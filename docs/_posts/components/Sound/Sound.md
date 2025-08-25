@@ -15,7 +15,7 @@ tags: [Sound, Sound]
 
 The Sound node controls the 3D spatialization of sound playback by a child AudioClip or MovieTexture node. Sound intensity includes stereo support, varying according to user location and view direction in the scene.
 
-The Sound node belongs to the **Sound** component and requires at least level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Sound node belongs to the [Sound](/x_ite/components/overview/#sound) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -28,7 +28,26 @@ The Sound node belongs to the **Sound** component and requires at least level **
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [in, out] | [description](#fields-description) | "" |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
+| SFBool | [ ] | [spatialize](#fields-spatialize) | TRUE |
+| SFFloat | [in, out] | [intensity](#fields-intensity) | 1  |
+| SFVec3f | [in, out] | [location](#fields-location) | 0 0 0  |
+| SFVec3f | [in, out] | [direction](#fields-direction) | 0 0 1  |
+| SFFloat | [in, out] | [minBack](#fields-minBack) | 1  |
+| SFFloat | [in, out] | [minFront](#fields-minFront) | 1  |
+| SFFloat | [in, out] | [maxBack](#fields-maxBack) | 10  |
+| SFFloat | [in, out] | [maxFront](#fields-maxFront) | 10  |
+| SFFloat | [in, out] | [priority](#fields-priority) | 0  |
+| SFNode | [in, out] | [source](#fields-source) | NULL  |
+| MFNode | [in, out] | [children](#fields-children) | [ ] |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -37,6 +56,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
+{: #fields-description }
 
 Author-provided prose that describes intended purpose of this node.
 
@@ -46,10 +66,12 @@ Author-provided prose that describes intended purpose of this node.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **enabled** TRUE
+{: #fields-enabled }
 
 Enables/disables node operation.
 
 ### SFBool [ ] **spatialize** TRUE
+{: #fields-spatialize }
 
 Whether to *spatialize* sound playback relative to viewer.
 
@@ -58,10 +80,12 @@ Whether to *spatialize* sound playback relative to viewer.
 - Only effective within the auralization volume.
 
 ### SFFloat [in, out] **intensity** 1 <small>[0,1]</small>
+{: #fields-intensity }
 
 Factor [0,1] adjusting loudness (decibels) of emitted sound.
 
 ### SFVec3f [in, out] **location** 0 0 0 <small>(-∞,∞)</small>
+{: #fields-location }
 
 Position of sound ellipsoid center, relative to local coordinate system.
 
@@ -70,10 +94,12 @@ Position of sound ellipsoid center, relative to local coordinate system.
 - Improve audibility by setting *location*='0 1.6 0' so that center height of sound ellipsoid matches typical [NavigationInfo](/x_ite/components/navigation/navigationinfo/) avatarSize height.
 
 ### SFVec3f [in, out] **direction** 0 0 1 <small>(-∞,∞)</small>
+{: #fields-direction }
 
 *direction* of sound axis, relative to local coordinate system.
 
 ### SFFloat [in, out] **minBack** 1 <small>[0,∞)</small>
+{: #fields-minBack }
 
 Inner (full loudness) ellipsoid distance along back direction.
 
@@ -82,6 +108,7 @@ Inner (full loudness) ellipsoid distance along back direction.
 - Ensure *minBack* \<= maxBack.
 
 ### SFFloat [in, out] **minFront** 1 <small>[0,∞)</small>
+{: #fields-minFront }
 
 Inner (full loudness) ellipsoid distance along front direction.
 
@@ -90,6 +117,7 @@ Inner (full loudness) ellipsoid distance along front direction.
 - Ensure *minFront* \<= maxFront.
 
 ### SFFloat [in, out] **maxBack** 10 <small>[0,∞)</small>
+{: #fields-maxBack }
 
 Outer (zero loudness)ellipsoid distance along back direction.
 
@@ -98,6 +126,7 @@ Outer (zero loudness)ellipsoid distance along back direction.
 - Ensure minBack \<= *maxBack*.
 
 ### SFFloat [in, out] **maxFront** 10 <small>[0,∞)</small>
+{: #fields-maxFront }
 
 Outer (zero loudness)ellipsoid distance along front direction.
 
@@ -106,10 +135,12 @@ Outer (zero loudness)ellipsoid distance along front direction.
 - Ensure minFront \<= *maxFront*.
 
 ### SFFloat [in, out] **priority** 0 <small>[0,1]</small>
+{: #fields-priority }
 
 Player hint [0,1] if needed to choose which sounds to play.
 
 ### SFNode [in, out] **source** NULL <small>[X3DSoundSourceNode]</small>
+{: #fields-source }
 
 Sound *source* for the Sound node, either an [AudioClip](/x_ite/components/sound/audioclip/) node or a [MovieTexture](/x_ite/components/texturing/movietexture/) node.
 
@@ -118,6 +149,7 @@ Sound *source* for the Sound node, either an [AudioClip](/x_ite/components/sound
 - If *source* field is not specified, the Sound node does not emit audio.
 
 ### MFNode [in, out] **children** [ ] <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
+{: #fields-children }
 
 Input/Output field *children*.
 

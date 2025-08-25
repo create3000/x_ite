@@ -1,56 +1,8 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
+import Matrix4 from "../Numbers/Matrix4.js";
+import Vector3 from "../Numbers/Vector3.js";
+import SAT     from "../Algorithms/SAT.js";
 
-import Triangle3 from "./Triangle3.js";
-import Matrix4   from "../Numbers/Matrix4.js";
-import Vector3   from "../Numbers/Vector3.js";
-import SAT       from "../Algorithms/SAT.js";
-
-function Box3 (/* size, center */)
+function Box3 (... args) /* size, center */
 {
    this .matrix = new Matrix4 ();
 
@@ -62,12 +14,15 @@ Object .assign (Box3 .prototype,
    copy ()
    {
       const copy = Object .create (Box3 .prototype);
+
       copy .matrix = this .matrix .copy ();
+
       return copy;
    },
    assign (box)
    {
       this .matrix .assign (box .matrix);
+
       return this;
    },
    equals (box)
@@ -142,9 +97,9 @@ Object .assign (Box3 .prototype,
       {
          const
             m = this .matrix,
-            x = m .xAxis,
-            y = m .yAxis,
-            z = m .zAxis;
+            x = m .X_AXIS,
+            y = m .Y_AXIS,
+            z = m .Z_AXIS;
 
          r1 .assign (y) .add (z);
 
@@ -193,9 +148,9 @@ Object .assign (Box3 .prototype,
 
          const m = this .matrix;
 
-         x .assign (m .xAxis);
-         y .assign (m .yAxis);
-         z .assign (m .zAxis);
+         x .assign (m .X_AXIS);
+         y .assign (m .Y_AXIS);
+         z .assign (m .Z_AXIS);
 
          r1 .assign (y) .add (z);
 
@@ -230,9 +185,9 @@ Object .assign (Box3 .prototype,
    {
       const m = this .matrix;
 
-      axes [0] .assign (m .xAxis);
-      axes [1] .assign (m .yAxis);
-      axes [2] .assign (m .zAxis);
+      axes [0] .assign (m .X_AXIS);
+      axes [1] .assign (m .Y_AXIS);
+      axes [2] .assign (m .Z_AXIS);
 
       return axes;
    },
@@ -243,102 +198,102 @@ Object .assign (Box3 .prototype,
          y = new Vector3 (),
          z = new Vector3 ();
 
-      const axes = [ Vector3 .xAxis, Vector3 .yAxis, Vector3 .zAxis ];
+      const axes = [ Vector3 .X_AXIS, Vector3 .Y_AXIS, Vector3 .Z_AXIS ];
 
       return function (normals)
       {
          const m = this .matrix;
 
-         x .assign (m .xAxis);
-         y .assign (m .yAxis);
-         z .assign (m .zAxis);
+         x .assign (m .X_AXIS);
+         y .assign (m .Y_AXIS);
+         z .assign (m .Z_AXIS);
 
-         if (x .norm () === 0)
+         if (x .squaredNorm () === 0)
          {
             x .assign (y) .cross (z);
 
-            if (x .norm () === 0)
+            if (x .squaredNorm () === 0)
             {
                for (const axis of axes)
                {
                   x .assign (axis) .cross (y);
 
-                  if (x .norm () !== 0)
+                  if (x .squaredNorm () !== 0)
                      break;
                }
 
-               if (x .norm () === 0)
+               if (x .squaredNorm () === 0)
                {
                   for (const axis of axes)
                   {
                      x .assign (axis) .cross (z);
 
-                     if (x .norm () !== 0)
+                     if (x .squaredNorm () !== 0)
                         break;
                   }
 
-                  if (x .norm () === 0)
-                     x .assign (Vector3 .xAxis);
+                  if (x .squaredNorm () === 0)
+                     x .assign (Vector3 .X_AXIS);
                }
             }
          }
 
-         if (y .norm () === 0)
+         if (y .squaredNorm () === 0)
          {
             y .assign (z) .cross (x);
 
-            if (y .norm () === 0)
+            if (y .squaredNorm () === 0)
             {
                for (const axis of axes)
                {
                   y .assign (axis) .cross (z);
 
-                  if (y .norm () !== 0)
+                  if (y .squaredNorm () !== 0)
                      break;
                }
 
-               if (y .norm () === 0)
+               if (y .squaredNorm () === 0)
                {
                   for (const axis of axes)
                   {
                      y .assign (axis) .cross (x);
 
-                     if (y .norm () !== 0)
+                     if (y .squaredNorm () !== 0)
                         break;
                   }
 
-                  if (y .norm () === 0)
-                     y .assign (Vector3 .yAxis);
+                  if (y .squaredNorm () === 0)
+                     y .assign (Vector3 .Y_AXIS);
                }
             }
          }
 
-         if (z .norm () === 0)
+         if (z .squaredNorm () === 0)
          {
             z .assign (x) .cross (y);
 
-            if (z .norm () === 0)
+            if (z .squaredNorm () === 0)
             {
                for (const axis of axes)
                {
                   z .assign (axis) .cross (x);
 
-                  if (z .norm () !== 0)
+                  if (z .squaredNorm () !== 0)
                      break;
                }
 
-               if (z .norm () === 0)
+               if (z .squaredNorm () === 0)
                {
                   for (const axis of axes)
                   {
                      z .assign (axis) .cross (y);
 
-                     if (z .norm () !== 0)
+                     if (z .squaredNorm () !== 0)
                         break;
                   }
 
-                  if (z .norm () === 0)
-                     z .assign (Vector3 .zAxis);
+                  if (z .squaredNorm () === 0)
+                     z .assign (Vector3 .Z_AXIS);
                }
             }
          }
@@ -406,61 +361,13 @@ Object .assign (Box3 .prototype,
    })(),
    intersectsBox: (() =>
    {
-      const points1 = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
-
-      const points2 = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
-
-      const axes1 = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
-
-      const axes2 = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
-
-      const axes9 = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
-
-      const normals = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
+      const
+         points1 = Array .from ({ length: 8 }, () => new Vector3 ()),
+         points2 = Array .from ({ length: 8 }, () => new Vector3 ()),
+         axes1   = Array .from ({ length: 3 }, () => new Vector3 ()),
+         axes2   = Array .from ({ length: 3 }, () => new Vector3 ()),
+         axes9   = Array .from ({ length: 9 }, () => new Vector3 ()),
+         normals = Array .from ({ length: 3 }, () => new Vector3 ());
 
       return function (other)
       {
@@ -506,105 +413,67 @@ Object .assign (Box3 .prototype,
          return true;
       };
    })(),
-   intersectsTriangle: (() =>
-   {
-      const points1 = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
+   // import Triangle3 from "./Triangle3.js";
+   // intersectsTriangle: (() =>
+   // {
+   //    const
+   //       points1        = Array .from ({ length: 8 }, () => new Vector3 ()),
+   //       axes1          = Array .from ({ length: 3 }, () => new Vector3 ()),
+   //       axes9          = Array .from ({ length: 9 }, () => new Vector3 ()),
+   //       normals        = Array .from ({ length: 3 }, () => new Vector3 ()),
+   //       triangle       = [ ],
+   //       triangleNormal = [ new Vector3 () ],
+   //       triangleEdges  = Array .from ({ length: 3 }, () => new Vector3 ());
 
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
+   //    return function (a, b, c)
+   //    {
+   //       // Test special cases.
 
-      const axes1 = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
+   //       if (this .isEmpty ())
+   //          return false;
 
-      const axes9 = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
+   //       // Get points.
 
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
+   //       this .getPoints (points1);
 
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
+   //       triangle [0] = a;
+   //       triangle [1] = b;
+   //       triangle [2] = c;
 
-      const normals = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 (),
-      ];
+   //       // Test the three planes spanned by the normal vectors of the faces of the first parallelepiped.
 
-      const triangle = [ ];
+   //       if (SAT .isSeparated (this .getNormals (normals), points1, triangle))
+   //          return false;
 
-      const triangleNormal = [ new Vector3 () ];
+   //       // Test the normal of the triangle.
 
-      const triangleEdges = [
-         new Vector3 (),
-         new Vector3 (),
-         new Vector3 ()
-      ];
+   //       Triangle3 .normal (a, b, c, triangleNormal [0]);
 
-      return function (a, b, c)
-      {
-         // Test special cases.
+   //       if (SAT .isSeparated (triangleNormal, points1, triangle))
+   //          return false;
 
-         if (this .isEmpty ())
-            return false;
+   //       // Test the nine other planes spanned by the edges of each parallelepiped.
 
-         // Get points.
+   //       this .getAxes (axes1);
 
-         this .getPoints (points1);
+   //       triangleEdges [0] .assign (a) .subtract (b);
+   //       triangleEdges [1] .assign (b) .subtract (c);
+   //       triangleEdges [2] .assign (c) .subtract (a);
 
-         triangle [0] = a;
-         triangle [1] = b;
-         triangle [2] = c;
+   //       for (let i1 = 0; i1 < 3; ++ i1)
+   //       {
+   //          for (let i2 = 0; i2 < 3; ++ i2)
+   //             axes9 [i1 * 3 + i2] .assign (axes1 [i1]) .cross (triangleEdges [i2]);
+   //       }
 
-         // Test the three planes spanned by the normal vectors of the faces of the first parallelepiped.
+   //       if (SAT .isSeparated (axes9, points1, triangle))
+   //          return false;
 
-         if (SAT .isSeparated (this .getNormals (normals), points1, triangle))
-            return false;
+   //       // Box and triangle intersect.
 
-         // Test the normal of the triangle.
-
-         Triangle3 .normal (a, b, c, triangleNormal [0]);
-
-         if (SAT .isSeparated (triangleNormal, points1, triangle))
-            return false;
-
-         // Test the nine other planes spanned by the edges of each parallelepiped.
-
-         this .getAxes (axes1);
-
-         triangleEdges [0] .assign (a) .subtract (b);
-         triangleEdges [1] .assign (b) .subtract (c);
-         triangleEdges [2] .assign (c) .subtract (a);
-
-         for (let i1 = 0; i1 < 3; ++ i1)
-         {
-            for (let i2 = 0; i2 < 3; ++ i2)
-               axes9 [i1 * 3 + i2] .assign (axes1 [i1]) .cross (triangleEdges [i2]);
-         }
-
-         if (SAT .isSeparated (axes9, points1, triangle))
-            return false;
-
-         // Box and triangle intersect.
-
-         return true;
-      };
-   })(),
+   //       return true;
+   //    };
+   // })(),
    toString ()
    {
       return `${this .size}, ${this .center}`;
@@ -620,8 +489,8 @@ Object .assign (Box3,
    Points (points)
    {
       const
-         min = new Vector3 (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY),
-         max = new Vector3 (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY);
+         min = new Vector3 (Number .POSITIVE_INFINITY),
+         max = new Vector3 (Number .NEGATIVE_INFINITY);
 
       for (const point of points)
       {

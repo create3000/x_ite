@@ -172,9 +172,9 @@ To animate the position of a shape you provide:
 - A list of key positions for a movement path
 - A time at which to be at each position
 
-An interpolatorsolator node converts an input time to an output position
+An interpolator node converts an input time to an output position
 
-- When a time is in between two key positions, the interpolatorsolator computes an intermediate position
+- When a time is in between two key positions, the interpolator computes an intermediate position
 
 ## Interpolating positions
 
@@ -220,7 +220,7 @@ PositionInterpolator {
 
 Typically route into a [Transform](/x_ite/components/grouping/transform/) node's *set\_translation* input
 
-## Using position interpolatorsolator inputs and outputs
+## Using position interpolator inputs and outputs
 
 The *set\_fraction* input:
 
@@ -230,12 +230,12 @@ The *value\_changed* output:
 
 - Outputs the position along the path each time the fraction is set
 
-## A sample using position interpolatorsolators
+## A sample using position interpolator
 
 ### XML Encoding
 
 ```x3d
-<Transform DEF='Particle1'
+<Transform DEF='Particle1'>
   <Shape><!-- ... --></Shape>
 </Transform>
 
@@ -278,7 +278,17 @@ ROUTE Timer1.fraction_changed TO Position1.set_fraction
 ROUTE Position1.value_changed TO Particle1.set_translation
 ```
 
-## Using other types of interpolatorsolators
+### Example
+
+<x3d-canvas src="https://create3000.github.io/media/tutorials/scenes/interpolator1/interpolator1.x3dv" update="auto">
+  <img src="https://create3000.github.io/media/tutorials/scenes/interpolator1/screenshot.avif" alt="Monolith1Timer"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/interpolator1/interpolator1.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/interpolator1/interpolator1.x3dv)
+{: .example-links }
+
+## Using other types of interpolators
 
 |                      |                             |
 |----------------------|-----------------------------|
@@ -288,10 +298,10 @@ ROUTE Position1.value_changed TO Particle1.set_translation
 | Animate color        | [ColorInterpolator][]       |
 | Animate transparency | [ScalarInterpolator][]      |
 
-  [PositionInterpolator]: https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#PositionInterpolator
-  [OrientationInterpolator]: https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#OrientationInterpolator
-  [ColorInterpolator]: https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#ColorInterpolator
-  [ScalarInterpolator]: https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#ScalarInterpolator
+  [PositionInterpolator]: /x_ite/components/interpolation/positioninterpolator
+  [OrientationInterpolator]: /x_ite/components/interpolation/orientationinterpolator/
+  [ColorInterpolator]: /x_ite/components/interpolation/colorinterpolator/
+  [ScalarInterpolator]: /x_ite/components/interpolation/scalarinterpolator/
 
 ## Syntax: OrientationInterpolator
 
@@ -387,12 +397,12 @@ The sensor outputs:
 
 Interpolators use key times and values and compute intermediate values
 
-All interpolatorsolators have:
+All interpolators have:
 
 - a *set\_fraction* input to set the fractional time
 - a *value\_changed* output to send new values
 
-Some interpolatorsolators are:
+Some interpolators are:
 
 - The [PositionInterpolator](/x_ite/components/interpolation/positioninterpolator/) node converts times to positions (or scales)
 - The [OrientationInterpolator](/x_ite/components/interpolation/orientationinterpolator/) node converts times to rotations

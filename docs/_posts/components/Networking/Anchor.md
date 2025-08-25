@@ -15,7 +15,7 @@ tags: [Anchor, Networking]
 
 Anchor is a Grouping node that can contain most nodes. When the user selects any of the geometry contained by the Anchor node, the browser either jumps to another viewpoint (similar to HTML bookmark) or else loads content (such as X3D, an image or HTML) specified by the url field. Newly loaded content completely replaces current content, if the value of parameter field indicates using the same window.
 
-The Anchor node belongs to the **Networking** component and requires at least level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The Anchor node belongs to the [Networking](/x_ite/components/overview/#networking) component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -26,11 +26,31 @@ The Anchor node belongs to the **Networking** component and requires at least le
       + Anchor (X3DUrlObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [in, out] | [description](#fields-description) | "" |
+| SFBool | [in, out] | [load](#fields-load) | TRUE |
+| MFString | [in, out] | [url](#fields-url) | [ ] |
+| MFString | [in, out] | [parameter](#fields-parameter) | [ ] |
+| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0  |
+| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600  |
+| SFBool | [in, out] | [visible](#fields-visible) | TRUE |
+| SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| MFNode | [in] | [addChildren](#fields-addChildren) |  |
+| MFNode | [in] | [removeChildren](#fields-removeChildren) |  |
+| MFNode | [in, out] | [children](#fields-children) | [ ] |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -39,6 +59,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
+{: #fields-description }
 
 Author-provided prose that describes intended purpose of the url asset.
 
@@ -47,10 +68,12 @@ Author-provided prose that describes intended purpose of the url asset.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **load** TRUE
+{: #fields-load }
 
 The *load* field has no effect, Anchor operation is only triggered by user selection.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
+{: #fields-url }
 
 Address of replacement world, or #ViewpointDEFName within the current scene, or alternate Web resource, activated by the user selecting [Shape](/x_ite/components/shape/shape/) geometry within the Anchor children nodes.
 
@@ -70,6 +93,7 @@ Address of replacement world, or #ViewpointDEFName within the current scene, or 
 - Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https *url* addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
 
 ### MFString [in, out] **parameter** [ ]
+{: #fields-parameter }
 
 If provided, *parameter* tells the X3D player where to to redirect the loaded url.
 
@@ -81,14 +105,17 @@ If provided, *parameter* tells the X3D player where to to redirect the loaded ur
 - This field may be ignored, applying the default value regardless.
 
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
+{: #fields-autoRefresh }
 
 The [*autoRefresh* field has no effect, Anchor operation is only triggered by user selection.
 
 ### SFTime [in, out] **autoRefreshTimeLimit** 3600 <small>[0,∞)</small>
+{: #fields-autoRefreshTimeLimit }
 
 The [*autoRefreshTimeLimit* field has no effect, Anchor operation is only triggered by user selection.
 
 ### SFBool [in, out] **visible** TRUE
+{: #fields-visible }
 
 Whether or not renderable content within this node is visually displayed.
 
@@ -98,6 +125,7 @@ Whether or not renderable content within this node is visually displayed.
 - Content must be *visible* to be collidable and to be pickable.
 
 ### SFBool [in, out] **bboxDisplay** FALSE
+{: #fields-bboxDisplay }
 
 Whether to display bounding box for associated geometry, aligned with world coordinates.
 
@@ -106,6 +134,7 @@ Whether to display bounding box for associated geometry, aligned with world coor
 - The bounding box is displayed regardless of whether contained content is visible.
 
 ### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or −1 −1 −1</small>
+{: #fields-bboxSize }
 
 Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
 
@@ -117,6 +146,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
+{: #fields-bboxCenter }
 
 Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
 
@@ -127,14 +157,17 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### MFNode [in] **addChildren**
+{: #fields-addChildren }
 
 Input field *addChildren*.
 
 ### MFNode [in] **removeChildren**
+{: #fields-removeChildren }
 
 Input field *removeChildren*.
 
 ### MFNode [in, out] **children** [ ] <small>[X3DChildNode]</small>
+{: #fields-children }
 
 Grouping nodes contain an ordered list of *children* nodes.
 

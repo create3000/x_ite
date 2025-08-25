@@ -1,61 +1,14 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Vector2             from "./Vector2.js";
 import Vector3             from "./Vector3.js";
 import Matrix2             from "./Matrix2.js";
 import eigen_decomposition from "../Algorithms/eigen_decomposition.js";
 
-function Matrix3 ()
+function Matrix3 (... args)
 {
-   if (arguments .length)
+   if (args .length)
    {
       for (let i = 0; i < 9; ++ i)
-         this [i] = arguments [i];
+         this [i] = args [i];
    }
    else
    {
@@ -98,10 +51,6 @@ Object .assign (Matrix3 .prototype,
              this [7] === matrix [7] &&
              this [8] === matrix [8];
    },
-   rotation ()
-   {
-      return Math .atan2 (this [1], this [0]);
-   },
    set1 (r, c, value)
    {
       this [r * this .order + c] = value;
@@ -124,14 +73,14 @@ Object .assign (Matrix3 .prototype,
          {
             case 1:
             {
-               if (translation && !translation .equals (Vector2 .Zero))
+               if (translation && !translation .equals (Vector2 .ZERO))
                   this .translate (translation);
 
                break;
             }
             case 2:
             {
-               if (translation && !translation .equals (Vector2 .Zero))
+               if (translation && !translation .equals (Vector2 .ZERO))
                   this .translate (translation);
 
                if (rotation)
@@ -141,26 +90,26 @@ Object .assign (Matrix3 .prototype,
             }
             case 3:
             {
-               if (translation && !translation .equals (Vector2 .Zero))
+               if (translation && !translation .equals (Vector2 .ZERO))
                   this .translate (translation);
 
                if (rotation)
                   this .rotate (rotation);
 
-               if (scale && !scale .equals (Vector2 .One))
+               if (scale && !scale .equals (Vector2 .ONE))
                   this .scale  (scale);
 
                break;
             }
             case 4:
             {
-               if (translation && !translation .equals (Vector2 .Zero))
+               if (translation && !translation .equals (Vector2 .ZERO))
                   this .translate (translation);
 
                if (rotation)
                   this .rotate (rotation);
 
-               if (scale && !scale .equals (Vector2 .One))
+               if (scale && !scale .equals (Vector2 .ONE))
                {
                   if (scaleOrientation)
                   {
@@ -179,10 +128,10 @@ Object .assign (Matrix3 .prototype,
             case 5:
             {
                // P' = T * C * R * SR * S * -SR * -C * P
-               if (translation && !translation .equals (Vector2 .Zero))
+               if (translation && !translation .equals (Vector2 .ZERO))
                   this .translate (translation);
 
-               const hasCenter = center && !center .equals (Vector2 .Zero);
+               const hasCenter = center && !center .equals (Vector2 .ZERO);
 
                if (hasCenter)
                   this .translate (center);
@@ -190,7 +139,7 @@ Object .assign (Matrix3 .prototype,
                if (rotation)
                   this .rotate (rotation);
 
-               if (scale && !scale .equals (Vector2 .One))
+               if (scale && !scale .equals (Vector2 .ONE))
                {
                   if (scaleOrientation)
                   {
@@ -581,7 +530,7 @@ Object .defineProperties (Matrix3 .prototype,
          return function () { return vector .set (this [6], this [7], this [8]); };
       })(),
    },
-   xAxis:
+   X_AXIS:
    {
       get: (() =>
       {
@@ -590,7 +539,7 @@ Object .defineProperties (Matrix3 .prototype,
          return function () { return vector .set (this [0], this [1]); };
       })(),
    },
-   yAxis:
+   Y_AXIS:
    {
       get: (() =>
       {
@@ -626,7 +575,7 @@ Object .defineProperties (Matrix3 .prototype,
 
 Object .assign (Matrix3,
 {
-   Identity: Object .freeze (new Matrix3 ()),
+   IDENTITY: Object .freeze (new Matrix3 ()),
    Rotation (rotation)
    {
       const

@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
@@ -115,7 +68,6 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
          line                    = new Line3 (),
          a                       = new Vector3 (),
          b                       = new Vector3 (),
-         clipPlanes              = [ ],
          intersections           = [ ],
          texCoord                = new Vector3 (),
          pickedTextureCoordinate = new Fields .MFVec3f (),
@@ -161,8 +113,6 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
                      pickedGeometries = this .getPickedGeometries (),
                      active           = !! pickedGeometries .length;
 
-                  pickedGeometries .assign (pickedGeometries .filter (node => node));
-
                   if (active !== this ._isActive .getValue ())
                      this ._isActive = active;
 
@@ -183,12 +133,13 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
                      {
                         const
                            geometryNode = target .geometryNode,
-                           vertices     = this .pickingGeometryNode .getVertices ();
+                           vertices     = this .pickingGeometryNode .getVertices (),
+                           numVertices  = vertices .length;
 
                         targetBBox .assign (geometryNode .getBBox ()) .multRight (target .modelMatrix);
                         matrix .assign (target .modelMatrix) .inverse () .multLeft (modelMatrix);
 
-                        for (let v = 0, vLength = vertices .length; v < vLength; v += 8)
+                        for (let v = 0; v < numVertices; v += 8)
                         {
                            matrix .multVecMatrix (point1 .set (vertices [v + 0], vertices [v + 1], vertices [v + 2]));
                            matrix .multVecMatrix (point2 .set (vertices [v + 4], vertices [v + 5], vertices [v + 6]));
@@ -196,19 +147,17 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
 
                            intersections .length = 0;
 
-                           if (geometryNode .intersectsLine (line, target .modelMatrix, clipPlanes, intersections))
+                           if (geometryNode .intersectsLine (line, target .modelMatrix, intersections))
                            {
-                              for (let i = 0, iLength = intersections .length; i < iLength; ++ i)
+                              for (const intersection of intersections)
                               {
                                  // Test if intersection.point is between point1 and point2.
-
-                                 const intersection = intersections [i];
 
                                  a .assign (intersection .point) .subtract (point1);
                                  b .assign (intersection .point) .subtract (point2);
 
                                  const
-                                    c = a .add (b) .magnitude (),
+                                    c = a .add (b) .norm (),
                                     s = point1 .distance (point2);
 
                                  if (c <= s)
@@ -256,7 +205,7 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
                      {
                         const t = intersection .texCoord;
 
-                        texCoord .set (t .x, t .y, t .z);
+                        texCoord .set (t .x, t .y, t .z) .divide (t .w);
 
                         pickedTextureCoordinate .push (texCoord);
                         pickedNormal            .push (intersection .normal);
@@ -296,12 +245,12 @@ Object .defineProperties (LinePickSensor,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "matchCriterion",          new Fields .SFString ("MATCH_ANY")),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "intersectionType",        new Fields .SFString ("BOUNDS")),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "sortOrder",               new Fields .SFString ("CLOSEST")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "pickingGeometry",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "pickTarget",              new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",                new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "pickedTextureCoordinate", new Fields .MFVec3f ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "pickedNormal",            new Fields .MFVec3f ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "pickedPoint",             new Fields .MFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "pickingGeometry",         new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "pickTarget",              new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "pickedGeometry",          new Fields .MFNode ()),
       ]),
       enumerable: true,

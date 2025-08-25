@@ -13,8 +13,8 @@ However, you will often want to perform special effects or special cases for you
 
 ## Example
 
-<x3d-canvas class="xr-button-cr" src="https://create3000.github.io/media/examples/X3D/WaterQuality/WaterQuality.x3d" update="auto">
-  <img src="https://create3000.github.io/media/images/water-quality.png" alt="Shader Example"/>
+<x3d-canvas class="xr-button-cr" update="auto" src="https://create3000.github.io/media/examples/X3D/WaterQuality/WaterQuality.x3d">
+  <img src="https://create3000.github.io/media/examples/X3D/WaterQuality/screenshot.avif" alt="Shader Example"/>
 </x3d-canvas>
 
 [Download ZIP Archive](https://create3000.github.io/media/examples/X3D/WaterQuality/WaterQuality.zip)
@@ -624,6 +624,7 @@ A [ComposedShader](/x_ite/components/shaders/composedshader/) defines a number o
 | Type  | Name            | Comment                                                 |
 |-------|-----------------|---------------------------------------------------------|
 | vec3  | color           |                                                         |
+| float | visibilityStart |                                                         |
 | float | visibilityRange |                                                         |
 | mat3  | matrix          | inverse fog space matrix, rotation and scale components |
 

@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields           from "../../Fields.js";
 import X3DNode          from "../Core/X3DNode.js";
 import X3DChildNode     from "../Core/X3DChildNode.js";
@@ -80,9 +33,10 @@ function X3DNBodyCollidableNode (executionContext)
 
    // Members
 
-   this .compoundShape = new Ammo .btCompoundShape ()
-   this .offset        = new Vector3 ();
-   this .matrix        = new Matrix4 ();
+   this .compoundShape  = new Ammo .btCompoundShape ()
+   this .offset         = new Vector3 ();
+   this .matrix         = new Matrix4 ();
+   this .visibleObjects = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DChildNode .prototype),
@@ -106,6 +60,15 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
          return this .boundedObject ?.getBBox (bbox, shadows) .multRight (this .matrix) ?? bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+   },
+   getShapes (shapes, parentModelMatrix)
+   {
+      const modelMatrix = parentModelMatrix .copy () .multLeft (this .matrix);
+
+      for (const visibleObject of this .visibleObjects)
+         visibleObject .getShapes (shapes, modelMatrix);
+
+      return shapes;
    },
    getLocalTransform: (() =>
    {
@@ -192,8 +155,8 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
       this .pickableObject  = null;
       this .collisionObject = null;
       this .shadowObject    = null;
-      this .visibleObject   = null;
-      this .bboxObject      = null;
+
+      this .visibleObjects .length = 0;
 
       // Add node.
 
@@ -230,7 +193,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
                this .shadowObject = childNode;
 
             if (childNode .isVisibleObject ())
-               this .visibleObject = childNode;
+               this .visibleObjects .push (childNode);
          }
 
          if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
@@ -239,14 +202,8 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
             childNode ._bboxDisplay .addInterest ("requestRebuild", this);
 
             if (childNode .isBBoxVisible ())
-               this .bboxObject = childNode;
+               this .visibleObjects .push (childNode .getBBoxNode ());
          }
-
-         delete this .traverse;
-      }
-      else
-      {
-         this .traverse = Function .prototype;
       }
 
       this .set_boundedObjects__ ();
@@ -283,7 +240,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
    },
    set_visibleObjects__ ()
    {
-      this .setVisibleObject (this .visibleObject || this .bboxObject || !this .isDefaultBBoxSize ());
+      this .setVisibleObject (this .visibleObjects .length);
    },
    requestRebuild ()
    {
@@ -320,15 +277,18 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
          }
          case TraverseType .PICKING:
          {
-            // X3DNBodyCollidableNode cannot be pickTarget of a X3DPickSensorNode,
-            // so we do not need to a this node to pickingHierarchy.
+            // X3DNBodyCollidableNode can't be pickTarget of a X3DPickSensorNode or TransformSensor,
+            // so we do not need to add this node to the pickingHierarchy.
 
-            const browser = this .getBrowser ();
-
-            if (browser .getPickable () .at (-1))
-               this .visibleObject ?.traverse (type, renderObject);
+            if (this .getBrowser () .getPickable () .at (-1))
+            {
+               for (const visibleObject of this .visibleObjects)
+                  visibleObject .traverse (type, renderObject);
+            }
             else
+            {
                this .pickableObject ?.traverse (type, renderObject);
+            }
 
             break;
          }
@@ -344,8 +304,9 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
          }
          case TraverseType .DISPLAY:
          {
-            this .visibleObject ?.traverse    (type, renderObject);
-            this .bboxObject    ?.displayBBox (type, renderObject);
+            for (const visibleObject of this .visibleObjects)
+               visibleObject .traverse (type, renderObject);
+
             break;
          }
       }

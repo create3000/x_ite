@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Vector3   from "./Vector3.js";
 import Matrix3   from "./Matrix3.js";
 import Algorithm from "../Algorithm.js";
@@ -94,14 +47,10 @@ Object .assign (Quaternion .prototype,
    setMatrix (matrix)
    {
       // First, find largest diagonal in matrix:
-      if (matrix [0] > matrix [4])
-      {
-         var i = matrix [0] > matrix [8] ? 0 : 2;
-      }
-      else
-      {
-         var i = matrix [4] > matrix [8] ? 1 : 2;
-      }
+
+      const i = matrix [0] > matrix [4]
+         ? matrix [0] > matrix [8] ? 0 : 2
+         : matrix [4] > matrix [8] ? 1 : 2;
 
       const scaleRow = matrix [0] + matrix [4] + matrix [8];
 
@@ -479,7 +428,7 @@ Object .assign (Quaternion .prototype,
              this .z * quat .z +
              this .w * quat .w;
    },
-   norm ()
+   squaredNorm ()
    {
       const { x, y, z, w } = this;
 
@@ -488,7 +437,7 @@ Object .assign (Quaternion .prototype,
              z * z +
              w * w;
    },
-   magnitude ()
+   norm ()
    {
       return Math .hypot (this .x, this .y, this .z, this .w);
    },
@@ -501,9 +450,9 @@ Object .assign (Quaternion .prototype,
          return this .set (0, 0, 0, this .w ** exponent);
 
       const
-         l     = this .magnitude (),
+         l     = this .norm (),
          theta = Math .acos (this .w / l),
-         li    = this .imag .magnitude (),
+         li    = this .imag .norm (),
          ltoe  = l ** exponent,
          et    = exponent * theta,
          scale = ltoe / li * Math .sin (et);
@@ -526,7 +475,7 @@ Object .assign (Quaternion .prototype,
       }
 
       const
-         l = this .magnitude (),
+         l = this .norm (),
          v = this .imag .normalize () .multiply (Math .acos (this .w / l)),
          w = Math .log (l);
 
@@ -543,7 +492,7 @@ Object .assign (Quaternion .prototype,
 
       const
          i  = this .imag,
-         li = i .magnitude (),
+         li = i .norm (),
          ew = Math .exp (this .w),
          w  = ew * Math .cos (li),
          v  = i .multiply (ew * Math .sin (li) / li);
@@ -560,7 +509,9 @@ Object .assign (Quaternion .prototype,
    },
    squad (a, b, destination, t)
    {
-      // We must use shortest path slerp to prevent flipping.  Also see spline.
+      // Ken Shoemake defines Squad as:
+      // We must use shortest path slerp to prevent flipping. See also spline below.
+      // a = spline (si-1, si, si+1) and b = spline (di-1, di, di+1), where si = source and di = destination
 
       return Algorithm .slerp (Algorithm .slerp (this, t1 .assign (destination), t),
                                Algorithm .slerp (t2 .assign (a), t3 .assign (b), t),
@@ -623,7 +574,7 @@ Object .defineProperties (Quaternion .prototype,
 
 Object .assign (Quaternion,
 {
-   Identity: Object .freeze (new Quaternion ()),
+   IDENTITY: Object .freeze (new Quaternion ()),
    spline: (() =>
    {
       const

@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import X3DChildObject       from "./X3DChildObject.js";
 import Events               from "./Events.js";
 import X3DFieldDefinition   from "./X3DFieldDefinition.js";
@@ -75,7 +28,7 @@ function X3DBaseNode (executionContext, browser = executionContext .getBrowser (
 
    this [_browser]           = browser;
    this [_executionContext]  = executionContext;
-   this [_type]              = [ X3DConstants .X3DBaseNode ];
+   this [_type]              = [ ];
    this [_fieldDefinitions]  = this .constructor .fieldDefinitions ?? this [_fieldDefinitions];
    this [_predefinedFields]  = new FieldArray ();
    this [_userDefinedFields] = new FieldArray ();
@@ -83,17 +36,19 @@ function X3DBaseNode (executionContext, browser = executionContext .getBrowser (
    this [_live]              = true;
    this [_initialized]       = false;
 
+   // Create fields.
+
    if (this .canUserDefinedFields ())
       this [_fieldDefinitions] = new FieldDefinitionArray (this [_fieldDefinitions]);
 
-   // Create fields.
+   for (const fieldDefinition of this [_fieldDefinitions])
+      this .addPredefinedField (fieldDefinition);
+
+   // Create events.
 
    this .addChildObjects (X3DConstants .outputOnly, "name_changed",     new Fields .SFTime (),
                           X3DConstants .outputOnly, "typeName_changed", new Fields .SFTime (),
-                          X3DConstants .outputOnly, "parents_changed",  new Fields .SFTime ())
-
-   for (const fieldDefinition of this [_fieldDefinitions])
-      this .addPredefinedField (fieldDefinition);
+                          X3DConstants .outputOnly, "parents_changed",  new Fields .SFTime ());
 }
 
 Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .prototype),
@@ -275,10 +230,12 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
          }
       }
    },
-   addChildObjects (/* accessType, name, field, ... */)
+   addChildObjects (... args /* accessType, name, field, ... */)
    {
-      for (let i = 0, length = arguments .length; i < length; i += 3)
-         this .addChildObject (arguments [i], arguments [i + 1], arguments [i + 2]);
+      const length = args .length;
+
+      for (let i = 0; i < length; i += 3)
+         this .addChildObject (args [i], args [i + 1], args [i + 2]);
    },
    addChildObject (accessType, name, field)
    {
@@ -314,9 +271,12 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    {
       return [... this [_predefinedFields], ... this [_userDefinedFields]];
    },
-   addPredefinedField ({ accessType, name, value })
+   addPredefinedField (fieldDefinition)
    {
-      const field = value .copy ();
+      const
+         accessType = fieldDefinition .getAccessType (),
+         name       = fieldDefinition .getName (),
+         field      = fieldDefinition .getValue () .copy ();
 
       field .setTainted (!this [_initialized]);
       field .addParent (this);
@@ -412,10 +372,13 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    {
       return this [_userDefinedFields];
    },
-   getChangedFields (extended)
+   /**
+    *
+    * @param {boolean} extended  also return user-defined fields and fields with routes
+    * @returns Array<X3DField>
+    */
+   getChangedFields (extended = false)
    {
-      /* param routes: also return fields with routes */
-
       const changedFields = [ ];
 
       if (extended)
@@ -459,7 +422,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
          ? this [_fieldDefinitions] .get (name)
          : this .constructor .fieldDefinitions ?.get (name);
 
-      return fieldDefinition ?.value .equals (field) ?? field .getModificationTime () < 0;
+      return fieldDefinition ?.getValue () .equals (field) ?? field .getModificationTime () < 0;
    },
    getExtendedEventHandling ()
    {
@@ -470,7 +433,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    {
       if (field .isTainted ())
       {
-         field .setModificationTime (Date .now ());
+         field .setModificationTime (Date .now () / 1000);
          return;
       }
 
@@ -488,7 +451,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    {
       const browser = this [_browser];
 
-      field .setModificationTime (Date .now ());
+      field .setModificationTime (Date .now () / 1000);
 
       // Register for processEvent
 
@@ -507,6 +470,8 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    },
    addNodeEvent ()
    {
+      this .setModificationTime (Date .now () / 1000);
+
       if (this .isTainted ())
          return;
 
@@ -596,17 +561,14 @@ Object .defineProperties (X3DBaseNode .prototype,
    name_changed:
    {
       get () { return this ._name_changed; },
-      enumerable: false,
    },
    typeName_changed:
    {
       get () { return this ._typeName_changed; },
-      enumerable: false,
    },
    parents_changed:
    {
       get () { return this ._parents_changed; },
-      enumerable: false,
    },
 });
 

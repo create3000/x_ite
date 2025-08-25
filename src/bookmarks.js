@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 function Bookmarks (browser, element)
 {
    this .browser = browser;
@@ -68,15 +21,16 @@ Object .assign (Bookmarks .prototype,
                test      = bookmark .test,
                path      = bookmark .path;
 
+            let element;
             if (test)
             {
-               var element = $('<span/>')
+               element = $('<span/>')
                   .addClass ('example-box')
                   .attr ('title', component + ' » ' + test)
                   .append ($("<a/>")
                      .addClass ('display-example')
                      .attr ('href', `${server}/${component}/${test}/${test}.x3d`)
-                     .attr ('style', `background-image:url(${server}/${component}/${test}/screenshot-small.avif)`)
+                     .attr ('style', `background-image:url(${server}/${component}/${test}/screenshot-small.png)`)
                      .on ("click", () => prevent (this .loadURL (`${server}/${component}/${test}/${test}.x3d`, bookmark))));
             }
             else if (path)
@@ -88,7 +42,7 @@ Object .assign (Bookmarks .prototype,
                   basename = path .match (/([^\/]+)\.\w+$/),
                   name     = basename [1] .replace (/([A-Z]+)/g, ' $1');
 
-               var element = $('<span/>')
+               element = $('<span/>')
                   .addClass ('example-box')
                   .attr ('title', path)
                   .append ($("<a/>")
@@ -99,7 +53,7 @@ Object .assign (Bookmarks .prototype,
             }
             else if (component)
             {
-               var element = $('<span/>')
+               element = $('<span/>')
                   .addClass ('example-box')
                   .attr ('title', path)
                   .addClass ('display-component')
@@ -137,6 +91,14 @@ Object .assign (Bookmarks .prototype,
          base  = this .browser .getWorldURL () .replace (/(?:\.O)?\.[^\.]+$/, ""),
          local = base .replace (/https:\/\/create3000.github.io\/(.*?)\//, `https://${location.hostname}/$1/docs/`);
 
+      if (this .browser .currentScene .encoding === "GLTF")
+      {
+         this .browser .setBrowserOption ("ColorSpace", "LINEAR");
+         this .browser .setBrowserOption ("ToneMapping", "KHR_PBR_NEUTRAL");
+      }
+
+      const gamma = this .browser .currentScene .encoding === "GLTF" ? 2.2 : 1;
+
       $("#file") .text (this .browser .getWorldURL ())
          .append ($("<a/>")
          .attr ('href', base + ".x3d")
@@ -163,12 +125,15 @@ Object .assign (Bookmarks .prototype,
          .on ("click", () => this .browser .viewAll (0))
          .appendTo ($("#toolbar"));
 
+      if (this .browser .currentScene .encoding === "GLTF")
+         this .browser .viewAll (0);
+
       let
          environmentLight = null,
          navigationInfo   = null;
 
       const environmentLightButton = $("<span></span>")
-         .text ("💡")
+         .text ("☼")
          .attr ("title", "Add EnvironmentLight")
          .on ("click", async () =>
          {
@@ -207,6 +172,42 @@ Object .assign (Bookmarks .prototype,
 
       if (this .browser .getLocalStorage () ["Bookmarks.environmentLight"] && this .browser .currentScene .encoding === "GLTF")
          environmentLightButton .trigger ("click");
+
+      let background = null;
+
+      const backgroundButton = $("<span></span>")
+         .text ("⛰")
+         .attr ("title", "Add EnvironmentLight")
+         .on ("click", async () =>
+         {
+            if (background)
+            {
+               console .info ("Background", !background .isBound);
+
+               background .set_bind = !background .isBound;
+               this .browser .getLocalStorage () ["Bookmarks.background"] = !background .isBound;
+            }
+            else
+            {
+               background = this .browser .currentScene .createNode ("Background");
+
+               background .set_bind = true;
+               this .browser .getLocalStorage () ["Bookmarks.background"] = true;
+
+               background .skyAngle    = [0.8, 1.3, 1.4, 1.5708];
+               background .skyColor    = [0.21, 0.31, 0.59, 0.33, 0.45, 0.7, 0.57, 0.66, 0.85, 0.6, 0.73, 0.89, 0.7, 0.83, 0.98] .map (v => Math .pow (v, gamma));
+               background .groundAngle = [0.659972, 1.2, 1.39912, 1.5708];
+               background .groundColor = [0.105712, 0.156051, 0.297, 0.187629, 0.255857, 0.398, 0.33604, 0.405546, 0.542, 0.3612, 0.469145, 0.602, 0.39471, 0.522059, 0.669] .map (v => Math .pow (v, gamma));
+
+               this .browser .currentScene .rootNodes .push (background);
+
+               console .info ("Added Background.");
+            }
+         })
+         .appendTo ($("#toolbar"));
+
+      if (this .browser .getLocalStorage () ["Bookmarks.background"] && this .browser .currentScene .encoding === "GLTF")
+         backgroundButton .trigger ("click");
 
       $("<span></span>") .addClass ("separator") .appendTo ($("#toolbar"));
 
@@ -336,44 +337,28 @@ Object .assign (Bookmarks .prototype,
    },
    async getEnvironmentLight (browser)
    {
-      if (this .environmentLight)
-         return this .environmentLight;
+      return this .environmentLight ?? await (async () =>
+      {
+         const
+            profile          = browser .getProfile ("Core"),
+            components       = ["CubeMapTexturing", "Lighting"] .map (name => browser .getComponent (name)),
+            scene            = await browser .createScene (profile, ... components),
+            environmentLight = scene .createNode ("EnvironmentLight"),
+            specularTexture  = scene .createNode ("ImageCubeMapTexture");
 
-      const
-         profile           = browser .getProfile ("Interchange"),
-         components        = ["CubeMapTexturing", "Lighting", "Texturing"] .map (name => browser .getComponent (name)),
-         scene             = await browser .createScene (profile, ... components),
-         environmentLight  = scene .createNode ("EnvironmentLight"),
-         diffuseTexture    = scene .createNode ("ImageCubeMapTexture"),
-         specularTexture   = scene .createNode ("ImageCubeMapTexture"),
-         textureProperties = scene .createNode ("TextureProperties");
+         specularTexture .url = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/helipad-specular.jpg");
 
-      textureProperties .generateMipMaps     = true;
-      textureProperties .minificationFilter  = "NICEST";
-      textureProperties .magnificationFilter = "NICEST";
+         environmentLight .intensity       = 1;
+         environmentLight .specularTexture = specularTexture;
 
-      // diffuseTexture  .url               = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/symmetrical_garden_1k-diffuse.png");
-      // diffuseTexture  .textureProperties = textureProperties;
-      // specularTexture .url               = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/symmetrical_garden_1k-specular.png");
-      // specularTexture .textureProperties = textureProperties;
-
-      diffuseTexture  .url               = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/helipad-diffuse.jpg");
-      diffuseTexture  .textureProperties = textureProperties;
-      specularTexture .url               = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/helipad-specular.jpg");
-      specularTexture .textureProperties = textureProperties;
-
-      environmentLight .intensity       = 1;
-      environmentLight .color           = new X3D .SFColor (1,1,1);
-      environmentLight .diffuseTexture  = diffuseTexture;
-      environmentLight .specularTexture = specularTexture;
-
-      return this .environmentLight = environmentLight;
+         return environmentLight;
+      })();
    }
 });
 
 function prevent (arg)
 {
-   return false;
+   return !! void (arg);
 }
 
 export default Bookmarks;

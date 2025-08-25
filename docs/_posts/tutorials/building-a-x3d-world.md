@@ -24,7 +24,7 @@ X3D files contain:
 ```x3d
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D {{ site.x3d_latest_version }}/EN" "https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.dtd">
-<X3D profile='Full' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
+<X3D profile='Interchange' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
   <Scene>
   <!-- A Cylinder -->
   <Shape>
@@ -43,6 +43,9 @@ X3D files contain:
 
 ```vrml
 #X3D V{{ site.x3d_latest_version }} utf8
+
+PROFILE Interchange
+
 # A Cylinder
 Shape {
   appearance Appearance {
@@ -80,6 +83,102 @@ Shape {
   - UCS (Universal Character Set) Transformation Format, 8-bit
   - Can encodes up to 2,164,864 characters for many languages
   - ASCII is a subset
+
+## Understanding profiles and components
+
+- **PROFILE Interchange:** File uses nodes from the `Interchange` profile
+- Nodes are grouped into components
+- Components are grouped into profiles
+- Browsers can load components on demand to reduce initial load times and improve performance by only fetching what is necessary when it’s needed
+- Additionally add as many **COMPONENT** statements you need
+
+### XML Encoding
+
+```x3d
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D {{ site.x3d_latest_version }}/EN" "https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.dtd">
+<X3D profile='Interchange' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
+  <head>
+    <component name='CubeMapTexturing' level='3'/>
+    <component name='Scripting' level='1'/>
+  </head>
+  <Scene>
+    ...
+  </Scene>
+</X3D>
+```
+
+### Classic VRML Encoding
+
+```vrml
+PROFILE Interchange
+
+COMPONENT CubeMapTexturing : 3
+COMPONENT Scripting : 1
+```
+
+What profiles and components are there:
+
+- [Profiles](/x_ite/profiles/overview/)
+- [Components](/x_ite/components/overview/)
+
+## Header statements
+
+There are a few other header statements, but always add a **PROFILE** statement. If there is no profile declared, profile **Full** is assumed and all components will be loaded, but this is probably not always desired.
+
+There are three header statements:
+
+1. **COMPONENT** statements
+2. **UNIT** statements
+3. **META** statements
+
+Order of header statements is important!
+
+### XML Encoding
+
+```x3d
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='CubeMapTexturing' level='3'/>
+    <component name='Scripting' level='1'/>
+    <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
+    <unit category='length' name='millimetre' conversionFactor='0.001'/>
+    <meta name='created' content='Thu, 08 May 2025 14:11:46 GMT'/>
+    <meta name='modified' content='Thu, 08 May 2025 14:19:44 GMT'/>
+  </head>
+  <Scene>
+    <!-- zero or more proto, node, route, import, export statements in arbitrary order -->
+    ...
+  </Scene>
+</X3D>
+```
+
+### Classic VRML Encoding
+
+```vrml
+#X3D V{{ site.x3d_latest_version }} utf8
+
+# exactly one profile statement
+PROFILE Interchange
+
+# zero or more component statements
+COMPONENT Scripting : 1
+COMPONENT CubeMapTexturing : 3
+
+# zero or more unit statements
+UNIT angle degree 0.017453292519943295
+UNIT length millimetre 0.001
+
+# zero or more meta statements
+META "created" "Thu, 08 May 2025 14:11:46 GMT"
+META "modified" "Thu, 08 May 2025 14:12:13 GMT"
+
+# zero or more proto, node, route, import, export statements
+# in arbitrary order
+...
+```
 
 ## Using comments
 

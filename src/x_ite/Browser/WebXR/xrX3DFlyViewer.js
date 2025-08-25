@@ -1,11 +1,11 @@
 import X3DFlyViewer from "../Navigation/X3DFlyViewer.js";
 import Vector3      from "../../../standard/Math/Numbers/Vector3.js";
 
-const GAMEPAD_SPEED_FACTOR = new Vector3 (300, 300, 300); // 143 would be right
+const GAMEPAD_SPEED_FACTOR = new Vector3 (300); // 143 would be right
 
 Object .assign (X3DFlyViewer .prototype,
 {
-   gamepads: (function ()
+   gamepads: (() =>
    {
       const axis = new Vector3 ();
 

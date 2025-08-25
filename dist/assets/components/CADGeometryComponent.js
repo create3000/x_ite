@@ -1,5 +1,5 @@
-/* X_ITE v11.5.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.0")];
+/* X_ITE v12.0.4 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.4")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -67,53 +67,6 @@ var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n
 const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
 ;// ./src/x_ite/Components/CADGeometry/X3DProductStructureChildNode.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -134,53 +87,6 @@ const __default__ = X3DProductStructureChildNode;
 
 /* harmony default export */ const CADGeometry_X3DProductStructureChildNode = (external_X_ITE_X3D_Namespace_default().add ("X3DProductStructureChildNode", __default__));
 ;// ./src/x_ite/Components/CADGeometry/CADAssembly.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -233,53 +139,6 @@ var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n
 const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
 var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
 ;// ./src/x_ite/Components/CADGeometry/CADFace.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -304,6 +163,10 @@ function CADFace (executionContext)
    this .setCollisionObject (true);
    this .setShadowObject (true);
    this .setVisibleObject (true);
+
+   // Private properties
+
+   this .visibleObjects = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProductStructureChildNode .prototype),
@@ -327,11 +190,22 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
+   getShapes (shapes, modelMatrix)
+   {
+      for (const visibleObject of this .visibleObjects)
+         visibleObject .getShapes (shapes, modelMatrix);
+
+      return shapes;
+   },
    requestRebuild ()
    {
       this ._rebuild .addEvent ();
    },
    set_children__ ()
+   {
+      this .setChild (external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DChildNode, this ._shape));
+   },
+   setChild (childNode)
    {
       // Remove node.
 
@@ -363,12 +237,10 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
       this .pickableObject  = null;
       this .collisionObject = null;
       this .shadowObject    = null;
-      this .visibleObject   = null;
-      this .bboxObject      = null;
+
+      this .visibleObjects .length = 0;
 
       // Add node.
-
-      const childNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DChildNode, this ._shape);
 
       if (childNode)
       {
@@ -413,7 +285,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
                         this .shadowObject = childNode;
 
                      if (childNode .isVisibleObject ())
-                        this .visibleObject = childNode;
+                        this .visibleObjects .push (childNode);
                   }
 
                   if (external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DBoundedObject, childNode))
@@ -422,7 +294,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
                      childNode ._bboxDisplay .addInterest ("requestRebuild", this);
 
                      if (childNode .isBBoxVisible ())
-                        this .bboxObject = childNode;
+                        this .visibleObjects .push (childNode .getBBoxNode ());
                   }
 
                   break;
@@ -469,7 +341,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
    },
    set_visibleObjects__ ()
    {
-      this .setVisibleObject (this .visibleObject || this .bboxObject);
+      this .setVisibleObject (this .visibleObjects .length);
    },
    traverse (type, renderObject)
    {
@@ -487,23 +359,18 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
          }
          case (external_X_ITE_X3D_TraverseType_default()).PICKING:
          {
-            if (this .getTransformSensors () .size)
+            // CADFace can't be pickTarget of a X3DPickSensorNode or TransformSensor,
+            // so we do not need to add this node to the pickingHierarchy.
+
+            if (this .getBrowser () .getPickable () .at (-1))
             {
-               const modelMatrix = renderObject .getModelViewMatrix () .get ();
-
-               for (const transformSensorNode of this .getTransformSensors ())
-                  transformSensorNode .collect (modelMatrix);
+               for (const visibleObject of this .visibleObjects)
+                  visibleObject .traverse (type, renderObject);
             }
-
-            // CADFace cannot be pickTarget of a X3DPickSensorNode,
-            // so we do not need to a this node to pickingHierarchy.
-
-            const browser = this .getBrowser ();
-
-            if (browser .getPickable () .at (-1))
-               this .visibleObject ?.traverse (type, renderObject);
             else
+            {
                this .pickableObject ?.traverse (type, renderObject);
+            }
 
             return;
          }
@@ -519,8 +386,9 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, CADGeometry_X3DProdu
          }
          case (external_X_ITE_X3D_TraverseType_default()).DISPLAY:
          {
-            this .visibleObject ?.traverse    (type, renderObject);
-            this .bboxObject    ?.displayBBox (type, renderObject);
+            for (const visibleObject of this .visibleObjects)
+               visibleObject .traverse (type, renderObject);
+
             return;
          }
       }
@@ -555,53 +423,6 @@ const CADFace_default_ = CADFace;
 
 /* harmony default export */ const CADGeometry_CADFace = (external_X_ITE_X3D_Namespace_default().add ("CADFace", CADFace_default_));
 ;// ./src/x_ite/Components/CADGeometry/CADLayer.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -646,53 +467,6 @@ const CADLayer_default_ = CADLayer;
 const external_X_ITE_X3D_X3DTransformNode_namespaceObject = __X_ITE_X3D__ .X3DTransformNode;
 var external_X_ITE_X3D_X3DTransformNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DTransformNode_namespaceObject);
 ;// ./src/x_ite/Components/CADGeometry/CADPart.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -744,53 +518,6 @@ const CADPart_default_ = CADPart;
 const external_X_ITE_X3D_X3DComposedGeometryNode_namespaceObject = __X_ITE_X3D__ .X3DComposedGeometryNode;
 var external_X_ITE_X3D_X3DComposedGeometryNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DComposedGeometryNode_namespaceObject);
 ;// ./src/x_ite/Components/CADGeometry/IndexedQuadSet.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -813,12 +540,17 @@ Object .assign (Object .setPrototypeOf (IndexedQuadSet .prototype, (external_X_I
 
       this ._set_index .addFieldInterest (this ._index);
    },
-   getTriangleIndex (i)
+   getTriangleIndex: (() =>
    {
-      const mod = i % 6;
+      const triangles = [0, 1, 2,   0, 2, 3];
 
-      return Math .floor (i / 6) * 4 + mod % 3 + Math .floor (mod / 4);
-   },
+      return function (i)
+      {
+         const mod = i % 6;
+
+         return (i - mod) / 6 * 4 + triangles [mod];
+      };
+   })(),
    getPolygonIndex (i)
    {
       return this ._index [i];
@@ -829,13 +561,11 @@ Object .assign (Object .setPrototypeOf (IndexedQuadSet .prototype, (external_X_I
    },
    getNumVertices ()
    {
-      return this ._index .length;
+      return this .checkVertexCount (this ._index .length, 4);
    },
    build ()
    {
-      let length = this ._index .length;
-
-      length -= length % 4;
+      const length = this .getNumVertices ();
 
       external_X_ITE_X3D_X3DComposedGeometryNode_default().prototype .build .call (this, 4, length, 6, length / 4 * 6);
    },
@@ -871,53 +601,6 @@ const IndexedQuadSet_default_ = IndexedQuadSet;
 
 /* harmony default export */ const CADGeometry_IndexedQuadSet = (external_X_ITE_X3D_Namespace_default().add ("IndexedQuadSet", IndexedQuadSet_default_));
 ;// ./src/x_ite/Components/CADGeometry/QuadSet.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -934,28 +617,28 @@ function QuadSet (executionContext)
 
 Object .assign (Object .setPrototypeOf (QuadSet .prototype, (external_X_ITE_X3D_X3DComposedGeometryNode_default()).prototype),
 {
-   getTriangleIndex (i)
+   getTriangleIndex: (() =>
    {
-      const mod = i % 6;
+      const triangles = [0, 1, 2,   0, 2, 3];
 
-      return Math .floor (i / 6) * 4 + mod % 3 + Math .floor (mod / 4);
-   },
+      return function (i)
+      {
+         const mod = i % 6;
+
+         return (i - mod) / 6 * 4 + triangles [mod];
+      };
+   })(),
    getVerticesPerPolygon ()
    {
       return 4;
    },
    getNumVertices ()
    {
-      return this .getCoord () ?.getSize ();
+      return this .checkVertexCount (this .getCoord () ?.getSize () ?? 0, 4);
    },
    build ()
    {
-      if (!this .getCoord ())
-         return;
-
-      let length = this .getCoord () .getSize ();
-
-      length -= length % 4;
+      const length = this .getNumVertices ();
 
       external_X_ITE_X3D_X3DComposedGeometryNode_default().prototype .build .call (this, 4, length, 6, length / 4 * 6);
    },
@@ -993,53 +676,6 @@ const QuadSet_default_ = QuadSet;
 
 /* harmony default export */ const CADGeometry_QuadSet = (external_X_ITE_X3D_Namespace_default().add ("QuadSet", QuadSet_default_));
 ;// ./src/assets/components/CADGeometryComponent.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 

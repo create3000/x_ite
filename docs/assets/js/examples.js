@@ -1,4 +1,4 @@
-$("table.examples a") .on ("click", function ()
+$(".examples a") .on ("click", function ()
 {
    Examples .shared .load ($(this));
    return false;
@@ -34,7 +34,7 @@ class Examples
          .attr ("contentScale", "auto")
          .attr ("update", "auto")
          .appendTo (this .#element);
-         
+
       this .#browser = this .#canvas .prop ("browser");
 
       $("<i></i>")
@@ -90,6 +90,7 @@ class Examples
       {
          $("<a></a>")
             .text ("#")
+            .attr ("title", "Go to documentation page.")
             .attr ("href", `/x_ite/components/${a .attr ("componentName") .replace (/[_]/g, "-") .toLowerCase ()}/${a .attr ("typeName") .toLowerCase ()}/`)
             .appendTo (this .#header);
       }

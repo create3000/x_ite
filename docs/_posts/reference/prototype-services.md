@@ -27,29 +27,37 @@ A reference to FieldDefinitionArray of all the fields defined for this prototype
 
 Always has the value of false. This property is read only.
 
+#### **appInfo**: string
+
+Short description or purpose of the prototype. This property is read only.
+
+#### **documentation**: string
+
+A string containing the documentation of this prototype. This property is read only.
+
 ### Methods
 
 #### **newInstance** (): SFNode
 
 Creates a new default instance of the prototype.
 
-#### **toVRMLString** (options: Options): string
+#### **toVRMLString** (options?: Options): string <small><span class="blue">non-standard</span></small>
 
-Returns the X3D VRML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this prototype.
+Returns the X3D VRML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, will produce this prototype.
 
-For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
+For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
-#### **toXMLString** (options: Options): string
+#### **toXMLString** (options?: Options): string <small><span class="blue">non-standard</span></small>
 
-Returns the X3D XML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this prototype.
+Returns the X3D XML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, will produce this prototype.
 
-For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
+For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
-#### **toJSONString** (options: Options): string
+#### **toJSONString** (options?: Options): string <small><span class="blue">non-standard</span></small>
 
-Returns the X3D JSON-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this prototype.
+Returns the X3D JSON-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, will produce this prototype.
 
-For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
+For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
 ## X3DExternProtoDeclaration
 
@@ -81,6 +89,14 @@ Always has the value of true. This property is read only.
 
 The value is one of the *_STATE* properties defined in the [X3DConstants](/x_ite/reference/constants-services/#load-state-constants) object. This property is read only.
 
+#### **appInfo**: string
+
+Short description or purpose of the extern prototype. This property is read only.
+
+#### **documentation**: string
+
+A string containing the documentation of this extern prototype. This property is read only.
+
 ### Methods
 
 #### **newInstance** (): SFNode
@@ -91,23 +107,23 @@ Creates a new default instance of the extern prototype.
 
 Triggers the loading of the extern prototype. It returns a Promise that is resolved when the extern prototype is completely loaded and all instances are updated.
 
-#### **toVRMLString** (options: Options): string
+#### **toVRMLString** (options?: Options): string
 
-Returns the X3D VRML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this extern prototype.
+Returns the X3D VRML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, will produce this extern prototype.
 
-For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
+For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
-#### **toXMLString** (options: Options): string
+#### **toXMLString** (options?: Options): string
 
-Returns the X3D XML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this extern prototype.
+Returns the X3D XML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, will produce this extern prototype.
 
-For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
+For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
-#### **toJSONString** (options: Options): string
+#### **toJSONString** (options?: Options): string
 
-Returns the X3D JSON-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, produce this extern prototype.
+Returns the X3D JSON-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, will produce this extern prototype.
 
-For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
+For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
 ## ProtoDeclarationArray
 

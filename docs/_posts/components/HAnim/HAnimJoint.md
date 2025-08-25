@@ -15,7 +15,7 @@ tags: [HAnimJoint, HAnim]
 
 HAnimJoint node can represent each joint in a body. The child HAnimSegment node provides a visual representation of the skeleton segment.
 
-The HAnimJoint node belongs to the **HAnim** component and requires at least level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The HAnimJoint node belongs to the [HAnim](/x_ite/components/overview/#hanim) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -28,7 +28,34 @@ The HAnimJoint node belongs to the **HAnim** component and requires at least lev
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [in, out] | [description](#fields-description) | "" |
+| SFString | [in, out] | [name](#fields-name) | "" |
+| SFVec3f | [in, out] | [translation](#fields-translation) | 0 0 0  |
+| SFRotation | [in, out] | [rotation](#fields-rotation) | 0 0 1 0  |
+| SFVec3f | [in, out] | [scale](#fields-scale) | 1 1 1  |
+| SFRotation | [in, out] | [scaleOrientation](#fields-scaleOrientation) | 0 0 1 0  |
+| SFVec3f | [in, out] | [center](#fields-center) | 0 0 0  |
+| MFFloat | [in, out] | [llimit](#fields-llimit) | [ 0, 0, 0 ] |
+| MFFloat | [in, out] | [ulimit](#fields-ulimit) | [ 0, 0, 0 ] |
+| SFRotation | [in, out] | [limitOrientation](#fields-limitOrientation) | 0 0 1 0  |
+| MFFloat | [in, out] | [stiffness](#fields-stiffness) | [ 0, 0, 0 ] |
+| MFInt32 | [in, out] | [skinCoordIndex](#fields-skinCoordIndex) | [ ] |
+| MFFloat | [in, out] | [skinCoordWeight](#fields-skinCoordWeight) | [ ] |
+| MFNode | [in, out] | [displacers](#fields-displacers) | [ ] |
+| SFBool | [in, out] | [visible](#fields-visible) | TRUE |
+| SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| MFNode | [in] | [addChildren](#fields-addChildren) |  |
+| MFNode | [in] | [removeChildren](#fields-removeChildren) |  |
+| MFNode | [in, out] | [children](#fields-children) | [ ] |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -37,6 +64,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
+{: #fields-description }
 
 Author-provided prose that describes intended purpose of this node.
 
@@ -45,6 +73,7 @@ Author-provided prose that describes intended purpose of this node.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFString [in, out] **name** ""
+{: #fields-name }
 
 Unique *name* attribute must be defined so that HAnimJoint node can be identified at run time for animation purposes.
 
@@ -54,7 +83,7 @@ Unique *name* attribute must be defined so that HAnimJoint node can be identifie
 - Well-defined names can simplify design and debugging through improved author understanding.
 - [X3D Scene Authoring Hints, Naming Conventions](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#NamingConventions)
 - [HAnim2 Names HAnim1 Alias Tables](https://www.web3d.org/x3d/content/examples/HumanoidAnimation/HAnim2NameHAnim1AliasTables.txt)
-- Candidate names found in the HAnim Specification are humanoid_root, sacroiliac, l_hip, l_knee, l_talocrural, l_talocalcaneonavicular, l_cuneonavicular_1, l_tarsometatarsal_1, l_metatarsophalangeal_1, l_tarsal_interphalangeal_1, l_cuneonavicular_2, l_tarsometatarsal_2, l_metatarsophalangeal_2, l_tarsal_proximal_interphalangeal_2, l_tarsal_distal_interphalangeal_2, l_cuneonavicular_3, l_tarsometatarsal_3, l_metatarsophalangeal_3, l_tarsal_proximal_interphalangeal_3, l_tarsal_distal_interphalangeal_3, l_calcaneocuboid, l_transversetarsal, l_tarsometatarsal_4, l_metatarsophalangeal_4, l_tarsal_proximal_interphalangeal_4, l_tarsal_distal_interphalangeal_4, l_tarsometatarsal_5, l_metatarsophalangeal_5, l_tarsal_proximal_interphalangeal_5, l_tarsal_distal_interphalangeal_5, r_hip, r_knee, r_talocrural, r_talocalcaneonavicular, r_cuneonavicular_1, r_tarsometatarsal_1, r_metatarsophalangeal_1, r_tarsal_interphalangeal_1, r_cuneonavicular_2, r_tarsometatarsal_2, r_metatarsophalangeal_2, r_tarsal_proximal_interphalangeal_2, r_tarsal_distal_interphalangeal_2, r_cuneonavicular_3, r_tarsometatarsal_3, r_metatarsophalangeal_3, r_tarsal_proximal_interphalangeal_3, r_tarsal_distal_interphalangeal_3, r_calcaneocuboid, r_transversetarsal, r_tarsometatarsal_4, r_metatarsophalangeal_4, r_tarsal_proximal_interphalangeal_4, r_tarsal_distal_interphalangeal_4, r_tarsometatarsal_5, r_metatarsophalangeal_5, r_tarsal_proximal_interphalangeal_5, r_tarsal_distal_interphalangeal_5, vl5, vl4, vl3, vl2, vl1, vt12, vt11, vt10, vt9, vt8, vt7, vt6, vt5, vt4, vt3, vt2, vt1, vc7, vc6, vc5, vc4, vc3, vc2, vc1, skullbase, l_eyelid_joint, r_eyelid_joint, l_eyeball_joint, r_eyeball_joint, l_eyebrow_joint, r_eyebrow_joint, temporomandibular, l_sternoclavicular, l_acromioclavicular, l_shoulder, l_elbow, l_radiocarpal, l_midcarpal_1, l_carpometacarpal_1, l_metacarpophalangeal_1, l_carpal_interphalangeal_1, l_midcarpal_2, l_carpometacarpal_2, l_metacarpophalangeal_2, l_carpal_proximal_interphalangeal_2, l_carpal_distal_interphalangeal_2, l_midcarpal_3, l_carpometacarpal_3, l_metacarpophalangeal_3, l_carpal_proximal_interphalangeal_3, l_carpal_distal_interphalangeal_3, l_midcarpal_4_5, l_carpometacarpal_4, l_metacarpophalangeal_4, l_carpal_proximal_interphalangeal_4, l_carpal_distal_interphalangeal_4, l_carpometacarpal_5, l_metacarpophalangeal_5, l_carpal_proximal_interphalangeal_5, l_carpal_distal_interphalangeal_5, r_sternoclavicular, r_acromioclavicular, r_shoulder, r_elbow, r_radiocarpal, r_midcarpal_1, r_carpometacarpal_1, r_metacarpophalangeal_1, r_carpal_interphalangeal_1, r_midcarpal_2, r_carpometacarpal_2, r_metacarpophalangeal_2, r_carpal_proximal_interphalangeal_2, r_carpal_distal_interphalangeal_2, r_midcarpal_3, r_carpometacarpal_3, r_metacarpophalangeal_3, r_carpal_proximal_interphalangeal_3, r_carpal_distal_interphalangeal_3, r_midcarpal_4_5, r_carpometacarpal_4, r_metacarpophalangeal_4, r_carpal_proximal_interphalangeal_4, r_carpal_distal_interphalangeal_4, r_carpometacarpal_5, r_metacarpophalangeal_5, r_carpal_proximal_interphalangeal_5, r_carpal_distal_interphalangeal_5
+- Predefined names found in the HAnim Specification include humanoid_root, sacroiliac, l_hip, l_knee, l_talocrural, l_talocalcaneonavicular, l_cuneonavicular_1, l_tarsometatarsal_1, l_metatarsophalangeal_1, l_tarsal_interphalangeal_1, l_cuneonavicular_2, l_tarsometatarsal_2, l_metatarsophalangeal_2, l_tarsal_proximal_interphalangeal_2, l_tarsal_distal_interphalangeal_2, l_cuneonavicular_3, l_tarsometatarsal_3, l_metatarsophalangeal_3, l_tarsal_proximal_interphalangeal_3, l_tarsal_distal_interphalangeal_3, l_calcaneocuboid, l_transversetarsal, l_tarsometatarsal_4, l_metatarsophalangeal_4, l_tarsal_proximal_interphalangeal_4, l_tarsal_distal_interphalangeal_4, l_tarsometatarsal_5, l_metatarsophalangeal_5, l_tarsal_proximal_interphalangeal_5, l_tarsal_distal_interphalangeal_5, r_hip, r_knee, r_talocrural, r_talocalcaneonavicular, r_cuneonavicular_1, r_tarsometatarsal_1, r_metatarsophalangeal_1, r_tarsal_interphalangeal_1, r_cuneonavicular_2, r_tarsometatarsal_2, r_metatarsophalangeal_2, r_tarsal_proximal_interphalangeal_2, r_tarsal_distal_interphalangeal_2, r_cuneonavicular_3, r_tarsometatarsal_3, r_metatarsophalangeal_3, r_tarsal_proximal_interphalangeal_3, r_tarsal_distal_interphalangeal_3, r_calcaneocuboid, r_transversetarsal, r_tarsometatarsal_4, r_metatarsophalangeal_4, r_tarsal_proximal_interphalangeal_4, r_tarsal_distal_interphalangeal_4, r_tarsometatarsal_5, r_metatarsophalangeal_5, r_tarsal_proximal_interphalangeal_5, r_tarsal_distal_interphalangeal_5, vl5, vl4, vl3, vl2, vl1, vt12, vt11, vt10, vt9, vt8, vt7, vt6, vt5, vt4, vt3, vt2, vt1, vc7, vc6, vc5, vc4, vc3, vc2, vc1, skullbase, l_eyelid_joint, r_eyelid_joint, l_eyeball_joint, r_eyeball_joint, l_eyebrow_joint, r_eyebrow_joint, temporomandibular, l_sternoclavicular, l_acromioclavicular, l_shoulder, l_elbow, l_radiocarpal, l_midcarpal_1, l_carpometacarpal_1, l_metacarpophalangeal_1, l_carpal_interphalangeal_1, l_midcarpal_2, l_carpometacarpal_2, l_metacarpophalangeal_2, l_carpal_proximal_interphalangeal_2, l_carpal_distal_interphalangeal_2, l_midcarpal_3, l_carpometacarpal_3, l_metacarpophalangeal_3, l_carpal_proximal_interphalangeal_3, l_carpal_distal_interphalangeal_3, l_midcarpal_4_5, l_carpometacarpal_4, l_metacarpophalangeal_4, l_carpal_proximal_interphalangeal_4, l_carpal_distal_interphalangeal_4, l_carpometacarpal_5, l_metacarpophalangeal_5, l_carpal_proximal_interphalangeal_5, l_carpal_distal_interphalangeal_5, r_sternoclavicular, r_acromioclavicular, r_shoulder, r_elbow, r_radiocarpal, r_midcarpal_1, r_carpometacarpal_1, r_metacarpophalangeal_1, r_carpal_interphalangeal_1, r_midcarpal_2, r_carpometacarpal_2, r_metacarpophalangeal_2, r_carpal_proximal_interphalangeal_2, r_carpal_distal_interphalangeal_2, r_midcarpal_3, r_carpometacarpal_3, r_metacarpophalangeal_3, r_carpal_proximal_interphalangeal_3, r_carpal_distal_interphalangeal_3, r_midcarpal_4_5, r_carpometacarpal_4, r_metacarpophalangeal_4, r_carpal_proximal_interphalangeal_4, r_carpal_distal_interphalangeal_4, r_carpometacarpal_5, r_metacarpophalangeal_5, r_carpal_proximal_interphalangeal_5, r_carpal_distal_interphalangeal_5
 
 #### Warnings
 
@@ -63,6 +92,7 @@ Unique *name* attribute must be defined so that HAnimJoint node can be identifie
 - [Note precise spelling of special HAnimJoint *name*='humanoid_root' according to](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#TheBody)
 
 ### SFVec3f [in, out] **translation** 0 0 0 <small>(-∞,∞)</small>
+{: #fields-translation }
 
 Position of children relative to local coordinate system.
 
@@ -75,6 +105,7 @@ Position of children relative to local coordinate system.
 - Usually HAnimJoint position is controlled by the center field, not the *translation* field.
 
 ### SFRotation [in, out] **rotation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
+{: #fields-rotation }
 
 Orientation of children relative to local coordinate system.
 
@@ -83,14 +114,17 @@ Orientation of children relative to local coordinate system.
 - Default pose is typically empty (or an identity *rotation*) to avoid distorted body animations.
 
 ### SFVec3f [in, out] **scale** 1 1 1 <small>(0,∞)</small>
+{: #fields-scale }
 
 Non-uniform x-y-z *scale* of child coordinate system, adjusted by center and scaleOrientation.
 
 ### SFRotation [in, out] **scaleOrientation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
+{: #fields-scaleOrientation }
 
 Preliminary rotation of coordinate system before scaling (to allow scaling around arbitrary orientations).
 
 ### SFVec3f [in, out] **center** 0 0 0 <small>(-∞,∞)</small>
+{: #fields-center }
 
 Translation offset from origin of local coordinate system.
 
@@ -99,6 +133,7 @@ Translation offset from origin of local coordinate system.
 - Usually HAnimJoint position is controlled by the *center* field, not the translation field.
 
 ### MFFloat [in, out] **llimit** [ 0, 0, 0 ] <small>(-∞,∞)</small>
+{: #fields-llimit }
 
 Lower limit for minimum joint rotation in radians.
 
@@ -112,6 +147,7 @@ Lower limit for minimum joint rotation in radians.
 - Field shall contain three values or else be an empty array. Behavior is undefined when array length is 1, 2, or greater than 3.
 
 ### MFFloat [in, out] **ulimit** [ 0, 0, 0 ] <small>(-∞,∞)</small>
+{: #fields-ulimit }
 
 Upper limit for maximum joint rotation in radians.
 
@@ -125,10 +161,12 @@ Upper limit for maximum joint rotation in radians.
 - Field shall contain three values or else be an empty array. Behavior is undefined when array length is 1, 2, or greater than 3.
 
 ### SFRotation [in, out] **limitOrientation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
+{: #fields-limitOrientation }
 
 Orientation of upper/lower rotation limits, relative to HAnimJoint center.
 
 ### MFFloat [in, out] **stiffness** [ 0, 0, 0 ] <small>[0,1]</small>
+{: #fields-stiffness }
 
 A scale factor of (1 - *stiffness*) is applied around the corresponding axis (X, Y, or Z for entries 0, 1 and 2 of the *stiffness* field). Thus a *stiffness* value of zero means that no rotation scaling occurs, while a *stiffness* value of one means that no rotation occurs regardless of any provided rotation.
 
@@ -142,6 +180,7 @@ A scale factor of (1 - *stiffness*) is applied around the corresponding axis (X,
 - Field shall contain three values or else be an empty array. Behavior is undefined when array length is 1, 2, or greater than 3.
 
 ### MFInt32 [in, out] **skinCoordIndex** [ ] <small>[0,∞)</small>
+{: #fields-skinCoordIndex }
 
 [Coordinate](/x_ite/components/rendering/coordinate/) index values referencing which vertices are influenced by the HAnimJoint.
 
@@ -155,6 +194,7 @@ A scale factor of (1 - *stiffness*) is applied around the corresponding axis (X,
 - Index values for [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skin [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint [HAnimSegment](/x_ite/components/hanim/hanimsegment/) and [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/) nodes for proper skin animation.
 
 ### MFFloat [in, out] **skinCoordWeight** [ ]
+{: #fields-skinCoordWeight }
 
 Weight deformation values for the corresponding values in the skinCoordIndex field.
 
@@ -163,6 +203,7 @@ Weight deformation values for the corresponding values in the skinCoordIndex fie
 - Index values for [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skin [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint [HAnimSegment](/x_ite/components/hanim/hanimsegment/) and [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/) nodes for proper skin animation.
 
 ### MFNode [in, out] **displacers** [ ] <small>[HAnimDisplacer]</small>
+{: #fields-displacers }
 
 The *displacers* field stores [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/) objects for a particular HAnimJoint object.
 
@@ -171,6 +212,7 @@ The *displacers* field stores [HAnimDisplacer](/x_ite/components/hanim/hanimdisp
 - Index values for [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skin [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint [HAnimSegment](/x_ite/components/hanim/hanimsegment/) and [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/) nodes for proper skin animation.
 
 ### SFBool [in, out] **visible** TRUE
+{: #fields-visible }
 
 Whether or not renderable content within this node is visually displayed.
 
@@ -180,6 +222,7 @@ Whether or not renderable content within this node is visually displayed.
 - Content must be *visible* to be collidable and to be pickable.
 
 ### SFBool [in, out] **bboxDisplay** FALSE
+{: #fields-bboxDisplay }
 
 Whether to display bounding box for associated geometry, aligned with world coordinates.
 
@@ -188,6 +231,7 @@ Whether to display bounding box for associated geometry, aligned with world coor
 - The bounding box is displayed regardless of whether contained content is visible.
 
 ### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or −1 −1 −1</small>
+{: #fields-bboxSize }
 
 Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
 
@@ -199,6 +243,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
+{: #fields-bboxCenter }
 
 Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
 
@@ -209,14 +254,17 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### MFNode [in] **addChildren**
+{: #fields-addChildren }
 
 Input field *addChildren*.
 
 ### MFNode [in] **removeChildren**
+{: #fields-removeChildren }
 
 Input field *removeChildren*.
 
 ### MFNode [in, out] **children** [ ] <small>[HAnimJoint,HAnimSegment,HAnimSite]</small>
+{: #fields-children }
 
 Grouping nodes contain an ordered list of *children* nodes.
 

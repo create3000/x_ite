@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
@@ -85,7 +38,6 @@ function GeoLOD (executionContext)
    this .childInlineNodes = [this .child1InlineNode, this .child2InlineNode, this .child3InlineNode, this .child4InlineNode];
    this .childrenLoaded   = false;
    this .keepCurrentLevel = false;
-   this .modelViewMatrix  = new Matrix4 ();
 }
 
 Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototype),
@@ -152,6 +104,26 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
+   getShapes (shapes, modelMatrix)
+   {
+      switch (this .childrenLoaded ? this ._level_changed .getValue () : 0)
+      {
+         case 0:
+         {
+            if (this ._rootNode .length)
+               return this .rootGroupNode .getShapes (shapes, modelMatrix);
+
+            return this .rootInlineNode .getShapes (shapes, modelMatrix);
+         }
+         case 1:
+         {
+            for (const childInlineNode of this .childInlineNodes)
+               childInlineNode .getShapes (shapes, modelMatrix);
+
+            return shapes;
+         }
+      }
+   },
    set_rootLoadState__ ()
    {
       if (this ._level_changed .getValue () !== 0)
@@ -208,16 +180,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
    {
       this .setShadowObject (this .childInlineNodes .some (childInlineNode => childInlineNode .isShadowObject ()));
    },
-   getLevel (modelViewMatrix)
-   {
-      const distance = this .getDistance (modelViewMatrix);
-
-      if (distance < this ._range .getValue ())
-         return 1;
-
-      return 0;
-   },
-   getDistance: (() =>
+   getLevel: (() =>
    {
       const center = new Vector3 ();
 
@@ -225,125 +188,111 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
       {
          modelViewMatrix .translate (this .getCoord (this ._center .getValue (), center));
 
-         return modelViewMatrix .origin .magnitude ();
+         const distance = modelViewMatrix .origin .norm ();
+
+         if (distance < this ._range .getValue ())
+            return 1;
+
+         return 0;
+      };
+   })(),
+   changeLevel: (() =>
+   {
+      const modelViewMatrix = new Matrix4 ();
+
+      return function (renderObject)
+      {
+         const level = this .getLevel (modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()));
+
+         if (level === this ._level_changed .getValue ())
+            return;
+
+         this ._level_changed = level;
+
+         switch (level)
+         {
+            case 0:
+            {
+               for (const childInlineNode of this .childInlineNodes)
+               {
+                  childInlineNode ._isBoundedObject   .removeInterest ("set_childBoundedObject__",   this);
+                  childInlineNode ._isPointingObject  .removeInterest ("set_childPointingObject__",  this);
+                  childInlineNode ._isCameraObject    .removeInterest ("set_childCameraObject__",    this);
+                  childInlineNode ._isPickableObject  .removeInterest ("set_childPickableObject__",  this);
+                  childInlineNode ._isCollisionObject .removeInterest ("set_childCollisionObject__", this);
+                  childInlineNode ._isShadowObject    .removeInterest ("set_childShadowObject__",    this);
+               }
+
+               if (this ._rootNode .length)
+               {
+                  this .connectChildNode (this .rootGroupNode, [TraverseType .DISPLAY]);
+
+                  this ._children      = this ._rootNode;
+                  this .childrenLoaded = false;
+               }
+               else
+               {
+                  if (this .rootInlineNode .checkLoadState () == X3DConstants .COMPLETE_STATE)
+                  {
+                     this .connectChildNode (this .rootInlineNode, [TraverseType .DISPLAY]);
+
+                     this ._children      = this .rootInlineNode .getInternalScene () .getRootNodes ();
+                     this .childrenLoaded = false;
+                  }
+               }
+
+               if (this .unload)
+               {
+                  for (const childInlineNode of this .childInlineNodes)
+                     childInlineNode ._load = false;
+               }
+
+               break;
+            }
+            case 1:
+            {
+               if (this ._rootNode .length)
+                  this .disconnectChildNode (this .rootGroupNode);
+               else
+                  this .disconnectChildNode (this .rootInlineNode);
+
+               for (const childInlineNode of this .childInlineNodes)
+               {
+                  childInlineNode ._isBoundedObject   .addInterest ("set_childBoundedObject__",   this);
+                  childInlineNode ._isPointingObject  .addInterest ("set_childPointingObject__",  this);
+                  childInlineNode ._isCameraObject    .addInterest ("set_childCameraObject__",    this);
+                  childInlineNode ._isPickableObject  .addInterest ("set_childPickableObject__",  this);
+                  childInlineNode ._isCollisionObject .addInterest ("set_childCollisionObject__", this);
+                  childInlineNode ._isShadowObject    .addInterest ("set_childShadowObject__",    this);
+               }
+
+               this .set_childBoundedObject__ ();
+               this .set_childPointingObject__ ();
+               this .set_childCameraObject__ ();
+               this .set_childPickableObject__ ();
+               this .set_childCollisionObject__ ();
+               this .set_childShadowObject__ ();
+
+               if (this .child1InlineNode ._load .getValue ())
+               {
+                  this .set_childLoadState__ ();
+               }
+               else
+               {
+                  for (const childInlineNode of this .childInlineNodes)
+                     childInlineNode ._load = true;
+               }
+
+               break;
+            }
+         }
       };
    })(),
    traverse (type, renderObject)
    {
-      switch (type)
-      {
-         case TraverseType .PICKING:
-         {
-            const
-               browser          = this .getBrowser (),
-               pickingHierarchy = browser .getPickingHierarchy ();
+      if (type === TraverseType .DISPLAY)
+         this .changeLevel (renderObject);
 
-            pickingHierarchy .push (this);
-
-            this .traverseChildren (type, renderObject);
-
-            pickingHierarchy .pop ();
-            return;
-         }
-         case TraverseType .DISPLAY:
-         {
-            const level = this .getLevel (this .modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()));
-
-            if (level !== this ._level_changed .getValue ())
-            {
-               this ._level_changed = level;
-
-               switch (level)
-               {
-                  case 0:
-                  {
-                     for (const childInlineNode of this .childInlineNodes)
-                     {
-                        childInlineNode ._isBoundedObject   .removeInterest ("set_childBoundedObject__",   this);
-                        childInlineNode ._isPointingObject  .removeInterest ("set_childPointingObject__",  this);
-                        childInlineNode ._isCameraObject    .removeInterest ("set_childCameraObject__",    this);
-                        childInlineNode ._isPickableObject  .removeInterest ("set_childPickableObject__",  this);
-                        childInlineNode ._isCollisionObject .removeInterest ("set_childCollisionObject__", this);
-                        childInlineNode ._isShadowObject    .removeInterest ("set_childShadowObject__",    this);
-                     }
-
-                     if (this ._rootNode .length)
-                     {
-                        this .connectChildNode (this .rootGroupNode, [TraverseType .DISPLAY]);
-
-                        this ._children      = this ._rootNode;
-                        this .childrenLoaded = false;
-                     }
-                     else
-                     {
-                        if (this .rootInlineNode .checkLoadState () == X3DConstants .COMPLETE_STATE)
-                        {
-                           this .connectChildNode (this .rootInlineNode, [TraverseType .DISPLAY]);
-
-                           this ._children      = this .rootInlineNode .getInternalScene () .getRootNodes ();
-                           this .childrenLoaded = false;
-                        }
-                     }
-
-                     if (this .unload)
-                     {
-                        for (const childInlineNode of this .childInlineNodes)
-                           childInlineNode ._load = false;
-                     }
-
-                     break;
-                  }
-                  case 1:
-                  {
-                     if (this ._rootNode .length)
-                        this .disconnectChildNode (this .rootGroupNode);
-                     else
-                        this .disconnectChildNode (this .rootInlineNode);
-
-                     for (const childInlineNode of this .childInlineNodes)
-                     {
-                        childInlineNode ._isBoundedObject   .addInterest ("set_childBoundedObject__",   this);
-                        childInlineNode ._isPointingObject  .addInterest ("set_childPointingObject__",  this);
-                        childInlineNode ._isCameraObject    .addInterest ("set_childCameraObject__",    this);
-                        childInlineNode ._isPickableObject  .addInterest ("set_childPickableObject__",  this);
-                        childInlineNode ._isCollisionObject .addInterest ("set_childCollisionObject__", this);
-                        childInlineNode ._isShadowObject    .addInterest ("set_childShadowObject__",    this);
-                     }
-
-                     this .set_childBoundedObject__ ();
-                     this .set_childPointingObject__ ();
-                     this .set_childCameraObject__ ();
-                     this .set_childPickableObject__ ();
-                     this .set_childCollisionObject__ ();
-                     this .set_childShadowObject__ ();
-
-                     if (this .child1InlineNode ._load .getValue ())
-                     {
-                        this .set_childLoadState__ ();
-                     }
-                     else
-                     {
-                        for (const childInlineNode of this .childInlineNodes)
-                           childInlineNode ._load = true;
-                     }
-
-                     break;
-                  }
-               }
-            }
-
-            this .traverseChildren (type, renderObject);
-            return;
-         }
-         default:
-         {
-            this .traverseChildren (type, renderObject);
-            return;
-         }
-      }
-   },
-   traverseChildren (type, renderObject)
-   {
       switch (this .childrenLoaded ? this ._level_changed .getValue () : 0)
       {
          case 0:

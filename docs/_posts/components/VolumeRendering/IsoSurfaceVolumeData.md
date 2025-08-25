@@ -15,7 +15,7 @@ tags: [IsoSurfaceVolumeData, VolumeRendering]
 
 IsoSurfaceVolumeData displays one or more surfaces extracted from a voxel dataset. A surface is defined as the boundary between regions in the volume where the voxel values are larger than a given value (the iso value) on one side of the boundary and smaller on the other side, and the gradient magnitude is larger than surfaceTolerance.
 
-The IsoSurfaceVolumeData node belongs to the **VolumeRendering** component and requires at least level **2,** its default container field is *children.* It is available from X3D version 3.3 or higher.
+The IsoSurfaceVolumeData node belongs to the [VolumeRendering](/x_ite/components/overview/#volumerendering) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.3 or higher.
 
 ## Hierarchy
 
@@ -26,11 +26,29 @@ The IsoSurfaceVolumeData node belongs to the **VolumeRendering** component and r
       + IsoSurfaceVolumeData
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFVec3f | [in, out] | [dimensions](#fields-dimensions) | 1 1 1  |
+| SFFloat | [in, out] | [contourStepSize](#fields-contourStepSize) | 0  |
+| MFFloat | [in, out] | [surfaceValues](#fields-surfaceValues) | [ ] |
+| SFFloat | [in, out] | [surfaceTolerance](#fields-surfaceTolerance) | 0  |
+| SFBool | [in, out] | [visible](#fields-visible) | TRUE |
+| SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| MFNode | [in, out] | [renderStyle](#fields-renderStyle) | [ ] |
+| SFNode | [in, out] | [gradients](#fields-gradients) | NULL  |
+| SFNode | [in, out] | [voxels](#fields-voxels) | NULL  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -39,10 +57,12 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFVec3f [in, out] **dimensions** 1 1 1 <small>(0,∞)</small>
+{: #fields-dimensions }
 
 Actual-size X-Y-Z *dimensions* of volume data in local coordinate system.
 
 ### SFFloat [in, out] **contourStepSize** 0 <small>(-∞,∞)</small>
+{: #fields-contourStepSize }
 
 If *contourStepSize* is non-zero, also render all isosurfaces that are multiples of that step size from initial surface value.
 
@@ -51,10 +71,12 @@ If *contourStepSize* is non-zero, also render all isosurfaces that are multiples
 - *contourStepSize* can be negative so that steppping can proceed in a negative direction.
 
 ### MFFloat [in, out] **surfaceValues** [ ] <small>(-∞,∞)</small>
+{: #fields-surfaceValues }
 
 If *surfaceValues* has one value defined, render corresponding isosurface plus any isosurfaces based on contourStepSize. If *surfaceValues* has more than one value defined, ignore contourStepSize and render surfaces corresponding to listed *surfaceValues*.
 
 ### SFFloat [in, out] **surfaceTolerance** 0 <small>[0,∞)</small>
+{: #fields-surfaceTolerance }
 
 Threshold for gradient magnitude for voxel inolusion in isosurface.
 
@@ -63,6 +85,7 @@ Threshold for gradient magnitude for voxel inolusion in isosurface.
 - Contained Texture3D node with `containerField='gradients'` can provide explicit per-voxel gradient direction information for determining surface boundaries.
 
 ### SFBool [in, out] **visible** TRUE
+{: #fields-visible }
 
 Whether or not renderable content within this node is visually displayed.
 
@@ -72,6 +95,7 @@ Whether or not renderable content within this node is visually displayed.
 - Content must be *visible* to be collidable and to be pickable.
 
 ### SFBool [in, out] **bboxDisplay** FALSE
+{: #fields-bboxDisplay }
 
 Whether to display bounding box for associated geometry, aligned with world coordinates.
 
@@ -80,6 +104,7 @@ Whether to display bounding box for associated geometry, aligned with world coor
 - The bounding box is displayed regardless of whether contained content is visible.
 
 ### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or −1 −1 −1</small>
+{: #fields-bboxSize }
 
 Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
 
@@ -91,6 +116,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
+{: #fields-bboxCenter }
 
 Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
 
@@ -101,6 +127,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### MFNode [in, out] **renderStyle** [ ] <small>[X3DVolumeRenderStyleNode]</small>
+{: #fields-renderStyle }
 
 Multiple contained X3DVolumeRenderStyleNode nodes corresponding to each isosurface that define specific rendering technique for this volumetric object.
 
@@ -109,10 +136,12 @@ Multiple contained X3DVolumeRenderStyleNode nodes corresponding to each isosurfa
 - If not defined, no default renderStyle is defined.
 
 ### SFNode [in, out] **gradients** NULL <small>[X3DTexture3DNode]</small>
+{: #fields-gradients }
 
 Single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/), [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/)) that provides explicit per-voxel gradient direction information for determining surface boundaries, rather than having it implicitly calculated by the implementation.
 
 ### SFNode [in, out] **voxels** NULL <small>[X3DTexture3DNode]</small>
+{: #fields-voxels }
 
 Single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/), [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/)) that provides raw voxel information utilized by corresponding rendering styles. Any number of color components (1-4) may be defined.
 

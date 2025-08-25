@@ -1,51 +1,5 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import { Decoder } from "../../../../node_modules/jpeg-lossless-decoder-js/release/lossless.js";
+import DEVELOPMENT from "../../DEVELOPMENT.js";
 
 function DicomParser ()
 {
@@ -134,7 +88,7 @@ Object .assign (DicomParser .prototype,
    },
    getPixelData ()
    {
-      var
+      const
          dicom        = this .dicom,
          pixelElement = this .dataSet .elements .x7fe00010 || this .dataSet .elements .x7fe00008, // pixel or float pixel
          components   = this .photometricInterpretation === "PALETTE COLOR" ? 3 : this .dicom .components,
@@ -226,10 +180,12 @@ Object .assign (DicomParser .prototype,
 
          if (this .pixelRepresentation === 1 && this .bitsStored !== undefined)
          {
-            var shift = 32 - this .bitsStored;
+            const
+               mask   = (1 << this .bitsStored) - 1,
+               length = frame .length;
 
-            for (var i = 0, length = frame .length; i < length; ++ i)
-               frame [i] = frame [i] << shift >> shift;
+            for (let i = 0; i < length; ++ i)
+               frame [i] &= mask;
          }
 
          // Handle photometric interpretation.
@@ -275,19 +231,24 @@ Object .assign (DicomParser .prototype,
 
          frame = this .flipImage (frame, components);
 
-         var
-            normalize = this .getNormalizeOffsetAndFactor (frame),
-            b         = f * imageLength;
+         // Copy data to bytes buffer.
+         {
+            const
+               { offset, factor } = this .getNormalizeOffsetAndFactor (frame),
+               length = frame .length;
 
-         for (var i = 0, length = frame .length; i < length; ++ i, ++ b)
-            bytes [b] = (frame [i] - normalize .offset) * normalize .factor;
+            for (let b = f * imageLength, i = 0; i < length; ++ i, ++ b)
+               bytes [b] = (frame [i] - offset) * factor;
+         }
       });
 
       // Invert MONOCHROME1 pixels.
 
       if (this .photometricInterpretation === "MONOCHROME1")
       {
-         for (var i = 0, length = bytes .length; i < length; ++ i)
+         const length = bytes .length;
+
+         for (let i = 0; i < length; ++ i)
             bytes [i] = 255 - bytes [i];
       }
 
@@ -298,39 +259,41 @@ Object .assign (DicomParser .prototype,
    },
    getFrames (pixelElement)
    {
-      var frames = [ ];
+      const
+         frames = [ ],
+         length = this .dicom .depth;
 
       if (pixelElement && pixelElement .encapsulatedPixelData)
       {
          if (pixelElement .basicOffsetTable .length)
          {
-            for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+            for (let i = 0; i < length; ++ i)
                frames .push (dicomParser .readEncapsulatedImageFrame (this .dataSet, pixelElement, i));
          }
          else if (this .dicom .depth !== pixelElement .fragments .length)
          {
-            var basicOffsetTable = dicomParser .createJPEGBasicOffsetTable (this .dataSet, pixelElement);
+            const basicOffsetTable = dicomParser .createJPEGBasicOffsetTable (this .dataSet, pixelElement);
 
-            for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+            for (let i = 0; i < length; ++ i)
                frames .push (dicomParser .readEncapsulatedImageFrame (this .dataSet, pixelElement, i, basicOffsetTable));
          }
          else
          {
-            for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+            for (let i = 0; i < length; ++ i)
                frames .push (dicomParser .readEncapsulatedPixelDataFromFragments (this .dataSet, pixelElement, i));
          }
       }
       else
       {
-         var pixelsPerFrame = this .dicom .width * this .dicom .height * this .dicom .components;
+         const pixelsPerFrame = this .dicom .width * this .dicom .height * this .dicom .components;
 
          switch (this .bitsAllocated)
          {
             case 1:
             {
-               for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+               for (let i = 0; i < length; ++ i)
                {
-                  var frameOffset = pixelElement .dataOffset + i * pixelsPerFrame / 8;
+                  const frameOffset = pixelElement .dataOffset + i * pixelsPerFrame / 8;
 
                   frames .push (this .unpackBinaryFrame (this .dataSet .byteArray, frameOffset, pixelsPerFrame));
                }
@@ -342,11 +305,11 @@ Object .assign (DicomParser .prototype,
             case 16:
             case 32:
             {
-               var bytesAllocated = this .bitsAllocated / 8;
+               const bytesAllocated = this .bitsAllocated / 8;
 
-               for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+               for (let i = 0; i < length; ++ i)
                {
-                  var frameOffset = pixelElement .dataOffset + i * pixelsPerFrame * bytesAllocated;
+                  const frameOffset = pixelElement .dataOffset + i * pixelsPerFrame * bytesAllocated;
 
                   frames .push (new Uint8Array (this .dataSet .byteArray .buffer, frameOffset, pixelsPerFrame * bytesAllocated));
                }
@@ -680,13 +643,19 @@ Object .assign (DicomParser .prototype,
    },
    decodeJPEGBaseline (pixelData)
    {
-      var jpeg = new JpegImage ();
+      const opts =
+      {
+         colorTransform: false,
+         useTArray: true,
+         formatAsRGBA: false,
+         tolerantDecoding: true,
+         maxResolutionInMP: 100,  // Don't decode more than 100 megapixels
+         maxMemoryUsageInMB: 512, // Don't decode if memory footprint is more than 512MB
+      };
 
-      jpeg .parse (pixelData);
-
-      jpeg .colorTransform = true; // default is true
-
-      var data = jpeg .getData (this .dicom .width, this .dicom .height);
+      const
+         decode = DEVELOPMENT ? window ["jpeg-js"] .decode : jpegDecode,
+         data   = decode (pixelData, opts);
 
       this .bitsAllocated = 8;
 
@@ -702,11 +671,11 @@ Object .assign (DicomParser .prototype,
    },
    decodeJPEGLS (pixelData)
    {
-      var image = this .jpegLSDecode (pixelData, this .pixelRepresentation === 1);
+      const image = this .jpegLSDecode (pixelData, this .pixelRepresentation === 1);
 
       // throw error if not success or too much data
       if (image .result !== 0 && image .result !== 6)
-         throw new Error (`DICOM: JPEG-LS decoder failed to decode frame (error code ${image.result}).`);
+         throw new Error (`DICOM: JPEG-LS decoder failed to decode frame (error code ${image .result}).`);
 
       return new Uint8Array (image .pixelData .buffer);
    },

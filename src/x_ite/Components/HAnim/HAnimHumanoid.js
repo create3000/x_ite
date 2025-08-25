@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
@@ -58,6 +11,17 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
+
+// Register shaders.
+
+import ShaderRegistry from "../../Browser/Shaders/ShaderRegistry.js";
+import Skin2          from "../../../assets/shaders/webgl2/common/Skin2.glsl.js";
+
+ShaderRegistry .addInclude ("Skin", Skin2);
+
+/**
+ * HAnimHumanoid
+ */
 
 function HAnimHumanoid (executionContext)
 {
@@ -130,7 +94,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       this ._scale            .addFieldInterest (this .transformNode ._scale);
       this ._scaleOrientation .addFieldInterest (this .transformNode ._scaleOrientation);
       this ._center           .addFieldInterest (this .transformNode ._center);
-      this ._bboxDisplay      .addFieldInterest (this .transformNode ._bboxDisplay);
       this ._bboxSize         .addFieldInterest (this .transformNode ._bboxSize);
       this ._bboxCenter       .addFieldInterest (this .transformNode ._bboxCenter);
 
@@ -139,7 +102,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       this .transformNode ._scale            = this ._scale;
       this .transformNode ._scaleOrientation = this ._scaleOrientation;
       this .transformNode ._center           = this ._center;
-      this .transformNode ._bboxDisplay      = this ._bboxDisplay;
       this .transformNode ._bboxSize         = this ._bboxSize;
       this .transformNode ._bboxCenter       = this ._bboxCenter;
       this .transformNode ._children         = [ this .skeletonNode, this .viewpointsNode, this .skinNode ];
@@ -153,16 +115,11 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       this .connectChildNode (this .transformNode);
 
-      // Check WebGL version.
+      // Textures
 
       const
          browser = this .getBrowser (),
          gl      = browser .getContext ();
-
-      if (gl .getVersion () === 1)
-         return;
-
-      // Textures
 
       this .jointsTexture              = gl .createTexture ();
       this .displacementsTexture       = gl .createTexture ();
@@ -172,10 +129,11 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       for (const texture of [this .jointsTexture, this .displacementsTexture, this .displacementWeightsTexture, this .jointMatricesTexture])
       {
          gl .bindTexture (gl .TEXTURE_2D, texture);
+
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
       }
 
       // Events
@@ -203,6 +161,10 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    {
       return this .transformNode .getSubBBox (bbox, shadows);
    },
+   getShapes (shapes, modelMatrix)
+   {
+      return this .transformNode .getShapes (shapes, modelMatrix);
+   },
    getMatrix ()
    {
       return this .transformNode .getMatrix ();
@@ -210,14 +172,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    getHAnimKey ()
    {
       return this .humanoidKey;
-   },
-   getNumJoints ()
-   {
-      return this .numJoints;
-   },
-   getNumDisplacements ()
-   {
-      return this .numDisplacements;
    },
    set_humanoidKey__ ()
    {
@@ -538,18 +492,33 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
       gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, jointMatricesArray);
    },
+   getShaderOptions (options)
+   {
+      options .push ("X3D_SKINNING");
+      options .push (`X3D_NUM_JOINT_SETS ${this .numJoints / 4}`);
+      options .push (`X3D_NUM_DISPLACEMENTS ${this .numDisplacements}`);
+   },
    setShaderUniforms (gl, shaderObject)
    {
       const
-         browser                               = this .getBrowser (),
-         jointsTextureTextureUnit              = browser .getTexture2DUnit (),
-         displacementsTextureTextureUnit       = browser .getTexture2DUnit (),
-         displacementWeightsTextureTextureUnit = browser .getTexture2DUnit (),
-         jointMatricesTextureUnit              = browser .getTexture2DUnit ();
+         browser                  = this .getBrowser (),
+         jointsTextureTextureUnit = browser .getTextureUnit (),
+         jointMatricesTextureUnit = browser .getTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + jointsTextureTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .jointsTexture);
       gl .uniform1i (shaderObject .x3d_JointsTexture, jointsTextureTextureUnit);
+
+      gl .activeTexture (gl .TEXTURE0 + jointMatricesTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
+      gl .uniform1i (shaderObject .x3d_JointMatricesTexture, jointMatricesTextureUnit);
+
+      if (!this .numDisplacements)
+         return;
+
+      const
+         displacementsTextureTextureUnit       = browser .getTextureUnit (),
+         displacementWeightsTextureTextureUnit = browser .getTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + displacementsTextureTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .displacementsTexture);
@@ -558,10 +527,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       gl .activeTexture (gl .TEXTURE0 + displacementWeightsTextureTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .displacementWeightsTexture);
       gl .uniform1i (shaderObject .x3d_DisplacementWeightsTexture, displacementWeightsTextureTextureUnit);
-
-      gl .activeTexture (gl .TEXTURE0 + jointMatricesTextureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
-      gl .uniform1i (shaderObject .x3d_JointMatricesTexture, jointMatricesTextureUnit);
    },
    dispose ()
    {
@@ -577,10 +542,10 @@ Object .defineProperties (HAnimHumanoid,
    {
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",              new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "version",               new Fields .SFString ("2.0")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "description",           new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "name",                  new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "info",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "version",               new Fields .SFString ("2.0")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "skeletalConfiguration", new Fields .SFString ("BASIC")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "loa",                   new Fields .SFInt32 (-1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "translation",           new Fields .SFVec3f ()),

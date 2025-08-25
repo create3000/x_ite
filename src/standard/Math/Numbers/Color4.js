@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Color3 from "./Color3.js";
 
 const
@@ -57,12 +10,12 @@ const
 // See: https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_materials_specular/README.md
 // See: https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/SpecularTest/glTF/SpecularTest.gltf
 
-function Color4 (r = 0, g = 0, b = 0, a = 0)
+function Color4 (r = 0, g = r, b = g, a = b)
 {
-   this [_r] = Math .max (r, 0);
-   this [_g] = Math .max (g, 0);
-   this [_b] = Math .max (b, 0);
-   this [_a] = Math .max (a, 0);
+   this [_r] = r;
+   this [_g] = g;
+   this [_b] = b;
+   this [_a] = a;
 }
 
 Object .assign (Color4 .prototype,
@@ -91,12 +44,12 @@ Object .assign (Color4 .prototype,
       this [_a] = color [_a];
       return this;
    },
-   set (r = 0, g = 0, b = 0, a = 0)
+   set (r = 0, g = r, b = g, a = b)
    {
-      this [_r] = Math .max (r, 0);
-      this [_g] = Math .max (g, 0);
-      this [_b] = Math .max (b, 0);
-      this [_a] = Math .max (a, 0);
+      this [_r] = r;
+      this [_g] = g;
+      this [_b] = b;
+      this [_a] = a;
       return this;
    },
    equals (color)
@@ -118,7 +71,7 @@ Object .assign (Color4 .prototype,
    {
       Color3 .prototype .setHSV .call (this, h, s, v);
 
-      this [_a] = Math .max (a, 0);
+      this [_a] = a;
 
       return this;
    },
@@ -152,22 +105,22 @@ for (const key of Object .keys (Color4 .prototype))
 
 const r = {
    get () { return this [_r]; },
-   set (value) { this [_r] = Math .max (value, 0); },
+   set (value) { this [_r] = value; },
 };
 
 const g = {
    get () { return this [_g]; },
-   set (value) { this [_g] = Math .max (value, 0); },
+   set (value) { this [_g] = value; },
 };
 
 const b = {
    get () { return this [_b]; },
-   set (value) { this [_b] = Math .max (value, 0); },
+   set (value) { this [_b] = value; },
 };
 
 const a = {
    get () { return this [_a]; },
-   set (value) { this [_a] = Math .max (value, 0); },
+   set (value) { this [_a] = value; },
 };
 
 Object .defineProperties (Color4 .prototype,
@@ -185,9 +138,9 @@ Object .defineProperties (Color4 .prototype,
 
 Object .assign (Color4,
 {
-   Transparent: Object .freeze (new Color4 ()),
-   Black: Object .freeze (new Color4 (0, 0, 0, 1)),
-   White: Object .freeze (new Color4 (1, 1, 1, 1)),
+   TRANSPARENT: Object .freeze (new Color4 ()),
+   BLACK: Object .freeze (new Color4 (0, 0, 0, 1)),
+   WHITE: Object .freeze (new Color4 (1)),
    HSVA (h, s, v, a)
    {
       const color = Object .create (this .prototype);

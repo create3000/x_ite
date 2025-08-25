@@ -15,7 +15,7 @@ tags: [ImageTexture3D, Texturing3D]
 
 ImageTexture3D defines a 3D image-based texture map by specifying a single image file that contains complete 3D data.
 
-The ImageTexture3D node belongs to the **Texturing3D** component and requires at least level **2,** its default container field is *texture.* It is available from X3D version 3.1 or higher.
+The ImageTexture3D node belongs to the [Texturing3D](/x_ite/components/overview/#texturing3d) component and requires at least support level **2,** its default container field is *texture.* It is available from X3D version 3.1 or higher.
 
 ## Hierarchy
 
@@ -28,11 +28,27 @@ The ImageTexture3D node belongs to the **Texturing3D** component and requires at
           + ImageTexture3D (X3DUrlObject)*
 ```
 
-<small>\* Derived from multiple interfaces.</small>
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [in, out] | [description](#fields-description) | "" |
+| SFBool | [in, out] | [load](#fields-load) | TRUE |
+| MFString | [in, out] | [url](#fields-url) | [ ] |
+| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0  |
+| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600  |
+| SFBool | [ ] | [repeatS](#fields-repeatS) | FALSE |
+| SFBool | [ ] | [repeatT](#fields-repeatT) | FALSE |
+| SFBool | [ ] | [repeatR](#fields-repeatR) | FALSE |
+| SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -41,6 +57,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFString [in, out] **description** ""
+{: #fields-description }
 
 Author-provided prose that describes intended purpose of the url asset.
 
@@ -49,8 +66,9 @@ Author-provided prose that describes intended purpose of the url asset.
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
 ### SFBool [in, out] **load** TRUE
+{: #fields-load }
 
-*load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded scene.
+*load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded asset.
 
 #### Hints
 
@@ -58,6 +76,7 @@ Author-provided prose that describes intended purpose of the url asset.
 - Use a separate [LoadSensor](/x_ite/components/networking/loadsensor/) node to detect when loading is complete.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
+{: #fields-url }
 
 Location and filename of image. Multiple locations are more reliable, and including a Web address lets e-mail attachments work.
 
@@ -73,6 +92,7 @@ Location and filename of image. Multiple locations are more reliable, and includ
 - Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https *url* addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
 
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
+{: #fields-autoRefresh }
 
 *autoRefresh* defines interval in seconds before automatic reload of current url asset is performed.
 
@@ -86,6 +106,7 @@ Location and filename of image. Multiple locations are more reliable, and includ
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
 ### SFTime [in, out] **autoRefreshTimeLimit** 3600 <small>[0,∞)</small>
+{: #fields-autoRefreshTimeLimit }
 
 *autoRefreshTimeLimit* defines maximum duration that automatic refresh activity can occur.
 
@@ -98,28 +119,32 @@ Location and filename of image. Multiple locations are more reliable, and includ
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
 ### SFBool [ ] **repeatS** FALSE
+{: #fields-repeatS }
 
 Whether to repeat texture along S axis horizontally from left to right.
 
 ### SFBool [ ] **repeatT** FALSE
+{: #fields-repeatT }
 
 Whether to repeat texture along T axis vertically from top to bottom.
 
 ### SFBool [ ] **repeatR** FALSE
+{: #fields-repeatR }
 
 Whether to repeat texture along R axis from front to back.
 
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
+{: #fields-textureProperties }
 
 Single contained [TextureProperties](/x_ite/components/texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
 
 ## Supported File Formats
 
-| Encoding | File Extension  | MIME Type   | Comment             |
-|----------|-----------------|-------------|---------------------|
-| KTX2     | .ktx2, .ktx2.gz | image/ktx2  | TEXTURE_3D, WebGL 2 |
-| DICOM    | .dcm            | image/dicom |                     |
-| NRRD     | .nrrd, .nrrd.gz | image/nrrd  |                     |
+| Encoding | File Extension  | MIME Type   | Comment    |
+|----------|-----------------|-------------|------------|
+| KTX2     | .ktx2, .ktx2.gz | image/ktx2  | TEXTURE_3D |
+| DICOM    | .dcm            | image/dicom |            |
+| NRRD     | .nrrd, .nrrd.gz | image/nrrd  |            |
 
 ## Advice
 

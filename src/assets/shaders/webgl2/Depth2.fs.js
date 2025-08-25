@@ -1,12 +1,14 @@
-export default /* glsl */ `#version 300 es
+export default () => /* glsl */ `#version 300 es
 
 precision highp float;
 precision highp int;
 precision highp sampler2D;
 
+uniform int x3d_Id;
+
 in vec3 vertex;
 
-out vec4 x3d_FragColor;
+layout(location = 0) out vec4 x3d_FragData0;
 
 #pragma X3D include "common/ClipPlanes.glsl"
 #pragma X3D include "common/Point.glsl"
@@ -25,6 +27,6 @@ main ()
       #endif
    #endif
 
-   x3d_FragColor = vec4 (gl_FragCoord .z);
+   x3d_FragData0 = vec4 (gl_FragCoord .z, float (x3d_Id), 0.0, 0.0); // depth, normal
 }
 `;

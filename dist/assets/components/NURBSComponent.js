@@ -1,5 +1,5 @@
-/* X_ITE v11.5.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.0")];
+/* X_ITE v12.0.4 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.4")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -64,53 +64,6 @@ var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(exte
 const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
 ;// ./src/x_ite/Components/NURBS/Contour2D.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -223,53 +176,6 @@ const __default__ = Contour2D;
 
 /* harmony default export */ const NURBS_Contour2D = (external_X_ITE_X3D_Namespace_default().add ("Contour2D", __default__));
 ;// ./src/x_ite/Components/NURBS/X3DNurbsControlCurveNode.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -292,53 +198,6 @@ const X3DNurbsControlCurveNode_default_ = X3DNurbsControlCurveNode;
 const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
 var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
 ;// ./src/x_ite/Components/NURBS/ContourPolyline2D.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -424,53 +283,6 @@ var external_X_ITE_X3D_Vector2_default = /*#__PURE__*/__webpack_require__.n(exte
 const external_X_ITE_X3D_Vector4_namespaceObject = __X_ITE_X3D__ .Vector4;
 var external_X_ITE_X3D_Vector4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector4_namespaceObject);
 ;// ./src/x_ite/Browser/NURBS/NURBS.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -479,6 +291,10 @@ const NURBS =
 {
    getTessellation (tessellation, dimension)
    {
+      // This returns the number of tessellation faces,
+      // the number of tessellation points will be one higher,
+      // as required by the specification.
+      
       if (tessellation > 0)
          return tessellation;
 
@@ -890,53 +706,6 @@ const NURBS_default_ = NURBS;
 
 /* harmony default export */ const NURBS_NURBS = (external_X_ITE_X3D_Namespace_default().add ("NURBS", NURBS_default_));
 ;// ./src/x_ite/Components/NURBS/X3DParametricGeometryNode.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -973,13 +742,13 @@ var external_X_ITE_X3D_X3DLineGeometryNode_default = /*#__PURE__*/__webpack_requ
 
 const is_ndarray_default_ = function (arr)
 {
-   if (! arr)
+   if (!arr)
       return false;
 
-   if (! arr .dtype)
+   if (!arr .dtype)
       return false;
 
-   var re = new RegExp ("function View[0-9]+d(:?" + arr .dtype + ")+");
+   const re = new RegExp ("function View[0-9]+d(:?" + arr .dtype + ")+");
 
    return re .test (String (arr .constructor));
 };
@@ -1020,7 +789,7 @@ const is_array_like_default_ = function isArrayLike (data)
 
 function inferType (x)
 {
-   if (! x)
+   if (!x)
       return undefined;
 
    if (is_ndarray (x) || is_ndarray_like (x))
@@ -1034,8 +803,10 @@ function inferType (x)
    {
       if (is_array_like (x))
       {
-         for (var ptr = x; is_array_like (ptr [0]); ptr = ptr [0])
-            ;
+         let ptr = x;
+
+         while (is_array_like (ptr [0]))
+            ptr = ptr [0];
 
          if ("x" in ptr)
             return inferType .ARRAY_OF_OBJECTS;
@@ -1069,11 +840,10 @@ function capitalize (str) {
 }
 
 const cache_key_default_ = function (nurbs, debug, checkBounds, pointType, weightType, knotType) {
-   var d;
-   var degreeParts = [];
-   var hasAnyKnots = false;
-   for (d = 0; d < nurbs.splineDimension; d++) {
-      var hasKnots = is_array_like(nurbs.knots) && is_array_like(nurbs.knots[d]);
+   const degreeParts = [];
+   let hasAnyKnots = false;
+   for (let d = 0; d < nurbs.splineDimension; ++ d) {
+      const hasKnots = is_array_like(nurbs.knots) && is_array_like(nurbs.knots[d]);
       if (hasKnots) hasAnyKnots = true;
       degreeParts.push(
          "Deg" +
@@ -1082,7 +852,7 @@ const cache_key_default_ = function (nurbs, debug, checkBounds, pointType, weigh
          capitalize(nurbs.boundary[d])
       );
    }
-   var parts = [
+   const parts = [
       [
          hasAnyKnots ? "NU" : "",
          nurbs.weights ? "RBS" : "BS"
@@ -1116,15 +886,16 @@ const cache_key_default_ = function (nurbs, debug, checkBounds, pointType, weigh
 /* harmony default export */ const cache_key = (external_X_ITE_X3D_Namespace_default().add ("cache-key", cache_key_default_));
 ;// ./src/lib/nurbs/src/utils/variable.js
 
-var createVariable = function createVariable (name, nurbs) {
+const createVariable = function createVariable (name, nurbs) {
    return function (i, period) {
       if (i !== undefined && !Array.isArray(i)) i = [i];
-      var dimAccessors = [];
-      for (var j = 0; j < i.length; j++) {
+      const dimAccessors = [];
+      for (let j = 0; j < i.length; ++ j) {
          dimAccessors.push(createVariable.sum(i[j]));
       }
-      if (period) {
-         for (i = 0; i < dimAccessors.length; i++) {
+      if (period)
+      {
+         for (let i = 0; i < dimAccessors.length; ++ i) {
             if (period[i] === undefined) continue;
             dimAccessors[i] = "(" + dimAccessors[i] + " + " + period[i] + ") % " + period[i];
          }
@@ -1149,7 +920,7 @@ const variable_default_ = createVariable;
 
 
 
-var properties = [".x", ".y", ".z", ".w"];
+const properties = [".x", ".y", ".z", ".w"];
 
 function wrapAccessor (callback)
 {
@@ -1158,14 +929,14 @@ function wrapAccessor (callback)
       if (i !== undefined && ! Array .isArray(i))
          i = [i];
 
-      var dimAccessors = [ ];
+      const dimAccessors = [ ];
 
-      for (var j = 0; j < i .length; j ++)
+      for (let j = 0; j < i .length; ++ j)
          dimAccessors .push (variable .sum (i [j]));
 
       if (period)
       {
-         for (i = 0; i < dimAccessors .length; i++)
+         for (let i = 0; i < dimAccessors .length; ++ i)
          {
             if (period [i] === undefined)
                continue;
@@ -1188,7 +959,7 @@ function createAccessor (name, data)
       {
          return wrapAccessor (accessors =>
          {
-            var e = accessors .pop ();
+            const e = accessors .pop ();
 
             return name + "[" + accessors .join ("][") + "]" + properties [e];
          });
@@ -1211,9 +982,9 @@ function createAccessor (name, data)
       {
          return wrapAccessor (accessors =>
          {
-            var code = [name + "Offset"];
+            const code = [name + "Offset"];
 
-            for (var i = 0; i < accessors.length; i++)
+            for (let i = 0; i < accessors.length; ++ i)
             {
                code.push(name + "Stride" + i + " * (" + accessors[i] + ")");
             }
@@ -1229,19 +1000,19 @@ function createAccessor (name, data)
 
 const create_accessors_default_ = function (nurbs)
 {
-   var accessors = { };
+   const accessors = { };
 
-   var accessor = createAccessor ("x", nurbs .points);
+   let accessor = createAccessor ("x", nurbs .points);
 
    if (accessor)
       accessors .point = accessor;
 
-   var accessor = createAccessor ("w", nurbs .weights);
+   accessor = createAccessor ("w", nurbs .weights);
 
    if (accessor)
       accessors .weight = accessor;
 
-   var accessor = createAccessor ("k", nurbs .knots);
+   accessor = createAccessor ("k", nurbs .knots);
 
    if (accessor)
       accessors .knot = accessor;
@@ -1253,31 +1024,30 @@ const create_accessors_default_ = function (nurbs)
 /* harmony default export */ const create_accessors = (external_X_ITE_X3D_Namespace_default().add ("create-accessors", create_accessors_default_));
 ;// ./src/lib/nurbs/src/numerical-derivative.js
 
-var args = [];
-var tmp = [];
+const args = [];
+const tmp = [];
 
 const numerical_derivative_default_ = function numericalDerivative (out, order, dimension) {
    if (order !== 1) {
       throw new Error("Numerical derivative not implemented for order n = " + order + ".");
    }
 
-   var i;
-   var h = arguments[this.splineDimension + 3] === undefined ? 1e-4 : arguments[this.splineDimension + 3];
+   const h = arguments[this.splineDimension + 3] === undefined ? 1e-4 : arguments[this.splineDimension + 3];
 
    args.length = this.splineDimension;
-   for (i = 0; i < this.splineDimension; i++) {
+   for (let i = 0; i < this.splineDimension; ++ i) {
       args[i + 1] = arguments[i + 3];
    }
 
-   var domain = this.domain;
-   var k0 = domain[dimension][0];
-   var k1 = domain[dimension][1];
+   const domain = this.domain;
+   const k0 = domain[dimension][0];
+   const k1 = domain[dimension][1];
 
-   var tm, tp, T;
-   var t0 = args[dimension + 1];
-   var dt = (k1 - k0) * h;
+   const t0 = args[dimension + 1];
+   let tm, tp;
+   let dt = (k1 - k0) * h;
    if (this.boundary[dimension] === "closed") {
-      T = k1 - k0;
+      const T = k1 - k0;
       tm = k0 + ((t0 - k0 - dt + T) % T);
       tp = k0 + ((t0 - k0 + dt + T) % T);
       dt *= 2;
@@ -1295,7 +1065,7 @@ const numerical_derivative_default_ = function numericalDerivative (out, order, 
    args[0] = out;
    this.evaluate.apply(null, args);
 
-   for (i = 0; i < this.dimension; i++) {
+   for (let i = 0; i < this .dimension; ++ i) {
       out[i] = (out[i] - tmp[i]) / dt;
    }
 
@@ -1306,18 +1076,29 @@ const numerical_derivative_default_ = function numericalDerivative (out, order, 
 /* harmony default export */ const numerical_derivative = (external_X_ITE_X3D_Namespace_default().add ("numerical-derivative", numerical_derivative_default_));
 ;// ./src/lib/nurbs/src/utils/ndloop.js
 
-const ndloop_default_ = function ndloop (n, callback) {
-   for (var m = 1, k = 0, i = []; k < n.length; k++) {
-      m *= Array.isArray(n[k]) ? (n[k][1] - n[k][0]) : n[k];
-      i[k] = Array.isArray(n[k]) ? n[k][0] : 0;
+const ndloop_default_ = function ndloop (n, callback)
+{
+   let m = 1, i = [ ];
+
+   for (let k = 0; k < n .length; ++ k)
+   {
+      m    *= Array .isArray (n [k]) ? (n [k] [1] - n [k] [0]) : n [k];
+      i [k] = Array .isArray (n [k]) ? n [k] [0] : 0;
    }
-   for (var ptr = 0; ptr < m; ptr++) {
-      callback(i.slice());
-      for (k = n.length - 1; k >= 0; k--) {
-         if (i[k] === (Array.isArray(n[k]) ? n[k][1] : n[k]) - 1) {
-            i[k] = Array.isArray(n[k]) ? n[k][0] : 0;
-         } else {
-            i[k]++;
+
+   for (let ptr = 0; ptr < m; ++ ptr)
+   {
+      callback (i .slice ());
+
+      for (let k = n .length - 1; k >= 0; -- k)
+      {
+         if (i [k] === (Array .isArray (n [k]) ? n [k] [1] : n [k]) - 1)
+         {
+            i [k] = Array .isArray (n [k]) ? n [k] [0] : 0;
+         }
+         else
+         {
+            ++ i [k];
             break;
          }
       }
@@ -1332,24 +1113,27 @@ const ndloop_default_ = function ndloop (n, callback) {
 
 const accessor_preamble_default_ = function (nurbs, variableName, propertyName, data)
 {
-   var code = [ ];
+   const code = [ ];
 
    switch (infer_type (data))
    {
       case infer_type .NDARRAY:
       {
-         code .push ("  var " + variableName + " = " + propertyName + ".data;");
-         code .push ("  var " + variableName + "Offset = " + propertyName + ".offset;");
+         code .push (`  var ${variableName} = ${propertyName}.data;`);
+         code .push (`  var ${variableName}Offset = ${propertyName}.offset;`);
 
-         for (var i = 0; i < data .dimension; i++) {
-            code .push ("  var " + variableName + "Stride" + i + " = " + propertyName + ".stride[" + i + "];");
+         for (let i = 0; i < data .dimension; ++ i) {
+            code .push (`  var ${variableName}Stride${i} = ${propertyName}.stride[${i}];`);
          }
 
          break;
       }
       case infer_type .ARRAY_OF_OBJECTS:
       case infer_type .ARRAY_OF_ARRAYS:
-         code .push ("  var " + variableName + " = " + propertyName + ";");
+      {
+         code .push (`  var ${variableName} = ${propertyName};`);
+         break;
+      }
    }
 
    return code .join ("\n");
@@ -1367,8 +1151,8 @@ const size_getter_default_ = function (data, dataVariableName, dimension) {
    } else if (is_ndarray_like(data)) {
       return dataVariableName + ".shape[" + dimension + "]";
    } else {
-      var str = dataVariableName;
-      for (var i = 0; i < dimension; i++) {
+      let str = dataVariableName;
+      for (let i = 0; i < dimension; ++ i) {
          str += "[0]";
       }
       return str + ".length";
@@ -1386,27 +1170,25 @@ const size_getter_default_ = function (data, dataVariableName, dimension) {
 
 
 
-var evaluatorCache = {};
-var codeCache = {};
+const evaluatorCache = {};
+const codeCache = {};
 
 const evaluator_default_ = function (cacheKey, nurbs, accessors, debug, checkBounds, isBasis, derivative) {
-   var splineDimension = nurbs.splineDimension;
-   var i, j, n, m, d, kvar;
-
-   var points = nurbs.points;
-   var degree = nurbs.degree;
-   var weights = nurbs.weights;
-   var hasWeights = weights !== undefined;
-   var knots = nurbs.knots;
-   var spaceDimension = nurbs.dimension;
-   var boundary = nurbs.boundary;
+   const splineDimension = nurbs.splineDimension;
+   const points = nurbs.points;
+   const degree = nurbs.degree;
+   const weights = nurbs.weights;
+   const hasWeights = weights !== undefined;
+   const knots = nurbs.knots;
+   const spaceDimension = nurbs.dimension;
+   const boundary = nurbs.boundary;
 
    if (derivative !== undefined && derivative !== null) {
       if (!Array.isArray(derivative)) {
          derivative = [derivative];
       }
-      var totalDerivativeOrder = 0;
-      for (i = 0; i < splineDimension; i++) {
+      let totalDerivativeOrder = 0;
+      for (let i = 0; i < splineDimension; ++ i) {
          if (derivative[i] === undefined) derivative[i] = 0;
          totalDerivativeOrder += derivative[i];
       }
@@ -1417,10 +1199,8 @@ const evaluator_default_ = function (cacheKey, nurbs, accessors, debug, checkBou
 
    if (isBasis) cacheKey = "Basis" + cacheKey;
    if (derivative) cacheKey = "Der" + derivative.join("_") + "_" + cacheKey;
-   var cachedEvaluator = evaluatorCache[cacheKey];
-   if (debug) {
-      var logger = typeof debug === "function" ? debug : console.log;
-   }
+   const cachedEvaluator = evaluatorCache[cacheKey];
+   const logger = debug ? (typeof debug === "function" ? debug : console.log) : null;
 
    if (cachedEvaluator) {
       if (debug) {
@@ -1430,17 +1210,17 @@ const evaluator_default_ = function (cacheKey, nurbs, accessors, debug, checkBou
       return cachedEvaluator.bind(nurbs);
    }
 
-   var code = [];
-   var functionName = "evaluate" + cacheKey;
+   const code = [];
+   const functionName = "evaluate" + cacheKey;
 
-   var pointAccessor = accessors.point;
+   let pointAccessor = accessors.point;
    if (isBasis) {
       pointAccessor = function (src, period) {
-         var terms = [];
-         for (var i = 0; i < src.length; i++) {
-            var accessor = src[i];
-            var terms2 = [];
-            for (var j = 0; j < accessor.length; j++) {
+         const terms = [];
+         for (let i = 0; i < src.length; ++ i) {
+            const terms2 = [];
+            let accessor = src[i];
+            for (let j = 0; j < accessor.length; ++ j) {
                if (accessor[j] !== 0) terms2.push(accessor[j]);
             }
             accessor = terms2.join(" + ");
@@ -1452,20 +1232,20 @@ const evaluator_default_ = function (cacheKey, nurbs, accessors, debug, checkBou
          return "((" + terms.join(" && ") + ") ? 1 : 0)";
       };
    }
-   var weightAccessor = accessors.weight;
-   var knotAccessor = accessors.knot;
+   const weightAccessor = accessors.weight;
+   const knotAccessor = accessors.knot;
 
-   var knotVar = variable("k");
-   var pointVar = variable("x");
-   var weightVar = variable("w");
-   var indexVar = variable("i");
-   var tVar = variable("t");
-   var domainVar = debug ? "domain" : "d";
-   var sizeVar = variable(debug ? "size" : "s");
-   var knotIndex = variable(debug ? "knotIndex" : "j");
+   const knotVar = variable("k");
+   const pointVar = variable("x");
+   const weightVar = variable("w");
+   const indexVar = variable("i");
+   const tVar = variable("t");
+   const domainVar = debug ? "domain" : "d";
+   const sizeVar = variable(debug ? "size" : "s");
+   const knotIndex = variable(debug ? "knotIndex" : "j");
 
-   var allDimensionUniform = true;
-   for (d = 0; d < splineDimension; d++) {
+   let allDimensionUniform = true;
+   for (let d = 0; d < splineDimension; ++ d) {
       if (is_array_like(knots) && is_array_like(knots[d])) {
          allDimensionUniform = false;
       }
@@ -1482,11 +1262,9 @@ const evaluator_default_ = function (cacheKey, nurbs, accessors, debug, checkBou
       // if (debug) code.push("console.log(\"" + str + " =\", " + str + ");");
    // }
 
-   if (isBasis) {
-      var indexArgs = [];
-   }
-   var parameterArgs = [];
-   for (i = 0; i < splineDimension; i++) {
+   const indexArgs = isBasis ? [] : null;
+   const parameterArgs = [];
+   for (let i = 0; i < splineDimension; ++ i) {
       if (isBasis) {
          indexArgs.push(indexVar([i]));
       }
@@ -1503,7 +1281,7 @@ const evaluator_default_ = function (cacheKey, nurbs, accessors, debug, checkBou
 
    if (checkBounds) {
       line("var " + domainVar + " = this.domain;");
-      line("for (var i = 0; i < this.splineDimension; i++) {");
+      line("for (var i = 0; i < this.splineDimension; ++ i) {");
       line("  a = arguments[i + 1];");
       line("  if (a < " + domainVar + "[i][0] || a > " + domainVar + "[i][1] || a === undefined || isNaN(a)) {");
       line("    throw new Error(\"Invalid Spline parameter in dimension \"+i+\". Valid domain is [\"+" + domainVar + "[i][0]+\", \"+" + domainVar + "[i][1]+\"]. but got t\"+i+\" = \"+arguments[i + 1]+\".\");");
@@ -1511,7 +1289,7 @@ const evaluator_default_ = function (cacheKey, nurbs, accessors, debug, checkBou
       line("}");
    }
 
-   for (d = 0; d < splineDimension; d++) {
+   for (let d = 0; d < splineDimension; ++ d) {
       line("var " + sizeVar(d) + " = " + size_getter(points, "this.points", d) + ";");
    }
    code.push(accessor_preamble(nurbs, "x", "this.points", points));
@@ -1528,8 +1306,8 @@ const evaluator_default_ = function (cacheKey, nurbs, accessors, debug, checkBou
       return "(" + cond + ") ? (" + a + ") : (" + b + ")";
    }
 
-   var hasKnots = [];
-   for (d = 0; d < splineDimension; d++) {
+   const hasKnots = [];
+   for (let d = 0; d < splineDimension; ++ d) {
       switch (infer_type(knots)) {
          case infer_type.NDARRAY:
             hasKnots[d] = true;
@@ -1540,7 +1318,7 @@ const evaluator_default_ = function (cacheKey, nurbs, accessors, debug, checkBou
       }
    }
 
-   for (d = 0; d < splineDimension; d++) {
+   for (let d = 0; d < splineDimension; ++ d) {
       if (hasKnots[d]) {
          //
          // LOCATE KNOTS
@@ -1556,7 +1334,7 @@ const evaluator_default_ = function (cacheKey, nurbs, accessors, debug, checkBou
 
          debugLine("\n  // Fetch knots for dimension " + d + "\n");
 
-         for (i = -degree[d] + 1; i <= degree[d]; i++) {
+         for (let i = -degree[d] + 1; i <= degree[d]; ++ i) {
             if (boundary[d] === "closed") {
                if (i < 0) {
                   // line("var " + knotVar([d, i + degree[d] - 1]) + " = " + knotAccessor([d, [knotIndex(d), i]]) + ";");
@@ -1595,14 +1373,14 @@ const evaluator_default_ = function (cacheKey, nurbs, accessors, debug, checkBou
          }
 
          debugLine("\n  // Compute and clamp knots for dimension " + d + "\n");
-         for (i = -degree[d] + 1; i <= degree[d]; i++) {
-            kvar = knotVar([d, i + degree[d] - 1]);
+         for (let i = -degree[d] + 1; i <= degree[d]; ++ i) {
+            const kvar = knotVar([d, i + degree[d] - 1]);
             line("var " + kvar + " = " + knotIndex(d) + " + " + (i) + ";");
          }
 
          if (boundary[d] === "clamped") {
-            for (i = -degree[d] + 1; i <= degree[d]; i++) {
-               kvar = knotVar([d, i + degree[d] - 1]);
+            for (let i = -degree[d] + 1; i <= degree[d]; ++ i) {
+               const kvar = knotVar([d, i + degree[d] - 1]);
                if (i < 0) {
                   line("if (" + kvar + " < " + degree[d] + ") " + kvar + " = " + degree[d] + ";");
                }
@@ -1619,16 +1397,18 @@ const evaluator_default_ = function (cacheKey, nurbs, accessors, debug, checkBou
       }
    }
 
-   for (d = 0, n = []; d < splineDimension; d++) {
+   const n = [ ];
+
+   for (let d = 0; d < splineDimension; ++ d) {
       n[d] = degree[d] + 1;
    }
 
    if (hasWeights) {
       debugLine("\n  // Fetch weights\n");
       ndloop(n, function (dst) {
-         var readIdx = [];
-         var period = [];
-         for (var d = 0; d < splineDimension; d++) {
+         const readIdx = [];
+         const period = [];
+         for (let d = 0; d < splineDimension; ++ d) {
             readIdx[d] = [knotIndex(d), dst[d] - degree[d]];
             if (boundary[d] === "closed" && dst[d] - degree[d] < 0) period[d] = sizeVar(d);
          }
@@ -1645,9 +1425,9 @@ const evaluator_default_ = function (cacheKey, nurbs, accessors, debug, checkBou
    }
 
    ndloop(n, function (dst) {
-      var readIdx = [];
-      var period = [];
-      for (var d = 0; d < splineDimension; d++) {
+      const readIdx = [];
+      const period = [];
+      for (let d = 0; d < splineDimension; ++ d) {
          readIdx[d] = [knotIndex(d), dst[d] - degree[d]];
          if (boundary[d] === "closed" && dst[d] - degree[d] < 0) period[d] = sizeVar(d);
       }
@@ -1658,8 +1438,8 @@ const evaluator_default_ = function (cacheKey, nurbs, accessors, debug, checkBou
             line("var " + pointVar(dst) + " = " + pointAccessor(readIdx, period) + ";");
          }
       } else {
-         for (d = 0; d < spaceDimension; d++) {
-            var dstWithDim = dst.concat(d);
+         for (let d = 0; d < spaceDimension; ++ d) {
+            const dstWithDim = dst.concat(d);
             readIdx[splineDimension] = d;
             if (hasWeights) {
                line("var " + pointVar(dstWithDim) + " = " + pointAccessor(readIdx, period) + " * " + weightVar(dst) + ";");
@@ -1672,12 +1452,12 @@ const evaluator_default_ = function (cacheKey, nurbs, accessors, debug, checkBou
    debugLine("\n");
 
    debugLine("// Perform De Boor\"s algorithm");
-   for (d = n.length - 1; d >= 0; d--) {
+   for (let d = n.length - 1; d >= 0; -- d) {
       n[d] = [degree[d], degree[d] + 1];
-      for (i = 0; i < degree[d]; i++) {
+      for (let i = 0; i < degree[d]; ++ i) {
          debugLine("\n  // Degree " + degree[d] + " evaluation in dimension " + d + ", step " + (i + 1) + "\n");
-         for (j = degree[d]; j > i; j--) {
-            var isDerivative = derivative && (degree[d] - i - derivative[d] <= 0);
+         for (let j = degree[d]; j > i; -- j) {
+            const isDerivative = derivative && (degree[d] - i - derivative[d] <= 0);
 
             if (isDerivative) {
                line("m = 1 / (" + knotVar([d, j - i + degree[d] - 1]) + " - " + knotVar([d, j - 1]) + ");");
@@ -1692,8 +1472,8 @@ const evaluator_default_ = function (cacheKey, nurbs, accessors, debug, checkBou
 
             if (hasWeights) {
                ndloop(n, function (ii) {
-                  var ij = ii.slice();
-                  var ij1 = ii.slice();
+                  const ij = ii.slice();
+                  const ij1 = ii.slice();
                   ij[d] = j;
                   ij1[d] = j - 1;
                   if (isDerivative && hasWeights) line("h = " + weightVar(ij) + ";");
@@ -1701,24 +1481,24 @@ const evaluator_default_ = function (cacheKey, nurbs, accessors, debug, checkBou
                });
             }
             ndloop(n, function (ii) {
-               var weightFactor, pt1, pt2;
-               var ij = ii.slice();
-               var ij1 = ii.slice();
+               let weightFactor, pt1, pt2;
+               const ij = ii.slice();
+               const ij1 = ii.slice();
                // Replace the dimension being interpolated with the interpolation indices
                ij[d] = j;
                ij1[d] = j - 1;
                // Create a version to which we can append the dimension when we loop over spatial dimension
                if (isDerivative) {
-                  var derivCoeff = i + 1;
+                  const derivCoeff = i + 1;
                   if (isBasis) {
                      weightFactor = hasWeights ? "h * " + weightVar(ij1) + " / " + weightVar(ij) + " * " : "";
                      pt1 = pointVar(ij) + (hasWeights ? " / h" : "");
                      pt2 = pointVar(ij1) + (hasWeights ? " / " + weightVar(ij1) : "");
                      line(pointVar(ij) + " = " + derivCoeff + " * " + weightFactor + "(" + pt1 + " - " + pt2 + ") * m;");
                   } else {
-                     var ijWithDimension = ij.slice();
-                     var ij1WithDimension = ij1.slice();
-                     for (m = 0; m < spaceDimension; m++) {
+                     const ijWithDimension = ij.slice();
+                     const ij1WithDimension = ij1.slice();
+                     for (let m = 0; m < spaceDimension; ++ m) {
                         ijWithDimension[splineDimension] = ij1WithDimension[splineDimension] = m;
                         weightFactor = hasWeights ? "h * " + weightVar(ij1) + " / " + weightVar(ij) + " * " : "";
                         pt1 = pointVar(ijWithDimension) + (hasWeights ? " / h" : "");
@@ -1730,7 +1510,7 @@ const evaluator_default_ = function (cacheKey, nurbs, accessors, debug, checkBou
                   if (isBasis) {
                      line(pointVar(ij) + " = b * " + pointVar(ij1) + " + a * " + pointVar(ij) + ";");
                   } else {
-                     for (m = 0; m < spaceDimension; m++) {
+                     for (let m = 0; m < spaceDimension; ++ m) {
                         ij[splineDimension] = ij1[splineDimension] = m;
                         line(pointVar(ij) + " = b * " + pointVar(ij1) + " + a * " + pointVar(ij) + ";");
                      }
@@ -1756,7 +1536,7 @@ const evaluator_default_ = function (cacheKey, nurbs, accessors, debug, checkBou
          line("return " + pointVar(degree) + ";");
       }
    } else {
-      for (d = 0; d < spaceDimension; d++) {
+      for (let d = 0; d < spaceDimension; ++ d) {
          if (hasWeights) {
             line("out[" + d + "] = " + pointVar(degree.concat([d])) + " / " + weightVar(degree) + ";");
          } else {
@@ -1770,13 +1550,13 @@ const evaluator_default_ = function (cacheKey, nurbs, accessors, debug, checkBou
    code.push("}");
 
    if (debug) {
-      var codeStr = code.join("\n");
+      const codeStr = code.join("\n");
       logger(codeStr);
 
       codeCache[cacheKey] = codeStr;
    }
 
-   var evaluator = new Function([code.join("\n"), "; return ", functionName].join(""))();
+   const evaluator = new Function([code.join("\n"), "; return ", functionName].join(""))();
    evaluatorCache[cacheKey] = evaluator;
    return evaluator.bind(nurbs);
 };
@@ -1789,65 +1569,66 @@ const evaluator_default_ = function (cacheKey, nurbs, accessors, debug, checkBou
 
 
 
-var transformerCache = {};
+const transformerCache = {};
 
-const transform_default_ = function createTransform (cacheKey, nurbs, accessors, debug) {
-   var i, j, iterator, iterators, terms, n, rvalue, lvalue;
-   var cachedTransformer = transformerCache[cacheKey];
+const transform_default_ = function createTransform (cacheKey, nurbs, accessors, debug)
+{
+   const cachedTransformer = transformerCache[cacheKey];
    if (cachedTransformer) {
       return cachedTransformer.bind(nurbs);
    }
 
-   var code = [];
-   var functionName = "transform" + cacheKey;
+   const code = [];
+   const functionName = "transform" + cacheKey;
 
    code.push("function " + functionName + "(m) {");
    code.push("var i, w;");
    code.push(accessor_preamble(nurbs, "x", "this.points", nurbs.points));
 
-   var sizeVar = variable(debug ? "size" : "s");
-   for (i = 0; i < nurbs.splineDimension; i++) {
+   const sizeVar = variable(debug ? "size" : "s");
+   for (let i = 0; i < nurbs.splineDimension; ++ i) {
       code.push("var " + sizeVar(i) + " = " + size_getter(nurbs.points, "this.points", i) + ";");
    }
 
-   iterators = [];
-   for (i = 0; i < nurbs.splineDimension; i++) {
-      iterator = "i" + i;
+   const iterators = [];
+   for (let i = 0; i < nurbs .splineDimension; ++ i) {
+      const iterator = "i" + i;
       iterators.push(iterator);
-      code.push("for (" + iterator + " = " + sizeVar(i) + "- 1; " + iterator + " >= 0; " + iterator + "--) {");
+      code.push("for (" + iterator + " = " + sizeVar(i) + "- 1; " + iterator + " >= 0; -- " + iterator + ") {");
    }
 
-   for (i = 0; i < nurbs.dimension; i++) {
+   for (let i = 0; i < nurbs.dimension; ++ i) {
       code.push("x" + i + " = " + accessors.point(iterators.concat([i])));
    }
 
-   terms = [];
-   for (i = 0; i < nurbs.dimension; i++) {
+   const terms = [];
+   for (let i = 0; i < nurbs.dimension; ++ i) {
       terms.push("m[" + ((nurbs.dimension + 1) * (i + 1) - 1) + "] * x" + i);
    }
    terms.push("m[" + ((nurbs.dimension + 1) * (nurbs.dimension + 1) - 1) + "]");
    code.push("var w = (" + terms.join(" + ") + ") || 1.0;");
 
-   for (i = 0; i < nurbs.dimension; i++) {
-      terms = [];
-      n = nurbs.dimension;
-      for (j = 0; j < n; j++) {
+   for (let i = 0; i < nurbs.dimension; ++ i) {
+      const terms = [];
+      const n = nurbs.dimension;
+      let j = 0;
+      for (; j < n; ++ j) {
          terms.push("m[" + (j * (n + 1) + i) + "] * x" + j);
       }
       terms.push("m[" + (j * (n + 1) + i) + "]");
-      lvalue = accessors.point(iterators.concat([i]));
-      rvalue = "(" + terms.join(" + ") + ") / w";
+      const lvalue = accessors.point(iterators.concat([i]));
+      const rvalue = "(" + terms.join(" + ") + ") / w";
       code.push(lvalue + " = " + rvalue + ";");
    }
 
-   for (i = nurbs.splineDimension - 1; i >= 0; i--) {
+   for (let i = nurbs.splineDimension - 1; i >= 0; -- i) {
       code.push("}");
    }
 
    code.push("return this;");
    code.push("}");
 
-   var transform = new Function([code.join("\n"), "; return ", functionName].join(""))();
+   const transform = new Function([code.join("\n"), "; return ", functionName].join(""))();
 
    if (debug) console.log(code.join("\n"));
 
@@ -1866,32 +1647,31 @@ const transform_default_ = function createTransform (cacheKey, nurbs, accessors,
 
 
 
-var supportCache = {};
+const supportCache = {};
 
 const support_default_ = function (cacheKey, nurbs, accessors, debug, checkBounds) {
-   var cachedSupport = supportCache[cacheKey];
+   const cachedSupport = supportCache[cacheKey];
    if (cachedSupport) {
       return cachedSupport.bind(nurbs);
    }
 
-   var degree = nurbs.degree;
-   var knots = nurbs.knots;
-   var splineDimension = nurbs.splineDimension;
-   var boundary = nurbs.boundary;
+   const degree = nurbs.degree;
+   const knots = nurbs.knots;
+   const splineDimension = nurbs.splineDimension;
+   const boundary = nurbs.boundary;
 
-   var i, n, d;
-   var code = [];
-   var functionName = "support" + cacheKey;
+   const code = [];
+   const functionName = "support" + cacheKey;
 
-   var knotAccessor = accessors.knot;
+   const knotAccessor = accessors.knot;
 
-   var tVar = variable("t");
-   var domainVar = debug ? "domain" : "d";
-   var sizeVar = variable(debug ? "size" : "s");
-   var knotIndex = variable(debug ? "knotIndex" : "i");
+   const tVar = variable("t");
+   const domainVar = debug ? "domain" : "d";
+   const sizeVar = variable(debug ? "size" : "s");
+   const knotIndex = variable(debug ? "knotIndex" : "i");
 
-   var allDimensionUniform = true;
-   for (d = 0; d < splineDimension; d++) {
+   let allDimensionUniform = true;
+   for (let d = 0; d < splineDimension; ++ d) {
       if (is_array_like(knots) && is_array_like(knots[d])) {
          allDimensionUniform = false;
       }
@@ -1902,19 +1682,19 @@ const support_default_ = function (cacheKey, nurbs, accessors, debug, checkBound
       code.push("  " + (str || ""));
    }
 
-   var parameterArgs = [];
-   for (i = 0; i < splineDimension; i++) {
+   const parameterArgs = [];
+   for (let i = 0; i < splineDimension; ++ i) {
       parameterArgs.push(tVar([i]));
    }
 
    code.push("function " + functionName + " (out, " + parameterArgs.join(", ") + ") {");
 
-   var c = 0;
+   let c = 0;
    function pushSupport (args, period) {
       if (period === undefined) {
-         line("out[" + (c++) + "] = " + args.join(" + ") + ";");
+         line("out[" + (c ++) + "] = " + args.join(" + ") + ";");
       } else {
-         line("out[" + (c++) + "] = (" + args.join(" + ") + " + " + period + ") % " + period + ";");
+         line("out[" + (c ++) + "] = (" + args.join(" + ") + " + " + period + ") % " + period + ";");
       }
    }
 
@@ -1923,7 +1703,7 @@ const support_default_ = function (cacheKey, nurbs, accessors, debug, checkBound
 
    if (checkBounds) {
       line("var " + domainVar + " = this.domain;");
-      line("for (var i = 0; i < this.splineDimension; i++) {");
+      line("for (var i = 0; i < this.splineDimension; ++ i) {");
       line("  a = arguments[i + 1];");
       line("  if (a < " + domainVar + "[i][0] || a > " + domainVar + "[i][1] || a === undefined || isNaN(a)) {");
       line("    throw new Error(\"Invalid Spline parameter in dimension \"+i+\". Valid domain is [\"+" + domainVar + "[i][0]+\", \"+" + domainVar + "[i][1]+\"]. but got t\"+i+\" = \"+arguments[i + 1]+\".\");");
@@ -1931,7 +1711,7 @@ const support_default_ = function (cacheKey, nurbs, accessors, debug, checkBound
       line("}");
    }
 
-   for (d = 0; d < splineDimension; d++) {
+   for (let d = 0; d < splineDimension; ++ d) {
       line("var " + sizeVar(d) + " = " + size_getter(nurbs.points, "this.points", d) + ";");
    }
 
@@ -1939,8 +1719,8 @@ const support_default_ = function (cacheKey, nurbs, accessors, debug, checkBound
       code.push(accessor_preamble(nurbs, "k", "this.knots", knots));
    }
 
-   var hasKnots = [];
-   for (d = 0; d < splineDimension; d++) {
+   const hasKnots = [];
+   for (let d = 0; d < splineDimension; ++ d) {
       switch (infer_type(knots)) {
          case infer_type.NDARRAY:
             hasKnots[d] = true;
@@ -1951,7 +1731,7 @@ const support_default_ = function (cacheKey, nurbs, accessors, debug, checkBound
       }
    }
 
-   for (d = 0; d < splineDimension; d++) {
+   for (let d = 0; d < splineDimension; ++ d) {
       if (hasKnots[d]) {
          line("var " + knotIndex(d) + " = 0;");
          line("h = " + sizeVar(d) + ";");
@@ -1971,18 +1751,20 @@ const support_default_ = function (cacheKey, nurbs, accessors, debug, checkBound
       }
    }
 
-   for (d = 0, n = []; d < splineDimension; d++) {
+   const n = [];
+
+   for (let d = 0; d < splineDimension; ++ d) {
       n[d] = degree[d] + 1;
    }
 
    ndloop(n, function (dst) {
-      var readIdx = [];
-      var period = [];
-      for (var d = 0; d < splineDimension; d++) {
+      const readIdx = [];
+      const period = [];
+      for (let d = 0; d < splineDimension; ++ d) {
          readIdx[d] = [knotIndex(d), dst[d] - degree[d]];
          if (boundary[d] === "closed" && dst[d] - degree[d] < 0) period[d] = sizeVar(d);
       }
-      for (d = 0; d < splineDimension; d++) {
+      for (let d = 0; d < splineDimension; ++ d) {
          pushSupport(readIdx[d], period[d]);
       }
    });
@@ -1994,10 +1776,10 @@ const support_default_ = function (cacheKey, nurbs, accessors, debug, checkBound
 
    if (debug) console.log(code.join("\n"));
 
-   var evaluator = new Function([code.join("\n"), "; return ", functionName].join(""))();
+   const evaluator = new Function([code.join("\n"), "; return ", functionName].join(""))();
    supportCache[cacheKey] = evaluator;
    return evaluator.bind(nurbs);
-};
+}
 ;
 
 /* harmony default export */ const support = (external_X_ITE_X3D_Namespace_default().add ("support", support_default_));
@@ -2183,7 +1965,7 @@ function uSeam (u0, nuBound, nvBound, dimension, points, pointIndex, seamIndex)
    }
 }
 
-function vSeam (v0, nuBound, nvBound, dimension, points, pointIndex, seamIndex)
+function vSeam (v0, nuBound, _ /* nvBound */, dimension, points, pointIndex, seamIndex)
 {
    for (let u0 = 0; u0 < nuBound; ++ u0)
    {
@@ -2226,7 +2008,7 @@ const sample_default_ = sample;
 
 
 
-var BOUNDARY_TYPES = {
+const BOUNDARY_TYPES = {
    open: "open",
    closed: "closed",
    clamped: "clamped"
@@ -2237,8 +2019,6 @@ function isBlank (x) {
 }
 
 function parseNURBS (points, degree, knots, weights, boundary, opts) {
-   var i, dflt;
-
    if (points && !is_array_like(points) && !is_ndarray(points)) {
       opts = points;
       this.debug = points.debug;
@@ -2261,9 +2041,9 @@ function parseNURBS (points, degree, knots, weights, boundary, opts) {
       Object.defineProperty(this, "size", {value: opts.size, writable: true, configurable: true});
    }
 
-   var pointType  = infer_type(this.points);
-   var weightType = infer_type(this.weights);
-   var knotType   = infer_type(this.knots);
+   const pointType  = infer_type(this.points);
+   const weightType = infer_type(this.weights);
+   const knotType   = infer_type(this.knots);
 
    if (this.points) {
       //
@@ -2298,11 +2078,12 @@ function parseNURBS (points, degree, knots, weights, boundary, opts) {
          case infer_type.ARRAY_OF_OBJECTS:
          case infer_type.ARRAY_OF_ARRAYS:
             // Follow the zeroth entries until we hit something that"s not an array
-            var splineDimension = 0;
-            var size = this.size || [];
+            const size = this.size || [];
+            let splineDimension = 0;
+            let ptr = this.points;
             size.length = 0;
-            for (var ptr = this.points; is_array_like(ptr[0]); ptr = ptr[0]) {
-               splineDimension++;
+            for (; is_array_like(ptr[0]); ptr = ptr[0]) {
+               ++ splineDimension;
                size.push(ptr.length);
             }
             if (splineDimension === 0) {
@@ -2322,9 +2103,9 @@ function parseNURBS (points, degree, knots, weights, boundary, opts) {
                },
                size: {
                   get: function () {
-                     var size = [];
+                     const size = [];
                      size.length = 0;
-                     for (var i = 0, ptr = this.points; i < this.splineDimension; i++, ptr = ptr[0]) {
+                     for (let i = 0, ptr = this.points; i < this.splineDimension; ++ i, ptr = ptr[0]) {
                         size[i] = ptr.length;
                      }
                      return size;
@@ -2374,16 +2155,16 @@ function parseNURBS (points, degree, knots, weights, boundary, opts) {
    // Sanitize the degree into an array
    //
    if (is_array_like(this.degree)) {
-      for (i = 0; i < this.splineDimension; i++) {
+      for (let i = 0; i < this.splineDimension; ++ i) {
          if (isBlank(this.degree[i])) {
             throw new Error("Missing degree in dimension " + (i + 1));
          }
       }
    } else {
-      var hasBaseDegree = !isBlank(this.degree);
-      var baseDegree = isBlank(this.degree) ? 2 : this.degree;
+      const hasBaseDegree = !isBlank(this.degree);
+      const baseDegree = isBlank(this.degree) ? 2 : this.degree;
       this.degree = [];
-      for (i = 0; i < this.splineDimension; i++) {
+      for (let i = 0; i < this.splineDimension; ++ i) {
          if (this.size[i] <= baseDegree) {
             if (hasBaseDegree) {
                throw new Error("Expected at least " + (baseDegree + 1) + " points for degree " + baseDegree + " spline in dimension " + (i + 1) + " but got only " + this.size[i]);
@@ -2399,13 +2180,13 @@ function parseNURBS (points, degree, knots, weights, boundary, opts) {
    //
    // Sanitize boundaries
    //
-   dflt = (typeof this.boundary !== "string") ? "open" : this.boundary;
+   const dflt = (typeof this.boundary !== "string") ? "open" : this.boundary;
    if (!BOUNDARY_TYPES[dflt]) {
       throw new Error("Boundary type must be one of " + Object.keys(BOUNDARY_TYPES) + ". Got " + dflt);
    }
    this.boundary = is_array_like(this.boundary) ? this.boundary : [];
    this.boundary.length = this.splineDimension;
-   for (i = 0; i < this.splineDimension; i++) {
+   for (let i = 0; i < this.splineDimension; ++ i) {
       this.boundary[i] = isBlank(this.boundary[i]) ? dflt : this.boundary[i];
 
       if (!BOUNDARY_TYPES[dflt]) {
@@ -2423,7 +2204,7 @@ function parseNURBS (points, degree, knots, weights, boundary, opts) {
             this.knots = [this.knots];
          }
 
-         for (i = 0; i < this.splineDimension; i++) {
+         for (let i = 0; i < this.splineDimension; ++ i) {
             if (this.size[i] <= this.degree[i]) {
                throw new Error("Expected at least " + (this.degree[i] + 1) + " points in dimension " + (i + 1) + " but got " + this.size[i] + ".");
             }
@@ -2435,7 +2216,7 @@ function parseNURBS (points, degree, knots, weights, boundary, opts) {
                   // Fudge factor allowance for just ignoring extra knots. This makes some allowance
                   // for passing regular clamped/open spline knots to a closed spline by ignoring extra
                   // knots instead of simply truncating.
-                  var canBeFudged = this.knots[i].length === this.size[i] + this.degree[i] + 1;
+                  const canBeFudged = this.knots[i].length === this.size[i] + this.degree[i] + 1;
                   if (!canBeFudged) {
                      throw new Error("Expected " + (this.size[i] + 1) + " knots for closed spline in dimension " + (i + 1) + " but got " + this.knots[i].length + ".");
                   }
@@ -2450,12 +2231,12 @@ function parseNURBS (points, degree, knots, weights, boundary, opts) {
    //
    // Create evaluator
    //
-   var newCacheKey = cache_key(this, this.debug, this.checkBounds, pointType, weightType, knotType);
+   const newCacheKey = cache_key(this, this.debug, this.checkBounds, pointType, weightType, knotType);
 
    if (newCacheKey !== this.__cacheKey) {
       this.__cacheKey = newCacheKey;
 
-      var accessors = create_accessors(this);
+      const accessors = create_accessors(this);
 
       this.evaluate = evaluator(this.__cacheKey, this, accessors, this.debug, this.checkBounds, false);
       this.transform = transform(this.__cacheKey, this, accessors, this.debug);
@@ -2472,8 +2253,8 @@ function parseNURBS (points, degree, knots, weights, boundary, opts) {
 }
 
 function domainGetter () {
-   var sizeArray;
-   var ret = [];
+   const ret = [];
+   let sizeArray;
 
    // If the reference to size is hard-coded, then the size cannot change, or
    // if you change points manually (like by appending a point) without re-running
@@ -2481,7 +2262,7 @@ function domainGetter () {
    // by querying the size directly, based on the point data type
    //
    // A pointer to the point array-of-arrays:
-   var ptr = this.points;
+   let ptr = this.points;
 
    if (!ptr) {
       // If there are no points, then just use this.size
@@ -2491,13 +2272,13 @@ function domainGetter () {
       sizeArray = ptr.shape;
    }
 
-   for (var d = 0; d < this.splineDimension; d++) {
-      var size = sizeArray ? sizeArray[d] : ptr.length;
-      var p = this.degree[d];
-      var isClosed = this.boundary[d] === "closed";
+   for (let d = 0; d < this.splineDimension; ++ d) {
+      const size = sizeArray ? sizeArray[d] : ptr.length;
+      const p = this.degree[d];
+      const isClosed = this.boundary[d] === "closed";
 
       if (this.knots && this.knots[d]) {
-         var k = this.knots[d];
+         const k = this.knots[d];
          ret[d] = [k[isClosed ? 0 : p], k[size]];
       } else {
          ret[d] = [isClosed ? 0 : p, size];
@@ -2518,13 +2299,13 @@ function domainGetter () {
 // @param opts {object} - additional options
 function nurbs (points, degree, knots, weights, boundary, opts)
 {
-   var ctor = function (points, degree, knots, weights, boundary, opts)
+   const ctor = function (points, degree, knots, weights, boundary, opts)
    {
       parseFcn (points, degree, knots, weights, boundary, opts);
       return ctor;
    };
 
-   var parseFcn = parseNURBS .bind (ctor);
+   const parseFcn = parseNURBS .bind (ctor);
 
    Object .defineProperty (ctor, "domain",
    {
@@ -2543,53 +2324,6 @@ const nurbs_default_ = nurbs;
 
 /* harmony default export */ const nurbs_nurbs = (external_X_ITE_X3D_Namespace_default().add ("nurbs", nurbs_default_));
 ;// ./src/x_ite/Components/NURBS/NurbsCurve.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -2703,9 +2437,7 @@ Object .assign (Object .setPrototypeOf (NurbsCurve .prototype, NURBS_X3DParametr
 
       // Knots
 
-      const
-         knots = this .getKnots (this .knots, closed, this ._order .getValue (), this .controlPointNode .getSize (), this ._knot),
-         scale = knots .at (-1) - knots [0];
+      const knots = this .getKnots (this .knots, closed, this ._order .getValue (), this .controlPointNode .getSize (), this ._knot);
 
       // Initialize NURBS tessellator
 
@@ -2764,53 +2496,6 @@ const NurbsCurve_default_ = NurbsCurve;
 
 /* harmony default export */ const NURBS_NurbsCurve = (external_X_ITE_X3D_Namespace_default().add ("NurbsCurve", NurbsCurve_default_));
 ;// ./src/x_ite/Components/NURBS/NurbsCurve2D.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -2877,9 +2562,7 @@ Object .assign (Object .setPrototypeOf (NurbsCurve2D .prototype, NURBS_X3DNurbsC
 
       // Knots
 
-      const
-         knots = this .getKnots (this .knots, closed, this ._order .getValue (), this ._controlPoint .length, this ._knot),
-         scale = knots .at (-1) - knots [0];
+      const knots = this .getKnots (this .knots, closed, this ._order .getValue (), this ._controlPoint .length, this ._knot);
 
       // Initialize NURBS tessellator
 
@@ -2967,54 +2650,6 @@ var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(ex
 const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
 var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Algorithm_namespaceObject);
 ;// ./src/x_ite/Components/NURBS/NurbsOrientationInterpolator.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 
 
 
@@ -3090,7 +2725,7 @@ Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype,
 
          this .derivative (direction, u);
 
-         this ._value_changed = rotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).zAxis, direction);
+         this ._value_changed = rotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, direction);
       };
    })(),
 });
@@ -3121,53 +2756,6 @@ const NurbsOrientationInterpolator_default_ = NurbsOrientationInterpolator;
 const external_X_ITE_X3D_Triangle3_namespaceObject = __X_ITE_X3D__ .Triangle3;
 var external_X_ITE_X3D_Triangle3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Triangle3_namespaceObject);
 ;// ./src/x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -3309,9 +2897,7 @@ Object .assign (Object .setPrototypeOf (X3DNurbsSurfaceGeometryNode .prototype, 
 
       const
          uKnots = this .getKnots (this .uKnots, uClosed, this ._uOrder .getValue (), this ._uDimension .getValue (), this ._uKnot),
-         vKnots = this .getKnots (this .vKnots, vClosed, this ._vOrder .getValue (), this ._vDimension .getValue (), this ._vKnot),
-         uScale = uKnots .at (-1) - uKnots [0],
-         vScale = vKnots .at (-1) - vKnots [0];
+         vKnots = this .getKnots (this .vKnots, vClosed, this ._vOrder .getValue (), this ._vDimension .getValue (), this ._vKnot);
 
       // Initialize NURBS tessellator
 
@@ -3530,53 +3116,6 @@ const X3DNurbsSurfaceGeometryNode_default_ = X3DNurbsSurfaceGeometryNode;
 
 /* harmony default export */ const NURBS_X3DNurbsSurfaceGeometryNode = (external_X_ITE_X3D_Namespace_default().add ("X3DNurbsSurfaceGeometryNode", X3DNurbsSurfaceGeometryNode_default_));
 ;// ./src/x_ite/Components/NURBS/NurbsPatchSurface.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -3624,54 +3163,6 @@ const NurbsPatchSurface_default_ = NurbsPatchSurface;
 
 /* harmony default export */ const NURBS_NurbsPatchSurface = (external_X_ITE_X3D_Namespace_default().add ("NurbsPatchSurface", NurbsPatchSurface_default_));
 ;// ./src/x_ite/Components/NURBS/NurbsPositionInterpolator.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 
 
 
@@ -3769,53 +3260,6 @@ const NurbsPositionInterpolator_default_ = NurbsPositionInterpolator;
 const external_X_ITE_X3D_X3DBoundedObject_namespaceObject = __X_ITE_X3D__ .X3DBoundedObject;
 var external_X_ITE_X3D_X3DBoundedObject_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DBoundedObject_namespaceObject);
 ;// ./src/x_ite/Components/NURBS/NurbsSet.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -3852,12 +3296,17 @@ Object .assign (Object .setPrototypeOf (NurbsSet .prototype, (external_X_ITE_X3D
    },
    getBBox (bbox, shadows)
    {
-      // Add bounding boxes
+      if (this .isDefaultBBoxSize ())
+      {
+         // Add bounding boxes
 
-      for (const geometryNode of this .geometryNodes)
-         bbox .add (geometryNode .getBBox ());
+         for (const geometryNode of this .geometryNodes)
+            bbox .add (geometryNode .getBBox ());
 
-      return bbox;
+         return bbox;
+      }
+
+      return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
    set_tessellationScale__ ()
    {
@@ -3941,54 +3390,6 @@ const NurbsSet_default_ = NurbsSet;
 
 /* harmony default export */ const NURBS_NurbsSet = (external_X_ITE_X3D_Namespace_default().add ("NurbsSet", NurbsSet_default_));
 ;// ./src/x_ite/Components/NURBS/NurbsSurfaceInterpolator.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 
 
 
@@ -4117,53 +3518,6 @@ const NurbsSurfaceInterpolator_default_ = NurbsSurfaceInterpolator;
 const external_X_ITE_X3D_Extrusion_namespaceObject = __X_ITE_X3D__ .Extrusion;
 var external_X_ITE_X3D_Extrusion_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Extrusion_namespaceObject);
 ;// ./src/x_ite/Components/NURBS/NurbsSweptSurface.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -4287,53 +3641,6 @@ const NurbsSweptSurface_default_ = NurbsSweptSurface;
 
 /* harmony default export */ const NURBS_NurbsSweptSurface = (external_X_ITE_X3D_Namespace_default().add ("NurbsSweptSurface", NurbsSweptSurface_default_));
 ;// ./src/x_ite/Components/NURBS/NurbsSwungSurface.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -4457,53 +3764,6 @@ const NurbsSwungSurface_default_ = NurbsSwungSurface;
 
 /* harmony default export */ const NURBS_NurbsSwungSurface = (external_X_ITE_X3D_Namespace_default().add ("NurbsSwungSurface", NurbsSwungSurface_default_));
 ;// ./src/x_ite/Components/NURBS/NurbsTextureCoordinate.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -4597,53 +3857,6 @@ const NurbsTextureCoordinate_default_ = NurbsTextureCoordinate;
 
 /* harmony default export */ const NURBS_NurbsTextureCoordinate = (external_X_ITE_X3D_Namespace_default().add ("NurbsTextureCoordinate", NurbsTextureCoordinate_default_));
 ;// ./src/standard/Math/Geometry/Triangle2.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 const Triangle2 =
@@ -4701,14 +3914,14 @@ const Triangle2 =
     * @param {Vector2} c third point of triangle
     * @returns
     */
-   toBarycentric: (function ()
+   toBarycentric: (() =>
    {
       const
          v0 = new (external_X_ITE_X3D_Vector2_default()) (),
          v1 = new (external_X_ITE_X3D_Vector2_default()) (),
          v2 = new (external_X_ITE_X3D_Vector2_default()) ();
 
-      return function (point, a, b, c, result)
+      return function (point, a, b, c, result = { })
       {
          v0 .assign (b) .subtract (a);
          v1 .assign (c) .subtract (a);
@@ -4739,54 +3952,6 @@ const Triangle2_default_ = Triangle2;
 const external_X_ITE_X3D_libtess_namespaceObject = __X_ITE_X3D__ .libtess;
 var external_X_ITE_X3D_libtess_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_libtess_namespaceObject);
 ;// ./src/x_ite/Components/NURBS/NurbsTrimmedSurface.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 
 
 
@@ -5167,53 +4332,6 @@ const NurbsTrimmedSurface_default_ = NurbsTrimmedSurface;
 
 /* harmony default export */ const NURBS_NurbsTrimmedSurface = (external_X_ITE_X3D_Namespace_default().add ("NurbsTrimmedSurface", NurbsTrimmedSurface_default_));
 ;// ./src/assets/components/NURBSComponent.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 

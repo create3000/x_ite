@@ -1,73 +1,25 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import Fields       from "../../Fields.js";
 import VertexArray  from "../../Rendering/VertexArray.js";
 import X3DNode      from "../Core/X3DNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
+import X3DCast      from "../../Base/X3DCast.js";
 import MikkTSpace   from "../../Browser/Rendering/MikkTSpace.js";
-import Shading      from "../../Browser/Core/Shading.js";
-import Vector2      from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3      from "../../../standard/Math/Numbers/Vector3.js";
+import Vector4      from "../../../standard/Math/Numbers/Vector4.js";
 import Matrix4      from "../../../standard/Math/Numbers/Matrix4.js";
 import Box3         from "../../../standard/Math/Geometry/Box3.js";
 import Plane3       from "../../../standard/Math/Geometry/Plane3.js";
-import Triangle3    from "../../../standard/Math/Geometry/Triangle3.js";
 import Algorithm    from "../../../standard/Math/Algorithm.js";
 import DEVELOPMENT  from "../../DEVELOPMENT.js";
 
 // Box normals for bbox / line intersection.
 const boxNormals = [
-   new Vector3 (0,  0,  1), // front
-   new Vector3 (0,  0, -1), // back
-   new Vector3 (0,  1,  0), // top
-   new Vector3 (0, -1,  0), // bottom
-   new Vector3 (1,  0,  0)  // right
-   // left: We do not have to test for left.
+   Vector3 .Z_AXIS,          // front
+   Vector3 .NEGATIVE_Z_AXIS, // back
+   Vector3 .Y_AXIS,          // top
+   Vector3 .NEGATIVE_Y_AXIS, // bottom
+   Vector3 .X_AXIS,          // right
+   // left: We do not need to test for left.
 ];
 
 function X3DGeometryNode (executionContext)
@@ -78,7 +30,7 @@ function X3DGeometryNode (executionContext)
 
    this .addChildObjects (X3DConstants .outputOnly, "transparent",  new Fields .SFBool (),
                           X3DConstants .outputOnly, "bbox_changed", new Fields .SFTime (),
-                          X3DConstants .outputOnly, "rebuild",      new Fields .SFTime ());
+                          X3DConstants .outputOnly, "rebuild",      new Fields .SFTime (Date .now () / 1000));
 
    // Members
 
@@ -90,7 +42,6 @@ function X3DGeometryNode (executionContext)
    this .solid                    = true;
    this .primitiveMode            = browser .getContext () .TRIANGLES;
    this .geometryType             = 3;
-   this .flatShading              = undefined;
    this .colorMaterial            = false;
    this .attribNodes              = [ ];
    this .attribArrays             = [ ];
@@ -102,7 +53,6 @@ function X3DGeometryNode (executionContext)
    this .colors                   = X3DGeometryNode .createArray ();
    this .tangents                 = X3DGeometryNode .createArray ();
    this .normals                  = X3DGeometryNode .createArray ();
-   this .flatNormals              = X3DGeometryNode .createArray ();
    this .vertices                 = X3DGeometryNode .createArray ();
    this .hasFogCoords             = false;
    this .hasNormals               = false;
@@ -175,8 +125,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       this .addInterest ("requestRebuild", this);
       this ._rebuild .addInterest ("rebuild", this);
 
-      this .frontFace             = gl .CCW;
-      this .backFace              = new Map ([[gl .CCW, gl .CW], [gl .CW, gl .CCW]]);
       this .coordIndexBuffer      = gl .createBuffer ();
       this .attribBuffers         = [ ];
       this .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
@@ -188,6 +136,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       this .vertexBuffer          = gl .createBuffer ();
       this .vertexArrayObject     = new VertexArray (gl);
 
+      this .setCCW (true);
       this .set_live__ ();
    },
    getGeometryType ()
@@ -238,7 +187,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    },
    getMatrix ()
    {
-      return Matrix4 .Identity;
+      return Matrix4 .IDENTITY;
    },
    getPrimitiveMode ()
    {
@@ -261,6 +210,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       const gl = this .getBrowser () .getContext ();
 
       this .frontFace = value ? gl .CCW : gl .CW;
+      this .backFace  = value ? gl .CW  : gl .CCW;
    },
    getCoordIndices ()
    {
@@ -490,10 +440,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    {
       // Apply screen nodes transformation in place here.
    },
-   isClipped (point, clipPlanes)
-   {
-      return clipPlanes .some (clipPlane => clipPlane .isClipped (point));
-   },
    intersectsLine: (() =>
    {
       const
@@ -501,10 +447,9 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          uvt             = { u: 0, v: 0, t: 0 },
          v0              = new Vector3 (),
          v1              = new Vector3 (),
-         v2              = new Vector3 (),
-         clipPoint       = new Vector3 ();
+         v2              = new Vector3 ();
 
-      return function (hitRay, matrix, clipPlanes, intersections)
+      return function (hitRay, matrix, intersections)
       {
          if (this .intersectsBBox (hitRay))
          {
@@ -525,94 +470,52 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
                v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
                v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
 
-               if (hitRay .intersectsTriangle (v0, v1, v2, uvt))
-               {
-                  // Get barycentric coordinates.
+               if (!hitRay .intersectsTriangle (v0, v1, v2, uvt))
+                  continue;
 
-                  const { u, v, t } = uvt;
+               // Get barycentric coordinates.
 
-                  // Determine vectors for X3DPointingDeviceSensors.
+               const { u, v, t } = uvt;
 
-                  const point = new Vector3 (u * vertices [i4]     + v * vertices [i4 + 4] + t * vertices [i4 +  8],
-                                             u * vertices [i4 + 1] + v * vertices [i4 + 5] + t * vertices [i4 +  9],
-                                             u * vertices [i4 + 2] + v * vertices [i4 + 6] + t * vertices [i4 + 10]);
+               // Determine vectors for LinePickSensor.
 
-                  if (clipPlanes .length)
-                  {
-                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
-                        continue;
-                  }
+               const point = new Vector3 (u * vertices [i4]     + v * vertices [i4 + 4] + t * vertices [i4 +  8],
+                                          u * vertices [i4 + 1] + v * vertices [i4 + 5] + t * vertices [i4 +  9],
+                                          u * vertices [i4 + 2] + v * vertices [i4 + 6] + t * vertices [i4 + 10]);
 
-                  const texCoord = new Vector2 (u * texCoords [i4]     + v * texCoords [i4 + 4] + t * texCoords [i4 + 8],
-                                                u * texCoords [i4 + 1] + v * texCoords [i4 + 5] + t * texCoords [i4 + 9]);
+               const texCoord = new Vector4 (u * texCoords [i4]     + v * texCoords [i4 + 4] + t * texCoords [i4 + 8],
+                                             u * texCoords [i4 + 1] + v * texCoords [i4 + 5] + t * texCoords [i4 + 9],
+                                             u * texCoords [i4 + 2] + v * texCoords [i4 + 6] + t * texCoords [i4 + 10],
+                                             u * texCoords [i4 + 3] + v * texCoords [i4 + 7] + t * texCoords [i4 + 11]);
 
-                  const i3 = i * 3;
+               const i3 = i * 3;
 
-                  const normal = new Vector3 (u * normals [i3]     + v * normals [i3 + 3] + t * normals [i3 + 6],
-                                              u * normals [i3 + 1] + v * normals [i3 + 4] + t * normals [i3 + 7],
-                                              u * normals [i3 + 2] + v * normals [i3 + 5] + t * normals [i3 + 8]);
+               const normal = new Vector3 (u * normals [i3]     + v * normals [i3 + 3] + t * normals [i3 + 6],
+                                           u * normals [i3 + 1] + v * normals [i3 + 4] + t * normals [i3 + 7],
+                                           u * normals [i3 + 2] + v * normals [i3 + 5] + t * normals [i3 + 8]);
 
-                  intersections .push ({ texCoord, normal, point: this .getMatrix () .multVecMatrix (point) });
-               }
+               intersections .push ({ texCoord, normal, point: this .getMatrix () .multVecMatrix (point) });
             }
          }
 
          return intersections .length;
       };
    })(),
-   getPlanesWithOffset: (() =>
-   {
-      const
-         min    = new Vector3 (),
-         max    = new Vector3 (),
-         planes = [ ];
-
-      for (let i = 0; i < 5; ++ i)
-         planes [i] = new Plane3 ();
-
-      return function (minX, minY, minZ, maxX, maxY, maxZ)
-      {
-         min .set (minX, minY, minZ);
-         max .set (maxX, maxY, maxZ);
-
-         for (let i = 0; i < 5; ++ i)
-            planes [i] .set (i % 2 ? min : max, boxNormals [i]);
-
-         return planes;
-      };
-   })(),
    intersectsBBox: (() =>
    {
       const intersection = new Vector3 ();
 
-      return function (hitRay, offsets)
+      return function (hitRay)
       {
-         if (offsets)
-         {
-            var
-               min    = this .min,
-               max    = this .max,
-               minX   = min .x - offsets .x,
-               maxX   = max .x + offsets .x,
-               minY   = min .y - offsets .y,
-               maxY   = max .y + offsets .y,
-               minZ   = min .z - offsets .z,
-               maxZ   = max .z + offsets .z,
-               planes = this .getPlanesWithOffset (minX, minY, minZ, maxX, maxY, maxZ);
-         }
-         else
-         {
-            var
-               min    = this .min,
-               max    = this .max,
-               minX   = min .x,
-               maxX   = max .x,
-               minY   = min .y,
-               maxY   = max .y,
-               minZ   = min .z,
-               maxZ   = max .z,
-               planes = this .planes;
-         }
+         const { min, max, planes } = this;
+
+         const
+            minX = min .x,
+            maxX = max .x,
+            minY = min .y,
+            maxY = max .y,
+            minZ = min .z,
+            maxZ = max .z;
 
          // front
          if (planes [0] .intersectsLine (hitRay, intersection))
@@ -657,134 +560,31 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          return false;
       };
    })(),
-   intersectsBox: (() =>
-   {
-      const
-         v0        = new Vector3 (),
-         v1        = new Vector3 (),
-         v2        = new Vector3 (),
-         invMatrix = new Matrix4 (),
-         clipPoint = new Vector3 ();
-
-      return function (box, clipPlanes, modelViewMatrix)
-      {
-         if (box .intersectsBox (this .bbox))
-         {
-            box .multRight (invMatrix .assign (this .getMatrix ()) .inverse ());
-
-            this .transformMatrix (modelViewMatrix); // Apply screen transformations from screen nodes.
-
-            const vertices = this .vertices .getValue ();
-
-            for (let i = 0, length = this .vertexCount; i < length; i += 3)
-            {
-               const i4 = i * 4;
-
-               v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
-               v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
-               v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
-
-               if (box .intersectsTriangle (v0, v1, v2))
-               {
-                  if (clipPlanes .length)
-                  {
-                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v0)), clipPlanes))
-                        continue;
-
-                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v1)), clipPlanes))
-                        continue;
-
-                     if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v2)), clipPlanes))
-                        continue;
-                  }
-
-                  return true;
-               }
-            }
-         }
-
-         return false;
-      };
-   })(),
    set_live__ ()
+   {
+      // Is overloaded by primitives with option nodes.
+   },
+   connectOptions (options)
    {
       const
          browser      = this .getBrowser (),
          alwaysUpdate = this .isLive () && browser .getBrowserOption ("AlwaysUpdateGeometries");
 
       if (this .getLive () .getValue () || alwaysUpdate)
-         browser .getBrowserOptions () ._Shading .addInterest ("set_shading__", this);
-      else
-         browser .getBrowserOptions () ._Shading .removeInterest ("set_shading__", this);
-   },
-   set_shading__: (() =>
-   {
-      const
-         v0     = new Vector3 (),
-         v1     = new Vector3 (),
-         v2     = new Vector3 (),
-         normal = new Vector3 ();
-
-      return function (shading)
       {
-         const
-            browser = this .getBrowser (),
-            gl      = browser .getContext ();
+         options .addInterest ("requestRebuild", this);
 
-         if (this .geometryType < 2)
-         {
-            gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, this .normals .getValue (), gl .DYNAMIC_DRAW);
-         }
-         else
-         {
-            const flatShading = browser .getBrowserOptions () .getShading () === Shading .FLAT;
-
-            if (flatShading === this .flatShading)
-               return;
-
-            this .flatShading = flatShading;
-
-            // Generate flat normals if needed.
-
-            if (flatShading)
-            {
-               if (!this .flatNormals .length)
-               {
-                  const
-                     cw          = this .frontFace === gl .CW,
-                     flatNormals = this .flatNormals,
-                     vertices    = this .vertices .getValue ();
-
-                  for (let i = 0, length = vertices .length; i < length; i += 12)
-                  {
-                     Triangle3 .normal (v0 .set (vertices [i],     vertices [i + 1], vertices [i + 2]),
-                                        v1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]),
-                                        v2 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]),
-                                        normal);
-
-                     if (cw)
-                        normal .negate ();
-
-                     flatNormals .push (normal .x, normal .y, normal .z,
-                                        normal .x, normal .y, normal .z,
-                                        normal .x, normal .y, normal .z);
-                  }
-
-                  flatNormals .shrinkToFit ();
-               }
-            }
-
-            // Transfer normals.
-
-            gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
-            gl .bufferData (gl .ARRAY_BUFFER, flatShading ? this .flatNormals .getValue () : this .normals .getValue (), gl .DYNAMIC_DRAW);
-         }
-      };
-   })(),
+         if (options .getModificationTime () >= this ._rebuild .getValue ())
+            this .requestRebuild ();
+      }
+      else
+      {
+         options .removeInterest ("requestRebuild", this);
+      }
+   },
    requestRebuild ()
    {
-      this ._rebuild .addEvent ();
+      this ._rebuild = Date .now () / 1000;
    },
    rebuild ()
    {
@@ -828,8 +628,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    {
       // BBox
 
-      this .min .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
-      this .max .set (Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY, Number .NEGATIVE_INFINITY);
+      this .min .set (Number .POSITIVE_INFINITY);
+      this .max .set (Number .NEGATIVE_INFINITY);
 
       // Create attribArray arrays.
       {
@@ -848,8 +648,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       // Buffer
 
-      this .flatShading = undefined;
-
       this .coordIndices   .length = 0;
       this .fogDepths      .length = 0;
       this .colors         .length = 0;
@@ -857,7 +655,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       this .texCoords      .length = 0;
       this .tangents       .length = 0;
       this .normals        .length = 0;
-      this .flatNormals    .length = 0;
       this .vertices       .length = 0;
    },
    updateBBox: (() =>
@@ -893,7 +690,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          }
          else
          {
-            this .bbox .setExtents (min .set (0, 0, 0), max .set (0, 0, 0));
+            this .bbox .setExtents (min .set (0), max .set (0));
          }
 
          for (let i = 0; i < 5; ++ i)
@@ -970,7 +767,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       const lastHasNormals = this .hasNormals;
 
-      this .set_shading__ (this .getBrowser () .getBrowserOptions () ._Shading);
+      gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
+      gl .bufferData (gl .ARRAY_BUFFER, this .normals .getValue (), gl .DYNAMIC_DRAW);
 
       this .hasNormals = !! this .normals .length;
 
@@ -986,12 +784,15 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    },
    updateGeometryKey ()
    {
-      this .geometryKey  = "";
-      this .geometryKey += this .geometryType;
-      this .geometryKey += this .hasFogCoords  ? "1" : "0";
-      this .geometryKey += this .colorMaterial ? "1" : "0";
-      this .geometryKey += this .hasTangents   ? "1" : "0";
-      this .geometryKey += this .hasNormals    ? "1" : "0";
+      let key = "";
+
+      key += this .geometryType;
+      key += this .hasFogCoords  ? 1 : 0;
+      key += this .colorMaterial ? 1 : 0;
+      key += this .hasTangents   ? 1 : 0;
+      key += this .hasNormals    ? 1 : 0;
+
+      this .geometryKey = key;
    },
    updateRenderFunctions ()
    {
@@ -1041,8 +842,18 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          renderModeNodes = appearanceNode .getRenderModes (),
          shaderNode      = appearanceNode .getShader (this, renderContext);
 
+      // Enable render mode nodes.
+
       for (const node of renderModeNodes)
          node .enable (gl);
+
+      // Handle negative scale.
+
+      const positiveScale = Matrix4 .prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
+
+      gl .frontFace (positiveScale ? this .frontFace : this .backFace);
+
+      // Draw front and back faces.
 
       if (this .solid || !appearanceNode .getBackMaterial ())
       {
@@ -1055,6 +866,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          this .displayGeometry (gl, renderContext, backShaderNode, true,  false);
          this .displayGeometry (gl, renderContext, shaderNode,     false, true);
       }
+
+      // Disable render mode nodes.
 
       for (const node of renderModeNodes)
          node .disable (gl);
@@ -1097,10 +910,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       }
 
       // Draw depending on wireframe, solid and transparent.
-
-      const positiveScale = Matrix4 .prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
-
-      gl .frontFace (positiveScale ? this .frontFace : this .backFace .get (this .frontFace));
 
       if (renderContext .transparent || back !== front)
       {
@@ -1167,13 +976,22 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    displayInstanced (gl, renderContext, shapeNode)
    {
       const
-         browser         = this .getBrowser (),
          appearanceNode  = renderContext .appearanceNode,
          renderModeNodes = appearanceNode .getRenderModes (),
          shaderNode      = appearanceNode .getShader (this, renderContext);
 
+      // Enable render mode nodes.
+
       for (const node of renderModeNodes)
          node .enable (gl);
+
+      // Handle negative scale.
+
+      const positiveScale = Matrix4 .prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
+
+      gl .frontFace (positiveScale ? this .frontFace : this .backFace);
+
+      // Draw front and back faces.
 
       if (this .solid || !appearanceNode .getBackMaterial ())
       {
@@ -1187,14 +1005,16 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          this .displayInstancedGeometry (gl, renderContext, shaderNode,     false, true,  shapeNode);
       }
 
+      // Disable render mode nodes.
+
       for (const node of renderModeNodes)
          node .disable (gl);
    },
    displayInstancedGeometry (gl, renderContext, shaderNode, back, front, shapeNode)
    {
       const
-         browser         = this .getBrowser (),
-         primitiveMode   = browser .getPrimitiveMode (this .primitiveMode);
+         browser       = this .getBrowser (),
+         primitiveMode = browser .getPrimitiveMode (this .primitiveMode);
 
       // Setup shader.
 
@@ -1248,10 +1068,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       // Draw depending on wireframe, solid and transparent.
 
-      const positiveScale = Matrix4 .prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
-
-      gl .frontFace (positiveScale ? this .frontFace : this .backFace .get (this .frontFace));
-
       if (renderContext .transparent || back !== front)
       {
          // Render transparent or back or front.
@@ -1281,6 +1097,113 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
          gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, shapeNode .getNumInstances ());
       }
+   },
+},
+// Common functions for all X3DComposedGeometryNode types and some other nodes:
+{
+   getFogCoord ()
+   {
+      return this .fogCoordNode;
+   },
+   getColor ()
+   {
+      return this .colorNode;
+   },
+   getTexCoord ()
+   {
+      return this .texCoordNode;
+   },
+   getTangent ()
+   {
+      return this .tangentNode;
+   },
+   getNormal ()
+   {
+      return this .normalNode;
+   },
+   getCoord ()
+   {
+      return this .coordNode;
+   },
+   set_attrib__ ()
+   {
+      const attribNodes = this .getAttrib ();
+
+      for (const attribNode of attribNodes)
+      {
+         attribNode .removeInterest ("requestRebuild", this);
+         attribNode ._attribute_changed .removeInterest ("updateVertexArrays", this);
+      }
+
+      attribNodes .length = 0;
+
+      for (const node of this ._attrib)
+      {
+         const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, node);
+
+         if (attribNode)
+            attribNodes .push (attribNode);
+      }
+
+      for (const attribNode of attribNodes)
+      {
+         attribNode .addInterest ("requestRebuild", this);
+         attribNode ._attribute_changed .addInterest ("updateVertexArrays", this);
+      }
+
+      this .updateVertexArrays ();
+   },
+   set_fogCoord__ ()
+   {
+      this .fogCoordNode ?.removeInterest ("requestRebuild", this);
+
+      this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this ._fogCoord);
+
+      this .fogCoordNode ?.addInterest ("requestRebuild", this);
+   },
+   set_color__ ()
+   {
+      this .colorNode ?.removeInterest ("requestRebuild", this);
+
+      this .colorNode = X3DCast (X3DConstants .X3DColorNode, this ._color);
+
+      this .colorNode ?.addInterest ("requestRebuild", this);
+
+      this .setTransparent (this .colorNode ?.isTransparent ());
+   },
+   set_texCoord__ ()
+   {
+      this .texCoordNode ?.removeInterest ("requestRebuild", this);
+
+      this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this ._texCoord);
+
+      this .texCoordNode ?.addInterest ("requestRebuild", this);
+
+      this .setTextureCoordinate (this .texCoordNode);
+   },
+   set_tangent__ ()
+   {
+      this .tangentNode ?.removeInterest ("requestRebuild", this);
+
+      this .tangentNode = X3DCast (X3DConstants .X3DTangentNode, this ._tangent);
+
+      this .tangentNode ?.addInterest ("requestRebuild", this);
+   },
+   set_normal__ ()
+   {
+      this .normalNode ?.removeInterest ("requestRebuild", this);
+
+      this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this ._normal);
+
+      this .normalNode ?.addInterest ("requestRebuild", this);
+   },
+   set_coord__ ()
+   {
+      this .coordNode ?.removeInterest ("requestRebuild", this);
+
+      this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._coord);
+
+      this .coordNode ?.addInterest ("requestRebuild", this);
    },
 });
 

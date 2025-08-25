@@ -7,11 +7,6 @@ Object .assign ($,
 
       return new TextDecoder () .decode (input);
    },
-   enum (object, property)
-   {
-      if (object .hasOwnProperty (property))
-         return object [property];
-   },
    sleep (ms)
    {
       return new Promise (resolve => setTimeout (resolve, ms));
@@ -60,21 +55,5 @@ Object .assign ($,
 // class C {
 //   @iffe fn (... args) { return function () { }; }
 // }
-
-Object .assign ($.fn,
-{
-   isInViewport ()
-   {
-      const
-         $this          = $(this),
-         $window        = $(window),
-         elementTop     = $this .offset () .top,
-         elementBottom  = elementTop + $this .outerHeight (),
-         viewportTop    = $window .scrollTop (),
-         viewportBottom = viewportTop + $window .height ();
-
-      return elementBottom > viewportTop && elementTop < viewportBottom;
-   },
-});
 
 export default $;

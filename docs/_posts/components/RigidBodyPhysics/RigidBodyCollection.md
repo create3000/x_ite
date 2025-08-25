@@ -15,7 +15,7 @@ tags: [RigidBodyCollection, RigidBodyPhysics]
 
 RigidBodyCollection represents a system of bodies that interact within a single physics model.
 
-The RigidBodyCollection node belongs to the **RigidBodyPhysics** component and requires at least level **2,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The RigidBodyCollection node belongs to the [RigidBodyPhysics](/x_ite/components/overview/#rigidbodyphysics) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -27,7 +27,33 @@ The RigidBodyCollection node belongs to the **RigidBodyPhysics** component and r
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
+| MFNode | [in] | [set_contacts](#fields-set_contacts) |  |
+| SFVec3f | [in, out] | [gravity](#fields-gravity) | 0 -9.8 0  |
+| SFBool | [in, out] | [preferAccuracy](#fields-preferAccuracy) | FALSE |
+| SFFloat | [in, out] | [errorCorrection](#fields-errorCorrection) | 0.8  |
+| SFInt32 | [in, out] | [iterations](#fields-iterations) | 10  |
+| SFFloat | [in, out] | [constantForceMix](#fields-constantForceMix) | 0.0001  |
+| SFFloat | [in, out] | [maxCorrectionSpeed](#fields-maxCorrectionSpeed) | -1  |
+| SFFloat | [in, out] | [contactSurfaceThickness](#fields-contactSurfaceThickness) | 0  |
+| SFBool | [in, out] | [autoDisable](#fields-autoDisable) | FALSE |
+| SFTime | [in, out] | [disableTime](#fields-disableTime) | 0  |
+| SFFloat | [in, out] | [disableLinearSpeed](#fields-disableLinearSpeed) | 0  |
+| SFFloat | [in, out] | [disableAngularSpeed](#fields-disableAngularSpeed) | 0  |
+| SFNode | [ ] | [collider](#fields-collider) | NULL  |
+| MFNode | [in, out] | [bodies](#fields-bodies) | [ ] |
+| MFNode | [in, out] | [joints](#fields-joints) | [ ] |
+| SFBool | [in, out] | [visible](#fields-visible) | TRUE |
+| SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -36,10 +62,12 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFBool [in, out] **enabled** TRUE
+{: #fields-enabled }
 
 Enables/disables node operation.
 
 ### MFNode [in] **set_contacts** <small class="red">not supported</small>
+{: #fields-set_contacts }
 
 *set_contacts* input field for [Contact](/x_ite/components/rigidbodyphysics/contact/) nodes provides per-frame information about *contacts* between bodies.
 
@@ -48,22 +76,27 @@ Enables/disables node operation.
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFVec3f [in, out] **gravity** 0 -9.8 0 <small>(-∞,∞)</small>
+{: #fields-gravity }
 
 *gravity* indicates direction and strength of local *gravity* vector for this collection of bodies (units m/sec^2).
 
 ### SFBool [in, out] **preferAccuracy** FALSE
+{: #fields-preferAccuracy }
 
 *preferAccuracy* provides hint for performance preference: higher accuracy or faster computational speed.
 
 ### SFFloat [in, out] **errorCorrection** 0.8 <small>[0,1]</small> <small class="red">not supported</small>
+{: #fields-errorCorrection }
 
 *errorCorrection* describes how quickly intersection errors due to floating-point inaccuracies are resolved (0=no correction, 1=all corrected in single step).
 
 ### SFInt32 [in, out] **iterations** 10 <small>[0,∞)</small>
+{: #fields-iterations }
 
 *iterations* controls number of *iterations* performed over collectioned joints and bodies during each evaluation.
 
 ### SFFloat [in, out] **constantForceMix** 0.0001 <small>[0,∞)</small> <small class="red">not supported</small>
+{: #fields-constantForceMix }
 
 *constantForceMix* modifies damping calculations by violating normal constraints while applying small, constant forces in those calculations.
 
@@ -73,18 +106,22 @@ Enables/disables node operation.
 - Spring-driven or spongy connections can be emulated by combined use of errorCorrection and *constantForceMix*.
 
 ### SFFloat [in, out] **maxCorrectionSpeed** -1 <small>[0,∞) or -1</small> <small class="red">not supported</small>
+{: #fields-maxCorrectionSpeed }
 
 Or -1, *maxCorrectionSpeed* .
 
 ### SFFloat [in, out] **contactSurfaceThickness** 0 <small>[0,∞)</small>
+{: #fields-contactSurfaceThickness }
 
 *contactSurfaceThickness* defines how far bodies may interpenetrate after a collision, allowing simulation of softer bodies that deform somewhat during collision.
 
 ### SFBool [in, out] **autoDisable** FALSE
+{: #fields-autoDisable }
 
 *autoDisable* toggles operation of disableAngularSpeed, disableLinearSpeed, disableTime.
 
 ### SFTime [in, out] **disableTime** 0 <small>[0,∞)</small> <small class="red">not supported</small>
+{: #fields-disableTime }
 
 *disableTime* defines interval when body becomes at rest and not part of rigid body calculations, reducing numeric instabilities.
 
@@ -94,6 +131,7 @@ Or -1, *maxCorrectionSpeed* .
 - *disableTime* is an SFTime duration interval, not an absolute clock time.
 
 ### SFFloat [in, out] **disableLinearSpeed** 0 <small>[0,∞)</small>
+{: #fields-disableLinearSpeed }
 
 *disableLinearSpeed* defines lower-limit tolerance value when body is considered at rest and not part of rigid body calculation, reducing numeric instabilitiess.
 
@@ -102,6 +140,7 @@ Or -1, *maxCorrectionSpeed* .
 - Only activated if autoDisable='true'
 
 ### SFFloat [in, out] **disableAngularSpeed** 0 <small>[0,∞)</small>
+{: #fields-disableAngularSpeed }
 
 *disableAngularSpeed* defines lower-limit tolerance value when body is considered at rest and not part of rigid body calculations, reducing numeric instabilities.
 
@@ -110,14 +149,17 @@ Or -1, *maxCorrectionSpeed* .
 - Only activated if autoDisable='true'
 
 ### SFNode [ ] **collider** NULL <small>[CollisionCollection]</small>
+{: #fields-collider }
 
 The *collider* field associates a collision collection with this rigid body collection allowing seamless updates and integration without the need to use the X3D event model.
 
 ### MFNode [in, out] **bodies** [ ] <small>[RigidBody]</small>
+{: #fields-bodies }
 
 Collection of top-level nodes that comprise a set of *bodies* evaluated as a single set of interactions.
 
 ### MFNode [in, out] **joints** [ ] <small>[X3DRigidJointNode]</small>
+{: #fields-joints }
 
 The *joints* field is used to register all *joints* between bodies contained in this collection.
 
@@ -128,6 +170,7 @@ The *joints* field is used to register all *joints* between bodies contained in 
 - Joints not registered with any collection are not evaluated.
 
 ### SFBool [in, out] **visible** TRUE
+{: #fields-visible }
 
 Whether or not renderable content within this node is visually displayed.
 
@@ -137,6 +180,7 @@ Whether or not renderable content within this node is visually displayed.
 - Content must be *visible* to be collidable and to be pickable.
 
 ### SFBool [in, out] **bboxDisplay** FALSE
+{: #fields-bboxDisplay }
 
 Whether to display bounding box for associated geometry, aligned with world coordinates.
 
@@ -145,6 +189,7 @@ Whether to display bounding box for associated geometry, aligned with world coor
 - The bounding box is displayed regardless of whether contained content is visible.
 
 ### SFVec3f [ ] **bboxSize** -1 -1 -1 <small>[0,∞) or −1 −1 −1</small>
+{: #fields-bboxSize }
 
 Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
 
@@ -156,6 +201,7 @@ Bounding box size is usually omitted, and can easily be calculated automatically
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
 ### SFVec3f [ ] **bboxCenter** 0 0 0 <small>(-∞,∞)</small>
+{: #fields-bboxCenter }
 
 Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
 

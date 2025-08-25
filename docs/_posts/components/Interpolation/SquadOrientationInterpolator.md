@@ -15,7 +15,7 @@ tags: [SquadOrientationInterpolator, Interpolation]
 
 SquadOrientationInterpolator performs non-linear interpolation among paired lists of rotation values to produce an SFRotation value_changed output event.
 
-The SquadOrientationInterpolator node belongs to the **Interpolation** component and requires at least level **5,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The SquadOrientationInterpolator node belongs to the [Interpolation](/x_ite/components/overview/#interpolation) component and requires at least support level **5,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -28,7 +28,19 @@ The SquadOrientationInterpolator node belongs to the **Interpolation** component
 
 ## Fields
 
+| Type | Access Type | Name | Default Value |
+| ---- | ----------- | ---- | ------------- |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFFloat | [in] | [set_fraction](#fields-set_fraction) |  |
+| SFBool | [in, out] | [closed](#fields-closed) | FALSE |
+| MFFloat | [in, out] | [key](#fields-key) | [ ] |
+| MFRotation | [in, out] | [keyValue](#fields-keyValue) | [ ] |
+| SFBool | [in, out] | [normalizeVelocity](#fields-normalizeVelocity) | FALSE  |
+| SFRotation | [out] | [value_changed](#fields-value_changed) |  |
+{: .fields }
+
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
+{: #fields-metadata }
 
 Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
@@ -37,6 +49,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
 ### SFFloat [in] **set_fraction** <small>(-∞,∞)</small>
+{: #fields-set_fraction }
 
 *set_fraction* selects input key for corresponding use of keyValue, keyVelocity values for output computation.
 
@@ -49,10 +62,12 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFBool [in, out] **closed** FALSE
+{: #fields-closed }
 
 Input/Output field *closed*.
 
 ### MFFloat [in, out] **key** [ ] <small>(-∞,∞)</small>
+{: #fields-key }
 
 Definition parameters for nonlinear-interpolation function time intervals, listed in non-decreasing order and corresponding to keyValue, keyVelocity array values.
 
@@ -66,6 +81,7 @@ Definition parameters for nonlinear-interpolation function time intervals, liste
 - Values in *key* array shall be monotonically non-decreasing, meaning that each value is greater than or equal to the preceding value.
 
 ### MFRotation [in, out] **keyValue** [ ] <small>(-∞,∞)</small>
+{: #fields-keyValue }
 
 Output values for nonlinear interpolation, each corresponding to an input-fraction value in the key array.
 
@@ -73,7 +89,17 @@ Output values for nonlinear interpolation, each corresponding to an input-fracti
 
 - Number of keys must match number of keyValues!
 
+### SFBool [in, out] **normalizeVelocity** FALSE <small class="red">not supported</small>
+{: #fields-normalizeVelocity }
+
+*normalizeVelocity* field specifies whether the velocity vectors are normalized to produce smooth speed transitions, or transformed into tangency vectors.
+
+#### Hint
+
+- [X3D 19.2.3 Non-linear interpolation](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/interpolators.html#NonlinearInterpolation)
+
 ### SFRotation [out] **value_changed**
+{: #fields-value_changed }
 
 Nonlinearly interpolated output value computed by using current time fraction along with corresponding key, keyValue and keyVelocity values.
 

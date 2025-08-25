@@ -5,9 +5,19 @@ nav: reference
 categories: [Reference]
 tags: [Scene, Services, Authoring, Interface]
 ---
+
+## Hierarchy
+
+```
++ X3DExecutionContext
+  + X3DScene
+```
+
 ## X3DExecutionContext
 
 This section lists the methods available in the X3DExecutionContext object, which allows scripts to get access to the scene graph.
+
+A [Script](/x_ite/components/scripting/script/) node inside a proto instance only has access to the current X3DExecutionContext object and this via `Browser.currentScene`, which returns a reference to the execution context inside the proto instance.
 
 ### Instance Creation Method(s)
 
@@ -146,6 +156,7 @@ A reference to the ExportedNodesArray object used by this execution context. Thi
 
 ### Methods
 
+<!--
 #### **setProfile** (*profile: ProfileInfo*): void
 
 Replaces the profile of this scene by the given *profile*. A profile of `null` is equivalent to a 'Full' profile.
@@ -161,6 +172,7 @@ Updates the *component*.
 #### **removeComponent** (*name: string*): void
 
 Removes the component with the given *name*.
+-->
 
 #### **updateUnit** (*category: string, name: string, conversionFactor: number*): void
 
@@ -214,9 +226,9 @@ Creates or updates the exported node *exportedName.*
 
 Removes the exported node *exportedName.*
 
-#### **toVRMLString** (options?: Options): string
+#### **toVRMLString** (options?: Options): string <small><span class="blue">non-standard</span></small>
 
-Returns the X3D VRML-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, produce this scene.
+Returns the X3D VRML-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, will produce this scene.
 
 ##### Options
 
@@ -230,17 +242,17 @@ An object with one or more of these properties:
 * **html:** boolean, HTML style, default: false
 * **closingTags:** boolean, use closing tags, default: false
 
-#### **toXMLString** (options?: Options): string
+#### **toXMLString** (options?: Options): string <small><span class="blue">non-standard</span></small>
 
-Returns the X3D XML-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, produce this scene.
+Returns the X3D XML-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, will produce this scene.
 
-For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
+For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
-#### **toJSONString** (options?: Options): string
+#### **toJSONString** (options?: Options): string <small><span class="blue">non-standard</span></small>
 
-Returns the X3D JSON-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, produce this scene.
+Returns the X3D JSON-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, will produce this scene.
 
-For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string).
+For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
 ## ProfileInfo
 
@@ -338,7 +350,7 @@ Additional units, called *derived units* are used in this International Standard
 | area         | length<sup>2</sup>        |
 | volume       | length<sup>3</sup>        |
 
-The standard color space used by this International Standard is RGB where each color component has the range [0.,1.].
+The standard color space used by this International Standard is RGB where each color component has the range [0.0, 1.0].
 
 #### **name**: string
 

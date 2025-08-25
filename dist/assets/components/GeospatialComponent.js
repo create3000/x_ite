@@ -1,5 +1,5 @@
-/* X_ITE v11.5.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.0")];
+/* X_ITE v12.0.4 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.4")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -64,84 +64,49 @@ var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n
 const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
 ;// ./src/standard/Math/Geometry/Spheroid3.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-function Spheroid3 (semiMajorAxis, semiMinorAxis)
+function Spheroid3 (semiMajorAxis = 1, semiMinorAxis = 1, use_f_1 = false)
 {
-   switch (arguments .length)
-   {
-      case 0:
-         this .semiMajorAxis = 0; // a
-         this .semiMinorAxis = 0; // c
-         break;
-      case 2:
-         this .semiMajorAxis = semiMajorAxis; // a
-         this .semiMinorAxis = semiMinorAxis; // c
-         break;
-      case 3:
-         const f_1 = arguments [1];
-         this .semiMajorAxis = semiMajorAxis;                 // a
-         this .semiMinorAxis = semiMajorAxis * (1 - 1 / f_1); // c
-         break;
-   }
+   this .set (semiMajorAxis, semiMinorAxis, use_f_1);
 }
 
 Object .assign (Spheroid3 .prototype,
 {
-   getSemiMajorAxis ()
+   copy ()
    {
-      // Returns the semi-major axis (a)
-      return this .semiMajorAxis; // a
+      const copy = Object .create (Spheroid3 .prototype);
+
+      copy .semiMajorAxis = this .semiMajorAxis; // a
+      copy .semiMinorAxis = this .semiMinorAxis; // c
+
+      return copy;
    },
-   getSemiMinorAxis ()
+   assign (spheroid)
    {
-      // Returns the semi-minor axis (c)
-      return this .semiMinorAxis; // c
+      this .semiMajorAxis = spheroid .semiMajorAxis;
+      this .semiMinorAxis = spheroid .semiMinorAxis;
+
+      return this;
+   },
+   equals (spheroid)
+   {
+      return this .semiMajorAxis === spheroid .semiMajorAxis && this .semiMinorAxis === spheroid .semiMinorAxis;
+   },
+   set (semiMajorAxis = 1, semiMinorAxis = 1, use_f_1 = false)
+   {
+      if (use_f_1)
+      {
+         const f_1 = semiMinorAxis;
+
+         this .semiMajorAxis = semiMajorAxis;                   // a
+         this .semiMinorAxis = semiMajorAxis * (1 - (1 / f_1)); // c
+      }
+      else
+      {
+         this .semiMajorAxis = semiMajorAxis; // a
+         this .semiMinorAxis = semiMinorAxis; // c
+      }
+
+      return this;
    },
    toString ()
    {
@@ -154,53 +119,6 @@ const __default__ = Spheroid3;
 
 /* harmony default export */ const Geometry_Spheroid3 = (external_X_ITE_X3D_Namespace_default().add ("Spheroid3", __default__));
 ;// ./src/standard/Geospatial/ReferenceEllipsoids.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 const ReferenceEllipsoids = new Map ([
@@ -249,53 +167,6 @@ const ReferenceEllipsoids_default_ = ReferenceEllipsoids;
 
 /* harmony default export */ const Geospatial_ReferenceEllipsoids = (external_X_ITE_X3D_Namespace_default().add ("ReferenceEllipsoids", ReferenceEllipsoids_default_));
 ;// ./src/standard/Geospatial/Geodetic.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 const
    EPS_H = 1e-3,
    EPS_P = 1e-10,
@@ -305,9 +176,9 @@ function Geodetic (spheroid, latitudeFirst, radians)
 {
    this .longitudeFirst = ! latitudeFirst;
    this .degrees        = ! radians;
-   this .a              = spheroid .getSemiMajorAxis ();
-   this .c              = spheroid .getSemiMinorAxis ();
-   this .c2a2           = (spheroid .getSemiMinorAxis () / this .a) ** 2;
+   this .a              = spheroid .semiMajorAxis;
+   this .c              = spheroid .semiMinorAxis;
+   this .c2a2           = (spheroid .semiMinorAxis / this .a) ** 2;
    this .ecc2           = 1 - this .c2a2;
 }
 
@@ -317,17 +188,17 @@ Object .assign (Geodetic .prototype,
    {
       const elevation = geodetic .z;
 
+      let latitude, longitude;
+
       if (this .longitudeFirst)
       {
-         var
-            latitude  = geodetic .y,
-            longitude = geodetic .x;
+         latitude  = geodetic .y;
+         longitude = geodetic .x;
       }
       else
       {
-         var
-            latitude  = geodetic .x,
-            longitude = geodetic .y;
+         latitude  = geodetic .x;
+         longitude = geodetic .y;
       }
 
       if (this .degrees)
@@ -440,53 +311,6 @@ const Geodetic_default_ = Geodetic;
 const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
 var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Algorithm_namespaceObject);
 ;// ./src/standard/Geospatial/UniversalTransverseMercator.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -498,8 +322,8 @@ const
 function UniversalTransverseMercator (spheroid, zone, northernHemisphere, northingFirst)
 {
    const
-      a    = spheroid .getSemiMajorAxis (),
-      ecc2 = 1 - (spheroid .getSemiMinorAxis () / a) ** 2,
+      a    = spheroid .semiMajorAxis,
+      ecc2 = 1 - (spheroid .semiMinorAxis / a) ** 2,
       EE   = ecc2 / (1 - ecc2),
       e1   = (1 - Math .sqrt (1 - ecc2)) / (1 + Math .sqrt (1 - ecc2));
 
@@ -531,17 +355,17 @@ Object .assign (UniversalTransverseMercator .prototype,
    {
       // https://gist.github.com/duedal/840476
 
+      let northing, easting;
+
       if (this .eastingFirst)
       {
-         var
-            northing = utm .y,
-            easting  = utm .x;
+         northing = utm .y;
+         easting  = utm .x;
       }
       else
       {
-         var
-            northing = utm .x,
-            easting  = utm .y;
+         northing = utm .x;
+         easting  = utm .y;
       }
 
       // Check for southern hemisphere and remove offset from easting.
@@ -648,53 +472,6 @@ const UniversalTransverseMercator_default_ = UniversalTransverseMercator;
 
 /* harmony default export */ const Geospatial_UniversalTransverseMercator = (external_X_ITE_X3D_Namespace_default().add ("UniversalTransverseMercator", UniversalTransverseMercator_default_));
 ;// ./src/x_ite/Browser/Geospatial/Geocentric.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 function Geocentric () { }
@@ -712,8 +489,8 @@ Object .assign (Geocentric .prototype,
    slerp (source, destination, t)
    {
       const
-         sourceLength      = source      .magnitude (),
-         destinationLength = destination .magnitude ();
+         sourceLength      = source      .norm (),
+         destinationLength = destination .norm ();
 
       source      .normalize ();
       destination .normalize ();
@@ -727,53 +504,6 @@ const Geocentric_default_ = Geocentric;
 
 /* harmony default export */ const Geospatial_Geocentric = (external_X_ITE_X3D_Namespace_default().add ("Geocentric", Geocentric_default_));
 ;// ./src/x_ite/Browser/Geospatial/GeospatialObject.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -945,53 +675,6 @@ var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(exte
 const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
 var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
 ;// ./src/x_ite/Components/Geospatial/X3DGeospatialObject.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -1060,7 +743,7 @@ Object .assign (X3DGeospatialObject .prototype,
       if (this .geoOriginNode)
          this .geoOriginNode .getOrigin (this .origin);
       else
-         this .origin .set (0, 0, 0);
+         this .origin .set (0);
 
       this .set_originMatrix__ ();
    },
@@ -1081,7 +764,7 @@ Object .assign (X3DGeospatialObject .prototype,
          x .set (0, 0, 1) .cross (y);
 
          // Handle pole cases.
-         if (x .equals ((external_X_ITE_X3D_Vector3_default()).Zero))
+         if (x .equals ((external_X_ITE_X3D_Vector3_default()).ZERO))
             x .set (1, 0, 0);
 
          z .assign (x) .cross (y);
@@ -1190,7 +873,7 @@ function getStandardLocationMatrix (geoPoint, result)
    x .set (0, 0, 1) .cross (y);
 
    // Handle pole cases.
-   if (x .equals ((external_X_ITE_X3D_Vector3_default()).Zero))
+   if (x .equals ((external_X_ITE_X3D_Vector3_default()).ZERO))
       x .set (1, 0, 0);
 
    z .assign (x) .cross (y);
@@ -1214,53 +897,6 @@ const X3DGeospatialObject_default_ = X3DGeospatialObject;
 const external_X_ITE_X3D_Triangle3_namespaceObject = __X_ITE_X3D__ .Triangle3;
 var external_X_ITE_X3D_Triangle3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Triangle3_namespaceObject);
 ;// ./src/x_ite/Components/Geospatial/GeoCoordinate.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -1312,7 +948,7 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, (external_X_IT
          }
          else
          {
-            return result .set (0, 0, 0);
+            return result .set (0);
          }
       };
    })(),
@@ -1445,54 +1081,6 @@ var external_X_ITE_X3D_X3DGeometryNode_default = /*#__PURE__*/__webpack_require_
 const external_X_ITE_X3D_Vector2_namespaceObject = __X_ITE_X3D__ .Vector2;
 var external_X_ITE_X3D_Vector2_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector2_namespaceObject);
 ;// ./src/x_ite/Components/Geospatial/GeoElevationGrid.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 
 
 
@@ -1527,57 +1115,15 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (external_X
       Geospatial_X3DGeospatialObject .prototype .initialize .call (this);
 
       this ._set_height .addFieldInterest (this ._height);
-      this ._color      .addInterest ("set_color__", this);
+      this ._color      .addInterest ("set_color__",    this);
       this ._texCoord   .addInterest ("set_texCoord__", this);
-      this ._normal     .addInterest ("set_normal__", this);
+      this ._tangent    .addInterest ("set_tangent__",  this);
+      this ._normal     .addInterest ("set_normal__",   this);
 
       this .set_color__ ();
       this .set_texCoord__ ();
+      this .set_tangent__ ();
       this .set_normal__ ();
-   },
-   set_color__ ()
-   {
-      this .colorNode ?.removeInterest ("requestRebuild", this);
-
-      this .colorNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DColorNode, this ._color);
-
-      this .colorNode ?.addInterest ("requestRebuild", this);
-
-      this .setTransparent (this .colorNode ?.isTransparent ());
-   },
-   set_texCoord__ ()
-   {
-      this .texCoordNode ?.removeInterest ("requestRebuild", this);
-
-      this .texCoordNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTextureCoordinateNode, this ._texCoord);
-
-      this .texCoordNode ?.addInterest ("requestRebuild", this);
-
-      this .setTextureCoordinate (this .texCoordNode);
-   },
-   set_normal__ ()
-   {
-      this .normalNode ?.removeInterest ("requestRebuild", this);
-
-      this .normalNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNormalNode, this ._normal);
-
-      this .normalNode ?.addInterest ("requestRebuild", this);
-   },
-   getColor ()
-   {
-      return this .colorNode;
-   },
-   getTexCoord ()
-   {
-      return this .texCoordNode;
-   },
-   getNormal ()
-   {
-      return this .normalNode;
-   },
-   getTangent ()
-   {
-      return this .tangentNode;
    },
    getHeight (index)
    {
@@ -1606,14 +1152,15 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (external_X
    createNormals (points, coordIndex, creaseAngle)
    {
       const
-         cw          = !this ._ccw .getValue (),
-         normalIndex = new Map (),
-         normals     = [ ];
+         numCoordIndices = coordIndex .length,
+         cw              = !this ._ccw .getValue (),
+         normalIndex     = new Map (),
+         normals         = [ ];
 
       for (let p = 0; p < points .length; ++ p)
          normalIndex .set (p, [ ]);
 
-      for (let c = 0; c < coordIndex .length; c += 3)
+      for (let c = 0; c < numCoordIndices; c += 3)
       {
          const
             c0 = coordIndex [c],
@@ -1736,16 +1283,15 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (external_X
          coordIndex         = this .createCoordIndex (),
          colorNode          = this .getColor (),
          texCoordNode       = this .getTexCoord (),
-         normalNode         = this .getNormal (),
          tangentNode        = this .getTangent (),
+         normalNode         = this .getNormal (),
          points             = this .createPoints (),
          colorArray         = this .getColors (),
          multiTexCoordArray = this .getMultiTexCoords (),
+         tangentArray       = this .getTangents (),
          normalArray        = this .getNormals (),
-         tangentArray       = this .getTangent (),
-         vertexArray        = this .getVertices ();
-
-      let face = 0;
+         vertexArray        = this .getVertices (),
+         numCoordIndices    = coordIndex .length;
 
       // Vertex attribute
 
@@ -1754,22 +1300,25 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (external_X
       //for (size_t a = 0, size = attribNodes .size (); a < size; ++ a)
       //   attribArrays [a] .reserve (coordIndex .size ());
 
+      let texCoords, texCoordArray;
+
       if (texCoordNode)
       {
          texCoordNode .init (multiTexCoordArray);
       }
       else
       {
-         var
-            texCoords     = this .createTexCoords (),
-            texCoordArray = this .getTexCoords ();
+         texCoords     = this .createTexCoords (),
+         texCoordArray = this .getTexCoords ();
 
          multiTexCoordArray .push (texCoordArray);
       }
 
       // Build geometry
 
-      for (let c = 0; c < coordIndex .length; ++ face)
+      let face = 0;
+
+      for (let c = 0; c < numCoordIndices; ++ face)
       {
          for (let p = 0; p < 6; ++ p, ++ c)
          {
@@ -1793,8 +1342,8 @@ Object .assign (Object .setPrototypeOf (GeoElevationGrid .prototype, (external_X
                texCoordArray .push (x, y, 0, 1);
             }
 
-            normalNode  ?.addVector (normalPerVertex ? index : face, normalArray);
             tangentNode ?.addVector (normalPerVertex ? index : face, tangentArray);
+            normalNode  ?.addVector (normalPerVertex ? index : face, normalArray);
 
             vertexArray .push (x, y, z, 1);
          }
@@ -1871,53 +1420,6 @@ var external_X_ITE_X3D_Group_default = /*#__PURE__*/__webpack_require__.n(extern
 const external_X_ITE_X3D_Inline_namespaceObject = __X_ITE_X3D__ .Inline;
 var external_X_ITE_X3D_Inline_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Inline_namespaceObject);
 ;// ./src/x_ite/Components/Geospatial/GeoLOD.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -1958,7 +1460,6 @@ function GeoLOD (executionContext)
    this .childInlineNodes = [this .child1InlineNode, this .child2InlineNode, this .child3InlineNode, this .child4InlineNode];
    this .childrenLoaded   = false;
    this .keepCurrentLevel = false;
-   this .modelViewMatrix  = new (external_X_ITE_X3D_Matrix4_default()) ();
 }
 
 Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype),
@@ -2025,6 +1526,26 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
+   getShapes (shapes, modelMatrix)
+   {
+      switch (this .childrenLoaded ? this ._level_changed .getValue () : 0)
+      {
+         case 0:
+         {
+            if (this ._rootNode .length)
+               return this .rootGroupNode .getShapes (shapes, modelMatrix);
+
+            return this .rootInlineNode .getShapes (shapes, modelMatrix);
+         }
+         case 1:
+         {
+            for (const childInlineNode of this .childInlineNodes)
+               childInlineNode .getShapes (shapes, modelMatrix);
+
+            return shapes;
+         }
+      }
+   },
    set_rootLoadState__ ()
    {
       if (this ._level_changed .getValue () !== 0)
@@ -2081,16 +1602,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
    {
       this .setShadowObject (this .childInlineNodes .some (childInlineNode => childInlineNode .isShadowObject ()));
    },
-   getLevel (modelViewMatrix)
-   {
-      const distance = this .getDistance (modelViewMatrix);
-
-      if (distance < this ._range .getValue ())
-         return 1;
-
-      return 0;
-   },
-   getDistance: (() =>
+   getLevel: (() =>
    {
       const center = new (external_X_ITE_X3D_Vector3_default()) ();
 
@@ -2098,125 +1610,111 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
       {
          modelViewMatrix .translate (this .getCoord (this ._center .getValue (), center));
 
-         return modelViewMatrix .origin .magnitude ();
+         const distance = modelViewMatrix .origin .norm ();
+
+         if (distance < this ._range .getValue ())
+            return 1;
+
+         return 0;
+      };
+   })(),
+   changeLevel: (() =>
+   {
+      const modelViewMatrix = new (external_X_ITE_X3D_Matrix4_default()) ();
+
+      return function (renderObject)
+      {
+         const level = this .getLevel (modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()));
+
+         if (level === this ._level_changed .getValue ())
+            return;
+
+         this ._level_changed = level;
+
+         switch (level)
+         {
+            case 0:
+            {
+               for (const childInlineNode of this .childInlineNodes)
+               {
+                  childInlineNode ._isBoundedObject   .removeInterest ("set_childBoundedObject__",   this);
+                  childInlineNode ._isPointingObject  .removeInterest ("set_childPointingObject__",  this);
+                  childInlineNode ._isCameraObject    .removeInterest ("set_childCameraObject__",    this);
+                  childInlineNode ._isPickableObject  .removeInterest ("set_childPickableObject__",  this);
+                  childInlineNode ._isCollisionObject .removeInterest ("set_childCollisionObject__", this);
+                  childInlineNode ._isShadowObject    .removeInterest ("set_childShadowObject__",    this);
+               }
+
+               if (this ._rootNode .length)
+               {
+                  this .connectChildNode (this .rootGroupNode, [(external_X_ITE_X3D_TraverseType_default()).DISPLAY]);
+
+                  this ._children      = this ._rootNode;
+                  this .childrenLoaded = false;
+               }
+               else
+               {
+                  if (this .rootInlineNode .checkLoadState () == (external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE)
+                  {
+                     this .connectChildNode (this .rootInlineNode, [(external_X_ITE_X3D_TraverseType_default()).DISPLAY]);
+
+                     this ._children      = this .rootInlineNode .getInternalScene () .getRootNodes ();
+                     this .childrenLoaded = false;
+                  }
+               }
+
+               if (this .unload)
+               {
+                  for (const childInlineNode of this .childInlineNodes)
+                     childInlineNode ._load = false;
+               }
+
+               break;
+            }
+            case 1:
+            {
+               if (this ._rootNode .length)
+                  this .disconnectChildNode (this .rootGroupNode);
+               else
+                  this .disconnectChildNode (this .rootInlineNode);
+
+               for (const childInlineNode of this .childInlineNodes)
+               {
+                  childInlineNode ._isBoundedObject   .addInterest ("set_childBoundedObject__",   this);
+                  childInlineNode ._isPointingObject  .addInterest ("set_childPointingObject__",  this);
+                  childInlineNode ._isCameraObject    .addInterest ("set_childCameraObject__",    this);
+                  childInlineNode ._isPickableObject  .addInterest ("set_childPickableObject__",  this);
+                  childInlineNode ._isCollisionObject .addInterest ("set_childCollisionObject__", this);
+                  childInlineNode ._isShadowObject    .addInterest ("set_childShadowObject__",    this);
+               }
+
+               this .set_childBoundedObject__ ();
+               this .set_childPointingObject__ ();
+               this .set_childCameraObject__ ();
+               this .set_childPickableObject__ ();
+               this .set_childCollisionObject__ ();
+               this .set_childShadowObject__ ();
+
+               if (this .child1InlineNode ._load .getValue ())
+               {
+                  this .set_childLoadState__ ();
+               }
+               else
+               {
+                  for (const childInlineNode of this .childInlineNodes)
+                     childInlineNode ._load = true;
+               }
+
+               break;
+            }
+         }
       };
    })(),
    traverse (type, renderObject)
    {
-      switch (type)
-      {
-         case (external_X_ITE_X3D_TraverseType_default()).PICKING:
-         {
-            const
-               browser          = this .getBrowser (),
-               pickingHierarchy = browser .getPickingHierarchy ();
+      if (type === (external_X_ITE_X3D_TraverseType_default()).DISPLAY)
+         this .changeLevel (renderObject);
 
-            pickingHierarchy .push (this);
-
-            this .traverseChildren (type, renderObject);
-
-            pickingHierarchy .pop ();
-            return;
-         }
-         case (external_X_ITE_X3D_TraverseType_default()).DISPLAY:
-         {
-            const level = this .getLevel (this .modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()));
-
-            if (level !== this ._level_changed .getValue ())
-            {
-               this ._level_changed = level;
-
-               switch (level)
-               {
-                  case 0:
-                  {
-                     for (const childInlineNode of this .childInlineNodes)
-                     {
-                        childInlineNode ._isBoundedObject   .removeInterest ("set_childBoundedObject__",   this);
-                        childInlineNode ._isPointingObject  .removeInterest ("set_childPointingObject__",  this);
-                        childInlineNode ._isCameraObject    .removeInterest ("set_childCameraObject__",    this);
-                        childInlineNode ._isPickableObject  .removeInterest ("set_childPickableObject__",  this);
-                        childInlineNode ._isCollisionObject .removeInterest ("set_childCollisionObject__", this);
-                        childInlineNode ._isShadowObject    .removeInterest ("set_childShadowObject__",    this);
-                     }
-
-                     if (this ._rootNode .length)
-                     {
-                        this .connectChildNode (this .rootGroupNode, [(external_X_ITE_X3D_TraverseType_default()).DISPLAY]);
-
-                        this ._children      = this ._rootNode;
-                        this .childrenLoaded = false;
-                     }
-                     else
-                     {
-                        if (this .rootInlineNode .checkLoadState () == (external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE)
-                        {
-                           this .connectChildNode (this .rootInlineNode, [(external_X_ITE_X3D_TraverseType_default()).DISPLAY]);
-
-                           this ._children      = this .rootInlineNode .getInternalScene () .getRootNodes ();
-                           this .childrenLoaded = false;
-                        }
-                     }
-
-                     if (this .unload)
-                     {
-                        for (const childInlineNode of this .childInlineNodes)
-                           childInlineNode ._load = false;
-                     }
-
-                     break;
-                  }
-                  case 1:
-                  {
-                     if (this ._rootNode .length)
-                        this .disconnectChildNode (this .rootGroupNode);
-                     else
-                        this .disconnectChildNode (this .rootInlineNode);
-
-                     for (const childInlineNode of this .childInlineNodes)
-                     {
-                        childInlineNode ._isBoundedObject   .addInterest ("set_childBoundedObject__",   this);
-                        childInlineNode ._isPointingObject  .addInterest ("set_childPointingObject__",  this);
-                        childInlineNode ._isCameraObject    .addInterest ("set_childCameraObject__",    this);
-                        childInlineNode ._isPickableObject  .addInterest ("set_childPickableObject__",  this);
-                        childInlineNode ._isCollisionObject .addInterest ("set_childCollisionObject__", this);
-                        childInlineNode ._isShadowObject    .addInterest ("set_childShadowObject__",    this);
-                     }
-
-                     this .set_childBoundedObject__ ();
-                     this .set_childPointingObject__ ();
-                     this .set_childCameraObject__ ();
-                     this .set_childPickableObject__ ();
-                     this .set_childCollisionObject__ ();
-                     this .set_childShadowObject__ ();
-
-                     if (this .child1InlineNode ._load .getValue ())
-                     {
-                        this .set_childLoadState__ ();
-                     }
-                     else
-                     {
-                        for (const childInlineNode of this .childInlineNodes)
-                           childInlineNode ._load = true;
-                     }
-
-                     break;
-                  }
-               }
-            }
-
-            this .traverseChildren (type, renderObject);
-            return;
-         }
-         default:
-         {
-            this .traverseChildren (type, renderObject);
-            return;
-         }
-      }
-   },
-   traverseChildren (type, renderObject)
-   {
       switch (this .childrenLoaded ? this ._level_changed .getValue () : 0)
       {
          case 0:
@@ -2281,53 +1779,6 @@ const GeoLOD_default_ = GeoLOD;
 const external_X_ITE_X3D_X3DTransformMatrix3DNode_namespaceObject = __X_ITE_X3D__ .X3DTransformMatrix3DNode;
 var external_X_ITE_X3D_X3DTransformMatrix3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DTransformMatrix3DNode_namespaceObject);
 ;// ./src/x_ite/Components/Geospatial/GeoLocation.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -2406,53 +1857,6 @@ var external_X_ITE_X3D_X3DInfoNode_default = /*#__PURE__*/__webpack_require__.n(
 const external_X_ITE_X3D_X3DUrlObject_namespaceObject = __X_ITE_X3D__ .X3DUrlObject;
 var external_X_ITE_X3D_X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DUrlObject_namespaceObject);
 ;// ./src/x_ite/Components/Geospatial/GeoMetadata.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -2510,53 +1914,6 @@ const GeoMetadata_default_ = GeoMetadata;
 
 /* harmony default export */ const Geospatial_GeoMetadata = (external_X_ITE_X3D_Namespace_default().add ("GeoMetadata", GeoMetadata_default_));
 ;// ./src/x_ite/Components/Geospatial/GeoOrigin.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -2616,53 +1973,6 @@ const GeoOrigin_default_ = GeoOrigin;
 const external_X_ITE_X3D_X3DInterpolatorNode_namespaceObject = __X_ITE_X3D__ .X3DInterpolatorNode;
 var external_X_ITE_X3D_X3DInterpolatorNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DInterpolatorNode_namespaceObject);
 ;// ./src/x_ite/Components/Geospatial/GeoPositionInterpolator.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -2685,7 +1995,7 @@ function GeoPositionInterpolator (executionContext)
    this ._value_changed .setUnit ("length");
 
    // Private properties
-   
+
    this .geocentric = new Geospatial_Geocentric ();
 }
 
@@ -2768,53 +2078,6 @@ var external_X_ITE_X3D_X3DEnvironmentalSensorNode_default = /*#__PURE__*/__webpa
 const external_X_ITE_X3D_ProximitySensor_namespaceObject = __X_ITE_X3D__ .ProximitySensor;
 var external_X_ITE_X3D_ProximitySensor_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ProximitySensor_namespaceObject);
 ;// ./src/x_ite/Components/Geospatial/GeoProximitySensor.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -2927,53 +2190,6 @@ const GeoProximitySensor_default_ = GeoProximitySensor;
 const external_X_ITE_X3D_X3DTouchSensorNode_namespaceObject = __X_ITE_X3D__ .X3DTouchSensorNode;
 var external_X_ITE_X3D_X3DTouchSensorNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DTouchSensorNode_namespaceObject);
 ;// ./src/x_ite/Components/Geospatial/GeoTouchSensor.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -3050,53 +2266,6 @@ const GeoTouchSensor_default_ = GeoTouchSensor;
 
 /* harmony default export */ const Geospatial_GeoTouchSensor = (external_X_ITE_X3D_Namespace_default().add ("GeoTouchSensor", GeoTouchSensor_default_));
 ;// ./src/x_ite/Components/Geospatial/GeoTransform.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -3198,53 +2367,6 @@ var external_X_ITE_X3D_NavigationInfo_default = /*#__PURE__*/__webpack_require__
 const external_X_ITE_X3D_Rotation4_namespaceObject = __X_ITE_X3D__ .Rotation4;
 var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Rotation4_namespaceObject);
 ;// ./src/x_ite/Components/Geospatial/GeoViewpoint.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -3298,12 +2420,6 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (external_X_ITE
       external_X_ITE_X3D_X3DViewpointNode_default().prototype .initialize .call (this);
       Geospatial_X3DGeospatialObject .prototype .initialize .call (this);
 
-      // Logarithmic depth buffer support
-
-      const gl = this .getBrowser () .getContext ();
-
-      this .logarithmicDepthBuffer = gl .HAS_FEATURE_FRAG_DEPTH;
-
       // Fields
 
       this ._position       .addInterest ("set_position__", this);
@@ -3332,7 +2448,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (external_X_ITE
    getProjectionMatrixWithLimits: (external_X_ITE_X3D_Viewpoint_default()).prototype .getProjectionMatrixWithLimits,
    getLogarithmicDepthBuffer ()
    {
-      return this .logarithmicDepthBuffer;
+      return true;
    },
    getPosition: (() =>
    {
@@ -3427,7 +2543,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (external_X_ITE
 
       return function (dynamic = false)
       {
-         if (!dynamic || this .getUserPosition () .magnitude () < 6.5e6)
+         if (!dynamic || this .getUserPosition () .norm () < 6.5e6)
          {
             this .getCoord (this ._position .getValue (), position);
 
@@ -3435,7 +2551,7 @@ Object .assign (Object .setPrototypeOf (GeoViewpoint .prototype, (external_X_ITE
          }
          else
          {
-            return upVector .assign ((external_X_ITE_X3D_Vector3_default()).zAxis);
+            return upVector .assign ((external_X_ITE_X3D_Vector3_default()).Z_AXIS);
          }
       };
    })(),
@@ -3491,53 +2607,6 @@ const GeoViewpoint_default_ = GeoViewpoint;
 
 /* harmony default export */ const Geospatial_GeoViewpoint = (external_X_ITE_X3D_Namespace_default().add ("GeoViewpoint", GeoViewpoint_default_));
 ;// ./src/assets/components/GeospatialComponent.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 

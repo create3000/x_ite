@@ -1,5 +1,5 @@
-/* X_ITE v11.5.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.0")];
+/* X_ITE v12.0.4 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.4")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -63,12 +63,6 @@ var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n
 ;// external "__X_ITE_X3D__ .X3DCast"
 const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
 var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
-;// external "__X_ITE_X3D__ .Vector3"
-const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
-var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
-;// external "__X_ITE_X3D__ .Rotation4"
-const external_X_ITE_X3D_Rotation4_namespaceObject = __X_ITE_X3D__ .Rotation4;
-var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Rotation4_namespaceObject);
 ;// external "__X_ITE_X3D__ .Matrix4"
 const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
 var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
@@ -76,55 +70,6 @@ var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(exte
 const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
 ;// ./src/x_ite/Components/TextureProjection/X3DTextureProjectorNode.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-
 
 
 
@@ -256,6 +201,12 @@ const __default__ = X3DTextureProjectorNode;
 ;// external "__X_ITE_X3D__ .Camera"
 const external_X_ITE_X3D_Camera_namespaceObject = __X_ITE_X3D__ .Camera;
 var external_X_ITE_X3D_Camera_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Camera_namespaceObject);
+;// external "__X_ITE_X3D__ .Vector3"
+const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
+var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
+;// external "__X_ITE_X3D__ .Rotation4"
+const external_X_ITE_X3D_Rotation4_namespaceObject = __X_ITE_X3D__ .Rotation4;
+var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Rotation4_namespaceObject);
 ;// external "__X_ITE_X3D__ .MatrixStack"
 const external_X_ITE_X3D_MatrixStack_namespaceObject = __X_ITE_X3D__ .MatrixStack;
 var external_X_ITE_X3D_MatrixStack_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_MatrixStack_namespaceObject);
@@ -263,53 +214,6 @@ var external_X_ITE_X3D_MatrixStack_default = /*#__PURE__*/__webpack_require__.n(
 const external_X_ITE_X3D_ObjectCache_namespaceObject = __X_ITE_X3D__ .ObjectCache;
 var external_X_ITE_X3D_ObjectCache_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ObjectCache_namespaceObject);
 ;// ./src/x_ite/Components/TextureProjection/TextureProjector.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -358,9 +262,9 @@ Object .assign (TextureProjectorContainer .prototype,
          lightNode             = this .lightNode,
          cameraSpaceMatrix     = renderObject .getCameraSpaceMatrixArray (),
          modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-         invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (this .global ? modelMatrix : (external_X_ITE_X3D_Matrix4_default()).Identity);
+         invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (this .global ? modelMatrix : (external_X_ITE_X3D_Matrix4_default()).IDENTITY);
 
-      this .rotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).zAxis, this .direction .assign (lightNode .getDirection ()) .negate ());
+      this .rotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, this .direction .assign (lightNode .getDirection ()) .negate ());
       lightNode .straightenHorizon (this .rotation);
 
       invTextureSpaceMatrix .translate (lightNode .getLocation ());
@@ -391,7 +295,7 @@ Object .assign (TextureProjectorContainer .prototype,
    setGlobalVariables (renderObject)
    {
       this .matrix
-         .assign (renderObject .getView () ?.inverse ?? (external_X_ITE_X3D_Matrix4_default()).Identity)
+         .assign (renderObject .getView () ?.inverse ?? (external_X_ITE_X3D_Matrix4_default()).IDENTITY)
          .multRight (renderObject .getCameraSpaceMatrixArray ())
          .multRight (this .invTextureSpaceProjectionMatrix);
 
@@ -405,8 +309,8 @@ Object .assign (TextureProjectorContainer .prototype,
          lightNode   = this .lightNode,
          texture     = lightNode .getTexture (),
          textureUnit = this .global
-            ? (this .textureUnit = this .textureUnit ?? this .browser .popTexture2DUnit ())
-            : this .browser .getTexture2DUnit ();
+            ? (this .textureUnit = this .textureUnit ?? this .browser .popTextureUnit ())
+            : this .browser .getTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
@@ -427,7 +331,7 @@ Object .assign (TextureProjectorContainer .prototype,
    },
    dispose ()
    {
-      this .browser .pushTexture2DUnit (this .textureUnit);
+      this .browser .pushTextureUnit (this .textureUnit);
 
       this .modelViewMatrix .clear ();
 
@@ -504,53 +408,6 @@ const TextureProjector_default_ = TextureProjector;
 
 /* harmony default export */ const TextureProjection_TextureProjector = (external_X_ITE_X3D_Namespace_default().add ("TextureProjector", TextureProjector_default_));
 ;// ./src/x_ite/Components/TextureProjection/TextureProjectorParallel.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -599,9 +456,9 @@ Object .assign (TextureProjectorParallelContainer .prototype,
          lightNode             = this .lightNode,
          cameraSpaceMatrix     = renderObject .getCameraSpaceMatrixArray (),
          modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-         invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (this .global ? modelMatrix : (external_X_ITE_X3D_Matrix4_default()).Identity);
+         invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (this .global ? modelMatrix : (external_X_ITE_X3D_Matrix4_default()).IDENTITY);
 
-      this .rotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).zAxis, this .direction .assign (lightNode .getDirection ()) .negate ());
+      this .rotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, this .direction .assign (lightNode .getDirection ()) .negate ());
       lightNode .straightenHorizon (this .rotation);
 
       invTextureSpaceMatrix .translate (lightNode .getLocation ());
@@ -653,7 +510,7 @@ Object .assign (TextureProjectorParallelContainer .prototype,
    setGlobalVariables (renderObject)
    {
       this .matrix
-         .assign (renderObject .getView () ?.inverse ?? (external_X_ITE_X3D_Matrix4_default()).Identity)
+         .assign (renderObject .getView () ?.inverse ?? (external_X_ITE_X3D_Matrix4_default()).IDENTITY)
          .multRight (renderObject .getCameraSpaceMatrixArray ())
          .multRight (this .invTextureSpaceProjectionMatrix);
 
@@ -667,8 +524,8 @@ Object .assign (TextureProjectorParallelContainer .prototype,
          lightNode   = this .lightNode,
          texture     = lightNode .getTexture (),
          textureUnit = this .global
-            ? (this .textureUnit = this .textureUnit ?? this .browser .popTexture2DUnit ())
-            : this .browser .getTexture2DUnit ();
+            ? (this .textureUnit = this .textureUnit ?? this .browser .popTextureUnit ())
+            : this .browser .getTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
@@ -689,7 +546,7 @@ Object .assign (TextureProjectorParallelContainer .prototype,
    },
    dispose ()
    {
-      this .browser .pushTexture2DUnit (this .textureUnit);
+      this .browser .pushTextureUnit (this .textureUnit);
 
       this .modelViewMatrix .clear ();
 
@@ -798,53 +655,6 @@ const TextureProjectorParallel_default_ = TextureProjectorParallel;
 
 /* harmony default export */ const TextureProjection_TextureProjectorParallel = (external_X_ITE_X3D_Namespace_default().add ("TextureProjectorParallel", TextureProjectorParallel_default_));
 ;// ./src/assets/components/TextureProjectionComponent.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 

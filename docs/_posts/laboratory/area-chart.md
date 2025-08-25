@@ -62,10 +62,11 @@ This page automatically generates an area chart from a set of random areas and h
   <div class="viewer-row">
     <div class="viewer-column-100">
       <x3d-canvas
-        id="chart"
-        splashScreen="false"
-        notifications="false"
-        contentScale="auto"></x3d-canvas>
+          id="chart"
+          splashScreen="false"
+          notifications="false"
+          contentScale="auto"
+          update="auto"></x3d-canvas>
       <div id="data">
         <div><b>Chart Data</b></div>
         <table>

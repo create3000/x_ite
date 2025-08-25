@@ -1,59 +1,14 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import TextureBuffer     from "../../Rendering/TextureBuffer.js";
 import ImageTexture      from "../../Components/Texturing/ImageTexture.js";
 import TextureProperties from "../../Components/Texturing/TextureProperties.js";
 import URLs              from "../Networking/URLs.js";
+import Filter2FS         from "./Filter2.fs.js";
 
 const
-   _maxLights     = Symbol (),
-   _textures      = Symbol (),
-   _shadowBuffers = Symbol ();
+   _maxLights                = Symbol (),
+   _textures                 = Symbol (),
+   _shadowBuffers            = Symbol (),
+   _environmentTextureShader = Symbol ();
 
 function X3DLightingContext ()
 {
@@ -118,7 +73,12 @@ Object .assign (X3DLightingContext .prototype,
          else
             this [_shadowBuffers] [shadowMapSize] = [ ];
 
-         return new TextureBuffer (this, shadowMapSize, shadowMapSize, true);
+         return new TextureBuffer ({
+            browser: this,
+            width: shadowMapSize,
+            height: shadowMapSize,
+            float: true,
+         });
       }
       catch (error)
       {
@@ -132,6 +92,103 @@ Object .assign (X3DLightingContext .prototype,
    {
       if (buffer)
          this [_shadowBuffers] [buffer .getWidth ()] .push (buffer);
+   },
+   getEnvironmentTextureShader ()
+   {
+      return this [_environmentTextureShader] ??= this .createShader ("EnvironmentTexture", "FullScreen", `data:x-shader/x-fragment,${Filter2FS}`, [ ], ["x3d_TextureEXT", "x3d_TextureSizeEXT", "x3d_TextureLinearEXT", "x3d_CurrentFaceEXT", "x3d_DistributionEXT", "x3d_SampleCountEXT", "x3d_RoughnessEXT", "x3d_LodBiasEXT", "x3d_IntensityEXT"]);
+   },
+   filterEnvironmentTexture ({ name, texture, distribution, sampleCount, roughness })
+   {
+      // Render the texture.
+
+      const
+         gl             = this .getContext (),
+         currentProgram = gl .getParameter (gl .CURRENT_PROGRAM),
+         shaderNode     = this .getEnvironmentTextureShader (),
+         framebuffer    = gl .createFramebuffer (),
+         size           = texture .getSize (),
+         filtered       = texture .getExecutionContext () .createNode ("ImageCubeMapTexture", false);
+
+      // Setup texture.
+
+      filtered .setName (name);
+      filtered .setPrivate (true);
+      filtered .setup ();
+      filtered .setSize (size);
+      filtered .setLinear (true);
+
+      // Resize texture.
+
+      const data = new Uint8Array (size * size * 4);
+
+      gl .bindTexture (filtered .getTarget (), filtered .getTexture ());
+
+      for (const target of filtered .getTargets ())
+         gl .texImage2D (target, 0, gl .RGBA, size, size, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
+
+      if (roughness .length > 1)
+      {
+         gl .generateMipmap (gl .TEXTURE_CUBE_MAP);
+         gl .texParameteri (gl .TEXTURE_CUBE_MAP, gl .TEXTURE_MIN_FILTER, gl .LINEAR_MIPMAP_LINEAR);
+         gl .texParameteri (gl .TEXTURE_CUBE_MAP, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+      }
+
+      // Setup defaults.
+
+      gl .bindFramebuffer (gl .FRAMEBUFFER, framebuffer);
+      gl .disable (gl .DEPTH_TEST);
+      gl .enable (gl .CULL_FACE);
+      gl .frontFace (gl .CCW);
+      gl .clearColor (0, 0, 0, 0);
+      gl .bindVertexArray (this .getFullscreenVertexArrayObject ());
+
+      // Setup specular texture uniforms.
+
+      const specularTextureUnit = this .popTextureUnit ();
+
+      gl .useProgram (shaderNode .getProgram ());
+      gl .activeTexture (gl .TEXTURE0 + specularTextureUnit);
+      gl .bindTexture (gl .TEXTURE_CUBE_MAP, texture .getTexture ());
+      gl .uniform1i (shaderNode .x3d_TextureEXT, specularTextureUnit);
+      gl .uniform1i (shaderNode .x3d_TextureSizeEXT, size);
+      gl .uniform1i (shaderNode .x3d_TextureLinearEXT, texture .isLinear ());
+      gl .uniform1i (shaderNode .x3d_DistributionEXT, distribution);
+      gl .uniform1i (shaderNode .x3d_SampleCountEXT, sampleCount);
+      gl .uniform1f (shaderNode .x3d_LodBiasEXT, 0);
+      gl .uniform1f (shaderNode .x3d_IntensityEXT, 1);
+
+      for (const [level, r] of roughness .entries ())
+      {
+         const mipSize = size >> level;
+
+         // console .log (level, mipSize, r, filtered .getLevels ());
+
+         // Setup mip level uniforms.
+
+         gl .uniform1f (shaderNode .x3d_RoughnessEXT, r);
+
+         // Generate images.
+
+         gl .viewport (0, 0, mipSize, mipSize);
+         gl .scissor  (0, 0, mipSize, mipSize);
+
+         for (let i = 0; i < 6; ++ i)
+         {
+            gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, filtered .getTargets () [i], filtered .getTexture (), level);
+
+            gl .clear (gl .COLOR_BUFFER_BIT);
+            gl .uniform1i (shaderNode .x3d_CurrentFaceEXT, i);
+            gl .drawArrays (gl .TRIANGLES, 0, 6);
+         }
+      }
+
+      gl .enable (gl .DEPTH_TEST);
+      gl .deleteFramebuffer (framebuffer);
+      gl .useProgram (currentProgram);
+
+      this .pushTextureUnit (specularTextureUnit);
+
+      return filtered;
    },
 });
 

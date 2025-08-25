@@ -15,7 +15,7 @@ tags: [Transforming, Shapes]
 
 ## Using coordinate systems
 
-- A X3D file builds components for a world
+- An X3D file builds components for a world
 - A file's world components are built in the file's world coordinate system
 - By default, all shapes are built at the origin of the world coordinate system
 

@@ -1,5 +1,5 @@
-/* X_ITE v11.5.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.0")];
+/* X_ITE v12.0.4 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.4")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -77,71 +77,16 @@ var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(e
 ;// external "__X_ITE_X3D__ .Namespace"
 const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
-;// ./src/x_ite/Browser/CubeMapTexturing/Panorama1.fs.js
-const __default__ = /* glsl */ `
-precision highp float;precision highp int;precision highp sampler2D;const float M_PI=3.1415926535897932384626433832795;varying vec2 texCoord;uniform sampler2D x3d_PanoramaTexture;uniform int x3d_CurrentFace;vec3 uvToXYZ(const in int face,const in vec2 uv){vec3 xyz;if(face==0)xyz=vec3(1.0,uv.y,uv.x);else if(face==1)xyz=vec3(-1.0,uv.y,-uv.x);else if(face==2)xyz=vec3(uv.x,uv.y,-1.0);else if(face==3)xyz=vec3(-uv.x,uv.y,1.0);else if(face==4)xyz=vec3(uv.y,-1.0,uv.x);else xyz=vec3(-uv.y,1.0,uv.x);return xyz;}vec2 dirToUV(const in vec3 dir){return vec2(0.5+0.5*atan(dir.z,dir.x)/M_PI,1.0-acos(dir.y)/M_PI);}vec3 panoramaToCubeMap(const in int face,const in vec2 texCoord){vec3 scan=uvToXYZ(face,texCoord);vec3 direction=normalize(scan);vec2 src=dirToUV(direction);return texture2D(x3d_PanoramaTexture,src).rgb;}void main(){gl_FragColor=vec4(panoramaToCubeMap(x3d_CurrentFace,texCoord),1.0);}`
-;
-
-/* harmony default export */ const Panorama1_fs = (external_X_ITE_X3D_Namespace_default().add ("Panorama1.fs", __default__));
 ;// ./src/x_ite/Browser/CubeMapTexturing/Panorama2.fs.js
-const Panorama2_fs_default_ = /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler2D;const float M_PI=3.1415926535897932384626433832795;in vec2 texCoord;out vec4 x3d_FragColor;uniform sampler2D x3d_PanoramaTexture;uniform int x3d_CurrentFace;vec3 uvToXYZ(const in int face,const in vec2 uv){switch(face){case 0:return vec3(1.0,uv.y,uv.x);case 1:return vec3(-1.0,uv.y,-uv.x);case 2:return vec3(uv.x,uv.y,-1.0);case 3:return vec3(-uv.x,uv.y,1.0);case 4:return vec3(uv.y,-1.0,uv.x);default:return vec3(-uv.y,1.0,uv.x);}}vec2 dirToUV(const in vec3 dir){return vec2(0.5+0.5*atan(dir.z,dir.x)/M_PI,1.0-acos(dir.y)/M_PI);}vec3 panoramaToCubeMap(const in int face,const in vec2 texCoord){vec3 scan=uvToXYZ(face,texCoord);vec3 direction=normalize(scan);vec2 src=dirToUV(direction);return texture(x3d_PanoramaTexture,src).rgb;}void main(){x3d_FragColor=vec4(panoramaToCubeMap(x3d_CurrentFace,texCoord),1.0);}`
+const __default__ = /* glsl */ `#version 300 es
+precision highp float;precision highp int;precision highp sampler2D;const float M_PI=3.1415926535897932384626433832795;in vec2 texCoord;out vec4 x3d_FragColor;uniform sampler2D x3d_PanoramaTextureEXT;uniform int x3d_CurrentFaceEXT;vec3 uvToXYZ(const in int face,const in vec2 uv){switch(face){case 0:return vec3(1.,uv.y,uv.x);case 1:return vec3(-1.,uv.y,-uv.x);case 2:return vec3(uv.x,uv.y,-1.);case 3:return vec3(-uv.x,uv.y,1.);case 4:return vec3(uv.y,-1.,uv.x);default:return vec3(-uv.y,1.,uv.x);}}vec2 dirToUV(const in vec3 dir){return vec2(.5+.5*atan(dir.z,dir.x)/M_PI,1.-acos(dir.y)/M_PI);}vec3 panoramaToCubeMap(const in int face,const in vec2 texCoord){vec3 scan=uvToXYZ(face,texCoord);vec3 direction=normalize(scan);vec2 src=dirToUV(direction);return texture(x3d_PanoramaTextureEXT,src).rgb;}void main(){x3d_FragColor=vec4(panoramaToCubeMap(x3d_CurrentFaceEXT,texCoord),1.);}`
 ;
 
-/* harmony default export */ const Panorama2_fs = (external_X_ITE_X3D_Namespace_default().add ("Panorama2.fs", Panorama2_fs_default_));
+/* harmony default export */ const Panorama2_fs = (external_X_ITE_X3D_Namespace_default().add ("Panorama2.fs", __default__));
 ;// ./src/x_ite/Browser/CubeMapTexturing/X3DCubeMapTexturingContext.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
 
 
-
-
-const
-   _panoramaShader = Symbol ();
+const _panoramaShader = Symbol ();
 
 function X3DCubeMapTexturingContext () { }
 
@@ -149,7 +94,7 @@ Object .assign (X3DCubeMapTexturingContext .prototype,
 {
    getPanoramaShader ()
    {
-      return this [_panoramaShader] ??= this .createShader ("Panorama", "FullScreen", "data:x-shader/x-fragment," + ["", Panorama1_fs, Panorama2_fs][this .getContext () .getVersion ()], [ ], ["x3d_PanoramaTexture", "x3d_CurrentFace"]);
+      return this [_panoramaShader] ??= this .createShader ("Panorama", "FullScreen", `data:x-shader/x-fragment,${Panorama2_fs}`, [ ], ["x3d_PanoramaTextureEXT", "x3d_CurrentFaceEXT"]);
    },
 });
 
@@ -176,53 +121,6 @@ var external_X_ITE_X3D_X3DSingleTextureNode_default = /*#__PURE__*/__webpack_req
 const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
 var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
 ;// ./src/x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -315,7 +213,7 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, (e
    },
    setShaderUniforms (gl, shaderObject, renderObject, channel = shaderObject .x3d_Texture [0])
    {
-      const textureUnit = this .getBrowser () .getTextureCubeUnit ();
+      const textureUnit = this .getBrowser () .getTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .getTexture ());
@@ -336,53 +234,6 @@ var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(exte
 const external_X_ITE_X3D_BitSet_namespaceObject = __X_ITE_X3D__ .BitSet;
 var external_X_ITE_X3D_BitSet_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_BitSet_namespaceObject);
 ;// ./src/x_ite/Components/CubeMapTexturing/ComposedCubeMapTexture.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -545,10 +396,12 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, CubeM
          this .setLinear (textureNodes .some (textureNode => textureNode .isLinear ()));
          this .setMipMaps (textureNodes .every (textureNode => textureNode .canMipMaps ()));
          this .updateTextureParameters ();
+         this .addNodeEvent ();
       }
       else
       {
          this .clearTexture ();
+         this .addNodeEvent ();
       }
    },
 });
@@ -595,53 +448,6 @@ var external_X_ITE_X3D_X3DRenderObject_default = /*#__PURE__*/__webpack_require_
 const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
 var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
 ;// ./src/x_ite/Rendering/DependentRenderer.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -769,53 +575,6 @@ var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(exte
 const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
 var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Algorithm_namespaceObject);
 ;// ./src/x_ite/Components/CubeMapTexturing/GeneratedCubeMapTexture.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -851,6 +610,12 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
    {
       CubeMapTexturing_X3DEnvironmentTextureNode .prototype .initialize .call (this);
 
+      // Upload default data.
+
+      this .clearTexture ();
+
+      // Initialize.
+
       this ._size .addInterest ("set_size__", this);
 
       this .set_size__ ();
@@ -863,9 +628,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
 
       // Transfer 6 textures of size x size pixels.
 
-      const size = gl .getVersion () >= 2
-         ? this ._size .getValue ()
-         : external_X_ITE_X3D_Algorithm_default().nextPowerOfTwo (this ._size .getValue ());
+      const size = this ._size .getValue ();
 
       if (size > 0)
       {
@@ -883,7 +646,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
          // Properties
 
          this .viewport    = new (external_X_ITE_X3D_Vector4_default()) (0, 0, size, size);
-         this .frameBuffer = new (external_X_ITE_X3D_TextureBuffer_default()) (this .getBrowser (), size, size);
+         this .frameBuffer = new (external_X_ITE_X3D_TextureBuffer_default()) ({ browser: this .getBrowser (), width: size, height: size });
 
          this .setSize (size);
       }
@@ -916,12 +679,12 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
       // Rotations to negated normals of the texture cube.
 
       const rotations = [
-         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).zAxis, new (external_X_ITE_X3D_Vector3_default()) ( 0,  0, -1)), // front
-         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).zAxis, new (external_X_ITE_X3D_Vector3_default()) ( 0,  0,  1)), // back
-         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).zAxis, new (external_X_ITE_X3D_Vector3_default()) ( 1,  0,  0)), // left
-         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).zAxis, new (external_X_ITE_X3D_Vector3_default()) (-1,  0,  0)), // right
-         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).zAxis, new (external_X_ITE_X3D_Vector3_default()) ( 0, -1,  0)), // top
-         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).zAxis, new (external_X_ITE_X3D_Vector3_default()) ( 0,  1,  0)), // bottom
+         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).NEGATIVE_Z_AXIS), // front
+         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).Z_AXIS),          // back
+         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).X_AXIS),          // left
+         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).NEGATIVE_X_AXIS), // right
+         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).NEGATIVE_Y_AXIS), // top
+         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).Y_AXIS),          // bottom
       ];
 
       // Negated scales of the texture cube.
@@ -1066,52 +829,6 @@ const external_X_ITE_X3D_DEVELOPMENT_namespaceObject = __X_ITE_X3D__ .DEVELOPMEN
 var external_X_ITE_X3D_DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_DEVELOPMENT_namespaceObject);
 ;// ./src/x_ite/Components/CubeMapTexturing/ImageCubeMapTexture.js
 /* provided dependency */ var $ = __webpack_require__(254);
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
 
 
 
@@ -1121,9 +838,6 @@ var external_X_ITE_X3D_DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(
 
 
 
-
-
-const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
 function ImageCubeMapTexture (executionContext)
 {
@@ -1146,12 +860,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
 
       // Upload default data.
 
-      const gl = this .getBrowser () .getContext ();
-
-      gl .bindTexture (this .getTarget (), this .getTexture ());
-
-      for (let i = 0; i < 6; ++ i)
-         gl .texImage2D  (this .getTargets () [i], 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+      this .clearTexture ();
 
       // Initialize.
 
@@ -1177,6 +886,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
       {
          this .clearTexture ();
          this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE);
+         this .addNodeEvent ();
          return;
       }
 
@@ -1234,6 +944,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
          this .updateTextureParameters ();
 
          this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
+         this .addNodeEvent ();
       }
       catch (error)
       {
@@ -1269,6 +980,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
          // Update load state.
 
          this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
+         this .addNodeEvent ();
       }
       catch (error)
       {
@@ -1364,7 +1076,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
          gl          = browser .getContext (),
          shaderNode  = browser .getPanoramaShader (),
          framebuffer = gl .createFramebuffer (),
-         textureUnit = browser .getTextureCubeUnit (),
+         textureUnit = browser .getTextureUnit (),
          size        = Math .floor (height / 2),
          data        = new Uint8Array (size * size * 4);
 
@@ -1389,7 +1101,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_2D, panoramaTexture);
-      gl .uniform1i (shaderNode .x3d_PanoramaTexture, textureUnit);
+      gl .uniform1i (shaderNode .x3d_PanoramaTextureEXT, textureUnit);
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, framebuffer);
       gl .viewport (0, 0, size, size);
@@ -1406,7 +1118,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
       {
          gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, this .getTargets () [i], this .getTexture (), 0);
          gl .clear (gl .COLOR_BUFFER_BIT);
-         gl .uniform1i (shaderNode .x3d_CurrentFace, i);
+         gl .uniform1i (shaderNode .x3d_CurrentFaceEXT, i);
          gl .drawArrays (gl .TRIANGLES, 0, 6);
 
          if (!transparent)
@@ -1458,53 +1170,6 @@ const ImageCubeMapTexture_default_ = ImageCubeMapTexture;
 
 /* harmony default export */ const CubeMapTexturing_ImageCubeMapTexture = (external_X_ITE_X3D_Namespace_default().add ("ImageCubeMapTexture", ImageCubeMapTexture_default_));
 ;// ./src/assets/components/CubeMapTexturingComponent.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 

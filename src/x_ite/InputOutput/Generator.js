@@ -1,55 +1,8 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import X3DConstants      from "../Base/X3DConstants.js";
 import Algorithm         from "../../standard/Math/Algorithm.js";
 import { getUniqueName } from "../Execution/NamedNodesHandling.js";
 
-function Generator ({ style = "TIDY", indent = "", indentChar = "  ", precision = 7, doublePrecision = 15, html = false, closingTags = false })
+function Generator ({ style = "TIDY", indent = "", indentChar = "  ", precision = 7, doublePrecision = 15, html = false, closingTags = false, names = true })
 {
    this .string          = "";
    this .indent          = indent;
@@ -58,6 +11,7 @@ function Generator ({ style = "TIDY", indent = "", indentChar = "  ", precision 
    this .doublePrecision = Algorithm .clamp (doublePrecision, 1, 21);
    this .html            = html;
    this .closingTags     = html || closingTags;
+   this .outputNames     = names; // private option: used in StaticGroup for toVRMLString.
 
    this .floatFormat             = this .createFloatFormat (this .precision);
    this .floatExponentialFormat  = this .createFloatExponentialFormat (this .precision);
@@ -507,6 +461,30 @@ Object .assign (Generator .prototype,
          return string .replace (regex, char => map [char]);
       };
    })(),
+   XMLAppInfo (object)
+   {
+      const appInfo = object .getAppInfo ();
+
+      if (!appInfo)
+         return;
+
+      this .string += this .Space ();
+      this .string += "appinfo='";
+      this .string += this .XMLEncode (appInfo);
+      this .string += "'";
+   },
+   XMLDocumentation (object)
+   {
+      const documentation = object .getDocumentation ();
+
+      if (!documentation)
+         return;
+
+      this .string += this .Space ();
+      this .string += "documentation='";
+      this .string += this .XMLEncode (documentation);
+      this .string += "'";
+   },
    JSONEncode: (() =>
    {
       const map = {
@@ -546,6 +524,40 @@ Object .assign (Generator .prototype,
          this .string = this .string .slice (0, -1);
 
       this .string += this .TidyBreak ();
+   },
+   JSONAppInfo (object)
+   {
+      const appInfo = object .getAppInfo ();
+
+      if (!appInfo)
+         return;
+
+      this .string += ',';
+      this .string += this .Indent ();
+      this .string += '"';
+      this .string += "@appinfo";
+      this .string += '"';
+      this .string += ':';
+      this .string += '"';
+      this .string += this .JSONEncode (appInfo);
+      this .string += '"';
+   },
+   JSONDocumentation (object)
+   {
+      const documentation = object .getDocumentation ();
+
+      if (!documentation)
+         return;
+
+      this .string += ',';
+      this .string += this .Indent ();
+      this .string += '"';
+      this .string += "@documentation";
+      this .string += '"';
+      this .string += ':';
+      this .string += '"';
+      this .string += this .JSONEncode (documentation);
+      this .string += '"';
    },
 });
 

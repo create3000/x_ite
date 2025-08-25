@@ -1,50 +1,3 @@
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 import SFScalar            from "./SFScalar.js";
 import SFColor             from "./SFColor.js";
 import SFColorRGBA         from "./SFColorRGBA.js";
@@ -470,20 +423,20 @@ const ArrayFields =
    MFFloat:     TypedArrayTemplate ("MFFloat",     SFFloat,     Value,       Float32Array, 1),
    MFImage:     MFImage,
    MFInt32:     TypedArrayTemplate ("MFInt32",     SFInt32,     Value,       Int32Array,   1),
-   MFMatrix3d:  TypedArrayTemplate ("MFMatrix3d",  SFMatrix3d,  SFMatrix3d,  Float64Array, 9,  Matrix3 .Identity),
-   MFMatrix3f:  TypedArrayTemplate ("MFMatrix3f",  SFMatrix3f,  SFMatrix3f,  Float32Array, 9,  Matrix3 .Identity),
-   MFMatrix4d:  TypedArrayTemplate ("MFMatrix4d",  SFMatrix4d,  SFMatrix4d,  Float64Array, 16, Matrix4 .Identity),
-   MFMatrix4f:  TypedArrayTemplate ("MFMatrix4f",  SFMatrix4f,  SFMatrix4f,  Float32Array, 16, Matrix4 .Identity),
+   MFMatrix3d:  TypedArrayTemplate ("MFMatrix3d",  SFMatrix3d,  SFMatrix3d,  Float64Array, 9,  Matrix3 .IDENTITY),
+   MFMatrix3f:  TypedArrayTemplate ("MFMatrix3f",  SFMatrix3f,  SFMatrix3f,  Float32Array, 9,  Matrix3 .IDENTITY),
+   MFMatrix4d:  TypedArrayTemplate ("MFMatrix4d",  SFMatrix4d,  SFMatrix4d,  Float64Array, 16, Matrix4 .IDENTITY),
+   MFMatrix4f:  TypedArrayTemplate ("MFMatrix4f",  SFMatrix4f,  SFMatrix4f,  Float32Array, 16, Matrix4 .IDENTITY),
    MFNode:      MFNode,
-   MFRotation:  TypedArrayTemplate ("MFRotation",  SFRotation,  SFRotation,  Float64Array, 4,  Rotation4 .Identity),
+   MFRotation:  TypedArrayTemplate ("MFRotation",  SFRotation,  SFRotation,  Float64Array, 4,  Rotation4 .IDENTITY),
    MFString:    MFString,
    MFTime:      TypedArrayTemplate ("MFTime",      SFTime,      Value,       Float64Array, 1,  -1),
    MFVec2d:     TypedArrayTemplate ("MFVec2d",     SFVec2d,     SFVec2d,     Float64Array, 2),
    MFVec2f:     TypedArrayTemplate ("MFVec2f",     SFVec2f,     SFVec2f,     Float32Array, 2),
    MFVec3d:     TypedArrayTemplate ("MFVec3d",     SFVec3d,     SFVec3d,     Float64Array, 3),
    MFVec3f:     TypedArrayTemplate ("MFVec3f",     SFVec3f,     SFVec3f,     Float32Array, 3),
-   MFVec4d:     TypedArrayTemplate ("MFVec4d",     SFVec4d,     SFVec4d,     Float64Array, 4,  Vector4 .wAxis),
-   MFVec4f:     TypedArrayTemplate ("MFVec4f",     SFVec4f,     SFVec4f,     Float32Array, 4,  Vector4 .wAxis),
+   MFVec4d:     TypedArrayTemplate ("MFVec4d",     SFVec4d,     SFVec4d,     Float64Array, 4,  Vector4 .W_AXIS),
+   MFVec4f:     TypedArrayTemplate ("MFVec4f",     SFVec4f,     SFVec4f,     Float32Array, 4,  Vector4 .W_AXIS),
 };
 
 export default ArrayFields;

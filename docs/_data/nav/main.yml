@@ -10,6 +10,8 @@
       url: /browser-support/
     - title: "Supported Nodes"
       url: /supported-nodes/
+    - title: "X3D Examples"
+      url: /x3d-examples/
     - title: "Accessing the External Browser"
       url: /accessing-the-external-browser/
     - title: "DOM Integration"

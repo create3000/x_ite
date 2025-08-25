@@ -1,5 +1,5 @@
-/* X_ITE v11.5.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-11.5.0")];
+/* X_ITE v12.0.4 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.4")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -64,53 +64,6 @@ var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n
 const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
 ;// ./src/x_ite/Components/HAnim/HAnimDisplacer.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -176,53 +129,71 @@ var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(exte
 ;// external "__X_ITE_X3D__ .Algorithm"
 const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
 var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Algorithm_namespaceObject);
+;// external "__X_ITE_X3D__ .ShaderRegistry"
+const external_X_ITE_X3D_ShaderRegistry_namespaceObject = __X_ITE_X3D__ .ShaderRegistry;
+var external_X_ITE_X3D_ShaderRegistry_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ShaderRegistry_namespaceObject);
+;// ./src/assets/shaders/webgl2/common/Skin2.glsl.js
+const Skin2_glsl_default_ = () => /* glsl */ `
+#if defined(X3D_SKINNING)
+in float x3d_CoordIndex;
+#if X3D_NUM_JOINT_SETS>0
+uniform sampler2D x3d_JointsTexture;
+#endif
+#if X3D_NUM_DISPLACEMENTS>0
+uniform sampler2D x3d_DisplacementsTexture;uniform sampler2D x3d_DisplacementWeightsTexture;
+#endif
+#if X3D_NUM_JOINT_SETS>0||X3D_NUM_DISPLACEMENTS>0
+uniform sampler2D x3d_JointMatricesTexture;
+#endif
+#if X3D_NUM_JOINT_SETS>0
+mat4 getJointMatrix(const in int joint){vec4 a=texelFetch(x3d_JointMatricesTexture,joint*8,0);vec4 b=texelFetch(x3d_JointMatricesTexture,joint*8+1,0);vec4 c=texelFetch(x3d_JointMatricesTexture,joint*8+2,0);vec4 d=texelFetch(x3d_JointMatricesTexture,joint*8+3,0);return mat4(a,b,c,d);}
+#if defined(X3D_NORMALS)
+mat3 getJointNormalMatrix(const in int joint){vec4 a=texelFetch(x3d_JointMatricesTexture,joint*8+4,0);vec4 b=texelFetch(x3d_JointMatricesTexture,joint*8+5,0);vec4 c=texelFetch(x3d_JointMatricesTexture,joint*8+6,0);return mat3(a.xyz,vec3(a.w,b.xy),vec3(b.zw,c.x));}
+#endif
+#endif
+#if X3D_NUM_DISPLACEMENTS>0
+mat3 getDisplacementJointMatrix(const in int joint){vec4 a=texelFetch(x3d_JointMatricesTexture,joint*8,0);vec4 b=texelFetch(x3d_JointMatricesTexture,joint*8+1,0);vec4 c=texelFetch(x3d_JointMatricesTexture,joint*8+2,0);return mat3(a.xyz,b.xyz,c.xyz);}
+#endif
+#if defined(X3D_NORMALS)
+vec3 skinNormal=vec3(0);
+#if defined(X3D_TANGENTS)
+vec3 skinTangent=vec3(0);
+#endif
+#define getSkinNormal(normal)(skinNormal)
+#if defined(X3D_TANGENTS)
+#define getSkinTangent(tangent)(skinTangent)
+#endif
+#else
+#define getSkinNormal(normal)(normal)
+#define getSkinTangent(tangent)(tangent)
+#endif
+vec4 getSkinVertex(const in vec4 vertex,const in vec3 normal,const in vec3 tangent){int coordIndex=int(x3d_CoordIndex);vec4 skin=vertex;
+#if defined(X3D_NORMALS)
+skinNormal=normal;
+#if defined(X3D_TANGENTS)
+skinTangent=tangent;
+#endif
+#endif
+#if X3D_NUM_DISPLACEMENTS>0
+{int coordIndexD=coordIndex*(X3D_NUM_DISPLACEMENTS*2);for(int i=0;i<X3D_NUM_DISPLACEMENTS;++i){int index=coordIndexD+i*2;vec4 displacement=texelFetch(x3d_DisplacementsTexture,index,0);int weightIndex=int(texelFetch(x3d_DisplacementsTexture,index+1,0).x);float weight=texelFetch(x3d_DisplacementWeightsTexture,weightIndex,0).x;skin.xyz+=getDisplacementJointMatrix(int(displacement.w))*(displacement.xyz*weight);}}
+#endif
+#if X3D_NUM_JOINT_SETS>0
+{int coordIndexJ=coordIndex*(X3D_NUM_JOINT_SETS*2);for(int i=0;i<X3D_NUM_JOINT_SETS;++i){int index=coordIndexJ+i;ivec4 joints=ivec4(texelFetch(x3d_JointsTexture,index,0));vec4 weights=texelFetch(x3d_JointsTexture,index+X3D_NUM_JOINT_SETS,0);for(int i=0;i<4;++i){int joint=joints[i];float weight=weights[i];skin+=(getJointMatrix(joint)*vertex-vertex)*weight;
+#if defined(X3D_NORMALS)
+mat3 jointNormalMatrix=getJointNormalMatrix(joint);skinNormal+=(jointNormalMatrix*normal-normal)*weight;
+#if defined(X3D_TANGENTS)
+skinTangent+=(jointNormalMatrix*tangent-tangent)*weight;
+#endif
+#endif
+}}}
+#endif
+return skin;}
+#endif
+`
+;
+
+/* harmony default export */ const Skin2_glsl = (external_X_ITE_X3D_Namespace_default().add ("Skin2.glsl", Skin2_glsl_default_));
 ;// ./src/x_ite/Components/HAnim/HAnimHumanoid.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
 
 
 
@@ -237,6 +208,16 @@ var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(ex
 
 
 
+// Register shaders.
+
+
+
+
+external_X_ITE_X3D_ShaderRegistry_default().addInclude ("Skin", Skin2_glsl);
+
+/**
+ * HAnimHumanoid
+ */
 
 function HAnimHumanoid (executionContext)
 {
@@ -309,7 +290,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
       this ._scale            .addFieldInterest (this .transformNode ._scale);
       this ._scaleOrientation .addFieldInterest (this .transformNode ._scaleOrientation);
       this ._center           .addFieldInterest (this .transformNode ._center);
-      this ._bboxDisplay      .addFieldInterest (this .transformNode ._bboxDisplay);
       this ._bboxSize         .addFieldInterest (this .transformNode ._bboxSize);
       this ._bboxCenter       .addFieldInterest (this .transformNode ._bboxCenter);
 
@@ -318,7 +298,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
       this .transformNode ._scale            = this ._scale;
       this .transformNode ._scaleOrientation = this ._scaleOrientation;
       this .transformNode ._center           = this ._center;
-      this .transformNode ._bboxDisplay      = this ._bboxDisplay;
       this .transformNode ._bboxSize         = this ._bboxSize;
       this .transformNode ._bboxCenter       = this ._bboxCenter;
       this .transformNode ._children         = [ this .skeletonNode, this .viewpointsNode, this .skinNode ];
@@ -332,16 +311,11 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
 
       this .connectChildNode (this .transformNode);
 
-      // Check WebGL version.
+      // Textures
 
       const
          browser = this .getBrowser (),
          gl      = browser .getContext ();
-
-      if (gl .getVersion () === 1)
-         return;
-
-      // Textures
 
       this .jointsTexture              = gl .createTexture ();
       this .displacementsTexture       = gl .createTexture ();
@@ -351,10 +325,11 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
       for (const texture of [this .jointsTexture, this .displacementsTexture, this .displacementWeightsTexture, this .jointMatricesTexture])
       {
          gl .bindTexture (gl .TEXTURE_2D, texture);
+
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
       }
 
       // Events
@@ -382,6 +357,10 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
    {
       return this .transformNode .getSubBBox (bbox, shadows);
    },
+   getShapes (shapes, modelMatrix)
+   {
+      return this .transformNode .getShapes (shapes, modelMatrix);
+   },
    getMatrix ()
    {
       return this .transformNode .getMatrix ();
@@ -389,14 +368,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
    getHAnimKey ()
    {
       return this .humanoidKey;
-   },
-   getNumJoints ()
-   {
-      return this .numJoints;
-   },
-   getNumDisplacements ()
-   {
-      return this .numDisplacements;
    },
    set_humanoidKey__ ()
    {
@@ -717,18 +688,33 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
       gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
       gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, jointMatricesArray);
    },
+   getShaderOptions (options)
+   {
+      options .push ("X3D_SKINNING");
+      options .push (`X3D_NUM_JOINT_SETS ${this .numJoints / 4}`);
+      options .push (`X3D_NUM_DISPLACEMENTS ${this .numDisplacements}`);
+   },
    setShaderUniforms (gl, shaderObject)
    {
       const
-         browser                               = this .getBrowser (),
-         jointsTextureTextureUnit              = browser .getTexture2DUnit (),
-         displacementsTextureTextureUnit       = browser .getTexture2DUnit (),
-         displacementWeightsTextureTextureUnit = browser .getTexture2DUnit (),
-         jointMatricesTextureUnit              = browser .getTexture2DUnit ();
+         browser                  = this .getBrowser (),
+         jointsTextureTextureUnit = browser .getTextureUnit (),
+         jointMatricesTextureUnit = browser .getTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + jointsTextureTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .jointsTexture);
       gl .uniform1i (shaderObject .x3d_JointsTexture, jointsTextureTextureUnit);
+
+      gl .activeTexture (gl .TEXTURE0 + jointMatricesTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
+      gl .uniform1i (shaderObject .x3d_JointMatricesTexture, jointMatricesTextureUnit);
+
+      if (!this .numDisplacements)
+         return;
+
+      const
+         displacementsTextureTextureUnit       = browser .getTextureUnit (),
+         displacementWeightsTextureTextureUnit = browser .getTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + displacementsTextureTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .displacementsTexture);
@@ -737,10 +723,6 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
       gl .activeTexture (gl .TEXTURE0 + displacementWeightsTextureTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .displacementWeightsTexture);
       gl .uniform1i (shaderObject .x3d_DisplacementWeightsTexture, displacementWeightsTextureTextureUnit);
-
-      gl .activeTexture (gl .TEXTURE0 + jointMatricesTextureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
-      gl .uniform1i (shaderObject .x3d_JointMatricesTexture, jointMatricesTextureUnit);
    },
    dispose ()
    {
@@ -756,10 +738,10 @@ Object .defineProperties (HAnimHumanoid,
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",              new (external_X_ITE_X3D_Fields_default()).SFNode ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "version",               new (external_X_ITE_X3D_Fields_default()).SFString ("2.0")),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "description",           new (external_X_ITE_X3D_Fields_default()).SFString ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "name",                  new (external_X_ITE_X3D_Fields_default()).SFString ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "info",                  new (external_X_ITE_X3D_Fields_default()).MFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "version",               new (external_X_ITE_X3D_Fields_default()).SFString ("2.0")),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "skeletalConfiguration", new (external_X_ITE_X3D_Fields_default()).SFString ("BASIC")),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "loa",                   new (external_X_ITE_X3D_Fields_default()).SFInt32 (-1)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "translation",           new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
@@ -839,53 +821,6 @@ const HAnimHumanoid_default_ = HAnimHumanoid;
 const external_X_ITE_X3D_X3DTransformNode_namespaceObject = __X_ITE_X3D__ .X3DTransformNode;
 var external_X_ITE_X3D_X3DTransformNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DTransformNode_namespaceObject);
 ;// ./src/x_ite/Components/HAnim/HAnimJoint.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -1048,53 +983,6 @@ var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(exte
 const external_X_ITE_X3D_Rotation4_namespaceObject = __X_ITE_X3D__ .Rotation4;
 var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Rotation4_namespaceObject);
 ;// ./src/x_ite/Components/HAnim/HAnimMotion.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -1460,53 +1348,6 @@ const HAnimMotion_default_ = HAnimMotion;
 const external_X_ITE_X3D_X3DGroupingNode_namespaceObject = __X_ITE_X3D__ .X3DGroupingNode;
 var external_X_ITE_X3D_X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DGroupingNode_namespaceObject);
 ;// ./src/x_ite/Components/HAnim/HAnimSegment.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -1547,16 +1388,11 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, (external_X_ITE
    {
       external_X_ITE_X3D_X3DGroupingNode_default().prototype .initialize .call (this);
 
-      // Check WebGL version.
+      // Textures
 
       const
          browser = this .getBrowser (),
          gl      = browser .getContext ();
-
-      if (gl .getVersion () === 1)
-         return;
-
-      // Textures
 
       this .displacementsTexture       = gl .createTexture ();
       this .displacementWeightsTexture = gl .createTexture ();
@@ -1565,10 +1401,11 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, (external_X_ITE
       for (const texture of [this .displacementsTexture, this .displacementWeightsTexture, this .jointMatricesTexture])
       {
          gl .bindTexture (gl .TEXTURE_2D, texture);
+         
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR);
-         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
       }
 
       // Events
@@ -1585,14 +1422,6 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, (external_X_ITE
    getHAnimKey ()
    {
       return this .humanoidKey;
-   },
-   getNumJoints ()
-   {
-      return this .numJoints;
-   },
-   getNumDisplacements ()
-   {
-      return this .numDisplacements;
    },
    set_humanoidKey__ ()
    {
@@ -1729,15 +1558,20 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, (external_X_ITE
    },
    traverse (type, renderObject)
    {
-      if (this .coordNode)
+      if (this .coordNode && this .numDisplacements)
+      {
          renderObject .getHAnimNode () .push (this);
 
-      external_X_ITE_X3D_X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
+         external_X_ITE_X3D_X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
 
-      this .skinning (type, renderObject);
+         this .skinning (type, renderObject);
 
-      if (this .coordNode)
          renderObject .getHAnimNode () .pop ();
+      }
+      else
+      {
+         external_X_ITE_X3D_X3DGroupingNode_default().prototype .traverse .call (this, type, renderObject);
+      }
    },
    skinning: (() =>
    {
@@ -1770,13 +1604,23 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, (external_X_ITE
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, size, size, 0, gl .RGBA, gl .FLOAT, jointMatricesArray);
       };
    })(),
+   getShaderOptions (options)
+   {
+      options .push ("X3D_SKINNING");
+      options .push (`X3D_NUM_JOINT_SETS ${this .numJoints / 4}`);
+      options .push (`X3D_NUM_DISPLACEMENTS ${this .numDisplacements}`);
+   },
    setShaderUniforms (gl, shaderObject)
    {
       const
          browser                               = this .getBrowser (),
-         displacementsTextureTextureUnit       = browser .getTexture2DUnit (),
-         displacementWeightsTextureTextureUnit = browser .getTexture2DUnit (),
-         jointMatricesTextureUnit              = browser .getTexture2DUnit ();
+         jointMatricesTextureUnit              = browser .getTextureUnit (),
+         displacementsTextureTextureUnit       = browser .getTextureUnit (),
+         displacementWeightsTextureTextureUnit = browser .getTextureUnit ();
+
+      gl .activeTexture (gl .TEXTURE0 + jointMatricesTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
+      gl .uniform1i (shaderObject .x3d_JointMatricesTexture, jointMatricesTextureUnit);
 
       gl .activeTexture (gl .TEXTURE0 + displacementsTextureTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .displacementsTexture);
@@ -1785,10 +1629,6 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, (external_X_ITE
       gl .activeTexture (gl .TEXTURE0 + displacementWeightsTextureTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .displacementWeightsTexture);
       gl .uniform1i (shaderObject .x3d_DisplacementWeightsTexture, displacementWeightsTextureTextureUnit);
-
-      gl .activeTexture (gl .TEXTURE0 + jointMatricesTextureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
-      gl .uniform1i (shaderObject .x3d_JointMatricesTexture, jointMatricesTextureUnit);
    },
 });
 
@@ -1823,53 +1663,6 @@ const HAnimSegment_default_ = HAnimSegment;
 
 /* harmony default export */ const HAnim_HAnimSegment = (external_X_ITE_X3D_Namespace_default().add ("HAnimSegment", HAnimSegment_default_));
 ;// ./src/x_ite/Components/HAnim/HAnimSite.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 
@@ -1917,53 +1710,6 @@ const HAnimSite_default_ = HAnimSite;
 
 /* harmony default export */ const HAnim_HAnimSite = (external_X_ITE_X3D_Namespace_default().add ("HAnimSite", HAnimSite_default_));
 ;// ./src/assets/components/HAnimComponent.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
 
 
 

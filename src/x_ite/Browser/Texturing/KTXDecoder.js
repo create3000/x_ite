@@ -28,18 +28,20 @@ export default class KTXDecoder
          bptcSupported  = !!gl .getExtension ("EXT_texture_compression_bptc"),
          pvrtcSupported = !!gl .getExtension ("WEBGL_compressed_texture_pvrtc") || !!gl .getExtension ("WEBKIT_WEBGL_compressed_texture_pvrtc");
 
+      let format;
+
       if (astcSupported)
-         var format = libktx .TranscodeTarget .ASTC_4x4_RGBA;
+         format = libktx .TranscodeTarget .ASTC_4x4_RGBA;
       else if (bptcSupported)
-         var format = libktx .TranscodeTarget .BC7_RGBA;
+         format = libktx .TranscodeTarget .BC7_RGBA;
       else if (dxtSupported)
-         var format = libktx .TranscodeTarget .BC1_OR_3;
+         format = libktx .TranscodeTarget .BC1_OR_3;
       else if (pvrtcSupported)
-         var format = libktx .TranscodeTarget .PVRTC1_4_RGBA;
+         format = libktx .TranscodeTarget .PVRTC1_4_RGBA;
       else if (etcSupported)
-         var format = libktx .TranscodeTarget .ETC;
+         format = libktx .TranscodeTarget .ETC;
       else
-         var format = libktx .TranscodeTarget .RGBA8888;
+         format = libktx .TranscodeTarget .RGBA4444;
 
       if (ktxTexture .transcodeBasis (format, 0) !== libktx .ErrorCode .SUCCESS)
          console .warn ("Texture transcode failed. See console for details.");
@@ -66,11 +68,12 @@ export default class KTXDecoder
       this .transcode (ktxTexture);
 
       const
+         gl           = this .gl,
          uploadResult = ktxTexture .glUpload (),
-         texture      = uploadResult .texture;
+         texture      = uploadResult .object;
 
-      if (!texture)
-         throw new Error ("Could not load KTX data");
+      if (uploadResult .error !== gl .NO_ERROR || !texture)
+         throw new Error ("Could not load KTX data.");
 
       texture .baseWidth     = ktxTexture .baseWidth;
       texture .baseHeight    = ktxTexture .baseHeight;
