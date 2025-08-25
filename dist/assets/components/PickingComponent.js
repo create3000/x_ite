@@ -1,5 +1,5 @@
-/* X_ITE v12.0.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.2")];
+/* X_ITE v12.0.4 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.4")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -547,7 +547,6 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, Picking_X3DPi
          line                    = new (external_X_ITE_X3D_Line3_default()) (),
          a                       = new (external_X_ITE_X3D_Vector3_default()) (),
          b                       = new (external_X_ITE_X3D_Vector3_default()) (),
-         clipPlanes              = [ ],
          intersections           = [ ],
          texCoord                = new (external_X_ITE_X3D_Vector3_default()) (),
          pickedTextureCoordinate = new (external_X_ITE_X3D_Fields_default()).MFVec3f (),
@@ -613,12 +612,13 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, Picking_X3DPi
                      {
                         const
                            geometryNode = target .geometryNode,
-                           vertices     = this .pickingGeometryNode .getVertices ();
+                           vertices     = this .pickingGeometryNode .getVertices (),
+                           numVertices  = vertices .length;
 
                         targetBBox .assign (geometryNode .getBBox ()) .multRight (target .modelMatrix);
                         matrix .assign (target .modelMatrix) .inverse () .multLeft (modelMatrix);
 
-                        for (let v = 0, vLength = vertices .length; v < vLength; v += 8)
+                        for (let v = 0; v < numVertices; v += 8)
                         {
                            matrix .multVecMatrix (point1 .set (vertices [v + 0], vertices [v + 1], vertices [v + 2]));
                            matrix .multVecMatrix (point2 .set (vertices [v + 4], vertices [v + 5], vertices [v + 6]));
@@ -626,13 +626,11 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, Picking_X3DPi
 
                            intersections .length = 0;
 
-                           if (geometryNode .intersectsLine (line, target .modelMatrix, clipPlanes, intersections))
+                           if (geometryNode .intersectsLine (line, target .modelMatrix, intersections))
                            {
-                              for (let i = 0, iLength = intersections .length; i < iLength; ++ i)
+                              for (const intersection of intersections)
                               {
                                  // Test if intersection.point is between point1 and point2.
-
-                                 const intersection = intersections [i];
 
                                  a .assign (intersection .point) .subtract (point1);
                                  b .assign (intersection .point) .subtract (point2);
@@ -686,7 +684,7 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, Picking_X3DPi
                      {
                         const t = intersection .texCoord;
 
-                        texCoord .set (t .x, t .y, t .z);
+                        texCoord .set (t .x, t .y, t .z) .divide (t .w);
 
                         pickedTextureCoordinate .push (texCoord);
                         pickedNormal            .push (intersection .normal);

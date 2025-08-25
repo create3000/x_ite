@@ -542,7 +542,6 @@ const draco = [
 ];
 
 const embedded = [
-   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/AlphaBlendModeTest/glTF-Embedded/AlphaBlendModeTest.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/AnimatedTriangle/glTF-Embedded/AnimatedTriangle.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/Box/glTF-Embedded/Box.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/BoxAnimated/glTF-Embedded/BoxAnimated.gltf",

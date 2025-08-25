@@ -13,7 +13,7 @@ tags: [PeriodicWave, Sound]
 
 ## Overview
 
-PeriodicWave defines a periodic waveform that can be used to shape the output of an Oscillator.#10;
+PeriodicWave defines a periodic waveform that can be used to shape the output of an Oscillator.
 
 The PeriodicWave node belongs to the [Sound](/x_ite/components/overview/#sound) component and requires at least support level **2,** its default container field is *periodicWave.* It is available from X3D version 4.0 or higher.
 
@@ -68,7 +68,7 @@ The *type* field specifies shape of waveform to play, which can be one of severa
 
 #### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#dictdef-periodicwaveoptions)
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#PeriodicWaveOptions)
 
 ### MFFloat [in, out] **optionsReal** [ ] <small>(-∞,∞)</small>
 {: #fields-optionsReal }
@@ -92,7 +92,7 @@ Imaginary coefficients for defining a waveform.
 
 ### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#periodicwave)
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#PeriodicWave)
 
 ## See Also
 

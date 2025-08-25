@@ -107,7 +107,7 @@ The *interauralDistance* field is .
 
 ### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#audiolistener)
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#AudioListener)
 
 ## See Also
 

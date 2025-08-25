@@ -85,7 +85,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 #### Warning
 
-- Decibel values shall not be used.
+- Decibel values shall not be used for this multiplicative factor.
 
 ### SFTime [in, out] **tailTime** 0 <small>[0,∞)</small>
 {: #fields-tailTime }
@@ -100,7 +100,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 ### SFTime [in, out] **delayTime** 0 <small>[0,∞)</small>
 {: #fields-delayTime }
 
-*delayTime* is duration of delay (in seconds) to apply.
+*delayTime* is duration of delay applied (in seconds).
 
 ### SFInt32 [in, out] **channelCount**
 {: #fields-channelCount }

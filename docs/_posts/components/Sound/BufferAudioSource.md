@@ -87,7 +87,7 @@ Enables/disables node operation.
 ### SFBool [in, out] **load** TRUE
 {: #fields-load }
 
-*load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded scene.
+*load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded asset.
 
 #### Hints
 
@@ -187,7 +187,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 #### Warning
 
-- Decibel values shall not be used.
+- Decibel values shall not be used for this multiplicative factor.
 
 ### SFFloat [in, out] **detune** 0 <small>[0,∞)</small>
 {: #fields-detune }

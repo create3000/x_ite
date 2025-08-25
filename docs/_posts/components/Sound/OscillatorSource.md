@@ -13,7 +13,7 @@ tags: [OscillatorSource, Sound]
 
 ## Overview
 
-OscillatorSource node represents an audio source generating a periodic waveform, providing a constant tone.#10;
+OscillatorSource node represents an audio source generating a periodic waveform, providing a constant tone.
 
 The OscillatorSource node belongs to the [Sound](/x_ite/components/overview/#sound) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
 
@@ -81,7 +81,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 #### Warning
 
-- Decibel values shall not be used.
+- Decibel values shall not be used for this multiplicative factor.
 
 ### SFFloat [in, out] **detune** 0 <small>[0,∞)</small>
 {: #fields-detune }
@@ -98,9 +98,10 @@ The *frequency* of oscillation in hertz. The default value 440 Hz is a standard 
 
 The *periodicWave* field is an optional [PeriodicWave](/x_ite/components/sound/periodicwave/) node providing a regular or arbitrary periodic waveform.
 
-#### Hint
+#### Hints
 
 - Can be original (DEF) or referenced (USE) nodes.
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#PeriodicWave)
 
 ### SFTime [in, out] **startTime** 0 <small>(-∞,∞)</small>
 {: #fields-startTime }
@@ -178,7 +179,7 @@ Current elapsed time since [AudioClip](/x_ite/components/sound/audioclip/) activ
 
 ### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#oscillatornode)
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#OscillatorNode)
 
 ## See Also
 

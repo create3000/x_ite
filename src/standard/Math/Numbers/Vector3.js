@@ -246,10 +246,16 @@ Object .defineProperties (Vector3 .prototype,
 Object .assign (Vector3,
 {
    ZERO: Object .freeze (new Vector3 ()),
+   // Positive values
    ONE: Object .freeze (new Vector3 (1)),
    X_AXIS: Object .freeze (new Vector3 (1, 0, 0)),
    Y_AXIS: Object .freeze (new Vector3 (0, 1, 0)),
    Z_AXIS: Object .freeze (new Vector3 (0, 0, 1)),
+   // Negative values
+   NEGATIVE_ONE: Object .freeze (new Vector3 (-1)),
+   NEGATIVE_X_AXIS: Object .freeze (new Vector3 (-1, 0, 0)),
+   NEGATIVE_Y_AXIS: Object .freeze (new Vector3 (0, -1, 0)),
+   NEGATIVE_Z_AXIS: Object .freeze (new Vector3 (0, 0, -1)),
 });
 
 export default Vector3;

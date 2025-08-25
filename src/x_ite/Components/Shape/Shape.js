@@ -22,10 +22,6 @@ Object .assign (Object .setPrototypeOf (Shape .prototype, X3DShapeNode .prototyp
    {
       return 1;
    },
-   intersectsBox (box, clipPlanes, modelViewMatrix)
-   {
-      return this .getGeometry () .intersectsBox (box, clipPlanes, modelViewMatrix);
-   },
    displaySimple (gl, renderContext, shaderNode)
    {
       this .getGeometry () .displaySimple (gl, renderContext, shaderNode);

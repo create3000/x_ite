@@ -1,5 +1,5 @@
-/* X_ITE v12.0.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.2")];
+/* X_ITE v12.0.4 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.4")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1097,8 +1097,6 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (external_X_I
       this .set_bbox__ ();
       this .set_objects__ ();
    },
-   intersectsBox (box, clipPlanes, modelViewMatrix)
-   { },
    displaySimple (gl, renderContext, shaderNode)
    {
       this .getGeometry () .displaySimpleInstanced (gl, shaderNode, this);

@@ -113,7 +113,7 @@ Object .assign (TextureBuffer .prototype,
          invProjectionMatrix = new Matrix4 (),
          point               = new Vector3 ();
 
-      return function (projectionMatrix, viewport)
+      return function (projectionMatrix, viewport, result)
       {
          const { context: gl, array, width, height } = this;
 
@@ -122,7 +122,8 @@ Object .assign (TextureBuffer .prototype,
          let
             winX = 0,
             winY = 0,
-            winZ = Number .POSITIVE_INFINITY;
+            winZ = Number .POSITIVE_INFINITY,
+            id   = -1;
 
          for (let wy = 0, i = 0; wy < height; ++ wy)
          {
@@ -135,6 +136,7 @@ Object .assign (TextureBuffer .prototype,
                   winX = wx;
                   winY = wy;
                   winZ = wz;
+                  id   = array [i + 1];
                }
             }
          }
@@ -143,7 +145,10 @@ Object .assign (TextureBuffer .prototype,
 
          ViewVolume .unProjectPointMatrix (winX, winY, winZ, invProjectionMatrix, viewport, point);
 
-         return point .z;
+         result .id       = id;
+         result .distance = -point .z;
+
+         return result;
       };
    })(),
    bind ()

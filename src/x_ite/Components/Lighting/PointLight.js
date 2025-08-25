@@ -23,12 +23,12 @@ import ObjectCache          from "../../../standard/Utility/ObjectCache.js";
 // yyYY      Case: Sign
 
 const orientationMatrices = [
-   new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 1,  0,  0), Vector3 .Z_AXIS)), // left
-   new Matrix4 () .setRotation (new Rotation4 (new Vector3 (-1,  0,  0), Vector3 .Z_AXIS)), // right
-   new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0,  0, -1), Vector3 .Z_AXIS)), // front
-   new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0,  0,  1), Vector3 .Z_AXIS)), // back
-   new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0,  1,  0), Vector3 .Z_AXIS)), // bottom
-   new Matrix4 () .setRotation (new Rotation4 (new Vector3 ( 0, -1,  0), Vector3 .Z_AXIS)), // top
+   new Matrix4 () .setRotation (new Rotation4 (Vector3 .X_AXIS,          Vector3 .Z_AXIS)), // left
+   new Matrix4 () .setRotation (new Rotation4 (Vector3 .NEGATIVE_X_AXIS, Vector3 .Z_AXIS)), // right
+   new Matrix4 () .setRotation (new Rotation4 (Vector3 .NEGATIVE_Z_AXIS, Vector3 .Z_AXIS)), // front
+   new Matrix4 () .setRotation (new Rotation4 (Vector3 .Z_AXIS,          Vector3 .Z_AXIS)), // back
+   new Matrix4 () .setRotation (new Rotation4 (Vector3 .Y_AXIS,          Vector3 .Z_AXIS)), // bottom
+   new Matrix4 () .setRotation (new Rotation4 (Vector3 .NEGATIVE_Y_AXIS, Vector3 .Z_AXIS)), // top
 ];
 
 const viewports = [

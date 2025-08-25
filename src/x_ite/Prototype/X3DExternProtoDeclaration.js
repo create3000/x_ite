@@ -33,9 +33,33 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       X3DProtoDeclarationNode .prototype .initialize .call (this);
       X3DUrlObject            .prototype .initialize .call (this);
    },
-   canUserDefinedFields ()
+   getAppInfo ()
    {
-      return true;
+      return this [_proto] ?.getAppInfo ()
+         || X3DProtoDeclarationNode .prototype .getAppInfo .call (this);
+   },
+   setAppInfo (value)
+   {
+      if (this [_proto])
+         this [_proto] .setAppInfo (value);
+      else
+         X3DProtoDeclarationNode .prototype .setAppInfo .call (this, value);
+   },
+   getDocumentation ()
+   {
+      return this [_proto] ?.getDocumentation ()
+         || X3DProtoDeclarationNode .prototype .getDocumentation .call (this);
+   },
+   setDocumentation (value)
+   {
+      if (this [_proto])
+         this [_proto] .setDocumentation (value);
+      else
+         X3DProtoDeclarationNode .prototype .setDocumentation .call (this, value);
+   },
+   getProtoDeclaration ()
+   {
+      return this [_proto];
    },
    setProtoDeclaration (proto)
    {
@@ -48,10 +72,6 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       }
 
       this .updateInstances ();
-   },
-   getProtoDeclaration ()
-   {
-      return this [_proto];
    },
    async loadData ()
    {
@@ -220,6 +240,9 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
 
       generator .string += "'";
 
+      generator .XMLAppInfo (this);
+      generator .XMLDocumentation (this);
+
       const userDefinedFields = this .getUserDefinedFields ();
 
       if (userDefinedFields .length)
@@ -245,6 +268,10 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
             generator .string += "name='";
             generator .string += generator .XMLEncode (field .getName ());
             generator .string += "'";
+
+            generator .XMLAppInfo (field);
+            generator .XMLDocumentation (field);
+
             generator .string += generator .closingTags ? "></field>" : "/>";
             generator .string += generator .TidyBreak ();
          }
@@ -282,6 +309,10 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       generator .string += '"';
       generator .string += generator .JSONEncode (this .getName ());
       generator .string += '"';
+
+      generator .JSONAppInfo (this);
+      generator .JSONDocumentation (this);
+
       generator .string += ',';
       generator .string += generator .TidyBreak ();
 
@@ -344,6 +375,9 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
             generator .string += '"';
             generator .string += generator .TidyBreak ();
 
+            generator .JSONAppInfo (field);
+            generator .JSONDocumentation (field);
+
             generator .string += generator .DecIndent ();
             generator .string += generator .Indent ();
             generator .string += '}';
@@ -393,16 +427,6 @@ for (const key of Object .keys (X3DExternProtoDeclaration .prototype))
 
 Object .defineProperties (X3DExternProtoDeclaration .prototype,
 {
-   name:
-   {
-      get: X3DExternProtoDeclaration .prototype .getName,
-      enumerable: true,
-   },
-   fields:
-   {
-      get: X3DExternProtoDeclaration .prototype .getFieldDefinitions,
-      enumerable: true,
-   },
    isExternProto:
    {
       value: true,

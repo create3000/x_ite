@@ -76,7 +76,6 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
    getPointOnCenterPlane: (() =>
    {
       const
-         axis     = new Vector3 (0, 0, -1),
          distance = new Vector3 (),
          far      = new Vector3 ();
 
@@ -98,7 +97,7 @@ Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .proto
 
          const direction = far .normalize ();
 
-         return result .assign (direction) .multiply (this .getDistanceToCenter (distance) .norm () / direction .dot (axis));
+         return result .assign (direction) .multiply (this .getDistanceToCenter (distance) .norm () / direction .dot (Vector3 .NEGATIVE_Z_AXIS));
       };
    })(),
    getDistanceToCenter (distance, positionOffset)

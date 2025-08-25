@@ -78,8 +78,8 @@ const handler =
 
       if (value)
       {
-         for (const fieldDefinition of value .getFieldDefinitions ())
-            ownKeys .push (fieldDefinition .name);
+         for (const { name } of value .getFieldDefinitions ())
+            ownKeys .push (name);
       }
 
       return ownKeys;

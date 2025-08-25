@@ -1,5 +1,5 @@
-/* X_ITE v12.0.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.2")];
+/* X_ITE v12.0.4 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.4")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1147,11 +1147,11 @@ const
 
 // Box normals for bbox / line intersection.
 const boxNormals = [
-   new (external_X_ITE_X3D_Vector3_default()) (0,  0,  1), // front
-   new (external_X_ITE_X3D_Vector3_default()) (0,  0, -1), // back
-   new (external_X_ITE_X3D_Vector3_default()) (0,  1,  0), // top
-   new (external_X_ITE_X3D_Vector3_default()) (0, -1,  0), // bottom
-   new (external_X_ITE_X3D_Vector3_default()) (1,  0,  0)  // right
+   (external_X_ITE_X3D_Vector3_default()).Z_AXIS,          // front
+   (external_X_ITE_X3D_Vector3_default()).NEGATIVE_Z_AXIS, // back
+   (external_X_ITE_X3D_Vector3_default()).Y_AXIS,          // top
+   (external_X_ITE_X3D_Vector3_default()).NEGATIVE_Y_AXIS, // bottom
+   (external_X_ITE_X3D_Vector3_default()).X_AXIS,          // right
    // left: We do not have to test for left.
 ];
 
@@ -2297,8 +2297,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
          gl .bufferData (gl .ARRAY_BUFFER, data, gl .DYNAMIC_DRAW);
       };
    })(),
-   intersectsBox (box, clipPlanes)
-   { },
    displaySimple (gl, renderContext, shaderNode)
    {
       // Display geometry.
