@@ -1,5 +1,5 @@
-/* X_ITE v12.0.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.3")];
+/* X_ITE v12.0.4 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.4")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -167,6 +167,19 @@ Object .assign (Object .setPrototypeOf (X3DKeyDeviceSensorNode .prototype, (exte
    enable ()
    {
       this .getBrowser () .addKeyDeviceSensorNode (this);
+
+      // Only one key device sensor may be active at a time.
+
+      for (const keyDeviceSensorNode of this .getBrowser () .getKeyDeviceSensorNodes ())
+      {
+         if (keyDeviceSensorNode === this)
+            continue;
+
+         if (!keyDeviceSensorNode ._enabled .getValue ())
+            continue;
+
+         keyDeviceSensorNode ._enabled = false;
+      }
    },
    disable ()
    {
@@ -229,7 +242,7 @@ Object .assign (Object .setPrototypeOf (KeySensor .prototype, KeyDeviceSensor_X3
    {
       event .preventDefault ();
 
-      if (! this ._isActive .getValue ())
+      if (!this ._isActive .getValue ())
          this ._isActive = true;
 
       switch (event .which)
@@ -475,6 +488,9 @@ Object .assign (Object .setPrototypeOf (KeySensor .prototype, KeyDeviceSensor_X3
 
       if (this ._altKey .getValue ())
          this ._altKey = false;
+
+      if (this ._isActive .getValue ())
+         this ._isActive = false;
    },
 });
 
@@ -570,7 +586,7 @@ Object .assign (Object .setPrototypeOf (StringSensor .prototype, KeyDeviceSensor
             {
                if (event .key .length === 1)
                {
-                  if (! this ._isActive .getValue ())
+                  if (!this ._isActive .getValue ())
                   {
                      this ._isActive    = true;
                      this ._enteredText = "";
