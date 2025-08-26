@@ -847,11 +847,11 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
    },
    toXMLStream (generator)
    {
-      const sharedNode = generator .IsSharedNode (this);
-
       generator .EnterScope ();
 
-      const name = generator .Name (this);
+      const
+         sharedNode = generator .IsSharedNode (this),
+         name       = generator .Name (this);
 
       if (name .length)
       {
@@ -1127,11 +1127,11 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
    },
    toJSONStream (generator)
    {
-      const sharedNode = generator .IsSharedNode (this);
-
       generator .EnterScope ();
 
-      const name = generator .Name (this);
+      const
+         sharedNode = generator .IsSharedNode (this),
+         name       = generator .Name (this);
 
       // USE name
 
