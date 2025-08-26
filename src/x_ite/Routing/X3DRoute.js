@@ -216,19 +216,19 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       generator .string += "<ROUTE";
       generator .string += generator .Space ();
       generator .string += "fromNode='";
-      generator .string += generator .XMLEncode (sourceNodeName);
+      generator .string += generator .EncodeString (sourceNodeName);
       generator .string += "'";
       generator .string += generator .Space ();
       generator .string += "fromField='";
-      generator .string += generator .XMLEncode (this .getSourceField ());
+      generator .string += generator .EncodeString (this .getSourceField ());
       generator .string += "'";
       generator .string += generator .Space ();
       generator .string += "toNode='";
-      generator .string += generator .XMLEncode (destinationNodeName);
+      generator .string += generator .EncodeString (destinationNodeName);
       generator .string += "'";
       generator .string += generator .Space ();
       generator .string += "toField='";
-      generator .string += generator .XMLEncode (this .getDestinationField ());
+      generator .string += generator .EncodeString (this .getDestinationField ());
       generator .string += "'";
       generator .string += generator .closingTags ? "></ROUTE>" : "/>";
    },
@@ -269,7 +269,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       generator .string += ':';
       generator .string += generator .TidySpace ();
       generator .string += '"';
-      generator .string += generator .JSONEncode (sourceNodeName);
+      generator .string += generator .EncodeString (sourceNodeName);
       generator .string += '"';
       generator .string += ',';
       generator .string += generator .TidyBreak ();
@@ -281,7 +281,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       generator .string += ':';
       generator .string += generator .TidySpace ();
       generator .string += '"';
-      generator .string += generator .JSONEncode (this .getSourceField ());
+      generator .string += generator .EncodeString (this .getSourceField ());
       generator .string += '"';
       generator .string += ',';
       generator .string += generator .TidyBreak ();
@@ -293,7 +293,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       generator .string += ':';
       generator .string += generator .TidySpace ();
       generator .string += '"';
-      generator .string += generator .JSONEncode (destinationNodeName);
+      generator .string += generator .EncodeString (destinationNodeName);
       generator .string += '"';
       generator .string += ',';
       generator .string += generator .TidyBreak ();
@@ -305,7 +305,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       generator .string += ':';
       generator .string += generator .TidySpace ();
       generator .string += '"';
-      generator .string += generator .JSONEncode (this .getDestinationField ());
+      generator .string += generator .EncodeString (this .getDestinationField ());
       generator .string += '"';
       generator .string += generator .TidyBreak ();
 

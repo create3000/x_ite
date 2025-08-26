@@ -54,14 +54,14 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
       generator .string += "<EXPORT";
       generator .string += generator .Space ();
       generator .string += "localDEF='";
-      generator .string += generator .XMLEncode (localName);
+      generator .string += generator .EncodeString (localName);
       generator .string += "'";
 
       if (this [_exportedName] !== localName)
       {
          generator .string += generator .Space ();
          generator .string += "AS='";
-         generator .string += generator .XMLEncode (this [_exportedName]);
+         generator .string += generator .EncodeString (this [_exportedName]);
          generator .string += "'";
       }
 
@@ -92,7 +92,7 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
       generator .string += ':';
       generator .string += generator .TidySpace ();
       generator .string += '"';
-      generator .string += generator .JSONEncode (localName);
+      generator .string += generator .EncodeString (localName);
       generator .string += '"';
 
       if (this [_exportedName] !== localName)
@@ -106,7 +106,7 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
          generator .string += ':';
          generator .string += generator .TidySpace ();
          generator .string += '"';
-         generator .string += generator .JSONEncode (this [_exportedName]);
+         generator .string += generator .EncodeString (this [_exportedName]);
          generator .string += '"';
          generator .string += generator .TidyBreak ();
       }

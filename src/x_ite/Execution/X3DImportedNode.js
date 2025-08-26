@@ -80,18 +80,18 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
       generator .string += "<IMPORT";
       generator .string += generator .Space ();
       generator .string += "inlineDEF='";
-      generator .string += generator .XMLEncode (generator .Name (this .getInlineNode ()));
+      generator .string += generator .EncodeString (generator .Name (this .getInlineNode ()));
       generator .string += "'";
       generator .string += generator .Space ();
       generator .string += "importedDEF='";
-      generator .string += generator .XMLEncode (this .getExportedName ());
+      generator .string += generator .EncodeString (this .getExportedName ());
       generator .string += "'";
 
       if (importedName !== this .getExportedName ())
       {
          generator .string += generator .Space ();
          generator .string += "AS='";
-         generator .string += generator .XMLEncode (importedName);
+         generator .string += generator .EncodeString (importedName);
          generator .string += "'";
       }
 
@@ -127,7 +127,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
       generator .string += ':';
       generator .string += generator .TidySpace ();
       generator .string += '"';
-      generator .string += generator .JSONEncode (generator .Name (this .getInlineNode ()));
+      generator .string += generator .EncodeString (generator .Name (this .getInlineNode ()));
       generator .string += '"';
       generator .string += ',';
       generator .string += generator .TidyBreak ();
@@ -139,7 +139,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
       generator .string += ':';
       generator .string += generator .TidySpace ();
       generator .string += '"';
-      generator .string += generator .JSONEncode (this .getExportedName ());
+      generator .string += generator .EncodeString (this .getExportedName ());
       generator .string += '"';
 
       if (importedName !== this .getExportedName ())
@@ -153,7 +153,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
          generator .string += ':';
          generator .string += generator .TidySpace ();
          generator .string += '"';
-         generator .string += generator .JSONEncode (importedName);
+         generator .string += generator .EncodeString (importedName);
          generator .string += '"';
          generator .string += generator .TidyBreak ();
       }

@@ -231,7 +231,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       generator .string += "<ExternProtoDeclare";
       generator .string += generator .Space ();
       generator .string += "name='";
-      generator .string += generator .XMLEncode (this .getName ());
+      generator .string += generator .EncodeString (this .getName ());
       generator .string += "'";
       generator .string += generator .Space ();
       generator .string += "url='";
@@ -240,8 +240,8 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
 
       generator .string += "'";
 
-      generator .XMLAppInfo (this);
-      generator .XMLDocumentation (this);
+      generator .AppInfo (this);
+      generator .Documentation (this);
 
       const userDefinedFields = this .getUserDefinedFields ();
 
@@ -266,11 +266,11 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
             generator .string += "'";
             generator .string += generator .Space ();
             generator .string += "name='";
-            generator .string += generator .XMLEncode (field .getName ());
+            generator .string += generator .EncodeString (field .getName ());
             generator .string += "'";
 
-            generator .XMLAppInfo (field);
-            generator .XMLDocumentation (field);
+            generator .AppInfo (field);
+            generator .Documentation (field);
 
             generator .string += generator .closingTags ? "></field>" : "/>";
             generator .string += generator .TidyBreak ();
@@ -307,11 +307,11 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       generator .string += '"';
       generator .string += ':';
       generator .string += '"';
-      generator .string += generator .JSONEncode (this .getName ());
+      generator .string += generator .EncodeString (this .getName ());
       generator .string += '"';
 
-      generator .JSONAppInfo (this);
-      generator .JSONDocumentation (this);
+      generator .AppInfo (this);
+      generator .Documentation (this);
 
       generator .string += ',';
       generator .string += generator .TidyBreak ();
@@ -371,12 +371,12 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
             generator .string += ':';
             generator .string += generator .TidySpace ();
             generator .string += '"';
-            generator .string += generator .JSONEncode (field .getName ());
+            generator .string += generator .EncodeString (field .getName ());
             generator .string += '"';
             generator .string += generator .TidyBreak ();
 
-            generator .JSONAppInfo (field);
-            generator .JSONDocumentation (field);
+            generator .AppInfo (field);
+            generator .Documentation (field);
 
             generator .string += generator .DecIndent ();
             generator .string += generator .Indent ();

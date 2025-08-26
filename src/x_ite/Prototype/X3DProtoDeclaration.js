@@ -133,11 +133,11 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
       generator .string += "<ProtoDeclare";
       generator .string += generator .Space ();
       generator .string += "name='";
-      generator .string += generator .XMLEncode (this .getName ());
+      generator .string += generator .EncodeString (this .getName ());
       generator .string += "'";
 
-      generator .XMLAppInfo (this);
-      generator .XMLDocumentation (this);
+      generator .AppInfo (this);
+      generator .Documentation (this);
 
       generator .string += ">";
       generator .string += generator .TidyBreak ();
@@ -172,13 +172,13 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
             generator .string += "'";
             generator .string += generator .Space ();
             generator .string += "name='";
-            generator .string += generator .XMLEncode (field .getName ());
+            generator .string += generator .EncodeString (field .getName ());
             generator .string += "'";
 
             if (field .isDefaultValue () || !field .isInitializable ())
             {
-               generator .XMLAppInfo (field);
-               generator .XMLDocumentation (field);
+               generator .AppInfo (field);
+               generator .Documentation (field);
 
                generator .string += generator .closingTags ? "></field>" : "/>";
                generator .string += generator .TidyBreak ();
@@ -190,8 +190,8 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
                   case X3DConstants .SFNode:
                   case X3DConstants .MFNode:
                   {
-                     generator .XMLAppInfo (field);
-                     generator .XMLDocumentation (field);
+                     generator .AppInfo (field);
+                     generator .Documentation (field);
                      generator .PushContainerField (null);
 
                      generator .string += ">";
@@ -221,8 +221,8 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
 
                      generator .string += "'";
 
-                     generator .XMLAppInfo (field);
-                     generator .XMLDocumentation (field);
+                     generator .AppInfo (field);
+                     generator .Documentation (field);
 
                      generator .string += generator .closingTags ? "></field>" : "/>";
                      generator .string += generator .TidyBreak ();
@@ -291,11 +291,11 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
       generator .string += '"';
       generator .string += ':';
       generator .string += '"';
-      generator .string += generator .JSONEncode (this .getName ());
+      generator .string += generator .EncodeString (this .getName ());
       generator .string += '"';
 
-      generator .JSONAppInfo (this);
-      generator .JSONDocumentation (this);
+      generator .AppInfo (this);
+      generator .Documentation (this);
 
       generator .string += ',';
       generator .string += generator .TidyBreak ();
@@ -367,7 +367,7 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
             generator .string += ':';
             generator .string += generator .TidySpace ();
             generator .string += '"';
-            generator .string += generator .JSONEncode (field .getName ());
+            generator .string += generator .EncodeString (field .getName ());
             generator .string += '"';
 
             if (field .isDefaultValue () || !field .isInitializable ())
@@ -436,8 +436,8 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
                }
             }
 
-            generator .JSONAppInfo (field);
-            generator .JSONDocumentation (field);
+            generator .AppInfo (field);
+            generator .Documentation (field);
 
             generator .string += generator .DecIndent ();
             generator .string += generator .Indent ();
@@ -488,7 +488,7 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
 
       this [_body] .toJSONStream (generator);
 
-      generator .JSONRemoveComma ();
+      generator .RemoveComma ();
 
       generator .string += generator .DecIndent ();
       generator .string += generator .Indent ();

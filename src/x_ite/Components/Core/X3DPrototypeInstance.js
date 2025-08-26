@@ -388,11 +388,11 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
             generator .string += "<ProtoInstance";
             generator .string += generator .Space ();
             generator .string += "name='";
-            generator .string += generator .XMLEncode (this .getTypeName ());
+            generator .string += generator .EncodeString (this .getTypeName ());
             generator .string += "'";
             generator .string += generator .Space ();
             generator .string += "USE='";
-            generator .string += generator .XMLEncode (name);
+            generator .string += generator .EncodeString (name);
             generator .string += "'";
 
             const containerField = generator .ContainerField ();
@@ -403,7 +403,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                {
                   generator .string += generator .Space ();
                   generator .string += "containerField='";
-                  generator .string += generator .XMLEncode (containerField .getName ());
+                  generator .string += generator .EncodeString (containerField .getName ());
                   generator .string += "'";
                }
             }
@@ -419,7 +419,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
       generator .string += "<ProtoInstance";
       generator .string += generator .Space ();
       generator .string += "name='";
-      generator .string += generator .XMLEncode (this .getTypeName ());
+      generator .string += generator .EncodeString (this .getTypeName ());
       generator .string += "'";
 
       if (name .length)
@@ -428,7 +428,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
          generator .string += generator .Space ();
          generator .string += "DEF='";
-         generator .string += generator .XMLEncode (name);
+         generator .string += generator .EncodeString (name);
          generator .string += "'";
       }
 
@@ -440,7 +440,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
          {
             generator .string += generator .Space ();
             generator .string += "containerField='";
-            generator .string += generator .XMLEncode (containerField .getName ());
+            generator .string += generator .EncodeString (containerField .getName ());
             generator .string += "'";
          }
       }
@@ -492,7 +492,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                      generator .string += "<fieldValue";
                      generator .string += generator .Space ();
                      generator .string += "name='";
-                     generator .string += generator .XMLEncode (field .getName ());
+                     generator .string += generator .EncodeString (field .getName ());
                      generator .string += "'";
 
                      if (field .length === 0)
@@ -532,7 +532,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                      generator .string += "<fieldValue";
                      generator .string += generator .Space ();
                      generator .string += "name='";
-                     generator .string += generator .XMLEncode (field .getName ());
+                     generator .string += generator .EncodeString (field .getName ());
                      generator .string += "'";
 
                      if (field .getValue () === null)
@@ -569,7 +569,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                      generator .string += "<fieldValue";
                      generator .string += generator .Space ();
                      generator .string += "name='";
-                     generator .string += generator .XMLEncode (field .getName ());
+                     generator .string += generator .EncodeString (field .getName ());
                      generator .string += "'";
                      generator .string += generator .Space ();
                      generator .string += "value='";
@@ -607,11 +607,11 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                   generator .string += "<connect";
                   generator .string += generator .Space ();
                   generator .string += "nodeField='";
-                  generator .string += generator .XMLEncode (field .getName ());
+                  generator .string += generator .EncodeString (field .getName ());
                   generator .string += "'";
                   generator .string += generator .Space ();
                   generator .string += "protoField='";
-                  generator .string += generator .XMLEncode (protoField .getName ());
+                  generator .string += generator .EncodeString (protoField .getName ());
                   generator .string += "'";
                   generator .string += generator .closingTags ? "></connect>" : "/>";
                   generator .string += generator .TidyBreak ();
@@ -665,7 +665,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
             generator .string += ':';
             generator .string += generator .TidySpace ();
             generator .string += '"';
-            generator .string += generator .JSONEncode (this .getTypeName ());
+            generator .string += generator .EncodeString (this .getTypeName ());
             generator .string += '"';
             generator .string += ',';
             generator .string += generator .TidyBreak ();
@@ -677,7 +677,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
             generator .string += ':';
             generator .string += generator .TidySpace ();
             generator .string += '"';
-            generator .string += generator .JSONEncode (name);
+            generator .string += generator .EncodeString (name);
             generator .string += '"';
             generator .string += generator .TidyBreak ();
 
@@ -723,7 +723,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
          generator .string += ':';
          generator .string += generator .TidySpace ();
          generator .string += '"';
-         generator .string += generator .JSONEncode (name);
+         generator .string += generator .EncodeString (name);
          generator .string += '"';
          generator .string += ',';
          generator .string += generator .TidyBreak ();
@@ -739,7 +739,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
       generator .string += ':';
       generator .string += generator .TidySpace ();
       generator .string += '"';
-      generator .string += generator .JSONEncode (this .getTypeName ());
+      generator .string += generator .EncodeString (this .getTypeName ());
       generator .string += '"';
       generator .string += ',';
       generator .string += generator .TidyBreak ();
@@ -814,7 +814,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                   generator .string += ':';
                   generator .string += generator .TidySpace ();
                   generator .string += '"';
-                  generator .string += generator .JSONEncode (field .getName ());
+                  generator .string += generator .EncodeString (field .getName ());
                   generator .string += '"';
                   generator .string += ',';
                   generator .string += generator .TidyBreak ();
@@ -854,7 +854,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                   generator .string += ':';
                   generator .string += generator .TidySpace ();
                   generator .string += '"';
-                  generator .string += generator .JSONEncode (field .getName ());
+                  generator .string += generator .EncodeString (field .getName ());
                   generator .string += '"';
                   generator .string += ',';
                   generator .string += generator .TidyBreak ();
@@ -886,7 +886,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                   generator .string += ':';
                   generator .string += generator .TidySpace ();
                   generator .string += '"';
-                  generator .string += generator .JSONEncode (field .getName ());
+                  generator .string += generator .EncodeString (field .getName ());
                   generator .string += '"';
                   generator .string += ',';
                   generator .string += generator .TidyBreak ();
@@ -961,7 +961,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                   generator .string += ':';
                   generator .string += generator .TidySpace ();
                   generator .string += '"';
-                  generator .string += generator .JSONEncode (field .getName ());
+                  generator .string += generator .EncodeString (field .getName ());
                   generator .string += '"';
                   generator .string += ',';
                   generator .string += generator .TidyBreak ();
@@ -973,7 +973,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                   generator .string += ':';
                   generator .string += generator .TidySpace ();
                   generator .string += '"';
-                  generator .string += generator .JSONEncode (protoField .getName ());
+                  generator .string += generator .EncodeString (protoField .getName ());
                   generator .string += '"';
                   generator .string += generator .TidyBreak ();
 
@@ -1004,7 +1004,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
          }
       }
 
-      generator .JSONRemoveComma ();
+      generator .RemoveComma ();
 
 
       // End

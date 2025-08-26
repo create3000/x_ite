@@ -33,7 +33,7 @@ Object .assign (Object .setPrototypeOf (UnitInfo .prototype, X3DObject .prototyp
       generator .string += "'";
       generator .string += generator .Space ();
       generator .string += "name='";
-      generator .string += generator .XMLEncode (this .name);
+      generator .string += generator .EncodeString (this .name);
       generator .string += "'";
       generator .string += generator .Space ();
       generator .string += "conversionFactor='";
@@ -71,7 +71,7 @@ Object .assign (Object .setPrototypeOf (UnitInfo .prototype, X3DObject .prototyp
       generator .string += ':';
       generator .string += generator .TidySpace ();
       generator .string += '"';
-      generator .string += generator .JSONEncode (this .name);
+      generator .string += generator .EncodeString (this .name);
       generator .string += '"';
       generator .string += ',';
       generator .string += generator .TidyBreak ();

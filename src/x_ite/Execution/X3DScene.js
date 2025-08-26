@@ -515,11 +515,11 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
                generator .string += "<meta";
                generator .string += generator .Space ();
                generator .string += "name='";
-               generator .string += generator .XMLEncode (key);
+               generator .string += generator .EncodeString (key);
                generator .string += "'";
                generator .string += generator .Space ();
                generator .string += "content='";
-               generator .string += generator .XMLEncode (value);
+               generator .string += generator .EncodeString (value);
                generator .string += "'";
                generator .string += generator .closingTags ? "></meta>" : "/>";
                generator .string += generator .TidyBreak ();
@@ -739,7 +739,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
                   generator .string += ':';
                   generator .string += generator .TidySpace ();
                   generator .string += '"';
-                  generator .string += generator .JSONEncode (key);
+                  generator .string += generator .EncodeString (key);
                   generator .string += '"';
                   generator .string += ',';
                   generator .string += generator .TidyBreak ();
@@ -751,7 +751,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
                   generator .string += ':';
                   generator .string += generator .TidySpace ();
                   generator .string += '"';
-                  generator .string += generator .JSONEncode (value);
+                  generator .string += generator .EncodeString (value);
                   generator .string += '"';
                   generator .string += generator .TidyBreak ();
 
@@ -898,7 +898,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       this .getExportedNodes () .toJSONStream (generator, true);
 
-      generator .JSONRemoveComma ();
+      generator .RemoveComma ();
 
       generator .LeaveScope ();
       generator .PopExecutionContext ();

@@ -164,16 +164,16 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
    {
       const { x, y, z, angle } = this .getValue ();
 
-      generator .string += generator .JSONNumber (generator .DoubleFormat (x));
+      generator .string += generator .Number (generator .DoubleFormat (x));
       generator .string += ',';
       generator .string += generator .TidySpace ();
-      generator .string += generator .JSONNumber (generator .DoubleFormat (y));
+      generator .string += generator .Number (generator .DoubleFormat (y));
       generator .string += ',';
       generator .string += generator .TidySpace ();
-      generator .string += generator .JSONNumber (generator .DoubleFormat (z));
+      generator .string += generator .Number (generator .DoubleFormat (z));
       generator .string += ',';
       generator .string += generator .TidySpace ();
-      generator .string += generator .JSONNumber (generator .DoubleFormat (generator .ToUnit ("angle", angle)));
+      generator .string += generator .Number (generator .DoubleFormat (generator .ToUnit ("angle", angle)));
    },
 });
 

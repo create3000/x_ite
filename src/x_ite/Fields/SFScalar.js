@@ -61,7 +61,7 @@ function SFNumberTemplate (TypeName, double, defaultValue)
       {
          const category = this .getUnit ();
 
-         generator .string += generator .JSONNumber (generator [_formatter] (generator .ToUnit (category, this .getValue ())));
+         generator .string += generator .Number (generator [_formatter] (generator .ToUnit (category, this .getValue ())));
       },
    });
 }
@@ -116,13 +116,13 @@ function SFStringTemplate (TypeName)
       toXMLStream (generator, sourceText = false)
       {
          generator .string += sourceText
-            ? generator .XMLEncodeSourceText (this .getValue ())
-            : generator .XMLEncode (this .getValue ());
+            ? generator .EncodeSourceText (this .getValue ())
+            : generator .EncodeString (this .getValue ());
       },
       toJSONStreamValue (generator)
       {
          generator .string += '"';
-         generator .string += generator .JSONEncode (this .getValue ());
+         generator .string += generator .EncodeString (this .getValue ());
          generator .string += '"';
       },
    });
