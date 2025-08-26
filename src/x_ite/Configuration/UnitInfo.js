@@ -49,7 +49,6 @@ Object .assign (Object .setPrototypeOf (UnitInfo .prototype, X3DObject .prototyp
       generator .string += generator .Indent ();
 
       generator .string += '{';
-      generator .string += generator .TidyBreak ();
       generator .string += generator .IncIndent ();
 
       generator .stringProperty ("@category",         this .category, false);

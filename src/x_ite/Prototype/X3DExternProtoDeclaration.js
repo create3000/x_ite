@@ -329,7 +329,6 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
          {
             generator .string += generator .Indent ();
             generator .string += '{';
-            generator .string += generator .TidyBreak ();
             generator .string += generator .IncIndent ();
 
             generator .stringProperty ("@accessType",    generator .AccessType (field .getAccessType ()), false);
@@ -338,6 +337,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
             generator .stringProperty ("@appinfo",       field .getAppInfo ());
             generator .stringProperty ("@documentation", field .getDocumentation ());
 
+            generator .string += generator .TidyBreak ();
             generator .string += generator .DecIndent ();
             generator .string += generator .Indent ();
             generator .string += '}';
