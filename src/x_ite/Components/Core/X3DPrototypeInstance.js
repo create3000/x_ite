@@ -386,26 +386,16 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
          {
             generator .string += generator .Indent ();
             generator .string += "<ProtoInstance";
-            generator .string += generator .Space ();
-            generator .string += "name='";
-            generator .string += generator .EncodeString (this .getTypeName ());
-            generator .string += "'";
-            generator .string += generator .Space ();
-            generator .string += "USE='";
-            generator .string += generator .EncodeString (name);
-            generator .string += "'";
+
+            generator .attribute ("name", this .getTypeName ());
+            generator .attribute ("USE",  name);
 
             const containerField = generator .ContainerField ();
 
             if (containerField)
             {
                if (containerField .getName () !== this .getContainerField ())
-               {
-                  generator .string += generator .Space ();
-                  generator .string += "containerField='";
-                  generator .string += generator .EncodeString (containerField .getName ());
-                  generator .string += "'";
-               }
+                  generator .attribute ("containerField", containerField .getName ());
             }
 
             generator .string += generator .closingTags ? "></ProtoInstance>" : "/>";
@@ -417,19 +407,13 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
       generator .string += generator .Indent ();
       generator .string += "<ProtoInstance";
-      generator .string += generator .Space ();
-      generator .string += "name='";
-      generator .string += generator .EncodeString (this .getTypeName ());
-      generator .string += "'";
+
+      generator .attribute ("name", this .getTypeName ());
 
       if (name .length)
       {
          generator .AddNode (this);
-
-         generator .string += generator .Space ();
-         generator .string += "DEF='";
-         generator .string += generator .EncodeString (name);
-         generator .string += "'";
+         generator .attribute ("DEF", name);
       }
 
       const containerField = generator .ContainerField ();
@@ -437,12 +421,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
       if (containerField)
       {
          if (containerField .getName () !== this .getContainerField ())
-         {
-            generator .string += generator .Space ();
-            generator .string += "containerField='";
-            generator .string += generator .EncodeString (containerField .getName ());
-            generator .string += "'";
-         }
+            generator .attribute ("containerField", containerField .getName ());
       }
 
       const fields = this .getChangedFields ();
@@ -490,10 +469,8 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                   {
                      generator .string += generator .Indent ();
                      generator .string += "<fieldValue";
-                     generator .string += generator .Space ();
-                     generator .string += "name='";
-                     generator .string += generator .EncodeString (field .getName ());
-                     generator .string += "'";
+
+                     generator .attribute ("name", field .getName ());
 
                      if (field .length === 0)
                      {
@@ -530,15 +507,13 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
                      generator .string += generator .Indent ();
                      generator .string += "<fieldValue";
-                     generator .string += generator .Space ();
-                     generator .string += "name='";
-                     generator .string += generator .EncodeString (field .getName ());
-                     generator .string += "'";
+
+                     generator .attribute ("name", field .getName ());
 
                      if (field .getValue () === null)
                      {
-                        generator .string += generator .Space ();
-                        generator .string += "value='null'";
+                        generator .attribute ("value", "null");
+
                         generator .string += generator .closingTags ? "></fieldValue>" : "/>";
                         generator .string += generator .TidyBreak ();
                      }
@@ -567,10 +542,9 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                   {
                      generator .string += generator .Indent ();
                      generator .string += "<fieldValue";
-                     generator .string += generator .Space ();
-                     generator .string += "name='";
-                     generator .string += generator .EncodeString (field .getName ());
-                     generator .string += "'";
+
+                     generator .attribute ("name", field .getName ());
+
                      generator .string += generator .Space ();
                      generator .string += "value='";
 
@@ -605,14 +579,10 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                {
                   generator .string += generator .Indent ();
                   generator .string += "<connect";
-                  generator .string += generator .Space ();
-                  generator .string += "nodeField='";
-                  generator .string += generator .EncodeString (field .getName ());
-                  generator .string += "'";
-                  generator .string += generator .Space ();
-                  generator .string += "protoField='";
-                  generator .string += generator .EncodeString (protoField .getName ());
-                  generator .string += "'";
+
+                  generator .attribute ("nodeField",  field .getName ());
+                  generator .attribute ("protoField", protoField .getName ());
+
                   generator .string += generator .closingTags ? "></connect>" : "/>";
                   generator .string += generator .TidyBreak ();
                }

@@ -465,20 +465,13 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       generator .string += generator .Indent ();
       generator .string += "<X3D";
-      generator .string += generator .Space ();
-      generator .string += "profile='";
-      generator .string += this .getProfile () ?.name ?? "Full";
-      generator .string += "'";
-      generator .string += generator .Space ();
-      generator .string += "version='";
-      generator .string += LATEST_VERSION;
-      generator .string += "'";
-      generator .string += generator .Space ();
-      generator .string += "xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance'";
-      generator .string += generator .Space ();
-      generator .string += "xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-";
-      generator .string += LATEST_VERSION;
-      generator .string += ".xsd'>";
+
+      generator .attribute ("profile",   this .getProfile () ?.name ?? "Full");
+      generator .attribute ("version",   LATEST_VERSION);
+      generator .attribute ("xmlns:xsd", "http://www.w3.org/2001/XMLSchema-instance");
+      generator .attribute ("xsd:noNamespaceSchemaLocation", `https://www.web3d.org/specifications/x3d-${LATEST_VERSION}.xsd`);
+
+      generator .string += ">";
       generator .string += generator .TidyBreak ();
 
       generator .IncIndent ();
@@ -513,14 +506,10 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
             {
                generator .string += generator .Indent ();
                generator .string += "<meta";
-               generator .string += generator .Space ();
-               generator .string += "name='";
-               generator .string += generator .EncodeString (key);
-               generator .string += "'";
-               generator .string += generator .Space ();
-               generator .string += "content='";
-               generator .string += generator .EncodeString (value);
-               generator .string += "'";
+
+               generator .attribute ("name",    key);
+               generator .attribute ("content", value);
+
                generator .string += generator .closingTags ? "></meta>" : "/>";
                generator .string += generator .TidyBreak ();
             }

@@ -52,19 +52,12 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
 
       generator .string += generator .Indent ();
       generator .string += "<EXPORT";
-      generator .string += generator .Space ();
-      generator .string += "localDEF='";
-      generator .string += generator .EncodeString (localName);
-      generator .string += "'";
+
+      generator .attribute ("localDEF", localName);
 
       if (this [_exportedName] !== localName)
-      {
-         generator .string += generator .Space ();
-         generator .string += "AS='";
-         generator .string += generator .EncodeString (this [_exportedName]);
-         generator .string += "'";
-      }
-
+         generator .attribute ("AS", this [_exportedName]);
+      
       generator .string += generator .closingTags ? "></EXPORT>" : "/>";
    },
    toJSONStream (generator)

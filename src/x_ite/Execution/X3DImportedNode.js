@@ -78,22 +78,12 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
 
       generator .string += generator .Indent ();
       generator .string += "<IMPORT";
-      generator .string += generator .Space ();
-      generator .string += "inlineDEF='";
-      generator .string += generator .EncodeString (generator .Name (this .getInlineNode ()));
-      generator .string += "'";
-      generator .string += generator .Space ();
-      generator .string += "importedDEF='";
-      generator .string += generator .EncodeString (this .getExportedName ());
-      generator .string += "'";
+
+      generator .attribute ("inlineDEF",   generator .Name (this .getInlineNode ()));
+      generator .attribute ("importedDEF", this .getExportedName ());
 
       if (importedName !== this .getExportedName ())
-      {
-         generator .string += generator .Space ();
-         generator .string += "AS='";
-         generator .string += generator .EncodeString (importedName);
-         generator .string += "'";
-      }
+         generator .attribute ("AS", importedName);
 
       generator .string += generator .closingTags ? "></IMPORT>" : "/>";
    },

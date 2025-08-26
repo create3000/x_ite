@@ -31,14 +31,10 @@ Object .assign (Object .setPrototypeOf (ComponentInfo .prototype, X3DObject .pro
    {
       generator .string += generator .Indent ();
       generator .string += "<component";
-      generator .string += generator .Space ();
-      generator .string += "name='";
-      generator .string += this .name;
-      generator .string += "'";
-      generator .string += generator .Space ();
-      generator .string += "level='";
-      generator .string += this .level;
-      generator .string += "'";
+
+      generator .attribute ("name",  this .name);
+      generator .attribute ("level", this .level);
+
       generator .string += generator .closingTags ? "></component>" : "/>";
    },
    toJSONStream (generator)

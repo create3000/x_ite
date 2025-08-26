@@ -214,22 +214,12 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
 
       generator .string += generator .Indent ();
       generator .string += "<ROUTE";
-      generator .string += generator .Space ();
-      generator .string += "fromNode='";
-      generator .string += generator .EncodeString (sourceNodeName);
-      generator .string += "'";
-      generator .string += generator .Space ();
-      generator .string += "fromField='";
-      generator .string += generator .EncodeString (this .getSourceField ());
-      generator .string += "'";
-      generator .string += generator .Space ();
-      generator .string += "toNode='";
-      generator .string += generator .EncodeString (destinationNodeName);
-      generator .string += "'";
-      generator .string += generator .Space ();
-      generator .string += "toField='";
-      generator .string += generator .EncodeString (this .getDestinationField ());
-      generator .string += "'";
+
+      generator .attribute ("fromNode",  sourceNodeName);
+      generator .attribute ("fromField", this .getSourceField ());
+      generator .attribute ("toNode",    destinationNodeName);
+      generator .attribute ("toField",   this .getDestinationField ());
+
       generator .string += generator .closingTags ? "></ROUTE>" : "/>";
    },
    toJSONStream (generator)

@@ -27,18 +27,11 @@ Object .assign (Object .setPrototypeOf (UnitInfo .prototype, X3DObject .prototyp
    {
       generator .string += generator .Indent ();
       generator .string += "<unit";
-      generator .string += generator .Space ();
-      generator .string += "category='";
-      generator .string += this .category;
-      generator .string += "'";
-      generator .string += generator .Space ();
-      generator .string += "name='";
-      generator .string += generator .EncodeString (this .name);
-      generator .string += "'";
-      generator .string += generator .Space ();
-      generator .string += "conversionFactor='";
-      generator .string += this .conversionFactor;
-      generator .string += "'";
+
+      generator .attribute ("category",         this .category);
+      generator .attribute ("name",             this .name);
+      generator .attribute ("conversionFactor", this .conversionFactor);
+
       generator .string += generator .closingTags ? "></unit>" : "/>";
    },
    toJSONStream (generator, _throw)

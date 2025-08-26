@@ -46,28 +46,17 @@ Object .assign (Object .setPrototypeOf (XMLGenerator .prototype, X3DGenerator .p
          return string .replace (regex, char => map [char]);
       };
    })(),
-   AppInfo (object)
+   attribute (name, value)
    {
-      const appInfo = object .getAppInfo ();
+      value = String (value);
 
-      if (!appInfo)
+      if (!value)
          return;
 
       this .string += this .Space ();
-      this .string += "appinfo='";
-      this .string += this .EncodeString (appInfo);
-      this .string += "'";
-   },
-   Documentation (object)
-   {
-      const documentation = object .getDocumentation ();
-
-      if (!documentation)
-         return;
-
-      this .string += this .Space ();
-      this .string += "documentation='";
-      this .string += this .EncodeString (documentation);
+      this .string += name;
+      this .string += "='";
+      this .string += this .EncodeString (value);
       this .string += "'";
    },
 });

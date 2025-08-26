@@ -229,10 +229,9 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    {
       generator .string += generator .Indent ();
       generator .string += "<ExternProtoDeclare";
-      generator .string += generator .Space ();
-      generator .string += "name='";
-      generator .string += generator .EncodeString (this .getName ());
-      generator .string += "'";
+
+      generator .attribute ("name", this .getName ());
+
       generator .string += generator .Space ();
       generator .string += "url='";
 
@@ -240,8 +239,8 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
 
       generator .string += "'";
 
-      generator .AppInfo (this);
-      generator .Documentation (this);
+      generator .attribute ("appinfo",       this .getAppInfo ());
+      generator .attribute ("documentation", this .getDocumentation ());
 
       const userDefinedFields = this .getUserDefinedFields ();
 
@@ -256,21 +255,12 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
          {
             generator .string += generator .Indent ();
             generator .string += "<field";
-            generator .string += generator .Space ();
-            generator .string += "accessType='";
-            generator .string += generator .AccessType (field .getAccessType ());
-            generator .string += "'";
-            generator .string += generator .Space ();
-            generator .string += "type='";
-            generator .string += field .getTypeName ();
-            generator .string += "'";
-            generator .string += generator .Space ();
-            generator .string += "name='";
-            generator .string += generator .EncodeString (field .getName ());
-            generator .string += "'";
 
-            generator .AppInfo (field);
-            generator .Documentation (field);
+            generator .attribute ("accessType",    generator .AccessType (field .getAccessType ()));
+            generator .attribute ("type",          field .getTypeName ());
+            generator .attribute ("name",          field .getName ());
+            generator .attribute ("appinfo",       field .getAppInfo ());
+            generator .attribute ("documentation", field .getDocumentation ());
 
             generator .string += generator .closingTags ? "></field>" : "/>";
             generator .string += generator .TidyBreak ();
