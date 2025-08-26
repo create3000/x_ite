@@ -256,8 +256,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
             generator .attribute ("appinfo",       field .getAppInfo ());
             generator .attribute ("documentation", field .getDocumentation ());
             generator .closeTag ("field");
-
-            generator .string += generator .TidyBreak ();
+            generator .AddTidyBreak ();
          }
 
          generator .DecIndent ();

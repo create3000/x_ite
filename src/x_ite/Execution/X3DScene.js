@@ -477,9 +477,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
           this .getMetaDatas () .size)
       {
          generator .openingTag ("head");
-
-         generator .string += generator .TidyBreak ();
-
+         generator .AddTidyBreak ();
          generator .IncIndent ();
 
          // <head>
@@ -491,8 +489,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
             if (unit .conversionFactor !== 1)
             {
                unit .toXMLStream (generator);
-
-               generator .string += generator .TidyBreak ();
+               generator .AddTidyBreak ();
             }
          }
 
@@ -504,8 +501,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
                generator .attribute ("name",    key);
                generator .attribute ("content", value);
                generator .closeTag ("meta");
-
-               generator .string += generator .TidyBreak ();
+               generator .AddTidyBreak ();
             }
          }
 
@@ -513,8 +509,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
          generator .DecIndent ();
          generator .closingTag ("head");
-
-         generator .string += generator .TidyBreak ();
+         generator .AddTidyBreak ();
       }
 
       if (this .getExternProtoDeclarations () .length ||
@@ -522,9 +517,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
           this .getRootNodes () .length)
       {
          generator .openingTag ("Scene");
-
-         generator .string += generator .TidyBreak ();
-
+         generator .AddTidyBreak ();
          generator .IncIndent ();
 
          // <Scene>
@@ -541,25 +534,14 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
          generator .LeaveScope ();
          generator .PopExecutionContext ();
-
-         // </Scene>
-
          generator .DecIndent ();
-         generator .closingTag ("Scene");
-
-         generator .string += generator .TidyBreak ();
-      }
-      else
-      {
-         generator .closingTag ("Scene");
-
-         generator .string += generator .TidyBreak ();
       }
 
+      generator .closingTag ("Scene");
+      generator .AddTidyBreak ();
       generator .DecIndent ();
       generator .closingTag ("X3D");
-
-      generator .string += generator .TidyBreak ();
+      generator .AddTidyBreak ();
    },
    toJSONStream (generator)
    {

@@ -108,6 +108,10 @@ Object .assign (Generator .prototype,
    {
       return this .tidyBreak;
    },
+   AddTidyBreak ()
+   {
+      this .string += this .tidyBreak;
+   },
    ForceBreak ()
    {
       return "\n";

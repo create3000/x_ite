@@ -145,9 +145,7 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
       {
          generator .IncIndent ();
          generator .openingTag ("ProtoInterface");
-
-         generator .string += generator .TidyBreak ();
-
+         generator .AddTidyBreak ();
          generator .IncIndent ();
 
          for (const field of userDefinedFields)
@@ -162,8 +160,7 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
                generator .attribute ("appinfo",       field .getAppInfo ());
                generator .attribute ("documentation", field .getDocumentation ());
                generator .closeTag ("field");
-
-               generator .string += generator .TidyBreak ();
+               generator .AddTidyBreak ();
             }
             else
             {
@@ -180,13 +177,10 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
 
                      field .toXMLStream (generator);
 
-                     generator .string += generator .TidyBreak ();
-
+                     generator .AddTidyBreak ();
                      generator .DecIndent ();
                      generator .closingTag ("field");
-
-                     generator .string += generator .TidyBreak ();
-
+                     generator .AddTidyBreak ();
                      generator .PopContainerField ();
                      break;
                   }
@@ -201,9 +195,8 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
 
                      generator .attribute ("appinfo",       field .getAppInfo ());
                      generator .attribute ("documentation", field .getDocumentation ());
-               generator .closeTag ("field");
-
-                     generator .string += generator .TidyBreak ();
+                     generator .closeTag ("field");
+                     generator .AddTidyBreak ();
                      break;
                   }
                }
@@ -212,9 +205,7 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
 
          generator .DecIndent ();
          generator .closingTag ("ProtoInterface");
-
-         generator .string += generator .TidyBreak ();
-
+         generator .AddTidyBreak ();
          generator .DecIndent ();
       }
 
@@ -226,18 +217,14 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
 
       generator .IncIndent ();
       generator .openingTag ("ProtoBody");
-
-      generator .string += generator .TidyBreak ();
-
+      generator .AddTidyBreak ();
       generator .IncIndent ();
 
       this [_body] .toXMLStream (generator);
 
       generator .DecIndent ();
       generator .closingTag ("ProtoBody");
-
-      generator .string += generator .TidyBreak ();
-
+      generator .AddTidyBreak ();
       generator .DecIndent ();
 
       // </ProtoBody>
