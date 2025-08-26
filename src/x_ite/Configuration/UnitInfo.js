@@ -52,39 +52,11 @@ Object .assign (Object .setPrototypeOf (UnitInfo .prototype, X3DObject .prototyp
       generator .string += generator .TidyBreak ();
       generator .string += generator .IncIndent ();
 
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@category";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += this .category;
-      generator .string += '"';
-      generator .string += ',';
-      generator .string += generator .TidyBreak ();
+      generator .stringProperty ("@category",         this .category, false);
+      generator .stringProperty ("@name",             this .name);
+      generator .numberProperty ("@conversionFactor", this .conversionFactor);
 
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@name";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += generator .EncodeString (this .name);
-      generator .string += '"';
-      generator .string += ',';
       generator .string += generator .TidyBreak ();
-
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@conversionFactor";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += this .conversionFactor;
-      generator .string += generator .TidyBreak ();
-
       generator .string += generator .DecIndent ();
       generator .string += generator .Indent ();
       generator .string += '}';

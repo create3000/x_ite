@@ -299,19 +299,11 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       generator .string += generator .IncIndent ();
       generator .string += generator .Indent ();
       generator .string += '{';
-      generator .string += generator .TidyBreak ();
       generator .string += generator .IncIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@name";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += '"';
-      generator .string += generator .EncodeString (this .getName ());
-      generator .string += '"';
 
-      generator .AppInfo (this);
-      generator .Documentation (this);
+      generator .stringProperty ("@name",          this .getName (), false);
+      generator .stringProperty ("@appinfo",       this .getAppInfo ());
+      generator .stringProperty ("@documentation", this .getDocumentation ());
 
       generator .string += ',';
       generator .string += generator .TidyBreak ();
@@ -340,43 +332,11 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
             generator .string += generator .TidyBreak ();
             generator .string += generator .IncIndent ();
 
-            generator .string += generator .Indent ();
-            generator .string += '"';
-            generator .string += "@accessType";
-            generator .string += '"';
-            generator .string += ':';
-            generator .string += generator .TidySpace ();
-            generator .string += '"';
-            generator .string += generator .AccessType (field .getAccessType ());
-            generator .string += '"';
-            generator .string += ',';
-            generator .string += generator .TidyBreak ();
-
-            generator .string += generator .Indent ();
-            generator .string += '"';
-            generator .string += "@type";
-            generator .string += '"';
-            generator .string += ':';
-            generator .string += generator .TidySpace ();
-            generator .string += '"';
-            generator .string += field .getTypeName ();
-            generator .string += '"';
-            generator .string += ',';
-            generator .string += generator .TidyBreak ();
-
-            generator .string += generator .Indent ();
-            generator .string += '"';
-            generator .string += "@name";
-            generator .string += '"';
-            generator .string += ':';
-            generator .string += generator .TidySpace ();
-            generator .string += '"';
-            generator .string += generator .EncodeString (field .getName ());
-            generator .string += '"';
-            generator .string += generator .TidyBreak ();
-
-            generator .AppInfo (field);
-            generator .Documentation (field);
+            generator .stringProperty ("@accessType",    generator .AccessType (field .getAccessType ()), false);
+            generator .stringProperty ("@type",          field .getTypeName ());
+            generator .stringProperty ("@name",          field .getName ());
+            generator .stringProperty ("@appinfo",       field .getAppInfo ());
+            generator .stringProperty ("@documentation", field .getDocumentation ());
 
             generator .string += generator .DecIndent ();
             generator .string += generator .Indent ();

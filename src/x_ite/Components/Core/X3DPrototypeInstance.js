@@ -655,32 +655,12 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
             generator .string += generator .IncIndent ();
             generator .string += generator .Indent ();
             generator .string += '{';
-            generator .string += generator .TidyBreak ();
             generator .string += generator .IncIndent ();
 
-            generator .string += generator .Indent ();
-            generator .string += '"';
-            generator .string += "@name";
-            generator .string += '"';
-            generator .string += ':';
-            generator .string += generator .TidySpace ();
-            generator .string += '"';
-            generator .string += generator .EncodeString (this .getTypeName ());
-            generator .string += '"';
-            generator .string += ',';
-            generator .string += generator .TidyBreak ();
+            generator .stringProperty ("@name", this .getTypeName (), false);
+            generator .stringProperty ("@USE", name);
 
-            generator .string += generator .Indent ();
-            generator .string += '"';
-            generator .string += "@USE";
-            generator .string += '"';
-            generator .string += ':';
-            generator .string += generator .TidySpace ();
-            generator .string += '"';
-            generator .string += generator .EncodeString (name);
-            generator .string += '"';
             generator .string += generator .TidyBreak ();
-
             generator .string += generator .DecIndent ();
             generator .string += generator .Indent ();
             generator .string += '}';
@@ -706,7 +686,6 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
       generator .string += generator .IncIndent ();
       generator .string += generator .Indent ();
       generator .string += '{';
-      generator .string += generator .TidyBreak ();
       generator .string += generator .IncIndent ();
 
 
@@ -715,32 +694,14 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
       if (name .length)
       {
          generator .AddNode (this);
-
-         generator .string += generator .Indent ();
-         generator .string += '"';
-         generator .string += "@DEF";
-         generator .string += '"';
-         generator .string += ':';
-         generator .string += generator .TidySpace ();
-         generator .string += '"';
-         generator .string += generator .EncodeString (name);
-         generator .string += '"';
-         generator .string += ',';
-         generator .string += generator .TidyBreak ();
+         generator .stringProperty ("@DEF", name, false);
       }
 
 
       // Type name
 
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@name";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += generator .EncodeString (this .getTypeName ());
-      generator .string += '"';
+      generator .stringProperty ("@name", this .getTypeName (), name .length);
+
       generator .string += ',';
       generator .string += generator .TidyBreak ();
 
@@ -805,17 +766,10 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                {
                   generator .string += generator .Indent ();
                   generator .string += '{';
-                  generator .string += generator .TidyBreak ();
                   generator .string += generator .IncIndent ();
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "@name";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
-                  generator .string += '"';
-                  generator .string += generator .EncodeString (field .getName ());
-                  generator .string += '"';
+
+                  generator .stringProperty ("@name", field .getName (), false);
+
                   generator .string += ',';
                   generator .string += generator .TidyBreak ();
                   generator .string += generator .Indent ();
@@ -845,17 +799,10 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                {
                   generator .string += generator .Indent ();
                   generator .string += '{';
-                  generator .string += generator .TidyBreak ();
                   generator .string += generator .IncIndent ();
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "@name";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
-                  generator .string += '"';
-                  generator .string += generator .EncodeString (field .getName ());
-                  generator .string += '"';
+
+                  generator .stringProperty ("@name", field .getName (), false);
+
                   generator .string += ',';
                   generator .string += generator .TidyBreak ();
                   generator .string += generator .Indent ();
@@ -877,17 +824,10 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                {
                   generator .string += generator .Indent ();
                   generator .string += '{';
-                  generator .string += generator .TidyBreak ();
                   generator .string += generator .IncIndent ();
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "@name";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
-                  generator .string += '"';
-                  generator .string += generator .EncodeString (field .getName ());
-                  generator .string += '"';
+
+                  generator .stringProperty ("@name", field .getName (), false);
+
                   generator .string += ',';
                   generator .string += generator .TidyBreak ();
                   generator .string += generator .Indent ();
@@ -951,32 +891,12 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                {
                   generator .string += generator .Indent ();
                   generator .string += '{';
-                  generator .string += generator .TidyBreak ();
                   generator .string += generator .IncIndent ();
 
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "@nodeField";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
-                  generator .string += '"';
-                  generator .string += generator .EncodeString (field .getName ());
-                  generator .string += '"';
-                  generator .string += ',';
-                  generator .string += generator .TidyBreak ();
+                  generator .stringProperty ("@nodeField",  field .getName (), false);
+                  generator .stringProperty ("@protoField", protoField .getName ());
 
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "@protoField";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
-                  generator .string += '"';
-                  generator .string += generator .EncodeString (protoField .getName ());
-                  generator .string += '"';
                   generator .string += generator .TidyBreak ();
-
                   generator .string += generator .DecIndent ();
                   generator .string += generator .Indent ();
                   generator .string += '}';

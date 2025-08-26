@@ -1233,17 +1233,10 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             generator .string += generator .IncIndent ();
             generator .string += generator .Indent ();
             generator .string += '{';
-            generator .string += generator .TidyBreak ();
             generator .string += generator .IncIndent ();
-            generator .string += generator .Indent ();
-            generator .string += '"';
-            generator .string += "@USE";
-            generator .string += '"';
-            generator .string += ':';
-            generator .string += generator .TidySpace ();
-            generator .string += '"';
-            generator .string += generator .EncodeString (name);
-            generator .string += '"';
+
+            generator .stringProperty ("@USE", name, false);
+
             generator .string += generator .TidyBreak ();
             generator .string += generator .DecIndent ();
             generator .string += generator .Indent ();
@@ -1271,7 +1264,6 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       generator .string += generator .IncIndent ();
       generator .string += generator .Indent ();
       generator .string += '{';
-      generator .string += generator .TidyBreak ();
       generator .string += generator .IncIndent ();
 
 
@@ -1280,20 +1272,12 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       if (name .length)
       {
          generator .AddNode (this);
+         generator .stringProperty ("@DEF", name, false);
 
-         generator .string += generator .Indent ();
-         generator .string += '"';
-         generator .string += "@DEF";
-         generator .string += '"';
-         generator .string += ':';
-         generator .string += generator .TidySpace ();
-         generator .string += '"';
-         generator .string += generator .EncodeString (name);
-         generator .string += '"';
          generator .string += ',';
-         generator .string += generator .TidyBreak ();
       }
 
+      generator .string += generator .TidyBreak ();
 
       // Fields
 
@@ -1355,48 +1339,48 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
          for (const field of outputFields)
          {
-            if (field .isInitializable ())
+            if (!field .isInitializable ())
+               continue;
+
+            switch (field .getType ())
             {
-               switch (field .getType ())
+               case X3DConstants .SFNode:
+               case X3DConstants .MFNode:
                {
-                  case X3DConstants .SFNode:
-                  case X3DConstants .MFNode:
-                  {
-                     generator .string += generator .Indent ();
-                     generator .string += '"';
-                     generator .string += '-';
-                     generator .string += field .getName ();
-                     generator .string += '"';
-                     generator .string += ':';
-                     generator .string += generator .TidySpace ();
+                  generator .string += generator .Indent ();
+                  generator .string += '"';
+                  generator .string += '-';
+                  generator .string += field .getName ();
+                  generator .string += '"';
+                  generator .string += ':';
+                  generator .string += generator .TidySpace ();
 
-                     field .toJSONStream (generator);
-                     break;
-                  }
-                  default:
-                  {
-                     generator .string += generator .Indent ();
-                     generator .string += '"';
-                     generator .string += '@';
-                     generator .string += field .getName ();
-                     generator .string += '"';
-                     generator .string += ':';
-                     generator .string += generator .TidySpace ();
-
-                     field .toJSONStream (generator);
-                     break;
-                  }
+                  field .toJSONStream (generator);
+                  break;
                }
+               default:
+               {
+                  generator .string += generator .Indent ();
+                  generator .string += '"';
+                  generator .string += '@';
+                  generator .string += field .getName ();
+                  generator .string += '"';
+                  generator .string += ':';
+                  generator .string += generator .TidySpace ();
 
-               generator .string += ',';
-               generator .string += generator .TidyBreak ();
+                  field .toJSONStream (generator);
+                  break;
+               }
             }
+
+            generator .string += ',';
+            generator .string += generator .TidyBreak ();
          }
       }
 
       // User defined fields
 
-      if (! this .canUserDefinedFields () || ! userDefinedFields .length)
+      if (!this .canUserDefinedFields () || !userDefinedFields .length)
          ;
       else
       {
@@ -1414,42 +1398,11 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
          {
             generator .string += generator .Indent ();
             generator .string += '{';
-            generator .string += generator .TidyBreak ();
             generator .string += generator .IncIndent ();
 
-            generator .string += generator .Indent ();
-            generator .string += '"';
-            generator .string += "@accessType";
-            generator .string += '"';
-            generator .string += ':';
-            generator .string += generator .TidySpace ();
-            generator .string += '"';
-            generator .string += generator .AccessType (field .getAccessType ());
-            generator .string += '"';
-            generator .string += ',';
-            generator .string += generator .TidyBreak ();
-
-            generator .string += generator .Indent ();
-            generator .string += '"';
-            generator .string += "@type";
-            generator .string += '"';
-            generator .string += ':';
-            generator .string += generator .TidySpace ();
-            generator .string += '"';
-            generator .string += field .getTypeName ();
-            generator .string += '"';
-            generator .string += ',';
-            generator .string += generator .TidyBreak ();
-
-            generator .string += generator .Indent ();
-            generator .string += '"';
-            generator .string += "@name";
-            generator .string += '"';
-            generator .string += ':';
-            generator .string += generator .TidySpace ();
-            generator .string += '"';
-            generator .string += generator .EncodeString (field .getName ());
-            generator .string += '"';
+            generator .stringProperty ("@accessType", generator .AccessType (field .getAccessType ()), false);
+            generator .stringProperty ("@type",       field .getTypeName ());
+            generator .stringProperty ("@name",       field .getName ());
 
             // If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
             // for this field.
@@ -1535,8 +1488,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                   references .push (field);
             }
 
-            generator .AppInfo (field);
-            generator .Documentation (field);
+            generator .stringProperty ("@appinfo",       field .getAppInfo ());
+            generator .stringProperty ("@documentation", field .getDocumentation ());
 
             generator .string += generator .TidyBreak ();
             generator .string += generator .DecIndent ();
@@ -1624,32 +1577,12 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             {
                generator .string += generator .Indent ();
                generator .string += '{';
-               generator .string += generator .TidyBreak ();
                generator .string += generator .IncIndent ();
 
-               generator .string += generator .Indent ();
-               generator .string += '"';
-               generator .string += "@nodeField";
-               generator .string += '"';
-               generator .string += ':';
-               generator .string += generator .TidySpace ();
-               generator .string += '"';
-               generator .string += generator .EncodeString (field .getName ());
-               generator .string += '"';
-               generator .string += ',';
-               generator .string += generator .TidyBreak ();
+               generator .stringProperty ("@nodeField",  field .getName (), false);
+               generator .stringProperty ("@protoField", protoField .getName ());
 
-               generator .string += generator .Indent ();
-               generator .string += '"';
-               generator .string += "@protoField";
-               generator .string += '"';
-               generator .string += ':';
-               generator .string += generator .TidySpace ();
-               generator .string += '"';
-               generator .string += generator .EncodeString (protoField .getName ());
-               generator .string += '"';
                generator .string += generator .TidyBreak ();
-
                generator .string += generator .DecIndent ();
                generator .string += generator .Indent ();
                generator .string += '}';

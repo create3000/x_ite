@@ -117,51 +117,15 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
       generator .string += generator .IncIndent ();
       generator .string += generator .Indent ();
       generator .string += '{';
-      generator .string += generator .TidyBreak ();
       generator .string += generator .IncIndent ();
 
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@inlineDEF";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += generator .EncodeString (generator .Name (this .getInlineNode ()));
-      generator .string += '"';
-      generator .string += ',';
-      generator .string += generator .TidyBreak ();
-
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@importedDEF";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += generator .EncodeString (this .getExportedName ());
-      generator .string += '"';
+      generator .stringProperty ("@inlineDEF",   generator .Name (this .getInlineNode ()), false);
+      generator .stringProperty ("@importedDEF", this .getExportedName ());
 
       if (importedName !== this .getExportedName ())
-      {
-         generator .string += ',';
-         generator .string += generator .TidyBreak ();
-         generator .string += generator .Indent ();
-         generator .string += '"';
-         generator .string += "@AS";
-         generator .string += '"';
-         generator .string += ':';
-         generator .string += generator .TidySpace ();
-         generator .string += '"';
-         generator .string += generator .EncodeString (importedName);
-         generator .string += '"';
-         generator .string += generator .TidyBreak ();
-      }
-      else
-      {
-         generator .string += generator .TidyBreak ();
-      }
+         generator .stringProperty ("@AS", importedName);
 
+      generator .string += generator .TidyBreak ();
       generator .string += generator .DecIndent ();
       generator .string += generator .Indent ();
       generator .string += '}';

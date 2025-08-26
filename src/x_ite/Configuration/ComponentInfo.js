@@ -45,30 +45,12 @@ Object .assign (Object .setPrototypeOf (ComponentInfo .prototype, X3DObject .pro
    {
       generator .string += generator .Indent ();
       generator .string += '{';
-      generator .string += generator .TidyBreak ();
       generator .string += generator .IncIndent ();
 
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@name";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += this .name;
-      generator .string += '"';
-      generator .string += ',';
-      generator .string += generator .TidyBreak ();
+      generator .stringProperty ("@name", this .name, false);
+      generator .numberProperty ("@level", this .level);
 
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@level";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += this .level;
       generator .string += generator .TidyBreak ();
-
       generator .string += generator .DecIndent ();
       generator .string += generator .Indent ();
       generator .string += '}';

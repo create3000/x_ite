@@ -467,7 +467,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       generator .string += "<X3D";
       generator .string += generator .Space ();
       generator .string += "profile='";
-      generator .string += this .getProfile () ? this .getProfile () .name : "Full";
+      generator .string += this .getProfile () ?.name ?? "Full";
       generator .string += "'";
       generator .string += generator .Space ();
       generator .string += "version='";
@@ -594,89 +594,19 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       generator .string += ':';
       generator .string += generator .TidySpace ();
       generator .string += '{';
-      generator .string += generator .TidyBreak ();
       generator .string += generator .IncIndent ();
       generator .string += generator .IncIndent ();
 
+      // Introduction
 
-      // Encoding
+      generator .stringProperty ("encoding", "UTF-8", false);
+      generator .stringProperty ("@profile", this .getProfile () ?.name ?? "Full");
+      generator .stringProperty ("@version", LATEST_VERSION);
+      generator .stringProperty ("@xsd:noNamespaceSchemaLocation", `https://www.web3d.org/specifications/x3d-${LATEST_VERSION}.xsd`);
+      generator .stringProperty ("JSON schema", `https://www.web3d.org/specifications/x3d-${LATEST_VERSION}-JSONSchema.json`);
 
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "encoding";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += "UTF-8";
-      generator .string += '"';
       generator .string += ',';
       generator .string += generator .TidyBreak ();
-
-
-      // Profile
-
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@profile";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += this .getProfile () ? this .getProfile () .name : "Full";
-      generator .string += '"';
-      generator .string += ',';
-      generator .string += generator .TidyBreak ();
-
-
-      // Version
-
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@version";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += LATEST_VERSION;
-      generator .string += '"';
-      generator .string += ',';
-      generator .string += generator .TidyBreak ();
-
-
-      // XSD noNamespaceSchemaLocation
-
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@xsd:noNamespaceSchemaLocation";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += "https://www.web3d.org/specifications/x3d-";
-      generator .string += LATEST_VERSION;
-      generator .string += ".xsd";
-      generator .string += '"';
-      generator .string += ',';
-      generator .string += generator .TidyBreak ();
-
-
-      // JSON schema
-
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "JSON schema";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += "https://www.web3d.org/specifications/x3d-";
-      generator .string += LATEST_VERSION;
-      generator .string += "-JSONSchema.json";
-      generator .string += '"';
-      generator .string += ',';
-      generator .string += generator .TidyBreak ();
-
 
       // Head
 
@@ -729,32 +659,12 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
                {
                   generator .string += generator .Indent ();
                   generator .string += '{';
-                  generator .string += generator .TidyBreak ();
                   generator .string += generator .IncIndent ();
 
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "@name";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
-                  generator .string += '"';
-                  generator .string += generator .EncodeString (key);
-                  generator .string += '"';
-                  generator .string += ',';
-                  generator .string += generator .TidyBreak ();
+                  generator .stringProperty ("@name",    key, false);
+                  generator .stringProperty ("@content", value);
 
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "@content";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
-                  generator .string += '"';
-                  generator .string += generator .EncodeString (value);
-                  generator .string += '"';
                   generator .string += generator .TidyBreak ();
-
                   generator .string += generator .DecIndent ();
                   generator .string += generator .Indent ();
                   generator .string += '}';

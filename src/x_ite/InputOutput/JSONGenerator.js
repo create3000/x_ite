@@ -47,39 +47,38 @@ Object .assign (Object .setPrototypeOf (JSONGenerator .prototype, X3DGenerator .
 
       this .string += this .TidyBreak ();
    },
-   AppInfo (object)
+   stringProperty (key, value, comma = true)
    {
-      const appInfo = object .getAppInfo ();
-
-      if (!appInfo)
+      if (!value)
          return;
 
-      this .string += ',';
+      if (comma)
+         this .string += ',';
+
+      this .string += this .TidyBreak ();
       this .string += this .Indent ();
       this .string += '"';
-      this .string += "@appinfo";
+      this .string += key;
       this .string += '"';
       this .string += ':';
+      this .string += this .TidySpace ();
       this .string += '"';
-      this .string += this .EncodeString (appInfo);
+      this .string += this .EncodeString (value);
       this .string += '"';
    },
-   Documentation (object)
+   numberProperty (key, value, comma = true)
    {
-      const documentation = object .getDocumentation ();
+      if (comma)
+         this .string += ',';
 
-      if (!documentation)
-         return;
-
-      this .string += ',';
+      this .string += this .TidyBreak ();
       this .string += this .Indent ();
       this .string += '"';
-      this .string += "@documentation";
+      this .string += key;
       this .string += '"';
       this .string += ':';
-      this .string += '"';
-      this .string += this .EncodeString (documentation);
-      this .string += '"';
+      this .string += this .TidySpace ();
+      this .string += value;
    },
 });
 

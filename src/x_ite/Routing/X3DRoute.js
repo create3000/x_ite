@@ -259,56 +259,14 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       generator .string += generator .IncIndent ();
       generator .string += generator .Indent ();
       generator .string += '{';
-      generator .string += generator .TidyBreak ();
       generator .string += generator .IncIndent ();
 
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@fromNode";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += generator .EncodeString (sourceNodeName);
-      generator .string += '"';
-      generator .string += ',';
-      generator .string += generator .TidyBreak ();
+      generator .stringProperty ("@fromNode",  sourceNodeName, false);
+      generator .stringProperty ("@fromField", this .getSourceField ());
+      generator .stringProperty ("@toNode",    destinationNodeName);
+      generator .stringProperty ("@toField",   this .getDestinationField ());
 
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@fromField";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += generator .EncodeString (this .getSourceField ());
-      generator .string += '"';
-      generator .string += ',';
       generator .string += generator .TidyBreak ();
-
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@toNode";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += generator .EncodeString (destinationNodeName);
-      generator .string += '"';
-      generator .string += ',';
-      generator .string += generator .TidyBreak ();
-
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@toField";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += generator .EncodeString (this .getDestinationField ());
-      generator .string += '"';
-      generator .string += generator .TidyBreak ();
-
       generator .string += generator .DecIndent ();
       generator .string += generator .Indent ();
       generator .string += '}';

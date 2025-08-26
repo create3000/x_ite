@@ -82,39 +82,14 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
       generator .string += generator .IncIndent ();
       generator .string += generator .Indent ();
       generator .string += '{';
-      generator .string += generator .TidyBreak ();
       generator .string += generator .IncIndent ();
 
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@localDEF";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += generator .EncodeString (localName);
-      generator .string += '"';
+      generator .stringProperty ("@localDEF", localName, false);
 
       if (this [_exportedName] !== localName)
-      {
-         generator .string += ',';
-         generator .string += generator .TidyBreak ();
-         generator .string += generator .Indent ();
-         generator .string += '"';
-         generator .string += "@AS";
-         generator .string += '"';
-         generator .string += ':';
-         generator .string += generator .TidySpace ();
-         generator .string += '"';
-         generator .string += generator .EncodeString (this [_exportedName]);
-         generator .string += '"';
-         generator .string += generator .TidyBreak ();
-      }
-      else
-      {
-         generator .string += generator .TidyBreak ();
-      }
+         generator .stringProperty ("@AS", this [_exportedName]);
 
+      generator .string += generator .TidyBreak ();
       generator .string += generator .DecIndent ();
       generator .string += generator .Indent ();
       generator .string += '}';
