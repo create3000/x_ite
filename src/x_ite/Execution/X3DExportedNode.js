@@ -50,15 +50,13 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
    {
       const localName = generator .Name (this .getLocalNode ());
 
-      generator .string += generator .Indent ();
-      generator .string += "<EXPORT";
-
+      generator .openTag ("EXPORT");
       generator .attribute ("localDEF", localName);
 
       if (this [_exportedName] !== localName)
          generator .attribute ("AS", this [_exportedName]);
-      
-      generator .string += generator .closingTags ? "></EXPORT>" : "/>";
+
+      generator .closeTag ("EXPORT");
    },
    toJSONStream (generator)
    {

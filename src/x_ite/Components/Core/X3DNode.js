@@ -857,9 +857,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       {
          if (generator .ExistsNode (this))
          {
-            generator .string += generator .Indent ();
-            generator .string += "<";
-            generator .string += this .getTypeName ();
+            generator .openTag (this .getTypeName ());
 
             if (generator .html && this .getTypeName () === "Script")
                generator .attribute ("type", "model/x3d+xml");
@@ -874,25 +872,13 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                   generator .attribute ("containerField", containerField .getName ());
             }
 
-            if (generator .closingTags)
-            {
-               generator .string += "></";
-               generator .string += this .getTypeName ();
-               generator .string += ">";
-            }
-            else
-            {
-               generator .string += "/>";
-            }
-
+            generator .closeTag (this .getTypeName ());
             generator .LeaveScope ();
             return;
          }
       }
 
-      generator .string += generator .Indent ();
-      generator .string += "<";
-      generator .string += this .getTypeName ();
+      generator .openTag (this .getTypeName ());
 
       if (generator .html && this .getTypeName () === "Script")
          generator .attribute ("type", "model/x3d+xml");
@@ -990,31 +976,18 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
       if ((!this .canUserDefinedFields () || !userDefinedFields .length) && (!references .length || sharedNode) && !childNodes .length && !cdata)
       {
-         if (generator .closingTags)
-         {
-            generator .string += "></";
-            generator .string += this .getTypeName ();
-            generator .string += ">";
-         }
-         else
-         {
-            generator .string += "/>";
-         }
+         generator .closeTag (this .getTypeName ());
       }
       else
       {
-         generator .string += ">";
-         generator .string += generator .TidyBreak ();
-
+         generator .endTag ();
          generator .IncIndent ();
 
          if (this .canUserDefinedFields ())
          {
             for (const field of userDefinedFields)
             {
-               generator .string += generator .Indent ();
-               generator .string += "<field";
-
+               generator .openTag ("field");
                generator .attribute ("accessType", generator .AccessType (field .getAccessType ()));
                generator .attribute ("type",       field .getTypeName ());
                generator .attribute ("name",       field .getName ());
@@ -1042,8 +1015,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                   {
                      generator .attribute ("appinfo",       field .getAppInfo ());
                      generator .attribute ("documentation", field .getDocumentation ());
+                     generator .closeTag ("field");
 
-                     generator .string += generator .closingTags ? "></field>" : "/>";
                      generator .string += generator .TidyBreak ();
                   }
                   else
@@ -1057,21 +1030,17 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                         {
                            generator .attribute ("appinfo",       field .getAppInfo ());
                            generator .attribute ("documentation", field .getDocumentation ());
-                           generator .PushContainerField (null);
-
-                           generator .string += ">";
-                           generator .string += generator .TidyBreak ();
-
+                           generator .endTag ();
                            generator .IncIndent ();
+                           generator .PushContainerField (null);
 
                            field .toXMLStream (generator);
 
                            generator .string += generator .TidyBreak ();
 
                            generator .DecIndent ();
+                           generator .closingTag ("field");
 
-                           generator .string += generator .Indent ();
-                           generator .string += "</field>";
                            generator .string += generator .TidyBreak ();
 
                            generator .PopContainerField ();
@@ -1088,8 +1057,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
                            generator .attribute ("appinfo",       field .getAppInfo ());
                            generator .attribute ("documentation", field .getDocumentation ());
+                           generator .closeTag ("field");
 
-                           generator .string += generator .closingTags ? "></field>" : "/>";
                            generator .string += generator .TidyBreak ();
                            break;
                         }
@@ -1103,8 +1072,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
                   generator .attribute ("appinfo",       field .getAppInfo ());
                   generator .attribute ("documentation", field .getDocumentation ());
+                  generator .closeTag ("field");
 
-                  generator .string += generator .closingTags ? "></field>" : "/>";
                   generator .string += generator .TidyBreak ();
                }
             }
@@ -1112,8 +1081,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
          if (references .length && !sharedNode)
          {
-            generator .string += generator .Indent ();
-            generator .string += "<IS>";
+            generator .openingTag ("IS");
+
             generator .string += generator .TidyBreak ();
 
             generator .IncIndent ();
@@ -1124,21 +1093,18 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
                for (const protoField of protoFields)
                {
-                  generator .string += generator .Indent ();
-                  generator .string += "<connect";
-
+                  generator .openTag ("connect");
                   generator .attribute ("nodeField",  field .getName ());
                   generator .attribute ("protoField", protoField .getName ());
+                  generator .closeTag ("connect");
 
-                  generator .string += generator .closingTags ? "></connect>" : "/>";
                   generator .string += generator .TidyBreak ();
                }
             }
 
             generator .DecIndent ();
+            generator .closingTag ("IS");
 
-            generator .string += generator .Indent ();
-            generator .string += "</IS>";
             generator .string += generator .TidyBreak ();
          }
 
@@ -1165,11 +1131,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
          }
 
          generator .DecIndent ();
-
-         generator .string += generator .Indent ();
-         generator .string += "</";
-         generator .string += this .getTypeName ();
-         generator .string += ">";
+         generator .closingTag (this .getTypeName ());
       }
 
       generator .LeaveScope ();

@@ -212,15 +212,12 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
          ? generator .Name (this [_destinationNode])
          : generator .ImportedName (this [_destinationNode]);
 
-      generator .string += generator .Indent ();
-      generator .string += "<ROUTE";
-
+      generator .openTag ("ROUTE");
       generator .attribute ("fromNode",  sourceNodeName);
       generator .attribute ("fromField", this .getSourceField ());
       generator .attribute ("toNode",    destinationNodeName);
       generator .attribute ("toField",   this .getDestinationField ());
-
-      generator .string += generator .closingTags ? "></ROUTE>" : "/>";
+      generator .closeTag ("ROUTE");
    },
    toJSONStream (generator)
    {

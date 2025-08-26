@@ -25,14 +25,11 @@ Object .assign (Object .setPrototypeOf (UnitInfo .prototype, X3DObject .prototyp
    },
    toXMLStream (generator)
    {
-      generator .string += generator .Indent ();
-      generator .string += "<unit";
-
+      generator .openTag ("unit");
       generator .attribute ("category",         this .category);
       generator .attribute ("name",             this .name);
       generator .attribute ("conversionFactor", this .conversionFactor);
-
-      generator .string += generator .closingTags ? "></unit>" : "/>";
+      generator .closeTag ("unit");
    },
    toJSONStream (generator, _throw)
    {

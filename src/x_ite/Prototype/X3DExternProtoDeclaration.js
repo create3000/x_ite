@@ -227,9 +227,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    },
    toXMLStream (generator)
    {
-      generator .string += generator .Indent ();
-      generator .string += "<ExternProtoDeclare";
-
+      generator .openTag ("ExternProtoDeclare");
       generator .attribute ("name", this .getName ());
 
       generator .string += generator .Space ();
@@ -246,34 +244,28 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
 
       if (userDefinedFields .length)
       {
-         generator .string += ">";
-         generator .string += generator .TidyBreak ();
-
+         generator .endTag ();
          generator .IncIndent ();
 
          for (const field of userDefinedFields)
          {
-            generator .string += generator .Indent ();
-            generator .string += "<field";
-
+            generator .openTag ("field");
             generator .attribute ("accessType",    generator .AccessType (field .getAccessType ()));
             generator .attribute ("type",          field .getTypeName ());
             generator .attribute ("name",          field .getName ());
             generator .attribute ("appinfo",       field .getAppInfo ());
             generator .attribute ("documentation", field .getDocumentation ());
+            generator .closeTag ("field");
 
-            generator .string += generator .closingTags ? "></field>" : "/>";
             generator .string += generator .TidyBreak ();
          }
 
          generator .DecIndent ();
-
-         generator .string += generator .Indent ();
-         generator .string += "</ExternProtoDeclare>";
+         generator .closingTag ("ExternProtoDeclare");
       }
       else
       {
-         generator .string += generator .closingTags ? "></ExternProtoDeclare>" : "/>";
+         generator .closeTag ("ExternProtoDeclare");
       }
    },
    toJSONStream (generator)

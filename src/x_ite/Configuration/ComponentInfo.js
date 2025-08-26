@@ -29,13 +29,10 @@ Object .assign (Object .setPrototypeOf (ComponentInfo .prototype, X3DObject .pro
    },
    toXMLStream (generator)
    {
-      generator .string += generator .Indent ();
-      generator .string += "<component";
-
+      generator .openTag ("component");
       generator .attribute ("name",  this .name);
       generator .attribute ("level", this .level);
-
-      generator .string += generator .closingTags ? "></component>" : "/>";
+      generator .closeTag ("component");
    },
    toJSONStream (generator)
    {

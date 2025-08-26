@@ -2,15 +2,13 @@ import X3DConstants      from "../Base/X3DConstants.js";
 import Algorithm         from "../../standard/Math/Algorithm.js";
 import { getUniqueName } from "../Execution/NamedNodesHandling.js";
 
-function Generator ({ style = "TIDY", indent = "", indentChar = "  ", precision = 7, doublePrecision = 15, html = false, closingTags = false, names = true } = { })
+function Generator ({ style = "TIDY", indent = "", indentChar = "  ", precision = 7, doublePrecision = 15, names = true } = { })
 {
    this .string          = "";
    this .indent          = indent;
    this .listIndent      = indent;
    this .precision       = Algorithm .clamp (precision, 1, 21);
    this .doublePrecision = Algorithm .clamp (doublePrecision, 1, 21);
-   this .html            = html;
-   this .closingTags     = html || closingTags;
    this .outputNames     = names; // private option: used in StaticGroup for toVRMLString.
 
    this .floatFormat             = this .createFloatFormat (this .precision);
@@ -29,7 +27,6 @@ function Generator ({ style = "TIDY", indent = "", indentChar = "  ", precision 
    this .names                 = new Map ();
    this .namesByNode           = new Map ();
    this .routeNodes            = new Map ();
-   this .containerFields       = [ ];
 }
 
 Object .assign (Generator .prototype,
@@ -391,18 +388,6 @@ Object .assign (Generator .prototype,
       importedNames .set (importedNode, newName);
 
       return newName;
-   },
-   PushContainerField (field)
-   {
-      this .containerFields .push (field);
-   },
-   PopContainerField ()
-   {
-      this .containerFields .pop ();
-   },
-   ContainerField ()
-   {
-      return this .containerFields .at (-1);
    },
    AccessType (accessType)
    {

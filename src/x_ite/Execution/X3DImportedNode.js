@@ -76,16 +76,14 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
 
       const importedName = generator .ImportedName (this);
 
-      generator .string += generator .Indent ();
-      generator .string += "<IMPORT";
-
+      generator .openTag ("IMPORT");
       generator .attribute ("inlineDEF",   generator .Name (this .getInlineNode ()));
       generator .attribute ("importedDEF", this .getExportedName ());
 
       if (importedName !== this .getExportedName ())
          generator .attribute ("AS", importedName);
 
-      generator .string += generator .closingTags ? "></IMPORT>" : "/>";
+      generator .closeTag ("IMPORT");
    },
    toJSONStream (generator)
    {

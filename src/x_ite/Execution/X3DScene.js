@@ -463,25 +463,21 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
          generator .string += generator .TidyBreak ();
       }
 
-      generator .string += generator .Indent ();
-      generator .string += "<X3D";
-
+      generator .openTag ("X3D");
       generator .attribute ("profile",   this .getProfile () ?.name ?? "Full");
       generator .attribute ("version",   LATEST_VERSION);
       generator .attribute ("xmlns:xsd", "http://www.w3.org/2001/XMLSchema-instance");
       generator .attribute ("xsd:noNamespaceSchemaLocation", `https://www.web3d.org/specifications/x3d-${LATEST_VERSION}.xsd`);
 
-      generator .string += ">";
-      generator .string += generator .TidyBreak ();
-
+      generator .endTag ();
       generator .IncIndent ();
 
       if (this .getComponents () .length ||
           this .getUnits () .some (unit => unit .conversionFactor !== 1) ||
           this .getMetaDatas () .size)
       {
-         generator .string += generator .Indent ();
-         generator .string += "<head>";
+         generator .openingTag ("head");
+
          generator .string += generator .TidyBreak ();
 
          generator .IncIndent ();
@@ -504,13 +500,11 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
          {
             for (const value of values)
             {
-               generator .string += generator .Indent ();
-               generator .string += "<meta";
-
+               generator .openTag ("meta");
                generator .attribute ("name",    key);
                generator .attribute ("content", value);
+               generator .closeTag ("meta");
 
-               generator .string += generator .closingTags ? "></meta>" : "/>";
                generator .string += generator .TidyBreak ();
             }
          }
@@ -518,9 +512,8 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
          // </head>
 
          generator .DecIndent ();
+         generator .closingTag ("head");
 
-         generator .string += generator .Indent ();
-         generator .string += "</head>";
          generator .string += generator .TidyBreak ();
       }
 
@@ -528,8 +521,8 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
           this .getProtoDeclarations () .length ||
           this .getRootNodes () .length)
       {
-         generator .string += generator .Indent ();
-         generator .string += "<Scene>";
+         generator .openingTag ("Scene");
+
          generator .string += generator .TidyBreak ();
 
          generator .IncIndent ();
@@ -552,22 +545,20 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
          // </Scene>
 
          generator .DecIndent ();
+         generator .closingTag ("Scene");
 
-         generator .string += generator .Indent ();
-         generator .string += "</Scene>";
          generator .string += generator .TidyBreak ();
       }
       else
       {
-         generator .string += generator .Indent ();
-         generator .string += "<Scene/>";
+         generator .closingTag ("Scene");
+
          generator .string += generator .TidyBreak ();
       }
 
       generator .DecIndent ();
+      generator .closingTag ("X3D");
 
-      generator .string += generator .Indent ();
-      generator .string += "</X3D>";
       generator .string += generator .TidyBreak ();
    },
    toJSONStream (generator)
