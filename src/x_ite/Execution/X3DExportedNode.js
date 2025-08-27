@@ -72,9 +72,7 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
       if (this [_exportedName] !== localName)
          generator .attribute ("AS", this [_exportedName]);
 
-      if (this [_description])
-         generator .attribute ("DESCRIPTION", this [_description]);
-
+      generator .attribute ("DESCRIPTION", this [_description]);
       generator .closeTag ("EXPORT");
    },
    toJSONStream (generator)
@@ -90,9 +88,7 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
       if (this [_exportedName] !== localName)
          generator .stringProperty ("@AS", this [_exportedName]);
 
-      if (this [_description])
-         generator .stringProperty ("@DESCRIPTION", this [_description]);
-
+      generator .stringProperty ("@DESCRIPTION", this [_description]);
       generator .endObject ();
       generator .endObject ();
    },
