@@ -1228,14 +1228,14 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                case X3DConstants .SFNode:
                case X3DConstants .MFNode:
                {
-                  generator .beginValue ('-' + field .getName (), comma || field !== outputFields [0]);
+                  generator .beginValue (`-${field .getName ()}`, comma || field !== outputFields [0]);
 
                   field .toJSONStream (generator);
                   break;
                }
                default:
                {
-                  generator .beginValue ('@' + field .getName (), comma || field !== outputFields [0]);
+                  generator .beginValue (`@${field .getName ()}`, comma || field !== outputFields [0]);
 
                   field .toJSONStream (generator);
                   break;
