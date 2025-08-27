@@ -1352,9 +1352,11 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       {
          generator .beginArray ("#sourceCode", comma);
 
-         const sourceTextLines = sourceText [0] .split ("\n");
+         const
+            sourceTextLines    = sourceText [0] .split ("\n"),
+            numSourceTextLines = sourceTextLines .length;
 
-         for (let i = 0, length = sourceTextLines .length; i < length; ++ i)
+         for (let i = 0; i < numSourceTextLines; ++ i)
          {
             if (i !== 0)
                generator .string += ',';
