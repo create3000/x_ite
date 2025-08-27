@@ -104,7 +104,6 @@ Object .assign (Object .setPrototypeOf (JSONGenerator .prototype, X3DGenerator .
             this .string += ':';
             this .string += this .TidySpace ();
             this .string += '{';
-            this .string += this .TidyBreak ();
             this .string += this .IncIndent ();
          }
       }
@@ -123,11 +122,31 @@ Object .assign (Object .setPrototypeOf (JSONGenerator .prototype, X3DGenerator .
       this .string += this .Indent ();
       this .string += '}';
    },
+   beginArray (name, comma = true)
+   {
+      this .beginValue (name, comma);
+
+      this .string += '[';
+      this .string += this .IncIndent ();
+   },
    endArray ()
    {
       this .string += this .DecIndent ();
       this .string += this .Indent ();
       this .string += ']';
+   },
+   beginValue (name, comma = true)
+   {
+      if (comma)
+         this .string += ',';
+
+      this .string += this .TidyBreak ();
+      this .string += this .Indent ();
+      this .string += '"';
+      this .string += name;
+      this .string += '"';
+      this .string += ':';
+      this .string += this .TidySpace ();
    },
 });
 

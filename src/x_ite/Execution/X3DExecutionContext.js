@@ -815,6 +815,8 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       generator .NamedNodes (this .getNamedNodes ());
       generator .ImportedNodes (this .getImportedNodes ());
 
+      generator .string += generator .TidyBreak ();
+
       // Extern proto declarations
 
       this .getExternProtoDeclarations () .toJSONStream (generator, true);

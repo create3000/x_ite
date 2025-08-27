@@ -582,22 +582,9 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
          if (this .getMetaDatas () .size)
          {
-            // if (headLastProperty)
-            // {
-            //    generator .string += ',';
-            //    generator .string += generator .TidyBreak ();
-            // }
-
             // Meta data begin
 
-            generator .string += generator .Indent ();
-            generator .string += '"';
-            generator .string += "meta";
-            generator .string += '"';
-            generator .string += ':';
-            generator .string += generator .TidySpace ();
-            generator .string += '[';
-            generator .string += generator .IncIndent ();
+            generator .beginArray ("meta", headLastProperty);
 
             // Meta data
 
@@ -607,7 +594,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
                {
                   generator .beginObject ("", i !== 0 || j !== 0);
                   generator .stringProperty ("@name",    key, false);
-                  generator .stringProperty ("@content", value);
+                  generator .stringProperty ("@content", new String (value));
                   generator .endObject ();
                }
             }
@@ -624,63 +611,24 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
          if (this .getComponents () .length)
          {
-            if (headLastProperty)
-            {
-               generator .string += ',';
-               generator .string += generator .TidyBreak ();
-            }
-
-            // Components begin
-
-            generator .string += generator .Indent ();
-            generator .string += '"';
-            generator .string += "component";
-            generator .string += '"';
-            generator .string += ':';
-            generator .string += generator .TidySpace ();
-            generator .string += '[';
-            generator .string += generator .TidyBreak ();
-            generator .string += generator .IncIndent ();
-
-            // Components
+            generator .beginArray ("component", headLastProperty);
 
             this .getComponents () .toJSONStream (generator);
-
-            // Components end
 
             generator .endArray ();
 
             headLastProperty = true;
          }
 
-
          // Units
 
          if (outputUnits)
          {
-            if (headLastProperty)
-            {
-               generator .string += ',';
-               generator .string += generator .TidyBreak ();
-            }
+            generator .beginArray ("unit", headLastProperty);
 
-            // Units begin
-
-            generator .string += generator .Indent ();
-            generator .string += '"';
-            generator .string += "unit";
-            generator .string += '"';
-            generator .string += ':';
-            generator .string += generator .TidySpace ();
-            generator .string += '[';
             generator .string += generator .TidyBreak ();
-            generator .string += generator .IncIndent ();
-
-            // Units
 
             this .getUnits ()  .toJSONStream (generator);
-
-            // Unit end
 
             generator .endArray ();
 
@@ -695,16 +643,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       // Scene
 
       generator .beginObject ("Scene");
-
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "-children";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '[';
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .IncIndent ();
+      generator .beginArray ("-children", false);
 
       const exportedNodes = this .getExportedNodes ();
 

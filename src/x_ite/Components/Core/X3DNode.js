@@ -1267,18 +1267,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
       if (this .canUserDefinedFields () && userDefinedFields .length)
       {
-         if (lastProperty)
-            generator .string += ',';
-
-         generator .string += generator .TidyBreak ();
-         generator .string += generator .Indent ();
-         generator .string += '"';
-         generator .string += "field";
-         generator .string += '"';
-         generator .string += ':';
-         generator .string += generator .TidySpace ();
-         generator .string += '[';
-         generator .string += generator .IncIndent ();
+         generator .beginArray ("field", lastProperty);
 
          for (const field of userDefinedFields)
          {
@@ -1306,58 +1295,35 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                if (mustOutputValue && generator .ExecutionContext ())
                   references .push (field);
 
-               if (!field .isInitializable () || field .isDefaultValue ())
-                  ;
-               else
+               if (field .isInitializable () && !field .isDefaultValue ())
                {
                   // Output value
-
-                  generator .string += ',';
-                  generator .string += generator .TidyBreak ();
 
                   switch (field .getType ())
                   {
                      case X3DConstants .SFNode:
                      {
-                        generator .string += generator .Indent ();
-                        generator .string += '"';
-                        generator .string += "-children";
-                        generator .string += '"';
-                        generator .string += ':';
-                        generator .string += generator .TidySpace ();
-                        generator .string += '[';
+                        generator .beginArray ("-children");
+
                         generator .string += generator .TidyBreak ();
-                        generator .string += generator .IncIndent ();
                         generator .string += generator .Indent ();
 
                         field .toJSONStream (generator);
 
-                        generator .string += generator .TidyBreak ();
-                        generator .string += generator .DecIndent ();
-                        generator .string += generator .Indent ();
-                        generator .string += ']';
+                        generator .AddTidyBreak ();
+                        generator .endArray ();
                         break;
                      }
                      case X3DConstants .MFNode:
                      {
-                        generator .string += generator .Indent ();
-                        generator .string += '"';
-                        generator .string += "-children";
-                        generator .string += '"';
-                        generator .string += ':';
-                        generator .string += generator .TidySpace ();
+                        generator .beginValue ("-children");
 
                         field .toJSONStream (generator);
                         break;
                      }
                      default:
                      {
-                        generator .string += generator .Indent ();
-                        generator .string += '"';
-                        generator .string += "@value";
-                        generator .string += '"';
-                        generator .string += ':';
-                        generator .string += generator .TidySpace ();
+                        generator .beginValue ("@value");
 
                         field .toJSONStream (generator);
                         break;
@@ -1386,19 +1352,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
       if (sourceText)
       {
-         if (lastProperty)
-            generator .string += ',';
+         generator .beginArray ("#sourceCode", lastProperty);
 
          generator .string += generator .TidyBreak ();
-         generator .string += generator .Indent ();
-         generator .string += '"';
-         generator .string += "#sourceCode";
-         generator .string += '"';
-         generator .string += ':';
-         generator .string += generator .TidySpace ();
-         generator .string += '[';
-         generator .string += generator .TidyBreak ();
-         generator .string += generator .IncIndent ();
 
          const sourceTextLines = sourceText [0] .split ("\n");
 
@@ -1425,15 +1381,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       if (references .length && !sharedNode)
       {
          generator .beginObject ("IS", lastProperty);
-
-         generator .string += generator .Indent ();
-         generator .string += '"';
-         generator .string += "connect";
-         generator .string += '"';
-         generator .string += ':';
-         generator .string += generator .TidySpace ();
-         generator .string += '[';
-         generator .string += generator .IncIndent ();
+         generator .beginArray ("connect", false);
 
          for (const field of references)
          {

@@ -283,16 +283,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
 
       if (userDefinedFields .length)
       {
-         generator .string += ',';
-         generator .string += generator .TidyBreak ();
-         generator .string += generator .Indent ();
-         generator .string += '"';
-         generator .string += "field";
-         generator .string += '"';
-         generator .string += ':';
-         generator .string += generator .TidySpace ();
-         generator .string += '[';
-         generator .string += generator .IncIndent ();
+         generator .beginArray ("field");
 
          for (const field of userDefinedFields)
          {

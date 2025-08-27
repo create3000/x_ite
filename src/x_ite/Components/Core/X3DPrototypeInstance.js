@@ -613,16 +613,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
       if (fields .length)
       {
-         generator .string += ',';
-         generator .string += generator .TidyBreak ();
-         generator .string += generator .Indent ();
-         generator .string += '"';
-         generator .string += "fieldValue";
-         generator .string += '"';
-         generator .string += ':';
-         generator .string += generator .TidySpace ();
-         generator .string += '[';
-         generator .string += generator .IncIndent ();
+         generator .beginArray ("fieldValue");
 
          const outputFields = [ ];
 
@@ -666,18 +657,9 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                {
                   generator .beginObject ("", field !== outputFields [0]);
                   generator .stringProperty ("@name", field .getName (), false);
+                  generator .beginArray ("-children");
 
-                  generator .string += ',';
                   generator .string += generator .TidyBreak ();
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "-children";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
-                  generator .string += '[';
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .IncIndent ();
                   generator .string += generator .Indent ();
 
                   field .toJSONStream (generator);
@@ -691,15 +673,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                {
                   generator .beginObject ("", field !== outputFields [0]);
                   generator .stringProperty ("@name", field .getName (), false);
-
-                  generator .string += ',';
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "-children";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
+                  generator .beginValue ("-children");
 
                   field .toJSONStream (generator);
 
@@ -710,15 +684,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                {
                   generator .beginObject ("", field !== outputFields [0]);
                   generator .stringProperty ("@name", field .getName (), false);
-
-                  generator .string += ',';
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "@value";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
+                  generator .beginValue ("@value");
 
                   field .toJSONStream (generator);
 
@@ -736,15 +702,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
          if (references .length && !sharedNode)
          {
             generator .beginObject ("IS");
-
-            generator .string += generator .Indent ();
-            generator .string += '"';
-            generator .string += "connect";
-            generator .string += '"';
-            generator .string += ':';
-            generator .string += generator .TidySpace ();
-            generator .string += '[';
-            generator .string += generator .IncIndent ();
+            generator .beginArray ("connect", false);
 
             for (const field of references)
             {
