@@ -131,6 +131,7 @@ Object .assign (Object .setPrototypeOf (JSONGenerator .prototype, X3DGenerator .
    },
    endArray ()
    {
+      this .string += this .TidyBreak ();
       this .string += this .DecIndent ();
       this .string += this .Indent ();
       this .string += ']';

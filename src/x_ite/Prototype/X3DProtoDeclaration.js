@@ -274,7 +274,6 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
 
                      field .toJSONStream (generator);
 
-                     generator .AddTidyBreak ();
                      generator .endArray ();
                      break;
                   }
@@ -300,7 +299,6 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
             generator .endObject ();
          }
 
-         generator .AddTidyBreak ();
          generator .endArray ();
       }
 
@@ -314,7 +312,6 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
 
       this [_body] .toJSONStream (generator);
 
-      generator .AddTidyBreak ();
       generator .endArray ();
       generator .endObject ();
 

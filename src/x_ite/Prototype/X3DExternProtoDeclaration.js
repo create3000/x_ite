@@ -297,7 +297,6 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
             generator .endObject ();
          }
 
-         generator .AddTidyBreak ();
          generator .endArray ();
       }
 

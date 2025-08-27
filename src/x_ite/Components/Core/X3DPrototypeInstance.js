@@ -664,7 +664,6 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
                   field .toJSONStream (generator);
 
-                  generator .AddTidyBreak ();
                   generator .endArray ();
                   generator .endObject ();
                   break;
@@ -694,7 +693,6 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
             }
          }
 
-         generator .AddTidyBreak ();
          generator .endArray ();
 
          // IS references
@@ -717,7 +715,6 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                }
             }
 
-            generator .AddTidyBreak ();
             generator .endArray ();
             generator .endObject ();
          }

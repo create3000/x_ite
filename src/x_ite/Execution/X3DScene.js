@@ -587,7 +587,6 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
             // Meta data end
 
-            generator .AddTidyBreak ();
             generator .endArray ();
 
             headLastProperty = true;
@@ -646,7 +645,6 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       // Scene end
 
-      generator .AddTidyBreak ();
       generator .endArray ();
       generator .endObject ();
 

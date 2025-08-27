@@ -1310,7 +1310,6 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
                         field .toJSONStream (generator);
 
-                        generator .AddTidyBreak ();
                         generator .endArray ();
                         break;
                      }
@@ -1342,7 +1341,6 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             generator .endObject ();
          }
 
-         generator .AddTidyBreak ();
          generator .endArray ();
 
          comma = true;
@@ -1354,21 +1352,18 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       {
          generator .beginArray ("#sourceCode", comma);
 
-         generator .string += generator .TidyBreak ();
-
          const sourceTextLines = sourceText [0] .split ("\n");
 
          for (let i = 0, length = sourceTextLines .length; i < length; ++ i)
          {
+            if (i !== 0)
+               generator .string += ',';
+
+            generator .string += generator .TidyBreak ();
             generator .string += generator .ListIndent ();
             generator .string += '"';
             generator .string += generator .EncodeString (sourceTextLines [i]);
             generator .string += '"';
-
-            if (i !== length - 1)
-               generator .string += ',';
-
-            generator .string += generator .TidyBreak ();
          }
 
          generator .endArray ();
@@ -1396,7 +1391,6 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             }
          }
 
-         generator .AddTidyBreak ();
          generator .endArray ();
          generator .endObject ();
       }
