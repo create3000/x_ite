@@ -1223,36 +1223,19 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
          for (const field of outputFields)
          {
-            if (comma || field !== outputFields [0])
-               generator .string += ',';
-
-            generator .string += generator .TidyBreak ();
-
             switch (field .getType ())
             {
                case X3DConstants .SFNode:
                case X3DConstants .MFNode:
                {
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += '-';
-                  generator .string += field .getName ();
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
+                  generator .beginValue ('-' + field .getName (), comma || field !== outputFields [0]);
 
                   field .toJSONStream (generator);
                   break;
                }
                default:
                {
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += '@';
-                  generator .string += field .getName ();
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
+                  generator .beginValue ('@' + field .getName (), comma || field !== outputFields [0]);
 
                   field .toJSONStream (generator);
                   break;
@@ -1260,7 +1243,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             }
          }
 
-         comma ||= outputFields .length;
+         comma ||= !! outputFields .length;
       }
 
       // User defined fields
