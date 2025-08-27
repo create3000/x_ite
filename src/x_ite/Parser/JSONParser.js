@@ -205,7 +205,7 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
        * convert an SFString to XML.
        */
 
-      return str .replace (/([\\"])/g, "\\$1");
+      return String (str) .replace (/([\\"])/g, "\\$1");
    },
    JSONStringToXML (str)
    {

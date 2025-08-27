@@ -81,19 +81,10 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
    {
       const localName = generator .Name (this .getLocalNode ());
 
-      generator .string += generator .Indent ();
-      generator .string += '{';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += "EXPORT";
-      generator .string += '"';
-      generator .string += ':';
       generator .string += generator .TidyBreak ();
-      generator .string += generator .IncIndent ();
       generator .string += generator .Indent ();
-      generator .string += '{';
-      generator .string += generator .IncIndent ();
 
+      generator .beginObject ("EXPORT", false, true);
       generator .stringProperty ("@localDEF", localName, false);
 
       if (this [_exportedName] !== localName)
@@ -102,14 +93,8 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
       if (this [_description])
          generator .stringProperty ("@DESCRIPTION", this [_description]);
 
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .DecIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '}';
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .DecIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '}';
+      generator .endObject ();
+      generator .endObject ();
    },
 });
 

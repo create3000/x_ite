@@ -816,16 +816,10 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       generator .NamedNodes (this .getNamedNodes ());
       generator .ImportedNodes (this .getImportedNodes ());
 
+      let comma = false;
 
-      // Extern proto declarations
-
-      this .getExternProtoDeclarations () .toJSONStream (generator, true);
-
-
-      // Proto declarations
-
-      this .getProtoDeclarations () .toJSONStream (generator, true);
-
+      comma = this .getExternProtoDeclarations () .toJSONStream (generator, comma);
+      comma = this .getProtoDeclarations ()       .toJSONStream (generator, comma);
 
       // Root nodes
 
@@ -833,6 +827,10 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       {
          for (const rootNode of this .getRootNodes ())
          {
+            if (comma)
+               generator .string += ',';
+
+            generator .string += generator .TidyBreak ();
             generator .string += generator .Indent ();
 
             if (rootNode)
@@ -840,24 +838,17 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
             else
                generator .string += "null";
 
-            generator .string += ',';
-            generator .string += generator .TidyBreak ();
+            comma = true;
          }
       }
 
-
-      // Imported nodes
-
-      this .getImportedNodes () .toJSONStream (generator, true);
-
-
-      // Routes
-
-      this .getRoutes () .toJSONStream (generator, true);
-
+      this .getImportedNodes () .toJSONStream (generator, comma);
+      this .getRoutes ()        .toJSONStream (generator, comma);
 
       generator .LeaveScope ();
       generator .PopExecutionContext ();
+
+      return comma;
    },
    dispose ()
    {

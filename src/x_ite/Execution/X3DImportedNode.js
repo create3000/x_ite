@@ -109,25 +109,15 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
       if (!generator .ExistsNode (this .getInlineNode ()))
          throw new Error ("X3DImportedNode.toJSONStream: Inline node does not exist.");
 
-      generator .AddRouteNode (this);
-
-      const importedName = generator .ImportedName (this);
-
-      generator .string += generator .Indent ();
-      generator .string += '{';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += "IMPORT";
-      generator .string += '"';
-      generator .string += ':';
       generator .string += generator .TidyBreak ();
-      generator .string += generator .IncIndent ();
       generator .string += generator .Indent ();
-      generator .string += '{';
-      generator .string += generator .IncIndent ();
 
+      generator .AddRouteNode (this);
+      generator .beginObject ("IMPORT", false, true);
       generator .stringProperty ("@inlineDEF",   generator .Name (this .getInlineNode ()), false);
       generator .stringProperty ("@importedDEF", this .getExportedName ());
+
+      const importedName = generator .ImportedName (this);
 
       if (importedName !== this .getExportedName ())
          generator .stringProperty ("@AS", importedName);
@@ -135,14 +125,8 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
       if (this [_description])
          generator .stringProperty ("@DESCRIPTION", this [_description]);
 
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .DecIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '}';
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .DecIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '}';
+      generator .endObject ();
+      generator .endObject ();
    },
    dispose ()
    {

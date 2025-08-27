@@ -269,26 +269,14 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    },
    toJSONStream (generator)
    {
-      generator .string += generator .Indent ();
-      generator .string += '{';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += "ExternProtoDeclare";
-      generator .string += '"';
-      generator .string += ':';
       generator .string += generator .TidyBreak ();
-      generator .string += generator .IncIndent ();
       generator .string += generator .Indent ();
-      generator .string += '{';
-      generator .string += generator .IncIndent ();
+
+      generator .beginObject ("ExternProtoDeclare", false, true);
 
       generator .stringProperty ("@name",          this .getName (), false);
       generator .stringProperty ("@appinfo",       this .getAppInfo ());
       generator .stringProperty ("@documentation", this .getDocumentation ());
-
-      generator .string += ',';
-      generator .string += generator .TidyBreak ();
-
 
       // Fields
 
@@ -296,49 +284,26 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
 
       if (userDefinedFields .length)
       {
-         generator .string += generator .Indent ();
-         generator .string += '"';
-         generator .string += "field";
-         generator .string += '"';
-         generator .string += ':';
-         generator .string += generator .TidySpace ();
-         generator .string += '[';
-         generator .string += generator .TidyBreak ();
-         generator .string += generator .IncIndent ();
+         generator .beginArray ("field");
 
          for (const field of userDefinedFields)
          {
-            generator .string += generator .Indent ();
-            generator .string += '{';
-            generator .string += generator .IncIndent ();
-
+            generator .beginObject ("", field !== userDefinedFields [0]);
             generator .stringProperty ("@accessType",    generator .AccessType (field .getAccessType ()), false);
             generator .stringProperty ("@type",          field .getTypeName ());
             generator .stringProperty ("@name",          field .getName ());
             generator .stringProperty ("@appinfo",       field .getAppInfo ());
             generator .stringProperty ("@documentation", field .getDocumentation ());
-
-            generator .string += generator .TidyBreak ();
-            generator .string += generator .DecIndent ();
-            generator .string += generator .Indent ();
-            generator .string += '}';
-
-            if (field !== userDefinedFields .at (-1))
-               generator .string += ',';
-
-            generator .string += generator .TidyBreak ();
+            generator .endObject ();
          }
 
-         generator .string += generator .DecIndent ();
-         generator .string += generator .Indent ();
-         generator .string += ']';
-         generator .string += ',';
-         generator .string += generator .TidyBreak ();
+         generator .endArray ();
       }
-
 
       // URL
 
+      generator .string += ',';
+      generator .string += generator .TidyBreak ();
       generator .string += generator .Indent ();
       generator .string += '"';
       generator .string += "@url";
@@ -348,18 +313,10 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
 
       this ._url .toJSONStream (generator);
 
-      generator .string += generator .TidyBreak ();
-
-
       // End
 
-      generator .string += generator .DecIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '}';
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .DecIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '}';
+      generator .endObject ();
+      generator .endObject ();
    },
 });
 
