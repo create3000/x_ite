@@ -625,8 +625,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
          if (outputUnits)
          {
             generator .beginArray ("unit", headLastProperty);
-
-            generator .string += generator .TidyBreak ();
+            generator .AddTidyBreak ();
 
             this .getUnits ()  .toJSONStream (generator);
 
