@@ -25,21 +25,11 @@ Object .assign (Object .setPrototypeOf (UnitInfo .prototype, X3DObject .prototyp
    },
    toXMLStream (generator)
    {
-      generator .string += generator .Indent ();
-      generator .string += "<unit";
-      generator .string += generator .Space ();
-      generator .string += "category='";
-      generator .string += this .category;
-      generator .string += "'";
-      generator .string += generator .Space ();
-      generator .string += "name='";
-      generator .string += generator .XMLEncode (this .name);
-      generator .string += "'";
-      generator .string += generator .Space ();
-      generator .string += "conversionFactor='";
-      generator .string += this .conversionFactor;
-      generator .string += "'";
-      generator .string += generator .closingTags ? "></unit>" : "/>";
+      generator .openTag ("unit");
+      generator .attribute ("category",         this .category);
+      generator .attribute ("name",             this .name);
+      generator .attribute ("conversionFactor", this .conversionFactor);
+      generator .closeTag ("unit");
    },
    toJSONStream (generator, _throw)
    {
@@ -49,42 +39,13 @@ Object .assign (Object .setPrototypeOf (UnitInfo .prototype, X3DObject .prototyp
       generator .string += generator .Indent ();
 
       generator .string += '{';
-      generator .string += generator .TidyBreak ();
       generator .string += generator .IncIndent ();
 
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@category";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += this .category;
-      generator .string += '"';
-      generator .string += ',';
-      generator .string += generator .TidyBreak ();
+      generator .stringProperty ("@category",         this .category, false);
+      generator .stringProperty ("@name",             this .name);
+      generator .numberProperty ("@conversionFactor", this .conversionFactor);
 
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@name";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += generator .JSONEncode (this .name);
-      generator .string += '"';
-      generator .string += ',';
       generator .string += generator .TidyBreak ();
-
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@conversionFactor";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += this .conversionFactor;
-      generator .string += generator .TidyBreak ();
-
       generator .string += generator .DecIndent ();
       generator .string += generator .Indent ();
       generator .string += '}';

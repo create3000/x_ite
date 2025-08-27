@@ -2,15 +2,13 @@ import X3DConstants      from "../Base/X3DConstants.js";
 import Algorithm         from "../../standard/Math/Algorithm.js";
 import { getUniqueName } from "../Execution/NamedNodesHandling.js";
 
-function Generator ({ style = "TIDY", indent = "", indentChar = "  ", precision = 7, doublePrecision = 15, html = false, closingTags = false, names = true })
+function Generator ({ style = "TIDY", indent = "", indentChar = "  ", precision = 7, doublePrecision = 15, names = true } = { })
 {
    this .string          = "";
    this .indent          = indent;
    this .listIndent      = indent;
    this .precision       = Algorithm .clamp (precision, 1, 21);
    this .doublePrecision = Algorithm .clamp (doublePrecision, 1, 21);
-   this .html            = html;
-   this .closingTags     = html || closingTags;
    this .outputNames     = names; // private option: used in StaticGroup for toVRMLString.
 
    this .floatFormat             = this .createFloatFormat (this .precision);
@@ -29,7 +27,6 @@ function Generator ({ style = "TIDY", indent = "", indentChar = "  ", precision 
    this .names                 = new Map ();
    this .namesByNode           = new Map ();
    this .routeNodes            = new Map ();
-   this .containerFields       = [ ];
 }
 
 Object .assign (Generator .prototype,
@@ -110,6 +107,10 @@ Object .assign (Generator .prototype,
    TidyBreak ()
    {
       return this .tidyBreak;
+   },
+   AddTidyBreak ()
+   {
+      this .string += this .tidyBreak;
    },
    ForceBreak ()
    {
@@ -392,18 +393,6 @@ Object .assign (Generator .prototype,
 
       return newName;
    },
-   PushContainerField (field)
-   {
-      this .containerFields .push (field);
-   },
-   PopContainerField ()
-   {
-      this .containerFields .pop ();
-   },
-   ContainerField ()
-   {
-      return this .containerFields .at (-1);
-   },
    AccessType (accessType)
    {
       switch (accessType)
@@ -421,143 +410,6 @@ Object .assign (Generator .prototype,
    ToUnit (category, value)
    {
       return this .ExecutionContext () ?.toUnit (category, value) ?? value;
-   },
-   XMLEncode: (() =>
-   {
-      const map = {
-         "\\": "\\\\",
-         "\r": "&#xD;",
-         "\n": "&#xA;",
-         "\t": "&#x9;",
-         "\"": "\\\"",
-         "'": "&apos;",
-         "<": "&lt;",
-         ">": "&gt;",
-         "&": "&amp;",
-      };
-
-      const regex = /([\\\r\n\t"'<>&])/g;
-
-      return function (string)
-      {
-         return string .replace (regex, char => map [char]);
-      };
-   })(),
-   XMLEncodeSourceText: (() =>
-   {
-      const map = {
-         "\\": "\\\\",
-         "\"": "\\\"",
-         "'": "&apos;",
-         "<": "&lt;",
-         ">": "&gt;",
-         "&": "&amp;",
-      };
-
-      const regex = /([\\"'<>&])/g;
-
-      return function (string)
-      {
-         return string .replace (regex, char => map [char]);
-      };
-   })(),
-   XMLAppInfo (object)
-   {
-      const appInfo = object .getAppInfo ();
-
-      if (!appInfo)
-         return;
-
-      this .string += this .Space ();
-      this .string += "appinfo='";
-      this .string += this .XMLEncode (appInfo);
-      this .string += "'";
-   },
-   XMLDocumentation (object)
-   {
-      const documentation = object .getDocumentation ();
-
-      if (!documentation)
-         return;
-
-      this .string += this .Space ();
-      this .string += "documentation='";
-      this .string += this .XMLEncode (documentation);
-      this .string += "'";
-   },
-   JSONEncode: (() =>
-   {
-      const map = {
-         "\\": "\\\\",
-         "\r": "\\r",
-         "\n": "\\n",
-         "\t": "\\t",
-         "\"": "\\\"",
-      };
-
-      const regex = /([\\\t\n\r"])/g;
-
-      return function (string)
-      {
-         return string .replace (regex, char => map [char]);
-      };
-   })(),
-   JSONNumber (value)
-   {
-      switch (value)
-      {
-         case "NaN":
-         case "Infinity":
-         case "-Infinity":
-            return '"' + value + '"';
-         default:
-            return value;
-      }
-   },
-   JSONRemoveComma ()
-   {
-      // this .string = this .string .replace (/,(\s*)$/s, "$1");
-
-      this .string = this .string .trimEnd ();
-
-      if (this .string .endsWith (','))
-         this .string = this .string .slice (0, -1);
-
-      this .string += this .TidyBreak ();
-   },
-   JSONAppInfo (object)
-   {
-      const appInfo = object .getAppInfo ();
-
-      if (!appInfo)
-         return;
-
-      this .string += ',';
-      this .string += this .Indent ();
-      this .string += '"';
-      this .string += "@appinfo";
-      this .string += '"';
-      this .string += ':';
-      this .string += '"';
-      this .string += this .JSONEncode (appInfo);
-      this .string += '"';
-   },
-   JSONDocumentation (object)
-   {
-      const documentation = object .getDocumentation ();
-
-      if (!documentation)
-         return;
-
-      this .string += ',';
-      this .string += this .Indent ();
-      this .string += '"';
-      this .string += "@documentation";
-      this .string += '"';
-      this .string += ':';
-      this .string += '"';
-      this .string += this .JSONEncode (documentation);
-      this .string += '"';
    },
 });
 

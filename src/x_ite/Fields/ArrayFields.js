@@ -168,21 +168,15 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
             }
             else
             {
-               generator .string += generator .Indent ();
-               generator .string += "<";
-               generator .string += "NULL";
+               generator .openTag ("NULL");
 
                const containerField = generator .ContainerField ();
 
                if (containerField)
-               {
-                  generator .string += generator .Space ();
-                  generator .string += "containerField='";
-                  generator .string += generator .XMLEncode (containerField .getName ());
-                  generator .string += "'";
-               }
+                  generator .attribute ("containerField", containerField .getName ());
 
-               generator .string += generator .closingTags ? "></NULL>" : "/>";
+               generator .closeTag ("NULL");
+
                generator .string += generator .TidyBreak ();
             }
          }
@@ -195,9 +189,7 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
          }
          else
          {
-            generator .string += generator .Indent ();
-            generator .string += "<";
-            generator .string += "NULL";
+            generator .openTag ("NULL");
 
             const containerField = generator .ContainerField ();
 
@@ -205,11 +197,11 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
             {
                generator .string += generator .Space ();
                generator .string += "containerField='";
-               generator .string += generator .XMLEncode (containerField .getName ());
+               generator .string += generator .EncodeString (containerField .getName ());
                generator .string += "'";
             }
 
-            generator .string += generator .closingTags ? "></NULL>" : "/>";
+            generator .closeTag ("NULL");
          }
 
          generator .LeaveScope ();

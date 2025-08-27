@@ -50,22 +50,13 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
    {
       const localName = generator .Name (this .getLocalNode ());
 
-      generator .string += generator .Indent ();
-      generator .string += "<EXPORT";
-      generator .string += generator .Space ();
-      generator .string += "localDEF='";
-      generator .string += generator .XMLEncode (localName);
-      generator .string += "'";
+      generator .openTag ("EXPORT");
+      generator .attribute ("localDEF", localName);
 
       if (this [_exportedName] !== localName)
-      {
-         generator .string += generator .Space ();
-         generator .string += "AS='";
-         generator .string += generator .XMLEncode (this [_exportedName]);
-         generator .string += "'";
-      }
+         generator .attribute ("AS", this [_exportedName]);
 
-      generator .string += generator .closingTags ? "></EXPORT>" : "/>";
+      generator .closeTag ("EXPORT");
    },
    toJSONStream (generator)
    {
@@ -82,39 +73,14 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
       generator .string += generator .IncIndent ();
       generator .string += generator .Indent ();
       generator .string += '{';
-      generator .string += generator .TidyBreak ();
       generator .string += generator .IncIndent ();
 
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@localDEF";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += generator .JSONEncode (localName);
-      generator .string += '"';
+      generator .stringProperty ("@localDEF", localName, false);
 
       if (this [_exportedName] !== localName)
-      {
-         generator .string += ',';
-         generator .string += generator .TidyBreak ();
-         generator .string += generator .Indent ();
-         generator .string += '"';
-         generator .string += "@AS";
-         generator .string += '"';
-         generator .string += ':';
-         generator .string += generator .TidySpace ();
-         generator .string += '"';
-         generator .string += generator .JSONEncode (this [_exportedName]);
-         generator .string += '"';
-         generator .string += generator .TidyBreak ();
-      }
-      else
-      {
-         generator .string += generator .TidyBreak ();
-      }
+         generator .stringProperty ("@AS", this [_exportedName]);
 
+      generator .string += generator .TidyBreak ();
       generator .string += generator .DecIndent ();
       generator .string += generator .Indent ();
       generator .string += '}';
