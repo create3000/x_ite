@@ -547,26 +547,12 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    {
       // X3D
 
-      generator .string += generator .Indent ();
-      generator .string += '{';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += "X3D";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '{';
-      generator .string += generator .IncIndent ();
-      generator .string += generator .IncIndent ();
-
-      // Introduction
-
+      generator .beginObject ("X3D", false, true);
       generator .stringProperty ("encoding", "UTF-8", false);
       generator .stringProperty ("@profile", this .getProfile () ?.name ?? "Full");
       generator .stringProperty ("@version", LATEST_VERSION);
       generator .stringProperty ("@xsd:noNamespaceSchemaLocation", `https://www.web3d.org/specifications/x3d-${LATEST_VERSION}.xsd`);
       generator .stringProperty ("JSON schema", `https://www.web3d.org/specifications/x3d-${LATEST_VERSION}-JSONSchema.json`);
-
 
       // Head
 
@@ -649,13 +635,11 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       generator .EnterScope ();
       generator .ExportedNodes (exportedNodes);
 
-      X3DExecutionContext .prototype .toJSONStream .call (this, generator);
+      const comma = X3DExecutionContext .prototype .toJSONStream .call (this, generator);
 
       // Exported nodes
 
-      this .getExportedNodes () .toJSONStream (generator, true);
-
-      generator .RemoveComma ();
+      this .getExportedNodes () .toJSONStream (generator, comma);
 
       generator .LeaveScope ();
       generator .PopExecutionContext ();
@@ -665,7 +649,6 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       generator .AddTidyBreak ();
       generator .endArray ();
       generator .endObject ();
-
 
       // X3D end
 

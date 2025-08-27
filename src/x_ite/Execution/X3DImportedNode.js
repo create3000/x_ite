@@ -90,6 +90,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
       if (!generator .ExistsNode (this .getInlineNode ()))
          throw new Error ("X3DImportedNode.toJSONStream: Inline node does not exist.");
 
+      generator .string += generator .TidyBreak ();
       generator .string += generator .Indent ();
 
       generator .AddRouteNode (this);

@@ -36,8 +36,6 @@ Object .assign (Object .setPrototypeOf (UnitInfo .prototype, X3DObject .prototyp
       if (this .conversionFactor === 1)
          throw new Error ("conversionFactor is 1");
 
-      generator .string = generator .string .trimEnd ();
-
       generator .beginObject ("", false);
       generator .stringProperty ("@category",         this .category, false);
       generator .stringProperty ("@name",             this .name);

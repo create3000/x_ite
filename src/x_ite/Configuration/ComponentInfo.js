@@ -36,8 +36,6 @@ Object .assign (Object .setPrototypeOf (ComponentInfo .prototype, X3DObject .pro
    },
    toJSONStream (generator)
    {
-      generator .string = generator .string .trimEnd ();
-
       generator .beginObject ("", false);
       generator .stringProperty ("@name", this .name, false);
       generator .numberProperty ("@level", this .level);

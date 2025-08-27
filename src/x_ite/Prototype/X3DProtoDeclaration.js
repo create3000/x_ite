@@ -233,6 +233,7 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
    },
    toJSONStream (generator)
    {
+      generator .string += generator .TidyBreak ();
       generator .string += generator .Indent ();
 
       generator .beginObject ("ProtoDeclare", false, true);
@@ -314,7 +315,6 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
 
       this [_body] .toJSONStream (generator);
 
-      generator .RemoveComma ();
       generator .AddTidyBreak ();
       generator .endArray ();
       generator .endObject ();

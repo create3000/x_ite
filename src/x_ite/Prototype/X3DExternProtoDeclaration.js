@@ -269,6 +269,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    },
    toJSONStream (generator)
    {
+      generator .string += generator .TidyBreak ();
       generator .string += generator .Indent ();
 
       generator .beginObject ("ExternProtoDeclare", false, true);

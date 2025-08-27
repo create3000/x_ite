@@ -235,6 +235,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
          ? generator .Name (this [_destinationNode])
          : generator .ImportedName (this [_destinationNode]);
 
+      generator .string += generator .TidyBreak ();
       generator .string += generator .Indent ();
 
       generator .beginObject ("ROUTE", false, true);

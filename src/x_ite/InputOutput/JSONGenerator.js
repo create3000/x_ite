@@ -36,10 +36,6 @@ Object .assign (Object .setPrototypeOf (JSONGenerator .prototype, X3DGenerator .
             return value;
       }
    },
-   RemoveComma ()
-   {
-      this .string = this .string .replace (/,(\s*)$/s, "");
-   },
    stringProperty (key, value, comma = true)
    {
       if (!value)

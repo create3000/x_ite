@@ -62,6 +62,7 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
    {
       const localName = generator .Name (this .getLocalNode ());
 
+      generator .string += generator .TidyBreak ();
       generator .string += generator .Indent ();
 
       generator .beginObject ("EXPORT", false, true);
