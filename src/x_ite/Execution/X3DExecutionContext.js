@@ -815,16 +815,13 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       generator .NamedNodes (this .getNamedNodes ());
       generator .ImportedNodes (this .getImportedNodes ());
 
-
       // Extern proto declarations
 
       this .getExternProtoDeclarations () .toJSONStream (generator, true);
 
-
       // Proto declarations
 
       this .getProtoDeclarations () .toJSONStream (generator, true);
-
 
       // Root nodes
 
@@ -844,16 +841,13 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          }
       }
 
-
       // Imported nodes
 
       this .getImportedNodes () .toJSONStream (generator, true);
 
-
       // Routes
 
       this .getRoutes () .toJSONStream (generator, true);
-
 
       generator .LeaveScope ();
       generator .PopExecutionContext ();

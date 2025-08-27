@@ -36,19 +36,13 @@ Object .assign (Object .setPrototypeOf (UnitInfo .prototype, X3DObject .prototyp
       if (this .conversionFactor === 1)
          throw new Error ("conversionFactor is 1");
 
-      generator .string += generator .Indent ();
+      generator .string = generator .string .trimEnd ();
 
-      generator .string += '{';
-      generator .string += generator .IncIndent ();
-
+      generator .beginObject ("", false);
       generator .stringProperty ("@category",         this .category, false);
       generator .stringProperty ("@name",             this .name);
       generator .numberProperty ("@conversionFactor", this .conversionFactor);
-
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .DecIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '}';
+      generator .endObject ();
    },
 });
 

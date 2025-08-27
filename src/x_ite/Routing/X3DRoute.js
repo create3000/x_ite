@@ -236,31 +236,16 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
          : generator .ImportedName (this [_destinationNode]);
 
       generator .string += generator .Indent ();
-      generator .string += '{';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += "ROUTE";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .IncIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '{';
-      generator .string += generator .IncIndent ();
+
+      generator .beginObject ("ROUTE", false, true);
 
       generator .stringProperty ("@fromNode",  sourceNodeName, false);
       generator .stringProperty ("@fromField", this .getSourceField ());
       generator .stringProperty ("@toNode",    destinationNodeName);
       generator .stringProperty ("@toField",   this .getDestinationField ());
 
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .DecIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '}';
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .DecIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '}';
+      generator .endObject ();
+      generator .endObject ();
    },
    dispose ()
    {

@@ -36,17 +36,12 @@ Object .assign (Object .setPrototypeOf (ComponentInfo .prototype, X3DObject .pro
    },
    toJSONStream (generator)
    {
-      generator .string += generator .Indent ();
-      generator .string += '{';
-      generator .string += generator .IncIndent ();
+      generator .string = generator .string .trimEnd ();
 
+      generator .beginObject ("", false);
       generator .stringProperty ("@name", this .name, false);
       generator .numberProperty ("@level", this .level);
-
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .DecIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '}';
+      generator .endObject ();
    },
 });
 

@@ -321,7 +321,10 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
       }
 
       if (lastProperty && !comma)
+      {
          generator .RemoveComma ();
+         generator .AddTidyBreak ();
+      }
 
       return lastProperty;
    },
