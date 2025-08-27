@@ -233,114 +233,61 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
    },
    toJSONStream (generator)
    {
-      generator .string += generator .Indent ();
-      generator .string += '{';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += "ProtoDeclare";
-      generator .string += '"';
-      generator .string += ':';
       generator .string += generator .TidyBreak ();
-      generator .string += generator .IncIndent ();
       generator .string += generator .Indent ();
-      generator .string += '{';
-      generator .string += generator .IncIndent ();
+
+      generator .beginObject ("ProtoDeclare", false, true);
 
       generator .stringProperty ("@name",          this .getName (), false);
       generator .stringProperty ("@appinfo",       this .getAppInfo ());
       generator .stringProperty ("@documentation", this .getDocumentation ());
 
-      generator .string += ',';
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "ProtoInterface";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '{';
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .IncIndent ();
-
-
       // Fields
 
       generator .EnterScope ();
+      generator .beginObject ("ProtoInterface");
 
       const userDefinedFields = this .getUserDefinedFields ();
 
       if (userDefinedFields .length)
       {
-         generator .string += generator .Indent ();
-         generator .string += '"';
-         generator .string += "field";
-         generator .string += '"';
-         generator .string += ':';
-         generator .string += generator .TidySpace ();
-         generator .string += '[';
-         generator .string += generator .TidyBreak ();
-         generator .string += generator .IncIndent ();
+         generator .beginArray ("field", false);
 
          for (const field of userDefinedFields)
          {
-            generator .string += generator .Indent ();
-            generator .string += '{';
-            generator .string += generator .IncIndent ();
-
+            generator .beginObject ("", field !== userDefinedFields [0]);
             generator .stringProperty ("@accessType", generator .AccessType (field .getAccessType ()), false);
             generator .stringProperty ("@type",       field .getTypeName ());
             generator .stringProperty ("@name",       field .getName ());
 
-            if (!(field .isDefaultValue () || !field .isInitializable ()))
+            if (!field .isDefaultValue () && field .isInitializable ())
             {
-               generator .string += ',';
-               generator .string += generator .TidyBreak ();
-
                // Output value
 
                switch (field .getType ())
                {
                   case X3DConstants .SFNode:
                   {
-                     generator .string += generator .Indent ();
-                     generator .string += '"';
-                     generator .string += "-children";
-                     generator .string += '"';
-                     generator .string += ':';
-                     generator .string += generator .TidySpace ();
-                     generator .string += '[';
+                     generator .beginArray ("-children");
+
                      generator .string += generator .TidyBreak ();
-                     generator .string += generator .IncIndent ();
                      generator .string += generator .Indent ();
 
                      field .toJSONStream (generator);
 
-                     generator .string += generator .TidyBreak ();
-                     generator .string += generator .DecIndent ();
-                     generator .string += generator .Indent ();
-                     generator .string += ']';
+                     generator .endArray ();
                      break;
                   }
                   case X3DConstants .MFNode:
                   {
-                     generator .string += generator .Indent ();
-                     generator .string += '"';
-                     generator .string += "-children";
-                     generator .string += '"';
-                     generator .string += ':';
-                     generator .string += generator .TidySpace ();
+                     generator .beginValue ("-children", true);
 
                      field .toJSONStream (generator);
                      break;
                   }
                   default:
                   {
-                     generator .string += generator .Indent ();
-                     generator .string += '"';
-                     generator .string += "@value";
-                     generator .string += '"';
-                     generator .string += ':';
-                     generator .string += generator .TidySpace ();
+                     generator .beginValue ("@value", true);
 
                      field .toJSONStream (generator);
                      break;
@@ -350,77 +297,29 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
 
             generator .stringProperty ("@appinfo",       field .getAppInfo ());
             generator .stringProperty ("@documentation", field .getDocumentation ());
-
-            generator .string += generator .TidyBreak ();
-            generator .string += generator .DecIndent ();
-            generator .string += generator .Indent ();
-            generator .string += '}';
-
-            if (field !== userDefinedFields .at (-1))
-               generator .string += ',';
-
-            generator .string += generator .TidyBreak ();
+            generator .endObject ();
          }
 
-         generator .string += generator .DecIndent ();
-         generator .string += generator .Indent ();
-         generator .string += ']';
+         generator .endArray ();
       }
 
-      generator .string += generator .DecIndent ();
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .Indent ();
-      generator .string += '}';
-      generator .string += ',';
-      generator .string += generator .TidyBreak ();
-
+      generator .endObject ();
       generator .LeaveScope ();
-
 
       // ProtoBody
 
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "ProtoBody";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '{';
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .IncIndent ();
-
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "-children";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '[';
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .IncIndent ();
+      generator .beginObject ("ProtoBody");
+      generator .beginArray ("-children", false);
 
       this [_body] .toJSONStream (generator);
 
-      generator .RemoveComma ();
-
-      generator .string += generator .DecIndent ();
-      generator .string += generator .Indent ();
-      generator .string += ']';
-      generator .string += generator .TidyBreak ();
+      generator .endArray ();
+      generator .endObject ();
 
       // End
 
-      generator .string += generator .DecIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '}';
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .DecIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '}';
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .DecIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '}';
+      generator .endObject ();
+      generator .endObject ();
    },
 });
 
