@@ -312,9 +312,10 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
 
             comma = true;
          }
-         catch (error)
+         catch
          {
-            // console .error (error);
+            // Remove comma:
+            generator .string = generator .string .replace (/,\s*$/s, "");
          }
       }
 

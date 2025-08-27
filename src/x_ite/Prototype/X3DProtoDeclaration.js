@@ -307,7 +307,6 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
       generator .endObject ();
       generator .LeaveScope ();
 
-
       // ProtoBody
 
       generator .beginObject ("ProtoBody");
