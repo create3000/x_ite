@@ -626,7 +626,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
          {
             generator .beginArray ("unit", headLastProperty);
 
-            this .getUnits ()  .toJSONStream (generator);
+            this .getUnits () .toJSONStream (generator);
 
             generator .endArray ();
 
