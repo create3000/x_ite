@@ -122,12 +122,12 @@ Object .assign (Object .setPrototypeOf (SFColor .prototype, X3DField .prototype)
 
       for (let i = 0; i < last; ++ i)
       {
-         generator .string += generator .JSONNumber (generator .FloatFormat (value [i]));
+         generator .string += generator .Number (generator .FloatFormat (value [i]));
          generator .string += ',';
          generator .string += generator .TidySpace ();
       }
 
-      generator .string += generator .JSONNumber (generator .FloatFormat (value [last]));
+      generator .string += generator .Number (generator .FloatFormat (value [last]));
    },
 });
 

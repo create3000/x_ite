@@ -464,34 +464,21 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
          generator .string += generator .TidyBreak ();
       }
 
-      generator .string += generator .Indent ();
-      generator .string += "<X3D";
-      generator .string += generator .Space ();
-      generator .string += "profile='";
-      generator .string += this .getProfile () ? this .getProfile () .name : "Full";
-      generator .string += "'";
-      generator .string += generator .Space ();
-      generator .string += "version='";
-      generator .string += LATEST_VERSION;
-      generator .string += "'";
-      generator .string += generator .Space ();
-      generator .string += "xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance'";
-      generator .string += generator .Space ();
-      generator .string += "xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-";
-      generator .string += LATEST_VERSION;
-      generator .string += ".xsd'>";
-      generator .string += generator .TidyBreak ();
+      generator .openTag ("X3D");
+      generator .attribute ("profile",   this .getProfile () ?.name ?? "Full");
+      generator .attribute ("version",   LATEST_VERSION);
+      generator .attribute ("xmlns:xsd", "http://www.w3.org/2001/XMLSchema-instance");
+      generator .attribute ("xsd:noNamespaceSchemaLocation", `https://www.web3d.org/specifications/x3d-${LATEST_VERSION}.xsd`);
 
+      generator .endTag ();
       generator .IncIndent ();
 
       if (this .getComponents () .length ||
           this .getUnits () .some (unit => unit .conversionFactor !== 1) ||
           this .getMetaDatas () .size)
       {
-         generator .string += generator .Indent ();
-         generator .string += "<head>";
-         generator .string += generator .TidyBreak ();
-
+         generator .openingTag ("head");
+         generator .AddTidyBreak ();
          generator .IncIndent ();
 
          // <head>
@@ -503,8 +490,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
             if (unit .conversionFactor !== 1)
             {
                unit .toXMLStream (generator);
-
-               generator .string += generator .TidyBreak ();
+               generator .AddTidyBreak ();
             }
          }
 
@@ -512,38 +498,27 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
          {
             for (const value of values)
             {
-               generator .string += generator .Indent ();
-               generator .string += "<meta";
-               generator .string += generator .Space ();
-               generator .string += "name='";
-               generator .string += generator .XMLEncode (key);
-               generator .string += "'";
-               generator .string += generator .Space ();
-               generator .string += "content='";
-               generator .string += generator .XMLEncode (value);
-               generator .string += "'";
-               generator .string += generator .closingTags ? "></meta>" : "/>";
-               generator .string += generator .TidyBreak ();
+               generator .openTag ("meta");
+               generator .attribute ("name",    key);
+               generator .attribute ("content", value);
+               generator .closeTag ("meta");
+               generator .AddTidyBreak ();
             }
          }
 
          // </head>
 
          generator .DecIndent ();
-
-         generator .string += generator .Indent ();
-         generator .string += "</head>";
-         generator .string += generator .TidyBreak ();
+         generator .closingTag ("head");
+         generator .AddTidyBreak ();
       }
 
       if (this .getExternProtoDeclarations () .length ||
           this .getProtoDeclarations () .length ||
           this .getRootNodes () .length)
       {
-         generator .string += generator .Indent ();
-         generator .string += "<Scene>";
-         generator .string += generator .TidyBreak ();
-
+         generator .openingTag ("Scene");
+         generator .AddTidyBreak ();
          generator .IncIndent ();
 
          // <Scene>
@@ -560,27 +535,14 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
          generator .LeaveScope ();
          generator .PopExecutionContext ();
-
-         // </Scene>
-
          generator .DecIndent ();
-
-         generator .string += generator .Indent ();
-         generator .string += "</Scene>";
-         generator .string += generator .TidyBreak ();
-      }
-      else
-      {
-         generator .string += generator .Indent ();
-         generator .string += "<Scene/>";
-         generator .string += generator .TidyBreak ();
       }
 
+      generator .closingTag ("Scene");
+      generator .AddTidyBreak ();
       generator .DecIndent ();
-
-      generator .string += generator .Indent ();
-      generator .string += "</X3D>";
-      generator .string += generator .TidyBreak ();
+      generator .closingTag ("X3D");
+      generator .AddTidyBreak ();
    },
    toJSONStream (generator)
    {
@@ -595,89 +557,19 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       generator .string += ':';
       generator .string += generator .TidySpace ();
       generator .string += '{';
-      generator .string += generator .TidyBreak ();
       generator .string += generator .IncIndent ();
       generator .string += generator .IncIndent ();
 
+      // Introduction
 
-      // Encoding
+      generator .stringProperty ("encoding", "UTF-8", false);
+      generator .stringProperty ("@profile", this .getProfile () ?.name ?? "Full");
+      generator .stringProperty ("@version", LATEST_VERSION);
+      generator .stringProperty ("@xsd:noNamespaceSchemaLocation", `https://www.web3d.org/specifications/x3d-${LATEST_VERSION}.xsd`);
+      generator .stringProperty ("JSON schema", `https://www.web3d.org/specifications/x3d-${LATEST_VERSION}-JSONSchema.json`);
 
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "encoding";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += "UTF-8";
-      generator .string += '"';
       generator .string += ',';
       generator .string += generator .TidyBreak ();
-
-
-      // Profile
-
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@profile";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += this .getProfile () ? this .getProfile () .name : "Full";
-      generator .string += '"';
-      generator .string += ',';
-      generator .string += generator .TidyBreak ();
-
-
-      // Version
-
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@version";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += LATEST_VERSION;
-      generator .string += '"';
-      generator .string += ',';
-      generator .string += generator .TidyBreak ();
-
-
-      // XSD noNamespaceSchemaLocation
-
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@xsd:noNamespaceSchemaLocation";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += "https://www.web3d.org/specifications/x3d-";
-      generator .string += LATEST_VERSION;
-      generator .string += ".xsd";
-      generator .string += '"';
-      generator .string += ',';
-      generator .string += generator .TidyBreak ();
-
-
-      // JSON schema
-
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "JSON schema";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += "https://www.web3d.org/specifications/x3d-";
-      generator .string += LATEST_VERSION;
-      generator .string += "-JSONSchema.json";
-      generator .string += '"';
-      generator .string += ',';
-      generator .string += generator .TidyBreak ();
-
 
       // Head
 
@@ -730,32 +622,12 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
                {
                   generator .string += generator .Indent ();
                   generator .string += '{';
-                  generator .string += generator .TidyBreak ();
                   generator .string += generator .IncIndent ();
 
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "@name";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
-                  generator .string += '"';
-                  generator .string += generator .JSONEncode (key);
-                  generator .string += '"';
-                  generator .string += ',';
-                  generator .string += generator .TidyBreak ();
+                  generator .stringProperty ("@name",    key, false);
+                  generator .stringProperty ("@content", value);
 
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "@content";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
-                  generator .string += '"';
-                  generator .string += generator .JSONEncode (value);
-                  generator .string += '"';
                   generator .string += generator .TidyBreak ();
-
                   generator .string += generator .DecIndent ();
                   generator .string += generator .Indent ();
                   generator .string += '}';
@@ -899,7 +771,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       this .getExportedNodes () .toJSONStream (generator, true);
 
-      generator .JSONRemoveComma ();
+      generator .RemoveComma ();
 
       generator .LeaveScope ();
       generator .PopExecutionContext ();

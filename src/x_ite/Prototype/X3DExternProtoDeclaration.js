@@ -227,12 +227,9 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    },
    toXMLStream (generator)
    {
-      generator .string += generator .Indent ();
-      generator .string += "<ExternProtoDeclare";
-      generator .string += generator .Space ();
-      generator .string += "name='";
-      generator .string += generator .XMLEncode (this .getName ());
-      generator .string += "'";
+      generator .openTag ("ExternProtoDeclare");
+      generator .attribute ("name", this .getName ());
+
       generator .string += generator .Space ();
       generator .string += "url='";
 
@@ -240,50 +237,34 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
 
       generator .string += "'";
 
-      generator .XMLAppInfo (this);
-      generator .XMLDocumentation (this);
+      generator .attribute ("appinfo",       this .getAppInfo ());
+      generator .attribute ("documentation", this .getDocumentation ());
 
       const userDefinedFields = this .getUserDefinedFields ();
 
       if (userDefinedFields .length)
       {
-         generator .string += ">";
-         generator .string += generator .TidyBreak ();
-
+         generator .endTag ();
          generator .IncIndent ();
 
          for (const field of userDefinedFields)
          {
-            generator .string += generator .Indent ();
-            generator .string += "<field";
-            generator .string += generator .Space ();
-            generator .string += "accessType='";
-            generator .string += generator .AccessType (field .getAccessType ());
-            generator .string += "'";
-            generator .string += generator .Space ();
-            generator .string += "type='";
-            generator .string += field .getTypeName ();
-            generator .string += "'";
-            generator .string += generator .Space ();
-            generator .string += "name='";
-            generator .string += generator .XMLEncode (field .getName ());
-            generator .string += "'";
-
-            generator .XMLAppInfo (field);
-            generator .XMLDocumentation (field);
-
-            generator .string += generator .closingTags ? "></field>" : "/>";
-            generator .string += generator .TidyBreak ();
+            generator .openTag ("field");
+            generator .attribute ("accessType",    generator .AccessType (field .getAccessType ()));
+            generator .attribute ("type",          field .getTypeName ());
+            generator .attribute ("name",          field .getName ());
+            generator .attribute ("appinfo",       field .getAppInfo ());
+            generator .attribute ("documentation", field .getDocumentation ());
+            generator .closeTag ("field");
+            generator .AddTidyBreak ();
          }
 
          generator .DecIndent ();
-
-         generator .string += generator .Indent ();
-         generator .string += "</ExternProtoDeclare>";
+         generator .closingTag ("ExternProtoDeclare");
       }
       else
       {
-         generator .string += generator .closingTags ? "></ExternProtoDeclare>" : "/>";
+         generator .closeTag ("ExternProtoDeclare");
       }
    },
    toJSONStream (generator)
@@ -299,19 +280,11 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       generator .string += generator .IncIndent ();
       generator .string += generator .Indent ();
       generator .string += '{';
-      generator .string += generator .TidyBreak ();
       generator .string += generator .IncIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@name";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += '"';
-      generator .string += generator .JSONEncode (this .getName ());
-      generator .string += '"';
 
-      generator .JSONAppInfo (this);
-      generator .JSONDocumentation (this);
+      generator .stringProperty ("@name",          this .getName (), false);
+      generator .stringProperty ("@appinfo",       this .getAppInfo ());
+      generator .stringProperty ("@documentation", this .getDocumentation ());
 
       generator .string += ',';
       generator .string += generator .TidyBreak ();
@@ -337,47 +310,15 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
          {
             generator .string += generator .Indent ();
             generator .string += '{';
-            generator .string += generator .TidyBreak ();
             generator .string += generator .IncIndent ();
 
-            generator .string += generator .Indent ();
-            generator .string += '"';
-            generator .string += "@accessType";
-            generator .string += '"';
-            generator .string += ':';
-            generator .string += generator .TidySpace ();
-            generator .string += '"';
-            generator .string += generator .AccessType (field .getAccessType ());
-            generator .string += '"';
-            generator .string += ',';
+            generator .stringProperty ("@accessType",    generator .AccessType (field .getAccessType ()), false);
+            generator .stringProperty ("@type",          field .getTypeName ());
+            generator .stringProperty ("@name",          field .getName ());
+            generator .stringProperty ("@appinfo",       field .getAppInfo ());
+            generator .stringProperty ("@documentation", field .getDocumentation ());
+
             generator .string += generator .TidyBreak ();
-
-            generator .string += generator .Indent ();
-            generator .string += '"';
-            generator .string += "@type";
-            generator .string += '"';
-            generator .string += ':';
-            generator .string += generator .TidySpace ();
-            generator .string += '"';
-            generator .string += field .getTypeName ();
-            generator .string += '"';
-            generator .string += ',';
-            generator .string += generator .TidyBreak ();
-
-            generator .string += generator .Indent ();
-            generator .string += '"';
-            generator .string += "@name";
-            generator .string += '"';
-            generator .string += ':';
-            generator .string += generator .TidySpace ();
-            generator .string += '"';
-            generator .string += generator .JSONEncode (field .getName ());
-            generator .string += '"';
-            generator .string += generator .TidyBreak ();
-
-            generator .JSONAppInfo (field);
-            generator .JSONDocumentation (field);
-
             generator .string += generator .DecIndent ();
             generator .string += generator .Indent ();
             generator .string += '}';

@@ -321,7 +321,7 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
       }
 
       if (lastProperty && !comma)
-         generator .JSONRemoveComma ();
+         generator .RemoveComma ();
 
       return lastProperty;
    },
