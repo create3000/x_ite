@@ -252,7 +252,6 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
 
       generator .string += ',';
       generator .string += generator .TidyBreak ();
-
       generator .string += generator .Indent ();
       generator .string += '"';
       generator .string += "ProtoInterface";
