@@ -205,7 +205,7 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
        * convert an SFString to XML.
        */
 
-      return str .replace (/([\\"])/g, "\\$1");
+      return String (str) .replace (/([\\"])/g, "\\$1");
    },
    JSONStringToXML (str)
    {
@@ -360,7 +360,7 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
                arrayOfStrings = false;
 
                for (const [str, value] of localArray .entries ())
-                  localArray [str] = this .SFStringToXML (String (value));
+                  localArray [str] = this .SFStringToXML (value);
 
                this .elementSetAttribute (element, parentkey .substring (1), '"' + localArray .join ('" "') + '"');
             }
