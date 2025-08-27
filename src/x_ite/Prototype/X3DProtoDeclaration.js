@@ -237,6 +237,7 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
       generator .string += generator .Indent ();
 
       generator .beginObject ("ProtoDeclare", false, true);
+
       generator .stringProperty ("@name",          this .getName (), false);
       generator .stringProperty ("@appinfo",       this .getAppInfo ());
       generator .stringProperty ("@documentation", this .getDocumentation ());
