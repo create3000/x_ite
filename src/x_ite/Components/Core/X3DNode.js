@@ -1152,7 +1152,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
          }
       }
 
-      let lastProperty = false;
+      let comma = false;
 
       // DEF name
 
@@ -1161,7 +1161,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
          generator .AddNode (this);
          generator .stringProperty ("@DEF", name, false);
 
-         lastProperty = true;
+         comma = true;
       }
 
       // Fields
@@ -1223,7 +1223,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
          for (const field of outputFields)
          {
-            if (lastProperty || field !== outputFields [0])
+            if (comma || field !== outputFields [0])
                generator .string += ',';
 
             generator .string += generator .TidyBreak ();
@@ -1260,14 +1260,14 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             }
          }
 
-         lastProperty ||= outputFields .length;
+         comma ||= outputFields .length;
       }
 
       // User defined fields
 
       if (this .canUserDefinedFields () && userDefinedFields .length)
       {
-         generator .beginArray ("field", lastProperty);
+         generator .beginArray ("field", comma);
 
          for (const field of userDefinedFields)
          {
@@ -1345,14 +1345,14 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
          generator .AddTidyBreak ();
          generator .endArray ();
 
-         lastProperty = true;
+         comma = true;
       }
 
       // Source text
 
       if (sourceText)
       {
-         generator .beginArray ("#sourceCode", lastProperty);
+         generator .beginArray ("#sourceCode", comma);
 
          generator .string += generator .TidyBreak ();
 
@@ -1373,14 +1373,14 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
          generator .endArray ();
 
-         lastProperty = true;
+         comma = true;
       }
 
       // IS references
 
       if (references .length && !sharedNode)
       {
-         generator .beginObject ("IS", lastProperty);
+         generator .beginObject ("IS", comma);
          generator .beginArray ("connect", false);
 
          for (const field of references)
