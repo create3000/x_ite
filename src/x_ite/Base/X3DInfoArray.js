@@ -314,8 +314,7 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
          }
          catch
          {
-            // Remove comma:
-            generator .string = generator .string .replace (/,\s*$/s, "");
+            generator .RemoveComma ();
          }
       }
 
