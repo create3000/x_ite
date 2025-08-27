@@ -360,7 +360,7 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
                arrayOfStrings = false;
 
                for (const [str, value] of localArray .entries ())
-                  localArray [str] = this .SFStringToXML (value);
+                  localArray [str] = this .SFStringToXML (String (value));
 
                this .elementSetAttribute (element, parentkey .substring (1), '"' + localArray .join ('" "') + '"');
             }
