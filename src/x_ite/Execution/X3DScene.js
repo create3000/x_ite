@@ -581,7 +581,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
                {
                   generator .beginObject ("", i !== 0 || j !== 0);
                   generator .stringProperty ("@name",    key, false);
-                  generator .stringProperty ("@content", new String (value));
+                  generator .stringProperty ("@content", value);
                   generator .endObject ();
                }
             }

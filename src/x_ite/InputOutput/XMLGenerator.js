@@ -43,7 +43,7 @@ Object .assign (Object .setPrototypeOf (XMLGenerator .prototype, X3DGenerator .p
 
       return function (string)
       {
-         return string .replace (regex, char => map [char]);
+         return String (string) .replace (regex, char => map [char]);
       };
    })(),
    EncodeSourceText: (() =>
@@ -104,11 +104,6 @@ Object .assign (Object .setPrototypeOf (XMLGenerator .prototype, X3DGenerator .p
    },
    attribute (name, value)
    {
-      value = String (value);
-
-      if (!value)
-         return;
-
       this .string += this .Space ();
       this .string += name;
       this .string += "='";

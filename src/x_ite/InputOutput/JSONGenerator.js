@@ -21,7 +21,7 @@ Object .assign (Object .setPrototypeOf (JSONGenerator .prototype, X3DGenerator .
 
       return function (string)
       {
-         return string .replace (regex, char => map [char]);
+         return String (string) .replace (regex, char => map [char]);
       };
    })(),
    Number (value)
@@ -42,9 +42,6 @@ Object .assign (Object .setPrototypeOf (JSONGenerator .prototype, X3DGenerator .
    },
    stringProperty (key, value, comma = true)
    {
-      if (!value)
-         return;
-
       if (comma)
          this .string += ',';
 
