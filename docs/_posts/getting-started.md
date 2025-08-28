@@ -349,7 +349,7 @@ X_ITE can load several file formats, either directly as the source of the \<x3d-
 
 All files can be compressed using GZip compression (usually denoted by a 'z' at the end of the filename suffix). This saves bandwidth and speeds up download time.
 
-If you have an own web-server see [how to configure your web server](/x_ite/how-to-configure-your-web-server/). If you are looking for an online X3D file format converter [see here](/x_ite/laboratory/x3d-file-converter/).
+If you have an own web-server see: [How to Configure Your Web-Server.](/x_ite/how-to-configure-your-web-server/) If you are looking for an online X3D file format converter [see here](/x_ite/laboratory/x3d-file-converter/).
 
 >**Tip:** Some file formats, such as glTF and SVG, export nodes that are important for accessing animations, lighting and other features. [Learn how exported nodes from glTF and other formats can be accessed and reused in X3D scenes.](/x_ite/components/networking/inline/#about-special-exported-nodes)
 {: .prompt-tip }
