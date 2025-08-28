@@ -189,6 +189,24 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 >**Tip:** All files can be compressed using GZip compression (usually denoted by a 'z' at the end of the filename suffix). This saves bandwidth and speeds up download time.
 {: .prompt-tip }
 
+### About Special Exported Nodes
+
+When you load a glTF or other file format, it is converted to an X3D scene and some nodes are exported from this scene. These nodes can then be imported into a parent scene where the file was loaded using an Inline node.
+
+The easiest way to see what has been exported is to use [Sunrize](/sunrize/) and inspect the scene.
+
+If you have animations, then a [TimeSensor](/x_ite/components/time/timesensor/) named *Timer1*, *Timer2*, and so on is exported for each animation. Additionally, a [Group](/x_ite/components/grouping/group/) named *Animations* is exported.
+
+You can then import these [TimeSensor](/x_ite/components/time/timesensor/) nodes into the parent file using an [IMPORT statement](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#IMPORTStatement).
+
+#### The second method involves doing it programmatically:
+
+Load the scene using `Browser.createX3DFromURL`, then access the [TimeSensor](/x_ite/components/time/timesensor/) nodes using [`scene.getExportedNode`](/x_ite/reference/scene-services/#getexportednode-exportedname-string-sfnode).
+
+#### Example
+
+Take a look at this [glTF example](/x_ite/playground/?url=https://create3000.github.io/media/examples/Core/glTF/glTF.x3d) — it does exactly what is described here.
+
 ## Advice
 
 ### Hints
