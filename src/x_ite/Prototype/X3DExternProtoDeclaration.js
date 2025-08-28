@@ -237,8 +237,11 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
 
       generator .string += "'";
 
-      generator .attribute ("appinfo",       this .getAppInfo ());
-      generator .attribute ("documentation", this .getDocumentation ());
+      if (this .getAppInfo ())
+         generator .attribute ("appinfo", this .getAppInfo ());
+
+      if (this .getDocumentation ())
+         generator .attribute ("documentation", this .getDocumentation ());
 
       const userDefinedFields = this .getUserDefinedFields ();
 
@@ -250,11 +253,16 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
          for (const field of userDefinedFields)
          {
             generator .openTag ("field");
-            generator .attribute ("accessType",    generator .AccessType (field .getAccessType ()));
-            generator .attribute ("type",          field .getTypeName ());
-            generator .attribute ("name",          field .getName ());
-            generator .attribute ("appinfo",       field .getAppInfo ());
-            generator .attribute ("documentation", field .getDocumentation ());
+            generator .attribute ("accessType", generator .AccessType (field .getAccessType ()));
+            generator .attribute ("type",       field .getTypeName ());
+            generator .attribute ("name",       field .getName ());
+
+            if (field .getAppInfo ())
+               generator .attribute ("appinfo", field .getAppInfo ());
+
+            if (field .getDocumentation ())
+               generator .attribute ("documentation", field .getDocumentation ());
+
             generator .closeTag ("field");
             generator .AddTidyBreak ();
          }
