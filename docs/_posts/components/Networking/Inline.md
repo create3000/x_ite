@@ -201,6 +201,10 @@ You can then import these [TimeSensor](/x_ite/components/time/timesensor/) nodes
 
 Load the scene using `Browser.createX3DFromURL`, then access the [TimeSensor](/x_ite/components/time/timesensor/) nodes using [`scene.getExportedNode`](/x_ite/reference/scene-services/#getexportednode-exportedname-string-sfnode).
 
+**Example**
+
+Take a look at this [glTF example](/x_ite/playground/?url=https://create3000.github.io/media/examples/Core/glTF/glTF.x3d) — it does exactly what is described here.
+
 ## Advice
 
 ### Hints
