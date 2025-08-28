@@ -130,9 +130,14 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
    toXMLStream (generator)
    {
       generator .openTag ("ProtoDeclare");
-      generator .attribute ("name",          this .getName ());
-      generator .attribute ("appinfo",       this .getAppInfo ());
-      generator .attribute ("documentation", this .getDocumentation ());
+      generator .attribute ("name", this .getName ());
+
+      if (this .getAppInfo ())
+         generator .attribute ("appinfo", this .getAppInfo ());
+
+      if (this .getDocumentation ())
+         generator .attribute ("documentation", this .getDocumentation ());
+
       generator .endTag ();
 
       // <ProtoInterface>
@@ -157,8 +162,12 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
 
             if (field .isDefaultValue () || !field .isInitializable ())
             {
-               generator .attribute ("appinfo",       field .getAppInfo ());
-               generator .attribute ("documentation", field .getDocumentation ());
+               if (field .getAppInfo ())
+                  generator .attribute ("appinfo", field .getAppInfo ());
+
+               if (field .getDocumentation ())
+                  generator .attribute ("documentation", field .getDocumentation ());
+
                generator .closeTag ("field");
                generator .AddTidyBreak ();
             }
@@ -169,8 +178,12 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
                   case X3DConstants .SFNode:
                   case X3DConstants .MFNode:
                   {
-                     generator .attribute ("appinfo",       field .getAppInfo ());
-                     generator .attribute ("documentation", field .getDocumentation ());
+                     if (field .getAppInfo ())
+                        generator .attribute ("appinfo", field .getAppInfo ());
+
+                     if (field .getDocumentation ())
+                        generator .attribute ("documentation", field .getDocumentation ());
+
                      generator .endTag ();
                      generator .IncIndent ();
                      generator .PushContainerField (null);
@@ -193,8 +206,12 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
 
                      generator .string += "'";
 
-                     generator .attribute ("appinfo",       field .getAppInfo ());
-                     generator .attribute ("documentation", field .getDocumentation ());
+                     if (field .getAppInfo ())
+                        generator .attribute ("appinfo", field .getAppInfo ());
+
+                     if (field .getDocumentation ())
+                        generator .attribute ("documentation", field .getDocumentation ());
+
                      generator .closeTag ("field");
                      generator .AddTidyBreak ();
                      break;

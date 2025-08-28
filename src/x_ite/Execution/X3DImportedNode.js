@@ -99,7 +99,9 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
       if (importedName !== this .getExportedName ())
          generator .attribute ("AS", importedName);
 
-      generator .attribute ("DESCRIPTION", this [_description]);
+      if (this [_description])
+         generator .attribute ("DESCRIPTION", this [_description]);
+
       generator .closeTag ("IMPORT");
    },
    toJSONStream (generator)
@@ -120,7 +122,9 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
       if (importedName !== this .getExportedName ())
          generator .stringProperty ("@AS", importedName);
 
-      generator .stringProperty ("@DESCRIPTION", this [_description]);
+      if (this [_description])
+         generator .stringProperty ("@DESCRIPTION", this [_description]);
+      
       generator .endObject ();
       generator .endObject ();
    },
