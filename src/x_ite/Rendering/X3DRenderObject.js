@@ -9,6 +9,7 @@ import Vector4       from "../../standard/Math/Numbers/Vector4.js";
 import Rotation4     from "../../standard/Math/Numbers/Rotation4.js";
 import Matrix4       from "../../standard/Math/Numbers/Matrix4.js";
 import MatrixStack   from "../../standard/Math/Utility/MatrixStack.js";
+import Plane3        from "../../standard/Math/Geometry/Plane3.js";
 import StopWatch     from "../../standard/Time/StopWatch.js";
 
 const DEPTH_BUFFER_SIZE = 16;
@@ -399,49 +400,55 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .transmission;
    },
-   constrainTranslation (translation, stepBack)
+   constrainTranslation: (() =>
    {
-      ///  Constrains @a translation to a possible value the avatar can move.  If the avatar reaches and intersects with an
-      ///  and obstacle and @a stepBack is true a translation in the opposite direction is returned.  Future implementation will
-      ///  will then return a value where the avatar slides along the wall.  Modifies translation in place.
-
-      // Constrain translation when the viewer collides with an obstacle.
-
       const
-         closestObject = this .getClosestObject (translation),
-         distance      = closestObject .distance - this .getNavigationInfo () .getCollisionRadius ();
+         plane       = new Plane3 (),
+         point       = new Vector3 (),
+         constrained = new Vector3 ();
 
-      if (distance > 0)
+      return function (translation, stepBack)
       {
-         // Move.
+         ///  Constrains @a translation to a possible value the avatar can move.  If the avatar reaches and intersects with an
+         ///  and obstacle and @a stepBack is true a translation in the opposite direction is returned.  Future implementation will
+         ///  will then return a value where the avatar slides along the wall.  Modifies translation in place.
 
-         const length = translation .norm ();
+         // Constrain translation when the viewer collides with an obstacle.
 
-         if (length > distance)
+         const
+            closestObject = this .getClosestObject (translation),
+            distance      = closestObject .distance - this .getNavigationInfo () .getCollisionRadius ();
+
+         if (distance > 0)
          {
-            // Collision, the avatar would intersect with the obstacle.
+            // Move.
 
-            translation .normalize ();
+            const length = translation .norm ();
 
-            const collisionAngle = Math .abs (closestObject .normal .dot (translation));
+            if (length > distance)
+            {
+               // Collision, the avatar would intersect with the obstacle.
+               // Slide along normal plane.
 
-            console .log (collisionAngle);
+               point .assign (translation) .normalize () .multiply (distance);
+               plane .set (point, closestObject .normal);
 
-            return translation .normalize () .multiply (distance);
+               return plane .getClosestPointToPoint (translation, constrained);
+            }
+
+            // Everything is fine.
+
+            return translation;
          }
 
-         // Everything is fine.
+         // Collision, the avatar is already within an obstacle.
 
-         return translation;
-      }
+         if (stepBack)
+            return this .constrainTranslation (translation .normalize () .multiply (distance), false);
 
-      // Collision, the avatar is already within an obstacle.
-
-      if (stepBack)
-         return this .constrainTranslation (translation .normalize () .multiply (distance), false);
-
-      return translation .assign (Vector3 .ZERO);
-   },
+         return translation .assign (Vector3 .ZERO);
+      };
+   })(),
    getClosestObject: (() =>
    {
       const
@@ -1059,7 +1066,7 @@ Object .assign (X3DRenderObject .prototype,
             {
                // Step up.
 
-               this .constrainTranslation (up .multVecRot (translation .set (0, distance, 0)), false);
+               const constrained = this .constrainTranslation (up .multVecRot (translation .set (0, distance, 0)), false);
 
                //if (getBrowser () -> getBrowserOptions () -> animateStairWalks ())
                //{
@@ -1068,13 +1075,13 @@ Object .assign (X3DRenderObject .prototype,
                //
                //   Vector3f offset = Vector3f (0, step, 0) * up;
                //
-               //   if (math::abs (offset) > math::abs (translation) or getBrowser () -> getCurrentSpeed () == 0)
-               //      offset = translation;
+               //   if (math::abs (offset) > math::abs (constrained) or getBrowser () -> getCurrentSpeed () == 0)
+               //      offset = constrained;
                //
                //   getViewpoint () -> positionOffset () += offset;
                //}
                //else
-                  viewpointNode ._positionOffset = translation .add (viewpointNode ._positionOffset .getValue ());
+                  viewpointNode ._positionOffset = constrained .add (viewpointNode ._positionOffset .getValue ());
             }
          }
       };
