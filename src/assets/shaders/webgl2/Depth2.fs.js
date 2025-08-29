@@ -10,6 +10,16 @@ in vec3 vertex;
 
 layout(location = 0) out vec4 x3d_FragData0;
 
+#if defined (X3D_NORMAL_BUFFER)
+   #if defined (X3D_NORMALS)
+      in vec3 normal;
+   #else
+      const vec3 normal = vec3 (0.0, 0.0, 1.0);
+   #endif
+
+   layout(location = 1) out vec4 x3d_FragData1;
+#endif
+
 #pragma X3D include "common/ClipPlanes.glsl"
 #pragma X3D include "common/Point.glsl"
 
@@ -27,6 +37,11 @@ main ()
       #endif
    #endif
 
-   x3d_FragData0 = vec4 (gl_FragCoord .z, float (x3d_Id), 0.0, 0.0); // depth, normal
+   #if defined (X3D_NORMAL_BUFFER)
+      x3d_FragData0 = vec4 (gl_FragCoord .z, vertex .z, 0.0, 0.0);
+      x3d_FragData1 = vec4 (normal, float (x3d_Id));
+   #else
+      x3d_FragData0 = vec4 (gl_FragCoord .z);
+   #endif
 }
 `;

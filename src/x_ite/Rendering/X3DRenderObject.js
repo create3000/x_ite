@@ -63,7 +63,7 @@ function X3DRenderObject (executionContext)
    this .transparencySorter       = new MergeSort (this .transparentShapes, (a, b) => a .distance < b .distance);
    this .transmission             = false;
    this .speed                    = 0;
-   this .depthBuffer              = new TextureBuffer ({ browser, width: DEPTH_BUFFER_SIZE, height: DEPTH_BUFFER_SIZE, float: true });
+   this .depthBuffer              = new TextureBuffer ({ browser, width: DEPTH_BUFFER_SIZE, height: DEPTH_BUFFER_SIZE, float: true, colorTextures: 2 });
 }
 
 Object .assign (X3DRenderObject .prototype,
@@ -505,10 +505,8 @@ Object .assign (X3DRenderObject .prototype,
    {
       const
          depthBufferViewport   = new Vector4 (0, 0, DEPTH_BUFFER_SIZE, DEPTH_BUFFER_SIZE),
-         depthBufferViewVolume = new ViewVolume (),
-         result                = { id: -1, distance: 0 };
-
-      depthBufferViewVolume .set (Matrix4 .IDENTITY, depthBufferViewport);
+         depthBufferViewVolume = new ViewVolume (Matrix4 .IDENTITY, depthBufferViewport),
+         result                = { id: -1, distance: 0, normal: new Vector3 () };
 
       return function (projectionMatrix)
       {
@@ -518,7 +516,7 @@ Object .assign (X3DRenderObject .prototype,
          this .depthBuffer .bind ();
          this .viewVolumes .push (depthBufferViewVolume);
 
-         this .depth (this .collisionShapes, this .numCollisionShapes);
+         this .depth (this .collisionShapes, this .numCollisionShapes, true);
 
          const depth = this .depthBuffer .readDepth (projectionMatrix, depthBufferViewport, result);
 
@@ -558,7 +556,7 @@ Object .assign (X3DRenderObject .prototype,
             this .numShadowShapes = 0;
 
             callback .call (group, type, this);
-            this .depth (this .shadowShapes, this .numShadowShapes);
+            this .depth (this .shadowShapes, this .numShadowShapes, false);
             break;
          }
          case TraverseType .DISPLAY:
@@ -995,7 +993,11 @@ Object .assign (X3DRenderObject .prototype,
 
          this .getProjectionMatrix () .push (cameraSpaceProjectionMatrix);
 
-         let distance = this .getCollisionShape (projectionMatrix) .distance;
+         const depth = this .getCollisionShape (projectionMatrix);
+
+         console .log (depth .normal .toString ())
+
+         let distance = depth .distance;
 
          this .getProjectionMatrix () .pop ();
 
@@ -1058,7 +1060,7 @@ Object .assign (X3DRenderObject .prototype,
    {
       const projectionMatrixArray = new Float32Array (16);
 
-      return function (shapes, numShapes)
+      return function (shapes, numShapes, normal)
       {
          const
             browser  = this .getBrowser (),
@@ -1074,7 +1076,7 @@ Object .assign (X3DRenderObject .prototype,
          gl .viewport (... viewport);
          gl .scissor (... viewport);
 
-         gl .clearColor (1, -1, 0, 0); // '1' for infinity, id, '0 0 0' for normal (TODO).
+         gl .clearColor (1, 0, 0, 0); // '1' for infinity.
          gl .clear (gl .COLOR_BUFFER_BIT | gl .DEPTH_BUFFER_BIT);
 
          // Render all objects
@@ -1089,7 +1091,7 @@ Object .assign (X3DRenderObject .prototype,
                appearanceNode      = shapeNode .getAppearance (),
                geometryContext     = shapeNode .getGeometryContext (),
                stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
-               shaderNode          = browser .getDepthShader (clipPlanes .length, shapeNode, hAnimNode);
+               shaderNode          = browser .getDepthShader (normal, clipPlanes .length, shapeNode, hAnimNode);
 
             // Cannot change viewport here, because the viewport is special here.
 
