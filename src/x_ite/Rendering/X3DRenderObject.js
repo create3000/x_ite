@@ -407,7 +407,7 @@ Object .assign (X3DRenderObject .prototype,
          point       = new Vector3 (),
          constrained = new Vector3 ();
 
-      return function (translation, stepBack)
+      return function (translation, stepBack = true, slide = true)
       {
          ///  Constrains @a translation to a possible value the avatar can move.  If the avatar reaches and intersects with an
          ///  and obstacle and @a stepBack is true a translation in the opposite direction is returned.  Future implementation will
@@ -431,6 +431,10 @@ Object .assign (X3DRenderObject .prototype,
                // Slide along normal plane.
 
                point .assign (translation) .normalize () .multiply (distance);
+
+               if (!slide)
+                  return point;
+
                plane .set (point, closestObject .normal);
 
                return plane .getClosestPointToPoint (translation, constrained);
@@ -444,7 +448,7 @@ Object .assign (X3DRenderObject .prototype,
          // Collision, the avatar is already within an obstacle.
 
          if (stepBack)
-            return this .constrainTranslation (translation .normalize () .multiply (distance), false);
+            return this .constrainTranslation (translation .normalize () .multiply (distance), false, false);
 
          return translation .assign (Vector3 .ZERO);
       };
@@ -1066,7 +1070,7 @@ Object .assign (X3DRenderObject .prototype,
             {
                // Step up.
 
-               const constrained = this .constrainTranslation (up .multVecRot (translation .set (0, distance, 0)), false);
+               const constrained = this .constrainTranslation (up .multVecRot (translation .set (0, distance, 0)), false, false);
 
                //if (getBrowser () -> getBrowserOptions () -> animateStairWalks ())
                //{

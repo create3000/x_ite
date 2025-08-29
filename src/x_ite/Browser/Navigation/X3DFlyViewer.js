@@ -391,7 +391,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
          const
             translation = this .getTranslationOffset (direction .assign (this .direction) .multiply (speedFactor)),
-            constrained = this .getActiveLayer () .constrainTranslation (translation, true);
+            constrained = this .getActiveLayer () .constrainTranslation (translation);
 
          viewpoint ._positionOffset = constrained .add (viewpoint ._positionOffset .getValue ());
 
@@ -452,7 +452,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          const
             orientation = viewpoint .getUserOrientation () .multRight (new Rotation4 (viewpoint .getUserOrientation () .multVecRot (axis .assign (Vector3 .Y_AXIS)), upVector)),
             translation = orientation .multVecRot (direction .multiply (speedFactor)),
-            constrained = this .getActiveLayer () .constrainTranslation (translation, true);
+            constrained = this .getActiveLayer () .constrainTranslation (translation);
 
          viewpoint ._positionOffset = constrained .add (viewpoint ._positionOffset .getValue ());
 
