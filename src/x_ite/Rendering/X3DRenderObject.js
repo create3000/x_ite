@@ -411,8 +411,6 @@ Object .assign (X3DRenderObject .prototype,
          closestObject = this .getClosestObject (translation),
          distance      = closestObject .distance - this .getNavigationInfo () .getCollisionRadius ();
 
-      console .log (closestObject .normal .toString ());
-
       if (distance > 0)
       {
          // Move.
@@ -422,6 +420,8 @@ Object .assign (X3DRenderObject .prototype,
          if (length > distance)
          {
             // Collision, the avatar would intersect with the obstacle.
+
+            console .log (closestObject .normal .toString ());
 
             return translation .normalize () .multiply (distance);
          }

@@ -6,8 +6,6 @@ precision highp sampler2D;
 
 uniform int x3d_Id;
 
-in vec3 vertex;
-
 layout(location = 0) out vec4 x3d_FragData0;
 
 #if defined (X3D_NORMAL_BUFFER)
