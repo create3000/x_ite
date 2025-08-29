@@ -900,8 +900,9 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       return closestObject ?.node ? {
          node: SFNodeCache .get (closestObject .node),
          distance: closestObject .distance,
+         normal: new Fields .SFVec3f (... closestObject .normal),
       }
-      : { node: null, distance: Infinity };
+      : { node: null, distance: Infinity, normal: null };
    },
    beginUpdate ()
    {

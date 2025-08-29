@@ -421,7 +421,11 @@ Object .assign (X3DRenderObject .prototype,
          {
             // Collision, the avatar would intersect with the obstacle.
 
-            console .log (closestObject .normal .toString ());
+            translation .normalize ();
+
+            const collisionAngle = Math .abs (closestObject .normal .dot (translation));
+
+            console .log (collisionAngle);
 
             return translation .normalize () .multiply (distance);
          }
@@ -503,7 +507,9 @@ Object .assign (X3DRenderObject .prototype,
          const depth = this .getCollisionShape (projectionMatrix);
 
          depth .modelViewMatrix .multRight (viewMatrix) .submatrix
-            .inverse () .multMatrixVec (depth .normal) .normalize ();
+            .inverse () .multMatrixVec (depth .normal);
+
+         rotation .inverse () .multVecRot (depth .normal) .normalize ();
 
          this .getProjectionMatrix () .pop ();
 
