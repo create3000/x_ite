@@ -407,7 +407,11 @@ Object .assign (X3DRenderObject .prototype,
 
       // Constrain translation when the viewer collides with an obstacle.
 
-      const distance = this .getClosestObject (translation) .distance - this .getNavigationInfo () .getCollisionRadius ();
+      const
+         closestObject = this .getClosestObject (translation),
+         distance      = closestObject .distance - this .getNavigationInfo () .getCollisionRadius ();
+
+      console .log (closestObject .normal .toString ());
 
       if (distance > 0)
       {
@@ -439,6 +443,7 @@ Object .assign (X3DRenderObject .prototype,
       const
          projectionMatrix            = new Matrix4 (),
          cameraSpaceProjectionMatrix = new Matrix4 (),
+         viewMatrix                  = new Matrix4 (),
          localOrientation            = new Rotation4 (),
          vector                      = new Vector3 (),
          rotation                    = new Rotation4 ();
@@ -482,17 +487,23 @@ Object .assign (X3DRenderObject .prototype,
 
          viewpointNode .straightenHorizon (rotation);
 
-         cameraSpaceProjectionMatrix
+         viewMatrix
             .assign (viewpointNode .getModelMatrix ())
             .translate (viewpointNode .getUserPosition ())
             .rotate (rotation)
             .inverse ()
-            .multRight (projectionMatrix)
             .multLeft (viewpointNode .getCameraSpaceMatrix ());
+
+         cameraSpaceProjectionMatrix
+            .assign (viewMatrix)
+            .multRight (projectionMatrix);
 
          this .getProjectionMatrix () .push (cameraSpaceProjectionMatrix);
 
          const depth = this .getCollisionShape (projectionMatrix);
+
+         depth .modelViewMatrix .multRight (viewMatrix) .submatrix
+            .inverse () .multMatrixVec (depth .normal) .normalize ();
 
          this .getProjectionMatrix () .pop ();
 
@@ -506,7 +517,7 @@ Object .assign (X3DRenderObject .prototype,
       const
          depthBufferViewport   = new Vector4 (0, 0, DEPTH_BUFFER_SIZE, DEPTH_BUFFER_SIZE),
          depthBufferViewVolume = new ViewVolume (Matrix4 .IDENTITY, depthBufferViewport),
-         result                = { id: -1, distance: 0, normal: new Vector3 () };
+         result                = { id: -1, distance: 0, normal: new Vector3 (), modelViewMatrix: new Matrix4 () };
 
       return function (projectionMatrix)
       {
@@ -522,9 +533,17 @@ Object .assign (X3DRenderObject .prototype,
 
          this .viewVolumes .pop ();
 
-         depth .node = depth .id < 0
-            ? null
-            : this .collisionShapes [depth .id] .shapeNode;
+         if (depth .id < 0)
+         {
+            depth .node = null;
+         }
+         else
+         {
+            const renderContext = this .collisionShapes [depth .id];
+
+            depth .node = renderContext .shapeNode;
+            depth .modelViewMatrix .assign (renderContext .modelViewMatrix);
+         }
 
          return depth;
       };
@@ -995,8 +1014,6 @@ Object .assign (X3DRenderObject .prototype,
 
          const depth = this .getCollisionShape (projectionMatrix);
 
-         console .log (depth .normal .toString ())
-
          let distance = depth .distance;
 
          this .getProjectionMatrix () .pop ();
@@ -1076,7 +1093,7 @@ Object .assign (X3DRenderObject .prototype,
          gl .viewport (... viewport);
          gl .scissor (... viewport);
 
-         gl .clearColor (1, 0, 0, 0); // '1' for infinity.
+         gl .clearColor (1, -1, -1, -1); // '1' for infinity, '-1' for no hit.
          gl .clear (gl .COLOR_BUFFER_BIT | gl .DEPTH_BUFFER_BIT);
 
          // Render all objects

@@ -38,10 +38,10 @@ main ()
    #endif
 
    #if defined (X3D_NORMAL_BUFFER)
-      x3d_FragData0 = vec4 (gl_FragCoord .z, vertex .z, 0.0, 0.0);
-      x3d_FragData1 = vec4 (normal, float (x3d_Id));
+      x3d_FragData0 = vec4 (gl_FragCoord .z);        // depth
+      x3d_FragData1 = vec4 (normal, float (x3d_Id)); // local normal, id
    #else
-      x3d_FragData0 = vec4 (gl_FragCoord .z);
+      x3d_FragData0 = vec4 (gl_FragCoord .z); // depth
    #endif
 }
 `;

@@ -13,8 +13,6 @@ out vec3 vertex;
 
 #if defined (X3D_NORMAL_BUFFER)
    #if defined (X3D_NORMALS)
-      uniform mat3 x3d_NormalMatrix;
-
       in vec3 x3d_Normal;
    #endif
 
@@ -47,7 +45,7 @@ main ()
    vertex = position .xyz;
 
    #if defined (X3D_NORMALS)
-      normal = x3d_NormalMatrix * x3d_TransformedNormal;
+      normal = x3d_TransformedNormal;
    #endif
 
    gl_Position = x3d_ProjectionMatrix * position;
