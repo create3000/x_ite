@@ -456,12 +456,11 @@ Object .assign (X3DRenderObject .prototype,
    getClosestObject: (() =>
    {
       const
-         projectionMatrix            = new Matrix4 (),
-         cameraSpaceProjectionMatrix = new Matrix4 (),
-         viewMatrix                  = new Matrix4 (),
-         localOrientation            = new Rotation4 (),
-         vector                      = new Vector3 (),
-         rotation                    = new Rotation4 ();
+         projectionMatrix     = new Matrix4 (),
+         viewProjectionMatrix = new Matrix4 (),
+         viewMatrix           = new Matrix4 (),
+         localOrientation     = new Rotation4 (),
+         rotation             = new Rotation4 ();
 
       return function (direction)
       {
@@ -497,7 +496,7 @@ Object .assign (X3DRenderObject .prototype,
             .multRight (viewpointNode .getOrientation ());
 
          rotation
-            .setFromToVec (Vector3 .Z_AXIS, vector .assign (direction) .negate ())
+            .setFromToVec (Vector3 .NEGATIVE_Z_AXIS, direction)
             .multRight (localOrientation);
 
          viewpointNode .straightenHorizon (rotation);
@@ -509,11 +508,11 @@ Object .assign (X3DRenderObject .prototype,
             .inverse ()
             .multLeft (viewpointNode .getCameraSpaceMatrix ());
 
-         cameraSpaceProjectionMatrix
+         viewProjectionMatrix
             .assign (viewMatrix)
             .multRight (projectionMatrix);
 
-         this .getProjectionMatrix () .push (cameraSpaceProjectionMatrix);
+         this .getProjectionMatrix () .push (viewProjectionMatrix);
 
          const depth = this .getCollisionShape (projectionMatrix);
 
@@ -972,10 +971,10 @@ Object .assign (X3DRenderObject .prototype,
    gravitate: (() =>
    {
       const
-         projectionMatrix            = new Matrix4 (),
-         cameraSpaceProjectionMatrix = new Matrix4 (),
-         translation                 = new Vector3 (),
-         rotation                    = new Rotation4 ();
+         projectionMatrix     = new Matrix4 (),
+         viewProjectionMatrix = new Matrix4 (),
+         translation          = new Vector3 (),
+         rotation             = new Rotation4 ();
 
       return function ()
       {
@@ -1019,7 +1018,7 @@ Object .assign (X3DRenderObject .prototype,
             upVector = viewpointNode .getUpVector (),
             down     = rotation .setFromToVec (Vector3 .Z_AXIS, upVector);
 
-         cameraSpaceProjectionMatrix
+         viewProjectionMatrix
             .assign (viewpointNode .getModelMatrix ())
             .translate (viewpointNode .getUserPosition ())
             .rotate (down)
@@ -1027,7 +1026,7 @@ Object .assign (X3DRenderObject .prototype,
             .multRight (projectionMatrix)
             .multLeft (viewpointNode .getCameraSpaceMatrix ());
 
-         this .getProjectionMatrix () .push (cameraSpaceProjectionMatrix);
+         this .getProjectionMatrix () .push (viewProjectionMatrix);
 
          const depth = this .getCollisionShape (projectionMatrix);
 
