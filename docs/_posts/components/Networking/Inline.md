@@ -205,7 +205,13 @@ Load the scene using `Browser.createX3DFromURL`, then access the [TimeSensor](/x
 
 #### Example
 
-Take a look at this [glTF example](/x_ite/playground/?url=https://create3000.github.io/media/examples/Core/glTF/glTF.x3d) — it does exactly what is described here.
+<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Networking/Inline/Inline.x3d" contentScale="auto" update="auto">
+  <img src="https://create3000.github.io/media/examples/Networking/Inline/screenshot.avif" alt="Inline"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/examples/Networking/Inline/Inline.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Networking/Inline/Inline.x3d)
+{: .example-links }
 
 ## Advice
 
