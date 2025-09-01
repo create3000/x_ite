@@ -1013,8 +1013,12 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
                   if (!field .isInitializable () || field .isDefaultValue ())
                   {
-                     generator .attribute ("appinfo",       field .getAppInfo ());
-                     generator .attribute ("documentation", field .getDocumentation ());
+                     if (field .getAppInfo ())
+                        generator .attribute ("appinfo", field .getAppInfo ());
+
+                     if (field .getDocumentation ())
+                        generator .attribute ("documentation", field .getDocumentation ());
+
                      generator .closeTag ("field");
                      generator .AddTidyBreak ();
                   }
@@ -1027,8 +1031,12 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                         case X3DConstants .SFNode:
                         case X3DConstants .MFNode:
                         {
-                           generator .attribute ("appinfo",       field .getAppInfo ());
-                           generator .attribute ("documentation", field .getDocumentation ());
+                           if (field .getAppInfo ())
+                              generator .attribute ("appinfo", field .getAppInfo ());
+
+                           if (field .getDocumentation ())
+                              generator .attribute ("documentation", field .getDocumentation ());
+
                            generator .endTag ();
                            generator .IncIndent ();
                            generator .PushContainerField (null);
@@ -1051,8 +1059,12 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
                            generator .string += "'";
 
-                           generator .attribute ("appinfo",       field .getAppInfo ());
-                           generator .attribute ("documentation", field .getDocumentation ());
+                           if (field .getAppInfo ())
+                              generator .attribute ("appinfo", field .getAppInfo ());
+
+                           if (field .getDocumentation ())
+                              generator .attribute ("documentation", field .getDocumentation ());
+
                            generator .closeTag ("field");
                            generator .AddTidyBreak ();
                            break;
@@ -1065,8 +1077,12 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                   if (generator .ExecutionContext ())
                      references .push (field);
 
-                  generator .attribute ("appinfo",       field .getAppInfo ());
-                  generator .attribute ("documentation", field .getDocumentation ());
+                  if (field .getAppInfo ())
+                     generator .attribute ("appinfo", field .getAppInfo ());
+
+                  if (field .getDocumentation ())
+                     generator .attribute ("documentation", field .getDocumentation ());
+
                   generator .closeTag ("field");
                   generator .AddTidyBreak ();
                }
@@ -1319,8 +1335,12 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                   references .push (field);
             }
 
-            generator .stringProperty ("@appinfo",       field .getAppInfo ());
-            generator .stringProperty ("@documentation", field .getDocumentation ());
+            if (field .getAppInfo ())
+               generator .stringProperty ("@appinfo", field .getAppInfo ());
+
+            if (field .getDocumentation ())
+               generator .stringProperty ("@documentation", field .getDocumentation ());
+
             generator .endObject ();
          }
 
