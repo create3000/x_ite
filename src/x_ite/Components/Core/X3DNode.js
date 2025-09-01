@@ -1335,8 +1335,12 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                   references .push (field);
             }
 
-            generator .stringProperty ("@appinfo",       field .getAppInfo ());
-            generator .stringProperty ("@documentation", field .getDocumentation ());
+            if (field .getAppInfo ())
+               generator .stringProperty ("@appinfo", field .getAppInfo ());
+
+            if (field .getDocumentation ())
+               generator .stringProperty ("@documentation", field .getDocumentation ());
+
             generator .endObject ();
          }
 

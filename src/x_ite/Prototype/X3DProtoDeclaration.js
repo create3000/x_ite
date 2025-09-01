@@ -254,10 +254,13 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
       generator .string += generator .Indent ();
 
       generator .beginObject ("ProtoDeclare", false, true);
+      generator .stringProperty ("@name", this .getName (), false);
 
-      generator .stringProperty ("@name",          this .getName (), false);
-      generator .stringProperty ("@appinfo",       this .getAppInfo ());
-      generator .stringProperty ("@documentation", this .getDocumentation ());
+      if (this .getAppInfo ())
+         generator .stringProperty ("@appinfo", this .getAppInfo ());
+
+      if (this .getDocumentation ())
+         generator .stringProperty ("@documentation", this .getDocumentation ());
 
       // Fields
 
@@ -312,8 +315,12 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
                }
             }
 
-            generator .stringProperty ("@appinfo",       field .getAppInfo ());
-            generator .stringProperty ("@documentation", field .getDocumentation ());
+            if (field .getAppInfo ())
+               generator .stringProperty ("@appinfo", field .getAppInfo ());
+
+            if (field .getDocumentation ())
+               generator .stringProperty ("@documentation", field .getDocumentation ());
+
             generator .endObject ();
          }
 
