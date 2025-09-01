@@ -11,6 +11,10 @@ X_ITE uses the `fetch` API to load files and there's no way around it. However, 
 
 To work around this problem, you will need to set up a localhost server, then you will be able to access your local files at the web address http://**localhost**/...
 
+## VS Code Extension
+
+For an integrated local development server with live reload support, we recommend using the popular [Live Server extension](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) by Ritwick Dey. It allows you to quickly launch a local development server with a single click and automatically refresh your browser whenever you save changes, making web development faster and more efficient.
+
 ## Using a Browser Extension
 
 You can use this [browser extension for Chrome and Edge](https://chrome.google.com/webstore/detail/web-server-for-chrome/ofhbbkphhbklhfoeikjpcbhemlocgigb/) to create a web server and serve your local files via HTTP. Very easy to use.
