@@ -281,10 +281,13 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       generator .string += generator .Indent ();
 
       generator .beginObject ("ExternProtoDeclare", false, true);
+      generator .stringProperty ("@name", this .getName (), false);
 
-      generator .stringProperty ("@name",          this .getName (), false);
-      generator .stringProperty ("@appinfo",       this .getAppInfo ());
-      generator .stringProperty ("@documentation", this .getDocumentation ());
+      if (this .getAppInfo ())
+         generator .stringProperty ("@appinfo", this .getAppInfo ());
+
+      if (this .getDocumentation ())
+         generator .stringProperty ("@documentation", this .getDocumentation ());
 
       // Fields
 
@@ -297,11 +300,16 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
          for (const field of userDefinedFields)
          {
             generator .beginObject ("", field !== userDefinedFields [0]);
-            generator .stringProperty ("@accessType",    generator .AccessType (field .getAccessType ()), false);
-            generator .stringProperty ("@type",          field .getTypeName ());
-            generator .stringProperty ("@name",          field .getName ());
-            generator .stringProperty ("@appinfo",       field .getAppInfo ());
-            generator .stringProperty ("@documentation", field .getDocumentation ());
+            generator .stringProperty ("@accessType", generator .AccessType (field .getAccessType ()), false);
+            generator .stringProperty ("@type",       field .getTypeName ());
+            generator .stringProperty ("@name",       field .getName ());
+
+            if (field .getAppInfo ())
+               generator .stringProperty ("@appinfo", field .getAppInfo ());
+
+            if (field .getDocumentation ())
+               generator .stringProperty ("@documentation", field .getDocumentation ());
+
             generator .endObject ();
          }
 
