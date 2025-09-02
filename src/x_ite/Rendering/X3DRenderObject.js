@@ -742,10 +742,10 @@ Object .assign (X3DRenderObject .prototype,
             radius     = bboxSize .norm () / 2,
             viewVolume = this .viewVolumes .at (-1);
 
-         let renderContext;
-
          if (!viewVolume .intersectsSphere (radius, bboxCenter))
             return false;
+
+         let renderContext;
 
          if (shapeNode .isTransparent ())
          {
