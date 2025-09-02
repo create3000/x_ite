@@ -9,7 +9,11 @@ tags: [Setup, Localhost, Server, XHR]
 
 X_ITE uses the `fetch` API to load files and there's no way around it. However, this means that files loaded using the **file://** scheme protocol are subject to the same origin policy and are treated as cross-origin requests (CORS), and cross-origin requests are only supported for protocol schemes: https, http and data. **This means that X_ITE cannot access these files.**
 
-To work around this problem, you will need to set up a localhost server, then you will be able to access your local files at the web address http://**localhost**/...
+To work around this problem, you will need to set up a localhost server, then you will be able to access your local files at the web address http://**localhost**/... or http://**127.0.0.1**/...
+
+## Using a VS Code Extension
+
+For an integrated local development server with live reload support, we recommend using the popular [Live Server extension](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) by Ritwick Dey. It allows you to quickly launch a local development server with a single click and automatically refresh your browser whenever you save changes, making web development faster and more efficient.
 
 ## Using a Browser Extension
 
