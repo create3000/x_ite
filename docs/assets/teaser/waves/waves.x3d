@@ -11,7 +11,7 @@
     <meta name='created' content='Sat, 17 May 2025 17:44:03 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.8.29, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 04 Sep 2025 10:47:32 GMT'/>
+    <meta name='modified' content='Thu, 04 Sep 2025 11:31:53 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='ColorScheme'>
@@ -268,13 +268,13 @@ function eventsProcessed ()
       <Layer DEF='Waves'>
         <Viewpoint
             description='Initial View'
-            position='329.3583 86.65297 355.6271'
-            orientation='0.55419853624732 -0.749212419936268 -0.362690959681337 4.84721773695913'
-            centerOfRotation='260.7127 -8.071033 325.6435'/>
+            position='299.3833 109.0399 211.6044'
+            orientation='-0.107055720216471 0.864757644339518 0.490645788043982 2.76860871210511'
+            centerOfRotation='273.5794 5.37422 267.9201'/>
         <ProtoInstance name='Boxes'>
           <fieldValue name='amplitude' value='2'/>
-          <fieldValue name='xDimension' value='200'/>
-          <fieldValue name='zDimension' value='200'/>
+          <fieldValue name='xDimension' value='150'/>
+          <fieldValue name='zDimension' value='150'/>
           <fieldValue name='xSpacing' value='3'/>
           <fieldValue name='zSpacing' value='3'/>
           <fieldValue name='highColor' value='0.2666667 0.5960784 0.8941176'/>
@@ -285,15 +285,15 @@ function eventsProcessed ()
         <Transform DEF='Rectangle2D'
             translation='0 0.04948798 0'
             scale='32 1.2 1'>
-          <Shape DEF='Light_3'>
+          <Shape DEF='Light_3'
+              visible='false'>
             <Appearance>
               <UnlitMaterial
                   transparency='0.5'/>
             </Appearance>
             <Rectangle2D DEF='_6'/>
           </Shape>
-          <Shape DEF='Dark_2'
-              visible='false'>
+          <Shape DEF='Dark_2'>
             <Appearance>
               <UnlitMaterial
                   emissiveColor='0 0 0'
@@ -315,7 +315,8 @@ function eventsProcessed ()
                 key='0, 0.5, 1'
                 keyValue='1 0 0 0, 1 0 0 1.5707963267949, 1 0 0 3.14159265358979'/>
           </Group>
-          <Group DEF='Light_1'>
+          <Group DEF='Light_1'
+              visible='false'>
             <Transform DEF='Front_1'>
               <Shape DEF='_13'>
                 <Appearance>
@@ -337,8 +338,7 @@ function eventsProcessed ()
               <Shape USE='_13'/>
             </Transform>
           </Group>
-          <Group DEF='Dark_1'
-              visible='false'>
+          <Group DEF='Dark_1'>
             <Transform DEF='Front'>
               <Shape DEF='_14'>
                 <Appearance>
