@@ -14,7 +14,7 @@ permalink: /
 
 <x3d-canvas
     class="teaser shadow"
-    src="/x_ite/assets/teaser/pluto/pluto.x3d"
+    src="/x_ite/assets/teaser/waves/waves.x3d"
     update="auto"
     splashScreen="false"
     contextMenu="false"
@@ -26,7 +26,7 @@ permalink: /
 <div class="mascot-wrapper">
   <x3d-canvas
       class="mascot"
-      src="/x_ite/assets/teaser/pluto/palm.x3d"
+      src="/x_ite/assets/teaser/waves/droplet.x3d"
       update="auto"
       splashScreen="false"
       contextMenu="false"
@@ -38,7 +38,7 @@ permalink: /
       oninitialized="this .style .visibility = 'visible';">
   </x3d-canvas>
 </div>
-Credits: [mqumboz](https://sketchfab.com/mqumboz) (palm)
+Credits: [Yahya Dev](https://sketchfab.com/YahyaDev) (droplet)
 {: .small }
 
 ## Overview
