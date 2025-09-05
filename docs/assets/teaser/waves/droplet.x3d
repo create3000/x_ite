@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
+    <meta name='created' content='Sat, 14 Dec 2024 18:52:06 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.8.29, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Thu, 04 Sep 2025 10:50:13 GMT'/>
+  </head>
+  <Scene>
+    <WorldInfo>
+      <MetadataSet containerField='metadata'
+          name='Sunrize'
+          reference='https://create3000.github.io/sunrize/'>
+        <MetadataSet
+            name='BrowserFrame'>
+          <MetadataBoolean
+              name='fixedSize'
+              value='true'/>
+          <MetadataDouble
+              name='aspectRatio'
+              value='780, 280'/>
+          <MetadataString
+              name='backgroundColor'
+              value='""'/>
+        </MetadataSet>
+      </MetadataSet>
+    </WorldInfo>
+    <NavigationInfo
+        type='"NONE"'
+        headlight='false'/>
+    <Background
+        transparency='1'/>
+    <DirectionalLight
+        intensity='1.2'/>
+    <Transform DEF='Palm'
+        translation='5.577054 -3.192956 2.229885'
+        rotation='0 -1 0 205'
+        scale='0.9878862 0.9878862 0.9878862'
+        center='0 22.54239 -0.3160129'>
+      <Inline DEF='_7'
+          url='"water_drop_cute_charachter.glb"'/>
+      <LoadSensor DEF='_8'>
+        <Inline USE='_7'/>
+      </LoadSensor>
+    </Transform>
+    <IMPORT inlineDEF='_7' importedDEF='Timer1' AS='Timer'/>
+    <ROUTE fromNode='_8' fromField='isLoaded' toNode='Timer' toField='set_loop'/>
+  </Scene>
+</X3D>

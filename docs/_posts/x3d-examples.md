@@ -56,6 +56,16 @@ In X3D, scrolling text effects can be achieved by animating the position of text
 
 ---
 
+## Shaders
+
+[![Waves](https://create3000.github.io/media/x_ite/examples/waves/screenshot.png)](/x_ite/playground/?url=https://create3000.github.io/media/x_ite/examples/waves/waves.x3d){: .left .w-25 }
+
+**Waves**
+
+This X3D file simulates ripple waves formed by a falling droplet using sinusoidal displacement, with [InstancedShape](/x_ite/components/x-ite/instancedshape/) employed for efficient geometry reuse and [ComposedShader](/x_ite/components/shaders/composedshader/) for custom shading control. The shader applies a refined color scheme to enhance depth and motion, demonstrating how X3D can realistically and efficiently model natural wave phenomena.
+
+---
+
 ## Textures
 
 [![Animated PNG](https://create3000.github.io/media/x_ite/examples/animated-png/screenshot.png)](/x_ite/playground/?url=https://create3000.github.io/media/x_ite/examples/animated-png/animated-png.x3d){: .left .w-25 }
