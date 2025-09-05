@@ -514,18 +514,18 @@ Object .assign (X3DRenderObject .prototype,
 
          this .getProjectionMatrix () .push (viewProjectionMatrix);
 
-         const depth = this .getCollisionShape (projectionMatrix);
+         const closestObject = this .getCollisionShape (projectionMatrix);
 
-         depth .modelViewMatrix .multRight (viewMatrix) .submatrix
-            .inverse () .multMatrixVec (depth .normal);
+         closestObject .modelViewMatrix .multRight (viewMatrix) .submatrix
+            .inverse () .multMatrixVec (closestObject .normal);
 
-         rotation .inverse () .multVecRot (depth .normal) .normalize ();
+         rotation .multVecRot (closestObject .normal) .normalize ();
 
          this .getProjectionMatrix () .pop ();
 
          this .collisionTime .stop ();
 
-         return depth;
+         return closestObject;
       };
    })(),
    getCollisionShape: (() =>
