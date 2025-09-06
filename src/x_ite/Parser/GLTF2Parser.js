@@ -1446,82 +1446,87 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return unlitMaterialNode;
    },
-   textureTransformObject (KHR_texture_transform, texCoord)
+   textureTransformObject: (() =>
    {
-      if (!(KHR_texture_transform instanceof Object))
-         return;
-
-      if (!this .extensions .has ("KHR_texture_transform"))
-         return;
-
-      texCoord = KHR_texture_transform .texCoord ?? texCoord;
-
-      // Create matrix.
-
       const
          translation = new Vector2 (),
          scale       = new Vector2 (1),
-         matrix      = new Matrix4 ();
+         matrix      = new Matrix4 (),
+         vector      = new Vector3 (),
+         rotation    = new Rotation4 ();
 
-      // Flip Y
-      matrix .scale (new Vector3 (1, -1, 1));
-      matrix .translate (new Vector3 (0, -1, 0));
-
-      if (this .vectorValue (KHR_texture_transform .offset, translation))
-         matrix .translate (new Vector3 (... translation, 0));
-
-      matrix .rotate (new Rotation4 (0, 0, -1, this .numberValue (KHR_texture_transform .rotation, 0)));
-
-      if (this .vectorValue (KHR_texture_transform .scale, scale))
-         matrix .scale (new Vector3 (... scale, 1));
-
-      // Check for existing node.
-
-      const existing = this .textureTransformNodes .find (node => this .texCoordOfNode .get (node) === texCoord && node ._matrix .getValue () .equals (matrix));
-
-      if (existing)
+      return function (KHR_texture_transform, texCoord)
       {
+         if (!(KHR_texture_transform instanceof Object))
+            return;
+
+         if (!this .extensions .has ("KHR_texture_transform"))
+            return;
+
+         texCoord = KHR_texture_transform .texCoord ?? texCoord;
+
+         // Reset matrix.
+         matrix .identity ();
+
+         // Flip Y
+         matrix .scale (vector .set (1, -1, 1));
+         matrix .translate (vector .set (0, -1, 0));
+
+         if (this .vectorValue (KHR_texture_transform .offset, translation))
+            matrix .translate (vector .set (... translation, 0));
+
+         matrix .rotate (rotation .set (0, 0, -1, this .numberValue (KHR_texture_transform .rotation, 0)));
+
+         if (this .vectorValue (KHR_texture_transform .scale, scale))
+            matrix .scale (vector .set (... scale, 1));
+
+         // Check for existing node.
+
+         const existing = this .textureTransformNodes .find (node => this .texCoordOfNode .get (node) === texCoord && node ._matrix .getValue () .equals (matrix));
+
+         if (existing)
+         {
+            Object .defineProperty (KHR_texture_transform, "pointers",
+            {
+               get: () =>
+               {
+                  return this .texCoordExtensionOfNode .get (existing);
+               },
+               configurable: true,
+            });
+
+            return existing ._mapping .getValue ();
+         }
+
+         // Create new TextureTransformMatrix3D.
+
+         const
+            scene                = this .getScene (),
+            textureTransformNode = scene .createNode ("TextureTransformMatrix3D", false),
+            mapping              = `TEXCOORD_${this .texCoordIndex + this .textureTransformNodes .length + 1}`;
+
+         textureTransformNode ._mapping = mapping;
+         textureTransformNode ._matrix  = matrix;
+
+         textureTransformNode .setup ();
+
+         this .textureTransformNodes .push (textureTransformNode);
+         this .texCoordMappings .set (mapping, texCoord);
+         this .texCoordOfNode .set (textureTransformNode, texCoord);
+         this .texCoordExtensionOfNode .set (textureTransformNode, KHR_texture_transform);
+
          Object .defineProperty (KHR_texture_transform, "pointers",
          {
             get: () =>
             {
-               return this .texCoordExtensionOfNode .get (existing);
-            },
-            configurable: true,
-         });
+               const scriptNode = scene .createNode ("Script", false);
 
-         return existing ._mapping .getValue ();
-      }
+               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "translation",   new Fields .SFVec2f ());
+               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "rotation",      new Fields .SFFloat ());
+               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "scale",         new Fields .SFVec2f (1, 1));
+               scriptNode .addUserDefinedField (X3DConstants .outputOnly,  "value_changed", new Fields .SFMatrix4f ());
 
-      // Create new TextureTransformMatrix3D.
-
-      const
-         scene                = this .getScene (),
-         textureTransformNode = scene .createNode ("TextureTransformMatrix3D", false),
-         mapping              = `TEXCOORD_${this .texCoordIndex + this .textureTransformNodes .length + 1}`;
-
-      textureTransformNode ._mapping = mapping;
-      textureTransformNode ._matrix  = matrix;
-
-      textureTransformNode .setup ();
-
-      this .textureTransformNodes .push (textureTransformNode);
-      this .texCoordMappings .set (mapping, texCoord);
-      this .texCoordOfNode .set (textureTransformNode, texCoord);
-      this .texCoordExtensionOfNode .set (textureTransformNode, KHR_texture_transform);
-
-      Object .defineProperty (KHR_texture_transform, "pointers",
-      {
-         get: () =>
-         {
-            const scriptNode = scene .createNode ("Script", false);
-
-            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "translation",   new Fields .SFVec2f ());
-            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "rotation",      new Fields .SFFloat ());
-            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "scale",         new Fields .SFVec2f (1, 1));
-            scriptNode .addUserDefinedField (X3DConstants .outputOnly,  "value_changed", new Fields .SFMatrix4f ());
-
-            scriptNode ._url = [/* js */ `ecmascript:
+               scriptNode ._url = [/* js */ `ecmascript:
 
 const
    flipY  = new SFMatrix3f (1, 0, 0, 0, -1, 0, 0, 1, 1),
@@ -1542,23 +1547,24 @@ function eventsProcessed ()
 }
 `];
 
-            scriptNode .setup ();
+               scriptNode .setup ();
 
-            scene .addNamedNode (scene .getUniqueName ("CombineTextureMatrixScript"), scriptNode);
-            scene .addRoute (scriptNode, "value_changed", textureTransformNode, "set_matrix");
+               scene .addNamedNode (scene .getUniqueName ("CombineTextureMatrixScript"), scriptNode);
+               scene .addRoute (scriptNode, "value_changed", textureTransformNode, "set_matrix");
 
-            this .addAnimationPointerAlias (scriptNode, "offset", "translation");
-            this .animationScripts .push (scriptNode);
+               this .addAnimationPointerAlias (scriptNode, "offset", "translation");
+               this .animationScripts .push (scriptNode);
 
-            Object .defineProperty (KHR_texture_transform, "pointers", { value: [scriptNode] });
+               Object .defineProperty (KHR_texture_transform, "pointers", { value: [scriptNode] });
 
-            return [scriptNode];
-         },
-         configurable: true,
-      });
+               return [scriptNode];
+            },
+            configurable: true,
+         });
 
-      return mapping;
-   },
+         return mapping;
+      };
+   })(),
    meshesArray (meshes)
    {
       if (!(meshes instanceof Array))
