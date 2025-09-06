@@ -1466,7 +1466,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          texCoord = KHR_texture_transform .texCoord ?? texCoord;
 
          // Reset matrix.
-         matrix .identity ();
+         matrix .set ();
 
          // Flip Y
          matrix .scale (vector .set (1, -1, 1));
