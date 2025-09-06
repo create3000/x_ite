@@ -41,9 +41,6 @@ Object .assign (X3DOptimizer .prototype,
 
             if (this .removeEmptyGroups)
             {
-               if (!node .visible)
-                  break;
-
                if (node .children .length === 0)
                   return [ ];
             }
@@ -121,9 +118,6 @@ Object .assign (X3DOptimizer .prototype,
             return node;
 
          if (!node .scale ?.getValue () .equals (Vector3 .ONE))
-            return node;
-
-         if (!node .visible)
             return node;
       }
 
@@ -206,10 +200,10 @@ Object .assign (X3DOptimizer .prototype,
    },
    combineSingleChild (node, removedNodes)
    {
-      if (!node .visible)
+      if (node .children .length !== 1)
          return node;
 
-      if (node .children .length !== 1)
+      if (!node .visible)
          return node;
 
       const child = node .children [0];
