@@ -910,6 +910,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       if (cdata ?.length === 0 || (generator .html && this .getTypeName () !== "Script"))
          cdata = null;
 
+      if (!cdata ?.some (string => string .match (/^\s*(?:ecmascript|javascript|vrmlscript)\:/s)))
+         cdata = null;
+
       generator .IncIndent ();
       generator .IncIndent ();
 
@@ -1195,6 +1198,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       if (sourceText)
       {
          if (sourceText .length !== 1)
+            sourceText = null;
+
+         if (!sourceText .some (string => string .match (/^\s*(?:ecmascript|javascript|vrmlscript)\:/s)))
             sourceText = null;
       }
 
