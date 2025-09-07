@@ -907,11 +907,14 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
       let cdata = this .getSourceText ();
 
-      if (cdata ?.length === 0 || (generator .html && this .getTypeName () !== "Script"))
-         cdata = null;
+      if (cdata)
+      {
+         if (cdata .length === 0 || (generator .html && this .getTypeName () !== "Script"))
+            cdata = null;
 
-      if (!cdata ?.some (string => string .match (/^\s*(?:ecmascript|javascript|vrmlscript)\:/s)))
-         cdata = null;
+         if (!cdata .some (string => string .match (/^\s*(?:ecmascript|javascript|vrmlscript)\:/s)))
+            cdata = null;
+      }
 
       generator .IncIndent ();
       generator .IncIndent ();
