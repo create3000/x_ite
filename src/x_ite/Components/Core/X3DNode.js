@@ -1198,7 +1198,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       if (sourceText ?.length !== 1)
          sourceText = null;
 
-      if (!sourceText .?some (string => string .match (/^\s*(?:ecmascript|javascript|vrmlscript)\:/s)))
+      if (!sourceText ?.some (string => string .match (/^\s*(?:ecmascript|javascript|vrmlscript)\:/s)))
          sourceText = null;
 
       // Predefined fields
