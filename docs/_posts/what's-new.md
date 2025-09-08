@@ -22,6 +22,7 @@ There is now a test file that should show both the same image on the front and b
 * Now, texture transform nodes also affect [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) node.
 * Collision detection is now entirely done by GPU.
 * XML and JSON attributes *appinfo* and *documentation* for `ProtoDeclare`, `ExternProtoDeclare` and `field` are no longer ignored.
+* glTF Parser now supports extension KHR_node_visibility.
 * Bug fixes in several nodes with bounding box calculations.
 * Fixes bug with light *attenuation* handling in PBR shader.
 * Fixes a bug with some smart-phones that HAnim and ParticleSystem nodes are not working.

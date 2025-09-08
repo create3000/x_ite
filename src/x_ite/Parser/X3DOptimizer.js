@@ -203,6 +203,9 @@ Object .assign (X3DOptimizer .prototype,
       if (node .children .length !== 1)
          return node;
 
+      if (!node .visible)
+         return node;
+
       const child = node .children [0];
 
       if (child .getValue () .getCloneCount () > 1)
