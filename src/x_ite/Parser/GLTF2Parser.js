@@ -1446,82 +1446,87 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return unlitMaterialNode;
    },
-   textureTransformObject (KHR_texture_transform, texCoord)
+   textureTransformObject: (() =>
    {
-      if (!(KHR_texture_transform instanceof Object))
-         return;
-
-      if (!this .extensions .has ("KHR_texture_transform"))
-         return;
-
-      texCoord = KHR_texture_transform .texCoord ?? texCoord;
-
-      // Create matrix.
-
       const
          translation = new Vector2 (),
          scale       = new Vector2 (1),
-         matrix      = new Matrix4 ();
+         matrix      = new Matrix4 (),
+         vector      = new Vector3 (),
+         rotation    = new Rotation4 ();
 
-      // Flip Y
-      matrix .scale (new Vector3 (1, -1, 1));
-      matrix .translate (new Vector3 (0, -1, 0));
-
-      if (this .vectorValue (KHR_texture_transform .offset, translation))
-         matrix .translate (new Vector3 (... translation, 0));
-
-      matrix .rotate (new Rotation4 (0, 0, -1, this .numberValue (KHR_texture_transform .rotation, 0)));
-
-      if (this .vectorValue (KHR_texture_transform .scale, scale))
-         matrix .scale (new Vector3 (... scale, 1));
-
-      // Check for existing node.
-
-      const existing = this .textureTransformNodes .find (node => this .texCoordOfNode .get (node) === texCoord && node ._matrix .getValue () .equals (matrix));
-
-      if (existing)
+      return function (KHR_texture_transform, texCoord)
       {
+         if (!(KHR_texture_transform instanceof Object))
+            return;
+
+         if (!this .extensions .has ("KHR_texture_transform"))
+            return;
+
+         texCoord = KHR_texture_transform .texCoord ?? texCoord;
+
+         // Reset matrix.
+         matrix .set ();
+
+         // Flip Y
+         matrix .scale (vector .set (1, -1, 1));
+         matrix .translate (vector .set (0, -1, 0));
+
+         if (this .vectorValue (KHR_texture_transform .offset, translation))
+            matrix .translate (vector .set (... translation, 0));
+
+         matrix .rotate (rotation .set (0, 0, -1, this .numberValue (KHR_texture_transform .rotation, 0)));
+
+         if (this .vectorValue (KHR_texture_transform .scale, scale))
+            matrix .scale (vector .set (... scale, 1));
+
+         // Check for existing node.
+
+         const existing = this .textureTransformNodes .find (node => this .texCoordOfNode .get (node) === texCoord && node ._matrix .getValue () .equals (matrix));
+
+         if (existing)
+         {
+            Object .defineProperty (KHR_texture_transform, "pointers",
+            {
+               get: () =>
+               {
+                  return this .texCoordExtensionOfNode .get (existing);
+               },
+               configurable: true,
+            });
+
+            return existing ._mapping .getValue ();
+         }
+
+         // Create new TextureTransformMatrix3D.
+
+         const
+            scene                = this .getScene (),
+            textureTransformNode = scene .createNode ("TextureTransformMatrix3D", false),
+            mapping              = `TEXCOORD_${this .texCoordIndex + this .textureTransformNodes .length + 1}`;
+
+         textureTransformNode ._mapping = mapping;
+         textureTransformNode ._matrix  = matrix;
+
+         textureTransformNode .setup ();
+
+         this .textureTransformNodes .push (textureTransformNode);
+         this .texCoordMappings .set (mapping, texCoord);
+         this .texCoordOfNode .set (textureTransformNode, texCoord);
+         this .texCoordExtensionOfNode .set (textureTransformNode, KHR_texture_transform);
+
          Object .defineProperty (KHR_texture_transform, "pointers",
          {
             get: () =>
             {
-               return this .texCoordExtensionOfNode .get (existing);
-            },
-            configurable: true,
-         });
+               const scriptNode = scene .createNode ("Script", false);
 
-         return existing ._mapping .getValue ();
-      }
+               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "translation",   new Fields .SFVec2f ());
+               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "rotation",      new Fields .SFFloat ());
+               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "scale",         new Fields .SFVec2f (1, 1));
+               scriptNode .addUserDefinedField (X3DConstants .outputOnly,  "value_changed", new Fields .SFMatrix4f ());
 
-      // Create new TextureTransformMatrix3D.
-
-      const
-         scene                = this .getScene (),
-         textureTransformNode = scene .createNode ("TextureTransformMatrix3D", false),
-         mapping              = `TEXCOORD_${this .texCoordIndex + this .textureTransformNodes .length + 1}`;
-
-      textureTransformNode ._mapping = mapping;
-      textureTransformNode ._matrix  = matrix;
-
-      textureTransformNode .setup ();
-
-      this .textureTransformNodes .push (textureTransformNode);
-      this .texCoordMappings .set (mapping, texCoord);
-      this .texCoordOfNode .set (textureTransformNode, texCoord);
-      this .texCoordExtensionOfNode .set (textureTransformNode, KHR_texture_transform);
-
-      Object .defineProperty (KHR_texture_transform, "pointers",
-      {
-         get: () =>
-         {
-            const scriptNode = scene .createNode ("Script", false);
-
-            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "translation",   new Fields .SFVec2f ());
-            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "rotation",      new Fields .SFFloat ());
-            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "scale",         new Fields .SFVec2f (1, 1));
-            scriptNode .addUserDefinedField (X3DConstants .outputOnly,  "value_changed", new Fields .SFMatrix4f ());
-
-            scriptNode ._url = [/* js */ `ecmascript:
+               scriptNode ._url = [/* js */ `ecmascript:
 
 const
    flipY  = new SFMatrix3f (1, 0, 0, 0, -1, 0, 0, 1, 1),
@@ -1542,23 +1547,24 @@ function eventsProcessed ()
 }
 `];
 
-            scriptNode .setup ();
+               scriptNode .setup ();
 
-            scene .addNamedNode (scene .getUniqueName ("CombineTextureMatrixScript"), scriptNode);
-            scene .addRoute (scriptNode, "value_changed", textureTransformNode, "set_matrix");
+               scene .addNamedNode (scene .getUniqueName ("CombineTextureMatrixScript"), scriptNode);
+               scene .addRoute (scriptNode, "value_changed", textureTransformNode, "set_matrix");
 
-            this .addAnimationPointerAlias (scriptNode, "offset", "translation");
-            this .animationScripts .push (scriptNode);
+               this .addAnimationPointerAlias (scriptNode, "offset", "translation");
+               this .animationScripts .push (scriptNode);
 
-            Object .defineProperty (KHR_texture_transform, "pointers", { value: [scriptNode] });
+               Object .defineProperty (KHR_texture_transform, "pointers", { value: [scriptNode] });
 
-            return [scriptNode];
-         },
-         configurable: true,
-      });
+               return [scriptNode];
+            },
+            configurable: true,
+         });
 
-      return mapping;
-   },
+         return mapping;
+      };
+   })(),
    meshesArray (meshes)
    {
       if (!(meshes instanceof Array))
@@ -2076,6 +2082,9 @@ function eventsProcessed ()
       node .childNode = node .humanoidNode ?? node .transformNode;
       node .pointers  = [node .childNode];
 
+      if (node .extensions ?.KHR_node_visibility ?.hidden)
+         node .childNode ._visible = false;
+
       return node;
    },
    nodeSkeleton (node, index)
@@ -2095,25 +2104,8 @@ function eventsProcessed ()
          node .childNode    = humanoidNode;
       }
    },
-   nodeChildren (node, index)
+   nodeChildren: (() =>
    {
-      const
-         scene         = this .getScene (),
-         transformNode = node .transformNode,
-         name          = this .sanitizeName (node .name);
-
-      // Name
-
-      if (name)
-      {
-         scene .addNamedNode (scene .getUniqueName (name), transformNode);
-
-         if (transformNode .getType () .at (-1) === X3DConstants .HAnimJoint)
-            transformNode ._name = node .name;
-      }
-
-      // Set transformation matrix.
-
       const
          translation      = new Vector3 (),
          rotation         = new Rotation4 (),
@@ -2122,134 +2114,154 @@ function eventsProcessed ()
          quaternion       = new Quaternion (),
          matrix           = new Matrix4 ();
 
-      if (this .vectorValue (node .matrix, matrix))
+      return function (node, index)
       {
-         matrix .get (translation, rotation, scale, scaleOrientation);
+         const
+            scene         = this .getScene (),
+            transformNode = node .transformNode,
+            name          = this .sanitizeName (node .name);
 
-         transformNode ._translation      = translation;
-         transformNode ._rotation         = rotation;
-         transformNode ._scale            = scale;
-         transformNode ._scaleOrientation = scaleOrientation;
-      }
-      else
-      {
-         if (this .vectorValue (node .translation, translation))
-            transformNode ._translation = translation;
-
-         if (this .vectorValue (node .rotation, quaternion))
-            transformNode ._rotation = new Rotation4 (quaternion);
-
-         if (this .vectorValue (node .scale, scale))
-            transformNode ._scale = scale;
-      }
-
-      // Add mesh.
-
-      const
-         skin                    = this .skins [node .skin],
-         EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing,
-         shapeNodes              = this .meshObject (this .meshes [node .mesh], skin, EXT_mesh_gpu_instancing);
-
-      // Add camera.
-
-      const viewpointNode = this .cameraObject (node .camera, this .cameras [node .camera]);
-
-      if (viewpointNode)
-         transformNode ._children .push (viewpointNode);
-
-      // Add light.
-
-      this .nodeLight (node .extensions ?.KHR_lights_punctual, transformNode);
-
-      // Add children.
-
-      let children = this .nodeChildrenArray (node .children);
-
-      if (transformNode .getType () .at (-1) === X3DConstants .HAnimJoint)
-      {
-         // Add a HAnimSegment if there are recursive skeletons.
-
-         children = children .map (childNode =>
-         {
-            if (childNode .getType () .at (-1) === X3DConstants .HAnimHumanoid)
-            {
-               const segmentNode = scene .createNode ("HAnimSegment", false);
-
-               segmentNode ._children .push (childNode);
-
-               segmentNode .setup ();
-
-               const humanoidNode = this .humanoidIndex .get (index);
-
-               humanoidNode ?._segments .push (segmentNode);
-
-               return segmentNode;
-            }
-            else
-            {
-               return childNode;
-            }
-         });
-      }
-
-      transformNode ._children .push (... children);
-
-      // Add Shape nodes.
-
-      if (shapeNodes)
-         transformNode ._children .push (... shapeNodes);
-
-      transformNode .setup ();
-
-      // Skin
-
-      if (!skin)
-         return;
-
-      const humanoidNode = skin .humanoidNode;
-
-      if (!humanoidNode .isInitialized ())
-      {
-         const name = this .sanitizeName (skin .name) || transformNode .getName ();
+         // Name
 
          if (name)
-            scene .addNamedNode (scene .getUniqueName (name), humanoidNode);
-
-         humanoidNode ._name                  = skin .name ?? node .name ?? "";
-         humanoidNode ._version               = "2.0";
-         humanoidNode ._skeletalConfiguration = "GLTF";
-
-         humanoidNode ._skeleton .push (... skin .skeleton
-            .map (index => this .nodes [index] ?.transformNode) .filter (node => node));
-
-         for (const [i, joint] of skin .joints .entries ())
          {
-            const
-               jointNode         = this .nodes [joint] ?.transformNode,
-               inverseBindMatrix = skin .inverseBindMatrices [i] ?? Matrix4 .IDENTITY;
+            scene .addNamedNode (scene .getUniqueName (name), transformNode);
 
-            if (!jointNode)
-               continue;
-
-            inverseBindMatrix .get (translation, rotation, scale);
-
-            humanoidNode ._joints                .push (jointNode);
-            humanoidNode ._jointBindingPositions .push (translation);
-            humanoidNode ._jointBindingRotations .push (rotation);
-            humanoidNode ._jointBindingScales    .push (scale);
+            if (transformNode .getType () .at (-1) === X3DConstants .HAnimJoint)
+               transformNode ._name = node .name;
          }
 
-         humanoidNode .setup ();
-      }
+         // Set transformation matrix.
 
-      if (shapeNodes ?.length)
-      {
-         humanoidNode ._skinNormal = shapeNodes [0] ._geometry .normal;
-         humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
-      }
+         if (this .vectorValue (node .matrix, matrix))
+         {
+            matrix .get (translation, rotation, scale, scaleOrientation);
 
-      humanoidNode ._skin .push (transformNode);
-   },
+            transformNode ._translation      = translation;
+            transformNode ._rotation         = rotation;
+            transformNode ._scale            = scale;
+            transformNode ._scaleOrientation = scaleOrientation;
+         }
+         else
+         {
+            if (this .vectorValue (node .translation, translation))
+               transformNode ._translation = translation;
+
+            if (this .vectorValue (node .rotation, quaternion))
+               transformNode ._rotation = rotation .setQuaternion (quaternion);
+
+            if (this .vectorValue (node .scale, scale))
+               transformNode ._scale = scale;
+         }
+
+         // Add mesh.
+
+         const
+            skin                    = this .skins [node .skin],
+            EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing,
+            shapeNodes              = this .meshObject (this .meshes [node .mesh], skin, EXT_mesh_gpu_instancing);
+
+         // Add camera.
+
+         const viewpointNode = this .cameraObject (node .camera, this .cameras [node .camera]);
+
+         if (viewpointNode)
+            transformNode ._children .push (viewpointNode);
+
+         // Add light.
+
+         this .nodeLight (node .extensions ?.KHR_lights_punctual, transformNode);
+
+         // Add children.
+
+         let children = this .nodeChildrenArray (node .children);
+
+         if (transformNode .getType () .at (-1) === X3DConstants .HAnimJoint)
+         {
+            // Add a HAnimSegment if there are recursive skeletons.
+
+            children = children .map (childNode =>
+            {
+               if (childNode .getType () .at (-1) === X3DConstants .HAnimHumanoid)
+               {
+                  const segmentNode = scene .createNode ("HAnimSegment", false);
+
+                  segmentNode ._children .push (childNode);
+
+                  segmentNode .setup ();
+
+                  const humanoidNode = this .humanoidIndex .get (index);
+
+                  humanoidNode ?._segments .push (segmentNode);
+
+                  return segmentNode;
+               }
+               else
+               {
+                  return childNode;
+               }
+            });
+         }
+
+         transformNode ._children .push (... children);
+
+         // Add Shape nodes.
+
+         if (shapeNodes)
+            transformNode ._children .push (... shapeNodes);
+
+         transformNode .setup ();
+
+         // Skin
+
+         if (!skin)
+            return;
+
+         const humanoidNode = skin .humanoidNode;
+
+         if (!humanoidNode .isInitialized ())
+         {
+            const name = this .sanitizeName (skin .name) || transformNode .getName ();
+
+            if (name)
+               scene .addNamedNode (scene .getUniqueName (name), humanoidNode);
+
+            humanoidNode ._name                  = skin .name ?? node .name ?? "";
+            humanoidNode ._version               = "2.0";
+            humanoidNode ._skeletalConfiguration = "GLTF";
+
+            humanoidNode ._skeleton .push (... skin .skeleton
+               .map (index => this .nodes [index] ?.transformNode) .filter (node => node));
+
+            for (const [i, joint] of skin .joints .entries ())
+            {
+               const
+                  jointNode         = this .nodes [joint] ?.transformNode,
+                  inverseBindMatrix = skin .inverseBindMatrices [i] ?? Matrix4 .IDENTITY;
+
+               if (!jointNode)
+                  continue;
+
+               inverseBindMatrix .get (translation, rotation, scale);
+
+               humanoidNode ._joints                .push (jointNode);
+               humanoidNode ._jointBindingPositions .push (translation);
+               humanoidNode ._jointBindingRotations .push (rotation);
+               humanoidNode ._jointBindingScales    .push (scale);
+            }
+
+            humanoidNode .setup ();
+         }
+
+         if (shapeNodes ?.length)
+         {
+            humanoidNode ._skinNormal = shapeNodes [0] ._geometry .normal;
+            humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
+         }
+
+         humanoidNode ._skin .push (transformNode);
+      };
+   })(),
    nodeLight (KHR_lights_punctual, transformNode)
    {
       if (!(KHR_lights_punctual instanceof Object))

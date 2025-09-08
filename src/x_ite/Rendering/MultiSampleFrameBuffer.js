@@ -73,6 +73,8 @@ function MultiSampleFramebuffer ({ browser, x, y, width, height, samples, oit })
    if (!oit)
       return;
 
+   // Must use 16bit color buffer textures instead of 32bit, because there is an issue with iPhone.
+
    // Create oit frame buffer.
 
    this .oitFramebuffer = gl .createFramebuffer ();
@@ -93,7 +95,7 @@ function MultiSampleFramebuffer ({ browser, x, y, width, height, samples, oit })
       this .accumRevealageBuffer = gl .createRenderbuffer ();
 
       gl .bindRenderbuffer (gl .RENDERBUFFER, this .accumRevealageBuffer);
-      gl .renderbufferStorageMultisample (gl .RENDERBUFFER, samples, gl .RGBA32F, width, height);
+      gl .renderbufferStorageMultisample (gl .RENDERBUFFER, samples, gl .RGBA16F, width, height);
       gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .RENDERBUFFER, this .accumRevealageBuffer);
 
       // Create alpha buffer.
@@ -101,7 +103,7 @@ function MultiSampleFramebuffer ({ browser, x, y, width, height, samples, oit })
       this .alphaBuffer = gl .createRenderbuffer ();
 
       gl .bindRenderbuffer (gl .RENDERBUFFER, this .alphaBuffer);
-      gl .renderbufferStorageMultisample (gl .RENDERBUFFER, samples, gl .RGBA32F, width, height);
+      gl .renderbufferStorageMultisample (gl .RENDERBUFFER, samples, gl .RGBA16F, width, height);
       gl .framebufferRenderbuffer (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT1, gl .RENDERBUFFER, this .alphaBuffer);
 
       // Add depth buffer.
@@ -125,7 +127,7 @@ function MultiSampleFramebuffer ({ browser, x, y, width, height, samples, oit })
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
 
-      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, width, height, 0, gl .RGBA, gl .FLOAT, null);
+      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA16F, width, height, 0, gl .RGBA, gl .FLOAT, null);
       gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, this .accumRevealageTexture, 0);
 
       // Create alpha texture buffer.
@@ -145,7 +147,7 @@ function MultiSampleFramebuffer ({ browser, x, y, width, height, samples, oit })
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
 
-      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, width, height, 0, gl .RGBA, gl .FLOAT, null);
+      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA16F, width, height, 0, gl .RGBA, gl .FLOAT, null);
       gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, this .alphaTexture, 0);
    }
    else
@@ -161,7 +163,7 @@ function MultiSampleFramebuffer ({ browser, x, y, width, height, samples, oit })
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
 
-      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, width, height, 0, gl .RGBA, gl .FLOAT, null);
+      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA16F, width, height, 0, gl .RGBA, gl .FLOAT, null);
       gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, this .accumRevealageTexture, 0);
 
       // Create alpha texture.
@@ -175,7 +177,7 @@ function MultiSampleFramebuffer ({ browser, x, y, width, height, samples, oit })
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
 
-      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, width, height, 0, gl .RGBA, gl .FLOAT, null);
+      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA16F, width, height, 0, gl .RGBA, gl .FLOAT, null);
       gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT1, gl .TEXTURE_2D, this .alphaTexture, 0);
 
       // Add depth buffer.
