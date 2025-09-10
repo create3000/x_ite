@@ -1127,15 +1127,12 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             generator .PopContainerField ();
          }
 
-         if (cdata)
+         for (const value of cdata ?? [ ])
          {
-            for (const value of cdata)
-            {
-               generator .string += "<![CDATA[";
-               generator .string += value;
-               generator .string += "]]>";
-               generator .string += generator .Break ();
-            }
+            generator .string += "<![CDATA[";
+            generator .string += value;
+            generator .string += "]]>";
+            generator .string += generator .Break ();
          }
 
          generator .DecIndent ();
