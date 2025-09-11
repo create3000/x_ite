@@ -438,8 +438,9 @@ Object .assign (X3DRenderObject .prototype,
 
                plane .set (point, closestObject .normal);
                plane .getClosestPointToPoint (translation, closest);
+               closest .subtract (point) .normalize () .multiply (length);
 
-               return closest .subtract (point) .normalize () .multiply (length);
+               return this .constrainTranslation (closest, false, false);
             }
 
             // Everything is fine.
@@ -450,7 +451,11 @@ Object .assign (X3DRenderObject .prototype,
          // Collision, the avatar is already within an obstacle.
 
          if (stepBack)
-            return this .constrainTranslation (point .assign (translation) .normalize () .multiply (distance), false, false);
+         {
+            point .assign (translation) .normalize () .multiply (distance)
+
+            return this .constrainTranslation (point, false, false);
+         }
 
          return translation .assign (Vector3 .ZERO);
       };
