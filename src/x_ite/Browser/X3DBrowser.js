@@ -895,7 +895,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
       layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
 
-      const constrained = layerNode ?.constrainTranslation (translation .getValue () .copy ());
+      const constrained = layerNode ?.constrainTranslation (translation .getValue ());
 
       return constrained ? new Fields .SFVec3f (... constrained) : null;
    },
