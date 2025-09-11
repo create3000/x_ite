@@ -1,5 +1,6 @@
 import TextureBuffer from "./TextureBuffer.js";
 import TraverseType  from "./TraverseType.js";
+import Algorithm     from "../../standard/Math/Algorithm.js";
 import MergeSort     from "../../standard/Math/Algorithms/MergeSort.js";
 import Camera        from "../../standard/Math/Geometry/Camera.js";
 import Line3         from "../../standard/Math/Geometry/Line3.js";
@@ -435,6 +436,8 @@ Object .assign (X3DRenderObject .prototype,
                if (!slide)
                   return point;
 
+               const wallFriction = Algorithm .clamp (this .getBrowser () .getBrowserOption ("WallFriction"), 0, 1);
+
                // Project translation on normal plane.
                plane .set (point, closestObject .normal);
                plane .getClosestPointToPoint (translation, closest);
@@ -444,7 +447,7 @@ Object .assign (X3DRenderObject .prototype,
                plane .getClosestPointToPoint (closest, constrained);
 
                // Adjust length.
-               constrained .subtract (point) .normalize () .multiply (length);
+               constrained .subtract (point) .normalize () .multiply (length * (1 - wallFriction));
 
                return this .constrainTranslation (constrained, false, false);
             }
