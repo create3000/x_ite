@@ -440,13 +440,15 @@ Object .assign (X3DRenderObject .prototype,
                // Project translation on normal plane.
                plane .set (point, closestObject .normal);
                plane .getClosestPointToPoint (translation, closest);
-               closest .subtract (point) .normalize () .multiply (length);
 
                // Project translation on up-vector plane.
                plane .set (point, this .getViewpoint () .getUpVector ());
                plane .getClosestPointToPoint (closest, constrained);
 
-               return this .constrainTranslation (closest, false, false);
+               // Adjust length.
+               constrained .subtract (point) .normalize () .multiply (length);
+
+               return this .constrainTranslation (constrained, false, false);
             }
 
             // Everything is fine.
