@@ -575,7 +575,7 @@ const constrained = Browser .constrainTranslation (translation);
 viewpoint .position = viewpoint .position .add (constrained);
 ```
 
-#### **getClosestObject** (*[layer: X3DLayerNode,] direction: SFVec3d | SFVec3f*): { node: X3DShapeNode | null, distance: number } <small><span class="blue">non-standard</span></small>
+#### **getClosestObject** (*[layer: X3DLayerNode,] direction: SFVec3d | SFVec3f*): { node: X3DShapeNode | null, distance: number, normal: SFVec3f, frontFacing: boolean } <small><span class="blue">non-standard</span></small>
 
 Returns the closest collidable object when looked in *direction*, measured from the active viewpoint position. The maximum detection radius is `2 * avatarHeight` (where *avatarHeight* is the second value of [NavigationInfo](/x_ite/components/navigation/navigationinfo/) *avatarSize*). Compare *distance* with *collisionRadius* (first value of [NavigationInfo](/x_ite/components/navigation/navigationinfo/) *avatarSize*) to detect if a collision with an object occurs. If *layer* is omitted, the active layer is used.
 
