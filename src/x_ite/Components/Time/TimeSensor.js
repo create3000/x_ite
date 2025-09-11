@@ -75,9 +75,9 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
 
       const time = this .getBrowser () .getCurrentTime ();
 
+      this ._time             = time;
       this ._cycleTime        = time;
       this ._fraction_changed = this .fraction;
-      this ._time             = time;
    },
    set_resume (pauseInterval)
    {
