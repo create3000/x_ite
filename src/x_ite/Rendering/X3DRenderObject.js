@@ -442,7 +442,7 @@ Object .assign (X3DRenderObject .prototype,
                plane .getClosestPointToPoint (translation, closest);
 
                // Project translation on up-vector plane.
-               plane .set (point, this .getViewpoint () .getUpVector ());
+               plane .set (Vector3 .ZERO, this .getViewpoint () .getUpVector ());
                plane .getClosestPointToPoint (closest, constrained);
 
                // Adjust length.
