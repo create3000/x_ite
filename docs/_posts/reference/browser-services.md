@@ -567,7 +567,7 @@ Changes the bound viewpoint node to the viewpoint named *name*. The viewpoint mu
 
 #### **constrainTranslation** (*[layer: X3DLayerNode,] translation: SFVec3d | SFVec3f*): SFVec3f <small><span class="blue">non-standard</span></small>
 
-Constrains a *translation*, that should be added to viewpoint position, to a possible value the avatar can move. If the avatar reaches or intersects with an obstacle the translation is constrained, to either slide along the wall or to stop.
+Constrains a *translation*, that should be added to viewpoint position, to a possible value the avatar can move. If the avatar reaches or intersects with an obstacle the translation is constrained, to either slide along the wall or to stop. If *layer* is omitted, the active layer is used.
 
 ```js
 const constrained = Browser .constrainTranslation (translation);
