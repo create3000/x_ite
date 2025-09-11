@@ -426,7 +426,7 @@ declare namespace X3D
    type ClosestObject = {
       node: X3DShapeNodeProxy | null,
       distance: number,
-      normal: SFVec3f,
+      normal: SFVec3f | null,
       frontFacing: boolean,
    };
 
