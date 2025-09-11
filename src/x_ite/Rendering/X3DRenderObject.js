@@ -410,7 +410,7 @@ Object .assign (X3DRenderObject .prototype,
 
       return function (translation, stepBack = true, slide = true)
       {
-         // Constrains a *translation*, that should be added to viewpoint position, to a possible value the avatar can move. If the avatar reaches or intersects with an obstacle the translation is constrained, to either slide along the wall or to stop.
+         // Constrains a *translation*, which should be added to viewpoint position to a possible value that avatar can move to. If the avatar reaches or intersects with an obstacle the translation is either constrained to slide along the wall or to stop.
 
          // Constrain translation when the viewer collides with an obstacle.
 
