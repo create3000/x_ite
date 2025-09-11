@@ -460,7 +460,7 @@ Object .assign (X3DRenderObject .prototype,
 
          if (stepBack)
          {
-            point .assign (translation) .normalize () .multiply (distance)
+            point .assign (translation) .normalize () .multiply (distance);
 
             return this .constrainTranslation (point, false, false);
          }
