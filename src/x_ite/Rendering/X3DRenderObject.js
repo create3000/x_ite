@@ -403,9 +403,9 @@ Object .assign (X3DRenderObject .prototype,
    constrainTranslation: (() =>
    {
       const
-         plane       = new Plane3 (),
-         point       = new Vector3 (),
-         constrained = new Vector3 ();
+         plane   = new Plane3 (),
+         point   = new Vector3 (),
+         closest = new Vector3 ();
 
       return function (translation, stepBack = true, slide = true)
       {
@@ -437,8 +437,9 @@ Object .assign (X3DRenderObject .prototype,
                   return point;
 
                plane .set (point, closestObject .normal);
+               plane .getClosestPointToPoint (translation, closest);
 
-               return plane .getClosestPointToPoint (translation, constrained);
+               return closest .subtract (point) .normalize () .multiply (length);
             }
 
             // Everything is fine.
@@ -449,7 +450,7 @@ Object .assign (X3DRenderObject .prototype,
          // Collision, the avatar is already within an obstacle.
 
          if (stepBack)
-            return this .constrainTranslation (translation .normalize () .multiply (distance), false, false);
+            return this .constrainTranslation (point .assign (translation) .normalize () .multiply (distance), false, false);
 
          return translation .assign (Vector3 .ZERO);
       };
