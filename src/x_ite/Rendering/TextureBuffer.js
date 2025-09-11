@@ -164,13 +164,13 @@ Object .assign (TextureBuffer .prototype,
          ViewVolume .unProjectPointMatrix (winX, winY, winZ, invProjectionMatrix, viewport, point);
 
          result .distance = -point .z;
+         result .id       = array [index + 1];
 
          gl .readBuffer (gl .COLOR_ATTACHMENT1);
          gl .readPixels (0, 0, width, height, gl .RGBA, gl .FLOAT, array);
 
-         result .id = array [index + 3];
-
          result .normal .set (array [index], array [index + 1], array [index + 2]);
+         result .frontFacing = array [index + 3] ? true : false;
 
          return result;
       };
