@@ -565,6 +565,16 @@ Changes the bound viewpoint node to the last viewpoint in the list of user viewp
 
 Changes the bound viewpoint node to the viewpoint named *name*. The viewpoint must be available in *layer*. If *layer* is omitted, the active layer is used.
 
+#### **constrainTranslation** (*[layer: X3DLayerNode,] translation: SFVec3d | SFVec3f*): SFVec3f <small><span class="blue">non-standard</span></small>
+
+Constrains a *translation*, that should be added to viewpoint position, to a possible value the avatar can move. If the avatar reaches or intersects with an obstacle the translation is constrained, to either slide along the wall or to stop.
+
+```js
+const constrained = Browser .constrainTranslation (translation);
+
+viewpoint .position = viewpoint .position .add (constrained);
+```
+
 #### **getClosestObject** (*[layer: X3DLayerNode,] direction: SFVec3d | SFVec3f*): { node: X3DShapeNode | null, distance: number } <small><span class="blue">non-standard</span></small>
 
 Returns the closest collidable object when looked in *direction*, measured from the active viewpoint position. The maximum detection radius is `2 * avatarHeight` (where *avatarHeight* is the second value of [NavigationInfo](/x_ite/components/navigation/navigationinfo/) *avatarSize*). Compare *distance* with *collisionRadius* (first value of [NavigationInfo](/x_ite/components/navigation/navigationinfo/) *avatarSize*) to detect if a collision with an object occurs. If *layer* is omitted, the active layer is used.
