@@ -1042,22 +1042,26 @@ Object .assign (X3DRenderObject .prototype,
 
          if (distance > 0)
          {
-            // gravitate and fall down the to the floor.
+            // Gravitate and fall down the to the floor.
 
             const currentFrameRate = this .speed ? browser .getCurrentFrameRate () : 1000000;
 
             this .speed -= browser .getBrowserOptions () ._Gravity .getValue () / currentFrameRate;
 
-            let y = this .speed / currentFrameRate;
+            let dy = this .speed / currentFrameRate;
 
-            if (y < -distance)
+            if (dy < -distance)
             {
                // The ground is reached.
-               y = -distance;
+
+               dy = -distance;
+
                this .speed = 0;
             }
 
-            viewpointNode ._positionOffset = viewpointNode ._positionOffset .getValue () .add (up .multVecRot (translation .set (0, y, 0)));
+            const falling = up .multVecRot (translation .set (0, dy, 0));
+
+            viewpointNode ._positionOffset = falling .add (viewpointNode ._positionOffset .getValue ());
          }
          else
          {
@@ -1069,22 +1073,9 @@ Object .assign (X3DRenderObject .prototype,
             {
                // Step up.
 
-               const constrained = this .constrainTranslation (up .multVecRot (translation .set (0, distance, 0)), false, false);
+               const step = up .multVecRot (translation .set (0, distance, 0));
 
-               //if (getBrowser () -> getBrowserOptions () -> animateStairWalks ())
-               //{
-               //   float step = getBrowser () -> getCurrentSpeed () / getBrowser () -> getCurrentFrameRate ();
-               //   step = abs (getViewMatrix () .mult_matrix_dir (Vector3f (0, step, 0) * up));
-               //
-               //   Vector3f offset = Vector3f (0, step, 0) * up;
-               //
-               //   if (math::abs (offset) > math::abs (constrained) or getBrowser () -> getCurrentSpeed () == 0)
-               //      offset = constrained;
-               //
-               //   getViewpoint () -> positionOffset () += offset;
-               //}
-               //else
-                  viewpointNode ._positionOffset = constrained .add (viewpointNode ._positionOffset .getValue ());
+               viewpointNode ._positionOffset = step .add (viewpointNode ._positionOffset .getValue ());
             }
          }
       };
