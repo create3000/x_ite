@@ -885,6 +885,20 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       this .currentScene .deleteRoute (sourceNode, sourceField, destinationNode, destinationField);
    },
+   constrainTranslation (layerNode, translation)
+   {
+      if (arguments .length === 1)
+      {
+         translation = layerNode;
+         layerNode   = this .getActiveLayer ();
+      }
+
+      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
+
+      const constrained = layerNode ?.constrainTranslation (translation .getValue ());
+
+      return constrained ? new Fields .SFVec3f (... constrained) : null;
+   },
    getClosestObject (layerNode, direction)
    {
       if (arguments .length === 1)
@@ -910,20 +924,6 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          normal: null,
          frontFacing: undefined,
       };
-   },
-   constrainTranslation (layerNode, translation)
-   {
-      if (arguments .length === 1)
-      {
-         translation = layerNode;
-         layerNode   = this .getActiveLayer ();
-      }
-
-      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
-
-      const constrained = layerNode ?.constrainTranslation (translation .getValue ());
-
-      return constrained ? new Fields .SFVec3f (... constrained) : null;
    },
    beginUpdate ()
    {
