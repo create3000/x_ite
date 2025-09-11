@@ -416,8 +416,9 @@ Object .assign (X3DRenderObject .prototype,
          // Constrain translation when the viewer collides with an obstacle.
 
          const
-            closestObject = this .getClosestObject (translation),
-            distance      = closestObject .distance - this .getNavigationInfo () .getCollisionRadius ();
+            closestObject   = this .getClosestObject (translation),
+            collisionRadius = this .getNavigationInfo () .getCollisionRadius (),
+            distance        = closestObject .distance - collisionRadius;
 
          if (distance > 0)
          {

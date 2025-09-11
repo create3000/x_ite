@@ -895,7 +895,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
       layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
 
-      const closestObject = layerNode ?.getClosestObject (direction .getValue ())
+      const closestObject = layerNode ?.getClosestObject (direction .getValue ());
 
       return closestObject ?.node
       ? {
