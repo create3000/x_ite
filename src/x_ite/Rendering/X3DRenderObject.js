@@ -403,9 +403,10 @@ Object .assign (X3DRenderObject .prototype,
    constrainTranslation: (() =>
    {
       const
-         plane   = new Plane3 (),
-         point   = new Vector3 (),
-         closest = new Vector3 ();
+         plane       = new Plane3 (),
+         point       = new Vector3 (),
+         closest     = new Vector3 (),
+         constrained = new Vector3 ();
 
       return function (translation, stepBack = true, slide = true)
       {
@@ -436,9 +437,14 @@ Object .assign (X3DRenderObject .prototype,
                if (!slide)
                   return point;
 
+               // Project translation on normal plane.
                plane .set (point, closestObject .normal);
                plane .getClosestPointToPoint (translation, closest);
                closest .subtract (point) .normalize () .multiply (length);
+
+               // Project translation on up-vector plane.
+               plane .set (point, this .getViewpoint () .getUpVector ());
+               plane .getClosestPointToPoint (closest, constrained);
 
                return this .constrainTranslation (closest, false, false);
             }
