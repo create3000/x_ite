@@ -897,8 +897,6 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
       const closestObject = layerNode ?.getClosestObject (direction .getValue ());
 
-      console .log (closestObject .frontFacing)
-
       return closestObject ?.node
       ? {
          node: SFNodeCache .get (closestObject .node),
