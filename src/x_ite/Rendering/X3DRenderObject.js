@@ -1052,7 +1052,7 @@ Object .assign (X3DRenderObject .prototype,
 
             if (dy < -distance)
             {
-               // The ground is reached.
+               // The ground has been reached.
 
                dy = -distance;
 
