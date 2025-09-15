@@ -664,22 +664,28 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 {
    setExecutionContext (executionContext)
    {
-      if (this .getExecutionContext ())
+      // Remove loading object.
       {
          const scene = this .getScene ();
 
-         for (const object of this [_loadingObjects])
-            scene .removeLoadingObject (object);
+         if (scene)
+         {
+            for (const object of this [_loadingObjects])
+               scene .removeLoadingObject (object);
+         }
       }
 
       X3DExecutionContext .prototype .setExecutionContext .call (this, executionContext);
 
-      if (this .getExecutionContext ())
+      // Add loading object.
       {
          const scene = this .getScene ();
 
-         for (const object of this [_loadingObjects])
-            scene .addLoadingObject (object);
+         if (scene)
+         {
+            for (const object of this [_loadingObjects])
+               scene .addLoadingObject (object);
+         }
       }
    },
    getLoadingObjects ()
