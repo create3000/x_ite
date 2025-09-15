@@ -248,7 +248,7 @@ declare namespace X3D
       changeViewpoint (layer: X3DLayerNodeProxy, name: string): void;
       changeViewpoint (name: string): void;
       /**
-       * Constrains a *translation*, which should be added to viewpoint position to a possible value that avatar can move to. If the avatar reaches or intersects with an obstacle the translation is either constrained to slide along the wall or to stop. If *layer* is omitted, the active layer is used.
+       * Constrains a *translation*, which should be added to the position of the active viewpoint, to a possible value that avatar can move to. If the avatar reaches or intersects with an obstacle the translation is either constrained to slide along the wall or to stop. If *layer* is omitted, the active layer is used.
        */
       constrainTranslation (layer: X3DLayerNodeProxy, translation: SFVec3d | SFVec3f): SFVec3f;
       constrainTranslation (translation: SFVec3d | SFVec3f): SFVec3f;
