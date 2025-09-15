@@ -664,7 +664,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 {
    setExecutionContext (executionContext)
    {
-      // Remove loading object.
+      // Remove loading objects from old parent scene.
       {
          const scene = this .getScene ();
 
@@ -677,7 +677,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       X3DExecutionContext .prototype .setExecutionContext .call (this, executionContext);
 
-      // Add loading object.
+      // Add loading objects to new parent scene.
       {
          const scene = this .getScene ();
 
