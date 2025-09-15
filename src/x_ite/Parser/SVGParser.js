@@ -114,15 +114,15 @@ function SVGParser (scene)
    switch (browser .getBrowserOption ("PrimitiveQuality"))
    {
       case "LOW":
-         this .BEZIER_STEPS = 6;  // Subdivisions of a span.
+         this .BEZIER_STEPS = 9;  // Subdivisions of a span.
          this .CIRCLE_STEPS = 20; // Subdivisions of a circle, used for arc and rounded rect.
          break;
       case "HIGH":
-         this .BEZIER_STEPS = 10; // Subdivisions of a span.
+         this .BEZIER_STEPS = 15; // Subdivisions of a span.
          this .CIRCLE_STEPS = 64; // Subdivisions of a circle, used for arc and rounded rect.
          break;
       default:
-         this .BEZIER_STEPS = 8;  // Subdivisions of a span.
+         this .BEZIER_STEPS = 12;  // Subdivisions of a span.
          this .CIRCLE_STEPS = 32; // Subdivisions of a circle, used for arc and rounded rect.
          break;
    }
