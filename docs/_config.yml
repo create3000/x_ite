@@ -24,13 +24,13 @@ description: >- # used by seo meta and the atom feed
 x3d_latest_version: 4.0 # x3d latest version
 
 # x_ite settings
-x_ite_latest_version: 12.0.7 # x_ite latest version
+x_ite_latest_version: 12.0.8 # x_ite latest version
 x_ite_compressed_size: 301 # size in kb
-x_ite_js_integrity: sha384-fD4I/BrFlyuE/AKb2gHgjbO3h3xs5d+v91NTkkf7GFCrIQLGHBKOs/L+DahlBI40
-x_ite_min_js_integrity: sha384-eEPxMh5PSc5qYKZ75KKmMSWzFQrsAMpQpALnFhrBOWJJmmeL8m7sdYa/WMaVAZga
-x_ite_mjs_integrity: sha384-+ifRYsygilJqqJqBDjZHcId5sAIjO+TzbmywqMW2nc0Z+yZ3daSRu4rONh+kNmZ9
-x_ite_min_mjs_integrity: sha384-heRmkdUmMQNn/x2kXIwyrQrJHA1g64d4lvX0/FNhBd/sJi68Rc9yPc0twbt7fKjd
-x_ite_css_integrity: sha384-KBw3YMaaqkzaDKk3LzWVmqsLhK0smal/BDW85wt7QyOXyNSmPx4jsYN/YTCnbdcU
+x_ite_js_integrity: sha384-bkHrHuBjyi/8kG5zCRCevMMRLmlI/gskc9Lv8nCXDdhKb0UkA56naw+jsrulun2/
+x_ite_min_js_integrity: sha384-yWvefNthGAfoYI86a8Z7Lx4O0ck0utwsz50QZRkZ7xT8hAmjmsFuo5IlLL2/ovtH
+x_ite_mjs_integrity: sha384-8Qx7DNx7342iQW8Hjk5uizWzm6fO0H9aHa4M3Z2Ou8blsGISv9s+SknKeZF3EW/5
+x_ite_min_mjs_integrity: sha384-PC388uBZThnluynVOcD0GW5op1M7bXdD+25PxgqYXZUkSsjFd8wokMmcpVu8ABNd
+x_ite_css_integrity: sha384-hfpDX9tvc2ySxISUQ0fRCwnoE4KRxcJnSjCRDXOggEMLJCEldKJcjMD+DT4Sfzu1
 
 # Fill in the protocol & hostname for your site.
 # e.g. 'https://username.github.io', note that it does not end with a '/'.
