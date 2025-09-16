@@ -563,6 +563,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
          this ._metadata = this .getExecutionContext () .createNode ("MetadataSet");
          metadataSet     = this ._metadata .valueOf ();
 
+         this .getExecutionContext () .addNamedNode (this .getExecutionContext () .getUniqueName (name), metadataSet);
+
          metadataSet .reference = this .getBrowser () .getBrowserOption ("MetadataReference");
          metadataSet .name      = name;
       }
