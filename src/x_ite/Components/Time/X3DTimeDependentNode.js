@@ -25,8 +25,8 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
 {
    initialize ()
    {
-      this .getLive ()  .addInterest ("set_live__", this);
-      this ._isEvenLive .addInterest (Symbol .for ("X_ITE.X3DBaseNode.set_live__"), this);
+      this .getLive () .addInterest ("set_live__", this);
+      this ._evenLive  .addInterest (Symbol .for ("X_ITE.X3DBaseNode.set_live__"), this);
 
       this ._initialized .addInterest ("set_loop__",       this);
       this ._enabled     .addInterest ("set_enabled__",    this);
@@ -47,7 +47,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
    {
       ///  Determines the live state of this node.
 
-      return this .isLive () && (this .getExecutionContext () .getLive () .getValue () || this ._isEvenLive .getValue ());
+      return this .isLive () && (this .getExecutionContext () .getLive () .getValue () || this ._evenLive .getValue ());
    },
    getElapsedTime ()
    {
