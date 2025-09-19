@@ -125,9 +125,11 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
 
       return function (renderObject)
       {
+         this .textureRenderingPass = true;
+
          if (!this .dependentRenderers .has (renderObject))
          {
-            const dependentRenderer = new DependentRenderer (this .getExecutionContext (), renderObject, this);
+            const dependentRenderer = new DependentRenderer (this .getExecutionContext (), renderObject);
 
             dependentRenderer .setup ();
 
@@ -205,20 +207,17 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
 
          if (this ._update .getValue () === "NEXT_FRAME_ONLY")
             this ._update = "NONE";
+
+         this .textureRenderingPass = false;
       };
    })(),
-   setShaderUniforms: (() =>
+   setShaderUniforms (gl, channel)
    {
-      const zeros = new Float32Array (16); // Trick: zero model view matrix to hide object.
+      X3DEnvironmentTextureNode .prototype .setShaderUniforms .call (this, gl, channel);
 
-      return function (gl, shaderObject, renderObject, channel)
-      {
-         X3DEnvironmentTextureNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, channel);
-
-         if (renderObject .getNode () === this)
-            gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, zeros);
-      };
-   })(),
+      if (this .textureRenderingPass)
+         gl .viewport (0, 0, 0, 0); // Hide object by making viewport zero size.
+   },
 });
 
 Object .defineProperties (GeneratedCubeMapTexture,

@@ -1,30 +1,31 @@
 import Fields                 from "../../Fields.js";
 import X3DConstants           from "../../Base/X3DConstants.js";
 import MultiSampleFramebuffer from "../../Rendering/MultiSampleFramebuffer.js";
-import TextureBuffer          from "../../Rendering/TextureBuffer.js";
 import { maxClipPlanes }      from "./RenderingConfiguration.js";
 import Lock                   from "../../../standard/Utility/Lock.js";
 
 const
-   _session            = Symbol (),
-   _framebuffers       = Symbol (),
-   _defaultFramebuffer = Symbol (),
-   _transmissionBuffer = Symbol (),
-   _resizer            = Symbol (),
-   _localObjects       = Symbol (),
-   _fullscreenArray    = Symbol (),
-   _fullscreenBuffer   = Symbol (),
-   _composeShader      = Symbol (),
-   _depthShaders       = Symbol (),
-   _buttonLock         = Symbol ();
+   _session             = Symbol (),
+   _framebuffers        = Symbol (),
+   _defaultFramebuffer  = Symbol (),
+   _textureBuffers      = Symbol (),
+   _resizer             = Symbol (),
+   _localObjects        = Symbol (),
+   _fullscreenArray     = Symbol (),
+   _fullscreenBuffer    = Symbol (),
+   _composeShader       = Symbol (),
+   _depthShaders        = Symbol (),
+   _shapeId             = Symbol (),
+   _buttonLock          = Symbol ();
 
 function X3DRenderingContext ()
 {
    this .addChildObjects (X3DConstants .outputOnly, "viewport", new Fields .SFVec4f (0, 0, 300, 150));
 
-   this [_framebuffers] = [ ];
-   this [_depthShaders] = new Map ();
-   this [_localObjects] = [ ]; // shader objects dumpster
+   this [_framebuffers]   = [ ];
+   this [_textureBuffers] = [ ];
+   this [_depthShaders]   = new Map ();
+   this [_localObjects]   = [ ]; // shader objects dumpster
 
    // WebXR support
 
@@ -161,14 +162,9 @@ Object .assign (X3DRenderingContext .prototype,
 
       this .reshape ();
    },
-   getTransmissionBuffer ()
+   addTextureBuffer (key)
    {
-      return this [_transmissionBuffer] ??= new TextureBuffer ({
-         browser: this,
-         width: this ._viewport [2],
-         height: this ._viewport [3],
-         mipMaps: true,
-      });
+      this [_textureBuffers] .push (key);
    },
    getFullscreenVertexArrayObject ()
    {
@@ -328,7 +324,8 @@ Object .assign (X3DRenderingContext .prototype,
 
       this [_framebuffers] [i] = new MultiSampleFramebuffer ({ browser: this, x, y, width, height, samples, oit });
 
-      this .reshapeTextureBuffer (_transmissionBuffer, width, height);
+      for (const key of this [_textureBuffers])
+         this .reshapeTextureBuffer (key, width, height);
    },
    reshapeTextureBuffer (key, width, height)
    {
@@ -343,6 +340,14 @@ Object .assign (X3DRenderingContext .prototype,
       textureBuffer .dispose ();
 
       this [key] = undefined;
+   },
+   resetShapeId ()
+   {
+      this [_shapeId] = 0;
+   },
+   getShapeId ()
+   {
+      return ++ this [_shapeId];
    },
    onfullscreen ()
    {

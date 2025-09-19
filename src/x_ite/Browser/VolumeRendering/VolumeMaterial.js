@@ -22,7 +22,7 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, UnlitMaterial
 
       let key = "";
 
-      key += renderObject .getRenderAndGlobalLightsKey ();
+      key += renderObject .getRenderKey ();
       key += fogNode ?.getFogType () ?? 0;
       key += ".";
       key += localObjectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
@@ -81,7 +81,7 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, UnlitMaterial
 
       return shaderNode;
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       this .volumeDataNode .setShaderUniforms (gl, shaderObject);
    },

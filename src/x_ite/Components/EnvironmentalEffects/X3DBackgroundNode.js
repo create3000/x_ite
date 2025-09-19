@@ -6,6 +6,7 @@ import VertexArray     from "../../Rendering/VertexArray.js";
 import TraverseType    from "../../Rendering/TraverseType.js";
 import AlphaMode       from "../../Browser/Shape/AlphaMode.js";
 import X3DConstants    from "../../Base/X3DConstants.js";
+import RenderPass      from "../../Rendering/RenderPass.js";
 import Complex         from "../../../standard/Math/Numbers/Complex.js";
 import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4       from "../../../standard/Math/Numbers/Rotation4.js";
@@ -39,6 +40,11 @@ function X3DBackgroundNode (executionContext)
    this .sphereContext    = new GeometryContext ({ colorMaterial: true });
    this .texturesContext  = new GeometryContext ({ localObjectsKeys: this .sphereContext .localObjectsKeys });
    this .localObjectsKeys = this .sphereContext .localObjectsKeys;
+
+   this [RenderPass .RENDER_KEY]         = this;
+   this [RenderPass .TRANSMISSION_KEY]   = this;
+   this [RenderPass .VOLUME_SCATTER_KEY] = null;
+
 }
 
 Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindableNode .prototype),
@@ -95,6 +101,10 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
       }
 
       return false;
+   },
+   getRenderPassNodes ()
+   {
+      return this .renderPassNodes;
    },
    set_texture__ (index, textureNode)
    {
@@ -568,15 +578,15 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
             gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
             gl .uniform1f (shaderNode .x3d_Exposure,                           1);
 
-            this .drawRectangle (gl, browser, shaderNode, renderObject, textureNode, this .textureBuffers [i], this .textureArrayObjects [i]);
+            this .drawRectangle (gl, browser, shaderNode, textureNode, this .textureBuffers [i], this .textureArrayObjects [i]);
 
             gl .uniform1f (shaderNode .x3d_Exposure, Math .max (browser .getBrowserOption ("Exposure"), 0));
          }
       };
    })(),
-   drawRectangle (gl, browser, shaderNode, renderObject, textureNode, buffer, vertexArray)
+   drawRectangle (gl, browser, shaderNode, textureNode, buffer, vertexArray)
    {
-      textureNode .setShaderUniforms (gl, shaderNode, renderObject);
+      textureNode .setShaderUniforms (gl, shaderNode .x3d_Texture [0]);
 
       if (vertexArray .enable (shaderNode .getProgram ()))
       {

@@ -1,5 +1,6 @@
 import TextureBuffer from "./TextureBuffer.js";
 import TraverseType  from "./TraverseType.js";
+import RenderPass    from "./RenderPass.js";
 import MergeSort     from "../../standard/Math/Algorithms/MergeSort.js";
 import Camera        from "../../standard/Math/Geometry/Camera.js";
 import Line3         from "../../standard/Math/Geometry/Line3.js";
@@ -17,8 +18,8 @@ function X3DRenderObject (executionContext)
 {
    const browser = executionContext .getBrowser ();
 
+   this .partialRenderKey         = "";
    this .renderKey                = "";
-   this .renderAndGlobalLightsKey = "";
    this .renderCount              = 0;
    this .view                     = null;
    this .viewVolumes              = [ ];
@@ -61,7 +62,8 @@ function X3DRenderObject (executionContext)
    this .opaqueShapes             = [ ];
    this .transparentShapes        = [ ];
    this .transparencySorter       = new MergeSort (this .transparentShapes, (a, b) => a .distance < b .distance);
-   this .transmission             = false;
+   this .renderPasses             = 0;
+   this .renderPass               = RenderPass .RENDER_BIT;
    this .speed                    = 0;
    this .depthBuffer              = new TextureBuffer ({ browser, width: DEPTH_BUFFER_SIZE, height: DEPTH_BUFFER_SIZE, float: true });
 }
@@ -86,10 +88,6 @@ Object .assign (X3DRenderObject .prototype,
    isIndependent ()
    {
       return true;
-   },
-   getNode ()
-   {
-      return null;
    },
    set_renderKey__ ()
    {
@@ -138,7 +136,7 @@ Object .assign (X3DRenderObject .prototype,
             break;
       }
 
-      this .renderKey = renderKey;
+      this .partialRenderKey = renderKey;
    },
    getLogarithmicDepthBuffer ()
    {
@@ -151,10 +149,6 @@ Object .assign (X3DRenderObject .prototype,
    getRenderKey ()
    {
       return this .renderKey;
-   },
-   getRenderAndGlobalLightsKey ()
-   {
-      return this .renderAndGlobalLightsKey;
    },
    getRenderCount ()
    {
@@ -395,9 +389,9 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .transparentShapes;
    },
-   isTransmission ()
+   getRenderPass ()
    {
-      return this .transmission;
+      return this .renderPass;
    },
    constrainTranslation (translation, stepBack)
    {
@@ -563,6 +557,7 @@ Object .assign (X3DRenderObject .prototype,
          case TraverseType .DISPLAY:
          {
             this .lightIndex           = 0;
+            this .renderPasses         = 0;
             this .numOpaqueShapes      = 0;
             this .numTransparentShapes = 0;
 
@@ -595,37 +590,38 @@ Object .assign (X3DRenderObject .prototype,
             radius     = bboxSize .norm () / 2,
             viewVolume = this .viewVolumes .at (-1);
 
-         if (viewVolume .intersectsSphere (radius, bboxCenter))
+         if (!viewVolume .intersectsSphere (radius, bboxCenter))
+            return false;
+
+         const num = this .numPointingShapes ++;
+
+         if (num === this .pointingShapes .length)
          {
-            const num = this .numPointingShapes ++;
+            const renderContext = {
+               renderObject: this,
+               modelViewMatrix: new Float32Array (16),
+               viewport: new Vector4 (),
+               clipPlanes: [ ],
+               sensors: [ ],
+               get renderContext () { return this; },
+            };
 
-            if (num === this .pointingShapes .length)
-            {
-               this .pointingShapes .push ({
-                  renderObject: this,
-                  modelViewMatrix: new Float32Array (16),
-                  viewport: new Vector4 (),
-                  clipPlanes: [ ],
-                  sensors: [ ],
-               });
-            }
-
-            const pointingContext = this .pointingShapes [num];
-
-            pointingContext .modelViewMatrix .set (modelViewMatrix);
-            pointingContext .viewport .assign (viewVolume .getViewport ());
-            pointingContext .hAnimNode = this .hAnimNode .at (-1);
-            pointingContext .shapeNode = shapeNode;
-
-            // Clip planes & sensors
-
-            assign (pointingContext .clipPlanes, this .localObjects);
-            assign (pointingContext .sensors,    this .sensors .at (-1));
-
-            return true;
+            this .pointingShapes .push (renderContext);
          }
 
-         return false;
+         const renderContext = this .pointingShapes [num];
+
+         renderContext .modelViewMatrix .set (modelViewMatrix);
+         renderContext .viewport .assign (viewVolume .getViewport ());
+         renderContext .hAnimNode = this .hAnimNode .at (-1);
+         renderContext .shapeNode = shapeNode;
+
+         // Clip planes & sensors
+
+         assign (renderContext .clipPlanes, this .localObjects);
+         assign (renderContext .sensors,    this .sensors .at (-1));
+
+         return true;
       };
    })(),
    addCollisionShape: (() =>
@@ -645,37 +641,38 @@ Object .assign (X3DRenderObject .prototype,
             radius     = bboxSize .norm () / 2,
             viewVolume = this .viewVolumes .at (-1);
 
-         if (viewVolume .intersectsSphere (radius, bboxCenter))
+         if (!viewVolume .intersectsSphere (radius, bboxCenter))
+            return false;
+
+         const num = this .numCollisionShapes ++;
+
+         if (num === this .collisionShapes .length)
          {
-            const num = this .numCollisionShapes ++;
+            const renderContext = {
+               renderObject: this,
+               modelViewMatrix: new Float32Array (16),
+               collisions: [ ],
+               clipPlanes: [ ],
+               get renderContext () { return this; },
+            };
 
-            if (num === this .collisionShapes .length)
-            {
-               this .collisionShapes .push ({
-                  renderObject: this,
-                  modelViewMatrix: new Float32Array (16),
-                  collisions: [ ],
-                  clipPlanes: [ ],
-               });
-            }
-
-            const collisionContext = this .collisionShapes [num];
-
-            collisionContext .modelViewMatrix .set (modelViewMatrix);
-            collisionContext .shapeNode = shapeNode;
-
-            // Collisions
-
-            assign (collisionContext .collisions, this .collisions);
-
-            // Clip planes
-
-            assign (collisionContext .clipPlanes, this .localObjects);
-
-            return true;
+            this .collisionShapes .push (renderContext);
          }
 
-         return false;
+         const renderContext = this .collisionShapes [num];
+
+         renderContext .modelViewMatrix .set (modelViewMatrix);
+         renderContext .shapeNode = shapeNode;
+
+         // Collisions
+
+         assign (renderContext .collisions, this .collisions);
+
+         // Clip planes
+
+         assign (renderContext .clipPlanes, this .localObjects);
+
+         return true;
       };
    })(),
    addShadowShape: (() =>
@@ -695,35 +692,36 @@ Object .assign (X3DRenderObject .prototype,
             radius     = bboxSize .norm () / 2,
             viewVolume = this .viewVolumes .at (-1);
 
-         if (viewVolume .intersectsSphere (radius, bboxCenter))
+         if (!viewVolume .intersectsSphere (radius, bboxCenter))
+            return false;
+
+         const num = this .numShadowShapes ++;
+
+         if (num === this .shadowShapes .length)
          {
-            const num = this .numShadowShapes ++;
+            const renderContext = {
+               renderObject: this,
+               modelViewMatrix: new Float32Array (16),
+               viewport: new Vector4 (),
+               clipPlanes: [ ],
+               get renderContext () { return this; },
+            };
 
-            if (num === this .shadowShapes .length)
-            {
-               this .shadowShapes .push ({
-                  renderObject: this,
-                  modelViewMatrix: new Float32Array (16),
-                  viewport: new Vector4 (),
-                  clipPlanes: [ ],
-               });
-            }
-
-            const depthContext = this .shadowShapes [num];
-
-            depthContext .modelViewMatrix .set (modelViewMatrix);
-            depthContext .viewport .assign (viewVolume .getViewport ());
-            depthContext .hAnimNode = this .hAnimNode .at (-1);
-            depthContext .shapeNode = shapeNode;
-
-            // Clip planes
-
-            assign (depthContext .clipPlanes, this .localObjects);
-
-            return true;
+            this .shadowShapes .push (renderContext);
          }
 
-         return false;
+         const renderContext = this .shadowShapes [num];
+
+         renderContext .modelViewMatrix .set (modelViewMatrix);
+         renderContext .viewport .assign (viewVolume .getViewport ());
+         renderContext .hAnimNode = this .hAnimNode .at (-1);
+         renderContext .shapeNode = shapeNode;
+
+         // Clip planes
+
+         assign (renderContext .clipPlanes, this .localObjects);
+
+         return true;
       };
    })(),
    addDisplayShape: (() =>
@@ -743,50 +741,49 @@ Object .assign (X3DRenderObject .prototype,
             radius     = bboxSize .norm () / 2,
             viewVolume = this .viewVolumes .at (-1);
 
-         if (viewVolume .intersectsSphere (radius, bboxCenter))
+         if (!viewVolume .intersectsSphere (radius, bboxCenter))
+            return false;
+
+         let renderContext;
+
+         if (shapeNode .isTransparent ())
          {
-            let renderContext;
+            const num = this .numTransparentShapes ++;
 
-            if (shapeNode .isTransparent ())
-            {
-               const num = this .numTransparentShapes ++;
+            if (num === this .transparentShapes .length)
+               this .transparentShapes .push (this .createRenderContext (true));
 
-               if (num === this .transparentShapes .length)
-                  this .transparentShapes .push (this .createRenderContext (true));
+            renderContext = this .transparentShapes [num];
 
-               renderContext = this .transparentShapes [num];
+            renderContext .distance = bboxCenter .z;
+         }
+         else
+         {
+            const num = this .numOpaqueShapes ++;
 
-               renderContext .distance = bboxCenter .z;
-            }
-            else
-            {
-               const num = this .numOpaqueShapes ++;
+            if (num === this .opaqueShapes .length)
+               this .opaqueShapes .push (this .createRenderContext (false));
 
-               if (num === this .opaqueShapes .length)
-                  this .opaqueShapes .push (this .createRenderContext (false));
-
-               renderContext = this .opaqueShapes [num];
-            }
-
-            this .transmission ||= shapeNode .isTransmission ();
-
-            renderContext .modelViewMatrix .set (modelViewMatrix);
-            renderContext .viewport .assign (viewVolume .getViewport ());
-            renderContext .shadows        = this .localShadows .at (-1);
-            renderContext .fogNode        = this .localFogs .at (-1);
-            renderContext .hAnimNode      = this .hAnimNode .at (-1);
-            renderContext .shapeNode      = shapeNode;
-            renderContext .appearanceNode = shapeNode .getAppearance ();
-
-            // Clip planes and local lights
-
-            assign (renderContext .localObjects,     this .localObjects); // Fog, ClipPane, X3DLightNode
-            assign (renderContext .localObjectsKeys, this .localObjectsKeys);
-
-            return true;
+            renderContext = this .opaqueShapes [num];
          }
 
-         return false;
+         this .renderPasses |= shapeNode .getRenderPasses ();
+
+         renderContext .modelViewMatrix .set (modelViewMatrix);
+         renderContext .viewport .assign (viewVolume .getViewport ());
+
+         renderContext .shadows        = this .localShadows .at (-1);
+         renderContext .fogNode        = this .localFogs .at (-1);
+         renderContext .hAnimNode      = this .hAnimNode .at (-1);
+         renderContext .shapeNode      = shapeNode;
+         renderContext .appearanceNode = shapeNode .getAppearance ();
+
+         // Clip planes and local lights
+
+         assign (renderContext .localObjects,     this .localObjects); // ClipPane, X3DLightNode
+         assign (renderContext .localObjectsKeys, this .localObjectsKeys);
+
+         return true;
       };
    })(),
    createRenderContext (transparent)
@@ -798,6 +795,7 @@ Object .assign (X3DRenderObject .prototype,
          viewport: new Vector4 (),
          localObjects: [ ],
          localObjectsKeys: [ ], // [clip planes, lights]
+         get renderContext () { return this; },
       };
    },
    pointing: (() =>
@@ -833,8 +831,7 @@ Object .assign (X3DRenderObject .prototype,
          for (let s = 0; s < numShapes; ++ s)
          {
             const
-               renderContext       = shapes [s],
-               { modelViewMatrix, viewport, shapeNode, hAnimNode, clipPlanes } = renderContext,
+               { renderContext, modelViewMatrix, viewport, shapeNode, hAnimNode, clipPlanes } = shapes [s],
                appearanceNode      = shapeNode .getAppearance (),
                geometryContext     = shapeNode .getGeometryContext (),
                depthModeNode       = appearanceNode .getDepthMode (),
@@ -1083,8 +1080,7 @@ Object .assign (X3DRenderObject .prototype,
          for (let s = 0; s < numShapes; ++ s)
          {
             const
-               renderContext       = shapes [s],
-               { clipPlanes, modelViewMatrix, shapeNode, hAnimNode } = renderContext,
+               { renderContext, clipPlanes, modelViewMatrix, shapeNode, hAnimNode } = shapes [s],
                appearanceNode      = shapeNode .getAppearance (),
                geometryContext     = shapeNode .getGeometryContext (),
                stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
@@ -1121,6 +1117,7 @@ Object .assign (X3DRenderObject .prototype,
          viewport                 = this .viewVolumes .at (-1) .getViewport (),
          lights                   = this .lights,
          globalLightsKeys         = this .globalLightsKeys,
+         globalLightsKey          = globalLightsKeys .sort () .join (""),
          globalLights             = this .globalLights,
          generatedCubeMapTextures = this .generatedCubeMapTextures,
          globalShadows            = this .globalShadows,
@@ -1147,19 +1144,23 @@ Object .assign (X3DRenderObject .prototype,
             generatedCubeMapTexture .renderTexture (this);
       }
 
-      this .renderAndGlobalLightsKey = `.${this .renderKey}.${globalLightsKeys .sort () .join ("")}.`;
-      this .globalShadow             = globalShadows .at (-1);
+      this .globalShadow = globalShadows .at (-1);
 
       // DRAW
 
-      // Draw to all framebuffers.
+      // Sort transparent shapes.
 
-      const transmission = this .transmission;
+      if (!this .orderIndependentTransparency)
+      {
+         const { numTransparentShapes, transparencySorter } = this;
+
+         transparencySorter .sort (0, numTransparentShapes);
+      }
+
+      // Draw to all framebuffers.
 
       for (let i = 0; i < numFramebuffers; ++ i)
       {
-         const frameBuffer = framebuffers [i];
-
          // Set matrices with XR support.
 
          const view = this .view = pose ?.views [i];
@@ -1183,25 +1184,49 @@ Object .assign (X3DRenderObject .prototype,
          for (const light of lights)
             light .setGlobalVariables (this);
 
-         // Render to transmission buffer.
+         // Render transmission texture and volume scatter texture.
 
-         if (independent && transmission)
+         if (independent && this .renderPasses !== RenderPass .RENDER_BIT)
          {
-            this .transmission = true;
+            // Render to volume scatter buffer.
 
-            const transmissionBuffer = browser .getTransmissionBuffer ();
+            if (this .renderPasses & RenderPass .VOLUME_SCATTER_BIT)
+            {
+               browser .resetShapeId ();
 
-            this .drawShapes (gl, browser, transmissionBuffer, gl .COLOR_BUFFER_BIT, false, viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
+               this .renderPass = RenderPass .VOLUME_SCATTER_KEY;
+               this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
 
-            gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
-            gl .generateMipmap (gl .TEXTURE_2D);
+               const volumeScatterBuffer = browser .getVolumeScatterBuffer ();
 
-            this .transmission = false;
+               this .drawShapes (RenderPass .VOLUME_SCATTER_KEY, gl, browser, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport);
+            }
+
+            // Render to transmission buffer.
+
+            if (this .renderPasses & RenderPass .TRANSMISSION_BIT)
+            {
+               this .renderPass = RenderPass .TRANSMISSION_KEY;
+               this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
+
+               const transmissionBuffer = browser .getTransmissionBuffer ();
+
+               this .drawShapes (RenderPass .TRANSMISSION_KEY, gl, browser, transmissionBuffer, gl .COLOR_BUFFER_BIT, viewport);
+
+               // Mipmap is later selected based on roughness and ior.
+               gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
+               gl .generateMipmap (gl .TEXTURE_2D);
+            }
          }
 
          // Draw with sorted blend or OIT.
 
-         this .drawShapes (gl, browser, frameBuffer, 0, frameBuffer .getOIT (), viewport, this .opaqueShapes, this .numOpaqueShapes, this .transparentShapes, this .numTransparentShapes, this .transparencySorter);
+         this .renderPass = RenderPass .RENDER_KEY;
+         this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
+
+         const frameBuffer = framebuffers [i];
+
+         this .drawShapes (RenderPass .RENDER_KEY, gl, browser, frameBuffer, 0, viewport);
       }
 
       this .view = null;
@@ -1233,13 +1258,15 @@ Object .assign (X3DRenderObject .prototype,
       globalShadows            .length = 1;
       generatedCubeMapTextures .length = 0;
    },
-   drawShapes (gl, browser, frameBuffer, clearBits, oit, viewport, opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes, transparencySorter)
+   drawShapes (renderPass, gl, browser, frameBuffer, clearBits, viewport)
    {
+      const { opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes } = this;
+
       this .advanceRenderCount ();
 
       frameBuffer .bind ();
 
-      // Configure viewport and background
+      // Configure viewport and background.
 
       gl .viewport (... viewport);
       gl .scissor (... viewport);
@@ -1250,45 +1277,37 @@ Object .assign (X3DRenderObject .prototype,
       gl .clear (gl .DEPTH_BUFFER_BIT | clearBits);
       gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
 
-      this .getBackground () .display (gl, this);
+      this .getBackground () [renderPass] ?.display (gl, this);
 
       // Use sorted blend or order independent transparency.
       // Render opaque objects first.
 
       for (let i = 0; i < numOpaqueShapes; ++ i)
       {
-         const renderContext = opaqueShapes [i];
+         const { renderContext, shapeNode } = opaqueShapes [i];
 
-         gl .viewport (... renderContext .viewport);
-
-         renderContext .shapeNode .display (gl, renderContext);
-         browser .resetTextureUnits ();
+         shapeNode [renderPass] ?.display (gl, renderContext);
       }
 
       // Render transparent objects.
 
-      if (oit)
+      if (frameBuffer .getOIT ())
          frameBuffer .bindTransparency ();
-      else
-         transparencySorter .sort (0, numTransparentShapes);
 
       gl .depthMask (false);
       gl .enable (gl .BLEND);
 
       for (let i = 0; i < numTransparentShapes; ++ i)
       {
-         const renderContext = transparentShapes [i];
+         const { renderContext, shapeNode } = transparentShapes [i];
 
-         gl .viewport (... renderContext .viewport);
-
-         renderContext .shapeNode .display (gl, renderContext);
-         browser .resetTextureUnits ();
+         shapeNode [renderPass] ?.display (gl, renderContext);
       }
 
       gl .depthMask (true);
       gl .disable (gl .BLEND);
 
-      if (oit)
+      if (frameBuffer .getOIT ())
          frameBuffer .compose ();
    },
 });

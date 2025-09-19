@@ -2,7 +2,7 @@ import ViewVolume from "../../standard/Math/Geometry/ViewVolume.js";
 import Vector3    from "../../standard/Math/Numbers/Vector3.js";
 import Matrix4    from "../../standard/Math/Numbers/Matrix4.js";
 
-function TextureBuffer ({ browser, width, height, float = false, mipMaps = false })
+function TextureBuffer ({ browser, width, height, float = false, mipMaps = false, colorTextures = 1 })
 {
    const gl = browser .getContext ();
 
@@ -23,37 +23,50 @@ function TextureBuffer ({ browser, width, height, float = false, mipMaps = false
       configurable: true,
    });
 
+   // Get current frame buffer.
+
+   const currentFrameBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
+
    // Create frame buffer.
 
    this .frameBuffer = gl .createFramebuffer ();
 
    gl .bindFramebuffer (gl .FRAMEBUFFER, this .frameBuffer);
 
-   // Create color texture.
+   // Set draw buffers.
 
-   this .colorTexture = gl .createTexture ();
+   gl .drawBuffers (Array .from ({ length: colorTextures }, (_, i) => gl .COLOR_ATTACHMENT0 + i));
 
-   gl .bindTexture (gl .TEXTURE_2D, this .colorTexture);
-   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S, gl .CLAMP_TO_EDGE);
-   gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T, gl .CLAMP_TO_EDGE);
+   // Create color textures.
 
-   if (mipMaps)
+   this .colorTextures = [ ];
+
+   for (let i = 0; i < colorTextures; ++ i)
    {
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR_MIPMAP_LINEAR);
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
-   }
-   else
-   {
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
-   }
+      this .colorTextures [i] = gl .createTexture ();
 
-   if (float)
-      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, width, height, 0, gl .RGBA, gl .FLOAT, null);
-   else
-      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
+      gl .bindTexture (gl .TEXTURE_2D, this .colorTextures [i]);
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S, gl .CLAMP_TO_EDGE);
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T, gl .CLAMP_TO_EDGE);
 
-   gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0, gl .TEXTURE_2D, this .colorTexture, 0);
+      if (mipMaps)
+      {
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .LINEAR_MIPMAP_LINEAR);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .LINEAR);
+      }
+      else
+      {
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
+         gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+      }
+
+      if (float)
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, width, height, 0, gl .RGBA, gl .FLOAT, null);
+      else
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, null);
+
+      gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .COLOR_ATTACHMENT0 + i, gl .TEXTURE_2D, this .colorTextures [i], 0);
+   }
 
    // Create depth buffer.
 
@@ -70,6 +83,10 @@ function TextureBuffer ({ browser, width, height, float = false, mipMaps = false
    gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .TEXTURE_2D, this .depthTexture, 0);
 
    const status = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
+
+   // Restore previous frame buffer.
+
+   gl .bindFramebuffer (gl .FRAMEBUFFER, currentFrameBuffer);
 
    // Always check that our framebuffer is ok.
 
@@ -91,9 +108,9 @@ Object .assign (TextureBuffer .prototype,
    {
       return this .height;
    },
-   getColorTexture ()
+   getColorTexture (i = 0)
    {
-      return this .colorTexture;
+      return this .colorTextures [i];
    },
    getDepthTexture ()
    {
@@ -162,7 +179,10 @@ Object .assign (TextureBuffer .prototype,
       const gl = this .context;
 
       gl .deleteFramebuffer (this .frameBuffer);
-      gl .deleteTexture (this .colorTexture);
+
+      for (const colorTexture of this .colorTextures)
+         gl .deleteTexture (colorTexture);
+
       gl .deleteTexture (this .depthTexture);
     },
 });

@@ -6,6 +6,7 @@ import X3DConstants     from "../../Base/X3DConstants.js";
 import TraverseType     from "../../Rendering/TraverseType.js";
 import GeometryType     from "../../Browser/Shape/GeometryType.js";
 import AlphaMode        from "../../Browser/Shape/AlphaMode.js";
+import RenderPass       from "../../Rendering/RenderPass.js";
 import Box3             from "../../../standard/Math/Geometry/Box3.js";
 import Vector3          from "../../../standard/Math/Numbers/Vector3.js";
 
@@ -26,9 +27,12 @@ function X3DShapeNode (executionContext)
 
    // Private properties
 
-   this .bbox       = new Box3 ();
-   this .bboxSize   = new Vector3 ();
-   this .bboxCenter = new Vector3 ();
+   this .bbox         = new Box3 ();
+   this .bboxSize     = new Vector3 ();
+   this .bboxCenter   = new Vector3 ();
+   this .renderPasses = RenderPass .RENDER_BIT;
+
+   this [RenderPass .RENDER_KEY] = this;
 }
 
 Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .prototype),
@@ -92,15 +96,8 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    },
    setTransparent (value)
    {
+      // Used by ParticleSystem!
       this .transparent = !!value;
-   },
-   isTransmission ()
-   {
-      return this .transmission;
-   },
-   setTransmission (value)
-   {
-      this .transmission = !!value;
    },
    getAlphaMode ()
    {
@@ -108,7 +105,12 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    },
    setAlphaMode (value)
    {
-      this .alphaMode = value;
+      // Used by ParticleSystem!
+      this .alphaMode = !!value;
+   },
+   getRenderPasses ()
+   {
+      return this .renderPasses;
    },
    getAppearance ()
    {
@@ -150,20 +152,23 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    {
       if (this .appearanceNode)
       {
-         this .appearanceNode ._alphaMode    .removeInterest ("set_transparent__",  this);
-         this .appearanceNode ._transparent  .removeInterest ("set_transparent__",  this);
-         this .appearanceNode ._transmission .removeInterest ("set_transmission__", this);
+         this .appearanceNode ._alphaMode     .removeInterest ("set_transparent__",   this);
+         this .appearanceNode ._transparent   .removeInterest ("set_transparent__",   this);
+         this .appearanceNode ._transmission  .removeInterest ("set_transmission__",  this);
+         this .appearanceNode ._volumeScatter .removeInterest ("set_volumeScatter__", this);
       }
 
       this .appearanceNode = X3DCast (X3DConstants .X3DAppearanceNode, this ._appearance)
          ?? this .getBrowser () .getDefaultAppearance ();
 
-      this .appearanceNode ._alphaMode    .addInterest ("set_transparent__",  this);
-      this .appearanceNode ._transparent  .addInterest ("set_transparent__",  this);
-      this .appearanceNode ._transmission .addInterest ("set_transmission__", this);
+      this .appearanceNode ._alphaMode     .addInterest ("set_transparent__",   this);
+      this .appearanceNode ._transparent   .addInterest ("set_transparent__",   this);
+      this .appearanceNode ._transmission  .addInterest ("set_transmission__",  this);
+      this .appearanceNode ._volumeScatter .addInterest ("set_volumeScatter__", this);
 
       this .set_transparent__ ();
       this .set_transmission__ ();
+      this .set_volumeScatter__ ();
    },
    set_geometry__ ()
    {
@@ -204,7 +209,22 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    },
    set_transmission__ ()
    {
-      this .transmission = this .appearanceNode .isTransmission ();
+      this .set_renderPass__ (this .appearanceNode .isTransmission (), RenderPass .TRANSMISSION_BIT);
+
+      this [RenderPass .TRANSMISSION_KEY] = this .appearanceNode .isTransmission () ? null : this;
+   },
+   set_volumeScatter__ ()
+   {
+      this .set_renderPass__ (this .appearanceNode .isVolumeScatter (), RenderPass .VOLUME_SCATTER_BIT);
+
+      this [RenderPass .VOLUME_SCATTER_KEY] = this .appearanceNode .isVolumeScatter () ? this : null;
+   },
+   set_renderPass__ (value, bit)
+   {
+      if (value)
+         this .renderPasses |= bit;
+      else
+         this .renderPasses &= ~bit;
    },
    set_objects__ ()
    {

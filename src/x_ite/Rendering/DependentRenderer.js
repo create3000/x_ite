@@ -2,13 +2,12 @@ import X3DBaseNode     from "../Base/X3DBaseNode.js";
 import X3DRenderObject from "./X3DRenderObject.js";
 import TraverseType    from "./TraverseType.js";
 
-function DependentRenderer (executionContext, renderObject, node)
+function DependentRenderer (executionContext, renderObject)
 {
    X3DBaseNode     .call (this, executionContext);
    X3DRenderObject .call (this, executionContext);
 
    this .renderObject = renderObject;
-   this .node         = node;
    this .framebuffers = [ ];
 }
 
@@ -23,10 +22,6 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNod
    isIndependent ()
    {
       return false;
-   },
-   getNode ()
-   {
-      return this .node;
    },
    getLayer ()
    {
