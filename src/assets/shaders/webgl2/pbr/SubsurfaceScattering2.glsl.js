@@ -110,7 +110,7 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
 
    totalWeight = max (totalWeight, vec3 (0.0001)); // Avoid division by zero.
 
-   return totalDiffuse / totalWeight * diffuseTransmissionColor;
+   return totalDiffuse / totalWeight * diffuseColor;
 }
 #endif
 #endif
