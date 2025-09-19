@@ -75,7 +75,6 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
    vec3 totalWeight  = vec3 (0.0);
    vec3 totalDiffuse = vec3 (0.0);
 
-   vec3 albedo                 = diffuseColor / max (0.00001, max3 (diffuseColor)); // Normalize the albedo color to avoid division by zero. // TODO: not used.
    vec3 clampedScatterDistance = max (vec3 (x3d_ScatterMinRadiusEXT), scatterDistance / maxColor) * maxColor;
    vec3 d                      = burley_setup (clampedScatterDistance, vec3 (1.0)); // Setup the Burley model parameters.
 
@@ -111,7 +110,7 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
 
    totalWeight = max (totalWeight, vec3 (0.0001)); // Avoid division by zero.
 
-   return totalDiffuse / totalWeight;
+   return totalDiffuse / totalWeight * diffuseTransmissionColor;
 }
 #endif
 #endif
