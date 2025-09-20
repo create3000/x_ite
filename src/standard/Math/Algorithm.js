@@ -148,7 +148,9 @@ const Algorithm =
             count -= step + 1;
          }
          else
+         {
             count = step;
+         }
       }
 
       return first;
@@ -168,8 +170,9 @@ const Algorithm =
          index = first + step;
 
          if (comp (value, array [index]))
+         {
             count = step;
-
+         }
          else
          {
             first  = ++ index;
