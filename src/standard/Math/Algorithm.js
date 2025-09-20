@@ -157,7 +157,7 @@ const Algorithm =
    },
    upperBound (array, first, last, value, comp = Algorithm.less)
    {
-      // sen.cppreference.com/w/cpp/algorithm/upper_bound
+      // https://en.cppreference.com/w/cpp/algorithm/upper_bound
 
       let
          index = 0,
