@@ -248,7 +248,7 @@ declare namespace X3D
       changeViewpoint (layer: X3DLayerNodeProxy, name: string): void;
       changeViewpoint (name: string): void;
       /**
-       * Constrains a *translation*, which should be added to viewpoint position to a possible value that avatar can move to. If the avatar reaches or intersects with an obstacle the translation is either constrained to slide along the wall or to stop. If *layer* is omitted, the active layer is used.
+       * Constrains a *translation*, which should be added to the position of the active viewpoint, to a possible value that avatar can move to. If the avatar reaches or intersects with an obstacle the translation is either constrained to slide along the wall or to stop. If *layer* is omitted, the active layer is used.
        */
       constrainTranslation (layer: X3DLayerNodeProxy, translation: SFVec3d | SFVec3f): SFVec3f;
       constrainTranslation (translation: SFVec3d | SFVec3f): SFVec3f;
@@ -1406,6 +1406,7 @@ declare namespace X3D
       readonly VolumeEmitter: number;
       readonly VolumeMaterialExtension: number;
       readonly VolumePickSensor: number;
+      readonly VolumeScatterMaterialExtension: number;
       readonly WaveShaper: number;
       readonly WindPhysicsModel: number;
       readonly WorldInfo: number;
@@ -20642,6 +20643,29 @@ declare namespace X3D
       sortOrder: "ANY" | "CLOSEST" | "ALL" | "ALL_SORTED";
    }
 
+   /** VolumeScatterMaterialExtension is an extension for the PhysicalMaterial and SpecularGlossinessMaterial nodes. For this node to have an effect, add an EnvironmentLight node. */
+   interface VolumeScatterMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
+   {
+      /**
+       * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      metadata: X3DMetadataObjectProxy | null;
+      /**
+       * The multi-scatter albedo.
+       *
+       * This field is of access type 'inputOutput' and type SFColor.
+       */
+      multiscatterColor: SFColor;
+      /**
+       * The anisotropy of scatter events. Range is (-1, 1).
+       *
+       * This field is of access type 'inputOutput' and type SFFloat.
+       */
+      scatterAnisotropy: number;
+   }
+
    /** WaveShaper node represents a nonlinear distorter that applies a wave-shaping distortion curve to the signal. */
    interface WaveShaperProxy extends X3DSoundProcessingNodeProxy
    {
@@ -22833,6 +22857,7 @@ declare namespace X3D
       VolumeEmitter: VolumeEmitterProxy,
       VolumeMaterialExtension: VolumeMaterialExtensionProxy,
       VolumePickSensor: VolumePickSensorProxy,
+      VolumeScatterMaterialExtension: VolumeScatterMaterialExtensionProxy,
       WaveShaper: WaveShaperProxy,
       WindPhysicsModel: WindPhysicsModelProxy,
       WorldInfo: WorldInfoProxy,

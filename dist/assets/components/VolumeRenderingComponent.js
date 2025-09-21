@@ -1,5 +1,5 @@
-/* X_ITE v12.0.8 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.8")];
+/* X_ITE v12.0.9 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.9")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1248,7 +1248,7 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, (external_X_I
 
       let key = "";
 
-      key += renderObject .getRenderAndGlobalLightsKey ();
+      key += renderObject .getRenderKey ();
       key += fogNode ?.getFogType () ?? 0;
       key += ".";
       key += localObjectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
@@ -1307,7 +1307,7 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, (external_X_I
 
       return shaderNode;
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       this .volumeDataNode .setShaderUniforms (gl, shaderObject);
    },
