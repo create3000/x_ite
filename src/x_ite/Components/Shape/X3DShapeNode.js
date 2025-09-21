@@ -30,7 +30,7 @@ function X3DShapeNode (executionContext)
    this .bbox         = new Box3 ();
    this .bboxSize     = new Vector3 ();
    this .bboxCenter   = new Vector3 ();
-   this .renderPasses = RenderPass .RENDER_BIT;
+   this .renderPasses = RenderPass .NONE;
 
    this [RenderPass .RENDER_KEY] = this;
 }

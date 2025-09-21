@@ -1,7 +1,7 @@
 const RenderPass =
 {
    // Bits
-   RENDER_BIT:         0b00,
+   NONE:               0b00,
    VOLUME_SCATTER_BIT: 0b01,
    TRANSMISSION_BIT:   0b10,
    // Keys

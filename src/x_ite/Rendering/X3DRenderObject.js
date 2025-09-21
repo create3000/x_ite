@@ -63,7 +63,7 @@ function X3DRenderObject (executionContext)
    this .transparentShapes        = [ ];
    this .transparencySorter       = new MergeSort (this .transparentShapes, (a, b) => a .distance < b .distance);
    this .renderPasses             = 0;
-   this .renderPass               = RenderPass .RENDER_BIT;
+   this .renderPass               = RenderPass .NONE;
    this .speed                    = 0;
    this .depthBuffer              = new TextureBuffer ({ browser, width: DEPTH_BUFFER_SIZE, height: DEPTH_BUFFER_SIZE, float: true });
 }
@@ -1186,7 +1186,7 @@ Object .assign (X3DRenderObject .prototype,
 
          // Render transmission texture and volume scatter texture.
 
-         if (independent && this .renderPasses !== RenderPass .RENDER_BIT)
+         if (independent && this .renderPasses !== RenderPass .NONE)
          {
             // Render to volume scatter buffer.
 
