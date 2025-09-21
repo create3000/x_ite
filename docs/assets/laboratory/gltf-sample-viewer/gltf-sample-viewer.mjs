@@ -815,8 +815,9 @@ class SampleViewer
    {
       return string
          .replace (/-(?:WebP|KTX)/ig, "")
-         .replace (/([A-Z]+)/g, " $1")
-         .replace (/([A-Z]+)([A-Z])/g, "$1 $2")
+         .replace (/(\d+)/g, " $1")
+         .replace (/([A-Z]+[a-z\d ]+)/g, " $1")
+         .replace (/([A-Z][a-z]+)/g, " $1")
          .replace (/\s+/g, " ")
          .trim ();
    }
