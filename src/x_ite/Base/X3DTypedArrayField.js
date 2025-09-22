@@ -561,7 +561,7 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          target = this [_target],
          array  = target .getValue ();
 
-      if (length < array .length)
+      if (length <= array .length)
          return array;
 
       const
