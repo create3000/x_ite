@@ -19,6 +19,7 @@ const no_headlight = [
    "LightsPunctualLamp",
    "PlaysetLightTest",
    "PointLightIntensityTest",
+   "ScatteringSkull",
 ];
 
 // SAMPLES_BEGIN
