@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <meta name='created' content='Thu, 25 Sep 2025 17:24:38 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.10.4, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Thu, 25 Sep 2025 17:34:23 GMT'/>
+  </head>
+  <Scene>
+    <WorldInfo>
+      <MetadataSet DEF='Sunrize' containerField='metadata'
+          name='Sunrize'
+          reference='https://create3000.github.io/sunrize/'>
+        <MetadataSet DEF='GridTool'
+            name='GridTool'
+            reference='https://create3000.github.io/sunrize/'>
+          <MetadataDouble DEF='rotation'
+              name='rotation'
+              reference='https://create3000.github.io/sunrize/'
+              value='1, 0, 0, 1.57079632679'/>
+          <MetadataBoolean DEF='visible_1'
+              name='visible'
+              reference='https://create3000.github.io/sunrize/'
+              value='true'/>
+          <MetadataInteger DEF='dimension'
+              name='dimension'
+              reference='https://create3000.github.io/sunrize/'
+              value='20, 10, 2'/>
+        </MetadataSet>
+        <MetadataSet DEF='BrowserFrame'
+            name='BrowserFrame'
+            reference='https://create3000.github.io/sunrize/'>
+          <MetadataBoolean DEF='fixedSize'
+              name='fixedSize'
+              reference='https://create3000.github.io/sunrize/'
+              value='true'/>
+          <MetadataDouble DEF='aspectRatio'
+              name='aspectRatio'
+              reference='https://create3000.github.io/sunrize/'
+              value='10, 1'/>
+          <MetadataString DEF='backgroundColor'
+              name='backgroundColor'
+              reference='https://create3000.github.io/sunrize/'
+              value='""'/>
+        </MetadataSet>
+      </MetadataSet>
+    </WorldInfo>
+    <OrthoViewpoint/>
+  </Scene>
+</X3D>

@@ -8,6 +8,19 @@ tags: [X3D, Examples]
 
 This collection of X3D examples showcases how powerful and flexible the standard can be for creating interactive 3D content on the web. You’ll find demonstrations of core features, including geometry, lighting, animation, prototyping, and scripting, each designed to highlight practical techniques. Whether you’re exploring X3D for learning, prototyping new ideas, or building full applications, these examples provide a solid starting point and inspiration.
 
+<x3d-canvas
+    class="teaser shadow"
+    src="/x_ite/assets/examples/examples.x3d"
+    update="auto"
+    splashScreen="false"
+    contextMenu="false"
+    notifications="false"
+    timings="false"
+    contentScale="auto"
+    xrSessionMode="NONE"
+    style="aspect-ratio: 10 / 1;">
+</x3d-canvas>
+
 ## Prototyping
 
 [![Keyboard](https://create3000.github.io/media/x_ite/examples/kbrd/screenshot.png)](/x_ite/playground/?url=https://create3000.github.io/media/x_ite/examples/kbrd/kbrd.x3d){: .left .w-25 }
