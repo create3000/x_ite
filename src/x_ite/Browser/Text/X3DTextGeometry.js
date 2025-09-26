@@ -352,6 +352,9 @@ Object .assign (X3DTextGeometry .prototype,
 
             this .getGlyphExtents (font, glyph, primitiveQuality, min, max);
 
+            min .y = font .descender / font .unitsPerEm;
+            max .y = font .ascender  / font .unitsPerEm;
+
             size .assign (max) .subtract (min);
 
             // Calculate glyph translation
@@ -391,8 +394,23 @@ Object .assign (X3DTextGeometry .prototype,
 
          if (length)
          {
-            if (textCompression === TextCompression .CHAR_SPACING && glyphs .length > 1)
-               charSpacing = (length - lineBound .y) / (glyphs .length - 1);
+            switch (textCompression)
+            {
+               case TextCompression .CHAR_SPACING:
+               {
+                  if (glyphs .length > 1)
+                     charSpacing = (length - lineBound .y) / (glyphs .length - 1);
+
+                  break;
+               }
+               case TextCompression .SCALING:
+               {
+                  if (fontStyle .getMajorAlignment () === TextAlignment .MIDDLE)
+                     max .y += (length - lineBound .y) / 2;
+
+                  break;
+               }
+            }
 
             lineBound .y = length;
             size .y      = length / scale;
