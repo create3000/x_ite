@@ -114,7 +114,7 @@
     "apng-js": "^1.1.5",
     "CharLS.js": "^2.0.1",
     "dicom-parser": "^1.8.21",
-    "fast-xml-parser": "^5.2.3",
+    "fast-xml-parser": "^5.2.5",
     "jpeg-js": "^0.4.4",
     "jpeg-lossless-decoder-js": "2.1.2",
     "jquery": "^3.7.1",
@@ -127,10 +127,10 @@
     "pako": "^2.1.0",
     "shell-tools": "^1.1.9",
     "string-replace-webpack-plugin": "^0.1.3",
-    "terser": "^5.39.2",
-    "webpack": "^5.99.9",
+    "terser": "^5.44.0",
+    "webpack": "^5.101.3",
     "webpack-cli": "^6.0.1",
-    "webpack-shell-plugin-next": "^2.3.2",
+    "webpack-shell-plugin-next": "^2.3.3",
     "woff2-encoder": "^2.0.0",
     "wrapper-webpack-plugin": "^2.2.2"
   }
