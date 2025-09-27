@@ -398,6 +398,12 @@ Returns a browser option with the corresponding *name*.
          <td>KHR_PBR_NEUTRAL</td>
       </tr>
       <tr>
+         <td>WallFriction</td>
+         <td>Defines how strongly the avatar resists sliding along walls during collisions, where 0 means no resistance (very slippery) and 1 means maximum resistance (no sliding). <small class="blue">non-standard</small></td>
+         <td>Float</td>
+         <td>0</td>
+      </tr>
+      <tr>
          <td>XRSessionMode</td>
          <td>A String defining the XR session mode. If the value is NONE, no XR button is displayed and all attempts to start a session are ignored. See also <a href="https://developer.mozilla.org/en-US/docs/Web/API/XRSystem/requestSession#parameters" target="blank">XRSystem.requestSession</a>. <small class="blue">non-standard</small></td>
          <td>NONE, IMMERSIVE_AR, IMMERSIVE_VR, INLINE</td>
@@ -575,11 +581,20 @@ const constrained = Browser .constrainTranslation (translation);
 viewpoint .position = viewpoint .position .add (constrained);
 ```
 
-#### **getClosestObject** (*[layer: X3DLayerNode,] direction: SFVec3d | SFVec3f*): { node: X3DShapeNode | null, distance: number } <small><span class="blue">non-standard</span></small>
+#### **getClosestObject** (*[layer: X3DLayerNode,] direction: SFVec3d | SFVec3f*): ClosestObject <small><span class="blue">non-standard</span></small>
 
 Returns the closest collidable object when looked in *direction*, measured from the active viewpoint position. The maximum detection radius is `2 * avatarHeight` (where *avatarHeight* is the second value of [NavigationInfo](/x_ite/components/navigation/navigationinfo/) *avatarSize*). Compare *distance* with *collisionRadius* (first value of [NavigationInfo](/x_ite/components/navigation/navigationinfo/) *avatarSize*) to detect if a collision with an object occurs. If *layer* is omitted, the active layer is used.
 
-The return value is an object with two properties *node* and *distance*.
+The return value is an object of type ClosestObject with the following properties:
+
+```ts
+type ClosestObject = {
+   node: X3DShapeNode | null,
+   distance: number,
+   normal: SFVec3f | null,
+   frontFacing: boolean,
+};
+```
 
 #### **beginUpdate** (): void
 

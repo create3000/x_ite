@@ -1,6 +1,7 @@
 import TextureBuffer from "./TextureBuffer.js";
 import TraverseType  from "./TraverseType.js";
 import RenderPass    from "./RenderPass.js";
+import Algorithm     from "../../standard/Math/Algorithm.js";
 import MergeSort     from "../../standard/Math/Algorithms/MergeSort.js";
 import Camera        from "../../standard/Math/Geometry/Camera.js";
 import Line3         from "../../standard/Math/Geometry/Line3.js";
@@ -10,6 +11,7 @@ import Vector4       from "../../standard/Math/Numbers/Vector4.js";
 import Rotation4     from "../../standard/Math/Numbers/Rotation4.js";
 import Matrix4       from "../../standard/Math/Numbers/Matrix4.js";
 import MatrixStack   from "../../standard/Math/Utility/MatrixStack.js";
+import Plane3        from "../../standard/Math/Geometry/Plane3.js";
 import StopWatch     from "../../standard/Time/StopWatch.js";
 
 const DEPTH_BUFFER_SIZE = 16;
@@ -65,7 +67,7 @@ function X3DRenderObject (executionContext)
    this .renderPasses             = 0;
    this .renderPass               = RenderPass .NONE;
    this .speed                    = 0;
-   this .depthBuffer              = new TextureBuffer ({ browser, width: DEPTH_BUFFER_SIZE, height: DEPTH_BUFFER_SIZE, float: true });
+   this .depthBuffer              = new TextureBuffer ({ browser, width: DEPTH_BUFFER_SIZE, height: DEPTH_BUFFER_SIZE, float: true, colorTextures: 2 });
 }
 
 Object .assign (X3DRenderObject .prototype,
@@ -393,48 +395,82 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .renderPass;
    },
-   constrainTranslation (translation, stepBack)
+   constrainTranslation: (() =>
    {
-      // Constrains @a translation to a possible value the avatar can move. If the avatar reaches and intersects with an
-      // and obstacle and @a stepBack is true a translation in the opposite direction is returned.
+      const
+         plane       = new Plane3 (),
+         point       = new Vector3 (),
+         closest     = new Vector3 (),
+         constrained = new Vector3 ();
 
-      // Constrain translation when the viewer collides with an obstacle.
-
-      const distance = this .getClosestObject (translation) .distance - this .getNavigationInfo () .getCollisionRadius ();
-
-      if (distance > 0)
+      return function (translation, stepBack = true, slide = true)
       {
-         // Move.
+         // Constrains a *translation*, which should be added to viewpoint position to a possible value that avatar can move to. If the avatar reaches or intersects with an obstacle the translation is either constrained to slide along the wall or to stop.
 
-         const length = translation .norm ();
+         // Constrain translation when the viewer collides with an obstacle.
 
-         if (length > distance)
+         const
+            closestObject   = this .getClosestObject (translation),
+            collisionRadius = this .getNavigationInfo () .getCollisionRadius (),
+            distance        = closestObject .distance - collisionRadius;
+
+         if (distance > 0)
          {
-            // Collision, the avatar would intersect with the obstacle.
+            // Move.
 
-            return translation .normalize () .multiply (distance);
+            const length = translation .norm ();
+
+            if (length > distance)
+            {
+               // Collision, the avatar would intersect with the obstacle.
+               // Slide along normal plane.
+
+               point .assign (translation) .normalize () .multiply (distance);
+
+               if (!slide)
+                  return point;
+
+               const wallFriction = Algorithm .clamp (this .getBrowser () .getBrowserOption ("WallFriction"), 0, 1);
+
+               // Project translation on normal plane.
+               plane .set (point, closestObject .normal);
+               plane .getClosestPointToPoint (translation, closest);
+
+               // Project translation on up-vector plane.
+               plane .set (Vector3 .ZERO, this .getViewpoint () .getUpVector ());
+               plane .getClosestPointToPoint (closest, constrained);
+
+               // Adjust length.
+               constrained .subtract (point) .normalize () .multiply (length * (1 - wallFriction));
+
+               return this .constrainTranslation (constrained, false, false);
+            }
+
+            // Everything is fine.
+
+            return translation;
          }
 
-         // Everything is fine.
+         // Collision, the avatar is already within an obstacle.
 
-         return translation;
-      }
+         if (stepBack)
+         {
+            point .assign (translation) .normalize () .multiply (distance);
 
-      // Collision, the avatar is already within an obstacle.
+            return this .constrainTranslation (point, false, false);
+         }
 
-      if (stepBack)
-         return this .constrainTranslation (translation .normalize () .multiply (distance), false);
-
-      return translation .assign (Vector3 .ZERO);
-   },
+         return translation .assign (Vector3 .ZERO);
+      };
+   })(),
    getClosestObject: (() =>
    {
       const
-         projectionMatrix            = new Matrix4 (),
-         cameraSpaceProjectionMatrix = new Matrix4 (),
-         localOrientation            = new Rotation4 (),
-         vector                      = new Vector3 (),
-         rotation                    = new Rotation4 ();
+         projectionMatrix     = new Matrix4 (),
+         viewProjectionMatrix = new Matrix4 (),
+         viewMatrix           = new Matrix4 (),
+         localOrientation     = new Rotation4 (),
+         rotation             = new Rotation4 ();
 
       return function (direction)
       {
@@ -470,38 +506,44 @@ Object .assign (X3DRenderObject .prototype,
             .multRight (viewpointNode .getOrientation ());
 
          rotation
-            .setFromToVec (Vector3 .Z_AXIS, vector .assign (direction) .negate ())
+            .setFromToVec (Vector3 .NEGATIVE_Z_AXIS, direction)
             .multRight (localOrientation);
 
          viewpointNode .straightenHorizon (rotation);
 
-         cameraSpaceProjectionMatrix
+         viewMatrix
             .assign (viewpointNode .getModelMatrix ())
             .translate (viewpointNode .getUserPosition ())
             .rotate (rotation)
             .inverse ()
-            .multRight (projectionMatrix)
             .multLeft (viewpointNode .getCameraSpaceMatrix ());
 
-         this .getProjectionMatrix () .push (cameraSpaceProjectionMatrix);
+         viewProjectionMatrix
+            .assign (viewMatrix)
+            .multRight (projectionMatrix);
 
-         const depth = this .getCollisionShape (projectionMatrix);
+         this .getProjectionMatrix () .push (viewProjectionMatrix);
+
+         const closestObject = this .getCollisionShape (projectionMatrix);
+
+         closestObject .modelViewMatrix .multRight (viewMatrix) .submatrix
+            .inverse () .multMatrixVec (closestObject .normal);
+
+         rotation .multVecRot (closestObject .normal) .normalize ();
 
          this .getProjectionMatrix () .pop ();
 
          this .collisionTime .stop ();
 
-         return depth;
+         return closestObject;
       };
    })(),
    getCollisionShape: (() =>
    {
       const
          depthBufferViewport   = new Vector4 (0, 0, DEPTH_BUFFER_SIZE, DEPTH_BUFFER_SIZE),
-         depthBufferViewVolume = new ViewVolume (),
-         result                = { id: -1, distance: 0 };
-
-      depthBufferViewVolume .set (Matrix4 .IDENTITY, depthBufferViewport);
+         depthBufferViewVolume = new ViewVolume (Matrix4 .IDENTITY, depthBufferViewport),
+         result                = { id: -1, distance: 0, normal: new Vector3 (), modelViewMatrix: new Matrix4 () };
 
       return function (projectionMatrix)
       {
@@ -511,15 +553,23 @@ Object .assign (X3DRenderObject .prototype,
          this .depthBuffer .bind ();
          this .viewVolumes .push (depthBufferViewVolume);
 
-         this .depth (this .collisionShapes, this .numCollisionShapes);
+         this .depth (this .collisionShapes, this .numCollisionShapes, true);
 
          const depth = this .depthBuffer .readDepth (projectionMatrix, depthBufferViewport, result);
 
          this .viewVolumes .pop ();
 
-         depth .node = depth .id < 0
-            ? null
-            : this .collisionShapes [depth .id] .shapeNode;
+         if (depth .id < 0)
+         {
+            depth .node = null;
+         }
+         else
+         {
+            const renderContext = this .collisionShapes [depth .id];
+
+            depth .node = renderContext .shapeNode;
+            depth .modelViewMatrix .assign (renderContext .modelViewMatrix);
+         }
 
          return depth;
       };
@@ -551,7 +601,7 @@ Object .assign (X3DRenderObject .prototype,
             this .numShadowShapes = 0;
 
             callback .call (group, type, this);
-            this .depth (this .shadowShapes, this .numShadowShapes);
+            this .depth (this .shadowShapes, this .numShadowShapes, false);
             break;
          }
          case TraverseType .DISPLAY:
@@ -934,10 +984,10 @@ Object .assign (X3DRenderObject .prototype,
    gravitate: (() =>
    {
       const
-         projectionMatrix            = new Matrix4 (),
-         cameraSpaceProjectionMatrix = new Matrix4 (),
-         translation                 = new Vector3 (),
-         rotation                    = new Rotation4 ();
+         projectionMatrix     = new Matrix4 (),
+         viewProjectionMatrix = new Matrix4 (),
+         translation          = new Vector3 (),
+         rotation             = new Rotation4 ();
 
       return function ()
       {
@@ -981,7 +1031,7 @@ Object .assign (X3DRenderObject .prototype,
             upVector = viewpointNode .getUpVector (),
             down     = rotation .setFromToVec (Vector3 .Z_AXIS, upVector);
 
-         cameraSpaceProjectionMatrix
+         viewProjectionMatrix
             .assign (viewpointNode .getModelMatrix ())
             .translate (viewpointNode .getUserPosition ())
             .rotate (down)
@@ -989,9 +1039,11 @@ Object .assign (X3DRenderObject .prototype,
             .multRight (projectionMatrix)
             .multLeft (viewpointNode .getCameraSpaceMatrix ());
 
-         this .getProjectionMatrix () .push (cameraSpaceProjectionMatrix);
+         this .getProjectionMatrix () .push (viewProjectionMatrix);
 
-         let distance = this .getCollisionShape (projectionMatrix) .distance;
+         const depth = this .getCollisionShape (projectionMatrix);
+
+         let distance = depth .distance;
 
          this .getProjectionMatrix () .pop ();
 
@@ -1003,22 +1055,26 @@ Object .assign (X3DRenderObject .prototype,
 
          if (distance > 0)
          {
-            // gravitate and fall down the to the floor.
+            // Gravitate and fall down the to the floor.
 
             const currentFrameRate = this .speed ? browser .getCurrentFrameRate () : 1000000;
 
             this .speed -= browser .getBrowserOptions () ._Gravity .getValue () / currentFrameRate;
 
-            let y = this .speed / currentFrameRate;
+            let dy = this .speed / currentFrameRate;
 
-            if (y < -distance)
+            if (dy < -distance)
             {
-               // The ground is reached.
-               y = -distance;
+               // The ground has been reached.
+
+               dy = -distance;
+
                this .speed = 0;
             }
 
-            viewpointNode ._positionOffset = viewpointNode ._positionOffset .getValue () .add (up .multVecRot (translation .set (0, y, 0)));
+            const falling = up .multVecRot (translation .set (0, dy, 0));
+
+            viewpointNode ._positionOffset = falling .add (viewpointNode ._positionOffset .getValue ());
          }
          else
          {
@@ -1030,22 +1086,9 @@ Object .assign (X3DRenderObject .prototype,
             {
                // Step up.
 
-               this .constrainTranslation (up .multVecRot (translation .set (0, distance, 0)), false);
+               const step = up .multVecRot (translation .set (0, distance, 0));
 
-               //if (getBrowser () -> getBrowserOptions () -> animateStairWalks ())
-               //{
-               //   float step = getBrowser () -> getCurrentSpeed () / getBrowser () -> getCurrentFrameRate ();
-               //   step = abs (getViewMatrix () .mult_matrix_dir (Vector3f (0, step, 0) * up));
-               //
-               //   Vector3f offset = Vector3f (0, step, 0) * up;
-               //
-               //   if (math::abs (offset) > math::abs (translation) or getBrowser () -> getCurrentSpeed () == 0)
-               //      offset = translation;
-               //
-               //   getViewpoint () -> positionOffset () += offset;
-               //}
-               //else
-                  viewpointNode ._positionOffset = translation .add (viewpointNode ._positionOffset .getValue ());
+               viewpointNode ._positionOffset = step .add (viewpointNode ._positionOffset .getValue ());
             }
          }
       };
@@ -1054,7 +1097,7 @@ Object .assign (X3DRenderObject .prototype,
    {
       const projectionMatrixArray = new Float32Array (16);
 
-      return function (shapes, numShapes)
+      return function (shapes, numShapes, normal)
       {
          const
             browser  = this .getBrowser (),
@@ -1070,7 +1113,7 @@ Object .assign (X3DRenderObject .prototype,
          gl .viewport (... viewport);
          gl .scissor (... viewport);
 
-         gl .clearColor (1, -1, 0, 0); // '1' for infinity, id, '0 0 0' for normal (TODO).
+         gl .clearColor (1, -1, -1, -1); // '1' for infinity, '-1' for no hit.
          gl .clear (gl .COLOR_BUFFER_BIT | gl .DEPTH_BUFFER_BIT);
 
          // Render all objects
@@ -1084,7 +1127,7 @@ Object .assign (X3DRenderObject .prototype,
                appearanceNode      = shapeNode .getAppearance (),
                geometryContext     = shapeNode .getGeometryContext (),
                stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
-               shaderNode          = browser .getDepthShader (clipPlanes .length, shapeNode, hAnimNode);
+               shaderNode          = browser .getDepthShader (normal, clipPlanes .length, shapeNode, hAnimNode);
 
             // Cannot change viewport here, because the viewport is special here.
 

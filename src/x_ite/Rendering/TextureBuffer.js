@@ -134,13 +134,14 @@ Object .assign (TextureBuffer .prototype,
       {
          const { context: gl, array, width, height } = this;
 
+         gl .readBuffer (gl .COLOR_ATTACHMENT0);
          gl .readPixels (0, 0, width, height, gl .RGBA, gl .FLOAT, array);
 
          let
-            winX = 0,
-            winY = 0,
-            winZ = Number .POSITIVE_INFINITY,
-            id   = -1;
+            winX  = 0,
+            winY  = 0,
+            winZ  = Number .POSITIVE_INFINITY,
+            index = -1;
 
          for (let wy = 0, i = 0; wy < height; ++ wy)
          {
@@ -150,10 +151,10 @@ Object .assign (TextureBuffer .prototype,
 
                if (wz < winZ)
                {
-                  winX = wx;
-                  winY = wy;
-                  winZ = wz;
-                  id   = array [i + 1];
+                  winX  = wx;
+                  winY  = wy;
+                  winZ  = wz;
+                  index = i;
                }
             }
          }
@@ -162,8 +163,14 @@ Object .assign (TextureBuffer .prototype,
 
          ViewVolume .unProjectPointMatrix (winX, winY, winZ, invProjectionMatrix, viewport, point);
 
-         result .id       = id;
          result .distance = -point .z;
+         result .id       = array [index + 1];
+
+         gl .readBuffer (gl .COLOR_ATTACHMENT1);
+         gl .readPixels (0, 0, width, height, gl .RGBA, gl .FLOAT, array);
+
+         result .normal .set (array [index], array [index + 1], array [index + 2]);
+         result .frontFacing = array [index + 3] ? true : false;
 
          return result;
       };

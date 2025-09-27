@@ -192,12 +192,13 @@ Object .assign (X3DRenderingContext .prototype,
    {
       return this [_composeShader] ??= this .createShader ("OITCompose", "FullScreen", "OITCompose");
    },
-   getDepthShader (numClipPlanes, shapeNode, hAnimNode)
+   getDepthShader (normal, numClipPlanes, shapeNode, hAnimNode)
    {
       const geometryContext = shapeNode .getGeometryContext ();
 
       let key = "";
 
+      key += normal ? 1 : 0;
       key += numClipPlanes; // Could be more than 9.
       key += hAnimNode ?.getHAnimKey () ?? "[]";
       key += shapeNode .getShapeKey ();
@@ -219,14 +220,22 @@ Object .assign (X3DRenderingContext .prototype,
       }
 
       return this [_depthShaders] .get (key)
-         ?? this .createDepthShader (key, numClipPlanes, shapeNode, hAnimNode);
+         ?? this .createDepthShader (key, normal, numClipPlanes, shapeNode, hAnimNode);
    },
-   createDepthShader (key, numClipPlanes, shapeNode, hAnimNode)
+   createDepthShader (key, normal, numClipPlanes, shapeNode, hAnimNode)
    {
       const
          appearanceNode  = shapeNode .getAppearance (),
          geometryContext = shapeNode .getGeometryContext (),
          options         = [ ];
+
+      if (normal)
+      {
+         options .push ("X3D_NORMAL_BUFFER");
+
+         if (geometryContext .hasNormals)
+            options .push ("X3D_NORMALS");
+      }
 
       if (numClipPlanes)
       {
