@@ -243,8 +243,16 @@ Object .assign (X3DRenderingContext .prototype,
          options .push ("X3D_NUM_CLIP_PLANES " + numClipPlanes);
       }
 
-      if (shapeNode .getShapeKey () > 0)
-         options .push ("X3D_INSTANCING");
+      switch (shapeNode .getShapeKey ())
+      {
+         case 1:
+         case 2:
+            options .push ("X3D_INSTANCING");
+            break;
+         case 3:
+            options .push ("X3D_INSTANCING", "X3D_INSTANCE_NORMAL");
+            break;
+      }
 
       options .push (`X3D_GEOMETRY_${geometryContext .geometryType}D`);
 
