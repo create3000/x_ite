@@ -170,7 +170,7 @@ Object .assign (TextureBuffer .prototype,
          gl .readPixels (0, 0, width, height, gl .RGBA, gl .FLOAT, array);
 
          result .normal .set (array [index], array [index + 1], array [index + 2]);
-         result .frontFacing = array [index + 3] ? true : false;
+         // result .frontFacing = array [index + 3] ? true : false;
 
          return result;
       };
