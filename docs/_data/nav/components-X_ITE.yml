@@ -30,3 +30,5 @@
       url: /components/x-ite/transmissionmaterialextension/
     - title: "VolumeMaterialExtension"
       url: /components/x-ite/volumematerialextension/
+    - title: "VolumeScatterMaterialExtension"
+      url: /components/x-ite/volumescattermaterialextension/

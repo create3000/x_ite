@@ -967,11 +967,11 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
          // Material
 
-         materialNode .setShaderUniforms (gl, this, renderObject, appearanceNode .getTextureTransformMapping (), geometryContext .getTextureCoordinateMapping (), front);
+         materialNode .setShaderUniforms (gl, this, appearanceNode .getTextureTransformMapping (), geometryContext .getTextureCoordinateMapping (), front);
 
          // Texture
 
-         textureNode ?.setShaderUniforms (gl, this, renderObject);
+         textureNode ?.setShaderUniforms (gl, this .x3d_Texture [0], this);
 
          appearanceNode  .getTextureTransform ()  .setShaderUniforms (gl, this);
          geometryContext .getTextureCoordinate () .setShaderUniforms (gl, this);

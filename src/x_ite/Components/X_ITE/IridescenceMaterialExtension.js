@@ -107,7 +107,7 @@ Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype,
       uniforms .push ("x3d_IridescenceThicknessMinimumEXT");
       uniforms .push ("x3d_IridescenceThicknessMaximumEXT");
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform1f (shaderObject .x3d_IridescenceEXT,                  this .iridescence);
       gl .uniform1f (shaderObject .x3d_IridescenceIndexOfRefractionEXT, this .iridescenceIndexOfRefraction);
@@ -118,16 +118,12 @@ Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype,
          return;
 
       this .iridescenceTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_IridescenceTextureEXT,
          this ._iridescenceTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .iridescenceThicknessTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_IridescenceThicknessTextureEXT,
          this ._iridescenceThicknessTextureMapping .getValue (),
          textureTransformMapping,

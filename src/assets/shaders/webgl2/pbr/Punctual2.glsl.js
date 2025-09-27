@@ -147,4 +147,6 @@ getVolumeTransmissionRay (const in vec3 n, const in vec3 v, const in float thick
    return normalize (refractionVector) * thickness * modelScale;
 }
 #endif
+
+#pragma X3D include "SubsurfaceScattering.glsl"
 `;

@@ -92,6 +92,8 @@ Object .assign (Object .setPrototypeOf (MetadataSet .prototype, X3DNode .prototy
 
       metadata = this .getExecutionContext () .createNode (typeName);
 
+      this .getExecutionContext () .addNamedNode (this .getExecutionContext () .getUniqueName (name), metadata);
+
       metadata .reference = this .getBrowser () .getBrowserOption ("MetadataReference");
       metadata .name      = name;
 

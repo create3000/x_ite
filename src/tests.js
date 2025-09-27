@@ -155,6 +155,7 @@ const X_ITE_TESTS = [
    { path: "HAnim/Tongue.x3d" },
    { component: "Interpolation" },
    { path: "Interpolation/ComposeSFVec3f.wrl" },
+   { path: "Interpolation/CoordinateInterpolator.x3d" },
    { path: "Interpolation/Cube.x3d" },
    { path: "Interpolation/EaseInEaseOut.x3d" },
    { path: "Interpolation/Force.x3d" },

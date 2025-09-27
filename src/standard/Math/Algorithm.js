@@ -148,14 +148,16 @@ const Algorithm =
             count -= step + 1;
          }
          else
+         {
             count = step;
+         }
       }
 
       return first;
    },
    upperBound (array, first, last, value, comp = Algorithm.less)
    {
-      // sen.cppreference.com/w/cpp/algorithm/upper_bound
+      // https://en.cppreference.com/w/cpp/algorithm/upper_bound
 
       let
          index = 0,
@@ -168,8 +170,9 @@ const Algorithm =
          index = first + step;
 
          if (comp (value, array [index]))
+         {
             count = step;
-
+         }
          else
          {
             first  = ++ index;

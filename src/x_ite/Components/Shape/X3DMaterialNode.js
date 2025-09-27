@@ -3,6 +3,7 @@ import X3DNode                from "../Core/X3DNode.js";
 import X3DAppearanceChildNode from "./X3DAppearanceChildNode.js";
 import AlphaMode              from "../../Browser/Shape/AlphaMode.js";
 import X3DConstants           from "../../Base/X3DConstants.js";
+import RenderPass             from "../../Rendering/RenderPass.js";
 import BitSet                 from "../../../standard/Utility/BitSet.js";
 
 function X3DMaterialNode (executionContext)
@@ -11,8 +12,11 @@ function X3DMaterialNode (executionContext)
 
    this .addType (X3DConstants .X3DMaterialNode);
 
-   this .addChildObjects (X3DConstants .outputOnly, "transparent",  new Fields .SFBool (),
-                          X3DConstants .outputOnly, "transmission", new Fields .SFBool ());
+   this .addChildObjects (X3DConstants .outputOnly, "transparent",   new Fields .SFBool (),
+                          X3DConstants .outputOnly, "transmission",  new Fields .SFBool (),
+                          X3DConstants .outputOnly, "volumeScatter", new Fields .SFBool ());
+
+   // Private properties
 
    this .textureBits = new BitSet ();
    this .shaderNodes = this .getBrowser () .getShaders ();
@@ -37,6 +41,15 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
    isTransmission ()
    {
       return this ._transmission .getValue ();
+   },
+   setVolumeScatter (value)
+   {
+      if (!!value !== this ._volumeScatter .getValue ())
+         this ._volumeScatter = value;
+   },
+   isVolumeScatter ()
+   {
+      return this ._volumeScatter .getValue ();
    },
    setTexture (index, textureNode)
    {
@@ -63,7 +76,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          const { renderObject, shadows, fogNode, shapeNode, appearanceNode, textureNode, hAnimNode, localObjectsKeys } = renderContext;
 
          key += shapeNode .getAlphaMode ();
-         key += renderObject .getRenderAndGlobalLightsKey ();
+         key += renderObject .getRenderKey ();
          key += shadows || renderObject .getGlobalShadow () ? 1 : 0;
          key += fogNode ?.getFogType () ?? 0;
          key += shapeNode .getShapeKey ();
@@ -82,9 +95,8 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          const { renderObject, alphaMode, textureNode, localObjectsKeys } = geometryContext;
 
          key += alphaMode;
-         key += ".";
          key += renderObject .getRenderKey ();
-         key += "..000011[]";
+         key += "000011[]";
          key += localObjectsKeys .sort () .join (""); // ClipPlane
          key += ".";
          key += textureNode ?.getTextureBits () .toString (16) ?? 0;
@@ -147,33 +159,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       {
          const { renderObject, fogNode, shapeNode, appearanceNode, hAnimNode, localObjectsKeys, textureNode } = renderContext;
 
-         const objectsKeys = localObjectsKeys .concat (renderObject .getGlobalLightsKeys ());
-
-         if (renderObject .getLogarithmicDepthBuffer ())
-            options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
-
-         switch (shapeNode .getAlphaMode ())
-         {
-            case AlphaMode .OPAQUE:
-            {
-               options .push ("X3D_ALPHA_MODE_OPAQUE");
-               break;
-            }
-            case AlphaMode .MASK:
-            {
-               options .push ("X3D_ALPHA_MODE_MASK");
-               break;
-            }
-            case AlphaMode .BLEND:
-            {
-               options .push ("X3D_ALPHA_MODE_BLEND");
-
-               if (renderObject .getOrderIndependentTransparency ())
-                  options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
-
-               break;
-            }
-         }
+         this .addRenderOptions (options, renderObject, shapeNode .getAlphaMode ());
 
          if (renderContext .shadows || renderObject .getGlobalShadows () .at (-1))
             options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
@@ -191,6 +177,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          hAnimNode ?.getShaderOptions (options);
 
          const
+            objectsKeys          = localObjectsKeys .concat (renderObject .getGlobalLightsKeys ()),
             numClipPlanes        = objectsKeys .reduce ((a, c) => a + (c === 0), 0),
             numLights            = objectsKeys .reduce ((a, c) => a + (c === 1), 0),
             numEnvironmentLights = objectsKeys .reduce ((a, c) => a + (c === 2), 0),
@@ -279,31 +266,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       {
          const { renderObject, alphaMode, localObjectsKeys, textureNode } = geometryContext;
 
-         if (renderObject .getLogarithmicDepthBuffer ())
-            options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
-
-         switch (alphaMode)
-         {
-            case AlphaMode .OPAQUE:
-            {
-               options .push ("X3D_ALPHA_MODE_OPAQUE");
-               break;
-            }
-            case AlphaMode .MASK:
-            {
-               options .push ("X3D_ALPHA_MODE_MASK");
-               break;
-            }
-            case AlphaMode .BLEND:
-            {
-               options .push ("X3D_ALPHA_MODE_BLEND");
-
-               if (renderObject .getOrderIndependentTransparency ())
-                  options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
-
-               break;
-            }
-         }
+         this .addRenderOptions (options, renderObject, alphaMode);
 
          const numClipPlanes = localObjectsKeys .reduce ((a, c) => a + (c === 0), 0);
 
@@ -327,6 +290,51 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       }
 
       return options;
+   },
+   addRenderOptions (options, renderObject, alphaMode)
+   {
+      switch (renderObject .getRenderPass ())
+      {
+         case RenderPass .TRANSMISSION_KEY:
+         {
+            options .push ("X3D_TRANSMISSION_PASS");
+            break;
+         }
+         case RenderPass .VOLUME_SCATTER_KEY:
+         {
+            options .push ("X3D_VOLUME_SCATTER_PASS");
+            break;
+         }
+      }
+
+      if (renderObject .getLogarithmicDepthBuffer ())
+         options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
+
+      switch (alphaMode)
+      {
+         case AlphaMode .OPAQUE:
+         {
+            options .push ("X3D_ALPHA_MODE_OPAQUE");
+            break;
+         }
+         case AlphaMode .MASK:
+         {
+            options .push ("X3D_ALPHA_MODE_MASK");
+            break;
+         }
+         case AlphaMode .BLEND:
+         {
+            options .push ("X3D_ALPHA_MODE_BLEND");
+
+            if (renderObject .getRenderPass () === RenderPass .RENDER_KEY)
+            {
+               if (renderObject .getOrderIndependentTransparency ())
+                  options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
+            }
+
+            break;
+         }
+      }
    },
 });
 

@@ -1,5 +1,5 @@
-/* X_ITE v12.0.8 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.8")];
+/* X_ITE v12.0.9 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.9")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -211,7 +211,7 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, (e
                                                                       false,
                                                                       false);
    },
-   setShaderUniforms (gl, shaderObject, renderObject, channel = shaderObject .x3d_Texture [0])
+   setShaderUniforms (gl, channel)
    {
       const textureUnit = this .getBrowser () .getTextureUnit ();
 
@@ -452,13 +452,12 @@ var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n
 
 
 
-function DependentRenderer (executionContext, renderObject, node)
+function DependentRenderer (executionContext, renderObject)
 {
    external_X_ITE_X3D_X3DBaseNode_default().call (this, executionContext);
    external_X_ITE_X3D_X3DRenderObject_default().call (this, executionContext);
 
    this .renderObject = renderObject;
-   this .node         = node;
    this .framebuffers = [ ];
 }
 
@@ -473,10 +472,6 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, (external_
    isIndependent ()
    {
       return false;
-   },
-   getNode ()
-   {
-      return this .node;
    },
    getLayer ()
    {
@@ -702,9 +697,11 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
 
       return function (renderObject)
       {
+         this .textureRenderingPass = true;
+
          if (!this .dependentRenderers .has (renderObject))
          {
-            const dependentRenderer = new Rendering_DependentRenderer (this .getExecutionContext (), renderObject, this);
+            const dependentRenderer = new Rendering_DependentRenderer (this .getExecutionContext (), renderObject);
 
             dependentRenderer .setup ();
 
@@ -782,20 +779,17 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
 
          if (this ._update .getValue () === "NEXT_FRAME_ONLY")
             this ._update = "NONE";
+
+         this .textureRenderingPass = false;
       };
    })(),
-   setShaderUniforms: (() =>
+   setShaderUniforms (gl, channel)
    {
-      const zeros = new Float32Array (16); // Trick: zero model view matrix to hide object.
+      CubeMapTexturing_X3DEnvironmentTextureNode .prototype .setShaderUniforms .call (this, gl, channel);
 
-      return function (gl, shaderObject, renderObject, channel)
-      {
-         CubeMapTexturing_X3DEnvironmentTextureNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, channel);
-
-         if (renderObject .getNode () === this)
-            gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, zeros);
-      };
-   })(),
+      if (this .textureRenderingPass)
+         gl .viewport (0, 0, 0, 0); // Hide object by making viewport zero size.
+   },
 });
 
 Object .defineProperties (GeneratedCubeMapTexture,

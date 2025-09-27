@@ -130,8 +130,9 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
                   for (const { x: glyphX, y: glyphY } of glyphVertices)
                   {
                      const
+                        glyphNumber = topToBottom ? g : numChars - g - 1,
                         x = glyphX * size + minorAlignment .x + translation .x,
-                        y = glyphY * size * scale + minorAlignment .y + translation .y * scale - g * charSpacing;
+                        y = glyphY * size * scale + minorAlignment .y + translation .y * scale - glyphNumber * charSpacing;
 
                      texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
                      normalArray   .push (0, 0, 1);
