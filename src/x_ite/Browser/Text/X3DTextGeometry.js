@@ -13,6 +13,10 @@ const
    max          = new Vector2 (),
    glyphMin     = new Vector2 (),
    glyphMax     = new Vector2 (),
+   firstMin     = new Vector2 (),
+   firstMax     = new Vector2 (),
+   lastMin      = new Vector2 (),
+   lastMax      = new Vector2 (),
    min3         = new Vector3 (),
    max3         = new Vector3 (),
    size         = new Vector2 (),
@@ -318,12 +322,44 @@ Object .assign (X3DTextGeometry .prototype,
 
       bbox .set ();
 
-      // Calculate bboxes.
-
       const
          firstL = leftToRight ? 0 : numLines - 1,
          lastL  = leftToRight ? numLines : -1,
          stepL  = leftToRight ? 1 : -1;
+
+      //
+
+      for (let l = firstL; l !== lastL; l += stepL)
+      {
+         const
+            glyphs   = this .stringToGlyphs (font, string [l], true, l),
+            numChars = glyphs .length;
+
+         if (!numChars)
+            continue;
+
+         const
+            firstAlignmentIndex = (topToBottom ? 0 : numChars - 1),
+            lastAlignmentIndex  = (topToBottom ? numChars - 1 : 0);
+
+         const
+            firstGlyph = glyphs [firstAlignmentIndex],
+            lastGlyph  = glyphs [lastAlignmentIndex];
+
+         // Get glyph extents.
+
+         this .getGlyphExtents (font, firstGlyph, primitiveQuality, min, max);
+
+         firstMin .min (min);
+         firstMax .max (max);
+
+         this .getGlyphExtents (font, lastGlyph, primitiveQuality, min, max);
+
+         lastMin .min (min);
+         lastMax .max (max);
+      }
+
+      // Calculate bboxes.
 
       let t = 0; // Translation index
 
@@ -334,6 +370,10 @@ Object .assign (X3DTextGeometry .prototype,
          const
             t0       = t,
             numChars = glyphs .length;
+
+         const
+            firstAlignmentIndex = (topToBottom ? 0 : numChars - 1),
+            lastAlignmentIndex  = (topToBottom ? numChars - 1 : 0);
 
          // Calculate line bbox
 
@@ -354,6 +394,47 @@ Object .assign (X3DTextGeometry .prototype,
 
             min .y = font .descender / font .unitsPerEm;
             max .y = font .ascender  / font .unitsPerEm;
+
+            switch (fontStyle .getMajorAlignment ())
+            {
+               case TextAlignment .BEGIN:
+               case TextAlignment .FIRST:
+               {
+                  if (g === firstAlignmentIndex)
+                  {
+                     min .y = Math .max (min .y, firstMin .y);
+                     max .y = Math .min (max .y, firstMax .y);
+                  }
+
+                  break;
+               }
+               case TextAlignment .MIDDLE:
+               {
+                  if (g === firstAlignmentIndex)
+                  {
+                     min .y = Math .max (min .y, firstMin .y);
+                     max .y = Math .min (max .y, firstMax .y);
+                  }
+
+                  if (g === lastAlignmentIndex)
+                  {
+                     min .y = Math .max (min .y, lastMin .y);
+                     max .y = Math .min (max .y, lastMax .y);
+                  }
+
+                  break;
+               }
+               case TextAlignment .END:
+               {
+                  if (g === lastAlignmentIndex)
+                  {
+                     min .y = Math .max (min .y, lastMin .y);
+                     max .y = Math .min (max .y, lastMax .y);
+                  }
+
+                  break;
+               }
+            }
 
             size .assign (max) .subtract (min);
 

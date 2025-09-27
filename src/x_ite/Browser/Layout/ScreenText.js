@@ -241,8 +241,9 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
                   const translation = translations [t];
 
                   const
+                     glyphNumber = topToBottom ? g : numChars - g - 1,
                      x = minorAlignment .x + translation .x - min .x,
-                     y = minorAlignment .y + translation .y * scale - g * charSpacing - max .y;
+                     y = minorAlignment .y + translation .y * scale - glyphNumber * charSpacing - max .y;
 
                   cx .save ();
                   cx .translate (x, -y);
