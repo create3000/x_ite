@@ -5,12 +5,9 @@ import X3DNode              from "../Core/X3DNode.js";
 import X3DViewportNode      from "./X3DViewportNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import TraverseType         from "../../Rendering/TraverseType.js";
-import ObjectCache          from "../../../standard/Utility/ObjectCache.js";
 import ViewVolume           from "../../../standard/Math/Geometry/ViewVolume.js";
 import Vector4              from "../../../standard/Math/Numbers/Vector4.js";
 import Algorithm            from "../../../standard/Math/Algorithm.js";
-
-const ViewVolumes = ObjectCache (ViewVolume);
 
 function Viewport (executionContext)
 {
@@ -18,7 +15,8 @@ function Viewport (executionContext)
 
    this .addType (X3DConstants .Viewport);
 
-   this .rectangle = new Vector4 ();
+   this .viewVolume = new ViewVolume ();
+   this .rectangle  = new Vector4 ();
 }
 
 Object .assign (Object .setPrototypeOf (Viewport .prototype, X3DViewportNode .prototype),
@@ -63,13 +61,11 @@ Object .assign (Object .setPrototypeOf (Viewport .prototype, X3DViewportNode .pr
          {
             case TraverseType .POINTER:
             {
-               const
-                  browser  = this .getBrowser (),
-                  viewport = this .rectangle;
+               const browser = this .getBrowser ();
 
                if (!browser .getPointingLayer ())
                {
-                  if (!browser .isPointerInRectangle (viewport))
+                  if (!browser .isPointerInRectangle (this .rectangle))
                      return;
                }
 
@@ -91,16 +87,15 @@ Object .assign (Object .setPrototypeOf (Viewport .prototype, X3DViewportNode .pr
    {
       const
          viewVolumes = renderObject .getViewVolumes (),
-         viewVolume  = ViewVolumes .pop (),
+         viewVolume  = this .viewVolume,
          rectangle   = this .getRectangle (viewVolumes .at (-1) ?.getViewport ());
 
       viewVolume .set (renderObject .getProjectionMatrix () .get (), rectangle);
-
       viewVolumes .push (viewVolume);
    },
    pop (renderObject)
    {
-      ViewVolumes .push (renderObject .getViewVolumes () .pop ());
+      renderObject .getViewVolumes () .pop ();
    },
 });
 

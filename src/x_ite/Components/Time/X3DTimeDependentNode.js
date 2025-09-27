@@ -8,7 +8,7 @@ function X3DTimeDependentNode (executionContext)
    this .addType (X3DConstants .X3DTimeDependentNode);
 
    this .addChildObjects (X3DConstants .outputOnly,  "initialized", new Fields .SFTime (),
-                          X3DConstants .inputOutput, "isEvenLive",  new Fields .SFBool ());
+                          X3DConstants .inputOutput, "evenLive",    new Fields .SFBool ());
 
    this .startTimeValue  = 0;
    this .pauseTimeValue  = 0;
@@ -25,8 +25,8 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
 {
    initialize ()
    {
-      this .getLive ()  .addInterest ("set_live__", this);
-      this ._isEvenLive .addInterest (Symbol .for ("X_ITE.X3DBaseNode.set_live__"), this);
+      this .getLive () .addInterest ("set_live__", this);
+      this ._evenLive  .addInterest (Symbol .for ("X_ITE.X3DBaseNode.set_live__"), this);
 
       this ._initialized .addInterest ("set_loop__",       this);
       this ._enabled     .addInterest ("set_enabled__",    this);
@@ -47,7 +47,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
    {
       ///  Determines the live state of this node.
 
-      return this .isLive () && (this .getExecutionContext () .getLive () .getValue () || this ._isEvenLive .getValue ());
+      return this .isLive () && (this .getExecutionContext () .getLive () .getValue () || this ._evenLive .getValue ());
    },
    getElapsedTime ()
    {

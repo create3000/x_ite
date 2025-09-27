@@ -576,5 +576,6 @@ Highest supported level: **1**
 - [SpecularMaterialExtension](/x_ite/components/x-ite/specularmaterialextension/) <small class="blue">experimental</small>
 - [TransmissionMaterialExtension](/x_ite/components/x-ite/transmissionmaterialextension/) <small class="blue">experimental</small>
 - [VolumeMaterialExtension](/x_ite/components/x-ite/volumematerialextension/) <small class="blue">experimental</small>
+- [VolumeScatterMaterialExtension](/x_ite/components/x-ite/volumescattermaterialextension/) <small class="blue">experimental</small>
 
 <!-- COMPONENTS END -->

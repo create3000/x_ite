@@ -68,7 +68,7 @@ in vec3 vertex;
    layout(location = 0) out vec4 x3d_FragData0;
    layout(location = 1) out vec4 x3d_FragData1;
 #else
-   out vec4 x3d_FragColor;
+   layout(location = 0) out vec4 x3d_FragColor;
 #endif
 
 // There is a bug with Mali GPU when gl_FrontFacing is accessed often or in a deep nested function,
@@ -144,7 +144,9 @@ main ()
       finalColor .rgb = getFogColor (finalColor .rgb);
    #endif
 
-   finalColor .rgb = toneMap (finalColor .rgb);
+   #if !defined (X3D_VOLUME_SCATTER_PASS)
+      finalColor .rgb = toneMap (finalColor .rgb);
+   #endif
 
    #if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
       float a = finalColor .a;

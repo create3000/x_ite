@@ -38,14 +38,14 @@ Object .assign (Object .setPrototypeOf (NormalInterpolator .prototype, X3DInterp
       {
          const keyValue = this ._keyValue .getValue ();
 
-         let size = this ._key .length > 1 ? Math .floor (this ._keyValue .length / this ._key .length) : 0;
+         let size = this ._key .length ? Math .floor (this ._keyValue .length / this ._key .length) : 0;
 
          this ._value_changed .length = size;
 
          const value_changed = this ._value_changed .getValue ();
 
          index0 *= size;
-         index1  = index0 + size;
+         index1  = index0 + (this ._key .length > 1 ? size : 0);
 
          index0 *= 3;
          index1 *= 3;
@@ -53,25 +53,18 @@ Object .assign (Object .setPrototypeOf (NormalInterpolator .prototype, X3DInterp
 
          for (let i0 = 0; i0 < size; i0 += 3)
          {
-            try
-            {
-               const
-                  i1 = i0 + 1,
-                  i2 = i0 + 2;
+            const
+               i1 = i0 + 1,
+               i2 = i0 + 2;
 
-               keyValue0 .set (keyValue [index0 + i0], keyValue [index0 + i1], keyValue [index0 + i2]);
-               keyValue1 .set (keyValue [index1 + i0], keyValue [index1 + i1], keyValue [index1 + i2]);
+            keyValue0 .set (keyValue [index0 + i0], keyValue [index0 + i1], keyValue [index0 + i2]);
+            keyValue1 .set (keyValue [index1 + i0], keyValue [index1 + i1], keyValue [index1 + i2]);
 
-               const value = Algorithm .simpleSlerp (keyValue0, keyValue1, weight);
+            const value = Algorithm .simpleSlerp (keyValue0, keyValue1, weight);
 
-               value_changed [i0] = value [0];
-               value_changed [i1] = value [1];
-               value_changed [i2] = value [2];
-            }
-            catch (error)
-            {
-               //console .log (error);
-            }
+            value_changed [i0] = value [0];
+            value_changed [i1] = value [1];
+            value_changed [i2] = value [2];
          }
 
          this ._value_changed .addEvent ();

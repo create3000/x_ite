@@ -88,7 +88,7 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
       uniforms .push ("x3d_SpecularEXT");
       uniforms .push ("x3d_SpecularColorEXT");
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform1f  (shaderObject .x3d_SpecularEXT,      this .specular);
       gl .uniform3fv (shaderObject .x3d_SpecularColorEXT, this .specularColorArray);
@@ -97,16 +97,12 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
          return;
 
       this .specularTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_SpecularTextureEXT,
          this ._specularTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .specularColorTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_SpecularColorTextureEXT,
          this ._specularColorTextureMapping .getValue (),
          textureTransformMapping,

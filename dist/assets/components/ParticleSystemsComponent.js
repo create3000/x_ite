@@ -1,5 +1,5 @@
-/* X_ITE v12.0.8 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.8")];
+/* X_ITE v12.0.9 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.9")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -2370,11 +2370,18 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
          default:
          {
             const
+               viewport        = renderContext .viewport,
                browser         = this .getBrowser (),
                appearanceNode  = this .getAppearance (),
                renderModeNodes = appearanceNode .getRenderModes (),
                shaderNode      = appearanceNode .getShader (this .geometryContext, renderContext),
                primitiveMode   = browser .getPrimitiveMode (this .primitiveMode);
+
+            // Set viewport.
+
+            gl .viewport (... viewport);
+
+            // Enable render mode nodes.
 
             for (const node of renderModeNodes)
                node .enable (gl);
@@ -2425,9 +2432,14 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
 
             gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, this .numParticles);
 
+            // Disable render mode nodes.
+
             for (const node of renderModeNodes)
                node .disable (gl);
 
+            // Reset texture units.
+
+            browser .resetTextureUnits ();
             break;
          }
       }

@@ -98,7 +98,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
              (this [_destinationNode] instanceof X3DNode ||
               this [_destinationNode] .getInlineNode () .checkLoadState () === X3DConstants .COMPLETE_STATE))
          {
-            console .warn (error .message);
+            console .warn (error);
          }
       }
    },

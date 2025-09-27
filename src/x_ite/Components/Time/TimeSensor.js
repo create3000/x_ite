@@ -85,7 +85,10 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
    },
    set_fraction (time)
    {
-      this ._fraction_changed = this .fraction = this .first + (this .interval ? Algorithm .fract ((time - this .cycle) / this .interval) : 0) * this .scale;
+      const fraction = this .first + (this .interval ? Algorithm .fract ((time - this .cycle) / this .interval) : 0) * this .scale;
+
+      this .fraction          = fraction;
+      this ._fraction_changed = fraction;
    },
    set_time ()
    {

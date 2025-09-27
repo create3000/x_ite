@@ -54,7 +54,7 @@ Object .assign (Color3 .prototype,
              this [_g] === color [_g] &&
              this [_b] === color [_b];
    },
-   getHSV (result)
+   getHSV (result = [ ])
    {
       let h, s, v;
 
