@@ -1,5 +1,5 @@
-/* X_ITE v12.0.9 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.9")];
+/* X_ITE v12.1.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1228,8 +1228,9 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
                   const translation = translations [t];
 
                   const
+                     glyphNumber = topToBottom ? g : numChars - g - 1,
                      x = minorAlignment .x + translation .x - min .x,
-                     y = minorAlignment .y + translation .y * scale - g * charSpacing - max .y;
+                     y = minorAlignment .y + translation .y * scale - glyphNumber * charSpacing - max .y;
 
                   cx .save ();
                   cx .translate (x, -y);
