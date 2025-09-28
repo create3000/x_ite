@@ -223,4 +223,16 @@ export default [
       "Viewpoint is copied to clipboard.",
       "Ansichtspunkt wurde in die Zwischenablage kopiert.",
    ],
+   [
+      "Animations",
+      "Animationen",
+   ],
+   [
+      "All",
+      "Alle",
+   ],
+   [
+      "None",
+      "Keine",
+   ],
 ];

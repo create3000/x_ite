@@ -224,4 +224,16 @@ export default [
       "Viewpoint is copied to clipboard.",
       "",
    ],
+   [
+      "Animations",
+      "",
+   ],
+   [
+      "All",
+      "",
+   ],
+   [
+      "None",
+      "",
+   ],
 ];

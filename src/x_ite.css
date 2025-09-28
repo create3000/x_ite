@@ -628,6 +628,18 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background-image: url(assets/images/stroke_partial.svg);
 }
 
+.x_ite-private-icon-animations > span {
+  background-image: url(assets/images/animation.svg);
+}
+
+.x_ite-private-icon-all > span {
+  background-image: url(assets/images/done_all.svg);
+}
+
+.x_ite-private-icon-none > span {
+  background-image: url(assets/images/cancel.svg);
+}
+
 .x_ite-private-icon-enter-fullscreen > span {
   background-image: url(assets/images/fullscreen.svg);
 }
