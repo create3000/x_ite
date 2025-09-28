@@ -7,6 +7,16 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
+## X_ITE v12.1 Series
+
+*Leipzig, 28th September 2025:* The X_ITE team proudly announces version 12.1, bringing new features, important fixes, and improved standards support for an even smoother Web3D experience.
+
+### Notable Changes
+
+* The Walk and Fly viewer come now with a new feature »Slide Along Walls« and new [browser option](/x_ite/reference/browser-services/#browser-options) `WallFriction`.
+* New glTF extension [KHR_materials_volume_scatter](/x_ite/components/x-ite/volumescattermaterialextension/) implemented.
+* Bug fix of [Text](/x_ite/components/text/text/) node with vertical text and *topToBottom* set to `FALSE`.
+
 ## X_ITE v12.0 Series
 
 *Leipzig, 9th August 2025:* This new series 12.0 comes with a breaking change in texture coordinate handling. There was a bug when the texture coordinate of a Geometry2D shape must be flipped for the back face.
