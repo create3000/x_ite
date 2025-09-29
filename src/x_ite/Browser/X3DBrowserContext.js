@@ -30,7 +30,7 @@ const
    _world          = Symbol (),
    _tainted        = Symbol (),
    _limitFrameRate = Symbol (),
-   _traverse       = Symbol (),
+   _traverse       = Symbol .for ("X_ITE.X3DBrowserContext.traverse"),
    _renderCallback = Symbol (),
    _animFrame      = Symbol (),
    _previousTime   = Symbol (),

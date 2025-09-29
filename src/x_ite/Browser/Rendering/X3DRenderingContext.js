@@ -52,7 +52,12 @@ Object .assign (X3DRenderingContext .prototype,
 
       // Observe resize and parent changes of <canvas> and configure viewport.
 
-      this [_resizer] = new ResizeObserver (() => this .reshape ());
+      this [_resizer] = new ResizeObserver (() =>
+      {
+         this .reshape ();
+         this [Symbol .for ("X_ITE.X3DBrowserContext.traverse")] (performance .now ());
+      });
+
       this [_resizer] .observe (this .getSurface () [0]);
 
       $(window) .on (`orientationchange.X3DRenderingContext-${this .getInstanceId ()}`, () => this .reshape ());
