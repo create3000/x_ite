@@ -381,8 +381,8 @@ _::-webkit-full-page-media, _:future, :root input.button::file-selector-button {
 
 input[type=button].button:hover,
 input[type=file].button:hover {
-  border: 1px solid var(--system-gray8);
-  color: var(--system-gray8);
+  border: 1px solid var(--system-gray0);
+  color: var(--system-gray0);
 }
 
 input[type=button].button:focus,
@@ -398,7 +398,7 @@ input[type=number] {
   border-radius: 1rem;
   height: 2rem;
   padding: 0 1rem;
-  background: var(--system-gray0);
+  background: var(--system-gray8);
 }
 
 input[type=""]:focus,
@@ -420,7 +420,7 @@ input[type=range].range {
 }
 
 input[type=range].range:hover {
-  background: var(--system-gray8);
+  background: var(--system-gray0);
 }
 
 input[type=range].range:focus {
@@ -439,7 +439,7 @@ input[type=range].range::-webkit-slider-thumb {
 }
 
 input[type=range].range:hover::-webkit-slider-thumb {
-  background: var(--system-gray8);
+  background: var(--system-gray0);
 }
 
 /* Must have a selector for each browser separately. */
@@ -454,7 +454,7 @@ input[type=range].range::-moz-range-thumb {
 }
 
 input[type=range].range:hover::-moz-range-thumb {
-  background: var(--system-gray8);
+  background: var(--system-gray0);
 }
 
 button {
@@ -470,7 +470,7 @@ button {
 }
 
 button:hover {
-  color: var(--system-gray8);
+  color: var(--system-gray0);
 }
 
 button i {
@@ -480,7 +480,7 @@ button i {
 
 button:hover,
 button i:hover {
-  color: var(--system-gray8);
+  color: var(--system-gray0);
 }
 
 button.selected {
@@ -507,8 +507,8 @@ select.select {
 }
 
 select.select:hover {
-  border: 1px solid var(--system-gray8);
-  color: var(--system-gray8);
+  border: 1px solid var(--system-gray0);
+  color: var(--system-gray0);
 }
 
 select.select:focus {
@@ -642,7 +642,7 @@ table.slim-table tbody tr td:has(img) {
 }
 
 .example .toolbar > span:hover {
-  color: var(--system-gray8);
+  color: var(--system-gray0);
 }
 
 .example .toolbar > span.selected {
@@ -707,7 +707,7 @@ table.slim-table tbody tr td:has(img) {
   left: -24px;
   top: -20px;
   cursor: pointer;
-  color: var(--system-gray0);
+  color: var(--system-gray8);
 }
 
 .example .fa-circle-xmark:hover {
