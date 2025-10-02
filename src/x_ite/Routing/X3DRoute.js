@@ -46,11 +46,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    getSourceNode ()
    {
       ///  SAI
-
-      if (this [_sourceNode] instanceof X3DImportedNode)
-         return $.try (() => this [_sourceNode] .getExportedNode ()) ?? this [_sourceNode];
-
-      return this [_sourceNode];;
+      return this [_sourceNode];
    },
    getSourceField ()
    {
@@ -71,10 +67,6 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    getDestinationNode ()
    {
       ///  SAI
-
-      if (this [_destinationNode] instanceof X3DImportedNode)
-         return $.try (() => this [_destinationNode] .getExportedNode ()) ?? this [_destinationNode];
-
       return this [_destinationNode];
    },
    getDestinationField ()

@@ -52,15 +52,20 @@ Object .assign (X3DRenderingContext .prototype,
 
       // Observe resize and parent changes of <canvas> and configure viewport.
 
+      $(window) .on (`orientationchange.X3DRenderingContext-${this .getInstanceId ()}`, () => this .reshape ());
+
       this [_resizer] = new ResizeObserver (() =>
       {
          this .reshape ();
-         this [Symbol .for ("X_ITE.X3DBrowserContext.traverse")] (performance .now ());
+
+         // Unfortunately jest environment doesn't like a traverse here.
+         if (typeof jest !== "undefined")
+            return;
+
+         this [Symbol .for ("X_ITE.X3DBrowserContext.traverse")] ?.(performance .now ());
       });
 
       this [_resizer] .observe (this .getSurface () [0]);
-
-      $(window) .on (`orientationchange.X3DRenderingContext-${this .getInstanceId ()}`, () => this .reshape ());
 
       this .reshape ();
 
