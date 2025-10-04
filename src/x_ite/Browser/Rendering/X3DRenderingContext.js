@@ -63,7 +63,7 @@ Object .assign (X3DRenderingContext .prototype,
          if (typeof jest !== "undefined")
             return;
 
-         this [Symbol .for ("X_ITE.X3DBrowserContext.traverse")] ?.(performance .now ());
+         this [Symbol .for ("X_ITE.X3DBrowserContext.traverse")] (performance .now ());
       });
 
       this [_resizer] .observe (this .getSurface () [0]);
