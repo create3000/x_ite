@@ -1,5 +1,5 @@
-/* X_ITE v12.1.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.0")];
+/* X_ITE v12.1.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -2006,10 +2006,7 @@ const SpecularMaterialExtension_default_ = SpecularMaterialExtension;
 ;
 
 /* harmony default export */ const X_ITE_SpecularMaterialExtension = (external_X_ITE_X3D_Namespace_default().add ("SpecularMaterialExtension", SpecularMaterialExtension_default_));
-;// external "__X_ITE_X3D__ .RenderPass"
-const external_X_ITE_X3D_RenderPass_namespaceObject = __X_ITE_X3D__ .RenderPass;
 ;// ./src/x_ite/Components/X_ITE/TransmissionMaterialExtension.js
-
 
 
 
