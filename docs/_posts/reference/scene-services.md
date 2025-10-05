@@ -198,6 +198,10 @@ Creates or updates the metadata with *name* and *values.* There must be at least
 
 Adds the metadata with *name* and *value.*
 
+#### **addMetaData** (*name: string, values: string []*): void
+
+Adds the metadata with *name* and *values.* There must be at least one value in *values.*
+
 #### **removeMetaData** (*name: string*): void
 
 Removes the metadata *name.*

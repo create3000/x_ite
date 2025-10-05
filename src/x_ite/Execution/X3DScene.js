@@ -51,7 +51,7 @@ function X3DScene (browser)
    this [_units] .add ("length", new UnitInfo ("length", "metre",    1));
    this [_units] .add ("mass",   new UnitInfo ("mass",   "kilogram", 1));
 
-   this [_metadata]       = new Map ();
+   this [_metadata]       = [ ];
    this [_exportedNodes]  = new ExportedNodesArray ();
    this [_loadingObjects] = new Set ();
 
@@ -221,41 +221,42 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    },
    setMetaData (name, values)
    {
-      name = String (name);
+      name   = String (name);
+      values = Array .isArray (values) ? values .map (String) : [String (values)];
 
       if (!name .length)
          throw new Error ("Couldn't add metadata: name is empty.");
 
-      if (!Array .isArray (values))
-         values = [values];
+      let index = this [_metadata] .findIndex (entry => entry [0] === name);
 
-      if (!values .length)
-         throw new Error ("Couldn't add metadata: values length is 0.");
+      this .removeMetaData (name);
 
-      this [_metadata] .set (name, values .map (String));
+      if (index === -1)
+         index = this [_metadata] .length;
+
+      for (const [i, value] of values .entries ())
+         this [_metadata] .splice (index + i, 0, [name, value]);
 
       this ._metadata_changed = Date .now () / 1000;
    },
-   addMetaData (name, value)
+   addMetaData (name, values)
    {
-      name  = String (name);
-      value = String (value);
+      name   = String (name);
+      values = Array .isArray (values) ? values .map (String) : [String (values)];
 
       if (!name .length)
          throw new Error ("Couldn't add metadata: name is empty.");
 
-      let values = this [_metadata] .get (name);
+      for (const value of values)
+         this [_metadata] .push ([name, value]);
 
-      if (!values)
-         this [_metadata] .set (name, values = [ ]);
-
-      values .push (value);
+      this ._metadata_changed = Date .now () / 1000;
    },
    removeMetaData (name)
    {
       name = String (name);
 
-      this [_metadata] .delete (name);
+      this [_metadata] = this [_metadata] .filter (entry => entry [0] !== name);
 
       this ._metadata_changed = Date .now () / 1000;
    },
@@ -263,21 +264,18 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    {
       name = String (name);
 
-      const values = this [_metadata] .get (name);
+      const values = this [_metadata]
+         .filter (entry => entry [0] === name)
+         .map (entry => entry [1]);
 
-      if (values)
-         return values .slice ();
+      if (values .length)
+         return values;
 
       return undefined;
    },
    getMetaDatas ()
    {
-      const metadata = new Map ();
-
-      for (const [key, values] of this [_metadata])
-         metadata .set (key, values .slice ());
-
-      return metadata;
+      return this [_metadata] .map (entry => entry .slice ());
    },
    addExportedNode (exportedName, node)
    {
@@ -410,20 +408,17 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       const metadata = this .getMetaDatas ();
 
-      if (metadata .size)
+      if (metadata .length)
       {
-         for (const [key, values] of metadata)
+         for (const [key, value] of metadata)
          {
-            for (const value of values)
-            {
-               generator .string += generator .Indent ();
-               generator .string += "META";
-               generator .string += generator .Space ();
-               generator .string += new Fields .SFString (key) .toString ();
-               generator .string += generator .Space ();
-               generator .string += new Fields .SFString (value) .toString ();
-               generator .string += generator .Break ();
-            }
+            generator .string += generator .Indent ();
+            generator .string += "META";
+            generator .string += generator .Space ();
+            generator .string += new Fields .SFString (key) .toString ();
+            generator .string += generator .Space ();
+            generator .string += new Fields .SFString (value) .toString ();
+            generator .string += generator .Break ();
          }
 
          generator .string += generator .TidyBreak ();
@@ -472,9 +467,11 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       generator .endTag ();
       generator .IncIndent ();
 
+      const metadata = this .getMetaDatas ();
+
       if (this .getComponents () .length ||
           this .getUnits () .some (unit => unit .conversionFactor !== 1) ||
-          this .getMetaDatas () .size)
+          metadata .length)
       {
          generator .openingTag ("head");
          generator .AddTidyBreak ();
@@ -493,16 +490,13 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
             }
          }
 
-         for (const [key, values] of this .getMetaDatas ())
+         for (const [key, value] of metadata)
          {
-            for (const value of values)
-            {
-               generator .openTag ("meta");
-               generator .attribute ("name",    key);
-               generator .attribute ("content", value);
-               generator .closeTag ("meta");
-               generator .AddTidyBreak ();
-            }
+            generator .openTag ("meta");
+            generator .attribute ("name",    key);
+            generator .attribute ("content", value);
+            generator .closeTag ("meta");
+            generator .AddTidyBreak ();
          }
 
          // </head>
@@ -556,9 +550,11 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       // Head
 
-      const outputUnits = this .getUnits () .some (unit => unit .conversionFactor !== 1);
+      const
+         outputUnits = this .getUnits () .some (unit => unit .conversionFactor !== 1),
+         metadata    = this .getMetaDatas ();
 
-      if (this .getComponents () .length || outputUnits || this .getMetaDatas () .size)
+      if (this .getComponents () .length || outputUnits || metadata .length)
       {
          let headLastProperty = false;
 
@@ -566,7 +562,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
          // Meta data
 
-         if (this .getMetaDatas () .size)
+         if (metadata .length)
          {
             // Meta data begin
 
@@ -574,15 +570,12 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
             // Meta data
 
-            for (const [i, [key, values]] of [... this .getMetaDatas ()] .entries ())
+            for (const [i, [key, value]] of metadata .entries ())
             {
-               for (const [j, value] of values .entries ())
-               {
-                  generator .beginObject ("", i !== 0 || j !== 0);
-                  generator .stringProperty ("@name",    key, false);
-                  generator .stringProperty ("@content", value);
-                  generator .endObject ();
-               }
+               generator .beginObject ("", i !== 0);
+               generator .stringProperty ("@name",    key, false);
+               generator .stringProperty ("@content", value);
+               generator .endObject ();
             }
 
             // Meta data end
