@@ -470,6 +470,9 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
             ... this .createUserMenu (),
 
             "separator3": "--------",
+
+            ... this .createAnimationsMenu (),
+
             "browser-timings": {
                name: _("Browser Timings"),
                type: "checkbox",
@@ -651,6 +654,75 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
             return _("None Viewer");
       }
    },
+   createAnimationsMenu ()
+   {
+      const
+         browser = this .getBrowser (),
+         scene   = browser .currentScene;
+
+      if (scene .encoding !== "GLTF")
+         return { };
+
+      const animations = $.try (() => scene .getExportedNode ("Animations"));
+
+      if (!animations)
+         return { };
+
+      const timeSensors = Array .from (animations .children, group => group .children [0]);
+
+      return {
+         "animations": {
+            name: _("Animations"),
+            className: "context-menu-icon x_ite-private-icon-animations",
+            items: {
+               ... Object .fromEntries (timeSensors .map ((timeSensor, i) =>
+               {
+                  return [`animation-${i}`, {
+                     name: timeSensor .description,
+                     type: "checkbox",
+                     selected: timeSensor .isActive,
+                     callback ()
+                     {
+                        if (timeSensor .isActive)
+                        {
+                           timeSensor .stopTime = Date .now () / 1000;
+                        }
+                        else
+                        {
+                           timeSensor .loop      = true;
+                           timeSensor .startTime = Date .now () / 1000;
+                        }
+                     },
+                  }];
+               })),
+
+               "separator2": "--------",
+
+               "all": {
+                  name: _("All"),
+                  className: "context-menu-icon x_ite-private-icon-all",
+                  callback ()
+                  {
+                     for (const timeSensor of timeSensors)
+                     {
+                        timeSensor .loop      = true;
+                        timeSensor .startTime = Date .now () / 1000;
+                     }
+                  },
+               },
+               "none": {
+                  name: _("None"),
+                  className: "context-menu-icon x_ite-private-icon-none",
+                  callback ()
+                  {
+                     for (const timeSensor of timeSensors)
+                        timeSensor .stopTime = Date .now () / 1000;
+                  },
+               },
+            },
+         },
+      };
+   }
 });
 
 Object .defineProperties (ContextMenu .prototype,

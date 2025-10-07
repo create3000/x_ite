@@ -1,5 +1,3 @@
-import DEVELOPMENT from "../DEVELOPMENT.js";
-
 function MultiSampleFramebuffer ({ browser, x, y, width, height, samples, oit })
 {
    const gl = browser .getContext ();

@@ -35,7 +35,12 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    },
    getExportedNode ()
    {
-      return this .getInlineNode () .getInternalScene () .getExportedNode (this [_exportedName]) .getValue ();
+      const exportedNode = this .getInlineNode () .getInternalScene () .getExportedNodes () .get (this [_exportedName]);
+
+      if (exportedNode)
+         return exportedNode .getLocalNode ();
+
+      throw new Error (`Exported node '${this [_exportedName]}' not found.`);
    },
    getImportedName ()
    {

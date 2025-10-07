@@ -52,10 +52,21 @@ Object .assign (X3DRenderingContext .prototype,
 
       // Observe resize and parent changes of <canvas> and configure viewport.
 
-      this [_resizer] = new ResizeObserver (() => this .reshape ());
-      this [_resizer] .observe (this .getSurface () [0]);
-
       $(window) .on (`orientationchange.X3DRenderingContext-${this .getInstanceId ()}`, () => this .reshape ());
+
+      this [_resizer] = new ResizeObserver (() =>
+      {
+         this .reshape ();
+
+         // Unfortunately jest environment doesn't like a traverse here.
+         // TODO: figure out why.
+         if (typeof jest !== "undefined")
+            return;
+
+         this [Symbol .for ("X_ITE.X3DBrowserContext.traverse")] (performance .now ());
+      });
+
+      this [_resizer] .observe (this .getSurface () [0]);
 
       this .reshape ();
 
@@ -243,8 +254,16 @@ Object .assign (X3DRenderingContext .prototype,
          options .push ("X3D_NUM_CLIP_PLANES " + numClipPlanes);
       }
 
-      if (shapeNode .getShapeKey () > 0)
-         options .push ("X3D_INSTANCING");
+      switch (shapeNode .getShapeKey ())
+      {
+         case 1:
+         case 2:
+            options .push ("X3D_INSTANCING");
+            break;
+         case 3:
+            options .push ("X3D_INSTANCING", "X3D_INSTANCE_NORMAL");
+            break;
+      }
 
       options .push (`X3D_GEOMETRY_${geometryContext .geometryType}D`);
 

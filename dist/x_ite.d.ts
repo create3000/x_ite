@@ -398,6 +398,7 @@ declare namespace X3D
       TextCompression:              "CHAR_SPACING" | "SCALING",
       Timings:                      boolean,
       ToneMapping:                  ToneMappingTypes,
+      WallFriction:                 number,
       XRSessionMode:                "NONE" | "IMMERSIVE_VR" | "IMMERSIVE_AR" | "INLINE",
    };
 
@@ -426,7 +427,8 @@ declare namespace X3D
    type ClosestObject = {
       node: X3DShapeNodeProxy | null,
       distance: number,
-      // normal: SFVec3f,
+      normal: SFVec3f | null,
+      frontFacing: boolean,
    };
 
    class ContextMenu
@@ -532,7 +534,7 @@ declare namespace X3D
       /**
        * Adds the metadata with *name* and *value.*
        */
-      addMetaData (name: string, value: string): void;
+      addMetaData (name: string, value: string | string []): void;
       /**
        * Removes the metadata *name.*
        */

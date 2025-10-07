@@ -534,7 +534,7 @@ declare namespace X3D
       /**
        * Adds the metadata with *name* and *value.*
        */
-      addMetaData (name: string, value: string): void;
+      addMetaData (name: string, value: string | string []): void;
       /**
        * Removes the metadata *name.*
        */

@@ -55,6 +55,7 @@ Convert **X3D, VRML 2.0 (.wrl), glTF (GLB), OBJ, STL, PLY,** and **SVG** to an X
   </p>
   <p id="convert-files" class="center">
     <a href="#">Convert file to ...</a>
+    <br>
     <select>
       <option value="XML" selected>X3D XML Encoding</option>
       <option value="VRML">X3D VRML Encoding</option>

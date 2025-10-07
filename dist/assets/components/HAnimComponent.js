@@ -1,5 +1,5 @@
-/* X_ITE v12.0.9 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.9")];
+/* X_ITE v12.1.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -453,9 +453,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
             continue;
 
          const
-            t = numJointBindingPositions ? jointBindingPositions [Math .min (i, numJointBindingPositions- 1)] .getValue () : null,
-            r = numJointBindingRotations ? jointBindingRotations [Math .min (i, numJointBindingRotations - 1)] .getValue () : null,
-            s = numJointBindingScales ? jointBindingScales [Math .min (i, numJointBindingScales - 1)] .getValue () : null;
+            t = i < numJointBindingPositions ? jointBindingPositions [i] .getValue () : null,
+            r = i < numJointBindingRotations ? jointBindingRotations [i] .getValue () : null,
+            s = i < numJointBindingScales    ? jointBindingScales    [i] .getValue () : null;
 
          jointNodes           .push (jointNode);
          jointBindingMatrices .push (new (external_X_ITE_X3D_Matrix4_default()) () .set (t, r, s));

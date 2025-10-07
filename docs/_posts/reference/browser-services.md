@@ -592,7 +592,6 @@ type ClosestObject = {
    node: X3DShapeNode | null,
    distance: number,
    normal: SFVec3f | null,
-   frontFacing: boolean,
 };
 ```
 

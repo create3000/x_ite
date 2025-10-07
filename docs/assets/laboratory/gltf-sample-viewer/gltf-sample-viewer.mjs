@@ -1108,23 +1108,11 @@ class SampleViewer
 
          const onclick = () =>
          {
-            $(`#animation${i}`) .toggleClass (["fa-circle", "fa-circle-dot", "selected"]);
-            $(`[for=animation${i}]`) .toggleClass ("selected");
-
             for (const group of animations .children)
                group .children [0] .stopTime = Date .now () / 1000;
 
-            if (!$(`#animation${i}`) .hasClass ( "fa-circle-dot"))
+            if (timeSensor .isActive)
                return;
-
-            $("#animations i") .each ((_, element) =>
-            {
-               if (element === $(`#animation${i}`) .get (0))
-                  return;
-
-               $(element) .removeClass (["fa-circle-dot", "selected"]) .addClass ("fa-circle");
-               $(`[for=${$(element) .attr ("id")}]`) .removeClass ("selected");
-            });
 
             timeSensor .loop      = true;
             timeSensor .startTime = Date .now () / 1000;
@@ -1133,14 +1121,36 @@ class SampleViewer
          const button = $("<button></button>")
             .addClass ("check")
             .attr ("for", `animation${i}`)
-            .text (group .children [0] .description)
+            .text (timeSensor .description)
             .on ("click", onclick)
             .appendTo ($("#animations"));
 
-         $("<i></i>")
+         const check = $("<i></i>")
             .addClass (["fa-regular", "fa-circle"])
             .attr ("id", `animation${i}`)
             .prependTo (button);
+
+         timeSensor .addFieldCallback (this, "isActive", value =>
+         {
+            if (value)
+            {
+               button
+                  .addClass ("selected");
+
+               check
+                  .removeClass ("fa-circle")
+                  .addClass (["fa-circle-dot", "selected"]);
+            }
+            else
+            {
+               button
+                  .removeClass ("selected");
+
+               check
+                  .removeClass (["fa-circle-dot", "selected"])
+                  .addClass ("fa-circle");
+            }
+         });
       }
 
       $("#animations") .show () .find ("button") .first () .trigger ("click");

@@ -257,9 +257,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
             continue;
 
          const
-            t = numJointBindingPositions ? jointBindingPositions [Math .min (i, numJointBindingPositions- 1)] .getValue () : null,
-            r = numJointBindingRotations ? jointBindingRotations [Math .min (i, numJointBindingRotations - 1)] .getValue () : null,
-            s = numJointBindingScales ? jointBindingScales [Math .min (i, numJointBindingScales - 1)] .getValue () : null;
+            t = i < numJointBindingPositions ? jointBindingPositions [i] .getValue () : null,
+            r = i < numJointBindingRotations ? jointBindingRotations [i] .getValue () : null,
+            s = i < numJointBindingScales    ? jointBindingScales    [i] .getValue () : null;
 
          jointNodes           .push (jointNode);
          jointBindingMatrices .push (new Matrix4 () .set (t, r, s));

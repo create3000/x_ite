@@ -916,13 +916,11 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          node: SFNodeCache .get (closestObject .node),
          distance: closestObject .distance,
          normal: new Fields .SFVec3f (... closestObject .normal),
-         frontFacing: closestObject .frontFacing,
       }
       : {
          node: null,
          distance: Infinity,
          normal: null,
-         frontFacing: undefined,
       };
    },
    beginUpdate ()

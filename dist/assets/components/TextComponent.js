@@ -1,5 +1,5 @@
-/* X_ITE v12.0.9 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.9")];
+/* X_ITE v12.1.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -747,8 +747,23 @@ Object .assign (X3DTextGeometry .prototype,
 
          if (length)
          {
-            if (textCompression === (external_X_ITE_X3D_TextCompression_default()).CHAR_SPACING && glyphs .length > 1)
-               charSpacing = (length - lineBound .y) / (glyphs .length - 1);
+            switch (textCompression)
+            {
+               case (external_X_ITE_X3D_TextCompression_default()).CHAR_SPACING:
+               {
+                  if (glyphs .length > 1)
+                     charSpacing = (length - lineBound .y) / (glyphs .length - 1);
+
+                  break;
+               }
+               case (external_X_ITE_X3D_TextCompression_default()).SCALING:
+               {
+                  if (fontStyle .getMajorAlignment () === Text_TextAlignment .MIDDLE)
+                     max .y += (length - lineBound .y) / 2;
+
+                  break;
+               }
+            }
 
             lineBound .y = length;
             size .y      = length / scale;
@@ -1128,8 +1143,9 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeom
                   for (const { x: glyphX, y: glyphY } of glyphVertices)
                   {
                      const
+                        glyphNumber = topToBottom ? g : numChars - g - 1,
                         x = glyphX * size + minorAlignment .x + translation .x,
-                        y = glyphY * size * scale + minorAlignment .y + translation .y * scale - g * charSpacing;
+                        y = glyphY * size * scale + minorAlignment .y + translation .y * scale - glyphNumber * charSpacing;
 
                      texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
                      normalArray   .push (0, 0, 1);

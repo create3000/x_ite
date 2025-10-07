@@ -218,5 +218,17 @@ export default [
    [
       "Viewpoint is copied to clipboard.",
       "Le point de Vue est copié dans le Presse-Papiers.",
-   ]
+   ],
+   [
+      "Animations",
+      "Animationen",
+   ],
+   [
+      "All",
+      "Toutes",
+   ],
+   [
+      "None",
+      "Aucune",
+   ],
 ];
