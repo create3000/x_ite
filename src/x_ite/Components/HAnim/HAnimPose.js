@@ -2,17 +2,16 @@ import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
-import X3DChildNode         from "../Core/X3DChildNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 
 function HAnimPose (executionContext)
 {
-   X3DChildNode .call (this, executionContext);
+   X3DNode .call (this, executionContext);
 
    this .addType (X3DConstants .HAnimPose);
 }
 
-Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DNode .prototype),
 {
    initialize ()
    {
