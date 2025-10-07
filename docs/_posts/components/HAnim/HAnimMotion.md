@@ -32,8 +32,8 @@ The HAnimMotion node belongs to the [HAnim](/x_ite/components/overview/#hanim) c
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFString | [in, out] | [name](#fields-name) | "" |
-| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFInt32 | [in, out] | [loa](#fields-loa) | -1  |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFString | [in, out] | [joints](#fields-joints) | "" |
 | MFBool | [in, out] | [channelsEnabled](#fields-channelsEnabled) | [ ] |
 | SFString | [in, out] | [channels](#fields-channels) | "" |
@@ -74,11 +74,6 @@ Author-provided prose that describes intended purpose of this node.
 
 Unique *name* attribute must be defined so that HAnimMotion node can be identified at run time for animation purposes.
 
-### SFBool [in, out] **enabled** TRUE
-{: #fields-enabled }
-
-Enables/disables node operation.
-
 ### SFInt32 [in, out] **loa** -1 <small>[-1,4]</small>
 {: #fields-loa }
 
@@ -88,6 +83,11 @@ Level Of Articulation 0..4 indicates complexity and detail of joints for given h
 
 - *loa* value of -1 indicates that no LOA conformance is provided.
 - [Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8.4 Levels of articulation](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#LevelsOfArticulation)
+
+### SFBool [in, out] **enabled** TRUE
+{: #fields-enabled }
+
+Enables/disables node operation.
 
 ### SFString [in, out] **joints** ""
 {: #fields-joints }
