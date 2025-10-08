@@ -97,6 +97,8 @@ Object .assign (X3DParser .prototype,
          const namedNode = this .getExecutionContext () .getNamedNode (name);
 
          this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (name), namedNode);
+
+         console .warn (`Duplicate DEF name '${name}'.`);
       }
       catch
       { }
@@ -106,6 +108,8 @@ Object .assign (X3DParser .prototype,
          const importedName = this .getExecutionContext () .getUniqueImportName (name);
 
          this .getExecutionContext () .renameImportedNode (name, importedName);
+
+         console .warn (`Duplicate imported name '${name}'.`);
       }
       catch
       { }
