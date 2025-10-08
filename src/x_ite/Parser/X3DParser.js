@@ -92,24 +92,26 @@ Object .assign (X3DParser .prototype,
    },
    renameExistingNode (name)
    {
+      const executionContext = this .getExecutionContext ();
+
       try
       {
-         const namedNode = this .getExecutionContext () .getNamedNode (name);
+         const namedNode = executionContext .getNamedNode (name);
 
-         this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (name), namedNode);
+         executionContext .updateNamedNode (executionContext .getUniqueName (name), namedNode);
 
-         console .warn (`Duplicate DEF name '${name}'.`);
+         console .warn (`Duplicate DEF name '${name}' in file ${executionContext .getWorldURL ()}.`);
       }
       catch
       { }
 
       try
       {
-         const importedName = this .getExecutionContext () .getUniqueImportName (name);
+         const importedName = executionContext .getUniqueImportName (name);
 
-         this .getExecutionContext () .renameImportedNode (name, importedName);
+         executionContext .renameImportedNode (name, importedName);
 
-         console .warn (`Duplicate imported name '${name}'.`);
+         console .warn (`Duplicate imported name '${name}' in file ${executionContext .getWorldURL ()}.`);
       }
       catch
       { }
