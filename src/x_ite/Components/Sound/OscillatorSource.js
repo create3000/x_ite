@@ -134,7 +134,7 @@ Object .defineProperties (OscillatorSource,
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "gain",         new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "detune",       new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "frequency",    new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "frequency",    new Fields .SFFloat (440)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "periodicWave", new Fields .SFNode ()),
 
          new X3DFieldDefinition (X3DConstants .inputOutput, "startTime",    new Fields .SFTime (0)),

@@ -36,7 +36,7 @@ The OscillatorSource node belongs to the [Sound](/x_ite/components/overview/#sou
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFFloat | [in, out] | [gain](#fields-gain) | 1  |
 | SFFloat | [in, out] | [detune](#fields-detune) | 0  |
-| SFFloat | [in, out] | [frequency](#fields-frequency) | 0  |
+| SFFloat | [in, out] | [frequency](#fields-frequency) | 440  |
 | SFNode | [in, out] | [periodicWave](#fields-periodicWave) | NULL  |
 | SFTime | [in, out] | [startTime](#fields-startTime) | 0  |
 | SFTime | [in, out] | [resumeTime](#fields-resumeTime) | 0  |
@@ -88,7 +88,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 
 The *detune* ffield is an a-rate AudioParam representing detuning of oscillation in cents (though the AudioParam returned is read-only, the value it represents is not).
 
-### SFFloat [in, out] **frequency** 0 <small>[0,∞)</small>
+### SFFloat [in, out] **frequency** 440 <small>[0,∞)</small>
 {: #fields-frequency }
 
 The *frequency* of oscillation in hertz. The default value 440 Hz is a standard middle-A note.
