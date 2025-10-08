@@ -95,9 +95,6 @@ function VRMLParser (scene)
    {
       Comment: Grammar .Comment,
    };
-
-   this .nodes        = [ ];
-   this .placeholders = new Map ();
 }
 
 Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .prototype),
@@ -332,8 +329,8 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                {
                   this .statements (this .getExecutionContext () .rootNodes);
 
-                  this .placeholders .forEach (placeholder => placeholder .replaceWithNode ());
-                  this .nodes .forEach (node => node .setup ());
+                  this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
+                  this .getNodes () .forEach (node => node .setup ());
 
                   if (this .lastIndex < this .input .length)
                      throw new Error ("Unknown statement.");
@@ -351,8 +348,8 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
          {
             this .statements (this .getExecutionContext () .rootNodes);
 
-            this .placeholders .forEach (placeholder => placeholder .replaceWithNode ());
-            this .nodes .forEach (node => node .setup ());
+            this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
+            this .getNodes () .forEach (node => node .setup ());
 
             if (this .lastIndex < this .input .length)
                throw new Error ("Unknown statement.");
@@ -679,7 +676,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
          {
             const
                name        = this .result [0],
-               placeholder = this .placeholders .get (name);
+               placeholder = this .getPlaceholders () .get (name);
 
             if (placeholder)
             {
@@ -689,7 +686,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
             {
                const placeholder = new Placeholder (this .getExecutionContext (), name);
 
-               this .placeholders .set (name, placeholder);
+               this .getPlaceholders () .set (name, placeholder);
 
                return placeholder;
             }
@@ -748,9 +745,8 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                         proto .addUserDefinedField (field .getAccessType (), field .getName (), field);
 
                      this .pushExecutionContext (proto .getBody ());
-
                      this .protoBody (proto .getBody () .rootNodes);
-
+                     this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
                      this .popExecutionContext ();
 
                      this .comments ();
@@ -1289,7 +1285,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
             if (Grammar .CloseBrace .parse (this))
             {
                if (!this .isInsideProtoDeclaration ())
-                  this .nodes .push (baseNode);
+                  this .getNodes () .push (baseNode);
 
                return baseNode;
             }

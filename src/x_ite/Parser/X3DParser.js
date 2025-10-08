@@ -5,6 +5,8 @@ function X3DParser (scene)
    this .scene             = scene;
    this .executionContexts = [ scene ];
    this .prototypes        = [ ];
+   this .placeholders      = new Map ();
+   this .nodes             = [ ];
 }
 
 Object .assign (X3DParser .prototype,
@@ -36,6 +38,10 @@ Object .assign (X3DParser .prototype,
    isInsideProtoDeclaration ()
    {
       return this .getExecutionContext () .getOuterNode () instanceof X3DProtoDeclaration;
+   },
+   getNodes ()
+   {
+      return this .nodes;
    },
    /**
     * @deprecated Directly use `browser.loadComponents`.
@@ -115,6 +121,25 @@ Object .assign (X3DParser .prototype,
       }
       catch
       { }
+   },
+   getPlaceholders ()
+   {
+      const
+         executionContext = this .getExecutionContext (),
+         placeholders     = this .placeholders .get (executionContext);
+
+      if (placeholders)
+      {
+         return placeholders;
+      }
+      else
+      {
+         const placeholders = new Map ();
+
+         this .placeholders .set (executionContext, placeholders);
+
+         return placeholders;
+      }
    },
 });
 

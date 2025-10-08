@@ -30,8 +30,6 @@ function XMLParser (scene)
    this .url               = new Fields .MFString ();
    this .protoNames        = new Map ();
    this .protoFields       = new WeakMap ();
-   this .nodes             = [ ];
-   this .placeholders      = new Map ();
 
    this .parser .setUnits (!!scene);
 }
@@ -113,8 +111,8 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                   {
                      this .childrenElements (xmlElement);
 
-                     this .placeholders .forEach (placeholder => placeholder .replaceWithNode ());
-                     this .nodes .forEach (node => node .setup ());
+                     this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
+                     this .getNodes () .forEach (node => node .setup ());
 
                      this .resolve (scene);
                   })
@@ -124,8 +122,8 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                {
                   this .childrenElements (xmlElement);
 
-                  this .placeholders .forEach (placeholder => placeholder .replaceWithNode ());
-                  this .nodes .forEach (node => node .setup ());
+                  this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
+                  this .getNodes () .forEach (node => node .setup ());
                }
             }
 
@@ -145,8 +143,8 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                {
                   this .sceneElement (xmlElement);
 
-                  this .placeholders .forEach (placeholder => placeholder .replaceWithNode ());
-                  this .nodes .forEach (node => node .setup ());
+                  this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
+                  this .getNodes () .forEach (node => node .setup ());
 
                   this .resolve (scene);
                })
@@ -156,8 +154,8 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             {
                this .sceneElement (xmlElement);
 
-               this .placeholders .forEach (placeholder => placeholder .replaceWithNode ());
-               this .nodes .forEach (node => node .setup ());
+               this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
+               this .getNodes () .forEach (node => node .setup ());
             }
 
             break;
@@ -170,8 +168,8 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                {
                   this .childrenElements (xmlElement);
 
-                  this .placeholders .forEach (placeholder => placeholder .replaceWithNode ());
-                  this .nodes .forEach (node => node .setup ());
+                  this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
+                  this .getNodes () .forEach (node => node .setup ());
 
                   this .resolve (scene);
                })
@@ -181,8 +179,8 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             {
                this .childrenElements (xmlElement);
 
-               this .placeholders .forEach (placeholder => placeholder .replaceWithNode ());
-               this .nodes .forEach (node => node .setup ());
+               this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
+               this .getNodes () .forEach (node => node .setup ());
             }
 
             break;
@@ -234,8 +232,8 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             for (const childNode of xmlElement .childNodes)
                this .x3dElementChildScene (childNode)
 
-            this .placeholders .forEach (placeholder => placeholder .replaceWithNode ());
-            this .nodes .forEach (node => node .setup ());
+            this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
+            this .getNodes () .forEach (node => node .setup ());
 
             this .resolve (scene);
          })
@@ -246,8 +244,8 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          for (const childNode of xmlElement .childNodes)
             this .x3dElementChildScene (childNode)
 
-         this .placeholders .forEach (placeholder => placeholder .replaceWithNode ());
-         this .nodes .forEach (node => node .setup ());
+         this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
+         this .getNodes () .forEach (node => node .setup ());
       }
    },
    x3dElementChildHead (xmlElement)
@@ -506,6 +504,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                   this .pushParent (proto);
                   this .protoBodyElement (childNode);
                   this .popParent ();
+                  this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
                   this .popExecutionContext ();
                   break;
                }
@@ -692,7 +691,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             this .childrenElements (xmlElement);
 
             if (!this .isInsideProtoDeclaration ())
-               this .nodes .push (node);
+               this .getNodes () .push (node);
 
             this .popParent ();
          }
@@ -772,7 +771,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          this .childrenElements (xmlElement);
 
          if (!this .isInsideProtoDeclaration ())
-            this .nodes .push (node);
+            this .getNodes () .push (node);
 
          this .popParent ();
       }
@@ -923,7 +922,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
          if (this .id (name))
          {
-            const placeholder = this .placeholders .get (name);
+            const placeholder = this .getPlaceholders () .get (name);
 
             if (placeholder)
             {
@@ -941,7 +940,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
                const placeholder = new Placeholder (this .getExecutionContext (), name, Type, typeName);
 
-               this .placeholders .set (name, placeholder);
+               this .getPlaceholders () .set (name, placeholder);
 
                this .addNode (xmlElement, placeholder);
             }
