@@ -35,7 +35,7 @@ class Placeholder extends X3DNode
       return this .#type .specificationRange;
    }
 
-   replace ()
+   replaceWithNode ()
    {
       const node = this .#executionContext .getLocalNode (this .#name) .getValue ();
 

@@ -332,7 +332,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                {
                   this .statements (this .getExecutionContext () .rootNodes);
 
-                  this .placeholders .forEach (placeholder => placeholder .replace ());
+                  this .placeholders .forEach (placeholder => placeholder .replaceWithNode ());
                   this .nodes .forEach (node => node .setup ());
 
                   if (this .lastIndex < this .input .length)
@@ -351,7 +351,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
          {
             this .statements (this .getExecutionContext () .rootNodes);
 
-            this .placeholders .forEach (placeholder => placeholder .replace ());
+            this .placeholders .forEach (placeholder => placeholder .replaceWithNode ());
             this .nodes .forEach (node => node .setup ());
 
             if (this .lastIndex < this .input .length)
