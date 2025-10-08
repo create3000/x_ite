@@ -5,6 +5,7 @@ import X3DField                  from "../Base/X3DField.js";
 import X3DExternProtoDeclaration from "../Prototype/X3DExternProtoDeclaration.js";
 import X3DProtoDeclaration       from "../Prototype/X3DProtoDeclaration.js";
 import X3DConstants              from "../Base/X3DConstants.js";
+import Placeholder               from "./Placeholder.js";
 import Color3                    from "../../standard/Math/Numbers/Color3.js";
 import Color4                    from "../../standard/Math/Numbers/Color4.js";
 import Matrix3                   from "../../standard/Math/Numbers/Matrix3.js";
@@ -94,6 +95,9 @@ function VRMLParser (scene)
    {
       Comment: Grammar .Comment,
    };
+
+   this .nodes        = [ ];
+   this .placeholders = new Map ();
 }
 
 Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .prototype),
@@ -328,6 +332,9 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                {
                   this .statements (this .getExecutionContext () .rootNodes);
 
+                  this .placeholders .forEach (placeholder => placeholder .replace ());
+                  this .nodes .forEach (node => node .setup ());
+
                   if (this .lastIndex < this .input .length)
                      throw new Error ("Unknown statement.");
 
@@ -343,6 +350,9 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
          else
          {
             this .statements (this .getExecutionContext () .rootNodes);
+
+            this .placeholders .forEach (placeholder => placeholder .replace ());
+            this .nodes .forEach (node => node .setup ());
 
             if (this .lastIndex < this .input .length)
                throw new Error ("Unknown statement.");
@@ -666,7 +676,24 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       if (Grammar .USE .parse (this))
       {
          if (this .nodeNameId ())
-            return this .getExecutionContext () .getNamedNode (this .result [0]) .getValue ();
+         {
+            const
+               name        = this .result [0],
+               placeholder = this .placeholders .get (name);
+
+            if (placeholder)
+            {
+               return placeholder;
+            }
+            else
+            {
+               const placeholder = new Placeholder (this .getExecutionContext (), name);
+
+               this .placeholders .set (name, placeholder);
+
+               return placeholder;
+            }
+         }
 
          throw new Error ("No name given after USE.");
       }
@@ -1262,7 +1289,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
             if (Grammar .CloseBrace .parse (this))
             {
                if (!this .isInsideProtoDeclaration ())
-                  baseNode .setup ();
+                  this .nodes .push (baseNode);
 
                return baseNode;
             }
