@@ -924,7 +924,27 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          {
             try
             {
-               this .addNode (xmlElement, this .getExecutionContext () .getNamedNode (name) .getValue ());
+               const node = this .getExecutionContext () .getNamedNode (name) .getValue ();
+
+               // This check is also done in Placeholder.
+               
+               if (this .nodeNameToCamelCase (xmlElement .nodeName) === "ProtoInstance")
+               {
+                  if (!node .getType () .includes (X3DConstants .X3DPrototypeInstance))
+                  {
+                     console .warn (`XML Parser: DEF/USE mismatch, '${name}', referenced node is not of type X3DPrototypeInstance.`);
+                  }
+                  else if (xmlElement .getAttribute ("name") !== node .getTypeName ())
+                  {
+                     console .warn (`XML Parser: DEF/USE mismatch, '${name}', name ${xmlElement .getAttribute ("name")} != ${node .getTypeName ()}.`);
+                  }
+               }
+               else if (this .nodeNameToCamelCase (xmlElement .nodeName) !== node .getTypeName ())
+               {
+                  console .warn (`XML Parser: DEF/USE mismatch, '${name}', ${xmlElement .nodeName} != ${node .getTypeName ()}.`);
+               }
+
+               this .addNode (xmlElement, node);
             }
             catch
             {
