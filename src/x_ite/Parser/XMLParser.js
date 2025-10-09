@@ -9,6 +9,7 @@ import HTMLSupport               from "./HTMLSupport.js";
 import X3DExternProtoDeclaration from "../Prototype/X3DExternProtoDeclaration.js";
 import X3DProtoDeclaration       from "../Prototype/X3DProtoDeclaration.js";
 import X3DConstants              from "../Base/X3DConstants.js";
+import Placeholder               from "./Placeholder.js";
 import DEVELOPMENT               from "../DEVELOPMENT.js";
 
 const AccessType =
@@ -109,6 +110,10 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                   browser .loadComponents (scene) .then (() =>
                   {
                      this .childrenElements (xmlElement);
+
+                     this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
+                     this .getNodes () .forEach (node => node .setup ());
+
                      this .resolve (scene);
                   })
                   .catch (this .reject);
@@ -116,6 +121,9 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                else
                {
                   this .childrenElements (xmlElement);
+
+                  this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
+                  this .getNodes () .forEach (node => node .setup ());
                }
             }
 
@@ -134,6 +142,10 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                browser .loadComponents (scene) .then (() =>
                {
                   this .sceneElement (xmlElement);
+
+                  this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
+                  this .getNodes () .forEach (node => node .setup ());
+
                   this .resolve (scene);
                })
                .catch (this .reject);
@@ -141,6 +153,9 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             else
             {
                this .sceneElement (xmlElement);
+
+               this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
+               this .getNodes () .forEach (node => node .setup ());
             }
 
             break;
@@ -152,6 +167,10 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                browser .loadComponents (scene) .then (() =>
                {
                   this .childrenElements (xmlElement);
+
+                  this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
+                  this .getNodes () .forEach (node => node .setup ());
+
                   this .resolve (scene);
                })
                .catch (this .reject);
@@ -159,6 +178,9 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             else
             {
                this .childrenElements (xmlElement);
+
+               this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
+               this .getNodes () .forEach (node => node .setup ());
             }
 
             break;
@@ -210,6 +232,9 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             for (const childNode of xmlElement .childNodes)
                this .x3dElementChildScene (childNode)
 
+            this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
+            this .getNodes () .forEach (node => node .setup ());
+
             this .resolve (scene);
          })
          .catch (this .reject);
@@ -218,6 +243,9 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       {
          for (const childNode of xmlElement .childNodes)
             this .x3dElementChildScene (childNode)
+
+         this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
+         this .getNodes () .forEach (node => node .setup ());
       }
    },
    x3dElementChildHead (xmlElement)
@@ -476,6 +504,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                   this .pushParent (proto);
                   this .protoBodyElement (childNode);
                   this .popParent ();
+                  this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
                   this .popExecutionContext ();
                   break;
                }
@@ -662,7 +691,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             this .childrenElements (xmlElement);
 
             if (!this .isInsideProtoDeclaration ())
-               node .setup ();
+               this .getNodes () .push (node);
 
             this .popParent ();
          }
@@ -742,7 +771,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          this .childrenElements (xmlElement);
 
          if (!this .isInsideProtoDeclaration ())
-            node .setup ();
+            this .getNodes () .push (node);
 
          this .popParent ();
       }
@@ -893,25 +922,55 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
          if (this .id (name))
          {
-            const node = this .getExecutionContext () .getNamedNode (name);
-
-            if (this .nodeNameToCamelCase (xmlElement .nodeName) === "ProtoInstance")
+            try
             {
-               if (!node .getNodeType () .includes (X3DConstants .X3DPrototypeInstance))
+               const node = this .getExecutionContext () .getNamedNode (name) .getValue ();
+
+               // This check is also done in Placeholder.
+
+               if (this .nodeNameToCamelCase (xmlElement .nodeName) === "ProtoInstance")
                {
-                  console .warn (`XML Parser: DEF/USE mismatch, '${name}', referenced node is not of type X3DPrototypeInstance.`);
+                  if (!node .getType () .includes (X3DConstants .X3DPrototypeInstance))
+                  {
+                     console .warn (`XML Parser: DEF/USE mismatch, '${name}', referenced node is not of type X3DPrototypeInstance.`);
+                  }
+                  else if (xmlElement .getAttribute ("name") !== node .getTypeName ())
+                  {
+                     console .warn (`XML Parser: DEF/USE mismatch, '${name}', name ${xmlElement .getAttribute ("name")} != ${node .getTypeName ()}.`);
+                  }
                }
-               else if (xmlElement .getAttribute ("name") !== node .getNodeTypeName ())
+               else if (this .nodeNameToCamelCase (xmlElement .nodeName) !== node .getTypeName ())
                {
-                  console .warn (`XML Parser: DEF/USE mismatch, '${name}', name ${xmlElement .getAttribute ("name")} != ${node .getNodeTypeName ()}.`);
+                  console .warn (`XML Parser: DEF/USE mismatch, '${name}', ${xmlElement .nodeName} != ${node .getTypeName ()}.`);
+               }
+
+               this .addNode (xmlElement, node);
+            }
+            catch
+            {
+               const placeholder = this .getPlaceholders () .get (name);
+
+               if (placeholder)
+               {
+                  this .addNode (xmlElement, placeholder);
+               }
+               else
+               {
+                  const nodeName = this .nodeNameToCamelCase (xmlElement .nodeName);
+
+                  const Type = nodeName === "ProtoInstance"
+                     ? this .getBrowser () .getAbstractNode ("X3DPrototypeInstance")
+                     : this .getBrowser () .getConcreteNode (nodeName);
+
+                  const typeName = xmlElement .getAttribute ("name");
+
+                  const placeholder = new Placeholder (this, name, Type, typeName);
+
+                  this .getPlaceholders () .set (name, placeholder);
+                  this .addNode (xmlElement, placeholder);
                }
             }
-            else if (this .nodeNameToCamelCase (xmlElement .nodeName) !== node .getNodeTypeName ())
-            {
-               console .warn (`XML Parser: DEF/USE mismatch, '${name}', ${xmlElement .nodeName} != ${node .getNodeTypeName ()}.`);
-            }
 
-            this .addNode (xmlElement, node .getValue ());
             return true;
          }
       }
@@ -930,6 +989,9 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
          if (name)
          {
+            if (!this .getNamedNodes () .has (name))
+               this .getNamedNodes () .set (name, node);
+
             this .renameExistingNode (name);
 
             this .getExecutionContext () .updateNamedNode (name, node);

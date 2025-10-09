@@ -5,6 +5,9 @@ function X3DParser (scene)
    this .scene             = scene;
    this .executionContexts = [ scene ];
    this .prototypes        = [ ];
+   this .namedNodes        = new Map ();
+   this .placeholders      = new Map ();
+   this .nodes             = [ ];
 }
 
 Object .assign (X3DParser .prototype,
@@ -36,6 +39,10 @@ Object .assign (X3DParser .prototype,
    isInsideProtoDeclaration ()
    {
       return this .getExecutionContext () .getOuterNode () instanceof X3DProtoDeclaration;
+   },
+   getNodes ()
+   {
+      return this .nodes;
    },
    /**
     * @deprecated Directly use `browser.loadComponents`.
@@ -92,23 +99,56 @@ Object .assign (X3DParser .prototype,
    },
    renameExistingNode (name)
    {
+      const executionContext = this .getExecutionContext ();
+
       try
       {
-         const namedNode = this .getExecutionContext () .getNamedNode (name);
+         const namedNode = executionContext .getNamedNode (name);
 
-         this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (name), namedNode);
+         executionContext .updateNamedNode (executionContext .getUniqueName (name), namedNode);
+
+         console .warn (`Duplicate DEF name '${name}' in file '${executionContext .getWorldURL ()}'.`);
       }
       catch
       { }
 
       try
       {
-         const importedName = this .getExecutionContext () .getUniqueImportName (name);
+         const importedName = executionContext .getUniqueImportName (name);
 
-         this .getExecutionContext () .renameImportedNode (name, importedName);
+         executionContext .renameImportedNode (name, importedName);
+
+         console .warn (`Duplicate imported name '${name}' in file '${executionContext .getWorldURL ()}'.`);
       }
       catch
       { }
+   },
+   getNamedNodes ()
+   {
+      return this .getMap (this .namedNodes);
+   },
+   getPlaceholders ()
+   {
+      return this .getMap (this .placeholders);
+   },
+   getMap (maps)
+   {
+      const
+         executionContext = this .getExecutionContext (),
+         map              = maps .get (executionContext);
+
+      if (map)
+      {
+         return map;
+      }
+      else
+      {
+         const map = new Map ();
+
+         maps .set (executionContext, map);
+
+         return map;
+      }
    },
 });
 
