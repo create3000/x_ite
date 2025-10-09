@@ -59,7 +59,7 @@ Object .assign (X3DParser .prototype,
    {
       const
          wrap   = $("<div></div>") .hide () .css ("color", defaultColor) .appendTo ($("body")),
-         div    = $("<div></div>").css ("color", value) .appendTo (wrap),
+         div    = $("<div></div>") .css ("color", value) .appendTo (wrap),
          rgb    = window .getComputedStyle (div [0]) .color,
          values = rgb .replace (/^rgba?\(|\)$/g, "") .split (/[\s,]+/) .map (s => parseFloat (s));
 
