@@ -870,6 +870,11 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          // Add new imported node.
 
          this .getExecutionContext () .addImportedNode (inlineNode, exportedNodeName, localNodeName);
+
+         if (!this .getImportedNodes () .has (localNodeName))
+         {
+            this .getImportedNodes () .set (localNodeName, this .getExecutionContext () .getImportedNodes () .get (localNodeName));
+         }
       }
       catch (error)
       {

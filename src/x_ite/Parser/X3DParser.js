@@ -5,8 +5,9 @@ function X3DParser (scene)
    this .scene             = scene;
    this .executionContexts = [ scene ];
    this .prototypes        = [ ];
-   this .namedNodes        = new Map ();
    this .placeholders      = new Map ();
+   this .namedNodes        = new Map ();
+   this .importedNodes     = new Map ();
    this .nodes             = [ ];
 }
 
@@ -123,13 +124,17 @@ Object .assign (X3DParser .prototype,
       catch
       { }
    },
+   getPlaceholders ()
+   {
+      return this .getMap (this .placeholders);
+   },
    getNamedNodes ()
    {
       return this .getMap (this .namedNodes);
    },
-   getPlaceholders ()
+   getImportedNodes ()
    {
-      return this .getMap (this .placeholders);
+      return this .getMap (this .importedNodes);
    },
    getMap (maps)
    {

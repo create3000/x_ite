@@ -1,6 +1,8 @@
 import Fields               from "../Fields.js";
 import X3DNode              from "../Components/Core/X3DNode.js";
+import X3DImportedNodeProxy from "../Components/Core/X3DImportedNodeProxy.js";
 import X3DPrototypeInstance from "../Components/Core/X3DPrototypeInstance.js";
+import X3DImportedNode      from "../Execution/X3DImportedNode.js";
 import X3DConstants         from "../Base/X3DConstants.js";
 
 class Placeholder extends X3DNode
@@ -10,6 +12,7 @@ class Placeholder extends X3DNode
    #lineNumber;
    #name;
    #namedNodes;
+   #importedNodes;
    #type;
    #typeName;
 
@@ -17,10 +20,11 @@ class Placeholder extends X3DNode
    {
       super (parser .getExecutionContext ());
 
-      this .#parser     = parser;
-      this .#lastIndex  = parser .lastIndex,
-      this .#lineNumber = parser .lineNumber;
-      this .#namedNodes = parser .getNamedNodes ();
+      this .#parser        = parser;
+      this .#lastIndex     = parser .lastIndex,
+      this .#lineNumber    = parser .lineNumber;
+      this .#namedNodes    = parser .getNamedNodes ();
+      this .#importedNodes = parser .getImportedNodes ();
 
       this .#name     = name;
       this .#type     = type;
@@ -45,8 +49,12 @@ class Placeholder extends X3DNode
    replaceWithNode ()
    {
       const
-         name = this .#name,
-         node = this .#namedNodes .get (name);
+         name      = this .#name,
+         localNode = this .#namedNodes .get (name) ?? this .#importedNodes .get (name);
+
+      const node = localNode instanceof X3DImportedNode
+         ? new X3DImportedNodeProxy (this .getExecutionContext (), localNode)
+         : node;
 
       if (!node)
       {

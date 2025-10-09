@@ -618,6 +618,11 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                   this .getExecutionContext () .addImportedNode (namedNode, exportedNodeNameId, nodeNameId);
 
+                  if (!this .getImportedNodes () .has (nodeNameId))
+                  {
+                     this .getImportedNodes () .set (nodeNameId, this .getExecutionContext () .getImportedNodes () .get (nodeNameId));
+                  }
+
                   return true;
                }
 
