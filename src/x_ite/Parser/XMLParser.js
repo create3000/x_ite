@@ -1,6 +1,7 @@
 import X3DField                  from "../Base/X3DField.js";
 import X3DBaseNode               from "../Base/X3DBaseNode.js";
 import X3DNode                   from "../Components/Core/X3DNode.js";
+import X3DImportedNodeProxy      from "../Components/Core/X3DImportedNodeProxy.js";
 import X3DPrototypeInstance      from "../Components/Core/X3DPrototypeInstance.js";
 import Fields                    from "../Fields.js";
 import X3DParser                 from "./X3DParser.js";
@@ -924,7 +925,12 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          {
             try
             {
-               const node = this .getExecutionContext () .getNamedNode (name) .getValue ();
+
+               const localNode = this .getExecutionContext () .getLocalNode (nodeNameId);
+
+               const node = localNode instanceof Fields .SFNode
+                  ? localNode .getValue ()
+                  : new X3DImportedNodeProxy (this .getExecutionContext (), localNode);
 
                // This check is also done in Placeholder.
 
