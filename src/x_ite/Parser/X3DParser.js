@@ -124,6 +124,8 @@ Object .assign (X3DParser .prototype,
       catch
       { }
    },
+   checkNodeType ()
+   { },
    getPlaceholders ()
    {
       return this .getMap (this .placeholders);

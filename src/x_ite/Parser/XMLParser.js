@@ -928,33 +928,23 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
          if (this .id (name))
          {
+            const nodeName = this .nodeNameToCamelCase (xmlElement .nodeName);
+
+            const Type = nodeName === "ProtoInstance"
+               ? this .getBrowser () .getAbstractNode ("X3DPrototypeInstance")
+               : this .getBrowser () .getConcreteNode (nodeName);
+
+            const typeName = xmlElement .getAttribute ("name");
+
             try
             {
-
-               const localNode = this .getExecutionContext () .getLocalNode (nodeNameId);
+               const localNode = this .getExecutionContext () .getLocalNode (name);
 
                const node = localNode instanceof Fields .SFNode
                   ? localNode .getValue ()
-                  : new X3DImportedNodeProxy (this .getExecutionContext (), localNode);
+                  : new X3DImportedNodeProxy (this .getExecutionContext (), localNode, Type);
 
-               // This check is also done in Placeholder.
-
-               if (this .nodeNameToCamelCase (xmlElement .nodeName) === "ProtoInstance")
-               {
-                  if (!node .getType () .includes (X3DConstants .X3DPrototypeInstance))
-                  {
-                     console .warn (`XML Parser: DEF/USE mismatch, '${name}', referenced node is not of type X3DPrototypeInstance.`);
-                  }
-                  else if (xmlElement .getAttribute ("name") !== node .getTypeName ())
-                  {
-                     console .warn (`XML Parser: DEF/USE mismatch, '${name}', name ${xmlElement .getAttribute ("name")} != ${node .getTypeName ()}.`);
-                  }
-               }
-               else if (this .nodeNameToCamelCase (xmlElement .nodeName) !== node .getTypeName ())
-               {
-                  console .warn (`XML Parser: DEF/USE mismatch, '${name}', ${xmlElement .nodeName} != ${node .getTypeName ()}.`);
-               }
-
+               this .checkNodeType (node, name, Type, typeName);
                this .addNode (xmlElement, node);
             }
             catch
@@ -967,14 +957,6 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                }
                else
                {
-                  const nodeName = this .nodeNameToCamelCase (xmlElement .nodeName);
-
-                  const Type = nodeName === "ProtoInstance"
-                     ? this .getBrowser () .getAbstractNode ("X3DPrototypeInstance")
-                     : this .getBrowser () .getConcreteNode (nodeName);
-
-                  const typeName = xmlElement .getAttribute ("name");
-
                   const placeholder = new Placeholder (this, name, Type, typeName);
 
                   this .getPlaceholders () .set (name, placeholder);
@@ -991,6 +973,27 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       }
 
       return false;
+   },
+   checkNodeType (node, name, type, typeName)
+   {
+      if (type !== X3DNode)
+      {
+         if (type === X3DPrototypeInstance)
+         {
+            if (!node .getType () .includes (X3DConstants .X3DPrototypeInstance))
+            {
+               console .warn (`XML Parser: DEF/USE mismatch, '${name}', referenced node is not of type X3DPrototypeInstance.`);
+            }
+            else if (typeName !== node .getTypeName ())
+            {
+               console .warn (`XML Parser: DEF/USE mismatch, '${name}', name ${typeName} != ${node .getTypeName ()}.`);
+            }
+         }
+         else if (type !== node .constructor)
+         {
+            console .warn (`XML Parser: DEF/USE mismatch, '${name}', ${type .typeName} != ${node .getTypeName ()}.`);
+         }
+      }
    },
    defAttribute (xmlElement, node)
    {

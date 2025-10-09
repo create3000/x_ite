@@ -53,8 +53,8 @@ class Placeholder extends X3DNode
          localNode = this .#namedNodes .get (name) ?? this .#importedNodes .get (name);
 
       const node = localNode instanceof X3DImportedNode
-         ? new X3DImportedNodeProxy (this .getExecutionContext (), localNode)
-         : node;
+         ? new X3DImportedNodeProxy (this .getExecutionContext (), localNode, this .#type)
+         : localNode;
 
       if (!node)
       {
@@ -64,7 +64,7 @@ class Placeholder extends X3DNode
          throw new Error (`Named node '${name}' not found.`);
       }
 
-      this .checkPlaceholderType (node);
+      this .#parser .checkNodeType (node, this .#name, this .#type, this .#typeName);
 
       for (const parent of this .getParents ())
       {
@@ -72,32 +72,6 @@ class Placeholder extends X3DNode
             continue;
 
          parent .setValue (node);
-      }
-   }
-
-   checkPlaceholderType (node)
-   {
-      const
-         name = this .#name,
-         type = this .#type;
-
-      if (type !== X3DNode)
-      {
-         if (type === X3DPrototypeInstance)
-         {
-            if (!node .getType () .includes (X3DConstants .X3DPrototypeInstance))
-            {
-               console .warn (`XML Parser: DEF/USE mismatch, '${name}', referenced node is not of type X3DPrototypeInstance.`);
-            }
-            else if (this .#typeName !== node .getTypeName ())
-            {
-               console .warn (`XML Parser: DEF/USE mismatch, '${name}', name ${this .#typeName} != ${node .getTypeName ()}.`);
-            }
-         }
-         else if (type !== node .constructor)
-         {
-            console .warn (`XML Parser: DEF/USE mismatch, '${name}', ${type .typeName} != ${node .getTypeName ()}.`);
-         }
       }
    }
 }
