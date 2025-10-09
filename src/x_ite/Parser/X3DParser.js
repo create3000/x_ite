@@ -5,6 +5,7 @@ function X3DParser (scene)
    this .scene             = scene;
    this .executionContexts = [ scene ];
    this .prototypes        = [ ];
+   this .namedNodes        = new Map ();
    this .placeholders      = new Map ();
    this .nodes             = [ ];
 }
@@ -122,23 +123,31 @@ Object .assign (X3DParser .prototype,
       catch
       { }
    },
+   getNamedNodes ()
+   {
+      return this .getMap (this .namedNodes);
+   },
    getPlaceholders ()
+   {
+      return this .getMap (this .placeholders);
+   },
+   getMap (maps)
    {
       const
          executionContext = this .getExecutionContext (),
-         placeholders     = this .placeholders .get (executionContext);
+         map              = maps .get (executionContext);
 
-      if (placeholders)
+      if (map)
       {
-         return placeholders;
+         return map;
       }
       else
       {
-         const placeholders = new Map ();
+         const map = new Map ();
 
-         this .placeholders .set (executionContext, placeholders);
+         maps .set (executionContext, map);
 
-         return placeholders;
+         return map;
       }
    },
 });

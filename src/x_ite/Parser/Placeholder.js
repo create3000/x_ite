@@ -7,15 +7,17 @@ class Placeholder extends X3DNode
 {
    #executionContext;
    #name;
+   #namedNodes;
    #type;
    #typeName;
 
-   constructor (executionContext, name, type = X3DNode, typeName)
+   constructor (executionContext, name, namedNodes, type = X3DNode, typeName)
    {
       super (executionContext);
 
       this .#executionContext = executionContext;
       this .#name             = name;
+      this .#namedNodes       = namedNodes;
       this .#type             = type;
       this .#typeName         = typeName;
    }
@@ -37,7 +39,12 @@ class Placeholder extends X3DNode
 
    replaceWithNode ()
    {
-      const node = this .#executionContext .getLocalNode (this .#name) .getValue ();
+      const
+         name = this .#name,
+         node = this .#namedNodes .get (name);
+
+      if (!node)
+         throw new Error (`Named node '${name}' not found.`);
 
       this .checkPlaceholderType (node);
 

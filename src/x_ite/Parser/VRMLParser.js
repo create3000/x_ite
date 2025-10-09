@@ -616,6 +616,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                   // Add new imported node.
 
                   this .getExecutionContext () .addImportedNode (namedNode, exportedNodeNameId, nodeNameId);
+
                   return true;
                }
 
@@ -674,21 +675,28 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       {
          if (this .nodeNameId ())
          {
-            const
-               name        = this .result [0],
-               placeholder = this .getPlaceholders () .get (name);
+            const nodeNameId = this .result [0];
 
-            if (placeholder)
+            try
             {
-               return placeholder;
+               return this .getExecutionContext () .getNamedNode (nodeNameId) .getValue ();
             }
-            else
+            catch
             {
-               const placeholder = new Placeholder (this .getExecutionContext (), name);
+               const placeholder = this .getPlaceholders () .get (nodeNameId);
 
-               this .getPlaceholders () .set (name, placeholder);
+               if (placeholder)
+               {
+                  return placeholder;
+               }
+               else
+               {
+                  const placeholder = new Placeholder (this .getExecutionContext (), nodeNameId, this .getNamedNodes ());
 
-               return placeholder;
+                  this .getPlaceholders () .set (nodeNameId, placeholder);
+
+                  return placeholder;
+               }
             }
          }
 
@@ -1265,6 +1273,9 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
          if (nodeNameId .length)
          {
+            if (!this .getNamedNodes () .has (nodeNameId))
+               this .getNamedNodes () .set (nodeNameId, baseNode);
+
             this .renameExistingNode (nodeNameId);
 
             this .getExecutionContext () .updateNamedNode (nodeNameId, baseNode);

@@ -922,27 +922,33 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
          if (this .id (name))
          {
-            const placeholder = this .getPlaceholders () .get (name);
-
-            if (placeholder)
+            try
             {
-               this .addNode (xmlElement, placeholder);
+               this .addNode (xmlElement, this .getExecutionContext () .getNamedNode (name) .getValue ());
             }
-            else
+            catch
             {
-               const nodeName = this .nodeNameToCamelCase (xmlElement .nodeName);
+               const placeholder = this .getPlaceholders () .get (name);
 
-               const Type = nodeName === "ProtoInstance"
-                  ? this .getBrowser () .getAbstractNode ("X3DPrototypeInstance")
-                  : this .getBrowser () .getConcreteNode (nodeName);
+               if (placeholder)
+               {
+                  this .addNode (xmlElement, placeholder);
+               }
+               else
+               {
+                  const nodeName = this .nodeNameToCamelCase (xmlElement .nodeName);
 
-               const typeName = xmlElement .getAttribute ("name");
+                  const Type = nodeName === "ProtoInstance"
+                     ? this .getBrowser () .getAbstractNode ("X3DPrototypeInstance")
+                     : this .getBrowser () .getConcreteNode (nodeName);
 
-               const placeholder = new Placeholder (this .getExecutionContext (), name, Type, typeName);
+                  const typeName = xmlElement .getAttribute ("name");
 
-               this .getPlaceholders () .set (name, placeholder);
+                  const placeholder = new Placeholder (this .getExecutionContext (), name, this .getNamedNodes (), Type, typeName);
 
-               this .addNode (xmlElement, placeholder);
+                  this .getPlaceholders () .set (name, placeholder);
+                  this .addNode (xmlElement, placeholder);
+               }
             }
 
             return true;
@@ -963,6 +969,9 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
          if (name)
          {
+            if (!this .getNamedNodes () .has (name))
+               this .getNamedNodes () .set (name, node);
+
             this .renameExistingNode (name);
 
             this .getExecutionContext () .updateNamedNode (name, node);
