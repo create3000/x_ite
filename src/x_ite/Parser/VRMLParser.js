@@ -691,7 +691,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                }
                else
                {
-                  const placeholder = new Placeholder (this .getExecutionContext (), nodeNameId, this .getNamedNodes ());
+                  const placeholder = new Placeholder (this, nodeNameId);
 
                   this .getPlaceholders () .set (nodeNameId, placeholder);
 

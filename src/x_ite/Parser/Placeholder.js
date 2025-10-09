@@ -5,21 +5,26 @@ import X3DConstants         from "../Base/X3DConstants.js";
 
 class Placeholder extends X3DNode
 {
-   #executionContext;
+   #parser;
+   #lastIndex;
+   #lineNumber;
    #name;
    #namedNodes;
    #type;
    #typeName;
 
-   constructor (executionContext, name, namedNodes, type = X3DNode, typeName)
+   constructor (parser, name, type = X3DNode, typeName)
    {
-      super (executionContext);
+      super (parser .getExecutionContext ());
 
-      this .#executionContext = executionContext;
-      this .#name             = name;
-      this .#namedNodes       = namedNodes;
-      this .#type             = type;
-      this .#typeName         = typeName;
+      this .#parser     = parser;
+      this .#lastIndex  = parser .lastIndex,
+      this .#lineNumber = parser .lineNumber;
+      this .#namedNodes = parser .getNamedNodes ();
+
+      this .#name     = name;
+      this .#type     = type;
+      this .#typeName = typeName;
    }
 
    getComponentInfo ()
@@ -44,7 +49,12 @@ class Placeholder extends X3DNode
          node = this .#namedNodes .get (name);
 
       if (!node)
+      {
+         this .#parser .lastIndex  = this .#lastIndex;
+         this .#parser .lineNumber = this .#lineNumber;
+
          throw new Error (`Named node '${name}' not found.`);
+      }
 
       this .checkPlaceholderType (node);
 

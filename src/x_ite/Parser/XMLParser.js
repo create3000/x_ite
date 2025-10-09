@@ -927,7 +927,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                const node = this .getExecutionContext () .getNamedNode (name) .getValue ();
 
                // This check is also done in Placeholder.
-               
+
                if (this .nodeNameToCamelCase (xmlElement .nodeName) === "ProtoInstance")
                {
                   if (!node .getType () .includes (X3DConstants .X3DPrototypeInstance))
@@ -964,7 +964,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
                   const typeName = xmlElement .getAttribute ("name");
 
-                  const placeholder = new Placeholder (this .getExecutionContext (), name, this .getNamedNodes (), Type, typeName);
+                  const placeholder = new Placeholder (this, name, Type, typeName);
 
                   this .getPlaceholders () .set (name, placeholder);
                   this .addNode (xmlElement, placeholder);
