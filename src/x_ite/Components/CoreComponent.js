@@ -7,6 +7,7 @@ import MetadataString       from "./Core/MetadataString.js";
 import WorldInfo            from "./Core/WorldInfo.js";
 import X3DBindableNode      from "./Core/X3DBindableNode.js";
 import X3DChildNode         from "./Core/X3DChildNode.js";
+import X3DImportedNodeProxy from "./Core/X3DImportedNodeProxy.js";
 import X3DInfoNode          from "./Core/X3DInfoNode.js";
 import X3DMetadataObject    from "./Core/X3DMetadataObject.js";
 import X3DNode              from "./Core/X3DNode.js";
@@ -29,6 +30,7 @@ export default {
    [
       X3DBindableNode,
       X3DChildNode,
+      X3DImportedNodeProxy,
       X3DInfoNode,
       X3DMetadataObject,
       X3DNode,

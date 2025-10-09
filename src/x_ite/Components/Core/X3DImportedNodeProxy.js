@@ -28,46 +28,21 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
    {
       return this [_importedNode] .getExportedNode ();
    },
-   getTypeName ()
+   ... Object .fromEntries ([
+      "getTypeName",
+      "getName",
+      "getFieldDefinitions",
+      "getPredefinedField",
+      "getPredefinedFields",
+      "getUserDefinedField",
+      "getUserDefinedFields",
+      "getFields",
+   ]
+   .map (fn => [fn, function (... args)
    {
-      return $.try (() => this [_importedNode] .getExportedNode () .getTypeName ())
-         ?? "X3DImportedNode";
-   },
-   getName ()
-   {
-      return $.try (() => this [_importedNode] .getExportedNode () .getName ())
-         ?? "";
-   },
-   getFieldDefinitions ()
-   {
-      return $.try (() => this [_importedNode] .getExportedNode () .getFieldDefinitions ())
-         ?? X3DNode .prototype .getFieldDefinitions .call (this);
-   },
-   getPredefinedField (name)
-   {
-      return $.try (() => this [_importedNode] .getExportedNode () .getPredefinedField (name))
-         ?? X3DNode .prototype .getPredefinedField .call (this, name);
-   },
-   getPredefinedFields ()
-   {
-      return $.try (() => this [_importedNode] .getExportedNode () .getPredefinedFields ())
-         ?? X3DNode .prototype .getPredefinedFields .call (this);
-   },
-   getUserDefinedField (name)
-   {
-      return $.try (() => this [_importedNode] .getExportedNode () .getUserDefinedField (name))
-         ?? X3DNode .prototype .getUserDefinedField .call (this, name);
-   },
-   getUserDefinedFields ()
-   {
-      return $.try (() => this [_importedNode] .getExportedNode () .getUserDefinedFields ())
-         ?? X3DNode .prototype .getUserDefinedFields .call (this);
-   },
-   getFields ()
-   {
-      return $.try (() => this [_importedNode] .getExportedNode () .getFields ())
-         ?? X3DNode .prototype .getFields .call (this);
-   },
+      return $.try (() => this [_importedNode] .getExportedNode () [fn] (... args))
+         ?? X3DNode .prototype [fn] .call (this, ... args);
+   }])),
    set_loadState__ ()
    {
       X3DChildObject .prototype .addEvent .call (this);
