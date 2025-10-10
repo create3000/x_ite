@@ -270,10 +270,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       const node = this [_namedNodes] .get (name);
 
-      if (!node || !node .getValue ())
-         return;
-
-      node .getValue () .setName ("");
+      node ?.getValue () ?.setName ("");
 
       this [_namedNodes] .remove (name);
 
@@ -285,7 +282,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       const node = this [_namedNodes] .get (name);
 
-      if (node)
+      if (node ?.getValue ())
          return node;
 
       throw new Error (`Named node '${name}' not found.`);
@@ -411,7 +408,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
     */
    getLocalizedNode (node)
    {
-      node = X3DCast (X3DConstants .X3DNode, node, false) ?.valueOf ()
+      node = X3DCast (X3DConstants .X3DNode, node, false)
          ?? (node instanceof X3DImportedNode ? node : null);
 
       if (!node)
