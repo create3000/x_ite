@@ -112,7 +112,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    async loadData ()
    {
       // See: 29.2.2 Script execution
-      // Wait a tick to get user-defined field with name self working.
+      // Wait a tick to get user-defined field with name 'self' working.
       await this .unloadData ();
 
       new FileLoader (this) .loadDocument (this ._url, async data =>
