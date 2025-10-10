@@ -36,6 +36,10 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
    {
       return this [_importedNode] .getExportedNode ();
    },
+   getName ()
+   {
+      return this [_importedNode] .getImportedName ();
+   },
    ... Object .fromEntries ([
       ["getComponentInfo",      "componentInfo"],
       ["getContainerField",     "containerField"],
@@ -49,8 +53,6 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
    }])),
    ... Object .fromEntries ([
       "getType",
-      "getName",
-      "getDisplayName",
       "getFieldDefinitions",
       "getPredefinedField",
       "getPredefinedFields",
