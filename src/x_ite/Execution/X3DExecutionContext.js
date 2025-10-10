@@ -413,11 +413,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          throw new Error ("Couldn't get localized node: node must be of type X3DNode.");
 
       if (node .getExecutionContext () === this)
-      {
-         return node instanceof X3DImportedNodeProxy
-            ? node .getImportedNode ()
-            : node;
-      }
+         return node;
 
       for (const importedNode of this [_importedNodes])
       {
