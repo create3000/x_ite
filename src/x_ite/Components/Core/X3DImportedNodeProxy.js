@@ -78,18 +78,22 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
    },
    toVRMLStream (generator)
    {
+      const importedName = generator .ImportedName (this [_importedNode]);
+
       generator .string += "USE";
       generator .string += generator .Space ();
-      generator .string += this [_importedNode] .getImportedName ();
+      generator .string += importedName;
    },
    toXMLStream (generator)
    {
+      const importedName = generator .ImportedName (this [_importedNode]);
+
       generator .openTag (this .getTypeName ());
 
       if (generator .html && this .getTypeName () === "Script")
          generator .attribute ("type", "model/x3d+xml");
 
-      generator .attribute ("USE", this [_importedNode] .getImportedName ());
+      generator .attribute ("USE", importedName);
 
       const containerField = generator .ContainerField ();
 
@@ -103,8 +107,10 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
    },
    toJSONStream (generator)
    {
+      const importedName = generator .ImportedName (this [_importedNode]);
+
       generator .beginObject (this .getTypeName (), false, true);
-      generator .stringProperty ("@USE", this [_importedNode] .getImportedName (), false);
+      generator .stringProperty ("@USE", importedName, false);
       generator .endObject ();
       generator .endObject ();
    },
