@@ -404,6 +404,11 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          throw new Error (`Unknown named or imported node '${name}'.`);
       }
    },
+   /**
+    *
+    * @param {SFNode|X3DNode|X3DImportedNode} node
+    * @returns either an X3DImportedNode if possible or X3DNode
+    */
    getLocalizedNode (node)
    {
       node = X3DCast (X3DConstants .X3DNode, node, false) ?.valueOf ()
