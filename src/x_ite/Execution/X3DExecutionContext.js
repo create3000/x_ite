@@ -406,12 +406,18 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    },
    getLocalizedNode (node)
    {
-      const importedNode = node instanceof X3DImportedNode ? node : null;
-
-      node = X3DCast (X3DConstants .X3DNode, node, false) ?? importedNode;
+      node = X3DCast (X3DConstants .X3DNode, node, false) ?.valueOf ()
+         ?? (node instanceof X3DImportedNode ? node : null);
 
       if (!node)
          throw new Error ("Couldn't get localized node: node must be of type X3DNode.");
+
+      if (node .getExecutionContext () === this)
+      {
+         return node instanceof X3DImportedNodeProxy
+            ? node .getImportedNode ()
+            : node;
+      }
 
       for (const importedNode of this [_importedNodes])
       {
@@ -600,7 +606,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       {
          // Normalize arguments.
 
-         let
+         const
             importedSourceNode      = sourceNode      instanceof X3DImportedNode ? sourceNode      : null,
             importedDestinationNode = destinationNode instanceof X3DImportedNode ? destinationNode : null;
 
@@ -608,18 +614,6 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          sourceField      = String (sourceField);
          destinationNode  = X3DCast (X3DConstants .X3DNode, destinationNode, false) ?? importedDestinationNode;
          destinationField = String (destinationField);
-
-         if (sourceNode instanceof X3DImportedNodeProxy)
-         {
-            importedSourceNode = sourceNode .getImportedNode ();
-            sourceNode         = importedSourceNode;
-         }
-
-         if (destinationNode instanceof X3DImportedNodeProxy)
-         {
-            importedDestinationNode = destinationNode .getImportedNode ();
-            destinationNode         = importedDestinationNode;
-         }
 
          // Check nodes.
 
@@ -678,7 +672,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    {
       // Normalize arguments.
 
-      let
+      const
          importedSourceNode      = sourceNode      instanceof X3DImportedNode ? sourceNode      : null,
          importedDestinationNode = destinationNode instanceof X3DImportedNode ? destinationNode : null;
 
@@ -686,18 +680,6 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       sourceField      = String (sourceField)
       destinationNode  = X3DCast (X3DConstants .X3DNode, destinationNode, false) ?? importedDestinationNode;
       destinationField = String (destinationField)
-
-      if (sourceNode instanceof X3DImportedNodeProxy)
-      {
-         importedSourceNode = sourceNode .getImportedNode ();
-         sourceNode         = importedSourceNode;
-      }
-
-      if (destinationNode instanceof X3DImportedNodeProxy)
-      {
-         importedDestinationNode = destinationNode .getImportedNode ();
-         destinationNode         = importedDestinationNode;
-      }
 
       // Check nodes.
 
