@@ -734,12 +734,10 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       // Output root nodes
 
-      const rootNodes = this .getRootNodes ();
+      const rootNodes = this .getRootNodes () .getValue ();
 
-      for (let i = 0, length = rootNodes .length; i < length; ++ i)
+      for (const rootNode of rootNodes)
       {
-         const rootNode = rootNodes [i];
-
          generator .string += generator .Indent ();
 
          if (rootNode)
@@ -749,7 +747,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
          generator .string += generator .TidyBreak ();
 
-         if (i !== length - 1)
+         if (rootNode !== rootNodes .at (-1))
             generator .string += generator .TidyBreak ();
       }
 
@@ -829,23 +827,20 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       // Root nodes
 
-      if (this .getRootNodes () .length)
+      for (const rootNode of this .getRootNodes () .getValue ())
       {
-         for (const rootNode of this .getRootNodes ())
-         {
-            if (comma)
-               generator .string += ',';
+         if (comma)
+            generator .string += ',';
 
-            generator .string += generator .TidyBreak ();
-            generator .string += generator .Indent ();
+         generator .string += generator .TidyBreak ();
+         generator .string += generator .Indent ();
 
-            if (rootNode)
-               rootNode .toJSONStream (generator);
-            else
-               generator .string += "null";
+         if (rootNode)
+            rootNode .toJSONStream (generator);
+         else
+            generator .string += "null";
 
-            comma = true;
-         }
+         comma = true;
       }
 
       this .getImportedNodes () .toJSONStream (generator, comma);
