@@ -56,6 +56,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
       "getPredefinedFields",
       "getUserDefinedField",
       "getUserDefinedFields",
+      "getField",
       "getFields",
       "getChangedFields",
       "isDefaultValue",

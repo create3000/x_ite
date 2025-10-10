@@ -5,6 +5,7 @@ import { getUniqueName }           from "./NamedNodesHandling.js";
 import NamedNodesArray             from "./NamedNodesArray.js";
 import X3DImportedNode             from "./X3DImportedNode.js";
 import ImportedNodesArray          from "./ImportedNodesArray.js";
+import X3DImportedNodeProxy        from "../Components/Core/X3DImportedNodeProxy.js";
 import ExternProtoDeclarationArray from "../Prototype/ExternProtoDeclarationArray.js";
 import ProtoDeclarationArray       from "../Prototype/ProtoDeclarationArray.js";
 import X3DProtoDeclaration         from "../Prototype/X3DProtoDeclaration.js";
@@ -599,7 +600,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       {
          // Normalize arguments.
 
-         const
+         let
             importedSourceNode      = sourceNode      instanceof X3DImportedNode ? sourceNode      : null,
             importedDestinationNode = destinationNode instanceof X3DImportedNode ? destinationNode : null;
 
@@ -607,6 +608,20 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          sourceField      = String (sourceField);
          destinationNode  = X3DCast (X3DConstants .X3DNode, destinationNode, false) ?? importedDestinationNode;
          destinationField = String (destinationField);
+
+         if (sourceNode instanceof X3DImportedNodeProxy)
+         {
+            importedSourceNode = sourceNode .getImportedNode ();
+            sourceNode         = importedSourceNode;
+         }
+
+         if (destinationNode instanceof X3DImportedNodeProxy)
+         {
+            importedDestinationNode = destinationNode .getImportedNode ();
+            destinationNode         = importedDestinationNode;
+         }
+
+         // Check nodes.
 
          if (!sourceNode)
             throw new Error ("source node must be of type X3DNode or X3DImportedNode.");
@@ -663,7 +678,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    {
       // Normalize arguments.
 
-      const
+      let
          importedSourceNode      = sourceNode      instanceof X3DImportedNode ? sourceNode      : null,
          importedDestinationNode = destinationNode instanceof X3DImportedNode ? destinationNode : null;
 
@@ -671,6 +686,20 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       sourceField      = String (sourceField)
       destinationNode  = X3DCast (X3DConstants .X3DNode, destinationNode, false) ?? importedDestinationNode;
       destinationField = String (destinationField)
+
+      if (sourceNode instanceof X3DImportedNodeProxy)
+      {
+         importedSourceNode = sourceNode .getImportedNode ();
+         sourceNode         = importedSourceNode;
+      }
+
+      if (destinationNode instanceof X3DImportedNodeProxy)
+      {
+         importedDestinationNode = destinationNode .getImportedNode ();
+         destinationNode         = importedDestinationNode;
+      }
+
+      // Check nodes.
 
       if (!sourceNode)
          throw new Error ("Bad ROUTE specification: sourceNode must be of type X3DNode.");
