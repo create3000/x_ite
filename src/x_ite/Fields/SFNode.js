@@ -344,7 +344,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
    {
       const
          target = this [_target],
-         value  = target .getValue ();
+         value  = target .getValue () ?.valueOf ();
 
       return value ? SFNodeCache .get (value) : null;
    },

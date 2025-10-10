@@ -50,8 +50,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
    ]
    .map (([fn, property]) => [fn, function ()
    {
-      return $.try (() => this [_importedNode] .getExportedNode () [fn] ())
-         ?? this [_type] [property];
+      return this .valueOf () ?.[fn] () ?? this [_type] [property];
    }])),
    ... Object .fromEntries ([
       "getType",
@@ -68,15 +67,18 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
    ]
    .map (fn => [fn, function (... args)
    {
-      return $.try (() => this [_importedNode] .getExportedNode () [fn] (... args))
-         ?? X3DNode .prototype [fn] .call (this, ... args);
+      return this .valueOf () ?.[fn] (... args) ?? X3DNode .prototype [fn] .call (this, ... args);
    }])),
    set_loadState__ ()
    {
       if (this [_importedNode] .getInlineNode () .checkLoadState () === X3DConstants .COMPLETE_STATE)
-         this [_type] = this [_importedNode] .getExportedNode () .constructor;
+         this [_type] = this .valueOf () .constructor;
 
       X3DChildObject .prototype .addEvent .call (this);
+   },
+   valueOf ()
+   {
+      return $.try (() => this [_importedNode] .getExportedNode ()) ?? null;
    },
    toVRMLStream (generator)
    {
