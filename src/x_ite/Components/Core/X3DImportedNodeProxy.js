@@ -28,6 +28,10 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
    {
       return false;
    },
+   getImportedNode ()
+   {
+      return this [_importedNode];
+   },
    getInnerNode ()
    {
       return this [_importedNode] .getExportedNode ();
@@ -44,6 +48,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
          ?? this [_type] [property];
    }])),
    ... Object .fromEntries ([
+      "getType",
       "getName",
       "getDisplayName",
       "getFieldDefinitions",

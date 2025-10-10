@@ -1,7 +1,6 @@
 import X3DField                  from "../Base/X3DField.js";
 import X3DBaseNode               from "../Base/X3DBaseNode.js";
 import X3DNode                   from "../Components/Core/X3DNode.js";
-import X3DImportedNodeProxy      from "../Components/Core/X3DImportedNodeProxy.js";
 import X3DPrototypeInstance      from "../Components/Core/X3DPrototypeInstance.js";
 import Fields                    from "../Fields.js";
 import X3DParser                 from "./X3DParser.js";
@@ -930,7 +929,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          {
             const nodeName = this .nodeNameToCamelCase (xmlElement .nodeName);
 
-            const Type = nodeName === "ProtoInstance"
+            const type = nodeName === "ProtoInstance"
                ? this .getBrowser () .getAbstractNode ("X3DPrototypeInstance")
                : this .getBrowser () .getConcreteNode (nodeName);
 
@@ -942,9 +941,9 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
                const node = localNode instanceof Fields .SFNode
                   ? localNode .getValue ()
-                  : new X3DImportedNodeProxy (this .getExecutionContext (), localNode, Type);
+                  : localNode .getProxyNode (localNode, type);
 
-               this .checkNodeType (node, name, Type, typeName);
+               this .checkNodeType (node, name, type, typeName);
                this .addNode (xmlElement, node);
             }
             catch
@@ -957,7 +956,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                }
                else
                {
-                  const placeholder = new Placeholder (this, name, Type, typeName);
+                  const placeholder = new Placeholder (this, name, type, typeName);
 
                   this .getPlaceholders () .set (name, placeholder);
                   this .addNode (xmlElement, placeholder);

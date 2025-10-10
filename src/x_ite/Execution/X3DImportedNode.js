@@ -1,11 +1,13 @@
-import X3DObject   from "../Base/X3DObject.js";
-import SFNodeCache from "../Fields/SFNodeCache.js";
+import X3DObject            from "../Base/X3DObject.js";
+import SFNodeCache          from "../Fields/SFNodeCache.js";
+import X3DImportedNodeProxy from "../Components/Core/X3DImportedNodeProxy.js";
 
 const
    _executionContext = Symbol (),
    _inlineNode       = Symbol (),
    _exportedName     = Symbol (),
-   _importedName     = Symbol ();
+   _importedName     = Symbol (),
+   _proxyNode        = Symbol ();
 
 function X3DImportedNode (executionContext, inlineNode, exportedName, importedName)
 {
@@ -47,6 +49,10 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    [Symbol .for ("X_ITE.X3DImportedNode.setImportName")] (importName)
    {
       this [_importedName] = importName;
+   },
+   getProxyNode (type)
+   {
+      return this [_proxyNode] ??= new X3DImportedNodeProxy (this .getExecutionContext (), this, type);
    },
    toVRMLStream (generator)
    {

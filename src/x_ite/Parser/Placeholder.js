@@ -1,9 +1,6 @@
-import Fields               from "../Fields.js";
-import X3DNode              from "../Components/Core/X3DNode.js";
-import X3DImportedNodeProxy from "../Components/Core/X3DImportedNodeProxy.js";
-import X3DPrototypeInstance from "../Components/Core/X3DPrototypeInstance.js";
-import X3DImportedNode      from "../Execution/X3DImportedNode.js";
-import X3DConstants         from "../Base/X3DConstants.js";
+import Fields          from "../Fields.js";
+import X3DNode         from "../Components/Core/X3DNode.js";
+import X3DImportedNode from "../Execution/X3DImportedNode.js";
 
 class Placeholder extends X3DNode
 {
@@ -53,7 +50,7 @@ class Placeholder extends X3DNode
          localNode = this .#namedNodes .get (name) ?? this .#importedNodes .get (name);
 
       const node = localNode instanceof X3DImportedNode
-         ? new X3DImportedNodeProxy (this .getExecutionContext (), localNode, this .#type)
+         ? localNode .getProxyNode (this .#type)
          : localNode;
 
       if (!node)

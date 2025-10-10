@@ -2,7 +2,6 @@ import X3DParser                 from "./X3DParser.js";
 import Expressions               from "./Expressions.js";
 import Fields                    from "../Fields.js";
 import X3DField                  from "../Base/X3DField.js";
-import X3DImportedNodeProxy      from "../Components/Core/X3DImportedNodeProxy.js";
 import X3DExternProtoDeclaration from "../Prototype/X3DExternProtoDeclaration.js";
 import X3DProtoDeclaration       from "../Prototype/X3DProtoDeclaration.js";
 import X3DConstants              from "../Base/X3DConstants.js";
@@ -689,7 +688,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                return localNode instanceof Fields .SFNode
                   ? localNode .getValue ()
-                  : new X3DImportedNodeProxy (this .getExecutionContext (), localNode);
+                  : localNode .getProxyNode (localNode);
             }
             catch
             {
