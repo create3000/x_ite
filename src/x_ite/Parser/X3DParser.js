@@ -108,7 +108,7 @@ Object .assign (X3DParser .prototype,
 
          executionContext .updateNamedNode (executionContext .getUniqueName (name), namedNode);
 
-         console .warn (`Duplicate DEF name '${name}' in file '${executionContext .getWorldURL ()}'.`);
+         // console .warn (`Duplicate DEF name '${name}' in file '${executionContext .getWorldURL ()}'.`);
       }
       catch
       { }
@@ -119,7 +119,7 @@ Object .assign (X3DParser .prototype,
 
          executionContext .renameImportedNode (name, importedName);
 
-         console .warn (`Duplicate imported name '${name}' in file '${executionContext .getWorldURL ()}'.`);
+         // console .warn (`Duplicate imported name '${name}' in file '${executionContext .getWorldURL ()}'.`);
       }
       catch
       { }
