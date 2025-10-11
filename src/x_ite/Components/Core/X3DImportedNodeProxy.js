@@ -72,8 +72,12 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
    set_loadState__ ()
    {
       if (this [_importedNode] .getInlineNode () .checkLoadState () === X3DConstants .COMPLETE_STATE)
-         this [_type] = this .valueOf () .constructor;
+         this [_type] = this .valueOf () ?.constructor ?? this [_type];
 
+      this .addChildEvent ();
+   },
+   addChildEvent ()
+   {
       X3DChildObject .prototype .addEvent .call (this);
    },
    valueOf ()
