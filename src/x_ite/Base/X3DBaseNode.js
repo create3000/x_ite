@@ -58,7 +58,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    {
       X3DChildObject .prototype .setName .call (this, value)
 
-      this ._name_changed = this [_browser] .getCurrentTime ();
+      this ._name_changed = Date .now () / 1000;
    },
    getBrowser ()
    {
@@ -488,7 +488,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    },
    parentsChanged ()
    {
-      const time = this [_browser] .getCurrentTime ();
+      const time = Date .now () / 1000;
 
       if (this [_executionContext])
          this [_executionContext] ._sceneGraph_changed = time;

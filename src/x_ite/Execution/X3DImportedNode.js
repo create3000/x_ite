@@ -49,6 +49,8 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    [Symbol .for ("X_ITE.X3DImportedNode.setImportName")] (importName)
    {
       this [_importedName] = importName;
+
+      this .getProxyNode () ._name_changed = Date .now () / 1000;
    },
    getProxyNode (type)
    {
