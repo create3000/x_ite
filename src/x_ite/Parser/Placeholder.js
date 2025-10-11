@@ -63,7 +63,7 @@ class Placeholder extends X3DNode
 
       this .#parser .checkNodeType (node, this .#name, this .#type, this .#typeName);
 
-      for (const parent of this .getParents ())
+      for (const parent of new Set (this .getParents ()))
       {
          if (!(parent instanceof Fields .SFNode))
             continue;
