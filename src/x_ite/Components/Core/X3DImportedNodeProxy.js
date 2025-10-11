@@ -78,6 +78,10 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
    {
       return false;
    },
+   getExecutionContext ()
+   {
+      return X3DNode .prototype .getExecutionContext .call (this);
+   },
    getImportedNode ()
    {
       return this [_importedNode];
