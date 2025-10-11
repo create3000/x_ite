@@ -6,14 +6,62 @@ const
    _importedNode = Symbol (),
    _type         = Symbol ();
 
+const handler =
+{
+   get (target, key)
+   {
+      if (key in target)
+         return target [key];
+
+      const property = target .valueOf () ?.[key];
+
+      if (typeof property === "function")
+         return property .bind (target .valueOf ());
+
+      return property;
+   },
+   set (target, key, value)
+   {
+      if (key in target)
+      {
+         target [key] = value;
+      }
+      else
+      {
+         const node = target .valueOf ();
+
+         if (node)
+            node [key] = value;
+      }
+
+      return true;
+   },
+   has (target, key)
+   {
+      return key in (target .valueOf () ?? { });
+   },
+   ownKeys (target)
+   {
+      return Object .keys (target .valueOf () ?? { });
+   },
+   getOwnPropertyDescriptor (target, key)
+   {
+      return Object .getOwnPropertyDescriptor (target .valueOf () ?? { }, key);
+   },
+}
+
 function X3DImportedNodeProxy (executionContext, importedNode, type = X3DNode)
 {
    X3DNode .call (this, executionContext);
+
+   const proxy = new Proxy (this, handler);
 
    this [_importedNode] = importedNode;
    this [_type]         = type;
 
    this .setup ();
+
+   return proxy;
 }
 
 Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode .prototype),
@@ -74,10 +122,8 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
       if (this [_importedNode] .getInlineNode () .checkLoadState () === X3DConstants .COMPLETE_STATE)
          this [_type] = this .valueOf () ?.constructor ?? this [_type];
 
-      this .addChildEvent ();
-   },
-   addChildEvent ()
-   {
+      this ._typeName_changed = Date .now () / 1000;
+
       X3DChildObject .prototype .addEvent .call (this);
    },
    valueOf ()
