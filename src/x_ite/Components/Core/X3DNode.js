@@ -1449,12 +1449,12 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
       // Remove node from entire scene graph.
 
-      for (const firstParent of new Set (this .getParents ()))
+      for (const firstParent of Array .from (this .getParents ()))
       {
          if (!(firstParent instanceof Fields .SFNode))
             continue;
 
-         for (const secondParent of new Set (firstParent .getParents ()))
+         for (const secondParent of Array .from (firstParent .getParents ()))
          {
             if (!(secondParent instanceof Fields .MFNode))
                continue;
@@ -1463,7 +1463,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
          }
       }
 
-      for (const firstParent of new Set (this .getParents ()))
+      for (const firstParent of Array .from (this .getParents ()))
       {
          if (!(firstParent instanceof Fields .SFNode))
             continue;
