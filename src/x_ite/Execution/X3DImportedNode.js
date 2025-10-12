@@ -7,11 +7,13 @@ const
    _inlineNode       = Symbol (),
    _exportedName     = Symbol (),
    _importedName     = Symbol (),
-   _proxyNode        = Symbol ();
+   _proxyNodes       = Symbol ();
 
 function X3DImportedNode (executionContext, inlineNode, exportedName, importedName)
 {
    X3DObject .call (this);
+
+   executionContext [_proxyNodes] ??= new Map ();
 
    this [_executionContext] = executionContext;
    this [_inlineNode]       = inlineNode;
@@ -46,15 +48,26 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    {
       return this [_importedName];
    },
-   [Symbol .for ("X_ITE.X3DImportedNode.setImportName")] (importName)
+   [Symbol .for ("X_ITE.X3DImportedNode.setImportName")] (importedName)
    {
-      this [_importedName] = importName;
+      this [_importedName] = importedName;
 
-      this .getProxyNode () .setName (importName);
+      this .getProxyNode () .setName (importedName);
    },
    getProxyNode (type)
    {
-      return this [_proxyNode] ??= new X3DImportedNodeProxy (this .getExecutionContext (), this [_importedName], type);
+      return this .getExecutionContext () [_proxyNodes] .get (this [_importedName])
+         ?? this .createProxyNode (type);
+   },
+   createProxyNode (type)
+   {
+      const
+         executionContext = this .getExecutionContext (),
+         proxy            = new X3DImportedNodeProxy (executionContext, this [_importedName], type);
+
+      executionContext [_proxyNodes] .set (this [_importedName], proxy);
+
+      return proxy;
    },
    toVRMLStream (generator)
    {
