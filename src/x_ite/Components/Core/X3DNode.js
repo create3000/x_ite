@@ -1426,15 +1426,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
          {
             for (const importedNode of Array .from (parentContext .getImportedNodes ()))
             {
-               try
-               {
-                  if (importedNode .getExportedNode () === this)
-                     parentContext .removeImportedNode (importedNode .getImportedName ());
-               }
-               catch (error)
-               {
-                  //console .error (error);
-               }
+               if (importedNode .getExportedNode () === this)
+                  parentContext .removeImportedNode (importedNode .getImportedName ());
             }
          }
 
