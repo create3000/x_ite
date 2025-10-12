@@ -13,10 +13,12 @@ const handler =
       if (key in target)
          return target [key];
 
-      const property = target .valueOf () ?.[key];
+      const
+         node     = target .valueOf (),
+         property = node ?.[key];
 
       if (typeof property === "function")
-         return property .bind (target .valueOf ());
+         return property .bind (node);
 
       return property;
    },
