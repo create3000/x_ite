@@ -50,11 +50,11 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    {
       this [_importedName] = importName;
 
-      this .getProxyNode () ._name_changed = Date .now () / 1000;
+      this .getProxyNode () .setName (importName);
    },
    getProxyNode (type)
    {
-      return this [_proxyNode] ??= new X3DImportedNodeProxy (this .getExecutionContext (), this, type);
+      return this [_proxyNode] ??= new X3DImportedNodeProxy (this .getExecutionContext (), this [_importedName], type);
    },
    toVRMLStream (generator)
    {

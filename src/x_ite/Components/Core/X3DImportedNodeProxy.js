@@ -3,6 +3,7 @@ import X3DConstants   from "../../Base/X3DConstants.js";
 import X3DNode        from "./X3DNode.js";
 
 const
+   _importedName = Symbol (),
    _importedNode = Symbol (),
    _type         = Symbol ();
 
@@ -52,13 +53,13 @@ const handler =
    },
 }
 
-function X3DImportedNodeProxy (executionContext, importedNode, type = X3DNode)
+function X3DImportedNodeProxy (executionContext, importedName, type = X3DNode)
 {
    X3DNode .call (this, executionContext);
 
    const proxy = new Proxy (this, handler);
 
-   this [_importedNode] = importedNode;
+   this [_importedName] = importedName;
    this [_type]         = type;
 
    this .setup ();
@@ -72,9 +73,9 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
    {
       X3DNode .prototype .initialize .call (this);
 
-      this [_importedNode] .getInlineNode () ._loadState .addInterest ("set_loadState__", this);
+      this .getExecutionContext () .importedNodes .addInterest ("set_importedNodes__", this);
 
-      this .set_loadState__ ();
+      this .set_importedNodes__ ();
    },
    getExtendedEventHandling ()
    {
@@ -90,7 +91,13 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
    },
    getName ()
    {
-      return this [_importedNode] .getImportedName ();
+      return this [_importedName];
+   },
+   setName (value)
+   {
+      this [_importedName] = value;
+
+      this ._name_changed = Date .now () / 1000;
    },
    ... Object .fromEntries ([
       ["getComponentInfo",      "componentInfo"],
@@ -119,9 +126,25 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
    {
       return this .valueOf () ?.[fn] (... args) ?? X3DNode .prototype [fn] .call (this, ... args);
    }])),
+   set_importedNodes__ ()
+   {
+      const importedNode = this .getExecutionContext () .getImportedNodes () .get (this [_importedName])
+         ?? null;
+
+      if (importedNode === this [_importedNode])
+         return;
+
+      this [_importedNode] ?.getInlineNode () ._loadState .removeInterest ("set_loadState__", this);
+
+      this [_importedNode] = importedNode;
+
+      this [_importedNode] ?.getInlineNode () ._loadState .addInterest ("set_loadState__", this);
+
+      this .set_loadState__ ();
+   },
    set_loadState__ ()
    {
-      if (this [_importedNode] .getInlineNode () .checkLoadState () === X3DConstants .COMPLETE_STATE)
+      if (this [_importedNode] ?.getInlineNode () .checkLoadState () === X3DConstants .COMPLETE_STATE)
          this [_type] = this .valueOf () ?.constructor ?? this [_type];
 
       this ._typeName_changed = Date .now () / 1000;
@@ -134,41 +157,69 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
    },
    toVRMLStream (generator)
    {
-      const importedName = generator .ImportedName (this [_importedNode]);
+      if (this [_importedNode])
+      {
+         const importedName = generator .ImportedName (this [_importedNode]);
 
-      generator .string += "USE";
-      generator .string += generator .Space ();
-      generator .string += importedName;
+         generator .string += "USE";
+         generator .string += generator .Space ();
+         generator .string += importedName;
+      }
+      else
+      {
+         generator .string += "NULL";
+      }
    },
    toXMLStream (generator)
    {
-      const importedName = generator .ImportedName (this [_importedNode]);
-
-      generator .openTag (this .getTypeName ());
-
-      if (generator .html && this .getTypeName () === "Script")
-         generator .attribute ("type", "model/x3d+xml");
-
-      generator .attribute ("USE", importedName);
-
-      const containerField = generator .ContainerField ();
-
-      if (containerField)
+      if (this [_importedNode])
       {
-         if (containerField .getName () !== this .getContainerField ())
-            generator .attribute ("containerField", containerField .getName ());
-      }
+         const importedName = generator .ImportedName (this [_importedNode]);
 
-      generator .closeTag (this .getTypeName ());
+         generator .openTag (this .getTypeName ());
+
+         if (generator .html && this .getTypeName () === "Script")
+            generator .attribute ("type", "model/x3d+xml");
+
+         generator .attribute ("USE", importedName);
+
+         const containerField = generator .ContainerField ();
+
+         if (containerField)
+         {
+            if (containerField .getName () !== this .getContainerField ())
+               generator .attribute ("containerField", containerField .getName ());
+         }
+
+         generator .closeTag (this .getTypeName ());
+      }
+      else
+      {
+         generator .openTag ("NULL");
+
+         const containerField = generator .ContainerField ();
+
+         if (containerField)
+            generator .attribute ("containerField", containerField .getName ());
+
+         generator .closeTag ("NULL");
+      }
    },
    toJSONStream (generator)
    {
-      const importedName = generator .ImportedName (this [_importedNode]);
+      if (this [_importedNode])
+      {
+         const importedName = generator .ImportedName (this [_importedNode]);
 
-      generator .beginObject (this .getTypeName (), false, true);
-      generator .stringProperty ("@USE", importedName, false);
-      generator .endObject ();
-      generator .endObject ();
+         generator .beginObject (this .getTypeName (), false, true);
+         generator .stringProperty ("@USE", importedName, false);
+         generator .endObject ();
+         generator .endObject ();
+      }
+      else
+      {
+         generator .string += 'null';
+      }
    },
 });
 
