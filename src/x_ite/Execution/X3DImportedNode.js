@@ -13,12 +13,11 @@ function X3DImportedNode (executionContext, inlineNode, exportedName, importedNa
 {
    X3DObject .call (this);
 
-   executionContext [_proxyNodes] ??= new Map ();
-
    this [_executionContext] = executionContext;
    this [_inlineNode]       = inlineNode;
    this [_exportedName]     = exportedName;
    this [_importedName]     = importedName;
+   this [_proxyNodes]       = executionContext [_proxyNodes] ??= new Map ();
 }
 
 Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .prototype),
@@ -51,11 +50,11 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    [Symbol .for ("X_ITE.X3DImportedNode.setImportName")] (importedName)
    {
       const
-         proxy = this .getProxyNode (),
-         cache = this .getExecutionContext () [_proxyNodes];
+         proxy      = this .getProxyNode (),
+         proxyNodes = this [_proxyNodes];
 
-      cache .delete (this [_importedName]);
-      cache .set (importedName, proxy);
+      proxyNodes .delete (this [_importedName]);
+      proxyNodes .set (importedName, proxy);
 
       this [_importedName] = importedName;
 
@@ -63,16 +62,14 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    },
    getProxyNode (type)
    {
-      return this .getExecutionContext () [_proxyNodes] .get (this [_importedName])
+      return this [_proxyNodes] .get (this [_importedName])
          ?? this .createProxyNode (type);
    },
    createProxyNode (type)
    {
-      const
-         executionContext = this .getExecutionContext (),
-         proxy            = new X3DImportedNodeProxy (executionContext, this [_importedName], type);
+      const proxy = new X3DImportedNodeProxy (this .getExecutionContext (), this [_importedName], type);
 
-      executionContext [_proxyNodes] .set (this [_importedName], proxy);
+      this [_proxyNodes] .set (this [_importedName], proxy);
 
       return proxy;
    },
