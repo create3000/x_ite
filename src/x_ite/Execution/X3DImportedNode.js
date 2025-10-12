@@ -7,7 +7,7 @@ const
    _inlineNode       = Symbol (),
    _exportedName     = Symbol (),
    _importedName     = Symbol (),
-   _proxyNodes       = Symbol ();
+   _exportedNodes    = Symbol ();
 
 function X3DImportedNode (executionContext, inlineNode, exportedName, importedName)
 {
@@ -17,7 +17,7 @@ function X3DImportedNode (executionContext, inlineNode, exportedName, importedNa
    this [_inlineNode]       = inlineNode;
    this [_exportedName]     = exportedName;
    this [_importedName]     = importedName;
-   this [_proxyNodes]       = executionContext [_proxyNodes] ??= new Map ();
+   this [_exportedNodes]    = executionContext [_exportedNodes] ??= new Map ();
 }
 
 Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .prototype),
@@ -34,7 +34,20 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    {
       return this [_exportedName];
    },
-   getExportedNode ()
+   getExportedNode (type)
+   {
+      return this [_exportedNodes] .get (this [_importedName])
+         ?? this .createExportedNode (type);
+   },
+   createExportedNode (type)
+   {
+      const exportedNode = new X3DImportedNodeProxy (this .getExecutionContext (), this [_importedName], type);
+
+      this [_exportedNodes] .set (this [_importedName], exportedNode);
+
+      return exportedNode;
+   },
+   getSharedNode ()
    {
       const exportedNode = this .getInlineNode () .getInternalScene () .getExportedNodes () .get (this [_exportedName]);
 
@@ -50,28 +63,15 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    [Symbol .for ("X_ITE.X3DImportedNode.setImportName")] (importedName)
    {
       const
-         proxy      = this .getProxyNode (),
-         proxyNodes = this [_proxyNodes];
+         exportedNode  = this .getExportedNode (),
+         exportedNodes = this [_exportedNodes];
 
-      proxyNodes .delete (this [_importedName]);
-      proxyNodes .set (importedName, proxy);
+      exportedNodes .delete (this [_importedName]);
+      exportedNodes .set (importedName, exportedNode);
 
       this [_importedName] = importedName;
 
-      proxy .setName (importedName);
-   },
-   getProxyNode (type)
-   {
-      return this [_proxyNodes] .get (this [_importedName])
-         ?? this .createProxyNode (type);
-   },
-   createProxyNode (type)
-   {
-      const proxy = new X3DImportedNodeProxy (this .getExecutionContext (), this [_importedName], type);
-
-      this [_proxyNodes] .set (this [_importedName], proxy);
-
-      return proxy;
+      exportedNode .setName (importedName);
    },
    toVRMLStream (generator)
    {
@@ -182,7 +182,7 @@ Object .defineProperties (X3DImportedNode .prototype,
    {
       get ()
       {
-         return this .getInlineNode () .getInternalScene () .getExportedNode (this [_exportedName]);
+         return SFNodeCache .get (this .getExportedNode ());
       },
       enumerable: true,
    },

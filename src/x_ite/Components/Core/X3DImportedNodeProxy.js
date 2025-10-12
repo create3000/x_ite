@@ -15,7 +15,7 @@ const handler =
          return target [key];
 
       const
-         node     = target .valueOf (),
+         node     = target .getSharedNode (),
          property = node ?.[key];
 
       if (typeof property === "function")
@@ -31,7 +31,7 @@ const handler =
       }
       else
       {
-         const node = target .valueOf ();
+         const node = target .getSharedNode ();
 
          if (node)
             node [key] = value;
@@ -41,15 +41,15 @@ const handler =
    },
    has (target, key)
    {
-      return key in (target .valueOf () ?? { });
+      return key in (target .getSharedNode () ?? { });
    },
    ownKeys (target)
    {
-      return Object .keys (target .valueOf () ?? { });
+      return Object .keys (target .getSharedNode () ?? { });
    },
    getOwnPropertyDescriptor (target, key)
    {
-      return Object .getOwnPropertyDescriptor (target .valueOf () ?? { }, key);
+      return Object .getOwnPropertyDescriptor (target .getSharedNode () ?? { }, key);
    },
 }
 
@@ -73,13 +73,17 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
    {
       X3DNode .prototype .initialize .call (this);
 
-      this .getExecutionContext () .importedNodes .addInterest ("set_importedNodes__", this);
+      this .getExecutionContext () .importedNodes .addInterest ("update", this);
 
-      this .set_importedNodes__ ();
+      this .update ();
    },
    getExtendedEventHandling ()
    {
       return false;
+   },
+   getSharedNode ()
+   {
+      return $.try (() => this [_importedNode] .getSharedNode ()) ?? null;
    },
    getImportedNode ()
    {
@@ -87,7 +91,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
    },
    getInnerNode ()
    {
-      return this [_importedNode] .getExportedNode ();
+      return this [_importedNode] .getSharedNode ();
    },
    getName ()
    {
@@ -107,7 +111,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
    ]
    .map (([fn, property]) => [fn, function ()
    {
-      return this .valueOf () ?.[fn] () ?? this [_type] [property];
+      return this .getSharedNode () ?.[fn] () ?? this [_type] [property];
    }])),
    ... Object .fromEntries ([
       "getType",
@@ -124,9 +128,9 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
    ]
    .map (fn => [fn, function (... args)
    {
-      return this .valueOf () ?.[fn] (... args) ?? X3DNode .prototype [fn] .call (this, ... args);
+      return this .getSharedNode () ?.[fn] (... args) ?? X3DNode .prototype [fn] .call (this, ... args);
    }])),
-   set_importedNodes__ ()
+   update ()
    {
       const importedNode = this .getExecutionContext () .getImportedNodes () .get (this [_importedName])
          ?? null;
@@ -145,15 +149,11 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
    set_loadState__ ()
    {
       if (this [_importedNode] ?.getInlineNode () .checkLoadState () === X3DConstants .COMPLETE_STATE)
-         this [_type] = this .valueOf () ?.constructor ?? this [_type];
+         this [_type] = this .getSharedNode () ?.constructor ?? this [_type];
 
       this ._typeName_changed = Date .now () / 1000;
 
       X3DChildObject .prototype .addEvent .call (this);
-   },
-   valueOf ()
-   {
-      return $.try (() => this [_importedNode] .getExportedNode ()) ?? null;
    },
    toVRMLStream (generator)
    {

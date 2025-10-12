@@ -331,6 +331,8 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       this [_importedNodes] .add (importedName, importedNode);
 
+      importedNode .getExportedNode () .update ();
+
       this ._sceneGraph_changed = Date .now () / 1000;
    },
    renameImportedNode (oldImportedName, newImportedName)
