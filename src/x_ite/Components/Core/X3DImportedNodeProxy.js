@@ -135,9 +135,6 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
       const importedNode = this .getExecutionContext () .getImportedNodes () .get (this [_importedName])
          ?? null;
 
-      if (importedNode === this [_importedNode])
-         return;
-
       this [_importedNode] ?.getInlineNode () ._loadState .removeInterest ("set_loadState__", this);
 
       this [_importedNode] = importedNode;
