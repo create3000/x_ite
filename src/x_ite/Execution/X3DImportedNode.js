@@ -18,6 +18,8 @@ function X3DImportedNode (executionContext, inlineNode, exportedName, importedNa
    this [_exportedName]     = exportedName;
    this [_importedName]     = importedName;
    this [_exportedNodes]    = executionContext [_exportedNodes] ??= new Map ();
+
+   this [_exportedNodes] .get (this [_importedName]) ?.update ();
 }
 
 Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .prototype),
