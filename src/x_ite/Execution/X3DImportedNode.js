@@ -50,9 +50,16 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    },
    [Symbol .for ("X_ITE.X3DImportedNode.setImportName")] (importedName)
    {
-      this .getProxyNode () .setName (importedName);
+      const
+         proxy = this .getProxyNode (),
+         cache = this .getExecutionContext () [_proxyNodes];
+
+      cache .delete (this [_importedName]);
+      cache .set (importedName, proxy);
 
       this [_importedName] = importedName;
+
+      proxy .setName (importedName);
    },
    getProxyNode (type)
    {
