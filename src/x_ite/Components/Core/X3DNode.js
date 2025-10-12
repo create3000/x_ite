@@ -1426,9 +1426,15 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                executionContext .removeExportedNode (exportedNode .getExportedName ());
          }
 
-         // Remove imported nodes if any.
+         // Remove imported node if any.
 
-         executionContext .getExecutionContext () ?.getImportedNodes () .addEvent ();
+         const parentContext = executionContext .getExecutionContext ();
+
+         if (parentContext)
+         {
+            for (const importedNode of parentContext .getImportedNodes ())
+               importedNode .getExportedNode () .update ();
+         }
       }
 
       // Remove node from entire scene graph.
