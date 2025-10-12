@@ -221,6 +221,8 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
    },
    dispose ()
    {
+      // Remove all imported nodes with this Inline node.
+
       X3DBoundedObject .prototype .dispose .call (this);
       X3DUrlObject     .prototype .dispose .call (this);
       X3DChildNode     .prototype .dispose .call (this);

@@ -83,7 +83,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
    },
    getSharedNode ()
    {
-      return $.try (() => this [_importedNode] .getSharedNode ()) ?? null;
+      return $.try (() => this .getInnerNode ()) ?? null;
    },
    getImportedNode ()
    {
