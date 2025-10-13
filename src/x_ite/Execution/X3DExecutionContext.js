@@ -633,18 +633,6 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          sourceNode      = this .getLocalizedNode (sourceNode);
          destinationNode = this .getLocalizedNode (destinationNode);
 
-         if (sourceNode instanceof X3DImportedNode)
-         {
-            if (sourceNode .getExecutionContext () !== this)
-               throw new Error ("Couldn't add route: source node does not belong to this execution context.");
-         }
-
-         if (destinationNode instanceof X3DImportedNode)
-         {
-            if (destinationNode .getExecutionContext () !== this)
-               throw new Error ("Couldn't add route: destination node does not belong to this execution context.");
-         }
-
          // Add route.
 
          const
