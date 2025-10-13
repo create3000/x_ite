@@ -743,9 +743,11 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       // Output root nodes
 
-      const rootNodes = this .getRootNodes () .getValue ();
+      const
+         rootNodes = this .getRootNodes (),
+         last      = rootNodes .length - 1;
 
-      for (const rootNode of rootNodes)
+      for (const [i, rootNode] of rootNodes .entries ())
       {
          generator .string += generator .Indent ();
 
@@ -756,7 +758,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
          generator .string += generator .TidyBreak ();
 
-         if (rootNode !== rootNodes .at (-1))
+         if (i !== last)
             generator .string += generator .TidyBreak ();
       }
 
@@ -836,7 +838,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       // Root nodes
 
-      for (const rootNode of this .getRootNodes () .getValue ())
+      for (const rootNode of this .getRootNodes ())
       {
          if (comma)
             generator .string += ',';
