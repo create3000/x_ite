@@ -159,13 +159,17 @@ Object .assign (X3DParser .prototype,
    },
    setupNodes ()
    {
-      this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
-      this .getPlaceholders () .clear ();
+      const
+         placeholders = this .getPlaceholders (),
+         nodes        = this .getNodes ();
+
+      placeholders .forEach (placeholder => placeholder .replaceWithNode ());
+      placeholders .clear ();
 
       if (!this .isInsideProtoDeclaration ())
-         this .getNodes () .forEach (node => node .setup ());
+         nodes .forEach (node => node .setup ());
 
-      this .getNodes () .length = 0;;
+      nodes .length = 0;;
    }
 });
 
