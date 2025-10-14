@@ -35,11 +35,11 @@ Object .assign (X3DParser .prototype,
    },
    getOuterNode ()
    {
-      return this .getExecutionContext () .getOuterNode ();
+      return this .getExecutionContext () ?.getOuterNode ();
    },
    isInsideProtoDeclaration ()
    {
-      return this .getExecutionContext () .getOuterNode () instanceof X3DProtoDeclaration;
+      return this .getOuterNode () instanceof X3DProtoDeclaration;
    },
    getNodes ()
    {
