@@ -329,9 +329,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                try
                {
                   this .statements (this .getExecutionContext () .rootNodes);
-
-                  this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
-                  this .getNodes () .forEach (node => node .setup ());
+                  this .setupNodes ()
 
                   if (this .lastIndex < this .input .length)
                      throw new Error ("Unknown statement.");
@@ -348,9 +346,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
          else
          {
             this .statements (this .getExecutionContext () .rootNodes);
-
-            this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
-            this .getNodes () .forEach (node => node .setup ());
+            this .setupNodes ()
 
             if (this .lastIndex < this .input .length)
                throw new Error ("Unknown statement.");
@@ -2674,10 +2670,10 @@ X3DField .prototype .fromVRMLString = function (string, scene)
    parser .setUnits (!!scene);
    parser .setInput (string);
 
-   if (parser .fieldValue (this))
-      return;
+   if (!parser .fieldValue (this))
+      throw new Error (`Couldn't read value for field '${this .getName ()}'.`);
 
-   throw new Error (`Couldn't read value for field '${this .getName ()}'.`);
+   parser .setupNodes ();
 };
 
 export default VRMLParser;

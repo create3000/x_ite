@@ -147,6 +147,7 @@ class DOMIntegration
             attribute     = element .attributes .getNamedItem (attributeName);
 
          parser .nodeAttribute (attribute, node);
+         parser .setupNodes ();
       }
       else
       {
@@ -162,6 +163,7 @@ class DOMIntegration
             parser .pushParent (node);
             parser .childElement (element);
             parser .popParent ();
+            parser .setupNodes ();
             parser .popExecutionContext ();
          }
       }
@@ -192,6 +194,7 @@ class DOMIntegration
 
          parser .pushExecutionContext (scene);
          parser .childElement (element);
+         parser .setupNodes ();
          parser .popExecutionContext ();
       }
       else if ($.data (parentNode, "node"))
@@ -206,6 +209,7 @@ class DOMIntegration
          parser .pushParent (node);
          parser .childElement (element);
          parser .popParent ();
+         parser .setupNodes ();
          parser .popExecutionContext ();
       }
       else
@@ -214,6 +218,7 @@ class DOMIntegration
 
          parser .pushExecutionContext (scene);
          parser .childElement (element);
+         parser .setupNodes ();
          parser .popExecutionContext ();
       }
 

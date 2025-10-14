@@ -157,6 +157,14 @@ Object .assign (X3DParser .prototype,
          return map;
       }
    },
+   setupNodes ()
+   {
+      this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
+      this .getNodes () .forEach (node => node .setup ());
+
+      this .getPlaceholders () .clear ();
+      this .getNodes () .length = 0;;
+   }
 });
 
 export default X3DParser;

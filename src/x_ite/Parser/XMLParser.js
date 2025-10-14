@@ -111,10 +111,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                   browser .loadComponents (scene) .then (() =>
                   {
                      this .childrenElements (xmlElement);
-
-                     this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
-                     this .getNodes () .forEach (node => node .setup ());
-
+                     this .setupNodes ();
                      this .resolve (scene);
                   })
                   .catch (this .reject);
@@ -122,9 +119,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                else
                {
                   this .childrenElements (xmlElement);
-
-                  this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
-                  this .getNodes () .forEach (node => node .setup ());
+                  this .setupNodes ();
                }
             }
 
@@ -143,10 +138,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                browser .loadComponents (scene) .then (() =>
                {
                   this .sceneElement (xmlElement);
-
-                  this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
-                  this .getNodes () .forEach (node => node .setup ());
-
+                  this .setupNodes ();
                   this .resolve (scene);
                })
                .catch (this .reject);
@@ -154,9 +146,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             else
             {
                this .sceneElement (xmlElement);
-
-               this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
-               this .getNodes () .forEach (node => node .setup ());
+               this .setupNodes ();
             }
 
             break;
@@ -168,10 +158,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                browser .loadComponents (scene) .then (() =>
                {
                   this .childrenElements (xmlElement);
-
-                  this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
-                  this .getNodes () .forEach (node => node .setup ());
-
+                  this .setupNodes ();
                   this .resolve (scene);
                })
                .catch (this .reject);
@@ -179,9 +166,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             else
             {
                this .childrenElements (xmlElement);
-
-               this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
-               this .getNodes () .forEach (node => node .setup ());
+               this .setupNodes ();
             }
 
             break;
@@ -233,9 +218,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             for (const childNode of xmlElement .childNodes)
                this .x3dElementChildScene (childNode)
 
-            this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
-            this .getNodes () .forEach (node => node .setup ());
-
+            this .setupNodes ();
             this .resolve (scene);
          })
          .catch (this .reject);
@@ -245,8 +228,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          for (const childNode of xmlElement .childNodes)
             this .x3dElementChildScene (childNode)
 
-         this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
-         this .getNodes () .forEach (node => node .setup ());
+         this .setupNodes ();
       }
    },
    x3dElementChildHead (xmlElement)
@@ -1288,10 +1270,10 @@ X3DField .prototype .fromXMLString = function (string, scene)
 {
    const parser = new XMLParser (scene);
 
-   if (parser .fieldValue (this, string))
-      return;
+   if (!parser .fieldValue (this, string))
+      throw new Error (`Couldn't read value for field '${this .getName ()}'.`);
 
-   throw new Error (`Couldn't read value for field '${this .getName ()}'.`);
+   parser .setupNodes ();
 };
 
 export default XMLParser;
