@@ -159,6 +159,9 @@ Object .assign (X3DParser .prototype,
    },
    setupNodes ()
    {
+      if (this .isInsideProtoDeclaration ())
+         return;
+
       this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
       this .getNodes () .forEach (node => node .setup ());
 

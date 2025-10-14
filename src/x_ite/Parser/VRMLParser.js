@@ -760,7 +760,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                      this .pushExecutionContext (proto .getBody ());
                      this .protoBody (proto .getBody () .rootNodes);
-                     this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
+                     this .setupNodes ();
                      this .popExecutionContext ();
 
                      this .comments ();

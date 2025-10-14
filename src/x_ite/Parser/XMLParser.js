@@ -487,7 +487,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                   this .pushParent (proto);
                   this .protoBodyElement (childNode);
                   this .popParent ();
-                  this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
+                  this .setupNodes ();
                   this .popExecutionContext ();
                   break;
                }
