@@ -162,10 +162,9 @@ Object .assign (X3DParser .prototype,
       this .getPlaceholders () .forEach (placeholder => placeholder .replaceWithNode ());
       this .getPlaceholders () .clear ();
 
-      if (this .isInsideProtoDeclaration ())
-         return;
+      if (!this .isInsideProtoDeclaration ())
+         this .getNodes () .forEach (node => node .setup ());
 
-      this .getNodes () .forEach (node => node .setup ());
       this .getNodes () .length = 0;;
    }
 });
