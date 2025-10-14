@@ -170,7 +170,7 @@ Object .assign (X3DParser .prototype,
          nodes .forEach (node => node .setup ());
 
       nodes .length = 0;;
-   }
+   },
 });
 
 export default X3DParser;
