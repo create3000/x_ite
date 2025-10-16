@@ -8,7 +8,7 @@ function X3DParser (scene)
    this .placeholders      = new Map ();
    this .namedNodes        = new Map ();
    this .importedNodes     = new Map ();
-   this .nodes             = [ ];
+   this .nodes             = new Map ();
 }
 
 Object .assign (X3DParser .prototype,
@@ -40,10 +40,6 @@ Object .assign (X3DParser .prototype,
    isInsideProtoDeclaration ()
    {
       return this .getOuterNode () instanceof X3DProtoDeclaration;
-   },
-   getNodes ()
-   {
-      return this .nodes;
    },
    /**
     * @deprecated Directly use `browser.loadComponents`.
@@ -124,25 +120,27 @@ Object .assign (X3DParser .prototype,
       catch
       { }
    },
-   checkNodeType ()
-   { },
+   getNodes ()
+   {
+      return this .getObject (this .nodes, Array);
+   },
    getPlaceholders ()
    {
-      return this .getMap (this .placeholders);
+      return this .getObject (this .placeholders, Map);
    },
    getNamedNodes ()
    {
-      return this .getMap (this .namedNodes);
+      return this .getObject (this .namedNodes, Map);
    },
    getImportedNodes ()
    {
-      return this .getMap (this .importedNodes);
+      return this .getObject (this .importedNodes, Map);
    },
-   getMap (maps)
+   getObject (objects, type)
    {
       const
          executionContext = this .getExecutionContext (),
-         map              = maps .get (executionContext);
+         map              = objects .get (executionContext);
 
       if (map)
       {
@@ -150,13 +148,15 @@ Object .assign (X3DParser .prototype,
       }
       else
       {
-         const map = new Map ();
+         const map = new type ();
 
-         maps .set (executionContext, map);
+         objects .set (executionContext, map);
 
          return map;
       }
    },
+   checkNodeType ()
+   { },
    setupNodes ()
    {
       const
