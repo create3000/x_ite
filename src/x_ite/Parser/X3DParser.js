@@ -122,21 +122,21 @@ Object .assign (X3DParser .prototype,
    },
    getNodes ()
    {
-      return this .getObject (this .nodes, Array);
+      return this .getContainer (this .nodes, Array);
    },
    getPlaceholders ()
    {
-      return this .getObject (this .placeholders, Map);
+      return this .getContainer (this .placeholders, Map);
    },
    getNamedNodes ()
    {
-      return this .getObject (this .namedNodes, Map);
+      return this .getContainer (this .namedNodes, Map);
    },
    getImportedNodes ()
    {
-      return this .getObject (this .importedNodes, Map);
+      return this .getContainer (this .importedNodes, Map);
    },
-   getObject (objects, type)
+   getContainer (objects, type)
    {
       const
          executionContext = this .getExecutionContext (),
