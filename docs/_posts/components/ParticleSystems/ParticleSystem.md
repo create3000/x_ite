@@ -209,7 +209,7 @@ Array of time intervals in seconds, corresponding to particle lifetime, that are
 - [Coordinate](/x_ite/components/rendering/coordinate/)
 - Number of *scaleKey* values must match length of scales field array values!
 
-### SFNode [ ] **scale** NULL <small>[X3DCoordinateNode]</small>
+### SFNode [ ] **scale** NULL <small>[Coordinate]</small>
 {: #fields-scale }
 
 The *scale* field contains a [Coordinate](/x_ite/components/rendering/coodinate/) node as a series of *scale* values to be used at the given scaleKey points in time.
