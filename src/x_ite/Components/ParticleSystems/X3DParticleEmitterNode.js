@@ -155,9 +155,6 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       // Forces, Colors, TexCoords, Scales
 
-      if (particleSystem .numTexCoords)
-         gl .uniform1i (program .texCoordCount, particleSystem .texCoordCount);
-
       for (const sampler of particleSystem .samplers)
       {
          gl .activeTexture (gl .TEXTURE0 + program [sampler]);
@@ -234,7 +231,16 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
    },
    getProgram (particleSystem)
    {
-      const { geometryType, createParticles, numColors, numTexCoords, numScales, numForces, boundedHierarchyRoot } = particleSystem;
+      const {
+         geometryType,
+         createParticles,
+         numColors,
+         numTexCoords,
+         texCoordCount,
+         numScales,
+         numForces,
+         boundedHierarchyRoot
+      } = particleSystem;
 
       let key = "";
 
@@ -244,6 +250,8 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       key += numColors
       key += ".";
       key += numTexCoords;
+      key += ".";
+      key += texCoordCount;
       key += ".";
       key += numScales;
       key += ".";
@@ -265,6 +273,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       defines .push (`${particleSystem .createParticles && this .on ? "#define X3D_CREATE_PARTICLES" : ""}`);
       defines .push (`#define X3D_NUM_COLORS ${particleSystem .numColors}`);
       defines .push (`#define X3D_NUM_TEX_COORDS ${particleSystem .numTexCoords}`);
+      defines .push (`#define X3D_TEX_COORDS_COUNT ${particleSystem .texCoordCount}`);
       defines .push (`#define X3D_NUM_SCALES ${particleSystem .numScales}`);
       defines .push (`#define X3D_NUM_FORCES ${particleSystem .numForces}`);
       defines .push (`${particleSystem .boundedHierarchyRoot > -1 ? "#define X3D_BOUNDED_VOLUME" : ""}`);
@@ -300,7 +309,6 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       #endif
 
       #if X3D_NUM_TEX_COORDS > 0
-         uniform int       texCoordCount;
          uniform sampler2D texCoords;
       #endif
 
@@ -793,7 +801,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
          interpolate (texCoords, X3D_NUM_TEX_COORDS, fraction, index0);
 
-         return X3D_NUM_TEX_COORDS + index0 * texCoordCount;
+         return X3D_NUM_TEX_COORDS + index0 * X3D_TEX_COORDS_COUNT;
       }
       #else
          #define getTexCoordIndex0(lifetime, elapsedTime) (-1)
@@ -947,8 +955,6 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       program .boundedHierarchyIndex = gl .getUniformLocation (program, "boundedHierarchyIndex");
       program .boundedHierarchyRoot  = gl .getUniformLocation (program, "boundedHierarchyRoot");
       program .boundedVolume         = gl .getUniformLocation (program, "boundedVolume");
-
-      program .texCoordCount = gl .getUniformLocation (program, "texCoordCount");
 
       for (const key in ParticleSampler)
          program [key] = gl .getUniformLocation (program, key);
