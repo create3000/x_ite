@@ -281,6 +281,7 @@ const X_ITE_TESTS = [
    { path: "ParticleSystems/OpenVolume.x3d" },
    { path: "ParticleSystems/PointEmitter.x3d" },
    { path: "ParticleSystems/PolylineEmitter.x3d" },
+   { path: "ParticleSystems/Scales.x3d" },
    { path: "ParticleSystems/Smoke.x3d" },
    { path: "ParticleSystems/SurfaceEmitter.x3d" },
    { path: "ParticleSystems/Torus.x3dv" },
