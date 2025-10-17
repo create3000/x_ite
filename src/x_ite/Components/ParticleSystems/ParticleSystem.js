@@ -631,7 +631,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    {
       this .scaleRampNode ?.removeInterest ("set_scale__", this);
 
-      this .scaleRampNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._scale);
+      this .scaleRampNode = X3DCast (X3DConstants .Coordinate, this ._scale);
 
       this .scaleRampNode ?.addInterest ("set_scale__", this);
 
