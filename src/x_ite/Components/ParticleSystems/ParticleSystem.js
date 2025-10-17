@@ -564,7 +564,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       {
          gl .bindTexture (gl .TEXTURE_2D, this .colorRampTexture);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, colorRamp);
-     }
+      }
 
       this .numColors                      = numColors;
       this .geometryContext .colorMaterial = !! (numColors && this .colorRampNode);
