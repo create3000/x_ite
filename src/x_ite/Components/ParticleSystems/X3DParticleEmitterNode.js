@@ -874,7 +874,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
             output5 = vec4 (0.0, 0.0, scale [2], 0.0);
          #elif X3D_GEOMETRY_TYPE == LINE
             mat3 s = mat3 (scale [0], 0.0, 0.0, 0.0, scale [1], 0.0, 0.0, 0.0, scale [2]);
-            mat3 m = s * Matrix3 (Quaternion (vec3 (0.0, 0.0, 1.0), output2 .xyz));
+            mat3 m = Matrix3 (Quaternion (vec3 (0.0, 0.0, 1.0), output2 .xyz)) * s;
 
             output3 = vec4 (m [0], 0.0);
             output4 = vec4 (m [1], 0.0);
