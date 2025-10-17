@@ -55,6 +55,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       this .addSampler ("boundedVolume");
       this .addSampler ("colorRamp");
       this .addSampler ("texCoordRamp");
+      this .addSampler ("sizeRamp");
 
       this .addUniform ("speed",     "uniform float speed;");
       this .addUniform ("variation", "uniform float variation;");
@@ -178,6 +179,14 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          gl .bindTexture (gl .TEXTURE_2D, particleSystem .texCoordRampTexture);
       }
 
+      // Colors
+
+      if (particleSystem .numSizes)
+      {
+         gl .activeTexture (gl .TEXTURE0 + program .sizeRampTextureUnit);
+         gl .bindTexture (gl .TEXTURE_2D, particleSystem .sizeRampTexture);
+      }
+
       // Other textures
 
       this .activateTextures (gl, program);
@@ -248,7 +257,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
    },
    getProgram (particleSystem)
    {
-      const { geometryType, createParticles, numColors, numTexCoords, numForces, boundedHierarchyRoot } = particleSystem;
+      const { geometryType, createParticles, numColors, numTexCoords, numSizes, numForces, boundedHierarchyRoot } = particleSystem;
 
       let key = "";
 
@@ -258,6 +267,8 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       key += numColors
       key += ".";
       key += numTexCoords;
+      key += ".";
+      key += numSizes;
       key += ".";
       key += numForces
       key += ".";
@@ -277,6 +288,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       defines .push (`${particleSystem .createParticles && this .on ? "#define X3D_CREATE_PARTICLES" : ""}`);
       defines .push (`#define X3D_NUM_COLORS ${particleSystem .numColors}`);
       defines .push (`#define X3D_NUM_TEX_COORDS ${particleSystem .numTexCoords}`);
+      defines .push (`#define X3D_NUM_SIZES ${particleSystem .numSizes}`);
       defines .push (`#define X3D_NUM_FORCES ${particleSystem .numForces}`);
       defines .push (`${particleSystem .boundedHierarchyRoot > -1 ? "#define X3D_BOUNDED_VOLUME" : ""}`);
 
@@ -313,6 +325,10 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       #if X3D_NUM_TEX_COORDS > 0
          uniform int       texCoordCount;
          uniform sampler2D texCoordRamp;
+      #endif
+
+      #if X3D_NUM_SIZES > 0
+         uniform sampler2D sizeRamp;
       #endif
 
       ${Array .from (this .uniforms .values ()) .join ("\n")}
@@ -570,7 +586,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          return first;
       }
 
-      #if X3D_NUM_COLORS > 0 || defined (X3D_POLYLINE_EMITTER) || defined (X3D_SURFACE_EMITTER) || defined (X3D_VOLUME_EMITTER)
+      #if X3D_NUM_COLORS > 0 || X3D_NUM_SIZES > 0 || defined (X3D_POLYLINE_EMITTER) || defined (X3D_SURFACE_EMITTER) || defined (X3D_VOLUME_EMITTER)
       void
       interpolate (const in sampler2D sampler, const in int count, const in float fraction, out int index0, out int index1, out float weight)
       {
@@ -729,6 +745,31 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          #define getColor(lifetime, elapsedTime) (vec4 (1.0))
       #endif
 
+      #if X3D_NUM_SIZES > 0
+      vec3
+      getSize (const in float lifetime, const in float elapsedTime)
+      {
+         // Determine index0, index1 and weight.
+
+         float fraction = elapsedTime / lifetime;
+
+         int   index0;
+         int   index1;
+         float weight;
+
+         interpolate (sizeRamp, X3D_NUM_SIZES, fraction, index0, index1, weight);
+
+         // Interpolate and return size.
+
+         vec3 size0 = texelFetch (sizeRamp, X3D_NUM_SIZES + index0, 0) .xyz;
+         vec3 size1 = texelFetch (sizeRamp, X3D_NUM_SIZES + index1, 0) .xyz;
+
+         return mix (size0, size1, weight);
+      }
+      #else
+         #define getSize(lifetime, elapsedTime) (vec3 (1.0))
+      #endif
+
       #if defined (X3D_BOUNDED_VOLUME)
       void
       bounce (const in float deltaTime, const in vec4 fromPosition, inout vec4 toPosition, inout vec3 velocity)
@@ -840,20 +881,23 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
             output6 = position;
          }
 
+         vec3 size = getSize (lifetime, elapsedTime);
+
          #if X3D_GEOMETRY_TYPE == POINT || X3D_GEOMETRY_TYPE == SPRITE || X3D_GEOMETRY_TYPE == GEOMETRY
-            output3 = vec4 (1.0, 0.0, 0.0, 0.0);
-            output4 = vec4 (0.0, 1.0, 0.0, 0.0);
-            output5 = vec4 (0.0, 0.0, 1.0, 0.0);
+            output3 = vec4 (size [0], 0.0, 0.0, 0.0);
+            output4 = vec4 (0.0, size [1], 0.0, 0.0);
+            output5 = vec4 (0.0, 0.0, size [2], 0.0);
          #elif X3D_GEOMETRY_TYPE == LINE
-            mat3 m = Matrix3 (Quaternion (vec3 (0.0, 0.0, 1.0), output2 .xyz));
+            mat3 s = mat3 (size [0], 0.0, 0.0, 0.0, size [1], 0.0, 0.0, 0.0, size [2]);
+            mat3 m = s * Matrix3 (Quaternion (vec3 (0.0, 0.0, 1.0), output2 .xyz));
 
             output3 = vec4 (m [0], 0.0);
             output4 = vec4 (m [1], 0.0);
             output5 = vec4 (m [2], 0.0);
          #else
-            output3 = vec4 (particleSize .x, 0.0, 0.0, 0.0);
-            output4 = vec4 (0.0, particleSize .y, 0.0, 0.0);
-            output5 = vec4 (0.0, 0.0, 1.0, 0.0);
+            output3 = vec4 (particleSize .x * size [0], 0.0, 0.0, 0.0);
+            output4 = vec4 (0.0, particleSize .y * size [1], 0.0, 0.0);
+            output5 = vec4 (0.0, 0.0, size [2], 0.0);
          #endif
       }
       `;
@@ -933,6 +977,8 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       program .texCoordCount = gl .getUniformLocation (program, "texCoordCount");
       program .texCoordRamp  = gl .getUniformLocation (program, "texCoordRamp");
+
+      program .sizeRamp = gl .getUniformLocation (program, "sizeRamp");
 
       for (const name of this .uniforms .keys ())
          program [name] = gl .getUniformLocation (program, name);

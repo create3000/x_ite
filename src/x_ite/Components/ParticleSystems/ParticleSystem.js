@@ -75,6 +75,7 @@ function ParticleSystem (executionContext)
    this .boundedVertices          = [ ];
    this .colorRamp                = new Float32Array ();
    this .texCoordRamp             = new Float32Array ();
+   this .sizeRamp                 = new Float32Array ();
    this .geometryContext          = new GeometryContext ({ textureCoordinateNode: browser .getDefaultTextureCoordinate () });
    this .creationTime             = 0;
    this .pauseTime                = 0;
@@ -119,6 +120,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this ._color             .addInterest ("set_colorRamp__",         this);
       this ._texCoordKey       .addInterest ("set_texCoord__",          this);
       this ._texCoord          .addInterest ("set_texCoordRamp__",      this);
+      this ._sizeKey           .addInterest ("set_size__",              this);
+      this ._size              .addInterest ("set_sizeRamp__",          this);
 
       // Create particles stuff.
 
@@ -140,6 +143,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .boundedTexture      = this .createTexture ();
       this .colorRampTexture    = this .createTexture ();
       this .texCoordRampTexture = this .createTexture ();
+      this .sizeRampTexture     = this .createTexture ();
 
       // Create GL stuff.
 
@@ -171,6 +175,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .set_physics__ ();
       this .set_colorRamp__ ();
       this .set_texCoordRamp__ ();
+      this .set_sizeRamp__ ();
       this .set_bbox__ ();
    },
    getShapeKey ()
@@ -528,13 +533,11 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    },
    set_colorRamp__ ()
    {
-      if (this .colorRampNode)
-         this .colorRampNode .removeInterest ("set_color__", this);
+      this .colorRampNode ?.removeInterest ("set_color__", this);
 
       this .colorRampNode = X3DCast (X3DConstants .X3DColorNode, this ._color);
 
-      if (this .colorRampNode)
-         this .colorRampNode .addInterest ("set_color__", this);
+      this .colorRampNode ?.addInterest ("set_color__", this);
 
       this .set_color__ ();
       this .set_transparent__ ();
@@ -574,13 +577,11 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    },
    set_texCoordRamp__ ()
    {
-      if (this .texCoordRampNode)
-         this .texCoordRampNode .removeInterest ("set_texCoord__", this);
+      this .texCoordRampNode ?.removeInterest ("set_texCoord__", this);
 
       this .texCoordRampNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this ._texCoord);
 
-      if (this .texCoordRampNode)
-         this .texCoordRampNode .addInterest ("set_texCoord__", this);
+      this .texCoordRampNode ?.addInterest ("set_texCoord__", this);
 
       this .set_texCoord__ ();
    },
@@ -612,6 +613,49 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       }
 
       this .numTexCoords = this .texCoordRampNode ? numTexCoords : 0;
+
+      this .updateVertexArrays ();
+   },
+   set_sizeRamp__ ()
+   {
+      this .sizeRampNode ?.removeInterest ("set_size__", this);
+
+      this .sizeRampNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._size);
+
+      this .sizeRampNode ?.addInterest ("set_size__", this);
+
+      this .set_size__ ();
+   },
+   set_size__ ()
+   {
+      const
+         gl           = this .getBrowser () .getContext (),
+         key          = this ._sizeKey,
+         numKeys      = key .length,
+         textureSize  = Math .ceil (Math .sqrt (numKeys * 2)); // keys + values
+
+      let ramp = this .sizeRamp;
+
+      if (textureSize * textureSize * 4 > ramp .length)
+         ramp = this .sizeRamp = new Float32Array (textureSize * textureSize * 4);
+      else
+         ramp .fill (0);
+
+      for (let i = 0; i < numKeys; ++ i)
+         ramp [i * 4] = key [i];
+
+      if (this .sizeRampNode)
+         ramp .set (this .sizeRampNode .addPoints ([ ], numKeys) .slice (0, numKeys * 4), numKeys * 4);
+      else
+         ramp .fill (1, numKeys * 4);
+
+      if (textureSize)
+      {
+         gl .bindTexture (gl .TEXTURE_2D, this .sizeRampTexture);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, ramp);
+      }
+
+      this .numSizes = numKeys;
 
       this .updateVertexArrays ();
    },
@@ -1025,6 +1069,8 @@ Object .defineProperties (ParticleSystem,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "color",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "texCoordKey",       new Fields .MFFloat ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "texCoord",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "sizeKey",           new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "size",              new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",          new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "pointerEvents",     new Fields .SFBool (true)), // skip test
          new X3DFieldDefinition (X3DConstants .inputOutput,    "castShadow",        new Fields .SFBool (true)),
