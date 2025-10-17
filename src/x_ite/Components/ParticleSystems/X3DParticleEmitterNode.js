@@ -1,11 +1,12 @@
-import Fields       from "../../Fields.js";
-import X3DNode      from "../Core/X3DNode.js";
-import GeometryType from "../../Browser/Shape/GeometryType.js";
-import X3DConstants from "../../Base/X3DConstants.js";
-import Line3Source  from "../../Browser/ParticleSystems/Line3.glsl.js";
-import Plane3Source from "../../Browser/ParticleSystems/Plane3.glsl.js";
-import Box3Source   from "../../Browser/ParticleSystems/Box3.glsl.js";
-import BVHSource    from "../../Browser/ParticleSystems/BVH.glsl.js";
+import Fields          from "../../Fields.js";
+import X3DNode         from "../Core/X3DNode.js";
+import ParticleSampler from "../../Browser/ParticleSystems/ParticleSampler.js";
+import GeometryType    from "../../Browser/Shape/GeometryType.js";
+import X3DConstants    from "../../Base/X3DConstants.js";
+import Line3Source     from "../../Browser/ParticleSystems/Line3.glsl.js";
+import Plane3Source    from "../../Browser/ParticleSystems/Plane3.glsl.js";
+import Box3Source      from "../../Browser/ParticleSystems/Box3.glsl.js";
+import BVHSource       from "../../Browser/ParticleSystems/BVH.glsl.js";
 
 function X3DParticleEmitterNode (executionContext)
 {
@@ -140,14 +141,6 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       gl .uniform1f (program .deltaTime,         deltaTime);
       gl .uniform2f (program .particleSize,      particleSystem ._particleSize .x, particleSystem ._particleSize .y);
 
-      // Forces
-
-      if (particleSystem .numForces)
-      {
-         gl .activeTexture (gl .TEXTURE0 + program .forcesTextureUnit);
-         gl .bindTexture (gl .TEXTURE_2D, particleSystem .forcesTexture);
-      }
-
       // Bounded Physics
 
       if (particleSystem .boundedHierarchyRoot > -1)
@@ -161,30 +154,12 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          gl .bindTexture (gl .TEXTURE_2D, particleSystem .boundedTexture);
       }
 
-      // Colors
+      // Forces, Colors, TexCoords, Scales
 
-      if (particleSystem .numColors)
+      for (const sampler of particleSystem .samplers)
       {
-         gl .activeTexture (gl .TEXTURE0 + program .colorRampTextureUnit);
-         gl .bindTexture (gl .TEXTURE_2D, particleSystem .colorRampTexture);
-      }
-
-      // TexCoords
-
-      if (particleSystem .numTexCoords)
-      {
-         gl .uniform1i (program .texCoordCount, particleSystem .texCoordCount);
-
-         gl .activeTexture (gl .TEXTURE0 + program .texCoordRampTextureUnit);
-         gl .bindTexture (gl .TEXTURE_2D, particleSystem .texCoordRampTexture);
-      }
-
-      // Scales
-
-      if (particleSystem .numScales)
-      {
-         gl .activeTexture (gl .TEXTURE0 + program .scaleRampTextureUnit);
-         gl .bindTexture (gl .TEXTURE_2D, particleSystem .scaleRampTexture);
+         gl .activeTexture (gl .TEXTURE0 + program [sampler]);
+         gl .bindTexture (gl .TEXTURE_2D, particleSystem [sampler]);
       }
 
       // Other textures
@@ -993,6 +968,11 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
          gl .uniform1i (location, program [name + "TextureUnit"] = browser .getTextureUnit ());
       }
+
+      program [ParticleSampler .FORCES]     = program .forcesTextureUnit;
+      program [ParticleSampler .COLORS]     = program .colorRampTextureUnit;
+      program [ParticleSampler .TEX_COORDS] = program .texCoordRampTextureUnit;
+      program [ParticleSampler .SCALES]     = program .scaleRampTextureUnit;
 
       browser .resetTextureUnits ();
 

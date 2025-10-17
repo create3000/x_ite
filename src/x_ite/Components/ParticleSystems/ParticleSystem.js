@@ -3,6 +3,7 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DShapeNode         from "../Shape/X3DShapeNode.js";
+import ParticleSampler      from "../../Browser/ParticleSystems/ParticleSampler.js";
 import GeometryContext      from "../../Browser/Rendering/GeometryContext.js";
 import GeometryType         from "../../Browser/Shape/GeometryType.js";
 import VertexArray          from "../../Rendering/VertexArray.js";
@@ -68,6 +69,7 @@ function ParticleSystem (executionContext)
 
    this .maxParticles             = 0;
    this .numParticles             = 0;
+   this .samplers                 = new Set ();
    this .forcePhysicsModelNodes   = [ ];
    this .forces                   = new Float32Array (4);
    this .boundedPhysicsModelNodes = [ ];
@@ -139,11 +141,12 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       // Create forces stuff.
 
-      this .forcesTexture       = this .createTexture ();
-      this .boundedTexture      = this .createTexture ();
-      this .colorRampTexture    = this .createTexture ();
-      this .texCoordRampTexture = this .createTexture ();
-      this .scaleRampTexture     = this .createTexture ();
+      this [ParticleSampler .FORCES]     = this .createTexture ();
+      this [ParticleSampler .COLORS]     = this .createTexture ();
+      this [ParticleSampler .TEX_COORDS] = this .createTexture ();
+      this [ParticleSampler .SCALES]     = this .createTexture ();
+
+      this .boundedTexture = this .createTexture ();
 
       // Create GL stuff.
 
@@ -565,12 +568,17 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       if (textureSize)
       {
-         gl .bindTexture (gl .TEXTURE_2D, this .colorRampTexture);
+         gl .bindTexture (gl .TEXTURE_2D, this [ParticleSampler .COLORS]);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, colorRamp);
       }
 
       this .numColors                      = numColors;
       this .geometryContext .colorMaterial = !! (numColors && this .colorRampNode);
+
+      if (numColors)
+         this .samplers .add (ParticleSampler .COLORS);
+      else
+         this .samplers .delete (ParticleSampler .COLORS);
 
       this .geometryContext .updateGeometryKey ();
       this .updateVertexArrays ();
@@ -608,11 +616,16 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       if (textureSize)
       {
-         gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
+         gl .bindTexture (gl .TEXTURE_2D, this [ParticleSampler .TEX_COORDS]);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, texCoordRamp);
       }
 
       this .numTexCoords = this .texCoordRampNode ? numTexCoords : 0;
+
+      if (numTexCoords)
+         this .samplers .add (ParticleSampler .TEX_COORDS);
+      else
+         this .samplers .delete (ParticleSampler .TEX_COORDS);
 
       this .updateVertexArrays ();
    },
@@ -651,11 +664,16 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       if (textureSize)
       {
-         gl .bindTexture (gl .TEXTURE_2D, this .scaleRampTexture);
+         gl .bindTexture (gl .TEXTURE_2D, this [ParticleSampler .SCALES]);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, ramp);
       }
 
       this .numScales = numKeys;
+
+      if (numKeys)
+         this .samplers .add (ParticleSampler .SCALES);
+      else
+         this .samplers .delete (ParticleSampler .SCALES);
 
       this .updateVertexArrays ();
    },
@@ -804,13 +822,21 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
          if (numForces)
          {
-            gl .bindTexture (gl .TEXTURE_2D, this .forcesTexture);
+            gl .bindTexture (gl .TEXTURE_2D, this [ParticleSampler .FORCES]);
             gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, numForces, 1, 0, gl .RGBA, gl .FLOAT, forces);
+
+            this .samplers .add (ParticleSampler .FORCES);
+         }
+         else
+         {
+            this .samplers .delete (ParticleSampler .FORCES);
          }
       }
       else
       {
          this .numForces = 0;
+
+         this .samplers .delete (ParticleSampler .FORCES);
       }
 
       // Swap buffers.
