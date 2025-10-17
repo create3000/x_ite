@@ -655,7 +655,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, ramp);
       }
 
-      this .numSizes = numKeys;
+      this .numScales = numKeys;
 
       this .updateVertexArrays ();
    },

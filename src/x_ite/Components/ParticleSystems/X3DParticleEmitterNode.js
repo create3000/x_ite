@@ -181,7 +181,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       // Colors
 
-      if (particleSystem .numSizes)
+      if (particleSystem .numScales)
       {
          gl .activeTexture (gl .TEXTURE0 + program .scaleRampTextureUnit);
          gl .bindTexture (gl .TEXTURE_2D, particleSystem .scaleRampTexture);
@@ -257,7 +257,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
    },
    getProgram (particleSystem)
    {
-      const { geometryType, createParticles, numColors, numTexCoords, numSizes, numForces, boundedHierarchyRoot } = particleSystem;
+      const { geometryType, createParticles, numColors, numTexCoords, numScales, numForces, boundedHierarchyRoot } = particleSystem;
 
       let key = "";
 
@@ -268,7 +268,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       key += ".";
       key += numTexCoords;
       key += ".";
-      key += numSizes;
+      key += numScales;
       key += ".";
       key += numForces
       key += ".";
@@ -288,7 +288,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       defines .push (`${particleSystem .createParticles && this .on ? "#define X3D_CREATE_PARTICLES" : ""}`);
       defines .push (`#define X3D_NUM_COLORS ${particleSystem .numColors}`);
       defines .push (`#define X3D_NUM_TEX_COORDS ${particleSystem .numTexCoords}`);
-      defines .push (`#define X3D_NUM_SIZES ${particleSystem .numSizes}`);
+      defines .push (`#define X3D_NUM_SCALES ${particleSystem .numScales}`);
       defines .push (`#define X3D_NUM_FORCES ${particleSystem .numForces}`);
       defines .push (`${particleSystem .boundedHierarchyRoot > -1 ? "#define X3D_BOUNDED_VOLUME" : ""}`);
 
@@ -327,7 +327,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          uniform sampler2D texCoordRamp;
       #endif
 
-      #if X3D_NUM_SIZES > 0
+      #if X3D_NUM_SCALES > 0
          uniform sampler2D scaleRamp;
       #endif
 
@@ -586,7 +586,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          return first;
       }
 
-      #if X3D_NUM_COLORS > 0 || X3D_NUM_SIZES > 0 || defined (X3D_POLYLINE_EMITTER) || defined (X3D_SURFACE_EMITTER) || defined (X3D_VOLUME_EMITTER)
+      #if X3D_NUM_COLORS > 0 || X3D_NUM_SCALES > 0 || defined (X3D_POLYLINE_EMITTER) || defined (X3D_SURFACE_EMITTER) || defined (X3D_VOLUME_EMITTER)
       void
       interpolate (const in sampler2D sampler, const in int count, const in float fraction, out int index0, out int index1, out float weight)
       {
@@ -745,7 +745,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          #define getColor(lifetime, elapsedTime) (vec4 (1.0))
       #endif
 
-      #if X3D_NUM_SIZES > 0
+      #if X3D_NUM_SCALES > 0
       vec3
       getScale (const in float lifetime, const in float elapsedTime)
       {
@@ -757,12 +757,12 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          int   index1;
          float weight;
 
-         interpolate (scaleRamp, X3D_NUM_SIZES, fraction, index0, index1, weight);
+         interpolate (scaleRamp, X3D_NUM_SCALES, fraction, index0, index1, weight);
 
          // Interpolate and return scale.
 
-         vec3 scale0 = texelFetch (scaleRamp, X3D_NUM_SIZES + index0, 0) .xyz;
-         vec3 scale1 = texelFetch (scaleRamp, X3D_NUM_SIZES + index1, 0) .xyz;
+         vec3 scale0 = texelFetch (scaleRamp, X3D_NUM_SCALES + index0, 0) .xyz;
+         vec3 scale1 = texelFetch (scaleRamp, X3D_NUM_SCALES + index1, 0) .xyz;
 
          return mix (scale0, scale1, weight);
       }
