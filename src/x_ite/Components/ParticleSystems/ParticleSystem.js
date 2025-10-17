@@ -69,6 +69,7 @@ function ParticleSystem (executionContext)
 
    this .maxParticles             = 0;
    this .numParticles             = 0;
+   this .spriteSize               = new Vector3 ();
    this .samplers                 = new Set ();
    this .forcePhysicsModelNodes   = [ ];
    this .forces                   = new Float32Array (4);
@@ -372,7 +373,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
             gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
             gl .bufferData (gl .ARRAY_BUFFER, QuadGeometry, gl .DYNAMIC_DRAW);
-
             break;
          }
          case GeometryType .GEOMETRY:
@@ -416,6 +416,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    {
       this .lineCoordinateNode ._point [0] .z = -this ._particleSize .y / 2;
       this .lineCoordinateNode ._point [1] .z = +this ._particleSize .y / 2;
+
+      this .spriteSize .set (... this ._particleSize);
    },
    set_emitter__ ()
    {
@@ -862,9 +864,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          new Vector3 (-0.5,  0.5, 0),
       ];
 
-      const
-         vertex = new Vector3 (),
-         size   = new Vector3 ();
+      const vertex = new Vector3 ();
 
       return function (gl, rotation)
       {
@@ -875,17 +875,15 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
          // Vertices
 
-         size .set (this ._particleSize .x, this ._particleSize .y, 1);
+         const size = this .spriteSize;
 
          for (let i = 0; i < 6; ++ i)
          {
             const index = 27 + i * 4;
 
-            rotation .multVecMatrix (vertex .assign (quad [i]) .multVec (size))
+            rotation .multVecMatrix (vertex .assign (quad [i]) .multVec (size));
 
-            data [index + 0] = vertex .x;
-            data [index + 1] = vertex .y;
-            data [index + 2] = vertex .z;
+            data .set (vertex, index);
          }
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);

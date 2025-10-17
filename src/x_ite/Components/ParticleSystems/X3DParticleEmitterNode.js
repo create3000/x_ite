@@ -869,23 +869,23 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          vec3 scale = getScale (lifetime, elapsedTime);
 
          #if X3D_GEOMETRY_TYPE == POINT || X3D_GEOMETRY_TYPE == SPRITE || X3D_GEOMETRY_TYPE == GEOMETRY
-            output3 = vec4 (scale [0], 0.0, 0.0, 0.0);
-            output4 = vec4 (0.0, scale [1], 0.0, 0.0);
-            output5 = vec4 (0.0, 0.0, scale [2], 0.0);
+            output3 = vec4 (scale .x, 0.0, 0.0, 0.0);
+            output4 = vec4 (0.0, scale .y, 0.0, 0.0);
+            output5 = vec4 (0.0, 0.0, scale .z, 0.0);
          #elif X3D_GEOMETRY_TYPE == LINE
             mat3 m = Matrix3 (Quaternion (vec3 (0.0, 0.0, 1.0), output2 .xyz));
 
             #if X3D_NUM_SCALES > 0
-               m *= mat3 (scale [0], 0.0, 0.0, 0.0, scale [1], 0.0, 0.0, 0.0, scale [2]);
+               m *= mat3 (scale .x, 0.0, 0.0, 0.0, scale .y, 0.0, 0.0, 0.0, scale .z);
             #endif
 
             output3 = vec4 (m [0], 0.0);
             output4 = vec4 (m [1], 0.0);
             output5 = vec4 (m [2], 0.0);
          #else
-            output3 = vec4 (particleSize .x * scale [0], 0.0, 0.0, 0.0);
-            output4 = vec4 (0.0, particleSize .y * scale [1], 0.0, 0.0);
-            output5 = vec4 (0.0, 0.0, scale [2], 0.0);
+            output3 = vec4 (particleSize .x * scale .x, 0.0, 0.0, 0.0);
+            output4 = vec4 (0.0, particleSize .y * scale .y, 0.0, 0.0);
+            output5 = vec4 (0.0, 0.0, scale .z, 0.0);
          #endif
       }
       `;
