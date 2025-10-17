@@ -1,8 +1,8 @@
 const ParticleSampler = {
-   FORCES: Symbol (),
-   COLORS: Symbol (),
-   TEX_COORDS: Symbol (),
-   SCALES: Symbol (),
+   forces: Symbol (),
+   colors: Symbol (),
+   texCoords: Symbol (),
+   scales: Symbol (),
 };
 
 export default ParticleSampler;

@@ -139,14 +139,12 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          thickLinesVertexArrayObject: new VertexArray (gl),
       });
 
-      // Create forces stuff.
-
-      this [ParticleSampler .FORCES]     = this .createTexture ();
-      this [ParticleSampler .COLORS]     = this .createTexture ();
-      this [ParticleSampler .TEX_COORDS] = this .createTexture ();
-      this [ParticleSampler .SCALES]     = this .createTexture ();
+      // Create textures for forces, colors, texCoords, scales.
 
       this .boundedTexture = this .createTexture ();
+
+      for (const symbol of Object .values (ParticleSampler))
+         this [symbol] = this .createTexture ();
 
       // Create GL stuff.
 
@@ -548,37 +546,37 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    set_color__ ()
    {
       const
-         gl           = this .getBrowser () .getContext (),
-         colorKey     = this ._colorKey,
-         numColors    = colorKey .length,
-         textureSize  = Math .ceil (Math .sqrt (numColors * 2));
+         gl          = this .getBrowser () .getContext (),
+         key         = this ._colorKey,
+         numKeys     = key .length,
+         textureSize = Math .ceil (Math .sqrt (numKeys * 2));
 
-      let colorRamp = this .colorRamp;
+      let ramp = this .colorRamp;
 
-      if (textureSize * textureSize * 4 > colorRamp .length)
-         colorRamp = this .colorRamp = new Float32Array (textureSize * textureSize * 4);
+      if (textureSize * textureSize * 4 > ramp .length)
+         ramp = this .colorRamp = new Float32Array (textureSize * textureSize * 4);
 
-      for (let i = 0; i < numColors; ++ i)
-         colorRamp [i * 4] = colorKey [i];
+      for (let i = 0; i < numKeys; ++ i)
+         ramp [i * 4] = key [i];
 
       if (this .colorRampNode)
-         colorRamp .set (this .colorRampNode .addColors ([ ], numColors) .slice (0, numColors * 4), numColors * 4);
+         ramp .set (this .colorRampNode .addColors ([ ], numKeys) .slice (0, numKeys * 4), numKeys * 4);
       else
-         colorRamp .fill (1, numColors * 4);
+         ramp .fill (1, numKeys * 4);
 
       if (textureSize)
       {
-         gl .bindTexture (gl .TEXTURE_2D, this [ParticleSampler .COLORS]);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, colorRamp);
+         gl .bindTexture (gl .TEXTURE_2D, this [ParticleSampler .colors]);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, ramp);
       }
 
-      this .numColors                      = numColors;
-      this .geometryContext .colorMaterial = !! (numColors && this .colorRampNode);
+      this .numColors                      = numKeys;
+      this .geometryContext .colorMaterial = !! (numKeys && this .colorRampNode);
 
-      if (numColors)
-         this .samplers .add (ParticleSampler .COLORS);
+      if (numKeys)
+         this .samplers .add (ParticleSampler .colors);
       else
-         this .samplers .delete (ParticleSampler .COLORS);
+         this .samplers .delete (ParticleSampler .colors);
 
       this .geometryContext .updateGeometryKey ();
       this .updateVertexArrays ();
@@ -596,36 +594,36 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    set_texCoord__ ()
    {
       const
-         gl           = this .getBrowser () .getContext (),
-         texCoordKey  = this ._texCoordKey,
-         numTexCoords = texCoordKey .length,
-         textureSize  = Math .ceil (Math .sqrt (numTexCoords + numTexCoords * this .texCoordCount));
+         gl          = this .getBrowser () .getContext (),
+         key         = this ._texCoordKey,
+         numKeys     = key .length,
+         textureSize = Math .ceil (Math .sqrt (numKeys + numKeys * this .texCoordCount));
 
-      let texCoordRamp = this .texCoordRamp;
+      let ramp = this .texCoordRamp;
 
-      if (textureSize * textureSize * 4 > texCoordRamp .length)
-         texCoordRamp = this .texCoordRamp = new Float32Array (textureSize * textureSize * 4);
+      if (textureSize * textureSize * 4 > ramp .length)
+         ramp = this .texCoordRamp = new Float32Array (textureSize * textureSize * 4);
       else
-         texCoordRamp .fill (0);
+         ramp .fill (0);
 
-      for (let i = 0; i < numTexCoords; ++ i)
-         texCoordRamp [i * 4] = texCoordKey [i];
+      for (let i = 0; i < numKeys; ++ i)
+         ramp [i * 4] = key [i];
 
       if (this .texCoordRampNode)
-         texCoordRamp .set (this .texCoordRampNode .addPoints ([ ]) .slice (0, numTexCoords * this .texCoordCount * 4), numTexCoords * 4);
+         ramp .set (this .texCoordRampNode .addPoints ([ ]) .slice (0, numKeys * this .texCoordCount * 4), numKeys * 4);
 
       if (textureSize)
       {
-         gl .bindTexture (gl .TEXTURE_2D, this [ParticleSampler .TEX_COORDS]);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, texCoordRamp);
+         gl .bindTexture (gl .TEXTURE_2D, this [ParticleSampler .texCoords]);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, ramp);
       }
 
-      this .numTexCoords = this .texCoordRampNode ? numTexCoords : 0;
+      this .numTexCoords = this .texCoordRampNode ? numKeys : 0;
 
-      if (numTexCoords)
-         this .samplers .add (ParticleSampler .TEX_COORDS);
+      if (numKeys)
+         this .samplers .add (ParticleSampler .texCoords);
       else
-         this .samplers .delete (ParticleSampler .TEX_COORDS);
+         this .samplers .delete (ParticleSampler .texCoords);
 
       this .updateVertexArrays ();
    },
@@ -664,16 +662,16 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       if (textureSize)
       {
-         gl .bindTexture (gl .TEXTURE_2D, this [ParticleSampler .SCALES]);
+         gl .bindTexture (gl .TEXTURE_2D, this [ParticleSampler .scales]);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, ramp);
       }
 
       this .numScales = numKeys;
 
       if (numKeys)
-         this .samplers .add (ParticleSampler .SCALES);
+         this .samplers .add (ParticleSampler .scales);
       else
-         this .samplers .delete (ParticleSampler .SCALES);
+         this .samplers .delete (ParticleSampler .scales);
 
       this .updateVertexArrays ();
    },
@@ -822,21 +820,21 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
          if (numForces)
          {
-            gl .bindTexture (gl .TEXTURE_2D, this [ParticleSampler .FORCES]);
+            gl .bindTexture (gl .TEXTURE_2D, this [ParticleSampler .forces]);
             gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, numForces, 1, 0, gl .RGBA, gl .FLOAT, forces);
 
-            this .samplers .add (ParticleSampler .FORCES);
+            this .samplers .add (ParticleSampler .forces);
          }
          else
          {
-            this .samplers .delete (ParticleSampler .FORCES);
+            this .samplers .delete (ParticleSampler .forces);
          }
       }
       else
       {
          this .numForces = 0;
 
-         this .samplers .delete (ParticleSampler .FORCES);
+         this .samplers .delete (ParticleSampler .forces);
       }
 
       // Swap buffers.
@@ -993,7 +991,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
                const textureUnit = browser .getTextureUnit ();
 
                gl .activeTexture (gl .TEXTURE0 + textureUnit);
-               gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
+               gl .bindTexture (gl .TEXTURE_2D, this [ParticleSampler .texCoords]);
                gl .uniform1i (shaderNode .x3d_TexCoordRamp, textureUnit);
             }
 

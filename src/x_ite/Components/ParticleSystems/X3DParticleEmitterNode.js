@@ -52,11 +52,10 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       this ._mass        .addInterest ("set_mass__",        this);
       this ._surfaceArea .addInterest ("set_surfaceArea__", this);
 
-      this .addSampler ("forces");
       this .addSampler ("boundedVolume");
-      this .addSampler ("colorRamp");
-      this .addSampler ("texCoordRamp");
-      this .addSampler ("scaleRamp");
+
+      for (const key in ParticleSampler)
+         this .addSampler (key);
 
       this .addUniform ("speed",     "uniform float speed;");
       this .addUniform ("variation", "uniform float variation;");
@@ -155,6 +154,9 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       }
 
       // Forces, Colors, TexCoords, Scales
+
+      if (particleSystem .numTexCoords)
+         gl .uniform1i (program .texCoordCount, particleSystem .texCoordCount);
 
       for (const sampler of particleSystem .samplers)
       {
@@ -294,16 +296,16 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       #endif
 
       #if X3D_NUM_COLORS > 0
-         uniform sampler2D colorRamp;
+         uniform sampler2D colors;
       #endif
 
       #if X3D_NUM_TEX_COORDS > 0
          uniform int       texCoordCount;
-         uniform sampler2D texCoordRamp;
+         uniform sampler2D texCoords;
       #endif
 
       #if X3D_NUM_SCALES > 0
-         uniform sampler2D scaleRamp;
+         uniform sampler2D scales;
       #endif
 
       ${Array .from (this .uniforms .values ()) .join ("\n")}
@@ -707,12 +709,12 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          int   index1;
          float weight;
 
-         interpolate (colorRamp, X3D_NUM_COLORS, fraction, index0, index1, weight);
+         interpolate (colors, X3D_NUM_COLORS, fraction, index0, index1, weight);
 
          // Interpolate and return color.
 
-         vec4 color0 = texelFetch (colorRamp, X3D_NUM_COLORS + index0, 0);
-         vec4 color1 = texelFetch (colorRamp, X3D_NUM_COLORS + index1, 0);
+         vec4 color0 = texelFetch (colors, X3D_NUM_COLORS + index0, 0);
+         vec4 color1 = texelFetch (colors, X3D_NUM_COLORS + index1, 0);
 
          return mix (color0, color1, weight);
       }
@@ -732,12 +734,12 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          int   index1;
          float weight;
 
-         interpolate (scaleRamp, X3D_NUM_SCALES, fraction, index0, index1, weight);
+         interpolate (scales, X3D_NUM_SCALES, fraction, index0, index1, weight);
 
          // Interpolate and return scale.
 
-         vec3 scale0 = texelFetch (scaleRamp, X3D_NUM_SCALES + index0, 0) .xyz;
-         vec3 scale1 = texelFetch (scaleRamp, X3D_NUM_SCALES + index1, 0) .xyz;
+         vec3 scale0 = texelFetch (scales, X3D_NUM_SCALES + index0, 0) .xyz;
+         vec3 scale1 = texelFetch (scales, X3D_NUM_SCALES + index1, 0) .xyz;
 
          return mix (scale0, scale1, weight);
       }
@@ -789,7 +791,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          float fraction = elapsedTime / lifetime;
          int   index0   = 0;
 
-         interpolate (texCoordRamp, X3D_NUM_TEX_COORDS, fraction, index0);
+         interpolate (texCoords, X3D_NUM_TEX_COORDS, fraction, index0);
 
          return X3D_NUM_TEX_COORDS + index0 * texCoordCount;
       }
@@ -940,20 +942,16 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       program .deltaTime         = gl .getUniformLocation (program, "deltaTime");
       program .particleSize      = gl .getUniformLocation (program, "particleSize");
 
-      program .forces = gl .getUniformLocation (program, "forces");
-
       program .boundedVerticesIndex  = gl .getUniformLocation (program, "boundedVerticesIndex");
       program .boundedNormalsIndex   = gl .getUniformLocation (program, "boundedNormalsIndex");
       program .boundedHierarchyIndex = gl .getUniformLocation (program, "boundedHierarchyIndex");
       program .boundedHierarchyRoot  = gl .getUniformLocation (program, "boundedHierarchyRoot");
       program .boundedVolume         = gl .getUniformLocation (program, "boundedVolume");
 
-      program .colorRamp = gl .getUniformLocation (program, "colorRamp");
-
       program .texCoordCount = gl .getUniformLocation (program, "texCoordCount");
-      program .texCoordRamp  = gl .getUniformLocation (program, "texCoordRamp");
 
-      program .scaleRamp = gl .getUniformLocation (program, "scaleRamp");
+      for (const key in ParticleSampler)
+         program [key] = gl .getUniformLocation (program, key);
 
       for (const name of this .uniforms .keys ())
          program [name] = gl .getUniformLocation (program, name);
@@ -969,10 +967,8 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          gl .uniform1i (location, program [name + "TextureUnit"] = browser .getTextureUnit ());
       }
 
-      program [ParticleSampler .FORCES]     = program .forcesTextureUnit;
-      program [ParticleSampler .COLORS]     = program .colorRampTextureUnit;
-      program [ParticleSampler .TEX_COORDS] = program .texCoordRampTextureUnit;
-      program [ParticleSampler .SCALES]     = program .scaleRampTextureUnit;
+      for (const [key, symbol] of Object .entries (ParticleSampler))
+         program [symbol] = program [key + "TextureUnit"];
 
       browser .resetTextureUnits ();
 
