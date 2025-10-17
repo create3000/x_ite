@@ -47,6 +47,8 @@ The ParticleSystem node belongs to the [ParticleSystems](/x_ite/components/overv
 | SFNode | [ ] | [color](#fields-color) | NULL  |
 | MFFloat | [ ] | [texCoordKey](#fields-texCoordKey) | [ ] |
 | SFNode | [ ] | [texCoord](#fields-texCoord) | NULL  |
+| MFFloat | [ ] | [scaleKey](#fields-scaleKey) | [ ] |
+| SFNode | [ ] | [scale](#fields-scale) | NULL  |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFBool | [in, out] | [pointerEvents](#fields-pointerEvents) | TRUE  |
 | SFBool | [in, out] | [castShadow](#fields-castShadow) | TRUE |
