@@ -179,7 +179,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          gl .bindTexture (gl .TEXTURE_2D, particleSystem .texCoordRampTexture);
       }
 
-      // Colors
+      // Scales
 
       if (particleSystem .numScales)
       {
