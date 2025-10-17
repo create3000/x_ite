@@ -55,7 +55,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       this .addSampler ("boundedVolume");
       this .addSampler ("colorRamp");
       this .addSampler ("texCoordRamp");
-      this .addSampler ("sizeRamp");
+      this .addSampler ("scaleRamp");
 
       this .addUniform ("speed",     "uniform float speed;");
       this .addUniform ("variation", "uniform float variation;");
@@ -183,8 +183,8 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       if (particleSystem .numSizes)
       {
-         gl .activeTexture (gl .TEXTURE0 + program .sizeRampTextureUnit);
-         gl .bindTexture (gl .TEXTURE_2D, particleSystem .sizeRampTexture);
+         gl .activeTexture (gl .TEXTURE0 + program .scaleRampTextureUnit);
+         gl .bindTexture (gl .TEXTURE_2D, particleSystem .scaleRampTexture);
       }
 
       // Other textures
@@ -328,7 +328,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       #endif
 
       #if X3D_NUM_SIZES > 0
-         uniform sampler2D sizeRamp;
+         uniform sampler2D scaleRamp;
       #endif
 
       ${Array .from (this .uniforms .values ()) .join ("\n")}
@@ -747,7 +747,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       #if X3D_NUM_SIZES > 0
       vec3
-      getSize (const in float lifetime, const in float elapsedTime)
+      getScale (const in float lifetime, const in float elapsedTime)
       {
          // Determine index0, index1 and weight.
 
@@ -757,17 +757,17 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          int   index1;
          float weight;
 
-         interpolate (sizeRamp, X3D_NUM_SIZES, fraction, index0, index1, weight);
+         interpolate (scaleRamp, X3D_NUM_SIZES, fraction, index0, index1, weight);
 
-         // Interpolate and return size.
+         // Interpolate and return scale.
 
-         vec3 size0 = texelFetch (sizeRamp, X3D_NUM_SIZES + index0, 0) .xyz;
-         vec3 size1 = texelFetch (sizeRamp, X3D_NUM_SIZES + index1, 0) .xyz;
+         vec3 scale0 = texelFetch (scaleRamp, X3D_NUM_SIZES + index0, 0) .xyz;
+         vec3 scale1 = texelFetch (scaleRamp, X3D_NUM_SIZES + index1, 0) .xyz;
 
-         return mix (size0, size1, weight);
+         return mix (scale0, scale1, weight);
       }
       #else
-         #define getSize(lifetime, elapsedTime) (vec3 (1.0))
+         #define getScale(lifetime, elapsedTime) (vec3 (1.0))
       #endif
 
       #if defined (X3D_BOUNDED_VOLUME)
@@ -881,23 +881,23 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
             output6 = position;
          }
 
-         vec3 size = getSize (lifetime, elapsedTime);
+         vec3 scale = getScale (lifetime, elapsedTime);
 
          #if X3D_GEOMETRY_TYPE == POINT || X3D_GEOMETRY_TYPE == SPRITE || X3D_GEOMETRY_TYPE == GEOMETRY
-            output3 = vec4 (size [0], 0.0, 0.0, 0.0);
-            output4 = vec4 (0.0, size [1], 0.0, 0.0);
-            output5 = vec4 (0.0, 0.0, size [2], 0.0);
+            output3 = vec4 (scale [0], 0.0, 0.0, 0.0);
+            output4 = vec4 (0.0, scale [1], 0.0, 0.0);
+            output5 = vec4 (0.0, 0.0, scale [2], 0.0);
          #elif X3D_GEOMETRY_TYPE == LINE
-            mat3 s = mat3 (size [0], 0.0, 0.0, 0.0, size [1], 0.0, 0.0, 0.0, size [2]);
+            mat3 s = mat3 (scale [0], 0.0, 0.0, 0.0, scale [1], 0.0, 0.0, 0.0, scale [2]);
             mat3 m = s * Matrix3 (Quaternion (vec3 (0.0, 0.0, 1.0), output2 .xyz));
 
             output3 = vec4 (m [0], 0.0);
             output4 = vec4 (m [1], 0.0);
             output5 = vec4 (m [2], 0.0);
          #else
-            output3 = vec4 (particleSize .x * size [0], 0.0, 0.0, 0.0);
-            output4 = vec4 (0.0, particleSize .y * size [1], 0.0, 0.0);
-            output5 = vec4 (0.0, 0.0, size [2], 0.0);
+            output3 = vec4 (particleSize .x * scale [0], 0.0, 0.0, 0.0);
+            output4 = vec4 (0.0, particleSize .y * scale [1], 0.0, 0.0);
+            output5 = vec4 (0.0, 0.0, scale [2], 0.0);
          #endif
       }
       `;
@@ -978,7 +978,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       program .texCoordCount = gl .getUniformLocation (program, "texCoordCount");
       program .texCoordRamp  = gl .getUniformLocation (program, "texCoordRamp");
 
-      program .sizeRamp = gl .getUniformLocation (program, "sizeRamp");
+      program .scaleRamp = gl .getUniformLocation (program, "scaleRamp");
 
       for (const name of this .uniforms .keys ())
          program [name] = gl .getUniformLocation (program, name);

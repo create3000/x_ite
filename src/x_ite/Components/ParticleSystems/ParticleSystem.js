@@ -75,7 +75,7 @@ function ParticleSystem (executionContext)
    this .boundedVertices          = [ ];
    this .colorRamp                = new Float32Array ();
    this .texCoordRamp             = new Float32Array ();
-   this .sizeRamp                 = new Float32Array ();
+   this .scaleRamp                = new Float32Array ();
    this .geometryContext          = new GeometryContext ({ textureCoordinateNode: browser .getDefaultTextureCoordinate () });
    this .creationTime             = 0;
    this .pauseTime                = 0;
@@ -120,8 +120,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this ._color             .addInterest ("set_colorRamp__",         this);
       this ._texCoordKey       .addInterest ("set_texCoord__",          this);
       this ._texCoord          .addInterest ("set_texCoordRamp__",      this);
-      this ._sizeKey           .addInterest ("set_size__",              this);
-      this ._size              .addInterest ("set_sizeRamp__",          this);
+      this ._scaleKey          .addInterest ("set_scale__",              this);
+      this ._scale             .addInterest ("set_scaleRamp__",          this);
 
       // Create particles stuff.
 
@@ -143,7 +143,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .boundedTexture      = this .createTexture ();
       this .colorRampTexture    = this .createTexture ();
       this .texCoordRampTexture = this .createTexture ();
-      this .sizeRampTexture     = this .createTexture ();
+      this .scaleRampTexture     = this .createTexture ();
 
       // Create GL stuff.
 
@@ -175,7 +175,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .set_physics__ ();
       this .set_colorRamp__ ();
       this .set_texCoordRamp__ ();
-      this .set_sizeRamp__ ();
+      this .set_scaleRamp__ ();
       this .set_bbox__ ();
    },
    getShapeKey ()
@@ -616,42 +616,42 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       this .updateVertexArrays ();
    },
-   set_sizeRamp__ ()
+   set_scaleRamp__ ()
    {
-      this .sizeRampNode ?.removeInterest ("set_size__", this);
+      this .scaleRampNode ?.removeInterest ("set_scale__", this);
 
-      this .sizeRampNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._size);
+      this .scaleRampNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._scale);
 
-      this .sizeRampNode ?.addInterest ("set_size__", this);
+      this .scaleRampNode ?.addInterest ("set_scale__", this);
 
-      this .set_size__ ();
+      this .set_scale__ ();
    },
-   set_size__ ()
+   set_scale__ ()
    {
       const
          gl           = this .getBrowser () .getContext (),
-         key          = this ._sizeKey,
+         key          = this ._scaleKey,
          numKeys      = key .length,
          textureSize  = Math .ceil (Math .sqrt (numKeys * 2)); // keys + values
 
-      let ramp = this .sizeRamp;
+      let ramp = this .scaleRamp;
 
       if (textureSize * textureSize * 4 > ramp .length)
-         ramp = this .sizeRamp = new Float32Array (textureSize * textureSize * 4);
+         ramp = this .scaleRamp = new Float32Array (textureSize * textureSize * 4);
       else
          ramp .fill (0);
 
       for (let i = 0; i < numKeys; ++ i)
          ramp [i * 4] = key [i];
 
-      if (this .sizeRampNode)
-         ramp .set (this .sizeRampNode .addPoints ([ ], numKeys) .slice (0, numKeys * 4), numKeys * 4);
+      if (this .scaleRampNode)
+         ramp .set (this .scaleRampNode .addPoints ([ ], numKeys) .slice (0, numKeys * 4), numKeys * 4);
       else
          ramp .fill (1, numKeys * 4);
 
       if (textureSize)
       {
-         gl .bindTexture (gl .TEXTURE_2D, this .sizeRampTexture);
+         gl .bindTexture (gl .TEXTURE_2D, this .scaleRampTexture);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, ramp);
       }
 
@@ -1069,8 +1069,8 @@ Object .defineProperties (ParticleSystem,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "color",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "texCoordKey",       new Fields .MFFloat ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "texCoord",          new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "sizeKey",           new Fields .MFFloat ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "size",              new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "scaleKey",          new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "scale",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",          new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "pointerEvents",     new Fields .SFBool (true)), // skip test
          new X3DFieldDefinition (X3DConstants .inputOutput,    "castShadow",        new Fields .SFBool (true)),
