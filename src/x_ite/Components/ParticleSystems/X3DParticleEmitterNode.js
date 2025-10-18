@@ -707,11 +707,9 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       #if X3D_NUM_COLORS > 0
       vec4
-      getColor (const in float lifetime, const in float elapsedTime)
+      getColor (const in float fraction)
       {
          // Determine index0, index1 and weight.
-
-         float fraction = elapsedTime / lifetime;
 
          int   index0;
          int   index1;
@@ -727,16 +725,14 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          return mix (color0, color1, weight);
       }
       #else
-         #define getColor(lifetime, elapsedTime) (vec4 (1.0))
+         #define getColor(fraction) (vec4 (1.0))
       #endif
 
       #if X3D_NUM_SCALES > 0
       vec3
-      getScale (const in float lifetime, const in float elapsedTime)
+      getScale (const in float fraction)
       {
          // Determine index0, index1 and weight.
-
-         float fraction = elapsedTime / lifetime;
 
          int   index0;
          int   index1;
@@ -752,7 +748,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          return mix (scale0, scale1, weight);
       }
       #else
-         #define getScale(lifetime, elapsedTime) (vec3 (1.0))
+         #define getScale(fraction) (vec3 (1.0))
       #endif
 
       #if defined (X3D_BOUNDED_VOLUME)
@@ -794,17 +790,16 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       #if X3D_NUM_TEX_COORDS > 0
       int
-      getTexCoordIndex0 (const in float lifetime, const in float elapsedTime)
+      getTexCoordIndex0 (const in float fraction)
       {
-         float fraction = elapsedTime / lifetime;
-         int   index0   = 0;
+         int index0 = 0;
 
          interpolate (texCoords, X3D_NUM_TEX_COORDS, fraction, index0);
 
          return X3D_NUM_TEX_COORDS + index0 * X3D_TEX_COORDS_COUNT;
       }
       #else
-         #define getTexCoordIndex0(lifetime, elapsedTime) (-1)
+         #define getTexCoordIndex0(fraction) (-1)
       #endif
 
       void
@@ -813,6 +808,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          int   life        = int (input0 [0]);
          float lifetime    = input0 [1];
          float elapsedTime = input0 [2] + deltaTime;
+         float fraction    = elapsedTime / lifetime;
 
          srand ((gl_VertexID + randomSeed) * randomSeed);
 
@@ -822,11 +818,12 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
             lifetime    = getRandomLifetime ();
             elapsedTime = 0.0;
+            fraction    = 0.0;
 
-            output0 = vec4 (max (life + 1, 1), lifetime, elapsedTime, getTexCoordIndex0 (lifetime, elapsedTime));
+            output0 = vec4 (max (life + 1, 1), lifetime, elapsedTime, getTexCoordIndex0 (fraction));
 
             #if defined (X3D_CREATE_PARTICLES)
-               output1 = getColor (lifetime, elapsedTime);
+               output1 = getColor (fraction);
                output2 = vec4 (getRandomVelocity (), 0.0);
                output6 = getRandomPosition ();
             #else
@@ -860,13 +857,13 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
                bounce (deltaTime, input6, position, velocity);
             #endif
 
-            output0 = vec4 (life, lifetime, elapsedTime, getTexCoordIndex0 (lifetime, elapsedTime));
-            output1 = getColor (lifetime, elapsedTime);
+            output0 = vec4 (life, lifetime, elapsedTime, getTexCoordIndex0 (fraction));
+            output1 = getColor (fraction);
             output2 = vec4 (velocity, 0.0);
             output6 = position;
          }
 
-         vec3 scale = getScale (lifetime, elapsedTime);
+         vec3 scale = getScale (fraction);
 
          #if X3D_GEOMETRY_TYPE == POINT || X3D_GEOMETRY_TYPE == SPRITE || X3D_GEOMETRY_TYPE == GEOMETRY
             output3 = vec4 (scale .x, 0.0, 0.0, 0.0);
