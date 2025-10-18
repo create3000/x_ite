@@ -12,7 +12,6 @@ import X3DCast              from "../../Base/X3DCast.js";
 import AlphaMode            from "../../Browser/Shape/AlphaMode.js";
 import LineSet              from "../Rendering/LineSet.js";
 import Coordinate           from "../Rendering/Coordinate.js";
-import Algorithm            from "../../../standard/Math/Algorithm.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 import Matrix3              from "../../../standard/Math/Numbers/Matrix3.js";
@@ -749,7 +748,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       const
          DELAY = 15, // Delay in frames when dt fully applies.
-         dt    = 1 / Algorithm .clamp (this .getBrowser () .getCurrentFrameRate (), 10, 60);
+         dt    = 1 / Math .max (this .getBrowser () .getCurrentFrameRate (), 10);
 
       // let deltaTime is only for the emitter, this.deltaTime is for the forces.
       let deltaTime = this .deltaTime = ((DELAY - 1) * this .deltaTime + dt) / DELAY; // Moving average about DELAY frames.
