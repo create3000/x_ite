@@ -805,7 +805,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       void
       main ()
       {
-         int   life        = int (input0 [0]);
+         uint  life        = uint (input0 [0]);
          float lifetime    = input0 [1];
          float elapsedTime = input0 [2] + deltaTime;
          float fraction    = elapsedTime / lifetime;
@@ -820,7 +820,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
             elapsedTime = 0.0;
             fraction    = 0.0;
 
-            output0 = vec4 (max (life + 1, 1), lifetime, elapsedTime, getTexCoordIndex0 (fraction));
+            output0 = vec4 (++ life, lifetime, elapsedTime, getTexCoordIndex0 (fraction));
 
             #if defined (X3D_CREATE_PARTICLES)
                output1 = getColor (fraction);
