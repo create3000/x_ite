@@ -880,8 +880,10 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
             output4 = vec4 (m [1], 0.0);
             output5 = vec4 (m [2], 0.0);
          #else
-            output3 = vec4 (particleSize .x * scale .x, 0.0, 0.0, 0.0);
-            output4 = vec4 (0.0, particleSize .y * scale .y, 0.0, 0.0);
+            vec2 s = particleSize * scale .xy;
+
+            output3 = vec4 (s .x, 0.0, 0.0, 0.0);
+            output4 = vec4 (0.0, s .y, 0.0, 0.0);
             output5 = vec4 (0.0, 0.0, scale .z, 0.0);
          #endif
       }
