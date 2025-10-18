@@ -971,6 +971,15 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
                shaderNode      = appearanceNode .getShader (this .geometryContext, renderContext),
                primitiveMode   = browser .getPrimitiveMode (this .primitiveMode);
 
+            // Enable sample alpha to coverage if not transparent.
+
+            if (this .geometryType === GeometryType .POINT && !renderContext .transparent)
+            {
+               gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
+               gl .enable (gl .BLEND);
+               gl .blendFuncSeparate (gl .ONE, gl .ZERO, gl .ZERO, gl .ONE);
+            }
+
             // Set viewport.
 
             gl .viewport (... viewport);
@@ -1034,6 +1043,16 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
             // Reset texture units.
 
             browser .resetTextureUnits ();
+
+            // Disable sample alpha to coverage if not transparent.
+
+            if (this .geometryType === GeometryType .POINT && !renderContext .transparent)
+            {
+               gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
+               gl .disable (gl .BLEND);
+               gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
+            }
+
             break;
          }
       }

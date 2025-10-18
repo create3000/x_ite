@@ -124,9 +124,9 @@ main ()
    vertex = position .xyz;
 
    #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
-      gl_PointSize = pointSize = getPointSize (vertex);
+      gl_PointSize = pointSize = getInstancePointSize (getPointSize (vertex));
    #else
-      gl_PointSize = 1.0;
+      gl_PointSize = getInstancePointSize (1.0);
    #endif
 
    #if defined (X3D_GEOMETRY_1D) && defined (X3D_STYLE_PROPERTIES)
