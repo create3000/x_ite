@@ -571,6 +571,32 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          return first;
       }
 
+      #if X3D_NUM_TEX_COORDS > 0
+      void
+      interpolate (const in sampler2D sampler, const in int count, const in float fraction, out int index0)
+      {
+         // Determine index0.
+
+         if (count == 1 || fraction <= texelFetch (sampler, 0, 0) .x)
+         {
+            index0 = 0;
+         }
+         else if (fraction >= texelFetch (sampler, count - 1, 0) .x)
+         {
+            index0 = count - 2;
+         }
+         else
+         {
+            int index = upperBound (sampler, count, fraction);
+
+            if (index < count)
+               index0 = index - 1;
+            else
+               index0 = 0;
+         }
+      }
+      #endif
+
       #if X3D_NUM_COLORS > 0 || X3D_NUM_SCALES > 0 || defined (X3D_POLYLINE_EMITTER) || defined (X3D_SURFACE_EMITTER) || defined (X3D_VOLUME_EMITTER)
       void
       interpolate (const in sampler2D sampler, const in int count, const in float fraction, out int index0, out int index1, out float weight)
@@ -609,32 +635,6 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
                index1 = 0;
                weight = 0.0;
             }
-         }
-      }
-      #endif
-
-      #if X3D_NUM_TEX_COORDS > 0
-      void
-      interpolate (const in sampler2D sampler, const in int count, const in float fraction, out int index0)
-      {
-         // Determine index0.
-
-         if (count == 1 || fraction <= texelFetch (sampler, 0, 0) .x)
-         {
-            index0 = 0;
-         }
-         else if (fraction >= texelFetch (sampler, count - 1, 0) .x)
-         {
-            index0 = count - 2;
-         }
-         else
-         {
-            int index = upperBound (sampler, count, fraction);
-
-            if (index < count)
-               index0 = index - 1;
-            else
-               index0 = 0;
          }
       }
       #endif
@@ -704,6 +704,20 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       ${this .functions .join ("\n")}
 
       // Current values
+
+      #if X3D_NUM_TEX_COORDS > 0
+      int
+      getTexCoordIndex0 (const in float fraction)
+      {
+         int index0 = 0;
+
+         interpolate (texCoords, X3D_NUM_TEX_COORDS, fraction, index0);
+
+         return X3D_NUM_TEX_COORDS + index0 * X3D_TEX_COORDS_COUNT;
+      }
+      #else
+         #define getTexCoordIndex0(fraction) (-1)
+      #endif
 
       #if X3D_NUM_COLORS > 0
       vec4
@@ -786,20 +800,6 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          toPosition = vec4 (point + save_normalize (velocity) * 0.0001, 1.0);
          velocity  *= damping;
       }
-      #endif
-
-      #if X3D_NUM_TEX_COORDS > 0
-      int
-      getTexCoordIndex0 (const in float fraction)
-      {
-         int index0 = 0;
-
-         interpolate (texCoords, X3D_NUM_TEX_COORDS, fraction, index0);
-
-         return X3D_NUM_TEX_COORDS + index0 * X3D_TEX_COORDS_COUNT;
-      }
-      #else
-         #define getTexCoordIndex0(fraction) (-1)
       #endif
 
       void
