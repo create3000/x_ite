@@ -212,7 +212,7 @@ Array of time intervals in seconds, corresponding to particle lifetime, that are
 ### SFNode [ ] **scale** NULL <small>[Coordinate]</small> <small class="blue">non-standard</small>
 {: #fields-scale }
 
-The *scale* field contains a [Coordinate](/x_ite/components/rendering/coodinate/) node as a series of *scale* values to be used at the given scaleKey points in time.
+The *scale* field contains a [Coordinate](/x_ite/components/rendering/coordinate/) node as a series of *scale* values to be used at the given scaleKey points in time.
 
 #### Hints
 
