@@ -377,8 +377,8 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          geometry .coord   = coordinate;
 
          appearance .material = material;
-         shape .appearance = appearance;
-         shape .geometry   = geometry;
+         shape .appearance    = appearance;
+         shape .geometry      = geometry;
 
          scene .rootNodes .push (shape);
       }
@@ -414,8 +414,8 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          geometry .coord   = coordinate;
 
          appearance .material = material;
-         shape .appearance = appearance;
-         shape .geometry   = geometry;
+         shape .appearance    = appearance;
+         shape .geometry      = geometry;
 
          scene .rootNodes .push (shape);
       }
