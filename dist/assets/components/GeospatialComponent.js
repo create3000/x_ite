@@ -1,5 +1,5 @@
-/* X_ITE v12.1.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.1")];
+/* X_ITE v12.1.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -982,7 +982,7 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, (external_X_IT
          p = new (external_X_ITE_X3D_Vector3_default()) (),
          g = new (external_X_ITE_X3D_Vector3_default()) ();
 
-      return function (array)
+      return function (array, min = this .length)
       {
          const
             point  = this .point,
@@ -993,6 +993,19 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, (external_X_IT
             this .getCoord (p .set (point [index], point [index + 1], point [index + 2]), g);
 
             array .push (g [0], g [1], g [2], 1);
+         }
+
+         min *= 3;
+
+         if (length)
+         {
+            for (let index = length; index < min; index += 3)
+               array .push (g [0], g [1], g [2], 1);
+         }
+         else
+         {
+            for (let index = length; index < min; index += 3)
+               array .push (0, 0, 0, 1);
          }
 
          return array;

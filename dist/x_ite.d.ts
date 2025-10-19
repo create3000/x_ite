@@ -13880,6 +13880,12 @@ declare namespace X3D
        */
       pauseTime: number;
       /**
+       * The periodicWave field is an optional PeriodicWave node providing a regular or arbitrary periodic waveform.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      periodicWave: PeriodicWaveProxy | null;
+      /**
        * When resumeTime becomes <= time now, isPaused becomes false and AudioClip becomes active.
        *
        * This field is of access type 'inputOutput' and type SFTime.
@@ -18858,7 +18864,7 @@ declare namespace X3D
    }
 
    /** TextureTransform shifts 2D texture coordinates for positioning, orienting and scaling image textures on geometry. */
-   interface TextureTransformProxy extends X3DTextureTransformNodeProxy
+   interface TextureTransformProxy extends X3DSingleTextureTransformNodeProxy
    {
       /**
        * center point in 2D (s,t) texture coordinates for rotation and scaling.
@@ -18899,7 +18905,7 @@ declare namespace X3D
    }
 
    /** TextureTransform3D applies a 3D transformation to texture coordinates. */
-   interface TextureTransform3DProxy extends X3DTextureTransformNodeProxy
+   interface TextureTransform3DProxy extends X3DSingleTextureTransformNodeProxy
    {
       /**
        * center point in 2D (s,t) texture coordinates for rotation and scaling.
@@ -18940,7 +18946,7 @@ declare namespace X3D
    }
 
    /** TextureTransformMatrix3D applies a 3D transformation to texture coordinates. */
-   interface TextureTransformMatrix3DProxy extends X3DTextureTransformNodeProxy
+   interface TextureTransformMatrix3DProxy extends X3DSingleTextureTransformNodeProxy
    {
       /**
        * The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material.

@@ -1,5 +1,5 @@
-/* X_ITE v12.1.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.1")];
+/* X_ITE v12.1.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -54,24 +54,36 @@ var external_X_ITE_X3D_FieldDefinitionArray_default = /*#__PURE__*/__webpack_req
 ;// external "__X_ITE_X3D__ .X3DNode"
 const external_X_ITE_X3D_X3DNode_namespaceObject = __X_ITE_X3D__ .X3DNode;
 var external_X_ITE_X3D_X3DNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNode_namespaceObject);
+;// external "__X_ITE_X3D__ .Namespace"
+const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
+var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
+;// ./src/x_ite/Browser/ParticleSystems/ParticleSampler.js
+const ParticleSampler = {
+   forces: Symbol (),
+   colors: Symbol (),
+   texCoords: Symbol (),
+   scales: Symbol (),
+};
+
+const __default__ = ParticleSampler;
+;
+
+/* harmony default export */ const ParticleSystems_ParticleSampler = (external_X_ITE_X3D_Namespace_default().add ("ParticleSampler", __default__));
 ;// external "__X_ITE_X3D__ .GeometryType"
 const external_X_ITE_X3D_GeometryType_namespaceObject = __X_ITE_X3D__ .GeometryType;
 var external_X_ITE_X3D_GeometryType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_GeometryType_namespaceObject);
 ;// external "__X_ITE_X3D__ .X3DConstants"
 const external_X_ITE_X3D_X3DConstants_namespaceObject = __X_ITE_X3D__ .X3DConstants;
 var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DConstants_namespaceObject);
-;// external "__X_ITE_X3D__ .Namespace"
-const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
-var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
 ;// ./src/x_ite/Browser/ParticleSystems/Line3.glsl.js
-const __default__ = /* glsl */ `
+const Line3_glsl_default_ = /* glsl */ `
 #if defined(X3D_BOUNDED_VOLUME)||defined(X3D_VOLUME_EMITTER)
 struct Line3{vec3 point;vec3 direction;};bool intersects(const in Line3 line,const in vec3 a,const in vec3 b,const in vec3 c,out vec3 r){vec3 edge1=b-a;vec3 edge2=c-a;vec3 pvec=cross(line.direction,edge2);float det=dot(edge1,pvec);if(det==0.)return false;float inv_det=1./det;vec3 tvec=line.point-a;float u=dot(tvec,pvec)*inv_det;if(u<0.||u>1.)return false;vec3 qvec=cross(tvec,edge1);float v=dot(line.direction,qvec)*inv_det;if(v<0.||u+v>1.)return false;r=vec3(u,v,1.-u-v);return true;}
 #endif
 `
 ;
 
-/* harmony default export */ const Line3_glsl = (external_X_ITE_X3D_Namespace_default().add ("Line3.glsl", __default__));
+/* harmony default export */ const Line3_glsl = (external_X_ITE_X3D_Namespace_default().add ("Line3.glsl", Line3_glsl_default_));
 ;// ./src/x_ite/Browser/ParticleSystems/Plane3.glsl.js
 const Plane3_glsl_default_ = /* glsl */ `
 #if defined(X3D_BOUNDED_VOLUME)||defined(X3D_VOLUME_EMITTER)
@@ -109,6 +121,7 @@ int getIntersections(const in sampler2D volume,const in int verticesIndex,const 
 
 /* harmony default export */ const BVH_glsl = (external_X_ITE_X3D_Namespace_default().add ("BVH.glsl", BVH_glsl_default_));
 ;// ./src/x_ite/Components/ParticleSystems/X3DParticleEmitterNode.js
+
 
 
 
@@ -162,10 +175,10 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (exte
       this ._mass        .addInterest ("set_mass__",        this);
       this ._surfaceArea .addInterest ("set_surfaceArea__", this);
 
-      this .addSampler ("forces");
       this .addSampler ("boundedVolume");
-      this .addSampler ("colorRamp");
-      this .addSampler ("texCoordRamp");
+
+      for (const key in ParticleSystems_ParticleSampler)
+         this .addSampler (key);
 
       this .addUniform ("speed",     "uniform float speed;");
       this .addUniform ("variation", "uniform float variation;");
@@ -250,14 +263,6 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (exte
       gl .uniform1f (program .deltaTime,         deltaTime);
       gl .uniform2f (program .particleSize,      particleSystem ._particleSize .x, particleSystem ._particleSize .y);
 
-      // Forces
-
-      if (particleSystem .numForces)
-      {
-         gl .activeTexture (gl .TEXTURE0 + program .forcesTextureUnit);
-         gl .bindTexture (gl .TEXTURE_2D, particleSystem .forcesTexture);
-      }
-
       // Bounded Physics
 
       if (particleSystem .boundedHierarchyRoot > -1)
@@ -271,22 +276,12 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (exte
          gl .bindTexture (gl .TEXTURE_2D, particleSystem .boundedTexture);
       }
 
-      // Colors
+      // Forces, Colors, TexCoords, Scales
 
-      if (particleSystem .numColors)
+      for (const sampler of particleSystem .samplers)
       {
-         gl .activeTexture (gl .TEXTURE0 + program .colorRampTextureUnit);
-         gl .bindTexture (gl .TEXTURE_2D, particleSystem .colorRampTexture);
-      }
-
-      // TexCoords
-
-      if (particleSystem .numTexCoords)
-      {
-         gl .uniform1i (program .texCoordCount, particleSystem .texCoordCount);
-
-         gl .activeTexture (gl .TEXTURE0 + program .texCoordRampTextureUnit);
-         gl .bindTexture (gl .TEXTURE_2D, particleSystem .texCoordRampTexture);
+         gl .activeTexture (gl .TEXTURE0 + program [sampler]);
+         gl .bindTexture (gl .TEXTURE_2D, particleSystem [sampler]);
       }
 
       // Other textures
@@ -359,7 +354,16 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (exte
    },
    getProgram (particleSystem)
    {
-      const { geometryType, createParticles, numColors, numTexCoords, numForces, boundedHierarchyRoot } = particleSystem;
+      const {
+         geometryType,
+         createParticles,
+         numColors,
+         numTexCoords,
+         texCoordCount,
+         numScales,
+         numForces,
+         boundedHierarchyRoot
+      } = particleSystem;
 
       let key = "";
 
@@ -369,6 +373,10 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (exte
       key += numColors
       key += ".";
       key += numTexCoords;
+      key += ".";
+      key += texCoordCount;
+      key += ".";
+      key += numScales;
       key += ".";
       key += numForces
       key += ".";
@@ -388,6 +396,8 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, (exte
       defines .push (`${particleSystem .createParticles && this .on ? "#define X3D_CREATE_PARTICLES" : ""}`);
       defines .push (`#define X3D_NUM_COLORS ${particleSystem .numColors}`);
       defines .push (`#define X3D_NUM_TEX_COORDS ${particleSystem .numTexCoords}`);
+      defines .push (`#define X3D_TEX_COORDS_COUNT ${particleSystem .texCoordCount}`);
+      defines .push (`#define X3D_NUM_SCALES ${particleSystem .numScales}`);
       defines .push (`#define X3D_NUM_FORCES ${particleSystem .numForces}`);
       defines .push (`${particleSystem .boundedHierarchyRoot > -1 ? "#define X3D_BOUNDED_VOLUME" : ""}`);
 
@@ -402,41 +412,49 @@ uniform sampler2D forces;
 uniform int boundedVerticesIndex;uniform int boundedNormalsIndex;uniform int boundedHierarchyIndex;uniform int boundedHierarchyRoot;uniform sampler2D boundedVolume;
 #endif
 #if X3D_NUM_COLORS>0
-uniform sampler2D colorRamp;
+uniform sampler2D colors;
 #endif
 #if X3D_NUM_TEX_COORDS>0
-uniform int texCoordCount;uniform sampler2D texCoordRamp;
+uniform sampler2D texCoords;
+#endif
+#if X3D_NUM_SCALES>0
+uniform sampler2D scales;
 #endif
 ${Array .from (this .uniforms .values ()) .join ("\n")}
 in vec4 input0;in vec4 input2;in vec4 input6;out vec4 output0;out vec4 output1;out vec4 output2;out vec4 output3;out vec4 output4;out vec4 output5;out vec4 output6;
 ${Object .entries ((external_X_ITE_X3D_GeometryType_default())) .map (([k, v]) => `#define ${k} ${v}`) .join ("\n")}
 const int ARRAY_SIZE=32;const float M_PI=3.14159265359;uniform float NaN;vec4 texelFetch(const in sampler2D sampler,const in int index,const in int lod){int x=textureSize(sampler,lod).x;ivec2 p=ivec2(index % x,index/x);vec4 t=texelFetch(sampler,p,lod);return t;}vec3 save_normalize(const in vec3 vector){float l=length(vector);if(l==0.)return vec3(0);return vector/l;}vec4 Quaternion(const in vec3 fromVector,const in vec3 toVector){vec3 from=save_normalize(fromVector);vec3 to=save_normalize(toVector);float cos_angle=dot(from,to);vec3 cross_vec=cross(from,to);float cross_len=length(cross_vec);if(cross_len==0.){if(cos_angle>0.){return vec4(0.,0.,0.,1.);}else{vec3 t=cross(from,vec3(1.,0.,0.));if(dot(t,t)==0.)t=cross(from,vec3(0.,1.,0.));t=save_normalize(t);return vec4(t,0.);}}else{float s=sqrt(abs(1.-cos_angle)*.5);cross_vec=save_normalize(cross_vec);return vec4(cross_vec*s,sqrt(abs(1.+cos_angle)*.5));}}vec3 multVecQuat(const in vec3 v,const in vec4 q){float a=q.w*q.w-q.x*q.x-q.y*q.y-q.z*q.z;float b=2.*(v.x*q.x+v.y*q.y+v.z*q.z);float c=2.*q.w;vec3 r=a*v.xyz+b*q.xyz+c*(q.yzx*v.zxy-q.zxy*v.yzx);return r;}mat3 Matrix3(const in vec4 quaternion){float x=quaternion.x;float y=quaternion.y;float z=quaternion.z;float w=quaternion.w;float A=y*y;float B=z*z;float C=x*y;float D=z*w;float E=z*x;float F=y*w;float G=x*x;float H=y*z;float I=x*w;return mat3(1.-2.*(A+B),2.*(C+D),2.*(E-F),2.*(C-D),1.-2.*(B+G),2.*(H+I),2.*(E+F),2.*(H-I),1.-2.*(A+G));}uint seed=1u;void srand(const in int value){seed=uint(value);}float random(){seed=seed*1103515245u+12345u;return float(seed)/4294967295.;}float getRandomValue(const in float min,const in float max){return min+random()*(max-min);}float getRandomLifetime(){float v=particleLifetime*lifetimeVariation;float min_=max(0.,particleLifetime-v);float max_=particleLifetime+v;return getRandomValue(min_,max_);}float getRandomSpeed(){float v=speed*variation;float min_=max(0.,speed-v);float max_=speed+v;return getRandomValue(min_,max_);}vec3 getRandomNormal(){float theta=getRandomValue(-M_PI,M_PI);float cphi=getRandomValue(-1.,1.);float r=sqrt(1.-cphi*cphi);return vec3(sin(theta)*r,cos(theta)*r,cphi);}vec3 getRandomNormalWithAngle(const in float angle){float theta=getRandomValue(-M_PI,M_PI);float cphi=getRandomValue(cos(angle),1.);float r=sqrt(1.-cphi*cphi);return vec3(sin(theta)*r,cos(theta)*r,cphi);}vec3 getRandomNormalWithDirectionAndAngle(const in vec3 direction,const in float angle){vec4 rotation=Quaternion(vec3(0.,0.,1.),direction);vec3 normal=getRandomNormalWithAngle(angle);return multVecQuat(normal,rotation);}vec3 getRandomSurfaceNormal(const in vec3 direction){float theta=getRandomValue(-M_PI,M_PI);float cphi=pow(random(),1./3.);float r=sqrt(1.-cphi*cphi);vec3 normal=vec3(sin(theta)*r,cos(theta)*r,cphi);vec4 rotation=Quaternion(vec3(0.,0.,1.),direction);return multVecQuat(normal,rotation);}vec3 getRandomSphericalVelocity(){vec3 normal=getRandomNormal();float speed=getRandomSpeed();return normal*speed;}int upperBound(const in sampler2D sampler,in int count,const in float value){int first=0;int step=0;while(count>0){int index=first;step=count>>1;index+=step;if(value<texelFetch(sampler,index,0).x){count=step;}else{first=++index;count-=step+1;}}return first;}
-#if X3D_NUM_COLORS>0||defined(X3D_POLYLINE_EMITTER)||defined(X3D_SURFACE_EMITTER)||defined(X3D_VOLUME_EMITTER)
-void interpolate(const in sampler2D sampler,const in int count,const in float fraction,out int index0,out int index1,out float weight){if(count==1||fraction<=texelFetch(sampler,0,0).x){index0=0;index1=0;weight=0.;}else if(fraction>=texelFetch(sampler,count-1,0).x){index0=count-2;index1=count-1;weight=1.;}else{int index=upperBound(sampler,count,fraction);if(index<count){index1=index;index0=index-1;float key0=texelFetch(sampler,index0,0).x;float key1=texelFetch(sampler,index1,0).x;weight=clamp((fraction-key0)/(key1-key0),0.,1.);}else{index0=0;index1=0;weight=0.;}}}
-#endif
 #if X3D_NUM_TEX_COORDS>0
 void interpolate(const in sampler2D sampler,const in int count,const in float fraction,out int index0){if(count==1||fraction<=texelFetch(sampler,0,0).x){index0=0;}else if(fraction>=texelFetch(sampler,count-1,0).x){index0=count-2;}else{int index=upperBound(sampler,count,fraction);if(index<count)index0=index-1;else index0=0;}}
+#endif
+#if X3D_NUM_COLORS>0||X3D_NUM_SCALES>0||defined(X3D_POLYLINE_EMITTER)||defined(X3D_SURFACE_EMITTER)||defined(X3D_VOLUME_EMITTER)
+void interpolate(const in sampler2D sampler,const in int count,const in float fraction,out int index0,out int index1,out float weight){if(count==1||fraction<=texelFetch(sampler,0,0).x){index0=0;index1=0;weight=0.;}else if(fraction>=texelFetch(sampler,count-1,0).x){index0=count-2;index1=count-1;weight=1.;}else{int index=upperBound(sampler,count,fraction);if(index<count){index1=index;index0=index-1;float key0=texelFetch(sampler,index0,0).x;float key1=texelFetch(sampler,index1,0).x;weight=clamp((fraction-key0)/(key1-key0),0.,1.);}else{index0=0;index1=0;weight=0.;}}}
 #endif
 #if defined(X3D_SURFACE_EMITTER)||defined(X3D_VOLUME_EMITTER)
 vec3 getRandomBarycentricCoord(){float u=random();float v=random();if(u+v>1.){u=1.-u;v=1.-v;}float t=1.-u-v;return vec3(t,u,v);}void getRandomPointOnSurface(const in sampler2D surface,const in int verticesIndex,const in int normalsIndex,out vec4 position,out vec3 normal){float lastAreaSoFar=texelFetch(surface,verticesIndex-1,0).x;float fraction=random()*lastAreaSoFar;int index0;int index1;int index2;float weight;interpolate(surface,verticesIndex,fraction,index0,index1,weight);index0*=3;index1=index0+1;index2=index0+2;vec4 vertex0=texelFetch(surface,verticesIndex+index0,0);vec4 vertex1=texelFetch(surface,verticesIndex+index1,0);vec4 vertex2=texelFetch(surface,verticesIndex+index2,0);vec3 normal0=texelFetch(surface,normalsIndex+index0,0).xyz;vec3 normal1=texelFetch(surface,normalsIndex+index1,0).xyz;vec3 normal2=texelFetch(surface,normalsIndex+index2,0).xyz;vec3 r=getRandomBarycentricCoord();position=r.z*vertex0+r.x*vertex1+r.y*vertex2;normal=save_normalize(r.z*normal0+r.x*normal1+r.y*normal2);}
 #endif
 ${this .functions .join ("\n")}
-#if X3D_NUM_COLORS>0
-vec4 getColor(const in float lifetime,const in float elapsedTime){float fraction=elapsedTime/lifetime;int index0;int index1;float weight;interpolate(colorRamp,X3D_NUM_COLORS,fraction,index0,index1,weight);vec4 color0=texelFetch(colorRamp,X3D_NUM_COLORS+index0,0);vec4 color1=texelFetch(colorRamp,X3D_NUM_COLORS+index1,0);return mix(color0,color1,weight);}
+#if X3D_NUM_TEX_COORDS>0
+int getTexCoordIndex0(const in float fraction){int index0=0;interpolate(texCoords,X3D_NUM_TEX_COORDS,fraction,index0);return X3D_NUM_TEX_COORDS+index0*X3D_TEX_COORDS_COUNT;}
 #else
-#define getColor(lifetime,elapsedTime)(vec4(1))
+#define getTexCoordIndex0(fraction)(-1)
+#endif
+#if X3D_NUM_COLORS>0
+vec4 getColor(const in float fraction){int index0;int index1;float weight;interpolate(colors,X3D_NUM_COLORS,fraction,index0,index1,weight);vec4 color0=texelFetch(colors,X3D_NUM_COLORS+index0,0);vec4 color1=texelFetch(colors,X3D_NUM_COLORS+index1,0);return mix(color0,color1,weight);}
+#else
+#define getColor(fraction)(vec4(1))
+#endif
+#if X3D_NUM_SCALES>0
+vec3 getScale(const in float fraction){int index0;int index1;float weight;interpolate(scales,X3D_NUM_SCALES,fraction,index0,index1,weight);vec3 scale0=texelFetch(scales,X3D_NUM_SCALES+index0,0).xyz;vec3 scale1=texelFetch(scales,X3D_NUM_SCALES+index1,0).xyz;return mix(scale0,scale1,weight);}
+#else
+#define getScale(fraction)(vec3(1))
 #endif
 #if defined(X3D_BOUNDED_VOLUME)
 void bounce(const in float deltaTime,const in vec4 fromPosition,inout vec4 toPosition,inout vec3 velocity){Line3 line=Line3(fromPosition.xyz,save_normalize(velocity));vec4 points[ARRAY_SIZE];vec3 normals[ARRAY_SIZE];int numIntersections=getIntersections(boundedVolume,boundedVerticesIndex,boundedNormalsIndex,boundedHierarchyIndex,boundedHierarchyRoot,line,points,normals);if(numIntersections==0)return;Plane3 plane1=plane3(line.point,line.direction);int index=min_index(points,numIntersections,0.,plane1);if(index==-1)return;vec3 point=points[index].xyz;vec3 normal=save_normalize(normals[index]);Plane3 plane2=plane3(point,normal);if(sign(plane_distance(plane2,fromPosition.xyz))==sign(plane_distance(plane2,toPosition.xyz)))return;float damping=length(normals[index]);velocity=reflect(velocity,normal);toPosition=vec4(point+save_normalize(velocity)*.0001,1.);velocity*=damping;}
 #endif
-#if X3D_NUM_TEX_COORDS>0
-int getTexCoordIndex0(const in float lifetime,const in float elapsedTime){float fraction=elapsedTime/lifetime;int index0=0;interpolate(texCoordRamp,X3D_NUM_TEX_COORDS,fraction,index0);return X3D_NUM_TEX_COORDS+index0*texCoordCount;}
-#else
-#define getTexCoordIndex0(lifetime,elapsedTime)(-1)
-#endif
-void main(){int life=int(input0[0]);float lifetime=input0[1];float elapsedTime=input0[2]+deltaTime;srand((gl_VertexID+randomSeed)*randomSeed);if(elapsedTime>lifetime){lifetime=getRandomLifetime();elapsedTime=0.;output0=vec4(max(life+1,1),lifetime,elapsedTime,getTexCoordIndex0(lifetime,elapsedTime));
+void main(){uint life=uint(input0[0]);float lifetime=input0[1];float elapsedTime=input0[2]+deltaTime;float fraction=elapsedTime/lifetime;srand((gl_VertexID+randomSeed)*randomSeed);if(elapsedTime>lifetime){lifetime=getRandomLifetime();elapsedTime=0.;fraction=0.;output0=vec4(++life,lifetime,elapsedTime,getTexCoordIndex0(fraction));
 #if defined(X3D_CREATE_PARTICLES)
-output1=getColor(lifetime,elapsedTime);output2=vec4(getRandomVelocity(),0.);output6=getRandomPosition();
+output1=getColor(fraction);output2=vec4(getRandomVelocity(),0.);output6=getRandomPosition();
 #else
 output1=vec4(0);output2=vec4(0);output6=vec4(NaN);
 #endif
@@ -448,13 +466,17 @@ position.xyz+=velocity*deltaTime;
 #if defined(X3D_BOUNDED_VOLUME)
 bounce(deltaTime,input6,position,velocity);
 #endif
-output0=vec4(life,lifetime,elapsedTime,getTexCoordIndex0(lifetime,elapsedTime));output1=getColor(lifetime,elapsedTime);output2=vec4(velocity,0.);output6=position;}
+output0=vec4(life,lifetime,elapsedTime,getTexCoordIndex0(fraction));output1=getColor(fraction);output2=vec4(velocity,0.);output6=position;}vec3 scale=getScale(fraction);
 #if X3D_GEOMETRY_TYPE==POINT||X3D_GEOMETRY_TYPE==SPRITE||X3D_GEOMETRY_TYPE==GEOMETRY
-output3=vec4(1.,0.,0.,0.);output4=vec4(0.,1.,0.,0.);output5=vec4(0.,0.,1.,0.);
+output3=vec4(scale.x,0.,0.,0.);output4=vec4(0.,scale.y,0.,0.);output5=vec4(0.,0.,scale.z,0.);
 #elif X3D_GEOMETRY_TYPE==LINE
-mat3 m=Matrix3(Quaternion(vec3(0.,0.,1.),output2.xyz));output3=vec4(m[0],0.);output4=vec4(m[1],0.);output5=vec4(m[2],0.);
+mat3 m=Matrix3(Quaternion(vec3(0.,0.,1.),output2.xyz));
+#if X3D_NUM_SCALES>0
+m*=mat3(scale.x,0.,0.,0.,scale.y,0.,0.,0.,scale.z);
+#endif
+output3=vec4(m[0],0.);output4=vec4(m[1],0.);output5=vec4(m[2],0.);
 #else
-output3=vec4(particleSize.x,0.,0.,0.);output4=vec4(0.,particleSize.y,0.,0.);output5=vec4(0.,0.,1.,0.);
+vec2 s=particleSize*scale.xy;output3=vec4(s.x,0.,0.,0.);output4=vec4(0.,s.y,0.,0.);output5=vec4(0.,0.,scale.z,0.);
 #endif
 }`
 
@@ -516,18 +538,14 @@ precision highp float;void main(){}`
       program .deltaTime         = gl .getUniformLocation (program, "deltaTime");
       program .particleSize      = gl .getUniformLocation (program, "particleSize");
 
-      program .forces = gl .getUniformLocation (program, "forces");
-
       program .boundedVerticesIndex  = gl .getUniformLocation (program, "boundedVerticesIndex");
       program .boundedNormalsIndex   = gl .getUniformLocation (program, "boundedNormalsIndex");
       program .boundedHierarchyIndex = gl .getUniformLocation (program, "boundedHierarchyIndex");
       program .boundedHierarchyRoot  = gl .getUniformLocation (program, "boundedHierarchyRoot");
       program .boundedVolume         = gl .getUniformLocation (program, "boundedVolume");
 
-      program .colorRamp = gl .getUniformLocation (program, "colorRamp");
-
-      program .texCoordCount = gl .getUniformLocation (program, "texCoordCount");
-      program .texCoordRamp  = gl .getUniformLocation (program, "texCoordRamp");
+      for (const key in ParticleSystems_ParticleSampler)
+         program [key] = gl .getUniformLocation (program, key);
 
       for (const name of this .uniforms .keys ())
          program [name] = gl .getUniformLocation (program, name);
@@ -542,6 +560,9 @@ precision highp float;void main(){}`
 
          gl .uniform1i (location, program [name + "TextureUnit"] = browser .getTextureUnit ());
       }
+
+      for (const [key, symbol] of Object .entries (ParticleSystems_ParticleSampler))
+         program [symbol] = program [key + "TextureUnit"];
 
       browser .resetTextureUnits ();
 
@@ -1489,6 +1510,7 @@ const BVH_default_ = BVH;
 
 
 
+
 const PointGeometry = new Float32Array ([0, 0, 0, 1]);
 
 // p4 ------ p3
@@ -1541,6 +1563,8 @@ function ParticleSystem (executionContext)
 
    this .maxParticles             = 0;
    this .numParticles             = 0;
+   this .spriteSize               = new (external_X_ITE_X3D_Vector3_default()) ();
+   this .samplers                 = new Set ();
    this .forcePhysicsModelNodes   = [ ];
    this .forces                   = new Float32Array (4);
    this .boundedPhysicsModelNodes = [ ];
@@ -1548,6 +1572,7 @@ function ParticleSystem (executionContext)
    this .boundedVertices          = [ ];
    this .colorRamp                = new Float32Array ();
    this .texCoordRamp             = new Float32Array ();
+   this .scaleRamp                = new Float32Array ();
    this .geometryContext          = new (external_X_ITE_X3D_GeometryContext_default()) ({ textureCoordinateNode: browser .getDefaultTextureCoordinate () });
    this .creationTime             = 0;
    this .pauseTime                = 0;
@@ -1592,6 +1617,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
       this ._color             .addInterest ("set_colorRamp__",         this);
       this ._texCoordKey       .addInterest ("set_texCoord__",          this);
       this ._texCoord          .addInterest ("set_texCoordRamp__",      this);
+      this ._scaleKey          .addInterest ("set_scale__",              this);
+      this ._scale             .addInterest ("set_scaleRamp__",          this);
 
       // Create particles stuff.
 
@@ -1607,12 +1634,12 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
          thickLinesVertexArrayObject: new (external_X_ITE_X3D_VertexArray_default()) (gl),
       });
 
-      // Create forces stuff.
+      // Create textures for forces, colors, texCoords, scales.
 
-      this .forcesTexture       = this .createTexture ();
-      this .boundedTexture      = this .createTexture ();
-      this .colorRampTexture    = this .createTexture ();
-      this .texCoordRampTexture = this .createTexture ();
+      this .boundedTexture = this .createTexture ();
+
+      for (const symbol of Object .values (ParticleSystems_ParticleSampler))
+         this [symbol] = this .createTexture ();
 
       // Create GL stuff.
 
@@ -1644,6 +1671,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
       this .set_physics__ ();
       this .set_colorRamp__ ();
       this .set_texCoordRamp__ ();
+      this .set_scaleRamp__ ();
       this .set_bbox__ ();
    },
    getShapeKey ()
@@ -1839,7 +1867,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
 
             gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
             gl .bufferData (gl .ARRAY_BUFFER, QuadGeometry, gl .DYNAMIC_DRAW);
-
             break;
          }
          case (external_X_ITE_X3D_GeometryType_default()).GEOMETRY:
@@ -1883,6 +1910,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
    {
       this .lineCoordinateNode ._point [0] .z = -this ._particleSize .y / 2;
       this .lineCoordinateNode ._point [1] .z = +this ._particleSize .y / 2;
+
+      this .spriteSize .set (... this ._particleSize);
    },
    set_emitter__ ()
    {
@@ -2001,13 +2030,11 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
    },
    set_colorRamp__ ()
    {
-      if (this .colorRampNode)
-         this .colorRampNode .removeInterest ("set_color__", this);
+      this .colorRampNode ?.removeInterest ("set_color__", this);
 
       this .colorRampNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DColorNode, this ._color);
 
-      if (this .colorRampNode)
-         this .colorRampNode .addInterest ("set_color__", this);
+      this .colorRampNode ?.addInterest ("set_color__", this);
 
       this .set_color__ ();
       this .set_transparent__ ();
@@ -2015,76 +2042,132 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
    set_color__ ()
    {
       const
-         gl           = this .getBrowser () .getContext (),
-         colorKey     = this ._colorKey,
-         numColors    = colorKey .length,
-         textureSize  = Math .ceil (Math .sqrt (numColors * 2));
+         gl          = this .getBrowser () .getContext (),
+         key         = this ._colorKey,
+         numKeys     = key .length,
+         textureSize = Math .ceil (Math .sqrt (numKeys * 2));
 
-      let colorRamp = this .colorRamp;
+      let ramp = this .colorRamp;
 
-      if (textureSize * textureSize * 4 > colorRamp .length)
-         colorRamp = this .colorRamp = new Float32Array (textureSize * textureSize * 4);
+      if (textureSize * textureSize * 4 > ramp .length)
+         ramp = this .colorRamp = new Float32Array (textureSize * textureSize * 4);
 
-      for (let i = 0; i < numColors; ++ i)
-         colorRamp [i * 4] = colorKey [i];
+      for (let i = 0; i < numKeys; ++ i)
+         ramp [i * 4] = key [i];
 
       if (this .colorRampNode)
-         colorRamp .set (this .colorRampNode .addColors ([ ], numColors) .slice (0, numColors * 4), numColors * 4);
+         ramp .set (this .colorRampNode .addColors ([ ], numKeys) .slice (0, numKeys * 4), numKeys * 4);
       else
-         colorRamp .fill (1, numColors * 4);
+         ramp .fill (1, numKeys * 4);
 
       if (textureSize)
       {
-         gl .bindTexture (gl .TEXTURE_2D, this .colorRampTexture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, colorRamp);
-     }
+         gl .bindTexture (gl .TEXTURE_2D, this [ParticleSystems_ParticleSampler .colors]);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, ramp);
+      }
 
-      this .numColors                      = numColors;
-      this .geometryContext .colorMaterial = !! (numColors && this .colorRampNode);
+      this .numColors                      = numKeys;
+      this .geometryContext .colorMaterial = !! (numKeys && this .colorRampNode);
+
+      if (numKeys)
+         this .samplers .add (ParticleSystems_ParticleSampler .colors);
+      else
+         this .samplers .delete (ParticleSystems_ParticleSampler .colors);
 
       this .geometryContext .updateGeometryKey ();
       this .updateVertexArrays ();
    },
    set_texCoordRamp__ ()
    {
-      if (this .texCoordRampNode)
-         this .texCoordRampNode .removeInterest ("set_texCoord__", this);
+      this .texCoordRampNode ?.removeInterest ("set_texCoord__", this);
 
       this .texCoordRampNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTextureCoordinateNode, this ._texCoord);
 
-      if (this .texCoordRampNode)
-         this .texCoordRampNode .addInterest ("set_texCoord__", this);
+      this .texCoordRampNode ?.addInterest ("set_texCoord__", this);
 
       this .set_texCoord__ ();
    },
    set_texCoord__ ()
    {
       const
-         gl           = this .getBrowser () .getContext (),
-         texCoordKey  = this ._texCoordKey,
-         numTexCoords = texCoordKey .length,
-         textureSize  = Math .ceil (Math .sqrt (numTexCoords + numTexCoords * this .texCoordCount));
+         gl          = this .getBrowser () .getContext (),
+         key         = this ._texCoordKey,
+         numKeys     = key .length,
+         textureSize = Math .ceil (Math .sqrt (numKeys + numKeys * this .texCoordCount));
 
-      let texCoordRamp = this .texCoordRamp;
+      let ramp = this .texCoordRamp;
 
-      if (textureSize * textureSize * 4 > texCoordRamp .length)
-         texCoordRamp = this .texCoordRamp = new Float32Array (textureSize * textureSize * 4);
+      if (textureSize * textureSize * 4 > ramp .length)
+         ramp = this .texCoordRamp = new Float32Array (textureSize * textureSize * 4);
       else
-         texCoordRamp .fill (0);
+         ramp .fill (0);
 
-      for (let i = 0; i < numTexCoords; ++ i)
-         texCoordRamp [i * 4] = texCoordKey [i];
+      for (let i = 0; i < numKeys; ++ i)
+         ramp [i * 4] = key [i];
 
       if (this .texCoordRampNode)
-         texCoordRamp .set (this .texCoordRampNode .addPoints ([ ]) .slice (0, numTexCoords * this .texCoordCount * 4), numTexCoords * 4);
+         ramp .set (this .texCoordRampNode .addPoints ([ ]) .slice (0, numKeys * this .texCoordCount * 4), numKeys * 4);
 
       if (textureSize)
       {
-         gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, texCoordRamp);
+         gl .bindTexture (gl .TEXTURE_2D, this [ParticleSystems_ParticleSampler .texCoords]);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, ramp);
       }
 
-      this .numTexCoords = this .texCoordRampNode ? numTexCoords : 0;
+      this .numTexCoords = this .texCoordRampNode ? numKeys : 0;
+
+      if (numKeys)
+         this .samplers .add (ParticleSystems_ParticleSampler .texCoords);
+      else
+         this .samplers .delete (ParticleSystems_ParticleSampler .texCoords);
+
+      this .updateVertexArrays ();
+   },
+   set_scaleRamp__ ()
+   {
+      this .scaleRampNode ?.removeInterest ("set_scale__", this);
+
+      this .scaleRampNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).Coordinate, this ._scale);
+
+      this .scaleRampNode ?.addInterest ("set_scale__", this);
+
+      this .set_scale__ ();
+   },
+   set_scale__ ()
+   {
+      const
+         gl           = this .getBrowser () .getContext (),
+         key          = this ._scaleKey,
+         numKeys      = key .length,
+         textureSize  = Math .ceil (Math .sqrt (numKeys * 2)); // keys + values
+
+      let ramp = this .scaleRamp;
+
+      if (textureSize * textureSize * 4 > ramp .length)
+         ramp = this .scaleRamp = new Float32Array (textureSize * textureSize * 4);
+      else
+         ramp .fill (0);
+
+      for (let i = 0; i < numKeys; ++ i)
+         ramp [i * 4] = key [i];
+
+      if (this .scaleRampNode)
+         ramp .set (this .scaleRampNode .addPoints ([ ], numKeys) .slice (0, numKeys * 4), numKeys * 4);
+      else
+         ramp .fill (1, numKeys * 4);
+
+      if (textureSize)
+      {
+         gl .bindTexture (gl .TEXTURE_2D, this [ParticleSystems_ParticleSampler .scales]);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, ramp);
+      }
+
+      this .numScales = numKeys;
+
+      if (numKeys)
+         this .samplers .add (ParticleSystems_ParticleSampler .scales);
+      else
+         this .samplers .delete (ParticleSystems_ParticleSampler .scales);
 
       this .updateVertexArrays ();
    },
@@ -2159,7 +2242,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
 
       const
          DELAY = 15, // Delay in frames when dt fully applies.
-         dt    = 1 / Math .max (10, this .getBrowser () .getCurrentFrameRate ());
+         dt    = 1 / Math .max (this .getBrowser () .getCurrentFrameRate (), 10);
 
       // let deltaTime is only for the emitter, this.deltaTime is for the forces.
       let deltaTime = this .deltaTime = ((DELAY - 1) * this .deltaTime + dt) / DELAY; // Moving average about DELAY frames.
@@ -2233,13 +2316,21 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
 
          if (numForces)
          {
-            gl .bindTexture (gl .TEXTURE_2D, this .forcesTexture);
+            gl .bindTexture (gl .TEXTURE_2D, this [ParticleSystems_ParticleSampler .forces]);
             gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, numForces, 1, 0, gl .RGBA, gl .FLOAT, forces);
+
+            this .samplers .add (ParticleSystems_ParticleSampler .forces);
+         }
+         else
+         {
+            this .samplers .delete (ParticleSystems_ParticleSampler .forces);
          }
       }
       else
       {
          this .numForces = 0;
+
+         this .samplers .delete (ParticleSystems_ParticleSampler .forces);
       }
 
       // Swap buffers.
@@ -2267,9 +2358,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
          new (external_X_ITE_X3D_Vector3_default()) (-0.5,  0.5, 0),
       ];
 
-      const
-         vertex = new (external_X_ITE_X3D_Vector3_default()) (),
-         size   = new (external_X_ITE_X3D_Vector3_default()) ();
+      const vertex = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function (gl, rotation)
       {
@@ -2280,17 +2369,15 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
 
          // Vertices
 
-         size .set (this ._particleSize .x, this ._particleSize .y, 1);
+         const size = this .spriteSize;
 
          for (let i = 0; i < 6; ++ i)
          {
             const index = 27 + i * 4;
 
-            rotation .multVecMatrix (vertex .assign (quad [i]) .multVec (size))
+            rotation .multVecMatrix (vertex .assign (quad [i]) .multVec (size));
 
-            data [index + 0] = vertex .x;
-            data [index + 1] = vertex .y;
-            data [index + 2] = vertex .z;
+            data .set (vertex, index);
          }
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
@@ -2377,6 +2464,15 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
                shaderNode      = appearanceNode .getShader (this .geometryContext, renderContext),
                primitiveMode   = browser .getPrimitiveMode (this .primitiveMode);
 
+            // Enable sample alpha to coverage if not transparent.
+
+            if (this .geometryType === (external_X_ITE_X3D_GeometryType_default()).POINT && !renderContext .transparent)
+            {
+               gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
+               gl .enable (gl .BLEND);
+               gl .blendFuncSeparate (gl .ONE, gl .ZERO, gl .ZERO, gl .ONE);
+            }
+
             // Set viewport.
 
             gl .viewport (... viewport);
@@ -2396,7 +2492,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
                const textureUnit = browser .getTextureUnit ();
 
                gl .activeTexture (gl .TEXTURE0 + textureUnit);
-               gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
+               gl .bindTexture (gl .TEXTURE_2D, this [ParticleSystems_ParticleSampler .texCoords]);
                gl .uniform1i (shaderNode .x3d_TexCoordRamp, textureUnit);
             }
 
@@ -2440,6 +2536,16 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
             // Reset texture units.
 
             browser .resetTextureUnits ();
+
+            // Disable sample alpha to coverage if not transparent.
+
+            if (this .geometryType === (external_X_ITE_X3D_GeometryType_default()).POINT && !renderContext .transparent)
+            {
+               gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
+               gl .disable (gl .BLEND);
+               gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
+            }
+
             break;
          }
       }
@@ -2498,6 +2604,8 @@ Object .defineProperties (ParticleSystem,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "color",             new (external_X_ITE_X3D_Fields_default()).SFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "texCoordKey",       new (external_X_ITE_X3D_Fields_default()).MFFloat ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "texCoord",          new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "scaleKey",          new (external_X_ITE_X3D_Fields_default()).MFFloat ()), // skip test
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "scale",             new (external_X_ITE_X3D_Fields_default()).SFNode ()), // skip test
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "isActive",          new (external_X_ITE_X3D_Fields_default()).SFBool ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "pointerEvents",     new (external_X_ITE_X3D_Fields_default()).SFBool (true)), // skip test
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "castShadow",        new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
