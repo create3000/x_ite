@@ -318,7 +318,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       const scene = this .getScene ();
 
-      if (this .coordIndex)
+      if (this .coordIndex) // IndexedFaceSet
       {
          const
             hasNormals = this .normals ?.some (v => v !== 0),
@@ -382,7 +382,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
          scene .rootNodes .push (shape);
       }
-      else
+      else // PointSet
       {
          const
             hasNormals = this .normals ?.some (v => v !== 0),
