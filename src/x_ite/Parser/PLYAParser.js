@@ -38,7 +38,6 @@ function PLYAParser (scene)
    X3DParser .call (this, scene);
 
    this .comments = [ ];
-   this .attrib   = [ ];
 
    this .typeMapping = new Map ([
       ["char",    this .int32],
@@ -314,43 +313,112 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       for (const element of elements)
          this .processElement (element);
 
-      if (!this .coord)
+      if (!this .points ?.length)
          return;
 
-      const
-         scene      = this .getScene (),
-         shape      = scene .createNode ("Shape"),
-         appearance = scene .createNode ("Appearance"),
-         material   = scene .createNode (this .geometry ? "Material" : "UnlitMaterial"),
-         geometry   = this .geometry ?? scene .createNode ("PointSet");
+      const scene = this .getScene ();
 
-      appearance .material = material;
-
-      if (this .texCoord)
+      if (this .coordIndex)
       {
-         const textureTransform = scene .createNode ("TextureTransform");
+         const
+            hasNormals = this .normals ?.some (v => v !== 0),
+            shape      = scene .createNode ("Shape"),
+            appearance = scene .createNode ("Appearance"),
+            material   = scene .createNode ("Material"),
+            geometry   = scene .createNode ("IndexedFaceSet"),
+            coordinate = scene .createNode ("Coordinate");
 
-         textureTransform .translation .y = -1;
-         textureTransform .scale .y       = -1;
+         geometry .solid      = false;
+         geometry .coordIndex = this .coordIndex;
 
-         appearance .textureTransform = textureTransform;
+         if (this .colors ?.length)
+         {
+            const
+               alpha = this .alpha && this .colors .some ((v, i) => i % 4 === 3 && v < 1),
+               color = scene .createNode (alpha ? "ColorRGBA" : "Color");
+
+            color .color    = alpha || !this .alpha ? this .colors : this .colors .filter ((v, i) => i % 4 !== 3);
+            geometry .color = color;
+         }
+
+         if (this .texCoords ?.length)
+         {
+            // TextureTransform
+
+            const textureTransform = scene .createNode ("TextureTransform");
+
+            textureTransform .translation .y = -1;
+            textureTransform .scale .y       = -1;
+
+            appearance .textureTransform = textureTransform;
+
+            // TextureCoordinate
+
+            const texCoord = scene .createNode ("TextureCoordinate");
+
+            texCoord .point    = this .texCoords;
+            geometry .texCoord = texCoord;
+
+            // Index
+
+            if (this .texCoordIndex ?.length)
+               geometry .texCoordIndex = this .texCoordIndex;
+         }
+
+         if (hasNormals)
+         {
+            const normal = scene .createNode ("Normal");
+
+            normal .vector   = this .normals;
+            geometry .normal = normal;
+         }
+
+         coordinate .point = this .points;
+         geometry .coord   = coordinate;
+
+         appearance .material = material;
+         shape .appearance = appearance;
+         shape .geometry   = geometry;
+
+         scene .rootNodes .push (shape);
       }
-
-      if (geometry .getNodeTypeName () !== "PointSet")
+      else
       {
-         geometry .solid    = false;
-         geometry .texCoord = this .texCoord;
+         const
+            hasNormals = this .normals ?.some (v => v !== 0),
+            shape      = scene .createNode ("Shape"),
+            appearance = scene .createNode ("Appearance"),
+            material   = scene .createNode (hasNormals ? "Material" : "UnlitMaterial"),
+            geometry   = scene .createNode ("PointSet"),
+            coordinate = scene .createNode ("Coordinate");
+
+         if (this .colors ?.length)
+         {
+            const
+               alpha = this .alpha && this .colors .some ((v, i) => i % 4 === 3 && v < 1),
+               color = scene .createNode (alpha ? "ColorRGBA" : "Color");
+
+            color .color    = alpha || !this .alpha ? this .colors : this .colors .filter ((v, i) => i % 4 !== 3);
+            geometry .color = color;
+         }
+
+         if (hasNormals)
+         {
+            const normal = scene .createNode ("Normal");
+
+            normal .vector   = this .normals;
+            geometry .normal = normal;
+         }
+
+         coordinate .point = this .points;
+         geometry .coord   = coordinate;
+
+         appearance .material = material;
+         shape .appearance = appearance;
+         shape .geometry   = geometry;
+
+         scene .rootNodes .push (shape);
       }
-
-      geometry .attrib = this .attrib;
-      geometry .color  = this .color;
-      geometry .normal = this .normal;
-      geometry .coord  = this .coord;
-
-      shape .appearance = appearance;
-      shape .geometry   = geometry;
-
-      scene .rootNodes .push (shape);
    },
    processElement (element)
    {
@@ -376,10 +444,8 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    parseVertices ({ count, properties })
    {
       const
-         scene     = this .getScene (),
-         texCoord  = scene .createNode ("TextureCoordinate"),
-         normal    = scene .createNode ("Normal"),
-         coord     = scene .createNode ("Coordinate"),
+         scales    = [ ],
+         rotations = [ ],
          colors    = [ ],
          texCoords = [ ],
          normals   = [ ],
@@ -398,7 +464,11 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
             switch (name)
             {
-               default:
+               case "scale_0": case "scale_1": case "scale_2":
+                  scales .push (this .value);
+                  break;
+               case "rot_0": case "rot_1": case "rot_2": case "rot_3":
+                  rotations .push (this .value);
                   break;
                case "red": case "green": case "blue": case "alpha":
                case "r": case "g": case "b": case "a":
@@ -429,27 +499,17 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       // Geometric properties
 
-      const
-         pAlpha = properties .some (p => p .name .match (/^(?:alpha|a|opacity)$/)),
-         alpha  = pAlpha && colors .some ((v, i) => i % 4 === 3 && v < 1),
-         color  = scene .createNode (alpha ? "ColorRGBA" : "Color");
-
-      color    .color  = alpha || !pAlpha ? colors : colors .filter ((v, i) => i % 4 !== 3);
-      texCoord .point  = texCoords;
-      normal   .vector = normals;
-      coord    .point  = points;
-
-      this .color    = colors    .length ? color    : null;
-      this .texCoord = texCoords .length ? texCoord : null;
-      this .normal   = normals   .length ? normal   : null;
-      this .coord    = coord;
+      this .rotations = rotations;
+      this .scales    = scales;
+      this .alpha     = properties .some (p => p .name .match (/^(?:alpha|a|opacity)$/));
+      this .colors    = colors;
+      this .texCoords = texCoords;
+      this .normals   = normals;
+      this .points    = points;
    },
    parseFaces ({ count, properties })
    {
-      const
-         scene      = this .getScene (),
-         geometry   = scene .createNode ("IndexedFaceSet"),
-         coordIndex = [ ];
+      const coordIndex = [ ];
 
       for (let i = 0; i < count; ++ i)
       {
@@ -474,15 +534,11 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          }
       }
 
-      geometry .coordIndex = coordIndex;
-      this .geometry       = geometry;
+      this .coordIndex = coordIndex;
    },
    parseMultiTextureVertices ({ count, properties })
    {
-      const
-         scene     = this .getScene (),
-         texCoord  = scene .createNode ("TextureCoordinate"),
-         texCoords = [ ];
+      const texCoords = [ ];
 
       for (let i = 0; i < count; ++ i)
       {
@@ -503,9 +559,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          }
       }
 
-      texCoord .point = texCoords;
-
-      this .texCoord = texCoords .length ? texCoord : null;
+      this .texCoords = texCoords;
    },
    parseMultiTextureFaces ({ count, properties })
    {
@@ -540,8 +594,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          }
       }
 
-      if (this .geometry)
-         this .geometry .texCoordIndex = texCoordIndex;
+      this .texCoordIndex = texCoordIndex;
    },
    parseUnknown ({ count })
    {
