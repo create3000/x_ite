@@ -1,5 +1,7 @@
 import X3DParser   from "./X3DParser.js";
 import Expressions from "./Expressions.js";
+import Vector3     from "../../standard/Math/Numbers/Vector3.js";
+import Quaternion  from "../../standard/Math/Numbers/Quaternion.js";
 
 /*
  *  Grammar
@@ -318,7 +320,85 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       const scene = this .getScene ();
 
-      if (this .coordIndex) // IndexedFaceSet
+      if (this .rotations ?.length && this .scales ?.length)
+      {
+         const
+            shape      = scene .createNode ("Shape"),
+            appearance = scene .createNode ("Appearance"),
+            material   = scene .createNode ("Material"),
+            geometry   = scene .createNode ("IndexedFaceSet"),
+            coordinate = scene .createNode ("Coordinate"),
+            rotation   = new Quaternion (),
+            rotations  = this .rotations,
+            scales     = this .scales,
+            points     = this .points,
+            numPoints  = points .length,
+            quad       = [-1, 1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0] .map (v => v * 1), // use 1 or 1.5
+            numQuad    = quad .length,
+            index      = [ ],
+            quads      = [ ];
+
+         for (let i = 0, l = numPoints / 3 * 4; i < l; i += 4)
+            index .push (i + 0, i + 2, i + 3, -1, i + 0, i + 3, i + 1, -1);
+
+         for (let p = 0; p < numPoints; p += 3)
+         {
+            const
+               sx = scales [p],
+               sy = scales [p + 1],
+               sz = scales [p + 2],
+               s  = Math .max (sx, sy, sz),
+               px = points [p],
+               py = points [p + 1],
+               pz = points [p + 2];
+
+            rotation .set (rotations [p], rotations [p + 1], rotations [p + 2], rotations [p + 3]);
+
+            for (let q = 0; q < numQuad; q += 3)
+            {
+               const p = new Vector3 (quad [q], quad [q + 1], quad [q + 2]);
+
+               p .multiply (s);
+
+               // rotation .multVecQuat (p);
+
+               p .x += px;
+               p .y += py;
+               p .z += pz;
+
+               quads .push (... p);
+            }
+         }
+
+         if (this .colors ?.length)
+         {
+            const index = [ ];
+
+            for (let i = 0; i < numPoints; ++ i)
+               index .push (i, i);
+
+            const
+               alpha = this .alpha && this .colors .some ((v, i) => i % 4 === 3 && v < 1),
+               color = scene .createNode (alpha ? "ColorRGBA" : "Color");
+
+            color .color             = alpha || !this .alpha ? this .colors : this .colors .filter ((v, i) => i % 4 !== 3);
+            geometry .colorIndex     = index;
+            geometry .colorPerVertex = false;
+            geometry .color          = color;
+         }
+
+         coordinate .point    = quads;
+         geometry .solid      = false;
+         geometry .coordIndex = index;
+         geometry .coord      = coordinate;
+
+         appearance .material = material;
+         shape .appearance    = appearance;
+         shape .geometry      = geometry;
+
+         scene .rootNodes .push (shape);
+      }
+      else if (this .coordIndex) // IndexedFaceSet
       {
          const
             hasNormals = this .normals ?.some (v => v !== 0),
@@ -465,7 +545,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
             switch (name)
             {
                case "scale_0": case "scale_1": case "scale_2":
-                  scales .push (this .value);
+                  scales .push (Math .exp (this .value));
                   break;
                case "rot_0": case "rot_1": case "rot_2": case "rot_3":
                   rotations .push (this .value);
