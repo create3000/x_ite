@@ -325,8 +325,8 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    {
       this .renderModeNodes .length = 0;
 
-      this .blendModeNode = X3DCast (X3DConstants .BlendMode, this ._blendMode),
-      this .depthModeNode = X3DCast (X3DConstants .DepthMode, this ._depthMode);
+      this .blendModeNode = X3DCast (X3DConstants .X3DBlendModeNode, this ._blendMode),
+      this .depthModeNode = X3DCast (X3DConstants .DepthMode,        this ._depthMode);
 
       if (this .blendModeNode) this .renderModeNodes .push (this .blendModeNode);
       if (this .depthModeNode) this .renderModeNodes .push (this .depthModeNode);
@@ -337,7 +337,7 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
                             this .materialNode ?.isTransparent () ||
                             this .backMaterialNode ?.isTransparent () ||
                             this .textureNode ?.isTransparent () ||
-                            this .blendModeNode);
+                            this .blendModeNode ?.isTransparent ());
    },
    set_transmission__ ()
    {

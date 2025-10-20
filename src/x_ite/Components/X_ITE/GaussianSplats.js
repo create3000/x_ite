@@ -11,6 +11,7 @@ import TextureCoordinate    from "../Texturing/TextureCoordinate.js";
 import Coordinate           from "../Rendering/Coordinate.js";
 import Appearance           from "../Shape/Appearance.js";
 import Shape                from "../Shape/Shape.js";
+import AlphaToCoverage      from "./AlphaToCoverage.js";
 import FloatVertexAttribute from "../Shaders/FloatVertexAttribute.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 
@@ -96,6 +97,7 @@ function GaussianSplats (executionContext)
    this .proximitySensor  = new ProximitySensor (executionContext);
    this .shapeNode        = new Shape (executionContext);
    this .appearanceNode   = new Appearance (executionContext);
+   this .alphaToCoverage  = new AlphaToCoverage (executionContext);
    this .geometryNode     = new IndexedFaceSet (executionContext);
    this .texCoordNode     = new TextureCoordinate (executionContext);
    this .coordNode        = new Coordinate (executionContext);
@@ -141,6 +143,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DChildNode 
 
       this .shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_Rotation", new Fields .SFRotation ());
       this .appearanceNode ._shaders .push (this .shaderNode);
+      this .appearanceNode ._blendMode = this .alphaToCoverage;
 
       // Geometry
 
@@ -161,6 +164,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DChildNode 
 
       this .translationsNode .setPrivate (true);
       this .scaleNode        .setPrivate (true);
+      this .alphaToCoverage  .setPrivate (true);
       this .appearanceNode   .setPrivate (true);
       this .texCoordNode     .setPrivate (true);
       this .coordNode        .setPrivate (true);
@@ -171,6 +175,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DChildNode 
 
       this .translationsNode .setup ();
       this .scaleNode        .setup ();
+      this .alphaToCoverage  .setup ();
       this .appearanceNode   .setup ();
       this .texCoordNode     .setup ();
       this .coordNode        .setup ();

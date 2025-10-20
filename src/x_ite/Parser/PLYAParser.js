@@ -331,7 +331,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          node .scales       = this .scales;
 
          if (this .colors ?.length)
-            node .color = this .createColor ();
+            node .color = this .createColor (false);
 
          scene .rootNodes .push (node);
       }
@@ -423,10 +423,10 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          scene .rootNodes .push (shape);
       }
    },
-   createColor ()
+   createColor (a = true)
    {
       const
-         alpha = this .alpha && this .colors .some ((v, i) => i % 4 === 3 && v < 1),
+         alpha = a && this .alpha && this .colors .some ((v, i) => i % 4 === 3 && v < 1),
          color = this .getScene () .createNode (alpha ? "ColorRGBA" : "Color");
 
       color .color = alpha || !this .alpha ? this .colors : this .colors .filter ((v, i) => i % 4 !== 3);

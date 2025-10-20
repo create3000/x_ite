@@ -2,7 +2,7 @@ import Fields                 from "../../Fields.js";
 import X3DFieldDefinition     from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray   from "../../Base/FieldDefinitionArray.js";
 import X3DNode                from "../Core/X3DNode.js";
-import X3DAppearanceChildNode from "../Shape/X3DAppearanceChildNode.js";
+import X3DBlendModeNode       from "./X3DBlendModeNode.js"
 import X3DConstants           from "../../Base/X3DConstants.js";
 
 /**
@@ -11,19 +11,23 @@ import X3DConstants           from "../../Base/X3DConstants.js";
 
 function BlendMode (executionContext)
 {
-   X3DAppearanceChildNode .call (this, executionContext);
+   X3DBlendModeNode .call (this, executionContext);
 
    this .addType (X3DConstants .BlendMode);
+
+   this .setTransparent (true);
+
+   // Private properties
 
    this .factorTypes   = new Map ();
    this .equationTypes = new Map ();
 }
 
-Object .assign (Object .setPrototypeOf (BlendMode .prototype, X3DAppearanceChildNode .prototype),
+Object .assign (Object .setPrototypeOf (BlendMode .prototype, X3DBlendModeNode .prototype),
 {
    initialize ()
    {
-      X3DAppearanceChildNode .prototype .initialize .call (this);
+      X3DBlendModeNode .prototype .initialize .call (this);
 
       const
          gl  = this .getBrowser () .getContext (),
