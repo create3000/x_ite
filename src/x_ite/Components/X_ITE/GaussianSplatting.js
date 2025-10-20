@@ -6,9 +6,12 @@ import X3DChildNode         from "../Core/X3DChildNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import IndexedFaceSet       from "../Geometry3D/IndexedFaceSet.js";
 import Group                from "../Grouping/Group.js";
+import ProximitySensor      from "../EnvironmentalSensor/ProximitySensor.js";
 import Coordinate           from "../Rendering/Coordinate.js";
 import Appearance           from "../Shape/Appearance.js";
 import Shape                from "../Shape/Shape.js";
+import FloatVertexAttribute from "../Shaders/FloatVertexAttribute.js";
+import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 
 const vs = /* glsl */ `data:x-shader/x-vertex,#version 300 es
 
@@ -18,12 +21,27 @@ precision highp int;
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 
+in vec3 x3d_Translation;
+in vec3 x3d_Scale;
 in vec4 x3d_Vertex;
+in vec4 x3d_Color;
+
+uniform mat3 x3d_Rotation;
+
+out vec4 color;
 
 void
 main ()
 {
-   gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * x3d_Vertex;
+   vec4 vertex = x3d_Vertex;
+
+   vertex .xyz *= max (max (x3d_Scale .x, x3d_Scale .y), x3d_Scale .z);
+   vertex .xyz  = x3d_Rotation * vertex .xyz;
+   vertex .xyz += x3d_Translation;
+
+   color = x3d_Color;
+
+   gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * vertex;
 }
 `;
 
@@ -32,12 +50,14 @@ const fs = /* glsl */ `data:x-shader/x-fragment,#version 300 es
 precision highp float;
 precision highp int;
 
+in vec4 color;
+
 out vec4 x3d_FragColor;
 
 void
 main ()
 {
-   x3d_FragColor = vec4 (1.0, 0.0, 0.0, 1.0);
+   x3d_FragColor = color;
 }
 `;
 
@@ -59,11 +79,14 @@ function GaussianSplatting (executionContext)
 
    // Private properties
 
-   this .groupNode      = new Group (executionContext);
-   this .shapeNode      = new Shape (executionContext);
-   this .appearanceNode = new Appearance (executionContext);
-   this .geometryNode   = new IndexedFaceSet (executionContext);
-   this .coordNode      = new Coordinate (executionContext);
+   this .groupNode        = new Group (executionContext);
+   this .proximitySensor  = new ProximitySensor (executionContext);
+   this .shapeNode        = new Shape (executionContext);
+   this .appearanceNode   = new Appearance (executionContext);
+   this .geometryNode     = new IndexedFaceSet (executionContext);
+   this .coordNode        = new Coordinate (executionContext);
+   this .translationsNode = new FloatVertexAttribute (executionContext);
+   this .scaleNode        = new FloatVertexAttribute (executionContext);
 }
 
 Object .assign (Object .setPrototypeOf (GaussianSplatting .prototype, X3DChildNode .prototype),
@@ -88,38 +111,54 @@ Object .assign (Object .setPrototypeOf (GaussianSplatting .prototype, X3DChildNo
       this .shapeNode ._bboxSize      = this ._bboxSize;
       this .shapeNode ._bboxCenter    = this ._bboxCenter;
 
+      // Proxy
+
+      this .proximitySensor ._size = new Vector3 (-1, -1, -1);
+      this .proximitySensor ._orientation_changed .addInterest ("set_orientation__", this);
+
       // Shader
+
+      this .translationsNode ._name          = "x3d_Translation";
+      this .translationsNode ._numComponents = 3;
+      this .scaleNode ._name                 = "x3d_Scale";
+      this .scaleNode ._numComponents        = 3;
 
       this .shaderNode = this .getBrowser () .createShader ("GaussianSplatting", vs, fs);
 
+      this .shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_Rotation", new Fields .SFRotation ());
       this .appearanceNode ._shaders .push (this .shaderNode);
 
       // Geometry
 
       this ._color .addFieldInterest (this .geometryNode ._color);
 
-      this .coordNode ._point = [-1, 1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0] .map (v => v * 1);
-
-      this .geometryNode ._solid          = false; // TODO: can be true
       this .geometryNode ._colorPerVertex = false;
       this .geometryNode ._color          = this ._color;
       this .geometryNode ._coord          = this .coordNode;
 
+      this .geometryNode ._attrib .push (this .translationsNode, this .scaleNode);
+
       this .shapeNode ._appearance = this .appearanceNode;
       this .shapeNode ._geometry   = this .geometryNode;
-      this .groupNode ._children   = [this .shapeNode];
+      this .groupNode ._children   = [this .shapeNode, this .proximitySensor];
 
-      this .appearanceNode .setPrivate (true);
-      this .coordNode      .setPrivate (true);
-      this .geometryNode   .setPrivate (true);
-      this .shapeNode      .setPrivate (true);
-      this .groupNode      .setPrivate (true);
+      this .translationsNode .setPrivate (true);
+      this .scaleNode        .setPrivate (true);
+      this .appearanceNode   .setPrivate (true);
+      this .coordNode        .setPrivate (true);
+      this .geometryNode     .setPrivate (true);
+      this .shapeNode        .setPrivate (true);
+      this .proximitySensor  .setPrivate (true);
+      this .groupNode        .setPrivate (true);
 
-      this .appearanceNode .setup ();
-      this .coordNode      .setup ();
-      this .geometryNode   .setup ();
-      this .shapeNode      .setup ();
-      this .groupNode      .setup ();
+      this .translationsNode .setup ();
+      this .scaleNode        .setup ();
+      this .appearanceNode   .setup ();
+      this .coordNode        .setup ();
+      this .geometryNode     .setup ();
+      this .shapeNode        .setup ();
+      this .proximitySensor  .setup ();
+      this .groupNode        .setup ();
 
       this ._translations .addInterest ("requestUpdateGeometry", this);
       this ._rotations    .addInterest ("requestUpdateGeometry", this);
@@ -140,26 +179,44 @@ Object .assign (Object .setPrototypeOf (GaussianSplatting .prototype, X3DChildNo
    set_geometry__ ()
    {
       const
-         numTranslations = this ._translations .length && 10000,
-         index           = [ ];
+         numTranslations = this ._translations .length && 50_000,
+         translations    = [ ],
+         scales          = [ ],
+         coordIndex      = [ ],
+         colorIndex      = [ ],
+         points          = [ ];
 
-      for (let i = 0; i < numTranslations; ++ i)
-         index .push (0, 2, 3, -1, 0, 3, 1, -1);
-
-      this .geometryNode ._coordIndex = index;
-
-      // colorIndex
+      for (let t = 0, f = 0; t < numTranslations; ++ t, f += 4)
       {
-         const index = [ ];
+         const
+            translation = this ._translations [t],
+            scale       = this ._scales [t];
 
-         for (let i = 0; i < numTranslations; ++ i)
-            index .push (i, i);
+         for (let q = 0; q < 4; ++ q)
+         {
+            translations .push (... translation);
+            scales       .push (... scale);
+         }
 
-         this .geometryNode ._colorIndex = index;
+         coordIndex .push (f + 0, f + 2, f + 3, -1, f + 0, f + 3, f + 1, -1);
+         colorIndex .push (t, t);
+         points .push (-1, 1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0); // Quad
       }
 
-      console .log (numTranslations)
-   }
+      this .translationsNode ._value = translations;
+      this .scaleNode        ._value = scales;
+
+      this .coordNode ._point = points;
+
+      this .geometryNode ._coordIndex = coordIndex;
+      this .geometryNode ._colorIndex = colorIndex;
+
+      console .log (numTranslations, this .geometryNode)
+   },
+   set_orientation__ (value)
+   {
+      this .shaderNode .getUserDefinedField ("x3d_Rotation") .setValue (value);
+   },
 });
 
 Object .defineProperties (GaussianSplatting,
