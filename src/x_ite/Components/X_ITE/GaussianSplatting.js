@@ -7,6 +7,8 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 import IndexedFaceSet       from "../Geometry3D/IndexedFaceSet.js";
 import Group                from "../Grouping/Group.js";
 import ProximitySensor      from "../EnvironmentalSensor/ProximitySensor.js";
+import TextureCoordinate    from "../Texturing/TextureCoordinate.js";
+import Tangent              from "../Rendering/Tangent.js";
 import Coordinate           from "../Rendering/Coordinate.js";
 import Appearance           from "../Shape/Appearance.js";
 import Shape                from "../Shape/Shape.js";
@@ -33,15 +35,15 @@ out vec4 color;
 void
 main ()
 {
-   vec4 vertex = x3d_Vertex;
+   vec3 vertex = x3d_Vertex .xyz / x3d_Vertex .w;
 
-   vertex .xyz *= max (max (x3d_Scale .x, x3d_Scale .y), x3d_Scale .z);
-   vertex .xyz  = x3d_Rotation * vertex .xyz;
-   vertex .xyz += x3d_Translation;
+   vertex *= max (max (x3d_Scale .x, x3d_Scale .y), x3d_Scale .z);
+   vertex  = x3d_Rotation * vertex;
+   vertex += x3d_Translation;
 
    color = x3d_Color;
 
-   gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * vertex;
+   gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * vec4 (vertex, 1.0);
 }
 `;
 
@@ -84,6 +86,8 @@ function GaussianSplatting (executionContext)
    this .shapeNode        = new Shape (executionContext);
    this .appearanceNode   = new Appearance (executionContext);
    this .geometryNode     = new IndexedFaceSet (executionContext);
+   this .texCoordNode     = new TextureCoordinate (executionContext);
+   this .tangentNode      = new Tangent (executionContext);
    this .coordNode        = new Coordinate (executionContext);
    this .translationsNode = new FloatVertexAttribute (executionContext);
    this .scaleNode        = new FloatVertexAttribute (executionContext);
@@ -130,10 +134,14 @@ Object .assign (Object .setPrototypeOf (GaussianSplatting .prototype, X3DChildNo
 
       // Geometry
 
+      this .texCoordNode ._points = [0, 1, 1, 1, 0, 0, 1, 0];
+
       this ._color .addFieldInterest (this .geometryNode ._color);
 
       this .geometryNode ._colorPerVertex = false;
       this .geometryNode ._color          = this ._color;
+      this .geometryNode ._texCoord       = this .texCoordNode;
+      this .geometryNode ._tangent        = this .tangentNode;
       this .geometryNode ._coord          = this .coordNode;
 
       this .geometryNode ._attrib .push (this .translationsNode, this .scaleNode);
@@ -145,6 +153,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatting .prototype, X3DChildNo
       this .translationsNode .setPrivate (true);
       this .scaleNode        .setPrivate (true);
       this .appearanceNode   .setPrivate (true);
+      this .texCoordNode     .setPrivate (true);
+      this .tangentNode      .setPrivate (true);
       this .coordNode        .setPrivate (true);
       this .geometryNode     .setPrivate (true);
       this .shapeNode        .setPrivate (true);
@@ -154,6 +164,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatting .prototype, X3DChildNo
       this .translationsNode .setup ();
       this .scaleNode        .setup ();
       this .appearanceNode   .setup ();
+      this .texCoordNode     .setup ();
+      this .tangentNode      .setup ();
       this .coordNode        .setup ();
       this .geometryNode     .setup ();
       this .shapeNode        .setup ();
@@ -179,11 +191,12 @@ Object .assign (Object .setPrototypeOf (GaussianSplatting .prototype, X3DChildNo
    set_geometry__ ()
    {
       const
-         numTranslations = this ._translations .length && 50_000,
+         numTranslations = this ._translations .length,
          translations    = [ ],
          scales          = [ ],
-         coordIndex      = [ ],
          colorIndex      = [ ],
+         texCoordIndex   = [ ],
+         coordIndex      = [ ],
          points          = [ ];
 
       for (let t = 0, f = 0; t < numTranslations; ++ t, f += 4)
@@ -198,8 +211,9 @@ Object .assign (Object .setPrototypeOf (GaussianSplatting .prototype, X3DChildNo
             scales       .push (... scale);
          }
 
-         coordIndex .push (f + 0, f + 2, f + 3, -1, f + 0, f + 3, f + 1, -1);
          colorIndex .push (t, t);
+         texCoordIndex .push (0, 2, 3, -1, 0, 3, 1, -1);
+         coordIndex .push (f + 0, f + 2, f + 3, -1, f + 0, f + 3, f + 1, -1);
          points .push (-1, 1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0); // Quad
       }
 
@@ -208,8 +222,9 @@ Object .assign (Object .setPrototypeOf (GaussianSplatting .prototype, X3DChildNo
 
       this .coordNode ._point = points;
 
-      this .geometryNode ._coordIndex = coordIndex;
-      this .geometryNode ._colorIndex = colorIndex;
+      this .geometryNode ._colorIndex    = colorIndex;
+      this .geometryNode ._texCoordIndex = texCoordIndex;
+      this .geometryNode ._coordIndex    = coordIndex;
 
       console .log (numTranslations, this .geometryNode)
    },
