@@ -30,13 +30,16 @@ in vec4 x3d_Color;
 uniform mat3 x3d_Rotation;
 
 out vec4 color;
+out vec2 pointCoord;
 
 void
 main ()
 {
    vec3 vertex = x3d_Vertex .xyz / x3d_Vertex .w;
 
-   vertex *= max (max (x3d_Scale .x, x3d_Scale .y), x3d_Scale .z);
+   pointCoord = vertex .xy;
+
+   vertex *= x3d_Scale;
    vertex  = x3d_Rotation * vertex;
    vertex += x3d_Translation;
 
@@ -52,13 +55,15 @@ precision highp float;
 precision highp int;
 
 in vec4 color;
+in vec2 pointCoord;
 
 out vec4 x3d_FragColor;
 
 void
 main ()
 {
-   x3d_FragColor = color;
+   x3d_FragColor .rgb = color .rgb;
+   x3d_FragColor .a   = smoothstep (color .a, 0.0, length (pointCoord));
 }
 `;
 
@@ -220,7 +225,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatting .prototype, X3DChildNo
       }
 
       this .translationsNode ._value = translations;
-      this .scaleNode        ._value = scales;
+      this .scaleNode        ._value = scales .map (v => v * 3);
 
       this .coordNode ._point = points;
 

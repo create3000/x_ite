@@ -1,7 +1,5 @@
 import X3DParser   from "./X3DParser.js";
 import Expressions from "./Expressions.js";
-import Vector3     from "../../standard/Math/Numbers/Vector3.js";
-import Quaternion  from "../../standard/Math/Numbers/Quaternion.js";
 
 /*
  *  Grammar
