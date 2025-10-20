@@ -394,6 +394,10 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
          this .tangents .assign (tangents);
          this .tangents .shrinkToFit ();
+
+         this .transfer ();
+         this .updateGeometryKey ();
+         this .updateRenderFunctions ();
       }
       catch (error)
       {
@@ -839,6 +843,11 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          renderModeNodes = appearanceNode .getRenderModes (),
          shaderNode      = appearanceNode .getShader (this, renderContext);
 
+      // Generate tangents if needed.
+
+      if (shaderNode .x3d_NormalTexture && !this .tangents .length)
+         this .generateTangents ();
+
       // Set viewport.
 
       gl .viewport (... viewport);
@@ -982,6 +991,11 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          primitiveMode   = browser .getPrimitiveMode (this .primitiveMode),
          renderModeNodes = appearanceNode .getRenderModes (),
          shaderNode      = appearanceNode .getShader (this, renderContext);
+
+      // Generate tangents if needed.
+
+      if (shaderNode .x3d_NormalTexture && !this .tangents .length)
+         this .generateTangents ();
 
       // Set viewport.
 
