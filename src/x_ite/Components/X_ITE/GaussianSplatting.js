@@ -8,7 +8,6 @@ import IndexedFaceSet       from "../Geometry3D/IndexedFaceSet.js";
 import Group                from "../Grouping/Group.js";
 import ProximitySensor      from "../EnvironmentalSensor/ProximitySensor.js";
 import TextureCoordinate    from "../Texturing/TextureCoordinate.js";
-import Tangent              from "../Rendering/Tangent.js";
 import Coordinate           from "../Rendering/Coordinate.js";
 import Appearance           from "../Shape/Appearance.js";
 import Shape                from "../Shape/Shape.js";
@@ -87,7 +86,6 @@ function GaussianSplatting (executionContext)
    this .appearanceNode   = new Appearance (executionContext);
    this .geometryNode     = new IndexedFaceSet (executionContext);
    this .texCoordNode     = new TextureCoordinate (executionContext);
-   this .tangentNode      = new Tangent (executionContext);
    this .coordNode        = new Coordinate (executionContext);
    this .translationsNode = new FloatVertexAttribute (executionContext);
    this .scaleNode        = new FloatVertexAttribute (executionContext);
@@ -141,7 +139,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatting .prototype, X3DChildNo
       this .geometryNode ._colorPerVertex = false;
       this .geometryNode ._color          = this ._color;
       this .geometryNode ._texCoord       = this .texCoordNode;
-      this .geometryNode ._tangent        = this .tangentNode;
       this .geometryNode ._coord          = this .coordNode;
 
       this .geometryNode ._attrib .push (this .translationsNode, this .scaleNode);
@@ -154,7 +151,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatting .prototype, X3DChildNo
       this .scaleNode        .setPrivate (true);
       this .appearanceNode   .setPrivate (true);
       this .texCoordNode     .setPrivate (true);
-      this .tangentNode      .setPrivate (true);
       this .coordNode        .setPrivate (true);
       this .geometryNode     .setPrivate (true);
       this .shapeNode        .setPrivate (true);
@@ -165,7 +161,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatting .prototype, X3DChildNo
       this .scaleNode        .setup ();
       this .appearanceNode   .setup ();
       this .texCoordNode     .setup ();
-      this .tangentNode      .setup ();
       this .coordNode        .setup ();
       this .geometryNode     .setup ();
       this .shapeNode        .setup ();

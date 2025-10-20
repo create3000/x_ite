@@ -613,11 +613,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       if (!this .multiTexCoords .length)
          this .generateTexCoords ();
 
-      // Generate tangents if needed.
-
-      if (!this .tangents .length)
-         this .generateTangents ();
-
       // Transfer arrays and update.
 
       this .transfer ();
