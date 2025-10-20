@@ -94,7 +94,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       await browser .loadComponents (scene);
 
-      this .processElements (this .header ([ ]))
+      await this .processElements (this .header ([ ]))
 
       // Create nodes.
 
@@ -308,7 +308,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       return false;
    },
-   processElements (elements)
+   async processElements (elements)
    {
       // console .log (elements)
 
@@ -322,76 +322,17 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       if (this .rotations ?.length && this .scales ?.length)
       {
-         const
-            shape      = scene .createNode ("Shape"),
-            appearance = scene .createNode ("Appearance"),
-            material   = scene .createNode ("Material"),
-            geometry   = scene .createNode ("IndexedFaceSet"),
-            coordinate = scene .createNode ("Coordinate"),
-            rotation   = new Quaternion (),
-            rotations  = this .rotations,
-            scales     = this .scales,
-            points     = this .points,
-            numPoints  = points .length,
-            quad       = [-1, 1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0] .map (v => v * 1), // use 1 or 1.5
-            numQuad    = quad .length,
-            index      = [ ],
-            quads      = [ ];
+         scene .addComponent (this .getBrowser () .getComponent ("X_ITE"));
 
-         for (let i = 0, l = numPoints / 3 * 4; i < l; i += 4)
-            index .push (i + 0, i + 2, i + 3, -1, i + 0, i + 3, i + 1, -1);
+         await this .getBrowser () .loadComponents (scene);
 
-         for (let p = 0; p < numPoints; p += 3)
-         {
-            const
-               sx = scales [p],
-               sy = scales [p + 1],
-               sz = scales [p + 2],
-               s  = Math .max (sx, sy, sz),
-               px = points [p],
-               py = points [p + 1],
-               pz = points [p + 2];
+         const node = scene .createNode ("GaussianSplatting");
 
-            rotation .set (rotations [p], rotations [p + 1], rotations [p + 2], rotations [p + 3]);
+         node .translations = this .points;
+         node .rotations    = this .rotations;
+         node .scales       = this .scales;
 
-            for (let q = 0; q < numQuad; q += 3)
-            {
-               const p = new Vector3 (quad [q], quad [q + 1], quad [q + 2]);
-
-               p .multiply (s);
-
-               // rotation .multVecQuat (p);
-
-               p .x += px;
-               p .y += py;
-               p .z += pz;
-
-               quads .push (... p);
-            }
-         }
-
-         if (this .colors ?.length)
-         {
-            const index = [ ];
-
-            for (let i = 0; i < numPoints; ++ i)
-               index .push (i, i);
-
-            geometry .colorIndex     = index;
-            geometry .colorPerVertex = false;
-            geometry .color          = this .createColor ();
-         }
-
-         coordinate .point    = quads;
-         geometry .solid      = false;
-         geometry .coordIndex = index;
-         geometry .coord      = coordinate;
-
-         appearance .material = material;
-         shape .appearance    = appearance;
-         shape .geometry      = geometry;
-
-         scene .rootNodes .push (shape);
+         scene .rootNodes .push (node);
       }
       else if (this .coordIndex) // IndexedFaceSet
       {
