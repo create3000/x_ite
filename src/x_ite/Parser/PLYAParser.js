@@ -377,14 +377,9 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
             for (let i = 0; i < numPoints; ++ i)
                index .push (i, i);
 
-            const
-               alpha = this .alpha && this .colors .some ((v, i) => i % 4 === 3 && v < 1),
-               color = scene .createNode (alpha ? "ColorRGBA" : "Color");
-
-            color .color             = alpha || !this .alpha ? this .colors : this .colors .filter ((v, i) => i % 4 !== 3);
             geometry .colorIndex     = index;
             geometry .colorPerVertex = false;
-            geometry .color          = color;
+            geometry .color          = this .createColor ();
          }
 
          coordinate .point    = quads;
@@ -412,14 +407,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          geometry .coordIndex = this .coordIndex;
 
          if (this .colors ?.length)
-         {
-            const
-               alpha = this .alpha && this .colors .some ((v, i) => i % 4 === 3 && v < 1),
-               color = scene .createNode (alpha ? "ColorRGBA" : "Color");
-
-            color .color    = alpha || !this .alpha ? this .colors : this .colors .filter ((v, i) => i % 4 !== 3);
-            geometry .color = color;
-         }
+            geometry .color = this .createColor ();
 
          if (this .texCoords ?.length)
          {
@@ -473,14 +461,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
             coordinate = scene .createNode ("Coordinate");
 
          if (this .colors ?.length)
-         {
-            const
-               alpha = this .alpha && this .colors .some ((v, i) => i % 4 === 3 && v < 1),
-               color = scene .createNode (alpha ? "ColorRGBA" : "Color");
-
-            color .color    = alpha || !this .alpha ? this .colors : this .colors .filter ((v, i) => i % 4 !== 3);
-            geometry .color = color;
-         }
+            geometry .color = this .createColor ();
 
          if (hasNormals)
          {
@@ -499,6 +480,16 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
          scene .rootNodes .push (shape);
       }
+   },
+   createColor ()
+   {
+      const
+         alpha = this .alpha && this .colors .some ((v, i) => i % 4 === 3 && v < 1),
+         color = this .getScene () .createNode (alpha ? "ColorRGBA" : "Color");
+
+      color .color = alpha || !this .alpha ? this .colors : this .colors .filter ((v, i) => i % 4 !== 3);
+
+      return color;
    },
    processElement (element)
    {
