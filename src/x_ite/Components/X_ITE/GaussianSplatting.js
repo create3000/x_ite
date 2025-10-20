@@ -10,6 +10,37 @@ import Coordinate           from "../Rendering/Coordinate.js";
 import Appearance           from "../Shape/Appearance.js";
 import Shape                from "../Shape/Shape.js";
 
+const vs = /* glsl */ `data:x-shader/x-vertex,#version 300 es
+
+precision highp float;
+precision highp int;
+
+uniform mat4 x3d_ProjectionMatrix;
+uniform mat4 x3d_ModelViewMatrix;
+
+in vec4 x3d_Vertex;
+
+void
+main ()
+{
+   gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * x3d_Vertex;
+}
+`;
+
+const fs = /* glsl */ `data:x-shader/x-fragment,#version 300 es
+
+precision highp float;
+precision highp int;
+
+out vec4 x3d_FragColor;
+
+void
+main ()
+{
+   x3d_FragColor = vec4 (1.0, 0.0, 0.0, 1.0);
+}
+`;
+
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
  */
@@ -56,6 +87,12 @@ Object .assign (Object .setPrototypeOf (GaussianSplatting .prototype, X3DChildNo
       this .shapeNode ._bboxDisplay   = this ._bboxDisplay;
       this .shapeNode ._bboxSize      = this ._bboxSize;
       this .shapeNode ._bboxCenter    = this ._bboxCenter;
+
+      // Shader
+
+      this .shaderNode = this .getBrowser () .createShader ("GaussianSplatting", vs, fs);
+
+      this .appearanceNode ._shaders .push (this .shaderNode);
 
       // Geometry
 
