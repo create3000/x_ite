@@ -41,13 +41,31 @@ Object .assign (Object .setPrototypeOf (GaussianSplatting .prototype, X3DChildNo
    {
       X3DChildNode .prototype .initialize .call (this);
 
-      // this ._color .addFieldInterest (this .geometryNode ._color);
+      // Common Fields
+
+      this ._pointerEvents .addFieldInterest (this .shapeNode ._pointerEvents);
+      this ._castShadow    .addFieldInterest (this .shapeNode ._castShadow);
+      this ._visible       .addFieldInterest (this .shapeNode ._visible);
+      this ._bboxDisplay   .addFieldInterest (this .shapeNode ._bboxDisplay);
+      this ._bboxSize      .addFieldInterest (this .shapeNode ._bboxSize);
+      this ._bboxCenter    .addFieldInterest (this .shapeNode ._bboxCenter);
+
+      this .shapeNode ._pointerEvents = this ._pointerEvents;
+      this .shapeNode ._castShadow    = this ._castShadow;
+      this .shapeNode ._visible       = this ._visible;
+      this .shapeNode ._bboxDisplay   = this ._bboxDisplay;
+      this .shapeNode ._bboxSize      = this ._bboxSize;
+      this .shapeNode ._bboxCenter    = this ._bboxCenter;
+
+      // Geometry
+
+      this ._color .addFieldInterest (this .geometryNode ._color);
 
       this .coordNode ._point = [-1, 1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0] .map (v => v * 1);
 
       this .geometryNode ._solid          = false; // TODO: can be true
       this .geometryNode ._colorPerVertex = false;
-      // this .geometryNode ._color          = this ._color;
+      this .geometryNode ._color          = this ._color;
       this .geometryNode ._coord          = this .coordNode;
 
       this .shapeNode ._appearance = this .appearanceNode;
@@ -92,6 +110,16 @@ Object .assign (Object .setPrototypeOf (GaussianSplatting .prototype, X3DChildNo
          index .push (0, 2, 3, -1, 0, 3, 1, -1);
 
       this .geometryNode ._coordIndex = index;
+
+      // colorIndex
+      {
+         const index = [ ];
+
+         for (let i = 0; i < numTranslations; ++ i)
+            index .push (i, i);
+
+         this .geometryNode ._colorIndex = index;
+      }
 
       console .log (numTranslations)
    }

@@ -332,6 +332,9 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          node .rotations    = this .rotations;
          node .scales       = this .scales;
 
+         if (this .colors ?.length)
+            node .color = this .createColor ();
+
          scene .rootNodes .push (node);
       }
       else if (this .coordIndex) // IndexedFaceSet
