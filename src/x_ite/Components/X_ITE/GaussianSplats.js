@@ -71,18 +71,18 @@ main ()
 
 import ShaderRegistry from "../../Browser/Shaders/ShaderRegistry.js";
 
-ShaderRegistry .addVertex   ("GaussianSplatting", vs);
-ShaderRegistry .addFragment ("GaussianSplatting", fs);
+ShaderRegistry .addVertex   ("GaussianSplats", vs);
+ShaderRegistry .addFragment ("GaussianSplats", fs);
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
  */
 
-function GaussianSplatting (executionContext)
+function GaussianSplats (executionContext)
 {
    X3DChildNode .call (this, executionContext);
 
-   this .addType (X3DConstants .GaussianSplatting);
+   this .addType (X3DConstants .GaussianSplats);
 
    this .addChildObjects (X3DConstants .outputOnly, "geometry", new Fields .SFTime ());
 
@@ -103,7 +103,7 @@ function GaussianSplatting (executionContext)
    this .scaleNode        = new FloatVertexAttribute (executionContext);
 }
 
-Object .assign (Object .setPrototypeOf (GaussianSplatting .prototype, X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DChildNode .prototype),
 {
    initialize ()
    {
@@ -137,7 +137,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatting .prototype, X3DChildNo
       this .scaleNode ._name                 = "x3d_Scale";
       this .scaleNode ._numComponents        = 3;
 
-      this .shaderNode = this .getBrowser () .createShader ("GaussianSplatting", "GaussianSplatting");
+      this .shaderNode = this .getBrowser () .createShader ("GaussianSplats", "GaussianSplats");
 
       this .shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_Rotation", new Fields .SFRotation ());
       this .appearanceNode ._shaders .push (this .shaderNode);
@@ -241,9 +241,9 @@ Object .assign (Object .setPrototypeOf (GaussianSplatting .prototype, X3DChildNo
    },
 });
 
-Object .defineProperties (GaussianSplatting,
+Object .defineProperties (GaussianSplats,
 {
-   ... X3DNode .getStaticProperties ("GaussianSplatting", "X_ITE", 1, "children", "2.0"),
+   ... X3DNode .getStaticProperties ("GaussianSplats", "X_ITE", 1, "children", "2.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
@@ -263,4 +263,4 @@ Object .defineProperties (GaussianSplatting,
    },
 });
 
-export default GaussianSplatting;
+export default GaussianSplats;

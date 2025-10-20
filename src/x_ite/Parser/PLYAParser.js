@@ -324,7 +324,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
          await this .getBrowser () .loadComponents (scene);
 
-         const node = scene .createNode ("GaussianSplatting");
+         const node = scene .createNode ("GaussianSplats");
 
          node .translations = this .points;
          node .rotations    = this .rotations;

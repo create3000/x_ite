@@ -7,7 +7,7 @@ import DepthMode                            from "../../x_ite/Components/X_ITE/D
 import DiffuseTransmissionMaterialExtension from "../../x_ite/Components/X_ITE/DiffuseTransmissionMaterialExtension.js";
 import DispersionMaterialExtension          from "../../x_ite/Components/X_ITE/DispersionMaterialExtension.js";
 import EmissiveStrengthMaterialExtension    from "../../x_ite/Components/X_ITE/EmissiveStrengthMaterialExtension.js";
-import GaussianSplatting                    from "../../x_ite/Components/X_ITE/GaussianSplatting.js";
+import GaussianSplats                       from "../../x_ite/Components/X_ITE/GaussianSplats.js";
 import InstancedShape                       from "../../x_ite/Components/X_ITE/InstancedShape.js";
 import IORMaterialExtension                 from "../../x_ite/Components/X_ITE/IORMaterialExtension.js";
 import IridescenceMaterialExtension         from "../../x_ite/Components/X_ITE/IridescenceMaterialExtension.js";
@@ -30,7 +30,7 @@ Components .add ({
       DiffuseTransmissionMaterialExtension,
       DispersionMaterialExtension,
       EmissiveStrengthMaterialExtension,
-      GaussianSplatting,
+      GaussianSplats,
       InstancedShape,
       IORMaterialExtension,
       IridescenceMaterialExtension,
