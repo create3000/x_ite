@@ -845,7 +845,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       // Generate tangents if needed.
 
-      if (shaderNode .x3d_NormalTexture && !this .tangents .length)
+      if (shaderNode .x3d_NormalTexture && !this .hasTangents)
          this .generateTangents ();
 
       // Set viewport.
@@ -994,7 +994,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       // Generate tangents if needed.
 
-      if (shaderNode .x3d_NormalTexture && !this .tangents .length)
+      if (shaderNode .x3d_NormalTexture && !this .hasTangents)
          this .generateTangents ();
 
       // Set viewport.
