@@ -958,23 +958,23 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
    },
    checkNodeType (node, name, type, typeName)
    {
-      if (type !== X3DNode)
+      if (type === X3DNode || node .constructor === X3DNode)
+         return;
+
+      if (type === X3DPrototypeInstance)
       {
-         if (type === X3DPrototypeInstance)
+         if (!node .getType () .includes (X3DConstants .X3DPrototypeInstance))
          {
-            if (!node .getType () .includes (X3DConstants .X3DPrototypeInstance))
-            {
-               console .warn (`XML Parser: DEF/USE mismatch, '${name}', referenced node is not of type X3DPrototypeInstance.`);
-            }
-            else if (typeName !== node .getTypeName ())
-            {
-               console .warn (`XML Parser: DEF/USE mismatch, '${name}', name ${typeName} != ${node .getTypeName ()}.`);
-            }
+            console .warn (`XML Parser: DEF/USE mismatch, '${name}', referenced node is not of type X3DPrototypeInstance.`);
          }
-         else if (type !== node .constructor)
+         else if (typeName !== node .getTypeName ())
          {
-            console .warn (`XML Parser: DEF/USE mismatch, '${name}', ${type .typeName} != ${node .getTypeName ()}.`);
+            console .warn (`XML Parser: DEF/USE mismatch, '${name}', name ${typeName} != ${node .getTypeName ()}.`);
          }
+      }
+      else if (type !== node .constructor)
+      {
+         console .warn (`XML Parser: DEF/USE mismatch, '${name}', ${type .typeName} != ${node .getTypeName ()}.`);
       }
    },
    defAttribute (xmlElement, node)
