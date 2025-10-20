@@ -14,7 +14,7 @@ import Shape                from "../Shape/Shape.js";
 import FloatVertexAttribute from "../Shaders/FloatVertexAttribute.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 
-const vs = /* glsl */ `data:x-shader/x-vertex,#version 300 es
+const vs = () => /* glsl */ `#version 300 es
 
 precision highp float;
 precision highp int;
@@ -46,7 +46,7 @@ main ()
 }
 `;
 
-const fs = /* glsl */ `data:x-shader/x-fragment,#version 300 es
+const fs = () => /* glsl */ `#version 300 es
 
 precision highp float;
 precision highp int;
@@ -61,6 +61,13 @@ main ()
    x3d_FragColor = color;
 }
 `;
+
+// Register shaders.
+
+import ShaderRegistry from "../../Browser/Shaders/ShaderRegistry.js";
+
+ShaderRegistry .addVertex   ("GaussianSplatting", vs);
+ShaderRegistry .addFragment ("GaussianSplatting", fs);
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
@@ -125,7 +132,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatting .prototype, X3DChildNo
       this .scaleNode ._name                 = "x3d_Scale";
       this .scaleNode ._numComponents        = 3;
 
-      this .shaderNode = this .getBrowser () .createShader ("GaussianSplatting", vs, fs);
+      this .shaderNode = this .getBrowser () .createShader ("GaussianSplatting", "GaussianSplatting");
 
       this .shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_Rotation", new Fields .SFRotation ());
       this .appearanceNode ._shaders .push (this .shaderNode);

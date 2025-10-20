@@ -90,13 +90,17 @@ const ShaderRegistry = {
          Unlit: UnlitFragment2,
       },
    },
-   addInclude: function (name, shader2)
+   addVertex: function (name, shader2)
    {
-      this .includes [2] [name] = shader2;
+      this .vertex [2] [name] = shader2;
    },
    addFragment: function (name, shader2)
    {
       this .fragment [2] [name] = shader2;
+   },
+   addInclude: function (name, shader2)
+   {
+      this .includes [2] [name] = shader2;
    },
 };
 
