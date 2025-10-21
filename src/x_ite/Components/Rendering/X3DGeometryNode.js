@@ -374,6 +374,9 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    {
       try
       {
+         if (this .geometryType < 2)
+            return;
+
          if (!this .vertices .length)
             return;
 
@@ -620,6 +623,11 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       if (!this .multiTexCoords .length)
          this .generateTexCoords ();
 
+      // Generate tangents if needed.
+
+      if (!this .tangents .length)
+         this .generateTangents ();
+
       // Transfer arrays and update.
 
       this .transfer ();
@@ -846,11 +854,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          renderModeNodes = appearanceNode .getRenderModes (),
          shaderNode      = appearanceNode .getShader (this, renderContext);
 
-      // Generate tangents if needed.
-
-      if (shaderNode .x3d_NormalTexture && !this .hasTangents)
-         this .generateTangents ();
-
       // Set viewport.
 
       gl .viewport (... viewport);
@@ -994,11 +997,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          primitiveMode   = browser .getPrimitiveMode (this .primitiveMode),
          renderModeNodes = appearanceNode .getRenderModes (),
          shaderNode      = appearanceNode .getShader (this, renderContext);
-
-      // Generate tangents if needed.
-
-      if (shaderNode .x3d_NormalTexture && !this .hasTangents)
-         this .generateTangents ();
 
       // Set viewport.
 
