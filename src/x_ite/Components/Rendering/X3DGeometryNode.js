@@ -72,10 +72,10 @@ class GeometryArray extends Array
    {
       const length = value .length;
 
+      this .length = length;
+
       for (let i = 0; i < length; ++ i)
          this [i] = value [i];
-
-      this .length = length;
    }
 
    getValue ()
@@ -89,6 +89,8 @@ class GeometryArray extends Array
          this .#typedArray .set (this);
       else
          this .#typedArray = new Float32Array (this);
+
+      return this .#typedArray;
    }
 }
 
