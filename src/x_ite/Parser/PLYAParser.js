@@ -1,5 +1,7 @@
 import X3DParser   from "./X3DParser.js";
 import Expressions from "./Expressions.js";
+import Quaternion  from "../../standard/Math/Numbers/Quaternion.js";
+import Rotation4   from "../../standard/Math/Numbers/Rotation4.js";
 
 /*
  *  Grammar
@@ -318,16 +320,29 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       const scene = this .getScene ();
 
-      if (this .rotations ?.length && this .scales ?.length)
+      if (this .quaternions ?.length && this .scales ?.length)
       {
          scene .addComponent (this .getBrowser () .getComponent ("X_ITE"));
 
          await this .getBrowser () .loadComponents (scene);
 
-         const node = scene .createNode ("GaussianSplats");
+         const
+            node           = scene .createNode ("GaussianSplats"),
+            quaternions    = this .quaternions,
+            numQuaternions = quaternions .length,
+            quaternion     = new Quaternion (),
+            rotation       = new Rotation4 (),
+            rotations      = [ ];
+
+         for (let i = 0; i < numQuaternions; i += 4)
+         {
+            quaternion .set (quaternions [i], quaternions [i + 1], quaternions [i + 2], quaternions [i + 3]);
+            rotation .setQuaternion (quaternion);
+            rotations .push (... rotation);
+         }
 
          node .translations = this .points;
-         node .rotations    = this .rotations;
+         node .rotations    = rotations;
          node .scales       = this .scales;
 
          if (this .colors ?.length)
@@ -457,12 +472,12 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    parseVertices ({ count, properties })
    {
       const
-         scales    = [ ],
-         rotations = [ ],
-         colors    = [ ],
-         texCoords = [ ],
-         normals   = [ ],
-         points    = [ ];
+         scales      = [ ],
+         quaternions = [ ],
+         colors      = [ ],
+         texCoords   = [ ],
+         normals     = [ ],
+         points      = [ ];
 
       // console .time ("vertices")
 
@@ -477,11 +492,11 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
             switch (name)
             {
+               case "rot_0": case "rot_1": case "rot_2": case "rot_3":
+                  quaternions .push (this .value);
+                  break;
                case "scale_0": case "scale_1": case "scale_2":
                   scales .push (Math .exp (this .value));
-                  break;
-               case "rot_0": case "rot_1": case "rot_2": case "rot_3":
-                  rotations .push (this .value);
                   break;
                case "red": case "green": case "blue": case "alpha":
                case "r": case "g": case "b": case "a":
@@ -512,13 +527,13 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       // Geometric properties
 
-      this .rotations = rotations;
-      this .scales    = scales;
-      this .alpha     = properties .some (p => p .name .match (/^(?:alpha|a|opacity)$/));
-      this .colors    = colors;
-      this .texCoords = texCoords;
-      this .normals   = normals;
-      this .points    = points;
+      this .quaternions = quaternions;
+      this .scales      = scales;
+      this .alpha       = properties .some (p => p .name .match (/^(?:alpha|a|opacity)$/));
+      this .colors      = colors;
+      this .texCoords   = texCoords;
+      this .normals     = normals;
+      this .points      = points;
    },
    parseFaces ({ count, properties })
    {

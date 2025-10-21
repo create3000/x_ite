@@ -1,19 +1,21 @@
-import Fields               from "../../Fields.js";
-import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DNode              from "../Core/X3DNode.js";
-import X3DChildNode         from "../Core/X3DChildNode.js";
-import X3DConstants         from "../../Base/X3DConstants.js";
-import IndexedFaceSet       from "../Geometry3D/IndexedFaceSet.js";
-import Group                from "../Grouping/Group.js";
-import ProximitySensor      from "../EnvironmentalSensor/ProximitySensor.js";
-import TextureCoordinate    from "../Texturing/TextureCoordinate.js";
-import Coordinate           from "../Rendering/Coordinate.js";
-import Appearance           from "../Shape/Appearance.js";
-import Shape                from "../Shape/Shape.js";
-import AlphaToCoverage      from "./AlphaToCoverage.js";
-import FloatVertexAttribute from "../Shaders/FloatVertexAttribute.js";
-import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
+import Fields                 from "../../Fields.js";
+import X3DFieldDefinition     from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray   from "../../Base/FieldDefinitionArray.js";
+import X3DNode                from "../Core/X3DNode.js";
+import X3DChildNode           from "../Core/X3DChildNode.js";
+import X3DConstants           from "../../Base/X3DConstants.js";
+import IndexedFaceSet         from "../Geometry3D/IndexedFaceSet.js";
+import Group                  from "../Grouping/Group.js";
+import ProximitySensor        from "../EnvironmentalSensor/ProximitySensor.js";
+import TextureCoordinate      from "../Texturing/TextureCoordinate.js";
+import Coordinate             from "../Rendering/Coordinate.js";
+import Appearance             from "../Shape/Appearance.js";
+import Shape                  from "../Shape/Shape.js";
+import AlphaToCoverage        from "./AlphaToCoverage.js";
+import FloatVertexAttribute   from "../Shaders/FloatVertexAttribute.js";
+import Matrix3VertexAttribute from "../Shaders/Matrix3VertexAttribute.js";
+import Vector3                from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix3                from "../../../standard/Math/Numbers/Matrix3.js";
 
 const vs = () => /* glsl */ `#version 300 es
 
@@ -24,6 +26,7 @@ uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 
 in vec3 x3d_Translation;
+// in mat3 x3d_Rotation;
 in vec3 x3d_Scale;
 in vec4 x3d_Vertex;
 in vec4 x3d_Color;
@@ -102,7 +105,8 @@ function GaussianSplats (executionContext)
    this .texCoordNode     = new TextureCoordinate (executionContext);
    this .coordNode        = new Coordinate (executionContext);
    this .translationsNode = new FloatVertexAttribute (executionContext);
-   this .scaleNode        = new FloatVertexAttribute (executionContext);
+   this .rotationsNode    = new Matrix3VertexAttribute (executionContext);
+   this .scalesNode       = new FloatVertexAttribute (executionContext);
 }
 
 Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DChildNode .prototype),
@@ -136,8 +140,9 @@ Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DChildNode 
 
       this .translationsNode ._name          = "x3d_Translation";
       this .translationsNode ._numComponents = 3;
-      this .scaleNode ._name                 = "x3d_Scale";
-      this .scaleNode ._numComponents        = 3;
+      this .rotationsNode ._name             = "x3d_Rotation";
+      this .scalesNode ._name                = "x3d_Scale";
+      this .scalesNode ._numComponents       = 3;
 
       this .shaderNode = this .getBrowser () .createShader ("GaussianSplats", "GaussianSplats");
 
@@ -157,14 +162,15 @@ Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DChildNode 
       this .geometryNode ._texCoord       = this .texCoordNode;
       this .geometryNode ._coord          = this .coordNode;
 
-      this .geometryNode ._attrib .push (this .translationsNode, this .scaleNode);
+      this .geometryNode ._attrib .push (this .translationsNode, this .rotationsNode, this .scalesNode);
 
       this .shapeNode ._appearance = this .appearanceNode;
       this .shapeNode ._geometry   = this .geometryNode;
       this .groupNode ._children   = [this .shapeNode, this .proximitySensor];
 
       this .translationsNode .setPrivate (true);
-      this .scaleNode        .setPrivate (true);
+      this .rotationsNode    .setPrivate (true);
+      this .scalesNode       .setPrivate (true);
       this .alphaToCoverage  .setPrivate (true);
       this .appearanceNode   .setPrivate (true);
       this .texCoordNode     .setPrivate (true);
@@ -175,7 +181,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DChildNode 
       this .groupNode        .setPrivate (true);
 
       this .translationsNode .setup ();
-      this .scaleNode        .setup ();
+      this .rotationsNode    .setup ();
+      this .scalesNode       .setup ();
       this .alphaToCoverage  .setup ();
       this .appearanceNode   .setup ();
       this .texCoordNode     .setup ();
@@ -206,21 +213,25 @@ Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DChildNode 
       const
          numTranslations = this ._translations .length,
          translations    = [ ],
+         rotations       = [ ],
          scales          = [ ],
          colorIndex      = [ ],
          texCoordIndex   = [ ],
          coordIndex      = [ ],
-         points          = [ ];
+         points          = [ ],
+         matrix          = new Matrix3 ();
 
       for (let t = 0, f = 0; t < numTranslations; ++ t, f += 4)
       {
          const
             translation = this ._translations [t],
+            rotation    = this ._rotations [t],
             scale       = this ._scales [t];
 
          for (let q = 0; q < 4; ++ q)
          {
             translations .push (... translation);
+            rotations    .push (... rotation .getValue () .getMatrix (matrix));
             scales       .push (... scale);
          }
 
@@ -231,7 +242,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DChildNode 
       }
 
       this .translationsNode ._value = translations;
-      this .scaleNode        ._value = scales .map (v => v * 3);
+      this .rotationsNode    ._value = rotations;
+      this .scalesNode       ._value = scales .map (v => v * 3);
 
       this .coordNode ._point = points;
 
