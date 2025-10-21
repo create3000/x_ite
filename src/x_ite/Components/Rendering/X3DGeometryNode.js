@@ -380,11 +380,17 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          if (!this .vertices .length)
             return;
 
-         if (this .tangents .length)
-            return;
-
          if (!MikkTSpace .isInitialized ())
-            return void (MikkTSpace .initialize () .then (() => this .generateTangents ()));
+         {
+            return void (MikkTSpace .initialize () .then (() =>
+            {
+               this .generateTangents ();
+               this .transfer ();
+               this .updateGeometryKey ();
+               this .updateRenderFunctions ();
+               this .getBrowser () .addBrowserEvent ();
+            }));
+         }
 
          const
             vertices  = this .vertices .getValue () .filter ((v, i) => i % 4 < 3),
@@ -399,11 +405,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
          this .tangents .assign (tangents);
          this .tangents .shrinkToFit ();
-
-         this .transfer ();
-         this .updateGeometryKey ();
-         this .updateRenderFunctions ();
-         this .getBrowser () .addBrowserEvent ();
       }
       catch (error)
       {
