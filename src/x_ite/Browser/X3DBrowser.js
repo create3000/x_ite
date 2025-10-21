@@ -22,7 +22,6 @@ import X3DConstants         from "../Base/X3DConstants.js";
 import SFNodeCache          from "../Fields/SFNodeCache.js";
 import Features             from "../Features.js";
 import Algorithm            from "../../standard/Math/Algorithm.js";
-import MikkTSpace           from "./Rendering/MikkTSpace.js";
 import _                    from "../../locale/gettext.js";
 import DEVELOPMENT          from "../DEVELOPMENT.js";
 
@@ -279,11 +278,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          }
 
          // Load array of component names.
-         return Promise .all ([
-            MikkTSpace .initialize (), // Required by Rendering component.
-            loadComponents .call (this, component, new Set ()),
-         ])
-         .then (Function .prototype);
+         return loadComponents .call (this, component, new Set ());
       };
    })(),
    addConcreteNode (ConcreteNode)
