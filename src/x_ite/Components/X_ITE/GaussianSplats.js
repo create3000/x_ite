@@ -144,6 +144,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DChildNode 
       this .shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_Rotation", new Fields .SFRotation ());
       this .appearanceNode ._shaders .push (this .shaderNode);
       this .appearanceNode ._blendMode = this .alphaToCoverage;
+      this .appearanceNode ._alphaMode = "OPAQUE";
 
       // Geometry
 

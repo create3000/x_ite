@@ -378,8 +378,11 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          if (!this .vertices .length)
             return;
 
+         if (this .tangents .length)
+            return;
+
          if (!MikkTSpace .isInitialized ())
-            return void (MikkTSpace .initialize () .then (() => this .requestRebuild ()));
+            return void (MikkTSpace .initialize () .then (() => this .generateTangents ()));
 
          const
             vertices  = this .vertices .getValue () .filter ((v, i) => i % 4 < 3),
