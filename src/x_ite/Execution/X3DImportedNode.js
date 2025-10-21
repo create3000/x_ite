@@ -47,6 +47,10 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
 
       return exportedNode;
    },
+   updateExportedNode ()
+   {
+      this [_exportedNodes] .get (this [_importedName]) ?.update ();
+   },
    getSharedNode ()
    {
       const exportedNode = this .getInlineNode () .getInternalScene () .getExportedNodes () .get (this [_exportedName]);

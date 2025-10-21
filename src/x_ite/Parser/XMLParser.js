@@ -958,7 +958,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
    },
    checkNodeType (node, name, type, typeName)
    {
-      if (type === X3DNode || node .constructor === X3DNode)
+      if (type === X3DNode)
          return;
 
       if (type === X3DPrototypeInstance)
