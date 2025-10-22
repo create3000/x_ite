@@ -107,7 +107,7 @@ theme_mode: # [light | dark]
 cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar: "/assets/img/logo.png"
+avatar: "assets/img/logo.png"
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.
@@ -159,7 +159,7 @@ pwa:
 paginate: 10
 
 # The base URL of your site
-baseurl: "/x_ite"
+baseurl: "/x_ite/"
 
 # ------------ The following options are not recommended to be modified ------------------
 
