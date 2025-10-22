@@ -3,7 +3,6 @@ import Fields       from "../Fields.js";
 import GoldenGate   from "../Parser/GoldenGate.js";
 import X3DWorld     from "../Execution/X3DWorld.js";
 import X3DScene     from "../Execution/X3DScene.js";
-import X3DConstants from "../Base/X3DConstants.js";
 import DEVELOPMENT  from "../DEVELOPMENT.js";
 
 const foreignMimeType = new Set ([
