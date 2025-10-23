@@ -78,7 +78,7 @@ The Fly Viewer work the same way like the Walk Viewer except gravity is always t
 
 See Walk Viewer to learn how movement is controlled.
 
->**Note:** The author of the X3D world determines whether collision with objects is enabled.
+>**Note:** The author of the X3D world determines whether viewer collisions with objects are enabled. This can be controlled by using a [Collision](/x_ite/components/navigation/collision/) node.
 {: .prompt-info }
 
 ## Plane Viewer
