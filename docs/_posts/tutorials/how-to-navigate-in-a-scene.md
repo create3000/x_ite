@@ -29,7 +29,7 @@ None Viewer
 
 You can choose a viewer from the available viewers in the viewer menu of the context menu. Not all viewers have to be available at the same time. **Note:** This is controlled by the X3D author by setting the *type* field of a [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node.
 
->**Tip:** Holding the <kbd>Shift</kbd>+<kbd>Cmd-or-Ctrl</kbd> key overrides any [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) that the pointer may be over and forces the pointing device to function as the viewpoint navigation tool; i.e., drag operations cause rotation, click operations cause center of rotation point selection.
+>**Tip:** Holding the <kbd>Shift</kbd>+<kbd>Ctrl-or-Cmd</kbd> key overrides any [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) that the pointer may be over and forces the pointing device to function as the viewpoint navigation tool; i.e., drag operations cause rotation, click operations cause center of rotation point selection.
 {: .prompt-tip }
 
 ## Examine Viewer
@@ -67,7 +67,7 @@ The other viewer, called the Walk Viewer, lets you navigate through a scene by m
 - **Go:** is the default Movement control. Click in the scene and hold down the left mouse button and then drag the pointer in the scene window to move in the world. Drag up to go forward, drag down to go backward, drag left to turn left, and drag right to turn right. Go turns your view in the direction of travel. Hold down <kbd>Shift</kbd> key to go faster.
 - **Slide:** click and hold down the middle mouse button (or scroll wheel) and then drag to jump straight up or down, or to slide right or left. Slide does not turn your view in the direction of travel. Hold down the <kbd>Shift</kbd> key to slide faster. Alternatively hold down the <kbd>Alt-or-Option</kbd> key and drag to slide.
 - **Tilt:** scroll your mouse wheel to look up and down without moving.
-- **Free Tilt:** You can enable free tilt by hold down the <kbd>Cmd-or-Ctrl</kbd> key and then drag to look up and down or from side to side without moving.
+- **Free Tilt:** You can enable free tilt by hold down the <kbd>Ctrl-or-Cmd</kbd> key and then drag to look up and down or from side to side without moving.
 
 >**Note:** Gravity is always enabled when in Walk Viewer mode. Put a floor under the viewer to prevent falling down.
 {: .prompt-info }
