@@ -170,7 +170,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
             if (types .has ("Xposition") || types .has ("Yposition") || types .has ("Zposition"))
             {
                const interpolator = interpolators [j] .positionInterpolator
-                  ?? this .createPositionInterpolator (interpolators, j);
+                  ??= new PositionInterpolator (this .getExecutionContext ());
 
                const
                   key      = frame / (frameCount - 1),
@@ -187,7 +187,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
             if (types .has ("Xrotation") || types .has ("Yrotation") || types .has ("Zrotation"))
             {
                const interpolator = interpolators [j] .orientationInterpolator
-                  ?? this .createOrientationInterpolator (interpolators, j);
+                  ??= new OrientationInterpolator (this .getExecutionContext ());
 
                const
                   key      = frame / (frameCount - 1),
@@ -204,7 +204,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
             if (types .has ("Xscale") || types .has ("Yscale") || types .has ("Zscale"))
             {
                const interpolator = interpolators [j] .scaleInterpolator
-                  ?? this .createScaleInterpolator (interpolators, j);
+                  ??= new PositionInterpolator (this .getExecutionContext ());
 
                const
                   key      = frame / (frameCount - 1),
@@ -221,7 +221,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
             if (types .has ("Xcenter") || types .has ("Ycenter") || types .has ("Zcenter"))
             {
                const interpolator = interpolators [j] .centerInterpolator
-                  ?? this .createCenterInterpolator (interpolators, j);
+                  ??= new PositionInterpolator (this .getExecutionContext ());
 
                const
                   key      = frame / (frameCount - 1),
@@ -240,7 +240,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
       for (const value of interpolators)
       {
          for (const interpolator of Object .values (value))
-            interpolator ?.setup ();
+            interpolator .setup ();
       }
 
       this ._frameIndex = 0;
@@ -318,22 +318,6 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
       this .endFrame               = Math .max (startFrame, endFrame);
       this .timeSensor ._range [1] = frameCount > 1 ? this .startFrame / (frameCount - 1) : 0;
       this .timeSensor ._range [2] = frameCount > 1 ? this .endFrame   / (frameCount - 1) : 0;
-   },
-   createPositionInterpolator (interpolators, j)
-   {
-      return interpolators [j] .positionInterpolator = new PositionInterpolator (this .getExecutionContext ());
-   },
-   createOrientationInterpolator (interpolators, j)
-   {
-      return interpolators [j] .orientationInterpolator = new OrientationInterpolator (this .getExecutionContext ());
-   },
-   createScaleInterpolator (interpolators, j)
-   {
-      return interpolators [j] .scaleInterpolator = new PositionInterpolator (this .getExecutionContext ());
-   },
-   createCenterInterpolator (interpolators, j)
-   {
-      return interpolators [j] .centerInterpolator = new PositionInterpolator (this .getExecutionContext ());
    },
    getFraction ()
    {
