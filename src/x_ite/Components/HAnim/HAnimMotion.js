@@ -231,9 +231,9 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          }
       }
 
-      for (const value of interpolators)
+      for (const joint of interpolators)
       {
-         for (const interpolator of Object .values (value))
+         for (const interpolator of Object .values (joint))
             interpolator .setup ();
       }
 
