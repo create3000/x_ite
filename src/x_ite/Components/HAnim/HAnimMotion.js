@@ -139,7 +139,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
       const timeSensor = this .timeSensor;
 
-      timeSensor ._fraction_changed .getFieldInterests ()
+      Array .from (timeSensor ._fraction_changed .getFieldInterests ())
          .forEach (field => timeSensor ._fraction_changed .removeFieldInterest (field));
 
       // Create interpolators.
@@ -154,7 +154,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          numChannels   = channels .reduce ((v, c) => v + c .length, 0),
          frameCount    = Math .floor (numChannels ? values .length / numChannels : 0),
          types         = new Map (),
-         interpolators = Array .from ({length: channels .length}, () => ({ }));
+         interpolators = Array .from ({ length: channels .length }, () => ({ }));
 
       this .interpolators = interpolators;
 
