@@ -160,6 +160,8 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
       for (let frame = 0, v = 0; frame < frameCount; ++ frame)
       {
+         const key = frame / (frameCount - 1);
+
          for (const [j, joint] of channels .entries ())
          {
             types .clear ();
@@ -172,11 +174,9 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
                const interpolator = interpolators [j] .positionInterpolator
                   ??= new PositionInterpolator (this .getExecutionContext ());
 
-               const
-                  key      = frame / (frameCount - 1),
-                  keyValue = new Vector3 (types .get ("Xposition") ?? 0,
-                                          types .get ("Yposition") ?? 0,
-                                          types .get ("Zposition") ?? 0);
+               const keyValue = new Vector3 (types .get ("Xposition") ?? 0,
+                                             types .get ("Yposition") ?? 0,
+                                             types .get ("Zposition") ?? 0);
 
                interpolator ._key      .push (key);
                interpolator ._keyValue .push (keyValue);
@@ -189,11 +189,9 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
                const interpolator = interpolators [j] .orientationInterpolator
                   ??= new OrientationInterpolator (this .getExecutionContext ());
 
-               const
-                  key      = frame / (frameCount - 1),
-                  keyValue = Rotation4 .fromEuler (Algorithm .radians (types .get ("Xrotation") ?? 0),
-                                                   Algorithm .radians (types .get ("Yrotation") ?? 0),
-                                                   Algorithm .radians (types .get ("Zrotation") ?? 0));
+               const keyValue = Rotation4 .fromEuler (Algorithm .radians (types .get ("Xrotation") ?? 0),
+                                                      Algorithm .radians (types .get ("Yrotation") ?? 0),
+                                                      Algorithm .radians (types .get ("Zrotation") ?? 0));
 
                interpolator ._key      .push (key);
                interpolator ._keyValue .push (keyValue);
@@ -206,11 +204,9 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
                const interpolator = interpolators [j] .scaleInterpolator
                   ??= new PositionInterpolator (this .getExecutionContext ());
 
-               const
-                  key      = frame / (frameCount - 1),
-                  keyValue = new Vector3 (types .get ("Xscale") ?? 1,
-                                          types .get ("Yscale") ?? 1,
-                                          types .get ("Zscale") ?? 1);
+               const keyValue = new Vector3 (types .get ("Xscale") ?? 1,
+                                             types .get ("Yscale") ?? 1,
+                                             types .get ("Zscale") ?? 1);
 
                interpolator ._key      .push (key);
                interpolator ._keyValue .push (keyValue);
@@ -223,11 +219,9 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
                const interpolator = interpolators [j] .centerInterpolator
                   ??= new PositionInterpolator (this .getExecutionContext ());
 
-               const
-                  key      = frame / (frameCount - 1),
-                  keyValue = new Vector3 (types .get ("Xcenter") ?? 0,
-                                          types .get ("Ycenter") ?? 0,
-                                          types .get ("Zcenter") ?? 0);
+               const keyValue = new Vector3 (types .get ("Xcenter") ?? 0,
+                                             types .get ("Ycenter") ?? 0,
+                                             types .get ("Zcenter") ?? 0);
 
                interpolator ._key      .push (key);
                interpolator ._keyValue .push (keyValue);
