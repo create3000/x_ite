@@ -217,14 +217,30 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
                timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
             }
+
+            if (types .has ("Xcenter") || types .has ("Ycenter") || types .has ("Zcenter"))
+            {
+               const interpolator = interpolators [j] .centerInterpolator
+                  ?? this .createCenterInterpolator (interpolators, j);
+
+               const
+                  key      = frame / (frameCount - 1),
+                  keyValue = new Vector3 (types .get ("Xcenter") ?? 0,
+                                          types .get ("Ycenter") ?? 0,
+                                          types .get ("Zcenter") ?? 0);
+
+               interpolator ._key      .push (key);
+               interpolator ._keyValue .push (keyValue);
+
+               timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
+            }
          }
       }
 
-      for (const { positionInterpolator, orientationInterpolator, scaleInterpolator } of interpolators)
+      for (const value of interpolators)
       {
-         positionInterpolator    ?.setup ();
-         orientationInterpolator ?.setup ();
-         scaleInterpolator       ?.setup ();
+         for (const interpolator of Object .values (value))
+            interpolator ?.setup ();
       }
 
       this ._frameIndex = 0;
@@ -314,6 +330,10 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
    createScaleInterpolator (interpolators, j)
    {
       return interpolators [j] .scaleInterpolator = new PositionInterpolator (this .getExecutionContext ());
+   },
+   createCenterInterpolator (interpolators, j)
+   {
+      return interpolators [j] .centerInterpolator = new PositionInterpolator (this .getExecutionContext ());
    },
    getFraction ()
    {
