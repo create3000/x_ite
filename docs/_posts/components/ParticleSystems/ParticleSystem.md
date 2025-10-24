@@ -35,8 +35,8 @@ The ParticleSystem node belongs to the [ParticleSystems](/x_ite/components/overv
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFBool | [in, out] | [createParticles](#fields-createParticles) | TRUE |
 | SFString | [ ] | [geometryType](#fields-geometryType) | "QUAD"  |
+| SFBool | [in, out] | [createParticles](#fields-createParticles) | TRUE |
 | SFInt32 | [in, out] | [maxParticles](#fields-maxParticles) | 200  |
 | SFFloat | [in, out] | [particleLifetime](#fields-particleLifetime) | 5  |
 | SFFloat | [in, out] | [lifetimeVariation](#fields-lifetimeVariation) | 0.25  |
@@ -74,15 +74,6 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 Enables/disables node operation.
 
-### SFBool [in, out] **createParticles** TRUE
-{: #fields-createParticles }
-
-Enables/disables creation of new particles, while any existing particles remain in existence and continue to animate until the end of their lifetimes.
-
-#### Hint
-
-- If no particles are left in scene, system is considered both active and enabled.
-
 ### SFString [ ] **geometryType** "QUAD" <small>["LINE"|"POINT"|"QUAD"|"SPRITE"|"TRIANGLE"|"GEOMETRY"|...]</small>
 {: #fields-geometryType }
 
@@ -102,6 +93,15 @@ Specifies type of geometry used to represent individual particles. Typically, a 
 
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 - Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
+
+### SFBool [in, out] **createParticles** TRUE
+{: #fields-createParticles }
+
+Enables/disables creation of new particles, while any existing particles remain in existence and continue to animate until the end of their lifetimes.
+
+#### Hint
+
+- If no particles are left in scene, system is considered both active and enabled.
 
 ### SFInt32 [in, out] **maxParticles** 200 <small>[0,∞)</small>
 {: #fields-maxParticles }
