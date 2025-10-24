@@ -77,46 +77,49 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
 
       this .needsUpdateInterpolators = false;
    },
-   processJoint (jointNode)
+   processJoint: (function ()
    {
-      const poseJointNode = this .poseJointNodes .get (jointNode ._name .getValue ());
-
-      if (!(poseJointNode || this ._resetOtherJoints .getValue ()))
-         return;
-
-      const executionContext = this .getExecutionContext ();
-
       const interpolators = [
          ["translation", "PositionInterpolator"],
          ["rotation",    "OrientationInterpolator"],
          ["scale",       "PositionInterpolator"],
       ];
 
-      for (const [name, interpolatorName] of interpolators)
+      return function (jointNode)
       {
-         const jointField = jointNode .getField (name);
+         const poseJointNode = this .poseJointNodes .get (jointNode ._name .getValue ());
 
-         const destinationField = poseJointNode
-            ? poseJointNode .getField (name)
-            : jointNode .getFieldDefinition (name) .value;
+         if (!(poseJointNode || this ._resetOtherJoints .getValue ()))
+            return;
 
-         if (jointField .equals (destinationField))
-            continue;
+         const executionContext = this .getExecutionContext ();
 
-         const interpolator = executionContext .createNode (interpolatorName, false);
+         for (const [name, interpolatorName] of interpolators)
+         {
+            const jointField = jointNode .getField (name);
 
-         this .timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
+            const destinationField = poseJointNode
+               ? poseJointNode .getField (name)
+               : jointNode .getFieldDefinition (name) .value;
 
-         interpolator ._value_changed .addFieldInterest (jointField);
+            if (jointField .equals (destinationField))
+               continue;
 
-         interpolator ._key      = [0, 1];
-         interpolator ._keyValue = [... jointField, ... destinationField];
+            const interpolator = executionContext .createNode (interpolatorName, false);
 
-         interpolator .setup ();
+            this .timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
 
-         this .interpolators .push (interpolator);
-      }
-   },
+            interpolator ._value_changed .addFieldInterest (jointField);
+
+            interpolator ._key      = [0, 1];
+            interpolator ._keyValue = [... jointField, ... destinationField];
+
+            interpolator .setup ();
+
+            this .interpolators .push (interpolator);
+         }
+      };
+   })(),
    set_commencePose__ ()
    {
       if (!this ._commencePose .getValue ())
