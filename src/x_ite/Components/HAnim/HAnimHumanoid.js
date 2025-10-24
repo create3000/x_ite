@@ -214,7 +214,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          return;
 
       for (const poseNode of this .poseNodes)
-         poseNode .needUpdateJoints ();
+         poseNode .setUpdateJoints (true);
    },
    set_motions__ ()
    {
