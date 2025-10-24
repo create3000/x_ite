@@ -45,14 +45,14 @@ const Algorithm =
    {
       return source + t * (destination - source);
    },
-   slerp (source, destination, t, simple = false)
+   slerp (source, destination, t, short = false)
    {
       let cosom = source .dot (destination);
 
       // if (cosom <= -1) ... vectors are inverse colinear.
       // ; // This case is not handled.
 
-      if (simple && cosom < 0)
+      if (short && cosom < 0)
       {
          // Reverse signs so we travel the short way round.
          cosom = -cosom;
