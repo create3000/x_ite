@@ -5,6 +5,10 @@ function X3DParser (scene)
    this .scene             = scene;
    this .executionContexts = [ scene ];
    this .prototypes        = [ ];
+   this .placeholders      = new Map ();
+   this .namedNodes        = new Map ();
+   this .importedNodes     = new Map ();
+   this .nodes             = new Map ();
 }
 
 Object .assign (X3DParser .prototype,
@@ -31,11 +35,11 @@ Object .assign (X3DParser .prototype,
    },
    getOuterNode ()
    {
-      return this .getExecutionContext () .getOuterNode ();
+      return this .getExecutionContext () ?.getOuterNode ();
    },
    isInsideProtoDeclaration ()
    {
-      return this .getExecutionContext () .getOuterNode () instanceof X3DProtoDeclaration;
+      return this .getOuterNode () instanceof X3DProtoDeclaration;
    },
    /**
     * @deprecated Directly use `browser.loadComponents`.
@@ -59,7 +63,7 @@ Object .assign (X3DParser .prototype,
    {
       const
          wrap   = $("<div></div>") .hide () .css ("color", defaultColor) .appendTo ($("body")),
-         div    = $("<div></div>").css ("color", value) .appendTo (wrap),
+         div    = $("<div></div>") .css ("color", value) .appendTo (wrap),
          rgb    = window .getComputedStyle (div [0]) .color,
          values = rgb .replace (/^rgba?\(|\)$/g, "") .split (/[\s,]+/) .map (s => parseFloat (s));
 
@@ -92,23 +96,80 @@ Object .assign (X3DParser .prototype,
    },
    renameExistingNode (name)
    {
+      const executionContext = this .getExecutionContext ();
+
       try
       {
-         const namedNode = this .getExecutionContext () .getNamedNode (name);
+         const namedNode = executionContext .getNamedNode (name);
 
-         this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (name), namedNode);
+         executionContext .updateNamedNode (executionContext .getUniqueName (name), namedNode);
+
+         // console .warn (`Duplicate DEF name '${name}' in file '${executionContext .getWorldURL ()}'.`);
       }
       catch
       { }
 
       try
       {
-         const importedName = this .getExecutionContext () .getUniqueImportName (name);
+         const importedName = executionContext .getUniqueImportName (name);
 
-         this .getExecutionContext () .renameImportedNode (name, importedName);
+         executionContext .renameImportedNode (name, importedName);
+
+         // console .warn (`Duplicate imported name '${name}' in file '${executionContext .getWorldURL ()}'.`);
       }
       catch
       { }
+   },
+   getNodes ()
+   {
+      return this .getContainer (this .nodes, Array);
+   },
+   getPlaceholders ()
+   {
+      return this .getContainer (this .placeholders, Map);
+   },
+   getNamedNodes ()
+   {
+      return this .getContainer (this .namedNodes, Map);
+   },
+   getImportedNodes ()
+   {
+      return this .getContainer (this .importedNodes, Map);
+   },
+   getContainer (objects, type)
+   {
+      const
+         executionContext = this .getExecutionContext (),
+         map              = objects .get (executionContext);
+
+      if (map)
+      {
+         return map;
+      }
+      else
+      {
+         const map = new type ();
+
+         objects .set (executionContext, map);
+
+         return map;
+      }
+   },
+   checkNodeType ()
+   { },
+   setupNodes ()
+   {
+      const
+         placeholders = this .getPlaceholders (),
+         nodes        = this .getNodes ();
+
+      placeholders .forEach (placeholder => placeholder .replaceWithNode ());
+      placeholders .clear ();
+
+      if (!this .isInsideProtoDeclaration ())
+         nodes .forEach (node => node .setup ());
+
+      nodes .length = 0;;
    },
 });
 

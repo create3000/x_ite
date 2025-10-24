@@ -47,6 +47,8 @@ The ParticleSystem node belongs to the [ParticleSystems](/x_ite/components/overv
 | SFNode | [ ] | [color](#fields-color) | NULL  |
 | MFFloat | [ ] | [texCoordKey](#fields-texCoordKey) | [ ] |
 | SFNode | [ ] | [texCoord](#fields-texCoord) | NULL  |
+| MFFloat | [ ] | [scaleKey](#fields-scaleKey) | [ ] |
+| SFNode | [ ] | [scale](#fields-scale) | NULL  |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFBool | [in, out] | [pointerEvents](#fields-pointerEvents) | TRUE  |
 | SFBool | [in, out] | [castShadow](#fields-castShadow) | TRUE |
@@ -196,6 +198,25 @@ Texture coordinates of the provided texture(s) in the [Appearance](/x_ite/compon
 #### Warning
 
 - [Field originally named 'texCoordRamp' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
+
+### MFFloat [ ] **scaleKey** [ ] <small>[0,∞)</small> <small class="blue">non-standard</small>
+{: #fields-scaleKey }
+
+Array of time intervals in seconds, corresponding to particle lifetime, that are used to interpolate color array values.
+
+#### Hints
+
+- [Coordinate](/x_ite/components/rendering/coordinate/)
+- Number of *scaleKey* values must match length of scales field array values!
+
+### SFNode [ ] **scale** NULL <small>[Coordinate]</small> <small class="blue">non-standard</small>
+{: #fields-scale }
+
+The *scale* field contains a [Coordinate](/x_ite/components/rendering/coordinate/) node as a series of *scale* values to be used at the given scaleKey points in time.
+
+#### Hints
+
+- Number of *scaleKey* values must match length of scales field array values!
 
 ### SFBool [out] **isActive**
 {: #fields-isActive }

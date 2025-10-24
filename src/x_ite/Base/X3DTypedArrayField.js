@@ -440,15 +440,22 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
       if (arguments .length === 0)
          return new (target .constructor) ();
 
-      index = Math .min (index|0, length);
+      index |= 0;
+
+      if (index < 0)
+         index += length;
+
+      index = Algorithm .clamp (index, 0, length);
 
       if (arguments .length < 2)
          deleteCount = length;
 
-      deleteCount = deleteCount|0;
+      deleteCount |= 0;
 
       if (index + deleteCount > length)
          deleteCount = length - index;
+
+      deleteCount = Math .max (deleteCount, 0);
 
       const result = target [_erase] (index, index + deleteCount);
 

@@ -5,6 +5,7 @@ import { getUniqueName }           from "./NamedNodesHandling.js";
 import NamedNodesArray             from "./NamedNodesArray.js";
 import X3DImportedNode             from "./X3DImportedNode.js";
 import ImportedNodesArray          from "./ImportedNodesArray.js";
+import X3DImportedNodeProxy        from "../Components/Core/X3DImportedNodeProxy.js";
 import ExternProtoDeclarationArray from "../Prototype/ExternProtoDeclarationArray.js";
 import ProtoDeclarationArray       from "../Prototype/ProtoDeclarationArray.js";
 import X3DProtoDeclaration         from "../Prototype/X3DProtoDeclaration.js";
@@ -269,10 +270,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       const node = this [_namedNodes] .get (name);
 
-      if (!node || !node .getValue ())
-         return;
-
-      node .getValue () .setName ("");
+      node ?.getValue () ?.setName ("");
 
       this [_namedNodes] .remove (name);
 
@@ -284,7 +282,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       const node = this [_namedNodes] .get (name);
 
-      if (node)
+      if (node ?.getValue ())
          return node;
 
       throw new Error (`Named node '${name}' not found.`);
@@ -333,6 +331,8 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       const importedNode = new X3DImportedNode (this, inlineNode, exportedName, importedName, description);
 
       this [_importedNodes] .add (importedName, importedNode);
+
+      importedNode .updateExportedNode ();
 
       this ._sceneGraph_changed = Date .now () / 1000;
    },
@@ -404,20 +404,32 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          throw new Error (`Unknown named or imported node '${name}'.`);
       }
    },
+   /**
+    *
+    * @param {SFNode|X3DNode|X3DImportedNode} node
+    * @returns either an X3DImportedNode if possible or X3DNode
+    */
    getLocalizedNode (node)
    {
-      const importedNode = node instanceof X3DImportedNode ? node : null;
-
-      node = X3DCast (X3DConstants .X3DNode, node, false) ?? importedNode;
+      node = X3DCast (X3DConstants .X3DNode, node, false)
+         ?? (node instanceof X3DImportedNode ? node : null);
 
       if (!node)
          throw new Error ("Couldn't get localized node: node must be of type X3DNode.");
+
+      if (node .getExecutionContext () === this)
+      {
+         if (node instanceof X3DImportedNodeProxy)
+            return node .getImportedNode ();
+
+         return node;
+      }
 
       for (const importedNode of this [_importedNodes])
       {
          try
          {
-            if (importedNode .getExportedNode () === node)
+            if (importedNode .getSharedNode () === node)
                return importedNode;
          }
          catch
@@ -609,11 +621,13 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          destinationNode  = X3DCast (X3DConstants .X3DNode, destinationNode, false) ?? importedDestinationNode;
          destinationField = String (destinationField);
 
+         // Check nodes.
+
          if (!sourceNode)
-            throw new Error ("source node must be of type X3DNode or X3DImportedNode.");
+            throw new Error ("source node must be of type X3DNode.");
 
          if (!destinationNode)
-            throw new Error ("destination node must be of type X3DNode or X3DImportedNode.");
+            throw new Error ("destination node must be of type X3DNode.");
 
          // Resolve imported source and destination node.
 
@@ -673,6 +687,8 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       destinationNode  = X3DCast (X3DConstants .X3DNode, destinationNode, false) ?? importedDestinationNode;
       destinationField = String (destinationField)
 
+      // Check nodes.
+
       if (!sourceNode)
          throw new Error ("Bad ROUTE specification: sourceNode must be of type X3DNode.");
 
@@ -728,12 +744,12 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       // Output root nodes
 
-      const rootNodes = this .getRootNodes ();
+      const
+         rootNodes = this .getRootNodes (),
+         last      = rootNodes .length - 1;
 
-      for (let i = 0, length = rootNodes .length; i < length; ++ i)
+      for (const [i, rootNode] of rootNodes .entries ())
       {
-         const rootNode = rootNodes [i];
-
          generator .string += generator .Indent ();
 
          if (rootNode)
@@ -743,7 +759,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
          generator .string += generator .TidyBreak ();
 
-         if (i !== length - 1)
+         if (i !== last)
             generator .string += generator .TidyBreak ();
       }
 
@@ -823,23 +839,20 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       // Root nodes
 
-      if (this .getRootNodes () .length)
+      for (const rootNode of this .getRootNodes ())
       {
-         for (const rootNode of this .getRootNodes ())
-         {
-            if (comma)
-               generator .string += ',';
+         if (comma)
+            generator .string += ',';
 
-            generator .string += generator .TidyBreak ();
-            generator .string += generator .Indent ();
+         generator .string += generator .TidyBreak ();
+         generator .string += generator .Indent ();
 
-            if (rootNode)
-               rootNode .toJSONStream (generator);
-            else
-               generator .string += "null";
+         if (rootNode)
+            rootNode .toJSONStream (generator);
+         else
+            generator .string += "null";
 
-            comma = true;
-         }
+         comma = true;
       }
 
       this .getImportedNodes () .toJSONStream (generator, comma);

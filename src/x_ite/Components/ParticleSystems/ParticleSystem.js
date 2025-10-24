@@ -3,6 +3,7 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DShapeNode         from "../Shape/X3DShapeNode.js";
+import ParticleSampler      from "../../Browser/ParticleSystems/ParticleSampler.js";
 import GeometryContext      from "../../Browser/Rendering/GeometryContext.js";
 import GeometryType         from "../../Browser/Shape/GeometryType.js";
 import VertexArray          from "../../Rendering/VertexArray.js";
@@ -68,6 +69,8 @@ function ParticleSystem (executionContext)
 
    this .maxParticles             = 0;
    this .numParticles             = 0;
+   this .spriteSize               = new Vector3 ();
+   this .samplers                 = new Set ();
    this .forcePhysicsModelNodes   = [ ];
    this .forces                   = new Float32Array (4);
    this .boundedPhysicsModelNodes = [ ];
@@ -75,6 +78,7 @@ function ParticleSystem (executionContext)
    this .boundedVertices          = [ ];
    this .colorRamp                = new Float32Array ();
    this .texCoordRamp             = new Float32Array ();
+   this .scaleRamp                = new Float32Array ();
    this .geometryContext          = new GeometryContext ({ textureCoordinateNode: browser .getDefaultTextureCoordinate () });
    this .creationTime             = 0;
    this .pauseTime                = 0;
@@ -119,6 +123,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this ._color             .addInterest ("set_colorRamp__",         this);
       this ._texCoordKey       .addInterest ("set_texCoord__",          this);
       this ._texCoord          .addInterest ("set_texCoordRamp__",      this);
+      this ._scaleKey          .addInterest ("set_scale__",              this);
+      this ._scale             .addInterest ("set_scaleRamp__",          this);
 
       // Create particles stuff.
 
@@ -134,12 +140,12 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          thickLinesVertexArrayObject: new VertexArray (gl),
       });
 
-      // Create forces stuff.
+      // Create textures for forces, colors, texCoords, scales.
 
-      this .forcesTexture       = this .createTexture ();
-      this .boundedTexture      = this .createTexture ();
-      this .colorRampTexture    = this .createTexture ();
-      this .texCoordRampTexture = this .createTexture ();
+      this .boundedTexture = this .createTexture ();
+
+      for (const symbol of Object .values (ParticleSampler))
+         this [symbol] = this .createTexture ();
 
       // Create GL stuff.
 
@@ -171,6 +177,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       this .set_physics__ ();
       this .set_colorRamp__ ();
       this .set_texCoordRamp__ ();
+      this .set_scaleRamp__ ();
       this .set_bbox__ ();
    },
    getShapeKey ()
@@ -366,7 +373,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
             gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
             gl .bufferData (gl .ARRAY_BUFFER, QuadGeometry, gl .DYNAMIC_DRAW);
-
             break;
          }
          case GeometryType .GEOMETRY:
@@ -410,6 +416,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    {
       this .lineCoordinateNode ._point [0] .z = -this ._particleSize .y / 2;
       this .lineCoordinateNode ._point [1] .z = +this ._particleSize .y / 2;
+
+      this .spriteSize .set (... this ._particleSize);
    },
    set_emitter__ ()
    {
@@ -528,13 +536,11 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    },
    set_colorRamp__ ()
    {
-      if (this .colorRampNode)
-         this .colorRampNode .removeInterest ("set_color__", this);
+      this .colorRampNode ?.removeInterest ("set_color__", this);
 
       this .colorRampNode = X3DCast (X3DConstants .X3DColorNode, this ._color);
 
-      if (this .colorRampNode)
-         this .colorRampNode .addInterest ("set_color__", this);
+      this .colorRampNode ?.addInterest ("set_color__", this);
 
       this .set_color__ ();
       this .set_transparent__ ();
@@ -542,76 +548,132 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    set_color__ ()
    {
       const
-         gl           = this .getBrowser () .getContext (),
-         colorKey     = this ._colorKey,
-         numColors    = colorKey .length,
-         textureSize  = Math .ceil (Math .sqrt (numColors * 2));
+         gl          = this .getBrowser () .getContext (),
+         key         = this ._colorKey,
+         numKeys     = key .length,
+         textureSize = Math .ceil (Math .sqrt (numKeys * 2));
 
-      let colorRamp = this .colorRamp;
+      let ramp = this .colorRamp;
 
-      if (textureSize * textureSize * 4 > colorRamp .length)
-         colorRamp = this .colorRamp = new Float32Array (textureSize * textureSize * 4);
+      if (textureSize * textureSize * 4 > ramp .length)
+         ramp = this .colorRamp = new Float32Array (textureSize * textureSize * 4);
 
-      for (let i = 0; i < numColors; ++ i)
-         colorRamp [i * 4] = colorKey [i];
+      for (let i = 0; i < numKeys; ++ i)
+         ramp [i * 4] = key [i];
 
       if (this .colorRampNode)
-         colorRamp .set (this .colorRampNode .addColors ([ ], numColors) .slice (0, numColors * 4), numColors * 4);
+         ramp .set (this .colorRampNode .addColors ([ ], numKeys) .slice (0, numKeys * 4), numKeys * 4);
       else
-         colorRamp .fill (1, numColors * 4);
+         ramp .fill (1, numKeys * 4);
 
       if (textureSize)
       {
-         gl .bindTexture (gl .TEXTURE_2D, this .colorRampTexture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, colorRamp);
-     }
+         gl .bindTexture (gl .TEXTURE_2D, this [ParticleSampler .colors]);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, ramp);
+      }
 
-      this .numColors                      = numColors;
-      this .geometryContext .colorMaterial = !! (numColors && this .colorRampNode);
+      this .numColors                      = numKeys;
+      this .geometryContext .colorMaterial = !! (numKeys && this .colorRampNode);
+
+      if (numKeys)
+         this .samplers .add (ParticleSampler .colors);
+      else
+         this .samplers .delete (ParticleSampler .colors);
 
       this .geometryContext .updateGeometryKey ();
       this .updateVertexArrays ();
    },
    set_texCoordRamp__ ()
    {
-      if (this .texCoordRampNode)
-         this .texCoordRampNode .removeInterest ("set_texCoord__", this);
+      this .texCoordRampNode ?.removeInterest ("set_texCoord__", this);
 
       this .texCoordRampNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this ._texCoord);
 
-      if (this .texCoordRampNode)
-         this .texCoordRampNode .addInterest ("set_texCoord__", this);
+      this .texCoordRampNode ?.addInterest ("set_texCoord__", this);
 
       this .set_texCoord__ ();
    },
    set_texCoord__ ()
    {
       const
-         gl           = this .getBrowser () .getContext (),
-         texCoordKey  = this ._texCoordKey,
-         numTexCoords = texCoordKey .length,
-         textureSize  = Math .ceil (Math .sqrt (numTexCoords + numTexCoords * this .texCoordCount));
+         gl          = this .getBrowser () .getContext (),
+         key         = this ._texCoordKey,
+         numKeys     = key .length,
+         textureSize = Math .ceil (Math .sqrt (numKeys + numKeys * this .texCoordCount));
 
-      let texCoordRamp = this .texCoordRamp;
+      let ramp = this .texCoordRamp;
 
-      if (textureSize * textureSize * 4 > texCoordRamp .length)
-         texCoordRamp = this .texCoordRamp = new Float32Array (textureSize * textureSize * 4);
+      if (textureSize * textureSize * 4 > ramp .length)
+         ramp = this .texCoordRamp = new Float32Array (textureSize * textureSize * 4);
       else
-         texCoordRamp .fill (0);
+         ramp .fill (0);
 
-      for (let i = 0; i < numTexCoords; ++ i)
-         texCoordRamp [i * 4] = texCoordKey [i];
+      for (let i = 0; i < numKeys; ++ i)
+         ramp [i * 4] = key [i];
 
       if (this .texCoordRampNode)
-         texCoordRamp .set (this .texCoordRampNode .addPoints ([ ]) .slice (0, numTexCoords * this .texCoordCount * 4), numTexCoords * 4);
+         ramp .set (this .texCoordRampNode .addPoints ([ ]) .slice (0, numKeys * this .texCoordCount * 4), numKeys * 4);
 
       if (textureSize)
       {
-         gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, texCoordRamp);
+         gl .bindTexture (gl .TEXTURE_2D, this [ParticleSampler .texCoords]);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, ramp);
       }
 
-      this .numTexCoords = this .texCoordRampNode ? numTexCoords : 0;
+      this .numTexCoords = this .texCoordRampNode ? numKeys : 0;
+
+      if (numKeys)
+         this .samplers .add (ParticleSampler .texCoords);
+      else
+         this .samplers .delete (ParticleSampler .texCoords);
+
+      this .updateVertexArrays ();
+   },
+   set_scaleRamp__ ()
+   {
+      this .scaleRampNode ?.removeInterest ("set_scale__", this);
+
+      this .scaleRampNode = X3DCast (X3DConstants .Coordinate, this ._scale);
+
+      this .scaleRampNode ?.addInterest ("set_scale__", this);
+
+      this .set_scale__ ();
+   },
+   set_scale__ ()
+   {
+      const
+         gl           = this .getBrowser () .getContext (),
+         key          = this ._scaleKey,
+         numKeys      = key .length,
+         textureSize  = Math .ceil (Math .sqrt (numKeys * 2)); // keys + values
+
+      let ramp = this .scaleRamp;
+
+      if (textureSize * textureSize * 4 > ramp .length)
+         ramp = this .scaleRamp = new Float32Array (textureSize * textureSize * 4);
+      else
+         ramp .fill (0);
+
+      for (let i = 0; i < numKeys; ++ i)
+         ramp [i * 4] = key [i];
+
+      if (this .scaleRampNode)
+         ramp .set (this .scaleRampNode .addPoints ([ ], numKeys) .slice (0, numKeys * 4), numKeys * 4);
+      else
+         ramp .fill (1, numKeys * 4);
+
+      if (textureSize)
+      {
+         gl .bindTexture (gl .TEXTURE_2D, this [ParticleSampler .scales]);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, ramp);
+      }
+
+      this .numScales = numKeys;
+
+      if (numKeys)
+         this .samplers .add (ParticleSampler .scales);
+      else
+         this .samplers .delete (ParticleSampler .scales);
 
       this .updateVertexArrays ();
    },
@@ -686,7 +748,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       const
          DELAY = 15, // Delay in frames when dt fully applies.
-         dt    = 1 / Math .max (10, this .getBrowser () .getCurrentFrameRate ());
+         dt    = 1 / Math .max (this .getBrowser () .getCurrentFrameRate (), 10);
 
       // let deltaTime is only for the emitter, this.deltaTime is for the forces.
       let deltaTime = this .deltaTime = ((DELAY - 1) * this .deltaTime + dt) / DELAY; // Moving average about DELAY frames.
@@ -760,13 +822,21 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
          if (numForces)
          {
-            gl .bindTexture (gl .TEXTURE_2D, this .forcesTexture);
+            gl .bindTexture (gl .TEXTURE_2D, this [ParticleSampler .forces]);
             gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, numForces, 1, 0, gl .RGBA, gl .FLOAT, forces);
+
+            this .samplers .add (ParticleSampler .forces);
+         }
+         else
+         {
+            this .samplers .delete (ParticleSampler .forces);
          }
       }
       else
       {
          this .numForces = 0;
+
+         this .samplers .delete (ParticleSampler .forces);
       }
 
       // Swap buffers.
@@ -794,9 +864,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          new Vector3 (-0.5,  0.5, 0),
       ];
 
-      const
-         vertex = new Vector3 (),
-         size   = new Vector3 ();
+      const vertex = new Vector3 ();
 
       return function (gl, rotation)
       {
@@ -807,17 +875,15 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
          // Vertices
 
-         size .set (this ._particleSize .x, this ._particleSize .y, 1);
+         const size = this .spriteSize;
 
          for (let i = 0; i < 6; ++ i)
          {
             const index = 27 + i * 4;
 
-            rotation .multVecMatrix (vertex .assign (quad [i]) .multVec (size))
+            rotation .multVecMatrix (vertex .assign (quad [i]) .multVec (size));
 
-            data [index + 0] = vertex .x;
-            data [index + 1] = vertex .y;
-            data [index + 2] = vertex .z;
+            data .set (vertex, index);
          }
 
          gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
@@ -904,6 +970,15 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
                shaderNode      = appearanceNode .getShader (this .geometryContext, renderContext),
                primitiveMode   = browser .getPrimitiveMode (this .primitiveMode);
 
+            // Enable sample alpha to coverage if not transparent.
+
+            if (this .geometryType === GeometryType .POINT && !renderContext .transparent)
+            {
+               gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
+               gl .enable (gl .BLEND);
+               gl .blendFuncSeparate (gl .ONE, gl .ZERO, gl .ZERO, gl .ONE);
+            }
+
             // Set viewport.
 
             gl .viewport (... viewport);
@@ -923,7 +998,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
                const textureUnit = browser .getTextureUnit ();
 
                gl .activeTexture (gl .TEXTURE0 + textureUnit);
-               gl .bindTexture (gl .TEXTURE_2D, this .texCoordRampTexture);
+               gl .bindTexture (gl .TEXTURE_2D, this [ParticleSampler .texCoords]);
                gl .uniform1i (shaderNode .x3d_TexCoordRamp, textureUnit);
             }
 
@@ -967,6 +1042,16 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
             // Reset texture units.
 
             browser .resetTextureUnits ();
+
+            // Disable sample alpha to coverage if not transparent.
+
+            if (this .geometryType === GeometryType .POINT && !renderContext .transparent)
+            {
+               gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
+               gl .disable (gl .BLEND);
+               gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
+            }
+
             break;
          }
       }
@@ -1025,6 +1110,8 @@ Object .defineProperties (ParticleSystem,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "color",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "texCoordKey",       new Fields .MFFloat ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "texCoord",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "scaleKey",          new Fields .MFFloat ()), // skip test
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "scale",             new Fields .SFNode ()), // skip test
          new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",          new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "pointerEvents",     new Fields .SFBool (true)), // skip test
          new X3DFieldDefinition (X3DConstants .inputOutput,    "castShadow",        new Fields .SFBool (true)),

@@ -29,7 +29,7 @@ None Viewer
 
 You can choose a viewer from the available viewers in the viewer menu of the context menu. Not all viewers have to be available at the same time. **Note:** This is controlled by the X3D author by setting the *type* field of a [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node.
 
->**Tip:** Holding the *Shift+Cmd-or-Ctrl*-key overrides any [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) that the pointer may be over and forces the pointing device to function as the viewpoint navigation tool; i.e., drag operations cause rotation, click operations cause center of rotation point selection.
+>**Tip:** Holding the <kbd>Shift</kbd>+<kbd>Ctrl-or-Cmd</kbd> key overrides any [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) that the pointer may be over and forces the pointing device to function as the viewpoint navigation tool; i.e., drag operations cause rotation, click operations cause center of rotation point selection.
 {: .prompt-tip }
 
 ## Examine Viewer
@@ -48,7 +48,7 @@ As a result, it seems like the Examine Viewer treats all the objects in your sce
 ### Viewer Controls
 
 - **Rotate:** Drag while holding down the left mouse button to rotate the scene.
-- **Pan:** Drag while holding down the middle mouse button (or scroll wheel) to move the scene. Alternatively hold down the *Alt-or-Option*-key and drag to move the scene.
+- **Pan:** Drag while holding down the middle mouse button (or scroll wheel) to move the scene. Alternatively hold down the <kbd>Alt-or-Option</kbd> key and drag to move the scene.
 - **Zoom:** Scroll the mouse wheel to move closer or farther away.
 
 When using the Examine Viewer you will notice, that the horizon is always horizontal. You can disable this behavior in the context menu under "Straighten Horizon", when disabled there are no such constrains and navigation feels more freely. There is also a [browser option](/x_ite/reference/browser-services/#browser-options) "StraightenHorizon" which can be read and written.
@@ -60,14 +60,14 @@ The other viewer, called the Walk Viewer, lets you navigate through a scene by m
 **Tips:**
 
 - Turn on the rubberband in the context menu under *Display Rubberband*. This is a navigation aid that let you show how fast you are moving and in which direction.
-- Hold down the *Shift*-key while moving to go a little faster.
+- Hold down the <kbd>Shift</kbd> key while moving to go a little faster.
 
 ### Viewer Controls
 
-- **Go:** is the default Movement control. Click in the scene and hold down the left mouse button and then drag the pointer in the scene window to move in the world. Drag up to go forward, drag down to go backward, drag left to turn left, and drag right to turn right. Go turns your view in the direction of travel. Hold down *Shift*-key to go faster.
-- **Slide:** click and hold down the middle mouse button (or scroll wheel) and then drag to jump straight up or down, or to slide right or left. Slide does not turn your view in the direction of travel. Hold down the *Shift*-key to slide faster. Alternatively hold down the *Alt-or-Option*-key and drag to slide.
+- **Go:** is the default Movement control. Click in the scene and hold down the left mouse button and then drag the pointer in the scene window to move in the world. Drag up to go forward, drag down to go backward, drag left to turn left, and drag right to turn right. Go turns your view in the direction of travel. Hold down <kbd>Shift</kbd> key to go faster.
+- **Slide:** click and hold down the middle mouse button (or scroll wheel) and then drag to jump straight up or down, or to slide right or left. Slide does not turn your view in the direction of travel. Hold down the <kbd>Shift</kbd> key to slide faster. Alternatively hold down the <kbd>Alt-or-Option</kbd> key and drag to slide.
 - **Tilt:** scroll your mouse wheel to look up and down without moving.
-- **Free Tilt:** You can enable free tilt by hold down the *Cmd-or-Ctrl*-key and then drag to look up and down or from side to side without moving.
+- **Free Tilt:** You can enable free tilt by hold down the <kbd>Ctrl-or-Cmd</kbd> key and then drag to look up and down or from side to side without moving.
 
 >**Note:** Gravity is always enabled when in Walk Viewer mode. Put a floor under the viewer to prevent falling down.
 {: .prompt-info }
@@ -78,7 +78,7 @@ The Fly Viewer work the same way like the Walk Viewer except gravity is always t
 
 See Walk Viewer to learn how movement is controlled.
 
->**Note:** The author of the X3D world determines whether collision with objects is enabled.
+>**Note:** The author of the X3D world can control whether viewer collisions with objects are enabled. This can be done by using a [Collision](/x_ite/components/navigation/collision/) node.
 {: .prompt-info }
 
 ## Plane Viewer
@@ -87,7 +87,7 @@ The Plane Viewer is useful especially for 2D scenes and in conjunction with the 
 
 ### Viewer Controls
 
-- **Pan:** Drag while holding down the middle mouse button (or scroll wheel) to move the scene. Alternatively hold down the *Alt-or-Option*-key and drag to move the scene.
+- **Pan:** Drag while holding down the middle mouse button (or scroll wheel) to move the scene. Alternatively hold down the <kbd>Alt-or-Option</kbd> key and drag to move the scene.
 - **Zoom:** Scroll the mouse wheel to move closer or farther away.
 
 An X3D author can enable the Plane Viewer by setting the *type* field of the [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node to "PLANE" and/or "PLANE_create3000.github.io".

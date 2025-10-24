@@ -350,10 +350,10 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
       for (const reference of this [_references] ?? EMPTY)
          reference .removeFieldInterest (this);
 
-      for (const route of new Set (this [_inputRoutes]))
+      for (const route of Array .from (this [_inputRoutes] ?? EMPTY))
          route .dispose ();
 
-      for (const route of new Set (this [_outputRoutes]))
+      for (const route of Array .from (this [_outputRoutes] ?? EMPTY))
          route .dispose ();
 
       this [_references]          ?.clear ();

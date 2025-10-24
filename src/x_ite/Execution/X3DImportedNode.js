@@ -1,12 +1,14 @@
-import X3DObject   from "../Base/X3DObject.js";
-import SFNodeCache from "../Fields/SFNodeCache.js";
+import X3DObject            from "../Base/X3DObject.js";
+import SFNodeCache          from "../Fields/SFNodeCache.js";
+import X3DImportedNodeProxy from "../Components/Core/X3DImportedNodeProxy.js";
 
 const
    _executionContext = Symbol (),
    _inlineNode       = Symbol (),
    _exportedName     = Symbol (),
    _importedName     = Symbol (),
-   _description      = Symbol ();
+   _description      = Symbol (),
+   _exportedNodes    = Symbol ();
 
 function X3DImportedNode (executionContext, inlineNode, exportedName, importedName, description)
 {
@@ -17,6 +19,7 @@ function X3DImportedNode (executionContext, inlineNode, exportedName, importedNa
    this [_exportedName]     = exportedName;
    this [_importedName]     = importedName;
    this [_description]      = description;
+   this [_exportedNodes]    = executionContext [_exportedNodes] ??= new Map ();
 }
 
 Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .prototype),
@@ -33,7 +36,24 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    {
       return this [_exportedName];
    },
-   getExportedNode ()
+   getExportedNode (type)
+   {
+      return this [_exportedNodes] .get (this [_importedName])
+         ?? this .createExportedNode (type);
+   },
+   createExportedNode (type)
+   {
+      const exportedNode = new X3DImportedNodeProxy (this .getExecutionContext (), this [_importedName], type);
+
+      this [_exportedNodes] .set (this [_importedName], exportedNode);
+
+      return exportedNode;
+   },
+   updateExportedNode ()
+   {
+      this [_exportedNodes] .get (this [_importedName]) ?.update ();
+   },
+   getSharedNode ()
    {
       const exportedNode = this .getInlineNode () .getInternalScene () .getExportedNodes () .get (this [_exportedName]);
 
@@ -46,9 +66,18 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    {
       return this [_importedName];
    },
-   [Symbol .for ("X_ITE.X3DImportedNode.setImportName")] (importName)
+   [Symbol .for ("X_ITE.X3DImportedNode.setImportName")] (importedName)
    {
-      this [_importedName] = importName;
+      const
+         exportedNode  = this .getExportedNode (),
+         exportedNodes = this [_exportedNodes];
+
+      exportedNodes .delete (this [_importedName]);
+      exportedNodes .set (importedName, exportedNode);
+
+      this [_importedName] = importedName;
+
+      exportedNode .setName (importedName);
    },
    getDescription ()
    {
@@ -129,7 +158,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
 
       if (this [_description])
          generator .stringProperty ("@DESCRIPTION", this [_description]);
-      
+
       generator .endObject ();
       generator .endObject ();
    },
@@ -179,7 +208,7 @@ Object .defineProperties (X3DImportedNode .prototype,
    {
       get ()
       {
-         return this .getInlineNode () .getInternalScene () .getExportedNode (this [_exportedName]);
+         return SFNodeCache .get (this .getExportedNode ());
       },
       enumerable: true,
    },

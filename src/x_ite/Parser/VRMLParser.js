@@ -2,9 +2,11 @@ import X3DParser                 from "./X3DParser.js";
 import Expressions               from "./Expressions.js";
 import Fields                    from "../Fields.js";
 import X3DField                  from "../Base/X3DField.js";
+import X3DImportedNode           from "../Execution/X3DImportedNode.js";
 import X3DExternProtoDeclaration from "../Prototype/X3DExternProtoDeclaration.js";
 import X3DProtoDeclaration       from "../Prototype/X3DProtoDeclaration.js";
 import X3DConstants              from "../Base/X3DConstants.js";
+import Placeholder               from "./Placeholder.js";
 import Color3                    from "../../standard/Math/Numbers/Color3.js";
 import Color4                    from "../../standard/Math/Numbers/Color4.js";
 import Matrix3                   from "../../standard/Math/Numbers/Matrix3.js";
@@ -328,6 +330,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                try
                {
                   this .statements (this .getExecutionContext () .rootNodes);
+                  this .setupNodes ()
 
                   if (this .lastIndex < this .input .length)
                      throw new Error ("Unknown statement.");
@@ -344,6 +347,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
          else
          {
             this .statements (this .getExecutionContext () .rootNodes);
+            this .setupNodes ()
 
             if (this .lastIndex < this .input .length)
                throw new Error ("Unknown statement.");
@@ -634,6 +638,12 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                   // Add new imported node.
 
                   this .getExecutionContext () .addImportedNode (namedNode, exportedNodeNameId, nodeNameId, description);
+
+                  if (!this .getImportedNodes () .has (nodeNameId))
+                  {
+                     this .getImportedNodes () .set (nodeNameId, this .getExecutionContext () .getImportedNodes () .get (nodeNameId));
+                  }
+
                   return true;
                }
 
@@ -691,7 +701,35 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       if (Grammar .USE .parse (this))
       {
          if (this .nodeNameId ())
-            return this .getExecutionContext () .getNamedNode (this .result [0]) .getValue ();
+         {
+            const nodeNameId = this .result [0];
+
+            try
+            {
+               const localNode = this .getExecutionContext () .getLocalNode (nodeNameId);
+
+               return localNode instanceof X3DImportedNode
+                  ? localNode .getExportedNode ()
+                  : localNode .getValue ();
+            }
+            catch
+            {
+               const placeholder = this .getPlaceholders () .get (nodeNameId);
+
+               if (placeholder)
+               {
+                  return placeholder;
+               }
+               else
+               {
+                  const placeholder = new Placeholder (this, nodeNameId);
+
+                  this .getPlaceholders () .set (nodeNameId, placeholder);
+
+                  return placeholder;
+               }
+            }
+         }
 
          throw new Error ("No name given after USE.");
       }
@@ -746,9 +784,8 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                         proto .addUserDefinedField (field .getAccessType (), field .getName (), field);
 
                      this .pushExecutionContext (proto .getBody ());
-
                      this .protoBody (proto .getBody () .rootNodes);
-
+                     this .setupNodes ();
                      this .popExecutionContext ();
 
                      this .comments ();
@@ -1267,6 +1304,9 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
          if (nodeNameId .length)
          {
+            if (!this .getNamedNodes () .has (nodeNameId))
+               this .getNamedNodes () .set (nodeNameId, baseNode);
+
             this .renameExistingNode (nodeNameId);
 
             this .getExecutionContext () .updateNamedNode (nodeNameId, baseNode);
@@ -1287,7 +1327,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
             if (Grammar .CloseBrace .parse (this))
             {
                if (!this .isInsideProtoDeclaration ())
-                  baseNode .setup ();
+                  this .getNodes () .push (baseNode);
 
                return baseNode;
             }
@@ -2655,10 +2695,10 @@ X3DField .prototype .fromVRMLString = function (string, scene)
    parser .setUnits (!!scene);
    parser .setInput (string);
 
-   if (parser .fieldValue (this))
-      return;
+   if (!parser .fieldValue (this))
+      throw new Error (`Couldn't read value for field '${this .getName ()}'.`);
 
-   throw new Error (`Couldn't read value for field '${this .getName ()}'.`);
+   parser .setupNodes ();
 };
 
 export default VRMLParser;

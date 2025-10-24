@@ -46,6 +46,10 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    getSourceNode ()
    {
       ///  SAI
+
+      if (this [_sourceNode] instanceof X3DImportedNode)
+         return this [_sourceNode] .getExportedNode ();
+
       return this [_sourceNode];
    },
    getSourceField ()
@@ -67,6 +71,10 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    getDestinationNode ()
    {
       ///  SAI
+
+      if (this [_destinationNode] instanceof X3DImportedNode)
+         return this [_destinationNode] .getExportedNode ();
+
       return this [_destinationNode];
    },
    getDestinationField ()
@@ -278,10 +286,7 @@ Object .defineProperties (X3DRoute .prototype,
    {
       get ()
       {
-         if (this [_sourceNode] instanceof X3DNode)
-            return SFNodeCache .get (this [_sourceNode]);
-
-         return this [_sourceNode];
+         return SFNodeCache .get (this .getSourceNode ());
       },
       enumerable: true,
    },
@@ -294,10 +299,7 @@ Object .defineProperties (X3DRoute .prototype,
    {
       get ()
       {
-         if (this [_destinationNode] instanceof X3DNode)
-            return SFNodeCache .get (this [_destinationNode]);
-
-         return this [_destinationNode];
+         return SFNodeCache .get (this .getDestinationNode ());
       },
       enumerable: true,
    },

@@ -477,40 +477,40 @@ More options can be adjusted using the [Browser object](/x_ite/reference/browser
 
 If the \<x3d-canvas\> element is focused, the following keyboard shortcuts are available.
 
-Home (Pos 1)
+<kbd>Home (Pos 1)</kbd>
 : Go to first viewpoint.
 
-End
+<kbd>End</kbd>
 : Go to last viewpoint.
 
-Page Up
+<kbd>Page Up</kbd>
 : Go to previous viewpoint.
 
-Page Down
+<kbd>Page Down</kbd>
 : Go to next viewpoint.
 
-Ctrl++
+<kbd>Ctrl</kbd>+<kbd>+</kbd>
 : Display browser timings.
 
-Shift+F8
+<kbd>Shift</kbd>+<kbd>F8</kbd>
 : Copy the the current viewpoint of the active layer to clipboard.
 
-Ctrl+S
+<kbd>Ctrl</kbd>+<kbd>s</kbd>
 : If \<x3d-canvas\> attribute *debug* is `true`, toggle begin/end update of browser.
 
-Ctrl+1
+<kbd>Ctrl</kbd>+<kbd>1</kbd>
 : If \<x3d-canvas\> attribute *debug* is `true`, set shading to POINT.
 
-Ctrl+2
+<kbd>Ctrl</kbd>+<kbd>2</kbd>
 : If \<x3d-canvas\> attribute *debug* is `true`, set shading to WIREFRAME.
 
-Ctrl+3
+<kbd>Ctrl</kbd>+<kbd>3</kbd>
 : If \<x3d-canvas\> attribute *debug* is `true`, set shading to FLAT.
 
-Ctrl+4
+<kbd>Ctrl</kbd>+<kbd>4</kbd>
 : If \<x3d-canvas\> attribute *debug* is `true`, set shading to GOURAUD.
 
-Ctrl+5
+<kbd>Ctrl</kbd>+<kbd>5</kbd>
 : If \<x3d-canvas\> attribute *debug* is `true`, set shading to PHONG.
 
 ## Extending the Context Menu

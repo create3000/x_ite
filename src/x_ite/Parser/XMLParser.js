@@ -6,9 +6,11 @@ import Fields                    from "../Fields.js";
 import X3DParser                 from "./X3DParser.js";
 import VRMLParser                from "./VRMLParser.js";
 import HTMLSupport               from "./HTMLSupport.js";
+import X3DImportedNode           from "../Execution/X3DImportedNode.js";
 import X3DExternProtoDeclaration from "../Prototype/X3DExternProtoDeclaration.js";
 import X3DProtoDeclaration       from "../Prototype/X3DProtoDeclaration.js";
 import X3DConstants              from "../Base/X3DConstants.js";
+import Placeholder               from "./Placeholder.js";
 import DEVELOPMENT               from "../DEVELOPMENT.js";
 
 const AccessType =
@@ -109,6 +111,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                   browser .loadComponents (scene) .then (() =>
                   {
                      this .childrenElements (xmlElement);
+                     this .setupNodes ();
                      this .resolve (scene);
                   })
                   .catch (this .reject);
@@ -116,6 +119,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                else
                {
                   this .childrenElements (xmlElement);
+                  this .setupNodes ();
                }
             }
 
@@ -134,6 +138,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                browser .loadComponents (scene) .then (() =>
                {
                   this .sceneElement (xmlElement);
+                  this .setupNodes ();
                   this .resolve (scene);
                })
                .catch (this .reject);
@@ -141,6 +146,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             else
             {
                this .sceneElement (xmlElement);
+               this .setupNodes ();
             }
 
             break;
@@ -152,6 +158,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                browser .loadComponents (scene) .then (() =>
                {
                   this .childrenElements (xmlElement);
+                  this .setupNodes ();
                   this .resolve (scene);
                })
                .catch (this .reject);
@@ -159,6 +166,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             else
             {
                this .childrenElements (xmlElement);
+               this .setupNodes ();
             }
 
             break;
@@ -210,6 +218,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             for (const childNode of xmlElement .childNodes)
                this .x3dElementChildScene (childNode)
 
+            this .setupNodes ();
             this .resolve (scene);
          })
          .catch (this .reject);
@@ -218,6 +227,8 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       {
          for (const childNode of xmlElement .childNodes)
             this .x3dElementChildScene (childNode)
+
+         this .setupNodes ();
       }
    },
    x3dElementChildHead (xmlElement)
@@ -476,6 +487,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                   this .pushParent (proto);
                   this .protoBodyElement (childNode);
                   this .popParent ();
+                  this .setupNodes ();
                   this .popExecutionContext ();
                   break;
                }
@@ -662,7 +674,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             this .childrenElements (xmlElement);
 
             if (!this .isInsideProtoDeclaration ())
-               node .setup ();
+               this .getNodes () .push (node);
 
             this .popParent ();
          }
@@ -742,7 +754,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          this .childrenElements (xmlElement);
 
          if (!this .isInsideProtoDeclaration ())
-            node .setup ();
+            this .getNodes () .push (node);
 
          this .popParent ();
       }
@@ -841,6 +853,11 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          // Add new imported node.
 
          this .getExecutionContext () .addImportedNode (inlineNode, exportedNodeName, localNodeName, description);
+
+         if (!this .getImportedNodes () .has (localNodeName))
+         {
+            this .getImportedNodes () .set (localNodeName, this .getExecutionContext () .getImportedNodes () .get (localNodeName));
+         }
       }
       catch (error)
       {
@@ -895,25 +912,42 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
          if (this .id (name))
          {
-            const node = this .getExecutionContext () .getNamedNode (name);
+            const nodeName = this .nodeNameToCamelCase (xmlElement .nodeName);
 
-            if (this .nodeNameToCamelCase (xmlElement .nodeName) === "ProtoInstance")
+            const type = nodeName === "ProtoInstance"
+               ? this .getBrowser () .getAbstractNode ("X3DPrototypeInstance")
+               : this .getBrowser () .getConcreteNode (nodeName);
+
+            const typeName = xmlElement .getAttribute ("name");
+
+            try
             {
-               if (!node .getNodeType () .includes (X3DConstants .X3DPrototypeInstance))
+               const localNode = this .getExecutionContext () .getLocalNode (name);
+
+               const node = localNode instanceof X3DImportedNode
+                  ? localNode .getExportedNode (type)
+                  : localNode .getValue ();
+
+               this .checkNodeType (node, name, type, typeName);
+               this .addNode (xmlElement, node);
+            }
+            catch
+            {
+               const placeholder = this .getPlaceholders () .get (name);
+
+               if (placeholder)
                {
-                  console .warn (`XML Parser: DEF/USE mismatch, '${name}', referenced node is not of type X3DPrototypeInstance.`);
+                  this .addNode (xmlElement, placeholder);
                }
-               else if (xmlElement .getAttribute ("name") !== node .getNodeTypeName ())
+               else
                {
-                  console .warn (`XML Parser: DEF/USE mismatch, '${name}', name ${xmlElement .getAttribute ("name")} != ${node .getNodeTypeName ()}.`);
+                  const placeholder = new Placeholder (this, name, type, typeName);
+
+                  this .getPlaceholders () .set (name, placeholder);
+                  this .addNode (xmlElement, placeholder);
                }
             }
-            else if (this .nodeNameToCamelCase (xmlElement .nodeName) !== node .getNodeTypeName ())
-            {
-               console .warn (`XML Parser: DEF/USE mismatch, '${name}', ${xmlElement .nodeName} != ${node .getNodeTypeName ()}.`);
-            }
 
-            this .addNode (xmlElement, node .getValue ());
             return true;
          }
       }
@@ -924,6 +958,27 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
       return false;
    },
+   checkNodeType (node, name, type, typeName)
+   {
+      if (type === X3DNode)
+         return;
+
+      if (type === X3DPrototypeInstance)
+      {
+         if (!node .getType () .includes (X3DConstants .X3DPrototypeInstance))
+         {
+            console .warn (`XML Parser: DEF/USE mismatch, '${name}', referenced node is not of type X3DPrototypeInstance.`);
+         }
+         else if (typeName !== node .getTypeName ())
+         {
+            console .warn (`XML Parser: DEF/USE mismatch, '${name}', name ${typeName} != ${node .getTypeName ()}.`);
+         }
+      }
+      else if (type !== node .constructor)
+      {
+         console .warn (`XML Parser: DEF/USE mismatch, '${name}', ${type .typeName} != ${node .getTypeName ()}.`);
+      }
+   },
    defAttribute (xmlElement, node)
    {
       try
@@ -932,6 +987,9 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
          if (name)
          {
+            if (!this .getNamedNodes () .has (name))
+               this .getNamedNodes () .set (name, node);
+
             this .renameExistingNode (name);
 
             this .getExecutionContext () .updateNamedNode (name, node);
@@ -1214,10 +1272,10 @@ X3DField .prototype .fromXMLString = function (string, scene)
 {
    const parser = new XMLParser (scene);
 
-   if (parser .fieldValue (this, string))
-      return;
+   if (!parser .fieldValue (this, string))
+      throw new Error (`Couldn't read value for field '${this .getName ()}'.`);
 
-   throw new Error (`Couldn't read value for field '${this .getName ()}'.`);
+   parser .setupNodes ();
 };
 
 export default XMLParser;

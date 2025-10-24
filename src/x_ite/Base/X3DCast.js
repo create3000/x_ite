@@ -13,6 +13,8 @@ function X3DCast (type, node, innerNode = true)
          {
             if (innerNode)
                node = node .getInnerNode ();
+            else
+               node = node .valueOf ();
 
             if (node .getType () .includes (type))
                return node;

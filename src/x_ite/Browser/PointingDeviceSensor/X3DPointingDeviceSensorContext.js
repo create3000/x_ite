@@ -222,7 +222,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       if (!this [_pointingDeviceSensorNodes] .size)
          return false;
 
-      // Must advance time, because event are later processed.
+      // Must advance time, because events are later processed.
       this .advanceOnlyTime ();
 
       if (hit === this [_hit])

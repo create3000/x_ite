@@ -3,7 +3,6 @@ import Fields       from "../Fields.js";
 import GoldenGate   from "../Parser/GoldenGate.js";
 import X3DWorld     from "../Execution/X3DWorld.js";
 import X3DScene     from "../Execution/X3DScene.js";
-import X3DConstants from "../Base/X3DConstants.js";
 import DEVELOPMENT  from "../DEVELOPMENT.js";
 
 const foreignMimeType = new Set ([
@@ -90,27 +89,19 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       scene ._loadCount .addInterest ("set_loadCount__", this, scene, resolve, reject);
       scene ._loadCount .addEvent ();
    },
-   async set_loadCount__ (scene, resolve, reject, field)
+   async set_loadCount__ (scene, resolve, reject)
    {
-      // Wait for X3DExternprotoDeclaration and Script nodes to be loaded or failed.
-
-      if (scene .externprotos .some (node => node .checkLoadState () === X3DConstants .IN_PROGRESS_STATE))
-         return;
-
-      const scripts = Array .from (scene .getLoadingObjects ())
-         .filter (node => node .getType () .includes (X3DConstants .Script));
-
-      if (scripts .some (node => node .checkLoadState () === X3DConstants .IN_PROGRESS_STATE))
-         return;
-
-      scene ._loadCount .removeInterest ("set_loadCount__", this);
-
-      // Wait for instances to be created.
-
-      await this .browser .nextFrame ();
-
       try
       {
+         if (scene ._loadCount .getValue ())
+            return;
+
+         scene ._loadCount .removeInterest ("set_loadCount__", this);
+
+         // Wait for instances to be created and events to be processed.
+
+         await this .browser .nextFrame ();
+
          resolve (scene);
       }
       catch (error)

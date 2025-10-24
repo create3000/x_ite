@@ -72,10 +72,10 @@ class GeometryArray extends Array
    {
       const length = value .length;
 
+      this .length = length;
+
       for (let i = 0; i < length; ++ i)
          this [i] = value [i];
-
-      this .length = length;
    }
 
    getValue ()
@@ -89,6 +89,8 @@ class GeometryArray extends Array
          this .#typedArray .set (this);
       else
          this .#typedArray = new Float32Array (this);
+
+      return this .#typedArray;
    }
 }
 
@@ -379,7 +381,16 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
             return;
 
          if (!MikkTSpace .isInitialized ())
-            return void (MikkTSpace .initialize () .then (() => this .requestRebuild ()));
+         {
+            return void (MikkTSpace .initialize () .then (() =>
+            {
+               this .generateTangents ();
+               this .transfer ();
+               this .updateGeometryKey ();
+               this .updateRenderFunctions ();
+               this .getBrowser () .addBrowserEvent ();
+            }));
+         }
 
          const
             vertices  = this .vertices .getValue () .filter ((v, i) => i % 4 < 3),

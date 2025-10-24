@@ -133,7 +133,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 ### SFFloat [in, out] **coneOuterAngle** 6.2832 <small>[0,2π]</small>
 {: #fields-coneOuterAngle }
 
-*coneOuterAngle* is centered along direction and defines an outer conical volume, within which the sound gain decreases linearly from full gain to coneOuterGain. Outside of *coneOuterAngle*, gain equals coneOuterGain.
+*coneOuterAngle* is centered along direction and defines an outer conical volume, within which the sound gain decreases from full gain to coneOuterGain. Outside of *coneOuterAngle*, gain equals coneOuterGain.
 
 #### Hints
 
@@ -143,7 +143,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 ### SFString [in, out] **distanceModel** "INVERSE" <small>["LINEAR" "INVERSE" "EXPONENTIAL"]</small>
 {: #fields-distanceModel }
 
-*distanceModel* determines how field specifies which algorithm to use for sound attenuation, corresponding to distance between an audio source and a listener, as it moves away from the listener.
+*distanceModel* determines which algorithm to use for sound attenuation, corresponding to distance between an audio source and a listener, as it moves away from the listener.
 
 #### Hint
 

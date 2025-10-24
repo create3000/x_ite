@@ -39,9 +39,16 @@ getInstanceVertex (const in vec4 vertex)
    return x3d_InstanceMatrix * vertex;
 }
 
+float
+getInstancePointSize (const in float pointSize)
+{
+   return pointSize * x3d_InstanceMatrix [0] .x;
+}
+
 #else
    #define getInstanceVertex(vertex) (vertex)
    #define getInstanceNormal(normal) (normal)
    #define getInstanceTexCoord(texCoord) (texCoord)
+   #define getInstancePointSize(pointSize) (pointSize)
 #endif
 `;

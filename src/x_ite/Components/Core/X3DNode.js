@@ -1418,26 +1418,6 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
       if (executionContext .isScene)
       {
-         // Remove imported node if any.
-
-         const parentContext = executionContext .getExecutionContext ();
-
-         if (parentContext)
-         {
-            for (const importedNode of Array .from (parentContext .getImportedNodes ()))
-            {
-               try
-               {
-                  if (importedNode .getExportedNode () === this)
-                     parentContext .removeImportedNode (importedNode .getImportedName ());
-               }
-               catch (error)
-               {
-                  //console .error (error);
-               }
-            }
-         }
-
          // Remove exported node if any.
 
          for (const exportedNode of Array .from (executionContext .getExportedNodes ()))
@@ -1445,16 +1425,26 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             if (exportedNode .getLocalNode () === this)
                executionContext .removeExportedNode (exportedNode .getExportedName ());
          }
+
+         // Remove imported node if any.
+
+         const parentContext = executionContext .getExecutionContext ();
+
+         if (parentContext)
+         {
+            for (const importedNode of parentContext .getImportedNodes ())
+               importedNode .getExportedNode () .update ();
+         }
       }
 
       // Remove node from entire scene graph.
 
-      for (const firstParent of new Set (this .getParents ()))
+      for (const firstParent of Array .from (this .getParents ()))
       {
          if (!(firstParent instanceof Fields .SFNode))
             continue;
 
-         for (const secondParent of new Set (firstParent .getParents ()))
+         for (const secondParent of Array .from (firstParent .getParents ()))
          {
             if (!(secondParent instanceof Fields .MFNode))
                continue;
@@ -1463,7 +1453,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
          }
       }
 
-      for (const firstParent of new Set (this .getParents ()))
+      for (const firstParent of Array .from (this .getParents ()))
       {
          if (!(firstParent instanceof Fields .SFNode))
             continue;
