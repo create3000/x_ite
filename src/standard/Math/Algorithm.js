@@ -45,7 +45,7 @@ const Algorithm =
    {
       return source + t * (destination - source);
    },
-   slerp (source, destination, t, short = false)
+   slerp (source, destination, t, short = true)
    {
       let cosom = source .dot (destination);
 
@@ -77,7 +77,7 @@ const Algorithm =
    },
    simpleSlerp (source, destination, t)
    {
-      return this .slerp (source, destination, t, true);
+      return this .slerp (source, destination, t, false);
    },
    isPowerOfTwo (n)
    {
