@@ -52,6 +52,7 @@ function HAnimHumanoid (executionContext)
    this .viewpointsNode       = new Group (executionContext);
    this .skinNode             = new Skin (executionContext, this);
    this .transformNode        = new Transform (executionContext);
+   this .poseNodes            = [ ];
    this .motionNodes          = [ ];
    this .jointNodes           = [ ];
    this .jointBindingMatrices = [ ];
@@ -138,6 +139,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       // Events
 
+      this ._poses                      .addInterest ("set_poses__",                      this);
       this ._motionsEnabled             .addInterest ("set_motions__",                    this);
       this ._motions                    .addInterest ("set_motions__",                    this);
       this ._jointBindingPositions      .addInterest ("set_joints__",                     this);
@@ -149,6 +151,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       this ._displacementWeightsTexture .addInterest ("set_displacementWeightsTexture__", this);
       this ._skinCoord                  .addInterest ("set_skinCoord__",                  this);
 
+      this .set_poses__ ();
       this .set_motions__ ();
       this .set_joints__ ();
       this .set_skinCoord__ ();
@@ -176,6 +179,20 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    set_humanoidKey__ ()
    {
       this .humanoidKey = `[${this .numJoints}.${this .numDisplacements}]`;
+   },
+   set_poses__ ()
+   {
+      const poseNodes = this .poseNodes;
+
+      poseNodes .length = 0;
+
+      for (const node of this ._poses)
+      {
+         const poseNode = X3DCast (X3DConstants .HAnimPose, node);
+
+         if (poseNode)
+            poseNodes .push (poseNode);
+      }
    },
    set_motions__ ()
    {
