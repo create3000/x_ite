@@ -17,8 +17,9 @@ function HAnimPose (executionContext)
 
    // Private properties
 
-   this .timeSensor = new TimeSensor (this .getExecutionContext ());
-   this .poseJoints = [ ];
+   this .timeSensor    = new TimeSensor (this .getExecutionContext ());
+   this .interpolators = [ ];
+   this .poseJoints    = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prototype),
@@ -48,11 +49,17 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
    },
    set_commencePose__ ()
    {
+      if (!this ._commencePose .getValue ())
+         return;
 
+      this .timeSensor .startTime = Date .now () / 1000;
    },
    set_fraction__ ()
    {
-
+      const fraction = this ._set_fraction .getValue ();
+      
+      for (const interpolator of this .interpolators)
+         interpolator .set_fraction = fraction;
    },
    set_poseJoints__ ()
    {
