@@ -334,6 +334,11 @@ List of [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes containing [Viewpo
 - These are actual node declarations, not USE nodes.
 - Top-level [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes (in turn containing [Viewpoint](/x_ite/components/navigation/viewpoint/) nodes) must include `containerField='viewpoints'` for proper validation and operation.
 
+### MFNode [in, out] **poses** [ ] <small>[HAnimPose]</small>
+{: #fields-poses }
+
+Contains any [HAnimPose](/x_ite/components/hanim/hanimpose/) nodes that can animate the HAnimHumanoid.
+
 ### MFBool [in, out] **motionsEnabled** [ ]
 {: #fields-motionsEnabled }
 
