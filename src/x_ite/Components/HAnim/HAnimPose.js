@@ -98,10 +98,12 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
 
          interpolator ._key = [0, 1];
 
-         if (poseJointNode)
-            interpolator ._keyValue = [... jointNode .getField (name), ... poseJointNode .getField (name)];
-         else
-            interpolator ._keyValue = [... jointNode .getField (name), ... jointNode .getFieldDefinitions () .get (name) .value];
+         interpolator ._keyValue = poseJointNode
+            ? [... jointNode .getField (name), ... poseJointNode .getField (name)]
+            : [... jointNode .getField (name), ... jointNode .getFieldDefinitions () .get (name) .value];
+
+         if (poseJointNode ?._name .getValue () === "humanoid_root")
+            console .log (interpolator .toVRMLString ())
 
          interpolator .setup ();
 
