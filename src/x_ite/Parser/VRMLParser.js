@@ -329,7 +329,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                try
                {
                   this .statements (this .getExecutionContext () .rootNodes);
-                  this .setupNodes ()
+                  this .setupNodes ();
 
                   if (this .lastIndex < this .input .length)
                      throw new Error ("Unknown statement.");
@@ -346,7 +346,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
          else
          {
             this .statements (this .getExecutionContext () .rootNodes);
-            this .setupNodes ()
+            this .setupNodes ();
 
             if (this .lastIndex < this .input .length)
                throw new Error ("Unknown statement.");
