@@ -85,7 +85,7 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
 
       for (const [name, interpolator] of interpolators)
       {
-         if (!this ._resetOtherJoints .getValue ())
+         if (!poseJointNode && !this ._resetOtherJoints .getValue ())
             continue;
 
          this .timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
