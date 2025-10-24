@@ -33,7 +33,6 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
 
       this ._enabled            .addFieldInterest (this .timeSensor ._enabled);
       this ._transitionDuration .addFieldInterest (this .timeSensor ._cycleInterval);
-      this ._set_startTime      .addFieldInterest (this .timeSensor ._startTime);
 
       this .timeSensor ._isActive .addFieldInterest (this ._isActive);
 
@@ -44,9 +43,10 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
 
       // Fields
 
-      this ._commencePose .addInterest ("set_commencePose__", this);
-      this ._set_fraction .addInterest ("set_fraction__",     this);
-      this ._poseJoints   .addInterest ("set_poseJoints__",   this);
+      this ._commencePose  .addInterest ("set_commencePose__", this);
+      this ._set_startTime .addInterest ("set_startTime__",    this);
+      this ._set_fraction  .addInterest ("set_fraction__",     this);
+      this ._poseJoints    .addInterest ("set_poseJoints__",   this);
 
       this .set_poseJoints__ ();
    },
@@ -117,6 +117,10 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
       if (!this ._commencePose .getValue ())
          return;
 
+      this .set_startTime__ ();
+   },
+   set_startTime__ ()
+   {
       this .processJoints ();
 
       this .timeSensor ._startTime = Date .now () / 1000;
