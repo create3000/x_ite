@@ -52,9 +52,6 @@ const Algorithm =
       // if (cosom <= -1) ... vectors are inverse colinear.
       // ; // This case is not handled.
 
-      if (cosom >= 1) // Both normal vectors are equal.
-         return source;
-
       if (cosom < 0)
       {
          // Reverse signs so we travel the short way round.
@@ -62,8 +59,11 @@ const Algorithm =
          destination .negate ();
       }
 
+      if (cosom >= 1) // Both normal vectors are equal.
+         return source;
+
       const
-         omega  = Math .acos (cosom),
+         omega  = Math .acos (Math .max (cosom, -1)),
          sinom  = Math .sin  (omega),
          scale0 = Math .sin ((1 - t) * omega) / sinom,
          scale1 = Math .sin (t * omega) / sinom;
