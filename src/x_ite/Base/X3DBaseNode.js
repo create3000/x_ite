@@ -254,6 +254,10 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
          set (value) { field .setValue (value); },
       });
    },
+   getFieldDefinition (name)
+   {
+      return this [_fieldDefinitions] .get (name);
+   },
    getFieldDefinitions ()
    {
       return this [_fieldDefinitions];

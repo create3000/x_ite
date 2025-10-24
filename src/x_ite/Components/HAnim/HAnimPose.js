@@ -100,7 +100,7 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
 
          interpolator ._keyValue = poseJointNode
             ? [... jointNode .getField (name), ... poseJointNode .getField (name)]
-            : [... jointNode .getField (name), ... jointNode .getFieldDefinitions () .get (name) .value];
+            : [... jointNode .getField (name), ... jointNode .getFieldDefinition (name) .value];
 
          interpolator .setup ();
 
