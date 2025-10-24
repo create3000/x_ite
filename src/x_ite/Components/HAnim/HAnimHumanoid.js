@@ -203,23 +203,18 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       for (const poseNode of this .poseNodes)
       {
-         poseNode ._isActive .addInterest ("set_pose_active__", this, poseNode);
+         poseNode ._isActive .addInterest ("set_pose_active__", this);
 
          poseNode .addJoints (this .jointNodes);
       }
    },
-   set_pose_active__ (currentPoseNode, value)
+   set_pose_active__ (value)
    {
       if (value .getValue ())
          return;
 
       for (const poseNode of this .poseNodes)
-      {
-         if (poseNode === currentPoseNode)
-            continue;
-
          poseNode .processJoints ();
-      }
    },
    set_motions__ ()
    {
