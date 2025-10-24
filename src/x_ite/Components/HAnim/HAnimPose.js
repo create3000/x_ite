@@ -64,6 +64,8 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
    },
    updateInterpolators ()
    {
+      this .needsUpdateInterpolators = false;
+
       for (const interpolator of this .interpolators)
          this .timeSensor ._fraction_changed .removeFieldInterest (interpolator ._set_fraction);
 
@@ -77,8 +79,6 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
 
       for (const interpolator of this .interpolators)
          this .timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
-
-      this .needsUpdateInterpolators = false;
    },
    processJoint: (function ()
    {
