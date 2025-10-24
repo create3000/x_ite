@@ -54,7 +54,7 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
    {
       this .joints .add (jointNodes);
 
-      this .setUpdateJoints (true);
+      this .updateJoints = true;
    },
    removeJoints (jointNodes)
    {
@@ -73,7 +73,7 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
             this .processJoint (jointNode);
       }
 
-      this .setUpdateJoints (false);
+      this .updateJoints = false;
    },
    processJoint (jointNode)
    {
@@ -107,9 +107,9 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
          this .interpolators .push (interpolator);
       }
    },
-   setUpdateJoints (value = true)
+   needsUpdateJoints ()
    {
-      this .updateJoints = value;
+      this .updateJoints = true;
    },
    set_commencePose__ ()
    {
