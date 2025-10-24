@@ -20,6 +20,7 @@ function HAnimPose (executionContext)
    this .timeSensor    = new TimeSensor (this .getExecutionContext ());
    this .interpolators = [ ];
    this .poseJoints    = [ ];
+   this .joints        = new Set ();
 }
 
 Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prototype),
@@ -51,11 +52,11 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
    },
    addJoints (jointNodes)
    {
-
+      this .joints .add (jointNodes);
    },
    removeJoints (jointNodes)
    {
-      
+      this .joints .delete (jointNodes);
    },
    set_commencePose__ ()
    {
