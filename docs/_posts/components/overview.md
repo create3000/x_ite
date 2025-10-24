@@ -194,6 +194,7 @@ Highest supported level: **3**
 - [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/hanim/hanimhumanoid/#example)
 - [HAnimJoint](/x_ite/components/hanim/hanimjoint/)
 - [HAnimMotion](/x_ite/components/hanim/hanimmotion/)
+- [HAnimPose](/x_ite/components/hanim/hanimpose/)
 - [HAnimSegment](/x_ite/components/hanim/hanimsegment/)
 - [HAnimSite](/x_ite/components/hanim/hanimsite/)
 
@@ -458,7 +459,7 @@ Highest supported level: **3**
 ### Text
 
 Text<br>
-Highest supported level: **1**
+Highest supported level: **2**
 {: .small }
 
 - [FontLibrary](/x_ite/components/text/fontlibrary/) <small class="blue">experimental</small>

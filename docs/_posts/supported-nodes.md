@@ -42,7 +42,7 @@ Of course, [all other X3D profiles](/x_ite/profiles/overview/) can also be used,
 
 This section documents all nodes supported by X_ITE.
 
-X_ITE supports a limited number of nodes defined by the X3D specification. Currently 248 out of 261 nodes (96%) are implemented. The implementation of these nodes is complete in the sense that the nodes support all the fields and functions required for that implementation, unless otherwise specified.
+X_ITE supports a limited number of nodes defined by the X3D specification. Currently 249 out of 262 nodes (96%) are implemented. The implementation of these nodes is complete in the sense that the nodes support all the fields and functions required for that implementation, unless otherwise specified.
 
 <!--
 Missing Nodes:
@@ -223,6 +223,7 @@ Highest supported level: **3**
 - [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/hanim/hanimhumanoid/#example)
 - [HAnimJoint](/x_ite/components/hanim/hanimjoint/)
 - [HAnimMotion](/x_ite/components/hanim/hanimmotion/)
+- [HAnimPose](/x_ite/components/hanim/hanimpose/)
 - [HAnimSegment](/x_ite/components/hanim/hanimsegment/)
 - [HAnimSite](/x_ite/components/hanim/hanimsite/)
 
@@ -480,9 +481,10 @@ Highest supported level: **3**
 ### Text
 
 Text<br>
-Highest supported level: **1**
+Highest supported level: **2**
 {: .small }
 
+- [FontLibrary](/x_ite/components/text/fontlibrary/) <small class="blue">experimental</small>
 - [FontStyle](/x_ite/components/text/fontstyle/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/text/fontstyle/#example)
 - [Text](/x_ite/components/text/text/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/text/text/#example)
 
