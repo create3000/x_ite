@@ -30,6 +30,17 @@ The HAnimPose node belongs to the [HAnim](/x_ite/components/overview/#hanim) com
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFString | [in, out] | [description](#fields-description) | "" |
+| SFString | [in, out] | [name](#fields-name) | "" |
+| SFInt32 | [in, out] | [loa](#fields-loa) | -1  |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
+| SFFloat | [in, out] | [transitionDuration](#fields-transitionDuration) |  |
+| SFBool | [in, out] | [resetOtherJoints](#fields-resetOtherJoints) |  |
+| SFBool | [in] | [commencePose](#fields-commencePose) |  |
+| SFTime | [in] | [set_startTime](#fields-set_startTime) |  |
+| SFFloat | [in] | [set_fraction](#fields-set_fraction) |  |
+| SFBool | [out] | [isActive](#fields-isActive) |  |
+| MFNode | [in, out] | [poseJoints](#fields-poseJoints) |  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -53,7 +64,7 @@ Author-provided prose that describes intended purpose of this node.
 ### SFString [in, out] **name** ""
 {: #fields-name }
 
-Unique *name* attribute must be defined so that HAnimPose node can be identified at run time for animation purposes.
+Unique *name* attribute must be defined so that [HAnimMotion](/x_ite/components/hanim/hanimmotion/) node can be identified at run time for animation purposes.
 
 ### SFInt32 [in, out] **loa** -1 <small>[-1,4]</small>
 {: #fields-loa }
@@ -69,6 +80,41 @@ Level Of Articulation 0..4 indicates complexity and detail of joints for given h
 {: #fields-enabled }
 
 Enables/disables node operation.
+
+### SFFloat [in, out] **transitionDuration** 0 <small>(0,∞)</small>
+{: #fields-transitionDuration }
+
+Input/Output field *transitionDuration*.
+
+### SFBool [in, out] **resetOtherJoints** FALSE
+{: #fields-resetOtherJoints }
+
+Input/Output field *resetOtherJoints*.
+
+### SFBool [in] **commencePose**
+{: #fields-commencePose }
+
+Input field *commencePose*.
+
+### SFTime [in] **set_startTime**
+{: #fields-set_startTime }
+
+Input field *set_startTime*.
+
+### SFFloat [in] **set_fraction**
+{: #fields-set_fraction }
+
+Input field *set_fraction*.
+
+### SFBool [out] **isActive**
+{: #fields-isActive }
+
+Output field *isActive*.
+
+### MFNode [in, out] **poseJoints** [ ] <small>[HAnimJoint]</small>
+{: #fields-poseJoints }
+
+Input/Output field *poseJoints*.
 
 ## See Also
 
