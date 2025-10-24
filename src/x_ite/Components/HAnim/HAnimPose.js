@@ -58,6 +58,10 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
    {
       this .joints .delete (jointNodes);
    },
+   setNeedsUpdateInterpolators ()
+   {
+      this .needsUpdateInterpolators = true;
+   },
    updateInterpolators ()
    {
       for (const interpolator of this .interpolators)
@@ -112,10 +116,6 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
 
          this .interpolators .push (interpolator);
       }
-   },
-   setNeedsUpdateInterpolators ()
-   {
-      this .needsUpdateInterpolators = true;
    },
    set_commencePose__ ()
    {
