@@ -34,13 +34,13 @@ The HAnimPose node belongs to the [HAnim](/x_ite/components/overview/#hanim) com
 | SFString | [in, out] | [name](#fields-name) | "" |
 | SFInt32 | [in, out] | [loa](#fields-loa) | -1  |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFFloat | [in, out] | [transitionDuration](#fields-transitionDuration) |  |
-| SFBool | [in, out] | [resetOtherJoints](#fields-resetOtherJoints) |  |
+| SFFloat | [in, out] | [transitionDuration](#fields-transitionDuration) | 0  |
+| SFBool | [in, out] | [resetOtherJoints](#fields-resetOtherJoints) | FALSE |
 | SFBool | [in] | [commencePose](#fields-commencePose) |  |
 | SFTime | [in] | [set_startTime](#fields-set_startTime) |  |
 | SFFloat | [in] | [set_fraction](#fields-set_fraction) |  |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
-| MFNode | [in, out] | [poseJoints](#fields-poseJoints) |  |
+| MFNode | [in, out] | [poseJoints](#fields-poseJoints) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
