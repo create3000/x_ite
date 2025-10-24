@@ -184,6 +184,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    {
       const poseNodes = this .poseNodes;
 
+      for (const poseNode of this .poseNodes)
+         poseNode .removeJoints (this .jointNodes);
+
       poseNodes .length = 0;
 
       for (const node of this ._poses)
@@ -193,6 +196,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          if (poseNode)
             poseNodes .push (poseNode);
       }
+
+      for (const poseNode of this .poseNodes)
+         poseNode .addJoints (this .jointNodes);
    },
    set_motions__ ()
    {
@@ -250,6 +256,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          numJointBindingRotations = jointBindingRotations .length,
          numJointBindingScales    = jointBindingScales .length;
 
+      for (const poseNode of this .poseNodes)
+         poseNode .removeJoints (jointNodes);
+
       for (const motionNode of this .motionNodes)
          motionNode .disconnectJoints (jointNodes);
 
@@ -291,6 +300,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          jointNode ._displacements       .addInterest ("addEvent", this ._displacementsTexture);
          jointNode ._displacementWeights .addInterest ("addEvent", this ._displacementWeightsTexture);
       }
+
+      for (const poseNode of this .poseNodes)
+         poseNode .addJoints (jointNodes);
 
       for (const motionNode of this .motionNodes)
          motionNode .connectJoints (jointNodes);

@@ -49,6 +49,14 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
 
       this .set_poseJoints__ ();
    },
+   addJoints (jointNodes)
+   {
+
+   },
+   removeJoints (jointNodes)
+   {
+      
+   },
    set_commencePose__ ()
    {
       if (!this ._commencePose .getValue ())
