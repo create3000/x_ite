@@ -90,28 +90,23 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
 
       for (const [name, interpolatorName] of interpolators)
       {
-         if (poseJointNode)
-         {
-            if (jointNode .getField (name) .equals (poseJointNode .getField (name)))
-               continue;
-         }
-         else
-         {
-            if (jointNode .getField (name) .equals (jointNode .getFieldDefinition (name) .value))
-               continue;
-         }
+         const jointField = jointNode .getField (name);
+
+         const destinationField = poseJointNode
+            ? poseJointNode .getField (name)
+            : jointNode .getFieldDefinition (name) .value;
+
+         if (jointField .equals (destinationField))
+            continue;
 
          const interpolator = executionContext .createNode (interpolatorName, false);
 
          this .timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
 
-         interpolator ._value_changed .addFieldInterest (jointNode .getField (name));
+         interpolator ._value_changed .addFieldInterest (jointField);
 
-         interpolator ._key = [0, 1];
-
-         interpolator ._keyValue = poseJointNode
-            ? [... jointNode .getField (name), ... poseJointNode .getField (name)]
-            : [... jointNode .getField (name), ... jointNode .getFieldDefinition (name) .value];
+         interpolator ._key      = [0, 1];
+         interpolator ._keyValue = [... jointField, ... destinationField];
 
          interpolator .setup ();
 
