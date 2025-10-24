@@ -17,10 +17,10 @@ function HAnimPose (executionContext)
 
    // Private properties
 
-   this .timeSensor    = new TimeSensor (this .getExecutionContext ());
-   this .interpolators = [ ];
-   this .poseJoints    = [ ];
-   this .joints        = new Set ();
+   this .timeSensor     = new TimeSensor (this .getExecutionContext ());
+   this .interpolators  = [ ];
+   this .poseJointNodes = new Map ();
+   this .joints         = new Set ();
 }
 
 Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prototype),
@@ -58,10 +58,58 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
    {
       this .joints .delete (jointNodes);
    },
+   processJoints ()
+   {
+      for (const interpolator of this .interpolators)
+         this .timeSensor ._fraction_changed .removeFieldInterest (interpolator ._set_fraction);
+
+      this .interpolators .length = 0;
+
+      for (const humanoid of this .joints)
+      {
+         for (const jointNode of humanoid)
+            this .processJoint (jointNode);
+      }
+   },
+   processJoint (jointNode)
+   {
+      const
+         executionContext = this .getExecutionContext (),
+         poseJointNode    = this .poseJointNodes .get (jointNode ._name .getValue ());
+
+      const interpolators = [
+         ["translation", new PositionInterpolator (executionContext)],
+         ["rotation",    new OrientationInterpolator (executionContext)],
+         ["scale",       new PositionInterpolator (executionContext)],
+      ];
+
+      for (const [name, interpolator] of interpolators)
+      {
+         if (!this ._resetOtherJoints .getValue ())
+            continue;
+
+         this .timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
+
+         interpolator ._value_changed .addFieldInterest (jointNode .getField (name));
+
+         interpolator ._key = [0, 1];
+
+         if (poseJointNode)
+            interpolator ._keyValue = [... jointNode .getField (name), ... poseJointNode .getField (name)];
+         else
+            interpolator ._keyValue = [... jointNode .getField (name), ... jointNode .getFieldDefinitions () .get (name) .value];
+
+         interpolator .setup ();
+
+         this .interpolators .push (interpolator);
+      }
+   },
    set_commencePose__ ()
    {
       if (!this ._commencePose .getValue ())
          return;
+
+      this .processJoints ();
 
       this .timeSensor ._startTime = Date .now () / 1000;
    },
@@ -74,14 +122,14 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
    },
    set_poseJoints__ ()
    {
-      this .poseJoints .length = 0;
+      this .poseJointNodes .clear ();
 
       for (const node of this ._poseJoints)
       {
          const jointNode = X3DCast (X3DConstants .HAnimJoint, node);
 
          if (jointNode)
-            this .poseJoints .push (jointNode);
+            this .poseJointNodes .set (jointNode ._name .getValue (), jointNode);
       }
    },
 });
