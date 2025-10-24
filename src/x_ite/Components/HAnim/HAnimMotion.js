@@ -208,21 +208,6 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
                timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
             }
-
-            if (types .has ("Xcenter") || types .has ("Ycenter") || types .has ("Zcenter"))
-            {
-               const interpolator = interpolators [j] .center
-                  ??= new PositionInterpolator (this .getExecutionContext ());
-
-               const keyValue = new Vector3 (types .get ("Xcenter") ?? 0,
-                                             types .get ("Ycenter") ?? 0,
-                                             types .get ("Zcenter") ?? 0);
-
-               interpolator ._key      .push (key);
-               interpolator ._keyValue .push (keyValue);
-
-               timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
-            }
          }
       }
 
