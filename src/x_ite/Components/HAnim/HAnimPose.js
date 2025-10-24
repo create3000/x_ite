@@ -1,13 +1,11 @@
-import Fields                  from "../../Fields.js";
-import X3DFieldDefinition      from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray    from "../../Base/FieldDefinitionArray.js";
-import X3DNode                 from "../Core/X3DNode.js";
-import X3DChildNode            from "../Core/X3DChildNode.js";
-import X3DConstants            from "../../Base/X3DConstants.js";
-import X3DCast                 from "../../Base/X3DCast.js";
-import TimeSensor              from "../Time/TimeSensor.js";
-import PositionInterpolator    from "../Interpolation/PositionInterpolator.js";
-import OrientationInterpolator from "../Interpolation/OrientationInterpolator.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode              from "../Core/X3DNode.js";
+import X3DChildNode         from "../Core/X3DChildNode.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
+import X3DCast              from "../../Base/X3DCast.js";
+import TimeSensor           from "../Time/TimeSensor.js";
 
 function HAnimPose (executionContext)
 {
@@ -77,21 +75,34 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
    },
    processJoint (jointNode)
    {
-      const
-         executionContext = this .getExecutionContext (),
-         poseJointNode    = this .poseJointNodes .get (jointNode ._name .getValue ());
+      const poseJointNode = this .poseJointNodes .get (jointNode ._name .getValue ());
 
       if (!(poseJointNode || this ._resetOtherJoints .getValue ()))
          return;
 
+      const executionContext = this .getExecutionContext ();
+
       const interpolators = [
-         ["translation", new PositionInterpolator (executionContext)],
-         ["rotation",    new OrientationInterpolator (executionContext)],
-         ["scale",       new PositionInterpolator (executionContext)],
+         ["translation", "PositionInterpolator"],
+         ["rotation",    "OrientationInterpolator"],
+         ["scale",       "PositionInterpolator"],
       ];
 
-      for (const [name, interpolator] of interpolators)
+      for (const [name, interpolatorName] of interpolators)
       {
+         if (poseJointNode)
+         {
+            if (jointNode .getField (name) .equals (poseJointNode .getField (name)))
+               continue;
+         }
+         else
+         {
+            if (jointNode .getField (name) .equals (jointNode .getFieldDefinition (name) .value))
+               continue;
+         }
+
+         const interpolator = executionContext .createNode (interpolatorName, false);
+
          this .timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
 
          interpolator ._value_changed .addFieldInterest (jointNode .getField (name));
@@ -120,12 +131,14 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
    },
    set_startTime__ ()
    {
+      // Create interpolators.
       this .processJoints ();
 
       this .timeSensor ._startTime = Date .now () / 1000;
    },
    set_fraction__ ()
    {
+      // Create interpolators.
       if (this .updateJoints)
          this .processJoints ();
 
