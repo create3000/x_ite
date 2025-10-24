@@ -133,7 +133,7 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
    },
    set_fraction__ ()
    {
-      // Create interpolators.
+      // Create interpolators if needed.
       if (this .updateJoints)
          this .processJoints ();
 
