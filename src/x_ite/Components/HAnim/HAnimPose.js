@@ -52,13 +52,13 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
    {
       this .joints .add (jointNodes);
 
-      this .updateJoints = true;
+      this .needsUpdateInterpolators = true;
    },
    removeJoints (jointNodes)
    {
       this .joints .delete (jointNodes);
    },
-   processJoints ()
+   updateInterpolators ()
    {
       for (const interpolator of this .interpolators)
          this .timeSensor ._fraction_changed .removeFieldInterest (interpolator ._set_fraction);
@@ -71,7 +71,7 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
             this .processJoint (jointNode);
       }
 
-      this .updateJoints = false;
+      this .needsUpdateInterpolators = false;
    },
    processJoint (jointNode)
    {
@@ -113,9 +113,9 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
          this .interpolators .push (interpolator);
       }
    },
-   needsUpdateJoints ()
+   setNeedsUpdateInterpolators ()
    {
-      this .updateJoints = true;
+      this .needsUpdateInterpolators = true;
    },
    set_commencePose__ ()
    {
@@ -126,16 +126,14 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
    },
    set_startTime__ ()
    {
-      // Create interpolators.
-      this .processJoints ();
+      this .updateInterpolators ();
 
       this .timeSensor ._startTime = Date .now () / 1000;
    },
    set_fraction__ ()
    {
-      // Create interpolators if needed.
-      if (this .updateJoints)
-         this .processJoints ();
+      if (this .needsUpdateInterpolators)
+         this .updateInterpolators ();
 
       const fraction = this ._set_fraction .getValue ();
 
