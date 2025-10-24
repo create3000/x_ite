@@ -81,6 +81,9 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
          executionContext = this .getExecutionContext (),
          poseJointNode    = this .poseJointNodes .get (jointNode ._name .getValue ());
 
+      if (!(poseJointNode || this ._resetOtherJoints .getValue ()))
+         return;
+
       const interpolators = [
          ["translation", new PositionInterpolator (executionContext)],
          ["rotation",    new OrientationInterpolator (executionContext)],
@@ -89,9 +92,6 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
 
       for (const [name, interpolator] of interpolators)
       {
-         if (!(poseJointNode || this ._resetOtherJoints .getValue ()))
-            continue;
-
          this .timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
 
          interpolator ._value_changed .addFieldInterest (jointNode .getField (name));
