@@ -63,7 +63,7 @@ const Algorithm =
          return source;
 
       const
-         omega  = Math .acos (Math .max (cosom, -1)),
+         omega  = Math .acos (cosom),
          sinom  = Math .sin  (omega),
          scale0 = Math .sin ((1 - t) * omega) / sinom,
          scale1 = Math .sin (t * omega) / sinom;
