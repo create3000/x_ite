@@ -57,9 +57,9 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
    set_fraction__ ()
    {
       const fraction = this ._set_fraction .getValue ();
-      
+
       for (const interpolator of this .interpolators)
-         interpolator .set_fraction = fraction;
+         interpolator ._set_fraction = fraction;
    },
    set_poseJoints__ ()
    {
