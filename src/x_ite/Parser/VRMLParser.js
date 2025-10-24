@@ -1255,7 +1255,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
             if (!this .unknownLevel)
             {
-               console .warn (`Parser error at line ${this .lineNumber}: Unknown node type or proto '${nodeTypeId}', you probably have insufficient component/profile statements, and/or an inappropriate specification version.`);
+               console .warn (`Parser error at line ${this .lineNumber}: Unknown node type or proto '${nodeTypeId}'. You probably have insufficient component/profile statements, and/or an inappropriate specification version.`);
             }
 
             this .comments ();
