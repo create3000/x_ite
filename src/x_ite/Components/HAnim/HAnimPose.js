@@ -70,6 +70,8 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
          for (const jointNode of humanoid)
             this .processJoint (jointNode);
       }
+
+      this .updateJoints = false;
    },
    processJoint (jointNode)
    {
@@ -104,6 +106,10 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
          this .interpolators .push (interpolator);
       }
    },
+   needUpdateJoints ()
+   {
+      this .updateJoints = true;
+   },
    set_commencePose__ ()
    {
       if (!this ._commencePose .getValue ())
@@ -115,6 +121,9 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
    },
    set_fraction__ ()
    {
+      if (this .updateJoints)
+         this .processJoints ();
+
       const fraction = this ._set_fraction .getValue ();
 
       for (const interpolator of this .interpolators)
