@@ -53,6 +53,8 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
    addJoints (jointNodes)
    {
       this .joints .add (jointNodes);
+
+      this .updateJoints = true;
    },
    removeJoints (jointNodes)
    {
