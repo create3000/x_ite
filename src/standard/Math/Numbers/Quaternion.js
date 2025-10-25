@@ -114,7 +114,7 @@ Object .assign (Quaternion .prototype,
    },
    setEuler (x, y, z, order = "XYZ")
    {
-		// http://www.mathworks.com/matlabcentral/fileexchange/20696-function-to-convert-between-dcm-euler-angles-quaternions-and-euler-vectors/content/SpinCalc.m
+		// https://github.com/toji/gl-matrix/blob/accefb6ddf1897a0dc443bbc7664c90e67af6455/src/quat.js#L460
 
       const
 		   c1 = Math .cos (x / 2),

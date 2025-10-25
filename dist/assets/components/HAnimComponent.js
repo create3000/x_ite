@@ -1,5 +1,5 @@
-/* X_ITE v12.1.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.2")];
+/* X_ITE v12.1.3 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.3")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1047,9 +1047,9 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (external_X_ITE_
          joints          = this .joints,
          jointsIndex     = this .getJointsIndex (jointNodes);
 
-      // Connect interpolators.
+      // Connect interpolators to joint nodes.
 
-      for (const [j, { positionInterpolator, orientationInterpolator, scaleInterpolator }] of this .interpolators .entries ())
+      for (const [j, joint] of this .interpolators .entries ())
       {
          if (j < channelsEnabled .length && !channelsEnabled [j])
             continue;
@@ -1059,9 +1059,8 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (external_X_ITE_
          if (!jointNode)
             continue;
 
-         positionInterpolator    ?._value_changed .addFieldInterest (jointNode ._translation);
-         orientationInterpolator ?._value_changed .addFieldInterest (jointNode ._rotation);
-         scaleInterpolator       ?._value_changed .addFieldInterest (jointNode ._scale);
+         for (const [name, interpolator] of Object .entries (joint))
+            interpolator ._value_changed .addFieldInterest (jointNode .getField (name));
       }
    },
    disconnectJoints (jointNodes)
@@ -1070,18 +1069,17 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (external_X_ITE_
          joints      = this .joints,
          jointsIndex = this .getJointsIndex (jointNodes);
 
-      // Disconnect joint nodes.
+      // Disconnect interpolators from joint nodes.
 
-      for (const [j, { positionInterpolator, orientationInterpolator, scaleInterpolator }] of this .interpolators .entries ())
+      for (const [j, joint] of this .interpolators .entries ())
       {
          const jointNode = jointsIndex .get (joints [j]);
 
          if (!jointNode)
             continue;
 
-         positionInterpolator    ?._value_changed .removeFieldInterest (jointNode ._translation);
-         orientationInterpolator ?._value_changed .removeFieldInterest (jointNode ._rotation);
-         scaleInterpolator       ?._value_changed .removeFieldInterest (jointNode ._scale);
+         for (const [name, interpolator] of Object .entries (joint))
+            interpolator ._value_changed .removeFieldInterest (jointNode .getField (name));
       }
    },
    getJointsIndex (jointNodes)
@@ -1106,16 +1104,13 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (external_X_ITE_
 
       // Disconnect all joint nodes.
 
-      for (const { positionInterpolator, orientationInterpolator, scaleInterpolator } of this .interpolators)
+      for (const joint of this .interpolators)
       {
-         positionInterpolator ?._value_changed .getFieldInterests ()
-            .forEach (field => positionInterpolator ._value_changed .removeFieldInterest (field));
-
-         orientationInterpolator ?._value_changed .getFieldInterests ()
-            .forEach (field => orientationInterpolator ._value_changed .removeFieldInterest (field));
-
-         scaleInterpolator ?._value_changed .getFieldInterests ()
-            .forEach (field => scaleInterpolator ._value_changed .removeFieldInterest (field));
+         for (const interpolator of joint)
+         {
+            Array .from (interpolator ._value_changed .getFieldInterests ())
+               .forEach (field => interpolator ._value_changed .removeFieldInterest (field));
+         }
       }
    },
    set_interpolators__ ()
@@ -1124,7 +1119,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (external_X_ITE_
 
       const timeSensor = this .timeSensor;
 
-      timeSensor ._fraction_changed .getFieldInterests ()
+      Array .from (timeSensor ._fraction_changed .getFieldInterests ())
          .forEach (field => timeSensor ._fraction_changed .removeFieldInterest (field));
 
       // Create interpolators.
@@ -1139,12 +1134,14 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (external_X_ITE_
          numChannels   = channels .reduce ((v, c) => v + c .length, 0),
          frameCount    = Math .floor (numChannels ? values .length / numChannels : 0),
          types         = new Map (),
-         interpolators = Array .from ({length: channels .length}, () => ({ }));
+         interpolators = Array .from ({ length: channels .length }, () => ({ }));
 
       this .interpolators = interpolators;
 
       for (let frame = 0, v = 0; frame < frameCount; ++ frame)
       {
+         const key = frame / (frameCount - 1);
+
          for (const [j, joint] of channels .entries ())
          {
             types .clear ();
@@ -1154,14 +1151,12 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (external_X_ITE_
 
             if (types .has ("Xposition") || types .has ("Yposition") || types .has ("Zposition"))
             {
-               const interpolator = interpolators [j] .positionInterpolator
-                  ?? this .createPositionInterpolator (interpolators, j);
+               const interpolator = interpolators [j] .translation
+                  ??= new (external_X_ITE_X3D_PositionInterpolator_default()) (this .getExecutionContext ());
 
-               const
-                  key      = frame / (frameCount - 1),
-                  keyValue = new (external_X_ITE_X3D_Vector3_default()) (types .get ("Xposition") ?? 0,
-                                          types .get ("Yposition") ?? 0,
-                                          types .get ("Zposition") ?? 0);
+               const keyValue = new (external_X_ITE_X3D_Vector3_default()) (types .get ("Xposition") ?? 0,
+                                             types .get ("Yposition") ?? 0,
+                                             types .get ("Zposition") ?? 0);
 
                interpolator ._key      .push (key);
                interpolator ._keyValue .push (keyValue);
@@ -1171,14 +1166,24 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (external_X_ITE_
 
             if (types .has ("Xrotation") || types .has ("Yrotation") || types .has ("Zrotation"))
             {
-               const interpolator = interpolators [j] .orientationInterpolator
-                  ?? this .createOrientationInterpolator (interpolators, j);
+               let order = "";
 
-               const
-                  key      = frame / (frameCount - 1),
-                  keyValue = external_X_ITE_X3D_Rotation4_default().fromEuler (external_X_ITE_X3D_Algorithm_default().radians (types .get ("Xrotation") ?? 0),
-                                                   external_X_ITE_X3D_Algorithm_default().radians (types .get ("Yrotation") ?? 0),
-                                                   external_X_ITE_X3D_Algorithm_default().radians (types .get ("Zrotation") ?? 0));
+               for (const key of types .keys ())
+               {
+                  const m = key .match (/^([XYZ])rotation$/);
+
+                  if (!m)
+                     continue;
+
+                  order += m [1];
+               }
+
+               const interpolator = interpolators [j] .rotation
+                  ??= new (external_X_ITE_X3D_OrientationInterpolator_default()) (this .getExecutionContext ());
+
+               const keyValue = external_X_ITE_X3D_Rotation4_default().fromEuler (external_X_ITE_X3D_Algorithm_default().radians (types .get ("Xrotation") ?? 0),
+                                                      external_X_ITE_X3D_Algorithm_default().radians (types .get ("Yrotation") ?? 0),
+                                                      external_X_ITE_X3D_Algorithm_default().radians (types .get ("Zrotation") ?? 0), order);
 
                interpolator ._key      .push (key);
                interpolator ._keyValue .push (keyValue);
@@ -1188,14 +1193,12 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (external_X_ITE_
 
             if (types .has ("Xscale") || types .has ("Yscale") || types .has ("Zscale"))
             {
-               const interpolator = interpolators [j] .scaleInterpolator
-                  ?? this .createScaleInterpolator (interpolators, j);
+               const interpolator = interpolators [j] .scale
+                  ??= new (external_X_ITE_X3D_PositionInterpolator_default()) (this .getExecutionContext ());
 
-               const
-                  key      = frame / (frameCount - 1),
-                  keyValue = new (external_X_ITE_X3D_Vector3_default()) (types .get ("Xscale") ?? 1,
-                                          types .get ("Yscale") ?? 1,
-                                          types .get ("Zscale") ?? 1);
+               const keyValue = new (external_X_ITE_X3D_Vector3_default()) (types .get ("Xscale") ?? 1,
+                                             types .get ("Yscale") ?? 1,
+                                             types .get ("Zscale") ?? 1);
 
                interpolator ._key      .push (key);
                interpolator ._keyValue .push (keyValue);
@@ -1205,11 +1208,10 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (external_X_ITE_
          }
       }
 
-      for (const { positionInterpolator, orientationInterpolator, scaleInterpolator } of interpolators)
+      for (const joint of interpolators)
       {
-         positionInterpolator    ?.setup ();
-         orientationInterpolator ?.setup ();
-         scaleInterpolator       ?.setup ();
+         for (const interpolator of Object .values (joint))
+            interpolator .setup ();
       }
 
       this ._frameIndex = 0;
@@ -1287,18 +1289,6 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (external_X_ITE_
       this .endFrame               = Math .max (startFrame, endFrame);
       this .timeSensor ._range [1] = frameCount > 1 ? this .startFrame / (frameCount - 1) : 0;
       this .timeSensor ._range [2] = frameCount > 1 ? this .endFrame   / (frameCount - 1) : 0;
-   },
-   createPositionInterpolator (interpolators, j)
-   {
-      return interpolators [j] .positionInterpolator = new (external_X_ITE_X3D_PositionInterpolator_default()) (this .getExecutionContext ());
-   },
-   createOrientationInterpolator (interpolators, j)
-   {
-      return interpolators [j] .orientationInterpolator = new (external_X_ITE_X3D_OrientationInterpolator_default()) (this .getExecutionContext ());
-   },
-   createScaleInterpolator (interpolators, j)
-   {
-      return interpolators [j] .scaleInterpolator = new (external_X_ITE_X3D_PositionInterpolator_default()) (this .getExecutionContext ());
    },
    getFraction ()
    {
