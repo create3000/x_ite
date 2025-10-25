@@ -186,8 +186,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       for (const poseNode of this .poseNodes)
       {
-         poseNode ._set_fraction .removeInterest ("set_pose_active__", this);
-         poseNode ._isActive     .removeInterest ("set_pose_active__", this);
+         poseNode ._set_fraction .removeInterest ("set_pose_fraction__", this);
+         poseNode ._isActive     .removeInterest ("set_pose_active__",   this);
 
          poseNode .removeJoints (this .jointNodes);
       }
@@ -204,16 +204,16 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       for (const poseNode of this .poseNodes)
       {
-         poseNode ._set_fraction .addInterest ("set_pose_active__", this, poseNode);
-         poseNode ._isActive     .addInterest ("set_pose_active__", this, undefined);
+         poseNode ._set_fraction .addInterest ("set_pose_fraction__", this, poseNode);
+         poseNode ._isActive     .addInterest ("set_pose_active__",   this,);
 
          poseNode .addJoints (this .jointNodes);
       }
    },
-   set_pose_active__ (currentPoseNode, value)
+   set_pose_fraction__ (currentPoseNode)
    {
-      if (value .getValue ())
-         return;
+      // There is a set_fraction event in currentPoseNode,
+      // all other poses must be updated now.
 
       for (const poseNode of this .poseNodes)
       {
@@ -222,6 +222,17 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
          poseNode .setNeedsUpdateInterpolators ();
       }
+   },
+   set_pose_active__ (value)
+   {
+      if (value .getValue ())
+         return;
+
+      // A pose node has finished its animation,
+      // all other poses must be updated now.
+
+      for (const poseNode of this .poseNodes)
+         poseNode .setNeedsUpdateInterpolators ();
    },
    set_motions__ ()
    {
