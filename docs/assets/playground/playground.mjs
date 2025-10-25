@@ -1,3 +1,5 @@
+const MONACO_VERSION = $(`script[src*="monaco-editor"]`) .attr ("src") .match (/\/monaco-editor(@?.*?)\//) [1];
+
 class Playground
 {
    autoUpdate = true;
@@ -11,7 +13,7 @@ class Playground
    constructor ()
    {
       // Also change version in playground.md!
-      require .config ({ paths: { "vs": "https://cdn.jsdelivr.net/npm/monaco-editor@0.54.0/min/vs" }});
+      require .config ({ paths: { "vs": `https://cdn.jsdelivr.net/npm/monaco-editor${MONACO_VERSION}/min/vs` }});
       require (["vs/editor/editor.main"], () => this .setup ());
    }
 
@@ -67,8 +69,6 @@ class Playground
 
       browser .baseURL = url;
 
-      browser .endUpdate ();
-
       await browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
 
       const encoding = { XML: "XML", JSON: "JSON", VRML: "VRML" } [browser .currentScene .encoding] ?? "XML";
@@ -79,8 +79,6 @@ class Playground
 
       model .setValue (browser .currentScene [`to${encoding}String`] ());
       model .onDidChangeContent (event => this .onDidChangeContent (event));
-
-      browser .beginUpdate ();
 
       // Keyboard shortcuts.
 
