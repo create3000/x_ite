@@ -1,5 +1,5 @@
-/* X_ITE v12.1.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.2")];
+/* X_ITE v12.1.3 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.3")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -452,7 +452,7 @@ vec3 getScale(const in float fraction){int index0;int index1;float weight;interp
 #if defined(X3D_BOUNDED_VOLUME)
 void bounce(const in float deltaTime,const in vec4 fromPosition,inout vec4 toPosition,inout vec3 velocity){Line3 line=Line3(fromPosition.xyz,save_normalize(velocity));vec4 points[ARRAY_SIZE];vec3 normals[ARRAY_SIZE];int numIntersections=getIntersections(boundedVolume,boundedVerticesIndex,boundedNormalsIndex,boundedHierarchyIndex,boundedHierarchyRoot,line,points,normals);if(numIntersections==0)return;Plane3 plane1=plane3(line.point,line.direction);int index=min_index(points,numIntersections,0.,plane1);if(index==-1)return;vec3 point=points[index].xyz;vec3 normal=save_normalize(normals[index]);Plane3 plane2=plane3(point,normal);if(sign(plane_distance(plane2,fromPosition.xyz))==sign(plane_distance(plane2,toPosition.xyz)))return;float damping=length(normals[index]);velocity=reflect(velocity,normal);toPosition=vec4(point+save_normalize(velocity)*.0001,1.);velocity*=damping;}
 #endif
-void main(){uint life=uint(input0[0]);float lifetime=input0[1];float elapsedTime=input0[2]+deltaTime;float fraction=elapsedTime/lifetime;srand((gl_VertexID+randomSeed)*randomSeed);if(elapsedTime>lifetime){lifetime=getRandomLifetime();elapsedTime=0.;fraction=0.;output0=vec4(++life,lifetime,elapsedTime,getTexCoordIndex0(fraction));
+void main(){int life=int(input0[0]);float lifetime=input0[1];float elapsedTime=input0[2]+deltaTime;float fraction=elapsedTime/lifetime;srand((gl_VertexID+randomSeed)*randomSeed);if(elapsedTime>lifetime){lifetime=getRandomLifetime();elapsedTime=0.;fraction=0.;output0=vec4(max(life+1,1),lifetime,elapsedTime,getTexCoordIndex0(fraction));
 #if defined(X3D_CREATE_PARTICLES)
 output1=getColor(fraction);output2=vec4(getRandomVelocity(),0.);output6=getRandomPosition();
 #else
@@ -2592,8 +2592,8 @@ Object .defineProperties (ParticleSystem,
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",          new (external_X_ITE_X3D_Fields_default()).SFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "enabled",           new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "createParticles",   new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "geometryType",      new (external_X_ITE_X3D_Fields_default()).SFString ("QUAD")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "createParticles",   new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "maxParticles",      new (external_X_ITE_X3D_Fields_default()).SFInt32 (200)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "particleLifetime",  new (external_X_ITE_X3D_Fields_default()).SFFloat (5)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "lifetimeVariation", new (external_X_ITE_X3D_Fields_default()).SFFloat (0.25)),
