@@ -229,7 +229,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          return;
 
       // A pose node has finished its animation,
-      // all other poses must be updated now.
+      // all poses must be updated now.
 
       for (const poseNode of this .poseNodes)
          poseNode .setNeedsUpdateInterpolators ();
