@@ -186,7 +186,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       for (const poseNode of this .poseNodes)
       {
-         poseNode ._isActive .removeInterest ("set_pose_active__", this);
+         poseNode ._set_fraction .removeInterest ("set_pose_active__", this);
+         poseNode ._isActive     .removeInterest ("set_pose_active__", this);
 
          poseNode .removeJoints (this .jointNodes);
       }
@@ -203,18 +204,24 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       for (const poseNode of this .poseNodes)
       {
-         poseNode ._isActive .addInterest ("set_pose_active__", this);
+         poseNode ._set_fraction .addInterest ("set_pose_active__", this, poseNode);
+         poseNode ._isActive     .addInterest ("set_pose_active__", this, undefined);
 
          poseNode .addJoints (this .jointNodes);
       }
    },
-   set_pose_active__ (value)
+   set_pose_active__ (currentPoseNode, value)
    {
       if (value .getValue ())
          return;
 
       for (const poseNode of this .poseNodes)
+      {
+         if (poseNode === currentPoseNode)
+            continue;
+
          poseNode .setNeedsUpdateInterpolators ();
+      }
    },
    set_motions__ ()
    {
