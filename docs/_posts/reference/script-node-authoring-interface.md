@@ -266,13 +266,16 @@ Script {
 // Callback for 'inputOnly SFBool start'.
 function start (value, time)
 {
- ...
+   print (value); // Print value.
+   ...
 }
 
 // Callback for 'inputOutput SFTime duration'.
 function set_duration (value, time)
 {
- ...
+   print (value);    // Both values
+   print (duration); // are the same.
+   ...
 }
   "
 }
