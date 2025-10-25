@@ -181,12 +181,24 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
             if (types .has ("Xrotation") || types .has ("Yrotation") || types .has ("Zrotation"))
             {
+               let order = "";
+
+               for (const key of types .keys ())
+               {
+                  const m = key .match (/^([XYZ])rotation$/);
+
+                  if (!m)
+                     continue;
+
+                  order += m [1];
+               }
+
                const interpolator = interpolators [j] .rotation
                   ??= new OrientationInterpolator (this .getExecutionContext ());
 
                const keyValue = Rotation4 .fromEuler (Algorithm .radians (types .get ("Xrotation") ?? 0),
                                                       Algorithm .radians (types .get ("Yrotation") ?? 0),
-                                                      Algorithm .radians (types .get ("Zrotation") ?? 0));
+                                                      Algorithm .radians (types .get ("Zrotation") ?? 0), order);
 
                interpolator ._key      .push (key);
                interpolator ._keyValue .push (keyValue);
