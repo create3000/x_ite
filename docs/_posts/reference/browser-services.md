@@ -748,6 +748,14 @@ None. This object cannot be instantiated by the user.
 
 ### Static Properties
 
+#### **typeName**: string
+
+The node type name for this class. This property is read only.
+
+#### **componentInfo**: { name: string, level: number }
+
+Returns an object with two properties *name* and *level* which can be used to get a ComponentInfo object from the X3D browser. This property is read only.
+
 #### **containerField**: string
 
 The default container field name for this node. This property is read only.
