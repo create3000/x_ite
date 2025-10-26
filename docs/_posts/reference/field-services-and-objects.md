@@ -427,7 +427,7 @@ const translation = new SFVec2f (1, 1);
 const rotation    = Math .PI;
 const scale       = new SFVec2f (2, 2);
 
-matrix .setTransform (translation, rotation, scale)
+matrix .setTransform (translation, rotation, scale);
 
 print (matrix);
 // Expected output: -2 0 0 0 -2 0 1 1 1
