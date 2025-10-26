@@ -195,7 +195,7 @@ Blue component of the color.
 
 #### **getHSV** (): Array
 
-Return an array with the components of the color's HSV value.
+Returns an array with the components of the color's HSV value.
 
 <x3d-script-area name="X3D ECMAScript Demo: SFColor getHSV">
 <pre>
@@ -276,7 +276,7 @@ Alpha component of the color.
 
 #### **getHSVA** (): Array
 
-Return an array with the components of the color's HSVA value.
+Returns an array with the components of the color's HSVA value.
 
 #### **setHSVA** (*h: number, s: number, v: number, a: number*): void
 
