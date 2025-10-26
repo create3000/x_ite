@@ -4,6 +4,7 @@ date: 2022-11-28
 layout: wide
 icon: fas fa-rocket
 order: 4
+monaco: true
 ---
 <style>
 @import url(https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block);
@@ -131,7 +132,6 @@ span.error {
 </style>
 
 <!-- Also change version in playground.js! -->
-<script defer src="https://cdn.jsdelivr.net/npm/monaco-editor@0.54.0/min/vs/loader.js"></script>
 <script type="module" src="../assets/playground/playground.mjs"></script>
 
 <div class="playground">
