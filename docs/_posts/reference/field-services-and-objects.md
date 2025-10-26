@@ -1115,6 +1115,20 @@ const copy = new SFVec4d (... vector); // Copy using spread syntax.
 
 Each component of the vector can be accessed using the `x`, `y`, `z` and `w` properties or using the standard C-style dereferencing operator (e.g. `sfVec4d/fObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<4).
 
+<x3d-script-area name="X3D ECMAScript Demo: SFVec4f properties">
+<pre>
+const vector = new SFVec4f ();
+
+vector .x = 1;
+vector .y = 2;
+vector .z = 3;
+vector .w = 4;
+
+print (vector);
+// Expected output: 1 2 3 4
+</pre>
+</x3d-script-area>
+
 #### **x**: number
 {: .writable }
 
