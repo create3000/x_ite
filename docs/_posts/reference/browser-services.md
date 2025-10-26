@@ -258,6 +258,16 @@ Returns a browser property with the corresponding *name*.
 
 Returns a browser option with the corresponding *name*.
 
+<x3d-script-area name="X3D ECMAScript Demo: X3DBrowser getBrowserOption">
+<pre>
+print (Browser .getBrowserOption ("ColorSpace"));
+print (Browser .getBrowserOption ("TextCompression"));
+
+// Expected output: LINEAR_WHEN_PHYSICAL_MATERIAL
+// Expected output: CHAR_SPACING
+</pre>
+</x3d-script-area>
+
 ##### Browser Options
 
 <table>
@@ -471,6 +481,16 @@ Removes a browser option callback function associated with *key* and *name* from
 
 Returns a rendering property with the corresponding *name*.
 
+<x3d-script-area name="X3D ECMAScript Demo: X3DBrowser getRenderingProperty">
+<pre>
+print (Browser .getRenderingProperty ("Antialiased"));
+print (Browser .getRenderingProperty ("ContentScale"));
+
+// Expected output: true
+// Expected output: 1
+</pre>
+</x3d-script-area>
+
 ##### Rendering Properties
 
 <table>
@@ -652,11 +672,21 @@ Prints *objects* to the browser's console without a newline character. Successiv
 
 Prints *objects* to the browser's console, inserting a newline character after the output. Successive calls to this function will result in each output presented on separate lines. The output is the implicit call to the object's `toString ()` function.
 
+<x3d-script-area name="X3D ECMAScript Demo: X3DBrowser println">
+<pre>
+Browser .println ("Debug output ...");
+Browser .println ("comes here.");
+
+// Expected output: Debug output ...
+// Expected output: comes here.
+</pre>
+</x3d-script-area>
+
 #### **dispose** (): void
 
 Disposes this X3DBrowser. The object can then no longer be used.
 
-### VRML Methods
+### Legacy VRML Methods
 
 To be downward compatible with VRML, the following additional functions are available:
 
