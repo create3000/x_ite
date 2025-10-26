@@ -23,6 +23,13 @@ A browser-implementation specific string describing the browser. This property i
 
 A browser-implementation specific string describing the browser version. This property is read only.
 
+<x3d-script-area name="X3D ECMAScript Demo: X3DBrowser version">
+<pre>
+print (Browser .name);
+print (Browser .version);
+</pre>
+</x3d-script-area>
+
 #### **providerURL**: string
 
 If provided, the URL to the entity that wrote this browser. This property is read only.
@@ -64,6 +71,17 @@ A String value which can be read and written, containing the URL against which r
 #### **currentScene**: X3DScene | X3DExecutionContext
 
 The real type of this class is dependent on whether the user code is inside a prototype instance or not. If the user code is inside a prototype instance the property represent an X3DExecutionContext otherwise it represent an X3DScene. This property is read only.
+
+<x3d-script-area name="X3D ECMAScript Demo: X3DBrowser currentScene">
+<pre>
+const node = Browser .currentScene .createNode ("Transform");
+
+Browser .currentScene .rootNodes .push (node);
+
+print (Browser .currentScene .rootNodes .length);
+// Expected output: 1
+</pre>
+</x3d-script-area>
 
 #### **activeLayer**: SFNode | null
 
@@ -115,11 +133,21 @@ The `getComponent` service returns a ComponentInfo object of the named component
 
 The `createScene` service creates a new empty scene that conforms to the given profile and component declarations. The Promise resolves when all components are loaded.
 
-```js
-const profile    = browser .getProfile ("Interactive");
-const components = [browser .getComponent ("..."), browser .getComponent ("...")];
-const scene      = await browser .createScene (profile, ... components);
-```
+<x3d-script-area name="X3D ECMAScript Demo: X3DBrowser createScene">
+<pre>
+const profile    = Browser .getProfile ("Interactive");
+const components = [Browser .getComponent ("Geometry2D"), Browser .getComponent ("Scripting")];
+const scene      = await Browser .createScene (profile, ... components);
+
+print (scene .profile .name);
+for (const component of scene .components)
+  print (component .name);
+
+// Expected output: Interactive
+// Expected output: Geometry2D
+// Expected output: Scripting
+</pre>
+</x3d-script-area>
 
 <!--
 #### **loadComponents** (*... args: Array \<X3DScene | ProfileInfo | ComponentInfoArray | ComponentInfo | string\>*): Promise\<void\> <small class="blue">non-standard</small>
