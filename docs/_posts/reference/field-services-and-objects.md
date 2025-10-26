@@ -735,9 +735,9 @@ A new rotation initialized with the identity rotation is created and returned.
 
 <x3d-script-area name="X3D ECMAScript Demo: new SFRotation (fromVector, toVector)">
 <pre>
-const from     = new SFVec3f (0, 0, 1);
-const to       = new SFVec3f (1, 0, 0);
-const rotation = new SFRotation (from, to);
+const fromVector = new SFVec3f (0, 0, 1);
+const toVector   = new SFVec3f (1, 0, 0);
+const rotation   = new SFRotation (fromVector, toVector);
 
 print (rotation);
 // Expected output: 0 1 0 1.5707963267949

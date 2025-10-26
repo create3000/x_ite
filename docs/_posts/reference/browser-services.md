@@ -163,6 +163,19 @@ Replace the current world with this new scene that has been loaded or constructe
 
 The string may be any valid X3D content in any language supported by the browser implementation. If the browser does not support the content encoding the appropriate exception will be thrown.
 
+<x3d-script-area name="X3D ECMAScript Demo: X3DBrowser createX3DFromString">
+<pre>
+const scene = await Browser .createX3DFromString (`#X3D V{{ site.x3d_latest_version }} utf8
+PROFILE Interchange
+Transform { }
+Group { }
+`);
+
+print (scene .rootNodes .length);
+// Expected output: 2
+</pre>
+</x3d-script-area>
+
 #### **createX3DFromURL** (*url: MFString, node: SFNode, event: string*): void
 
 Parse the passed URL into an X3D scene. When complete send the passed event to the passed node. The event is a string with the name of an MFNode inputOnly field of the passed node.
