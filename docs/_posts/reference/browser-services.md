@@ -23,10 +23,13 @@ A browser-implementation specific string describing the browser. This property i
 
 A browser-implementation specific string describing the browser version. This property is read only.
 
-<x3d-script-area name="X3D ECMAScript Demo: X3DBrowser version">
+<x3d-script-area name="X3D ECMAScript Demo: X3DBrowser name/version">
 <pre>
 print (Browser .name);
 print (Browser .version);
+
+// Expected output: X_ITE
+// Expected output: {{ site.x_ite_latest_version }}
 </pre>
 </x3d-script-area>
 
