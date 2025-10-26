@@ -1231,9 +1231,15 @@ None
 
 The `[@@iterator]()` method of X3DArrayField instances implements the iterable protocol and allows X3DArrayField objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the elements of the array in order.
 
-```js
-const copy = new MFBool (... array); // Copy using spread syntax.
-```
+<x3d-script-area name="X3D ECMAScript Demo: MFBool iterator">
+<pre>
+const array = new MFBool (true, false, true, false);
+const copy  = new MFBool (... array); // Copy using spread syntax.
+
+print (copy);
+// Expected output: [ TRUE, FALSE, TRUE, FALSE ]
+</pre>
+</x3d-script-area>
 
 ### Properties
 
