@@ -646,6 +646,7 @@ material .diffuseColor = new SFColor (1, 1, 1);
 material .transparency = 0.5;
 
 print (material .toVRMLString ());
+// Expected output: Material { diffuseColor 1 1 1 transparency 0.5 }
 </pre>
 </x3d-script-area>
 
