@@ -368,10 +368,10 @@ A MFInt32 array corresponding to the pixels of the image.
 <pre>
 const image = new SFImage (2, 2, 3);
 
-image .array [0] = 0xff00ff;
-image .array [1] = 0xffff00;
-image .array [2] = 0x00ffff;
-image .array [3] = 0xffffff;
+image .array [0] = 0xff00ff; // magenta
+image .array [1] = 0xffff00; // yellow
+image .array [2] = 0x00ffff; // cyan
+image .array [3] = 0xffffff; // white
 
 print (image);
 // Expected output: 2 2 3 0xff00ff 0xffff00 0xffff 0xffffff
