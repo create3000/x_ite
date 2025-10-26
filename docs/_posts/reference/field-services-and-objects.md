@@ -208,7 +208,7 @@ print (c .getHSV ());
 
 #### **setHSV** (*h: number, s: number, v: number*): void
 
-Sets a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and a is the alpha component of the HSV color.
+Sets a HSV color value; *h* is the hue, *s* is the saturation and *v* is the value component of the HSV color.
 
 The saturation, and value component must be in the range 0–1, and the hue component must be in the range 0–2π.
 
@@ -278,9 +278,9 @@ Return an array with the components of the color's HSVA value.
 
 #### **setHSVA** (*h: number, s: number, v: number, a: number*): void
 
-Sets a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and a is the alpha component of the HSV color.
+Sets a HSVA color value; *h* is the hue, *s* is the saturation, *v* is the value and *a* is the alpha component of the HSVA color.
 
-The saturation, and value component must be in the range 0–1, and the hue component must be in the range 0–2π.
+The saturation, value, and alpha component must be in the range 0–1, and the hue component must be in the range 0–2π.
 
 #### **linearToSRGB** (): SFColorRGBA
 
