@@ -284,6 +284,17 @@ Sets a HSVA color value; *h* is the hue, *s* is the saturation, *v* is the value
 
 The saturation, value and alpha component must be in the range [0,1], and the hue component must be in the range [0,2π].
 
+<x3d-script-area name="X3D ECMAScript Demo: SFColorRGBA setHSVA">
+<pre>
+const color = new SFColorRGBA ();
+
+color .setHSVA (Math .PI / 2, 1, 1, 0.5);
+
+print (color);
+// Expected output: 0.5 1 0 0.5
+</pre>
+</x3d-script-area>
+
 #### **linearToSRGB** (): SFColorRGBA
 
 Returns a SFColorRGBA object whose value is converted to sRGB color space.
