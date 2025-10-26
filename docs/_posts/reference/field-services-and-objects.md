@@ -420,6 +420,20 @@ Sets the SFMatrix3d/f to the passed values. *translation* is an SFVec2d/f object
 
 Any of the rightmost parameters can be omitted, or any parameter can be `null`. In other words, the method can take from 0 to 5 parameters. For example, you can specify 0 parameters (resulting in a identity matrix), 1 parameter (a translation), 2 parameters (a translation and a rotation), 3 parameters (a translation, rotation and a scaleFactor), etc. Any unspecified parameter is set to its default as specified in the **Transform** node section of the X3D specification.
 
+<x3d-script-area name="X3D ECMAScript Demo: SFMatrix3f setTransform">
+<pre>
+const matrix      = new SFMatrix3f ();
+const translation = new SFVec2f (1, 1);
+const rotation    = Math .PI;
+const scale       = new SFVec2f (2, 2);
+
+matrix .setTransform (translation, rotation, scale)
+
+print (matrix);
+// Expected output: -2 0 0 0 -2 0 1 1 1
+</pre>
+</x3d-script-area>
+
 #### **getTransform** (*translation*, *rotation*, *scaleFactor*, *scaleOrientation*, *center*): void
 
 Decomposes the SFMatrix3d/f and returns the components in the passed *translation*, *rotation*, and *scaleFactor* objects*. rotation* is a SFVec3d/f, where x and y are the complex value of the rotation and z is the rotation angle in radians. The other types of the parameters are the same as in **setTransform**.
