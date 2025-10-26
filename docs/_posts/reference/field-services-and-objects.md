@@ -197,14 +197,14 @@ Blue component of the color.
 
 Return an array with the components of the color's HSV value.
 
-<x3d-script-area title="X3D ECMAScript Demo: SFColor getHSV">
+<pre><x3d-script-area title="X3D ECMAScript Demo: SFColor getHSV">
 const c = new SFColor (0, 0.5, 1);
 
 print (c);
 print (c .getHSV ());
 // Expected output: 0, 0.5, 1
 // Expected output: 3.665191429188092,1,1
-</x3d-script-area>
+</x3d-script-area></pre>
 
 #### **setHSV** (*h: number, s: number, v: number*): void
 
@@ -939,7 +939,7 @@ Returns the geometric length of this vector.
 
 Returns a SFVec3d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
 
-<x3d-script-area title="X3D ECMAScript Demo: SFVec3f lerp">
+<pre><x3d-script-area title="X3D ECMAScript Demo: SFVec3f lerp">
 const a = new SFVec3f (1, 2, 3);
 const b = new SFVec3f (2, 3, 4);
 
@@ -949,7 +949,7 @@ print (a .lerp (b, 0.5));
 // Expected output: 1, 2, 3
 // Expected output: 2, 3, 4
 // Expected output: 1.5 2.5 3.5
-</x3d-script-area>
+</x3d-script-area></pre>
 
 #### **min** (*other: SFVec3d/f*): SFVec3d/f
 
