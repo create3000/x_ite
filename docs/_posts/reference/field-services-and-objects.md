@@ -637,10 +637,17 @@ Each node may be assigned values to its **initializeOnly,** **inputOnly** and **
 
 When you assign to a field of type `SFBool`, `SFDouble`, `SFFloat`, `SFInt32`, `SFString` or `SFTime` use plain JavaScript types like boolean, number or string, otherwise use the provided X3D field types:
 
-```js
+<x3d-script-area name="X3D ECMAScript Demo: SFNode properties">
+<pre>
+const scene    = Browser .currentScene;
+const material = scene .createNode ("Material");
+
 material .diffuseColor = new SFColor (1, 1, 1);
 material .transparency = 0.5;
-```
+
+print (material .toVRMLString ());
+</pre>
+</x3d-script-area>
 
 ### Methods
 
