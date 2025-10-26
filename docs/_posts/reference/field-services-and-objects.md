@@ -794,6 +794,20 @@ Returns an SFVec2d/f whose value is the componentwise absolute value of the obje
 
 Returns an SFVec2d/f whose value is the passed SFVec2d/f added, componentwise, to the object.
 
+<x3d-script-area title="X3D ECMAScript Demo: SFVec2f add">
+<pre>
+const a = new SFVec2f (1, 2);
+const b = new SFVec2f (2, 3);
+
+print (a);
+print (b);
+print (a .add (b));
+// Expected output: 1 2
+// Expected output: 2 3
+// Expected output: 3 5
+</pre>
+</x3d-script-area>
+
 #### **clamp** (*low: SFVec2d/f, high: SFVec2d/f*): SFVec2d/f
 
 Returns the elements of this object constrained to the range *low* to *high*. The returned value is computed as `min(max(x, low), high)`.
