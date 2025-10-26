@@ -202,7 +202,7 @@ const c = new SFColor (0, 0.5, 1);
 
 print (c);
 print (c .getHSV ());
-// Expected output: 0, 0.5, 1
+// Expected output: 0 0.5 1
 // Expected output: 3.665191429188092,1,1
 </x3d-script-area></pre>
 
@@ -946,8 +946,8 @@ const b = new SFVec3f (2, 3, 4);
 print (a);
 print (b);
 print (a .lerp (b, 0.5));
-// Expected output: 1, 2, 3
-// Expected output: 2, 3, 4
+// Expected output: 1 2 3
+// Expected output: 2 3 4
 // Expected output: 1.5 2.5 3.5
 </x3d-script-area></pre>
 
