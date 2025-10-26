@@ -162,7 +162,7 @@ A new color initialized with zero values is created and returned.
 
 #### *sfColorObjectName* = new **SFColor** (*r: number, g: number, b: number*)
 
-*r, g,* and *b* are scalar values with the red, green, and blue values of the color in the range 0–1.
+*r, g,* and *b* are scalar values with the red, green, and blue values of the color in the range [0,1].
 
 ### Iterator
 
@@ -210,7 +210,7 @@ print (c .getHSV ());
 
 Sets a HSV color value; *h* is the hue, *s* is the saturation and *v* is the value component of the HSV color.
 
-The saturation and value component must be in the range 0–1, and the hue component must be in the range 0–2π.
+The saturation and value component must be in the range [0,1], and the hue component must be in the range [0,2π].
 
 #### **linearToSRGB** (): SFColor
 
@@ -236,7 +236,7 @@ A new color initialized with zero values is created and returned.
 
 #### *sfColorRGBAObjectName* = new **SFColorRGBA** (*r: number, g: number, b: number, a: number*)
 
-*r, g, b* and *a* are scalar values with the red, green and blue values of the color in the range 0–1.
+*r, g, b* and *a* are scalar values with the red, green and blue values of the color in the range [0,1].
 
 ### Iterator
 
@@ -280,7 +280,7 @@ Return an array with the components of the color's HSVA value.
 
 Sets a HSVA color value; *h* is the hue, *s* is the saturation, *v* is the value and *a* is the alpha component of the HSVA color.
 
-The saturation, value and alpha component must be in the range 0–1, and the hue component must be in the range 0–2π.
+The saturation, value and alpha component must be in the range [0,1], and the hue component must be in the range [0,2π].
 
 #### **linearToSRGB** (): SFColorRGBA
 
