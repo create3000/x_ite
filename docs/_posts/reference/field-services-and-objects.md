@@ -728,6 +728,20 @@ Returns an SFRotation whose value is the object multiplied by the passed SFRotat
 
 Returns a SFVec3f whose value is the SFVec3f *vec* multiplied by the matrix corresponding to this object's rotation.
 
+<x3d-script-area title="X3D ECMAScript Demo: SFRotation multVec">
+<pre>
+const r = new SFRotation (0, 1, 0, Math .PI / 2);
+const v = new SFVec3f (0, 0, 1);
+
+print (r);
+print (v);
+print (r .multVec (v));
+// Expected output: 0 1 0 1.5707963267949
+// Expected output: 0 0 1
+// Expected output: 1 0 0
+</pre>
+</x3d-script-area>
+
 #### **setAxis** (*vec: SFVec3d/f*): void
 
 Set the axis of rotation to the vector passed in *vec*.
