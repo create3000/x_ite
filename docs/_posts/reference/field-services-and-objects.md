@@ -1425,6 +1425,26 @@ The MFNode object corresponds to an X3D MFNode field. It is used to store a one-
 
 The creation method can be passed 0 or more SFNode-valued expressions to initialize the elements of the array.
 
+### Iterator
+
+The `[@@iterator]()` method of MFNode instances implements the iterable protocol and allows MFNode objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the elements of the array in order.
+
+<x3d-script-area name="X3D ECMAScript Demo: MFNode iterator">
+<pre>
+const group     = Browser .currentScene .createNode ("Group");
+const transform = Browser .currentScene .createNode ("Transform");
+const collision = Browser .currentScene .createNode ("Collision");
+
+group .children = new MFNode (transform, collision);
+
+for (const child of group .children)
+  print (child);
+
+// Expected output: Transform { }
+// Expected output: Collision { }
+</pre>
+</x3d-script-area>
+
 ### Properties
 
 Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. `mfNodeObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `null`.
