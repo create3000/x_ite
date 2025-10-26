@@ -197,7 +197,7 @@ Blue component of the color.
 
 Return an array with the components of the color's HSV value.
 
-<x3d-script-area title="X3D ECMAScript Demo: SFColor getHSV">
+<x3d-script-area name="X3D ECMAScript Demo: SFColor getHSV">
 <pre>
 const color = new SFColor (0, 0.5, 1);
 
@@ -666,7 +666,7 @@ A new rotation initialized with the identity rotation is created and returned.
 
 *fromVector* and *toVector* are SFVec3d/f valued objects. These vectors are normalized and the rotation value that would rotate from the *fromVector* to the *toVector* is stored in the object.
 
-<x3d-script-area title="X3D ECMAScript Demo: new SFRotation (fromVector, toVector)">
+<x3d-script-area name="X3D ECMAScript Demo: new SFRotation (fromVector, toVector)">
 <pre>
 const from     = new SFVec3f (0, 0, 1);
 const to       = new SFVec3f (1, 0, 0);
@@ -739,7 +739,7 @@ Returns an SFRotation whose value is the object multiplied by the passed SFRotat
 
 Returns a SFVec3f whose value is the SFVec3f *vec* multiplied by the matrix corresponding to this object's rotation.
 
-<x3d-script-area title="X3D ECMAScript Demo: SFRotation multVec">
+<x3d-script-area name="X3D ECMAScript Demo: SFRotation multVec">
 <pre>
 const rotation = new SFRotation (0, 1, 0, Math .PI / 2);
 const vector   = new SFVec3f (0, 0, 1);
@@ -819,7 +819,7 @@ Returns an SFVec2d/f whose value is the componentwise absolute value of the obje
 
 Returns an SFVec2d/f whose value is the passed SFVec2d/f added, componentwise, to the object.
 
-<x3d-script-area title="X3D ECMAScript Demo: SFVec2f add">
+<x3d-script-area name="X3D ECMAScript Demo: SFVec2f add">
 <pre>
 const a = new SFVec2f (1, 2);
 const b = new SFVec2f (2, 3);
@@ -980,7 +980,7 @@ Returns the geometric length of this vector.
 
 Returns a SFVec3d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
 
-<x3d-script-area title="X3D ECMAScript Demo: SFVec3f lerp">
+<x3d-script-area name="X3D ECMAScript Demo: SFVec3f lerp">
 <pre>
 const a = new SFVec3f (1, 2, 3);
 const b = new SFVec3f (2, 3, 4);
