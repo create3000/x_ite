@@ -324,6 +324,15 @@ A new image initialized with zero values is created and returned.
 *components* are the number of components of the image (0-4).
 *array* is a optional MFInt32 array with pixel data.
 
+<x3d-script-area name="X3D ECMAScript Demo: new SFImage (width, height, components, array)">
+<pre>
+const image = new SFImage (2, 2, 3, new MFInt32 (0xff0000, 0x00ff00, 0x0000ff, 0xffffff));
+
+print (image);
+// Expected output: 2 2 3 0xff0000 0xff00 0xff 0xffffff
+</pre>
+</x3d-script-area>
+
 ### Iterator
 
 The `[@@iterator]()` method of SFImage instances implements the iterable protocol and allows SFImage objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
@@ -353,6 +362,17 @@ Number of components.
 {: .writable }
 
 A MFInt32 array corresponding to the pixels of the image.
+
+<x3d-script-area name="X3D ECMAScript Demo: SFImage array">
+<pre>
+const image = new SFImage (2, 2, 3, new MFInt32 (0xff0000, 0x00ff00, 0x0000ff, 0xffffff));
+
+image .array [0] = 0xff00ff;
+
+print (image);
+// Expected output: 2 2 3 0xff00ff 0xff00 0xff 0xffffff
+</pre>
+</x3d-script-area>
 
 ### Methods
 
