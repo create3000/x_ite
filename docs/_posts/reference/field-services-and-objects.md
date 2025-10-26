@@ -326,7 +326,8 @@ A new image initialized with zero values is created and returned.
 
 <x3d-script-area name="X3D ECMAScript Demo: new SFImage (width, height, components, array)">
 <pre>
-const image = new SFImage (2, 2, 3, new MFInt32 (0xff0000, 0x00ff00, 0x0000ff, 0xffffff));
+const array = new MFInt32 (0xff0000, 0x00ff00, 0x0000ff, 0xffffff);
+const image = new SFImage (2, 2, 3, array);
 
 print (image);
 // Expected output: 2 2 3 0xff0000 0xff00 0xff 0xffffff
@@ -365,12 +366,15 @@ A MFInt32 array corresponding to the pixels of the image.
 
 <x3d-script-area name="X3D ECMAScript Demo: SFImage array">
 <pre>
-const image = new SFImage (2, 2, 3, new MFInt32 (0xff0000, 0x00ff00, 0x0000ff, 0xffffff));
+const image = new SFImage (2, 2, 3);
 
 image .array [0] = 0xff00ff;
+image .array [1] = 0xffff00;
+image .array [2] = 0x00ffff;
+image .array [3] = 0xffffff;
 
 print (image);
-// Expected output: 2 2 3 0xff00ff 0xff00 0xff 0xffffff
+// Expected output: 2 2 3 0xff00ff 0xffff00 0xffff 0xffffff
 </pre>
 </x3d-script-area>
 
