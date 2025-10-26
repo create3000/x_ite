@@ -199,10 +199,10 @@ Return an array with the components of the color's HSV value.
 
 <x3d-script-area title="X3D ECMAScript Demo: SFColor getHSV">
 <pre>
-const c = new SFColor (0, 0.5, 1);
+const color = new SFColor (0, 0.5, 1);
 
-print (c);
-print (c .getHSV ());
+print (color);
+print (color .getHSV ());
 // Expected output: 0 0.5 1
 // Expected output: 3.665191429188092,1,1
 </pre>
@@ -666,6 +666,17 @@ A new rotation initialized with the identity rotation is created and returned.
 
 *fromVector* and *toVector* are SFVec3d/f valued objects. These vectors are normalized and the rotation value that would rotate from the *fromVector* to the *toVector* is stored in the object.
 
+<x3d-script-area title="X3D ECMAScript Demo: new SFRotation (fromVector, toVector)">
+<pre>
+const from     = new SFVec3f (0, 0, 1);
+const to       = new SFVec3f (1, 0, 0);
+const rotation = new SFRotation (from, to);
+
+print (rotation);
+// Expected output: 0 1 0 1.5707963267949
+</pre>
+</x3d-script-area>
+
 #### *sfRotationObjectName* = new **SFRotation** (*matrix: SFMatrix3d/f*)
 
 *matrix* is an SFMatrix3d/f rotation matrix object whose value is converted into an SFRotation object.
@@ -730,12 +741,12 @@ Returns a SFVec3f whose value is the SFVec3f *vec* multiplied by the matrix corr
 
 <x3d-script-area title="X3D ECMAScript Demo: SFRotation multVec">
 <pre>
-const r = new SFRotation (0, 1, 0, Math .PI / 2);
-const v = new SFVec3f (0, 0, 1);
+const rotation = new SFRotation (0, 1, 0, Math .PI / 2);
+const vector   = new SFVec3f (0, 0, 1);
 
-print (r);
-print (v);
-print (r .multVec (v));
+print (rotation);
+print (vector);
+print (rotation .multVec (vector));
 // Expected output: 0 1 0 1.5707963267949
 // Expected output: 0 0 1
 // Expected output: 1 0 0

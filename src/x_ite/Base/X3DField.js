@@ -73,7 +73,7 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    getType ()
    {
-      return X3DConstants [this .constructor .typeName];
+      return this .constructor .type;
    },
    setAccessType (value)
    {
