@@ -40,7 +40,7 @@ The X3D object has several properties, you can use any of the properties below.
 
 The X3DConstants object defines values that can be useful for scripting. See also [Constants Services](/x_ite/reference/constants-services/).
 
-<x3d-script-area name="X3D External Browser Demo: X3DConstants" style="height: 620px">
+<x3d-script-area name="X3D External Browser Demo: X3DConstants" style="height: 630px">
 <pre>
 const canvas  = X3D .createBrowser ();
 const browser = canvas .browser;
