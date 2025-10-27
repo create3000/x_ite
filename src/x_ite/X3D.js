@@ -147,6 +147,11 @@ Namespace, Namespace .Fields,
 
       return element;
    },
+   toString ()
+   {
+      return Object .prototype .toString .call (this);
+   },
+   [Symbol .toStringTag]: "X3D",
 });
 
 export default X3D;
