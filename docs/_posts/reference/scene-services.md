@@ -79,6 +79,21 @@ A reference to the ImportedNodesArray object used by this execution context. Thi
 
 When used inside a prototype instance, this property is not writable. The MFNode object instance is also not be writable. When used anywhere else, it is writable.
 
+<x3d-script-area name="X3D ECMAScript Demo: X3DExecutionContext rootNodes">
+<pre>
+const scene = Browser .currentScene;
+
+scene .rootNodes .push (scene .createNode ("Group"));
+scene .rootNodes .push (scene .createNode ("Switch"));
+
+for (const node of scene .rootNodes)
+  print (node);
+
+// Expected output: Group { }
+// Expected output: Switch { }
+</pre>
+</x3d-script-area>
+
 #### **protos**: ProtoDeclarationArray
 
 A reference to the ProtoDeclarationArray object used by this execution context. This property is read only.
@@ -100,6 +115,22 @@ Creates a new default instance of the node given by the *typeName* string contai
 #### **createProto** (*protoName: string*): SFNode
 
 Creates a new default instance of the prototype given by the *protoName* string containing the name of an prototype or extern prototype of this execution context.
+
+<x3d-script-area name="X3D ECMAScript Demo: X3DExecutionContext createProto">
+<pre>
+const scene = await Browser .createX3DFromString (`#X3D V{{ site.x3d_latest_version }} utf8
+PROFILE Interchange
+PROTO MyBox [ ]
+{
+  Shape { geometry Box { } }
+}
+`);
+
+print (scene .createProto ("MyBox"));
+
+// Expected output: MyBox { }
+</pre>
+</x3d-script-area>
 
 #### **getNamedNode** (*name: string*): SFNode
 
