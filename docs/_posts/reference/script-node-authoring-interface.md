@@ -227,10 +227,12 @@ Fundamental X3D field types such as `SFColor`, `SFVec3f`, `SFRotation`, and thei
 <pre>
 const material = Browser .currentScene .createNode ("Material");
 
-print (material);
+material .diffuseColor = new SFColor (0.1, 0.2, 0.3);
+
+print (material .toVRMLString ());
 print (material .diffuseColor .getType () === X3DConstants .SFColor);
 
-// Expected output: Material { }
+// Expected output: Material { diffuseColor 0.1 0.2 0.3 }
 // Expected output: true
 </pre>
 </x3d-script-area>
