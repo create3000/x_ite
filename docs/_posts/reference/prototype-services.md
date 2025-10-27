@@ -113,6 +113,20 @@ A reference to FieldDefinitionArray of all the fields defined for this extern pr
 
 A MFString array of all the URI's defined for this extern prototype. This property is read only.
 
+<x3d-script-area name="X3D ECMAScript Demo: X3DExternProtoDeclaration urls">
+<pre>
+const scene = await Browser .createX3DFromString (`#X3D V{{ site.x3d_latest_version }} utf8
+PROFILE Interchange
+EXTERNPROTO MyBox [ ]
+"https://example.com/my-proto.x3d"
+`);
+
+print (scene .externprotos [0] .urls);
+
+// Expected output: MyBox
+</pre>
+</x3d-script-area>
+
 #### **isExternProto**: boolean
 
 Always has the value of true. This property is read only.
@@ -150,6 +164,18 @@ For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmls
 Returns the X3D XML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, will produce this extern prototype.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
+
+<x3d-script-area name="X3D ECMAScript Demo: X3DExternProtoDeclaration toXMLString">
+<pre>
+const scene = await Browser .createX3DFromString (`#X3D V{{ site.x3d_latest_version }} utf8
+PROFILE Interchange
+EXTERNPROTO MyBox [ ]
+"https://example.com/my-proto.x3d"
+`);
+
+print (scene .externprotos [0] .toXMLString ());
+</pre>
+</x3d-script-area>
 
 #### **toJSONString** (options?: Options): string
 
