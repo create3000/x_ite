@@ -94,14 +94,18 @@ For each `inputOutput`, `outputOnly` and `initializeOnly` fields in the Script n
 
 Every object has a set of *properties* and *methods*. Properties are names on the object that can be selected (using the `.` operator) then used in an expression or as the target of an expression. Methods are names on the object that can be called (using the function call operator) to perform some operation on the object. For example:
 
-```js
-function someFunction ()
-{
-  let a = new SFColor (0.5, 0.5, 0.5);
-  let b = a .r;                        // 'b' contains 0.5.
-  a .setHSV (0.1, 0.1, 0.1);           // 'a' now contains new properties.
-}
-```
+<x3d-script-area name="X3D ECMAScript Demo: Objects and Fields">
+<pre>
+const a = new SFColor (0.5, 0.6, 0.7);
+const b = a .r;                      // 'b' contains 0.5.
+
+a .setHSV (0.1, 0.2, 0.3);           // 'a' now contains new properties.
+
+print (a);
+
+// Expected output: 0.3 0.2457296 0.24
+</pre>
+</x3d-script-area>
 
 The value `a.r` selects the property which corresponds to the red component of the color. The value `a .setHSV ()` selects the method which sets the color in HSV space.
 
@@ -109,10 +113,18 @@ The value `a.r` selects the property which corresponds to the red component of t
 
 For each object type there is a corresponding constructor. Constructors typically take a flexible set of parameters to allow construction of objects with any initial value. MF objects are essentially arrays so they always take 0 or more parameters of the corresponding SF object type. A value of a given data type is created using the `new` keyword with the data type name. For instance:
 
-```js
-let a = new SFVec3f (0, 1, 0);   // 'a' has a SFVec3f containing 0, 1, 0.
-let b = new MFFloat (1, 2, 3, 4) // 'b' has a MFFloat containing 4 floats.
-```
+<x3d-script-area name="X3D ECMAScript Demo: Object Construction">
+<pre>
+const a = new SFVec3f (0, 1, 0);   // 'a' has a SFVec3f containing 0, 1, 0.
+const b = new MFFloat (1, 2, 3, 4) // 'b' has a MFFloat containing 4 floats.
+
+print (a);
+print (b);
+
+// Expected output: 0 1 0
+// Expected output: [ 1, 2, 3, 4 ]
+</pre>
+</x3d-script-area>
 
 ### Data Conversion
 
