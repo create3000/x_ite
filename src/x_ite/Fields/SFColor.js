@@ -1,5 +1,6 @@
-import Color3   from "../../standard/Math/Numbers/Color3.js";
-import X3DField from "../Base/X3DField.js";
+import X3DField     from "../Base/X3DField.js";
+import X3DConstants from "../Base/X3DConstants.js";
+import Color3       from "../../standard/Math/Numbers/Color3.js";
 
 function SFColor (r, g, b)
 {
@@ -182,6 +183,11 @@ Object .defineProperties (SFColor .prototype,
 
 Object .defineProperties (SFColor,
 {
+   type:
+   {
+      value: X3DConstants .SFColor,
+      enumerable: true,
+   },
    typeName:
    {
       value: "SFColor",

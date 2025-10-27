@@ -412,6 +412,11 @@ for (const key of Object .keys (SFNode .prototype))
 
 Object .defineProperties (SFNode,
 {
+   type:
+   {
+      value: X3DConstants .SFNode,
+      enumerable: true,
+   },
    typeName:
    {
       value: "SFNode",

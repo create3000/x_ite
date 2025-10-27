@@ -23,6 +23,16 @@ A browser-implementation specific string describing the browser. This property i
 
 A browser-implementation specific string describing the browser version. This property is read only.
 
+<x3d-script-area name="X3D ECMAScript Example: X3DBrowser name/version">
+<pre>
+print (Browser .name);
+print (Browser .version);
+
+// Expected output: X_ITE
+// Expected output: {{ site.x_ite_latest_version }}
+</pre>
+</x3d-script-area>
+
 #### **providerURL**: string
 
 If provided, the URL to the entity that wrote this browser. This property is read only.
@@ -64,6 +74,17 @@ A String value which can be read and written, containing the URL against which r
 #### **currentScene**: X3DScene | X3DExecutionContext
 
 The real type of this class is dependent on whether the user code is inside a prototype instance or not. If the user code is inside a prototype instance the property represent an X3DExecutionContext otherwise it represent an X3DScene. This property is read only.
+
+<x3d-script-area name="X3D ECMAScript Example: X3DBrowser currentScene">
+<pre>
+const node = Browser .currentScene .createNode ("Transform");
+
+Browser .currentScene .rootNodes .push (node);
+
+print (Browser .currentScene .rootNodes .length);
+// Expected output: 1
+</pre>
+</x3d-script-area>
 
 #### **activeLayer**: SFNode | null
 
@@ -115,11 +136,21 @@ The `getComponent` service returns a ComponentInfo object of the named component
 
 The `createScene` service creates a new empty scene that conforms to the given profile and component declarations. The Promise resolves when all components are loaded.
 
-```js
-const profile    = browser .getProfile ("Interactive");
-const components = [browser .getComponent ("..."), browser .getComponent ("...")];
-const scene      = await browser .createScene (profile, ... components);
-```
+<x3d-script-area name="X3D ECMAScript Example: X3DBrowser createScene">
+<pre>
+const profile    = Browser .getProfile ("Interactive");
+const components = [Browser .getComponent ("Geometry2D"), Browser .getComponent ("Scripting")];
+const scene      = await Browser .createScene (profile, ... components);
+
+print (scene .profile .name);
+for (const component of scene .components)
+  print (component .name);
+
+// Expected output: Interactive
+// Expected output: Geometry2D
+// Expected output: Scripting
+</pre>
+</x3d-script-area>
 
 <!--
 #### **loadComponents** (*... args: Array \<X3DScene | ProfileInfo | ComponentInfoArray | ComponentInfo | string\>*): Promise\<void\> <small class="blue">non-standard</small>
@@ -134,6 +165,19 @@ Replace the current world with this new scene that has been loaded or constructe
 #### **createX3DFromString** (*x3dSyntax: string*): Promise\<X3DScene\>
 
 The string may be any valid X3D content in any language supported by the browser implementation. If the browser does not support the content encoding the appropriate exception will be thrown.
+
+<x3d-script-area name="X3D ECMAScript Example: X3DBrowser createX3DFromString">
+<pre>
+const scene = await Browser .createX3DFromString (`#X3D V{{ site.x3d_latest_version }} utf8
+PROFILE Interchange
+Transform { }
+Group { }
+`);
+
+print (scene .rootNodes .length);
+// Expected output: 2
+</pre>
+</x3d-script-area>
 
 #### **createX3DFromURL** (*url: MFString, node: SFNode, event: string*): void
 
@@ -216,6 +260,16 @@ Returns a browser property with the corresponding *name*.
 #### **getBrowserOption** (*name: string*): any
 
 Returns a browser option with the corresponding *name*.
+
+<x3d-script-area name="X3D ECMAScript Example: X3DBrowser getBrowserOption">
+<pre>
+print (Browser .getBrowserOption ("ColorSpace"));
+print (Browser .getBrowserOption ("TextCompression"));
+
+// Expected output: LINEAR_WHEN_PHYSICAL_MATERIAL
+// Expected output: CHAR_SPACING
+</pre>
+</x3d-script-area>
 
 ##### Browser Options
 
@@ -430,6 +484,16 @@ Removes a browser option callback function associated with *key* and *name* from
 
 Returns a rendering property with the corresponding *name*.
 
+<x3d-script-area name="X3D ECMAScript Example: X3DBrowser getRenderingProperty">
+<pre>
+print (Browser .getRenderingProperty ("Antialiased"));
+print (Browser .getRenderingProperty ("ContentScale"));
+
+// Expected output: true
+// Expected output: 1
+</pre>
+</x3d-script-area>
+
 ##### Rendering Properties
 
 <table>
@@ -611,11 +675,21 @@ Prints *objects* to the browser's console without a newline character. Successiv
 
 Prints *objects* to the browser's console, inserting a newline character after the output. Successive calls to this function will result in each output presented on separate lines. The output is the implicit call to the object's `toString ()` function.
 
+<x3d-script-area name="X3D ECMAScript Example: X3DBrowser println">
+<pre>
+Browser .println ("Debug output ...");
+Browser .println ("comes here.");
+
+// Expected output: Debug output ...
+// Expected output: comes here.
+</pre>
+</x3d-script-area>
+
 #### **dispose** (): void
 
 Disposes this X3DBrowser. The object can then no longer be used.
 
-### VRML Methods
+### Legacy VRML Methods
 
 To be downward compatible with VRML, the following additional functions are available:
 
@@ -653,11 +727,11 @@ Parse the passed URL into an VRML scene. When complete send the passed event to 
 
 #### **addRoute** (*sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string*): void
 
-Add a route from the passed *sourceField* to the passed *destinationField*.
+Add a route in the current scene from the passed *sourceField* to the passed *destinationField*.
 
 #### **deleteRoute** (*sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string*): void
 
-Remove the route between the passed *sourceField* and passed *destinationField*, if one exists.
+Remove the route in the current scene between the passed *sourceField* and passed *destinationField*, if one exists.
 
 #### **loadURL** (*url: MFString, parameter?: MFString*): void
 
@@ -676,6 +750,14 @@ The X3DConcreteNode interface defines an interface for concrete node types, it e
 None. This object cannot be instantiated by the user.
 
 ### Static Properties
+
+#### **typeName**: string
+
+The node type name for this class. This property is read only.
+
+#### **componentInfo**: { name: string, level: number }
+
+Returns an object with two properties *name* and *level* which can be used to get a ComponentInfo object from the X3D browser. This property is read only.
 
 #### **containerField**: string
 

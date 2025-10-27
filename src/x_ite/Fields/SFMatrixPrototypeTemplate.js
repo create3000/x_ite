@@ -1,4 +1,5 @@
-import X3DField from "../Base/X3DField.js";
+import X3DField     from "../Base/X3DField.js";
+import X3DConstants from "../Base/X3DConstants.js";
 
 function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, properties = { })
 {
@@ -6,6 +7,11 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
 
    Object .defineProperties (Constructor,
    {
+      type:
+      {
+         value: X3DConstants [TypeName],
+         enumerable: true,
+      },
       typeName:
       {
          value: TypeName,

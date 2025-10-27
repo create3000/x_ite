@@ -162,7 +162,7 @@ A new color initialized with zero values is created and returned.
 
 #### *sfColorObjectName* = new **SFColor** (*r: number, g: number, b: number*)
 
-*r, g,* and *b* are scalar values with the red, green, and blue values of the color in the range 0–1.
+*r, g,* and *b* are scalar values with the red, green, and blue values of the color in the range [0,1].
 
 ### Iterator
 
@@ -195,13 +195,24 @@ Blue component of the color.
 
 #### **getHSV** (): Array
 
-Return an array with the components of the color's HSV value.
+Returns an array with the components of the color's HSV value.
+
+<x3d-script-area name="X3D ECMAScript Example: SFColor getHSV">
+<pre>
+const color = new SFColor (0, 0.5, 1);
+
+print (color);
+print (color .getHSV ());
+// Expected output: 0 0.5 1
+// Expected output: 3.665191429188092,1,1
+</pre>
+</x3d-script-area>
 
 #### **setHSV** (*h: number, s: number, v: number*): void
 
-Sets a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and a is the alpha component of the HSV color.
+Sets a HSV color value; *h* is the hue, *s* is the saturation and *v* is the value component of the HSV color.
 
-The saturation, and value component must be in the range 0–1, and the hue component must be in the range 0–2π.
+The saturation and value component must be in the range [0,1], and the hue component must be in the range [0,2π].
 
 #### **linearToSRGB** (): SFColor
 
@@ -227,7 +238,7 @@ A new color initialized with zero values is created and returned.
 
 #### *sfColorRGBAObjectName* = new **SFColorRGBA** (*r: number, g: number, b: number, a: number*)
 
-*r, g, b* and *a* are scalar values with the red, green and blue values of the color in the range 0–1.
+*r, g, b* and *a* are scalar values with the red, green and blue values of the color in the range [0,1].
 
 ### Iterator
 
@@ -265,13 +276,24 @@ Alpha component of the color.
 
 #### **getHSVA** (): Array
 
-Return an array with the components of the color's HSVA value.
+Returns an array with the components of the color's HSVA value.
 
 #### **setHSVA** (*h: number, s: number, v: number, a: number*): void
 
-Sets a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and a is the alpha component of the HSV color.
+Sets a HSVA color value; *h* is the hue, *s* is the saturation, *v* is the value and *a* is the alpha component of the HSVA color.
 
-The saturation, and value component must be in the range 0–1, and the hue component must be in the range 0–2π.
+The saturation, value and alpha component must be in the range [0,1], and the hue component must be in the range [0,2π].
+
+<x3d-script-area name="X3D ECMAScript Example: SFColorRGBA setHSVA">
+<pre>
+const color = new SFColorRGBA ();
+
+color .setHSVA (Math .PI / 2, 1, 1, 0.5);
+
+print (color);
+// Expected output: 0.5 1 0 0.5
+</pre>
+</x3d-script-area>
 
 #### **linearToSRGB** (): SFColorRGBA
 
@@ -302,6 +324,16 @@ A new image initialized with zero values is created and returned.
 *components* are the number of components of the image (0-4).
 *array* is a optional MFInt32 array with pixel data.
 
+<x3d-script-area name="X3D ECMAScript Example: new SFImage (width, height, components, array)">
+<pre>
+const array = new MFInt32 (0xff0000, 0x00ff00, 0x0000ff, 0xffffff);
+const image = new SFImage (2, 2, 3, array);
+
+print (image);
+// Expected output: 2 2 3 0xff0000 0xff00 0xff 0xffffff
+</pre>
+</x3d-script-area>
+
 ### Iterator
 
 The `[@@iterator]()` method of SFImage instances implements the iterable protocol and allows SFImage objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
@@ -331,6 +363,20 @@ Number of components.
 {: .writable }
 
 A MFInt32 array corresponding to the pixels of the image.
+
+<x3d-script-area name="X3D ECMAScript Example: SFImage array">
+<pre>
+const image = new SFImage (2, 2, 3);
+
+image .array [0] = 0xff00ff; // magenta
+image .array [1] = 0xffff00; // yellow
+image .array [2] = 0x00ffff; // cyan
+image .array [3] = 0xffffff; // white
+
+print (image);
+// Expected output: 2 2 3 0xff00ff 0xffff00 0xffff 0xffffff
+</pre>
+</x3d-script-area>
 
 ### Methods
 
@@ -373,6 +419,20 @@ Individual elements of the object can be referenced using the standard C-style d
 Sets the SFMatrix3d/f to the passed values. *translation* is an SFVec2d/f object, *rotation* is a Number, *scaleFactor* is a SFVec2d/f object, *scaleOrientation* is a Number and *center* is a SFVec2d/f object.
 
 Any of the rightmost parameters can be omitted, or any parameter can be `null`. In other words, the method can take from 0 to 5 parameters. For example, you can specify 0 parameters (resulting in a identity matrix), 1 parameter (a translation), 2 parameters (a translation and a rotation), 3 parameters (a translation, rotation and a scaleFactor), etc. Any unspecified parameter is set to its default as specified in the **Transform** node section of the X3D specification.
+
+<x3d-script-area name="X3D ECMAScript Example: SFMatrix3f setTransform">
+<pre>
+const matrix      = new SFMatrix3f ();
+const translation = new SFVec2f (1, 1);
+const rotation    = Math .PI;
+const scale       = new SFVec2f (2, 2);
+
+matrix .setTransform (translation, rotation, scale);
+
+print (matrix);
+// Expected output: -2 0 0 0 -2 0 1 1 1
+</pre>
+</x3d-script-area>
 
 #### **getTransform** (*translation*, *rotation*, *scaleFactor*, *scaleOrientation*, *center*): void
 
@@ -516,6 +576,16 @@ Returns a SFMatrix4d/f whose value is the object multiplied by the passed *matri
 
 Returns a SFVec3d/f whose value is the object multiplied by the passed row vector.
 
+<x3d-script-area name="X3D ECMAScript Example: SFMatrix4f multVecMatrix">
+<pre>
+const matrix = new SFMatrix4f (0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1);
+const vector = new SFVec3f (0, 0, 1);
+
+print (matrix .multVecMatrix (vector));
+// Expected output: 1 0 0
+</pre>
+</x3d-script-area>
+
 #### **multVecMatrix** (*SFVec4d/f vec*): SFVec4d/f
 
 Returns a SFVec4d/f whose value is the object multiplied by the passed row vector.
@@ -567,10 +637,18 @@ Each node may be assigned values to its **initializeOnly,** **inputOnly** and **
 
 When you assign to a field of type `SFBool`, `SFDouble`, `SFFloat`, `SFInt32`, `SFString` or `SFTime` use plain JavaScript types like boolean, number or string, otherwise use the provided X3D field types:
 
-```js
+<x3d-script-area name="X3D ECMAScript Example: SFNode properties">
+<pre>
+const scene    = Browser .currentScene;
+const material = scene .createNode ("Material");
+
 material .diffuseColor = new SFColor (1, 1, 1);
 material .transparency = 0.5;
-```
+
+print (material .toVRMLString ());
+// Expected output: Material { diffuseColor 1 1 1 transparency 0.5 }
+</pre>
+</x3d-script-area>
 
 ### Methods
 
@@ -655,6 +733,17 @@ A new rotation initialized with the identity rotation is created and returned.
 
 *fromVector* and *toVector* are SFVec3d/f valued objects. These vectors are normalized and the rotation value that would rotate from the *fromVector* to the *toVector* is stored in the object.
 
+<x3d-script-area name="X3D ECMAScript Example: new SFRotation (fromVector, toVector)">
+<pre>
+const fromVector = new SFVec3f (0, 0, 1);
+const toVector   = new SFVec3f (1, 0, 0);
+const rotation   = new SFRotation (fromVector, toVector);
+
+print (rotation);
+// Expected output: 0 1 0 1.5707963267949
+</pre>
+</x3d-script-area>
+
 #### *sfRotationObjectName* = new **SFRotation** (*matrix: SFMatrix3d/f*)
 
 *matrix* is an SFMatrix3d/f rotation matrix object whose value is converted into an SFRotation object.
@@ -716,6 +805,20 @@ Returns an SFRotation whose value is the object multiplied by the passed SFRotat
 #### **multVec** (*vec: SFVec3d/f*): SFVec3d/f
 
 Returns a SFVec3f whose value is the SFVec3f *vec* multiplied by the matrix corresponding to this object's rotation.
+
+<x3d-script-area name="X3D ECMAScript Example: SFRotation multVec">
+<pre>
+const rotation = new SFRotation (0, 1, 0, Math .PI / 2);
+const vector   = new SFVec3f (0, 0, 1);
+
+print (rotation);
+print (vector);
+print (rotation .multVec (vector));
+// Expected output: 0 1 0 1.5707963267949
+// Expected output: 0 0 1
+// Expected output: 1 0 0
+</pre>
+</x3d-script-area>
 
 #### **setAxis** (*vec: SFVec3d/f*): void
 
@@ -782,6 +885,20 @@ Returns an SFVec2d/f whose value is the componentwise absolute value of the obje
 #### **add** (*other: SFVec2d/f*): SFVec2d/f
 
 Returns an SFVec2d/f whose value is the passed SFVec2d/f added, componentwise, to the object.
+
+<x3d-script-area name="X3D ECMAScript Example: SFVec2f add">
+<pre>
+const a = new SFVec2f (1, 2);
+const b = new SFVec2f (2, 3);
+
+print (a);
+print (b);
+print (a .add (b));
+// Expected output: 1 2
+// Expected output: 2 3
+// Expected output: 3 5
+</pre>
+</x3d-script-area>
 
 #### **clamp** (*low: SFVec2d/f, high: SFVec2d/f*): SFVec2d/f
 
@@ -930,6 +1047,20 @@ Returns the geometric length of this vector.
 
 Returns a SFVec3d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
 
+<x3d-script-area name="X3D ECMAScript Example: SFVec3f lerp">
+<pre>
+const a = new SFVec3f (1, 2, 3);
+const b = new SFVec3f (2, 3, 4);
+
+print (a);
+print (b);
+print (a .lerp (b, 0.5));
+// Expected output: 1 2 3
+// Expected output: 2 3 4
+// Expected output: 1.5 2.5 3.5
+</pre>
+</x3d-script-area>
+
 #### **min** (*other: SFVec3d/f*): SFVec3d/f
 
 Returns an SFVec3d/f whose value is the componentwise minimum of the passed SFVec3d/f and the object.
@@ -983,6 +1114,20 @@ const copy = new SFVec4d (... vector); // Copy using spread syntax.
 ### Properties
 
 Each component of the vector can be accessed using the `x`, `y`, `z` and `w` properties or using the standard C-style dereferencing operator (e.g. `sfVec4d/fObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<4).
+
+<x3d-script-area name="X3D ECMAScript Example: SFVec4f properties">
+<pre>
+const vector = new SFVec4f ();
+
+vector .x = 1;
+vector .y = 2;
+vector .z = 3;
+vector .w = 4;
+
+print (vector);
+// Expected output: 1 2 3 4
+</pre>
+</x3d-script-area>
 
 #### **x**: number
 {: .writable }
@@ -1086,9 +1231,15 @@ None
 
 The `[@@iterator]()` method of X3DArrayField instances implements the iterable protocol and allows X3DArrayField objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the elements of the array in order.
 
-```js
-const copy = new MFBool (... array); // Copy using spread syntax.
-```
+<x3d-script-area name="X3D ECMAScript Example: MFBool iterator">
+<pre>
+const array = new MFBool (true, false, true, false);
+const copy  = new MFBool (... array); // Copy using spread syntax.
+
+print (copy);
+// Expected output: [ TRUE, FALSE, TRUE, FALSE ]
+</pre>
+</x3d-script-area>
 
 ### Properties
 
@@ -1273,6 +1424,26 @@ The MFNode object corresponds to an X3D MFNode field. It is used to store a one-
 #### *mfNodeObjectName* = new **MFNode** (*... values: SFNode []*)
 
 The creation method can be passed 0 or more SFNode-valued expressions to initialize the elements of the array.
+
+### Iterator
+
+The `[@@iterator]()` method of MFNode instances implements the iterable protocol and allows MFNode objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the elements of the array in order.
+
+<x3d-script-area name="X3D ECMAScript Example: MFNode iterator">
+<pre>
+const group     = Browser .currentScene .createNode ("Group");
+const transform = Browser .currentScene .createNode ("Transform");
+const collision = Browser .currentScene .createNode ("Collision");
+
+group .children = new MFNode (transform, collision);
+
+for (const child of group .children)
+  print (child);
+
+// Expected output: Transform { }
+// Expected output: Collision { }
+</pre>
+</x3d-script-area>
 
 ### Properties
 

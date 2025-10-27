@@ -1,8 +1,9 @@
-import X3DField  from "../Base/X3DField.js";
-import SFVec3     from "./SFVec3.js";
-import SFMatrix3  from "./SFMatrix3.js";
-import Rotation4  from "../../standard/Math/Numbers/Rotation4.js";
-import Quaternion from "../../standard/Math/Numbers/Quaternion.js";
+import X3DField     from "../Base/X3DField.js";
+import SFVec3       from "./SFVec3.js";
+import SFMatrix3    from "./SFMatrix3.js";
+import Rotation4    from "../../standard/Math/Numbers/Rotation4.js";
+import X3DConstants from "../Base/X3DConstants.js";
+import Quaternion   from "../../standard/Math/Numbers/Quaternion.js";
 
 const
    SFVec3d    = SFVec3 .SFVec3d,
@@ -242,6 +243,11 @@ Object .defineProperties (SFRotation .prototype,
 
 Object .defineProperties (SFRotation,
 {
+   type:
+   {
+      value: X3DConstants .SFRotation,
+      enumerable: true,
+   },
    typeName:
    {
       value: "SFRotation",

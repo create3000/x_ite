@@ -33,6 +33,20 @@ The string represent the basic specification version used by the parsed file in 
 
 The encoding is represented as a string that describes the data encoding used. Valid values are "ASCII", "VRML", "XML", "BINARY", "SCRIPTED", "BIFS", "NONE". This property is read only.
 
+Additional valid values are "GLTF", "OBJ", "STL", "PLY", "SVG".
+
+<x3d-script-area name="X3D ECMAScript Example: X3DExecutionContext specificationVersion/encoding">
+<pre>
+const scene = Browser .currentScene;
+
+print (scene .specificationVersion);
+print (scene .encoding);
+
+// Expected output: {{ site.x3d_latest_version }}
+// Expected output: SCRIPTED
+</pre>
+</x3d-script-area>
+
 #### **profile**: ProfileInfo | null
 
 A reference to the ProfileInfo object used by this execution context. A value of `null` implies profile `Full`.  This property is read only.
@@ -65,6 +79,21 @@ A reference to the ImportedNodesArray object used by this execution context. Thi
 
 When used inside a prototype instance, this property is not writable. The MFNode object instance is also not be writable. When used anywhere else, it is writable.
 
+<x3d-script-area name="X3D ECMAScript Example: X3DExecutionContext rootNodes">
+<pre>
+const scene = Browser .currentScene;
+
+scene .rootNodes .push (scene .createNode ("Group"));
+scene .rootNodes .push (scene .createNode ("Switch"));
+
+for (const node of scene .rootNodes)
+  print (node);
+
+// Expected output: Group { }
+// Expected output: Switch { }
+</pre>
+</x3d-script-area>
+
 #### **protos**: ProtoDeclarationArray
 
 A reference to the ProtoDeclarationArray object used by this execution context. This property is read only.
@@ -86,6 +115,22 @@ Creates a new default instance of the node given by the *typeName* string contai
 #### **createProto** (*protoName: string*): SFNode
 
 Creates a new default instance of the prototype given by the *protoName* string containing the name of an prototype or extern prototype of this execution context.
+
+<x3d-script-area name="X3D ECMAScript Example: X3DExecutionContext createProto">
+<pre>
+const scene = await Browser .createX3DFromString (`#X3D V{{ site.x3d_latest_version }} utf8
+PROFILE Interchange
+PROTO MyBox [ ]
+{
+  Shape { geometry Box { } }
+}
+`);
+
+print (scene .createProto ("MyBox"));
+
+// Expected output: MyBox { }
+</pre>
+</x3d-script-area>
 
 #### **getNamedNode** (*name: string*): SFNode
 
@@ -122,6 +167,22 @@ Removes the imported node *importedName.*
 #### **addRoute** (*sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string*): X3DRoute
 
 Add a route from the passed *sourceField* to the passed *destinationField.* The return value is an X3DRoute object.
+
+<x3d-script-area name="X3D ECMAScript Example: X3DExecutionContext addRoute">
+<pre>
+const scene        = Browser .currentScene;
+const timer        = scene .createNode ("TimeSensor");
+const interpolator = scene .createNode ("PositionInterpolator");
+
+const route = scene .addRoute (timer, "fraction_changed", interpolator, "set_fraction");
+
+print (route);
+print (scene .routes .length);
+
+// Expected output: [object X3DRoute]
+// Expected output: 1
+</pre>
+</x3d-script-area>
 
 #### **deleteRoute** (*route: X3DRoute*): void
 
@@ -218,6 +279,20 @@ Removes *node* from the list of root nodes.
 
 Returns a reference to the node with the exported name *exportedName.* If no exported node *exportedName* is found an exception is thrown.
 
+<x3d-script-area name="X3D ECMAScript Example: X3DExecutionContext getExportedNode">
+<pre>
+const scene = await Browser .createX3DFromString (`#X3D V{{ site.x3d_latest_version }} utf8
+PROFILE Interchange
+DEF T Transform { }
+EXPORT T
+`);
+
+print (scene .getExportedNode ("T"));
+
+// Expected output: Transform { }
+</pre>
+</x3d-script-area>
+
 #### **addExportedNode** (*exportedName: string, node: SFNode*): void
 
 Creates the exported node *exportedName.*
@@ -245,6 +320,21 @@ An object with one or more of these properties:
 * **doublePrecision:** integer, double precision, default: 15
 * **html:** boolean, HTML style, default: false
 * **closingTags:** boolean, use closing tags, default: false
+
+<x3d-script-area name="X3D ECMAScript Example: X3DScene toVRMLString">
+<pre>
+const scene        = Browser .currentScene;
+const timer        = scene .createNode ("TimeSensor");
+const interpolator = scene .createNode ("PositionInterpolator");
+
+scene .rootNodes .push (timer, interpolator);
+scene .addNamedNode ("Timer", timer);
+scene .addNamedNode ("Interpolator", interpolator);
+scene .addRoute (timer, "fraction_changed", interpolator, "set_fraction");
+
+print (scene .toVRMLString ());
+</pre>
+</x3d-script-area>
 
 #### **toXMLString** (options?: Options): string <small><span class="blue">non-standard</span></small>
 
