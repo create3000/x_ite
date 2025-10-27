@@ -161,11 +161,18 @@ The X3DCanvasElement, \<x3d-canvas\>, is the main element that displays the X3D 
 
 An \<x3d-canvas\> can be created with the `document.createElement` function to get a reference to an X3DCanvasElement.
 
-```js
-const
-   canvas  = document .createElement ("x3d-canvas"),
-   browser = canvas .browser;
-```
+<x3d-script-area name="X3D External Browser Demo: createElement">
+<pre>
+const canvas  = document .createElement ("x3d-canvas");
+const browser = canvas .browser;
+
+console .log (canvas);
+console .log (browser);
+
+// Expected output: [object X3DCanvasElement]
+// Expected output: [object X3DBrowser]
+</pre>
+</x3d-script-area>
 
 ### Attributes
 
