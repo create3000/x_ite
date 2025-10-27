@@ -123,7 +123,7 @@ EXTERNPROTO MyBox [ ]
 
 print (scene .externprotos [0] .urls);
 
-// Expected output: MyBox
+// Expected output: "https://example.com/my-proto.x3d"
 </pre>
 </x3d-script-area>
 
