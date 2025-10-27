@@ -86,7 +86,7 @@ const
   translation = new X3D .SFVec3f (4, 2, 0),
   length      = translation .length ();
 
-print (length);
+console .log (length);
 // Expected output: 4.47213595499958
 </pre>
 </x3d-script-area>
