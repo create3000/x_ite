@@ -15,6 +15,22 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
+<x3d-script-area name="X3D ECMAScript Demo: X3DRoute Properties">
+<pre>
+const scene        = Browser .currentScene;
+const timer        = scene .createNode ("TimeSensor");
+const interpolator = scene .createNode ("PositionInterpolator");
+
+const route = scene .addRoute (timer, "fraction_changed", interpolator, "set_fraction");
+
+print (route .sourceNode,      route .sourceField);
+print (route .destinationNode, route .destinationField);
+
+// Expected output: TimeSensor { } fraction_changed
+// Expected output: PositionInterpolator { } set_fraction
+</pre>
+</x3d-script-area>
+
 #### **sourceNode**: SFNode
 
 A reference to the node that is the source of this route.
