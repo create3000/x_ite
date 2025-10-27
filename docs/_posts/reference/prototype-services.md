@@ -19,6 +19,22 @@ None. This object cannot be instantiated by the user.
 
 A string of the declared name of this prototype. This property is read only.
 
+<x3d-script-area name="X3D ECMAScript Demo: X3DProtoDeclaration name">
+<pre>
+const scene = await Browser .createX3DFromString (`#X3D V{{ site.x3d_latest_version }} utf8
+PROFILE Interchange
+PROTO MyBox [ ]
+{
+  Shape { geometry Box { } }
+}
+`);
+
+print (scene .protos [0] .name);
+
+// Expected output: MyBox
+</pre>
+</x3d-script-area>
+
 #### **fields**: FieldDefinitionArray
 
 A reference to FieldDefinitionArray of all the fields defined for this prototype. This property is read only.
@@ -40,6 +56,22 @@ A string containing the documentation of this prototype. This property is read o
 #### **newInstance** (): SFNode
 
 Creates a new default instance of the prototype.
+
+<x3d-script-area name="X3D ECMAScript Demo: X3DProtoDeclaration newInstance">
+<pre>
+const scene = await Browser .createX3DFromString (`#X3D V{{ site.x3d_latest_version }} utf8
+PROFILE Interchange
+PROTO MyBox [ ]
+{
+  Shape { geometry Box { } }
+}
+`);
+
+print (scene .protos [0] .newInstance ("MyBox"));
+
+// Expected output: MyBox { }
+</pre>
+</x3d-script-area>
 
 #### **toVRMLString** (options?: Options): string <small><span class="blue">non-standard</span></small>
 
