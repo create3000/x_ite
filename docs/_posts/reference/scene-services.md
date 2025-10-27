@@ -168,6 +168,22 @@ Removes the imported node *importedName.*
 
 Add a route from the passed *sourceField* to the passed *destinationField.* The return value is an X3DRoute object.
 
+<x3d-script-area name="X3D ECMAScript Demo: X3DExecutionContext addRoute">
+<pre>
+const scene        = Browser .currentScene;
+const timer        = scene .createNode ("TimeSensor");
+const interpolator = scene .createNode ("PositionInterpolator");
+
+const route = scene .addRoute (timer, "fraction_changed", interpolator, "set_fraction");
+
+print (route);
+print (scene .routes .length);
+
+// Expected output: [object X3DRoute]
+// Expected output: 1
+</pre>
+</x3d-script-area>
+
 #### **deleteRoute** (*route: X3DRoute*): void
 
 Remove the route if it is connected.
