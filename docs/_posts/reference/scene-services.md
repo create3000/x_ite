@@ -328,6 +328,8 @@ const timer        = scene .createNode ("TimeSensor");
 const interpolator = scene .createNode ("PositionInterpolator");
 
 scene .rootNodes .push (timer, interpolator);
+scene .addNamedNode ("Timer", timer);
+scene .addNamedNode ("Interpolator", interpolator);
 scene .addRoute (timer, "fraction_changed", interpolator, "set_fraction");
 
 print (scene .toVRMLString ());
