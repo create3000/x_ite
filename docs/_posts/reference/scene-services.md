@@ -279,6 +279,20 @@ Removes *node* from the list of root nodes.
 
 Returns a reference to the node with the exported name *exportedName.* If no exported node *exportedName* is found an exception is thrown.
 
+<x3d-script-area name="X3D ECMAScript Demo: X3DExecutionContext createProto">
+<pre>
+const scene = await Browser .createX3DFromString (`#X3D V{{ site.x3d_latest_version }} utf8
+PROFILE Interchange
+DEF T Transform { }
+EXPORT T
+`);
+
+print (scene .getExportedNode ("T"));
+
+// Expected output: Transform { }
+</pre>
+</x3d-script-area>
+
 #### **addExportedNode** (*exportedName: string, node: SFNode*): void
 
 Creates the exported node *exportedName.*
@@ -306,6 +320,19 @@ An object with one or more of these properties:
 * **doublePrecision:** integer, double precision, default: 15
 * **html:** boolean, HTML style, default: false
 * **closingTags:** boolean, use closing tags, default: false
+
+<x3d-script-area name="X3D ECMAScript Demo: X3DScene toVRMLString">
+<pre>
+const scene        = Browser .currentScene;
+const timer        = scene .createNode ("TimeSensor");
+const interpolator = scene .createNode ("PositionInterpolator");
+
+scene .rootNodes .push (timer, interpolator);
+scene .addRoute (timer, "fraction_changed", interpolator, "set_fraction");
+
+print (scene .toVRMLString ());
+</pre>
+</x3d-script-area>
 
 #### **toXMLString** (options?: Options): string <small><span class="blue">non-standard</span></small>
 
