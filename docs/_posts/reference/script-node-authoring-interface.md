@@ -219,6 +219,22 @@ Most SF objects in ECMAScript have a corresponding MF object. An MFObject is ess
 
 Dereferencing an MF object creates a new object of the corresponding SF object type with the contents of the dereferenced element. Assigning an SF object to a dereferenced MF object (which must be of the corresponding type) copies the contents of the SF object into the dereferenced element.
 
+### Global Objects and Types
+
+Fundamental X3D field types such as `SFColor`, `SFVec3f`, `SFRotation`, and their multi-valued counterparts (`MFColor`, `MFVec3f`, etc.) are accessible as JavaScript classes, allowing scripts to create, modify, and pass values between nodes in a type-safe way. The **`Browser`** object serves as a global interface to the current X3D browser instance, enabling operations like loading new worlds, creating nodes, or querying scene properties at runtime. Additionally, several **global utility functions** are defined for convenience — for example, `print()` outputs diagnostic messages to the browser console.
+
+<x3d-script-area name="X3D ECMAScript Demo: Global Objects and Types">
+<pre>
+const material = Browser .currentScene .createNode ("Material");
+
+print (material);
+print (material .diffuseColor .getType () === X3DConstants .SFColor);
+
+// Expected output: Material { }
+// Expected output: true
+</pre>
+</x3d-script-area>
+
 ## Supported Protocol in the Script Node's **url** Field
 
 The *url* field of the Script node may contain a URL that references ECMAScript code:
