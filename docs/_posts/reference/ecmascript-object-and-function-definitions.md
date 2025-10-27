@@ -24,7 +24,7 @@ There are a fixed set of objects in ECMAScript, each of which have a fixed set o
 
 ## X3D Object
 
-The X3D object is the starting point for accessing objects and functions of X_ITE:
+The X3D object is the starting point for accessing objects and functions of X_ITE in an external script:
 
 ```js
 import X3D from "https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.mjs";
@@ -40,33 +40,35 @@ The X3D object has several properties, you can use any of the properties below.
 
 The X3DConstants object defines values that can be useful for scripting. See also [Constants Services](/x_ite/reference/constants-services/).
 
-```js
-function foo (node)
+<x3d-script-area name="X3D ECMAScript Demo: X3DConstants" style="height: 620px">
+<pre>
+const canvas  = X3D .createBrowser ();
+const browser = canvas .browser;
+const node    = browser .currentScene .createNode ("DirectionalLight");
+const types   = node .getNodeType () .reverse (); // Get node type array.
+
+// Iterate over node type array in reverse order with
+// concrete node types as first and abstract node
+// types as last index.
+
+for (const type of types)
 {
-  // Get node type array.
-
-  const types = node .getNodeType () .reverse ();
-
-  // Iterate over node type array in reverse order with
-  // concrete node types as first and abstract node
-  // types as last index.
-
-  for (const type of types)
+  switch (type)
   {
-    switch (type)
-    {
-      case X3D .X3DConstants .Transform:
-        // node is of type Transform.
-        ...
-        break;
-      case X3D .X3DConstants .X3DLightNode:
-        //  node is at least of type X3DLightNode.
-        ...
-        break;
-    }
+    case X3D .X3DConstants .DirectionalLight:
+      console .log ("Node is of type DirectionalLight.")
+      continue;
+    case X3D .X3DConstants .X3DLightNode:
+      console .log ("Node is at least of type X3DLightNode.")
+      continue;
+    case X3D .X3DConstants .Transform:
+      break; // Leave for loop.
   }
+
+  break; // Leave for loop.
 }
-```
+</pre>
+</x3d-script-area>
 
 #### **X3DFields**
 
@@ -75,14 +77,19 @@ All X3DFields (SFColor, ..., MFBool, MFColor, and so on). The fields can be crea
 >**Note:** Scalar objects like SFBool, SFDouble, SFFloat, SFInt32, SFString, and SFTime have no constructor, just use the built-in JavaScript types Boolean, Number, and String.
 {: .prompt-info }
 
-```js
+<x3d-script-area name="X3D ECMAScript Demo: X3DFields">
+<pre>
 // Create a new translation vector and
 // determine the length of this vector.
 
 const
   translation = new X3D .SFVec3f (4, 2, 0),
   length      = translation .length ();
-```
+
+print (length);
+// Expected output: 4.47213595499958
+</pre>
+</x3d-script-area>
 
 ### Functions
 
