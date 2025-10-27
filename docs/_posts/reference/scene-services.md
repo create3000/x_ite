@@ -279,7 +279,7 @@ Removes *node* from the list of root nodes.
 
 Returns a reference to the node with the exported name *exportedName.* If no exported node *exportedName* is found an exception is thrown.
 
-<x3d-script-area name="X3D ECMAScript Demo: X3DExecutionContext createProto">
+<x3d-script-area name="X3D ECMAScript Demo: X3DExecutionContext getExportedNode">
 <pre>
 const scene = await Browser .createX3DFromString (`#X3D V{{ site.x3d_latest_version }} utf8
 PROFILE Interchange
