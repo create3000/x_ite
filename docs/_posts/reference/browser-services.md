@@ -727,11 +727,11 @@ Parse the passed URL into an VRML scene. When complete send the passed event to 
 
 #### **addRoute** (*sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string*): void
 
-Add a route from the passed *sourceField* to the passed *destinationField*.
+Add a route in the current scene from the passed *sourceField* to the passed *destinationField*.
 
 #### **deleteRoute** (*sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string*): void
 
-Remove the route between the passed *sourceField* and passed *destinationField*, if one exists.
+Remove the route in the current scene between the passed *sourceField* and passed *destinationField*, if one exists.
 
 #### **loadURL** (*url: MFString, parameter?: MFString*): void
 
