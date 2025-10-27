@@ -19,7 +19,7 @@ None. This object cannot be instantiated by the user.
 
 A string of the declared name of this prototype. This property is read only.
 
-<x3d-script-area name="X3D ECMAScript Demo: X3DProtoDeclaration name">
+<x3d-script-area name="X3D ECMAScript Example: X3DProtoDeclaration name">
 <pre>
 const scene = await Browser .createX3DFromString (`#X3D V{{ site.x3d_latest_version }} utf8
 PROFILE Interchange
@@ -57,7 +57,7 @@ A string containing the documentation of this prototype. This property is read o
 
 Creates a new default instance of the prototype.
 
-<x3d-script-area name="X3D ECMAScript Demo: X3DProtoDeclaration newInstance">
+<x3d-script-area name="X3D ECMAScript Example: X3DProtoDeclaration newInstance">
 <pre>
 const scene = await Browser .createX3DFromString (`#X3D V{{ site.x3d_latest_version }} utf8
 PROFILE Interchange
@@ -113,7 +113,7 @@ A reference to FieldDefinitionArray of all the fields defined for this extern pr
 
 A MFString array of all the URI's defined for this extern prototype. This property is read only.
 
-<x3d-script-area name="X3D ECMAScript Demo: X3DExternProtoDeclaration urls">
+<x3d-script-area name="X3D ECMAScript Example: X3DExternProtoDeclaration urls">
 <pre>
 const scene = await Browser .createX3DFromString (`#X3D V{{ site.x3d_latest_version }} utf8
 PROFILE Interchange
@@ -165,7 +165,7 @@ Returns the X3D XML-encoded string that, if parsed as the value of createX3DFrom
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
-<x3d-script-area name="X3D ECMAScript Demo: X3DExternProtoDeclaration toXMLString">
+<x3d-script-area name="X3D ECMAScript Example: X3DExternProtoDeclaration toXMLString">
 <pre>
 const scene = await Browser .createX3DFromString (`#X3D V{{ site.x3d_latest_version }} utf8
 PROFILE Interchange

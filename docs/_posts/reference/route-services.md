@@ -15,7 +15,7 @@ None. This object cannot be instantiated by the user.
 
 ### Properties
 
-<x3d-script-area name="X3D ECMAScript Demo: X3DRoute Properties">
+<x3d-script-area name="X3D ECMAScript Example: X3DRoute Properties">
 <pre>
 const scene        = Browser .currentScene;
 const timer        = scene .createNode ("TimeSensor");

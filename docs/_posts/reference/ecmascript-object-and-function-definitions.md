@@ -40,7 +40,7 @@ The X3D object has several properties, you can use any of the properties below.
 
 The X3DConstants object defines values that can be useful for scripting. See also [Constants Services](/x_ite/reference/constants-services/).
 
-<x3d-script-area name="X3D External Browser Demo: X3DConstants" style="height: 630px">
+<x3d-script-area name="X3D External Browser Example: X3DConstants" style="height: 630px">
 <pre>
 const canvas  = X3D .createBrowser ();
 const browser = canvas .browser;
@@ -77,7 +77,7 @@ All X3DFields (SFColor, ..., MFBool, MFColor, and so on). The fields can be crea
 >**Note:** Scalar objects like SFBool, SFDouble, SFFloat, SFInt32, SFString, and SFTime have no constructor, just use the built-in JavaScript types Boolean, Number, and String.
 {: .prompt-info }
 
-<x3d-script-area name="X3D External Browser Demo: X3DFields">
+<x3d-script-area name="X3D External Browser Example: X3DFields">
 <pre>
 // Create a new translation vector and
 // determine the length of this vector.
@@ -161,7 +161,7 @@ The X3DCanvasElement, \<x3d-canvas\>, is the main element that displays the X3D 
 
 An \<x3d-canvas\> can be created with the `document.createElement` function to get a reference to an X3DCanvasElement.
 
-<x3d-script-area name="X3D External Browser Demo: createElement">
+<x3d-script-area name="X3D External Browser Example: createElement">
 <pre>
 const canvas  = document .createElement ("x3d-canvas");
 const browser = canvas .browser;

@@ -23,7 +23,7 @@ A browser-implementation specific string describing the browser. This property i
 
 A browser-implementation specific string describing the browser version. This property is read only.
 
-<x3d-script-area name="X3D ECMAScript Demo: X3DBrowser name/version">
+<x3d-script-area name="X3D ECMAScript Example: X3DBrowser name/version">
 <pre>
 print (Browser .name);
 print (Browser .version);
@@ -75,7 +75,7 @@ A String value which can be read and written, containing the URL against which r
 
 The real type of this class is dependent on whether the user code is inside a prototype instance or not. If the user code is inside a prototype instance the property represent an X3DExecutionContext otherwise it represent an X3DScene. This property is read only.
 
-<x3d-script-area name="X3D ECMAScript Demo: X3DBrowser currentScene">
+<x3d-script-area name="X3D ECMAScript Example: X3DBrowser currentScene">
 <pre>
 const node = Browser .currentScene .createNode ("Transform");
 
@@ -136,7 +136,7 @@ The `getComponent` service returns a ComponentInfo object of the named component
 
 The `createScene` service creates a new empty scene that conforms to the given profile and component declarations. The Promise resolves when all components are loaded.
 
-<x3d-script-area name="X3D ECMAScript Demo: X3DBrowser createScene">
+<x3d-script-area name="X3D ECMAScript Example: X3DBrowser createScene">
 <pre>
 const profile    = Browser .getProfile ("Interactive");
 const components = [Browser .getComponent ("Geometry2D"), Browser .getComponent ("Scripting")];
@@ -166,7 +166,7 @@ Replace the current world with this new scene that has been loaded or constructe
 
 The string may be any valid X3D content in any language supported by the browser implementation. If the browser does not support the content encoding the appropriate exception will be thrown.
 
-<x3d-script-area name="X3D ECMAScript Demo: X3DBrowser createX3DFromString">
+<x3d-script-area name="X3D ECMAScript Example: X3DBrowser createX3DFromString">
 <pre>
 const scene = await Browser .createX3DFromString (`#X3D V{{ site.x3d_latest_version }} utf8
 PROFILE Interchange
@@ -261,7 +261,7 @@ Returns a browser property with the corresponding *name*.
 
 Returns a browser option with the corresponding *name*.
 
-<x3d-script-area name="X3D ECMAScript Demo: X3DBrowser getBrowserOption">
+<x3d-script-area name="X3D ECMAScript Example: X3DBrowser getBrowserOption">
 <pre>
 print (Browser .getBrowserOption ("ColorSpace"));
 print (Browser .getBrowserOption ("TextCompression"));
@@ -484,7 +484,7 @@ Removes a browser option callback function associated with *key* and *name* from
 
 Returns a rendering property with the corresponding *name*.
 
-<x3d-script-area name="X3D ECMAScript Demo: X3DBrowser getRenderingProperty">
+<x3d-script-area name="X3D ECMAScript Example: X3DBrowser getRenderingProperty">
 <pre>
 print (Browser .getRenderingProperty ("Antialiased"));
 print (Browser .getRenderingProperty ("ContentScale"));
@@ -675,7 +675,7 @@ Prints *objects* to the browser's console without a newline character. Successiv
 
 Prints *objects* to the browser's console, inserting a newline character after the output. Successive calls to this function will result in each output presented on separate lines. The output is the implicit call to the object's `toString ()` function.
 
-<x3d-script-area name="X3D ECMAScript Demo: X3DBrowser println">
+<x3d-script-area name="X3D ECMAScript Example: X3DBrowser println">
 <pre>
 Browser .println ("Debug output ...");
 Browser .println ("comes here.");

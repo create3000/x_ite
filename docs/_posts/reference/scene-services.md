@@ -35,7 +35,7 @@ The encoding is represented as a string that describes the data encoding used. V
 
 Additional valid values are "GLTF", "OBJ", "STL", "PLY", "SVG".
 
-<x3d-script-area name="X3D ECMAScript Demo: X3DExecutionContext specificationVersion/encoding">
+<x3d-script-area name="X3D ECMAScript Example: X3DExecutionContext specificationVersion/encoding">
 <pre>
 const scene = Browser .currentScene;
 
@@ -79,7 +79,7 @@ A reference to the ImportedNodesArray object used by this execution context. Thi
 
 When used inside a prototype instance, this property is not writable. The MFNode object instance is also not be writable. When used anywhere else, it is writable.
 
-<x3d-script-area name="X3D ECMAScript Demo: X3DExecutionContext rootNodes">
+<x3d-script-area name="X3D ECMAScript Example: X3DExecutionContext rootNodes">
 <pre>
 const scene = Browser .currentScene;
 
@@ -116,7 +116,7 @@ Creates a new default instance of the node given by the *typeName* string contai
 
 Creates a new default instance of the prototype given by the *protoName* string containing the name of an prototype or extern prototype of this execution context.
 
-<x3d-script-area name="X3D ECMAScript Demo: X3DExecutionContext createProto">
+<x3d-script-area name="X3D ECMAScript Example: X3DExecutionContext createProto">
 <pre>
 const scene = await Browser .createX3DFromString (`#X3D V{{ site.x3d_latest_version }} utf8
 PROFILE Interchange
@@ -168,7 +168,7 @@ Removes the imported node *importedName.*
 
 Add a route from the passed *sourceField* to the passed *destinationField.* The return value is an X3DRoute object.
 
-<x3d-script-area name="X3D ECMAScript Demo: X3DExecutionContext addRoute">
+<x3d-script-area name="X3D ECMAScript Example: X3DExecutionContext addRoute">
 <pre>
 const scene        = Browser .currentScene;
 const timer        = scene .createNode ("TimeSensor");
@@ -279,7 +279,7 @@ Removes *node* from the list of root nodes.
 
 Returns a reference to the node with the exported name *exportedName.* If no exported node *exportedName* is found an exception is thrown.
 
-<x3d-script-area name="X3D ECMAScript Demo: X3DExecutionContext getExportedNode">
+<x3d-script-area name="X3D ECMAScript Example: X3DExecutionContext getExportedNode">
 <pre>
 const scene = await Browser .createX3DFromString (`#X3D V{{ site.x3d_latest_version }} utf8
 PROFILE Interchange
@@ -321,7 +321,7 @@ An object with one or more of these properties:
 * **html:** boolean, HTML style, default: false
 * **closingTags:** boolean, use closing tags, default: false
 
-<x3d-script-area name="X3D ECMAScript Demo: X3DScene toVRMLString">
+<x3d-script-area name="X3D ECMAScript Example: X3DScene toVRMLString">
 <pre>
 const scene        = Browser .currentScene;
 const timer        = scene .createNode ("TimeSensor");
