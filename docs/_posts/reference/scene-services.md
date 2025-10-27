@@ -33,6 +33,20 @@ The string represent the basic specification version used by the parsed file in 
 
 The encoding is represented as a string that describes the data encoding used. Valid values are "ASCII", "VRML", "XML", "BINARY", "SCRIPTED", "BIFS", "NONE". This property is read only.
 
+Additional valid values are "GLTF", "OBJ", "STL", "PLY", "SVG".
+
+<x3d-script-area name="X3D ECMAScript Demo: X3DExecutionContext specificationVersion/encoding">
+<pre>
+const scene = Browser .currentScene;
+
+print (scene .specificationVersion);
+print (scene .encoding);
+
+// Expected output: {{ site.x3d_latest_version }}
+// Expected output: SCRIPTED
+</pre>
+</x3d-script-area>
+
 #### **profile**: ProfileInfo | null
 
 A reference to the ProfileInfo object used by this execution context. A value of `null` implies profile `Full`.  This property is read only.
