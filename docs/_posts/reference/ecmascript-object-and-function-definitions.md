@@ -82,9 +82,8 @@ All X3DFields (SFColor, ..., MFBool, MFColor, and so on). The fields can be crea
 // Create a new translation vector and
 // determine the length of this vector.
 
-const
-  translation = new X3D .SFVec3f (4, 2, 0),
-  length      = translation .length ();
+const translation = new X3D .SFVec3f (4, 2, 0);
+const length      = translation .length ();
 
 console .log (length);
 // Expected output: 4.47213595499958
