@@ -56,10 +56,10 @@ for (const type of types)
   switch (type)
   {
     case X3D .X3DConstants .DirectionalLight:
-      console .log ("Node is of type DirectionalLight.")
+      console .log ("Node is of type DirectionalLight.");
       continue;
     case X3D .X3DConstants .X3DLightNode:
-      console .log ("Node is at least of type X3DLightNode.")
+      console .log ("Node is at least of type X3DLightNode.");
       continue;
     case X3D .X3DConstants .Transform:
       break; // Leave for loop.
