@@ -6,11 +6,11 @@ uniform sampler2D x3d_TexCoordRamp;
 
 in vec4 x3d_Particle;
 
-const int map [6] = int [6] (0, 1, 2, 0, 2, 3);
-
 vec4
 getInstanceTexCoord (const in vec4 texCoord, const in int vertexId)
 {
+   const int map [6] = int [6] (0, 1, 2, 0, 2, 3);
+
    int index0 = int (x3d_Particle [3]);
 
    return texelFetch (x3d_TexCoordRamp, index0 + map [vertexId], 0);
