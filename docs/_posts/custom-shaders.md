@@ -234,7 +234,7 @@ A [ComposedShader](/x_ite/components/shaders/composedshader/) node provides the 
 | SFMatrix3f     | mat3                  |                                         |
 | SFMatrix4d     | mat4                  |                                         |
 | SFMatrix4f     | mat4                  |                                         |
-| SFNode         | see node fields table |                                         |
+| SFNode         | [see node fields table](#node-fields) |                         |
 | SFRotation     | mat3                  | 3×3 matrix representation               |
 | SFString       | not supported         |                                         |
 | SFTime         | float                 |                                         |
@@ -256,7 +256,7 @@ A [ComposedShader](/x_ite/components/shaders/composedshader/) node provides the 
 | MFMatrix3f     | mat3 [ ]              |                                         |
 | MFMatrix4d     | mat4 [ ]              |                                         |
 | MFMatrix4f     | mat4 [ ]              |                                         |
-| MFNode         | see node fields table |                                         |
+| MFNode         | [see node fields table](#node-fields) |                         |
 | MFRotation     | mat3 [ ]              | 3×3 matrix representation               |
 | MFString       | not supported         |                                         |
 | MFTime         | float [ ]             |                                         |
@@ -296,7 +296,7 @@ A [ComposedShader](/x_ite/components/shaders/composedshader/) defines a number o
       <tr>
          <td>uniform x3d_FogParameters</td>
          <td>x3d_Fog</td>
-         <td>see table »Uniform Struct x3d_FogParameters«</td>
+         <td>see table <a href="#uniform-struct-x3d_fogparameters">Uniform Struct x3d_FogParameters</a></td>
       </tr>
       <tr>
          <td colspan="3"><hr/></td>
@@ -304,7 +304,7 @@ A [ComposedShader](/x_ite/components/shaders/composedshader/) defines a number o
       <tr>
          <td>uniform x3d_LightSourceParameters</td>
          <td>x3d_LightSource [x3d_MaxLights]</td>
-         <td>see table »Uniform Struct x3d_LightSourceParameters«</td>
+         <td>see table <a href="#uniform-struct-x3d_lightsourceparameters">Uniform Struct x3d_LightSourceParameters</a></td>
       </tr>
       <tr>
          <td colspan="3"><hr/></td>
@@ -317,17 +317,17 @@ A [ComposedShader](/x_ite/components/shaders/composedshader/) defines a number o
       <tr>
          <td>uniform x3d_PointPropertiesParameters</td>
          <td>x3d_PointProperties</td>
-         <td>see table »Uniform Struct x3d_PointPropertiesParameters«</td>
+         <td>see table <a href="#uniform-struct-x3d_pointpropertiesparameters">Uniform Struct x3d_PointPropertiesParameters</a></td>
       </tr>
       <tr>
          <td>uniform x3d_LinePropertiesParameters</td>
          <td>x3d_LineProperties</td>
-         <td>see table »Uniform Struct x3d_LinePropertiesParameters«</td>
+         <td>see table <a href="#uniform-struct-x3d_linepropertiesparameters">Uniform Struct x3d_LinePropertiesParameters</a></td>
       </tr>
       <tr>
          <td>uniform x3d_FillPropertiesParameters</td>
          <td>x3d_FillProperties</td>
-         <td>see table »Uniform Struct x3d_FillPropertiesParameters«</td>
+         <td>see table <a href="#uniform-struct-x3d_fillpropertiesparameters">Uniform Struct x3d_FillPropertiesParameters</a></td>
       </tr>
       <tr>
          <td colspan="3"><hr/></td>
@@ -335,7 +335,7 @@ A [ComposedShader](/x_ite/components/shaders/composedshader/) defines a number o
       <tr>
          <td>uniform x3d_MaterialParameters</td>
          <td>x3d_Material</td>
-         <td>see table »Uniform Struct x3d_MaterialParameters«</td>
+         <td>see table <a href="#uniform-struct-x3d_materialparameters">Uniform Struct x3d_MaterialParameters</a></td>
       </tr>
       <tr>
          <td colspan="3"><hr/></td>
@@ -353,7 +353,7 @@ A [ComposedShader](/x_ite/components/shaders/composedshader/) defines a number o
       <tr>
          <td>uniform x3d_TextureCoordinateGeneratorParameters</td>
          <td>x3d_TextureCoordinateGenerator [x3d_MaxTextures]</td>
-         <td>see table »Uniform Struct x3d_TextureCoordinateGeneratorParameters«</td>
+         <td>see table <a href="#uniform-struct-x3d_texturecoordinategeneratorparameters">Uniform Struct x3d_TextureCoordinateGeneratorParameters</a></td>
       </tr>
       <tr>
          <td colspan="3"><hr/></td>
@@ -399,37 +399,42 @@ A [ComposedShader](/x_ite/components/shaders/composedshader/) defines a number o
       <tr>
          <td>in float</td>
          <td>x3d_FogDepth</td>
-         <td>fog depth of the vertex overriding Fog.visibilityRange; available if FogCoordinate is attached</td>
+         <td>fog depth of vertex overriding Fog.visibilityRange; available if FogCoordinate is attached</td>
       </tr>
       <tr>
          <td>in vec4</td>
          <td>x3d_Color</td>
-         <td>color of the vertex; available if X3DColorNode is attached</td>
+         <td>color of vertex; available if X3DColorNode is attached</td>
       </tr>
       <tr>
          <td>in vec4</td>
          <td>x3d_TexCoord0</td>
-         <td>texture coordinate of the vertex from channel 0</td>
+         <td>texture coordinate of vertex from channel 0, if provided or auto generated</td>
       </tr>
       <tr>
          <td>in vec4</td>
          <td>x3d_TexCoord1</td>
-         <td>texture coordinate of the vertex from channel 1</td>
+         <td>texture coordinate of vertex from channel 1, if provided</td>
       </tr>
       <tr>
          <td>in vec4</td>
          <td>x3d_TexCoord2</td>
-         <td>texture coordinate of the vertex from channel 2</td>
+         <td>texture coordinate of vertex from channel 2, if provided</td>
       </tr>
       <tr>
          <td>in vec4</td>
          <td>x3d_TexCoord3</td>
-         <td>texture coordinate of the vertex from channel 3</td>
+         <td>texture coordinate of vertex from channel 3, if provided</td>
+      </tr>
+      <tr>
+         <td>in vec4</td>
+         <td>x3d_Tangent</td>
+         <td>tangent vector of vertex</td>
       </tr>
       <tr>
          <td>in vec3</td>
          <td>x3d_Normal</td>
-         <td>normal of the vertex</td>
+         <td>normal vector of vertex</td>
       </tr>
       <tr>
          <td>in vec4</td>
