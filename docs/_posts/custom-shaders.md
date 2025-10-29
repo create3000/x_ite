@@ -209,7 +209,9 @@ Normally the browser automatically determines the alpha treatment based on mater
 
 ## Data Type Mapping
 
-A [ComposedShader](/x_ite/components/shaders/composedshader/) node provides the capability to define custom fields like the [Script](/x_ite/components/scripting/script/) node it does, these fields are then mapped to GLSL uniform variables. They are automatically updated and can be of any access type (initializeOnly, inputOnly, outputOnly or inputOutput).
+A [ComposedShader](/x_ite/components/shaders/composedshader/) node provides the capability to define custom fields like the [Script](/x_ite/components/scripting/script/) node it does, these fields are then mapped to GLSL uniform variables. They are automatically updated and can be of any access type (`initializeOnly`, `inputOnly`, outputOnly or `inputOutput`).
+
+These fields are then available in the shader as **uniform variables**, using corresponding GLSL data types such as `float`, `vec2`, `vec3`, `vec4`, `mat4`, or `sampler2D`, depending on the X3D field type.
 
 ### Node fields
 
