@@ -221,231 +221,51 @@ A [ComposedShader](/x_ite/components/shaders/composedshader/) node provides the 
 
 ### X3D field types to GLSL data types
 
-<table>
-   <thead>
-      <tr>
-         <th>X3D field type</th>
-         <th>GLSL variable type</th>
-         <th></th>
-      </tr>
-   </thead>
-   <tbody>
-      <tr>
-         <td>SFBool</td>
-         <td>bool</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFColor</td>
-         <td>vec3</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFColorRGBA</td>
-         <td>vec4</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFDouble</td>
-         <td>float</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFFloat</td>
-         <td>float</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFImage</td>
-         <td>int [ ]</td>
-         <td>(width, height, comp, array)</td>
-      </tr>
-      <tr>
-         <td>SFInt32</td>
-         <td>int</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFMatrix3d</td>
-         <td>mat3</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFMatrix3f</td>
-         <td>mat3</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFMatrix4d</td>
-         <td>mat4</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFMatrix4f</td>
-         <td>mat4</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFNode</td>
-         <td>see node fields table</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFRotation</td>
-         <td>mat3</td>
-         <td>3×3 matrix representation</td>
-      </tr>
-      <tr>
-         <td>SFString</td>
-         <td>not supported</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFTime</td>
-         <td>float</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFVec2d</td>
-         <td>vec2</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFVec2f</td>
-         <td>vec2</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFVec3d</td>
-         <td>vec3</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFVec3f</td>
-         <td>vec3</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFVec4d</td>
-         <td>vec4</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFVec4f</td>
-         <td>vec4</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td colspan="4"><hr/>
-         </td>
-      </tr>
-      <tr>
-         <td>MFBool</td>
-         <td>bool [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFColor</td>
-         <td>vec3 [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFColorRGBA</td>
-         <td>vec4 [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFDouble</td>
-         <td>float [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFFloat</td>
-         <td>float [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFImage</td>
-         <td>int [ ]</td>
-         <td>(width, height, comp, array, width ...)</td>
-      </tr>
-      <tr>
-         <td>MFInt32</td>
-         <td>int [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFMatrix3d</td>
-         <td>mat3 [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFMatrix3f</td>
-         <td>mat3 [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFMatrix4d</td>
-         <td>mat4 [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFMatrix4f</td>
-         <td>mat4 [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFNode</td>
-         <td>see node fields table</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFRotation</td>
-         <td>mat3 [ ]</td>
-         <td>3×3 matrix representation</td>
-      </tr>
-      <tr>
-         <td>MFString</td>
-         <td>not supported</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFTime</td>
-         <td>float [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFVec2d</td>
-         <td>vec2 [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFVec2f</td>
-         <td>vec2 [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFVec3d</td>
-         <td>vec3 [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFVec3f</td>
-         <td>vec3 [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFVec4d</td>
-         <td>vec4 [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFVec4f</td>
-         <td>vec4 [ ]</td>
-         <td></td>
-      </tr>
-   </tbody>
-</table>
+| X3D field type | GLSL variable type    | Comment                                 |
+|----------------|-----------------------|-----------------------------------------|
+| SFBool         | bool                  |                                         |
+| SFColor        | vec3                  |                                         |
+| SFColorRGBA    | vec4                  |                                         |
+| SFDouble       | float                 |                                         |
+| SFFloat        | float                 |                                         |
+| SFImage        | int [ ]               | (width, height, comp, array)            |
+| SFInt32        | int                   |                                         |
+| SFMatrix3d     | mat3                  |                                         |
+| SFMatrix3f     | mat3                  |                                         |
+| SFMatrix4d     | mat4                  |                                         |
+| SFMatrix4f     | mat4                  |                                         |
+| SFNode         | see node fields table |                                         |
+| SFRotation     | mat3                  | 3×3 matrix representation               |
+| SFString       | not supported         |                                         |
+| SFTime         | float                 |                                         |
+| SFVec2d        | vec2                  |                                         |
+| SFVec2f        | vec2                  |                                         |
+| SFVec3d        | vec3                  |                                         |
+| SFVec3f        | vec3                  |                                         |
+| SFVec4d        | vec4                  |                                         |
+| SFVec4f        | vec4                  |                                         |
+| <br>           |
+| MFBool         | bool [ ]              |                                         |
+| MFColor        | vec3 [ ]              |                                         |
+| MFColorRGBA    | vec4 [ ]              |                                         |
+| MFDouble       | float [ ]             |                                         |
+| MFFloat        | float [ ]             |                                         |
+| MFImage        | int [ ]               | (width, height, comp, array, width ...) |
+| MFInt32        | int [ ]               |                                         |
+| MFMatrix3d     | mat3 [ ]              |                                         |
+| MFMatrix3f     | mat3 [ ]              |                                         |
+| MFMatrix4d     | mat4 [ ]              |                                         |
+| MFMatrix4f     | mat4 [ ]              |                                         |
+| MFNode         | see node fields table |                                         |
+| MFRotation     | mat3 [ ]              | 3×3 matrix representation               |
+| MFString       | not supported         |                                         |
+| MFTime         | float [ ]             |                                         |
+| MFVec2d        | vec2 [ ]              |                                         |
+| MFVec2f        | vec2 [ ]              |                                         |
+| MFVec3d        | vec3 [ ]              |                                         |
+| MFVec3f        | vec3 [ ]              |                                         |
+| MFVec4d        | vec4 [ ]              |                                         |
+| MFVec4f        | vec4 [ ]              |                                         |
 
 ## Built-in Variables
 
