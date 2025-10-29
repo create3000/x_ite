@@ -114,7 +114,7 @@ main ()
    #endif
 
    #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
-      setPointTexCoords ();
+      setPointTexCoords (gl_PointCoord);
    #elif defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
       setTexCoords ();
    #endif
@@ -133,11 +133,11 @@ main ()
    #endif
 
    #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
-      finalColor = getPointColor (finalColor);
+      finalColor = getPointColor (finalColor, gl_PointCoord);
    #endif
 
    #if (defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D)) && defined (X3D_STYLE_PROPERTIES)
-      finalColor = getHatchColor (finalColor);
+      finalColor = getHatchColor (finalColor, gl_FragCoord);
    #endif
 
    #if defined (X3D_FOG)

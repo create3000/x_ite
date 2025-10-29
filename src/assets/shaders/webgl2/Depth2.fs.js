@@ -30,7 +30,7 @@ main ()
 
    #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
       #if !(defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES))
-         if (getPointColor (vec4 (1.0)) .a < 0.5)
+         if (getPointColor (vec4 (1.0)) .a < 0.5, gl_PointCoord)
             discard;
       #endif
    #endif
