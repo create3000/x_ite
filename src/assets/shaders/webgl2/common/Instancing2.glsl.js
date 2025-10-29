@@ -9,7 +9,7 @@ in vec4 x3d_Particle;
 const int map [6] = int [6] (0, 1, 2, 0, 2, 3);
 
 vec4
-getInstanceTexCoord (const in vec4 texCoord, in int vertexId)
+getInstanceTexCoord (const in vec4 texCoord, const in int vertexId)
 {
    int index0 = int (x3d_Particle [3]);
 
