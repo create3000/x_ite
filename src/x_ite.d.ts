@@ -327,11 +327,11 @@ declare namespace X3D
        */
       createVrmlFromURL (url: MFString, node: SFNode, fieldName: string): void;
       /**
-       * Add a route from the passed *sourceField* to the passed *destinationField*.
+       * Add a route in the current scene from the passed *sourceField* to the passed *destinationField*.
        */
       addRoute (sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string): void;
       /**
-       * Remove the route between the passed *sourceField* and passed *destinationField*, if one exists.
+       * Remove the route in the current scene between the passed *sourceField* and passed *destinationField*, if one exists.
        */
       deleteRoute (sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string): void;
       /**
@@ -603,6 +603,8 @@ declare namespace X3D
       readonly specificationVersion: string;
       /**
        * The encoding is represented as a string that describes the data encoding used. Valid values are "ASCII", "VRML", "XML", "BINARY", "SCRIPTED", "BIFS", "NONE". This property is read only.
+       *
+       * Additional valid values are “GLTF”, “OBJ”, “STL”, “PLY”, “SVG”.
        */
       readonly encoding: "ASCII" | "VRML" | "XML" | "JSON" | "BINARY" | "SCRIPTED" | "BIFS" | "NONE" | "GLTF" | "OBJ" | "STL" | "PLY" | "SVG";
       /**
