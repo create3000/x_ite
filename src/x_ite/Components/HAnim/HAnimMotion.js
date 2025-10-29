@@ -148,8 +148,10 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          values        = this ._values,
          numChannels   = channels .reduce ((v, c) => v + c .length, 0),
          frameCount    = Math .floor (numChannels ? values .length / numChannels : 0),
-         types         = new Map (),
-         interpolators = Array .from ({ length: channels .length }, () => ({ }));
+         interpolators = Array .from ({ length: channels .length }, () => ({ })),
+         position      = new Vector3 (),
+         rotation      = new Vector3 (),
+         scale         = new Vector3 ();
 
       this .interpolators = interpolators;
 
@@ -159,66 +161,110 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
          for (const [j, joint] of channels .entries ())
          {
-            types .clear ();
+            position .set (0, 0, 0);
+            rotation .set (0, 0, 0);
+            scale    .set (1, 1, 1);
+
+            position .channels = false;
+            rotation .channels = false;
+            scale    .channels = false;
+
+            rotation .order = "";
 
             for (const channel of joint)
-               types .set (channel, values [v ++]);
-
-            if (types .has ("Xposition") || types .has ("Yposition") || types .has ("Zposition"))
             {
-               const interpolator = interpolators [j] .translation
-                  ??= new PositionInterpolator (this .getExecutionContext ());
-
-               const keyValue = new Vector3 (types .get ("Xposition") ?? 0,
-                                             types .get ("Yposition") ?? 0,
-                                             types .get ("Zposition") ?? 0);
-
-               interpolator ._key      .push (key);
-               interpolator ._keyValue .push (keyValue);
-
-               timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
-            }
-
-            if (types .has ("Xrotation") || types .has ("Yrotation") || types .has ("Zrotation"))
-            {
-               let order = "";
-
-               for (const key of types .keys ())
+               switch (channel)
                {
-                  const m = key .match (/^([XYZ])rotation$/);
-
-                  if (!m)
-                     continue;
-
-                  order += m [1];
+                  case "Xposition":
+                     position .channels = true;
+                     position .x        = values [v ++];
+                     break;
+                  case "Yposition":
+                     position .channels = true;
+                     position .y        = values [v ++];
+                     break;
+                  case "Zposition":
+                     position .channels = true;
+                     position .z        = values [v ++];
+                     break;
+                  case "Xrotation":
+                     rotation .channels = true;
+                     rotation .order   += "X";
+                     rotation .x        = Algorithm .radians (values [v ++]);
+                     break;
+                  case "Yrotation":
+                     rotation .channels = true;
+                     rotation .order   += "Y";
+                     rotation .y        = Algorithm .radians (values [v ++]);
+                     break;
+                  case "Zrotation":
+                     rotation .channels = true;
+                     rotation .order   += "Z";
+                     rotation .z        = Algorithm .radians (values [v ++]);
+                     break;
+                  case "Xscale":
+                     scale .channels = true;
+                     scale .x        = values [v ++];
+                     break;
+                  case "Yscale":
+                     scale .channels = true;
+                     scale .y        = values [v ++];
+                     break;
+                  case "Zscale":
+                     scale .channels = true;
+                     scale .z        = values [v ++];
+                     break;
+                  default:
+                     v ++;
+                     break;
                }
-
-               const interpolator = interpolators [j] .rotation
-                  ??= new OrientationInterpolator (this .getExecutionContext ());
-
-               const keyValue = Rotation4 .fromEuler (Algorithm .radians (types .get ("Xrotation") ?? 0),
-                                                      Algorithm .radians (types .get ("Yrotation") ?? 0),
-                                                      Algorithm .radians (types .get ("Zrotation") ?? 0), order);
-
-               interpolator ._key      .push (key);
-               interpolator ._keyValue .push (keyValue);
-
-               timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
             }
 
-            if (types .has ("Xscale") || types .has ("Yscale") || types .has ("Zscale"))
+            if (position .channels)
             {
-               const interpolator = interpolators [j] .scale
-                  ??= new PositionInterpolator (this .getExecutionContext ());
+               const interpolator = interpolators [j] .translation ??= (() =>
+               {
+                  const interpolator = new PositionInterpolator (this .getExecutionContext ());
 
-               const keyValue = new Vector3 (types .get ("Xscale") ?? 1,
-                                             types .get ("Yscale") ?? 1,
-                                             types .get ("Zscale") ?? 1);
+                  timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
+
+                  return interpolator;
+               })();
+
+               interpolator ._key      .push (key);
+               interpolator ._keyValue .push (position);
+            }
+
+            if (rotation .channels)
+            {
+               const interpolator = interpolators [j] .rotation ??= (() =>
+               {
+                  const interpolator = new OrientationInterpolator (this .getExecutionContext ());
+
+                  timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
+
+                  return interpolator;
+               })();
+
+               const keyValue = Rotation4 .fromEuler (... rotation, rotation .order);
 
                interpolator ._key      .push (key);
                interpolator ._keyValue .push (keyValue);
+            }
 
-               timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
+            if (scale .channels)
+            {
+               const interpolator = interpolators [j] .scale ??= (() =>
+               {
+                  const interpolator = new PositionInterpolator (this .getExecutionContext ());
+
+                  timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
+
+                  return interpolator;
+               })();
+
+               interpolator ._key      .push (key);
+               interpolator ._keyValue .push (scale);
             }
          }
       }
