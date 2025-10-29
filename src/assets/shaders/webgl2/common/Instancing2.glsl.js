@@ -6,17 +6,17 @@ uniform sampler2D x3d_TexCoordRamp;
 
 in vec4 x3d_Particle;
 
-vec4
-getInstanceTexCoord (const in vec4 texCoord)
-{
-   const int map [6] = int [6] (0, 1, 2, 0, 2, 3);
+const int map [6] = int [6] (0, 1, 2, 0, 2, 3);
 
+vec4
+getInstanceTexCoord (const in vec4 texCoord, in int id)
+{
    int index0 = int (x3d_Particle [3]);
 
-   return texelFetch (x3d_TexCoordRamp, index0 + map [gl_VertexID % 6], 0);
+   return texelFetch (x3d_TexCoordRamp, index0 + map [id], 0);
 }
 #else
-   #define getInstanceTexCoord(texCoord) (texCoord)
+   #define getInstanceTexCoord(texCoord,id) (texCoord)
 #endif
 
 #if defined (X3D_INSTANCE_NORMAL)
@@ -48,7 +48,7 @@ getInstancePointSize (const in float pointSize)
 #else
    #define getInstanceVertex(vertex) (vertex)
    #define getInstanceNormal(normal) (normal)
-   #define getInstanceTexCoord(texCoord) (texCoord)
+   #define getInstanceTexCoord(texCoord,id) (texCoord)
    #define getInstancePointSize(pointSize) (pointSize)
 #endif
 `;
