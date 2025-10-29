@@ -205,7 +205,7 @@ main ()
 
 Lighting is enabled if a [Material](/x_ite/components/shape/material/) node is used and some lights are on.
 
-Normally the browser automatically determines the alpha treatment based on material, colors, and images, but you can force a alpha mode by setting the *alphaMode* field of a [Appearance](/x_ite/components/shape/appearance/) node.
+The browser usually determines the alpha treatment automatically based on the material, colors and images used. However, you can force an alpha mode by setting the *alphaMode* field of an [Appearance](/x_ite/components/shape/appearance/) node.
 
 ## Data Type Mapping
 
