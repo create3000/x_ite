@@ -10,9 +10,9 @@ flat in vec2  startPoint;  // in px
 in vec2       midPoint;    // in px
 
 void
-stipple ()
+stipple (const in vec4 fragCoord)
 {
-   vec2  point = closest_point (line2 (startPoint, midPoint), gl_FragCoord .xy);
+   vec2  point = closest_point (line2 (startPoint, midPoint), fragCoord .xy);
    float s     = (lengthSoFar + length (point - startPoint)) * x3d_LineProperties .lineStippleScale;
 
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)

@@ -39,7 +39,7 @@ main ()
    #endif
 
    #if defined (X3D_GEOMETRY_1D) && defined (X3D_STYLE_PROPERTIES)
-      stipple ();
+      stipple (gl_FragCoord);
    #endif
 
    x3d_FragData0 = vec4 (vertex, x3d_Id);
