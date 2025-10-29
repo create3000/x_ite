@@ -17,6 +17,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 * New glTF extension [KHR_materials_volume_scatter](/x_ite/components/x-ite/volumescattermaterialextension/) implemented.
 * If a glTF file with animations is loaded, a new »Animations« menu will appear in the context menu.
 * Bug fix of [Text](/x_ite/components/text/text/) node with vertical text and *topToBottom* set to `FALSE`.
+* Bug fix when [ParticleSystem](/x_ite/components/particlesystems/particlesystem/) *texCoord* is used.
 
 ## X_ITE v12.0 Series
 
