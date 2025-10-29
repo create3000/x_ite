@@ -144,13 +144,15 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          .split (/[\s,]+\d+[\s,]+/s)
          .map (string => string .split (/[\s,]+/s));
 
+      // console .time ("set_interpolators__");
+
       const
          values        = this ._values,
          numChannels   = channels .reduce ((v, c) => v + c .length, 0),
          frameCount    = Math .floor (numChannels ? values .length / numChannels : 0),
          interpolators = Array .from ({ length: channels .length }, () => ({ })),
          position      = new Vector3 (),
-         rotation      = new Vector3 (),
+         rotation      = new Rotation4 (),
          scale         = new Vector3 ();
 
       this .interpolators = interpolators;
@@ -161,58 +163,54 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
          for (const [j, joint] of channels .entries ())
          {
-            position .set (0, 0, 0);
-            rotation .set (0, 0, 0);
-            scale    .set (1, 1, 1);
-
-            position .channels = false;
-            rotation .channels = false;
-            scale    .channels = false;
-
-            rotation .order = "";
+            let
+               Xposition = 0, Yposition = 0, Zposition = 0, positionChannels,
+               Xrotation = 0, Yrotation = 0, Zrotation = 0, rotationChannels,
+               Xscale    = 1, Yscale    = 1, Zscale    = 1, scaleChannels,
+               rotationOrder = "";
 
             for (const channel of joint)
             {
                switch (channel)
                {
                   case "Xposition":
-                     position .channels = true;
-                     position .x        = values [v ++];
+                     positionChannels = true;
+                     Xposition        = values [v ++];
                      break;
                   case "Yposition":
-                     position .channels = true;
-                     position .y        = values [v ++];
+                     positionChannels = true;
+                     Yposition        = values [v ++];
                      break;
                   case "Zposition":
-                     position .channels = true;
-                     position .z        = values [v ++];
+                     positionChannels = true;
+                     Zposition        = values [v ++];
                      break;
                   case "Xrotation":
-                     rotation .channels = true;
-                     rotation .order   += "X";
-                     rotation .x        = Algorithm .radians (values [v ++]);
+                     rotationChannels = true;
+                     rotationOrder   += "X";
+                     Xrotation        = Algorithm .radians (values [v ++]);
                      break;
                   case "Yrotation":
-                     rotation .channels = true;
-                     rotation .order   += "Y";
-                     rotation .y        = Algorithm .radians (values [v ++]);
+                     rotationChannels = true;
+                     rotationOrder   += "Y";
+                     Yrotation        = Algorithm .radians (values [v ++]);
                      break;
                   case "Zrotation":
-                     rotation .channels = true;
-                     rotation .order   += "Z";
-                     rotation .z        = Algorithm .radians (values [v ++]);
+                     rotationChannels = true;
+                     rotationOrder   += "Z";
+                     Zrotation        = Algorithm .radians (values [v ++]);
                      break;
                   case "Xscale":
-                     scale .channels = true;
-                     scale .x        = values [v ++];
+                     scaleChannels = true;
+                     Xscale        = values [v ++];
                      break;
                   case "Yscale":
-                     scale .channels = true;
-                     scale .y        = values [v ++];
+                     scaleChannels = true;
+                     Yscale        = values [v ++];
                      break;
                   case "Zscale":
-                     scale .channels = true;
-                     scale .z        = values [v ++];
+                     scaleChannels = true;
+                     Zscale        = values [v ++];
                      break;
                   default:
                      v ++;
@@ -220,7 +218,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
                }
             }
 
-            if (position .channels)
+            if (positionChannels)
             {
                const interpolator = interpolators [j] .translation ??= (() =>
                {
@@ -232,10 +230,10 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
                })();
 
                interpolator ._key      .push (key);
-               interpolator ._keyValue .push (position);
+               interpolator ._keyValue .push (position .set (Xposition, Yposition, Zposition));
             }
 
-            if (rotation .channels)
+            if (rotationChannels)
             {
                const interpolator = interpolators [j] .rotation ??= (() =>
                {
@@ -246,13 +244,11 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
                   return interpolator;
                })();
 
-               const keyValue = Rotation4 .fromEuler (... rotation, rotation .order);
-
                interpolator ._key      .push (key);
-               interpolator ._keyValue .push (keyValue);
+               interpolator ._keyValue .push (rotation .setEuler (Xrotation, Yrotation, Zrotation, rotationOrder));
             }
 
-            if (scale .channels)
+            if (scaleChannels)
             {
                const interpolator = interpolators [j] .scale ??= (() =>
                {
@@ -264,7 +260,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
                })();
 
                interpolator ._key      .push (key);
-               interpolator ._keyValue .push (scale);
+               interpolator ._keyValue .push (scale .set (Xscale, Yscale, Zscale));
             }
          }
       }
@@ -274,6 +270,8 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          for (const interpolator of Object .values (joint))
             interpolator .setup ();
       }
+
+      // console .timeEnd ("set_interpolators__");
 
       this ._frameIndex = 0;
       this ._startFrame = 0;
