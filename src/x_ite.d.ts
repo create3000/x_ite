@@ -598,7 +598,7 @@ declare namespace X3D
    class X3DExecutionContext extends X3DObject
    {
       /**
-       * The string represent the basic specification version used by the parsed file in decimal format. For example, a scene conforming to this specification returns a value such as "4.0". This property is read only.
+       * The string represent the basic specification version used by the parsed file in decimal format. For example, a scene conforming to this specification returns a value such as "4.1". This property is read only.
        */
       readonly specificationVersion: string;
       /**
