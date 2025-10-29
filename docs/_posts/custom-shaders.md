@@ -203,7 +203,7 @@ main ()
 
 ## Lighting and Transparency
 
-Lighting is enabled if a [Material](/x_ite/components/shape/material/) node is used and some lights are on.
+Lighting is enabled if a [Material](/x_ite/components/shape/material/) or [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/) node is used and some lights are on.
 
 The browser usually determines the alpha treatment automatically based on the material, colors and images used. However, you can force an alpha mode by setting the *alphaMode* field of an [Appearance](/x_ite/components/shape/appearance/) node.
 
