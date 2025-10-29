@@ -120,7 +120,7 @@ Object .assign (Object .setPrototypeOf (ShaderPart .prototype, X3DNode .prototyp
                   typeName = this .getTypeName (),
                   name     = this .getName (),
                   log      = gl .getShaderInfoLog (shader),
-                  match    = log .match (/(\d+):(\d+)/);
+                  match    = log ?.match (/(\d+):(\d+)/);
 
                if (match)
                {
