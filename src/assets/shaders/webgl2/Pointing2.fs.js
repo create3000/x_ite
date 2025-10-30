@@ -32,7 +32,7 @@ main ()
    #endif
 
    #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
-      if (getPointColor (vec4 (1.0)) .a < 0.5, gl_PointCoord)
+      if (getPointColor (vec4 (1.0), gl_PointCoord) .a < 0.5)
          discard;
 
       texCoord0 = vec4 (gl_PointCoord .x, 1.0 - gl_PointCoord .y, 0.0, 1.0);
