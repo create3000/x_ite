@@ -85,7 +85,7 @@ bool frontFacing;
 #pragma X3D include "Fog.glsl"
 
 vec4
-getMaterialColor ();
+getMaterialColor (const in vec4 fragCoord);
 
 #if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
 // https://learnopengl.com/Guest-Articles/2020/OIT/Weighted-Blended
@@ -119,7 +119,7 @@ main ()
       setTexCoords ();
    #endif
 
-   vec4 finalColor = getMaterialColor ();
+   vec4 finalColor = getMaterialColor (gl_FragCoord);
 
    #if defined (X3D_ALPHA_MODE_OPAQUE)
       finalColor .a = 1.0;

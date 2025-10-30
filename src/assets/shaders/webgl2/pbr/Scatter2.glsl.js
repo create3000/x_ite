@@ -10,7 +10,7 @@ export default () => /* glsl */ `
 uniform float x3d_ScatterMaterialIdEXT;
 
 vec4
-getMaterialColor ()
+getMaterialColor (const in vec4 fragCoord)
 {
    vec3 singleScatter = multiToSingleScatter ();
    vec4 baseColor     = getBaseColor ();
