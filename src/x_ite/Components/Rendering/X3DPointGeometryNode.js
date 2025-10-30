@@ -31,11 +31,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
       // Enable sample alpha to coverage if not transparent.
 
       if (!transparent)
-      {
          gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
-         gl .enable (gl .BLEND);
-         gl .blendFuncSeparate (gl .ONE, gl .ZERO, gl .ZERO, gl .ONE);
-      }
 
       // Set viewport.
 
@@ -94,11 +90,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
       // Disable sample alpha to coverage if not transparent.
 
       if (!transparent)
-      {
          gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
-         gl .disable (gl .BLEND);
-         gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
-      }
    },
    displayInstanced (gl, renderContext, shapeNode)
    {
@@ -111,11 +103,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
       // Enable sample alpha to coverage if not transparent.
 
       if (!transparent)
-      {
          gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
-         gl .enable (gl .BLEND);
-         gl .blendFuncSeparate (gl .ONE, gl .ZERO, gl .ZERO, gl .ONE);
-      }
 
       // Set viewport.
 
@@ -193,11 +181,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
       // Disable sample alpha to coverage if not transparent.
 
       if (!transparent)
-      {
          gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
-         gl .disable (gl .BLEND);
-         gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
-      }
    },
 });
 
