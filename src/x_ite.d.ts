@@ -350,7 +350,7 @@ declare namespace X3D
       | boolean
       | null
       | JSONValue []
-      | { [key: string]: JSONValue }
+      | { [key: string]: JSONValue };
 
    interface JSONObject
    {
@@ -422,7 +422,7 @@ declare namespace X3D
       Multisampling:          number,
       PixelsPerPoint:         number,
       XRSession:              boolean,
-   }
+   };
 
    type ClosestObject = {
       node: X3DShapeNodeProxy | null,
@@ -2124,7 +2124,7 @@ declare namespace X3D
       doublePrecision?: number,
       html?: boolean,
       closingTags?: boolean,
-   }
+   };
 
    /**
     * The SFRotation object corresponds to an X3D SFRotation field.
@@ -2645,9 +2645,9 @@ declare namespace X3D
       with (index: number, value: T): this;
    }
 
-   type ArrayTest <T> = (element: T, i: number, array: X3DArrayField <T>) => boolean
-   type ArrayAction <T> = (element: T, i: number, array: X3DArrayField <T>) => void
-   type ArrayReducer <T, U> = (accum: U, current: T, i: number, array: X3DArrayField <T>) => U
+   type ArrayTest <T> = (element: T, i: number, array: X3DArrayField <T>) => boolean;
+   type ArrayAction <T> = (element: T, i: number, array: X3DArrayField <T>) => void;
+   type ArrayReducer <T, U> = (accum: U, current: T, i: number, array: X3DArrayField <T>) => U;
 
    /**
     * The MFBool object corresponds to an X3D MFBool field. It is used to store a one-dimensional array of SFBool objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfBoolObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `false`.
@@ -22873,7 +22873,7 @@ declare namespace X3D
       WorldInfo: WorldInfoProxy,
    }
    &
-   { [name: string]: X3DNodeProxy } // catch all;
+   { [name: string]: X3DNodeProxy }; // catch all;
 
    // NODES END
 }
