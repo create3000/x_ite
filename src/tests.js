@@ -76,7 +76,6 @@ const X_ITE_TESTS = [
    { path: "Extrusion/gears42P.x3d" },
    { path: "Extrusion/HalfSpheres.x3d" },
    { path: "Extrusion/Mobius.x3d" },
-   { path: "Extrusion/Möbius.x3d" },
    { path: "Extrusion/pipe.wrl" },
    { path: "Extrusion/Rotations.x3d" },
    { path: "Extrusion/Scales.x3d" },
