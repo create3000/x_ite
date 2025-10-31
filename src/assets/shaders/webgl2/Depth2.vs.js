@@ -30,7 +30,7 @@ void
 main ()
 {
    #if defined (X3D_NORMALS)
-      vec4 x3d_TransformedVertex = getInstanceVertex (getSkinVertex (x3d_Vertex, x3d_Normal, x3d_Tangent .xyz));
+      vec4 x3d_TransformedVertex = getInstanceVertex (getSkinVertex (x3d_Vertex, x3d_Normal, vec3 (0.0)));
       vec3 x3d_TransformedNormal = getInstanceNormal (getSkinNormal (x3d_Normal));
    #else
       vec4 x3d_TransformedVertex = getInstanceVertex (getSkinVertex (x3d_Vertex, vec3 (0.0), vec3 (0.0)));
