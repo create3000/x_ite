@@ -20,7 +20,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 * Bug fixed in [HAnimMotion](/x_ite/components/hanim/hanimmotion/) node with XYZ rotation handling.
 * Bug fixed when [ParticleSystem](/x_ite/components/particlesystems/particlesystem/) *texCoord* is used.
 * Bug fixed when points are rendered on a transparent [Background](/x_ite/components/environmentaleffects/background/).
-* Fixed fatal bug in Depth shader when [ClipPlane](/x_ite/components/rendering/clipplane/) nodes are used. This affects shadows and pointing device operations.
+* Fixed fatal bug in Depth shader when [ClipPlane](/x_ite/components/rendering/clipplane/) nodes are used. This affects shadows and collision detection.
 
 ## X_ITE v12.0 Series
 
