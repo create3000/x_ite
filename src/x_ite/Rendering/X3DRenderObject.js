@@ -712,6 +712,7 @@ Object .assign (X3DRenderObject .prototype,
          const renderContext = this .collisionShapes [num];
 
          renderContext .modelViewMatrix .set (modelViewMatrix);
+         renderContext .hAnimNode = this .hAnimNode .at (-1);
          renderContext .shapeNode = shapeNode;
 
          // Collisions
