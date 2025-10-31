@@ -8,7 +8,9 @@ uniform int x3d_Id;
 
 layout(location = 0) out vec4 x3d_FragData0;
 
-in vec3 vertex;
+#if defined (X3D_CLIP_PLANES)
+   in vec3 vertex;
+#endif
 
 #if defined (X3D_NORMAL_BUFFER)
    #if defined (X3D_NORMALS)
