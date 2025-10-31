@@ -9,6 +9,8 @@ uniform mat4 x3d_ModelViewMatrix;
 
 in vec4 x3d_Vertex;
 
+out vec3 vertex;
+
 #if defined (X3D_NORMAL_BUFFER)
    #if defined (X3D_NORMALS)
       in vec3 x3d_Normal;
@@ -33,6 +35,8 @@ main ()
    #endif
 
    vec4 position = x3d_ModelViewMatrix * x3d_TransformedVertex;
+
+   vertex = position .xyz;
 
    #if defined (X3D_NORMALS)
       normal = x3d_TransformedNormal;

@@ -22915,7 +22915,7 @@ declare namespace X3D
       WorldInfo: WorldInfoProxy,
    }
    &
-   { [name: string]: X3DNodeProxy }; // catch all;
+   { [name: string]: X3DNodeProxy } // catch all;
 
    // NODES END
 }
