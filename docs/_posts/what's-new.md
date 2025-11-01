@@ -18,7 +18,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 * If a glTF file with animations is loaded, a new »Animations« menu will appear in the context menu.
 * Optimized creation of [HAnimMotion](/x_ite/components/hanim/hanimmotion/) interpolators.
 * Bug fixed in [Text](/x_ite/components/text/text/) node with vertical text and *topToBottom* set to `FALSE`.
-* Bug fixed in [HAnimMotion](/x_ite/components/hanim/hanimmotion/) node with XYZ rotation handling.
+* Bug fixed in [HAnimMotion](/x_ite/components/hanim/hanimmotion/) node with XYZ rotation order handling.
 * Bug fixed when [ParticleSystem](/x_ite/components/particlesystems/particlesystem/) *texCoord* is used.
 * Bug fixed when points are rendered on a transparent [Background](/x_ite/components/environmentaleffects/background/).
 * Fixed fatal bug in Depth shader when [ClipPlane](/x_ite/components/rendering/clipplane/) nodes are used. This affects shadows and collision detection.
