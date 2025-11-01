@@ -20,6 +20,13 @@ function HAnimJoint (executionContext)
    this .setVisibleObject (true);
    this .addAllowedTypes (X3DConstants .HAnimJoint, X3DConstants .HAnimSegment);
 
+   // Units
+
+   // this ._llimit .setUnit ("angle"); // TODO: seems to be angle, but is it in radians or degrees
+   // this ._ulimit .setUnit ("angle"); // TODO: seems to be angle, but is it in radians or degrees
+   this ._minAngle .setUnit ("angle");
+   this ._maxAngle .setUnit ("angle");
+
    // Legacy
 
    if (executionContext .getSpecificationVersion () <= 3.3)
