@@ -16,6 +16,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 * The Walk and Fly viewers come now with a new feature »Slide Along Walls« and new [browser option](/x_ite/reference/browser-services/#browser-options) `WallFriction`.
 * New glTF extension [KHR_materials_volume_scatter](/x_ite/components/x-ite/volumescattermaterialextension/) implemented.
 * If a glTF file with animations is loaded, a new »Animations« menu will appear in the context menu.
+* Optimized creation of [HAnimMotion](/x_ite/components/hanim/hanimmotion/) interpolators.
 * Bug fixed in [Text](/x_ite/components/text/text/) node with vertical text and *topToBottom* set to `FALSE`.
 * Bug fixed in [HAnimMotion](/x_ite/components/hanim/hanimmotion/) node with XYZ rotation handling.
 * Bug fixed when [ParticleSystem](/x_ite/components/particlesystems/particlesystem/) *texCoord* is used.
