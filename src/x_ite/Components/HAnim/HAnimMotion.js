@@ -259,7 +259,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
                      }
                      else if (rotationOrder .length > 3)
                      {
-                        rotationOrder = rotationOrder .slice (-3);
+                        rotationOrder = rotationOrder .slice (0, 3);
                      }
                   }
 
