@@ -38,12 +38,12 @@ The HAnimJoint node belongs to the [HAnim](/x_ite/components/overview/#hanim) co
 | SFVec3f | [in, out] | [scale](#fields-scale) | 1 1 1  |
 | SFRotation | [in, out] | [scaleOrientation](#fields-scaleOrientation) | 0 0 1 0  |
 | SFVec3f | [in, out] | [center](#fields-center) | 0 0 0  |
+| SFRotation | [in, out] | [limitOrientation](#fields-limitOrientation) | 0 0 1 0  |
 | MFFloat | [in, out] | [llimit](#fields-llimit) | [ 0, 0, 0 ] |
 | MFFloat | [in, out] | [ulimit](#fields-ulimit) | [ 0, 0, 0 ] |
-| SFRotation | [in, out] | [limitOrientation](#fields-limitOrientation) | 0 0 1 0  |
-| MFFloat | [in, out] | [stiffness](#fields-stiffness) | [ 0, 0, 0 ] |
 | SFFloat | [in, out] | [minAngle](#fields-minAngle) | 0  |
 | SFFloat | [in, out] | [maxAngle](#fields-maxAngle) | 0  |
+| MFFloat | [in, out] | [stiffness](#fields-stiffness) | [ 0, 0, 0 ] |
 | MFInt32 | [in, out] | [skinCoordIndex](#fields-skinCoordIndex) | [ ] |
 | MFFloat | [in, out] | [skinCoordWeight](#fields-skinCoordWeight) | [ ] |
 | MFNode | [in, out] | [displacers](#fields-displacers) | [ ] |
@@ -134,6 +134,11 @@ Translation offset from origin of local coordinate system.
 
 - Usually HAnimJoint position is controlled by the *center* field, not the translation field.
 
+### SFRotation [in, out] **limitOrientation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
+{: #fields-limitOrientation }
+
+Orientation of upper/lower rotation limits, relative to HAnimJoint center.
+
 ### MFFloat [in, out] **llimit** [ 0, 0, 0 ] <small>(-∞,∞)</small>
 {: #fields-llimit }
 
@@ -162,10 +167,15 @@ Upper limit for maximum joint rotation in radians.
 
 - Field shall contain three values or else be an empty array. Behavior is undefined when array length is 1, 2, or greater than 3.
 
-### SFRotation [in, out] **limitOrientation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
-{: #fields-limitOrientation }
+### SFFloat [in, out] **minAngle** 0 <small>(-∞,∞)</small>
+{: #fields-minAngle }
 
-Orientation of upper/lower rotation limits, relative to HAnimJoint center.
+Input/Output field *minAngle*.
+
+### SFFloat [in, out] **maxAngle** 0 <small>(-∞,∞)</small>
+{: #fields-maxAngle }
+
+Input/Output field *maxAngle*.
 
 ### MFFloat [in, out] **stiffness** [ 0, 0, 0 ] <small>[0,1]</small>
 {: #fields-stiffness }
@@ -180,16 +190,6 @@ A scale factor of (1 - *stiffness*) is applied around the corresponding axis (X,
 #### Warning
 
 - Field shall contain three values or else be an empty array. Behavior is undefined when array length is 1, 2, or greater than 3.
-
-### SFFloat [in, out] **minAngle** 0 <small>(-∞,∞)</small>
-{: #fields-minAngle }
-
-Input/Output field *minAngle*.
-
-### SFFloat [in, out] **maxAngle** 0 <small>(-∞,∞)</small>
-{: #fields-maxAngle }
-
-Input/Output field *maxAngle*.
 
 ### MFInt32 [in, out] **skinCoordIndex** [ ] <small>[0,∞)</small>
 {: #fields-skinCoordIndex }
