@@ -169,9 +169,8 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
             {
                let
                   Xposition = 0, Yposition = 0, Zposition = 0, positionChannels,
-                  Xrotation = 0, Yrotation = 0, Zrotation = 0, rotationChannels,
-                  Xscale    = 1, Yscale    = 1, Zscale    = 1, scaleChannels,
-                  rotationOrder = "";
+                  Xrotation = 0, Yrotation = 0, Zrotation = 0, rotationOrder = "",
+                  Xscale    = 1, Yscale    = 1, Zscale    = 1, scaleChannels;
 
                for (const channel of joint)
                {
@@ -190,19 +189,16 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
                         Zposition        = values [v ++];
                         break;
                      case "Xrotation":
-                        rotationChannels = true;
-                        rotationOrder   += "X";
-                        Xrotation        = Algorithm .radians (values [v ++]);
+                        rotationOrder += "X";
+                        Xrotation      = Algorithm .radians (values [v ++]);
                         break;
                      case "Yrotation":
-                        rotationChannels = true;
-                        rotationOrder   += "Y";
-                        Yrotation        = Algorithm .radians (values [v ++]);
+                        rotationOrder += "Y";
+                        Yrotation      = Algorithm .radians (values [v ++]);
                         break;
                      case "Zrotation":
-                        rotationChannels = true;
-                        rotationOrder   += "Z";
-                        Zrotation        = Algorithm .radians (values [v ++]);
+                        rotationOrder += "Z";
+                        Zrotation      = Algorithm .radians (values [v ++]);
                         break;
                      case "Xscale":
                         scaleChannels = true;
@@ -238,7 +234,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
                   interpolator ._keyValue .push (position .set (Xposition, Yposition, Zposition));
                }
 
-               if (rotationChannels)
+               if (rotationOrder .length)
                {
                   const interpolator = interpolators [j] .rotation ??= (() =>
                   {
@@ -249,7 +245,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
                      return interpolator;
                   })();
 
-                  if (rotationOrder .length !== 3)
+                  if (rotationOrder .length < 3)
                   {
                      for (const o of defaultOrder)
                      {
@@ -259,6 +255,10 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
                         rotationOrder += o;
                      }
                   }
+                  // else if (rotationOrder .length > 3)
+                  // {
+                  //    console .warn (`Too many rotation values: ${rotationOrder}.`);
+                  // }
 
                   interpolator ._key      .push (key);
                   interpolator ._keyValue .push (rotation .setEuler (Xrotation, Yrotation, Zrotation, rotationOrder));
