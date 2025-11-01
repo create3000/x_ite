@@ -48,6 +48,7 @@ function X3DFogObject (executionContext)
 
    // Units
 
+   this ._visibilityStart .setUnit ("length");
    this ._visibilityRange .setUnit ("length");
 
    // Private properties
