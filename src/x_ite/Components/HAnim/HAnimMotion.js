@@ -245,20 +245,23 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
                      return interpolator;
                   })();
 
-                  if (rotationOrder .length < 3)
+                  if (rotationOrder .length !== 3)
                   {
-                     for (const o of defaultOrder)
+                     if (rotationOrder .length < 3)
                      {
-                        if (rotationOrder .includes (o))
-                           continue;
+                        for (const o of defaultOrder)
+                        {
+                           if (rotationOrder .includes (o))
+                              continue;
 
-                        rotationOrder += o;
+                           rotationOrder += o;
+                        }
+                     }
+                     else if (rotationOrder .length > 3)
+                     {
+                        rotationOrder = rotationOrder .slice (-3);
                      }
                   }
-                  // else if (rotationOrder .length > 3)
-                  // {
-                  //    console .warn (`Too many rotation values: ${rotationOrder}.`);
-                  // }
 
                   interpolator ._key      .push (key);
                   interpolator ._keyValue .push (rotation .setEuler (Xrotation, Yrotation, Zrotation, rotationOrder));
