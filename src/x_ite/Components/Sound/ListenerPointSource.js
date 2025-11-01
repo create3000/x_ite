@@ -18,7 +18,8 @@ function ListenerPointSource (executionContext)
 
    // Units
 
-   this ._position .setUnit ("length");
+   this ._position           .setUnit ("length");
+   this ._interauralDistance .setUnit ("length");
 }
 
 Object .assign (Object .setPrototypeOf (ListenerPointSource .prototype, X3DSoundNode .prototype),
