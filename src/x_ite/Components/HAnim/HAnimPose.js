@@ -41,10 +41,11 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
 
       // Fields
 
-      this ._commencePose  .addInterest ("set_commencePose__", this);
-      this ._set_startTime .addInterest ("set_startTime__",    this);
-      this ._set_fraction  .addInterest ("set_fraction__",     this);
-      this ._poseJoints    .addInterest ("set_poseJoints__",   this);
+      this ._resetAllJoints .addInterest ("set_resetAllJoints__", this);
+      this ._commencePose   .addInterest ("set_commencePose__",   this);
+      this ._set_startTime  .addInterest ("set_startTime__",      this);
+      this ._set_fraction   .addInterest ("set_fraction__",       this);
+      this ._poseJoints     .addInterest ("set_poseJoints__",     this);
 
       this .set_poseJoints__ ();
    },
@@ -62,7 +63,7 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
    {
       this .needsUpdateInterpolators = true;
    },
-   updateInterpolators ()
+   updateInterpolators (reset)
    {
       this .needsUpdateInterpolators = false;
 
@@ -74,7 +75,7 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
       for (const humanoid of this .joints)
       {
          for (const jointNode of humanoid)
-            this .processJoint (jointNode);
+            this .processJoint (jointNode, reset);
       }
 
       for (const interpolator of this .interpolators)
@@ -88,12 +89,17 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
          ["scale",       "PositionInterpolator"],
       ];
 
-      return function (jointNode)
+      return function (jointNode, reset)
       {
-         const poseJointNode = this .poseJointNodes .get (jointNode ._name .getValue ());
+         let poseJointNode;
 
-         if (!poseJointNode && this .poseJointNodes .size)
-            return;
+         if (!reset)
+         {
+            poseJointNode = this .poseJointNodes .get (jointNode ._name .getValue ());
+
+            if (!poseJointNode && this .poseJointNodes .size)
+               return;
+         }
 
          const executionContext = this .getExecutionContext ();
 
@@ -121,6 +127,15 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
          }
       };
    })(),
+   set_resetAllJoints__ ()
+   {
+      if (!this ._resetAllJoints .getValue ())
+         return;
+
+      this .updateInterpolators (true);
+
+      this .timeSensor ._startTime = Date .now () / 1000;
+   },
    set_commencePose__ ()
    {
       if (!this ._commencePose .getValue ())
@@ -130,7 +145,7 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
    },
    set_startTime__ ()
    {
-      this .updateInterpolators ();
+      this .updateInterpolators (false);
 
       this .timeSensor ._startTime = Date .now () / 1000;
    },
@@ -170,6 +185,7 @@ Object .defineProperties (HAnimPose,
          new X3DFieldDefinition (X3DConstants .inputOutput, "loa",                new Fields .SFInt32 (-1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",            new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "transitionDuration", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "resetAllJoints",     new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "commencePose",       new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_startTime",      new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",       new Fields .SFFloat ()),
