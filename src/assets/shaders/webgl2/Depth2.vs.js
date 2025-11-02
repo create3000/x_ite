@@ -9,6 +9,10 @@ uniform mat4 x3d_ModelViewMatrix;
 
 in vec4 x3d_Vertex;
 
+#if defined (X3D_CLIP_PLANES)
+   out vec3 vertex;
+#endif
+
 #if defined (X3D_NORMAL_BUFFER)
    #if defined (X3D_NORMALS)
       in vec3 x3d_Normal;
@@ -26,13 +30,17 @@ void
 main ()
 {
    #if defined (X3D_NORMALS)
-      vec4 x3d_TransformedVertex = getInstanceVertex (getSkinVertex (x3d_Vertex, x3d_Normal, x3d_Tangent .xyz));
+      vec4 x3d_TransformedVertex = getInstanceVertex (getSkinVertex (x3d_Vertex, x3d_Normal, vec3 (0.0)));
       vec3 x3d_TransformedNormal = getInstanceNormal (getSkinNormal (x3d_Normal));
    #else
       vec4 x3d_TransformedVertex = getInstanceVertex (getSkinVertex (x3d_Vertex, vec3 (0.0), vec3 (0.0)));
    #endif
 
    vec4 position = x3d_ModelViewMatrix * x3d_TransformedVertex;
+
+   #if defined (X3D_CLIP_PLANES)
+      vertex = position .xyz;
+   #endif
 
    #if defined (X3D_NORMALS)
       normal = x3d_TransformedNormal;

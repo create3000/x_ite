@@ -56,10 +56,10 @@ for (const type of types)
   switch (type)
   {
     case X3D .X3DConstants .DirectionalLight:
-      console .log ("Node is of type DirectionalLight.")
+      console .log ("Node is of type DirectionalLight.");
       continue;
     case X3D .X3DConstants .X3DLightNode:
-      console .log ("Node is at least of type X3DLightNode.")
+      console .log ("Node is at least of type X3DLightNode.");
       continue;
     case X3D .X3DConstants .Transform:
       break; // Leave for loop.
@@ -82,11 +82,11 @@ All X3DFields (SFColor, ..., MFBool, MFColor, and so on). The fields can be crea
 // Create a new translation vector and
 // determine the length of this vector.
 
-const translation = new X3D .SFVec3f (4, 2, 0);
+const translation = new X3D .SFVec3f (2, 3, 6);
 const length      = translation .length ();
 
 console .log (length);
-// Expected output: 4.47213595499958
+// Expected output: 7
 </pre>
 </x3d-script-area>
 

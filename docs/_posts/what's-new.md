@@ -13,10 +13,17 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 ### Notable Changes
 
-* The Walk and Fly viewer come now with a new feature »Slide Along Walls« and new [browser option](/x_ite/reference/browser-services/#browser-options) `WallFriction`.
+* The Walk and Fly viewers come now with a new feature »Slide Along Walls« and new [browser option](/x_ite/reference/browser-services/#browser-options) `WallFriction`.
 * New glTF extension [KHR_materials_volume_scatter](/x_ite/components/x-ite/volumescattermaterialextension/) implemented.
 * If a glTF file with animations is loaded, a new »Animations« menu will appear in the context menu.
-* Bug fix of [Text](/x_ite/components/text/text/) node with vertical text and *topToBottom* set to `FALSE`.
+* Optimized creation of [HAnimMotion](/x_ite/components/hanim/hanimmotion/) interpolators.
+* Bug fixed in [Text](/x_ite/components/text/text/) node with vertical text and *topToBottom* set to `FALSE`.
+* Bug fixed in [HAnimMotion](/x_ite/components/hanim/hanimmotion/) node with XYZ rotation order handling.
+* Bug fixed when [ParticleSystem](/x_ite/components/particlesystems/particlesystem/) *texCoord* is used.
+* Bug fixed when points are rendered on a transparent [Background](/x_ite/components/environmentaleffects/background/).
+* Fixed fatal bug in Depth shader when [ClipPlane](/x_ite/components/rendering/clipplane/) nodes are used. This affects shadows and collision detection.
+* Correctly handle [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) nodes during collision detection.
+* Fixed units of *nearDistance* and *farDistance* fields of X3DViewpointNode and X3DTextureProjectorNode.
 
 ## X_ITE v12.0 Series
 

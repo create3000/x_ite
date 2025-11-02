@@ -1,5 +1,5 @@
-/* X_ITE v12.1.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.3")];
+/* X_ITE v12.1.4 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.4")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -2467,11 +2467,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
             // Enable sample alpha to coverage if not transparent.
 
             if (this .geometryType === (external_X_ITE_X3D_GeometryType_default()).POINT && !renderContext .transparent)
-            {
                gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
-               gl .enable (gl .BLEND);
-               gl .blendFuncSeparate (gl .ONE, gl .ZERO, gl .ZERO, gl .ONE);
-            }
 
             // Set viewport.
 
@@ -2540,11 +2536,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
             // Disable sample alpha to coverage if not transparent.
 
             if (this .geometryType === (external_X_ITE_X3D_GeometryType_default()).POINT && !renderContext .transparent)
-            {
                gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
-               gl .disable (gl .BLEND);
-               gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
-            }
 
             break;
          }

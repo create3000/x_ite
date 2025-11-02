@@ -27,6 +27,13 @@ function X3DViewpointNode (executionContext)
                           X3DConstants .inputOutput, "centerOfRotationOffset", new Fields .SFVec3f (),
                           X3DConstants .inputOutput, "fieldOfViewScale",       new Fields .SFFloat (1));
 
+   // Units
+
+   this ._nearDistance .setUnit ("length");
+   this ._farDistance  .setUnit ("length");
+
+   // Private properties
+
    this .descriptions         = [ ];
    this .userPosition         = new Vector3 ();
    this .userOrientation      = new Rotation4 ();

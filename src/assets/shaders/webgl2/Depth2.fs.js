@@ -8,6 +8,10 @@ uniform int x3d_Id;
 
 layout(location = 0) out vec4 x3d_FragData0;
 
+#if defined (X3D_CLIP_PLANES)
+   in vec3 vertex;
+#endif
+
 #if defined (X3D_NORMAL_BUFFER)
    #if defined (X3D_NORMALS)
       in vec3 normal;
@@ -30,7 +34,7 @@ main ()
 
    #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
       #if !(defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES))
-         if (getPointColor (vec4 (1.0)) .a < 0.5)
+         if (getPointColor (vec4 (1.0), gl_PointCoord) .a < 0.5)
             discard;
       #endif
    #endif

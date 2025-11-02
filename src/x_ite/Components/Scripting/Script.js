@@ -291,6 +291,8 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
          }
       }
 
+      // Add a \n immediately after sourceText, in case there is a comment in the last line.
+
       sourceText += "\n;\n[" + callbacks .map (c => `typeof ${c} !== "undefined" ? ${c} : undefined`) .join (",") + "];";
 
       const

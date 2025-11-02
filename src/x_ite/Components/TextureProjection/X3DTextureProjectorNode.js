@@ -12,9 +12,10 @@ function X3DTextureProjectorNode (executionContext)
 
    // Units
 
-   this ._location    .setUnit ("length");
-   this ._farDistance .setUnit ("length");
-   this ._location    .setUnit ("length");
+   this ._location     .setUnit ("length");
+   this ._nearDistance .setUnit ("length");
+   this ._farDistance  .setUnit ("length");
+   this ._location     .setUnit ("length");
 }
 
 Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, X3DLightNode .prototype),

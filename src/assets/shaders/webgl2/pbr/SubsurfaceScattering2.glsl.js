@@ -43,14 +43,14 @@ burley_eval (const in vec3 d, const in float r)
 }
 
 vec3
-getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in float attenuationDistance, const in vec3 diffuseColor)
+getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in float attenuationDistance, const in vec3 diffuseColor, const in vec4 fragCoord)
 {
    vec3  scatterDistance     = attenuationDistance * x3d_MultiscatterColorEXT; // Scale the attenuation distance by the multi-scatter color.
    float maxColor            = max3 (scatterDistance);
    vec3  vMaxColor           = max (vec3 (maxColor), vec3 (0.00001));
    vec2  texelSize           = 1.0 / vec2 (x3d_Viewport .zw);
    mat4  invProjectionMatrix = inverse (projectionMatrix);
-   vec2  uv                  = gl_FragCoord .xy * texelSize;
+   vec2  uv                  = fragCoord .xy * texelSize;
    vec4  centerSample        = textureLod (x3d_ScatterSamplerEXT, uv, 0.0); // Sample the LUT at the current UV coordinates.
    float centerDepth         = textureLod (x3d_ScatterDepthSamplerEXT, uv, 0.0) .r; // Get depth from the framebuffer.
 

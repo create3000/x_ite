@@ -33,7 +33,7 @@ getEmissiveColor ()
 }
 
 vec4
-getMaterialColor ()
+getMaterialColor (const in vec4 fragCoord)
 {
    vec4 finalColor = getEmissiveColor ();
 

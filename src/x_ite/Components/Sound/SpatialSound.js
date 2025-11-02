@@ -20,9 +20,11 @@ function SpatialSound (executionContext)
 
    // Units
 
-   this ._location       .setUnit ("length");
-   this ._coneInnerAngle .setUnit ("angle");
-   this ._coneOuterAngle .setUnit ("angle");
+   this ._location          .setUnit ("length");
+   this ._coneInnerAngle    .setUnit ("angle");
+   this ._coneOuterAngle    .setUnit ("angle");
+   this ._maxDistance       .setUnit ("length");
+   this ._referenceDistance .setUnit ("length");
 
    // Private properties
 

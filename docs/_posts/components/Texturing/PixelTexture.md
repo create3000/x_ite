@@ -93,7 +93,7 @@ Single contained [TextureProperties](/x_ite/components/texturing/textureproperti
 ### Hints
 
 - This is a good way to bundle image(s) into a single scene file, avoiding multiple downloads.
-- [X3D-Edit includes PixelTexture image-conversion import capabilities.](https://savage.nps.edu/X3D-Edit/images/PixelTextureImportImage.png)
+- [X3D-Edit includes PixelTexture image-conversion import capabilities.](https://www.web3d.org/x3d/tools/X3D-Edit/images/PixelTextureImportImage.png)
 - Can contain a single [TextureProperties](/x_ite/components/texturing/textureproperties/) node.
 - Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
 - [X3D Scene Authoring Hints, Images and Videos](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Images)

@@ -153,15 +153,15 @@ x3d-canvas {
 
 <h3>Predefined L-Systems</h3>
 
-<img alt="Example Image" class="predefined" src="/x_ite/assets/laboratory//l-system/images/image1.png">
-<img alt="Example Image" class="predefined" src="/x_ite/assets/laboratory//l-system/images/image2.png">
-<img alt="Example Image" class="predefined" src="/x_ite/assets/laboratory//l-system/images/image3.png">
-<img alt="Example Image" class="predefined" src="/x_ite/assets/laboratory//l-system/images/image4.png">
-<img alt="Example Image" class="predefined" src="/x_ite/assets/laboratory//l-system/images/image5.png">
-<img alt="Example Image" class="predefined" src="/x_ite/assets/laboratory//l-system/images/image6.png">
-<img alt="Example Image" class="predefined" src="/x_ite/assets/laboratory//l-system/images/image7.png">
-<img alt="Example Image" class="predefined" src="/x_ite/assets/laboratory//l-system/images/image8.png">
-<img alt="Example Image" class="predefined" src="/x_ite/assets/laboratory//l-system/images/image9.png">
+<img alt="Example Image" class="predefined" src="/x_ite/assets/laboratory/l-system/images/image1.png">
+<img alt="Example Image" class="predefined" src="/x_ite/assets/laboratory/l-system/images/image2.png">
+<img alt="Example Image" class="predefined" src="/x_ite/assets/laboratory/l-system/images/image3.png">
+<img alt="Example Image" class="predefined" src="/x_ite/assets/laboratory/l-system/images/image4.png">
+<img alt="Example Image" class="predefined" src="/x_ite/assets/laboratory/l-system/images/image5.png">
+<img alt="Example Image" class="predefined" src="/x_ite/assets/laboratory/l-system/images/image6.png">
+<img alt="Example Image" class="predefined" src="/x_ite/assets/laboratory/l-system/images/image7.png">
+<img alt="Example Image" class="predefined" src="/x_ite/assets/laboratory/l-system/images/image8.png">
+<img alt="Example Image" class="predefined" src="/x_ite/assets/laboratory/l-system/images/image9.png">
 
 <h2>See Also</h2>
 <ul>

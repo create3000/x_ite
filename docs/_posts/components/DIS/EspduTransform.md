@@ -780,7 +780,7 @@ Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Tr
 ### Hints
 
 - These PDU packets use the IEEE Distributed Interactive Simulation (DIS) protocol.
-- [Savage Developers Guide on DIS](https://savage.nps.edu/Savage/developers.html#DIS)
+- [X3D Developers Guide on DIS](https://www.web3d.org/x3d/content/examples/X3dDevelopersGuide.htmll#DIS)
 - Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/DistributedInteractiveSimulation.pdf)
 

@@ -5,9 +5,9 @@ export default () => /* glsl */ `
 #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
 #if !defined (X3D_DEPTH_SHADER)
 void
-setPointTexCoords ()
+setPointTexCoords (const in vec2 pointCoord)
 {
-   vec4 texCoord = vec4 (gl_PointCoord .x, 1.0 - gl_PointCoord .y, 0.0, 1.0);
+   vec4 texCoord = vec4 (pointCoord .x, 1.0 - pointCoord .y, 0.0, 1.0);
 
    ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 
@@ -18,19 +18,19 @@ setPointTexCoords ()
    `) .join ("\n")}
 }
 #endif
-#define getPointColor(color) (color)
+#define getPointColor(color,pointCoord) (color)
 
 #else
 
 in float pointSize;
 
-#define setPointTexCoords()
+#define setPointTexCoords(pointCoord)
 
 vec4
-getPointColor (in vec4 color)
+getPointColor (in vec4 color, const in vec2 pointCoord)
 {
    if (pointSize > 1.0)
-      color .a *= clamp (pointSize * (0.5 - distance (vec2 (0.5), gl_PointCoord)), 0.0, 1.0);
+      color .a *= clamp (pointSize * (0.5 - distance (vec2 (0.5), pointCoord)), 0.0, 1.0);
 
    else
       color .a *= pointSize;

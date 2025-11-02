@@ -330,7 +330,7 @@ Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Tr
 ### Hints
 
 - ReceiverPdu packets use the IEEE Distributed Interactive Simulation (DIS) protocol.
-- [Savage Developers Guide on DIS](https://savage.nps.edu/Savage/developers.html#DIS)
+- [X3D Developers Guide on DIS](https://www.web3d.org/x3d/content/examples/X3dDevelopersGuide.htmll#DIS)
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/DistributedInteractiveSimulation.pdf)
 
 ### Warning

@@ -203,13 +203,13 @@ main ()
 
 ## Lighting and Transparency
 
-Lighting is enabled if a [Material](/x_ite/components/shape/material/) node is used and some lights are on.
+Lighting is enabled if a [Material](/x_ite/components/shape/material/) or [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/) node is used and some lights are on.
 
-Normally the browser automatically determines the alpha treatment based on material, colors, and images, but you can force a alpha mode by setting the *alphaMode* field of a [Appearance](/x_ite/components/shape/appearance/) node.
+The browser usually determines the alpha treatment automatically based on the material, colors and images used. However, you can force an alpha mode by setting the *alphaMode* field of an [Appearance](/x_ite/components/shape/appearance/) node.
 
 ## Data Type Mapping
 
-A [ComposedShader](/x_ite/components/shaders/composedshader/) node provides the capability to define custom fields like the [Script](/x_ite/components/scripting/script/) node it does, these fields are then mapped to GLSL uniform variables. They are automatically updated and can be of any access type (initializeOnly, inputOnly, outputOnly or inputOutput).
+A [ComposedShader](/x_ite/components/shaders/composedshader/) node provides the capability to define custom fields like the [Script](/x_ite/components/scripting/script/) node it does. These fields are then available in the shader as **uniform variables**, using corresponding GLSL data types such as `float`, `vec2`, `vec3`, `vec4`, `mat4`, or `sampler2D`, depending on the X3D field type. They are updated automatically and can be any of the following access types: `initializeOnly`, `inputOnly` or `inputOutput`.
 
 ### Node fields
 
@@ -221,231 +221,51 @@ A [ComposedShader](/x_ite/components/shaders/composedshader/) node provides the 
 
 ### X3D field types to GLSL data types
 
-<table>
-   <thead>
-      <tr>
-         <th>X3D field type</th>
-         <th>GLSL variable type</th>
-         <th></th>
-      </tr>
-   </thead>
-   <tbody>
-      <tr>
-         <td>SFBool</td>
-         <td>bool</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFColor</td>
-         <td>vec3</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFColorRGBA</td>
-         <td>vec4</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFDouble</td>
-         <td>float</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFFloat</td>
-         <td>float</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFImage</td>
-         <td>int [ ]</td>
-         <td>(width, height, comp, array)</td>
-      </tr>
-      <tr>
-         <td>SFInt32</td>
-         <td>int</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFMatrix3d</td>
-         <td>mat3</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFMatrix3f</td>
-         <td>mat3</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFMatrix4d</td>
-         <td>mat4</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFMatrix4f</td>
-         <td>mat4</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFNode</td>
-         <td>see node fields table</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFRotation</td>
-         <td>mat3</td>
-         <td>3×3 matrix representation</td>
-      </tr>
-      <tr>
-         <td>SFString</td>
-         <td>not supported</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFTime</td>
-         <td>float</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFVec2d</td>
-         <td>vec2</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFVec2f</td>
-         <td>vec2</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFVec3d</td>
-         <td>vec3</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFVec3f</td>
-         <td>vec3</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFVec4d</td>
-         <td>vec4</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>SFVec4f</td>
-         <td>vec4</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td colspan="4"><hr/>
-         </td>
-      </tr>
-      <tr>
-         <td>MFBool</td>
-         <td>bool [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFColor</td>
-         <td>vec3 [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFColorRGBA</td>
-         <td>vec4 [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFDouble</td>
-         <td>float [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFFloat</td>
-         <td>float [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFImage</td>
-         <td>int [ ]</td>
-         <td>(width, height, comp, array, width ...)</td>
-      </tr>
-      <tr>
-         <td>MFInt32</td>
-         <td>int [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFMatrix3d</td>
-         <td>mat3 [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFMatrix3f</td>
-         <td>mat3 [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFMatrix4d</td>
-         <td>mat4 [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFMatrix4f</td>
-         <td>mat4 [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFNode</td>
-         <td>see node fields table</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFRotation</td>
-         <td>mat3 [ ]</td>
-         <td>3×3 matrix representation</td>
-      </tr>
-      <tr>
-         <td>MFString</td>
-         <td>not supported</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFTime</td>
-         <td>float [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFVec2d</td>
-         <td>vec2 [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFVec2f</td>
-         <td>vec2 [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFVec3d</td>
-         <td>vec3 [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFVec3f</td>
-         <td>vec3 [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFVec4d</td>
-         <td>vec4 [ ]</td>
-         <td></td>
-      </tr>
-      <tr>
-         <td>MFVec4f</td>
-         <td>vec4 [ ]</td>
-         <td></td>
-      </tr>
-   </tbody>
-</table>
+| X3D field type | GLSL variable type    | Comment                                 |
+|----------------|-----------------------|-----------------------------------------|
+| SFBool         | bool                  |                                         |
+| SFColor        | vec3                  |                                         |
+| SFColorRGBA    | vec4                  |                                         |
+| SFDouble       | float                 |                                         |
+| SFFloat        | float                 |                                         |
+| SFImage        | int [ ]               | (width, height, comp, array)            |
+| SFInt32        | int                   |                                         |
+| SFMatrix3d     | mat3                  |                                         |
+| SFMatrix3f     | mat3                  |                                         |
+| SFMatrix4d     | mat4                  |                                         |
+| SFMatrix4f     | mat4                  |                                         |
+| SFNode         | [see node fields table](#node-fields) |                         |
+| SFRotation     | mat3                  | 3×3 matrix representation               |
+| SFString       | not supported         |                                         |
+| SFTime         | float                 |                                         |
+| SFVec2d        | vec2                  |                                         |
+| SFVec2f        | vec2                  |                                         |
+| SFVec3d        | vec3                  |                                         |
+| SFVec3f        | vec3                  |                                         |
+| SFVec4d        | vec4                  |                                         |
+| SFVec4f        | vec4                  |                                         |
+| <br>           |
+| MFBool         | bool [ ]              |                                         |
+| MFColor        | vec3 [ ]              |                                         |
+| MFColorRGBA    | vec4 [ ]              |                                         |
+| MFDouble       | float [ ]             |                                         |
+| MFFloat        | float [ ]             |                                         |
+| MFImage        | int [ ]               | (width, height, comp, array, width ...) |
+| MFInt32        | int [ ]               |                                         |
+| MFMatrix3d     | mat3 [ ]              |                                         |
+| MFMatrix3f     | mat3 [ ]              |                                         |
+| MFMatrix4d     | mat4 [ ]              |                                         |
+| MFMatrix4f     | mat4 [ ]              |                                         |
+| MFNode         | [see node fields table](#node-fields) |                         |
+| MFRotation     | mat3 [ ]              | 3×3 matrix representation               |
+| MFString       | not supported         |                                         |
+| MFTime         | float [ ]             |                                         |
+| MFVec2d        | vec2 [ ]              |                                         |
+| MFVec2f        | vec2 [ ]              |                                         |
+| MFVec3d        | vec3 [ ]              |                                         |
+| MFVec3f        | vec3 [ ]              |                                         |
+| MFVec4d        | vec4 [ ]              |                                         |
+| MFVec4f        | vec4 [ ]              |                                         |
 
 ## Built-in Variables
 
@@ -476,7 +296,7 @@ A [ComposedShader](/x_ite/components/shaders/composedshader/) defines a number o
       <tr>
          <td>uniform x3d_FogParameters</td>
          <td>x3d_Fog</td>
-         <td>see table »Uniform Struct x3d_FogParameters«</td>
+         <td>see table <a href="#uniform-struct-x3d_fogparameters">Uniform Struct x3d_FogParameters</a></td>
       </tr>
       <tr>
          <td colspan="3"><hr/></td>
@@ -484,7 +304,7 @@ A [ComposedShader](/x_ite/components/shaders/composedshader/) defines a number o
       <tr>
          <td>uniform x3d_LightSourceParameters</td>
          <td>x3d_LightSource [x3d_MaxLights]</td>
-         <td>see table »Uniform Struct x3d_LightSourceParameters«</td>
+         <td>see table <a href="#uniform-struct-x3d_lightsourceparameters">Uniform Struct x3d_LightSourceParameters</a></td>
       </tr>
       <tr>
          <td colspan="3"><hr/></td>
@@ -497,17 +317,17 @@ A [ComposedShader](/x_ite/components/shaders/composedshader/) defines a number o
       <tr>
          <td>uniform x3d_PointPropertiesParameters</td>
          <td>x3d_PointProperties</td>
-         <td>see table »Uniform Struct x3d_PointPropertiesParameters«</td>
+         <td>see table <a href="#uniform-struct-x3d_pointpropertiesparameters">Uniform Struct x3d_PointPropertiesParameters</a></td>
       </tr>
       <tr>
          <td>uniform x3d_LinePropertiesParameters</td>
          <td>x3d_LineProperties</td>
-         <td>see table »Uniform Struct x3d_LinePropertiesParameters«</td>
+         <td>see table <a href="#uniform-struct-x3d_linepropertiesparameters">Uniform Struct x3d_LinePropertiesParameters</a></td>
       </tr>
       <tr>
          <td>uniform x3d_FillPropertiesParameters</td>
          <td>x3d_FillProperties</td>
-         <td>see table »Uniform Struct x3d_FillPropertiesParameters«</td>
+         <td>see table <a href="#uniform-struct-x3d_fillpropertiesparameters">Uniform Struct x3d_FillPropertiesParameters</a></td>
       </tr>
       <tr>
          <td colspan="3"><hr/></td>
@@ -515,7 +335,7 @@ A [ComposedShader](/x_ite/components/shaders/composedshader/) defines a number o
       <tr>
          <td>uniform x3d_MaterialParameters</td>
          <td>x3d_Material</td>
-         <td>see table »Uniform Struct x3d_MaterialParameters«</td>
+         <td>see table <a href="#uniform-struct-x3d_materialparameters">Uniform Struct x3d_MaterialParameters</a></td>
       </tr>
       <tr>
          <td colspan="3"><hr/></td>
@@ -533,7 +353,7 @@ A [ComposedShader](/x_ite/components/shaders/composedshader/) defines a number o
       <tr>
          <td>uniform x3d_TextureCoordinateGeneratorParameters</td>
          <td>x3d_TextureCoordinateGenerator [x3d_MaxTextures]</td>
-         <td>see table »Uniform Struct x3d_TextureCoordinateGeneratorParameters«</td>
+         <td>see table <a href="#uniform-struct-x3d_texturecoordinategeneratorparameters">Uniform Struct x3d_TextureCoordinateGeneratorParameters</a></td>
       </tr>
       <tr>
          <td colspan="3"><hr/></td>
@@ -579,37 +399,42 @@ A [ComposedShader](/x_ite/components/shaders/composedshader/) defines a number o
       <tr>
          <td>in float</td>
          <td>x3d_FogDepth</td>
-         <td>fog depth of the vertex overriding Fog.visibilityRange; available if FogCoordinate is attached</td>
+         <td>fog depth of vertex overriding Fog.visibilityRange; available if FogCoordinate is attached</td>
       </tr>
       <tr>
          <td>in vec4</td>
          <td>x3d_Color</td>
-         <td>color of the vertex; available if X3DColorNode is attached</td>
+         <td>color of vertex; available if X3DColorNode is attached</td>
       </tr>
       <tr>
          <td>in vec4</td>
          <td>x3d_TexCoord0</td>
-         <td>texture coordinate of the vertex from channel 0</td>
+         <td>texture coordinate of vertex from channel 0, if provided or auto generated</td>
       </tr>
       <tr>
          <td>in vec4</td>
          <td>x3d_TexCoord1</td>
-         <td>texture coordinate of the vertex from channel 1</td>
+         <td>texture coordinate of vertex from channel 1, if provided</td>
       </tr>
       <tr>
          <td>in vec4</td>
          <td>x3d_TexCoord2</td>
-         <td>texture coordinate of the vertex from channel 2</td>
+         <td>texture coordinate of vertex from channel 2, if provided</td>
       </tr>
       <tr>
          <td>in vec4</td>
          <td>x3d_TexCoord3</td>
-         <td>texture coordinate of the vertex from channel 3</td>
+         <td>texture coordinate of vertex from channel 3, if provided</td>
+      </tr>
+      <tr>
+         <td>in vec4</td>
+         <td>x3d_Tangent</td>
+         <td>tangent vector of vertex</td>
       </tr>
       <tr>
          <td>in vec3</td>
          <td>x3d_Normal</td>
-         <td>normal of the vertex</td>
+         <td>normal vector of vertex</td>
       </tr>
       <tr>
          <td>in vec4</td>
