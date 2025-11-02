@@ -1,5 +1,5 @@
-/* X_ITE v12.1.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.3")];
+/* X_ITE v12.1.4 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.4")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -537,7 +537,9 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
          }
       }
 
-      sourceText += ";\n[" + callbacks .map (c => `typeof ${c} !== "undefined" ? ${c} : undefined`) .join (",") + "];";
+      // Add a \n immediately after sourceText, in case there is a comment in the last line.
+
+      sourceText += "\n;\n[" + callbacks .map (c => `typeof ${c} !== "undefined" ? ${c} : undefined`) .join (",") + "];";
 
       const
          result  = this .evaluate (sourceText),

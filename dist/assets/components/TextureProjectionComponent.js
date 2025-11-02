@@ -1,5 +1,5 @@
-/* X_ITE v12.1.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.3")];
+/* X_ITE v12.1.4 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.4")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -84,9 +84,10 @@ function X3DTextureProjectorNode (executionContext)
 
    // Units
 
-   this ._location    .setUnit ("length");
-   this ._farDistance .setUnit ("length");
-   this ._location    .setUnit ("length");
+   this ._location     .setUnit ("length");
+   this ._nearDistance .setUnit ("length");
+   this ._farDistance  .setUnit ("length");
+   this ._location     .setUnit ("length");
 }
 
 Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, (external_X_ITE_X3D_X3DLightNode_default()).prototype),

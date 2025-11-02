@@ -327,11 +327,11 @@ declare namespace X3D
        */
       createVrmlFromURL (url: MFString, node: SFNode, fieldName: string): void;
       /**
-       * Add a route from the passed *sourceField* to the passed *destinationField*.
+       * Add a route in the current scene from the passed *sourceField* to the passed *destinationField*.
        */
       addRoute (sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string): void;
       /**
-       * Remove the route between the passed *sourceField* and passed *destinationField*, if one exists.
+       * Remove the route in the current scene between the passed *sourceField* and passed *destinationField*, if one exists.
        */
       deleteRoute (sourceNode: SFNode, sourceField: string, destinationNode: SFNode, destinationField: string): void;
       /**
@@ -350,7 +350,7 @@ declare namespace X3D
       | boolean
       | null
       | JSONValue []
-      | { [key: string]: JSONValue }
+      | { [key: string]: JSONValue };
 
    interface JSONObject
    {
@@ -422,7 +422,7 @@ declare namespace X3D
       Multisampling:          number,
       PixelsPerPoint:         number,
       XRSession:              boolean,
-   }
+   };
 
    type ClosestObject = {
       node: X3DShapeNodeProxy | null,
@@ -603,6 +603,8 @@ declare namespace X3D
       readonly specificationVersion: string;
       /**
        * The encoding is represented as a string that describes the data encoding used. Valid values are "ASCII", "VRML", "XML", "BINARY", "SCRIPTED", "BIFS", "NONE". This property is read only.
+       *
+       * Additional valid values are “GLTF”, “OBJ”, “STL”, “PLY”, “SVG”.
        */
       readonly encoding: "ASCII" | "VRML" | "XML" | "JSON" | "BINARY" | "SCRIPTED" | "BIFS" | "NONE" | "GLTF" | "OBJ" | "STL" | "PLY" | "SVG";
       /**
@@ -1589,6 +1591,7 @@ declare namespace X3D
     */
    class SFBool extends X3DField
    {
+      static readonly type: number;
       static readonly typeName: "SFBool";
 
       constructor ();
@@ -1602,6 +1605,7 @@ declare namespace X3D
     */
    class SFColor extends X3DField
    {
+      static readonly type: number;
       static readonly typeName: "SFColor";
 
       /**
@@ -1658,6 +1662,7 @@ declare namespace X3D
     */
    class SFColorRGBA extends X3DField
    {
+      static readonly type: number;
       static readonly typeName: "SFColorRGBA";
 
       /**
@@ -1718,6 +1723,7 @@ declare namespace X3D
     */
    class SFDouble extends X3DField
    {
+      static readonly type: number;
       static readonly typeName: "SFDouble";
 
       constructor ();
@@ -1731,6 +1737,7 @@ declare namespace X3D
     */
    class SFFloat extends X3DField
    {
+      static readonly type: number;
       static readonly typeName: "SFFloat";
 
       constructor ();
@@ -1744,6 +1751,7 @@ declare namespace X3D
     */
    class SFImage extends X3DField
    {
+      static readonly type: number;
       static readonly typeName: "SFImage";
 
       /**
@@ -1791,6 +1799,7 @@ declare namespace X3D
     */
    class SFInt32 extends X3DField
    {
+      static readonly type: number;
       static readonly typeName: "SFInt32";
 
       constructor ();
@@ -1907,6 +1916,7 @@ declare namespace X3D
     */
    class SFMatrix3d extends SFMatrix3
    {
+      static readonly type: number;
       static readonly typeName: "SFMatrix3d";
    }
 
@@ -1915,6 +1925,7 @@ declare namespace X3D
     */
    class SFMatrix3f extends SFMatrix3
    {
+      static readonly type: number;
       static readonly typeName: "SFMatrix3f";
    }
 
@@ -2019,6 +2030,7 @@ declare namespace X3D
     */
    class SFMatrix4d extends SFMatrix4
    {
+      static readonly type: number;
       static readonly typeName: "SFMatrix4d";
    }
 
@@ -2027,6 +2039,7 @@ declare namespace X3D
     */
    class SFMatrix4f extends SFMatrix4
    {
+      static readonly type: number;
       static readonly typeName: "SFMatrix4f";
    }
 
@@ -2035,6 +2048,7 @@ declare namespace X3D
     */
    class SFNode extends X3DField
    {
+      static readonly type: number;
       static readonly typeName: "SFNode";
 
       /**
@@ -2122,13 +2136,14 @@ declare namespace X3D
       doublePrecision?: number,
       html?: boolean,
       closingTags?: boolean,
-   }
+   };
 
    /**
     * The SFRotation object corresponds to an X3D SFRotation field.
     */
    class SFRotation extends X3DField
    {
+      static readonly type: number;
       static readonly typeName: "SFRotation";
 
       /**
@@ -2217,6 +2232,7 @@ declare namespace X3D
     */
    class SFString extends X3DField
    {
+      static readonly type: number;
       static readonly typeName: "SFString";
 
       constructor ();
@@ -2232,6 +2248,7 @@ declare namespace X3D
     */
    class SFTime extends X3DField
    {
+      static readonly type: number;
       static readonly typeName: "SFTime";
 
       constructor ();
@@ -2341,6 +2358,7 @@ declare namespace X3D
     */
    class SFVec2d extends SFVec2
    {
+      static readonly type: number;
       static readonly typeName: "SFVec2d";
    }
 
@@ -2349,6 +2367,7 @@ declare namespace X3D
     */
    class SFVec2f extends SFVec2
    {
+      static readonly type: number;
       static readonly typeName: "SFVec2f";
    }
 
@@ -2461,6 +2480,7 @@ declare namespace X3D
     */
    class SFVec3d extends SFVec3
    {
+      static readonly type: number;
       static readonly typeName: "SFVec3d";
    }
 
@@ -2469,6 +2489,7 @@ declare namespace X3D
     */
    class SFVec3f extends SFVec3
    {
+      static readonly type: number;
       static readonly typeName: "SFVec3f";
    }
 
@@ -2581,6 +2602,7 @@ declare namespace X3D
     */
    class SFVec4d extends SFVec4
    {
+      static readonly type: number;
       static readonly typeName: "SFVec4d";
    }
 
@@ -2589,6 +2611,7 @@ declare namespace X3D
     */
    class SFVec4f extends SFVec4
    {
+      static readonly type: number;
       static readonly typeName: "SFVec4f";
    }
 
@@ -2643,15 +2666,16 @@ declare namespace X3D
       with (index: number, value: T): this;
    }
 
-   type ArrayTest <T> = (element: T, i: number, array: X3DArrayField <T>) => boolean
-   type ArrayAction <T> = (element: T, i: number, array: X3DArrayField <T>) => void
-   type ArrayReducer <T, U> = (accum: U, current: T, i: number, array: X3DArrayField <T>) => U
+   type ArrayTest <T> = (element: T, i: number, array: X3DArrayField <T>) => boolean;
+   type ArrayAction <T> = (element: T, i: number, array: X3DArrayField <T>) => void;
+   type ArrayReducer <T, U> = (accum: U, current: T, i: number, array: X3DArrayField <T>) => U;
 
    /**
     * The MFBool object corresponds to an X3D MFBool field. It is used to store a one-dimensional array of SFBool objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfBoolObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `false`.
     */
    class MFBool extends X3DArrayField <boolean>
    {
+      static readonly type: number;
       static readonly typeName: "MFBool";
    }
 
@@ -2660,6 +2684,7 @@ declare namespace X3D
     */
    class MFColor extends X3DArrayField <SFColor>
    {
+      static readonly type: number;
       static readonly typeName: "MFColor";
    }
 
@@ -2668,6 +2693,7 @@ declare namespace X3D
     */
    class MFColorRGBA extends X3DArrayField <SFColorRGBA>
    {
+      static readonly type: number;
       static readonly typeName: "MFColorRGBA";
    }
 
@@ -2676,6 +2702,7 @@ declare namespace X3D
     */
    class MFDouble extends X3DArrayField <number>
    {
+      static readonly type: number;
       static readonly typeName: "MFDouble";
    }
 
@@ -2684,6 +2711,7 @@ declare namespace X3D
     */
    class MFFloat extends X3DArrayField <number>
    {
+      static readonly type: number;
       static readonly typeName: "MFFloat";
    }
 
@@ -2692,6 +2720,7 @@ declare namespace X3D
     */
    class MFImage extends X3DArrayField <SFImage>
    {
+      static readonly type: number;
       static readonly typeName: "MFImage";
    }
 
@@ -2700,6 +2729,7 @@ declare namespace X3D
     */
    class MFInt32 extends X3DArrayField <number>
    {
+      static readonly type: number;
       static readonly typeName: "MFInt32";
    }
 
@@ -2708,6 +2738,7 @@ declare namespace X3D
     */
    class MFMatrix3d extends X3DArrayField <SFMatrix3d>
    {
+      static readonly type: number;
       static readonly typeName: "MFMatrix3d";
    }
 
@@ -2716,6 +2747,7 @@ declare namespace X3D
     */
    class MFMatrix3f extends X3DArrayField <SFMatrix3f>
    {
+      static readonly type: number;
       static readonly typeName: "MFMatrix3f";
    }
 
@@ -2724,6 +2756,7 @@ declare namespace X3D
     */
    class MFMatrix4d extends X3DArrayField <SFMatrix4d>
    {
+      static readonly type: number;
       static readonly typeName: "MFMatrix4d";
    }
 
@@ -2732,6 +2765,7 @@ declare namespace X3D
     */
    class MFMatrix4f extends X3DArrayField <SFMatrix4f>
    {
+      static readonly type: number;
       static readonly typeName: "MFMatrix4f";
    }
 
@@ -2740,6 +2774,7 @@ declare namespace X3D
     */
    class MFNode <T extends SFNode | null = SFNode | null> extends X3DArrayField <T>
    {
+      static readonly type: number;
       static readonly typeName: "MFNode";
    }
 
@@ -2748,6 +2783,7 @@ declare namespace X3D
     */
    class MFRotation extends X3DArrayField <SFRotation>
    {
+      static readonly type: number;
       static readonly typeName: "MFRotation";
    }
 
@@ -2756,6 +2792,7 @@ declare namespace X3D
     */
    class MFString <T extends string = string> extends X3DArrayField <T>
    {
+      static readonly type: number;
       static readonly typeName: "MFString";
    }
 
@@ -2764,6 +2801,7 @@ declare namespace X3D
     */
    class MFTime extends X3DArrayField <number>
    {
+      static readonly type: number;
       static readonly typeName: "MFTime";
    }
 
@@ -2772,6 +2810,7 @@ declare namespace X3D
     */
    class MFVec2d extends X3DArrayField <SFVec2d>
    {
+      static readonly type: number;
       static readonly typeName: "MFVec2d";
    }
 
@@ -2780,6 +2819,7 @@ declare namespace X3D
     */
    class MFVec2f extends X3DArrayField <SFVec2f>
    {
+      static readonly type: number;
       static readonly typeName: "MFVec2f";
    }
 
@@ -2788,6 +2828,7 @@ declare namespace X3D
     */
    class MFVec3d extends X3DArrayField <SFVec3d>
    {
+      static readonly type: number;
       static readonly typeName: "MFVec3d";
    }
 
@@ -2796,6 +2837,7 @@ declare namespace X3D
     */
    class MFVec3f extends X3DArrayField <SFVec3f>
    {
+      static readonly type: number;
       static readonly typeName: "MFVec3f";
    }
 
@@ -2804,6 +2846,7 @@ declare namespace X3D
     */
    class MFVec4d extends X3DArrayField <SFVec4d>
    {
+      static readonly type: number;
       static readonly typeName: "MFVec4d";
    }
 
@@ -2812,6 +2855,7 @@ declare namespace X3D
     */
    class MFVec4f extends X3DArrayField <SFVec4f>
    {
+      static readonly type: number;
       static readonly typeName: "MFVec4f";
    }
 
