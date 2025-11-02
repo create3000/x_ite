@@ -80,7 +80,7 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
       for (const interpolator of this .interpolators)
          this .timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
    },
-   processJoint: (function ()
+   processJoint: (() =>
    {
       const interpolators = [
          ["translation", "PositionInterpolator"],
@@ -92,7 +92,7 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
       {
          const poseJointNode = this .poseJointNodes .get (jointNode ._name .getValue ());
 
-         if (!(poseJointNode || this ._resetOtherJoints .getValue ()))
+         if (!poseJointNode && this .poseJointNodes .size)
             return;
 
          const executionContext = this .getExecutionContext ();
@@ -170,7 +170,6 @@ Object .defineProperties (HAnimPose,
          new X3DFieldDefinition (X3DConstants .inputOutput, "loa",                new Fields .SFInt32 (-1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",            new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "transitionDuration", new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "resetOtherJoints",   new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "commencePose",       new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_startTime",      new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",       new Fields .SFFloat ()),
