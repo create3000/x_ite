@@ -123,13 +123,14 @@ cubeToUVCompact (in vec3 v, const float texelSizeY)
 mat4
 getPointLightRotations (const in vec3 vector)
 {
-   mat4 rotations [6];
-   rotations [0] = mat4 ( 0, 0 , 1, 0,   0, 1,  0, 0,  -1,  0,  0, 0,   0, 0, 0, 1);  // left
-   rotations [1] = mat4 ( 0, 0, -1, 0,   0, 1,  0, 0,   1,  0,  0, 0,   0, 0, 0, 1);  // right
-   rotations [2] = mat4 (-1, 0,  0, 0,   0, 1,  0, 0,   0,  0, -1, 0,   0, 0, 0, 1);  // front
-   rotations [3] = mat4 ( 1, 0,  0, 0,   0, 1,  0, 0,   0,  0,  1, 0,   0, 0, 0, 1);  // back
-   rotations [4] = mat4 ( 1, 0,  0, 0,   0, 0,  1, 0,   0, -1,  0, 0,   0, 0, 0, 1);  // bottom
-   rotations [5] = mat4 ( 1, 0,  0, 0,   0, 0, -1, 0,   0,  1,  0, 0,   0, 0, 0, 1);  // top
+   const mat4 rotations [6] = mat4 [6] (
+      mat4 ( 0, 0 , 1, 0,   0, 1,  0, 0,  -1,  0,  0, 0,   0, 0, 0, 1),  // left
+      mat4 ( 0, 0, -1, 0,   0, 1,  0, 0,   1,  0,  0, 0,   0, 0, 0, 1),  // right
+      mat4 (-1, 0,  0, 0,   0, 1,  0, 0,   0,  0, -1, 0,   0, 0, 0, 1),  // front
+      mat4 ( 1, 0,  0, 0,   0, 1,  0, 0,   0,  0,  1, 0,   0, 0, 0, 1),  // back
+      mat4 ( 1, 0,  0, 0,   0, 0,  1, 0,   0, -1,  0, 0,   0, 0, 0, 1),  // bottom
+      mat4 ( 1, 0,  0, 0,   0, 0, -1, 0,   0,  1,  0, 0,   0, 0, 0, 1)   // top
+   );
 
    vec3 a = abs (vector .xyz);
 
