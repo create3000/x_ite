@@ -58,8 +58,7 @@ evalSensitivity (const in float OPD, const in vec3 shift)
    const vec3 var = vec3 (4.3278e+09, 9.3046e+09, 6.6121e+09);
 
    float phase = 2.0 * M_PI * OPD * 1.0e-9;
-
-   vec3 xyz = val * sqrt (2.0 * M_PI * var) * cos (pos * phase + shift) * exp (-sq (phase) * var);
+   vec3  xyz   = val * sqrt (2.0 * M_PI * var) * cos (pos * phase + shift) * exp (-sq (phase) * var);
 
    xyz.x += 9.7470e-14 * sqrt (2.0 * M_PI * 4.5282e+09) * cos (2.2399e+06 * phase + shift [0]) * exp (-4.5282e+09 * sq (phase));
    xyz   /= 1.0685e-7;
