@@ -171,6 +171,16 @@ canvas.minimap-decorations-layer {
   background-color: var(--system-red);
 }
 
+.console p.warn + p.warn,
+.console p.error + p.error {
+  border-top: none;
+}
+
+.console p.warn:has(+ p.warn),
+.console p.error:has(+ p.error) {
+  border-bottom: none;
+}
+
 .console p.splitter {
   margin: 5px 0px;
   border-top: 1px solid var(--system-gray3);
