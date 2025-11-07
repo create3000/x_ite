@@ -1322,9 +1322,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    },
    scriptBodyElement (baseNode)
    {
-      const
-         lastIndex  = this .lastIndex,
-         lineNumber = this .lineNumber;
+      const { lastIndex, lineNumber } = this;
 
       if (this .Id ())
       {
@@ -1454,9 +1452,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
          {
             // Parse unknown field value.
 
-            const
-               lastIndex  = this .lastIndex,
-               lineNumber = this .lineNumber;
+            const { lastIndex, lineNumber } = this;
 
             if (this .unknownValue ())
             {
