@@ -1454,7 +1454,9 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
          {
             // Parse unknown field value.
 
-            const lineNumber = this .lineNumber;
+            const
+               lastIndex  = this .lastIndex,
+               lineNumber = this .lineNumber;
 
             if (this .unknownValue ())
             {
@@ -1465,6 +1467,9 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                return true;
             }
+
+            this .lastIndex  = lastIndex;
+            this .lineNumber = lineNumber;
 
             throw new Error (`Unknown field '${fieldId}' in class '${baseNode .getTypeName ()}'.`);
          }
