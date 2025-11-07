@@ -518,6 +518,60 @@ class Playground
       };
    }
 
+   redirectConsoleMessages ()
+   {
+      const output = (log, command) =>
+      {
+         return (... args) =>
+         {
+            log .apply (console, args);
+
+            this .addConsoleMessage (command, args .join (" "));
+         };
+      }
+
+      for (const command of ["log", "info", "warn", "error", "debug"])
+         console [command] = output (console [command], command);
+   }
+
+   CONSOLE_MAX = 1000;
+
+   excludes = [
+      /No suitable|of an UNKNOWN touch/,
+   ];
+
+   #messageTime = 0;
+
+   addConsoleMessage (level, message)
+   {
+      if (this .excludes .some (exclude => exclude .test (message)))
+         return;
+
+      const
+         console = $(".console") .show (),
+         text    = $("<p></p>") .addClass (level) .text (message);
+
+      if (performance .now () - this .#messageTime > 1000)
+         console .append ($("<p></p>") .addClass ("splitter"));
+
+      this .#messageTime = performance .now ();
+
+      const
+         children = console .children (),
+         last     = children .last ();
+
+      if (last .hasClass (level))
+      {
+         last .css ("border-bottom", "none");
+         text .css ("border-top",    "none");
+      }
+
+      children .slice (0, Math .max (children .length - this .CONSOLE_MAX, 0)) .remove ();
+
+      console .append (text);
+      console .scrollTop (console .prop ("scrollHeight"));
+   }
+
    addVRMLEncoding ()
    {
       const browser = this .browser;
@@ -603,60 +657,6 @@ class Playground
          { open: "'", close: "'" },
          ],
       });
-   }
-
-   CONSOLE_MAX = 1000;
-
-   excludes = [
-      /No suitable|of an UNKNOWN touch/,
-   ];
-
-   #messageTime = 0;
-
-   addConsoleMessage (level, message)
-   {
-      if (this .excludes .some (exclude => exclude .test (message)))
-         return;
-
-      const
-         console = $(".console") .show (),
-         text    = $("<p></p>") .addClass (level) .text (message);
-
-      if (performance .now () - this .#messageTime > 1000)
-         console .append ($("<p></p>") .addClass ("splitter"));
-
-      this .#messageTime = performance .now ();
-
-      const
-         children = console .children (),
-         last     = children .last ();
-
-      if (last .hasClass (level))
-      {
-         last .css ("border-bottom", "none");
-         text .css ("border-top",    "none");
-      }
-
-      children .slice (0, Math .max (children .length - this .CONSOLE_MAX, 0)) .remove ();
-
-      console .append (text);
-      console .scrollTop (console .prop ("scrollHeight"));
-   }
-
-   redirectConsoleMessages ()
-   {
-      const output = (log, command) =>
-      {
-         return (... args) =>
-         {
-            log .apply (console, args);
-
-            this .addConsoleMessage (command, args .join (" "));
-         };
-      }
-
-      for (const command of ["log", "info", "warn", "error", "debug"])
-         console [command] = output (console [command], command);
    }
 }
 
