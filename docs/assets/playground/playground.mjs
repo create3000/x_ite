@@ -83,6 +83,12 @@ class Playground
       // Keyboard shortcuts.
 
       $("#editor") .on ("keydown", event => this .onKeyDown (event));
+
+      // Console
+
+      this .redirectConsoleMessages ();
+
+      console .info (X3D .getBrowser () .getWelcomeMessage ());
    }
 
    changeColorScheme ()
@@ -598,41 +604,60 @@ class Playground
          ],
       });
    }
+
+   CONSOLE_MAX = 1000;
+
+   excludes = [
+      /No suitable|of an UNKNOWN touch/,
+   ];
+
+   #messageTime = 0;
+
+   addConsoleMessage (level, message)
+   {
+      if (this .excludes .some (exclude => exclude .test (message)))
+         return;
+
+      const
+         console = $(".console") .show (),
+         text    = $("<p></p>") .addClass (level) .text (message);
+
+      if (performance .now () - this .#messageTime > 1000)
+         console .append ($("<p></p>") .addClass ("splitter"));
+
+      this .#messageTime = performance .now ();
+
+      const
+         children = console .children (),
+         last     = children .last ();
+
+      if (last .hasClass (level))
+      {
+         last .css ("border-bottom", "none");
+         text .css ("border-top",    "none");
+      }
+
+      children .slice (0, Math .max (children .length - this .CONSOLE_MAX, 0)) .remove ();
+
+      console .append (text);
+      console .scrollTop (console .prop ("scrollHeight"));
+   }
+
+   redirectConsoleMessages ()
+   {
+      const output = (log, command) =>
+      {
+         return (... args) =>
+         {
+            log .apply (console, args);
+
+            this .addConsoleMessage (command, args .join (" "));
+         };
+      }
+
+      for (const command of ["log", "info", "warn", "error", "debug"])
+         console [command] = output (console [command], command);
+   }
 }
 
 Playground .run ();
-
-(() =>
-{
-   function output (log, classes)
-   {
-      let c;
-
-      return function (... args)
-      {
-         const
-            text     = args .join (" ") + "\n",
-            element  = $("<span></span>") .addClass (classes) .text (text),
-            console  = c ??= $(".console"),
-            children = console .children ();
-
-         if (text .match (/No suitable|of an UNKNOWN touch/))
-            return;
-
-         log .apply (this, args);
-
-         children .slice (0, Math .max (children .length - 200, 0)) .remove ();
-
-         console .append (element);
-         console .scrollTop (console .prop ("scrollHeight"));
-      }
-   }
-
-   console .log   = output (console .log,   "log");
-   console .info  = output (console .info,  ["info", "blue"]);
-   console .warn  = output (console .warn,  ["warn", "yellow"]);
-   console .error = output (console .error, ["error", "red"]);
-   console .debug = output (console .debug, "debug");
-
-   console .info (X3D .getBrowser () .getWelcomeMessage ());
-})();
