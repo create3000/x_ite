@@ -556,10 +556,7 @@ class Playground
 
       this .#messageTime = performance .now ();
 
-      const children = console .children ();
-
-      children .slice (0, Math .max (children .length - this .CONSOLE_MAX, 0)) .remove ();
-
+      console .children (`:not(:nth-last-child(-n+${this .CONSOLE_MAX}))`) .remove ();
       console .append (text);
       console .scrollTop (console .prop ("scrollHeight"));
    }
