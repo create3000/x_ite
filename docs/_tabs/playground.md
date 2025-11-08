@@ -96,7 +96,6 @@ monaco: true
 .monaco-editor-background,
 canvas.minimap-decorations-layer {
   outline: none;
-  background-color: inherit;
 }
 
 .console {
@@ -179,6 +178,11 @@ canvas.minimap-decorations-layer {
 .console p.warn + p.warn,
 .console p.error + p.error {
   border-top: none;
+}
+
+.console p.warn:not(:has(+ p.warn)),
+.console p.error:not(:has(+ p.error)) {
+  margin-bottom: 2px;
 }
 
 .console p.splitter {
