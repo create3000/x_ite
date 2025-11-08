@@ -131,7 +131,7 @@ canvas.minimap-decorations-layer {
   font-size: 8pt;
 }
 
-.console p:before {
+.console p:where(.warn, .error):before {
   content: "";
   box-sizing: border-box;
   position: absolute;
