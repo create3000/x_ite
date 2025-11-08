@@ -151,7 +151,6 @@ class Playground
       const
          browser         = this .browser,
          editor          = this .editor,
-         model           = this .model,
          activeViewpoint = browser .activeViewpoint ?.getValue (),
          text            = editor .getValue (),
          url             = encodeURI (`data:,${text}`);
