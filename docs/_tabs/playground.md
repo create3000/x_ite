@@ -91,19 +91,6 @@ monaco: true
   white-space: pre;
 }
 
-.monaco-editor,
-.monaco-editor .margin,
-.monaco-editor-background,
-canvas.minimap-decorations-layer {
-  outline: none;
-}
-
-.console {
-  background: var(--playground-console-background);
-  padding: 0.5rem;
-  height: 50%;
-}
-
 .content x3d-canvas, x3d-canvas {
   display: block;
   width: 100%;
