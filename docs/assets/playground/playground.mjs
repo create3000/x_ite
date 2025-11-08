@@ -73,8 +73,6 @@ class Playground
 
       const encoding = { XML: "XML", JSON: "JSON", VRML: "VRML" } [browser .currentScene .encoding] ?? "XML";
 
-      monaco .editor .setModelLanguage (model, encoding .toLowerCase ());
-
       this .updateLanguage (encoding);
 
       model .setValue (browser .currentScene [`to${encoding}String`] ());
@@ -142,7 +140,6 @@ class Playground
          await this .browser .loadURL (new X3D .MFString (fileReader .result)) .catch (Function .prototype);
 
          this .model .setValue (this .browser .currentScene .toXMLString ());
-         monaco .editor .setModelLanguage (this .model, "xml");
          this .updateLanguage ("XML");
       });
 
@@ -175,30 +172,29 @@ class Playground
       try
       {
          await browser .loadURL (new X3D .MFString (url));
+
+         if (activeViewpoint && browser .activeViewpoint)
+         {
+            const activeViewpoint = browser .activeViewpoint .getValue ();
+
+            activeViewpoint .setUserPosition (userPosition);
+            activeViewpoint .setUserOrientation (userOrientation);
+            activeViewpoint .setUserCenterOfRotation (userCenterOfRotation);
+            activeViewpoint .setFieldOfViewScale (fieldOfViewScale);
+            activeViewpoint .setNearDistance (nearDistance);
+            activeViewpoint .setFarDistance (farDistance);
+         }
+
+         this .changed = false;
+
+         this .updateLanguage (browser .currentScene .encoding);
+
+         $("#refresh-button") .removeClass ("selected");
       }
       catch (error)
       {
          console .error (error);
       }
-
-      if (activeViewpoint && browser .activeViewpoint)
-      {
-         const activeViewpoint = browser .activeViewpoint .getValue ();
-
-         activeViewpoint .setUserPosition (userPosition);
-         activeViewpoint .setUserOrientation (userOrientation);
-         activeViewpoint .setUserCenterOfRotation (userCenterOfRotation);
-         activeViewpoint .setFieldOfViewScale (fieldOfViewScale);
-         activeViewpoint .setNearDistance (nearDistance);
-         activeViewpoint .setFarDistance (farDistance);
-      }
-
-      monaco .editor .setModelLanguage (model, browser .currentScene .encoding .toLowerCase ());
-
-      this .changed = false;
-
-      $("#refresh-button") .removeClass ("selected");
-      this .updateLanguage (browser .currentScene .encoding);
    }
 
    updateToolbar ()
@@ -350,7 +346,6 @@ class Playground
          .on ("click", () =>
          {
             model .setValue (browser .currentScene .toXMLString ());
-            monaco .editor .setModelLanguage (model, "xml");
             this .updateLanguage ("XML");
          })
          .appendTo (right);
@@ -365,7 +360,6 @@ class Playground
          .on ("click", () =>
          {
             model .setValue (browser .currentScene .toVRMLString ());
-            monaco .editor .setModelLanguage (model, "vrml");
             this .updateLanguage ("VRML");
          })
          .appendTo (right);
@@ -380,7 +374,6 @@ class Playground
          .on ("click", () =>
          {
             model .setValue (browser .currentScene .toJSONString ());
-            monaco .editor .setModelLanguage (model, "json");
             this .updateLanguage ("JSON");
          })
          .appendTo (right);
@@ -390,6 +383,8 @@ class Playground
    {
       $(".language") .removeClass ("selected");
       $(`.language.${encoding}`) .addClass ("selected");
+
+      monaco .editor .setModelLanguage (this .model, encoding .toLowerCase ());
    }
 
    setFullSize (fullSize)
