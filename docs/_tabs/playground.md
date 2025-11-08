@@ -103,6 +103,8 @@ monaco: true
 .console {
   overflow: scroll;
   background: var(--system-gray7);
+  height: 50%;
+  padding: 0.5rem;
 }
 
 .console p {
