@@ -141,7 +141,6 @@ canvas.minimap-decorations-layer {
   left: 0px;
   width: 100%;
   height: 100%;
-  filter: brightness(2) opacity(60%);
 }
 
 .console p:first-child {
@@ -159,7 +158,7 @@ canvas.minimap-decorations-layer {
 }
 
 .console p.warn:before {
-  background-color: var(--system-yellow);
+  background-color: color-mix(in srgb, color-mix(in srgb, var(--system-yellow), white 50%), black 30%);
 }
 
 .console p.error {
@@ -169,7 +168,7 @@ canvas.minimap-decorations-layer {
 }
 
 .console p.error:before {
-  background-color: var(--system-red);
+  background-color: color-mix(in srgb, color-mix(in srgb, var(--system-red), white 50%), black 30%);
 }
 
 .console p.warn:has(+ p.warn),
