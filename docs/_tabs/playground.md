@@ -158,7 +158,7 @@ canvas.minimap-decorations-layer {
 }
 
 .console p.warn:before {
-  background-color: color-mix(in srgb, color-mix(in srgb, var(--system-yellow), white 50%), black 30%);
+  background-color: color-mix(in srgb, color-mix(in srgb, var(--system-yellow), white 50%), transparent 30%);
 }
 
 .console p.error {
@@ -168,7 +168,7 @@ canvas.minimap-decorations-layer {
 }
 
 .console p.error:before {
-  background-color: color-mix(in srgb, color-mix(in srgb, var(--system-red), white 50%), black 30%);
+  background-color: color-mix(in srgb, color-mix(in srgb, var(--system-red), white 50%), transparent 30%);
 }
 
 .console p.warn:has(+ p.warn),
