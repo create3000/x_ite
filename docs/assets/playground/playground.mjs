@@ -172,7 +172,14 @@ class Playground
             farDistance          = activeViewpoint .getFarDistance ();
       }
 
-      await browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
+      try
+      {
+         await browser .loadURL (new X3D .MFString (url));
+      }
+      catch (error)
+      {
+         console .error (error);
+      }
 
       if (activeViewpoint && browser .activeViewpoint)
       {
