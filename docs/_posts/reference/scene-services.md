@@ -484,6 +484,10 @@ The SFNode object of the exported node. This property is read only.
 
 A string of the imported name. This property is read only.
 
+#### **description**: string
+
+An optional simple DESCRIPTION of intended purpose for the node provided via IMPORT.
+
 ## X3DExportedNode
 
 The X3DExportedNode object stores information about a particular export declaration. The object consists solely of read-only properties. It does not define any additional functions.
@@ -501,6 +505,10 @@ A string of the exported name. This property is read only.
 #### **localNode**: SFNode
 
 The SFNode object of the corresponding node. This property is read only.
+
+#### **description**: string
+
+An optional simple DESCRIPTION of intended purpose for the node provided via EXPORT.
 
 ## ProfileInfoArray
 
