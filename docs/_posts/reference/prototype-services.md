@@ -45,11 +45,11 @@ Always has the value of false. This property is read only.
 
 #### **appInfo**: string
 
-Short description or purpose of the prototype. This property is read only.
+Short description or purpose of the prototype.
 
 #### **documentation**: string
 
-A string containing the documentation of this prototype. This property is read only.
+A string containing the documentation of this prototype.
 
 ### Methods
 
@@ -137,11 +137,11 @@ The value is one of the *_STATE* properties defined in the [X3DConstants](/x_ite
 
 #### **appInfo**: string
 
-Short description or purpose of the extern prototype. This property is read only.
+Short description or purpose of the extern prototype.
 
 #### **documentation**: string
 
-A string containing the documentation of this extern prototype. This property is read only.
+A string containing the documentation of this extern prototype.
 
 ### Methods
 
