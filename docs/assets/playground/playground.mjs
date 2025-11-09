@@ -73,8 +73,6 @@ class Playground
 
       const encoding = { XML: "XML", JSON: "JSON", VRML: "VRML" } [browser .currentScene .encoding] ?? "XML";
 
-      monaco .editor .setModelLanguage (model, encoding .toLowerCase ());
-
       this .updateLanguage (encoding);
 
       model .setValue (browser .currentScene [`to${encoding}String`] ());
@@ -83,6 +81,12 @@ class Playground
       // Keyboard shortcuts.
 
       $("#editor") .on ("keydown", event => this .onKeyDown (event));
+
+      // Console
+
+      this .redirectConsoleMessages ();
+
+      console .info (X3D .getBrowser () .getWelcomeMessage ());
    }
 
    changeColorScheme ()
@@ -136,7 +140,6 @@ class Playground
          await this .browser .loadURL (new X3D .MFString (fileReader .result)) .catch (Function .prototype);
 
          this .model .setValue (this .browser .currentScene .toXMLString ());
-         monaco .editor .setModelLanguage (this .model, "xml");
          this .updateLanguage ("XML");
       });
 
@@ -148,7 +151,6 @@ class Playground
       const
          browser         = this .browser,
          editor          = this .editor,
-         model           = this .model,
          activeViewpoint = browser .activeViewpoint ?.getValue (),
          text            = editor .getValue (),
          url             = encodeURI (`data:,${text}`);
@@ -166,26 +168,32 @@ class Playground
             farDistance          = activeViewpoint .getFarDistance ();
       }
 
-      await browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
-
-      if (activeViewpoint && browser .activeViewpoint)
+      try
       {
-         const activeViewpoint = browser .activeViewpoint .getValue ();
+         await browser .loadURL (new X3D .MFString (url));
 
-         activeViewpoint .setUserPosition (userPosition);
-         activeViewpoint .setUserOrientation (userOrientation);
-         activeViewpoint .setUserCenterOfRotation (userCenterOfRotation);
-         activeViewpoint .setFieldOfViewScale (fieldOfViewScale);
-         activeViewpoint .setNearDistance (nearDistance);
-         activeViewpoint .setFarDistance (farDistance);
+         if (activeViewpoint && browser .activeViewpoint)
+         {
+            const activeViewpoint = browser .activeViewpoint .getValue ();
+
+            activeViewpoint .setUserPosition (userPosition);
+            activeViewpoint .setUserOrientation (userOrientation);
+            activeViewpoint .setUserCenterOfRotation (userCenterOfRotation);
+            activeViewpoint .setFieldOfViewScale (fieldOfViewScale);
+            activeViewpoint .setNearDistance (nearDistance);
+            activeViewpoint .setFarDistance (farDistance);
+         }
+
+         this .changed = false;
+
+         this .updateLanguage (browser .currentScene .encoding);
+
+         $("#refresh-button") .removeClass ("selected");
       }
-
-      monaco .editor .setModelLanguage (model, browser .currentScene .encoding .toLowerCase ());
-
-      this .changed = false;
-
-      $("#refresh-button") .removeClass ("selected");
-      this .updateLanguage (browser .currentScene .encoding);
+      catch (error)
+      {
+         console .error (error);
+      }
    }
 
    updateToolbar ()
@@ -337,7 +345,6 @@ class Playground
          .on ("click", () =>
          {
             model .setValue (browser .currentScene .toXMLString ());
-            monaco .editor .setModelLanguage (model, "xml");
             this .updateLanguage ("XML");
          })
          .appendTo (right);
@@ -352,7 +359,6 @@ class Playground
          .on ("click", () =>
          {
             model .setValue (browser .currentScene .toVRMLString ());
-            monaco .editor .setModelLanguage (model, "vrml");
             this .updateLanguage ("VRML");
          })
          .appendTo (right);
@@ -367,7 +373,6 @@ class Playground
          .on ("click", () =>
          {
             model .setValue (browser .currentScene .toJSONString ());
-            monaco .editor .setModelLanguage (model, "json");
             this .updateLanguage ("JSON");
          })
          .appendTo (right);
@@ -377,6 +382,8 @@ class Playground
    {
       $(".language") .removeClass ("selected");
       $(`.language.${encoding}`) .addClass ("selected");
+
+      monaco .editor .setModelLanguage (this .model, encoding .toLowerCase ());
    }
 
    setFullSize (fullSize)
@@ -512,6 +519,49 @@ class Playground
       };
    }
 
+   redirectConsoleMessages ()
+   {
+      const output = (log, command) =>
+      {
+         return (... args) =>
+         {
+            log .apply (console, args);
+
+            this .addConsoleMessage (command, args .join (" "));
+         };
+      }
+
+      for (const command of ["log", "info", "warn", "error", "debug"])
+         console [command] = output (console [command], command);
+   }
+
+   CONSOLE_MAX = 1000;
+
+   excludes = [
+      /No suitable|of an UNKNOWN touch/,
+   ];
+
+   #messageTime = 0;
+
+   addConsoleMessage (level, message)
+   {
+      if (this .excludes .some (exclude => exclude .test (message)))
+         return;
+
+      const
+         console = $(".console") .show (),
+         text    = $("<p></p>") .addClass (level) .text (message);
+
+      if (performance .now () - this .#messageTime > 1000)
+         console .append ($("<p></p>") .addClass ("splitter"));
+
+      this .#messageTime = performance .now ();
+
+      console .children (`:not(:nth-last-child(-n+${this .CONSOLE_MAX}))`) .remove ();
+      console .append (text);
+      console .scrollTop (console .prop ("scrollHeight"));
+   }
+
    addVRMLEncoding ()
    {
       const browser = this .browser;
@@ -601,38 +651,3 @@ class Playground
 }
 
 Playground .run ();
-
-(() =>
-{
-   function output (log, classes)
-   {
-      let c;
-
-      return function (... args)
-      {
-         const
-            text     = args .join (" ") + "\n",
-            element  = $("<span></span>") .addClass (classes) .text (text),
-            console  = c ??= $(".console"),
-            children = console .children ();
-
-         if (text .match (/No suitable|of an UNKNOWN touch/))
-            return;
-
-         log .apply (this, args);
-
-         children .slice (0, Math .max (children .length - 200, 0)) .remove ();
-
-         console .append (element);
-         console .scrollTop (console .prop ("scrollHeight"));
-      }
-   }
-
-   console .log   = output (console .log,   "log");
-   console .info  = output (console .info,  ["info", "blue"]);
-   console .warn  = output (console .warn,  ["warn", "yellow"]);
-   console .error = output (console .error, ["error", "red"]);
-   console .debug = output (console .debug, "debug");
-
-   console .info (X3D .getBrowser () .getWelcomeMessage ());
-})();

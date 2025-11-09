@@ -91,20 +91,6 @@ monaco: true
   white-space: pre;
 }
 
-.monaco-editor,
-.monaco-editor .margin,
-.monaco-editor-background,
-canvas.minimap-decorations-layer {
-  outline: none;
-  background-color: inherit;
-}
-
-.console {
-  background: var(--playground-console-background);
-  padding: 0.5rem;
-  height: 50%;
-}
-
 .content x3d-canvas, x3d-canvas {
   display: block;
   width: 100%;
@@ -116,18 +102,86 @@ canvas.minimap-decorations-layer {
 
 .console {
   overflow: scroll;
+  background: var(--system-gray7);
+  height: 50%;
+  padding: 0.5rem;
 }
 
-span.info {
+.console p {
+  box-sizing: border-box;
+  position: relative;
+  z-index: 0;
+  margin: 0;
+  padding: 1px 2px;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+  font-family: monospace;
+  font-size: 8pt;
+}
+
+.console p:where(.warn, .error):before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  display: block;
+  z-index: -1;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+.console p:first-child {
+  margin-top: 0px;
+}
+
+.console .info {
   color: var(--system-blue);
 }
 
-span.warn {
-  color: var(--system-yellow);
+.console p.warn {
+  border-top: 1px solid var(--system-yellow);
+  border-bottom: 1px solid var(--system-yellow);
+  color: black;
 }
 
-span.error {
-  color: var(--system-red);
+.console p.warn:before {
+  background-color: color-mix(in srgb, color-mix(in srgb, var(--system-yellow), white 50%), transparent 30%);
+}
+
+.console p.error {
+  border-top: 1px solid var(--system-red);
+  border-bottom: 1px solid var(--system-red);
+  color: black;
+}
+
+.console p.error:before {
+  background-color: color-mix(in srgb, color-mix(in srgb, var(--system-red), white 50%), transparent 30%);
+}
+
+.console p.warn:has(+ p.warn),
+.console p.error:has(+ p.error) {
+  border-bottom: none;
+}
+
+.console p.warn + p.warn,
+.console p.error + p.error {
+  border-top: none;
+}
+
+.console p.warn:not(:has(+ p.warn)),
+.console p.error:not(:has(+ p.error)) {
+  margin-bottom: 2px;
+}
+
+.console p.splitter {
+  margin: 5px 0px;
+  border-top: 1px solid var(--system-gray3);
+  padding: 0px;
+}
+
+.console p.splitter:first-child {
+  display: none;
 }
 </style>
 

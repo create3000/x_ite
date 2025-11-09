@@ -107,7 +107,7 @@ const X_ITE_X3D = X3D .noConflict ();
 </script>
 ```
 
->**Tip:** If you use the ES6 module version with `import` then you no longer need this function.
+>**Tip:** If you use the ES6 module version with `import` then you will no longer need this function.
 {: .prompt-tip }
 
 The following services can be used to establish a session and obtain the X3DBrowser object.
