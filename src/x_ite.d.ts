@@ -919,13 +919,13 @@ declare namespace X3D
        */
       readonly isExternProto: false;
       /**
-       * Short description or purpose of the prototype. This property is read only.
+       * Short description or purpose of the prototype.
        */
-      readonly appInfo: string;
+      appInfo: string;
       /**
-       * A string containing the documentation of this prototype. This property is read only.
+       * A string containing the documentation of this prototype.
        */
-      readonly documentation: string;
+      documentation: string;
 
       /**
        * Creates a new default instance of the prototype.
@@ -978,13 +978,13 @@ declare namespace X3D
        */
       readonly isExternProto: true;
       /**
-       * Short description or purpose of the extern prototype. This property is read only.
+       * Short description or purpose of the extern prototype.
        */
-      readonly appInfo: string;
+      appInfo: string;
       /**
-       * A string containing the documentation of this extern prototype. This property is read only.
+       * A string containing the documentation of this extern prototype.
        */
-      readonly documentation: string;
+      documentation: string;
       /**
        * The value is one of the *_STATE* properties defined in the X3DConstants object. This property is read only.
        */
@@ -1530,13 +1530,13 @@ declare namespace X3D
        */
       readonly value: boolean | number | string | null | X3DField;
       /**
-       * Short description or purpose of the field. This property is read only.
+       * Short description or purpose of the field.
        */
-      readonly appInfo: string;
+      appInfo: string;
       /**
-       * A string containing the documentation of this field. This property is read only.
+       * A string containing the documentation of this field.
        */
-      readonly documentation: string;
+      documentation: string;
    }
 
    /**

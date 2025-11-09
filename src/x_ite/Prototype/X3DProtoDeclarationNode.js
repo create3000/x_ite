@@ -44,6 +44,10 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclarationNode .prototype, X3DB
    {
       return this [_documentation];
    },
+   setDocumentation (value)
+   {
+      this [_documentation] = String (value);
+   },
    createInstance (executionContext, setup = true /* non-public argument */)
    {
       if (setup === false)
@@ -91,11 +95,13 @@ Object .defineProperties (X3DProtoDeclarationNode .prototype,
    appInfo:
    {
       get: X3DProtoDeclarationNode .prototype .getAppInfo,
+      set: X3DProtoDeclarationNode .prototype .setAppInfo,
       enumerable: true,
    },
    documentation:
    {
       get: X3DProtoDeclarationNode .prototype .getDocumentation,
+      set: X3DProtoDeclarationNode .prototype .setDocumentation,
       enumerable: true,
    },
 });
