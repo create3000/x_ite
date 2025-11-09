@@ -34,6 +34,10 @@ Object .assign (Object .setPrototypeOf (X3DFieldDefinition .prototype, X3DObject
    {
       return this [_value] .getAppInfo ();
    },
+   setAppInfo (value)
+   {
+      return this [_value] .setAppInfo (value);
+   },
    getDocumentation ()
    {
       return this [_value] .getDocumentation ();
