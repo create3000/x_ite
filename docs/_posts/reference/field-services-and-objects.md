@@ -33,11 +33,11 @@ The default value for this field. This property is read only.
 
 #### **appInfo**: string
 
-Short description or purpose of the field. This property is read only.
+Short description or purpose of the field.
 
 #### **documentation**: string
 
-A string containing the documentation of this field. This property is read only.
+A string containing the documentation of this field.
 
 ### Methods
 
