@@ -35,6 +35,10 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
    {
       return this [_description];
    },
+   setDescription (value)
+   {
+      this [_description] = String (value);
+   },
    toVRMLStream (generator)
    {
       const localName = generator .Name (this .getLocalNode ());
@@ -92,7 +96,7 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
 
       if (this [_description])
          generator .stringProperty ("@DESCRIPTION", this [_description]);
-      
+
       generator .endObject ();
       generator .endObject ();
    },
@@ -105,10 +109,7 @@ Object .defineProperties (X3DExportedNode .prototype,
 {
    exportedName:
    {
-      get ()
-      {
-         return this [_exportedName];
-      },
+      get: X3DExportedNode .prototype .getExportedName,
       enumerable: true,
    },
    localNode:
@@ -121,10 +122,8 @@ Object .defineProperties (X3DExportedNode .prototype,
    },
    description:
    {
-      get ()
-      {
-         return this [_description];
-      },
+      get: X3DExportedNode .prototype .getDescription,
+      set: X3DExportedNode .prototype .setDescription,
       enumerable: true,
    },
 });

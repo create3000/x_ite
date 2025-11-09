@@ -875,9 +875,9 @@ declare namespace X3D
        */
       readonly importedName: string;
       /**
-       * An optional simple DESCRIPTION of intended purpose for the node provided via IMPORT. This property is read only.
+       * An optional simple DESCRIPTION of intended purpose for the node provided via IMPORT.
        */
-      readonly description: string;
+      description: string;
    }
 
    /**
@@ -899,9 +899,9 @@ declare namespace X3D
        */
       readonly localNode: SFNode;
       /**
-       * An optional simple DESCRIPTION of intended purpose for the node provided via EXPORT. This property is read only.
+       * An optional simple DESCRIPTION of intended purpose for the node provided via EXPORT.
        */
-      readonly description: string;
+      description: string;
    }
 
    /**

@@ -83,6 +83,10 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    {
       return this [_description];
    },
+   setDescription (value)
+   {
+      this [_description] = String (value);
+   },
    toVRMLStream (generator)
    {
       if (!generator .ExistsNode (this .getInlineNode ()))
@@ -198,10 +202,7 @@ Object .defineProperties (X3DImportedNode .prototype,
    },
    exportedName:
    {
-      get ()
-      {
-         return this [_exportedName];
-      },
+      get: X3DImportedNode .prototype .getExportedName,
       enumerable: true,
    },
    exportedNode:
@@ -214,18 +215,13 @@ Object .defineProperties (X3DImportedNode .prototype,
    },
    importedName:
    {
-      get ()
-      {
-         return this [_importedName];
-      },
+      get: X3DImportedNode .prototype .getImportedName,
       enumerable: true,
    },
    description:
    {
-      get ()
-      {
-         return this [_description];
-      },
+      get: X3DImportedNode .prototype .getDescription,
+      set: X3DImportedNode .prototype .setDescription,
       enumerable: true,
    },
 });
