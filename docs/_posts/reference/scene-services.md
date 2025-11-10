@@ -518,7 +518,7 @@ An integer containing the number of elements in the array. This property is read
 
 ### Methods
 
-None
+Almost all read-only functions known from JavaScript Array.
 
 ## ComponentInfoArray
 
@@ -536,7 +536,7 @@ An integer containing the number of elements in the array. This property is read
 
 ### Methods
 
-None
+Almost all read-only functions known from JavaScript Array.
 
 ## UnitInfoArray
 
@@ -554,7 +554,7 @@ An integer containing the number of elements in the array. This property is read
 
 ### Methods
 
-None
+Almost all read-only functions known from JavaScript Array.
 
 ## ImportedNodesArray
 
@@ -572,7 +572,7 @@ An integer containing the number of elements in the array. This property is read
 
 ### Methods
 
-None
+Almost all read-only functions known from JavaScript Array.
 
 ## ExportedNodesArray
 
@@ -590,4 +590,4 @@ An integer containing the number of elements in the array. This property is read
 
 ### Methods
 
-None
+Almost all read-only functions known from JavaScript Array.

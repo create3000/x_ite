@@ -59,7 +59,7 @@ An integer containing the number of elements in the array. This property is read
 
 ### Methods
 
-None
+Almost all read-only functions known from JavaScript Array.
 
 ## Field Hierarchy
 
