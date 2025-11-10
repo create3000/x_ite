@@ -12,6 +12,7 @@ permalink: /
 [![npm Downloads](https://badgen.net/npm/dm/x_ite)](https://npmtrends.com/x_ite){: .badge-link }
 [![DeepScan grade](https://deepscan.io/api/teams/23540/projects/26814/branches/855447/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=23540&pid=26814&bid=855447){: .badge-link }
 
+<!--
 <x3d-canvas
     class="teaser shadow"
     src="/x_ite/assets/teaser/waves/waves.x3d"
@@ -39,6 +40,36 @@ permalink: /
   </x3d-canvas>
 </div>
 Credits: [Yahya Dev](https://sketchfab.com/YahyaDev) (droplet)
+{: .small }
+-->
+
+<x3d-canvas
+    class="teaser shadow"
+    src="/x_ite/assets/teaser/winter-forest/winter-forest.x3d"
+    update="auto"
+    splashScreen="false"
+    contextMenu="false"
+    notifications="false"
+    timings="false"
+    contentScale="auto"
+    xrSessionMode="NONE">
+</x3d-canvas>
+<div class="mascot-wrapper">
+  <x3d-canvas
+      class="mascot"
+      src="/x_ite/assets/teaser/winter-forest/snowman.x3d"
+      update="auto"
+      splashScreen="false"
+      contextMenu="false"
+      notifications="false"
+      timings="false"
+      contentScale="auto"
+      xrSessionMode="NONE"
+      style="visibility: hidden;"
+      oninitialized="this .style .visibility = 'visible';">
+  </x3d-canvas>
+</div>
+Credits: [LostBoyz2078](https://sketchfab.com/LostModels2025) (snowman)
 {: .small }
 
 ## Overview

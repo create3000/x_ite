@@ -6,7 +6,7 @@
     <meta name='created' content='Sat, 14 Dec 2024 18:52:06 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.11.5, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Mon, 10 Nov 2025 18:26:16 GMT'/>
+    <meta name='modified' content='Mon, 10 Nov 2025 18:48:17 GMT'/>
   </head>
   <Scene>
     <WorldInfo>
@@ -33,6 +33,20 @@
     <Background
         transparency='1'/>
     <DirectionalLight
-        intensity='1.2'/>
+        intensity='20'
+        direction='0.5 0 -1'/>
+    <Transform
+        translation='7.251151 -3.237491 -0.028493'
+        rotation='0 -1 0 38.0363747031365'
+        scale='0.07224182 0.07224182 0.07224182'>
+      <Inline DEF='_1'
+          url='"Snowman.glb"'/>
+      <LoadSensor DEF='_2'>
+        <Inline
+            url='"Snowman.glb"'/>
+      </LoadSensor>
+    </Transform>
+    <IMPORT inlineDEF='_1' importedDEF='Timer1'/>
+    <ROUTE fromNode='_2' fromField='isLoaded' toNode='Timer1' toField='set_loop'/>
   </Scene>
 </X3D>
