@@ -142,7 +142,7 @@ declare namespace X3D
       /**
        * The `getSupportedComponent` service returns a ComponentInfo object of the named component from the `supportedComponents` array. The parameter is the name of a component from which to fetch the declaration. The browser only returns a ComponentInfo object if it supports the named component. If it does not support the component, an error is thrown.
        */
-      getSupportedComponent (name : string): ComponentInfo;
+      getSupportedComponent (name: string): ComponentInfo;
       /**
        * The `getProfile` service returns a ProfileInfo object of the named profile. The parameter is the name of a profile from which to fetch the declaration. The browser only returns a ProfileInfo object if it supports the named profile. If it does not support the named profile, an error is thrown.
        */
@@ -150,7 +150,7 @@ declare namespace X3D
       /**
        * The `getComponent` service returns a ComponentInfo object of the named component. The first parameter is the name of a component and the second the level from which to fetch the declaration. The browser only returns a ComponentInfo object if it supports the named component and the requested level. If it does not support the component at the level desired, an error is thrown. If level is omitted, it defaults to the highest supported level of this component.
        */
-      getComponent (name : string, level?: number): ComponentInfo;
+      getComponent (name: string, level?: number): ComponentInfo;
       /**
        * The `createScene` service creates a new empty scene that conforms to the given profile and component declarations. The Promise resolves when all components are loaded.
        */
@@ -1074,7 +1074,7 @@ declare namespace X3D
       some (predicate: ArrayTest <T>): boolean;
       toReversed (): this;
       toSorted (comparator?: (a: T, b: T) => number): this;
-      toSpliced (start: number, deleteCount: number, ... items: T []) : this;
+      toSpliced (start: number, deleteCount: number, ... items: T []): this;
       values (): IterableIterator <T>;
       with (index: number, value: T): this;
    }
@@ -2683,10 +2683,10 @@ declare namespace X3D
       slice (start?: number, end?: number): this;
       some (predicate: ArrayTest <T>): boolean;
       sort (comparator?: (a: T, b: T) => number): this;
-      splice (start: number, deleteCount: number, ... items: T []) : this;
+      splice (start: number, deleteCount: number, ... items: T []): this;
       toReversed (): this;
       toSorted (comparator?: (a: T, b: T) => number): this;
-      toSpliced (start: number, deleteCount: number, ... items: T []) : this;
+      toSpliced (start: number, deleteCount: number, ... items: T []): this;
       unshift (... elements: T []): number;
       values (): IterableIterator <T>;
       with (index: number, value: T): this;
