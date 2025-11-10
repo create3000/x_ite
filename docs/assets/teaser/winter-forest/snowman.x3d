@@ -6,7 +6,7 @@
     <meta name='created' content='Sat, 14 Dec 2024 18:52:06 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.11.5, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Mon, 10 Nov 2025 19:47:00 GMT'/>
+    <meta name='modified' content='Mon, 10 Nov 2025 20:02:17 GMT'/>
   </head>
   <Scene>
     <WorldInfo>
@@ -45,7 +45,7 @@
         <Inline USE='_3'/>
       </LoadSensor>
     </Transform>
-    <IMPORT inlineDEF='_3' importedDEF='Timer1' AS='Timer1_1'/>
-    <ROUTE fromNode='_2' fromField='isLoaded' toNode='Timer1_1' toField='set_loop'/>
+    <IMPORT inlineDEF='_3' importedDEF='Timer1'/>
+    <ROUTE fromNode='_2' fromField='isLoaded' toNode='Timer1' toField='set_loop'/>
   </Scene>
 </X3D>
