@@ -1051,6 +1051,32 @@ declare namespace X3D
       [Symbol .iterator](): IterableIterator <T>;
       readonly [index: number]: T;
       readonly length: number;
+
+      at (index: number): T;
+      entries (): IterableIterator <[number, T]>;
+      every (predicate: ArrayTest <T>): boolean;
+      fill (val: T, start?: number, end?: number): this;
+      filter (predicate: ArrayTest <T>): this;
+      find (test: ArrayTest <T>): T | undefined;
+      findIndex (test: ArrayTest <T>): number;
+      findLast (test: ArrayTest <T>): T | undefined;
+      findLastIndex (test: ArrayTest <T>): number;
+      forEach (action: ArrayAction <T>): void;
+      includes (needle: T): boolean;
+      indexOf (needle: T): number;
+      join (separator?: string): string;
+      keys (): number [];
+      lastIndexOf (needle: T): number;
+      map <U> (f: (element: T, i: number, array: this) => U): this;
+      reduce <U> (f: ArrayReducer <T, U>, initial?: U): U;
+      reduceRight <U> (f: ArrayReducer <T, U>, initial?: U): U;
+      slice (start?: number, end?: number): this;
+      some (predicate: ArrayTest <T>): boolean;
+      toReversed (): this;
+      toSorted (comparator?: (a: T, b: T) => number): this;
+      toSpliced (start: number, deleteCount: number, ... items: T []) : this;
+      values (): IterableIterator <T>;
+      with (index: number, value: T): this;
    }
 
    /**
