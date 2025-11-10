@@ -17,7 +17,7 @@ None. This object cannot be instantiated by the user.
 
 #### **name**: string
 
-A string of the declared name of this prototype. This property is read only.
+A string of the declared name of this prototype. This property is read-only.
 
 <x3d-script-area name="X3D ECMAScript Example: X3DProtoDeclaration name">
 <pre>
@@ -37,11 +37,11 @@ print (scene .protos [0] .name);
 
 #### **fields**: FieldDefinitionArray
 
-A reference to FieldDefinitionArray of all the fields defined for this prototype. This property is read only.
+A reference to FieldDefinitionArray of all the fields defined for this prototype. This property is read-only.
 
 #### **isExternProto**: boolean
 
-Always has the value of false. This property is read only.
+Always has the value of false. This property is read-only.
 
 #### **appInfo**: string
 
@@ -103,15 +103,15 @@ None. This object cannot be instantiated by the user.
 
 #### **name**: string
 
-A string of the declared name of this extern prototype. This property is read only.
+A string of the declared name of this extern prototype. This property is read-only.
 
 #### **fields**: FieldDefinitionArray
 
-A reference to FieldDefinitionArray of all the fields defined for this extern prototype. This property is read only.
+A reference to FieldDefinitionArray of all the fields defined for this extern prototype. This property is read-only.
 
 #### **urls**: MFString
 
-A MFString array of all the URI's defined for this extern prototype. This property is read only.
+A MFString array of all the URI's defined for this extern prototype. This property is read-only.
 
 <x3d-script-area name="X3D ECMAScript Example: X3DExternProtoDeclaration urls">
 <pre>
@@ -129,11 +129,11 @@ print (scene .externprotos [0] .urls);
 
 #### **isExternProto**: boolean
 
-Always has the value of true. This property is read only.
+Always has the value of true. This property is read-only.
 
 #### **loadState**: number
 
-The value is one of the *_STATE* properties defined in the [X3DConstants](/x_ite/reference/constants-services/#load-state-constants) object. This property is read only.
+The value is one of the *_STATE* properties defined in the [X3DConstants](/x_ite/reference/constants-services/#load-state-constants) object. This property is read-only.
 
 #### **appInfo**: string
 
@@ -199,7 +199,7 @@ The `[@@iterator]()` method of ProtoDeclarationArray instances implements the it
 
 #### **length**: number
 
-An integer containing the number of elements in the array. This property is read only.
+An integer containing the number of elements in the array. This property is read-only.
 
 ### Methods
 
@@ -221,7 +221,7 @@ The `[@@iterator]()` method of ExternProtoDeclarationArray instances implements 
 
 #### **length**: number
 
-An integer containing the number of elements in the array. This property is read only.
+An integer containing the number of elements in the array. This property is read-only.
 
 ### Methods
 

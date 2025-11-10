@@ -17,11 +17,11 @@ None. This object cannot be instantiated by the user. One global instance of the
 
 #### **name**: string
 
-A browser-implementation specific string describing the browser. This property is read only.
+A browser-implementation specific string describing the browser. This property is read-only.
 
 #### **version**: string
 
-A browser-implementation specific string describing the browser version. This property is read only.
+A browser-implementation specific string describing the browser version. This property is read-only.
 
 <x3d-script-area name="X3D ECMAScript Example: X3DBrowser name/version">
 <pre>
@@ -35,15 +35,15 @@ print (Browser .version);
 
 #### **providerURL**: string
 
-If provided, the URL to the entity that wrote this browser. This property is read only.
+If provided, the URL to the entity that wrote this browser. This property is read-only.
 
 #### **currentSpeed**: number
 
-The current speed of the avatar in m/s. This property is read only.
+The current speed of the avatar in m/s. This property is read-only.
 
 #### **currentFrameRate**: number
 
-The current frame rate in frames per second. This property is read only.
+The current frame rate in frames per second. This property is read-only.
 
 #### **description**: string
 {: .writable }
@@ -52,19 +52,19 @@ A user-defined String which can be read and written.
 
 #### **supportedProfiles**: ProfileInfoArray
 
-Returns the list of all profiles that are supported by this browser. This property is read only.
+Returns the list of all profiles that are supported by this browser. This property is read-only.
 
 #### **supportedComponents**: ComponentInfoArray
 
-Returns a list of all components that are supported by this browser. This property is read only.
+Returns a list of all components that are supported by this browser. This property is read-only.
 
 #### **concreteNodes**: ConcreteNodesArray
 
-Returns a list of all concrete node classes that are supported by this browser. This property is read only.
+Returns a list of all concrete node classes that are supported by this browser. This property is read-only.
 
 #### **abstractNodes**: AbstractNodesArray
 
-Returns a list of all abstract node classes that are supported by this browser. This property is read only.
+Returns a list of all abstract node classes that are supported by this browser. This property is read-only.
 
 #### **baseURL**: string
 {: .writable }
@@ -73,7 +73,7 @@ A String value which can be read and written, containing the URL against which r
 
 #### **currentScene**: X3DScene | X3DExecutionContext
 
-The real type of this class is dependent on whether the user code is inside a prototype instance or not. If the user code is inside a prototype instance the property represent an X3DExecutionContext otherwise it represent an X3DScene. This property is read only.
+The real type of this class is dependent on whether the user code is inside a prototype instance or not. If the user code is inside a prototype instance the property represent an X3DExecutionContext otherwise it represent an X3DScene. This property is read-only.
 
 <x3d-script-area name="X3D ECMAScript Example: X3DBrowser currentScene">
 <pre>
@@ -88,23 +88,23 @@ print (Browser .currentScene .rootNodes .length);
 
 #### **activeLayer**: SFNode | null
 
-Returns the active layer, if any. The active layer is the layer on which navigation takes place. This property is read only.
+Returns the active layer, if any. The active layer is the layer on which navigation takes place. This property is read-only.
 
 #### **activeNavigationInfo**: SFNode | null
 
-Returns the bound NavigationInfo node in the active layer, if any. This property is read only.
+Returns the bound NavigationInfo node in the active layer, if any. This property is read-only.
 
 #### **activeViewpoint**: SFNode | null
 
-Returns the bound X3DViewpointNode in the active layer, if any. This property is read only.
+Returns the bound X3DViewpointNode in the active layer, if any. This property is read-only.
 
 #### **contextMenu**: ContextMenu
 
-Returns a reference to the corresponding ContextMenu. This property is read only.
+Returns a reference to the corresponding ContextMenu. This property is read-only.
 
 #### **element**: X3DCanvasElement
 
-Returns a reference to the corresponding X3DCanvasElement. This property is read only.
+Returns a reference to the corresponding X3DCanvasElement. This property is read-only.
 
 ### Methods
 
@@ -753,19 +753,19 @@ None. This object cannot be instantiated by the user.
 
 #### **typeName**: string
 
-The node type name for this class. This property is read only.
+The node type name for this class. This property is read-only.
 
 #### **componentInfo**: { name: string, level: number }
 
-Returns an object with two properties *name* and *level* which can be used to get a ComponentInfo object from the X3D browser. This property is read only.
+Returns an object with two properties *name* and *level* which can be used to get a ComponentInfo object from the X3D browser. This property is read-only.
 
 #### **containerField**: string
 
-The default container field name for this node. This property is read only.
+The default container field name for this node. This property is read-only.
 
 #### **specificationRange**: { from: string, to: string }
 
-Returns an object with two strings defining the first version and last version where this node is specified. This property is read only.
+Returns an object with two strings defining the first version and last version where this node is specified. This property is read-only.
 
 #### **fieldDefinitions**: FieldDefinitionArray
 
@@ -783,11 +783,11 @@ None. This object cannot be instantiated by the user.
 
 #### **typeName**: string
 
-The node type name for this class. This property is read only.
+The node type name for this class. This property is read-only.
 
 #### **componentInfo**: { name: string, level: number }
 
-Returns an object with two properties *name* and *level* which can be used to get a ComponentInfo object from the X3D browser. This property is read only.
+Returns an object with two properties *name* and *level* which can be used to get a ComponentInfo object from the X3D browser. This property is read-only.
 
 ## ConcreteNodesArray
 
@@ -805,7 +805,7 @@ The `[@@iterator]()` method of ConcreteNodesArray instances implements the itera
 
 #### **length**: number
 
-An integer containing the number of elements in the array. This property is read only.
+An integer containing the number of elements in the array. This property is read-only.
 
 ### Methods
 
@@ -827,7 +827,7 @@ The `[@@iterator]()` method of AbstractNodesArray instances implements the itera
 
 #### **length**: number
 
-An integer containing the number of elements in the array. This property is read only.
+An integer containing the number of elements in the array. This property is read-only.
 
 ### Methods
 

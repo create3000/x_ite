@@ -67,7 +67,7 @@ The `[@@iterator]()` method of RouteArray instances implements the iterable prot
 
 #### **length**: number
 
-An integer containing the number of elements in the array. This property is read only.
+An integer containing the number of elements in the array. This property is read-only.
 
 ### Methods
 

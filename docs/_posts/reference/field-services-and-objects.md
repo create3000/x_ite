@@ -17,19 +17,19 @@ None.
 
 #### **accessType**: number
 
-Value from the [X3DConstants](/x_ite/reference/constants-services/#access-type-constants) object describing the accessType (e.g., `X3DConstants.inputOnly`). This property is read only.
+Value from the [X3DConstants](/x_ite/reference/constants-services/#access-type-constants) object describing the accessType (e.g., `X3DConstants.inputOnly`). This property is read-only.
 
 #### **dataType**: number
 
-Value from [X3DConstants](/x_ite/reference/constants-services/#field-type-constants) object describing the field's data type (e.g., `X3DConstants.SFBool`). This property is read only.
+Value from [X3DConstants](/x_ite/reference/constants-services/#field-type-constants) object describing the field's data type (e.g., `X3DConstants.SFBool`). This property is read-only.
 
 #### **name**: string
 
-A string of the field name (e.g., `"children"`). This property is read only.
+A string of the field name (e.g., `"children"`). This property is read-only.
 
 #### **value**: boolean | number | string | null | X3DField
 
-The default value for this field. This property is read only.
+The default value for this field. This property is read-only.
 
 #### **appInfo**: string
 
@@ -70,7 +70,7 @@ for (const fieldDefinition of geometry .getFieldDefinitions ())
 
 #### **length**: number
 
-An integer containing the number of elements in the array. This property is read only.
+An integer containing the number of elements in the array. This property is read-only.
 
 ### Methods
 
