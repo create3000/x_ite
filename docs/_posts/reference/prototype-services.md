@@ -67,7 +67,7 @@ PROTO MyBox [ ]
 }
 `);
 
-print (scene .protos [0] .newInstance ("MyBox"));
+print (scene .protos [0] .newInstance ());
 
 // Expected output: MyBox { }
 </pre>
