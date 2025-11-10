@@ -55,6 +55,17 @@ None. This object cannot be instantiated by the user.
 
 The `[@@iterator]()` method of FieldDefinitionArray instances implements the iterable protocol and allows FieldDefinitionArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
 
+<x3d-script-area name="X3D ECMAScript Example: FieldDefinitionArray Iterator">
+<pre>
+const geometry = Browser .currentScene .createNode ("IndexedTriangleSet");
+
+for (const fieldDefinition of geometry .getFieldDefinitions ())
+  print (fieldDefinition .name);
+
+// Expected output: list of field names
+</pre>
+</x3d-script-area>
+
 ### Properties
 
 #### **length**: number
