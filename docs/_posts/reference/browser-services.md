@@ -805,7 +805,7 @@ An integer containing the number of elements in the array. This property is read
 
 ### Methods
 
-Almost all read-only functions known from JavaScript Array.
+Almost all read-only functions known from JavaScript [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array).
 
 ## AbstractNodesArray
 
@@ -823,4 +823,4 @@ An integer containing the number of elements in the array. This property is read
 
 ### Methods
 
-Almost all read-only functions known from JavaScript Array.
+Almost all read-only functions known from JavaScript [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array).
