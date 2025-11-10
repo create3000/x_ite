@@ -59,6 +59,10 @@ RouteArray is an object that represents an array of X3DRoute objects. This is a 
 
 None. This object cannot be instantiated by the user.
 
+### Iterator
+
+The `[@@iterator]()` method of RouteArray instances implements the iterable protocol and allows RouteArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+
 ### Properties
 
 #### **length**: number

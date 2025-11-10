@@ -51,6 +51,10 @@ FieldDefinitionArray is an object that represents an array of X3DFieldDefinition
 
 None. This object cannot be instantiated by the user.
 
+### Iterator
+
+The `[@@iterator]()` method of FieldDefinitionArray instances implements the iterable protocol and allows FieldDefinitionArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+
 ### Properties
 
 #### **length**: number

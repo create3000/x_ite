@@ -797,6 +797,10 @@ ConcreteNodesArray is an object that represents an array of classes derived from
 
 None. This object cannot be instantiated by the user.
 
+### Iterator
+
+The `[@@iterator]()` method of ConcreteNodesArray instances implements the iterable protocol and allows ConcreteNodesArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+
 ### Properties
 
 #### **length**: number
@@ -814,6 +818,10 @@ AbstractNodesArray is an object that represents an array of classes derived from
 ### Instance Creation Method(s)
 
 None. This object cannot be instantiated by the user.
+
+### Iterator
+
+The `[@@iterator]()` method of AbstractNodesArray instances implements the iterable protocol and allows AbstractNodesArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
 
 ### Properties
 

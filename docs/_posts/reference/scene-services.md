@@ -510,6 +510,10 @@ ProfileInfoArray is an object that represents an array of ProfileInfo objects. T
 
 None. This object cannot be instantiated by the user.
 
+### Iterator
+
+The `[@@iterator]()` method of ProfileInfoArray instances implements the iterable protocol and allows ProfileInfoArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+
 ### Properties
 
 #### **length**: number
@@ -527,6 +531,10 @@ ComponentInfoArray is an object that represents an array of ComponentInfo object
 ### Instance Creation Method(s)
 
 None. This object cannot be instantiated by the user.
+
+### Iterator
+
+The `[@@iterator]()` method of ComponentInfoArray instances implements the iterable protocol and allows ComponentInfoArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
 
 ### Properties
 
@@ -546,6 +554,10 @@ UnitInfoArray is an object that represents an array of UnitInfo objects. This is
 
 None. This object cannot be instantiated by the user.
 
+### Iterator
+
+The `[@@iterator]()` method of UnitInfoArray instances implements the iterable protocol and allows UnitInfoArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+
 ### Properties
 
 #### **length**: number
@@ -564,6 +576,10 @@ ImportedNodesArray is an object that represents an array of X3DImportedNode obje
 
 None. This object cannot be instantiated by the user.
 
+### Iterator
+
+The `[@@iterator]()` method of ImportedNodesArray instances implements the iterable protocol and allows ImportedNodesArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+
 ### Properties
 
 #### **length**: number
@@ -581,6 +597,10 @@ ExportedNodesArray is an object that represents an array of X3DExportedNode obje
 ### Instance Creation Method(s)
 
 None. This object cannot be instantiated by the user.
+
+### Iterator
+
+The `[@@iterator]()` method of ExportedNodesArray instances implements the iterable protocol and allows ExportedNodesArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
 
 ### Properties
 
