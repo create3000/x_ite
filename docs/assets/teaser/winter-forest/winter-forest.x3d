@@ -10,7 +10,7 @@
     <meta name='created' content='Sat, 17 May 2025 17:44:03 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.11.5, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Mon, 10 Nov 2025 18:13:29 GMT'/>
+    <meta name='modified' content='Mon, 10 Nov 2025 18:20:47 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='ColorScheme'>
@@ -96,9 +96,10 @@ function changeColorScheme (event)
           <Shape>
             <Appearance>
               <ImageTexture
-                  url='"winter.png"'/>
+                  url='"winter.avif"'/>
             </Appearance>
-            <Rectangle2D/>
+            <Rectangle2D
+                solid='true'/>
           </Shape>
         </Transform>
         <ParticleSystem
