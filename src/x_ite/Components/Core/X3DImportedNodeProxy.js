@@ -53,7 +53,7 @@ const handler =
    },
 }
 
-function X3DImportedNodeProxy (executionContext, importedName, type = X3DNode)
+function X3DImportedNodeProxy (executionContext, importedName, type)
 {
    X3DNode .call (this, executionContext);
 
@@ -80,6 +80,12 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
    getExtendedEventHandling ()
    {
       return false;
+   },
+   setTypeHint (value)
+   {
+      this [_type] ??= value;
+
+      return this;
    },
    getSharedNode ()
    {
@@ -111,7 +117,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
    ]
    .map (([fn, property]) => [fn, function ()
    {
-      return this .getSharedNode () ?.[fn] () ?? this [_type] [property];
+      return this .getSharedNode () ?.[fn] () ?? this .constructor [property];
    }])),
    ... Object .fromEntries ([
       "getType",
@@ -226,7 +232,7 @@ Object .defineProperties (X3DImportedNodeProxy .prototype,
    {
       get ()
       {
-         return this [_type] ?? X3DImportedNodeProxy;
+         return this [_type] ?? X3DNode;
       },
    }
 });
