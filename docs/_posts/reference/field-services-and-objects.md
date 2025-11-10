@@ -11,7 +11,7 @@ The X3DFieldDefinition object represents all of the descriptive properties of a 
 
 ### Instance Creation Method(s)
 
-None.
+None. This object cannot be instantiated by the user.
 
 ### Properties
 
@@ -125,7 +125,7 @@ The X3DField object is the base object of all SF* field and X3DArrayField.
 
 ### Instance Creation Method(s)
 
-None
+None. This object cannot be instantiated by the user.
 
 ### Properties
 
