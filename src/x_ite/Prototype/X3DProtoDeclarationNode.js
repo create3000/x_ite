@@ -36,10 +36,6 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclarationNode .prototype, X3DB
    {
       this [_appInfo] = String (value);
    },
-   setDocumentation (value)
-   {
-      this [_documentation] = String (value);
-   },
    getDocumentation ()
    {
       return this [_documentation];
