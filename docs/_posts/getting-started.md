@@ -38,7 +38,8 @@ permalink: /
       oninitialized="this .style .visibility = 'visible';">
   </x3d-canvas>
 </div>
-Credits: [LostBoyz2078](https://sketchfab.com/LostModels2025) (snowman)
+Credits: [Yahya Dev](https://sketchfab.com/YahyaDev) (droplet)
+<!-- Credits: [LostBoyz2078](https://sketchfab.com/LostModels2025) (snowman) -->
 {: .small }
 
 ## Overview
