@@ -512,7 +512,7 @@ None. This object cannot be instantiated by the user.
 
 ### Iterator
 
-The `[@@iterator]()` method of ProfileInfoArray instances implements the iterable protocol and allows ProfileInfoArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+The `[@@iterator]()` method of ProfileInfoArray instances implements the iterable protocol and allows ProfileInfoArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
 
 ### Properties
 
@@ -534,7 +534,7 @@ None. This object cannot be instantiated by the user.
 
 ### Iterator
 
-The `[@@iterator]()` method of ComponentInfoArray instances implements the iterable protocol and allows ComponentInfoArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+The `[@@iterator]()` method of ComponentInfoArray instances implements the iterable protocol and allows ComponentInfoArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
 
 ### Properties
 
@@ -556,7 +556,7 @@ None. This object cannot be instantiated by the user.
 
 ### Iterator
 
-The `[@@iterator]()` method of UnitInfoArray instances implements the iterable protocol and allows UnitInfoArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+The `[@@iterator]()` method of UnitInfoArray instances implements the iterable protocol and allows UnitInfoArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
 
 ### Properties
 
@@ -578,7 +578,7 @@ None. This object cannot be instantiated by the user.
 
 ### Iterator
 
-The `[@@iterator]()` method of ImportedNodesArray instances implements the iterable protocol and allows ImportedNodesArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+The `[@@iterator]()` method of ImportedNodesArray instances implements the iterable protocol and allows ImportedNodesArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
 
 ### Properties
 
@@ -600,7 +600,7 @@ None. This object cannot be instantiated by the user.
 
 ### Iterator
 
-The `[@@iterator]()` method of ExportedNodesArray instances implements the iterable protocol and allows ExportedNodesArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+The `[@@iterator]()` method of ExportedNodesArray instances implements the iterable protocol and allows ExportedNodesArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
 
 ### Properties
 

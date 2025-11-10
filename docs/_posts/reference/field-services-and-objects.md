@@ -53,7 +53,7 @@ None. This object cannot be instantiated by the user.
 
 ### Iterator
 
-The `[@@iterator]()` method of FieldDefinitionArray instances implements the iterable protocol and allows FieldDefinitionArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+The `[@@iterator]()` method of FieldDefinitionArray instances implements the iterable protocol and allows FieldDefinitionArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
 
 <x3d-script-area name="X3D ECMAScript Example: FieldDefinitionArray Iterator">
 <pre>
@@ -181,7 +181,7 @@ A new color initialized with zero values is created and returned.
 
 ### Iterator
 
-The `[@@iterator]()` method of SFColor instances implements the iterable protocol and allows SFColor objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+The `[@@iterator]()` method of SFColor instances implements the iterable protocol and allows SFColor objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
 
 ```js
 const copy = new SFColor (... color); // Copy using spread syntax.
@@ -257,7 +257,7 @@ A new color initialized with zero values is created and returned.
 
 ### Iterator
 
-The `[@@iterator]()` method of SFColorRGBA instances implements the iterable protocol and allows SFColorRGBA objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+The `[@@iterator]()` method of SFColorRGBA instances implements the iterable protocol and allows SFColorRGBA objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
 
 ```js
 const copy = new SFColorRGBA (... color); // Copy using spread syntax.
@@ -351,7 +351,7 @@ print (image);
 
 ### Iterator
 
-The `[@@iterator]()` method of SFImage instances implements the iterable protocol and allows SFImage objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+The `[@@iterator]()` method of SFImage instances implements the iterable protocol and allows SFImage objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
 
 ```js
 const copy = new SFImage (... image); // Copy using spread syntax.
@@ -417,7 +417,7 @@ A new matrix initialized with the values in *f11* through *f44* is created and r
 
 ### Iterator
 
-The `[@@iterator]()` method of SFMatrix3d/f instances implements the iterable protocol and allows SFMatrix3d/f objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+The `[@@iterator]()` method of SFMatrix3d/f instances implements the iterable protocol and allows SFMatrix3d/f objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
 
 ```js
 const copy = new SFMatrix3d (... matrix); // Copy using spread syntax.
@@ -541,7 +541,7 @@ A new matrix initialized with the values in *f11* through *f44* is created and r
 
 ### Iterator
 
-The `[@@iterator]()` method of SFMatrix4d/f instances implements the iterable protocol and allows SFMatrix4d/f objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+The `[@@iterator]()` method of SFMatrix4d/f instances implements the iterable protocol and allows SFMatrix4d/f objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
 
 ```js
 const copy = new SFMatrix4d (... matrix); // Copy using spread syntax.
@@ -765,7 +765,7 @@ print (rotation);
 
 ### Iterator
 
-The `[@@iterator]()` method of SFRotation instances implements the iterable protocol and allows SFRotation objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+The `[@@iterator]()` method of SFRotation instances implements the iterable protocol and allows SFRotation objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
 
 ```js
 const copy = new SFRotation (... rotation); // Copy using spread syntax.
@@ -871,7 +871,7 @@ Constructs a SFVec2d/f from *x* and *y*, where *x* and *y* are scalar expression
 
 ### Iterator
 
-The `[@@iterator]()` method of SFVec2d/f instances implements the iterable protocol and allows SFVec2d/f objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+The `[@@iterator]()` method of SFVec2d/f instances implements the iterable protocol and allows SFVec2d/f objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
 
 ```js
 const copy = new SFVec2d (... vector); // Copy using spread syntax.
@@ -991,7 +991,7 @@ Constructs a SFVec3d/f from *x*, *y* and *z*, where *x*, *y* and *z* are scalar 
 
 ### Iterator
 
-The `[@@iterator]()` method of SFVec3d/f instances implements the iterable protocol and allows SFVec3d/f objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+The `[@@iterator]()` method of SFVec3d/f instances implements the iterable protocol and allows SFVec3d/f objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
 
 ```js
 const copy = new SFVec3d (... vector); // Copy using spread syntax.
@@ -1120,7 +1120,7 @@ Constructs a SFVec4d/f from *x*, *y*, *z* and *w*, where *x*, *y*, *z* and *w* a
 
 ### Iterator
 
-The `[@@iterator]()` method of SFVec4d/f instances implements the iterable protocol and allows SFVec4d/f objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+The `[@@iterator]()` method of SFVec4d/f instances implements the iterable protocol and allows SFVec4d/f objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
 
 ```js
 const copy = new SFVec4d (... vector); // Copy using spread syntax.

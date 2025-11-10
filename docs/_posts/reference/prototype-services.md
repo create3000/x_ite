@@ -193,7 +193,7 @@ None. This object cannot be instantiated by the user.
 
 ### Iterator
 
-The `[@@iterator]()` method of ProtoDeclarationArray instances implements the iterable protocol and allows ProtoDeclarationArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+The `[@@iterator]()` method of ProtoDeclarationArray instances implements the iterable protocol and allows ProtoDeclarationArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
 
 ### Properties
 
@@ -215,7 +215,7 @@ None. This object cannot be instantiated by the user.
 
 ### Iterator
 
-The `[@@iterator]()` method of ExternProtoDeclarationArray instances implements the iterable protocol and allows ExternProtoDeclarationArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns a iterator object that yields the properties of the object in order.
+The `[@@iterator]()` method of ExternProtoDeclarationArray instances implements the iterable protocol and allows ExternProtoDeclarationArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
 
 ### Properties
 
