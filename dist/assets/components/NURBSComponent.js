@@ -1,5 +1,5 @@
-/* X_ITE v12.1.5 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.5")];
+/* X_ITE v12.1.6 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.6")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -2068,7 +2068,7 @@ function parseNURBS (points, degree, knots, weights, boundary, opts) {
                      return this.points.shape.slice(0, this.points.shape.length - 1);
                   },
                   set: function () {
-                     throw new Error("Cannot assign to read only property 'size'");
+                     throw new Error("Cannot assign to This property is read-only property 'size'");
                   },
                   configurable: true
                }
@@ -2111,7 +2111,7 @@ function parseNURBS (points, degree, knots, weights, boundary, opts) {
                      return size;
                   },
                   set: function () {
-                     throw new Error("Cannot assign to read only property \"size\"");
+                     throw new Error("Cannot assign to This property is read-only property \"size\"");
                   },
                   configurable: true
                }
