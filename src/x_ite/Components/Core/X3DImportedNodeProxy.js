@@ -84,8 +84,6 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
    setTypeHint (value)
    {
       this [_type] ??= value;
-
-      return this;
    },
    getSharedNode ()
    {

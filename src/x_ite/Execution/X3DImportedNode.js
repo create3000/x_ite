@@ -36,8 +36,11 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    },
    getExportedNode (type)
    {
-      return this [_exportedNodes] .get (this [_importedName]) ?.setTypeHint (type)
-         ?? this .createExportedNode (type);
+      const exportedNode = this [_exportedNodes] .get (this [_importedName]);
+
+      exportedNode ?.setTypeHint (type);
+
+      return exportedNode ?? this .createExportedNode (type);
    },
    createExportedNode (type)
    {
