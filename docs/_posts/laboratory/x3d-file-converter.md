@@ -35,10 +35,13 @@ x_ite: true
 }
 
 #drop-zone select {
-  color: unset;
+  appearance: none;
   position: relative;
   top: -6px;
+  border-radius: 30px;
+  padding: 0px 20px;
   font-size: inherit;
+  color: unset;
 }
 </style>
 
