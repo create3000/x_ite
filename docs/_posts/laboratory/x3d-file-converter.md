@@ -38,6 +38,7 @@ x_ite: true
   color: unset;
   position: relative;
   top: -6px;
+  font-size: inherit;
 }
 </style>
 
