@@ -1052,20 +1052,19 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    {
       const
          invModelViewMatrix = new Matrix4 (),
-         billboardToScreen  = new Vector3 (),
-         viewerYAxis        = new Vector3 (),
+         x                  = new Vector3 (),
          y                  = new Vector3 (),
-         rotation           = new Matrix3 (9);
+         z                  = new Vector3 (),
+         rotation           = new Matrix3 ();
 
       return function (modelViewMatrix)
       {
          invModelViewMatrix .assign (modelViewMatrix) .inverse ();
-         invModelViewMatrix .multDirMatrix (billboardToScreen .assign (Vector3 .Z_AXIS));
-         invModelViewMatrix .multDirMatrix (viewerYAxis .assign (Vector3 .Y_AXIS));
+         invModelViewMatrix .multDirMatrix (x .assign (Vector3 .Y_AXIS));
+         invModelViewMatrix .multDirMatrix (z .assign (Vector3 .Z_AXIS));
 
-         const x = viewerYAxis .cross (billboardToScreen);
-         y .assign (billboardToScreen) .cross (x);
-         const z = billboardToScreen;
+         x .cross (z);
+         y .assign (z) .cross (x);
 
          // Compose rotation matrix.
 
@@ -1073,9 +1072,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          y .normalize ();
          z .normalize ();
 
-         rotation .set (x .x, x .y, x .z,
-                        y .x, y .y, y .z,
-                        z .x, z .y, z .z);
+         rotation .set (... x, ... y, ... z);
 
          return rotation;
       };
