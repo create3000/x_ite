@@ -225,7 +225,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       this .advanceTime ();
       this .xrFrame (frame);
 
-      // Events
+      // Prepare and Time Events
 
       this .addTaintedField (this ._prepareEvents);
       this [_processEvents] ();
@@ -256,7 +256,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
       this .addTaintedField (this ._sensorEvents);
       this [_processEvents] ();
 
-      // Display
+      // Sensor Display
 
       this [_displayTime] .start ()
       this .addTaintedField (this ._displayEvents);
