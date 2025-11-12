@@ -36,8 +36,6 @@ x_ite: true
 
 #drop-zone select {
   appearance: none;
-  position: relative;
-  top: -6px;
   background: white;
   border: 2px solid black;
   border-radius: 33px;
