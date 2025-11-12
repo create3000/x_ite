@@ -9,8 +9,8 @@
     <component name='Text' level='1'/>
     <meta name='created' content='Sat, 17 May 2025 17:44:03 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.11.5, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Mon, 10 Nov 2025 18:20:47 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.11.6, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Wed, 12 Nov 2025 12:39:10 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='ColorScheme'>
@@ -103,8 +103,8 @@ function changeColorScheme (event)
           </Shape>
         </Transform>
         <ParticleSystem
-            geometryType='POINT'
-            particleLifetime='3'>
+            particleLifetime='3'
+            particleSize='0.1 0.1'>
           <PolylineEmitter
               direction='0 -1 0'
               speed='1'
@@ -117,6 +117,8 @@ function changeColorScheme (event)
                 pointSizeScaleFactor='10'
                 pointSizeMinValue='10'
                 pointSizeMaxValue='10'/>
+            <ImageTexture
+                url='"snow.svg"'/>
           </Appearance>
         </ParticleSystem>
       </Layer>
@@ -163,7 +165,7 @@ function changeColorScheme (event)
                       emissiveColor='0 0 0'/>
                 </Appearance>
                 <Text DEF='_5'
-                    string='"X_ITE v12.1.5"'
+                    string='"X_ITE v12.1.6"'
                     solid='true'>
                   <FontStyle
                       family='"Neuropol.otf", "SANS"'
