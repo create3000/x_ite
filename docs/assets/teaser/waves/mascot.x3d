@@ -5,8 +5,8 @@
     <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
     <meta name='created' content='Sat, 14 Dec 2024 18:52:06 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.11.5, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Mon, 10 Nov 2025 18:26:16 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.11.6, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Wed, 12 Nov 2025 10:29:01 GMT'/>
   </head>
   <Scene>
     <WorldInfo>
@@ -34,5 +34,18 @@
         transparency='1'/>
     <DirectionalLight
         intensity='1.2'/>
+    <Transform DEF='Mascot'
+        translation='5.577054 -3.192956 2.229885'
+        rotation='0 -1 0 205'
+        scale='0.9878862 0.9878862 0.9878862'
+        center='0 22.54239 -0.3160129'>
+      <Inline DEF='_7'
+          url='"water_drop_cute_charachter.glb"'/>
+      <LoadSensor DEF='_8'>
+        <Inline USE='_7'/>
+      </LoadSensor>
+    </Transform>
+    <IMPORT inlineDEF='_7' importedDEF='Timer1' AS='Timer'/>
+    <ROUTE fromNode='_8' fromField='isLoaded' toNode='Timer' toField='set_loop'/>
   </Scene>
 </X3D>

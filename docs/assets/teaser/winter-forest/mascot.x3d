@@ -5,8 +5,8 @@
     <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
     <meta name='created' content='Sat, 14 Dec 2024 18:52:06 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.11.5, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Mon, 10 Nov 2025 19:05:45 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.11.6, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Wed, 12 Nov 2025 10:29:12 GMT'/>
   </head>
   <Scene>
     <WorldInfo>
@@ -35,7 +35,7 @@
     <DirectionalLight
         intensity='20'
         direction='0.5 0 -1'/>
-    <Transform
+    <Transform DEF='Mascot'
         translation='6.840926 -3.237491 -0.028493'
         rotation='0 -1 0 38.0363747031365'
         scale='0.07224182 0.07224182 0.07224182'>
