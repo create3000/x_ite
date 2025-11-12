@@ -251,12 +251,12 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
 
       this [_collisionTime] .stop ();
 
-      // Events
+      // Sensor Events
 
       this .addTaintedField (this ._sensorEvents);
       this [_processEvents] ();
 
-      // Sensor Display
+      // Display
 
       this [_displayTime] .start ()
       this .addTaintedField (this ._displayEvents);
