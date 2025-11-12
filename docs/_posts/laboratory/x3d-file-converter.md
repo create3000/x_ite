@@ -39,12 +39,13 @@ x_ite: true
   position: relative;
   top: -6px;
   background: white;
-  border-radius: 30px;
+  border-radius: 33px;
   padding: 10px 20px;
   font-size: inherit;
   font-family: inherit;
   border: 2px solid black;
   color: black;
+  line-height: normal;
 }
 </style>
 
