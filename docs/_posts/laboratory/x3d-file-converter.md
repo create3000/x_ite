@@ -38,7 +38,7 @@ x_ite: true
   appearance: none;
   background: white;
   border: 4px solid var(--text-color);
-  border-radius: 33px;
+  border-radius: 36px;
   padding: 10px 20px;
   line-height: normal;
   font-size: inherit;
