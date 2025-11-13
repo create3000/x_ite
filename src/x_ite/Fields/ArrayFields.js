@@ -156,9 +156,11 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
       {
          generator .EnterScope ();
 
-         const array = target .getValue ();
+         const
+            array = target .getValue (),
+            last  = length - 1;
 
-         for (let i = 0, n = length - 1; i < n; ++ i)
+         for (let i = 0; i < last; ++ i)
          {
             const node = array [i] .getValue ();
 
@@ -216,7 +218,9 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
 
       if (length)
       {
-         const array = target .getValue ();
+         const
+            array = target .getValue (),
+            last  = length - 1;
 
          generator .EnterScope ();
 
@@ -224,7 +228,7 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
          generator .string += generator .TidyBreak ();
          generator .string += generator .IncIndent ();
 
-         for (let i = 0, n = length - 1; i < n; ++ i)
+         for (let i = 0; i < last; ++ i)
          {
             generator .string += generator .Indent ();
 

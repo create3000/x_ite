@@ -384,9 +384,10 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
    {
       const
          target = this [_target],
-         array  = target .getValue ();
+         array  = target .getValue (),
+         length = array .length;
 
-      switch (array .length)
+      switch (length)
       {
          case 0:
          {
@@ -402,11 +403,13 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
          }
          default:
          {
+            const last = length - 1;
+
             generator .string += "[";
             generator .string += generator .ListStart ();
             generator .IncIndent ();
 
-            for (let i = 0, length = array .length - 1; i < length; ++ i)
+            for (let i = 0; i < last; ++ i)
             {
                generator .string += generator .ListIndent ();
                array [i] .toStream (generator);
@@ -437,9 +440,11 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
 
       if (length)
       {
-         const array = target .getValue ();
+         const
+            array = target .getValue (),
+            last  = length - 1;
 
-         for (let i = 0, length = array .length - 1; i < length; ++ i)
+         for (let i = 0; i < last; ++ i)
          {
             array [i] .toXMLStream (generator);
             generator .string += generator .Comma ();
@@ -457,17 +462,19 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
 
       if (length)
       {
-         const value = this .getValue ();
+         const
+            array = target .getValue (),
+            last  = length - 1;
 
          generator .string += '[';
          generator .string += generator .ListBreak ();
          generator .string += generator .IncIndent ();
 
-         for (let i = 0, n = length - 1; i < n; ++ i)
+         for (let i = 0; i < last; ++ i)
          {
             generator .string += generator .ListIndent ();
 
-            value [i] .toJSONStreamValue (generator);
+            array [i] .toJSONStreamValue (generator);
 
             generator .string += ',';
             generator .string += generator .ListBreak ();
@@ -475,7 +482,7 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
 
          generator .string += generator .ListIndent ();
 
-         value .at (-1) .toJSONStreamValue (generator);
+         array .at (-1) .toJSONStreamValue (generator);
 
          generator .string += generator .ListBreak ();
          generator .string += generator .DecIndent ();
