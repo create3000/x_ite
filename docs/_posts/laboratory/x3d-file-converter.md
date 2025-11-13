@@ -57,11 +57,10 @@ Convert **X3D, VRML 2.0 (.wrl), glTF (GLB), OBJ, STL, PLY,** and **SVG** to an X
 
 <div id="drop-zone">
   <p id="open-files" class="center">
-    <a href="#">Choose a file</a> or drag it here.
-    <input type="file" />
+    <a href="#">Choose files</a> or drag them here.
   </p>
   <p id="convert-files" class="center">
-    <a href="#">Convert file to ...</a>
+    <a href="#">Convert <span id="filenames">file</span> to ...</a>
     <br>
     <select>
       <option value="XML" selected>X3D XML Encoding</option>

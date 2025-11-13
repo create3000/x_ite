@@ -38,6 +38,7 @@ $("#open-files a") .on ("click", event =>
    const input = $("<input></input>")
       .attr ("type", "file")
       .attr ("accept", suffixes .join (","))
+      .attr ("multiple", "")
       .appendTo ($("#open-files"));
 
    input .on ("change", event =>
@@ -52,7 +53,21 @@ $("#open-files a") .on ("click", event =>
 
 function read (files)
 {
+   const n = files .length;
+
    read .files = [... files];
+
+   $("#filenames") .empty ();
+
+   read .files
+      .flatMap ((file, i) => [
+         $("<span></span>") .text (`»${file .name}«`),
+         ... (i < n - 1 ? [$("<span></span>") .text (","), $("<br>")] : [ ])
+      ])
+      .forEach (element => element .appendTo ($("#filenames")));
+
+   if (n > 1)
+      $("#filenames") .prepend ($("<br>")) .append ($("<br>"));
 
    $("#open-files") .hide ();
    $("#convert-files") .show ();
