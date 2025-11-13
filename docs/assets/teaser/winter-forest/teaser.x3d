@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+  <head>
+    <component name='Geometry2D' level='2'/>
+    <component name='Layering' level='1'/>
+    <component name='ParticleSystems' level='3'/>
+    <component name='Scripting' level='1'/>
+    <component name='Text' level='1'/>
+    <meta name='created' content='Sat, 17 May 2025 17:44:03 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.11.6, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Wed, 12 Nov 2025 12:39:10 GMT'/>
+  </head>
+  <Scene>
+    <ProtoDeclare name='ColorScheme'>
+      <ProtoInterface>
+        <field accessType='outputOnly' type='SFBool' name='light'/>
+        <field accessType='outputOnly' type='SFBool' name='dark'/>
+      </ProtoInterface>
+      <ProtoBody>
+        <Script DEF='ColorSchemeScript'>
+          <field accessType='outputOnly' type='SFBool' name='light'/>
+          <field accessType='outputOnly' type='SFBool' name='dark'/>
+          <IS>
+            <connect nodeField='light' protoField='light'/>
+            <connect nodeField='dark' protoField='dark'/>
+          </IS>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+   const colorScheme = window .matchMedia ("(prefers-color-scheme: light)");
+
+   colorScheme .addEventListener ("change", event => changeColorScheme (event));
+
+   changeColorScheme (colorScheme);
+}
+
+function changeColorScheme (event)
+{
+   light = event .matches;
+
+   if (typeof $ !== "undefined")
+   {
+      if ($("html") .attr ("data-mode") === "light")
+         light = true;
+
+      if ($("html") .attr ("data-mode") === "dark")
+         light = false;
+   }
+
+   dark = !light;
+}
+]]>
+        </Script>
+      </ProtoBody>
+    </ProtoDeclare>
+    <WorldInfo
+        title='pluto'>
+      <MetadataSet containerField='metadata'
+          name='Sunrize'
+          reference='https://create3000.github.io/sunrize/'>
+        <MetadataSet
+            name='BrowserFrame'
+            reference='https://create3000.github.io/sunrize/'>
+          <MetadataBoolean
+              name='fixedSize'
+              reference='https://create3000.github.io/sunrize/'
+              value='true'/>
+          <MetadataDouble
+              name='aspectRatio'
+              reference='https://create3000.github.io/sunrize/'
+              value='16, 5'/>
+          <MetadataString
+              name='backgroundColor'
+              reference='https://create3000.github.io/sunrize/'
+              value='""'/>
+        </MetadataSet>
+      </MetadataSet>
+    </WorldInfo>
+    <ProtoInstance name='ColorScheme' DEF='_12'/>
+    <LayerSet
+        activeLayer='-1'
+        order='1, 2, 3'>
+      <Layer DEF='Background'>
+        <Background DEF='Dark_3'/>
+        <Background DEF='Light_2'
+            skyColor='1 1 1'/>
+      </Layer>
+      <Layer DEF='Forest'>
+        <OrthoViewpoint/>
+        <Transform DEF='Rectangle2D_2'
+            translation='0 0.02092643 0'
+            scale='3.225895 2.211502 3.150288'>
+          <Shape>
+            <Appearance>
+              <ImageTexture
+                  url='"winter.avif"'/>
+            </Appearance>
+            <Rectangle2D
+                solid='true'/>
+          </Shape>
+        </Transform>
+        <ParticleSystem
+            particleLifetime='3'
+            particleSize='0.1 0.1'>
+          <PolylineEmitter
+              direction='0 -1 0'
+              speed='1'
+              coordIndex='0, 1, -1'>
+            <Coordinate
+                point='-3.5 1 0, 3.5 1 0'/>
+          </PolylineEmitter>
+          <Appearance>
+            <PointProperties
+                pointSizeScaleFactor='10'
+                pointSizeMinValue='10'
+                pointSizeMaxValue='10'/>
+            <ImageTexture
+                url='"snow.svg"'/>
+          </Appearance>
+        </ParticleSystem>
+      </Layer>
+      <Layer DEF='Text'>
+        <Transform DEF='Rectangle2D_1'
+            translation='0 0.04948798 0'
+            scale='32 1.2 1'>
+          <Shape DEF='Light_3'
+              visible='false'>
+            <Appearance>
+              <UnlitMaterial
+                  transparency='0.5'/>
+            </Appearance>
+            <Rectangle2D DEF='_6'/>
+          </Shape>
+          <Shape DEF='Dark_2'>
+            <Appearance>
+              <UnlitMaterial
+                  emissiveColor='0 0 0'
+                  transparency='0.5'/>
+            </Appearance>
+            <Rectangle2D USE='_6'/>
+          </Shape>
+        </Transform>
+        <Transform DEF='Text_1'
+            translation='-9 0 3'
+            rotation='1 0 0 3.14159265358979'
+            scale='0.8288495 0.8288495 0.8288495'
+            center='5.160146 0 0'>
+          <Group DEF='Animation'>
+            <TimeSensor DEF='_3'
+                cycleInterval='0.5'
+                startTime='1744035866.764'/>
+            <OrientationInterpolator DEF='_4'
+                key='0, 0.5, 1'
+                keyValue='1 0 0 0, 1 0 0 1.5707963267949, 1 0 0 3.14159265358979'/>
+          </Group>
+          <Group DEF='Light_1'
+              visible='false'>
+            <Transform DEF='Front_1'>
+              <Shape DEF='_13'>
+                <Appearance>
+                  <UnlitMaterial
+                      emissiveColor='0 0 0'/>
+                </Appearance>
+                <Text DEF='_5'
+                    string='"X_ITE v12.1.6"'
+                    solid='true'>
+                  <FontStyle
+                      family='"Neuropol.otf", "SANS"'
+                      size='1.4'
+                      justify='"BEGIN", "MIDDLE"'/>
+                </Text>
+              </Shape>
+            </Transform>
+            <Transform DEF='Back_1'
+                rotation='1 0 0 3.14159265358979'>
+              <Shape USE='_13'/>
+            </Transform>
+          </Group>
+          <Group DEF='Dark_1'>
+            <Transform DEF='Front'>
+              <Shape DEF='_14'>
+                <Appearance>
+                  <UnlitMaterial/>
+                </Appearance>
+                <Text USE='_5'/>
+              </Shape>
+            </Transform>
+            <Transform DEF='Back'
+                rotation='1 0 0 3.14159265358979'>
+              <Shape USE='_14'/>
+            </Transform>
+          </Group>
+          <Script DEF='X_ITE'>
+            <field accessType='outputOnly' type='MFString' name='string_changed'/>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+   string_changed = new MFString (Browser .name + " v" + Browser .version);
+}
+]]>
+          </Script>
+        </Transform>
+      </Layer>
+    </LayerSet>
+    <ROUTE fromNode='_3' fromField='fraction_changed' toNode='_4' toField='set_fraction'/>
+    <ROUTE fromNode='_4' fromField='value_changed' toNode='Text_1' toField='set_rotation'/>
+    <ROUTE fromNode='X_ITE' fromField='string_changed' toNode='_5' toField='set_string'/>
+    <ROUTE fromNode='_12' fromField='dark' toNode='Dark_1' toField='set_visible'/>
+    <ROUTE fromNode='_12' fromField='light' toNode='Light_1' toField='set_visible'/>
+    <ROUTE fromNode='_12' fromField='dark' toNode='Dark_2' toField='set_visible'/>
+    <ROUTE fromNode='_12' fromField='light' toNode='Light_3' toField='set_visible'/>
+  </Scene>
+</X3D>

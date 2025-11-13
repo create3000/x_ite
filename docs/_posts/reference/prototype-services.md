@@ -17,7 +17,7 @@ None. This object cannot be instantiated by the user.
 
 #### **name**: string
 
-A string of the declared name of this prototype. This property is read only.
+A string of the declared name of this prototype. This property is read-only.
 
 <x3d-script-area name="X3D ECMAScript Example: X3DProtoDeclaration name">
 <pre>
@@ -37,11 +37,11 @@ print (scene .protos [0] .name);
 
 #### **fields**: FieldDefinitionArray
 
-A reference to FieldDefinitionArray of all the fields defined for this prototype. This property is read only.
+A reference to FieldDefinitionArray of all the fields defined for this prototype. This property is read-only.
 
 #### **isExternProto**: boolean
 
-Always has the value of false. This property is read only.
+Always has the value of false. This property is read-only.
 
 #### **appInfo**: string
 
@@ -67,7 +67,7 @@ PROTO MyBox [ ]
 }
 `);
 
-print (scene .protos [0] .newInstance ("MyBox"));
+print (scene .protos [0] .newInstance ());
 
 // Expected output: MyBox { }
 </pre>
@@ -103,15 +103,15 @@ None. This object cannot be instantiated by the user.
 
 #### **name**: string
 
-A string of the declared name of this extern prototype. This property is read only.
+A string of the declared name of this extern prototype. This property is read-only.
 
 #### **fields**: FieldDefinitionArray
 
-A reference to FieldDefinitionArray of all the fields defined for this extern prototype. This property is read only.
+A reference to FieldDefinitionArray of all the fields defined for this extern prototype. This property is read-only.
 
 #### **urls**: MFString
 
-A MFString array of all the URI's defined for this extern prototype. This property is read only.
+A MFString array of all the URI's defined for this extern prototype. This property is read-only.
 
 <x3d-script-area name="X3D ECMAScript Example: X3DExternProtoDeclaration urls">
 <pre>
@@ -129,11 +129,11 @@ print (scene .externprotos [0] .urls);
 
 #### **isExternProto**: boolean
 
-Always has the value of true. This property is read only.
+Always has the value of true. This property is read-only.
 
 #### **loadState**: number
 
-The value is one of the *_STATE* properties defined in the [X3DConstants](/x_ite/reference/constants-services/#load-state-constants) object. This property is read only.
+The value is one of the *_STATE* properties defined in the [X3DConstants](/x_ite/reference/constants-services/#load-state-constants) object. This property is read-only.
 
 #### **appInfo**: string
 
@@ -191,15 +191,19 @@ ProtoDeclarationArray is an object that represents an array of X3DProtoDeclarati
 
 None. This object cannot be instantiated by the user.
 
+### Iterator
+
+The `[@@iterator]()` method of ProtoDeclarationArray instances implements the iterable protocol and allows ProtoDeclarationArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
+
 ### Properties
 
 #### **length**: number
 
-An integer containing the number of elements in the array. This property is read only.
+An integer containing the number of elements in the array. This property is read-only.
 
 ### Methods
 
-None
+Almost all read-only functions known from JavaScript [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array).
 
 ## ExternProtoDeclarationArray
 
@@ -209,12 +213,16 @@ ExternProtoDeclarationArray is an object that represents an array of X3DExternPr
 
 None. This object cannot be instantiated by the user.
 
+### Iterator
+
+The `[@@iterator]()` method of ExternProtoDeclarationArray instances implements the iterable protocol and allows ExternProtoDeclarationArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
+
 ### Properties
 
 #### **length**: number
 
-An integer containing the number of elements in the array. This property is read only.
+An integer containing the number of elements in the array. This property is read-only.
 
 ### Methods
 
-None
+Almost all read-only functions known from JavaScript [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array).

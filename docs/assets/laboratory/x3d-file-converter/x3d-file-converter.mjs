@@ -38,6 +38,7 @@ $("#open-files a") .on ("click", event =>
    const input = $("<input></input>")
       .attr ("type", "file")
       .attr ("accept", suffixes .join (","))
+      .attr ("multiple", "")
       .appendTo ($("#open-files"));
 
    input .on ("change", event =>
@@ -52,7 +53,21 @@ $("#open-files a") .on ("click", event =>
 
 function read (files)
 {
+   const n = files .length;
+
    read .files = [... files];
+
+   $("#filenames") .empty ();
+
+   read .files
+      .flatMap ((file, i) => [
+         $("<span></span>") .text (`»${file .name}«`),
+         ... (i < n - 1 ? [$("<span></span>") .text (","), $("<br>")] : [ ])
+      ])
+      .forEach (element => element .appendTo ($("#filenames")));
+
+   if (n > 1)
+      $("#filenames") .prepend ($("<br>")) .append ($("<br>"));
 
    $("#open-files") .hide ();
    $("#convert-files") .show ();
@@ -84,21 +99,22 @@ async function convert (encoding, files)
       try
       {
          const
-            Browser = X3D .createBrowser () .browser,
+            browser = X3D .createBrowser () .browser,
             url     = URL .createObjectURL (file);
 
-         Browser .endUpdate ();
-         Browser .setBrowserOption ("LoadUrlObjects",   false);
-         Browser .setBrowserOption ("PrimitiveQuality", "HIGH");
-         Browser .setBrowserOption ("TextureQuality",   "HIGH");
+         browser .setBrowserOption ("PrimitiveQuality", "HIGH");
+         browser .setBrowserOption ("TextureQuality",   "HIGH");
+         browser .setBrowserOption ("LoadUrlObjects",   false);
+         browser .setBrowserOption ("Mute",             true);
+         browser .endUpdate ();
 
-         await Browser .loadURL (new X3D .MFString (url));
+         await browser .loadURL (new X3D .MFString (url));
 
          const
-            scene     = Browser .currentScene,
-            generator = scene .getMetaData ("generator") ?.filter (value => !value .startsWith (Browser .name)) ?? [ ];
+            scene     = browser .currentScene,
+            generator = scene .getMetaData ("generator") ?.filter (value => !value .startsWith (browser .name)) ?? [ ];
 
-         generator .push (`${Browser .name} V${Browser .version}, ${Browser .providerURL}`);
+         generator .push (`${browser .name} V${browser .version}, ${browser .providerURL}`);
 
          scene .setMetaData ("generator", generator);
          scene .setMetaData ("modified", new Date () .toUTCString ());
@@ -166,11 +182,35 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd ()}
 function link (mimeType, name, x3dSyntax)
 {
    const a = $("<a></a>")
-      .text (name)
+      .text (`${name} (${humanFileSize (x3dSyntax .length, true)})`)
       .attr ("href", "#")
       .on ("click", () => download (mimeType, name, x3dSyntax));
 
    $("<li></li>") .append (a) .appendTo ($("#download-links"));
+}
+
+function humanFileSize (bytes, si = false, dp = 1)
+{
+   const thresh = si ? 1000 : 1024;
+
+   if (Math .abs (bytes) < thresh)
+      return bytes + ' B';
+
+   const units = si
+      ? ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+      : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
+
+   const r = 10 ** dp;
+
+   let u = -1;
+
+   do {
+      bytes /= thresh;
+      ++ u;
+   }
+   while (Math .round (Math .abs (bytes) * r) / r >= thresh && u < units .length - 1);
+
+   return bytes .toFixed (dp) + ' ' + units [u];
 }
 
 function download (mimeType, name, x3dSyntax)

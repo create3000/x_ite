@@ -906,54 +906,50 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
    },
    useAttribute (xmlElement)
    {
-      try
-      {
-         const name = xmlElement .getAttribute ("USE");
+      const name = xmlElement .getAttribute ("USE");
 
-         if (this .id (name))
+      if (this .id (name))
+      {
+         const
+            browser  = this .getBrowser (),
+            nodeName = this .nodeNameToCamelCase (xmlElement .nodeName);
+
+         const type = $.try (() => nodeName === "ProtoInstance"
+            ? browser .getAbstractNode ("X3DPrototypeInstance")
+            : browser .getConcreteNode (nodeName))
+            ?? X3DNode;
+
+         const typeName = xmlElement .getAttribute ("name");
+
+         try
          {
-            const nodeName = this .nodeNameToCamelCase (xmlElement .nodeName);
+            const localNode = this .getExecutionContext () .getLocalNode (name);
 
-            const type = nodeName === "ProtoInstance"
-               ? this .getBrowser () .getAbstractNode ("X3DPrototypeInstance")
-               : this .getBrowser () .getConcreteNode (nodeName);
+            const node = localNode instanceof X3DImportedNode
+               ? localNode .getExportedNode (type)
+               : localNode .getValue ();
 
-            const typeName = xmlElement .getAttribute ("name");
-
-            try
-            {
-               const localNode = this .getExecutionContext () .getLocalNode (name);
-
-               const node = localNode instanceof X3DImportedNode
-                  ? localNode .getExportedNode (type)
-                  : localNode .getValue ();
-
-               this .checkNodeType (node, name, type, typeName);
-               this .addNode (xmlElement, node);
-            }
-            catch
-            {
-               const placeholder = this .getPlaceholders () .get (name);
-
-               if (placeholder)
-               {
-                  this .addNode (xmlElement, placeholder);
-               }
-               else
-               {
-                  const placeholder = new Placeholder (this, name, type, typeName);
-
-                  this .getPlaceholders () .set (name, placeholder);
-                  this .addNode (xmlElement, placeholder);
-               }
-            }
-
-            return true;
+            this .checkNodeType (node, name, type, typeName);
+            this .addNode (xmlElement, node);
          }
-      }
-      catch (error)
-      {
-         console .warn (`XML Parser: Invalid USE name: ${error .message}`);
+         catch
+         {
+            const placeholder = this .getPlaceholders () .get (name);
+
+            if (placeholder)
+            {
+               this .addNode (xmlElement, placeholder);
+            }
+            else
+            {
+               const placeholder = new Placeholder (this, name, type, typeName);
+
+               this .getPlaceholders () .set (name, placeholder);
+               this .addNode (xmlElement, placeholder);
+            }
+         }
+
+         return true;
       }
 
       return false;

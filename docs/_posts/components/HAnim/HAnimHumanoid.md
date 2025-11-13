@@ -289,6 +289,7 @@ The *joints* field contains a list of USE references for all [HAnimJoint](/x_ite
 
 - The number of contained `<[HAnimJoint](/x_ite/components/hanim/hanimjoint/) USE='*' containerField='joints'/>` nodes at top level of HAnimHumanoid needs to match the number of corresponding [HAnimJoint](/x_ite/components/hanim/hanimjoint/) node instances found within the preceding skeleton hierarchy.
 - Top-level [HAnimJoint](/x_ite/components/hanim/hanimjoint/) USE nodes must include `containerField='joints'` for proper validation and operation.
+- Do not mistakenly include `<[HAnimJoint](/x_ite/components/hanim/hanimjoint/) USE='ModelName_humanoid_root' containerField='skeleton'/>` since that is erroneous and `containerField='joints'` is correct.
 
 ### MFNode [in, out] **segments** [ ] <small>[HAnimSegment]</small>
 {: #fields-segments }

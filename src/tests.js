@@ -84,7 +84,7 @@ const X_ITE_TESTS = [
    { path: "Extrusion/Triangle.wrl" },
    { path: "Extrusion/wrong1.wrl" },
    { path: "Extrusion/wrong2-separated.x3d" },
-   { path: "Extrusion/Wrong2.x3d" },
+   { path: "Extrusion/wrong2.x3d" },
    { path: "Extrusion/Wrong2Cutout.x3d" },
    { component: "Follower" },
    { path: "Follower/ColorChaser.x3dv" },

@@ -59,12 +59,16 @@ RouteArray is an object that represents an array of X3DRoute objects. This is a 
 
 None. This object cannot be instantiated by the user.
 
+### Iterator
+
+The `[@@iterator]()` method of RouteArray instances implements the iterable protocol and allows RouteArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
+
 ### Properties
 
 #### **length**: number
 
-An integer containing the number of elements in the array. This property is read only.
+An integer containing the number of elements in the array. This property is read-only.
 
 ### Methods
 
-None
+Almost all read-only functions known from JavaScript [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array).

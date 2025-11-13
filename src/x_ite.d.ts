@@ -64,23 +64,23 @@ declare namespace X3D
    class X3DBrowser extends X3DObject
    {
       /**
-       * A browser-implementation specific string describing the browser. This property is read only.
+       * A browser-implementation specific string describing the browser. This property is read-only.
        */
       readonly name: string;
       /**
-       * A browser-implementation specific string describing the browser version. This property is read only.
+       * A browser-implementation specific string describing the browser version. This property is read-only.
        */
       readonly version: string;
       /**
-       * If provided, the URL to the entity that wrote this browser. This property is read only.
+       * If provided, the URL to the entity that wrote this browser. This property is read-only.
        */
       readonly providerURL: string;
       /**
-       * The current speed of the avatar in m/s. This property is read only.
+       * The current speed of the avatar in m/s. This property is read-only.
        */
       readonly currentSpeed: number;
       /**
-       * The current frame rate in frames per second. This property is read only.
+       * The current frame rate in frames per second. This property is read-only.
        */
       readonly currentFrameRate: number;
       /**
@@ -88,23 +88,23 @@ declare namespace X3D
        */
       description: string;
       /**
-       * Returns the list of all profiles that are supported by this browser. This property is read only.
+       * Returns the list of all profiles that are supported by this browser. This property is read-only.
        */
       readonly supportedProfiles: ProfileInfoArray;
       /**
-       * Returns a list of all components that are supported by this browser. This property is read only.
+       * Returns a list of all components that are supported by this browser. This property is read-only.
        */
       readonly supportedComponents: ComponentInfoArray;
       /**
-       * Returns a list of all concrete node classes that are supported by this browser. This property is read only.
+       * Returns a list of all concrete node classes that are supported by this browser. This property is read-only.
        */
       readonly concreteNodes: ConcreteNodesArray;
       /**
-       * Returns a list of all abstract node classes that are supported by this browser. This property is read only.
+       * Returns a list of all abstract node classes that are supported by this browser. This property is read-only.
        */
       readonly abstractNodes: AbstractNodesArray;
       /**
-       * Returns a list of all field type classes that are supported by this browser. This property is read only.
+       * Returns a list of all field type classes that are supported by this browser. This property is read-only.
        */
       readonly fieldTypes: FieldTypesArray;
       /**
@@ -112,27 +112,27 @@ declare namespace X3D
        */
       baseURL: string;
       /**
-       * The real type of this class is dependent on whether the user code is inside a prototype instance or not. If the user code is inside a prototype instance the property represent an X3DExecutionContext otherwise it represent an X3DScene. This property is read only.
+       * The real type of this class is dependent on whether the user code is inside a prototype instance or not. If the user code is inside a prototype instance the property represent an X3DExecutionContext otherwise it represent an X3DScene. This property is read-only.
        */
       readonly currentScene: X3DScene;
       /*
-       * Returns the active layer, if any. The active layer is the layer on which navigation takes place. This property is read only.
+       * Returns the active layer, if any. The active layer is the layer on which navigation takes place. This property is read-only.
        */
       readonly activeLayer: X3DLayerNodeProxy | null;
       /*
-       * Returns the bound NavigationInfo node in the active layer, if any. This property is read only.
+       * Returns the bound NavigationInfo node in the active layer, if any. This property is read-only.
        */
       readonly activeNavigationInfo: NavigationInfoProxy | null;
       /*
-       * Returns the bound X3DViewpointNode in the active layer, if any. This property is read only.
+       * Returns the bound X3DViewpointNode in the active layer, if any. This property is read-only.
        */
       readonly activeViewpoint: X3DViewpointNodeProxy | null;
       /**
-       * Returns a reference to the corresponding ContextMenu. This property is read only.
+       * Returns a reference to the corresponding ContextMenu. This property is read-only.
        */
       readonly contextMenu: ContextMenu;
       /**
-       * Returns a reference to the corresponding X3DCanvasElement. This property is read only.
+       * Returns a reference to the corresponding X3DCanvasElement. This property is read-only.
        */
       readonly element: X3DCanvasElement;
       /**
@@ -142,7 +142,7 @@ declare namespace X3D
       /**
        * The `getSupportedComponent` service returns a ComponentInfo object of the named component from the `supportedComponents` array. The parameter is the name of a component from which to fetch the declaration. The browser only returns a ComponentInfo object if it supports the named component. If it does not support the component, an error is thrown.
        */
-      getSupportedComponent (name : string): ComponentInfo;
+      getSupportedComponent (name: string): ComponentInfo;
       /**
        * The `getProfile` service returns a ProfileInfo object of the named profile. The parameter is the name of a profile from which to fetch the declaration. The browser only returns a ProfileInfo object if it supports the named profile. If it does not support the named profile, an error is thrown.
        */
@@ -150,7 +150,7 @@ declare namespace X3D
       /**
        * The `getComponent` service returns a ComponentInfo object of the named component. The first parameter is the name of a component and the second the level from which to fetch the declaration. The browser only returns a ComponentInfo object if it supports the named component and the requested level. If it does not support the component at the level desired, an error is thrown. If level is omitted, it defaults to the highest supported level of this component.
        */
-      getComponent (name : string, level?: number): ComponentInfo;
+      getComponent (name: string, level?: number): ComponentInfo;
       /**
        * The `createScene` service creates a new empty scene that conforms to the given profile and component declarations. The Promise resolves when all components are loaded.
        */
@@ -495,7 +495,7 @@ declare namespace X3D
        */
       rootNodes: MFNode;
       /**
-       * A reference to the ExportedNodesArray object used by this execution context. This property is read only.
+       * A reference to the ExportedNodesArray object used by this execution context. This property is read-only.
        */
       readonly exportedNodes: ExportedNodesArray;
 
@@ -598,41 +598,41 @@ declare namespace X3D
    class X3DExecutionContext extends X3DObject
    {
       /**
-       * The string represent the basic specification version used by the parsed file in decimal format. For example, a scene conforming to this specification returns a value such as "4.1". This property is read only.
+       * The string represent the basic specification version used by the parsed file in decimal format. For example, a scene conforming to this specification returns a value such as "4.1". This property is read-only.
        */
       readonly specificationVersion: string;
       /**
-       * The encoding is represented as a string that describes the data encoding used. Valid values are "ASCII", "VRML", "XML", "BINARY", "SCRIPTED", "BIFS", "NONE". This property is read only.
+       * The encoding is represented as a string that describes the data encoding used. Valid values are "ASCII", "VRML", "XML", "BINARY", "SCRIPTED", "BIFS", "NONE". This property is read-only.
        *
        * Additional valid values are “GLTF”, “OBJ”, “STL”, “PLY”, “SVG”.
        */
       readonly encoding: "ASCII" | "VRML" | "XML" | "JSON" | "BINARY" | "SCRIPTED" | "BIFS" | "NONE" | "GLTF" | "OBJ" | "STL" | "PLY" | "SVG";
       /**
-       * A reference to the ProfileInfo object used by this execution context. A value of `null` implies profile `Full`.  This property is read only.
+       * A reference to the ProfileInfo object used by this execution context. A value of `null` implies profile `Full`.  This property is read-only.
        */
       readonly profile: ProfileInfo | null;
       /**
-       * A reference to the ComponentInfoArray object used by this execution context. This property is read only.
+       * A reference to the ComponentInfoArray object used by this execution context. This property is read-only.
        */
       readonly components: ComponentInfoArray;
       /**
-       * A string containing the URL of this execution context. This property is read only.
+       * A string containing the URL of this execution context. This property is read-only.
        */
       readonly worldURL: string;
       /**
-       * A string containing the URL against which relative URLs are resolved. This property is read only.
+       * A string containing the URL against which relative URLs are resolved. This property is read-only.
        */
       readonly baseURL: string;
       /**
-       * A reference to the UnitInfoArray object used by this execution context. This property is read only.
+       * A reference to the UnitInfoArray object used by this execution context. This property is read-only.
        */
       readonly units: UnitInfoArray;
       /**
-       * A reference to the NamedNodesArray object used by this execution context. This property is read only.
+       * A reference to the NamedNodesArray object used by this execution context. This property is read-only.
        */
       readonly namedNodes: NamedNodesArray;
       /**
-       * A reference to the ImportedNodesArray object used by this execution context. This property is read only.
+       * A reference to the ImportedNodesArray object used by this execution context. This property is read-only.
        */
       readonly importedNodes: ImportedNodesArray;
       /**
@@ -640,15 +640,15 @@ declare namespace X3D
        */
       readonly rootNodes: MFNode;
       /**
-       * A reference to the ProtoDeclarationArray object used by this execution context. This property is read only.
+       * A reference to the ProtoDeclarationArray object used by this execution context. This property is read-only.
        */
       readonly protos: ProtoDeclarationArray;
       /**
-       * A reference to the ExternProtoDeclarationArray object used by this execution context. This property is read only.
+       * A reference to the ExternProtoDeclarationArray object used by this execution context. This property is read-only.
        */
       readonly externprotos: ExternProtoDeclarationArray;
       /**
-       * A reference to the RouteArray object used by this execution context. This property is read only.
+       * A reference to the RouteArray object used by this execution context. This property is read-only.
        */
       readonly routes: RouteArray;
 
@@ -717,11 +717,11 @@ declare namespace X3D
    interface X3DConcreteNode extends X3DAbstractNode
    {
       /**
-       * The default container field name for this node. This property is read only.
+       * The default container field name for this node. This property is read-only.
        */
       readonly containerField: string;
       /**
-       * Returns an array with two strings defining the first version and last version where this node is specified. This property is read only.
+       * Returns an array with two strings defining the first version and last version where this node is specified. This property is read-only.
        */
       readonly specificationRange:
       {
@@ -745,11 +745,11 @@ declare namespace X3D
    interface X3DAbstractNode
    {
       /**
-       * The node type name for this class. This property is read only.
+       * The node type name for this class. This property is read-only.
        */
       readonly typeName: string;
       /**
-       * Returns an object with two properties *name* and *level* which can be used to get a ComponentInfo object from the X3D browser. This property is read only.
+       * Returns an object with two properties *name* and *level* which can be used to get a ComponentInfo object from the X3D browser. This property is read-only.
        */
       readonly componentInfo:
       {
@@ -774,19 +774,19 @@ declare namespace X3D
    class ProfileInfo extends X3DObject
    {
       /**
-       * A string of the formal name of this profile. This property is read only.
+       * A string of the formal name of this profile. This property is read-only.
        */
       readonly name: string;
       /**
-       * A generic, freeform title string provided by the browser manufacturer. This property is read only.
+       * A generic, freeform title string provided by the browser manufacturer. This property is read-only.
        */
       readonly title: string;
       /**
-       * If provided, the URL to the entity that wrote this component. This assumes that extensions to the browser may not necessarily be provided by the browser writer's themselves. This property is read only.
+       * If provided, the URL to the entity that wrote this component. This assumes that extensions to the browser may not necessarily be provided by the browser writer's themselves. This property is read-only.
        */
       readonly providerURL: string;
       /**
-       * An ComponentInfoArray object of the ComponentInfo object instances that make up this profile. This property is read only.
+       * An ComponentInfoArray object of the ComponentInfo object instances that make up this profile. This property is read-only.
        */
       readonly components: ComponentInfoArray
    }
@@ -802,19 +802,19 @@ declare namespace X3D
    class ComponentInfo extends X3DObject
    {
       /**
-       * A string of the formal name of this profile. This property is read only.
+       * A string of the formal name of this profile. This property is read-only.
        */
       readonly name: string;
       /**
-       * A number of the level of support of this instance. This property is read only.
+       * A number of the level of support of this instance. This property is read-only.
        */
       readonly level: number;
       /**
-       * A generic, freeform title string provided by the browser manufacturer. This property is read only.
+       * A generic, freeform title string provided by the browser manufacturer. This property is read-only.
        */
       readonly title: string;
       /**
-       * If provided, the URL to the entity that wrote this component. This assumes that extensions to the browser may not necessarily be provided by the browser writer's themselves. This property is read only.
+       * If provided, the URL to the entity that wrote this component. This assumes that extensions to the browser may not necessarily be provided by the browser writer's themselves. This property is read-only.
        */
       readonly providerURL: string;
    }
@@ -830,15 +830,15 @@ declare namespace X3D
    class UnitInfo extends X3DObject
    {
       /**
-       * The category of default unit being modified as defined in the table. This property is read only.
+       * The category of default unit being modified as defined in the table. This property is read-only.
        */
       readonly category: string;
       /**
-       * A string of the name assigned to the new default unit. This property is read only.
+       * A string of the name assigned to the new default unit. This property is read-only.
        */
       readonly name: string;
       /**
-       * The double-precision number needed to convert from the new default unit to the initial default unit. This property is read only.
+       * The double-precision number needed to convert from the new default unit to the initial default unit. This property is read-only.
        */
       readonly conversionFactor: number;
    }
@@ -859,19 +859,19 @@ declare namespace X3D
    class X3DImportedNode extends X3DObject
    {
       /**
-       * The SFNode object of the Inline node. This property is read only.
+       * The SFNode object of the Inline node. This property is read-only.
        */
       readonly inlineNode: SFNode;
       /**
-       * A string of the exported name. This property is read only.
+       * A string of the exported name. This property is read-only.
        */
       readonly exportedName: string;
       /**
-       * The SFNode object of the exported node. This property is read only.
+       * The SFNode object of the exported node. This property is read-only.
        */
       readonly exportedNode: SFNode;
       /**
-       * A string of the imported name. This property is read only.
+       * A string of the imported name. This property is read-only.
        */
       readonly importedName: string;
       /**
@@ -891,11 +891,11 @@ declare namespace X3D
    class X3DExportedNode extends X3DObject
    {
       /**
-       * A string of the exported name. This property is read only.
+       * A string of the exported name. This property is read-only.
        */
       readonly exportedName: string;
       /**
-       * The SFNode object of the corresponding node. This property is read only.
+       * The SFNode object of the corresponding node. This property is read-only.
        */
       readonly localNode: SFNode;
       /**
@@ -915,15 +915,15 @@ declare namespace X3D
    class X3DProtoDeclaration extends X3DObject
    {
       /**
-       * A string of the declared name of this prototype. This property is read only.
+       * A string of the declared name of this prototype. This property is read-only.
        */
       readonly name: string;
       /**
-       * A reference to FieldDefinitionArray of all the fields defined for this prototype. This property is read only.
+       * A reference to FieldDefinitionArray of all the fields defined for this prototype. This property is read-only.
        */
       readonly fields: FieldDefinitionArray;
       /**
-       * Always has the value of false. This property is read only.
+       * Always has the value of false. This property is read-only.
        */
       readonly isExternProto: false;
       /**
@@ -970,19 +970,19 @@ declare namespace X3D
    class X3DExternProtoDeclaration extends X3DObject
    {
       /**
-       * A string of the declared name of this extern prototype. This property is read only.
+       * A string of the declared name of this extern prototype. This property is read-only.
        */
       readonly name: string;
       /**
-       * A reference to FieldDefinitionArray of all the fields defined for this extern prototype. This property is read only.
+       * A reference to FieldDefinitionArray of all the fields defined for this extern prototype. This property is read-only.
        */
       readonly fields: FieldDefinitionArray;
       /**
-       * A MFString array of all the URI's defined for this extern prototype. This property is read only.
+       * A MFString array of all the URI's defined for this extern prototype. This property is read-only.
        */
       readonly urls: MFString;
       /**
-       * Always has the value of true. This property is read only.
+       * Always has the value of true. This property is read-only.
        */
       readonly isExternProto: true;
       /**
@@ -994,7 +994,7 @@ declare namespace X3D
        */
       documentation: string;
       /**
-       * The value is one of the *_STATE* properties defined in the X3DConstants object. This property is read only.
+       * The value is one of the *_STATE* properties defined in the X3DConstants object. This property is read-only.
        */
       readonly loadState: number;
 
@@ -1059,6 +1059,32 @@ declare namespace X3D
       [Symbol .iterator](): IterableIterator <T>;
       readonly [index: number]: T;
       readonly length: number;
+
+      at (index: number): T;
+      entries (): IterableIterator <[number, T]>;
+      every (predicate: ArrayTest <T>): boolean;
+      fill (val: T, start?: number, end?: number): this;
+      filter (predicate: ArrayTest <T>): this;
+      find (test: ArrayTest <T>): T | undefined;
+      findIndex (test: ArrayTest <T>): number;
+      findLast (test: ArrayTest <T>): T | undefined;
+      findLastIndex (test: ArrayTest <T>): number;
+      forEach (action: ArrayAction <T>): void;
+      includes (needle: T): boolean;
+      indexOf (needle: T): number;
+      join (separator?: string): string;
+      keys (): number [];
+      lastIndexOf (needle: T): number;
+      map <U> (f: (element: T, i: number, array: this) => U): this;
+      reduce <U> (f: ArrayReducer <T, U>, initial?: U): U;
+      reduceRight <U> (f: ArrayReducer <T, U>, initial?: U): U;
+      slice (start?: number, end?: number): this;
+      some (predicate: ArrayTest <T>): boolean;
+      toReversed (): this;
+      toSorted (comparator?: (a: T, b: T) => number): this;
+      toSpliced (start: number, deleteCount: number, ... items: T []): this;
+      values (): IterableIterator <T>;
+      with (index: number, value: T): this;
    }
 
    /**
@@ -1522,19 +1548,19 @@ declare namespace X3D
    class X3DFieldDefinition extends X3DObject
    {
       /**
-       * Value from the X3DConstants object describing the accessType (e.g., "X3DConstants.inputOnly"). This property is read only.
+       * Value from the X3DConstants object describing the accessType (e.g., "X3DConstants.inputOnly"). This property is read-only.
        */
       readonly accessType: number;
       /**
-       * Value from X3DConstants object describing the field's data type (e.g., "X3DConstants.SFBool"). This property is read only.
+       * Value from X3DConstants object describing the field's data type (e.g., "X3DConstants.SFBool"). This property is read-only.
        */
       readonly dataType: number;
       /**
-       * A string of the field name (e.g., "children"). This property is read only.
+       * A string of the field name (e.g., "children"). This property is read-only.
        */
       readonly name: string;
       /**
-       * The default value for this field. This property is read only.
+       * The default value for this field. This property is read-only.
        */
       readonly value: boolean | number | string | null | X3DField;
       /**
@@ -2665,10 +2691,10 @@ declare namespace X3D
       slice (start?: number, end?: number): this;
       some (predicate: ArrayTest <T>): boolean;
       sort (comparator?: (a: T, b: T) => number): this;
-      splice (start: number, deleteCount: number, ... items: T []) : this;
+      splice (start: number, deleteCount: number, ... items: T []): this;
       toReversed (): this;
       toSorted (comparator?: (a: T, b: T) => number): this;
-      toSpliced (start: number, deleteCount: number, ... items: T []) : this;
+      toSpliced (start: number, deleteCount: number, ... items: T []): this;
       unshift (... elements: T []): number;
       values (): IterableIterator <T>;
       with (index: number, value: T): this;

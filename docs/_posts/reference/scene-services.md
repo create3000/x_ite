@@ -27,11 +27,11 @@ None. This object cannot be instantiated by the user.
 
 #### **specificationVersion**: string
 
-The string represent the basic specification version used by the parsed file in decimal format. For example, a scene conforming to this specification returns a value such as "4.0". This property is read only.
+The string represent the basic specification version used by the parsed file in decimal format. For example, a scene conforming to this specification returns a value such as "4.0". This property is read-only.
 
 #### **encoding**: string
 
-The encoding is represented as a string that describes the data encoding used. Valid values are "ASCII", "VRML", "XML", "BINARY", "SCRIPTED", "BIFS", "NONE". This property is read only.
+The encoding is represented as a string that describes the data encoding used. Valid values are "ASCII", "VRML", "XML", "BINARY", "SCRIPTED", "BIFS", "NONE". This property is read-only.
 
 Additional valid values are "GLTF", "OBJ", "STL", "PLY", "SVG".
 
@@ -49,31 +49,31 @@ print (scene .encoding);
 
 #### **profile**: ProfileInfo | null
 
-A reference to the ProfileInfo object used by this execution context. A value of `null` implies profile `Full`.  This property is read only.
+A reference to the ProfileInfo object used by this execution context. A value of `null` implies profile `Full`.  This property is read-only.
 
 #### **components**: ComponentInfoArray
 
-A reference to the ComponentInfoArray object used by this execution context. This property is read only.
+A reference to the ComponentInfoArray object used by this execution context. This property is read-only.
 
 #### **worldURL**: string
 
-A string containing the URL of this execution context. This property is read only.
+A string containing the URL of this execution context. This property is read-only.
 
 #### **baseURL**: string
 
-A string containing the URL against which relative URLs are resolved. This property is read only.
+A string containing the URL against which relative URLs are resolved. This property is read-only.
 
 #### **units**: UnitInfoArray
 
-A reference to the UnitInfoArray object used by this execution context. This property is read only.
+A reference to the UnitInfoArray object used by this execution context. This property is read-only.
 
 #### **namedNodes**: NamedNodesArray
 
-A reference to the NamedNodesArray object used by this execution context. This property is read only.
+A reference to the NamedNodesArray object used by this execution context. This property is read-only.
 
 #### **importedNodes**: ImportedNodesArray
 
-A reference to the ImportedNodesArray object used by this execution context. This property is read only.
+A reference to the ImportedNodesArray object used by this execution context. This property is read-only.
 
 #### **rootNodes**: MFNode
 
@@ -96,15 +96,15 @@ for (const node of scene .rootNodes)
 
 #### **protos**: ProtoDeclarationArray
 
-A reference to the ProtoDeclarationArray object used by this execution context. This property is read only.
+A reference to the ProtoDeclarationArray object used by this execution context. This property is read-only.
 
 #### **externprotos**: ExternProtoDeclarationArray
 
-A reference to the ExternProtoDeclarationArray object used by this execution context. This property is read only.
+A reference to the ExternProtoDeclarationArray object used by this execution context. This property is read-only.
 
 #### **routes**: RouteArray
 
-A reference to the RouteArray object used by this execution context. This property is read only.
+A reference to the RouteArray object used by this execution context. This property is read-only.
 
 ### Methods
 
@@ -213,7 +213,7 @@ When used inside a prototype instance, this property is not writable. The MFNode
 
 #### **exportedNodes**: ExportedNodesArray
 
-A reference to the ExportedNodesArray object used by this execution context. This property is read only.
+A reference to the ExportedNodesArray object used by this execution context. This property is read-only.
 
 ### Methods
 
@@ -360,19 +360,19 @@ None. This object cannot be instantiated by the user.
 
 #### **name**: string
 
-A string of the formal name of this profile. This property is read only.
+A string of the formal name of this profile. This property is read-only.
 
 #### **title**: string
 
-A generic, freeform title string provided by the browser manufacturer. This property is read only.
+A generic, freeform title string provided by the browser manufacturer. This property is read-only.
 
 #### **providerURL**: string
 
-If provided, the URL to the entity that wrote this component. This assumes that extensions to the browser may not necessarily be provided by the browser writer's themselves. This property is read only.
+If provided, the URL to the entity that wrote this component. This assumes that extensions to the browser may not necessarily be provided by the browser writer's themselves. This property is read-only.
 
 #### **components**: ComponentInfoArray
 
-An ComponentInfoArray object of the ComponentInfo object instances that make up this profile. This property is read only.
+An ComponentInfoArray object of the ComponentInfo object instances that make up this profile. This property is read-only.
 
 ### Methods
 
@@ -390,19 +390,19 @@ None. This object cannot be instantiated by the user.
 
 #### **name**: string
 
-A string of the formal name of this profile. This property is read only.
+A string of the formal name of this profile. This property is read-only.
 
 #### **level**: number
 
-A number of the level of support of this instance. This property is read only.
+A number of the level of support of this instance. This property is read-only.
 
 #### **title**: string
 
-A generic, freeform title string provided by the browser manufacturer. This property is read only.
+A generic, freeform title string provided by the browser manufacturer. This property is read-only.
 
 #### **providerURL**: string
 
-If provided, the URL to the entity that wrote this component. This assumes that extensions to the browser may not necessarily be provided by the browser writer's themselves. This property is read only.
+If provided, the URL to the entity that wrote this component. This assumes that extensions to the browser may not necessarily be provided by the browser writer's themselves. This property is read-only.
 
 ### Methods
 
@@ -420,7 +420,7 @@ None. This object cannot be instantiated by the user.
 
 #### **category**: string
 
-The category of default unit being modified as defined in the table. This property is read only.
+The category of default unit being modified as defined in the table. This property is read-only.
 
 #### Standard units
 
@@ -448,11 +448,11 @@ The standard color space used by this International Standard is RGB where each c
 
 #### **name**: string
 
-A string of the name assigned to the new default unit. This property is read only.
+A string of the name assigned to the new default unit. This property is read-only.
 
 #### **conversionFactor**: number
 
-The double-precision number needed to convert from the new default unit to the initial default unit. This property is read only.
+The double-precision number needed to convert from the new default unit to the initial default unit. This property is read-only.
 
 ### Methods
 
@@ -470,19 +470,19 @@ None. This object cannot be instantiated by the user.
 
 #### **inlineNode**: SFNode
 
-The SFNode object of the Inline node. This property is read only.
+The SFNode object of the Inline node. This property is read-only.
 
 #### **exportedName**: string
 
-A string of the exported name. This property is read only.
+A string of the exported name. This property is read-only.
 
 #### **exportedNode**: SFNode
 
-The SFNode object of the exported node. This property is read only.
+The SFNode object of the exported node. This property is read-only.
 
 #### **importedName**: string
 
-A string of the imported name. This property is read only.
+A string of the imported name. This property is read-only.
 
 #### **description**: string
 
@@ -500,11 +500,11 @@ None. This object cannot be instantiated by the user.
 
 #### **exportedName**: string
 
-A string of the exported name. This property is read only.
+A string of the exported name. This property is read-only.
 
 #### **localNode**: SFNode
 
-The SFNode object of the corresponding node. This property is read only.
+The SFNode object of the corresponding node. This property is read-only.
 
 #### **description**: string
 
@@ -518,15 +518,19 @@ ProfileInfoArray is an object that represents an array of ProfileInfo objects. T
 
 None. This object cannot be instantiated by the user.
 
+### Iterator
+
+The `[@@iterator]()` method of ProfileInfoArray instances implements the iterable protocol and allows ProfileInfoArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
+
 ### Properties
 
 #### **length**: number
 
-An integer containing the number of elements in the array. This property is read only.
+An integer containing the number of elements in the array. This property is read-only.
 
 ### Methods
 
-None
+Almost all read-only functions known from JavaScript [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array).
 
 ## ComponentInfoArray
 
@@ -536,15 +540,19 @@ ComponentInfoArray is an object that represents an array of ComponentInfo object
 
 None. This object cannot be instantiated by the user.
 
+### Iterator
+
+The `[@@iterator]()` method of ComponentInfoArray instances implements the iterable protocol and allows ComponentInfoArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
+
 ### Properties
 
 #### **length**: number
 
-An integer containing the number of elements in the array. This property is read only.
+An integer containing the number of elements in the array. This property is read-only.
 
 ### Methods
 
-None
+Almost all read-only functions known from JavaScript [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array).
 
 ## UnitInfoArray
 
@@ -554,15 +562,19 @@ UnitInfoArray is an object that represents an array of UnitInfo objects. This is
 
 None. This object cannot be instantiated by the user.
 
+### Iterator
+
+The `[@@iterator]()` method of UnitInfoArray instances implements the iterable protocol and allows UnitInfoArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
+
 ### Properties
 
 #### **length**: number
 
-An integer containing the number of elements in the array. This property is read only.
+An integer containing the number of elements in the array. This property is read-only.
 
 ### Methods
 
-None
+Almost all read-only functions known from JavaScript [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array).
 
 ## ImportedNodesArray
 
@@ -572,15 +584,19 @@ ImportedNodesArray is an object that represents an array of X3DImportedNode obje
 
 None. This object cannot be instantiated by the user.
 
+### Iterator
+
+The `[@@iterator]()` method of ImportedNodesArray instances implements the iterable protocol and allows ImportedNodesArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
+
 ### Properties
 
 #### **length**: number
 
-An integer containing the number of elements in the array. This property is read only.
+An integer containing the number of elements in the array. This property is read-only.
 
 ### Methods
 
-None
+Almost all read-only functions known from JavaScript [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array).
 
 ## ExportedNodesArray
 
@@ -590,12 +606,16 @@ ExportedNodesArray is an object that represents an array of X3DExportedNode obje
 
 None. This object cannot be instantiated by the user.
 
+### Iterator
+
+The `[@@iterator]()` method of ExportedNodesArray instances implements the iterable protocol and allows ExportedNodesArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
+
 ### Properties
 
 #### **length**: number
 
-An integer containing the number of elements in the array. This property is read only.
+An integer containing the number of elements in the array. This property is read-only.
 
 ### Methods
 
-None
+Almost all read-only functions known from JavaScript [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array).

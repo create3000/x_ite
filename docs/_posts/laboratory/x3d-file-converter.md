@@ -35,9 +35,16 @@ x_ite: true
 }
 
 #drop-zone select {
-  color: unset;
-  position: relative;
-  top: -6px;
+  appearance: none;
+  background: white;
+  border: 4px solid var(--text-color);
+  border-radius: 36px;
+  padding: 10px 20px;
+  line-height: normal;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: bold;
+  color: var(--text-color);
 }
 </style>
 
@@ -46,15 +53,14 @@ x_ite: true
 
 ## Upload and Convert
 
-Convert **X3D, VRML 2.0 (.wrl), glTF (GLB), OBJ, STL, PLY,** and **SVG** to an X3D format of your choice.
+Convert **X3D, VRML 2.0 (.wrl), glTF (GLB), OBJ, STL, PLY,** and **SVG** to an X3D format of your choice. Files are converted offline, ie. no data is transferred.
 
 <div id="drop-zone">
   <p id="open-files" class="center">
-    <a href="#">Choose a file</a> or drag it here.
-    <input type="file" />
+    <a href="#">Choose files</a> or drag them here.
   </p>
   <p id="convert-files" class="center">
-    <a href="#">Convert file to ...</a>
+    <a href="#">Convert <span id="filenames">file</span> to ...</a>
     <br>
     <select>
       <option value="XML" selected>X3D XML Encoding</option>
