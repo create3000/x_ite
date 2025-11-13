@@ -37,13 +37,14 @@ x_ite: true
 #drop-zone select {
   appearance: none;
   background: white;
-  border: 2px solid black;
+  border: 4px solid var(--text-color);
   border-radius: 33px;
   padding: 10px 20px;
   line-height: normal;
   font-size: inherit;
   font-family: inherit;
-  color: black;
+  font-weight: bold;
+  color: var(--text-color);
 }
 </style>
 
