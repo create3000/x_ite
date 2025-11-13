@@ -106,13 +106,6 @@ Object .assign (Generator .prototype,
    },
    TidyBreak ()
    {
-      if (this .needsSpace)
-      {
-         this .needsSpace = false;
-
-         return " ";
-      }
-
       return this .tidyBreak;
    },
    AddTidyBreak ()
@@ -129,18 +122,22 @@ Object .assign (Generator .prototype,
    },
    TidySpace ()
    {
-      if (this .needsSpace)
-      {
-         this .needsSpace = false;
-
-         return " ";
-      }
-
       return this .tidySpace;
    },
    NeedsSpace ()
    {
-      this .needsSpace = true;
+      if (!this .tidyBreak)
+         this .TidyBreak = this .NeedsSpaceImpl;
+
+      if (!this .tidySpace)
+         this .TidySpace = this .NeedsSpaceImpl;
+   },
+   NeedsSpaceImpl ()
+   {
+      delete this .TidyBreak;
+      delete this .TidySpace;
+
+      return " ";
    },
    ListStart ()
    {
