@@ -99,21 +99,22 @@ async function convert (encoding, files)
       try
       {
          const
-            Browser = X3D .createBrowser () .browser,
+            browser = X3D .createBrowser () .browser,
             url     = URL .createObjectURL (file);
 
-         Browser .endUpdate ();
-         Browser .setBrowserOption ("LoadUrlObjects",   false);
-         Browser .setBrowserOption ("PrimitiveQuality", "HIGH");
-         Browser .setBrowserOption ("TextureQuality",   "HIGH");
+         browser .setBrowserOption ("PrimitiveQuality", "HIGH");
+         browser .setBrowserOption ("TextureQuality",   "HIGH");
+         browser .setBrowserOption ("LoadUrlObjects",   false);
+         browser .setBrowserOption ("Mute",             true);
+         browser .endUpdate ();
 
-         await Browser .loadURL (new X3D .MFString (url));
+         await browser .loadURL (new X3D .MFString (url));
 
          const
-            scene     = Browser .currentScene,
-            generator = scene .getMetaData ("generator") ?.filter (value => !value .startsWith (Browser .name)) ?? [ ];
+            scene     = browser .currentScene,
+            generator = scene .getMetaData ("generator") ?.filter (value => !value .startsWith (browser .name)) ?? [ ];
 
-         generator .push (`${Browser .name} V${Browser .version}, ${Browser .providerURL}`);
+         generator .push (`${browser .name} V${browser .version}, ${browser .providerURL}`);
 
          scene .setMetaData ("generator", generator);
          scene .setMetaData ("modified", new Date () .toUTCString ());
