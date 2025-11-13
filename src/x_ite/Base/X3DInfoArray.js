@@ -266,6 +266,8 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
    },
    toVRMLStream (generator)
    {
+      const proto = this .getTypeName () .includes ("Proto");
+
       for (const value of this [_array])
       {
          try
@@ -274,7 +276,7 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
 
             generator .string += generator .Break ();
 
-            if (this .getTypeName () .match (/Proto/))
+            if (proto)
                generator .string += generator .TidyBreak ();
          }
          catch (error)

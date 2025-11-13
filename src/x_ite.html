@@ -98,17 +98,29 @@ async function loadURL (url)
 
 function toVRMLString ()
 {
-   console .log (Browser .toVRMLString ());
+   console .time ("VRML");
+   Browser .toVRMLString ({ style: "COMPACT" });
+   console .timeEnd ("VRML");
+
+   // console .log (Browser .toVRMLString ());
 }
 
 function toXMLString ()
 {
-   console .log (Browser .toXMLString ());
+   console .time ("XML");
+   Browser .toXMLString ();
+   console .timeEnd ("XML");
+
+   // console .log (Browser .toXMLString ());
 }
 
 function toJSONString ()
 {
-   console .log (Browser .toJSONString ());
+   console .time ("JSON");
+   Browser .toJSONString ({ style: "COMPACT" });
+   console .timeEnd ("JSON");
+
+   // console .log (Browser .toJSONString ());
 }
 
 const bookmarks = new Bookmarks (Browser, $("#examples-box"));

@@ -165,6 +165,8 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
          generator .string += "USE";
          generator .string += generator .Space ();
          generator .string += importedName;
+
+         generator .NeedsSpace ();
       }
       else
       {

@@ -863,6 +863,7 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
                }
 
                generator .string += generator .ListIndent ();
+
                value .set (array [(length - 1) * components]);
                value .toStream (generator);
             }
@@ -928,7 +929,6 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
             }
 
             value .set (array [(length - 1) * components]);
-
             value .toXMLStream (generator);
          }
          else
