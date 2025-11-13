@@ -2106,8 +2106,8 @@ function eventsProcessed ()
       node .childNode = node .humanoidNode ?? node .transformNode;
       node .pointers  = [node .childNode];
 
-      if (node .extensions ?.KHR_node_visibility ?.hidden)
-         node .childNode ._visible = false;
+      if (node .extensions ?.KHR_node_visibility)
+         node .childNode ._visible = node .extensions ?.KHR_node_visibility .visible;
 
       return node;
    },
