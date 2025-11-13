@@ -87,7 +87,7 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
             {
                generator .string += generator .Indent ();
                array [i] .toStream (generator);
-               generator .string += generator .string .at (-1) === "}" ? generator .TidyBreak () : generator .Break ();
+               generator .string += generator .TidyBreak ();
             }
 
             generator .DecIndent ();
@@ -134,7 +134,7 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
             {
                generator .string += generator .Indent ();
                element .toVRMLStream (generator);
-               generator .string += generator .string .at (-1) === "}" ? generator .TidyBreak () : generator .Break ();
+               generator .string += generator .TidyBreak ();
             }
 
             generator .DecIndent ();

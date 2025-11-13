@@ -127,17 +127,26 @@ Object .assign (Generator .prototype,
    NeedsSpace ()
    {
       if (!this .tidyBreak)
-         this .TidyBreak = this .NeedsSpaceImpl;
+      {
+         this .TidyBreak = function ()
+         {
+            delete this .TidyBreak;
+            delete this .TidySpace;
+
+            return "\n";
+         };
+      }
 
       if (!this .tidySpace)
-         this .TidySpace = this .NeedsSpaceImpl;
-   },
-   NeedsSpaceImpl ()
-   {
-      delete this .TidyBreak;
-      delete this .TidySpace;
+      {
+         this .TidySpace = function ()
+         {
+            delete this .TidyBreak;
+            delete this .TidySpace;
 
-      return " ";
+            return " ";
+         };
+      }
    },
    ListStart ()
    {
