@@ -102,7 +102,9 @@ function toVRMLString ()
    Browser .toVRMLString ({ style: "COMPACT" });
    console .timeEnd ("VRML");
 
-   // console .log (Browser .toVRMLString ());
+   // console .log (Browser .toVRMLString ({ style: "CLEAN" }));
+
+   // Browser .createX3DFromString (Browser .toVRMLString ({ style: "CLEAN" }));
 }
 
 function toXMLString ()

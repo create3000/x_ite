@@ -110,6 +110,8 @@ Object .assign (Generator .prototype,
    },
    AddTidyBreak ()
    {
+      this .needsSpace &&= !this .tidyBreak;
+
       this .string += this .tidyBreak;
    },
    ForceBreak ()
@@ -122,27 +124,21 @@ Object .assign (Generator .prototype,
    },
    TidySpace ()
    {
+      this .needsSpace &&= !this .tidySpace;
+
       return this .tidySpace;
    },
-   NeedsSpace: (() =>
+   NeedsSpace ()
    {
-      function Space ()
-      {
-         delete this .TidyBreak;
-         delete this .TidySpace;
+      this .needsSpace = true;
+   },
+   CheckSpace ()
+   {
+      if (this .needsSpace)
+         this .string += " ";
 
-         return " ";
-      }
-
-      return function ()
-      {
-         if (!this .tidyBreak)
-            this .TidyBreak = Space;
-
-         if (!this .tidySpace)
-            this .TidySpace = Space
-      };
-   })(),
+      this .needsSpace = false;
+   },
    ListStart ()
    {
       return this .listEnclosure;
@@ -248,6 +244,8 @@ Object .assign (Generator .prototype,
       this .names                 .set (executionContext, new Set ());
       this .namesByNode           .set (executionContext, new Map ());
       this .routeNodes            .set (executionContext, new Set ());
+
+      this .needsSpace = false;
    },
    PopExecutionContext ()
    {

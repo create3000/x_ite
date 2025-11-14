@@ -360,6 +360,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
       }
       else
       {
+         generator .CheckSpace ();
          generator .string += "NULL";
          generator .NeedsSpace ();
       }
@@ -376,6 +377,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
       }
       else
       {
+         generator .CheckSpace ();
          generator .string += "NULL";
          generator .NeedsSpace ();
       }

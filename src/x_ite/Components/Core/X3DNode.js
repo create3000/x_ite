@@ -616,6 +616,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
    toVRMLStream (generator)
    {
       generator .EnterScope ();
+      generator .CheckSpace ();
 
       if (generator .outputNames)
       {
