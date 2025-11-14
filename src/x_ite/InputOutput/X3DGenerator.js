@@ -124,30 +124,25 @@ Object .assign (Generator .prototype,
    {
       return this .tidySpace;
    },
-   NeedsSpace ()
+   NeedsSpace: (() =>
    {
-      if (!this .tidyBreak)
+      function Space ()
       {
-         this .TidyBreak = function ()
-         {
-            delete this .TidyBreak;
-            delete this .TidySpace;
+         delete this .TidyBreak;
+         delete this .TidySpace;
 
-            return "\n";
-         };
+         return " ";
       }
 
-      if (!this .tidySpace)
+      return function ()
       {
-         this .TidySpace = function ()
-         {
-            delete this .TidyBreak;
-            delete this .TidySpace;
+         if (!this .tidyBreak)
+            this .TidyBreak = Space;
 
-            return " ";
-         };
-      }
-   },
+         if (!this .tidySpace)
+            this .TidySpace = Space
+      };
+   })(),
    ListStart ()
    {
       return this .listEnclosure;
