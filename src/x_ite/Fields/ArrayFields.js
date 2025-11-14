@@ -167,7 +167,6 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
             if (node)
             {
                node .toXMLStream (generator);
-               generator .string += generator .TidyBreak ();
             }
             else
             {
@@ -179,9 +178,9 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
                   generator .attribute ("containerField", containerField .getName ());
 
                generator .closeTag ("NULL");
-
-               generator .string += generator .TidyBreak ();
             }
+
+            generator .string += generator .TidyBreak ();
          }
 
          const node = array .at (-1) .getValue ();
