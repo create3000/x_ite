@@ -304,14 +304,7 @@ Object .assign (Generator .prototype,
       const index = this .importedNodesIndex .get (this .ExecutionContext ());
 
       for (const importedNode of importedNodes)
-      {
-         try
-         {
-            index .add (importedNode .getInlineNode ());
-         }
-         catch
-         { }
-      }
+         index .add (importedNode .getInlineNode ());
    },
    AddRouteNode (routeNode)
    {
