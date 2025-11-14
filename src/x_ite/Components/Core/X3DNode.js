@@ -863,15 +863,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                generator .attribute ("type", "model/x3d+xml");
 
             generator .attribute ("USE", name);
-
-            const containerField = generator .ContainerField ();
-
-            if (containerField)
-            {
-               if (containerField .getName () !== this .getContainerField ())
-                  generator .attribute ("containerField", containerField .getName ());
-            }
-
+            generator .containerField (this .getContainerField ());
             generator .closeTag (this .getTypeName ());
             generator .LeaveScope ();
             return;
@@ -889,13 +881,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
          generator .attribute ("DEF", name);
       }
 
-      const containerField = generator .ContainerField ();
-
-      if (containerField)
-      {
-         if (containerField .getName () !== this .getContainerField ())
-            generator .attribute ("containerField", containerField .getName ());
-      }
+      generator .containerField (this .getContainerField ());
 
       const
          fields            = this .getChangedFields (),

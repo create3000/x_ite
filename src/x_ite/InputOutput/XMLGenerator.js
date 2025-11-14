@@ -21,10 +21,6 @@ Object .assign (Object .setPrototypeOf (XMLGenerator .prototype, X3DGenerator .p
    {
       this .containerFields .pop ();
    },
-   ContainerField ()
-   {
-      return this .containerFields .at (-1);
-   },
    EncodeString: (() =>
    {
       const map = {
@@ -109,6 +105,16 @@ Object .assign (Object .setPrototypeOf (XMLGenerator .prototype, X3DGenerator .p
       this .string += "='";
       this .string += this .EncodeString (value);
       this .string += "'";
+   },
+   containerField (defaultContainerField)
+   {
+      const containerField = this .containerFields .at (-1);
+
+      if (!containerField)
+         return;
+
+      if (containerField .getName () !== defaultContainerField)
+         this .attribute ("containerField", containerField .getName ());
    },
 });
 

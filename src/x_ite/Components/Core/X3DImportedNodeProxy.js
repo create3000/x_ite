@@ -185,26 +185,13 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
             generator .attribute ("type", "model/x3d+xml");
 
          generator .attribute ("USE", importedName);
-
-         const containerField = generator .ContainerField ();
-
-         if (containerField)
-         {
-            if (containerField .getName () !== this .getContainerField ())
-               generator .attribute ("containerField", containerField .getName ());
-         }
-
+         generator .containerField (this .getContainerField ());
          generator .closeTag (this .getTypeName ());
       }
       else
       {
          generator .openTag ("NULL");
-
-         const containerField = generator .ContainerField ();
-
-         if (containerField)
-            generator .attribute ("containerField", containerField .getName ());
-
+         generator .containerField ();
          generator .closeTag ("NULL");
       }
    },

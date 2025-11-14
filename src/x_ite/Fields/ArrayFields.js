@@ -171,12 +171,7 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
             else
             {
                generator .openTag ("NULL");
-
-               const containerField = generator .ContainerField ();
-
-               if (containerField)
-                  generator .attribute ("containerField", containerField .getName ());
-
+               generator .containerField ();
                generator .closeTag ("NULL");
             }
 
@@ -192,12 +187,7 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
          else
          {
             generator .openTag ("NULL");
-
-            const containerField = generator .ContainerField ();
-
-            if (containerField)
-               generator .attribute ("containerField", containerField .getName ());
-
+            generator .containerField ();
             generator .closeTag ("NULL");
          }
 
