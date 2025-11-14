@@ -6,6 +6,7 @@
 const no_ibl = [
    "DirectionalLight",
    "LightsPunctualLamp",
+   "LightVisibility",
    "PlaysetLightTest",
    "PointLightIntensityTest",
 ];
@@ -17,6 +18,7 @@ const no_headlight = [
    "GlamVelvetSofa",
    "IridescenceSuzanne",
    "LightsPunctualLamp",
+   "LightVisibility",
    "PlaysetLightTest",
    "PointLightIntensityTest",
    "ScatteringSkull",
