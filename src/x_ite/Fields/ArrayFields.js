@@ -197,12 +197,7 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
             const containerField = generator .ContainerField ();
 
             if (containerField)
-            {
-               generator .string += generator .Space ();
-               generator .string += "containerField='";
-               generator .string += generator .EncodeString (containerField .getName ());
-               generator .string += "'";
-            }
+               generator .attribute ("containerField", containerField .getName ());
 
             generator .closeTag ("NULL");
          }
