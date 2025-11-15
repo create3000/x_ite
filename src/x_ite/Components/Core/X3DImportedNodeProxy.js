@@ -158,22 +158,20 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
    },
    toVRMLStream (generator)
    {
-      generator .CheckSpace ();
-
       if (this [_importedNode])
       {
          const importedName = generator .ImportedName (this [_importedNode]);
 
+         generator .CheckSpace ();
          generator .string += "USE";
          generator .Space ();
          generator .string += importedName;
+         generator .NeedsSpace ();
       }
       else
       {
-         generator .string += "NULL";
+         generator .NULL ();
       }
-
-      generator .NeedsSpace ();
    },
    toXMLStream (generator)
    {

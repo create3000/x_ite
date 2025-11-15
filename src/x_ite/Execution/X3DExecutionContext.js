@@ -752,15 +752,9 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          generator .Indent ();
 
          if (rootNode)
-         {
             rootNode .toVRMLStream (generator);
-         }
          else
-         {
-            generator .CheckSpace ();
-            generator .string += "NULL";
-            generator .NeedsSpace ();
-         }
+            generator .NULL ();
 
          generator .TidyBreak ();
 

@@ -355,15 +355,9 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
          value  = target .getValue ();
 
       if (value)
-      {
          value .toStream (generator);
-      }
       else
-      {
-         generator .CheckSpace ();
-         generator .string += "NULL";
-         generator .NeedsSpace ();
-      }
+         generator .NULL ();
    },
    toVRMLStream (generator)
    {
@@ -372,15 +366,9 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
          value  = target .getValue ();
 
       if (value)
-      {
          value .toVRMLStream (generator);
-      }
       else
-      {
-         generator .CheckSpace ();
-         generator .string += "NULL";
-         generator .NeedsSpace ();
-      }
+         generator .NULL ();
    },
    toXMLStream (generator)
    {
