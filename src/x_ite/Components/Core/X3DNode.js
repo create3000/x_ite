@@ -673,8 +673,6 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
             for (const field of userDefinedFields)
             {
-               generator .ClearSpace ();
-
                this .toVRMLStreamUserDefinedField (generator, field, fieldTypeLength, accessTypeLength);
 
                if (field === last)
@@ -708,8 +706,6 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
          for (const field of fields)
          {
-            generator .ClearSpace ();
-
             this .toVRMLStreamField (generator, field);
 
             if (field === last)

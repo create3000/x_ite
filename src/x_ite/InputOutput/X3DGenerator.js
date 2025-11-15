@@ -98,11 +98,21 @@ Object .assign (Generator .prototype,
    },
    Comma ()
    {
+      this .needsSpace = false;
+
       this .string += this .comma;
    },
    Break ()
    {
+      this .needsSpace = false;
+
       this .string += this .break;
+   },
+   ForceBreak ()
+   {
+      this .needsSpace = false;
+
+      this .string += "\n";
    },
    TidyBreak ()
    {
@@ -110,12 +120,10 @@ Object .assign (Generator .prototype,
 
       this .string += this .tidyBreak;
    },
-   ForceBreak ()
-   {
-      this .string += "\n";
-   },
    Space ()
    {
+      this .needsSpace = false;
+
       this .string += " ";
    },
    TidySpace ()
@@ -133,10 +141,6 @@ Object .assign (Generator .prototype,
       if (this .needsSpace)
          this .string += " ";
 
-      this .needsSpace = false;
-   },
-   ClearSpace ()
-   {
       this .needsSpace = false;
    },
    ListStart ()
