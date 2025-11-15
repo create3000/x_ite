@@ -165,8 +165,8 @@ Object .assign (Generator .prototype,
    },
    DecIndent ()
    {
-      this .indent     = this .indent     .slice (0, this .indent     .length - this .indentChar     .length);
-      this .listIndent = this .listIndent .slice (0, this .listIndent .length - this .listIndentChar .length);
+      this .indent     = this .indent     .slice (0, -this .indentChar     .length);
+      this .listIndent = this .listIndent .slice (0, -this .listIndentChar .length);
    },
    NeedsSpace ()
    {
