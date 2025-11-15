@@ -2,6 +2,16 @@ import X3DConstants      from "../Base/X3DConstants.js";
 import Algorithm         from "../../standard/Math/Algorithm.js";
 import { getUniqueName } from "../Execution/NamedNodesHandling.js";
 
+const spaces = [
+   "Comma",
+   "ForceBreak",
+   "Break",
+   "TidyBreak",
+   "Space",
+   "TidySpace",
+   "Indent",
+];
+
 function Generator ({ style = "TIDY", indent = "", indentChar = "  ", precision = 7, doublePrecision = 15, names = true } = { })
 {
    this .string          = "";
@@ -98,50 +108,27 @@ Object .assign (Generator .prototype,
    },
    Comma ()
    {
-      this .needsSpace = false;
-
       this .string += this .comma;
-   },
-   Break ()
-   {
-      this .needsSpace = false;
-
-      this .string += this .break;
    },
    ForceBreak ()
    {
-      this .needsSpace = false;
-
       this .string += "\n";
+   },
+   Break ()
+   {
+      this .string += this .break;
    },
    TidyBreak ()
    {
-      this .needsSpace &&= !this .tidyBreak;
-
       this .string += this .tidyBreak;
    },
    Space ()
    {
-      this .needsSpace = false;
-
       this .string += " ";
    },
    TidySpace ()
    {
-      this .needsSpace &&= !this .tidySpace;
-
       this .string += this .tidySpace;
-   },
-   NeedsSpace ()
-   {
-      this .needsSpace = true;
-   },
-   CheckSpace ()
-   {
-      if (this .needsSpace)
-         this .string += " ";
-
-      this .needsSpace = false;
    },
    ListStart ()
    {
@@ -176,6 +163,43 @@ Object .assign (Generator .prototype,
    {
       this .indent     = this .indent     .slice (0, this .indent     .length - this .indentChar     .length);
       this .listIndent = this .listIndent .slice (0, this .listIndent .length - this .listIndentChar .length);
+   },
+   NeedsSpace ()
+   {
+      this .needsSpace = true;
+
+      for (const key of spaces)
+      {
+         const fn = this [key];
+
+         this [key] = () =>
+         {
+            const length = this .string .length;
+
+            fn .call (this);
+
+            this .needsSpace &&= !(this .string .length - length);
+
+            if (!this .needsSpace)
+               this .ClearNeedsSpace ();
+         };
+      }
+   },
+   CheckSpace ()
+   {
+      if (this .needsSpace)
+      {
+         this .string += " ";
+
+         this .ClearNeedsSpace ();
+      }
+
+      this .needsSpace = false;
+   },
+   ClearNeedsSpace ()
+   {
+      for (const key of spaces)
+         delete this [key];
    },
    createFloatFormat (precision)
    {
