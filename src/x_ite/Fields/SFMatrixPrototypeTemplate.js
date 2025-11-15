@@ -153,7 +153,7 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
          for (let i = 0; i < last; ++ i)
          {
             generator .string += generator [_formatter] (value [i]);
-            generator .string += generator .Space ();
+            generator .Space ();
          }
 
          generator .string += generator [_formatter] (value [last]);
@@ -169,11 +169,11 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
       toJSONStream (generator)
       {
          generator .string += '[';
-         generator .string += generator .TidySpace ();
+         generator .TidySpace ();
 
          this .toJSONStreamValue (generator);
 
-         generator .string += generator .TidySpace ();
+         generator .TidySpace ();
          generator .string += ']';
       },
       toJSONStreamValue (generator)
@@ -186,7 +186,7 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
          {
             generator .string += generator .Number (generator [_formatter] (value [i]));
             generator .string += ',';
-            generator .string += generator .TidySpace ();
+            generator .TidySpace ();
          }
 
          generator .string += generator .Number (generator [_formatter] (value [last]));

@@ -68,7 +68,7 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
          case 0:
          {
             generator .string += "[";
-            generator .string += generator .TidySpace ();
+            generator .TidySpace ();
             generator .string += "]";
             break;
          }
@@ -80,18 +80,18 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
          default:
          {
             generator .string += "[";
-            generator .string += generator .TidyBreak ();
+            generator .TidyBreak ();
             generator .IncIndent ();
 
             for (let i = 0; i < length; ++ i)
             {
-               generator .string += generator .Indent ();
+               generator .Indent ();
                array [i] .toStream (generator);
-               generator .string += generator .TidyBreak ();
+               generator .TidyBreak ();
             }
 
             generator .DecIndent ();
-            generator .string += generator .Indent ();
+            generator .Indent ();
             generator .string += "]";
             break;
          }
@@ -109,7 +109,7 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
          case 0:
          {
             generator .string += "[";
-            generator .string += generator .TidySpace ();
+            generator .TidySpace ();
             generator .string += "]";
             break;
          }
@@ -127,18 +127,18 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
             generator .EnterScope ();
 
             generator .string += "[";
-            generator .string += generator .TidyBreak ();
+            generator .TidyBreak ();
             generator .IncIndent ();
 
             for (const element of array)
             {
-               generator .string += generator .Indent ();
+               generator .Indent ();
                element .toVRMLStream (generator);
-               generator .string += generator .TidyBreak ();
+               generator .TidyBreak ();
             }
 
             generator .DecIndent ();
-            generator .string += generator .Indent ();
+            generator .Indent ();
             generator .string += "]";
 
             generator .LeaveScope ();
@@ -175,7 +175,7 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
                generator .closeTag ("NULL");
             }
 
-            generator .string += generator .TidyBreak ();
+            generator .TidyBreak ();
          }
 
          const node = array .at (-1) .getValue ();
@@ -209,12 +209,12 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
          generator .EnterScope ();
 
          generator .string += '[';
-         generator .string += generator .TidyBreak ();
-         generator .string += generator .IncIndent ();
+         generator .TidyBreak ();
+         generator .IncIndent ();
 
          for (let i = 0; i < last; ++ i)
          {
-            generator .string += generator .Indent ();
+            generator .Indent ();
 
             if (array [i])
                array [i] .toJSONStreamValue (generator);
@@ -222,19 +222,19 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
                generator .string += 'null';
 
             generator .string += ',';
-            generator .string += generator .TidyBreak ();
+            generator .TidyBreak ();
          }
 
-         generator .string += generator .Indent ();
+         generator .Indent ();
 
          if (array .at (-1))
             array .at (-1) .toJSONStreamValue (generator);
          else
             generator .string += 'null';
 
-         generator .string += generator .TidyBreak ();
-         generator .string += generator .DecIndent ();
-         generator .string += generator .Indent ();
+         generator .TidyBreak ();
+         generator .DecIndent ();
+         generator .Indent ();
          generator .string += ']';
 
          generator .LeaveScope ();
@@ -242,7 +242,7 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
       else
       {
          generator .string += '[';
-         generator .string += generator .TidySpace ();
+         generator .TidySpace ();
          generator .string += ']';
       }
    },
@@ -300,8 +300,8 @@ Object .assign (Object .setPrototypeOf (MFString .prototype, X3DObjectArrayField
             generator .string += "\"";
             value [i] .toXMLStream (generator, sourceText);
             generator .string += "\"";
-            generator .string += generator .Comma ();
-            generator .string += generator .TidySpace ();
+            generator .Comma ();
+            generator .TidySpace ();
          }
 
          generator .string += "\"";

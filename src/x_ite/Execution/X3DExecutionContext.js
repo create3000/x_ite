@@ -749,7 +749,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       for (const [i, rootNode] of rootNodes .entries ())
       {
-         generator .string += generator .Indent ();
+         generator .Indent ();
 
          if (rootNode)
          {
@@ -762,10 +762,10 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
             generator .NeedsSpace ();
          }
 
-         generator .string += generator .TidyBreak ();
+         generator .TidyBreak ();
 
          if (i !== last)
-            generator .string += generator .TidyBreak ();
+            generator .TidyBreak ();
       }
 
       // Output imported nodes
@@ -774,7 +774,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       if (importedNodes .length)
       {
-         generator .string += generator .TidyBreak ();
+         generator .TidyBreak ();
 
          importedNodes .toVRMLStream (generator);
       }
@@ -785,7 +785,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       if (routes .length)
       {
-         generator .string += generator .TidyBreak ();
+         generator .TidyBreak ();
 
          routes .toVRMLStream (generator);
       }
@@ -816,7 +816,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       {
          rootNodes .toXMLStream (generator);
 
-         generator .string += generator .TidyBreak ();
+         generator .TidyBreak ();
       }
 
       // Output imported nodes
@@ -849,8 +849,8 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          if (comma)
             generator .string += ',';
 
-         generator .string += generator .TidyBreak ();
-         generator .string += generator .Indent ();
+         generator .TidyBreak ();
+         generator .Indent ();
 
          if (rootNode)
             rootNode .toJSONStream (generator);

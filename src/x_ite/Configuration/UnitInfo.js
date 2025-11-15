@@ -14,13 +14,13 @@ Object .assign (Object .setPrototypeOf (UnitInfo .prototype, X3DObject .prototyp
 {
    toVRMLStream (generator)
    {
-      generator .string += generator .Indent ();
+      generator .Indent ();
       generator .string += "UNIT";
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += this .category;
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += this .name;
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += this .conversionFactor;
    },
    toXMLStream (generator)

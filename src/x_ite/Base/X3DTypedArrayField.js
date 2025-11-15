@@ -822,7 +822,7 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          case 0:
          {
             generator .string += "[";
-            generator .string += generator .TidySpace ();
+            generator .TidySpace ();
             generator .string += "]";
             break;
          }
@@ -848,23 +848,23 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
             const last = length - 1;
 
             generator .string += "[";
-            generator .string += generator .ListStart ();
+            generator .ListStart ();
             generator .IncIndent ();
 
             if (components === 1)
             {
                for (let i = 0; i < last; ++ i)
                {
-                  generator .string += generator .ListIndent ();
+                  generator .ListIndent ();
 
                   value .set (array [i * components]);
                   value .toStream (generator);
 
-                  generator .string += generator .Comma ();
-                  generator .string += generator .ListBreak ();
+                  generator .Comma ();
+                  generator .ListBreak ();
                }
 
-               generator .string += generator .ListIndent ();
+               generator .ListIndent ();
 
                value .set (array [last * components]);
                value .toStream (generator);
@@ -873,18 +873,18 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
             {
                for (let i = 0; i < last; ++ i)
                {
-                  generator .string += generator .ListIndent ();
+                  generator .ListIndent ();
 
                   for (let c = 0, first = i * components; c < components; ++ c, ++ first)
                      value [c] = array [first];
 
                   value .toStream (generator);
 
-                  generator .string += generator .Comma ();
-                  generator .string += generator .ListBreak ();
+                  generator .Comma ();
+                  generator .ListBreak ();
                }
 
-               generator .string += generator .ListIndent ();
+               generator .ListIndent ();
 
                for (let c = 0, first = last * components; c < components; ++ c, ++ first)
                   value [c] = array [first];
@@ -892,9 +892,9 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
                value .toStream (generator);
             }
 
-            generator .string += generator .ListEnd ();
+            generator .ListEnd ();
             generator .DecIndent ();
-            generator .string += generator .ListIndent ();
+            generator .ListIndent ();
             generator .string += "]";
             break;
          }
@@ -927,8 +927,8 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
                value .set (array [i * components]);
                value .toXMLStream (generator);
 
-               generator .string += generator .Comma ();
-               generator .string += generator .TidySpace ();
+               generator .Comma ();
+               generator .TidySpace ();
             }
 
             value .set (array [last * components]);
@@ -943,8 +943,8 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
 
                value .toXMLStream (generator);
 
-               generator .string += generator .Comma ();
-               generator .string += generator .TidySpace ();
+               generator .Comma ();
+               generator .TidySpace ();
             }
 
             for (let c = 0, first = last * components; c < components; ++ c, ++ first)
@@ -971,23 +971,23 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          value .setUnit (target .getUnit ());
 
          generator .string += '[';
-         generator .string += generator .ListBreak ();
-         generator .string += generator .IncIndent ();
+         generator .ListBreak ();
+         generator .IncIndent ();
 
          if (components === 1)
          {
             for (let i = 0; i < last; ++ i)
             {
-               generator .string += generator .ListIndent ();
+               generator .ListIndent ();
 
                value .set (array [i * components]);
                value .toJSONStreamValue (generator);
 
                generator .string += ',';
-               generator .string += generator .ListBreak ();
+               generator .ListBreak ();
             }
 
-            generator .string += generator .ListIndent ();
+            generator .ListIndent ();
 
             value .set (array [last * components]);
             value .toJSONStreamValue (generator);
@@ -996,7 +996,7 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          {
             for (let i = 0; i < last; ++ i)
             {
-               generator .string += generator .ListIndent ();
+               generator .ListIndent ();
 
                for (let c = 0, first = i * components; c < components; ++ c, ++ first)
                   value [c] = array [first];
@@ -1004,10 +1004,10 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
                value .toJSONStreamValue (generator);
 
                generator .string += ',';
-               generator .string += generator .ListBreak ();
+               generator .ListBreak ();
             }
 
-            generator .string += generator .ListIndent ();
+            generator .ListIndent ();
 
             for (let c = 0, first = last * components; c < components; ++ c, ++ first)
                value [c] = array [first];
@@ -1015,15 +1015,15 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
             value .toJSONStreamValue (generator);
          }
 
-         generator .string += generator .ListBreak ();
-         generator .string += generator .DecIndent ();
-         generator .string += generator .ListIndent ();
+         generator .ListBreak ();
+         generator .DecIndent ();
+         generator .ListIndent ();
          generator .string += ']';
       }
       else
       {
          generator .string += '[';
-         generator .string += generator .TidySpace ();
+         generator .TidySpace ();
          generator .string += ']';
       }
    },

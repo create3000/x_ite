@@ -452,7 +452,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                      if (field .length === 0)
                      {
                         generator .closeTag ("fieldValue");
-                        generator .AddTidyBreak ();
+                        generator .TidyBreak ();
                      }
                      else
                      {
@@ -462,10 +462,10 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
                         field .toXMLStream (generator);
 
-                        generator .AddTidyBreak ();
+                        generator .TidyBreak ();
                         generator .DecIndent ();
                         generator .closingTag ("fieldValue");
-                        generator .AddTidyBreak ();
+                        generator .TidyBreak ();
                         generator .PopContainerField ();
                      }
 
@@ -480,7 +480,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                      {
                         generator .attribute ("value", "null");
                         generator .closeTag ("fieldValue");
-                        generator .AddTidyBreak ();
+                        generator .TidyBreak ();
                      }
                      else
                      {
@@ -490,10 +490,10 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
                         field .toXMLStream (generator);
 
-                        generator .AddTidyBreak ();
+                        generator .TidyBreak ();
                         generator .DecIndent ();
                         generator .closingTag ("fieldValue");
-                        generator .AddTidyBreak ();
+                        generator .TidyBreak ();
                      }
 
                      generator .PopContainerField ();
@@ -504,14 +504,14 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                      generator .openTag ("fieldValue");
                      generator .attribute ("name", field .getName ());
 
-                     generator .string += generator .Space ();
+                     generator .Space ();
                      generator .string += "value='";
 
                      field .toXMLStream (generator);
 
                      generator .string += "'";
                      generator .closeTag ("fieldValue");
-                     generator .AddTidyBreak ();
+                     generator .TidyBreak ();
                      break;
                   }
                }
@@ -525,7 +525,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
          if (references .length && !sharedNode)
          {
             generator .openingTag ("IS");
-            generator .AddTidyBreak ();
+            generator .TidyBreak ();
             generator .IncIndent ();
 
             for (const field of references)
@@ -538,13 +538,13 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                   generator .attribute ("nodeField",  field .getName ());
                   generator .attribute ("protoField", protoField .getName ());
                   generator .closeTag ("connect");
-                  generator .AddTidyBreak ();
+                  generator .TidyBreak ();
                }
             }
 
             generator .DecIndent ();
             generator .closingTag ("IS");
-            generator .AddTidyBreak ();
+            generator .TidyBreak ();
          }
 
          generator .DecIndent ();
@@ -645,8 +645,8 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                   generator .stringProperty ("@name", field .getName (), false);
                   generator .beginArray ("-children");
 
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .Indent ();
+                  generator .TidyBreak ();
+                  generator .Indent ();
 
                   field .toJSONStream (generator);
 

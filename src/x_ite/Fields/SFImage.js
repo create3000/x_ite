@@ -157,17 +157,17 @@ Object .assign (Object .setPrototypeOf (SFImage .prototype, X3DField .prototype)
          array  = new Uint32Array (this .array .getValue () .buffer);
 
       generator .string += width;
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += height;
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += this .comp;
-      generator .string += generator .AttribBreak ();
+      generator .AttribBreak ();
 
       generator .IncIndent ();
 
       for (let y = 0; y < height; ++ y)
       {
-         generator .string += generator .ListIndent ();
+         generator .ListIndent ();
 
          const s = y * width;
 
@@ -177,11 +177,11 @@ Object .assign (Object .setPrototypeOf (SFImage .prototype, X3DField .prototype)
             generator .string += array [x + s] .toString (16);
 
             if (x !== width - 1)
-               generator .string += generator .Space ();
+               generator .Space ();
          }
 
          if (y !== height - 1)
-            generator .string += generator .AttribBreak ();
+            generator .AttribBreak ();
       }
 
       generator .DecIndent ();
@@ -197,15 +197,15 @@ Object .assign (Object .setPrototypeOf (SFImage .prototype, X3DField .prototype)
    toJSONStream (generator)
    {
       generator .string += '[';
-      generator .string += generator .ListBreak ();
-      generator .string += generator .IncIndent ();
-      generator .string += generator .ListIndent ();
+      generator .ListBreak ();
+      generator .IncIndent ();
+      generator .ListIndent ();
 
       this .toJSONStreamValue (generator);
 
-      generator .string += generator .DecIndent ();
-      generator .string += generator .ListBreak ();
-      generator .string += generator .ListIndent ();
+      generator .DecIndent ();
+      generator .ListBreak ();
+      generator .ListIndent ();
       generator .string += ']';
    },
    toJSONStreamValue (generator)
@@ -218,21 +218,21 @@ Object .assign (Object .setPrototypeOf (SFImage .prototype, X3DField .prototype)
 
       generator .string += width;
       generator .string += ',';
-      generator .string += generator .TidySpace ();
+      generator .TidySpace ();
       generator .string += height;
       generator .string += ',';
-      generator .string += generator .TidySpace ();
+      generator .TidySpace ();
       generator .string += this .comp;
       generator .string += ',';
 
       if (width && height)
       {
-         generator .string += generator .ListBreak ();
-         generator .string += generator .IncIndent ();
+         generator .ListBreak ();
+         generator .IncIndent ();
 
          for (let y = 0; y < height; ++ y)
          {
-            generator .string += generator .ListIndent ();
+            generator .ListIndent ();
 
             const s = y * width;
 
@@ -244,14 +244,14 @@ Object .assign (Object .setPrototypeOf (SFImage .prototype, X3DField .prototype)
                   generator .string += ',';
 
                if (x !== width - 1)
-                  generator .string += generator .TidySpace ();
+                  generator .TidySpace ();
             }
 
             if (y !== height - 1)
-               generator .string += generator .ListBreak ();
+               generator .ListBreak ();
          }
 
-         generator .string += generator .DecIndent ();
+         generator .DecIndent ();
       }
    },
 });

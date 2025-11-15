@@ -136,11 +136,11 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
       const { x, y, z, angle } = this .getValue ();
 
       generator .string += generator .DoubleFormat (x);
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += generator .DoubleFormat (y);
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += generator .DoubleFormat (z);
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += generator .DoubleFormat (generator .ToUnit ("angle", angle));
    },
    toVRMLStream (generator)
@@ -154,11 +154,11 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
    toJSONStream (generator)
    {
       generator .string += '[';
-      generator .string += generator .TidySpace ();
+      generator .TidySpace ();
 
       this .toJSONStreamValue (generator);
 
-      generator .string += generator .TidySpace ();
+      generator .TidySpace ();
       generator .string += ']';
    },
    toJSONStreamValue (generator)
@@ -167,13 +167,13 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
 
       generator .string += generator .Number (generator .DoubleFormat (x));
       generator .string += ',';
-      generator .string += generator .TidySpace ();
+      generator .TidySpace ();
       generator .string += generator .Number (generator .DoubleFormat (y));
       generator .string += ',';
-      generator .string += generator .TidySpace ();
+      generator .TidySpace ();
       generator .string += generator .Number (generator .DoubleFormat (z));
       generator .string += ',';
-      generator .string += generator .TidySpace ();
+      generator .TidySpace ();
       generator .string += generator .Number (generator .DoubleFormat (generator .ToUnit ("angle", angle)));
    },
 });

@@ -98,17 +98,13 @@ Object .assign (Generator .prototype,
    },
    Comma ()
    {
-      return this .comma;
+      this .string += this .comma;
    },
    Break ()
    {
-      return this .break;
+      this .string += this .break;
    },
    TidyBreak ()
-   {
-      return this .tidyBreak;
-   },
-   AddTidyBreak ()
    {
       this .needsSpace &&= !this .tidyBreak;
 
@@ -116,17 +112,17 @@ Object .assign (Generator .prototype,
    },
    ForceBreak ()
    {
-      return "\n";
+      this .string += "\n";
    },
    Space ()
    {
-      return " ";
+      this .string += " ";
    },
    TidySpace ()
    {
       this .needsSpace &&= !this .tidySpace;
 
-      return this .tidySpace;
+      this .string += this .tidySpace;
    },
    NeedsSpace ()
    {
@@ -141,41 +137,37 @@ Object .assign (Generator .prototype,
    },
    ListStart ()
    {
-      return this .listEnclosure;
+      this .string += this .listEnclosure;
    },
    ListEnd ()
    {
-      return this .listEnclosure;
+      this .string += this .listEnclosure;
    },
    ListBreak ()
    {
-      return this .listBreak;
+      this .string += this .listBreak;
    },
    AttribBreak ()
    {
-      return this .attribBreak;
+      this .string += this .attribBreak;
    },
    Indent ()
    {
-      return this .indent;
+      this .string += this .indent;
    },
    ListIndent ()
    {
-      return this .listIndent;
+      this .string += this .listIndent;
    },
    IncIndent ()
    {
       this .indent     += this .indentChar;
       this .listIndent += this .listIndentChar;
-
-      return "";
    },
    DecIndent ()
    {
       this .indent     = this .indent     .slice (0, this .indent     .length - this .indentChar     .length);
       this .listIndent = this .listIndent .slice (0, this .listIndent .length - this .listIndentChar .length);
-
-      return "";
    },
    createFloatFormat (precision)
    {

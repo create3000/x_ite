@@ -62,28 +62,28 @@ Object .assign (Object .setPrototypeOf (XMLGenerator .prototype, X3DGenerator .p
    })(),
    openingTag (name)
    {
-      this .string += this .Indent ();
+      this .Indent ();
       this .string += "<";
       this .string += name;
       this .string += ">";
    },
    closingTag (name)
    {
-      this .string += this .Indent ();
+      this .Indent ();
       this .string += "</";
       this .string += name;
       this .string += ">";
    },
    openTag (name)
    {
-      this .string += this .Indent ();
+      this .Indent ();
       this .string += "<";
       this .string += name;
    },
    endTag ()
    {
       this .string += ">";
-      this .string += this .TidyBreak ();
+      this .TidyBreak ();
    },
    closeTag (name)
    {
@@ -100,7 +100,7 @@ Object .assign (Object .setPrototypeOf (XMLGenerator .prototype, X3DGenerator .p
    },
    attribute (name, value)
    {
-      this .string += this .Space ();
+      this .Space ();
       this .string += name;
       this .string += "='";
       this .string += this .EncodeString (value);

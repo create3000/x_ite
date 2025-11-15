@@ -191,15 +191,15 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
          ? generator .Name (this [_destinationNode])
          : generator .ImportedName (this [_destinationNode]);
 
-      generator .string += generator .Indent ();
+      generator .Indent ();
       generator .string += "ROUTE";
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += sourceNodeName;
       generator .string += ".";
       generator .string += this .getSourceField ();
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += "TO";
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += destinationNodeName;
       generator .string += ".";
       generator .string += this .getDestinationField ();
@@ -243,8 +243,8 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
          ? generator .Name (this [_destinationNode])
          : generator .ImportedName (this [_destinationNode]);
 
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .Indent ();
+      generator .TidyBreak ();
+      generator .Indent ();
 
       generator .beginObject ("ROUTE", false, true);
 

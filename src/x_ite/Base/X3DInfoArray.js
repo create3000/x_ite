@@ -274,10 +274,10 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
          {
             value .toVRMLStream (generator);
 
-            generator .string += generator .Break ();
+            generator .Break ();
 
             if (proto)
-               generator .string += generator .TidyBreak ();
+               generator .TidyBreak ();
          }
          catch (error)
          {
@@ -293,7 +293,7 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
          {
             value .toXMLStream (generator);
 
-            generator .string += generator .TidyBreak ();
+            generator .TidyBreak ();
          }
          catch (error)
          {

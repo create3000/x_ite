@@ -89,18 +89,18 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
 
       const importedName = generator .ImportedName (this);
 
-      generator .string += generator .Indent ();
+      generator .Indent ();
       generator .string += "IMPORT";
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += generator .Name (this .getInlineNode ());
       generator .string += ".";
       generator .string += this .getExportedName ();
 
       if (importedName !== this .getExportedName ())
       {
-         generator .string += generator .Space ();
+         generator .Space ();
          generator .string += "AS";
-         generator .string += generator .Space ();
+         generator .Space ();
          generator .string += importedName;
       }
    },
@@ -127,8 +127,8 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
       if (!generator .ExistsNode (this .getInlineNode ()))
          throw new Error ("X3DImportedNode.toJSONStream: Inline node does not exist.");
 
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .Indent ();
+      generator .TidyBreak ();
+      generator .Indent ();
 
       generator .AddRouteNode (this);
       generator .beginObject ("IMPORT", false, true);
