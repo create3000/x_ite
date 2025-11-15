@@ -100,10 +100,6 @@ Object .assign (Generator .prototype,
    {
       this .string += this .comma;
    },
-   ForceBreak ()
-   {
-      this .string += "\n";
-   },
    Break ()
    {
       this .needsSpace = false;

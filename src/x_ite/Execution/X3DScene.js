@@ -370,8 +370,8 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       generator .Space ();
       generator .string += "V";
       generator .string += this .getBrowser () .version;
-      generator .ForceBreak ();
-      generator .ForceBreak ();
+      generator .string += "\n";
+      generator .string += "\n";
 
       const profile = this .getProfile ();
 
