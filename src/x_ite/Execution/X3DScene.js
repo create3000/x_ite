@@ -427,7 +427,6 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       const exportedNodes = this .getExportedNodes ();
 
       generator .PushExecutionContext (this);
-      generator .EnterScope ();
       generator .ExportedNodes (exportedNodes);
 
       X3DExecutionContext .prototype .toVRMLStream .call (this, generator);
@@ -439,7 +438,6 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
          exportedNodes .toVRMLStream (generator);
       }
 
-      generator .LeaveScope ();
       generator .PopExecutionContext ();
    },
    toXMLStream (generator)
@@ -519,14 +517,12 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
          const exportedNodes = this .getExportedNodes ();
 
          generator .PushExecutionContext (this);
-         generator .EnterScope ();
          generator .ExportedNodes (exportedNodes);
 
          X3DExecutionContext .prototype .toXMLStream .call (this, generator);
 
          exportedNodes .toXMLStream (generator);
 
-         generator .LeaveScope ();
          generator .PopExecutionContext ();
          generator .DecIndent ();
          generator .closingTag ("Scene");
@@ -629,7 +625,6 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       const exportedNodes = this .getExportedNodes ();
 
       generator .PushExecutionContext (this);
-      generator .EnterScope ();
       generator .ExportedNodes (exportedNodes);
 
       const comma = X3DExecutionContext .prototype .toJSONStream .call (this, generator);
@@ -638,7 +633,6 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       this .getExportedNodes () .toJSONStream (generator, comma);
 
-      generator .LeaveScope ();
       generator .PopExecutionContext ();
 
       // Scene end

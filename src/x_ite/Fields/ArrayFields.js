@@ -63,6 +63,8 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
          array  = target .getValue (),
          length = array .length;
 
+      generator .ClearSpace ();
+
       switch (length)
       {
          case 0:
@@ -115,17 +117,11 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
          }
          case 1:
          {
-            generator .EnterScope ();
-
             array [0] .toVRMLStream (generator);
-
-            generator .LeaveScope ();
             break;
          }
          default:
          {
-            generator .EnterScope ();
-
             generator .string += "[";
             generator .TidyBreak ();
             generator .IncIndent ();
@@ -140,8 +136,6 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
             generator .DecIndent ();
             generator .Indent ();
             generator .string += "]";
-
-            generator .LeaveScope ();
             break;
          }
       }
@@ -154,8 +148,6 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
 
       if (length)
       {
-         generator .EnterScope ();
-
          const
             array = target .getValue (),
             last  = length - 1;
@@ -190,8 +182,6 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
             generator .containerField ();
             generator .closeTag ("NULL");
          }
-
-         generator .LeaveScope ();
       }
    },
    toJSONStream (generator)
@@ -205,8 +195,6 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
          const
             array = target .getValue (),
             last  = length - 1;
-
-         generator .EnterScope ();
 
          generator .string += '[';
          generator .TidyBreak ();
@@ -236,8 +224,6 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
          generator .DecIndent ();
          generator .Indent ();
          generator .string += ']';
-
-         generator .LeaveScope ();
       }
       else
       {

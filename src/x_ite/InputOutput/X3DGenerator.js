@@ -135,6 +135,10 @@ Object .assign (Generator .prototype,
 
       this .needsSpace = false;
    },
+   ClearSpace ()
+   {
+      this .needsSpace = false;
+   },
    ListStart ()
    {
       this .string += this .listEnclosure;
@@ -258,14 +262,6 @@ Object .assign (Generator .prototype,
    ExecutionContext ()
    {
       return this .executionContextStack .at (-1);
-   },
-   EnterScope ()
-   {
-      // TODO: remove me.
-   },
-   LeaveScope ()
-   {
-      // TODO: remove me.
    },
    NamedNodes (namedNodes)
    {

@@ -615,7 +615,6 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
    },
    toVRMLStream (generator)
    {
-      generator .EnterScope ();
       generator .CheckSpace ();
 
       if (generator .outputNames)
@@ -629,9 +628,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
                generator .string += "USE";
                generator .Space ();
                generator .string += name;
-
                generator .NeedsSpace ();
-               generator .LeaveScope ();
                return;
             }
          }
@@ -676,6 +673,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
             for (const field of userDefinedFields)
             {
+               generator .ClearSpace ();
+
                this .toVRMLStreamUserDefinedField (generator, field, fieldTypeLength, accessTypeLength);
 
                if (field === last)
@@ -709,6 +708,8 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
          for (const field of fields)
          {
+            generator .ClearSpace ();
+
             this .toVRMLStreamField (generator, field);
 
             if (field === last)
@@ -722,8 +723,6 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       }
 
       generator .string += "}";
-
-      generator .LeaveScope ();
    },
    toVRMLStreamUserDefinedField (generator, field, fieldTypeLength, accessTypeLength)
    {
@@ -848,8 +847,6 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
    },
    toXMLStream (generator)
    {
-      generator .EnterScope ();
-
       const
          sharedNode = generator .IsSharedNode (this),
          name       = generator .Name (this);
@@ -866,7 +863,6 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             generator .attribute ("USE", name);
             generator .containerField (this .getContainerField ());
             generator .closeTag (this .getTypeName ());
-            generator .LeaveScope ();
             return;
          }
       }
@@ -1125,13 +1121,9 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
          generator .DecIndent ();
          generator .closingTag (this .getTypeName ());
       }
-
-      generator .LeaveScope ();
    },
    toJSONStream (generator)
    {
-      generator .EnterScope ();
-
       const
          sharedNode = generator .IsSharedNode (this),
          name       = generator .Name (this);
@@ -1149,8 +1141,6 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             generator .stringProperty ("@USE", name, false);
             generator .endObject ();
             generator .endObject ();
-
-            generator .LeaveScope ();
             return;
          }
       }
@@ -1389,8 +1379,6 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
       generator .endObject ();
       generator .endObject ();
-
-      generator .LeaveScope ();
    },
    dispose ()
    {

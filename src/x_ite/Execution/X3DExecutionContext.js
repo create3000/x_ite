@@ -729,7 +729,6 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    toVRMLStream (generator)
    {
       generator .PushExecutionContext (this);
-      generator .EnterScope ();
       generator .NamedNodes (this .getNamedNodes ());
       generator .ImportedNodes (this .getImportedNodes ());
 
@@ -784,13 +783,11 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          routes .toVRMLStream (generator);
       }
 
-      generator .LeaveScope ();
       generator .PopExecutionContext ();
    },
    toXMLStream (generator)
    {
       generator .PushExecutionContext (this);
-      generator .EnterScope ();
       generator .NamedNodes (this .getNamedNodes ());
       generator .ImportedNodes (this .getImportedNodes ());
 
@@ -821,13 +818,11 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       this .getRoutes () .toXMLStream (generator);
 
-      generator .LeaveScope ();
       generator .PopExecutionContext ();
    },
    toJSONStream (generator)
    {
       generator .PushExecutionContext (this);
-      generator .EnterScope ();
       generator .NamedNodes (this .getNamedNodes ());
       generator .ImportedNodes (this .getImportedNodes ());
 
@@ -857,7 +852,6 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       this .getImportedNodes () .toJSONStream (generator, comma);
       this .getRoutes ()        .toJSONStream (generator, comma);
 
-      generator .LeaveScope ();
       generator .PopExecutionContext ();
 
       return comma;

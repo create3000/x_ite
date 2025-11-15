@@ -52,8 +52,6 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
       generator .TidySpace ();
       generator .string += "[";
 
-      generator .EnterScope ();
-
       const userDefinedFields = this .getUserDefinedFields ();
 
       if (userDefinedFields .length === 0)
@@ -92,8 +90,6 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
 
          generator .Indent ();
       }
-
-      generator .LeaveScope ();
 
       generator .string += "]";
       generator .TidyBreak ();
@@ -141,8 +137,6 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
       generator .endTag ();
 
       // <ProtoInterface>
-
-      generator .EnterScope ();
 
       const userDefinedFields = this .getUserDefinedFields ();
 
@@ -226,8 +220,6 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
          generator .DecIndent ();
       }
 
-      generator .LeaveScope ();
-
       // </ProtoInterface>
 
       // <ProtoBody>
@@ -264,7 +256,6 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
 
       // Fields
 
-      generator .EnterScope ();
       generator .beginObject ("ProtoInterface");
 
       const userDefinedFields = this .getUserDefinedFields ();
@@ -328,7 +319,6 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
       }
 
       generator .endObject ();
-      generator .LeaveScope ();
 
       // ProtoBody
 

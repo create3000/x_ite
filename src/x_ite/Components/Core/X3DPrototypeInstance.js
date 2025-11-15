@@ -376,8 +376,6 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
    {
       const sharedNode = generator .IsSharedNode (this);
 
-      generator .EnterScope ();
-
       const name = generator .Name (this);
 
       if (name .length)
@@ -389,7 +387,6 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
             generator .attribute ("USE",  name);
             generator .containerField (this .getContainerField ());
             generator .closeTag ("ProtoInstance");
-            generator .LeaveScope ();
             return;
          }
       }
@@ -550,14 +547,10 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
          generator .DecIndent ();
          generator .closingTag ("ProtoInstance");
       }
-
-      generator .LeaveScope ();
    },
    toJSONStream (generator)
    {
       const sharedNode = generator .IsSharedNode (this);
-
-      generator .EnterScope ();
 
       // Type name
 
@@ -573,8 +566,6 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
             generator .stringProperty ("@USE", name);
             generator .endObject ();
             generator .endObject ();
-
-            generator .LeaveScope ();
             return;
          }
       }
@@ -710,8 +701,6 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
       generator .endObject ();
       generator .endObject ();
-
-      generator .LeaveScope ();
    },
    dispose ()
    {
