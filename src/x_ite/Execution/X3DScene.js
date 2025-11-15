@@ -529,9 +529,14 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
          generator .LeaveScope ();
          generator .PopExecutionContext ();
          generator .DecIndent ();
+         generator .closingTag ("Scene");
+      }
+      else
+      {
+         generator .openTag ("Scene");
+         generator .closeTag ("Scene");
       }
 
-      generator .closingTag ("Scene");
       generator .TidyBreak ();
       generator .DecIndent ();
       generator .closingTag ("X3D");
