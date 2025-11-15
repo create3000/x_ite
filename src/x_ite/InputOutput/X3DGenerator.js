@@ -98,14 +98,10 @@ Object .assign (Generator .prototype,
    },
    Comma ()
    {
-      this .needsSpace = false;
-
       this .string += this .comma;
    },
    ForceBreak ()
    {
-      this .needsSpace = false;
-
       this .string += "\n";
    },
    Break ()
@@ -150,8 +146,6 @@ Object .assign (Generator .prototype,
    },
    Indent ()
    {
-      this .needsSpace &&= !this .indent;
-
       this .string += this .indent;
    },
    ListIndent ()
