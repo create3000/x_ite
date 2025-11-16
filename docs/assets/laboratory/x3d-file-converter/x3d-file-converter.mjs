@@ -155,17 +155,25 @@ function getHTML (scene, filename)
     <script src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js"></script>
     <style>
 body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
   background-color: rgb(21, 22, 24);
   color: rgb(108, 110, 113);
 }
 
-a {
-  color: rgb(106, 140, 191);
+body > * {
+  flex: 0 0 auto;
 }
 
 x3d-canvas {
-  width: 768px;
-  height: 432px;
+   flex: 1 1 auto;
+   width: 100%;
+   height: 100%;
+}
+
+a {
+  color: rgb(106, 140, 191);
 }
     </style>
   </head>
