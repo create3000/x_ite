@@ -162,6 +162,7 @@ body {
   height: 100vh;
   background-color: rgb(27, 27, 30);
   color: rgb(175, 176, 177);
+  font-family: sans-serif;
 }
 
 body > * {
