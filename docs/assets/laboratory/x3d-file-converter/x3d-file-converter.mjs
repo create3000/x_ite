@@ -160,8 +160,8 @@ body {
   margin: 0px;
   padding: 0px;
   height: 100vh;
-  background-color: rgb(27, 27, 30);
-  color: rgb(175, 176, 177);
+  background-color: light-dark(white, rgb(27, 27, 30));
+  color: light-dark(rgb(42, 42, 42), rgb(175, 176, 177));
   font-family: sans-serif;
 }
 
@@ -178,11 +178,11 @@ x3d-canvas {
 }
 
 a {
-  color: rgb(82, 108, 150);
+  color: light-dark(rgb(0, 86, 178), rgb(82, 108, 150));
 }
 
 a:hover {
-  color: rgb(210, 96, 58)
+  color: light-dark(rgb(210, 96, 58), rgb(210, 96, 58))
 }
     </style>
   </head>
