@@ -161,7 +161,7 @@ body {
   padding: 0px;
   height: 100vh;
   background-color: rgb(27, 27, 30);
-  color: rgb(108, 110, 113);
+  color: rgb(175, 176, 177);
 }
 
 body > * {
