@@ -158,7 +158,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: rgb(21, 22, 24);
+  background-color: rgb(27, 27, 30);
   color: rgb(108, 110, 113);
 }
 
@@ -173,7 +173,11 @@ x3d-canvas {
 }
 
 a {
-  color: rgb(106, 140, 191);
+  color: rgb(82, 108, 150);
+}
+
+a:hover {
+  color: rgb(210, 96, 58)
 }
     </style>
   </head>
