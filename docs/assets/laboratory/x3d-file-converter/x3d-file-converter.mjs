@@ -173,6 +173,8 @@ body > * {
 
 x3d-canvas {
   flex: 1 1 auto;
+  border-top: 2px solid light-dark(rgb(42, 42, 42), rgb(175, 176, 177));
+  border-bottom: 2px solid light-dark(rgb(42, 42, 42), rgb(175, 176, 177));
   padding: 0px;
   width: 100%;
   height: 100%;

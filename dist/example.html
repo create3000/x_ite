@@ -6,16 +6,44 @@
     <!-- or use: -->
     <!-- <script defer src="https://cdn.jsdelivr.net/npm/x_ite@12.1.7/dist/x_ite.min.js"></script> -->
     <style>
+body {
+  color-scheme: light dark;
+  display: flex;
+  flex-direction: column;
+  margin: 0px;
+  padding: 0px;
+  height: 100vh;
+  background-color: light-dark(white, rgb(27, 27, 30));
+  color: light-dark(rgb(42, 42, 42), rgb(175, 176, 177));
+  font-family: sans-serif;
+}
+
+body > * {
+  flex: 0 0 auto;
+  padding: 0px 1rem;
+}
+
 x3d-canvas {
-  width: 1000px;
-  height: 563px;
+  flex: 1 1 auto;
+  border-top: 2px solid light-dark(black, white);
+  border-bottom: 2px solid light-dark(black, white);
+  padding: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+a {
+  color: light-dark(rgb(0, 86, 178), rgb(82, 108, 150));
+}
+
+a:hover {
+  color: light-dark(rgb(210, 96, 58), rgb(210, 96, 58))
 }
     </style>
   </head>
   <body>
-    <x3d-canvas src="https://create3000.github.io/media/x_ite/info/info.x3d">
-      <p>Your browser may not support all features required by X_ITE!</p>
-    </x3d-canvas>
+    <h1>X_ITE X3D Browser</h1>
+    <x3d-canvas src="https://create3000.github.io/media/x_ite/info/info.x3d"></x3d-canvas>
     <p>If local files are not loaded <a href="https://create3000.github.io/x_ite/setup-a-localhost-server">consider setup a localhost server</a> or use <a href="https://create3000.github.io/x_ite/dom-integration">DOM integration methods</a>.</p>
   </body>
 </html>
