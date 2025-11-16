@@ -1,5 +1,5 @@
-/* X_ITE v12.1.6 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.6")];
+/* X_ITE v12.1.7 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.7")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -2546,20 +2546,19 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
    {
       const
          invModelViewMatrix = new (external_X_ITE_X3D_Matrix4_default()) (),
-         billboardToScreen  = new (external_X_ITE_X3D_Vector3_default()) (),
-         viewerYAxis        = new (external_X_ITE_X3D_Vector3_default()) (),
+         x                  = new (external_X_ITE_X3D_Vector3_default()) (),
          y                  = new (external_X_ITE_X3D_Vector3_default()) (),
-         rotation           = new (external_X_ITE_X3D_Matrix3_default()) (9);
+         z                  = new (external_X_ITE_X3D_Vector3_default()) (),
+         rotation           = new (external_X_ITE_X3D_Matrix3_default()) ();
 
       return function (modelViewMatrix)
       {
          invModelViewMatrix .assign (modelViewMatrix) .inverse ();
-         invModelViewMatrix .multDirMatrix (billboardToScreen .assign ((external_X_ITE_X3D_Vector3_default()).Z_AXIS));
-         invModelViewMatrix .multDirMatrix (viewerYAxis .assign ((external_X_ITE_X3D_Vector3_default()).Y_AXIS));
+         invModelViewMatrix .multDirMatrix (x .assign ((external_X_ITE_X3D_Vector3_default()).Y_AXIS));
+         invModelViewMatrix .multDirMatrix (z .assign ((external_X_ITE_X3D_Vector3_default()).Z_AXIS));
 
-         const x = viewerYAxis .cross (billboardToScreen);
-         y .assign (billboardToScreen) .cross (x);
-         const z = billboardToScreen;
+         x .cross (z);
+         y .assign (z) .cross (x);
 
          // Compose rotation matrix.
 
@@ -2567,9 +2566,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
          y .normalize ();
          z .normalize ();
 
-         rotation .set (x .x, x .y, x .z,
-                        y .x, y .y, y .z,
-                        z .x, z .y, z .z);
+         rotation .set (... x, ... y, ... z);
 
          return rotation;
       };
