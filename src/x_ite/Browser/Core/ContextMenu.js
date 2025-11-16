@@ -702,7 +702,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
                "all": {
                   name: _("All"),
-                  className: "context-menu-icon x_ite-private-icon-all",
+                  className: "context-menu-icon x_ite-private-icon-play",
                   callback ()
                   {
                      for (const timeSensor of timeSensors)
@@ -714,7 +714,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                },
                "none": {
                   name: _("None"),
-                  className: "context-menu-icon x_ite-private-icon-none",
+                  className: "context-menu-icon x_ite-private-icon-stop",
                   callback ()
                   {
                      for (const timeSensor of timeSensors)
