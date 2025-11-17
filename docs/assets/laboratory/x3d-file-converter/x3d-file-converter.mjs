@@ -174,6 +174,7 @@ function getHTML (scene, filename)
 
 body {
   color-scheme: light dark;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   margin: 0px;
@@ -191,6 +192,7 @@ body > * {
 
 x3d-canvas {
   flex: 1 1 auto;
+  box-sizing: border-box;
   border-top: 1px solid color-mix(in srgb, var(--text-color), transparent 90%);
   border-bottom: 1px solid color-mix(in srgb, var(--text-color), transparent 90%);
   padding: 0px;
