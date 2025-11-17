@@ -35,7 +35,7 @@ The HAnimPose node belongs to the [HAnim](/x_ite/components/overview/#hanim) com
 | SFInt32 | [in, out] | [loa](#fields-loa) | -1  |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFFloat | [in, out] | [transitionDuration](#fields-transitionDuration) | 0  |
-| SFBool | [in, out] | [resetOtherJoints](#fields-resetOtherJoints) | FALSE |
+| SFBool | [in] | [resetAllJoints](#fields-resetAllJoints) |  |
 | SFBool | [in] | [commencePose](#fields-commencePose) |  |
 | SFTime | [in] | [set_startTime](#fields-set_startTime) |  |
 | SFFloat | [in] | [set_fraction](#fields-set_fraction) |  |
@@ -86,10 +86,10 @@ Enables/disables node operation.
 
 Input/Output field *transitionDuration*.
 
-### SFBool [in, out] **resetOtherJoints** FALSE
-{: #fields-resetOtherJoints }
+### SFBool [in] **resetAllJoints**
+{: #fields-resetAllJoints }
 
-Input/Output field *resetOtherJoints*.
+Input field *resetAllJoints*.
 
 ### SFBool [in] **commencePose**
 {: #fields-commencePose }
@@ -115,6 +115,11 @@ Output field *isActive*.
 {: #fields-poseJoints }
 
 Input/Output field *poseJoints*.
+
+###  [] **resetOtherJoints** FALSE
+{: #fields-resetOtherJoints }
+
+Input/Output field *resetOtherJoints*.
 
 ## See Also
 

@@ -116,9 +116,9 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
 
       if (this [_description])
       {
-         generator .string += generator .Space ();
+         generator .Space ();
          generator .string += "DESCRIPTION";
-         generator .string += generator .Space ();
+         generator .Space ();
          generator .string += '"';
          generator .string += this [_description];
          generator .string += '"';

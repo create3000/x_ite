@@ -108,7 +108,7 @@ Enables/disables creation of new particles, while any existing particles remain 
 
 Maximum number of particles to be generated at one time (subject to player limitations).
 
-### SFFloat [in, out] **particleLifetime** 5 <small>[0,∞)</small>
+### SFTime [in, out] **particleLifetime** 5 <small>[0,∞)</small>
 {: #fields-particleLifetime }
 
 TODO not properly defined in X3D specification. Particle animation lifetime in base time units (default is seconds).
