@@ -611,7 +611,11 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
    },
    toStream (generator)
    {
-      generator .string += this .getTypeName () + " { }";
+      generator .string += this .getTypeName ();
+      generator .TidySpace ();
+      generator .string += "{";
+      generator .TidySpace ();
+      generator .string += "}";
    },
    toVRMLStream (generator)
    {
