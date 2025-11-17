@@ -158,69 +158,29 @@ Object .assign (Object .setPrototypeOf (X3DImportedNodeProxy .prototype, X3DNode
    },
    toVRMLStream (generator)
    {
-      if (this [_importedNode])
-      {
-         const importedName = generator .ImportedName (this [_importedNode]);
-
-         generator .string += "USE";
-         generator .string += generator .Space ();
-         generator .string += importedName;
-      }
-      else
-      {
-         generator .string += "NULL";
-      }
+      generator .CheckSpace ();
+      generator .string += "USE";
+      generator .Space ();
+      generator .string += this [_importedName];
+      generator .NeedsSpace ();
    },
    toXMLStream (generator)
    {
-      if (this [_importedNode])
-      {
-         const importedName = generator .ImportedName (this [_importedNode]);
+      generator .openTag (this .getTypeName ());
 
-         generator .openTag (this .getTypeName ());
+      if (generator .html && this .getTypeName () === "Script")
+         generator .attribute ("type", "model/x3d+xml");
 
-         if (generator .html && this .getTypeName () === "Script")
-            generator .attribute ("type", "model/x3d+xml");
-
-         generator .attribute ("USE", importedName);
-
-         const containerField = generator .ContainerField ();
-
-         if (containerField)
-         {
-            if (containerField .getName () !== this .getContainerField ())
-               generator .attribute ("containerField", containerField .getName ());
-         }
-
-         generator .closeTag (this .getTypeName ());
-      }
-      else
-      {
-         generator .openTag ("NULL");
-
-         const containerField = generator .ContainerField ();
-
-         if (containerField)
-            generator .attribute ("containerField", containerField .getName ());
-
-         generator .closeTag ("NULL");
-      }
+      generator .attribute ("USE", this [_importedName]);
+      generator .containerField (this .getContainerField ());
+      generator .closeTag (this .getTypeName ());
    },
    toJSONStream (generator)
    {
-      if (this [_importedNode])
-      {
-         const importedName = generator .ImportedName (this [_importedNode]);
-
-         generator .beginObject (this .getTypeName (), false, true);
-         generator .stringProperty ("@USE", importedName, false);
-         generator .endObject ();
-         generator .endObject ();
-      }
-      else
-      {
-         generator .string += 'null';
-      }
+      generator .beginObject (this .getTypeName (), false, true);
+      generator .stringProperty ("@USE", this [_importedName], false);
+      generator .endObject ();
+      generator .endObject ();
    },
 });
 

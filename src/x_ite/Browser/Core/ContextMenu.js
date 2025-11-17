@@ -1,5 +1,6 @@
-import X3DBaseNode from "../../Base/X3DBaseNode.js";
-import _           from "../../../locale/gettext.js";
+import X3DBaseNode  from "../../Base/X3DBaseNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import _            from "../../../locale/gettext.js";
 
 const
    _options  = Symbol (),
@@ -660,15 +661,16 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
          browser = this .getBrowser (),
          scene   = browser .currentScene;
 
-      if (scene .encoding !== "GLTF")
-         return { };
-
       const animations = $.try (() => scene .getExportedNode ("Animations"));
 
       if (!animations)
          return { };
 
-      const timeSensors = Array .from (animations .children, group => group .children [0]);
+      const timeSensors = $.try (() => Array .from (animations .children, group => group .children [0]))
+         .filter (node => node .getNodeType () .includes (X3DConstants .TimeSensor));
+
+      if (!timeSensors ?.length)
+         return { };
 
       return {
          "animations": {
@@ -700,7 +702,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
                "all": {
                   name: _("All"),
-                  className: "context-menu-icon x_ite-private-icon-all",
+                  className: "context-menu-icon x_ite-private-icon-play",
                   callback ()
                   {
                      for (const timeSensor of timeSensors)
@@ -712,7 +714,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                },
                "none": {
                   name: _("None"),
-                  className: "context-menu-icon x_ite-private-icon-none",
+                  className: "context-menu-icon x_ite-private-icon-stop",
                   callback ()
                   {
                      for (const timeSensor of timeSensors)

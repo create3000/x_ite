@@ -98,69 +98,76 @@ Object .assign (Generator .prototype,
    },
    Comma ()
    {
-      return this .comma;
+      this .string += this .comma;
    },
    Break ()
    {
-      return this .break;
+      this .needsSpace = false;
+
+      this .string += this .break;
    },
    TidyBreak ()
    {
-      return this .tidyBreak;
-   },
-   AddTidyBreak ()
-   {
+      this .needsSpace &&= !this .tidyBreak;
+
       this .string += this .tidyBreak;
-   },
-   ForceBreak ()
-   {
-      return "\n";
    },
    Space ()
    {
-      return " ";
+      this .needsSpace = false;
+
+      this .string += " ";
    },
    TidySpace ()
    {
-      return this .tidySpace;
+      this .needsSpace &&= !this .tidySpace;
+
+      this .string += this .tidySpace;
    },
    ListStart ()
    {
-      return this .listEnclosure;
+      this .string += this .listEnclosure;
    },
    ListEnd ()
    {
-      return this .listEnclosure;
+      this .string += this .listEnclosure;
    },
    ListBreak ()
    {
-      return this .listBreak;
+      this .string += this .listBreak;
    },
    AttribBreak ()
    {
-      return this .attribBreak;
+      this .string += this .attribBreak;
    },
    Indent ()
    {
-      return this .indent;
+      this .string += this .indent;
    },
    ListIndent ()
    {
-      return this .listIndent;
+      this .string += this .listIndent;
    },
    IncIndent ()
    {
       this .indent     += this .indentChar;
       this .listIndent += this .listIndentChar;
-
-      return "";
    },
    DecIndent ()
    {
-      this .indent     = this .indent     .slice (0, this .indent     .length - this .indentChar     .length);
-      this .listIndent = this .listIndent .slice (0, this .listIndent .length - this .listIndentChar .length);
+      this .indent     = this .indent     .slice (0, -this .indentChar     .length);
+      this .listIndent = this .listIndent .slice (0, -this .listIndentChar .length);
+   },
+   NeedsSpace ()
+   {
+      this .needsSpace = true;
+   },
+   CheckSpace ()
+   {
+      if (this .needsSpace)
+         this .string += " ";
 
-      return "";
+      this .needsSpace = false;
    },
    createFloatFormat (precision)
    {
@@ -229,6 +236,8 @@ Object .assign (Generator .prototype,
       this .names                 .set (executionContext, new Set ());
       this .namesByNode           .set (executionContext, new Map ());
       this .routeNodes            .set (executionContext, new Set ());
+
+      this .needsSpace = false;
    },
    PopExecutionContext ()
    {
@@ -249,14 +258,6 @@ Object .assign (Generator .prototype,
    ExecutionContext ()
    {
       return this .executionContextStack .at (-1);
-   },
-   EnterScope ()
-   {
-      // TODO: remove me.
-   },
-   LeaveScope ()
-   {
-      // TODO: remove me.
    },
    NamedNodes (namedNodes)
    {
@@ -285,14 +286,7 @@ Object .assign (Generator .prototype,
       const index = this .importedNodesIndex .get (this .ExecutionContext ());
 
       for (const importedNode of importedNodes)
-      {
-         try
-         {
-            index .add (importedNode .getInlineNode ());
-         }
-         catch
-         { }
-      }
+         index .add (importedNode .getInlineNode ());
    },
    AddRouteNode (routeNode)
    {

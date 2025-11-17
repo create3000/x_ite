@@ -45,20 +45,18 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
    },
    toVRMLStream (generator)
    {
-      generator .string += generator .Indent ();
+      generator .Indent ();
       generator .string += "PROTO";
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += this .getName ();
-      generator .string += generator .TidySpace ();
+      generator .TidySpace ();
       generator .string += "[";
-
-      generator .EnterScope ();
 
       const userDefinedFields = this .getUserDefinedFields ();
 
       if (userDefinedFields .length === 0)
       {
-         generator .string += generator .TidySpace ();
+         generator .TidySpace ();
       }
       else
       {
@@ -72,7 +70,7 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
             accessTypeLength = Math .max (accessTypeLength, generator .AccessType (field .getAccessType ()) .length);
          }
 
-         generator .string += generator .TidyBreak ();
+         generator .TidyBreak ();
 
          generator .IncIndent ();
 
@@ -83,24 +81,22 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
             this .toVRMLStreamUserDefinedField (generator, field, fieldTypeLength, accessTypeLength);
 
             if (field === last)
-               generator .string += generator .TidyBreak ();
+               generator .TidyBreak ();
             else
-               generator .string += generator .Break ();
+               generator .Break ();
          }
 
          generator .DecIndent ();
 
-         generator .string += generator .Indent ();
+         generator .Indent ();
       }
 
-      generator .LeaveScope ();
-
       generator .string += "]";
-      generator .string += generator .TidyBreak ();
+      generator .TidyBreak ();
 
-      generator .string += generator .Indent ();
+      generator .Indent ();
       generator .string += "{";
-      generator .string += generator .TidyBreak ();
+      generator .TidyBreak ();
 
       generator .IncIndent ();
 
@@ -108,22 +104,22 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
 
       generator .DecIndent ();
 
-      generator .string += generator .Indent ();
+      generator .Indent ();
       generator .string += "}";
    },
    toVRMLStreamUserDefinedField (generator, field, fieldTypeLength, accessTypeLength)
    {
-      generator .string += generator .Indent ();
+      generator .Indent ();
       generator .string += generator .AccessType (field .getAccessType ()) .padEnd (accessTypeLength, generator .TidySpace ());
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += field .getTypeName () .padEnd (fieldTypeLength, generator .TidySpace ());
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += field .getName ();
 
       if (!field .isInitializable ())
          return;
 
-      generator .string += generator .Space ();
+      generator .Space ();
 
       field .toVRMLStream (generator);
    },
@@ -142,15 +138,13 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
 
       // <ProtoInterface>
 
-      generator .EnterScope ();
-
       const userDefinedFields = this .getUserDefinedFields ();
 
       if (userDefinedFields .length !== 0)
       {
          generator .IncIndent ();
          generator .openingTag ("ProtoInterface");
-         generator .AddTidyBreak ();
+         generator .TidyBreak ();
          generator .IncIndent ();
 
          for (const field of userDefinedFields)
@@ -169,7 +163,7 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
                   generator .attribute ("documentation", field .getDocumentation ());
 
                generator .closeTag ("field");
-               generator .AddTidyBreak ();
+               generator .TidyBreak ();
             }
             else
             {
@@ -190,16 +184,16 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
 
                      field .toXMLStream (generator);
 
-                     generator .AddTidyBreak ();
+                     generator .TidyBreak ();
                      generator .DecIndent ();
                      generator .closingTag ("field");
-                     generator .AddTidyBreak ();
+                     generator .TidyBreak ();
                      generator .PopContainerField ();
                      break;
                   }
                   default:
                   {
-                     generator .string += generator .Space ();
+                     generator .Space ();
                      generator .string += "value='";
 
                      field .toXMLStream (generator);
@@ -213,7 +207,7 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
                         generator .attribute ("documentation", field .getDocumentation ());
 
                      generator .closeTag ("field");
-                     generator .AddTidyBreak ();
+                     generator .TidyBreak ();
                      break;
                   }
                }
@@ -222,11 +216,9 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
 
          generator .DecIndent ();
          generator .closingTag ("ProtoInterface");
-         generator .AddTidyBreak ();
+         generator .TidyBreak ();
          generator .DecIndent ();
       }
-
-      generator .LeaveScope ();
 
       // </ProtoInterface>
 
@@ -234,14 +226,14 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
 
       generator .IncIndent ();
       generator .openingTag ("ProtoBody");
-      generator .AddTidyBreak ();
+      generator .TidyBreak ();
       generator .IncIndent ();
 
       this [_body] .toXMLStream (generator);
 
       generator .DecIndent ();
       generator .closingTag ("ProtoBody");
-      generator .AddTidyBreak ();
+      generator .TidyBreak ();
       generator .DecIndent ();
 
       // </ProtoBody>
@@ -250,8 +242,8 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
    },
    toJSONStream (generator)
    {
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .Indent ();
+      generator .TidyBreak ();
+      generator .Indent ();
 
       generator .beginObject ("ProtoDeclare", false, true);
       generator .stringProperty ("@name", this .getName (), false);
@@ -264,7 +256,6 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
 
       // Fields
 
-      generator .EnterScope ();
       generator .beginObject ("ProtoInterface");
 
       const userDefinedFields = this .getUserDefinedFields ();
@@ -290,8 +281,8 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
                   {
                      generator .beginArray ("-children");
 
-                     generator .string += generator .TidyBreak ();
-                     generator .string += generator .Indent ();
+                     generator .TidyBreak ();
+                     generator .Indent ();
 
                      field .toJSONStream (generator);
 
@@ -328,7 +319,6 @@ Object .assign (Object .setPrototypeOf (X3DProtoDeclaration .prototype, X3DProto
       }
 
       generator .endObject ();
-      generator .LeaveScope ();
 
       // ProtoBody
 

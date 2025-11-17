@@ -632,12 +632,12 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background-image: url(assets/images/animation.svg);
 }
 
-.x_ite-private-icon-all > span {
-  background-image: url(assets/images/done_all.svg);
+.x_ite-private-icon-play > span {
+  background-image: url(assets/images/play_circle.svg);
 }
 
-.x_ite-private-icon-none > span {
-  background-image: url(assets/images/cancel.svg);
+.x_ite-private-icon-stop > span {
+  background-image: url(assets/images/stop_circle.svg);
 }
 
 .x_ite-private-icon-enter-fullscreen > span {

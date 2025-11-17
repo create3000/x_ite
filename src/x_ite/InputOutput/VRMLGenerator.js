@@ -5,7 +5,15 @@ function VRMLGenerator (options)
    X3DGenerator .call (this, options);
 }
 
-Object .setPrototypeOf (VRMLGenerator .prototype, X3DGenerator .prototype);
+Object .assign (Object .setPrototypeOf (VRMLGenerator .prototype, X3DGenerator .prototype),
+{
+   NULL ()
+   {
+      this .CheckSpace ();
+      this .string += "NULL";
+      this .NeedsSpace ();
+   },
+});
 
 for (const key of Object .keys (VRMLGenerator .prototype))
    Object .defineProperty (VRMLGenerator .prototype, key, { enumerable: false });

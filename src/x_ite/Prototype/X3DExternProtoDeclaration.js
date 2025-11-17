@@ -164,18 +164,18 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    },
    toVRMLStream (generator)
    {
-      generator .string += generator .Indent ();
+      generator .Indent ();
       generator .string += "EXTERNPROTO";
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += this .getName ();
-      generator .string += generator .TidySpace ();
+      generator .TidySpace ();
       generator .string += "[";
 
       const userDefinedFields = this .getUserDefinedFields ();
 
       if (userDefinedFields .length === 0)
       {
-         generator .string += generator .TidySpace ();
+         generator .TidySpace ();
       }
       else
       {
@@ -189,7 +189,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
             accessTypeLength = Math .max (accessTypeLength, generator .AccessType (field .getAccessType ()) .length);
          }
 
-         generator .string += generator .TidyBreak ();
+         generator .TidyBreak ();
 
          generator .IncIndent ();
 
@@ -200,29 +200,29 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
             this .toVRMLStreamUserDefinedField (generator, field, fieldTypeLength, accessTypeLength);
 
             if (field === last)
-               generator .string += generator .TidyBreak ();
+               generator .TidyBreak ();
             else
-               generator .string += generator .Break ();
+               generator .Break ();
          }
 
          generator .DecIndent ();
 
-         generator .string += generator .Indent ();
+         generator .Indent ();
       }
 
       generator .string += "]";
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .Indent ();
+      generator .TidyBreak ();
+      generator .Indent ();
 
       this ._url .toVRMLStream (generator);
    },
    toVRMLStreamUserDefinedField (generator, field, fieldTypeLength, accessTypeLength)
    {
-      generator .string += generator .Indent ();
+      generator .Indent ();
       generator .string += generator .AccessType (field .getAccessType ()) .padEnd (accessTypeLength, generator .TidySpace ());
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += field .getTypeName () .padEnd (fieldTypeLength, generator .TidySpace ());
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += field .getName ();
    },
    toXMLStream (generator)
@@ -230,7 +230,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       generator .openTag ("ExternProtoDeclare");
       generator .attribute ("name", this .getName ());
 
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += "url='";
 
       this ._url .toXMLStream (generator);
@@ -264,7 +264,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
                generator .attribute ("documentation", field .getDocumentation ());
 
             generator .closeTag ("field");
-            generator .AddTidyBreak ();
+            generator .TidyBreak ();
          }
 
          generator .DecIndent ();
@@ -277,8 +277,8 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    },
    toJSONStream (generator)
    {
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .Indent ();
+      generator .TidyBreak ();
+      generator .Indent ();
 
       generator .beginObject ("ExternProtoDeclare", false, true);
       generator .stringProperty ("@name", this .getName (), false);
@@ -319,13 +319,13 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       // URL
 
       generator .string += ',';
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .Indent ();
+      generator .TidyBreak ();
+      generator .Indent ();
       generator .string += '"';
       generator .string += "@url";
       generator .string += '"';
       generator .string += ':';
-      generator .string += generator .TidySpace ();
+      generator .TidySpace ();
 
       this ._url .toJSONStream (generator);
 

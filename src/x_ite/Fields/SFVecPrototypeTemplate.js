@@ -119,7 +119,7 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double, properti
          for (let i = 0; i < last; ++ i)
          {
             generator .string += generator [_formatter] (generator .ToUnit (category, value [i]));
-            generator .string += generator .Space ();
+            generator .Space ();
          }
 
          generator .string += generator [_formatter] (generator .ToUnit (category, value [last]));
@@ -135,11 +135,11 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double, properti
       toJSONStream (generator)
       {
          generator .string += '[';
-         generator .string += generator .TidySpace ();
+         generator .TidySpace ();
 
          this .toJSONStreamValue (generator);
 
-         generator .string += generator .TidySpace ();
+         generator .TidySpace ();
          generator .string += ']';
       },
       toJSONStreamValue (generator)
@@ -153,7 +153,7 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double, properti
          {
             generator .string += generator .Number (generator [_formatter] (generator .ToUnit (category, value [i])));
             generator .string += ',';
-            generator .string += generator .TidySpace ();
+            generator .TidySpace ();
          }
 
          generator .string += generator .Number (generator [_formatter] (generator .ToUnit (category, value [last])));

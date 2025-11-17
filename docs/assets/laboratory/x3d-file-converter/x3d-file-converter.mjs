@@ -152,20 +152,40 @@ function getHTML (scene, filename)
 <html>
   <head>
     <meta charset="utf-8">
-    <script src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js"></script>
     <style>
 body {
-  background-color: rgb(21, 22, 24);
-  color: rgb(108, 110, 113);
+  color-scheme: light dark;
+  display: flex;
+  flex-direction: column;
+  margin: 0px;
+  padding: 0px;
+  height: 100vh;
+  background-color: light-dark(white, rgb(27, 27, 30));
+  color: light-dark(rgb(42, 42, 42), rgb(175, 176, 177));
+  font-family: sans-serif;
 }
 
-a {
-  color: rgb(106, 140, 191);
+body > * {
+  flex: 0 0 auto;
+  padding: 0px 1rem;
 }
 
 x3d-canvas {
-  width: 768px;
-  height: 432px;
+  flex: 1 1 auto;
+  border-top: 2px solid light-dark(rgb(42, 42, 42), rgb(175, 176, 177));
+  border-bottom: 2px solid light-dark(rgb(42, 42, 42), rgb(175, 176, 177));
+  padding: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+a {
+  color: light-dark(rgb(0, 86, 178), rgb(82, 108, 150));
+}
+
+a:hover {
+  color: light-dark(rgb(210, 96, 58), rgb(210, 96, 58))
 }
     </style>
   </head>

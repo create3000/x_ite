@@ -45,13 +45,13 @@ Object .assign (Object .setPrototypeOf (JSONGenerator .prototype, X3DGenerator .
       if (comma)
          this .string += ',';
 
-      this .string += this .TidyBreak ();
-      this .string += this .Indent ();
+      this .TidyBreak ();
+      this .Indent ();
       this .string += '"';
       this .string += key;
       this .string += '"';
       this .string += ':';
-      this .string += this .TidySpace ();
+      this .TidySpace ();
       this .string += '"';
       this .string += this .EncodeString (value);
       this .string += '"';
@@ -61,13 +61,13 @@ Object .assign (Object .setPrototypeOf (JSONGenerator .prototype, X3DGenerator .
       if (comma)
          this .string += ',';
 
-      this .string += this .TidyBreak ();
-      this .string += this .Indent ();
+      this .TidyBreak ();
+      this .Indent ();
       this .string += '"';
       this .string += key;
       this .string += '"';
       this .string += ':';
-      this .string += this .TidySpace ();
+      this .TidySpace ();
       this .string += value;
    },
    beginObject (name, comma = true, main = false)
@@ -80,43 +80,43 @@ Object .assign (Object .setPrototypeOf (JSONGenerator .prototype, X3DGenerator .
          if (main)
          {
             this .string += '{';
-            this .string += this .TidySpace ();
+            this .TidySpace ();
             this .string += '"';
             this .string += name;
             this .string += '"';
             this .string += ':';
-            this .string += this .TidyBreak ();
-            this .string += this .IncIndent ();
-            this .string += this .Indent ();
+            this .TidyBreak ();
+            this .IncIndent ();
+            this .Indent ();
             this .string += '{';
-            this .string += this .IncIndent ();
+            this .IncIndent ();
          }
          else
          {
-            this .string += this .TidyBreak ();
-            this .string += this .Indent ();
+            this .TidyBreak ();
+            this .Indent ();
             this .string += '"';
             this .string += name;
             this .string += '"';
             this .string += ':';
-            this .string += this .TidySpace ();
+            this .TidySpace ();
             this .string += '{';
-            this .string += this .IncIndent ();
+            this .IncIndent ();
          }
       }
       else
       {
-         this .string += this .TidyBreak ();
-         this .string += this .Indent ();
+         this .TidyBreak ();
+         this .Indent ();
          this .string += '{';
-         this .string += this .IncIndent ();
+         this .IncIndent ();
       }
    },
    endObject ()
    {
-      this .string += this .TidyBreak ();
-      this .string += this .DecIndent ();
-      this .string += this .Indent ();
+      this .TidyBreak ();
+      this .DecIndent ();
+      this .Indent ();
       this .string += '}';
    },
    beginArray (name, comma = true)
@@ -124,13 +124,13 @@ Object .assign (Object .setPrototypeOf (JSONGenerator .prototype, X3DGenerator .
       this .beginValue (name, comma);
 
       this .string += '[';
-      this .string += this .IncIndent ();
+      this .IncIndent ();
    },
    endArray ()
    {
-      this .string += this .TidyBreak ();
-      this .string += this .DecIndent ();
-      this .string += this .Indent ();
+      this .TidyBreak ();
+      this .DecIndent ();
+      this .Indent ();
       this .string += ']';
    },
    beginValue (name, comma = true)
@@ -138,13 +138,13 @@ Object .assign (Object .setPrototypeOf (JSONGenerator .prototype, X3DGenerator .
       if (comma)
          this .string += ',';
 
-      this .string += this .TidyBreak ();
-      this .string += this .Indent ();
+      this .TidyBreak ();
+      this .Indent ();
       this .string += '"';
       this .string += name;
       this .string += '"';
       this .string += ':';
-      this .string += this .TidySpace ();
+      this .TidySpace ();
    },
 });
 
