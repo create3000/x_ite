@@ -194,7 +194,7 @@ a:hover {
     <x3d-canvas>
 ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd ()}
     </x3d-canvas>
-    <p>Made with <a href="https://create3000.github.io/x_ite/laboratory/x3d-file-converter/" target="_blank">X_ITE Online File Format Converter</a>.</p>
+    <p>Made with <a href="https://create3000.github.io/x_ite/laboratory/x3d-file-converter/" target="_blank">X_ITE Online File Format Converter</a>. If local files are not loaded <a href="https://create3000.github.io/x_ite/setup-a-localhost-server">consider setup a localhost server</a> or use <a href="https://create3000.github.io/x_ite/dom-integration">DOM integration methods</a>.</p>
   </body>
 </html>`
 }
