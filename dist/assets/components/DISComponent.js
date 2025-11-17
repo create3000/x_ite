@@ -1,5 +1,5 @@
-/* X_ITE v12.1.7 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.7")];
+/* X_ITE v12.1.8 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.8")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope

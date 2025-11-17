@@ -63,8 +63,6 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
          array  = target .getValue (),
          length = array .length;
 
-      generator .ClearSpace ();
-
       switch (length)
       {
          case 0:
