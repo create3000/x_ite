@@ -6,6 +6,8 @@
     <!-- or use: -->
     <!-- <script defer src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js"></script> -->
     <style>
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400&family=Source+Sans+3:ital,wght@0,400&display=swap");
+
 @media (prefers-color-scheme: light) {
   :root {
     --text-color: rgb(42, 42, 42);
@@ -34,12 +36,17 @@ body {
   height: 100vh;
   background-color: var(--background-color);
   color: var(--text-color);
-  font-family: sans-serif;
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 1.08rem;
 }
 
 body > * {
   flex: 0 0 auto;
   padding: 0px 1rem;
+}
+
+h1 {
+   font-family: Lato, sans-serif;
 }
 
 x3d-canvas {
