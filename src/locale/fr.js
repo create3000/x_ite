@@ -221,7 +221,7 @@ export default [
    ],
    [
       "Animations",
-      "Animationen",
+      "Animations",
    ],
    [
       "All",
