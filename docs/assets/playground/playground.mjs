@@ -151,38 +151,32 @@ class Playground
       const
          browser         = this .browser,
          editor          = this .editor,
-         activeViewpoint = browser .activeViewpoint ?.getValue (),
+         activeViewpoint = browser .getActiveViewpoint (),
          text            = editor .getValue (),
          url             = encodeURI (`data:,${text}`);
 
       $("#refresh-button") .addClass ("selected");
 
-      if (activeViewpoint)
-      {
-         var
-            userPosition         = activeViewpoint .getUserPosition () .copy (),
-            userOrientation      = activeViewpoint .getUserOrientation () .copy (),
-            userCenterOfRotation = activeViewpoint .getUserCenterOfRotation () .copy (),
-            fieldOfViewScale     = activeViewpoint .getFieldOfViewScale (),
-            nearDistance         = activeViewpoint .getNearDistance (),
-            farDistance          = activeViewpoint .getFarDistance ();
-      }
+      const
+         userPosition         = activeViewpoint .getUserPosition () .copy (),
+         userOrientation      = activeViewpoint .getUserOrientation () .copy (),
+         userCenterOfRotation = activeViewpoint .getUserCenterOfRotation () .copy (),
+         fieldOfViewScale     = activeViewpoint .getFieldOfViewScale (),
+         nearDistance         = activeViewpoint .getNearDistance (),
+         farDistance          = activeViewpoint .getFarDistance ();
 
       try
       {
          await browser .loadURL (new X3D .MFString (url));
 
-         if (activeViewpoint && browser .activeViewpoint)
-         {
-            const activeViewpoint = browser .activeViewpoint .getValue ();
+         const activeViewpoint = browser .getActiveViewpoint ();
 
-            activeViewpoint .setUserPosition (userPosition);
-            activeViewpoint .setUserOrientation (userOrientation);
-            activeViewpoint .setUserCenterOfRotation (userCenterOfRotation);
-            activeViewpoint .setFieldOfViewScale (fieldOfViewScale);
-            activeViewpoint .setNearDistance (nearDistance);
-            activeViewpoint .setFarDistance (farDistance);
-         }
+         activeViewpoint .setUserPosition (userPosition);
+         activeViewpoint .setUserOrientation (userOrientation);
+         activeViewpoint .setUserCenterOfRotation (userCenterOfRotation);
+         activeViewpoint .setFieldOfViewScale (fieldOfViewScale);
+         activeViewpoint .setNearDistance (nearDistance);
+         activeViewpoint .setFarDistance (farDistance);
 
          this .changed = false;
 
