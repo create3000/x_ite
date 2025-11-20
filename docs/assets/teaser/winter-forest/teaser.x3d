@@ -10,7 +10,7 @@
     <meta name='created' content='Sat, 17 May 2025 17:44:03 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.11.8, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 20 Nov 2025 12:07:53 GMT'/>
+    <meta name='modified' content='Thu, 20 Nov 2025 12:17:47 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='ColorScheme'>
@@ -68,7 +68,7 @@ function changeColorScheme (colorScheme)
         </Script>
       </ProtoBody>
     </ProtoDeclare>
-    <WorldInfo
+    <WorldInfo DEF='_1'
         title='Winter Forest'
         info='"Credits: [LostBoyz2078](https://sketchfab.com/LostModels2025) (snowman)"'>
       <MetadataSet containerField='metadata'
@@ -139,15 +139,15 @@ function changeColorScheme (colorScheme)
         <Transform DEF='Rectangle2D_1'
             translation='0 0.04948798 0'
             scale='32 1.2 1'>
-          <Shape DEF='Light_3'>
+          <Shape DEF='Light_3'
+              visible='false'>
             <Appearance>
               <UnlitMaterial
                   transparency='0.5'/>
             </Appearance>
             <Rectangle2D DEF='_6'/>
           </Shape>
-          <Shape DEF='Dark_2'
-              visible='false'>
+          <Shape DEF='Dark_2'>
             <Appearance>
               <UnlitMaterial
                   emissiveColor='0 0 0'
@@ -169,7 +169,8 @@ function changeColorScheme (colorScheme)
                 key='0, 0.5, 1'
                 keyValue='1 0 0 0, 1 0 0 1.5707963267949, 1 0 0 3.14159265358979'/>
           </Group>
-          <Group DEF='Light_1'>
+          <Group DEF='Light_1'
+              visible='false'>
             <Transform DEF='Front_1'>
               <Shape DEF='_13'>
                 <Appearance>
@@ -191,8 +192,7 @@ function changeColorScheme (colorScheme)
               <Shape USE='_13'/>
             </Transform>
           </Group>
-          <Group DEF='Dark_1'
-              visible='false'>
+          <Group DEF='Dark_1'>
             <Transform DEF='Front'>
               <Shape DEF='_14'>
                 <Appearance>
@@ -219,6 +219,24 @@ function initialize ()
         </Transform>
       </Layer>
     </LayerSet>
+    <Script DEF='CreditsScript'>
+      <field accessType='initializeOnly' type='SFNode' name='worldInfo'>
+        <WorldInfo USE='_1'/>
+      </field>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+   if (typeof $ === "undefined")
+      return;
+
+   let html = worldInfo .info .join ("\n")
+      .replace (/\[(.*?)\]\((.*?)\)/g, `<a href="\$2" target="_empty">\$1</a>`);
+
+   $("#teaser-credits") .html (html);
+}
+]]>
+    </Script>
     <ROUTE fromNode='_3' fromField='fraction_changed' toNode='_4' toField='set_fraction'/>
     <ROUTE fromNode='_4' fromField='value_changed' toNode='Text_1' toField='set_rotation'/>
     <ROUTE fromNode='X_ITE' fromField='string_changed' toNode='_5' toField='set_string'/>
