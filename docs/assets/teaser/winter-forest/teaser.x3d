@@ -10,7 +10,7 @@
     <meta name='created' content='Sat, 17 May 2025 17:44:03 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.11.8, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 20 Nov 2025 12:17:47 GMT'/>
+    <meta name='modified' content='Thu, 20 Nov 2025 13:59:47 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='ColorScheme'>
@@ -230,7 +230,7 @@ function initialize ()
    if (typeof $ === "undefined")
       return;
 
-   let html = worldInfo .info .join ("\n")
+   const html = worldInfo .info .join ("\n")
       .replace (/\[(.*?)\]\((.*?)\)/g, `<a href="\$2" target="_empty">\$1</a>`);
 
    $("#teaser-credits") .html (html);
