@@ -10,7 +10,7 @@
     <meta name='created' content='Sat, 17 May 2025 17:44:03 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.11.8, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 20 Nov 2025 11:44:55 GMT'/>
+    <meta name='modified' content='Thu, 20 Nov 2025 12:07:53 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='ColorScheme'>
@@ -34,12 +34,24 @@ function initialize ()
 
    colorScheme .addEventListener ("change", event => changeColorScheme (event));
 
+   if (typeof $ !== "undefined")
+   {
+      const observer = new MutationObserver (() => changeColorScheme (colorScheme));
+
+      observer .observe ($("html") [0],
+      {
+         attributes: true,
+         attributeFilter: ["data-mode"],
+         attributeOldValue: false,
+      });
+   }
+
    changeColorScheme (colorScheme);
 }
 
-function changeColorScheme (event)
+function changeColorScheme (colorScheme)
 {
-   light = event .matches;
+   light = colorScheme .matches;
 
    if (typeof $ !== "undefined")
    {
@@ -127,15 +139,15 @@ function changeColorScheme (event)
         <Transform DEF='Rectangle2D_1'
             translation='0 0.04948798 0'
             scale='32 1.2 1'>
-          <Shape DEF='Light_3'
-              visible='false'>
+          <Shape DEF='Light_3'>
             <Appearance>
               <UnlitMaterial
                   transparency='0.5'/>
             </Appearance>
             <Rectangle2D DEF='_6'/>
           </Shape>
-          <Shape DEF='Dark_2'>
+          <Shape DEF='Dark_2'
+              visible='false'>
             <Appearance>
               <UnlitMaterial
                   emissiveColor='0 0 0'
@@ -157,8 +169,7 @@ function changeColorScheme (event)
                 key='0, 0.5, 1'
                 keyValue='1 0 0 0, 1 0 0 1.5707963267949, 1 0 0 3.14159265358979'/>
           </Group>
-          <Group DEF='Light_1'
-              visible='false'>
+          <Group DEF='Light_1'>
             <Transform DEF='Front_1'>
               <Shape DEF='_13'>
                 <Appearance>
@@ -180,7 +191,8 @@ function changeColorScheme (event)
               <Shape USE='_13'/>
             </Transform>
           </Group>
-          <Group DEF='Dark_1'>
+          <Group DEF='Dark_1'
+              visible='false'>
             <Transform DEF='Front'>
               <Shape DEF='_14'>
                 <Appearance>
@@ -210,9 +222,9 @@ function initialize ()
     <ROUTE fromNode='_3' fromField='fraction_changed' toNode='_4' toField='set_fraction'/>
     <ROUTE fromNode='_4' fromField='value_changed' toNode='Text_1' toField='set_rotation'/>
     <ROUTE fromNode='X_ITE' fromField='string_changed' toNode='_5' toField='set_string'/>
-    <ROUTE fromNode='_12' fromField='dark' toNode='Dark_1' toField='set_visible'/>
     <ROUTE fromNode='_12' fromField='light' toNode='Light_1' toField='set_visible'/>
-    <ROUTE fromNode='_12' fromField='dark' toNode='Dark_2' toField='set_visible'/>
     <ROUTE fromNode='_12' fromField='light' toNode='Light_3' toField='set_visible'/>
+    <ROUTE fromNode='_12' fromField='dark' toNode='Dark_1' toField='set_visible'/>
+    <ROUTE fromNode='_12' fromField='dark' toNode='Dark_2' toField='set_visible'/>
   </Scene>
 </X3D>
