@@ -63,15 +63,10 @@ Object .assign (X3DLightingContext .prototype,
    {
       try
       {
-         const shadowBuffers = this [_shadowBuffers] [shadowMapSize];
+         const shadowBuffers = this [_shadowBuffers] [shadowMapSize] ??= [ ];
 
-         if (shadowBuffers)
-         {
-            if (shadowBuffers .length)
-               return shadowBuffers .pop ();
-         }
-         else
-            this [_shadowBuffers] [shadowMapSize] = [ ];
+         if (shadowBuffers .length)
+            return shadowBuffers .pop ();
 
          return new TextureBuffer ({
             browser: this,
