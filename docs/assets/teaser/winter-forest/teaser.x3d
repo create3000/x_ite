@@ -9,8 +9,8 @@
     <component name='Text' level='1'/>
     <meta name='created' content='Sat, 17 May 2025 17:44:03 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.11.6, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Wed, 12 Nov 2025 12:39:10 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.11.8, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Thu, 20 Nov 2025 11:44:55 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='ColorScheme'>
@@ -57,7 +57,8 @@ function changeColorScheme (event)
       </ProtoBody>
     </ProtoDeclare>
     <WorldInfo
-        title='pluto'>
+        title='Winter Forest'
+        info='"Credits: [LostBoyz2078](https://sketchfab.com/LostModels2025) (snowman)"'>
       <MetadataSet containerField='metadata'
           name='Sunrize'
           reference='https://create3000.github.io/sunrize/'>
@@ -165,7 +166,7 @@ function changeColorScheme (event)
                       emissiveColor='0 0 0'/>
                 </Appearance>
                 <Text DEF='_5'
-                    string='"X_ITE v12.1.6"'
+                    string='"X_ITE v12.1.8"'
                     solid='true'>
                   <FontStyle
                       family='"Neuropol.otf", "SANS"'
