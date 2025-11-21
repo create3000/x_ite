@@ -116,9 +116,6 @@ const
 
 // Append <x3d-canvas> element to body:
 
-canvas .setAttribute ("contentScale", "auto");
-canvas .setAttribute ("update",       "auto");
-
 document .body .appendChild (canvas);
 
 // Change Browser Options (this could also be done by setting the attributes of the canvas):
