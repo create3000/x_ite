@@ -57,10 +57,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
    },
    set_channelCount__ ()
    {
-      const channelCount = Algorithm .clamp (this ._channelCount .getValue (), 1, 32);
-
-      this .audioDestination .channelCount       = channelCount;
-      this .getSoundDestination () .channelCount = channelCount;
+      this .audioDestination .channelCount = Algorithm .clamp (this ._channelCount .getValue (), 1, 32);
    },
    set_channelCountMode__: (() =>
    {
@@ -72,10 +69,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
 
       return function ()
       {
-         const channelCountMode = channelCountModes .get (this ._channelCountMode .getValue ()) ?? "max";
-
-         this .audioDestination .channelCountMode       = channelCountMode;
-         this .getSoundDestination () .channelCountMode = channelCountMode;
+         this .audioDestination .channelCountMode = channelCountModes .get (this ._channelCountMode .getValue ()) ?? "max";
       };
    })(),
    set_channelInterpretation__: (() =>
@@ -87,10 +81,7 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
 
       return function ()
       {
-         const channelInterpretation = channelInterpretations .get (this ._channelInterpretation .getValue ()) ?? "speakers";
-
-         this .audioDestination .channelInterpretation       = channelInterpretation;
-         this .getSoundDestination () .channelInterpretation = channelInterpretation;
+         this .audioDestination .channelInterpretation = channelInterpretations .get (this ._channelInterpretation .getValue ()) ?? "speakers";
       };
    })(),
    set_children__ ()
