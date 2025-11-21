@@ -73,7 +73,7 @@ Object .assign (X3DSoundContext .prototype,
       {
          audioElement [functionName] ()
             .then (() => this [_audioElements] .delete (audioElement))
-            .catch (() => this .showAudioButton ());
+            .catch (Function .prototype);
       }
    },
    stopAudioElement (audioElement, functionName = "pause")
@@ -84,10 +84,6 @@ Object .assign (X3DSoundContext .prototype,
       this [_audioElements] .delete (audioElement);
 
       audioElement [functionName] ();
-   },
-   showAudioButton ()
-   {
-      console .log ("showAudioButton");
    },
 });
 

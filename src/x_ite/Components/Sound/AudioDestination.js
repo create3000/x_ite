@@ -11,7 +11,11 @@ function AudioDestination (executionContext)
 
    this .addType (X3DConstants .AudioDestination);
 
-   this .audioElement = new Audio ();
+   const audioContext = this .getBrowser () .getAudioContext ();
+
+   this .audioElement                    = new Audio ();
+   this .mediaStreamAudioDestinationNode = new MediaStreamAudioDestinationNode (audioContext);
+   this .audioElement .srcObject         = this .mediaStreamAudioDestinationNode .stream;
 }
 
 Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDestinationNode .prototype),
@@ -36,30 +40,10 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDes
    {
       const active = this ._enabled .getValue () && this .getLive () .getValue ();
 
-      if (!!this .mediaStreamAudioDestinationNode === active)
-         return;
-
       if (active)
-      {
-         const audioContext = this .getBrowser () .getAudioContext ();
-
-         this .mediaStreamAudioDestinationNode = new MediaStreamAudioDestinationNode (audioContext);
-         this .audioElement .srcObject         = this .mediaStreamAudioDestinationNode .stream;
-
          this .getBrowser () .startAudioElement (this .audioElement);
-      }
       else
-      {
          this .getBrowser () .stopAudioElement (this .audioElement);
-
-         for (const track of this .mediaStreamAudioDestinationNode .stream .getAudioTracks ())
-            track .stop ();
-
-         for (const track of this .mediaStreamAudioDestinationNode .stream .getVideoTracks ())
-            track .stop ();
-
-         this .mediaStreamAudioDestinationNode = null;
-      }
 
       X3DSoundDestinationNode .prototype .set_enabled__ .call (this);
    },
@@ -67,7 +51,7 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDes
    {
       this .getBrowser () .startAudioElement (this, "set_mediaDeviceID_impl__");
    },
-   set_mediaDeviceID_impl__ ()
+   async set_mediaDeviceID_impl__ ()
    {
       // Safari has no support for `setSinkId` yet, as of Aug 2023.
 
