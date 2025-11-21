@@ -20,7 +20,7 @@ This script initializes an X3D canvas within an HTML page, configuring it to con
 
 ```html
 <script defer src="https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.js"></script>
-<x3d-canvas update="auto" contentScale="auto">
+<x3d-canvas contentScale="auto" update="auto">
   <X3D profile='Interchange' version='{{ site.x3d_latest_version }}'>
     <head>
       <unit category='angle' name='degree' conversionFactor='0.017453292519943295'></unit>
@@ -68,6 +68,9 @@ const
   scene   = await browser .createScene (browser .getProfile ("Interchange"), browser .getComponent ("Interpolation", 1));
 
 // Append <x3d-canvas> element to body:
+
+canvas .setAttribute ("contentScale", "auto");
+canvas .setAttribute ("update",       "auto");
 
 document .body .appendChild (canvas);
 
