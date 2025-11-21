@@ -58,15 +58,6 @@ Object .assign (X3DSoundContext .prototype,
          return defaultPeriodicWave;
       })();
    },
-   startAudioElements ()
-   {
-      for (const [audioElement, functionName] of this [_audioElements])
-      {
-         audioElement [functionName] ()
-            .then (() => this [_audioElements] .delete (audioElement))
-            .catch (Function .prototype);
-      }
-   },
    startAudioElement (audioElement, functionName = "play")
    {
       if (!audioElement)
@@ -76,6 +67,15 @@ Object .assign (X3DSoundContext .prototype,
 
       this .startAudioElements ();
    },
+   startAudioElements ()
+   {
+      for (const [audioElement, functionName] of this [_audioElements])
+      {
+         audioElement [functionName] ()
+            .then (() => this [_audioElements] .delete (audioElement))
+            .catch (() => this .showAudioButton ());
+      }
+   },
    stopAudioElement (audioElement, functionName = "pause")
    {
       if (!audioElement)
@@ -84,6 +84,10 @@ Object .assign (X3DSoundContext .prototype,
       this [_audioElements] .delete (audioElement);
 
       audioElement [functionName] ();
+   },
+   showAudioButton ()
+   {
+      console .log ("showAudioButton");
    },
 });
 

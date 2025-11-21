@@ -65,14 +65,15 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDes
    },
    set_mediaDeviceID__ ()
    {
+      this .getBrowser () .startAudioElement (this, "set_mediaDeviceID_impl__");
+   },
+   set_mediaDeviceID_impl__ ()
+   {
       // Safari has no support for `setSinkId` yet, as of Aug 2023.
 
-      this .audioElement .setSinkId ?.(this ._mediaDeviceID .getValue ()) .catch (error =>
-      {
-         console .error (error .message);
+      const sinkId = this ._mediaDeviceID .getValue () || "default";
 
-         this .audioElement .setSinkId ("default") .catch (Function .prototype);
-      });
+      return this .audioElement .setSinkId ?.(sinkId) ?? Promise .resolve ();
    },
 });
 
