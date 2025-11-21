@@ -70,6 +70,8 @@ Object .assign (Object .setPrototypeOf (X3DSoundChannelNode .prototype, X3DSound
       }
       else
       {
+         // If enabled field is FALSE, the audio signal passes through unmodified and is not blocked.
+
          this .audioDestination .gain .value           = 1;
          this .audioDestination .channelCountMode      = "max";
          this .audioDestination .channelInterpretation = "speakers";
