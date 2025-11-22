@@ -748,6 +748,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   width: 32px;
   height: 32px;
   background-image: url(assets/images/no_sound.svg);
+  background-size: 32px 32px;
 }
 
 /* WebXR */
