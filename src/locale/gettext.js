@@ -17,6 +17,6 @@ function getLanguage ()
 
 const
    language = getLanguage (),
-   locale   = new Map (languages .map (p => [p .en, p [language] ?? p .en]));
+   locale   = new Map (languages .map (p => [p .en, p [language]]));
 
 export default (string) => locale .get (string) || string;
