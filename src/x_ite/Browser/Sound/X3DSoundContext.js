@@ -5,7 +5,8 @@ const
    _audioElements       = Symbol (),
    _audioContext        = Symbol (),
    _defaultPeriodicWave = Symbol (),
-   _noSoundButton       = Symbol ();
+   _noSoundButton       = Symbol (),
+   _noSoundButtonId     = Symbol ();
 
 function X3DSoundContext ()
 {
@@ -92,29 +93,29 @@ Object .assign (X3DSoundContext .prototype,
    },
    toggleNoSoundButton ()
    {
-      this [_noSoundButton] ??= $("<div></div>")
-         .attr ("part", "no-sound-button")
-         .attr ("title", _("Activate sound."))
-         .addClass (["x_ite-private-no-sound-button", "x_ite-private-button"])
-         .on ("mousedown touchstart mouseup touchend", () => this .startAudioElements ())
-         .appendTo (this .getSurface ());
+      clearTimeout (this [_noSoundButtonId]);
 
-      if (this [_audioElements] .size)
+      this [_noSoundButtonId] = setTimeout (async () =>
       {
-         this [_noSoundButton] .addClass ("x_ite-private-fade-in-300");
+         this [_noSoundButton] ??= $("<div></div>")
+            .attr ("part", "no-sound-button")
+            .attr ("title", _("Activate sound."))
+            .addClass (["x_ite-private-no-sound-button", "x_ite-private-button"])
+            .on ("mousedown touchstart mouseup touchend", () => this .startAudioElements ())
+            .appendTo (this .getSurface ());
 
-         setTimeout (() => this [_noSoundButton]
-            .show ()
-            .removeClass ("x_ite-private-fade-in-300"), 400);
-      }
-      else
-      {
-         this [_noSoundButton] .addClass ("x_ite-private-fade-out-300");
+         const
+            count   = this [_audioElements] .size,
+            add     = count ? "x_ite-private-fade-in-300" : "x_ite-private-fade-out-300",
+            display = count ? "show" : "hide";
 
-         setTimeout (() => this [_noSoundButton]
-            .hide ()
-            .removeClass ("x_ite-private-fade-out-300"), 400);
-      }
+         this [_noSoundButton] .addClass (add);
+
+         await $.sleep (400);
+
+         this [_noSoundButton] [display] () .removeClass (add);
+      },
+      200);
    },
 });
 
