@@ -101,7 +101,7 @@ Object .assign (X3DSoundContext .prototype,
             .attr ("part", "no-sound-button")
             .attr ("title", _("Activate sound."))
             .addClass (["x_ite-private-no-sound-button", "x_ite-private-button"])
-            .on ("mousedown touchstart mouseup touchend", () => this .startAudioElements ())
+            .on ("mouseup touchend", () => this .startAudioElements ())
             .appendTo (this .getSurface ());
 
          const
