@@ -1,9 +1,11 @@
 import PeriodicWave from "../../Components/Sound/PeriodicWave.js";
+import _            from "../../../locale/gettext.js";
 
 const
    _audioElements       = Symbol (),
    _audioContext        = Symbol (),
-   _defaultPeriodicWave = Symbol ();
+   _defaultPeriodicWave = Symbol (),
+   _noSoundButton       = Symbol ();
 
 function X3DSoundContext ()
 {
@@ -58,7 +60,7 @@ Object .assign (X3DSoundContext .prototype,
          return defaultPeriodicWave;
       })();
    },
-   startAudioElement (audioElement, functionName = "play")
+   startAudioElement (audioElement, functionName = "play", sound = true)
    {
       if (!audioElement)
          return;
@@ -73,7 +75,8 @@ Object .assign (X3DSoundContext .prototype,
       {
          audioElement [functionName] ()
             .then (() => this [_audioElements] .delete (audioElement))
-            .catch (Function .prototype);
+            .catch (Function .prototype)
+            .finally (() => this .toggleNoSoundButton ());
       }
    },
    stopAudioElement (audioElement, functionName = "pause")
@@ -84,6 +87,34 @@ Object .assign (X3DSoundContext .prototype,
       this [_audioElements] .delete (audioElement);
 
       audioElement [functionName] ();
+
+      this .toggleNoSoundButton ();
+   },
+   toggleNoSoundButton ()
+   {
+      this [_noSoundButton] ??= $("<div></div>")
+         .attr ("part", "no-sound-button")
+         .attr ("title", _("Activate sound."))
+         .addClass (["x_ite-private-no-sound-button", "x_ite-private-button"])
+         .on ("mousedown touchstart mouseup touchend", () => this .startAudioElements ())
+         .appendTo (this .getSurface ());
+
+      if (this [_audioElements] .size)
+      {
+         this [_noSoundButton] .addClass ("x_ite-private-fade-in-300");
+
+         setTimeout (() => this [_noSoundButton]
+            .show ()
+            .removeClass ("x_ite-private-fade-in-300"), 400);
+      }
+      else
+      {
+         this [_noSoundButton] .addClass ("x_ite-private-fade-out-300");
+
+         setTimeout (() => this [_noSoundButton]
+            .hide ()
+            .removeClass ("x_ite-private-fade-out-300"), 400);
+      }
    },
 });
 

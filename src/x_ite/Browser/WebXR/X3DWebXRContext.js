@@ -6,6 +6,7 @@ import Vector3     from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4   from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4     from "../../../standard/Math/Numbers/Matrix4.js";
 import Lock        from "../../../standard/Utility/Lock.js";
+import _           from "../../../locale/gettext.js";
 
 import "./xrExamineViewer.js";
 import "./xrX3DFlyViewer.js";
@@ -38,8 +39,8 @@ Object .assign (X3DWebXRContext .prototype,
    {
       $("<div></div>")
          .attr ("part", "xr-button")
-         .attr ("title", "Start WebXR session.")
-         .addClass ("x_ite-private-xr-button")
+         .attr ("title", _("Start WebXR session."))
+         .addClass (["x_ite-private-xr-button", "x_ite-private-button"])
          .on ("mousedown touchstart", false)
          .on ("mouseup touchend", event =>
          {

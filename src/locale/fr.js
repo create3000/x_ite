@@ -231,4 +231,12 @@ export default [
       "None",
       "Aucune",
    ],
+   [
+      "Start WebXR session.",
+      "Démarrez une session WebXR.",
+   ],
+   [
+      "Activate sound.",
+      "Activez le son.",
+   ],
 ];
