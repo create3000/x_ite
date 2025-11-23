@@ -81,7 +81,7 @@ monaco: true
 /* Editor */
 
 #editor, .console {
-  position: relative; /* fix monaco tooltips */
+  position: relative; /* Fix monaco tooltips. */
   border: none;
   width: 100%;
   height: 100%;
@@ -90,6 +90,11 @@ monaco: true
   font-size: 0.8rem;
   line-height: 1.4;
   white-space: pre;
+}
+
+/* Hide monaco tooltips. */
+#editor .context-view {
+  display: none !important;
 }
 
 .content x3d-canvas, x3d-canvas {
