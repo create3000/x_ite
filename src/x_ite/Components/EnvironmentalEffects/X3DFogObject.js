@@ -109,8 +109,12 @@ Object .assign (X3DFogObject .prototype,
    },
    set_visibilityRange__ ()
    {
-      this .visibilityStart = Math .max (this ._visibilityStart .getValue (), 0);
-      this .visibilityRange = Math .max (this ._visibilityRange .getValue (), 0);
+      const
+         visibilityStart = Math .max (this ._visibilityStart .getValue (), 0),
+         visibilityRange = Math .max (this ._visibilityRange .getValue (), 0);
+
+      this .visibilityStart = Math .min (visibilityStart, visibilityRange);
+      this .visibilityRange = visibilityRange;
 
       this .set_fogType__ ();
    },
