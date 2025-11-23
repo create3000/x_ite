@@ -1,5 +1,5 @@
-/* X_ITE v12.1.8 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.8")];
+/* X_ITE v12.1.9 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.9")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -281,6 +281,9 @@ var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(ex
 ;// external "__X_ITE_X3D__ .Lock"
 const external_X_ITE_X3D_Lock_namespaceObject = __X_ITE_X3D__ .Lock;
 var external_X_ITE_X3D_Lock_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Lock_namespaceObject);
+;// external "__X_ITE_X3D__ .gettext"
+const external_X_ITE_X3D_gettext_namespaceObject = __X_ITE_X3D__ .gettext;
+var external_X_ITE_X3D_gettext_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_gettext_namespaceObject);
 ;// external "__X_ITE_X3D__ .ExamineViewer"
 const external_X_ITE_X3D_ExamineViewer_namespaceObject = __X_ITE_X3D__ .ExamineViewer;
 var external_X_ITE_X3D_ExamineViewer_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ExamineViewer_namespaceObject);
@@ -429,6 +432,7 @@ Object .assign ((external_X_ITE_X3D_X3DViewer_default()).prototype,
 
 
 
+
 const
    _sessionLock    = Symbol (),
    _referenceSpace = Symbol (),
@@ -456,8 +460,8 @@ Object .assign (X3DWebXRContext .prototype,
    {
       $("<div></div>")
          .attr ("part", "xr-button")
-         .attr ("title", "Start WebXR session.")
-         .addClass ("x_ite-private-xr-button")
+         .attr ("title", external_X_ITE_X3D_gettext_default()("Start WebXR session."))
+         .addClass (["x_ite-private-xr-button", "x_ite-private-button"])
          .on ("mousedown touchstart", false)
          .on ("mouseup touchend", event =>
          {
