@@ -73,7 +73,8 @@ Object .assign (Object .setPrototypeOf (LoadSensor .prototype, X3DNetworkSensorN
          case X3DConstants .COMPLETE_STATE:
          case X3DConstants .FAILED_STATE:
          {
-            this .count ();
+            // Wait for imported nodes and their routes.
+            setTimeout (() => this .count ());
             break;
          }
       }
@@ -144,7 +145,7 @@ Object .assign (Object .setPrototypeOf (LoadSensor .prototype, X3DNetworkSensorN
    {
       this .remove ();
 
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return;
 
       const urlObjects = this .urlObjects;
