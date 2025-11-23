@@ -438,14 +438,14 @@ Any of the rightmost parameters can be omitted, or any parameter can be `null`. 
 <x3d-script-area name="X3D ECMAScript Example: SFMatrix3f setTransform">
 <pre>
 const matrix      = new SFMatrix3f ();
-const translation = new SFVec2f (1, 1);
+const translation = new SFVec2f (1, 2);
 const rotation    = Math .PI;
-const scale       = new SFVec2f (2, 2);
+const scale       = new SFVec2f (3, 4);
 
 matrix .setTransform (translation, rotation, scale);
 
 print (matrix);
-// Expected output: -2 0 0 0 -2 0 1 1 1
+// Expected output: -3 0 0 0 -4 0 1 2 1
 </pre>
 </x3d-script-area>
 
