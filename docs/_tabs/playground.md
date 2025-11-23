@@ -81,6 +81,7 @@ monaco: true
 /* Editor */
 
 #editor, .console {
+  position: relative; /* fix monaco tooltips */
   border: none;
   width: 100%;
   height: 100%;
