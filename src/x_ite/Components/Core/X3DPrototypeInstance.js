@@ -331,7 +331,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
    {
       const rootNodes2 = this [_body] .getRootNodes ();
 
-      for (const node of rootNodes1)
+      for (const node of rootNodes1 .getValue ())
          rootNodes2 .push (node .copy (this));
    },
    importImportedNodes (importedNodes)
