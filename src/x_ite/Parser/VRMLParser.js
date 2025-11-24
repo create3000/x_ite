@@ -1264,7 +1264,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
             {
                ++ this .unknownLevel;
 
-               this .nodeBody (this .getExecutionContext () .createNode ("MetadataBoolean", false));
+               this .nodeBody (this .getExecutionContext () .createNode ("WorldInfo", false));
 
                -- this .unknownLevel;
 
@@ -2541,6 +2541,8 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       try
       {
          ++ this .unknownLevel;
+
+         this .comments ();
 
          if (Grammar .IS .parse (this))
          {
