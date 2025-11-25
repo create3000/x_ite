@@ -116,56 +116,60 @@ Object .assign (Quaternion .prototype,
    {
 		// https://github.com/toji/gl-matrix/blob/accefb6ddf1897a0dc443bbc7664c90e67af6455/src/quat.js#L460
 
+      x /= 2;
+      y /= 2;
+      z /= 2;
+
       const
-		   c1 = Math .cos (x / 2),
-		   c2 = Math .cos (y / 2),
-		   c3 = Math .cos (z / 2),
-		   s1 = Math .sin (x / 2),
-		   s2 = Math .sin (y / 2),
-		   s3 = Math .sin (z / 2);
+		   sx = Math .sin (x),
+		   sy = Math .sin (y),
+		   sz = Math .sin (z),
+		   cx = Math .cos (x),
+		   cy = Math .cos (y),
+		   cz = Math .cos (z);
 
 		switch (order)
       {
 			case "XYZ":
-				this .x = s1 * c2 * c3 + c1 * s2 * s3;
-				this .y = c1 * s2 * c3 - s1 * c2 * s3;
-				this .z = c1 * c2 * s3 + s1 * s2 * c3;
-				this .w = c1 * c2 * c3 - s1 * s2 * s3;
+				this .x = sx * cy * cz + cx * sy * sz;
+				this .y = cx * sy * cz - sx * cy * sz;
+				this .z = cx * cy * sz + sx * sy * cz;
+				this .w = cx * cy * cz - sx * sy * sz;
 				break;
 
          case "ZYX":
-            this .x = s1 * c2 * c3 - c1 * s2 * s3;
-            this .y = c1 * s2 * c3 + s1 * c2 * s3;
-            this .z = c1 * c2 * s3 - s1 * s2 * c3;
-            this .w = c1 * c2 * c3 + s1 * s2 * s3;
+            this .x = sx * cy * cz - cx * sy * sz;
+            this .y = cx * sy * cz + sx * cy * sz;
+            this .z = cx * cy * sz - sx * sy * cz;
+            this .w = cx * cy * cz + sx * sy * sz;
             break;
 
 			case "YXZ":
-				this .x = s1 * c2 * c3 + c1 * s2 * s3;
-				this .y = c1 * s2 * c3 - s1 * c2 * s3;
-				this .z = c1 * c2 * s3 - s1 * s2 * c3;
-				this .w = c1 * c2 * c3 + s1 * s2 * s3;
+				this .x = sx * cy * cz + cx * sy * sz;
+				this .y = cx * sy * cz - sx * cy * sz;
+				this .z = cx * cy * sz - sx * sy * cz;
+				this .w = cx * cy * cz + sx * sy * sz;
 				break;
 
 			case "ZXY":
-				this .x = s1 * c2 * c3 - c1 * s2 * s3;
-				this .y = c1 * s2 * c3 + s1 * c2 * s3;
-				this .z = c1 * c2 * s3 + s1 * s2 * c3;
-				this .w = c1 * c2 * c3 - s1 * s2 * s3;
+				this .x = sx * cy * cz - cx * sy * sz;
+				this .y = cx * sy * cz + sx * cy * sz;
+				this .z = cx * cy * sz + sx * sy * cz;
+				this .w = cx * cy * cz - sx * sy * sz;
 				break;
 
 			case "YZX":
-				this .x = s1 * c2 * c3 + c1 * s2 * s3;
-				this .y = c1 * s2 * c3 + s1 * c2 * s3;
-				this .z = c1 * c2 * s3 - s1 * s2 * c3;
-				this .w = c1 * c2 * c3 - s1 * s2 * s3;
+				this .x = sx * cy * cz + cx * sy * sz;
+				this .y = cx * sy * cz + sx * cy * sz;
+				this .z = cx * cy * sz - sx * sy * cz;
+				this .w = cx * cy * cz - sx * sy * sz;
 				break;
 
 			case "XZY":
-				this .x = s1 * c2 * c3 - c1 * s2 * s3;
-				this .y = c1 * s2 * c3 - s1 * c2 * s3;
-				this .z = c1 * c2 * s3 + s1 * s2 * c3;
-				this .w = c1 * c2 * c3 + s1 * s2 * s3;
+				this .x = sx * cy * cz - cx * sy * sz;
+				this .y = cx * sy * cz - sx * cy * sz;
+				this .z = cx * cy * sz + sx * sy * cz;
+				this .w = cx * cy * cz + sx * sy * sz;
 				break;
 		}
 
