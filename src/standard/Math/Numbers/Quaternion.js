@@ -112,6 +112,14 @@ Object .assign (Quaternion .prototype,
 
       return matrix;
    },
+   /**
+    * Sets the Euler components.
+    * @param {number} x - The angle of the x axis in radians.
+    * @param {number} y - The angle of the y axis in radians.
+    * @param {number} z - The angle of the z axis in radians.
+    * @param {string} order - A string representing the order that the rotations are applied.
+    * @returns {Quaternion} A reference to this quaternion.
+    */
    setEuler (x, y, z, order = "XYZ")
    {
 		// https://github.com/toji/gl-matrix/blob/accefb6ddf1897a0dc443bbc7664c90e67af6455/src/quat.js#L460
@@ -175,6 +183,12 @@ Object .assign (Quaternion .prototype,
 
 		return this;
 	},
+   /**
+    * Gets the Euler components.
+    * @param {number[]} euler - Array to be returned.
+    * @param {string} order - A string representing the order that the rotations are applied.
+    * @returns {number[]} The angles of the Euler rotations in radians.
+    */
    getEuler (euler = [ ], order = "XYZ")
    {
       const { 0: m0, 1: m1, 2: m2, 3: m3, 4: m4, 5: m5, 6: m6, 7: m7, 8: m8 } = this .getMatrix (m);
