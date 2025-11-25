@@ -121,7 +121,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
       for (const joint of this .interpolators)
       {
-         for (const interpolator of joint)
+         for (const interpolator of Object .values (joint))
          {
             Array .from (interpolator ._value_changed .getFieldInterests ())
                .forEach (field => interpolator ._value_changed .removeFieldInterest (field));
@@ -228,7 +228,6 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
                      return interpolator;
                   })();
-
 
                   interpolator ._key      .push (key);
                   interpolator ._keyValue .push (position .set (Xposition, Yposition, Zposition));
