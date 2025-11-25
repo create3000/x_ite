@@ -192,7 +192,7 @@ Object .assign (Quaternion .prototype,
    getEuler (euler = [ ], order = "XYZ")
    {
       // https://github.com/mrdoob/three.js/blob/7a4f6b6637fbf10f1f36c9bb1f34b32452e516c6/src/math/Euler.js#L189
-      
+
       const { 0: m0, 1: m1, 2: m2, 3: m3, 4: m4, 5: m5, 6: m6, 7: m7, 8: m8 } = this .getMatrix (m);
 
 		switch (order)
@@ -216,7 +216,7 @@ Object .assign (Quaternion .prototype,
          }
 			case "ZYX":
          {
-				euler [1] = Math .asin (- Algorithm .clamp (m2, -1, 1));
+				euler [1] = Math .asin (-Algorithm .clamp (m2, -1, 1));
 
 				if (Math .abs (m2) < 0.9999999)
             {
@@ -233,7 +233,7 @@ Object .assign (Quaternion .prototype,
          }
 			case "YXZ":
          {
-				euler [0] = Math .asin (- Algorithm .clamp (m7, -1, 1));
+				euler [0] = Math .asin (-Algorithm .clamp (m7, -1, 1));
 
 				if (Math .abs (m7) < 0.9999999)
             {
@@ -285,7 +285,7 @@ Object .assign (Quaternion .prototype,
          }
 			case "XZY":
          {
-				euler [2] = Math .asin (- Algorithm .clamp (m3, -1, 1));
+				euler [2] = Math .asin (-Algorithm .clamp (m3, -1, 1));
 
 				if (Math .abs (m3) < 0.9999999)
             {
