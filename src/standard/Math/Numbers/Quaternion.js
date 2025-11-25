@@ -191,6 +191,8 @@ Object .assign (Quaternion .prototype,
     */
    getEuler (euler = [ ], order = "XYZ")
    {
+      // https://github.com/mrdoob/three.js/blob/7a4f6b6637fbf10f1f36c9bb1f34b32452e516c6/src/math/Euler.js#L189
+      
       const { 0: m0, 1: m1, 2: m2, 3: m3, 4: m4, 5: m5, 6: m6, 7: m7, 8: m8 } = this .getMatrix (m);
 
 		switch (order)
