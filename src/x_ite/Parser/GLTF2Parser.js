@@ -620,6 +620,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    accessorObject: (() =>
    {
+      // https://github.com/KhronosGroup/glTF/blob/2e51b3a2c5078a29f5c0d7aee567eb1d926265b4/extensions/2.0/Khronos/KHR_accessor_float64/README.md
+
       const TypedArrays = new Map ([
          [5120, Int8Array],
          [5121, Uint8Array],
@@ -628,6 +630,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          [5124, Int32Array],
          [5125, Uint32Array],
          [5126, Float32Array],
+         [5130, Float64Array],
       ]);
 
       const Components = new Map ([
@@ -755,7 +758,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          case 5125: // Uint32Array
             return Float32Array .from (array, v => v / 4294967295);
          case 5126: // Float32Array
-            return array;
+         case 5130: // Float64Array
+            return array; // Their normalized property MUST NOT be set to true;
       }
    },
    samplersArray (samplers)
@@ -2106,7 +2110,14 @@ function eventsProcessed ()
       node .childNode = node .humanoidNode ?? node .transformNode;
       node .pointers  = [node .childNode];
 
-      node .childNode ._visible = node .extensions ?.KHR_node_visibility ?.visible ?? true;
+      // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_visibility
+      const visibility = node .extensions ?.KHR_node_visibility;
+
+      if (visibility)
+      {
+         visibility .pointers      = [node .childNode];
+         node .childNode ._visible = visibility .visible ?? true;
+      }
 
       return node;
    },
@@ -3569,6 +3580,8 @@ function eventsProcessed ()
             return [ ];
 
          const scene = this .getScene ();
+
+         console .log (field .getTypeName ())
 
          switch (field .getType ())
          {

@@ -9,8 +9,8 @@
     <component name='Text' level='1'/>
     <meta name='created' content='Sat, 17 May 2025 17:44:03 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.11.6, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Wed, 12 Nov 2025 12:39:10 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.11.8, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Fri, 21 Nov 2025 12:59:16 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='ColorScheme'>
@@ -34,12 +34,24 @@ function initialize ()
 
    colorScheme .addEventListener ("change", event => changeColorScheme (event));
 
+   if (typeof $ !== "undefined")
+   {
+      const observer = new MutationObserver (() => changeColorScheme (colorScheme));
+
+      observer .observe ($("html") [0],
+      {
+         attributes: true,
+         attributeFilter: ["data-mode"],
+         attributeOldValue: false,
+      });
+   }
+
    changeColorScheme (colorScheme);
 }
 
-function changeColorScheme (event)
+function changeColorScheme (colorScheme)
 {
-   light = event .matches;
+   light = colorScheme .matches;
 
    if (typeof $ !== "undefined")
    {
@@ -56,8 +68,9 @@ function changeColorScheme (event)
         </Script>
       </ProtoBody>
     </ProtoDeclare>
-    <WorldInfo
-        title='pluto'>
+    <WorldInfo DEF='_1'
+        title='Winter Forest'
+        info='"Credits: [LostBoyz2078](https://sketchfab.com/LostModels2025) (snowman)"'>
       <MetadataSet containerField='metadata'
           name='Sunrize'
           reference='https://create3000.github.io/sunrize/'>
@@ -165,7 +178,7 @@ function changeColorScheme (event)
                       emissiveColor='0 0 0'/>
                 </Appearance>
                 <Text DEF='_5'
-                    string='"X_ITE v12.1.6"'
+                    string='"X_ITE v12.1.8"'
                     solid='true'>
                   <FontStyle
                       family='"Neuropol.otf", "SANS"'
@@ -206,12 +219,30 @@ function initialize ()
         </Transform>
       </Layer>
     </LayerSet>
+    <Script DEF='CreditsScript'>
+      <field accessType='initializeOnly' type='SFNode' name='worldInfo'>
+        <WorldInfo USE='_1'/>
+      </field>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+   if (typeof $ === "undefined")
+      return;
+
+   const html = worldInfo .info .join ("\n")
+      .replace (/\[(.*?)\]\((.*?)\)/g, `<a href="\$2" target="_blank">\$1</a>`);
+
+   $("#teaser-credits") .html (html);
+}
+]]>
+    </Script>
     <ROUTE fromNode='_3' fromField='fraction_changed' toNode='_4' toField='set_fraction'/>
     <ROUTE fromNode='_4' fromField='value_changed' toNode='Text_1' toField='set_rotation'/>
     <ROUTE fromNode='X_ITE' fromField='string_changed' toNode='_5' toField='set_string'/>
-    <ROUTE fromNode='_12' fromField='dark' toNode='Dark_1' toField='set_visible'/>
     <ROUTE fromNode='_12' fromField='light' toNode='Light_1' toField='set_visible'/>
-    <ROUTE fromNode='_12' fromField='dark' toNode='Dark_2' toField='set_visible'/>
     <ROUTE fromNode='_12' fromField='light' toNode='Light_3' toField='set_visible'/>
+    <ROUTE fromNode='_12' fromField='dark' toNode='Dark_1' toField='set_visible'/>
+    <ROUTE fromNode='_12' fromField='dark' toNode='Dark_2' toField='set_visible'/>
   </Scene>
 </X3D>

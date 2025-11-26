@@ -8,7 +8,7 @@ tags: [Accessing, External, Browser, Authoring, Interface]
 
 ## Overview
 
-X_ITE is designed to provide access to the internal X3D browser and its contained scene graph via JavaScript, either within an internal X3D Script node or an external HTML script.
+X_ITE is designed to provide access to the internal X3D browser and its contained scene graph via JavaScript, either within an internal X3D [Script](/x_ite/components/scripting/script/) node or an external HTML script.
 
 If you want combine DOM access with X3D access in your JavaScript functions then you probably want to access the external browser object if you want include an external JavaScript file in your HTML page and you don't want to do it directly in a [Script](/x_ite/components/scripting/script/) node.
 
@@ -20,7 +20,7 @@ This script initializes an X3D canvas within an HTML page, configuring it to con
 
 ```html
 <script defer src="https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.js"></script>
-<x3d-canvas update="auto" contentScale="auto">
+<x3d-canvas contentScale="auto" update="auto">
   <X3D profile='Interchange' version='{{ site.x3d_latest_version }}'>
     <head>
       <unit category='angle' name='degree' conversionFactor='0.017453292519943295'></unit>

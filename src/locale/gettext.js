@@ -1,11 +1,6 @@
-import de from "./de.js";
-import fr from "./fr.js";
+import languages from "./languages.js";
 
-const locales = new Map ([
-   ["en", undefined], // default language
-   ["de", de],
-   ["fr", fr],
-]);
+const locales = new Set (Object .keys (languages [0]));
 
 function getLanguage ()
 {
@@ -20,6 +15,8 @@ function getLanguage ()
    return (navigator .language || navigator .userLanguage) .split ("-") [0];
 }
 
-const locale = new Map (locales .get (getLanguage ()) ?? [ ]);
+const
+   language = getLanguage (),
+   locale   = new Map (languages .map (p => [p .en, p [language]]));
 
 export default (string) => locale .get (string) || string;

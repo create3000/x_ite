@@ -1,9 +1,12 @@
 import PeriodicWave from "../../Components/Sound/PeriodicWave.js";
+import _            from "../../../locale/gettext.js";
 
 const
    _audioElements       = Symbol (),
    _audioContext        = Symbol (),
-   _defaultPeriodicWave = Symbol ();
+   _defaultPeriodicWave = Symbol (),
+   _noSoundButton       = Symbol (),
+   _noSoundButtonId     = Symbol ();
 
 function X3DSoundContext ()
 {
@@ -58,16 +61,7 @@ Object .assign (X3DSoundContext .prototype,
          return defaultPeriodicWave;
       })();
    },
-   startAudioElements ()
-   {
-      for (const [audioElement, functionName] of this [_audioElements])
-      {
-         audioElement [functionName] ()
-            .then (() => this [_audioElements] .delete (audioElement))
-            .catch (Function .prototype);
-      }
-   },
-   startAudioElement (audioElement, functionName = "play")
+   startAudioElement (audioElement, functionName = "play", sound = true)
    {
       if (!audioElement)
          return;
@@ -75,6 +69,16 @@ Object .assign (X3DSoundContext .prototype,
       this [_audioElements] .set (audioElement, functionName);
 
       this .startAudioElements ();
+   },
+   startAudioElements ()
+   {
+      for (const [audioElement, functionName] of this [_audioElements])
+      {
+         audioElement [functionName] ()
+            .then (() => this [_audioElements] .delete (audioElement))
+            .catch (Function .prototype)
+            .finally (() => this .toggleNoSoundButton ());
+      }
    },
    stopAudioElement (audioElement, functionName = "pause")
    {
@@ -84,6 +88,34 @@ Object .assign (X3DSoundContext .prototype,
       this [_audioElements] .delete (audioElement);
 
       audioElement [functionName] ();
+
+      this .toggleNoSoundButton ();
+   },
+   toggleNoSoundButton ()
+   {
+      clearTimeout (this [_noSoundButtonId]);
+
+      this [_noSoundButtonId] = setTimeout (async () =>
+      {
+         this [_noSoundButton] ??= $("<div></div>")
+            .attr ("part", "no-sound-button")
+            .attr ("title", _("Activate sound."))
+            .addClass (["x_ite-private-no-sound-button", "x_ite-private-button"])
+            .on ("mouseup touchend", () => this .startAudioElements ())
+            .appendTo (this .getSurface ());
+
+         const
+            count   = this [_audioElements] .size,
+            add     = count ? "x_ite-private-fade-in-300" : "x_ite-private-fade-out-300",
+            display = count ? "show" : "hide";
+
+         this [_noSoundButton] .addClass (add);
+
+         await $.sleep (400);
+
+         this [_noSoundButton] [display] () .removeClass (add);
+      },
+      200);
    },
 });
 

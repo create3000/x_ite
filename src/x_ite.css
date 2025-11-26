@@ -729,21 +729,36 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   background: var(--progress-color);
 }
 
-/* WebXR */
+/* No Sound Button */
 
-.x_ite-private-xr-button {
+.x_ite-private-button {
   position: absolute;
-  right: 10px;
-  bottom: 10px;
-  width: 32px;
-  height: 18px;
-  background: url(assets/images/xr.svg);
+  background: no-repeat;
   cursor: pointer;
   transition: transform .2s ease-in-out;
 }
 
-.x_ite-private-xr-button:hover {
+.x_ite-private-button:hover {
   transform: scale(1.2);
+}
+
+.x_ite-private-no-sound-button {
+  left: 10px;
+  top: 10px;
+  width: 32px;
+  height: 32px;
+  background-image: url(assets/images/no_sound.svg);
+  background-size: 32px 32px;
+}
+
+/* WebXR */
+
+.x_ite-private-xr-button {
+  right: 10px;
+  bottom: 10px;
+  width: 32px;
+  height: 18px;
+  background-image: url(assets/images/xr.svg);
 }
 
 /* Animations */

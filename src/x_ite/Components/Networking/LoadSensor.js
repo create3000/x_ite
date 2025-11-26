@@ -90,8 +90,8 @@ Object .assign (Object .setPrototypeOf (LoadSensor .prototype, X3DNetworkSensorN
 
          for (const urlObject of urlObjects)
          {
-            complete += urlObject .checkLoadState () == X3DConstants .COMPLETE_STATE;
-            failed   += urlObject .checkLoadState () == X3DConstants .FAILED_STATE;
+            complete += urlObject .checkLoadState () === X3DConstants .COMPLETE_STATE;
+            failed   += urlObject .checkLoadState () === X3DConstants .FAILED_STATE;
          }
 
          const
@@ -144,7 +144,7 @@ Object .assign (Object .setPrototypeOf (LoadSensor .prototype, X3DNetworkSensorN
    {
       this .remove ();
 
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return;
 
       const urlObjects = this .urlObjects;
@@ -154,12 +154,11 @@ Object .assign (Object .setPrototypeOf (LoadSensor .prototype, X3DNetworkSensorN
          const urlObject = X3DCast (X3DConstants .X3DUrlObject, node);
 
          if (urlObject)
-         {
             urlObjects .push (urlObject);
-
-            urlObject ._loadState .addInterest ("set_loadState__", this, urlObject);
-         }
       }
+
+      for (const urlObject of urlObjects)
+         urlObject ._loadState .addInterest ("set_loadState__", this, urlObject);
 
       this .count ();
    },

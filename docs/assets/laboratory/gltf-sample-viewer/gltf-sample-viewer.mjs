@@ -144,9 +144,11 @@ const glTF = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/MultiUVTest/glTF/MultiUVTest.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/MultipleScenes/glTF/MultipleScenes.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/NegativeScaleTest/glTF/NegativeScaleTest.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/NodePerformanceTest/glTF/NodePerformanceTest.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/NormalTangentMirrorTest/glTF/NormalTangentMirrorTest.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/NormalTangentTest/glTF/NormalTangentTest.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/OrientationTest/glTF/OrientationTest.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/PlaysetLightTest/glTF/PlaysetLightTest.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/PointLightIntensityTest/glTF/PointLightIntensityTest.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/PotOfCoals/glTF/PotOfCoals.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/PotOfCoalsAnimationPointer/glTF/PotOfCoalsAnimationPointer.gltf",
@@ -803,10 +805,11 @@ class SampleViewer
 
       for (const [name, filename] of [... map] .sort ((a, b) => a [0] .localeCompare (b [0])))
       {
+         const item = $("<li></li>") .appendTo (list);
+
          const link = $("<a></a>")
             .text (name)
             .attr ("href", filename)
-            .appendTo ($("<li></li>") .appendTo (list))
             .on ("click", () =>
             {
                column .find ("a") .removeClass ("bold");
@@ -814,7 +817,29 @@ class SampleViewer
 
                this .loadURL (filename);
                return false;
-            });
+            })
+            .appendTo (item);
+
+         if (!filename .includes ("KhronosGroup"))
+            continue;
+
+         $("<span></span>") .text (" ") .appendTo (item);
+
+         const readme = filename
+            .replace ("raw.githubusercontent.com", "github.com")
+            .replace (/main|master/, "blob/main", "")
+            .replace (/[^\/]+\/[^\/]+$/, "");
+
+         $("<a></a>")
+            .css ("position", "relative")
+            .css ("top", "1px")
+            .attr ("title", "Show README.")
+            .attr ("target", "_blank")
+            .attr ("href", readme)
+            .append ($("<i></i>")
+               .css ("margin", "0 0.2rem")
+               .addClass (["fa-brands", "fa-readme"]))
+            .appendTo (item);
       }
    }
 

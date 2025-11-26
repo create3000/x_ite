@@ -154,16 +154,38 @@ function getHTML (scene, filename)
     <meta charset="utf-8">
     <script defer src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js"></script>
     <style>
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400&family=Source+Sans+3:ital,wght@0,400&display=swap");
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --text-color: rgb(42, 42, 42);
+    --background-color: white;
+    --link-color: rgb(0, 86, 178);
+    --link-hover-color: rgb(210, 96, 58);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: rgb(175, 176, 177);
+    --background-color: rgb(27, 27, 30);
+    --link-color: rgb(82, 108, 150);
+    --link-hover-color: rgb(210, 96, 58);
+  }
+}
+
 body {
   color-scheme: light dark;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   margin: 0px;
   padding: 0px;
   height: 100vh;
-  background-color: light-dark(white, rgb(27, 27, 30));
-  color: light-dark(rgb(42, 42, 42), rgb(175, 176, 177));
-  font-family: sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 1.08rem;
 }
 
 body > * {
@@ -171,21 +193,26 @@ body > * {
   padding: 0px 1rem;
 }
 
+h1 {
+   font-family: Lato, sans-serif;
+}
+
 x3d-canvas {
   flex: 1 1 auto;
-  border-top: 2px solid light-dark(rgb(42, 42, 42), rgb(175, 176, 177));
-  border-bottom: 2px solid light-dark(rgb(42, 42, 42), rgb(175, 176, 177));
+  box-sizing: border-box;
+  border-top: 1px solid color-mix(in srgb, var(--text-color), transparent 90%);
+  border-bottom: 1px solid color-mix(in srgb, var(--text-color), transparent 90%);
   padding: 0px;
   width: 100%;
   height: 100%;
 }
 
 a {
-  color: light-dark(rgb(0, 86, 178), rgb(82, 108, 150));
+  color: var(--link-color);
 }
 
 a:hover {
-  color: light-dark(rgb(210, 96, 58), rgb(210, 96, 58))
+  color: var(--link-hover-color);
 }
     </style>
   </head>
@@ -194,7 +221,7 @@ a:hover {
     <x3d-canvas>
 ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd ()}
     </x3d-canvas>
-    <p>Made with <a href="https://create3000.github.io/x_ite/laboratory/x3d-file-converter/" target="_blank">X_ITE Online File Format Converter.</a></p>
+    <p>Made with <a href="https://create3000.github.io/x_ite/laboratory/x3d-file-converter/" target="_blank">X_ITE Online File Format Converter</a>. If local files are not loaded <a href="https://create3000.github.io/x_ite/setup-a-localhost-server">consider setup a localhost server</a> or use <a href="https://create3000.github.io/x_ite/dom-integration">DOM integration methods</a>.</p>
   </body>
 </html>`
 }

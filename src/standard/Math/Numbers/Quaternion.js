@@ -112,67 +112,87 @@ Object .assign (Quaternion .prototype,
 
       return matrix;
    },
+   /**
+    * Sets the Euler components.
+    * @param {number} x - The angle of the x axis in radians.
+    * @param {number} y - The angle of the y axis in radians.
+    * @param {number} z - The angle of the z axis in radians.
+    * @param {string} order - A string representing the order that the rotations are applied.
+    * @returns {Quaternion} A reference to this quaternion.
+    */
    setEuler (x, y, z, order = "XYZ")
    {
 		// https://github.com/toji/gl-matrix/blob/accefb6ddf1897a0dc443bbc7664c90e67af6455/src/quat.js#L460
 
+      x /= 2;
+      y /= 2;
+      z /= 2;
+
       const
-		   c1 = Math .cos (x / 2),
-		   c2 = Math .cos (y / 2),
-		   c3 = Math .cos (z / 2),
-		   s1 = Math .sin (x / 2),
-		   s2 = Math .sin (y / 2),
-		   s3 = Math .sin (z / 2);
+		   sx = Math .sin (x),
+		   sy = Math .sin (y),
+		   sz = Math .sin (z),
+		   cx = Math .cos (x),
+		   cy = Math .cos (y),
+		   cz = Math .cos (z);
 
 		switch (order)
       {
 			case "XYZ":
-				this .x = s1 * c2 * c3 + c1 * s2 * s3;
-				this .y = c1 * s2 * c3 - s1 * c2 * s3;
-				this .z = c1 * c2 * s3 + s1 * s2 * c3;
-				this .w = c1 * c2 * c3 - s1 * s2 * s3;
+				this .x = sx * cy * cz + cx * sy * sz;
+				this .y = cx * sy * cz - sx * cy * sz;
+				this .z = cx * cy * sz + sx * sy * cz;
+				this .w = cx * cy * cz - sx * sy * sz;
 				break;
 
          case "ZYX":
-            this .x = s1 * c2 * c3 - c1 * s2 * s3;
-            this .y = c1 * s2 * c3 + s1 * c2 * s3;
-            this .z = c1 * c2 * s3 - s1 * s2 * c3;
-            this .w = c1 * c2 * c3 + s1 * s2 * s3;
+            this .x = sx * cy * cz - cx * sy * sz;
+            this .y = cx * sy * cz + sx * cy * sz;
+            this .z = cx * cy * sz - sx * sy * cz;
+            this .w = cx * cy * cz + sx * sy * sz;
             break;
 
 			case "YXZ":
-				this .x = s1 * c2 * c3 + c1 * s2 * s3;
-				this .y = c1 * s2 * c3 - s1 * c2 * s3;
-				this .z = c1 * c2 * s3 - s1 * s2 * c3;
-				this .w = c1 * c2 * c3 + s1 * s2 * s3;
+				this .x = sx * cy * cz + cx * sy * sz;
+				this .y = cx * sy * cz - sx * cy * sz;
+				this .z = cx * cy * sz - sx * sy * cz;
+				this .w = cx * cy * cz + sx * sy * sz;
 				break;
 
 			case "ZXY":
-				this .x = s1 * c2 * c3 - c1 * s2 * s3;
-				this .y = c1 * s2 * c3 + s1 * c2 * s3;
-				this .z = c1 * c2 * s3 + s1 * s2 * c3;
-				this .w = c1 * c2 * c3 - s1 * s2 * s3;
+				this .x = sx * cy * cz - cx * sy * sz;
+				this .y = cx * sy * cz + sx * cy * sz;
+				this .z = cx * cy * sz + sx * sy * cz;
+				this .w = cx * cy * cz - sx * sy * sz;
 				break;
 
 			case "YZX":
-				this .x = s1 * c2 * c3 + c1 * s2 * s3;
-				this .y = c1 * s2 * c3 + s1 * c2 * s3;
-				this .z = c1 * c2 * s3 - s1 * s2 * c3;
-				this .w = c1 * c2 * c3 - s1 * s2 * s3;
+				this .x = sx * cy * cz + cx * sy * sz;
+				this .y = cx * sy * cz + sx * cy * sz;
+				this .z = cx * cy * sz - sx * sy * cz;
+				this .w = cx * cy * cz - sx * sy * sz;
 				break;
 
 			case "XZY":
-				this .x = s1 * c2 * c3 - c1 * s2 * s3;
-				this .y = c1 * s2 * c3 - s1 * c2 * s3;
-				this .z = c1 * c2 * s3 + s1 * s2 * c3;
-				this .w = c1 * c2 * c3 + s1 * s2 * s3;
+				this .x = sx * cy * cz - cx * sy * sz;
+				this .y = cx * sy * cz - sx * cy * sz;
+				this .z = cx * cy * sz + sx * sy * cz;
+				this .w = cx * cy * cz + sx * sy * sz;
 				break;
 		}
 
 		return this;
 	},
+   /**
+    * Gets the Euler components.
+    * @param {number[]} euler - Array to be returned.
+    * @param {string} order - A string representing the order that the rotations are applied.
+    * @returns {number[]} The angles of the Euler rotations in radians.
+    */
    getEuler (euler = [ ], order = "XYZ")
    {
+      // https://github.com/mrdoob/three.js/blob/7a4f6b6637fbf10f1f36c9bb1f34b32452e516c6/src/math/Euler.js#L189
+
       const { 0: m0, 1: m1, 2: m2, 3: m3, 4: m4, 5: m5, 6: m6, 7: m7, 8: m8 } = this .getMatrix (m);
 
 		switch (order)
@@ -196,7 +216,7 @@ Object .assign (Quaternion .prototype,
          }
 			case "ZYX":
          {
-				euler [1] = Math .asin (- Algorithm .clamp (m2, -1, 1));
+				euler [1] = Math .asin (-Algorithm .clamp (m2, -1, 1));
 
 				if (Math .abs (m2) < 0.9999999)
             {
@@ -213,7 +233,7 @@ Object .assign (Quaternion .prototype,
          }
 			case "YXZ":
          {
-				euler [0] = Math .asin (- Algorithm .clamp (m7, -1, 1));
+				euler [0] = Math .asin (-Algorithm .clamp (m7, -1, 1));
 
 				if (Math .abs (m7) < 0.9999999)
             {
@@ -265,7 +285,7 @@ Object .assign (Quaternion .prototype,
          }
 			case "XZY":
          {
-				euler [2] = Math .asin (- Algorithm .clamp (m3, -1, 1));
+				euler [2] = Math .asin (-Algorithm .clamp (m3, -1, 1));
 
 				if (Math .abs (m3) < 0.9999999)
             {

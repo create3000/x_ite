@@ -137,7 +137,6 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
       }
       else
       {
-
          this .element
             .removeClass ("x_ite-private-fade-in-300")
             .addClass ("x_ite-private-fade-out-300");

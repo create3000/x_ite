@@ -5,8 +5,8 @@
     <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
     <meta name='created' content='Sat, 14 Dec 2024 18:52:06 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.11.6, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Wed, 12 Nov 2025 10:29:12 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V1.11.9, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Sun, 23 Nov 2025 18:04:25 GMT'/>
   </head>
   <Scene>
     <WorldInfo>
@@ -42,8 +42,7 @@
       <Inline DEF='_1'
           url='"Snowman.glb"'/>
       <LoadSensor DEF='_2'>
-        <Inline
-            url='"Snowman.glb"'/>
+        <Inline USE='_1'/>
       </LoadSensor>
     </Transform>
     <IMPORT inlineDEF='_1' importedDEF='Timer1'/>
