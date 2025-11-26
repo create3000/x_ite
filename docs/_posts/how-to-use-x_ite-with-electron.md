@@ -59,6 +59,7 @@ async function main ()
 
 main ();
 ```
+{: file='main.js' }
 
 ### index.html
 
@@ -76,6 +77,7 @@ This is the HTML page, which will be displayed in your browser window.
   <body></body>
 </html>
 ```
+{: file='index.html' }
 
 ### preload.js
 
@@ -109,6 +111,7 @@ function preload ()
   browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/x_ite/info/info.x3d"));
 }
 ```
+{: file='preload.js' }
 
 ### styles.css
 
@@ -131,3 +134,4 @@ body {
   padding: 10px;
 }
 ```
+{: file='styles.css' }
