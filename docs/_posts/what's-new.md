@@ -13,17 +13,18 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 ### Notable Changes
 
-* The Walk and Fly viewers come now with a new feature »Slide Along Walls« and new [browser option](/x_ite/reference/browser-services/#browser-options) `WallFriction`.
-* New glTF extension [KHR_materials_volume_scatter](/x_ite/components/x-ite/volumescattermaterialextension/) implemented.
-* If a glTF file with animations is loaded, a new »Animations« menu will appear in the context menu.
-* Optimized creation of [HAnimMotion](/x_ite/components/hanim/hanimmotion/) interpolators.
-* Bug fixed in [Text](/x_ite/components/text/text/) node with vertical text and *topToBottom* set to `FALSE`.
-* Bug fixed in [HAnimMotion](/x_ite/components/hanim/hanimmotion/) node with XYZ rotation order handling.
-* Bug fixed when [ParticleSystem](/x_ite/components/particlesystems/particlesystem/) *texCoord* is used.
-* Bug fixed when points are rendered on a transparent [Background](/x_ite/components/environmentaleffects/background/).
-* Fixed fatal bug in Depth shader when [ClipPlane](/x_ite/components/rendering/clipplane/) nodes are used. This affects shadows and collision detection.
-* Correctly handle [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) nodes during collision detection.
-* Fixed units of *nearDistance* and *farDistance* fields of X3DViewpointNode and X3DTextureProjectorNode.
+- [x] The Walk and Fly viewers come now with a new feature »Slide Along Walls« and new [browser option](/x_ite/reference/browser-services/#browser-options) `WallFriction`.
+- [x] New glTF extension [KHR_materials_volume_scatter](/x_ite/components/x-ite/volumescattermaterialextension/) implemented.
+- [x] If a glTF file with animations is loaded, a new »Animations« menu will appear in the context menu.
+- [x] Optimized creation of [HAnimMotion](/x_ite/components/hanim/hanimmotion/) interpolators.
+- [x] glTF Parser now supports extension [KHR_node_visibility](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_visibility) with animation pointers.
+- [x] Bug fixed in [Text](/x_ite/components/text/text/) node with vertical text and *topToBottom* set to `FALSE`.
+- [x] Bug fixed in [HAnimMotion](/x_ite/components/hanim/hanimmotion/) node with XYZ rotation order handling.
+- [x] Bug fixed when [ParticleSystem](/x_ite/components/particlesystems/particlesystem/) *texCoord* is used.
+- [x] Bug fixed when points are rendered on a transparent [Background](/x_ite/components/environmentaleffects/background/).
+- [x] Fixed fatal bug in Depth shader when [ClipPlane](/x_ite/components/rendering/clipplane/) nodes are used. This affects shadows and collision detection.
+- [x] Correctly handle [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) nodes during collision detection.
+- [x] Fixed units of *nearDistance* and *farDistance* fields of X3DViewpointNode and X3DTextureProjectorNode.
 
 ## X_ITE v12.0 Series
 
@@ -33,17 +34,17 @@ There is now a test file that should show both the same image on the front and b
 
 ### Breaking Change
 
-* Fixes texture flipping about x-Axis for Geometry2D for [ImageTexture](/x_ite/components/texturing/imagetexture/) and [MovieTexture](/x_ite/components/texturing/movietexture/).
+- [x] Fixes texture flipping about x-Axis for Geometry2D for [ImageTexture](/x_ite/components/texturing/imagetexture/) and [MovieTexture](/x_ite/components/texturing/movietexture/).
 
 ### Notable Changes
 
-* Now, texture transform nodes also affect [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) node.
-* Collision detection is now entirely done by GPU.
-* XML and JSON attributes *appinfo* and *documentation* for `ProtoDeclare`, `ExternProtoDeclare` and `field` are no longer ignored.
-* glTF Parser now supports extension KHR_node_visibility.
-* Bug fixes in several nodes with bounding box calculations.
-* Fixes bug with light *attenuation* handling in PBR shader.
-* Fixes a bug with some smart-phones that HAnim and ParticleSystem nodes are not working.
+- [x] Now, texture transform nodes also affect [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) node.
+- [x] Collision detection is now entirely done by GPU.
+- [x] XML and JSON attributes *appinfo* and *documentation* for `ProtoDeclare`, `ExternProtoDeclare` and `field` are no longer ignored.
+- [x] glTF Parser now supports extension [KHR_node_visibility](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_visibility).
+- [x] Bug fixes in several nodes with bounding box calculations.
+- [x] Fixes bug with light *attenuation* handling in PBR shader.
+- [x] Fixes a bug with some smart-phones that HAnim and ParticleSystem nodes are not working.
 
 ## X_ITE v11.6 Series
 
@@ -58,12 +59,12 @@ See also: [MovieTexture supported file formats](/x_ite/components/texturing/movi
 
 ### Notable Changes
 
-* This series drops support for WebGL 1, because all known browsers support WebGL 2 now for quite a while.
-* [EnvironmentLight](/x_ite/components/lighting/environmentlight/) can now generate a diffuse texture from specular if *diffuseTexture* field is empty.
-* Fixes a bug with Mali GPU when some objects are rendered completely black.
-* Fixes light calculations for [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/).
-* Speed of glTF image loading is now better in some cases.
-* Fixes a bug with [Extrusion](/x_ite/components/geometry3d/extrusion/) and closed *spine* when *orientations* are used.
+- [x] This series drops support for WebGL 1, because all known browsers support WebGL 2 now for quite a while.
+- [x] [EnvironmentLight](/x_ite/components/lighting/environmentlight/) can now generate a diffuse texture from specular if *diffuseTexture* field is empty.
+- [x] Fixes a bug with Mali GPU when some objects are rendered completely black.
+- [x] Fixes light calculations for [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/).
+- [x] Speed of glTF image loading is now better in some cases.
+- [x] Fixes a bug with [Extrusion](/x_ite/components/geometry3d/extrusion/) and closed *spine* when *orientations* are used.
 
 ## X_ITE v11.5 Series
 
@@ -71,52 +72,52 @@ See also: [MovieTexture supported file formats](/x_ite/components/texturing/movi
 
 ### Sunrize
 
-* Objects can now directly be selected in the browser window.
-* New Hierarchy buttons »Select parent nodes(s).« and »Select child node(s).« in the Dashboard.
-* New »View all objects in active layer.« button in the Dashboard.
-* Other bug fixes.
+- [x] Objects can now directly be selected in the browser window.
+- [x] New Hierarchy buttons »Select parent nodes(s).« and »Select child node(s).« in the Dashboard.
+- [x] New »View all objects in active layer.« button in the Dashboard.
+- [x] Other bug fixes.
 
 ### X_ITE
 
-* New `theme` [attribute](/x_ite/#attributes-of-the-x3d-canvas-element) for the \<x3d-canvas\> element.
-* New icon concept for context menu, timings and notifications.
-* X3DVolumeDataNode now supports [browser option](/x_ite/reference/browser-services/#browser-options) `QualityWhenMoving`.
-* Improved [LineProperties](/x_ite/components/shape/lineproperties/) `linewidthScaleFactor` handling to support a greater range of values.
-* Fixed various minor bugs in [MovieTexture](/x_ite/components/texturing/movietexture/).
-* Fixed issue with animation getting stuck when in transition, viewAll or lookAt animation.
-* Fixed issue with [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) sending »old« *touchTime* values.
-* Fixed issue in normal calculations in rare cases.
-* Fixed [Switch](/x_ite/components/grouping/switch/) and [LOD](/x_ite/components/navigation/lod/) `addChildren` and `removeChildren` events handling.
-* If the *min* package is selected, the correct files are now loaded from the assets folder.
-* Fixed fatal bug in PBR shader when [DiffuseTransmissionMaterialExtension](/x_ite/components/x-ite/diffusetransmissionmaterialextension/) and [VolumeMaterialExtension](/x_ite/components/x-ite/volumematerialextension/) are present at the same time.
-* Fixed bug when Order Independent Transparency (OIT) and [TransmissionMaterialExtension](/x_ite/components/x-ite/transmissionmaterialextension/) are used together.
-* Fixed a bug in PBR shader when points and lines are rendered without normals.
-* Other bug fixes.
+- [x] New `theme` [attribute](/x_ite/#attributes-of-the-x3d-canvas-element) for the \<x3d-canvas\> element.
+- [x] New icon concept for context menu, timings and notifications.
+- [x] X3DVolumeDataNode now supports [browser option](/x_ite/reference/browser-services/#browser-options) `QualityWhenMoving`.
+- [x] Improved [LineProperties](/x_ite/components/shape/lineproperties/) `linewidthScaleFactor` handling to support a greater range of values.
+- [x] Fixed various minor bugs in [MovieTexture](/x_ite/components/texturing/movietexture/).
+- [x] Fixed issue with animation getting stuck when in transition, viewAll or lookAt animation.
+- [x] Fixed issue with [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) sending »old« *touchTime* values.
+- [x] Fixed issue in normal calculations in rare cases.
+- [x] Fixed [Switch](/x_ite/components/grouping/switch/) and [LOD](/x_ite/components/navigation/lod/) `addChildren` and `removeChildren` events handling.
+- [x] If the *min* package is selected, the correct files are now loaded from the assets folder.
+- [x] Fixed fatal bug in PBR shader when [DiffuseTransmissionMaterialExtension](/x_ite/components/x-ite/diffusetransmissionmaterialextension/) and [VolumeMaterialExtension](/x_ite/components/x-ite/volumematerialextension/) are present at the same time.
+- [x] Fixed bug when Order Independent Transparency (OIT) and [TransmissionMaterialExtension](/x_ite/components/x-ite/transmissionmaterialextension/) are used together.
+- [x] Fixed a bug in PBR shader when points and lines are rendered without normals.
+- [x] Other bug fixes.
 
 ## X_ITE v11.4 Series
 
 *Leipzig, 23rd March 2025:* This series comes with a lot of small but important changes and features.
 
-* Improved WOFF2 font files handling.
-* New dragging cursor when an X3DDragSensorNode is dragged.
-* New [Mute](/x_ite/reference/browser-services/#getbrowseroption-name-string-any) browser option.
-* Fixed a issue when an X3DBindableNode receives a *set_bind* `FALSE` event.
-* Fixed an issue with viewpoint binding at initialization of world and when the viewpoint has received an additional *set_bind* `TRUE` event.
-* The pixel data of a [PixelTexture](/x_ite/components/texturing/pixeltexture/) node are now checked for transparent pixels if necessary, to automatically determine alpha mode of [Appearance](/x_ite/components/shape/appearance/) node.
+- [x] Improved WOFF2 font files handling.
+- [x] New dragging cursor when an X3DDragSensorNode is dragged.
+- [x] New [Mute](/x_ite/reference/browser-services/#getbrowseroption-name-string-any) browser option.
+- [x] Fixed a issue when an X3DBindableNode receives a *set_bind* `FALSE` event.
+- [x] Fixed an issue with viewpoint binding at initialization of world and when the viewpoint has received an additional *set_bind* `TRUE` event.
+- [x] The pixel data of a [PixelTexture](/x_ite/components/texturing/pixeltexture/) node are now checked for transparent pixels if necessary, to automatically determine alpha mode of [Appearance](/x_ite/components/shape/appearance/) node.
 
 ## X_ITE v11.3 Series
 
 *Leipzig, 9th March 2025:* The scene-graph now optimizes itself automatically depending on what nodes are present. If, for example, a Group node contains only invisible nodes such as TimeSensor or ScalarInterpolator, this group is completely optimized away, of course this has no influence on the animation. Not only nodes that are invisible, but also nodes that do not participate in collision or shadow calculation can now be sorted out. This optimization is dynamic and thorough, everything that does not need to be traversed is removed.
 
-* Scene-graph traversal optimizations for improved performance and efficiency in processing scene graphs, resulting in faster rendering and reduced computation overhead.
+- [x] Scene-graph traversal optimizations for improved performance and efficiency in processing scene graphs, resulting in faster rendering and reduced computation overhead.
 
 ## X_ITE v11.2 Series
 
 *Leipzig, 16th February 2025:* With this series there is now extended WebXR support. Use your VR glasses with X_ITE and get immersive.
 
-* Basic visualization of the controller (input ray and tracking point)
-* X3DPointingDeviceSensorNode support
-* Support for WALK, FLY and EXAMINE viewer via controllers and buttons
+- [x] Basic visualization of the controller (input ray and tracking point)
+- [x] X3DPointingDeviceSensorNode support
+- [x] Support for WALK, FLY and EXAMINE viewer via controllers and buttons
 
 You can now click and drag [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) and [PlaneSensor](/x_ite/components/pointingdevicesensor/planesensor/) etc. and also get feedback on your controller.
 
@@ -126,22 +127,22 @@ The WALK, FLY and EXAMINE viewer can now be controlled via the buttons and the t
 
 *Leipzig, 12th December 2024:* Again, these series fixes some long standing issues. There are also some breaking changes.
 
-* `X3DBrowser.createScene` now returns a Promise.
-* `X3DBaseNode.setExecutionContext(null)` always connects to browser.
-* Default value of `X3DTextureProjectorNode.upVector` is now `0 1 0`.
-* Fixed a bug when parsing strings.
+- [x] `X3DBrowser.createScene` now returns a Promise.
+- [x] `X3DBaseNode.setExecutionContext(null)` always connects to browser.
+- [x] Default value of `X3DTextureProjectorNode.upVector` is now `0 1 0`.
+- [x] Fixed a bug when parsing strings.
 
 ## X_ITE v10.5 Series
 
 *Leipzig, 8th September 2024:* These series fixes some long standing issues.
 
-* Improved rendering of opaque points, especially with [PointSet](/x_ite/components/rendering/pointset/).
-* Implemented [NurbsTrimmedSurface](/x_ite/components/nurbs/nurbstrimmedsurface/).
-* Increased speed when parsing X3D files.
-* Improved rendering of thick lines.
-* [StaticGroup](/x_ite/components/grouping/staticgroup/) is now doing extensive optimizations.
-* [HAnimSegment](/x_ite/components/hanim/hanimsegment/) now handles displacers.
-* glTF Parser: Implemented glTF extension [KHR_animation_pointer](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_animation_pointer/README.md).
+- [x] Improved rendering of opaque points, especially with [PointSet](/x_ite/components/rendering/pointset/).
+- [x] Implemented [NurbsTrimmedSurface](/x_ite/components/nurbs/nurbstrimmedsurface/).
+- [x] Increased speed when parsing X3D files.
+- [x] Improved rendering of thick lines.
+- [x] [StaticGroup](/x_ite/components/grouping/staticgroup/) is now doing extensive optimizations.
+- [x] [HAnimSegment](/x_ite/components/hanim/hanimsegment/) now handles displacers.
+- [x] glTF Parser: Implemented glTF extension [KHR_animation_pointer](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_animation_pointer/README.md).
 
 ## X_ITE v10.4 Series
 
@@ -151,11 +152,11 @@ This works very well with all geometry types (point, line, 2D, 3D).
 
 A basic test file is also available. This test file will create 10 static nodes from the previous 22 nodes:
 
-* [StaticGroup](/x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Grouping/StaticGroup.x3d)
+- [x] [StaticGroup](/x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Grouping/StaticGroup.x3d)
 
 Another test file using an Inline node with a glTF sample (1.5 million triangles). This test file will create 15 static nodes from the previous 49 nodes:
 
-* [StaticGroup with Inline](/x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Grouping/StaticGroupWithInline.x3d)
+- [x] [StaticGroup with Inline](/x_ite/playground/?url=https://create3000.github.io/Library/Tests/Components/Grouping/StaticGroupWithInline.x3d)
 
 ## X_ITE v10.3 Series
 
@@ -163,16 +164,16 @@ Another test file using an Inline node with a glTF sample (1.5 million triangles
 
 If you don't have a VR headset, there is a browser extension for Chrome and Firefox that emulates a WebXR device:
 
-* [WebXR Emulator for Chrome](https://chromewebstore.google.com/detail/webxr-api-emulator/mjddjgeghkdijejnciaefnkjmkafnnje)
-* [WebXR Emulator for Firefox](https://addons.mozilla.org/de/firefox/addon/webxr-api-emulator/)
+- [x] [WebXR Emulator for Chrome](https://chromewebstore.google.com/detail/webxr-api-emulator/mjddjgeghkdijejnciaefnkjmkafnnje)
+- [x] [WebXR Emulator for Firefox](https://addons.mozilla.org/de/firefox/addon/webxr-api-emulator/)
 
 ## X_ITE v10.2 Series
 
 *Leipzig, 4th August 2024:* This release comes with the following improvements:
 
-- Implemented KHR_materials_diffuse_transmission as [DiffuseTransmissionMaterialExtension](/x_ite/components/x-ite/diffusetransmissionmaterialextension/) node.
-- Implemented KHR_mesh_quantization in glTF parser.
-- Tangents are now automatically generated using MikkTSpace algorithm, if not present.
+- [x] Implemented KHR_materials_diffuse_transmission as [DiffuseTransmissionMaterialExtension](/x_ite/components/x-ite/diffusetransmissionmaterialextension/) node.
+- [x] Implemented KHR_mesh_quantization in glTF parser.
+- [x] Tangents are now automatically generated using MikkTSpace algorithm, if not present.
 
 ## X_ITE v10.1 Series
 
@@ -190,8 +191,8 @@ To get an idea of what a great difference these new material extensions make, ch
 
 There are also new [browser options](/x_ite/reference/browser-services/#browser-options) that are especially made for PhysicalMaterial node and SpecularGlossinessMaterial node.
 
-* New browser option Exposure.
-* New browser option ToneMapping.
+- [x] New browser option Exposure.
+- [x] New browser option ToneMapping.
 
 ### Implemented glTF Extensions
 
@@ -199,24 +200,24 @@ All glTF extensions implemented with this version are listed below:
 
 #### X3DOneSidedMaterialNode
 
-* KHR_materials_pbrSpecularGlossiness implemented as [SpecularGlossinessMaterial](/x_ite/components/x-ite/specularglossinessmaterial/) node.
+- [x] KHR_materials_pbrSpecularGlossiness implemented as [SpecularGlossinessMaterial](/x_ite/components/x-ite/specularglossinessmaterial/) node.
 
 #### X3DMaterialExtensionNode
 
-* KHR_materials_anisotropy implemented as [AnisotropyMaterialExtension](/x_ite/components/x-ite/anisotropymaterialextension/) node.
-* KHR_materials_clearcoat implemented as [ClearcoatMaterialExtension](/x_ite/components/x-ite/clearcoatmaterialextension/) node.
-* KHR_materials_dispersion implemented as [DispersionMaterialExtension](/x_ite/components/x-ite/dispersionmaterialextension/) node.
-* KHR_materials_emissive_strength implemented as [EmissiveStrengthMaterialExtension](/x_ite/components/x-ite/emissivestrengthmaterialextension/) node.
-* KHR_materials_ior implemented as [IORMaterialExtension](/x_ite/components/x-ite/iormaterialextension/) node.
-* KHR_materials_iridescence implemented as [IridescenceMaterialExtension](/x_ite/components/x-ite/iridescencematerialextension/) node.
-* KHR_materials_sheen implemented as [SheenMaterialExtension](/x_ite/components/x-ite/sheenmaterialextension/) node.
-* KHR_materials_specular implemented as [SpecularMaterialExtension](/x_ite/components/x-ite/specularmaterialextension/) node.
-* KHR_materials_transmission implemented as [TransmissionMaterialExtension](/x_ite/components/x-ite/transmissionmaterialextension/) node.
-* KHR_materials_volume implemented as [VolumeMaterialExtension](/x_ite/components/x-ite/volumematerialextension/) node.
+- [x] KHR_materials_anisotropy implemented as [AnisotropyMaterialExtension](/x_ite/components/x-ite/anisotropymaterialextension/) node.
+- [x] KHR_materials_clearcoat implemented as [ClearcoatMaterialExtension](/x_ite/components/x-ite/clearcoatmaterialextension/) node.
+- [x] KHR_materials_dispersion implemented as [DispersionMaterialExtension](/x_ite/components/x-ite/dispersionmaterialextension/) node.
+- [x] KHR_materials_emissive_strength implemented as [EmissiveStrengthMaterialExtension](/x_ite/components/x-ite/emissivestrengthmaterialextension/) node.
+- [x] KHR_materials_ior implemented as [IORMaterialExtension](/x_ite/components/x-ite/iormaterialextension/) node.
+- [x] KHR_materials_iridescence implemented as [IridescenceMaterialExtension](/x_ite/components/x-ite/iridescencematerialextension/) node.
+- [x] KHR_materials_sheen implemented as [SheenMaterialExtension](/x_ite/components/x-ite/sheenmaterialextension/) node.
+- [x] KHR_materials_specular implemented as [SpecularMaterialExtension](/x_ite/components/x-ite/specularmaterialextension/) node.
+- [x] KHR_materials_transmission implemented as [TransmissionMaterialExtension](/x_ite/components/x-ite/transmissionmaterialextension/) node.
+- [x] KHR_materials_volume implemented as [VolumeMaterialExtension](/x_ite/components/x-ite/volumematerialextension/) node.
 
 #### Switch
 
-* KHR_materials_variants implemented as [Switch](/x_ite/components/grouping/switch/) node.
+- [x] KHR_materials_variants implemented as [Switch](/x_ite/components/grouping/switch/) node.
 
 ## X_ITE v9.5.2 Released
 
@@ -226,12 +227,12 @@ The [InstancedShape](/x_ite/components/x-ite/instancedshape/) node can now be us
 
 I have created two examples here to show the potential of this connection, both of which can be seen in the X_ITE Playground:
 
-* [Open HAnimInstancedShape in Playground.](/x_ite/playground/?url=https://create3000.github.io/media/examples/HAnim/HAnimInstancedShape/HAnimInstancedShape.x3d)
-* [Open HAnimParticleSystem in Playground.](/x_ite/playground/?url=https://create3000.github.io/media/examples/HAnim/HAnimParticleSystem/HAnimParticleSystem.x3d)
+- [x] [Open HAnimInstancedShape in Playground.](/x_ite/playground/?url=https://create3000.github.io/media/examples/HAnim/HAnimInstancedShape/HAnimInstancedShape.x3d)
+- [x] [Open HAnimParticleSystem in Playground.](/x_ite/playground/?url=https://create3000.github.io/media/examples/HAnim/HAnimParticleSystem/HAnimParticleSystem.x3d)
 
 In addition to these changes, we have added a »damping« field to BoundedPhysicsModel which makes this possible:
 
-* [Open BoundedPhysicsModel in Playground.](/x_ite/playground/?url=https://create3000.github.io/media/examples/ParticleSystems/BoundedPhysicsModel/BoundedPhysicsModel.x3d)
+- [x] [Open BoundedPhysicsModel in Playground.](/x_ite/playground/?url=https://create3000.github.io/media/examples/ParticleSystems/BoundedPhysicsModel/BoundedPhysicsModel.x3d)
 
 Every time a particle collides with the model, the velocity is multiplied by the damping factor, which now makes it possible to create more realistic simulations.
 
@@ -245,7 +246,7 @@ In the meantime, further improvements have of course been made, but these are no
 
 ### New Features
 
-* Imported nodes also work within protos now.
+- [x] Imported nodes also work within protos now.
 
 ## X_ITE v9.0.0 Released
 
@@ -253,13 +254,13 @@ In the meantime, further improvements have of course been made, but these are no
 
 ### New Features
 
-* Implemented a KTX texture loader for [ImageCubeMapTexture](/x_ite/components/cubemaptexturing/imagecubemaptexture/), [ImageTexture](/x_ite/components/texturing/imagetexture/), and [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/).
-* [ImageCubeMapTexture](/x_ite/components/cubemaptexturing/imagecubemaptexture/) can now load panorama images.
-* Basic implementation of [EnvironmentLight](/x_ite/components/lighting/environmentlight/) node.
-* ES module version of X_ITE named »x_ite.mjs«.
-* Typescript types for IntelliSense.
-* PLY 3d format parser.
-* [TextureProjection component](/x_ite/components/overview/#textureprojection) is now working.
+- [x] Implemented a KTX texture loader for [ImageCubeMapTexture](/x_ite/components/cubemaptexturing/imagecubemaptexture/), [ImageTexture](/x_ite/components/texturing/imagetexture/), and [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/).
+- [x] [ImageCubeMapTexture](/x_ite/components/cubemaptexturing/imagecubemaptexture/) can now load panorama images.
+- [x] Basic implementation of [EnvironmentLight](/x_ite/components/lighting/environmentlight/) node.
+- [x] ES module version of X_ITE named »x_ite.mjs«.
+- [x] Typescript types for IntelliSense.
+- [x] PLY 3d format parser.
+- [x] [TextureProjection component](/x_ite/components/overview/#textureprojection) is now working.
 
 ## X_ITE v8.10.0 Released
 
@@ -267,22 +268,22 @@ In the meantime, further improvements have of course been made, but these are no
 
 ### New Features
 
-* The component/profile messages in the console from HAnim should be gone now.
-* HAnimHumanoid is now GPU accelerated, try high poly objects.
-* glTF skin object is now completely translated into HAnimHumanoid even with animations.
+- [x] The component/profile messages in the console from HAnim should be gone now.
+- [x] HAnimHumanoid is now GPU accelerated, try high poly objects.
+- [x] glTF skin object is now completely translated into HAnimHumanoid even with animations.
 
 With the [glTF Sample Viewer](https://create3000.github.io/x_ite/laboratory/gltf-sample-viewer) you can test glTF and HAnimHumanoid if you like. Files of interest are:
 
 #### glTF Random Models
 
-* Animated Bee (lots of joints)
+- [x] Animated Bee (lots of joints)
 
 #### glTF Sample Models
 
-* Brain Stem (high poly)
-* Cesium man
-* Fox
-* Recursive Skeletons (stress test)
+- [x] Brain Stem (high poly)
+- [x] Cesium man
+- [x] Fox
+- [x] Recursive Skeletons (stress test)
 
 ## X_ITE v8.7.0 Released
 
@@ -292,7 +293,7 @@ In addition, there is now an [automated test suite](https://github.com/create300
 
 ### Breaking Changes
 
-- `Browser.createX3DFromString` now returns a Promise.
+- [x] `Browser.createX3DFromString` now returns a Promise.
 
 ## X_ITE v8.5.2 Released
 
@@ -300,18 +301,18 @@ In addition, there is now an [automated test suite](https://github.com/create300
 
 ### New Features
 
-- Added SVG parser.
-- Added STL parser.
-- Added GLB parser.
-- Parse HTML colors and constants like PI or PI1_3.
-- Better GZip support.
+- [x] Added SVG parser.
+- [x] Added STL parser.
+- [x] Added GLB parser.
+- [x] Parse HTML colors and constants like PI or PI1_3.
+- [x] Better GZip support.
 
 ### Bug Fixes
 
-- Fixed wireframe shading of thick lines.
-- Fixed XML MFString parsing.
-- Fixed and optimized NRRD parser.
-- Fixed XML output of backslash in strings.
+- [x] Fixed wireframe shading of thick lines.
+- [x] Fixed XML MFString parsing.
+- [x] Fixed and optimized NRRD parser.
+- [x] Fixed XML output of backslash in strings.
 
 ## X_ITE v8.5.0 Released
 
@@ -319,18 +320,18 @@ In addition, there is now an [automated test suite](https://github.com/create300
 
 ### New Features
 
-- Added antialiased attribute.
-- Added multisampling attribute.
-- Added contentScale attribute.
-- New browser options and rendering properties.
-- Animated GIF support for MovieTexture.
-- Added glTF parser.
-- Added Wavefront OBJ parser.
-- Implemented ImageTextureAtlas node.
+- [x] Added antialiased attribute.
+- [x] Added multisampling attribute.
+- [x] Added contentScale attribute.
+- [x] New browser options and rendering properties.
+- [x] Animated GIF support for MovieTexture.
+- [x] Added glTF parser.
+- [x] Added Wavefront OBJ parser.
+- [x] Implemented ImageTextureAtlas node.
 
 ### Bug Fixes
 
-- Fixed X3DViewpointNode.viewAll behavior at initialization of world.
+- [x] Fixed X3DViewpointNode.viewAll behavior at initialization of world.
 
 ## X_ITE v8.4.0 Released
 
@@ -338,7 +339,7 @@ In addition, there is now an [automated test suite](https://github.com/create300
 
 ### New Features
 
-- Implemented toJSONString.
+- [x] Implemented toJSONString.
 
 ## X_ITE v8.3.3 Released
 
@@ -346,19 +347,19 @@ In addition, there is now an [automated test suite](https://github.com/create300
 
 ### New Features
 
-- Added to*String options (scene, style, precision, doublePrecision).
-- Added output styles (CLEAN, SMALL, COMPACT, TIDY).
-- Prefer PROTO's during parse.
-- Collect joint nodes if no provided (HAnim).
-- Relaxed VRML parser (parse top level statements in MFNode).
-- XML short syntax of prototype instances.
+- [x] Added to*String options (scene, style, precision, doublePrecision).
+- [x] Added output styles (CLEAN, SMALL, COMPACT, TIDY).
+- [x] Prefer PROTO's during parse.
+- [x] Collect joint nodes if no provided (HAnim).
+- [x] Relaxed VRML parser (parse top level statements in MFNode).
+- [x] XML short syntax of prototype instances.
 
 ### Bug Fixes
 
-- Fixed bug when floating point numbers are printed.
-- Fixed bug when MFImage is printed.
-- Fixed component's highest levels.
-- Fixed double count of headlight.
+- [x] Fixed bug when floating point numbers are printed.
+- [x] Fixed bug when MFImage is printed.
+- [x] Fixed component's highest levels.
+- [x] Fixed double count of headlight.
 
 ## X_ITE v8.3.0 Released
 
@@ -366,18 +367,18 @@ In addition, there is now an [automated test suite](https://github.com/create300
 
 ### New Features
 
-- Use Phong shading as default for version 4.0.
-- Implemented X3DViewpointNode *viewAll, nearDistance, farDistance and navigationInfo*.
-- Implemented Inline *global* field.
-- Implemented point and line geometry *normal* field.
-- Added getNodeTypeName to [SFNode](https://create3000.github.io/x_ite/reference/field-services-and-objects#sfnode-object).
-- Added vector constructors to [SFMatrix*](https://create3000.github.io/x_ite/reference/field-services-and-objects#sfmatrix3dsfmatrix3f-object).
-- Added [SFRotation](https://create3000.github.io/x_ite/reference/field-services-and-objects#sfrotation-object) matrix handling functions.
-- Text component is now loaded on demand.
+- [x] Use Phong shading as default for version 4.0.
+- [x] Implemented X3DViewpointNode *viewAll, nearDistance, farDistance and navigationInfo*.
+- [x] Implemented Inline *global* field.
+- [x] Implemented point and line geometry *normal* field.
+- [x] Added getNodeTypeName to [SFNode](https://create3000.github.io/x_ite/reference/field-services-and-objects#sfnode-object).
+- [x] Added vector constructors to [SFMatrix*](https://create3000.github.io/x_ite/reference/field-services-and-objects#sfmatrix3dsfmatrix3f-object).
+- [x] Added [SFRotation](https://create3000.github.io/x_ite/reference/field-services-and-objects#sfrotation-object) matrix handling functions.
+- [x] Text component is now loaded on demand.
 
 ### Bug Fixes
 
-- Fixed bug with GeoViewpoint flickering when just bound.
+- [x] Fixed bug with GeoViewpoint flickering when just bound.
 
 ## X_ITE v8.1.0 Released
 
@@ -385,8 +386,8 @@ In addition, there is now an [automated test suite](https://github.com/create300
 
 ### Bug Fixes
 
-- Fixed Examine Viewer spin behavior.
-- Fixed fading of Splash Screen.
+- [x] Fixed Examine Viewer spin behavior.
+- [x] Fixed fading of Splash Screen.
 
 ## X_ITE v8.0.0 Released
 
@@ -394,14 +395,14 @@ In addition, there is now an [automated test suite](https://github.com/create300
 
 ### New Features
 
-- Now based on native JavaScript module system.
-- X_ITE build is now based on WebPack, and a UMD library is build.
-- No more injected \<script\> elements in \<header\> element of page.
-- x_ite_dom is now an integral part of X_ITE.
+- [x] Now based on native JavaScript module system.
+- [x] X_ITE build is now based on WebPack, and a UMD library is build.
+- [x] No more injected \<script\> elements in \<header\> element of page.
+- [x] x_ite_dom is now an integral part of X_ITE.
 
 ### Bug Fixes
 
-- Fixed X3DNode dispose.
+- [x] Fixed X3DNode dispose.
 
 ## X_ITE v7.0.0 Released
 
@@ -409,14 +410,14 @@ In addition, there is now an [automated test suite](https://github.com/create300
 
 ### New Features
 
-- New shader system.
-- X3DVolumeData node now supports visible and bboxDisplay field.
-- GeoViewpoint automatically forces logarithmic depth buffer.
-- GeoViewpoint can now handle browser option 'StraightenHorizon'.
+- [x] New shader system.
+- [x] X3DVolumeData node now supports visible and bboxDisplay field.
+- [x] GeoViewpoint automatically forces logarithmic depth buffer.
+- [x] GeoViewpoint can now handle browser option 'StraightenHorizon'.
 
 ### Bug Fixes
 
-- Fixed ComposedShader activate field handling.
+- [x] Fixed ComposedShader activate field handling.
 
 ## X_ITE v6.1.0 Released
 
@@ -424,14 +425,14 @@ In addition, there is now an [automated test suite](https://github.com/create300
 
 ### New Features
 
-- Implemented picking of thick lines and large points with X3DPointingDeviceSensorNode nodes like TouchSensor.
-- Added Shading menu if *debug* attribute is 'true'.
+- [x] Implemented picking of thick lines and large points with X3DPointingDeviceSensorNode nodes like TouchSensor.
+- [x] Added Shading menu if *debug* attribute is 'true'.
 
 ### Bug Fixes
 
-- Fixed Disk2D line case rendering.
-- Fixed SFImage.toString.
-- Fixed CSS.
+- [x] Fixed Disk2D line case rendering.
+- [x] Fixed SFImage.toString.
+- [x] Fixed CSS.
 
 ## X_ITE v6.0.0 Released
 
@@ -439,16 +440,16 @@ In addition, there is now an [automated test suite](https://github.com/create300
 
 ### New Features
 
-- Introducing x3d-canvas element, using JavaScript User-Element syntax.
-- New styles for context menu.
-- Full support for LineProperties node.
-- ParticleSystems are now GPU accelerated.
-- Faster picking and other optimizations.
+- [x] Introducing x3d-canvas element, using JavaScript User-Element syntax.
+- [x] New styles for context menu.
+- [x] Full support for LineProperties node.
+- [x] ParticleSystems are now GPU accelerated.
+- [x] Faster picking and other optimizations.
 
 ### Bug Fixes
 
-- Fixed bug that browser stop working suddenly.
-- Fixed fatal bug when second browser is created programmatically.
+- [x] Fixed bug that browser stop working suddenly.
+- [x] Fixed fatal bug when second browser is created programmatically.
 
 ## X_ITE v4.7.7 Released
 
@@ -456,38 +457,38 @@ In addition, there is now an [automated test suite](https://github.com/create300
 
 ### New Features
 
-- Output XML or VRML encoding when viewpoint is copied.
-- Added browser option "Timings", but removed attribute.
-- Return promise from X3D function.
+- [x] Output XML or VRML encoding when viewpoint is copied.
+- [x] Added browser option "Timings", but removed attribute.
+- [x] Return promise from X3D function.
 
 ### Bug Fixes
 
-- Prevent accidental navigation when context menu is closed.
-- Fixed copy to clipboard of viewpoint when in fullscreen mode.
+- [x] Prevent accidental navigation when context menu is closed.
+- [x] Fixed copy to clipboard of viewpoint when in fullscreen mode.
 
 ## X_ITE v4.7.6 Released
 
 *Leipzig, 23th January 2022*: This release implements the new X3Dv4 UnlitMaterial. This also means that the custom shader interface has changed:
 
-- Depreciated x3d_FrontMaterial in favor of x3d_Material uniform.
-- Removed x3d_BackMaterial uniform.
-- Removed x3d_Lighting uniform.
-- Removed x3d_SeparateBackColors uniform.
+- [x] Depreciated x3d_FrontMaterial in favor of x3d_Material uniform.
+- [x] Removed x3d_BackMaterial uniform.
+- [x] Removed x3d_Lighting uniform.
+- [x] Removed x3d_SeparateBackColors uniform.
 
 ### New Features
 
-- Added X3DSingleTextureNode class.
-- Added X3DSingleTextureTransformNode class.
-- Added X3DSingleTextureCoordinateNode class.
-- Added UnlitMaterial class.
-- Implemented Appearance *backMaterial* field.
+- [x] Added X3DSingleTextureNode class.
+- [x] Added X3DSingleTextureTransformNode class.
+- [x] Added X3DSingleTextureCoordinateNode class.
+- [x] Added UnlitMaterial class.
+- [x] Implemented Appearance *backMaterial* field.
 
 ### Bug Fixes
 
-- Fixed bug in aliases handling and proto nodes setup.
-- Fixed bug in initialization of TextureTransformMatrix3D.
-- Fixed wireframe mode for geometry.
-- Optimized POINT shading.
+- [x] Fixed bug in aliases handling and proto nodes setup.
+- [x] Fixed bug in initialization of TextureTransformMatrix3D.
+- [x] Fixed wireframe mode for geometry.
+- [x] Optimized POINT shading.
 
 ## X_ITE v4.7.3 Released
 
@@ -495,8 +496,8 @@ In addition, there is now an [automated test suite](https://github.com/create300
 
 ### New Features
 
-- Parse JSON encoding "#sourceCode" objects.
-- Use JavaScript URL objects internally now.
+- [x] Parse JSON encoding "#sourceCode" objects.
+- [x] Use JavaScript URL objects internally now.
 
 ## X_ITE v4.7.2 Released
 
@@ -504,16 +505,16 @@ In addition, there is now an [automated test suite](https://github.com/create300
 
 ### New Features
 
-- Changed behavior of FLY viewer.
-- Added particle uniforms to line geometry.
+- [x] Changed behavior of FLY viewer.
+- [x] Added particle uniforms to line geometry.
 
 ### Bug Fixes
 
-- Fixes script url determination.
-- Fixed bug when particle systems are used.
-- Fixed rendering issue of Gouraud and Phong shader in Safari.
-- Reduced compile time of Phong shader.
-- Fixed bug in live handling.
+- [x] Fixes script url determination.
+- [x] Fixed bug when particle systems are used.
+- [x] Fixed rendering issue of Gouraud and Phong shader in Safari.
+- [x] Reduced compile time of Phong shader.
+- [x] Fixed bug in live handling.
 
 ## X_ITE v4.7.1 Released
 
@@ -521,21 +522,21 @@ In addition, there is now an [automated test suite](https://github.com/create300
 
 ### New Features
 
-- Added layerNode argument to `Browser.changeViewpoint([layerNode,] name)`.
-- Implemented Symbol.iterator for MF* fields. This enables `for of` loops.
-- Improved X3DBindableNode handling when cloned in multiple layers.
+- [x] Added layerNode argument to `Browser.changeViewpoint([layerNode,] name)`.
+- [x] Implemented Symbol.iterator for MF* fields. This enables `for of` loops.
+- [x] Improved X3DBindableNode handling when cloned in multiple layers.
 
 ### Bug Fixes
 
-- Abort loading if loadURL is called more than once.
-- Fixed load count handling.
-- Fixed LOD.
-- Fixed call outstanding events of inputOutput's of Script node when initialized.
-- Preload line shader when WALK/FLY viewer becomes active.
-- Prevent bug in Firefox that event loop is broken when pressing special keys. (#86)
-- Display submenus of context menu on left side if there is no space on right side. (#86)
-- Fixed fatal bug in OrthoViewpoint (#84).
-- Fixed bugs in RigidBodyPhysics when nodes are changed.
+- [x] Abort loading if loadURL is called more than once.
+- [x] Fixed load count handling.
+- [x] Fixed LOD.
+- [x] Fixed call outstanding events of inputOutput's of Script node when initialized.
+- [x] Preload line shader when WALK/FLY viewer becomes active.
+- [x] Prevent bug in Firefox that event loop is broken when pressing special keys. (#86)
+- [x] Display submenus of context menu on left side if there is no space on right side. (#86)
+- [x] Fixed fatal bug in OrthoViewpoint (#84).
+- [x] Fixed bugs in RigidBodyPhysics when nodes are changed.
 
 ## X_ITE v4.7.0 Released
 
@@ -545,17 +546,17 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### New Features
 
-- Added X3DLightNode *shadows* field.
-- Updated range of X3DLightNode *intensity* field.
-- Added X3DShapeNode *castShadow* field.
-- Added Appearance *alphaMode* and *alphaCutoff* field.
-- Added X3DBoundedBox *visible* and X3DBoundedBox *bboxDisplay* field.
-- Updated access type of WorldInfo *title* and *info* field to match X3Dv4.
-- Add context menu "Show World Info" menu item, if an WorldInfo node exists.
+- [x] Added X3DLightNode *shadows* field.
+- [x] Updated range of X3DLightNode *intensity* field.
+- [x] Added X3DShapeNode *castShadow* field.
+- [x] Added Appearance *alphaMode* and *alphaCutoff* field.
+- [x] Added X3DBoundedBox *visible* and X3DBoundedBox *bboxDisplay* field.
+- [x] Updated access type of WorldInfo *title* and *info* field to match X3Dv4.
+- [x] Add context menu "Show World Info" menu item, if an WorldInfo node exists.
 
 ### Bug Fixes
 
-- Changed Extrusion SCPyAxis calculation.
+- [x] Changed Extrusion SCPyAxis calculation.
 
 ## X_ITE v4.6.24 Released
 
@@ -563,8 +564,8 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### Bug Fixes
 
-- Fixed TransformSensor handling.
-- Fixed X3DBindableNode handling when child of a Switch or LOD node.
+- [x] Fixed TransformSensor handling.
+- [x] Fixed X3DBindableNode handling when child of a Switch or LOD node.
 
 ## X_ITE v4.6.23 Released
 
@@ -576,9 +577,9 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### Bug Fixes
 
-- Changed ComposedCubMapTexture field names.
-- Modified finiteRotationAxis default value.
-- Improved loading of X3DBackgroundNode nodes and ComposedCubeMap nodes.
+- [x] Changed ComposedCubMapTexture field names.
+- [x] Modified finiteRotationAxis default value.
+- [x] Improved loading of X3DBackgroundNode nodes and ComposedCubeMap nodes.
 
 ## X_ITE v4.6.21 Released
 
@@ -586,7 +587,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### Bug Fixes
 
-- Hide Shape node of GeneratedCubeMapTexture when generating texture itself.
+- [x] Hide Shape node of GeneratedCubeMapTexture when generating texture itself.
 
 ## X_ITE v4.6.20 Released
 
@@ -594,7 +595,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### Bug Fixes
 
-- Fixed bug in X3DBrowser.importDocument and X3DBrowser.importJS.
+- [x] Fixed bug in X3DBrowser.importDocument and X3DBrowser.importJS.
 
 ## X_ITE v4.6.19 Released
 
@@ -602,9 +603,9 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### Bug Fixes
 
-- Fixed handling of negative radius values in Disk2D.
-- Fixed handling of caps of Extrusion in rare cases.
-- Use negated normal for back faces in TextureCoordinateGenerator.
+- [x] Fixed handling of negative radius values in Disk2D.
+- [x] Fixed handling of caps of Extrusion in rare cases.
+- [x] Use negated normal for back faces in TextureCoordinateGenerator.
 
 ## X_ITE v4.6.18 Released
 
@@ -612,7 +613,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### Bug Fixes
 
-- Fixed bug with pointing device when padding is applied to X3DCanvas.
+- [x] Fixed bug with pointing device when padding is applied to X3DCanvas.
 
 ## X_ITE v4.6.17 Released
 
@@ -620,7 +621,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### Bug Fixes
 
-- Fixed a bug in X3DViewpointNode when the viewpoint is animated.
+- [x] Fixed a bug in X3DViewpointNode when the viewpoint is animated.
 
 ## X_ITE v4.6.15 Released
 
@@ -628,10 +629,10 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### Bug Fixes and Enhancements
 
-- Fixed OrthoViewpoint.
-- Fixed Layout component level.
-- Fixed shader select.
-- Implemented shader _activate_ field.
+- [x] Fixed OrthoViewpoint.
+- [x] Fixed Layout component level.
+- [x] Fixed shader select.
+- [x] Implemented shader _activate_ field.
 
 ## X_ITE v4.6.14 Released
 
@@ -639,7 +640,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### Bug Fixes and Enhancements
 
-- Fixed XML parser parse MFNode fieldValue element.
+- [x] Fixed XML parser parse MFNode fieldValue element.
 
 ## X_ITE v4.6.12 Released
 
@@ -647,14 +648,14 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### Bug Fixes and Enhancements
 
-- Better control of navigation with mouse and trackpad on macOS and tablet devices.
-- Fixed examine viewer rotation when multiple layer with viewport are present.
-- Emulate middle mouse button when pressing <kbd>Alt-or-Option</kbd> key.
-- Fixed bug in IndexedTriangleFanSet.
-- Updated Shape component to level 5.
-- Fix bug in rotation axis/angle calculation.
-- Very small optimization of transparent shapes.
-- Reworked bindable nodes bind handling.
+- [x] Better control of navigation with mouse and trackpad on macOS and tablet devices.
+- [x] Fixed examine viewer rotation when multiple layer with viewport are present.
+- [x] Emulate middle mouse button when pressing <kbd>Alt-or-Option</kbd> key.
+- [x] Fixed bug in IndexedTriangleFanSet.
+- [x] Updated Shape component to level 5.
+- [x] Fix bug in rotation axis/angle calculation.
+- [x] Very small optimization of transparent shapes.
+- [x] Reworked bindable nodes bind handling.
 
 ## X_ITE v4.6.11 Released
 
@@ -662,10 +663,10 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### Bug Fixes
 
-- Updated dependencies.
-- Fixed bug with Geometry2D in Safari.
-- Fixed Background rendering on iOS Safari.
-- Fixed bug with sound loading on iOS Safari.
+- [x] Updated dependencies.
+- [x] Fixed bug with Geometry2D in Safari.
+- [x] Fixed Background rendering on iOS Safari.
+- [x] Fixed bug with sound loading on iOS Safari.
 
 ## X_ITE v4.6.10 Released
 
@@ -673,7 +674,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### Bug Fixes
 
-- Fixed CSS.
+- [x] Fixed CSS.
 
 ## X_ITE v4.6.9 Released
 
@@ -681,8 +682,8 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### Bug Fixes
 
-- Added missing fields for HTML/DOM support.
-- Fixed projective texture mapping in conjunction with generated cube map.
+- [x] Added missing fields for HTML/DOM support.
+- [x] Fixed projective texture mapping in conjunction with generated cube map.
 
 ## X_ITE v4.6.8 Released
 
@@ -690,12 +691,12 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### New Features
 
-- Implemented TextureProjectorParallel.
-- Implemented TextureProjectorPerspective.
+- [x] Implemented TextureProjectorParallel.
+- [x] Implemented TextureProjectorPerspective.
 
 ### Bug Fixes
 
-- Fixed special case in TimeSensor when *cycleInterval* is 0.
+- [x] Fixed special case in TimeSensor when *cycleInterval* is 0.
 
 ## X_ITE v4.6.7 Released
 
@@ -703,7 +704,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### New Features
 
-- Implemented PointProperties node.
+- [x] Implemented PointProperties node.
 
 ## X_ITE v4.6.6 Released
 
@@ -711,7 +712,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### Bug Fixes
 
-- Fixed texture 3d orientation.
+- [x] Fixed texture 3d orientation.
 
 ## X_ITE v4.6.4 Released
 
@@ -719,15 +720,15 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### New Features
 
-- Updated external library dependencies.
-- Improved Gouraud and Phong shader.
-- Implemented DICOM image parser for ImageTexture3D.
-- Support for X3DTexture3DNode in OpacityMapVolumeStyle node's *transferFunction* field.
-- Implemented Script node *shutdown* function.
+- [x] Updated external library dependencies.
+- [x] Improved Gouraud and Phong shader.
+- [x] Implemented DICOM image parser for ImageTexture3D.
+- [x] Support for X3DTexture3DNode in OpacityMapVolumeStyle node's *transferFunction* field.
+- [x] Implemented Script node *shutdown* function.
 
 ### Bug Fixes
 
-- Fixed bug in Script node in rare cases.
+- [x] Fixed bug in Script node in rare cases.
 
 ## X_ITE v4.6.3 Released
 
@@ -735,15 +736,15 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### New Features
 
-- Support for NRRD types signed/unsigned byte, signed/unsigned short, signed/unsigned int, float, and double.
-- Implemented NRRD ASCII, RAW, HEX, and GZIP encoding.
+- [x] Support for NRRD types signed/unsigned byte, signed/unsigned short, signed/unsigned int, float, and double.
+- [x] Implemented NRRD ASCII, RAW, HEX, and GZIP encoding.
 
 ### Bug Fixes
 
-- Fixed CylinderSensor minAngle/maxAngle handling.
-- Fixed wrong SilhouetteEnhancementVolumeStyle rendering in rare cases.
-- Fixed wrong BoundaryEnhancementVolumeStyle rendering.
-- Fixed Background rendering on mobile devices.
+- [x] Fixed CylinderSensor minAngle/maxAngle handling.
+- [x] Fixed wrong SilhouetteEnhancementVolumeStyle rendering in rare cases.
+- [x] Fixed wrong BoundaryEnhancementVolumeStyle rendering.
+- [x] Fixed Background rendering on mobile devices.
 
 ## X_ITE v4.6.2 Released
 
@@ -751,15 +752,15 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### New Features
 
-- Basic support for VolumeRendering component.
-- Full support for Texturing3D component.
+- [x] Basic support for VolumeRendering component.
+- [x] Full support for Texturing3D component.
 
 ### Bug Fixes
 
-- Fixed missing Browser properties *supportedProfiles* and *supportedComponents*.
-- Optimized NURBS weight handling when no weights present.
-- Fixed bug in TextureTransformMatrix3D.
-- Fixed double load of URL in some cases of X3DUrlObject nodes.
+- [x] Fixed missing Browser properties *supportedProfiles* and *supportedComponents*.
+- [x] Optimized NURBS weight handling when no weights present.
+- [x] Fixed bug in TextureTransformMatrix3D.
+- [x] Fixed double load of URL in some cases of X3DUrlObject nodes.
 
 ## X_ITE v4.5.14 Released
 
@@ -767,9 +768,9 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### Bug Fixes
 
-- Better NURBS normals.
-- Fixed X3DNurbsSurfaceGeometryNode *closed* field handling.
-- Fix NURBS *weight* field handling.
+- [x] Better NURBS normals.
+- [x] Fixed X3DNurbsSurfaceGeometryNode *closed* field handling.
+- [x] Fix NURBS *weight* field handling.
 
 ## X_ITE v4.5.12 Released
 
@@ -777,8 +778,8 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### Bug Fixes
 
-- Fixed bug in Matrix transpose.
-- Better parser errors when node type is not known.
+- [x] Fixed bug in Matrix transpose.
+- [x] Better parser errors when node type is not known.
 
 ## X_ITE v4.5.10 Released
 
@@ -786,7 +787,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### Bug Fixes
 
-- Fixed sound rendering.
+- [x] Fixed sound rendering.
 
 ## X_ITE v4.5.9 Released
 
@@ -794,8 +795,8 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### Bug Fixes
 
-- Fixed bug with browser event handler, for instance »onload«, if jQuery is present.
-- Fixed bug with FogCoordinate calculation handling.
+- [x] Fixed bug with browser event handler, for instance »onload«, if jQuery is present.
+- [x] Fixed bug with FogCoordinate calculation handling.
 
 ## X_ITE v4.5.8 Released
 
@@ -803,7 +804,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### Bug Fixes
 
-- Fixed bug when parsing Classic VRML Encoded files.
+- [x] Fixed bug when parsing Classic VRML Encoded files.
 
 ## X_ITE v4.5.7 Released
 
@@ -811,14 +812,14 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### New Features
 
-- Updated splash screen.
+- [x] Updated splash screen.
 
 ### Bug Fixes
 
-- Fixed TimeSensor wrong *cycleTime* event at startup.
-- Fixed BrowserTimings button type.
-- Removed non-standard fields from X3DSoundSourceNode nodes.
-- Fixed geometry nodes index fields access type.
+- [x] Fixed TimeSensor wrong *cycleTime* event at startup.
+- [x] Fixed BrowserTimings button type.
+- [x] Removed non-standard fields from X3DSoundSourceNode nodes.
+- [x] Fixed geometry nodes index fields access type.
 
 ## X_ITE v4.5.6 Released
 
@@ -826,11 +827,11 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### New Features
 
-- Optimized CoordinateChaser/Damper and TexCoordChaser2D/Damper2D.
+- [x] Optimized CoordinateChaser/Damper and TexCoordChaser2D/Damper2D.
 
 ### Bug Fixes
 
-- Fixed bug in TimeSensor *fraction\_changed* calculation if *loop* is true.
+- [x] Fixed bug in TimeSensor *fraction\_changed* calculation if *loop* is true.
 
 ## X_ITE v4.5.4 Released
 
@@ -838,13 +839,13 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### New Features
 
-- Added MFNode.toVRML/XMLString.
+- [x] Added MFNode.toVRML/XMLString.
 
 ### Bug Fixes
 
-- Fixed sound playing when Browser.endUpdate was called.
-- Fixed Switch node when children are changed.
-- Fixed a bug with Inline nodes in conjunction with DOM integration.
+- [x] Fixed sound playing when Browser.endUpdate was called.
+- [x] Fixed Switch node when children are changed.
+- [x] Fixed a bug with Inline nodes in conjunction with DOM integration.
 
 ## X_ITE v4.5.1 Released
 
@@ -856,18 +857,18 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### New Features
 
-- Implemented MultiTexture, MultiTextureTransform, and MultiTextureCoordinate.
-- Implemented FillProperties.
-- Faster startup of browser.
-- Better transitions with OrthoViewpoint.
+- [x] Implemented MultiTexture, MultiTextureTransform, and MultiTextureCoordinate.
+- [x] Implemented FillProperties.
+- [x] Faster startup of browser.
+- [x] Better transitions with OrthoViewpoint.
 
 ### Bug Fixes
 
-- Fix bug in browser options when switching texture quality.
-- Fixed picking and Layout node.
-- Fixed bug with composite glyphs in Text node.
-- Fixed bug with data URLs.
-- Fixed bug in toXMLString and toVRMLString when outputting protos.
+- [x] Fix bug in browser options when switching texture quality.
+- [x] Fixed picking and Layout node.
+- [x] Fixed bug with composite glyphs in Text node.
+- [x] Fixed bug with data URLs.
+- [x] Fixed bug in toXMLString and toVRMLString when outputting protos.
 
 ## X_ITE v4.4.7 Released
 
@@ -875,8 +876,8 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### New Features
 
-- Implemented TextureCoordinateGenerator.
-- More precise VisibilitySensor.
+- [x] Implemented TextureCoordinateGenerator.
+- [x] More precise VisibilitySensor.
 
 ## X_ITE v4.4.6 Released
 
@@ -884,13 +885,13 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### New Features
 
-- Implemented Picking component.
+- [x] Implemented Picking component.
 
 ## X_ITE v4.4.5 Released
 
 ### Bug Fixes
 
-- Fixed bug in LOD traverse.
+- [x] Fixed bug in LOD traverse.
 
 ## X_ITE v4.4.4 Released
 
@@ -898,16 +899,16 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### New Features
 
-- Implemented toVRMLString.
-- New X3DCanvas attribute *preserveDrawingBuffer*.
+- [x] Implemented toVRMLString.
+- [x] New X3DCanvas attribute *preserveDrawingBuffer*.
 
 ### Bug Fixes
 
-- Fixed bug in toXMLString of X3DScene.
-- Fixed bug when parsing SFMatrix3d/f values.
-- Fixed bug when parsing data URLs.
-- Fixed shadow handling.
-- Fixed bug in MF* fields pop and shift.
+- [x] Fixed bug in toXMLString of X3DScene.
+- [x] Fixed bug when parsing SFMatrix3d/f values.
+- [x] Fixed bug when parsing data URLs.
+- [x] Fixed shadow handling.
+- [x] Fixed bug in MF* fields pop and shift.
 
 ## X_ITE v4.4.3 Released
 
@@ -915,7 +916,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### Bug Fixes
 
-- Fixed bug in BlendMode.
+- [x] Fixed bug in BlendMode.
 
 ## X_ITE v4.4.2 Released
 
@@ -923,15 +924,15 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### New Features
 
-- Show version number in context menu.
-- Fully implemented TransformSensor.
-- Optimized proto instance creation, especially when you use proto instances within another proto.
-- Small improvements.
+- [x] Show version number in context menu.
+- [x] Fully implemented TransformSensor.
+- [x] Optimized proto instance creation, especially when you use proto instances within another proto.
+- [x] Small improvements.
 
 ### Bug Fixes
 
-- Fixed GeoLOD when a ProximitySensor or Viewpoint is in the root node or children.
-- Fixed fatal bug in IndexedFaceSet if there are degenerated polygons.
+- [x] Fixed GeoLOD when a ProximitySensor or Viewpoint is in the root node or children.
+- [x] Fixed fatal bug in IndexedFaceSet if there are degenerated polygons.
 
 ## X_ITE v4.4.1 Released
 
@@ -939,9 +940,9 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### Bug Fixes
 
-- Fixed Browser.createX3DFromString console output.
-- Fixed X3DExternProtoDeclaration, X3DProtoDeclaration, X3DRoute toString output.
-- Fixed H-Anim units.
+- [x] Fixed Browser.createX3DFromString console output.
+- [x] Fixed X3DExternProtoDeclaration, X3DProtoDeclaration, X3DRoute toString output.
+- [x] Fixed H-Anim units.
 
 ## X_ITE v4.4.0 Released
 
@@ -949,12 +950,12 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### New Features
 
-- Implemented FogCoordinate.
+- [x] Implemented FogCoordinate.
 
 ### Bug Fixes
 
-- Pass current time stamp to Script.prepareEvents function.
-- X3DConstants have now browser event constants for browser callbacks.
+- [x] Pass current time stamp to Script.prepareEvents function.
+- [x] X3DConstants have now browser event constants for browser callbacks.
 
 ## X_ITE v4.2.17 Released
 
@@ -962,7 +963,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### New Features
 
-- Implemented »H-Anim« component.
+- [x] Implemented »H-Anim« component.
 
 ## X_ITE v4.2.16 Released
 
@@ -970,7 +971,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### New Features
 
-- Implemented »NURBS« component.
+- [x] Implemented »NURBS« component.
 
 ## X_ITE v4.2.15 Released
 
@@ -978,12 +979,12 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### Bug Fixes
 
-- Implemented Layout for Viewpoint and GeoViewpoint.
-- Fixed Browser.getRenderingProperty.
-- Fixed logarithmic depth buffer handling.
-- Fixed bug in ECMAScript SFVec2/3d handling.
-- Fixed bug in XML generator when generating nodes.
-- Fixed bug with audio/video playback when url changes.
+- [x] Implemented Layout for Viewpoint and GeoViewpoint.
+- [x] Fixed Browser.getRenderingProperty.
+- [x] Fixed logarithmic depth buffer handling.
+- [x] Fixed bug in ECMAScript SFVec2/3d handling.
+- [x] Fixed bug in XML generator when generating nodes.
+- [x] Fixed bug with audio/video playback when url changes.
 
 ## X_ITE v4.2.14 Released
 
@@ -991,34 +992,34 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ### New Features
 
-- Implemented StringSensor
+- [x] Implemented StringSensor
 
 ### Bug Fixes
 
-- Fixed X3DKeyDeviceSensorNode.enabled field handling.
-- Fixed bug with KeySensor.isActive.
-- Fixed bug in X3DComposedGeometryNode normal generation.
-- Fog.visibilityRange is now affected by scaling.
-- SpotLight.radius and PointLight.radius are now affected by scaling.
+- [x] Fixed X3DKeyDeviceSensorNode.enabled field handling.
+- [x] Fixed bug with KeySensor.isActive.
+- [x] Fixed bug in X3DComposedGeometryNode normal generation.
+- [x] Fog.visibilityRange is now affected by scaling.
+- [x] SpotLight.radius and PointLight.radius are now affected by scaling.
 
 ## X_ITE v4.2.13 Released
 
 *Leipzig, 6th December 2018:* SFVec2f/d, SFVec3f/d, SFVec4f/d have now new functions. These are multVec, divVec, distance, and lerp. Have a look at:
 
-- SFVec2f/d Object
-- SFVec3f/d Object
-- SFVec4f/d Object
+- [x] SFVec2f/d Object
+- [x] SFVec3f/d Object
+- [x] SFVec4f/d Object
 
 for more information. Additionally we tested X_ITE against <https://www.web3d.org/x3d/content/examples/Basic/index.html> and fixed the bugs we found.
 
 ### New Features
 
-- Added new vector functions to SFVec2f/d, SFVec3f/d, SFVec4f/d.
+- [x] Added new vector functions to SFVec2f/d, SFVec3f/d, SFVec4f/d.
 
 ### Bug Fixes
 
-- Fixed progress bar CSS in some cases.
-- Fixed X3DBackground rendering if a GeoViewpoint is bound.
+- [x] Fixed progress bar CSS in some cases.
+- [x] Fixed X3DBackground rendering if a GeoViewpoint is bound.
 
 ## X_ITE v4.2.12 Released
 
@@ -1026,9 +1027,9 @@ for more information. Additionally we tested X_ITE against <https://www.web3d.or
 
 ### Bug Fixes
 
-- Fixed fatal bug in Text node when vertical text is rendered with empty lines.
-- Fixed bug in Text.lineBounds when vertical text is rendered with empty lines.
-- Fixed wrong initialization of BrowserOptions.
+- [x] Fixed fatal bug in Text node when vertical text is rendered with empty lines.
+- [x] Fixed bug in Text.lineBounds when vertical text is rendered with empty lines.
+- [x] Fixed wrong initialization of BrowserOptions.
 
 ## X_ITE v4.2.11 Released
 
@@ -1036,13 +1037,13 @@ for more information. Additionally we tested X_ITE against <https://www.web3d.or
 
 ### New Features
 
-- Small optimizations
+- [x] Small optimizations
 
 ### Bug Fixes
 
-- Fixed a bug in event handling.
-- Fixed a bug in GeoLOD.
-- Fixed fatal bug in ImageCubeMapTexture.
+- [x] Fixed a bug in event handling.
+- [x] Fixed a bug in GeoLOD.
+- [x] Fixed fatal bug in ImageCubeMapTexture.
 
 ## X_ITE v4.2.10 Released
 
@@ -1050,20 +1051,20 @@ for more information. Additionally we tested X_ITE against <https://www.web3d.or
 
 ### Bug Fixes
 
-- Fixed LOD level calculation when range is empty.
-- Fixed LocalFog calculation.
-- Fixed fog calculation when visibilityRange is 0.
-- Disable collision detection when viewpoint transition is active.
-- Use specified precision for default struct types in shader source.
+- [x] Fixed LOD level calculation when range is empty.
+- [x] Fixed LocalFog calculation.
+- [x] Fixed fog calculation when visibilityRange is 0.
+- [x] Disable collision detection when viewpoint transition is active.
+- [x] Use specified precision for default struct types in shader source.
 
 ## X_ITE v4.2.9 Released
 
 ### Bug Fixes
 
-- Switch sounds off when not visible.
-- Fixed fatal bug when setting audio/video volume.
-- Fixed Sound node volume calculation.
-- Better interpolation from saturated color to black, white, or gray.
+- [x] Switch sounds off when not visible.
+- [x] Fixed fatal bug when setting audio/video volume.
+- [x] Fixed Sound node volume calculation.
+- [x] Better interpolation from saturated color to black, white, or gray.
 
 ## X_ITE v4.2.8 Released
 
@@ -1076,14 +1077,14 @@ element .on ("load", function () { console .log ("load, yeah"); });
 
 ### New Features
 
-- The X3DCanvas element has now the onload, onshutdown, and *onerror* attributes with jQuery support.
-- The X3DCanvas element has now the onload, onshutdown, onerror, src, and url properties.
-- X_ITE now respects the tabindex setting from the X3DCanvas element.
+- [x] The X3DCanvas element has now the onload, onshutdown, and *onerror* attributes with jQuery support.
+- [x] The X3DCanvas element has now the onload, onshutdown, onerror, src, and url properties.
+- [x] X_ITE now respects the tabindex setting from the X3DCanvas element.
 
 ### Bug Fixes
 
-- Fixed bug in Extrusion orientation handling.
-- Better support for Extrusion with coincident spine points.
+- [x] Fixed bug in Extrusion orientation handling.
+- [x] Better support for Extrusion with coincident spine points.
 
 ## X_ITE v4.2.7 Released
 
@@ -1091,10 +1092,10 @@ element .on ("load", function () { console .log ("load, yeah"); });
 
 ### Bug Fixes
 
-- Fixed a bug in proto instances loaded from extern prototypes.
-- Also parse and output XML IMPORT attribute importedDEF beside old attribute exportedDEF.
-- ScreenGroup and ScreenFontStyle are now respecting a scaleOrientation in the transformation hierarchy.
-- Fixed normal calculation of bounding boxes, it handles now special cases.
+- [x] Fixed a bug in proto instances loaded from extern prototypes.
+- [x] Also parse and output XML IMPORT attribute importedDEF beside old attribute exportedDEF.
+- [x] ScreenGroup and ScreenFontStyle are now respecting a scaleOrientation in the transformation hierarchy.
+- [x] Fixed normal calculation of bounding boxes, it handles now special cases.
 
 ## X_ITE v4.2.6 Released
 
@@ -1102,14 +1103,14 @@ element .on ("load", function () { console .log ("load, yeah"); });
 
 ### New Features
 
-- Better polygon support for concave polygons.
-- Better polygon font rendering.
-- »Straighten Horizon« is now the default for EXAMINE viewer.
+- [x] Better polygon support for concave polygons.
+- [x] Better polygon font rendering.
+- [x] »Straighten Horizon« is now the default for EXAMINE viewer.
 
 ### Bug Fixes
 
-- Fixed bug when parsing XML field values.
-- Fixed SFRotation handling of un-normalized values.
+- [x] Fixed bug when parsing XML field values.
+- [x] Fixed SFRotation handling of un-normalized values.
 
 ## X_ITE v4.2.5 Released
 
@@ -1117,26 +1118,26 @@ element .on ("load", function () { console .log ("load, yeah"); });
 
 ### New Features
 
-- Added »Straighten Horizon« option to context menu when EXAMINE viewer is active.
-- Optimized XML parser, it is now up to 60 % faster especially for large geometries.
-- Implemented BrowserOption »EnableInlineViewpoints«.
-- Published X3DField.add/removeFieldCallback functions.
-- Implemented X3DBrowser.add/removeBrowserCallback functions.
-- Changed X3DCanvas element focus handling, the element itself is now the focus element.
-- New and optimized resize handling of X3DCanvas element.
+- [x] Added »Straighten Horizon« option to context menu when EXAMINE viewer is active.
+- [x] Optimized XML parser, it is now up to 60 % faster especially for large geometries.
+- [x] Implemented BrowserOption »EnableInlineViewpoints«.
+- [x] Published X3DField.add/removeFieldCallback functions.
+- [x] Implemented X3DBrowser.add/removeBrowserCallback functions.
+- [x] Changed X3DCanvas element focus handling, the element itself is now the focus element.
+- [x] New and optimized resize handling of X3DCanvas element.
 
 ### Bug Fixes
 
-- Fixed bug of XML output of proto with cloned root nodes.
-- Fixed bug when parsing JSON encoded files containing script source code.
-- Fixed handling of VRML viewpoints.
-- Fixed event breaking rules for script execution.
-- Fixed CSS menu handling.
-- Fixed access type of *index* field of IndexedTriangleFanSet, IndexedTriangleSet, IndexedTriangleStripSet.
-- Fixed bug in proto instance initialization when extern proto is not yet loaded.
-- Fixed rendering of PointSet with GeoCoordinate.
-- Fixed KeyDeviceSensor in some cases.
-- Fixed spinning of viewpoint carries over after viewpoint change.
+- [x] Fixed bug of XML output of proto with cloned root nodes.
+- [x] Fixed bug when parsing JSON encoded files containing script source code.
+- [x] Fixed handling of VRML viewpoints.
+- [x] Fixed event breaking rules for script execution.
+- [x] Fixed CSS menu handling.
+- [x] Fixed access type of *index* field of IndexedTriangleFanSet, IndexedTriangleSet, IndexedTriangleStripSet.
+- [x] Fixed bug in proto instance initialization when extern proto is not yet loaded.
+- [x] Fixed rendering of PointSet with GeoCoordinate.
+- [x] Fixed KeyDeviceSensor in some cases.
+- [x] Fixed spinning of viewpoint carries over after viewpoint change.
 
 ## X_ITE v4.2.4 Released
 
@@ -1144,8 +1145,8 @@ element .on ("load", function () { console .log ("load, yeah"); });
 
 ### Bug Fixes
 
-- Fixed fatal bug in X3DProgrammableShaderObject.
-- Small optimizations in X3DField objects.
+- [x] Fixed fatal bug in X3DProgrammableShaderObject.
+- [x] Small optimizations in X3DField objects.
 
 ## X_ITE v4.2.3 Released
 
@@ -1153,10 +1154,10 @@ element .on ("load", function () { console .log ("load, yeah"); });
 
 ### Bug Fixes
 
-- Fixed bug in PROTO setup.
-- Small optimizations in X3DArrayField.
-- Small optimizations in event handling.
-- Fixed bug in name handling when copy node.
+- [x] Fixed bug in PROTO setup.
+- [x] Small optimizations in X3DArrayField.
+- [x] Small optimizations in event handling.
+- [x] Fixed bug in name handling when copy node.
 
 ## X_ITE v4.2.2 Released
 
@@ -1164,7 +1165,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 
 ### New Features
 
-- code.create3000.de is now accessible via https
+- [x] code.create3000.de is now accessible via https
 
 ## X_ITE v4.2.1 Released
 
@@ -1172,10 +1173,10 @@ element .on ("load", function () { console .log ("load, yeah"); });
 
 ### Bug Fixes
 
-- A real depth buffer is now used in shadow calculations.
-- Fixed Chrome glitches of X3DBackground node.
-- Fixed CSS issue.
-- Fixed ImageTexture issue when the texture is reused multiple times.
+- [x] A real depth buffer is now used in shadow calculations.
+- [x] Fixed Chrome glitches of X3DBackground node.
+- [x] Fixed CSS issue.
+- [x] Fixed ImageTexture issue when the texture is reused multiple times.
 
 ## X_ITE v4.2.0 Released
 
@@ -1203,9 +1204,9 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 
 ### Bug Fixes
 
-- Fixed fatal bug in Classic VRML parser.
-- Fixed LOD.level\_changed event handling.
-- Fixed bug when rendering opaque objects.
+- [x] Fixed fatal bug in Classic VRML parser.
+- [x] Fixed LOD.level\_changed event handling.
+- [x] Fixed bug when rendering opaque objects.
 
 ## X_ITE v4.1.6 Released
 
@@ -1220,7 +1221,7 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 
 ### New Features
 
-- RigidBodyPhysics component
+- [x] RigidBodyPhysics component
 
 ## X_ITE v4.1.5 Released
 
@@ -1228,20 +1229,20 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 
 ### New Features
 
-- JSON file loader
-- Touch device support for all Viewers and TouchSensor nodes
-- Smoother navigation in Examine Viewer and other viewer
-- Optimizations in IndexedQuadSet and QuadSet
-- Optimized CoordinateInterpolator, NormalInterpolator, and CoordinateInterpolator2D
-- Support for more textures for custom shaders
-- New »StraightenHorizon« browser option
-- Better rendering of Text in some cases
+- [x] JSON file loader
+- [x] Touch device support for all Viewers and TouchSensor nodes
+- [x] Smoother navigation in Examine Viewer and other viewer
+- [x] Optimizations in IndexedQuadSet and QuadSet
+- [x] Optimized CoordinateInterpolator, NormalInterpolator, and CoordinateInterpolator2D
+- [x] Support for more textures for custom shaders
+- [x] New »StraightenHorizon« browser option
+- [x] Better rendering of Text in some cases
 
 ### Bug Fixes
 
-- Less memory footprint
-- Fixed IndexedTriangleSet attribute handling
-- and more bug fixes
+- [x] Less memory footprint
+- [x] Fixed IndexedTriangleSet attribute handling
+- [x] and more bug fixes
 
 ## X_ITE v4.1.4 Released
 
@@ -1257,10 +1258,10 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 
 ### New Features Bug Fixes
 
-- Small optimizations Bug Fixes in ParticleSystem node.
-- Added x3d\_CameraSpaceMatrix to ComposedShader build-in variables.
-- Fixed a bug in X3DBackground node when displayed with GeneratedCubeMapTexture node.
-- Fixed fatal bug in MFImage.
+- [x] Small optimizations Bug Fixes in ParticleSystem node.
+- [x] Added x3d\_CameraSpaceMatrix to ComposedShader build-in variables.
+- [x] Fixed a bug in X3DBackground node when displayed with GeneratedCubeMapTexture node.
+- [x] Fixed fatal bug in MFImage.
 
 ## X_ITE v4.1.1 Released
 
@@ -1268,7 +1269,7 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 
 ### New Features Bug Fixes
 
-- Fixed a bug in load count handling of the splash screen
+- [x] Fixed a bug in load count handling of the splash screen
 
 ## X_ITE v4.1.0 Released
 
@@ -1276,9 +1277,9 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 
 ### New Features Bug Fixes
 
-- Fixed bug in CADLayer.addChildren
-- Optimized X3DGroupingNode.removeChildren
-- Implemented units handling
+- [x] Fixed bug in CADLayer.addChildren
+- [x] Optimized X3DGroupingNode.removeChildren
+- [x] Implemented units handling
 
 ## Cobweb is now X_ITE
 
@@ -1295,21 +1296,21 @@ Additionally X_ITE is now available via GitHub CDN and jsDelivr CDN.
 
 ### New Features Bug Fixes
 
-- Better font support for polygon text.
-- Fixed fog rendering with Gouraud shading in some cases.
-- If for any reason Phong shading is not available Gouraud shading is used instead.
-- Better mouse wheel reaction in walk viewer.
-- The X3DCanvas element can now be styled in IE, this is important if the fallback is visible.
-- Fixed font kerning in some cases.
-- X3D functions for external browser are now called when scenes are loaded.
-- Fixed bug in normalizeVelocity if keyVelocity is 0. See SplineScalarInterpolator.
-- Fixed bug with LoadSensor if an X3DUrlObject is created from Script.
-- Fixed event processing from ShaderPart url field.
-- Fixed BooleanFilter inputFalse output.
-- Fixed fog calculation if visibilityRange is 0.
-- Changed handling of fallback css attribute display.
-- Package is now available via code.create3000.de and jsDelivr.
-- npm is now the package management system.
+- [x] Better font support for polygon text.
+- [x] Fixed fog rendering with Gouraud shading in some cases.
+- [x] If for any reason Phong shading is not available Gouraud shading is used instead.
+- [x] Better mouse wheel reaction in walk viewer.
+- [x] The X3DCanvas element can now be styled in IE, this is important if the fallback is visible.
+- [x] Fixed font kerning in some cases.
+- [x] X3D functions for external browser are now called when scenes are loaded.
+- [x] Fixed bug in normalizeVelocity if keyVelocity is 0. See SplineScalarInterpolator.
+- [x] Fixed bug with LoadSensor if an X3DUrlObject is created from Script.
+- [x] Fixed event processing from ShaderPart url field.
+- [x] Fixed BooleanFilter inputFalse output.
+- [x] Fixed fog calculation if visibilityRange is 0.
+- [x] Changed handling of fallback css attribute display.
+- [x] Package is now available via code.create3000.de and jsDelivr.
+- [x] npm is now the package management system.
 
 ## Cobweb 3.3 Released
 
@@ -1324,12 +1325,12 @@ There are new URL's for cobweb.min.js and cobweb.css. Use the following location
 
 ### New Features Bug Fixes
 
-- Changed external browser access.
-- Fixed default values of certain nodes (IntegerTrigger, ArcClose2D, Disk2D, Rectangle2D, TriangleSet2D, GeoViewpoint, DirectionalLight, Viewpoint, ConeEmitter, CylinderSensor).
-- X3DCanvas is now transparent on startup until browser is initialized.
-- Enable propagate events to HTML browser if in NONE viewer.
-- X3DExecutionContext.getImportedNode operates now correct if importedName is undefined.
-- SFBool.valueOf return now a native JavaScript value.
+- [x] Changed external browser access.
+- [x] Fixed default values of certain nodes (IntegerTrigger, ArcClose2D, Disk2D, Rectangle2D, TriangleSet2D, GeoViewpoint, DirectionalLight, Viewpoint, ConeEmitter, CylinderSensor).
+- [x] X3DCanvas is now transparent on startup until browser is initialized.
+- [x] Enable propagate events to HTML browser if in NONE viewer.
+- [x] X3DExecutionContext.getImportedNode operates now correct if importedName is undefined.
+- [x] SFBool.valueOf return now a native JavaScript value.
 
 ## Cobweb 3.2 Released
 
@@ -1337,12 +1338,12 @@ There are new URL's for cobweb.min.js and cobweb.css. Use the following location
 
 ### New Features Bug Fixes
 
-- Changed default CSS style display of X3DCanvas element to *inline-block.*
-- Changed default width and height of X3DCanvas element to 300 × 150 pixels.
-- Added new X3DCanvas attributes *splashScreen,* notifications, timings, contextMenu.
-- Implemented JavaScript browser option *SplashScreen.*
-- Implemented SFColorRGBA.prototype.set/getHSVA.
-- Use *uniform mat3* in custom shaders for SF/MFRotation fields.
+- [x] Changed default CSS style display of X3DCanvas element to *inline-block.*
+- [x] Changed default width and height of X3DCanvas element to 300 × 150 pixels.
+- [x] Added new X3DCanvas attributes *splashScreen,* notifications, timings, contextMenu.
+- [x] Implemented JavaScript browser option *SplashScreen.*
+- [x] Implemented SFColorRGBA.prototype.set/getHSVA.
+- [x] Use *uniform mat3* in custom shaders for SF/MFRotation fields.
 
 ## Cobweb 3.1 Released
 
@@ -1358,13 +1359,13 @@ There are new URL's for cobweb.min.js and cobweb.css. Use the following location
 
 ### New Features Bug Fixes
 
-- New shader uniform x3d\_ViewportPrototypes do completely work now with DOM Integration.
-- Implemented X3DArrayField push and unshift
-- Implemented X3DField equals
-- Reworked XMLParser
-- Fixed ScreenFontStyle text picking
-- Fixed issue with touch sensibility of Disk2D
-- Fixed an issue of X3DPrototypeInstance in toXMLString
+- [x] New shader uniform x3d\_ViewportPrototypes do completely work now with DOM Integration.
+- [x] Implemented X3DArrayField push and unshift
+- [x] Implemented X3DField equals
+- [x] Reworked XMLParser
+- [x] Fixed ScreenFontStyle text picking
+- [x] Fixed issue with touch sensibility of Disk2D
+- [x] Fixed an issue of X3DPrototypeInstance in toXMLString
 
 ## First Version
 
