@@ -836,7 +836,9 @@ class SampleViewer
             .attr ("title", "Show README.")
             .attr ("target", "_blank")
             .attr ("href", readme)
-            .append ($("<i></i>") .addClass (["fa-brands", "fa-readme"]))
+            .append ($("<i></i>")
+               .css ("margin", "0 0.2rem")
+               .addClass (["fa-brands", "fa-readme"]))
             .appendTo (item);
       }
    }
