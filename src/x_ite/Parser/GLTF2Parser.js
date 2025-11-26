@@ -2107,7 +2107,13 @@ function eventsProcessed ()
       node .pointers  = [node .childNode];
 
       // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_visibility
-      node .childNode ._visible = node .extensions ?.KHR_node_visibility ?.visible ?? true;
+      const visibility = node .extensions ?.KHR_node_visibility;
+
+      if (visibility)
+      {
+         visibility .node          = node;
+         node .childNode ._visible = visibility .visible ?? true;
+      }
 
       return node;
    },
