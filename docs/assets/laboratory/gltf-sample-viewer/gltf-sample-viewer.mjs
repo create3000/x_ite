@@ -828,7 +828,7 @@ class SampleViewer
          const readme = filename
             .replace ("raw.githubusercontent.com", "github.com")
             .replace (/main|master/, "blob/main", "")
-            .replace (/[^\/]+\/[^\/]+$/, "README.md");
+            .replace (/[^\/]+\/[^\/]+$/, "");
 
          $("<a></a>")
             .css ("position", "relative")
