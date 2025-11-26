@@ -79,7 +79,7 @@ This is the HTML page, which will be displayed in your browser window.
 
 ### preload.js
 
-The preload script runs before `index.html` is loaded in the renderer. It has access to web APIs as well as Electron's renderer process modules and some polyfilled Node.js functions.
+The preload script runs before `index.html`{: .filepath } is loaded in the renderer. It has access to web APIs as well as Electron's renderer process modules and some polyfilled Node.js functions.
 
 ```js
 /**
@@ -112,7 +112,7 @@ function preload ()
 
 ### styles.css
 
-Styles for index.html
+Styles for `index.html`{: .filepath }
 
 ```css
 /* styles.css */
