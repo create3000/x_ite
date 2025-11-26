@@ -2106,6 +2106,7 @@ function eventsProcessed ()
       node .childNode = node .humanoidNode ?? node .transformNode;
       node .pointers  = [node .childNode];
 
+      // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_visibility
       node .childNode ._visible = node .extensions ?.KHR_node_visibility ?.visible ?? true;
 
       return node;
