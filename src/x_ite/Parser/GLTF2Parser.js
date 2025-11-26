@@ -2115,7 +2115,7 @@ function eventsProcessed ()
 
       if (visibility)
       {
-         visibility .node          = node;
+         visibility .pointers = [node .childNode];
          node .childNode ._visible = visibility .visible ?? true;
       }
 
@@ -3580,6 +3580,8 @@ function eventsProcessed ()
             return [ ];
 
          const scene = this .getScene ();
+
+         console .log (field .getTypeName ())
 
          switch (field .getType ())
          {
