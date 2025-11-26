@@ -2115,7 +2115,7 @@ function eventsProcessed ()
 
       if (visibility)
       {
-         visibility .pointers = [node .childNode];
+         visibility .pointers      = [node .childNode];
          node .childNode ._visible = visibility .visible ?? true;
       }
 
