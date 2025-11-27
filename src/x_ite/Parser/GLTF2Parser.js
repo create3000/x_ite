@@ -3581,8 +3581,6 @@ function eventsProcessed ()
 
          const scene = this .getScene ();
 
-         console .log (field .getTypeName ())
-
          switch (field .getType ())
          {
             case X3DConstants .SFColor:
