@@ -81,7 +81,7 @@ getNormalInfo (const in float normalScale)
 
    #if defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D)
    // For a back-facing surface, the tangential basis vectors are negated.
-   if (frontFacing == false)
+   if (!frontFacing)
    {
       t  = -t;
       b  = -b;

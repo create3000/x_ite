@@ -14,10 +14,10 @@ ExtensionKeys .add ("TRANSMISSION_MATERIAL_EXTENSION");
 
 // Register shaders.
 
-import ShaderRegistry       from "../../Browser/Shaders/ShaderRegistry.js";
-import TransmissionBackface from "../../../assets/shaders/webgl2/pbr/TransmissionBackface.glsl.js";
+import ShaderRegistry        from "../../Browser/Shaders/ShaderRegistry.js";
+import TransmissionBackface2 from "../../../assets/shaders/webgl2/pbr/TransmissionBackface2.glsl.js";
 
-ShaderRegistry .addInclude ("TransmissionBackface", TransmissionBackface);
+ShaderRegistry .addInclude ("TransmissionBackface", TransmissionBackface2);
 
 // Register textures.
 

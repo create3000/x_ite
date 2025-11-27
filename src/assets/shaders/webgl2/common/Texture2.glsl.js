@@ -134,7 +134,7 @@ getTexCoord (const in int textureTransformMapping, const in int textureCoordinat
 
    #if defined (X3D_GEOMETRY_2D)
       // Flip X if needed. Must be done before.
-      if (frontFacing == false)
+      if (!frontFacing)
          texCoord .x = 1.0 - texCoord .x;
    #endif
 
