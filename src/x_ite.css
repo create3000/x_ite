@@ -275,6 +275,10 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   padding-bottom: 2px;
 }
 
+.x_ite-private-browser-timings td.pointer {
+  pointer-events: all;
+}
+
 .x_ite-private-browser-timings tfoot td:first-child {
   padding-right: 0;
 }

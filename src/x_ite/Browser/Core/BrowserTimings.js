@@ -45,7 +45,6 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
          .appendTo (this .table);
 
       this .button = $("<button></button>")
-         .attr ("type", "button")
          .appendTo (this .footer .find ("td"));
 
       this .frameRate       = $("<td></td>");
@@ -60,8 +59,8 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
       this .pickingTime     = $("<td></td>");
       this .collisionTime   = $("<td></td>");
       this .renderTime      = $("<td></td>");
-      this .numPrimitives   = $("<td></td>");
-      this .numShapes       = $("<td></td>");
+      this .numPrimitives   = $("<td></td>") .addClass ("pointer") .attr ("title", _("Points; Lines; Triangles"));
+      this .numShapes       = $("<td></td>") .addClass ("pointer") .attr ("title", _("Opaque Shapes + Transparent Shapes"));
       this .sensors         = $("<td></td>");
 
       this .body .append ($("<tr></tr>")

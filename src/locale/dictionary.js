@@ -299,4 +299,14 @@ export default [
       de: "Activiere den Ton.",
       fr: "Activez le son.",
    },
+   {
+      en: "Points; Lines; Triangles",
+      de: "Punkte; Linien; Dreiecke",
+      fr: "Points; Lignes; Triangles",
+   },
+   {
+      en: "Opaque Shapes + Transparent Shapes",
+      de: "opaque Formen + transparente Formen",
+      fr: "Formes opaques + Formes transparentes",
+   },
 ];
