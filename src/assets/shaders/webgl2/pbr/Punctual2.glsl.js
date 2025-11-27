@@ -94,6 +94,7 @@ getPunctualRadianceClearCoat (const in vec3 clearcoatNormal, const in vec3 v, co
 
 #if defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
 
+// This texture is also used in IBL2.glsl.js.
 uniform sampler2D x3d_TransmissionBackfaceSamplerEXT;
 
 vec3
