@@ -122,28 +122,28 @@ Object .assign (Quaternion .prototype,
     */
    setEuler (x, y, z, order = "XYZ")
    {
-		// https://github.com/toji/gl-matrix/blob/accefb6ddf1897a0dc443bbc7664c90e67af6455/src/quat.js#L460
+      // https://github.com/toji/gl-matrix/blob/accefb6ddf1897a0dc443bbc7664c90e67af6455/src/quat.js#L460
 
       x /= 2;
       y /= 2;
       z /= 2;
 
       const
-		   sx = Math .sin (x),
-		   sy = Math .sin (y),
-		   sz = Math .sin (z),
-		   cx = Math .cos (x),
-		   cy = Math .cos (y),
-		   cz = Math .cos (z);
+         sx = Math .sin (x),
+         sy = Math .sin (y),
+         sz = Math .sin (z),
+         cx = Math .cos (x),
+         cy = Math .cos (y),
+         cz = Math .cos (z);
 
-		switch (order)
+      switch (order)
       {
-			case "XYZ":
-				this .x = sx * cy * cz + cx * sy * sz;
-				this .y = cx * sy * cz - sx * cy * sz;
-				this .z = cx * cy * sz + sx * sy * cz;
-				this .w = cx * cy * cz - sx * sy * sz;
-				break;
+         case "XYZ":
+            this .x = sx * cy * cz + cx * sy * sz;
+            this .y = cx * sy * cz - sx * cy * sz;
+            this .z = cx * cy * sz + sx * sy * cz;
+            this .w = cx * cy * cz - sx * sy * sz;
+            break;
 
          case "ZYX":
             this .x = sx * cy * cz - cx * sy * sz;
@@ -152,37 +152,37 @@ Object .assign (Quaternion .prototype,
             this .w = cx * cy * cz + sx * sy * sz;
             break;
 
-			case "YXZ":
-				this .x = sx * cy * cz + cx * sy * sz;
-				this .y = cx * sy * cz - sx * cy * sz;
-				this .z = cx * cy * sz - sx * sy * cz;
-				this .w = cx * cy * cz + sx * sy * sz;
-				break;
+         case "YXZ":
+            this .x = sx * cy * cz + cx * sy * sz;
+            this .y = cx * sy * cz - sx * cy * sz;
+            this .z = cx * cy * sz - sx * sy * cz;
+            this .w = cx * cy * cz + sx * sy * sz;
+            break;
 
-			case "ZXY":
-				this .x = sx * cy * cz - cx * sy * sz;
-				this .y = cx * sy * cz + sx * cy * sz;
-				this .z = cx * cy * sz + sx * sy * cz;
-				this .w = cx * cy * cz - sx * sy * sz;
-				break;
+         case "ZXY":
+            this .x = sx * cy * cz - cx * sy * sz;
+            this .y = cx * sy * cz + sx * cy * sz;
+            this .z = cx * cy * sz + sx * sy * cz;
+            this .w = cx * cy * cz - sx * sy * sz;
+            break;
 
-			case "YZX":
-				this .x = sx * cy * cz + cx * sy * sz;
-				this .y = cx * sy * cz + sx * cy * sz;
-				this .z = cx * cy * sz - sx * sy * cz;
-				this .w = cx * cy * cz - sx * sy * sz;
-				break;
+         case "YZX":
+            this .x = sx * cy * cz + cx * sy * sz;
+            this .y = cx * sy * cz + sx * cy * sz;
+            this .z = cx * cy * sz - sx * sy * cz;
+            this .w = cx * cy * cz - sx * sy * sz;
+            break;
 
-			case "XZY":
-				this .x = sx * cy * cz - cx * sy * sz;
-				this .y = cx * sy * cz - sx * cy * sz;
-				this .z = cx * cy * sz + sx * sy * cz;
-				this .w = cx * cy * cz + sx * sy * sz;
-				break;
-		}
+         case "XZY":
+            this .x = sx * cy * cz - cx * sy * sz;
+            this .y = cx * sy * cz - sx * cy * sz;
+            this .z = cx * cy * sz + sx * sy * cz;
+            this .w = cx * cy * cz + sx * sy * sz;
+            break;
+      }
 
-		return this;
-	},
+      return this;
+   },
    /**
     * Gets the Euler components.
     * @param {number[]} euler - Array to be returned.
@@ -195,115 +195,115 @@ Object .assign (Quaternion .prototype,
 
       const { 0: m0, 1: m1, 2: m2, 3: m3, 4: m4, 5: m5, 6: m6, 7: m7, 8: m8 } = this .getMatrix (m);
 
-		switch (order)
+      switch (order)
       {
-			case "XYZ":
+         case "XYZ":
          {
-				euler [1] = Math .asin (Algorithm .clamp (m6, -1, 1));
+            euler [1] = Math .asin (Algorithm .clamp (m6, -1, 1));
 
-				if (Math .abs (m6) < 0.9999999)
+            if (Math .abs (m6) < 0.9999999)
             {
-					euler [0] = Math .atan2 (-m7, m8);
-					euler [2] = Math .atan2 (-m3, m0);
-				}
+               euler [0] = Math .atan2 (-m7, m8);
+               euler [2] = Math .atan2 (-m3, m0);
+            }
             else
             {
-					euler [0] = Math .atan2 (m5, m4);
-					euler [2] = 0;
-				}
+               euler [0] = Math .atan2 (m5, m4);
+               euler [2] = 0;
+            }
 
-				break;
+            break;
          }
-			case "ZYX":
+         case "ZYX":
          {
-				euler [1] = Math .asin (-Algorithm .clamp (m2, -1, 1));
+            euler [1] = Math .asin (-Algorithm .clamp (m2, -1, 1));
 
-				if (Math .abs (m2) < 0.9999999)
+            if (Math .abs (m2) < 0.9999999)
             {
-					euler [0] = Math .atan2 (m5, m8);
-					euler [2] = Math .atan2 (m1, m0);
-				}
+               euler [0] = Math .atan2 (m5, m8);
+               euler [2] = Math .atan2 (m1, m0);
+            }
             else
             {
-					euler [0] = 0;
-					euler [2] = Math .atan2 (-m3, m4);
-				}
+               euler [0] = 0;
+               euler [2] = Math .atan2 (-m3, m4);
+            }
 
-				break;
+            break;
          }
-			case "YXZ":
+         case "YXZ":
          {
-				euler [0] = Math .asin (-Algorithm .clamp (m7, -1, 1));
+            euler [0] = Math .asin (-Algorithm .clamp (m7, -1, 1));
 
-				if (Math .abs (m7) < 0.9999999)
+            if (Math .abs (m7) < 0.9999999)
             {
-					euler [1] = Math .atan2 (m6, m8);
-					euler [2] = Math .atan2 (m1, m4);
+               euler [1] = Math .atan2 (m6, m8);
+               euler [2] = Math .atan2 (m1, m4);
 
-				}
+            }
             else
             {
-					euler [1] = Math .atan2 (-m2, m0);
-					euler [2] = 0;
-				}
+               euler [1] = Math .atan2 (-m2, m0);
+               euler [2] = 0;
+            }
 
-				break;
+            break;
          }
-			case "ZXY":
+         case "ZXY":
          {
-				euler [0] = Math .asin (Algorithm .clamp (m5, -1, 1));
+            euler [0] = Math .asin (Algorithm .clamp (m5, -1, 1));
 
-				if (Math .abs (m5) < 0.9999999)
+            if (Math .abs (m5) < 0.9999999)
             {
-					euler [1] = Math .atan2 (-m2, m8);
-					euler [2] = Math .atan2 (-m3, m4);
-				}
+               euler [1] = Math .atan2 (-m2, m8);
+               euler [2] = Math .atan2 (-m3, m4);
+            }
             else
             {
-					euler [1] = 0;
-					euler [2] = Math .atan2 (m1, m0);
-				}
+               euler [1] = 0;
+               euler [2] = Math .atan2 (m1, m0);
+            }
 
-				break;
+            break;
          }
-			case "YZX":
+         case "YZX":
          {
-				euler [2] = Math .asin (Algorithm .clamp (m1, -1, 1));
+            euler [2] = Math .asin (Algorithm .clamp (m1, -1, 1));
 
-				if (Math .abs (m1) < 0.9999999)
+            if (Math .abs (m1) < 0.9999999)
             {
-					euler [0] = Math .atan2 (-m7, m4);
-					euler [1] = Math .atan2 (-m2, m0);
-				}
+               euler [0] = Math .atan2 (-m7, m4);
+               euler [1] = Math .atan2 (-m2, m0);
+            }
             else
             {
-					euler [0] = 0;
-					euler [1] = Math .atan2 (m6, m8);
-				}
+               euler [0] = 0;
+               euler [1] = Math .atan2 (m6, m8);
+            }
 
-				break;
+            break;
          }
-			case "XZY":
+         case "XZY":
          {
-				euler [2] = Math .asin (-Algorithm .clamp (m3, -1, 1));
+            euler [2] = Math .asin (-Algorithm .clamp (m3, -1, 1));
 
-				if (Math .abs (m3) < 0.9999999)
+            if (Math .abs (m3) < 0.9999999)
             {
-					euler [0] = Math .atan2 (m5, m4);
-					euler [1] = Math .atan2 (m6, m0);
+               euler [0] = Math .atan2 (m5, m4);
+               euler [1] = Math .atan2 (m6, m0);
 
-				}
+            }
             else
             {
-					euler [0] = Math .atan2 (-m7, m8);
-					euler [1] = 0;
-				}
+               euler [0] = Math .atan2 (-m7, m8);
+               euler [1] = 0;
+            }
 
-				break;
+            break;
          }
-		}
+      }
 
-		return euler;
+      return euler;
    },
    isReal ()
    {

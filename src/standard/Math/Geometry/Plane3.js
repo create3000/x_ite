@@ -96,7 +96,7 @@ Object .assign (Plane3 .prototype,
    {
       return result .assign (this .normal) .multiply (-this .getDistanceToPoint (point));
    },
-	getClosestPointToPoint (point, result = new Vector3 ())
+   getClosestPointToPoint (point, result = new Vector3 ())
    {
       return this .getPerpendicularVectorToPoint (point, result) .add (point);
    },
