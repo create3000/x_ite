@@ -78,23 +78,17 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
             interpolator ._value_changed .addFieldInterest (jointNode .getField (name));
       }
    },
-   disconnectJoints (jointNodes)
+   disconnectJoints ()
    {
-      const
-         joints      = this .joints,
-         jointsIndex = this .getJointsIndex (jointNodes);
-
       // Disconnect interpolators from joint nodes.
 
-      for (const [j, joint] of this .interpolators .entries ())
+      for (const joint of this .interpolators)
       {
-         const jointNode = jointsIndex .get (joints [j]);
-
-         if (!jointNode)
-            continue;
-
-         for (const [name, interpolator] of Object .entries (joint))
-            interpolator ._value_changed .removeFieldInterest (jointNode .getField (name));
+         for (const interpolator of Object .values (joint))
+         {
+            Array .from (interpolator ._value_changed .getFieldInterests ())
+               .forEach (field => interpolator ._value_changed .removeFieldInterest (field));
+         }
       }
    },
    getJointsIndex (jointNodes)
@@ -117,16 +111,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
    {
       this .joints = this ._joints .getValue () .replace (/^[\s,]+|[\s,]+$/sg, "") .split (/[\s,]+/s);
 
-      // Disconnect all joint nodes.
-
-      for (const joint of this .interpolators)
-      {
-         for (const interpolator of Object .values (joint))
-         {
-            Array .from (interpolator ._value_changed .getFieldInterests ())
-               .forEach (field => interpolator ._value_changed .removeFieldInterest (field));
-         }
-      }
+      this .disconnectJoints ();
    },
    set_interpolators__: (() =>
    {

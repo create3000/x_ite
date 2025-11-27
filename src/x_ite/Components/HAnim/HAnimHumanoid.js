@@ -30,7 +30,8 @@ function HAnimHumanoid (executionContext)
 
    this .addType (X3DConstants .HAnimHumanoid);
 
-   this .addChildObjects (X3DConstants .outputOnly, "jointTextures",              new Fields .SFTime (),
+   this .addChildObjects (X3DConstants .outputOnly, "jointName",                  new Fields .SFTime (),
+                          X3DConstants .outputOnly, "jointTextures",              new Fields .SFTime (),
                           X3DConstants .outputOnly, "displacementsTexture",       new Fields .SFTime (),
                           X3DConstants .outputOnly, "displacementWeightsTexture", new Fields .SFTime ());
 
@@ -144,6 +145,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       this ._jointBindingRotations      .addInterest ("set_joints__",                     this);
       this ._jointBindingScales         .addInterest ("set_joints__",                     this);
       this ._joints                     .addInterest ("set_joints__",                     this);
+      this ._jointName                  .addInterest ("set_connectAllJoints__",           this);
       this ._jointTextures              .addInterest ("set_jointTextures__",              this);
       this ._displacementsTexture       .addInterest ("set_displacementsTexture__",       this);
       this ._displacementWeightsTexture .addInterest ("set_displacementWeightsTexture__", this);
@@ -190,7 +192,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          motionNode ._channels        .removeInterest ("set_connectJoints__", this);
          motionNode ._values          .removeInterest ("set_connectJoints__", this);
 
-         motionNode .disconnectJoints (this .jointNodes);
+         motionNode .disconnectJoints ();
       }
 
       motionNodes .length = 0;
@@ -223,7 +225,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    },
    set_connectJoints__ (motionNode)
    {
-      motionNode .disconnectJoints (this .jointNodes);
+      motionNode .disconnectJoints ();
       motionNode .connectJoints (this .jointNodes);
    },
    set_joints__ ()
@@ -239,13 +241,13 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          numJointBindingScales    = jointBindingScales .length;
 
       for (const motionNode of this .motionNodes)
-         motionNode .disconnectJoints (jointNodes);
+         motionNode .disconnectJoints ();
 
       for (const jointNode of jointNodes)
       {
          jointNode .removeInterest ("unlock", this .update);
 
-         jointNode ._name                .removeInterest ("set_connectAllJoints__", this);
+         jointNode ._name                .removeInterest ("addEvent", this ._jointName);
          jointNode ._skinCoordIndex      .removeInterest ("addEvent", this ._jointTextures);
          jointNode ._skinCoordWeight     .removeInterest ("addEvent", this ._jointTextures);
          jointNode ._displacements       .removeInterest ("addEvent", this ._displacementsTexture);
@@ -275,7 +277,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       {
          jointNode .addInterest ("unlock", this .update);
 
-         jointNode ._name                .addInterest ("set_connectAllJoints__", this);
+         jointNode ._name                .addInterest ("addEvent", this ._jointName);
          jointNode ._skinCoordIndex      .addInterest ("addEvent", this ._jointTextures);
          jointNode ._skinCoordWeight     .addInterest ("addEvent", this ._jointTextures);
          jointNode ._displacements       .addInterest ("addEvent", this ._displacementsTexture);
