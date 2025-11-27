@@ -320,23 +320,23 @@ Object .assign (MultiSampleFramebuffer .prototype,
                            0, 0, width, height,
                            gl .COLOR_BUFFER_BIT, samples ? gl .LINEAR : gl .NEAREST);
 
-      // // DEBUG start
-      // if (DEVELOPMENT)
-      // {
-      //    const volumeScatterBuffer = browser .getVolumeScatterBuffer ?.();
+      // DEBUG start
+      if (true)
+      {
+         const volumeScatterBuffer = browser .getTransmissionBackfaceBuffer ?.();
 
-      //    if (volumeScatterBuffer)
-      //    {
-      //       gl .bindFramebuffer (gl .READ_FRAMEBUFFER, volumeScatterBuffer .frameBuffer);
-      //       gl .readBuffer (gl .COLOR_ATTACHMENT0);
-      //       gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, browser .getDefaultFramebuffer ());
+         if (volumeScatterBuffer)
+         {
+            gl .bindFramebuffer (gl .READ_FRAMEBUFFER, volumeScatterBuffer .frameBuffer);
+            gl .readBuffer (gl .COLOR_ATTACHMENT0);
+            gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, browser .getDefaultFramebuffer ());
 
-      //       gl .blitFramebuffer (0, 0, width, height,
-      //                            0, 0, width / 4, height / 4,
-      //                            gl .COLOR_BUFFER_BIT, gl .NEAREST);
-      //    }
-      // }
-      // // DEBUG end
+            gl .blitFramebuffer (0, 0, width, height,
+                                 0, 0, width / 4, height / 4,
+                                 gl .COLOR_BUFFER_BIT, gl .NEAREST);
+         }
+      }
+      // DEBUG end
 
       if (!auxBuffer)
          return;

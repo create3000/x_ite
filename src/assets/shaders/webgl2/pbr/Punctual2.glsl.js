@@ -93,8 +93,11 @@ getPunctualRadianceClearCoat (const in vec3 clearcoatNormal, const in vec3 v, co
 #endif
 
 #if defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
+
+uniform sampler2D x3d_TransmissionBackfaceSamplerEXT;
+
 vec3
-getPunctualRadianceTransmission (const in vec3 normal, const in vec3 view, const in vec3 pointToLight, const in float alphaRoughness, const in vec3 baseColor, const in float ior)
+getPunctualRadianceTransmission (const in vec3 normal, const in vec3 view, const in vec3 pointToLight, const in float alphaRoughness, in vec3 baseColor, const in float ior, const in vec4 fragCoord)
 {
     float transmissionRoughness = applyIorToRoughness (alphaRoughness, ior);
 
@@ -106,6 +109,13 @@ getPunctualRadianceTransmission (const in vec3 normal, const in vec3 view, const
 
     float D   = D_GGX (clamp (dot (n, h), 0.0, 1.0), transmissionRoughness);
     float Vis = V_GGX (clamp (dot (n, l_mirror), 0.0, 1.0), clamp (dot (n, v), 0.0, 1.0), transmissionRoughness);
+
+   #if defined (X3D_VOLUME_MATERIAL_EXT)
+      vec2 uvCoords             = fragCoord .xy * (1.0 / vec2 (x3d_Viewport .zw));
+      vec3 transmissionBackface = texture (x3d_TransmissionBackfaceSamplerEXT, uvCoords) .rgb;
+
+      baseColor *= transmissionBackface;
+   #endif
 
     // Transmission BTDF
     return baseColor * D * Vis;

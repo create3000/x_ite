@@ -1232,10 +1232,10 @@ Object .assign (X3DRenderObject .prototype,
 
          if (this .renderPasses !== RenderPass .NONE)
          {
-            // Render to volume scatter buffer.
-
             if (this .renderPasses & RenderPass .VOLUME_SCATTER_BIT)
             {
+               // Render to volume scatter buffer.
+
                browser .resetShapeId ();
 
                this .renderPass = RenderPass .VOLUME_SCATTER_KEY;
@@ -1246,10 +1246,10 @@ Object .assign (X3DRenderObject .prototype,
                this .drawShapes (RenderPass .VOLUME_SCATTER_KEY, gl, browser, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport);
             }
 
-            // Render to transmission buffer.
-
             if (this .renderPasses & RenderPass .TRANSMISSION_BIT)
             {
+               // Render to transmission buffer.
+
                this .renderPass = RenderPass .TRANSMISSION_KEY;
                this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
 
@@ -1260,6 +1260,15 @@ Object .assign (X3DRenderObject .prototype,
                // Mipmap is later selected based on roughness and ior.
                gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
                gl .generateMipmap (gl .TEXTURE_2D);
+
+               // Render to transmission backface buffer.
+
+               this .renderPass = RenderPass .TRANSMISSION_BACKFACE_KEY;
+               this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
+
+               const transmissionBackfaceBuffer = browser .getTransmissionBackfaceBuffer ();
+
+               this .drawShapes (RenderPass .TRANSMISSION_BACKFACE_KEY, gl, browser, transmissionBackfaceBuffer, gl .COLOR_BUFFER_BIT, viewport);
             }
          }
 

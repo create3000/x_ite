@@ -868,7 +868,10 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       const positiveScale = Matrix4 .prototype .determinant3 .call (modelViewMatrix) > 0;
 
-      gl .frontFace (positiveScale ? this .frontFace : this .backFace);
+      if (shaderNode .transmissionBackfacePass)
+         gl .frontFace (positiveScale ? this .backFace : this .frontFace);
+      else
+         gl .frontFace (positiveScale ? this .frontFace : this .backFace);
 
       // Draw front and back faces.
 
@@ -1012,7 +1015,10 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       const positiveScale = Matrix4 .prototype .determinant3 .call (modelViewMatrix) > 0;
 
-      gl .frontFace (positiveScale ? this .frontFace : this .backFace);
+      if (shaderNode .transmissionBackfacePass)
+         gl .frontFace (positiveScale ? this .backFace : this .frontFace);
+      else
+         gl .frontFace (positiveScale ? this .frontFace : this .backFace);
 
       // Draw front and back faces.
 

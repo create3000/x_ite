@@ -12,11 +12,19 @@ import Algorithm                from "../../../standard/Math/Algorithm.js";
 
 ExtensionKeys .add ("TRANSMISSION_MATERIAL_EXTENSION");
 
+// Register shaders.
+
+import ShaderRegistry       from "../../Browser/Shaders/ShaderRegistry.js";
+import TransmissionBackface from "../../../assets/shaders/webgl2/pbr/TransmissionBackface.glsl.js";
+
+ShaderRegistry .addInclude ("TransmissionBackface", TransmissionBackface);
+
 // Register textures.
 
 import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
 
 MaterialTextures .add ("x3d_TransmissionTextureEXT");
+MaterialTextures .add ("x3d_TransmissionBackfaceTextureEXT");
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
@@ -70,22 +78,33 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
    {
       uniforms .push ("x3d_TransmissionEXT");
       uniforms .push ("x3d_TransmissionSamplerEXT");
+      uniforms .push ("x3d_TransmissionBackfaceSamplerEXT");
    },
    setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       // These shapes must not be rendered during transmission pass!
 
+      if (shaderObject .transmissionBackfacePass)
+         return;
+
       const
-         browser                   = this .getBrowser (),
-         transmissionBuffer        = browser .getTransmissionBuffer (),
-         transmissionUnit          = browser .getTextureUnit (),
-         transmissionBufferTexture = transmissionBuffer .getColorTexture ();
+         browser                           = this .getBrowser (),
+         transmissionBuffer                = browser .getTransmissionBuffer (),
+         transmissionBackfaceBuffer        = browser .getTransmissionBackfaceBuffer (),
+         transmissionUnit                  = browser .getTextureUnit (),
+         transmissionBackfaceUnit          = browser .getTextureUnit (),
+         transmissionBufferTexture         = transmissionBuffer .getColorTexture (),
+         transmissionBackfaceBufferTexture = transmissionBackfaceBuffer .getColorTexture ();
 
       gl .uniform1f (shaderObject .x3d_TransmissionEXT, this .transmission);
 
       gl .activeTexture (gl .TEXTURE0 + transmissionUnit);
       gl .bindTexture (gl .TEXTURE_2D, transmissionBufferTexture);
       gl .uniform1i (shaderObject .x3d_TransmissionSamplerEXT, transmissionUnit);
+
+      gl .activeTexture (gl .TEXTURE0 + transmissionBackfaceUnit);
+      gl .bindTexture (gl .TEXTURE_2D, transmissionBackfaceBufferTexture);
+      gl .uniform1i (shaderObject .x3d_TransmissionBackfaceSamplerEXT, transmissionBackfaceUnit);
 
       if (!+this .getTextureBits ())
          return;

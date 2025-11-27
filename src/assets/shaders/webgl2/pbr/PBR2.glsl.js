@@ -41,6 +41,8 @@ uniform x3d_PhysicalMaterialParameters x3d_Material;
 
 #if defined (X3D_VOLUME_SCATTER_PASS)
 #pragma X3D include "Scatter.glsl"
+#elif defined (X3D_TRANSMISSION_BACKFACE_PASS)
+#pragma X3D include "TransmissionBackface.glsl"
 #else
 vec4
 getMaterialColor (const in vec4 fragCoord)
@@ -343,7 +345,7 @@ getMaterialColor (const in vec4 fragCoord)
             pointToLight -= transmissionRay;
             l             = normalize (pointToLight);
 
-            vec3 transmittedLight = lightIntensity * getPunctualRadianceTransmission (n, v, l, materialInfo .alphaRoughness, baseColor .rgb, materialInfo .ior);
+            vec3 transmittedLight = lightIntensity * getPunctualRadianceTransmission (n, v, l, materialInfo .alphaRoughness, baseColor .rgb, materialInfo .ior, fragCoord);
 
             #if defined (X3D_VOLUME_MATERIAL_EXT)
                transmittedLight = applyVolumeAttenuation (transmittedLight, length (transmissionRay), materialInfo .attenuationColor, materialInfo .attenuationDistance);

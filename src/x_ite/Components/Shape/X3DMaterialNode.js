@@ -295,14 +295,19 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
    {
       switch (renderObject .getRenderPass ())
       {
+         case RenderPass .VOLUME_SCATTER_KEY:
+         {
+            options .push ("X3D_VOLUME_SCATTER_PASS");
+            break;
+         }
          case RenderPass .TRANSMISSION_KEY:
          {
             options .push ("X3D_TRANSMISSION_PASS");
             break;
          }
-         case RenderPass .VOLUME_SCATTER_KEY:
+         case RenderPass .TRANSMISSION_BACKFACE_KEY:
          {
-            options .push ("X3D_VOLUME_SCATTER_PASS");
+            options .push ("X3D_TRANSMISSION_BACKFACE_PASS");
             break;
          }
       }

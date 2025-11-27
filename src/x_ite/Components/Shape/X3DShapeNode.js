@@ -209,15 +209,20 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    },
    set_transmission__ ()
    {
-      this .set_renderPass__ (this .appearanceNode .isTransmission (), RenderPass .TRANSMISSION_BIT);
+      const transmission = this .appearanceNode .isTransmission ();
 
-      this [RenderPass .TRANSMISSION_KEY] = this .appearanceNode .isTransmission () ? null : this;
+      this .set_renderPass__ (transmission, RenderPass .TRANSMISSION_BIT);
+
+      this [RenderPass .TRANSMISSION_KEY]          = transmission ? null : this;
+      this [RenderPass .TRANSMISSION_BACKFACE_KEY] = transmission ? this : null;
    },
    set_volumeScatter__ ()
    {
-      this .set_renderPass__ (this .appearanceNode .isVolumeScatter (), RenderPass .VOLUME_SCATTER_BIT);
+      const volumeScatter = this .appearanceNode .isVolumeScatter ();
 
-      this [RenderPass .VOLUME_SCATTER_KEY] = this .appearanceNode .isVolumeScatter () ? this : null;
+      this .set_renderPass__ (volumeScatter, RenderPass .VOLUME_SCATTER_BIT);
+
+      this [RenderPass .VOLUME_SCATTER_KEY] = volumeScatter ? this : null;
    },
    set_renderPass__ (value, bit)
    {

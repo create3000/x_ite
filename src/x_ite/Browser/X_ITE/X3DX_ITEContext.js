@@ -1,8 +1,9 @@
 import TextureBuffer from "../../Rendering/TextureBuffer.js";
 
 const
-   _transmissionBuffer  = Symbol (),
-   _volumeScatterBuffer = Symbol ();
+   _volumeScatterBuffer        = Symbol (),
+   _transmissionBuffer         = Symbol (),
+   _transmissionBackfaceBuffer = Symbol ();
 
 function X3DX_ITEContext () { }
 
@@ -10,8 +11,18 @@ Object .assign (X3DX_ITEContext .prototype,
 {
    initialize ()
    {
-      this .addTextureBuffer (_transmissionBuffer);
       this .addTextureBuffer (_volumeScatterBuffer);
+      this .addTextureBuffer (_transmissionBuffer);
+      this .addTextureBuffer (_transmissionBackfaceBuffer);
+   },
+   getVolumeScatterBuffer ()
+   {
+      return this [_volumeScatterBuffer] ??= new TextureBuffer ({
+         browser: this,
+         width: this ._viewport [2],
+         height: this ._viewport [3],
+         float: true,
+      });
    },
    getTransmissionBuffer ()
    {
@@ -22,13 +33,12 @@ Object .assign (X3DX_ITEContext .prototype,
          mipMaps: true,
       });
    },
-   getVolumeScatterBuffer ()
+   getTransmissionBackfaceBuffer ()
    {
-      return this [_volumeScatterBuffer] ??= new TextureBuffer ({
+      return this [_transmissionBackfaceBuffer] ??= new TextureBuffer ({
          browser: this,
          width: this ._viewport [2],
          height: this ._viewport [3],
-         float: true,
       });
    },
 });
