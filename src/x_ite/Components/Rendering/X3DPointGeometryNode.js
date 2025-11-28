@@ -5,8 +5,6 @@ function X3DPointGeometryNode (executionContext)
 {
    X3DGeometryNode .call (this, executionContext);
 
-   const browser = this .getBrowser ();
-
    this .setGeometryType (0);
    this .setSolid (false);
 }

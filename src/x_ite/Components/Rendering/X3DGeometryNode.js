@@ -34,8 +34,6 @@ function X3DGeometryNode (executionContext)
 
    // Members
 
-   const browser = this .getBrowser ();
-
    this .min                      = new Vector3 ();
    this .max                      = new Vector3 ();
    this .bbox                     = Box3 .Extents (this .min, this .max);
