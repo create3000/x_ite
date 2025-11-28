@@ -148,10 +148,6 @@ main ()
       finalColor .rgb = toneMap (finalColor .rgb);
    #endif
 
-   #if defined (X3D_COLORSPACE_LINEAR)
-      finalColor .rgb = linearToSRGB (finalColor .rgb);
-   #endif
-
    #if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
       float a = finalColor .a;
       float w = weight (gl_FragCoord .z, a);

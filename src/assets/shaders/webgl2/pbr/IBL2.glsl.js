@@ -105,11 +105,7 @@ getTransmissionSample (const in vec2 fragCoord, const in float roughness, const 
    float framebufferLod   = log2 (float (framebufferSize)) * applyIorToRoughness (roughness, ior);
    vec3  transmittedLight = textureLod (x3d_TransmissionSamplerEXT, fragCoord, framebufferLod) .rgb;
 
-   #if defined (X3D_COLORSPACE_SRGB)
-      return transmittedLight;
-   #else
-      return sRGBToLinear (transmittedLight);
-   #endif
+   return transmittedLight;
 }
 
 vec3 getIBLVolumeRefraction (const in vec3 n, const in vec3 v, const in float perceptualRoughness, const in vec3 baseColor, const in vec3 position, const in mat4 modelMatrix, const in mat4 projMatrix, const in float ior, const in float thickness, const in vec3 attenuationColor, const in float attenuationDistance, const in float dispersion)

@@ -153,6 +153,10 @@ toneMap (in vec3 color)
       color = toneMap_KhronosPbrNeutral (color);
    #endif
 
+   #if defined (X3D_COLORSPACE_LINEAR)
+      color = linearToSRGB (color);
+   #endif
+
    return color;
 }
 `;
