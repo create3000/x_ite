@@ -30,7 +30,6 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prot
    {
       const
          browser     = this .getBrowser (),
-         gl          = browser .getContext (),
          options     = browser .getDisk2DOptions (),
          innerRadius = Math .min (Math .abs (this ._innerRadius .getValue ()), Math .abs (this ._outerRadius .getValue ())),
          outerRadius = Math .max (Math .abs (this ._innerRadius .getValue ()), Math .abs (this ._outerRadius .getValue ())),
