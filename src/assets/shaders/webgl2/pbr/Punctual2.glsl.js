@@ -95,7 +95,7 @@ getPunctualRadianceClearCoat (const in vec3 clearcoatNormal, const in vec3 v, co
 #if defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
 
 // This texture is also used in IBL2.glsl.js.
-uniform sampler2D x3d_TransmissionBackfaceSamplerEXT;
+uniform sampler2D x3d_TransmissionBackfacesSamplerEXT;
 
 vec3
 getPunctualRadianceTransmission (const in vec3 normal, const in vec3 view, const in vec3 pointToLight, const in float alphaRoughness, in vec3 baseColor, const in float ior, const in vec4 fragCoord)
@@ -113,7 +113,7 @@ getPunctualRadianceTransmission (const in vec3 normal, const in vec3 view, const
 
    #if defined (X3D_VOLUME_MATERIAL_EXT)
       vec2 uvCoords             = fragCoord .xy * (1.0 / vec2 (x3d_Viewport .zw));
-      vec3 transmissionBackface = texture (x3d_TransmissionBackfaceSamplerEXT, uvCoords) .rgb;
+      vec3 transmissionBackface = texture (x3d_TransmissionBackfacesSamplerEXT, uvCoords) .rgb;
 
       baseColor *= transmissionBackface;
    #endif

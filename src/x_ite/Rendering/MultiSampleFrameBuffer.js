@@ -323,11 +323,11 @@ Object .assign (MultiSampleFramebuffer .prototype,
       // DEBUG start
       if (true)
       {
-         const volumeScatterBuffer = browser .getTransmissionBackfaceBuffer ?.();
+         const framebuffer = browser .getTransmissionBackfacesBuffer ?.();
 
-         if (volumeScatterBuffer)
+         if (framebuffer)
          {
-            gl .bindFramebuffer (gl .READ_FRAMEBUFFER, volumeScatterBuffer .frameBuffer);
+            gl .bindFramebuffer (gl .READ_FRAMEBUFFER, framebuffer .frameBuffer);
             gl .readBuffer (gl .COLOR_ATTACHMENT0);
             gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, browser .getDefaultFramebuffer ());
 

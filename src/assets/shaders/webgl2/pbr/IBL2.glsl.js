@@ -139,7 +139,7 @@ vec3 getIBLVolumeRefraction (const in vec3 n, const in vec3 v, const in float pe
          // Sample framebuffer to get pixel the refracted ray hits for this color channel.
          transmittedLight [i] = getTransmissionSample (refractionCoords, perceptualRoughness, iors [i]) [i];
 
-         vec3 transmissionBackface = texture (x3d_TransmissionBackfaceSamplerEXT, refractionCoords) .rgb;
+         vec3 transmissionBackface = texture (x3d_TransmissionBackfacesSamplerEXT, refractionCoords) .rgb;
 
          transmittedLight [i] *= transmissionBackface [i];
       }
@@ -157,7 +157,7 @@ vec3 getIBLVolumeRefraction (const in vec3 n, const in vec3 v, const in float pe
 
       // Sample framebuffer to get pixel the refracted ray hits.
       vec3 transmittedLight     = getTransmissionSample (refractionCoords, perceptualRoughness, ior);
-      vec3 transmissionBackface = texture (x3d_TransmissionBackfaceSamplerEXT, refractionCoords) .rgb;
+      vec3 transmissionBackface = texture (x3d_TransmissionBackfacesSamplerEXT, refractionCoords) .rgb;
 
       transmittedLight *= transmissionBackface;
    #endif // MATERIAL_DISPERSION

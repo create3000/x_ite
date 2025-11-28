@@ -1266,9 +1266,9 @@ Object .assign (X3DRenderObject .prototype,
                this .renderPass = RenderPass .TRANSMISSION_BACKFACE_KEY;
                this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
 
-               const transmissionBackfaceBuffer = browser .getTransmissionBackfaceBuffer ();
+               const transmissionBackfacesBuffer = browser .getTransmissionBackfacesBuffer ();
 
-               this .drawShapes (RenderPass .TRANSMISSION_BACKFACE_KEY, gl, browser, transmissionBackfaceBuffer, gl .COLOR_BUFFER_BIT, viewport);
+               this .drawShapes (RenderPass .TRANSMISSION_BACKFACE_KEY, gl, browser, transmissionBackfacesBuffer, gl .COLOR_BUFFER_BIT, viewport);
             }
          }
 

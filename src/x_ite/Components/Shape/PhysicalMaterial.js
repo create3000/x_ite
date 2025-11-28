@@ -180,8 +180,8 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
 
       browser .getShaders () .set (key, shaderNode);
 
-      shaderNode .volumeScatterPass        = options .includes ("X3D_VOLUME_SCATTER_PASS");
-      shaderNode .transmissionBackfacePass = options .includes ("X3D_TRANSMISSION_BACKFACE_PASS");
+      shaderNode .volumeScatterPass         = options .includes ("X3D_VOLUME_SCATTER_PASS");
+      shaderNode .transmissionBackfacesPass = options .includes ("X3D_TRANSMISSION_BACKFACES_PASS");
 
       return shaderNode;
    },
