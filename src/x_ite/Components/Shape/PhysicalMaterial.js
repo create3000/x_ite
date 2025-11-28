@@ -43,6 +43,10 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
       this .set_extensions__ ();
       this .set_transparent__ ();
    },
+   isPhysical ()
+   {
+      return true;
+   },
    getMaterialKey ()
    {
       return this .materialKey;
@@ -140,12 +144,7 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
 
       this .setTransmission (extensionNodes .some (extensionNode => extensionNode .getType () .includes (X3DConstants .TransmissionMaterialExtension)));
 
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () >= 2)
-      {
-         this .setVolumeScatter (extensionNodes .some (extensionNode => extensionNode .getType () .includes (X3DConstants .VolumeScatterMaterialExtension)) && extensionNodes .some (extensionNode => extensionNode .getType () .includes (X3DConstants .VolumeMaterialExtension)));
-      }
+      this .setVolumeScatter (extensionNodes .some (extensionNode => extensionNode .getType () .includes (X3DConstants .VolumeScatterMaterialExtension)) && extensionNodes .some (extensionNode => extensionNode .getType () .includes (X3DConstants .VolumeMaterialExtension)));
 
       this .set_extensionsKey__ ();
    },
@@ -185,7 +184,8 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
 
       browser .getShaders () .set (key, shaderNode);
 
-      shaderNode .volumeScatterPass = options .includes ("X3D_VOLUME_SCATTER_PASS");
+      shaderNode .volumeScatterPass         = options .includes ("X3D_VOLUME_SCATTER_PASS");
+      shaderNode .transmissionBackfacesPass = options .includes ("X3D_TRANSMISSION_BACKFACES_PASS");
 
       return shaderNode;
    },

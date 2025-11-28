@@ -24,6 +24,10 @@ function X3DMaterialNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanceChildNode .prototype),
 {
+   isPhysical ()
+   {
+      return false;
+   },
    setTransparent (value)
    {
       if (!!value !== this ._transparent .getValue ())
@@ -119,11 +123,11 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          case "SRGB":
             options .push ("X3D_COLORSPACE_SRGB");
             break;
-         default: // LINEAR_WHEN_PHYSICAL_MATERIAL
-            options .push ("X3D_COLORSPACE_LINEAR_WHEN_PHYSICAL_MATERIAL");
-            break;
          case "LINEAR":
             options .push ("X3D_COLORSPACE_LINEAR");
+            break;
+         default: // LINEAR_WHEN_PHYSICAL_MATERIAL
+            options .push (this .isPhysical () ? "X3D_COLORSPACE_LINEAR" : "X3D_COLORSPACE_SRGB");
             break;
       }
 
@@ -295,14 +299,14 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
    {
       switch (renderObject .getRenderPass ())
       {
-         case RenderPass .TRANSMISSION_KEY:
-         {
-            options .push ("X3D_TRANSMISSION_PASS");
-            break;
-         }
          case RenderPass .VOLUME_SCATTER_KEY:
          {
-            options .push ("X3D_VOLUME_SCATTER_PASS");
+            options .push ("X3D_VOLUME_SCATTER_PASS", "X3D_LINEAR_OUTPUT");
+            break;
+         }
+         case RenderPass .TRANSMISSION_KEY:
+         {
+            options .push ("X3D_TRANSMISSION_PASS", "X3D_LINEAR_OUTPUT");
             break;
          }
       }
