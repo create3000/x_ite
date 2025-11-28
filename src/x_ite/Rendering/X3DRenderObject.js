@@ -1158,6 +1158,7 @@ Object .assign (X3DRenderObject .prototype,
          pose                     = browser .getPose (),
          framebuffers             = this .getFramebuffers (),
          numFramebuffers          = framebuffers .length,
+         renderPasses             = this .renderPasses,
          viewport                 = this .viewVolumes .at (-1) .getViewport (),
          lights                   = this .lights,
          globalLightsKeys         = this .globalLightsKeys,
@@ -1230,9 +1231,9 @@ Object .assign (X3DRenderObject .prototype,
 
          // Render transmission texture and volume scatter texture.
 
-         if (this .renderPasses !== RenderPass .NONE)
+         if (renderPasses !== RenderPass .NONE)
          {
-            if (this .renderPasses & RenderPass .VOLUME_SCATTER_BIT)
+            if (renderPasses & RenderPass .VOLUME_SCATTER_BIT)
             {
                // Render to volume scatter buffer.
 
@@ -1248,7 +1249,7 @@ Object .assign (X3DRenderObject .prototype,
                this .drawShapes (RenderPass .VOLUME_SCATTER_KEY, gl, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport);
             }
 
-            if (this .renderPasses & RenderPass .TRANSMISSION_BIT)
+            if (renderPasses & RenderPass .TRANSMISSION_BIT)
             {
                // Render to transmission buffer.
 
