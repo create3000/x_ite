@@ -43,6 +43,10 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
       this .set_extensions__ ();
       this .set_transparent__ ();
    },
+   isPhysical ()
+   {
+      return true;
+   },
    getMaterialKey ()
    {
       return this .materialKey;
