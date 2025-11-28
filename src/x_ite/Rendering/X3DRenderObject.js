@@ -1243,7 +1243,9 @@ Object .assign (X3DRenderObject .prototype,
 
                const volumeScatterBuffer = browser .getVolumeScatterBuffer ();
 
-               this .drawShapes (RenderPass .VOLUME_SCATTER_KEY, gl, browser, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport);
+               gl .clearColor (0, 0, 0, 0);
+
+               this .drawShapes (RenderPass .VOLUME_SCATTER_KEY, gl, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport);
             }
 
             if (this .renderPasses & RenderPass .TRANSMISSION_BIT)
@@ -1255,7 +1257,9 @@ Object .assign (X3DRenderObject .prototype,
 
                const transmissionBuffer = browser .getTransmissionBuffer ();
 
-               this .drawShapes (RenderPass .TRANSMISSION_KEY, gl, browser, transmissionBuffer, gl .COLOR_BUFFER_BIT, viewport);
+               gl .clearColor (0, 0, 0, 0);
+
+               this .drawShapes (RenderPass .TRANSMISSION_KEY, gl, transmissionBuffer, gl .COLOR_BUFFER_BIT, viewport);
 
                // Mipmap is later selected based on roughness and ior.
                gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
@@ -1268,7 +1272,9 @@ Object .assign (X3DRenderObject .prototype,
 
                const transmissionBackfacesBuffer = browser .getTransmissionBackfacesBuffer ();
 
-               this .drawShapes (RenderPass .TRANSMISSION_BACKFACES_KEY, gl, browser, transmissionBackfacesBuffer, gl .COLOR_BUFFER_BIT, viewport);
+               gl .clearColor (1, 1, 1, 1);
+
+               this .drawShapes (RenderPass .TRANSMISSION_BACKFACES_KEY, gl, transmissionBackfacesBuffer, gl .COLOR_BUFFER_BIT, viewport);
             }
          }
 
@@ -1279,7 +1285,9 @@ Object .assign (X3DRenderObject .prototype,
 
          const frameBuffer = framebuffers [i];
 
-         this .drawShapes (RenderPass .RENDER_KEY, gl, browser, frameBuffer, 0, viewport);
+         gl .clearColor (0, 0, 0, 0);
+
+         this .drawShapes (RenderPass .RENDER_KEY, gl, frameBuffer, 0, viewport);
       }
 
       this .view = null;
@@ -1311,7 +1319,7 @@ Object .assign (X3DRenderObject .prototype,
       globalShadows            .length = 1;
       generatedCubeMapTextures .length = 0;
    },
-   drawShapes (renderPass, gl, browser, frameBuffer, clearBits, viewport)
+   drawShapes (renderPass, gl, frameBuffer, clearBits, viewport)
    {
       const { opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes } = this;
 
@@ -1326,7 +1334,6 @@ Object .assign (X3DRenderObject .prototype,
 
       // Draw background.
 
-      gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .DEPTH_BUFFER_BIT | clearBits);
       gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
 
