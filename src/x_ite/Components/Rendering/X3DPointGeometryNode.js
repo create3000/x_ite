@@ -5,10 +5,7 @@ function X3DPointGeometryNode (executionContext)
 {
    X3DGeometryNode .call (this, executionContext);
 
-   const browser = this .getBrowser ();
-
    this .setGeometryType (0);
-   this .setPrimitiveMode (browser .getContext () .POINTS);
    this .setSolid (false);
 }
 
@@ -76,7 +73,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
       }
 
-      gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
+      gl .drawArrays (gl .POINTS, 0, this .vertexCount);
 
       // Disable render mode nodes.
 
@@ -167,7 +164,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
 
       // Wireframes are always solid so only one drawing call is needed.
 
-      gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, shapeNode .getNumInstances ());
+      gl .drawArraysInstanced (gl .POINTS, 0, this .vertexCount, shapeNode .getNumInstances ());
 
       // Disable render mode nodes.
 

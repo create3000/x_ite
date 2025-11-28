@@ -48,7 +48,6 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prot
             this .getMax () .set (0);
 
             this .setGeometryType (0);
-            this .setPrimitiveMode (gl .POINTS);
             this .setTransparent (true);
             this .setSolid (false);
             this .setBase (X3DPointGeometryNode);
@@ -77,7 +76,6 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prot
          this .getMax () .set ( outerRadius,  outerRadius, 0);
 
          this .setGeometryType (1);
-         this .setPrimitiveMode (gl .LINES);
          this .setTransparent (false);
          this .setSolid (false);
          this .setBase (X3DLineGeometryNode);
@@ -107,7 +105,6 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prot
          this .getMax () .set ( outerRadius,  outerRadius, 0);
 
          this .setGeometryType (2);
-         this .setPrimitiveMode (gl .TRIANGLES);
          this .setTransparent (false);
          this .setSolid (this ._solid .getValue ());
          this .setBase (X3DGeometryNode);
@@ -152,7 +149,6 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prot
       this .getMax () .set ( outerRadius,  outerRadius, 0);
 
       this .setGeometryType (2);
-      this .setPrimitiveMode (gl .TRIANGLES);
       this .setTransparent (false);
       this .setSolid (this ._solid .getValue ());
       this .setBase (X3DGeometryNode);
