@@ -519,7 +519,6 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
       gl .uniform3f (shaderNode .x3d_EmissiveColor,                      1, 1, 1)
       gl .uniform1f (shaderNode .x3d_Transparency,                       transparency)
       gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
-      gl .uniform1f (shaderNode .x3d_Exposure,                           1);
 
       // Enable vertex attribute arrays.
 
@@ -537,8 +536,6 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          gl .disable (gl .BLEND);
 
       gl .drawArrays (gl .TRIANGLES, 0, this .sphereCount);
-
-      gl .uniform1f (shaderNode .x3d_Exposure, Math .max (browser .getBrowserOption ("Exposure"), 0));
    },
    drawCube: (() =>
    {
@@ -576,11 +573,8 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
             gl .uniform3f (shaderNode .x3d_EmissiveColor,                      1, 1, 1);
             gl .uniform1f (shaderNode .x3d_Transparency,                       0);
             gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
-            gl .uniform1f (shaderNode .x3d_Exposure,                           1);
 
             this .drawRectangle (gl, browser, shaderNode, textureNode, this .textureBuffers [i], this .textureArrayObjects [i]);
-
-            gl .uniform1f (shaderNode .x3d_Exposure, Math .max (browser .getBrowserOption ("Exposure"), 0));
          }
       };
    })(),
