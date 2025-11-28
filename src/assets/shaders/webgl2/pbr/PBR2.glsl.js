@@ -41,7 +41,7 @@ uniform x3d_PhysicalMaterialParameters x3d_Material;
 
 #if defined (X3D_VOLUME_SCATTER_PASS)
 #pragma X3D include "Scatter.glsl"
-#elif defined (X3D_TRANSMISSION_BACKFACE_PASS)
+#elif defined (X3D_TRANSMISSION_BACKFACES_PASS)
 #pragma X3D include "TransmissionBackfaces.glsl"
 #else
 vec4

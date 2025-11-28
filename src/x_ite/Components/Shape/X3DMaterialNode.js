@@ -305,9 +305,9 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
             options .push ("X3D_TRANSMISSION_PASS");
             break;
          }
-         case RenderPass .TRANSMISSION_BACKFACE_KEY:
+         case RenderPass .TRANSMISSION_BACKFACES_KEY:
          {
-            options .push ("X3D_TRANSMISSION_BACKFACE_PASS");
+            options .push ("X3D_TRANSMISSION_BACKFACES_PASS");
             break;
          }
       }

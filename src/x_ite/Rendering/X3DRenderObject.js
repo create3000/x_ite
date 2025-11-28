@@ -1263,12 +1263,12 @@ Object .assign (X3DRenderObject .prototype,
 
                // Render to transmission backface buffer.
 
-               this .renderPass = RenderPass .TRANSMISSION_BACKFACE_KEY;
+               this .renderPass = RenderPass .TRANSMISSION_BACKFACES_KEY;
                this .renderKey  = `.${this .partialRenderKey}.${this .renderPass}.${globalLightsKey}.`;
 
                const transmissionBackfacesBuffer = browser .getTransmissionBackfacesBuffer ();
 
-               this .drawShapes (RenderPass .TRANSMISSION_BACKFACE_KEY, gl, browser, transmissionBackfacesBuffer, gl .COLOR_BUFFER_BIT, viewport);
+               this .drawShapes (RenderPass .TRANSMISSION_BACKFACES_KEY, gl, browser, transmissionBackfacesBuffer, gl .COLOR_BUFFER_BIT, viewport);
             }
          }
 
