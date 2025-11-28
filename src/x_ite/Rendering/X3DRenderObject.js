@@ -1285,8 +1285,6 @@ Object .assign (X3DRenderObject .prototype,
 
          const frameBuffer = framebuffers [i];
 
-         gl .clearColor (0, 0, 0, 0);
-
          this .drawShapes (RenderPass .RENDER_KEY, gl, frameBuffer, 0, viewport);
       }
 
