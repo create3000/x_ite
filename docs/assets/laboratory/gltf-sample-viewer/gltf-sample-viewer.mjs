@@ -21,7 +21,6 @@ const no_headlight = [
    "LightVisibility",
    "PlaysetLightTest",
    "PointLightIntensityTest",
-   "ScatteringSkull",
 ];
 
 // SAMPLES_BEGIN
