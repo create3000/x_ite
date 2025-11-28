@@ -65,7 +65,7 @@ function X3DRenderObject (executionContext)
    this .transparentShapes        = [ ];
    this .transparencySorter       = new MergeSort (this .transparentShapes, (a, b) => a .distance < b .distance);
    this .renderPasses             = 0;
-   this .renderPass               = RenderPass .NONE;
+   this .renderPass               = 0;
    this .speed                    = 0;
    this .depthBuffer              = new TextureBuffer ({ browser, width: DEPTH_BUFFER_SIZE, height: DEPTH_BUFFER_SIZE, float: true, colorTextures: 2 });
 }
