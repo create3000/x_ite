@@ -960,7 +960,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
             // Proceed with next case:
          }
-         default:
+         default: // GeometryType .POINT
          {
             const
                viewport        = renderContext .viewport,

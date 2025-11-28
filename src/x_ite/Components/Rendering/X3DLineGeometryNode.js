@@ -28,7 +28,6 @@ function X3DLineGeometryNode (executionContext)
    this .thickLinesVertexArrayObject = new VertexArray (gl);
 
    this .setGeometryType (1);
-   this .setPrimitiveMode (gl .LINES);
    this .setSolid (false);
 }
 
@@ -121,7 +120,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
       }
 
-      gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
+      gl .drawArrays (gl .LINES, 0, this .vertexCount);
       gl .lineWidth (1);
    },
    displaySimpleThick (gl, renderContext, shaderNode)
@@ -204,7 +203,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          this .updateInstances = false;
       }
 
-      gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, shapeNode .getNumInstances ());
+      gl .drawArraysInstanced (gl .LINES, 0, this .vertexCount, shapeNode .getNumInstances ());
    },
    displaySimpleInstancedThick (gl, shaderNode, shapeNode)
    {
@@ -277,7 +276,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
       const
          { viewport, appearanceNode } = renderContext,
          browser         = this .getBrowser (),
-         primitiveMode   = browser .getPrimitiveMode (this .getPrimitiveMode ()),
+         primitiveMode   = browser .getPrimitiveMode (gl .LINES),
          shaderNode      = appearanceNode .getShader (this, renderContext),
          renderModeNodes = appearanceNode .getRenderModes ();
 
@@ -607,7 +606,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          geometryContext = shapeNode .getGeometryContext (),
          shaderNode      = appearanceNode .getShader (geometryContext, renderContext),
          renderModeNodes = appearanceNode .getRenderModes (),
-         primitiveMode   = browser .getPrimitiveMode (this .getPrimitiveMode ());
+         primitiveMode   = browser .getPrimitiveMode (gl .LINES);
 
       // Set viewport.
 

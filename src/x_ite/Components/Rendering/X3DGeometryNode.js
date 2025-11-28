@@ -40,7 +40,6 @@ function X3DGeometryNode (executionContext)
    this .max                      = new Vector3 ();
    this .bbox                     = Box3 .Extents (this .min, this .max);
    this .solid                    = true;
-   this .primitiveMode            = browser .getContext () .TRIANGLES;
    this .geometryType             = 3;
    this .colorMaterial            = false;
    this .attribNodes              = [ ];
@@ -190,14 +189,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    getMatrix ()
    {
       return Matrix4 .IDENTITY;
-   },
-   getPrimitiveMode ()
-   {
-      return this .primitiveMode;
-   },
-   setPrimitiveMode (value)
-   {
-      this .primitiveMode = value;
    },
    setSolid (value)
    {
@@ -844,14 +835,14 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
       }
 
-      gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
+      gl .drawArrays (gl .TRIANGLES, 0, this .vertexCount);
    },
    display (gl, renderContext)
    {
       const
          { viewport, appearanceNode, modelViewMatrix } = renderContext,
          browser         = this .getBrowser (),
-         primitiveMode   = browser .getPrimitiveMode (this .primitiveMode),
+         primitiveMode   = browser .getPrimitiveMode (gl .TRIANGLES),
          renderModeNodes = appearanceNode .getRenderModes (),
          shaderNode      = appearanceNode .getShader (this, renderContext);
 
@@ -991,14 +982,14 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          this .updateInstances = false;
       }
 
-      gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, shapeNode .getNumInstances ());
+      gl .drawArraysInstanced (gl .TRIANGLES, 0, this .vertexCount, shapeNode .getNumInstances ());
    },
    displayInstanced (gl, renderContext, shapeNode)
    {
       const
          { viewport, appearanceNode, modelViewMatrix } = renderContext,
          browser         = this .getBrowser (),
-         primitiveMode   = browser .getPrimitiveMode (this .primitiveMode),
+         primitiveMode   = browser .getPrimitiveMode (gl .TRIANGLES),
          renderModeNodes = appearanceNode .getRenderModes (),
          shaderNode      = appearanceNode .getShader (this, renderContext);
 
