@@ -133,11 +133,8 @@ vec3 getIBLVolumeRefraction (const in vec3 n, const in vec3 v, const in float pe
          refractionCoords /= 2.0;
 
          // Sample framebuffer to get pixel the refracted ray hits for this color channel.
-         transmittedLight [i] = getTransmissionSample (refractionCoords, perceptualRoughness, iors [i]) [i];
-
-         vec3 transmissionBackface = texture (x3d_TransmissionBackfacesSamplerEXT, refractionCoords) .rgb;
-
-         transmittedLight [i] *= transmissionBackface [i];
+         transmittedLight [i]  = getTransmissionSample (refractionCoords, perceptualRoughness, iors [i]) [i];
+         transmittedLight [i] *= texture (x3d_TransmissionBackfacesSamplerEXT, refractionCoords) [i];
       }
    #else
       vec3  transmissionRay       = getVolumeTransmissionRay (n, v, thickness, ior, modelMatrix);
