@@ -1231,7 +1231,7 @@ Object .assign (X3DRenderObject .prototype,
 
          // Render transmission texture and volume scatter texture.
 
-         if (renderPasses !== RenderPass .NONE)
+         if (renderPasses)
          {
             if (renderPasses & RenderPass .VOLUME_SCATTER_BIT)
             {
