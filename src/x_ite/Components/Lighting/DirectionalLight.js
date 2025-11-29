@@ -113,7 +113,12 @@ Object .assign (DirectionalLightContainer .prototype,
    },
    setShaderUniforms (gl, shaderObject)
    {
-      const i = shaderObject .numLights ++;
+      const
+         i        = shaderObject .numLights ++,
+         uniforms = shaderObject .x3d_Light [i];
+
+      if (!uniforms)
+         return;
 
       if (this .shadowBuffer)
       {
@@ -123,7 +128,7 @@ Object .assign (DirectionalLightContainer .prototype,
 
          gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
-         gl .uniform1i (shaderObject .x3d_ShadowMap [i], textureUnit);
+         gl .uniform1i (uniforms .shadowMap, textureUnit);
       }
 
       if (shaderObject .hasLight (i, this))
@@ -133,26 +138,26 @@ Object .assign (DirectionalLightContainer .prototype,
          { lightNode, direction} = this,
          color                   = lightNode .getColor ();
 
-      gl .uniform1i (shaderObject .x3d_LightType [i],             1);
-      gl .uniform3f (shaderObject .x3d_LightColor [i],            ... color);
-      gl .uniform1f (shaderObject .x3d_LightIntensity [i],        lightNode .getIntensity ());
-      gl .uniform1f (shaderObject .x3d_LightAmbientIntensity [i], lightNode .getAmbientIntensity ());
-      gl .uniform3f (shaderObject .x3d_LightDirection [i],        ... direction);
-      gl .uniform1f (shaderObject .x3d_LightRadius [i],           -1);
+      gl .uniform1i (uniforms .type,             1);
+      gl .uniform3f (uniforms .color,            ... color);
+      gl .uniform1f (uniforms .intensity,        lightNode .getIntensity ());
+      gl .uniform1f (uniforms .ambientIntensity, lightNode .getAmbientIntensity ());
+      gl .uniform3f (uniforms .direction,        ... direction);
+      gl .uniform1f (uniforms .radius,           -1);
 
       if (this .shadowBuffer)
       {
          const shadowColor = lightNode .getShadowColor ();
 
-         gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         ... shadowColor);
-         gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
-         gl .uniform1f        (shaderObject .x3d_ShadowBias [i],          lightNode .getShadowBias ());
-         gl .uniformMatrix4fv (shaderObject .x3d_ShadowMatrix [i], false, this .shadowMatrixArray);
-         gl .uniform1i        (shaderObject .x3d_ShadowMapSize [i],       lightNode .getShadowMapSize ());
+         gl .uniform3f        (uniforms .shadowColor,         ... shadowColor);
+         gl .uniform1f        (uniforms .shadowIntensity,     lightNode .getShadowIntensity ());
+         gl .uniform1f        (uniforms .shadowBias,          lightNode .getShadowBias ());
+         gl .uniformMatrix4fv (uniforms .shadowMatrix, false, this .shadowMatrixArray);
+         gl .uniform1i        (uniforms .shadowMapSize,       lightNode .getShadowMapSize ());
       }
       else
       {
-         gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);
+         gl .uniform1f (uniforms .shadowIntensity, 0);
       }
    },
    dispose ()

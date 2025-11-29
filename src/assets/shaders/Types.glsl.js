@@ -143,7 +143,7 @@ struct x3d_EnvironmentLightSourceParameters {
       mediump samplerCube sheenTexture;
       bool                sheenTextureLinear;
       mediump int         sheenTextureLevels;
-      mediump sampler2D   CharlieLUTTexture;
+      mediump sampler2D   charlieLUTTexture;
    #endif
 };
 #endif
