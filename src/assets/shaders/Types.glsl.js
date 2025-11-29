@@ -113,12 +113,13 @@ struct x3d_LightSourceParameters {
    mediump float beamWidth;
    mediump float cutOffAngle;
    mediump mat3  matrix;
+   
    #if defined (X3D_SHADOWS)
-   mediump vec3  shadowColor;
-   mediump float shadowIntensity;
-   mediump float shadowBias;
-   mediump mat4  shadowMatrix;
-   mediump int   shadowMapSize;
+      mediump vec3  shadowColor;
+      mediump float shadowIntensity;
+      mediump float shadowBias;
+      mediump mat4  shadowMatrix;
+      mediump int   shadowMapSize;
    #endif
 };
 #endif
