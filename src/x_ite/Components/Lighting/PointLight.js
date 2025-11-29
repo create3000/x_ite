@@ -144,7 +144,12 @@ Object .assign (PointLightContainer .prototype,
    },
    setShaderUniforms (gl, shaderObject)
    {
-      const i = shaderObject .numLights ++;
+      const
+         i        = shaderObject .numLights ++,
+         uniforms = shaderObject .x3d_Light [i];
+
+      if (!uniforms)
+         return;
 
       if (this .shadowBuffer)
       {
@@ -154,7 +159,7 @@ Object .assign (PointLightContainer .prototype,
 
          gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
-         gl .uniform1i (shaderObject .x3d_ShadowMap [i], textureUnit);
+         gl .uniform1i (uniforms .shadowMap, textureUnit);
       }
 
       if (shaderObject .hasLight (i, this))
@@ -165,28 +170,28 @@ Object .assign (PointLightContainer .prototype,
          color                   = lightNode .getColor (),
          attenuation             = lightNode .getAttenuation ();
 
-      gl .uniform1i        (shaderObject .x3d_LightType [i],             2);
-      gl .uniform3f        (shaderObject .x3d_LightColor [i],            ... color);
-      gl .uniform1f        (shaderObject .x3d_LightIntensity [i],        lightNode .getIntensity ());
-      gl .uniform1f        (shaderObject .x3d_LightAmbientIntensity [i], lightNode .getAmbientIntensity ());
-      gl .uniform3fv       (shaderObject .x3d_LightAttenuation [i],      attenuation);
-      gl .uniform3f        (shaderObject .x3d_LightLocation [i],         ... location);
-      gl .uniform1f        (shaderObject .x3d_LightRadius [i],           lightNode .getRadius ());
-      gl .uniformMatrix3fv (shaderObject .x3d_LightMatrix [i], false,    this .matrixArray);
+      gl .uniform1i        (uniforms .type,             2);
+      gl .uniform3f        (uniforms .color,            ... color);
+      gl .uniform1f        (uniforms .intensity,        lightNode .getIntensity ());
+      gl .uniform1f        (uniforms .ambientIntensity, lightNode .getAmbientIntensity ());
+      gl .uniform3fv       (uniforms .attenuation,      attenuation);
+      gl .uniform3f        (uniforms .location,         ... location);
+      gl .uniform1f        (uniforms .radius,           lightNode .getRadius ());
+      gl .uniformMatrix3fv (uniforms .matrix, false,    this .matrixArray);
 
       if (this .shadowBuffer)
       {
          const shadowColor = lightNode .getShadowColor ();
 
-         gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         ... shadowColor);
-         gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
-         gl .uniform1f        (shaderObject .x3d_ShadowBias [i],          lightNode .getShadowBias ());
-         gl .uniformMatrix4fv (shaderObject .x3d_ShadowMatrix [i], false, this .shadowMatrixArray);
-         gl .uniform1i        (shaderObject .x3d_ShadowMapSize [i],       lightNode .getShadowMapSize ());
+         gl .uniform3f        (uniforms .shadowColor,         ... shadowColor);
+         gl .uniform1f        (uniforms .shadowIntensity,     lightNode .getShadowIntensity ());
+         gl .uniform1f        (uniforms .shadowBias,          lightNode .getShadowBias ());
+         gl .uniformMatrix4fv (uniforms .shadowMatrix, false, this .shadowMatrixArray);
+         gl .uniform1i        (uniforms .shadowMapSize,       lightNode .getShadowMapSize ());
       }
       else
       {
-         gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);
+         gl .uniform1f (uniforms .shadowIntensity, 0);
       }
    },
    dispose ()

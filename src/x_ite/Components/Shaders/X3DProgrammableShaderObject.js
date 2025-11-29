@@ -24,24 +24,7 @@ function X3DProgrammableShaderObject (executionContext)
 
    this .x3d_ClipPlane                           = [ ];
    this .x3d_EnvironmentLight                    = [ ];
-   this .x3d_LightType                           = [ ];
-   this .x3d_LightOn                             = [ ];
-   this .x3d_LightColor                          = [ ];
-   this .x3d_LightIntensity                      = [ ];
-   this .x3d_LightAmbientIntensity               = [ ];
-   this .x3d_LightAttenuation                    = [ ];
-   this .x3d_LightLocation                       = [ ];
-   this .x3d_LightDirection                      = [ ];
-   this .x3d_LightBeamWidth                      = [ ];
-   this .x3d_LightCutOffAngle                    = [ ];
-   this .x3d_LightRadius                         = [ ];
-   this .x3d_LightMatrix                         = [ ];
-   this .x3d_ShadowIntensity                     = [ ];
-   this .x3d_ShadowColor                         = [ ];
-   this .x3d_ShadowBias                          = [ ];
-   this .x3d_ShadowMatrix                        = [ ];
-   this .x3d_ShadowMapSize                       = [ ];
-   this .x3d_ShadowMap                           = [ ];
+   this .x3d_Light                               = [ ];
    this .x3d_Texture                             = [ ];
    this .x3d_MultiTextureMode                    = [ ];
    this .x3d_MultiTextureAlphaMode               = [ ];
@@ -124,24 +107,26 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       for (let i = 0; i < maxLights; ++ i)
       {
-         this .x3d_LightType [i]             = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].type",             "x3d_LightType[" + i + "]");
-         this .x3d_LightColor [i]            = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].color",            "x3d_LightColor[" + i + "]");
-         this .x3d_LightAmbientIntensity [i] = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].ambientIntensity", "x3d_LightAmbientIntensity[" + i + "]");
-         this .x3d_LightIntensity [i]        = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].intensity",        "x3d_LightIntensity[" + i + "]");
-         this .x3d_LightAttenuation [i]      = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].attenuation",      "x3d_LightAttenuation[" + i + "]");
-         this .x3d_LightLocation [i]         = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].location",         "x3d_LightLocation[" + i + "]");
-         this .x3d_LightDirection [i]        = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].direction",        "x3d_LightDirection[" + i + "]");
-         this .x3d_LightBeamWidth [i]        = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].beamWidth",        "x3d_LightBeamWidth[" + i + "]");
-         this .x3d_LightCutOffAngle [i]      = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].cutOffAngle",      "x3d_LightCutOffAngle[" + i + "]");
-         this .x3d_LightRadius [i]           = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].radius",           "x3d_LightRadius[" + i + "]");
-         this .x3d_LightMatrix [i]           = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].matrix",           "x3d_LightMatrix[" + i + "]");
+         this .x3d_Light [i] = {
+            type:             this .getUniformLocation (gl, program, `x3d_LightSource[${i}].type`,             `x3d_LightType[${i}]`),
+            color:            this .getUniformLocation (gl, program, `x3d_LightSource[${i}].color`,            `x3d_LightColor[${i}]`),
+            ambientIntensity: this .getUniformLocation (gl, program, `x3d_LightSource[${i}].ambientIntensity`, `x3d_LightAmbientIntensity[${i}]`),
+            intensity:        this .getUniformLocation (gl, program, `x3d_LightSource[${i}].intensity`,        `x3d_LightIntensity[${i}]`),
+            attenuation:      this .getUniformLocation (gl, program, `x3d_LightSource[${i}].attenuation`,      `x3d_LightAttenuation[${i}]`),
+            location:         this .getUniformLocation (gl, program, `x3d_LightSource[${i}].location`,         `x3d_LightLocation[${i}]`),
+            direction:        this .getUniformLocation (gl, program, `x3d_LightSource[${i}].direction`,        `x3d_LightDirection[${i}]`),
+            beamWidth:        this .getUniformLocation (gl, program, `x3d_LightSource[${i}].beamWidth`,        `x3d_LightBeamWidth[${i}]`),
+            cutOffAngle:      this .getUniformLocation (gl, program, `x3d_LightSource[${i}].cutOffAngle`,      `x3d_LightCutOffAngle[${i}]`),
+            radius:           this .getUniformLocation (gl, program, `x3d_LightSource[${i}].radius`,           `x3d_LightRadius[${i}]`),
+            matrix:           this .getUniformLocation (gl, program, `x3d_LightSource[${i}].matrix`,           `x3d_LightMatrix[${i}]`),
 
-         this .x3d_ShadowIntensity [i] = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowIntensity");
-         this .x3d_ShadowColor [i]     = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowColor");
-         this .x3d_ShadowBias [i]      = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowBias");
-         this .x3d_ShadowMatrix [i]    = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowMatrix");
-         this .x3d_ShadowMapSize [i]   = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowMapSize");
-         this .x3d_ShadowMap [i]       = gl .getUniformLocation (program, "x3d_ShadowMap[" + i + "]");
+            shadowIntensity: gl .getUniformLocation (program, `x3d_LightSource[${i}].shadowIntensity`),
+            shadowColor:     gl .getUniformLocation (program, `x3d_LightSource[${i}].shadowColor`),
+            shadowBias:      gl .getUniformLocation (program, `x3d_LightSource[${i}].shadowBias`),
+            shadowMatrix:    gl .getUniformLocation (program, `x3d_LightSource[${i}].shadowMatrix`),
+            shadowMapSize:   gl .getUniformLocation (program, `x3d_LightSource[${i}].shadowMapSize`),
+            shadowMap:       gl .getUniformLocation (program, `x3d_ShadowMap[${i}]`),
+         };
       }
 
       for (let i = 0; i < maxEnvironmentLights; ++ i)
@@ -341,8 +326,8 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       {
          const texture2DUnit = browser .getDefaultTexture2DUnit ();
 
-         for (const uniform of this .x3d_ShadowMap)
-            gl .uniform1i (uniform, texture2DUnit);
+         for (const uniforms of this .x3d_Light)
+            gl .uniform1i (uniforms .shadowMap, texture2DUnit);
       }
    },
    getUniformLocation (gl, program, name, depreciated)
