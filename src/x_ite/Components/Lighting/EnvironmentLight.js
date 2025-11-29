@@ -174,16 +174,15 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    },
    getLightKey ()
    {
-      return this .lightKey ??= this .createLightKey ();
-   },
-   createLightKey ()
-   {
-      const
-         diffuseLinear  = this .getDiffuseTexture ()  ?.isLinear () ? 1 : 0,
-         specularLinear = this .getSpecularTexture () ?.isLinear () ? 1 : 0,
-         sheenLinear    = this .getSheenTexture ()    ?.isLinear () ? 1 : 0;
+      return this .lightKey ??= (() =>
+      {
+         const
+            diffuseLinear  = this .getDiffuseTexture ()  ?.isLinear () ? 1 : 0,
+            specularLinear = this .getSpecularTexture () ?.isLinear () ? 1 : 0,
+            sheenLinear    = this .getSheenTexture ()    ?.isLinear () ? 1 : 0;
 
-      return `[2.${diffuseLinear}.${specularLinear}.${sheenLinear}]`;
+         return `[2.${diffuseLinear}.${specularLinear}.${sheenLinear}]`;
+      })();
    },
    getDiffuseTexture ()
    {
