@@ -25,12 +25,12 @@ function X3DProgrammableShaderObject (executionContext)
    this .x3d_ClipPlane                  = [ ];
    this .x3d_EnvironmentLight           = [ ];
    this .x3d_Light                      = [ ];
-   this .x3d_Texture                    = [ ];
    this .x3d_MultiTexture               = [ ];
-   this .x3d_TextureCoordinateGenerator = [ ];
-   this .x3d_TextureProjector           = [ ];
    this .x3d_TexCoord                   = [ ];
+   this .x3d_Texture                    = [ ];
+   this .x3d_TextureCoordinateGenerator = [ ];
    this .x3d_TextureMatrix              = [ ];
+   this .x3d_TextureProjector           = [ ];
 }
 
 Object .assign (X3DProgrammableShaderObject .prototype,
