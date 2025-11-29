@@ -203,12 +203,12 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          {
             const
                lights    = renderObject .getGlobalLights () .concat (renderContext .localObjects),
-               container = lights .findLast (c => c .lightNode .getLightKey () .toString () .startsWith ("[2")),
+               container = lights .find (c => c .lightNode .getLightKey () .toString () .startsWith ("[2")),
                lightNode = container .lightNode;
 
             // Although we count this kind of light here, only one is supported.
             options .push ("X3D_USE_IBL")
-            options .push (`X3D_NUM_ENVIRONMENT_LIGHTS ${Math .min (numEnvironmentLights, browser .getMaxLights ())}`);
+            options .push (`X3D_NUM_ENVIRONMENT_LIGHTS ${Math .min (numEnvironmentLights, browser .getMaxEnvironmentLights ())}`);
 
             if (lightNode .getDiffuseTexture () ?.isLinear ())
                options .push ("X3D_ENVIRONMENT_DIFFUSE_TEXTURE_LINEAR");

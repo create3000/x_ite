@@ -12,7 +12,18 @@ function X3DProgrammableShaderObject (executionContext)
 
    this .uniformNames = [ ];
 
+   this .fogNode                    = null;
+   this .numClipPlanes              = 0;
+   this .numEnvironmentLights       = 0;
+   this .environmentLightNodes      = [ ];
+   this .numLights                  = 0;
+   this .lightNodes                 = [ ];
+   this .numTextureProjectors       = 0;
+   this .textureProjectorNodes      = [ ];
+   this .textures                   = new Set ();
+
    this .x3d_ClipPlane                           = [ ];
+   this .x3d_EnvironmentLight                    = [ ];
    this .x3d_LightType                           = [ ];
    this .x3d_LightOn                             = [ ];
    this .x3d_LightColor                          = [ ];
@@ -46,16 +57,6 @@ function X3DProgrammableShaderObject (executionContext)
    this .x3d_TextureProjectorMatrix              = [ ];
    this .x3d_TexCoord                            = [ ];
    this .x3d_TextureMatrix                       = [ ];
-
-   this .fogNode                    = null;
-   this .numClipPlanes              = 0;
-   this .numEnvironmentLights       = 0;
-   this .environmentLightNodes      = [ ];
-   this .numLights                  = 0;
-   this .lightNodes                 = [ ];
-   this .numTextureProjectors       = 0;
-   this .textureProjectorNodes      = [ ];
-   this .textures                   = new Set ();
 }
 
 Object .assign (X3DProgrammableShaderObject .prototype,
@@ -84,6 +85,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          gl                   = browser .getContext (),
          maxClipPlanes        = browser .getMaxClipPlanes (),
          maxLights            = browser .getMaxLights (),
+         maxEnvironmentLights = browser .getMaxEnvironmentLights (),
          maxTextures          = browser .getMaxTextures (),
          maxTextureTransforms = browser .getMaxTextureTransforms (),
          maxTexCoords         = browser .getMaxTexCoords ();
@@ -142,18 +144,23 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          this .x3d_ShadowMap [i]       = gl .getUniformLocation (program, "x3d_ShadowMap[" + i + "]");
       }
 
-      this .x3d_EnvironmentLightColor                 = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.color");
-      this .x3d_EnvironmentLightIntensity             = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.intensity");
-      this .x3d_EnvironmentLightAmbientIntensity      = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.ambientIntensity");
-      this .x3d_EnvironmentLightRotation              = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.rotation");
-      this .x3d_EnvironmentLightDiffuseTexture        = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.diffuseTexture");
-      this .x3d_EnvironmentLightDiffuseTextureLevels  = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.diffuseTextureLevels");
-      this .x3d_EnvironmentLightSpecularTexture       = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularTexture");
-      this .x3d_EnvironmentLightSpecularTextureLevels = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularTextureLevels");
-      this .x3d_EnvironmentLightSheenTexture          = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.sheenTexture");
-      this .x3d_EnvironmentLightSheenTextureLevels    = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.sheenTextureLevels");
-      this .x3d_EnvironmentLightGGXLUTTexture         = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.GGXLUTTexture");
-      this .x3d_EnvironmentLightCharlieLUTTexture     = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.CharlieLUTTexture");
+      for (let i = 0; i < maxEnvironmentLights; ++ i)
+      {
+         this .x3d_EnvironmentLight [i] = {
+            color:                 gl .getUniformLocation (program, "x3d_EnvironmentLightSource.color"),
+            intensity:             gl .getUniformLocation (program, "x3d_EnvironmentLightSource.intensity"),
+            ambientIntensity:      gl .getUniformLocation (program, "x3d_EnvironmentLightSource.ambientIntensity"),
+            rotation:              gl .getUniformLocation (program, "x3d_EnvironmentLightSource.rotation"),
+            diffuseTexture:        gl .getUniformLocation (program, "x3d_EnvironmentLightSource.diffuseTexture"),
+            diffuseTextureLevels:  gl .getUniformLocation (program, "x3d_EnvironmentLightSource.diffuseTextureLevels"),
+            specularTexture:       gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularTexture"),
+            specularTextureLevels: gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularTextureLevels"),
+            sheenTexture:          gl .getUniformLocation (program, "x3d_EnvironmentLightSource.sheenTexture"),
+            sheenTextureLevels:    gl .getUniformLocation (program, "x3d_EnvironmentLightSource.sheenTextureLevels"),
+            GGXLUTTexture:         gl .getUniformLocation (program, "x3d_EnvironmentLightSource.GGXLUTTexture"),
+            charlieLUTTexture:     gl .getUniformLocation (program, "x3d_EnvironmentLightSource.charlieLUTTexture"),
+         };
+      }
 
       this .x3d_AmbientIntensity  = this .getUniformLocation (gl, program, "x3d_Material.ambientIntensity", "x3d_FrontMaterial.ambientIntensity");
       this .x3d_DiffuseColor      = this .getUniformLocation (gl, program, "x3d_Material.diffuseColor",     "x3d_FrontMaterial.diffuseColor");

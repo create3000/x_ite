@@ -31,6 +31,10 @@ Object .assign (X3DLightingContext .prototype,
    {
       return this [_maxLights];
    },
+   getMaxEnvironmentLights ()
+   {
+      return 1;
+   },
    getLibraryTexture (name)
    {
       return this [_textures] .get (name) ?? this .createLibraryTexture (name);
