@@ -22,16 +22,15 @@ function X3DProgrammableShaderObject (executionContext)
    this .textureProjectorNodes      = [ ];
    this .textures                   = new Set ();
 
-   this .x3d_ClipPlane                           = [ ];
-   this .x3d_EnvironmentLight                    = [ ];
-   this .x3d_Light                               = [ ];
-   this .x3d_Texture                             = [ ];
-   this .x3d_MultiTexture                        = [ ];
-   this .x3d_TextureCoordinateGeneratorMode      = [ ];
-   this .x3d_TextureCoordinateGeneratorParameter = [ ];
-   this .x3d_TextureProjector                    = [ ];
-   this .x3d_TexCoord                            = [ ];
-   this .x3d_TextureMatrix                       = [ ];
+   this .x3d_ClipPlane                  = [ ];
+   this .x3d_EnvironmentLight           = [ ];
+   this .x3d_Light                      = [ ];
+   this .x3d_Texture                    = [ ];
+   this .x3d_MultiTexture               = [ ];
+   this .x3d_TextureCoordinateGenerator = [ ];
+   this .x3d_TextureProjector           = [ ];
+   this .x3d_TexCoord                   = [ ];
+   this .x3d_TextureMatrix              = [ ];
 }
 
 Object .assign (X3DProgrammableShaderObject .prototype,
@@ -228,8 +227,10 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       for (let i = 0; i < maxTexCoords; ++ i)
       {
-         this .x3d_TextureCoordinateGeneratorMode [i]      = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].mode");
-         this .x3d_TextureCoordinateGeneratorParameter [i] = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].parameter");
+         this .x3d_TextureCoordinateGenerator [i] = {
+            mode:      gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].mode"),
+            parameter: gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].parameter"),
+         };
 
          const x3d_TexCoord = this .getAttribLocation (gl, program, "x3d_TexCoord" + i, i ? "" : "x3d_TexCoord");
 
