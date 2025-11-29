@@ -1,6 +1,6 @@
-import languages from "./languages.js";
+import dictionary from "./dictionary.js";
 
-const locales = new Set (Object .keys (languages [0]));
+const locales = new Set (Object .keys (dictionary [0]));
 
 function getLanguage ()
 {
@@ -17,6 +17,6 @@ function getLanguage ()
 
 const
    language = getLanguage (),
-   locale   = new Map (languages .map (p => [p .en, p [language]]));
+   locale   = new Map (dictionary .map (p => [p .en, p [language]]));
 
 export default (string) => locale .get (string) || string;

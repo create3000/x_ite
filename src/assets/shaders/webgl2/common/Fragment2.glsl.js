@@ -144,7 +144,7 @@ main ()
       finalColor .rgb = getFogColor (finalColor .rgb);
    #endif
 
-   #if !defined (X3D_VOLUME_SCATTER_PASS)
+   #if !defined (X3D_LINEAR_OUTPUT)
       finalColor .rgb = toneMap (finalColor .rgb);
    #endif
 

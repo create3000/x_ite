@@ -62,6 +62,10 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
       this .set_occlusionTexture__ ();
       this .set_transparent__ ();
    },
+   isPhysical ()
+   {
+      return true;
+   },
    getMaterialKey ()
    {
       return 4;

@@ -87,7 +87,12 @@ Object .assign (TextureProjectorContainer .prototype,
    },
    setShaderUniforms (gl, shaderObject, renderObject)
    {
-      const i = shaderObject .numTextureProjectors ++;
+      const
+         i        = shaderObject .numTextureProjectors ++,
+         uniforms = shaderObject .x3d_TextureProjector [i];
+
+      if (!uniforms)
+         return;
 
       const
          lightNode   = this .lightNode,
@@ -98,7 +103,7 @@ Object .assign (TextureProjectorContainer .prototype,
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
-      gl .uniform1i (shaderObject .x3d_TextureProjectorTexture [i], textureUnit);
+      gl .uniform1i (uniforms .texture, textureUnit);
 
       if (shaderObject .hasTextureProjector (i, this))
          return;
@@ -107,11 +112,11 @@ Object .assign (TextureProjectorContainer .prototype,
          nearParameter = lightNode .getNearParameter (),
          farParameter  = lightNode .getFarParameter ();
 
-      gl .uniform3f        (shaderObject .x3d_TextureProjectorColor [i],         ... lightNode .getColor ());
-      gl .uniform1f        (shaderObject .x3d_TextureProjectorIntensity [i],     lightNode .getIntensity ());
-      gl .uniform3fv       (shaderObject .x3d_TextureProjectorLocation [i],      this .locationArray);
-      gl .uniform3f        (shaderObject .x3d_TextureProjectorParams [i],        nearParameter, farParameter, texture .isLinear ());
-      gl .uniformMatrix4fv (shaderObject .x3d_TextureProjectorMatrix [i], false, this .matrixArray);
+      gl .uniform3f        (uniforms .color,         ... lightNode .getColor ());
+      gl .uniform1f        (uniforms .intensity,     lightNode .getIntensity ());
+      gl .uniform3fv       (uniforms .location,      this .locationArray);
+      gl .uniform3f        (uniforms .params,        nearParameter, farParameter, texture .isLinear ());
+      gl .uniformMatrix4fv (uniforms .matrix, false, this .matrixArray);
    },
    dispose ()
    {

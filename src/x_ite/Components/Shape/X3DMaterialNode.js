@@ -24,6 +24,10 @@ function X3DMaterialNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanceChildNode .prototype),
 {
+   isPhysical ()
+   {
+      return false;
+   },
    setTransparent (value)
    {
       if (!!value !== this ._transparent .getValue ())
@@ -119,11 +123,11 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          case "SRGB":
             options .push ("X3D_COLORSPACE_SRGB");
             break;
-         default: // LINEAR_WHEN_PHYSICAL_MATERIAL
-            options .push ("X3D_COLORSPACE_LINEAR_WHEN_PHYSICAL_MATERIAL");
-            break;
          case "LINEAR":
             options .push ("X3D_COLORSPACE_LINEAR");
+            break;
+         default: // LINEAR_WHEN_PHYSICAL_MATERIAL
+            options .push (this .isPhysical () ? "X3D_COLORSPACE_LINEAR" : "X3D_COLORSPACE_SRGB");
             break;
       }
 
@@ -178,10 +182,10 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
          const
             objectsKeys          = localObjectsKeys .concat (renderObject .getGlobalLightsKeys ()),
-            numClipPlanes        = objectsKeys .reduce ((a, c) => a + (c === 0), 0),
-            numLights            = objectsKeys .reduce ((a, c) => a + (c === 1), 0),
-            numEnvironmentLights = objectsKeys .reduce ((a, c) => a + (c === 2), 0),
-            numTextureProjectors = objectsKeys .reduce ((a, c) => a + (c === 3), 0);
+            numClipPlanes        = objectsKeys .reduce ((a, k) => a + (k === 0), 0),
+            numLights            = objectsKeys .reduce ((a, k) => a + (k === 1), 0),
+            numEnvironmentLights = objectsKeys .reduce ((a, k) => a + k .toString () .startsWith ("[2"), 0),
+            numTextureProjectors = objectsKeys .reduce ((a, k) => a + (k === 3), 0);
 
          if (numClipPlanes)
          {
@@ -197,9 +201,23 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
          if (numEnvironmentLights && geometryContext .hasNormals)
          {
+            const
+               lights    = renderObject .getGlobalLights () .concat (renderContext .localObjects),
+               container = lights .find (c => c .lightNode .getLightKey () .toString () .startsWith ("[2")),
+               lightNode = container .lightNode;
+
             // Although we count this kind of light here, only one is supported.
             options .push ("X3D_USE_IBL")
-            options .push (`X3D_NUM_ENVIRONMENT_LIGHTS ${Math .min (numEnvironmentLights, browser .getMaxLights ())}`);
+            options .push (`X3D_NUM_ENVIRONMENT_LIGHTS ${Math .min (numEnvironmentLights, browser .getMaxEnvironmentLights ())}`);
+
+            if (lightNode .getDiffuseTexture () ?.isLinear ())
+               options .push ("X3D_ENVIRONMENT_DIFFUSE_TEXTURE_LINEAR");
+
+            if (lightNode .getSpecularTexture () ?.isLinear ())
+               options .push ("X3D_ENVIRONMENT_SPECULAR_TEXTURE_LINEAR");
+
+            if (lightNode .getSheenTexture () ?.isLinear ())
+               options .push ("X3D_ENVIRONMENT_SHEEN_TEXTURE_LINEAR");
          }
 
          if (numTextureProjectors)
@@ -268,7 +286,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
          this .addRenderOptions (options, renderObject, alphaMode);
 
-         const numClipPlanes = localObjectsKeys .reduce ((a, c) => a + (c === 0), 0);
+         const numClipPlanes = localObjectsKeys .reduce ((a, k) => a + (k === 0), 0);
 
          if (numClipPlanes)
          {
@@ -295,14 +313,14 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
    {
       switch (renderObject .getRenderPass ())
       {
-         case RenderPass .TRANSMISSION_KEY:
-         {
-            options .push ("X3D_TRANSMISSION_PASS");
-            break;
-         }
          case RenderPass .VOLUME_SCATTER_KEY:
          {
-            options .push ("X3D_VOLUME_SCATTER_PASS");
+            options .push ("X3D_VOLUME_SCATTER_PASS", "X3D_LINEAR_OUTPUT");
+            break;
+         }
+         case RenderPass .TRANSMISSION_KEY:
+         {
+            options .push ("X3D_TRANSMISSION_PASS", "X3D_LINEAR_OUTPUT");
             break;
          }
       }
