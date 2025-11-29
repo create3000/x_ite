@@ -113,7 +113,7 @@ struct x3d_LightSourceParameters {
    mediump float beamWidth;
    mediump float cutOffAngle;
    mediump mat3  matrix;
-   
+
    #if defined (X3D_SHADOWS)
       mediump vec3  shadowColor;
       mediump float shadowIntensity;
@@ -182,10 +182,11 @@ struct x3d_FillPropertiesParameters
    bool          filled;
    bool          hatched;
    mediump vec3  hatchColor;
-   #if defined (X3D_STYLE_PROPERTIES_TEXTURE)
-   sampler2D     texture;
-   #endif
    mediump float scale;
+
+   #if defined (X3D_STYLE_PROPERTIES_TEXTURE)
+      sampler2D texture;
+   #endif
 };
 #endif
 
@@ -230,6 +231,7 @@ struct x3d_PhysicalMaterialParameters
       mediump float metallic;
       mediump float roughness;
    #endif
+   
    mediump vec3  emissiveColor;
    mediump float occlusionStrength;
    mediump float normalScale;
