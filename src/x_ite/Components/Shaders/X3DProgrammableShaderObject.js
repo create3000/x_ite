@@ -109,7 +109,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             specularTextureLevels: gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularTextureLevels"),
             sheenTexture:          gl .getUniformLocation (program, "x3d_EnvironmentLightSource.sheenTexture"),
             sheenTextureLevels:    gl .getUniformLocation (program, "x3d_EnvironmentLightSource.sheenTextureLevels"),
-            GGXLUTTexture:         gl .getUniformLocation (program, "x3d_EnvironmentLightSource.GGXLUTTexture"),
+            ggxLUTTexture:         gl .getUniformLocation (program, "x3d_EnvironmentLightSource.ggxLUTTexture"),
             charlieLUTTexture:     gl .getUniformLocation (program, "x3d_EnvironmentLightSource.charlieLUTTexture"),
          };
       }

@@ -137,7 +137,7 @@ struct x3d_EnvironmentLightSourceParameters {
    mediump samplerCube specularTexture;
    bool                specularTextureLinear;
    mediump int         specularTextureLevels;
-   mediump sampler2D   GGXLUTTexture;
+   mediump sampler2D   ggxLUTTexture;
 
    #if defined (X3D_SHEEN_MATERIAL_EXT)
       mediump samplerCube sheenTexture;

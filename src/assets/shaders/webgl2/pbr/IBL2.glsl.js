@@ -73,7 +73,7 @@ getIBLGGXFresnel (const in vec3 n, const in vec3 v, const in float roughness, co
    // Roughness dependent fresnel, from Fdez-Aguera
    float NdotV           = clamp (dot(n, v), 0.0, 1.0);
    vec2  brdfSamplePoint = clamp (vec2 (NdotV, roughness), vec2 (0.0), vec2 (1.0));
-   vec2  f_ab            = texture (x3d_EnvironmentLightSource .GGXLUTTexture, brdfSamplePoint) .rg;
+   vec2  f_ab            = texture (x3d_EnvironmentLightSource .ggxLUTTexture, brdfSamplePoint) .rg;
 
    vec3 Fr     = max (vec3 (1.0 - roughness), F0) - F0;
    vec3 k_S    = F0 + Fr * pow (1.0 - NdotV, 5.0);
