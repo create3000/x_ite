@@ -32,12 +32,7 @@ function X3DProgrammableShaderObject (executionContext)
    this .x3d_MultiTextureFunction                = [ ];
    this .x3d_TextureCoordinateGeneratorMode      = [ ];
    this .x3d_TextureCoordinateGeneratorParameter = [ ];
-   this .x3d_TextureProjectorColor               = [ ];
-   this .x3d_TextureProjectorIntensity           = [ ];
-   this .x3d_TextureProjectorLocation            = [ ];
-   this .x3d_TextureProjectorParams              = [ ];
-   this .x3d_TextureProjectorTexture             = [ ];
-   this .x3d_TextureProjectorMatrix              = [ ];
+   this .x3d_TextureProjector                    = [ ];
    this .x3d_TexCoord                            = [ ];
    this .x3d_TextureMatrix                       = [ ];
 }
@@ -202,27 +197,30 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       for (let i = 0; i < maxTextures; ++ i)
       {
          this .x3d_Texture [i] = {
-            texture2D: gl .getUniformLocation (program, "x3d_Texture2D[" + i + "]"),
-            texture3D: gl .getUniformLocation (program, "x3d_Texture3D[" + i + "]"),
-            textureCube: this .getUniformLocation (gl, program, "x3d_TextureCube[" + i + "]", "x3d_CubeMapTexture[" + i + "]"),
+            texture2D: gl .getUniformLocation (program, `x3d_Texture2D[${i}]`),
+            texture3D: gl .getUniformLocation (program, `x3d_Texture3D[${i}]`),
+            textureCube: this .getUniformLocation (gl, program, `x3d_TextureCube[${i}]`, `x3d_CubeMapTexture[${i}]`),
          }
 
-         this .x3d_MultiTextureMode [i]      = gl .getUniformLocation (program, "x3d_MultiTexture[" + i + "].mode");
-         this .x3d_MultiTextureAlphaMode [i] = gl .getUniformLocation (program, "x3d_MultiTexture[" + i + "].alphaMode");
-         this .x3d_MultiTextureSource [i]    = gl .getUniformLocation (program, "x3d_MultiTexture[" + i + "].source");
-         this .x3d_MultiTextureFunction [i]  = gl .getUniformLocation (program, "x3d_MultiTexture[" + i + "].function");
+         this .x3d_MultiTextureMode [i]      = gl .getUniformLocation (program, `x3d_MultiTexture[${i}].mode`);
+         this .x3d_MultiTextureAlphaMode [i] = gl .getUniformLocation (program, `x3d_MultiTexture[${i}].alphaMode`);
+         this .x3d_MultiTextureSource [i]    = gl .getUniformLocation (program, `x3d_MultiTexture[${i}].source`);
+         this .x3d_MultiTextureFunction [i]  = gl .getUniformLocation (program, `x3d_MultiTexture[${i}].function`);
 
-         this .x3d_TextureProjectorColor [i]     = gl .getUniformLocation (program, "x3d_TextureProjectorColor[" + i + "]");
-         this .x3d_TextureProjectorIntensity [i] = gl .getUniformLocation (program, "x3d_TextureProjectorIntensity[" + i + "]");
-         this .x3d_TextureProjectorLocation [i]  = gl .getUniformLocation (program, "x3d_TextureProjectorLocation[" + i + "]");
-         this .x3d_TextureProjectorParams [i]    = gl .getUniformLocation (program, "x3d_TextureProjectorParams[" + i + "]");
-         this .x3d_TextureProjectorMatrix [i]    = gl .getUniformLocation (program, "x3d_TextureProjectorMatrix[" + i + "]");
-         this .x3d_TextureProjectorTexture [i]   = gl .getUniformLocation (program, "x3d_TextureProjectorTexture[" + i + "]");
+         this .x3d_TextureProjector [i] =
+         {
+            color:     gl .getUniformLocation (program, `x3d_TextureProjectorColor[${i}]`),
+            intensity: gl .getUniformLocation (program, `x3d_TextureProjectorIntensity[${i}]`),
+            location:  gl .getUniformLocation (program, `x3d_TextureProjectorLocation[${i}]`),
+            params:    gl .getUniformLocation (program, `x3d_TextureProjectorParams[${i}]`),
+            matrix:    gl .getUniformLocation (program, `x3d_TextureProjectorMatrix[${i}]`),
+            texture:   gl .getUniformLocation (program, `x3d_TextureProjectorTexture[${i}]`),
+         }
       }
 
       for (let i = 0; i < maxTextureTransforms; ++ i)
       {
-         const uniform = gl .getUniformLocation (program, "x3d_TextureMatrix[" + i + "]");
+         const uniform = gl .getUniformLocation (program, `x3d_TextureMatrix[${i}]`);
 
          if (uniform === null)
             break;
