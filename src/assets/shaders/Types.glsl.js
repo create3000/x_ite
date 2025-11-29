@@ -231,7 +231,7 @@ struct x3d_PhysicalMaterialParameters
       mediump float metallic;
       mediump float roughness;
    #endif
-   
+
    mediump vec3  emissiveColor;
    mediump float occlusionStrength;
    mediump float normalScale;
