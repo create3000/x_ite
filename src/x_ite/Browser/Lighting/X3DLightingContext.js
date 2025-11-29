@@ -27,13 +27,13 @@ function X3DLightingContext ()
 
 Object .assign (X3DLightingContext .prototype,
 {
-   getMaxLights ()
-   {
-      return this [_maxLights];
-   },
    getMaxEnvironmentLights ()
    {
       return 1;
+   },
+   getMaxLights ()
+   {
+      return this [_maxLights];
    },
    getLibraryTexture (name)
    {

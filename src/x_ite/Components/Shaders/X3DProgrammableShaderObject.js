@@ -58,8 +58,8 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          browser              = this .getBrowser (),
          gl                   = browser .getContext (),
          maxClipPlanes        = browser .getMaxClipPlanes (),
-         maxLights            = browser .getMaxLights (),
          maxEnvironmentLights = browser .getMaxEnvironmentLights (),
+         maxLights            = browser .getMaxLights (),
          maxTextures          = browser .getMaxTextures (),
          maxTextureTransforms = browser .getMaxTextureTransforms (),
          maxTexCoords         = browser .getMaxTexCoords ();
@@ -96,6 +96,24 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       this .x3d_FillPropertiesTexture    = gl .getUniformLocation (program, "x3d_FillProperties.texture");
       this .x3d_FillPropertiesScale      = gl .getUniformLocation (program, "x3d_FillProperties.scale");
 
+      for (let i = 0; i < maxEnvironmentLights; ++ i)
+      {
+         this .x3d_EnvironmentLight [i] = {
+            color:                 gl .getUniformLocation (program, "x3d_EnvironmentLightSource.color"),
+            intensity:             gl .getUniformLocation (program, "x3d_EnvironmentLightSource.intensity"),
+            ambientIntensity:      gl .getUniformLocation (program, "x3d_EnvironmentLightSource.ambientIntensity"),
+            rotation:              gl .getUniformLocation (program, "x3d_EnvironmentLightSource.rotation"),
+            diffuseTexture:        gl .getUniformLocation (program, "x3d_EnvironmentLightSource.diffuseTexture"),
+            diffuseTextureLevels:  gl .getUniformLocation (program, "x3d_EnvironmentLightSource.diffuseTextureLevels"),
+            specularTexture:       gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularTexture"),
+            specularTextureLevels: gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularTextureLevels"),
+            sheenTexture:          gl .getUniformLocation (program, "x3d_EnvironmentLightSource.sheenTexture"),
+            sheenTextureLevels:    gl .getUniformLocation (program, "x3d_EnvironmentLightSource.sheenTextureLevels"),
+            GGXLUTTexture:         gl .getUniformLocation (program, "x3d_EnvironmentLightSource.GGXLUTTexture"),
+            charlieLUTTexture:     gl .getUniformLocation (program, "x3d_EnvironmentLightSource.charlieLUTTexture"),
+         };
+      }
+
       for (let i = 0; i < maxLights; ++ i)
       {
          this .x3d_Light [i] = {
@@ -117,24 +135,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             shadowMatrix:    gl .getUniformLocation (program, `x3d_LightSource[${i}].shadowMatrix`),
             shadowMapSize:   gl .getUniformLocation (program, `x3d_LightSource[${i}].shadowMapSize`),
             shadowMap:       gl .getUniformLocation (program, `x3d_ShadowMap[${i}]`),
-         };
-      }
-
-      for (let i = 0; i < maxEnvironmentLights; ++ i)
-      {
-         this .x3d_EnvironmentLight [i] = {
-            color:                 gl .getUniformLocation (program, "x3d_EnvironmentLightSource.color"),
-            intensity:             gl .getUniformLocation (program, "x3d_EnvironmentLightSource.intensity"),
-            ambientIntensity:      gl .getUniformLocation (program, "x3d_EnvironmentLightSource.ambientIntensity"),
-            rotation:              gl .getUniformLocation (program, "x3d_EnvironmentLightSource.rotation"),
-            diffuseTexture:        gl .getUniformLocation (program, "x3d_EnvironmentLightSource.diffuseTexture"),
-            diffuseTextureLevels:  gl .getUniformLocation (program, "x3d_EnvironmentLightSource.diffuseTextureLevels"),
-            specularTexture:       gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularTexture"),
-            specularTextureLevels: gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularTextureLevels"),
-            sheenTexture:          gl .getUniformLocation (program, "x3d_EnvironmentLightSource.sheenTexture"),
-            sheenTextureLevels:    gl .getUniformLocation (program, "x3d_EnvironmentLightSource.sheenTextureLevels"),
-            GGXLUTTexture:         gl .getUniformLocation (program, "x3d_EnvironmentLightSource.GGXLUTTexture"),
-            charlieLUTTexture:     gl .getUniformLocation (program, "x3d_EnvironmentLightSource.charlieLUTTexture"),
          };
       }
 
