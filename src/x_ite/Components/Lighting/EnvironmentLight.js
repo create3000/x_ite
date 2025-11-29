@@ -110,16 +110,13 @@ Object .assign (EnvironmentLightContainer .prototype,
       gl .uniform3f        (shaderObject .x3d_EnvironmentLightColor,                 ... color);
       gl .uniform1f        (shaderObject .x3d_EnvironmentLightIntensity,             lightNode .getIntensity ());
       gl .uniformMatrix3fv (shaderObject .x3d_EnvironmentLightRotation, false,       this .rotationMatrix);
-      gl .uniform1i        (shaderObject .x3d_EnvironmentLightDiffuseTextureLinear,  diffuseTexture ?.isLinear ());
       gl .uniform1i        (shaderObject .x3d_EnvironmentLightDiffuseTextureLevels,  diffuseTexture ?.getLevels () ?? 0);
-      gl .uniform1i        (shaderObject .x3d_EnvironmentLightSpecularTextureLinear, specularTexture ?.isLinear ());
       gl .uniform1i        (shaderObject .x3d_EnvironmentLightSpecularTextureLevels, specularTexture ?.getLevels () ?? 0);
 
       if (shaderObject .x3d_EnvironmentLightSheenTexture)
       {
          const sheenTexture = lightNode .getSheenTexture ();
 
-         gl .uniform1i (shaderObject .x3d_EnvironmentLightSheenTextureLinear, sheenTexture ?.isLinear ());
          gl .uniform1i (shaderObject .x3d_EnvironmentLightSheenTextureLevels, sheenTexture ?.getLevels () ?? 0);
       }
    },
@@ -177,7 +174,16 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    },
    getLightKey ()
    {
-      return 2;
+      return this .lightKey ??= this .createLightKey ();
+   },
+   createLightKey ()
+   {
+      const
+         diffuseLinear  = this .getDiffuseTexture ()  ?.isLinear () ? 1 : 0,
+         specularLinear = this .getSpecularTexture () ?.isLinear () ? 1 : 0,
+         sheenLinear    = this .getSheenTexture ()    ?.isLinear () ? 1 : 0;
+
+      return `[2.${diffuseLinear}.${specularLinear}.${sheenLinear}]`;
    },
    getDiffuseTexture ()
    {
@@ -278,6 +284,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    },
    requestGenerateTextures ()
    {
+      this .lightKey                 = undefined;
       this .generatedDiffuseTexture  = null;
       this .generatedSpecularTexture = null;
       this .generatedSheenTexture    = null;

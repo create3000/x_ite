@@ -14,11 +14,13 @@ getDiffuseLight (const in vec3 n)
    vec3 textureColor = texture (x3d_EnvironmentLightSource .diffuseTexture, texCoord) .rgb;
 
    #if defined (X3D_COLORSPACE_SRGB)
-      if (x3d_EnvironmentLightSource .diffuseTextureLinear)
+      #if defined (X3D_ENVIRONMENT_DIFFUSE_TEXTURE_LINEAR)
          textureColor = linearToSRGB (textureColor);
+      #endif
    #else
-      if (!x3d_EnvironmentLightSource .diffuseTextureLinear)
+      #if !defined (X3D_ENVIRONMENT_DIFFUSE_TEXTURE_LINEAR)
          textureColor = sRGBToLinear (textureColor);
+      #endif
    #endif
 
    return textureColor * x3d_EnvironmentLightSource .color * x3d_EnvironmentLightSource .intensity;
@@ -31,11 +33,13 @@ getSpecularLight (const in vec3 reflection, const in float lod)
    vec3 textureColor = textureLod (x3d_EnvironmentLightSource .specularTexture, texCoord, lod) .rgb;
 
    #if defined (X3D_COLORSPACE_SRGB)
-      if (x3d_EnvironmentLightSource .specularTextureLinear)
+      #if defined (X3D_ENVIRONMENT_SPECULAR_TEXTURE_LINEAR)
          textureColor = linearToSRGB (textureColor);
+      #endif
    #else
-      if (!x3d_EnvironmentLightSource .specularTextureLinear)
+      #if !defined (X3D_ENVIRONMENT_SPECULAR_TEXTURE_LINEAR)
          textureColor = sRGBToLinear (textureColor);
+      #endif
    #endif
 
    return textureColor * x3d_EnvironmentLightSource .color * x3d_EnvironmentLightSource .intensity;
@@ -49,11 +53,13 @@ getSheenLight (const in vec3 reflection, const in float lod)
    vec3 textureColor = textureLod (x3d_EnvironmentLightSource .sheenTexture, texCoord, lod) .rgb;
 
    #if defined (X3D_COLORSPACE_SRGB)
-      if (x3d_EnvironmentLightSource .sheenTextureLinear)
+      #if defined (X3D_ENVIRONMENT_SHEEN_TEXTURE_LINEAR)
          textureColor = linearToSRGB (textureColor);
+      #endif
    #else
-      if (!x3d_EnvironmentLightSource .sheenTextureLinear)
+      #if !defined (X3D_ENVIRONMENT_SHEEN_TEXTURE_LINEAR)
          textureColor = sRGBToLinear (textureColor);
+      #endif
    #endif
 
    return textureColor * x3d_EnvironmentLightSource .color * x3d_EnvironmentLightSource .intensity;

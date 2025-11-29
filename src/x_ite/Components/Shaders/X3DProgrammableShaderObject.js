@@ -147,13 +147,10 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       this .x3d_EnvironmentLightAmbientIntensity      = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.ambientIntensity");
       this .x3d_EnvironmentLightRotation              = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.rotation");
       this .x3d_EnvironmentLightDiffuseTexture        = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.diffuseTexture");
-      this .x3d_EnvironmentLightDiffuseTextureLinear  = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.diffuseTextureLinear");
       this .x3d_EnvironmentLightDiffuseTextureLevels  = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.diffuseTextureLevels");
       this .x3d_EnvironmentLightSpecularTexture       = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularTexture");
-      this .x3d_EnvironmentLightSpecularTextureLinear = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularTextureLinear");
       this .x3d_EnvironmentLightSpecularTextureLevels = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularTextureLevels");
       this .x3d_EnvironmentLightSheenTexture          = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.sheenTexture");
-      this .x3d_EnvironmentLightSheenTextureLinear    = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.sheenTextureLinear");
       this .x3d_EnvironmentLightSheenTextureLevels    = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.sheenTextureLevels");
       this .x3d_EnvironmentLightGGXLUTTexture         = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.GGXLUTTexture");
       this .x3d_EnvironmentLightCharlieLUTTexture     = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.CharlieLUTTexture");
