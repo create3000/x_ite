@@ -26,10 +26,7 @@ function X3DProgrammableShaderObject (executionContext)
    this .x3d_EnvironmentLight                    = [ ];
    this .x3d_Light                               = [ ];
    this .x3d_Texture                             = [ ];
-   this .x3d_MultiTextureMode                    = [ ];
-   this .x3d_MultiTextureAlphaMode               = [ ];
-   this .x3d_MultiTextureSource                  = [ ];
-   this .x3d_MultiTextureFunction                = [ ];
+   this .x3d_MultiTexture                        = [ ];
    this .x3d_TextureCoordinateGeneratorMode      = [ ];
    this .x3d_TextureCoordinateGeneratorParameter = [ ];
    this .x3d_TextureProjector                    = [ ];
@@ -202,13 +199,14 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             textureCube: this .getUniformLocation (gl, program, `x3d_TextureCube[${i}]`, `x3d_CubeMapTexture[${i}]`),
          }
 
-         this .x3d_MultiTextureMode [i]      = gl .getUniformLocation (program, `x3d_MultiTexture[${i}].mode`);
-         this .x3d_MultiTextureAlphaMode [i] = gl .getUniformLocation (program, `x3d_MultiTexture[${i}].alphaMode`);
-         this .x3d_MultiTextureSource [i]    = gl .getUniformLocation (program, `x3d_MultiTexture[${i}].source`);
-         this .x3d_MultiTextureFunction [i]  = gl .getUniformLocation (program, `x3d_MultiTexture[${i}].function`);
+         this .x3d_MultiTexture [i] = {
+            mode:      gl .getUniformLocation (program, `x3d_MultiTexture[${i}].mode`),
+            alphaMode: gl .getUniformLocation (program, `x3d_MultiTexture[${i}].alphaMode`),
+            source:    gl .getUniformLocation (program, `x3d_MultiTexture[${i}].source`),
+            function:  gl .getUniformLocation (program, `x3d_MultiTexture[${i}].function`),
+         };
 
-         this .x3d_TextureProjector [i] =
-         {
+         this .x3d_TextureProjector [i] = {
             color:     gl .getUniformLocation (program, `x3d_TextureProjectorColor[${i}]`),
             intensity: gl .getUniformLocation (program, `x3d_TextureProjectorIntensity[${i}]`),
             location:  gl .getUniformLocation (program, `x3d_TextureProjectorLocation[${i}]`),
