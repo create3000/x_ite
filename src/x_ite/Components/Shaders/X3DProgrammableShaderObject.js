@@ -860,7 +860,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          const
             stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
             materialNode        = front ? appearanceNode .getMaterial () : appearanceNode .getBackMaterial (),
-            textureNode         = renderContext .textureNode || appearanceNode .getTexture ();
+            textureNode         = renderContext .textureNode ?? appearanceNode .getTexture ();
 
          // Set global uniforms.
 
