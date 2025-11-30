@@ -348,7 +348,9 @@ Object .assign (Bookmarks .prototype,
 
          specularTexture .url = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/helipad-specular.jpg");
 
+         environmentLight .global          = true;
          environmentLight .intensity       = 1;
+         environmentLight .color           = new X3D .SFColor (1, 1, 1);
          environmentLight .specularTexture = specularTexture;
 
          return environmentLight;
