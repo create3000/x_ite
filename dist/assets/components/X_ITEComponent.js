@@ -1,5 +1,5 @@
-/* X_ITE v12.1.9 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.9")];
+/* X_ITE v12.1.10 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.10")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1699,6 +1699,10 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, (
       this .set_occlusionStrength__ ();
       this .set_occlusionTexture__ ();
       this .set_transparent__ ();
+   },
+   isPhysical ()
+   {
+      return true;
    },
    getMaterialKey ()
    {
