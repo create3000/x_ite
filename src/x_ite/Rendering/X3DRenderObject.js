@@ -1206,6 +1206,8 @@ Object .assign (X3DRenderObject .prototype,
 
       for (let i = 0; i < numFramebuffers; ++ i)
       {
+         this .advanceRenderCount ();
+
          // Set matrices with XR support.
 
          const view = this .view = pose ?.views [i];
@@ -1321,8 +1323,6 @@ Object .assign (X3DRenderObject .prototype,
    drawShapes (renderPass, gl, frameBuffer, clearBits, viewport)
    {
       const { opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes } = this;
-
-      this .advanceRenderCount ();
 
       frameBuffer .bind ();
 
