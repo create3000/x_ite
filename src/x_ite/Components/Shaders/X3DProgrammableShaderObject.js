@@ -855,18 +855,19 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       return function (gl, renderContext, geometryContext, front = true)
       {
-         const { renderObject, fogNode, appearanceNode, hAnimNode, modelViewMatrix } = renderContext;
+         const { renderObject, fogNode, appearanceNode, hAnimNode, modelViewMatrix, textureNode: contextTextureNode, localObjects } = renderContext;
 
          const
             stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
             materialNode        = front ? appearanceNode .getMaterial () : appearanceNode .getBackMaterial (),
-            textureNode         = renderContext .textureNode ?? appearanceNode .getTexture ();
+            textureNode         = contextTextureNode ?? appearanceNode .getTexture (),
+            renderCount         = renderObject .getRenderCount ();
 
          // Set global uniforms.
 
-         if (this .renderCount !== renderObject .getRenderCount ())
+         if (this .renderCount !== renderCount)
          {
-            this .renderCount = renderObject .getRenderCount ();
+            this .renderCount = renderCount;
 
             // Set viewport.
 
@@ -940,7 +941,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          this .numLights            = this .numGlobalLights;
          this .numTextureProjectors = this .numGlobalTextureProjectors;
 
-         for (const localObject of renderContext .localObjects)
+         for (const localObject of localObjects)
             localObject .setShaderUniforms (gl, this, renderObject);
 
          // Alpha
