@@ -1,5 +1,5 @@
-/* X_ITE v12.1.9 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.9")];
+/* X_ITE v12.1.10 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.10")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -226,7 +226,8 @@ function HAnimHumanoid (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).HAnimHumanoid);
 
-   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "jointTextures",              new (external_X_ITE_X3D_Fields_default()).SFTime (),
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "jointName",                  new (external_X_ITE_X3D_Fields_default()).SFTime (),
+                          (external_X_ITE_X3D_X3DConstants_default()).outputOnly, "jointTextures",              new (external_X_ITE_X3D_Fields_default()).SFTime (),
                           (external_X_ITE_X3D_X3DConstants_default()).outputOnly, "displacementsTexture",       new (external_X_ITE_X3D_Fields_default()).SFTime (),
                           (external_X_ITE_X3D_X3DConstants_default()).outputOnly, "displacementWeightsTexture", new (external_X_ITE_X3D_Fields_default()).SFTime ());
 
@@ -340,6 +341,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
       this ._jointBindingRotations      .addInterest ("set_joints__",                     this);
       this ._jointBindingScales         .addInterest ("set_joints__",                     this);
       this ._joints                     .addInterest ("set_joints__",                     this);
+      this ._jointName                  .addInterest ("set_connectAllJoints__",           this);
       this ._jointTextures              .addInterest ("set_jointTextures__",              this);
       this ._displacementsTexture       .addInterest ("set_displacementsTexture__",       this);
       this ._displacementWeightsTexture .addInterest ("set_displacementWeightsTexture__", this);
@@ -386,7 +388,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
          motionNode ._channels        .removeInterest ("set_connectJoints__", this);
          motionNode ._values          .removeInterest ("set_connectJoints__", this);
 
-         motionNode .disconnectJoints (this .jointNodes);
+         motionNode .disconnectJoints ();
       }
 
       motionNodes .length = 0;
@@ -412,9 +414,14 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
          motionNode .connectJoints (this .jointNodes);
       }
    },
+   set_connectAllJoints__ ()
+   {
+      for (const motionNode of this .motionNodes)
+         this .set_connectJoints__ (motionNode);
+   },
    set_connectJoints__ (motionNode)
    {
-      motionNode .disconnectJoints (this .jointNodes);
+      motionNode .disconnectJoints ();
       motionNode .connectJoints (this .jointNodes);
    },
    set_joints__ ()
@@ -430,12 +437,13 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
          numJointBindingScales    = jointBindingScales .length;
 
       for (const motionNode of this .motionNodes)
-         motionNode .disconnectJoints (jointNodes);
+         motionNode .disconnectJoints ();
 
       for (const jointNode of jointNodes)
       {
          jointNode .removeInterest ("unlock", this .update);
 
+         jointNode ._name                .removeInterest ("addEvent", this ._jointName);
          jointNode ._skinCoordIndex      .removeInterest ("addEvent", this ._jointTextures);
          jointNode ._skinCoordWeight     .removeInterest ("addEvent", this ._jointTextures);
          jointNode ._displacements       .removeInterest ("addEvent", this ._displacementsTexture);
@@ -465,6 +473,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
       {
          jointNode .addInterest ("unlock", this .update);
 
+         jointNode ._name                .addInterest ("addEvent", this ._jointName);
          jointNode ._skinCoordIndex      .addInterest ("addEvent", this ._jointTextures);
          jointNode ._skinCoordWeight     .addInterest ("addEvent", this ._jointTextures);
          jointNode ._displacements       .addInterest ("addEvent", this ._displacementsTexture);
@@ -1063,23 +1072,17 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (external_X_ITE_
             interpolator ._value_changed .addFieldInterest (jointNode .getField (name));
       }
    },
-   disconnectJoints (jointNodes)
+   disconnectJoints ()
    {
-      const
-         joints      = this .joints,
-         jointsIndex = this .getJointsIndex (jointNodes);
-
       // Disconnect interpolators from joint nodes.
 
-      for (const [j, joint] of this .interpolators .entries ())
+      for (const joint of this .interpolators)
       {
-         const jointNode = jointsIndex .get (joints [j]);
-
-         if (!jointNode)
-            continue;
-
-         for (const [name, interpolator] of Object .entries (joint))
-            interpolator ._value_changed .removeFieldInterest (jointNode .getField (name));
+         for (const interpolator of Object .values (joint))
+         {
+            Array .from (interpolator ._value_changed .getFieldInterests ())
+               .forEach (field => interpolator ._value_changed .removeFieldInterest (field));
+         }
       }
    },
    getJointsIndex (jointNodes)
@@ -1102,16 +1105,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (external_X_ITE_
    {
       this .joints = this ._joints .getValue () .replace (/^[\s,]+|[\s,]+$/sg, "") .split (/[\s,]+/s);
 
-      // Disconnect all joint nodes.
-
-      for (const joint of this .interpolators)
-      {
-         for (const interpolator of joint)
-         {
-            Array .from (interpolator ._value_changed .getFieldInterests ())
-               .forEach (field => interpolator ._value_changed .removeFieldInterest (field));
-         }
-      }
+      this .disconnectJoints ();
    },
    set_interpolators__: (() =>
    {
@@ -1213,7 +1207,6 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (external_X_ITE_
 
                      return interpolator;
                   })();
-
 
                   interpolator ._key      .push (key);
                   interpolator ._keyValue .push (position .set (Xposition, Yposition, Zposition));

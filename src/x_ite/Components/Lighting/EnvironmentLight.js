@@ -58,7 +58,7 @@ Object .assign (EnvironmentLightContainer .prototype,
          { browser, lightNode, global } = this,
          diffuseTexture  = lightNode .getDiffuseTexture (),
          specularTexture = lightNode .getSpecularTexture (),
-         GGXLUTTexture   = browser .getLibraryTexture ("lut_ggx.png");
+         ggxLUTTexture   = browser .getLibraryTexture ("lut_ggx.png");
 
       const diffuseTextureUnit = global
          ? this .diffuseTextureUnit ??= browser .popTextureUnit ()
@@ -68,8 +68,8 @@ Object .assign (EnvironmentLightContainer .prototype,
          ? this .specularTextureUnit ??= browser .popTextureUnit ()
          : browser .getTextureUnit ();
 
-      const GGXLUTTextureUnit = global
-         ? this .GGXLUTTextureUnit ??= browser .popTextureUnit ()
+      const ggxLUTTextureUnit = global
+         ? this .ggxLUTTextureUnit ??= browser .popTextureUnit ()
          : browser .getTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + diffuseTextureUnit);
@@ -80,9 +80,9 @@ Object .assign (EnvironmentLightContainer .prototype,
       gl .bindTexture (gl .TEXTURE_CUBE_MAP, specularTexture ?.getTexture () ?? browser .getDefaultTextureCube ());
       gl .uniform1i (uniforms .specularTexture, specularTextureUnit);
 
-      gl .activeTexture (gl .TEXTURE0 + GGXLUTTextureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, GGXLUTTexture .getTexture ());
-      gl .uniform1i (uniforms .GGXLUTTexture, GGXLUTTextureUnit);
+      gl .activeTexture (gl .TEXTURE0 + ggxLUTTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, ggxLUTTexture .getTexture ());
+      gl .uniform1i (uniforms .ggxLUTTexture, ggxLUTTextureUnit);
 
       if (uniforms .sheenTexture)
       {
@@ -136,13 +136,13 @@ Object .assign (EnvironmentLightContainer .prototype,
          browser .pushTextureUnit (this .diffuseTextureUnit);
          browser .pushTextureUnit (this .specularTextureUnit);
          browser .pushTextureUnit (this .sheenTextureUnit);
-         browser .pushTextureUnit (this .GGXLUTTextureUnit);
+         browser .pushTextureUnit (this .ggxLUTTextureUnit);
          browser .pushTextureUnit (this .charlieLUTTextureUnit);
 
          this .diffuseTextureUnit    = undefined;
          this .specularTextureUnit   = undefined;
          this .sheenTextureUnit      = undefined;
-         this .GGXLUTTextureUnit     = undefined;
+         this .ggxLUTTextureUnit     = undefined;
          this .charlieLUTTextureUnit = undefined;
       }
 

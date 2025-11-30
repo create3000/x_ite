@@ -184,7 +184,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
             objectsKeys          = localObjectsKeys .concat (renderObject .getGlobalLightsKeys ()),
             numClipPlanes        = objectsKeys .reduce ((a, k) => a + (k === 0), 0),
             numLights            = objectsKeys .reduce ((a, k) => a + (k === 1), 0),
-            numEnvironmentLights = objectsKeys .reduce ((a, k) => a + k .toString () .startsWith ("[2"), 0),
+            numEnvironmentLights = objectsKeys .reduce ((a, k) => a + k .toString () .startsWith ("[2."), 0),
             numTextureProjectors = objectsKeys .reduce ((a, k) => a + (k === 3), 0);
 
          if (numClipPlanes)
@@ -203,7 +203,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          {
             const
                lights    = renderObject .getGlobalLights () .concat (renderContext .localObjects),
-               container = lights .find (c => c .lightNode .getLightKey () .toString () .startsWith ("[2")),
+               container = lights .find (c => c .lightNode .getLightKey () .toString () .startsWith ("[2.")),
                lightNode = container .lightNode;
 
             // Although we count this kind of light here, only one is supported.

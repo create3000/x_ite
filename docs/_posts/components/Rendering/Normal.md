@@ -59,7 +59,7 @@ Set of unit-length normal vectors, corresponding to indexed polygons or vertices
 - Normal values are typically only calculated or applied once, during initial loading of model geometry.
 - Custom Normal values can produce special effects.
 - If no child Normal node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
-- Computation of normal values is performed quite quickly on modern 3D graphics hardware, often with no perceptible delay.
+- Computation of normal values is performed quite rapidly on modern 3D graphics hardware, often with no perceptible delay. This is why many models simply rely on automatic computation of normals.
 - [Normal vectors perpendicular to 3D surface](https://en.wikipedia.org/wiki/Normal_(geometry))
 
 ### Warning
