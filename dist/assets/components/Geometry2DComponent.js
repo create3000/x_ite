@@ -1,5 +1,5 @@
-/* X_ITE v12.1.9 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.9")];
+/* X_ITE v12.1.10 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.10")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -862,7 +862,6 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, (external_X_ITE_X3D_X
    {
       const
          browser     = this .getBrowser (),
-         gl          = browser .getContext (),
          options     = browser .getDisk2DOptions (),
          innerRadius = Math .min (Math .abs (this ._innerRadius .getValue ()), Math .abs (this ._outerRadius .getValue ())),
          outerRadius = Math .max (Math .abs (this ._innerRadius .getValue ()), Math .abs (this ._outerRadius .getValue ())),
@@ -880,7 +879,6 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, (external_X_ITE_X3D_X
             this .getMax () .set (0);
 
             this .setGeometryType (0);
-            this .setPrimitiveMode (gl .POINTS);
             this .setTransparent (true);
             this .setSolid (false);
             this .setBase ((external_X_ITE_X3D_X3DPointGeometryNode_default()));
@@ -909,7 +907,6 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, (external_X_ITE_X3D_X
          this .getMax () .set ( outerRadius,  outerRadius, 0);
 
          this .setGeometryType (1);
-         this .setPrimitiveMode (gl .LINES);
          this .setTransparent (false);
          this .setSolid (false);
          this .setBase ((external_X_ITE_X3D_X3DLineGeometryNode_default()));
@@ -939,7 +936,6 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, (external_X_ITE_X3D_X
          this .getMax () .set ( outerRadius,  outerRadius, 0);
 
          this .setGeometryType (2);
-         this .setPrimitiveMode (gl .TRIANGLES);
          this .setTransparent (false);
          this .setSolid (this ._solid .getValue ());
          this .setBase ((external_X_ITE_X3D_X3DGeometryNode_default()));
@@ -984,7 +980,6 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, (external_X_ITE_X3D_X
       this .getMax () .set ( outerRadius,  outerRadius, 0);
 
       this .setGeometryType (2);
-      this .setPrimitiveMode (gl .TRIANGLES);
       this .setTransparent (false);
       this .setSolid (this ._solid .getValue ());
       this .setBase ((external_X_ITE_X3D_X3DGeometryNode_default()));

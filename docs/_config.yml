@@ -25,13 +25,13 @@ x3d_latest_version: 4.1 # x3d latest version
 
 # x_ite settings
 x_ite_teaser: winter-forest
-x_ite_latest_version: 12.1.9 # x_ite latest version
+x_ite_latest_version: 12.1.10 # x_ite latest version
 x_ite_compressed_size: 304 # size in kb
-x_ite_js_integrity: sha384-BRFhmTCWw7SKxqzSe4J12C9zIW72MMM+F56OhbLrw102oMUh7WUWPsjgSzQLhIR6
-x_ite_min_js_integrity: sha384-46TvrgForw6ioVGKiqBzQFD8y9X+fZWi1Ev8CmUXgt7VYWR96HpN3/l22BKfXjHI
-x_ite_mjs_integrity: sha384-vp8mbfnOCT8eUAnp4pfan1UqOP3C8Bvzocv0MBraQa7IsiasKMZ4HduTwaPRdObn
-x_ite_min_mjs_integrity: sha384-OFn0Iu6DYMov4/HVDEEnwCy8IWnmHHmMdeCidmcPTM0NJlQ1ILwLGIVnWCw7X2vz
-x_ite_css_integrity: sha384-vOj8thlkTGCjnTgmfJX9tVsUEFrTftQquI2/CUluPlPmNS32s9aGXcIN4oitSW1V
+x_ite_js_integrity: sha384-FjwLMdLlLOc1OfzSFRM7HTAcqYXeZ3KcKvbnZPw52kTY9i95QwzpvcfC15doInWZ
+x_ite_min_js_integrity: sha384-FOuvInRPMwXsCwEl5EVS3t6pVO5dDbmoVsd7Rp94xOuCbPd1ZPZWxC8BcDlP0Ez/
+x_ite_mjs_integrity: sha384-oi0H0Mp2noU0cCfhCk77hP2aEj2kXAcfcwgJDRVQHczlG8Nj01OKcETVLrotZGMu
+x_ite_min_mjs_integrity: sha384-ljB1IYG0hsvtWJBvu/riG9cfUZn7CEgOzfIV4gYwyBoIP52/z856Eeyrc4C0I8C6
+x_ite_css_integrity: sha384-ibO6H3mcOBVYIe62iUjowt6lpCAc9VlPXPRb3f5v1FO8lHKNVbg/J1oINrXtepsU
 
 # Fill in the protocol & hostname for your site.
 # e.g. 'https://username.github.io', note that it does not end with a '/'.

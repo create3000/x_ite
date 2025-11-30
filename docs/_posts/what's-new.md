@@ -25,6 +25,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 - [x] Fixed fatal bug in Depth shader when [ClipPlane](/x_ite/components/rendering/clipplane/) nodes are used. This affects shadows and collision detection.
 - [x] Correctly handle [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) nodes during collision detection.
 - [x] Fixed units of *nearDistance* and *farDistance* fields of X3DViewpointNode and X3DTextureProjectorNode.
+- [x] Fixed a visual bug when glTF KHR_materials_transmission is rendered.
 
 ## X_ITE v12.0 Series
 
