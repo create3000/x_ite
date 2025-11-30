@@ -855,12 +855,12 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       return function (gl, renderContext, geometryContext, front = true)
       {
-         const { renderObject, fogNode, appearanceNode, hAnimNode, modelViewMatrix, textureNode: contextTextureNode, localObjects } = renderContext;
+         const { renderObject, fogNode, appearanceNode, hAnimNode, modelViewMatrix, textureNode: geometryTextureNode, localObjects } = renderContext;
 
          const
             stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
             materialNode        = front ? appearanceNode .getMaterial () : appearanceNode .getBackMaterial (),
-            textureNode         = contextTextureNode ?? appearanceNode .getTexture (),
+            textureNode         = geometryTextureNode ?? appearanceNode .getTexture (),
             renderCount         = renderObject .getRenderCount ();
 
          // Set global uniforms.
