@@ -74,7 +74,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
        */
 
       for (let i = 0; i < maxClipPlanes; ++ i)
-         this .x3d_ClipPlane [i] = gl .getUniformLocation (program, "x3d_ClipPlane[" + i + "]");
+         this .x3d_ClipPlane [i] = gl .getUniformLocation (program, `x3d_ClipPlane[${i}]`);
 
       this .x3d_FogColor           = this .getUniformLocation (gl, program, "x3d_Fog.color",           "x3d_FogColor");
       this .x3d_FogVisibilityStart = this .getUniformLocation (gl, program, "x3d_Fog.visibilityStart", "x3d_FogVisibilityStart");
@@ -228,11 +228,11 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       for (let i = 0; i < maxTexCoords; ++ i)
       {
          this .x3d_TextureCoordinateGenerator [i] = {
-            mode:      gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].mode"),
-            parameter: gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].parameter"),
+            mode:      gl .getUniformLocation (program, `x3d_TextureCoordinateGenerator[${i}].mode`),
+            parameter: gl .getUniformLocation (program, `x3d_TextureCoordinateGenerator[${i}].parameter`),
          };
 
-         const x3d_TexCoord = this .getAttribLocation (gl, program, "x3d_TexCoord" + i, i ? "" : "x3d_TexCoord");
+         const x3d_TexCoord = this .getAttribLocation (gl, program, `x3d_TexCoord${i}`, i ? "" : "x3d_TexCoord");
 
          if (x3d_TexCoord !== -1)
             this .x3d_TexCoord .push ([i, x3d_TexCoord]);
