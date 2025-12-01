@@ -80,6 +80,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          "Debug",
          "Exposure",
          "LogarithmicDepthBuffer",
+         "MaximumFrameRate",
          "Multisampling",
          "Notifications",
          "OrderIndependentTransparency",

@@ -302,6 +302,11 @@ Object .assign (X3DCoreContext .prototype,
             this .setBrowserOption ("LogarithmicDepthBuffer", this .parseBooleanAttribute (newValue) ?? false);
             break;
          }
+         case "maximumframerate":
+         {
+            this .setBrowserOption ("MaximumFrameRate", newValue);
+            break;
+         }
          case "multisampling":
          {
             const samples = parseInt (newValue);
