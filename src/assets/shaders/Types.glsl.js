@@ -273,7 +273,7 @@ struct x3d_TextureProjectorParameters
    mediump vec3  color;
    mediump float intensity;
    mediump vec3  location;
-   mediump vec3  params; // near, far, linear
+   mediump vec2  params; // near, far
    mediump mat4  matrix;
 };
 #endif

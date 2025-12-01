@@ -136,7 +136,7 @@ Object .assign (TextureProjectorParallelContainer .prototype,
       gl .uniform3f        (uniforms .color,         ... lightNode .getColor ());
       gl .uniform1f        (uniforms .intensity,     lightNode .getIntensity ());
       gl .uniform3fv       (uniforms .location,      this .locationArray);
-      gl .uniform3f        (uniforms .params,        nearParameter, farParameter, texture .isLinear ());
+      gl .uniform2f        (uniforms .params,        nearParameter, farParameter);
       gl .uniformMatrix4fv (uniforms .matrix, false, this .matrixArray);
    },
    dispose ()
