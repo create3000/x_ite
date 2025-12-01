@@ -404,6 +404,12 @@ print (Browser .getBrowserOption ("TextCompression"));
          <td>false</td>
       </tr>
       <tr>
+         <td>MaximumFrameRate</td>
+         <td>Caps the rendering frequency to reduce CPU usage and improve overall browser responsiveness. Animations will run at this controlled maximum FPS instead of the full device refresh rate. <small class="blue">non-standard</small></td>
+         <td>Float</td>
+         <td>80</td>
+      </tr>
+      <tr>
          <td>Multisampling</td>
          <td>Number of samples used for multisampling. <small class="blue">non-standard</small></td>
          <td>Integer</td>

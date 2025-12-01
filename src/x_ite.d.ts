@@ -389,6 +389,7 @@ declare namespace X3D
       Gravity:                      number,
       LoadUrlObjects:               boolean,
       LogarithmicDepthBuffer:       boolean,
+      MaximumFrameRate:             number,
       MetadataReference:            string,
       Multisampling:                number,
       Mute:                         boolean,
