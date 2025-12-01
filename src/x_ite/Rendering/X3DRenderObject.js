@@ -930,6 +930,12 @@ Object .assign (X3DRenderObject .prototype,
 
       return function ()
       {
+         const browser = this .getBrowser ();
+
+         // Check if there are enabled Collision nodes.
+         if (!browser .getCollisionCount ())
+            return;
+
          // Collision nodes are handled here.
 
          const

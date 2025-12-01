@@ -21,6 +21,10 @@ function X3DViewer (executionContext, navigationInfoNode)
 
 Object .assign (Object .setPrototypeOf (X3DViewer .prototype, X3DBaseNode .prototype),
 {
+   isCollidable ()
+   {
+      return false;
+   },
    isActive ()
    {
       return this ._isActive .getValue ();

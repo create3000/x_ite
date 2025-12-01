@@ -233,7 +233,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
 
       this [_collisionTime] .start ();
 
-      if (this .getCollisionCount ())
+      if (this .getCollisionCount () || this .getViewer () .isCollidable ())
          this [_world] .traverse (TraverseType .COLLISION);
 
       this [_collisionTime] .stop ();
