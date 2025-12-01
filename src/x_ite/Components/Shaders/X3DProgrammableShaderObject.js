@@ -204,11 +204,11 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          };
 
          this .x3d_TextureProjector [i] = {
-            color:     gl .getUniformLocation (program, `x3d_TextureProjectorColor[${i}]`),
-            intensity: gl .getUniformLocation (program, `x3d_TextureProjectorIntensity[${i}]`),
-            location:  gl .getUniformLocation (program, `x3d_TextureProjectorLocation[${i}]`),
-            params:    gl .getUniformLocation (program, `x3d_TextureProjectorParams[${i}]`),
-            matrix:    gl .getUniformLocation (program, `x3d_TextureProjectorMatrix[${i}]`),
+            color:     gl .getUniformLocation (program, `x3d_TextureProjector[${i}].color`),
+            intensity: gl .getUniformLocation (program, `x3d_TextureProjector[${i}].intensity`),
+            location:  gl .getUniformLocation (program, `x3d_TextureProjector[${i}].location`),
+            params:    gl .getUniformLocation (program, `x3d_TextureProjector[${i}].params`),
+            matrix:    gl .getUniformLocation (program, `x3d_TextureProjector[${i}].matrix`),
             texture:   gl .getUniformLocation (program, `x3d_TextureProjectorTexture[${i}]`),
          }
       }
