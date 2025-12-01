@@ -44,7 +44,7 @@ Object .assign (X3DTimeContext .prototype,
             interval      = time - this [_lastTime],
             viewpointNode = this .getActiveViewpoint ();
 
-         if (time <= this [_lastTime])
+         if (interval <= 1 / this .getBrowserOption ("LimitFrameRate"))
             return false;
 
          this [_lastTime]         = time;

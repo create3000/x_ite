@@ -394,6 +394,7 @@ Object .defineProperties (BrowserOptions,
          new X3DFieldDefinition (X3DConstants .inputOutput, "Debug",                        new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Exposure",                     new Fields .SFDouble (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Gravity",                      new Fields .SFDouble (9.80665)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "LimitFrameRate",               new Fields .SFFloat (70)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "LoadUrlObjects",               new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "LogarithmicDepthBuffer",       new Fields .SFBool ()),
          // A string, which is set to the *reference* field of metadata nodes, when they are created.
