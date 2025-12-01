@@ -188,8 +188,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          };
       }
 
-      this .x3d_TexCoord .length = 0;
-
       for (let i = 0; i < maxTextures; ++ i)
       {
          this .x3d_Texture [i] = {
@@ -216,14 +214,9 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       }
 
       for (let i = 0; i < maxTextureTransforms; ++ i)
-      {
-         const uniform = gl .getUniformLocation (program, `x3d_TextureMatrix[${i}]`);
+         this .x3d_TextureMatrix [i] = gl .getUniformLocation (program, `x3d_TextureMatrix[${i}]`);
 
-         if (uniform === null)
-            break;
-
-         this .x3d_TextureMatrix [i] = uniform;
-      }
+      this .x3d_TexCoord .length = 0;
 
       for (let i = 0; i < maxTexCoords; ++ i)
       {
