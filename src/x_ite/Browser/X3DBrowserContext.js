@@ -195,13 +195,11 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
    {
       // Limit frame rate.
 
-      if (this .advanceTime ())
+      this [_tainted] = false;
+
+      if (!this .advanceTime ())
       {
-         this [_tainted] = false;
-      }
-      else
-      {
-         this [_animFrame] = this .getSession () .requestAnimationFrame (this [_renderCallback]);
+         this .addBrowserEvent ();
          return;
       }
 
