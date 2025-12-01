@@ -345,7 +345,7 @@ print (Browser .getBrowserOption ("TextCompression"));
       </tr>
       <tr>
          <td>AutoUpdate</td>
-         <td>Whether the update control of the browser should be done automatically or not. If true, animations will be disabled if x3d-canvas is not visible.<small class="blue">non-standard</small></td>
+         <td>Whether the update control of the browser should be done automatically or not. If true, animations will be disabled if the &lt;x3d-canvas&gt; element is not visible. <small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>false</td>
       </tr>
@@ -357,7 +357,7 @@ print (Browser .getBrowserOption ("TextCompression"));
       </tr>
       <tr>
          <td>ColorSpace</td>
-         <td>The color space in which color calculations take place. <small class="blue">non-standard</small></td>
+         <td>The color space in which colors are defines and color calculations take place. <small class="blue">non-standard</small></td>
          <td>SRGB, LINEAR_WHEN_PHYSICAL_MATERIAL, LINEAR</td>
          <td>LINEAR_WHEN_PHYSICAL_MATERIAL</td>
       </tr>
@@ -393,13 +393,13 @@ print (Browser .getBrowserOption ("TextCompression"));
       </tr>
       <tr>
          <td>LoadUrlObjects</td>
-         <td>Wether X3DUrlObject should be loaded. <small class="blue">non-standard</small></td>
+         <td>Wether X3DUrlObject nodes should be loaded. <small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>true</td>
       </tr>
       <tr>
          <td>LogarithmicDepthBuffer</td>
-         <td>Whether to use a logarithmic depth buffer. It may be necessary to use this if dealing with huge differences in scale in a single scene. It is automatically enabled if a GeoViewpoint is bound. <small class="blue">non-standard</small></td>
+         <td>Whether to use a logarithmic depth buffer. It may be necessary to use this if dealing with huge differences in scale in a single scene. It is automatically enabled if a GeoViewpoint node is bound. <small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>false</td>
       </tr>
