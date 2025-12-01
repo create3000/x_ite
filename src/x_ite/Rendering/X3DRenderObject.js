@@ -329,10 +329,6 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .collisionTime;
    },
-   setNumPointingShapes (value)
-   {
-      this .numPointingShapes = value;
-   },
    getNumPointingShapes ()
    {
       return this .numPointingShapes;
@@ -341,10 +337,6 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .pointingShapes;
    },
-   setNumCollisionShapes (value)
-   {
-      this .numCollisionShapes = value;
-   },
    getNumCollisionShapes ()
    {
       return this .numCollisionShapes;
@@ -352,10 +344,6 @@ Object .assign (X3DRenderObject .prototype,
    getCollisionShapes ()
    {
       return this .collisionShapes;
-   },
-   setNumShadowShapes (value)
-   {
-      this .numShadowShapes = value;
    },
    getNumShadowShapes ()
    {
@@ -369,11 +357,6 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .numOpaqueShapes;
    },
-   setNumOpaqueShapes (value)
-   {
-      // Needed for StaticGroup.
-      this .numOpaqueShapes = value;
-   },
    getOpaqueShapes ()
    {
       return this .opaqueShapes;
@@ -381,11 +364,6 @@ Object .assign (X3DRenderObject .prototype,
    getNumTransparentShapes ()
    {
       return this .numTransparentShapes;
-   },
-   setNumTransparentShapes (value)
-   {
-      // Needed for StaticGroup.
-      this .numTransparentShapes = value;
    },
    getTransparentShapes ()
    {
