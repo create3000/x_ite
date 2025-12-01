@@ -44,6 +44,9 @@ Object .assign (X3DTimeContext .prototype,
             interval      = time - this [_lastTime],
             viewpointNode = this .getActiveViewpoint ();
 
+         if (time <= this [_lastTime])
+            return false;
+
          this [_lastTime]         = time;
          this [_currentTime]      = time;
          this [_currentFrameRate] = interval ? 1 / interval : 60;
@@ -64,6 +67,8 @@ Object .assign (X3DTimeContext .prototype,
 
          if (this [_currentSpeed] > 0)
             this .addBrowserEvent ();
+
+         return true;
       };
    })(),
 });

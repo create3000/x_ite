@@ -29,7 +29,6 @@ import DEVELOPMENT                    from "../DEVELOPMENT.js";
 const
    _world          = Symbol (),
    _tainted        = Symbol (),
-   _limitFrameRate = Symbol (),
    _traverse       = Symbol .for ("X_ITE.X3DBrowserContext.traverse"),
    _renderCallback = Symbol (),
    _animFrame      = Symbol (),
@@ -192,28 +191,19 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
          });
       });
    },
-   [_limitFrameRate] (now)
-   {
-      if (now > this [_previousTime])
-      {
-         this [_previousTime] = now;
-         this [_tainted]      = false;
-
-         return false;
-      }
-      else
-      {
-         this .getSession () .requestAnimationFrame (this [_renderCallback]);
-
-         return true;
-      }
-   },
    [_traverse] (now, frame)
    {
       // Limit frame rate.
 
-      if (this [_limitFrameRate] (now))
+      if (this .advanceTime ())
+      {
+         this [_tainted] = false;
+      }
+      else
+      {
+         this [_animFrame] = this .getSession () .requestAnimationFrame (this [_renderCallback]);
          return;
+      }
 
       // Start
 
@@ -222,7 +212,6 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
 
       // Time
 
-      this .advanceTime ();
       this .xrFrame (frame);
 
       // Prepare and Time Events
