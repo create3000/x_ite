@@ -49,7 +49,7 @@ Object .assign (X3DTimeContext .prototype,
 
          this [_lastTime]         = time;
          this [_currentTime]      = time;
-         this [_currentFrameRate] = interval ? 1 / interval : 60;
+         this [_currentFrameRate] = 1 / interval;
 
          if (viewpointNode)
          {
