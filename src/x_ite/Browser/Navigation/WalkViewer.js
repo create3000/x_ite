@@ -9,10 +9,6 @@ function WalkViewer (executionContext, navigationInfo)
 
 Object .assign (Object .setPrototypeOf (WalkViewer .prototype, X3DFlyViewer .prototype),
 {
-   isCollidable ()
-   {
-      return true;
-   },
    getStraightenHorizon ()
    {
       return true;

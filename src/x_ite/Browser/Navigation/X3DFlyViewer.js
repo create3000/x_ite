@@ -65,6 +65,10 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
       this .orientationChaser ._duration = ROTATE_TIME;
       this .orientationChaser .setup ();
    },
+   isCollidable ()
+   {
+      return true;
+   },
    set_controlKey__ ()
    {
       if (this .event && this .event .button === 0)

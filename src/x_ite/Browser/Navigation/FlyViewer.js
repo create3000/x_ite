@@ -7,10 +7,6 @@ function FlyViewer (executionContext, navigationInfo)
 
 Object .assign (Object .setPrototypeOf (FlyViewer .prototype, X3DFlyViewer .prototype),
 {
-   isCollidable ()
-   {
-      return this .isActive ();
-   },
    getFlyDirection (fromVector, toVector, direction)
    {
       return direction .assign (toVector) .subtract (fromVector);
