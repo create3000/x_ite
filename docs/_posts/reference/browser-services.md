@@ -357,7 +357,7 @@ print (Browser .getBrowserOption ("TextCompression"));
       </tr>
       <tr>
          <td>ColorSpace</td>
-         <td>The color space in which colors are defines and color calculations take place. <small class="blue">non-standard</small></td>
+         <td>The color space in which colors are defined and color calculations take place. <small class="blue">non-standard</small></td>
          <td>SRGB, LINEAR_WHEN_PHYSICAL_MATERIAL, LINEAR</td>
          <td>LINEAR_WHEN_PHYSICAL_MATERIAL</td>
       </tr>
