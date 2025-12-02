@@ -21,6 +21,7 @@ const
    _pointingTime              = Symbol (),
    _pointingBuffer            = Symbol (),
    _pointingShaders           = Symbol (),
+   _composeShader             = Symbol (),
    _inputSource               = Symbol (),
    _id                        = Symbol (),
    _pointingContexts          = Symbol (),
@@ -442,6 +443,10 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
       this [_pointingShaders] .set (key, shaderNode);
 
       return shaderNode;
+   },
+   getPointingComposeShader ()
+   {
+      return this [_composeShader] ??= this .createShader ("PointingCompose", "FullScreen", "Pointing", ["X3D_COMPOSE_SHADER"]);
    },
 });
 

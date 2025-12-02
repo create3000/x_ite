@@ -4,6 +4,17 @@ precision highp float;
 precision highp int;
 precision highp sampler2D;
 
+#if defined (X3D_COMPOSE_SHADER)
+uniform sampler2D x3d_PointingTexture;
+
+out vec4 x3d_FragData0;
+
+void
+main ()
+{
+   x3d_FragData0 = texelFetch (x3d_PointingTexture, ivec2 (0, 0), 0);
+}
+#else
 in vec3 vertex;
 in vec3 normal;
 in vec4 texCoord;
@@ -46,4 +57,5 @@ main ()
    x3d_FragData1 = vec4 (normal, 0.0);
    x3d_FragData2 = texCoord0;
 }
+#endif
 `;
