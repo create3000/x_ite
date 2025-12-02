@@ -104,12 +104,17 @@ Object .assign (PointingBuffer .prototype,
          program     = shaderNode .getProgram (),
          textureUnit = gl .getUniformLocation (program, "x3d_PointingTexture");
 
+      gl .bindFramebuffer (gl .FRAMEBUFFER, this .combinedFrameBuffer);
       gl .useProgram (program);
       gl .uniform1i (textureUnit, 0);
 
       // Render to combined framebuffer.
 
-      gl .bindFramebuffer (gl .FRAMEBUFFER, this .combinedFrameBuffer);
+      gl .disable (gl .DEPTH_TEST);
+      gl .disable (gl .BLEND);
+      gl .enable (gl .CULL_FACE);
+      gl .frontFace (gl .CCW);
+      gl .bindVertexArray (browser .getFullscreenVertexArrayObject ());
 
       for (let i = 0; i < 3; ++ i)
       {
@@ -118,15 +123,10 @@ Object .assign (PointingBuffer .prototype,
 
          gl .activeTexture (gl .TEXTURE0);
          gl .bindTexture (gl .TEXTURE_2D, this .colorTextures [i]);
-
-         gl .disable (gl .DEPTH_TEST);
-         gl .disable (gl .BLEND);
-         gl .enable (gl .CULL_FACE);
-         gl .frontFace (gl .CCW);
-         gl .bindVertexArray (browser .getFullscreenVertexArrayObject ());
          gl .drawArrays (gl .TRIANGLES, 0, 6);
-         gl .enable (gl .DEPTH_TEST);
       }
+
+      gl .enable (gl .DEPTH_TEST);
 
       // Read from combined framebuffer.
 
