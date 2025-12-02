@@ -130,13 +130,11 @@ Object .assign (PointingBuffer .prototype,
 
       // Read from combined framebuffer.
 
-      console .time ("readPixels");
       gl .readBuffer (gl .COLOR_ATTACHMENT0);
       gl .readPixels (0, 0, 3, 1, gl .RGBA, gl .FLOAT, array);
-      console .timeEnd ("readPixels");
-
 
       hit .id = array [3];
+
       hit .point    .set (array [0], array [1], array [2]);
       hit .normal   .set (array [4], array [5], array [6]);
       hit .texCoord .set (array [8], array [9], array [10], array [11]);
