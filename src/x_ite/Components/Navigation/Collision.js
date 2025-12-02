@@ -45,6 +45,9 @@ Object .assign (Object .setPrototypeOf (Collision .prototype, X3DGroupingNode .p
    },
    set_enabled__ ()
    {
+      if (!this ._enabled .getValue ())
+         this .set_active (false);
+
       this .set_live__ ();
       this .set_children__ ();
    },
