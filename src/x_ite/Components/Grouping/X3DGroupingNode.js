@@ -407,8 +407,6 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
          {
             const { sensors, pointingDeviceSensorNodes, clipPlaneNodes, pointingObjects } = this;
 
-            sensors .length = 0;
-
             if (pointingDeviceSensorNodes .size)
             {
                for (const pointingDeviceSensorNode of pointingDeviceSensorNodes)
@@ -428,7 +426,11 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
                clipPlaneNode .pop (renderObject);
 
             if (sensors .length)
+            {
+               sensors .length = 0;
+
                renderObject .getSensors () .pop ();
+            }
 
             return;
          }
