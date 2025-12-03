@@ -76,12 +76,18 @@ Object .assign (X3DTexturingContext .prototype,
 
       gl .activeTexture (gl .TEXTURE0 + this [_defaultTextureCubeUnit]);
       gl .bindTexture (gl .TEXTURE_CUBE_MAP, this [_defaultTextureCube]);
-      gl .texImage2D (gl .TEXTURE_CUBE_MAP_POSITIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-      gl .texImage2D (gl .TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-      gl .texImage2D (gl .TEXTURE_CUBE_MAP_NEGATIVE_X, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-      gl .texImage2D (gl .TEXTURE_CUBE_MAP_POSITIVE_X, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-      gl .texImage2D (gl .TEXTURE_CUBE_MAP_POSITIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-      gl .texImage2D (gl .TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+
+      const targets = [
+         gl .TEXTURE_CUBE_MAP_POSITIVE_Z,
+         gl .TEXTURE_CUBE_MAP_NEGATIVE_Z,
+         gl .TEXTURE_CUBE_MAP_NEGATIVE_X,
+         gl .TEXTURE_CUBE_MAP_POSITIVE_X,
+         gl .TEXTURE_CUBE_MAP_POSITIVE_Y,
+         gl .TEXTURE_CUBE_MAP_NEGATIVE_Y,
+      ];
+
+      for (const target of targets)
+         gl .texImage2D (target, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
       // Reset texture units.
 
@@ -158,9 +164,6 @@ Object .assign (X3DTexturingContext .prototype,
    },
    popTextureUnit ()
    {
-      if (this [_textureUnitIndex] === 0)
-         return;
-
       -- this [_textureUnitIndex];
 
       return this [_combinedTextureUnits] .pop ();
@@ -176,9 +179,6 @@ Object .assign (X3DTexturingContext .prototype,
    },
    getTextureUnit ()
    {
-      if (this [_textureUnitIndex] === 0)
-         return;
-
       return this [_combinedTextureUnits] [-- this [_textureUnitIndex]];
    },
    resetTextureUnits ()
