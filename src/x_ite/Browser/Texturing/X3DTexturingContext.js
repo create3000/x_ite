@@ -9,7 +9,8 @@ import { maxTextureTransforms, maxTexCoords, maxTextures } from "./TexturingConf
 
 const
    _maxTextures              = Symbol (),
-   _combinedTextureUnits     = Symbol (),
+   _numCombinedTextureUnits  = Symbol (),
+   _globalTextureUnitIndex   = Symbol (),
    _textureUnitIndex         = Symbol (),
    _defaultTexture2DUnit     = Symbol (),
    _defaultTexture3DUnit     = Symbol (),
@@ -44,13 +45,13 @@ Object .assign (X3DTexturingContext .prototype,
 
       // Get texture Units
 
-      const maxCombinedTextureUnits = gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS);
+      let maxCombinedTextureUnits = gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS);
 
-      this [_combinedTextureUnits] = [... Array (maxCombinedTextureUnits) .keys ()];
+      this [_defaultTexture2DUnit]   = -- maxCombinedTextureUnits;
+      this [_defaultTexture3DUnit]   = -- maxCombinedTextureUnits;
+      this [_defaultTextureCubeUnit] = -- maxCombinedTextureUnits;
 
-      this [_defaultTexture2DUnit]   = this [_combinedTextureUnits] .pop ();
-      this [_defaultTexture3DUnit]   = this [_combinedTextureUnits] .pop ();
-      this [_defaultTextureCubeUnit] = this [_combinedTextureUnits] .pop ();
+      this [_numCombinedTextureUnits] = maxCombinedTextureUnits;
 
       // Default Texture 2D Unit
 
@@ -91,8 +92,9 @@ Object .assign (X3DTexturingContext .prototype,
 
       // Reset texture units.
 
-      gl .activeTexture (gl .TEXTURE0 + this [_combinedTextureUnits] [0]);
+      gl .activeTexture (gl .TEXTURE0);
 
+      this .resetGlobalTextureUnits ();
       this .resetTextureUnits ();
 
       // Set texture quality.
@@ -162,28 +164,21 @@ Object .assign (X3DTexturingContext .prototype,
 
       return gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS)
    },
-   popTextureUnit ()
+   getGlobalTextureUnit ()
    {
-      -- this [_textureUnitIndex];
-
-      return this [_combinedTextureUnits] .pop ();
+      return this [_textureUnitIndex] = -- this [_globalTextureUnitIndex];
    },
-   pushTextureUnit (textureUnit)
+   resetGlobalTextureUnits ()
    {
-      ++ this [_textureUnitIndex];
-
-      if (textureUnit === undefined)
-         return;
-
-      this [_combinedTextureUnits] .push (textureUnit);
+      this [_textureUnitIndex] = this [_globalTextureUnitIndex] = this [_numCombinedTextureUnits];
    },
    getTextureUnit ()
    {
-      return this [_combinedTextureUnits] [-- this [_textureUnitIndex]];
+      return -- this [_textureUnitIndex];
    },
    resetTextureUnits ()
    {
-      this [_textureUnitIndex] = this [_combinedTextureUnits] .length;
+      this [_textureUnitIndex] = this [_globalTextureUnitIndex];
    },
    getDefaultTexture2DUnit ()
    {

@@ -1275,6 +1275,8 @@ Object .assign (X3DRenderObject .prototype,
 
          for (const globalObject of globalLights)
             globalObject .dispose ();
+
+         browser .resetGlobalTextureUnits ();
       }
 
       // Reset containers.

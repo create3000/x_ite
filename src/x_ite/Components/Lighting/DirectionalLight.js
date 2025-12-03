@@ -123,7 +123,7 @@ Object .assign (DirectionalLightContainer .prototype,
       if (this .shadowBuffer)
       {
          const textureUnit = this .global
-            ? this .textureUnit ??= this .browser .popTextureUnit ()
+            ? this .textureUnit ??= this .browser .getGlobalTextureUnit ()
             : this .browser .getTextureUnit ();
 
          gl .activeTexture (gl .TEXTURE0 + textureUnit);
@@ -169,11 +169,7 @@ Object .assign (DirectionalLightContainer .prototype,
          this .shadowBuffer = null;
 
          if (global)
-         {
-            browser .pushTextureUnit (this .textureUnit);
-
             this .textureUnit = undefined;
-         }
       }
 
       this .modelViewMatrix .clear ();

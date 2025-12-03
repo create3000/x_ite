@@ -61,15 +61,15 @@ Object .assign (EnvironmentLightContainer .prototype,
          ggxLUTTexture   = browser .getLibraryTexture ("lut_ggx.png");
 
       const diffuseTextureUnit = global
-         ? this .diffuseTextureUnit ??= browser .popTextureUnit ()
+         ? this .diffuseTextureUnit ??= browser .getGlobalTextureUnit ()
          : browser .getTextureUnit ();
 
       const specularTextureUnit = global
-         ? this .specularTextureUnit ??= browser .popTextureUnit ()
+         ? this .specularTextureUnit ??= browser .getGlobalTextureUnit ()
          : browser .getTextureUnit ();
 
       const ggxLUTTextureUnit = global
-         ? this .ggxLUTTextureUnit ??= browser .popTextureUnit ()
+         ? this .ggxLUTTextureUnit ??= browser .getGlobalTextureUnit ()
          : browser .getTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + diffuseTextureUnit);
@@ -91,11 +91,11 @@ Object .assign (EnvironmentLightContainer .prototype,
             charlieLUTTexture = browser .getLibraryTexture ("lut_charlie.png");
 
          const sheenTextureUnit = global
-            ? this .sheenTextureUnit ??= browser .popTextureUnit ()
+            ? this .sheenTextureUnit ??= browser .getGlobalTextureUnit ()
             : browser .getTextureUnit ();
 
          const charlieLUTTextureUnit = global
-            ? this .charlieLUTTextureUnit ??= browser .popTextureUnit ()
+            ? this .charlieLUTTextureUnit ??= browser .getGlobalTextureUnit ()
             : browser .getTextureUnit ();
 
          gl .activeTexture (gl .TEXTURE0 + sheenTextureUnit);
@@ -129,18 +129,10 @@ Object .assign (EnvironmentLightContainer .prototype,
 
       if (global)
       {
-         const { browser } = this;
-
-         browser .pushTextureUnit (this .diffuseTextureUnit);
-         browser .pushTextureUnit (this .specularTextureUnit);
-         browser .pushTextureUnit (this .sheenTextureUnit);
-         browser .pushTextureUnit (this .ggxLUTTextureUnit);
-         browser .pushTextureUnit (this .charlieLUTTextureUnit);
-
          this .diffuseTextureUnit    = undefined;
          this .specularTextureUnit   = undefined;
-         this .sheenTextureUnit      = undefined;
          this .ggxLUTTextureUnit     = undefined;
+         this .sheenTextureUnit      = undefined;
          this .charlieLUTTextureUnit = undefined;
       }
 
