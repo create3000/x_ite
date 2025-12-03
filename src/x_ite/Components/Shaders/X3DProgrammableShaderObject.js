@@ -144,7 +144,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       this .x3d_Glossiness        = gl .getUniformLocation (program, "x3d_Material.glossiness");
       this .x3d_OcclusionStrength = gl .getUniformLocation (program, "x3d_Material.occlusionStrength");
       this .x3d_NormalScale       = gl .getUniformLocation (program, "x3d_Material.normalScale");
-      this .x3d_Transparency      = this .getUniformLocation (gl, program, "x3d_Material.transparency",     "x3d_FrontMaterial.transparency");
+      this .x3d_Transparency      = this .getUniformLocation (gl, program, "x3d_Material.transparency", "x3d_FrontMaterial.transparency");
 
       const commonUniforms = [
          // Matrices
@@ -313,16 +313,17 @@ Object .assign (X3DProgrammableShaderObject .prototype,
    {
       // Legacy function to get uniform location.
 
-      let location = gl .getUniformLocation (program, name);
+      const location = gl .getUniformLocation (program, name);
 
       if (location)
-         return location;
-
-      // Look for depreciated location.
-
-      if (depreciated)
       {
-         location = gl .getUniformLocation (program, depreciated);
+         return location;
+      }
+      else
+      {
+         // Look for depreciated location.
+
+         const location = gl .getUniformLocation (program, depreciated);
 
          if (location)
          {
@@ -331,8 +332,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
          return location;
       }
-
-      return 0;
    },
    getAttribLocation (gl, program, name, depreciated)
    {
