@@ -405,10 +405,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
       {
          case TraverseType .POINTER:
          {
-            const
-               pointingDeviceSensorNodes = this .pointingDeviceSensorNodes,
-               clipPlaneNodes            = this .clipPlaneNodes,
-               sensors                   = this .sensors;
+            const { sensors, pointingDeviceSensorNodes, clipPlaneNodes, pointingObjects } = this;
 
             sensors .length = 0;
 
@@ -424,7 +421,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
             for (const clipPlaneNode of clipPlaneNodes)
                clipPlaneNode .push (renderObject);
 
-            for (const pointingObject of this .pointingObjects)
+            for (const pointingObject of pointingObjects)
                pointingObject .traverse (type, renderObject);
 
             for (const clipPlaneNode of clipPlaneNodes)
@@ -477,12 +474,12 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
          }
          case TraverseType .COLLISION:
          {
-            const clipPlaneNodes = this .clipPlaneNodes;
+            const { clipPlaneNodes, collisionObjects } = this;
 
             for (const clipPlaneNode of clipPlaneNodes)
                clipPlaneNode .push (renderObject);
 
-            for (const collisionObject of this .collisionObjects)
+            for (const collisionObject of collisionObjects)
                collisionObject .traverse (type, renderObject);
 
             for (const clipPlaneNode of clipPlaneNodes)
@@ -494,12 +491,12 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
          {
             // Nodes that are not visible do not cast shadows.
 
-            const clipPlaneNodes = this .clipPlaneNodes;
+            const { clipPlaneNodes, shadowObjects } = this;
 
             for (const clipPlaneNode of clipPlaneNodes)
                clipPlaneNode .push (renderObject);
 
-            for (const shadowObject of this .shadowObjects)
+            for (const shadowObject of shadowObjects)
                shadowObject .traverse (type, renderObject);
 
             for (const clipPlaneNode of clipPlaneNodes)
@@ -509,12 +506,12 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
          }
          case TraverseType .DISPLAY:
          {
-            const displayNodes = this .displayNodes;
+            const { displayNodes, visibleObjects } = this;
 
             for (const displayNode of displayNodes)
                displayNode .push (renderObject, this);
 
-            for (const visibleObject of this .visibleObjects)
+            for (const visibleObject of visibleObjects)
                visibleObject .traverse (type, renderObject);
 
             for (const displayNode of displayNodes)
