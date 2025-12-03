@@ -94,7 +94,6 @@ Object .assign (X3DTexturingContext .prototype,
       gl .activeTexture (gl .TEXTURE0);
 
       this .resetGlobalTextureUnits ();
-      this .resetTextureUnits ();
 
       // Set texture quality.
 
