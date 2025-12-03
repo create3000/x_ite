@@ -337,26 +337,25 @@ Object .assign (X3DProgrammableShaderObject .prototype,
    {
       // Legacy function to get uniform location.
 
-      let location = gl .getAttribLocation (program, name);
+      const location = gl .getAttribLocation (program, name);
 
       if (location >= 0)
-         return location;
-
-      // Look for depreciated location.
-
-      if (depreciated)
       {
-         location = gl .getAttribLocation (program, depreciated);
+         return location;
+      }
+      else
+      {
+         // Look for depreciated location.
+
+         const location = gl .getAttribLocation (program, depreciated);
 
          if (location >= 0)
          {
-            console .warn (this .getTypeName (), this .getName (), "Using attribute location name '" + depreciated + "' is depreciated, use '" + name + "'. See https://create3000.github.io/x_ite/custom-shaders.");
+            console .warn (this .getTypeName (), this .getName (), `Using attribute location name '${depreciated}' is depreciated, use '${name}'. See https://create3000.github.io/x_ite/custom-shaders.`);
          }
 
          return location;
       }
-
-      return -1;
    },
    addShaderFields ()
    {
