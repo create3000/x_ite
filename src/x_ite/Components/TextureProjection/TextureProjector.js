@@ -121,11 +121,13 @@ Object .assign (TextureProjectorContainer .prototype,
    dispose ()
    {
       if (this .global)
+      {
          this .browser .pushTextureUnit (this .textureUnit);
 
-      this .modelViewMatrix .clear ();
+         this .textureUnit = undefined;
+      }
 
-      this .textureUnit = undefined;
+      this .modelViewMatrix .clear ();
 
       TextureProjectorCache .push (this);
    },
