@@ -165,25 +165,20 @@ Object .assign (PointLightContainer .prototype,
       if (shaderObject .hasLight (i, this))
          return;
 
-      const
-         { lightNode, location } = this,
-         color                   = lightNode .getColor (),
-         attenuation             = lightNode .getAttenuation ();
+      const { lightNode, location } = this;
 
       gl .uniform1i        (uniforms .type,             2);
-      gl .uniform3f        (uniforms .color,            ... color);
+      gl .uniform3f        (uniforms .color,            ... lightNode .getColor ());
       gl .uniform1f        (uniforms .intensity,        lightNode .getIntensity ());
       gl .uniform1f        (uniforms .ambientIntensity, lightNode .getAmbientIntensity ());
-      gl .uniform3fv       (uniforms .attenuation,      attenuation);
+      gl .uniform3fv       (uniforms .attenuation,      lightNode .getAttenuation ());
       gl .uniform3f        (uniforms .location,         ... location);
       gl .uniform1f        (uniforms .radius,           lightNode .getRadius ());
       gl .uniformMatrix3fv (uniforms .matrix, false,    this .matrixArray);
 
       if (this .shadowBuffer)
       {
-         const shadowColor = lightNode .getShadowColor ();
-
-         gl .uniform3f        (uniforms .shadowColor,         ... shadowColor);
+         gl .uniform3f        (uniforms .shadowColor,         ... lightNode .getShadowColor ());
          gl .uniform1f        (uniforms .shadowIntensity,     lightNode .getShadowIntensity ());
          gl .uniform1f        (uniforms .shadowBias,          lightNode .getShadowBias ());
          gl .uniformMatrix4fv (uniforms .shadowMatrix, false, this .shadowMatrixArray);

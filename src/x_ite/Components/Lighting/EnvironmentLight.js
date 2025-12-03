@@ -110,9 +110,7 @@ Object .assign (EnvironmentLightContainer .prototype,
       if (shaderObject .hasEnvironmentLight (i, this))
          return;
 
-      const color = lightNode .getColor ();
-
-      gl .uniform3f        (uniforms .color,                 ... color);
+      gl .uniform3f        (uniforms .color,                 ... lightNode .getColor ());
       gl .uniform1f        (uniforms .intensity,             lightNode .getIntensity ());
       gl .uniformMatrix3fv (uniforms .rotation, false,       this .rotationMatrix);
       gl .uniform1i        (uniforms .diffuseTextureLevels,  diffuseTexture ?.getLevels () ?? 0);
