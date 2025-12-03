@@ -61,16 +61,16 @@ Object .assign (EnvironmentLightContainer .prototype,
          ggxLUTTexture   = browser .getLibraryTexture ("lut_ggx.png");
 
       const diffuseTextureUnit = global
-         ? this .diffuseTextureUnit ??= browser .getGlobalTextureUnit ()
-         : browser .getTextureUnit ();
+         ? this .diffuseTextureUnit ??= browser .popGlobalTextureUnit ()
+         : browser .popTextureUnit ();
 
       const specularTextureUnit = global
-         ? this .specularTextureUnit ??= browser .getGlobalTextureUnit ()
-         : browser .getTextureUnit ();
+         ? this .specularTextureUnit ??= browser .popGlobalTextureUnit ()
+         : browser .popTextureUnit ();
 
       const ggxLUTTextureUnit = global
-         ? this .ggxLUTTextureUnit ??= browser .getGlobalTextureUnit ()
-         : browser .getTextureUnit ();
+         ? this .ggxLUTTextureUnit ??= browser .popGlobalTextureUnit ()
+         : browser .popTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + diffuseTextureUnit);
       gl .bindTexture (gl .TEXTURE_CUBE_MAP, diffuseTexture ?.getTexture () ?? browser .getDefaultTextureCube ());
@@ -91,12 +91,12 @@ Object .assign (EnvironmentLightContainer .prototype,
             charlieLUTTexture = browser .getLibraryTexture ("lut_charlie.png");
 
          const sheenTextureUnit = global
-            ? this .sheenTextureUnit ??= browser .getGlobalTextureUnit ()
-            : browser .getTextureUnit ();
+            ? this .sheenTextureUnit ??= browser .popGlobalTextureUnit ()
+            : browser .popTextureUnit ();
 
          const charlieLUTTextureUnit = global
-            ? this .charlieLUTTextureUnit ??= browser .getGlobalTextureUnit ()
-            : browser .getTextureUnit ();
+            ? this .charlieLUTTextureUnit ??= browser .popGlobalTextureUnit ()
+            : browser .popTextureUnit ();
 
          gl .activeTexture (gl .TEXTURE0 + sheenTextureUnit);
          gl .bindTexture (gl .TEXTURE_CUBE_MAP, sheenTexture ?.getTexture () ?? browser .getDefaultTextureCube ());

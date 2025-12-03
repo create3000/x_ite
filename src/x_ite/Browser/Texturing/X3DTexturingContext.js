@@ -10,8 +10,8 @@ import { maxTextureTransforms, maxTexCoords, maxTextures } from "./TexturingConf
 const
    _maxTextures              = Symbol (),
    _numCombinedTextureUnits  = Symbol (),
-   _globalTextureUnitIndex   = Symbol (),
-   _textureUnitIndex         = Symbol (),
+   _globalTextureUnits       = Symbol (),
+   _textureUnits             = Symbol (),
    _defaultTexture2DUnit     = Symbol (),
    _defaultTexture3DUnit     = Symbol (),
    _defaultTextureCubeUnit   = Symbol (),
@@ -162,21 +162,21 @@ Object .assign (X3DTexturingContext .prototype,
 
       return gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS)
    },
-   getGlobalTextureUnit ()
+   popGlobalTextureUnit ()
    {
-      return this [_textureUnitIndex] = -- this [_globalTextureUnitIndex];
+      return this [_textureUnits] = -- this [_globalTextureUnits];
    },
    resetGlobalTextureUnits ()
    {
-      this [_textureUnitIndex] = this [_globalTextureUnitIndex] = this [_numCombinedTextureUnits];
+      this [_textureUnits] = this [_globalTextureUnits] = this [_numCombinedTextureUnits];
    },
-   getTextureUnit ()
+   popTextureUnit ()
    {
-      return -- this [_textureUnitIndex];
+      return -- this [_textureUnits];
    },
    resetTextureUnits ()
    {
-      this [_textureUnitIndex] = this [_globalTextureUnitIndex];
+      this [_textureUnits] = this [_globalTextureUnits];
    },
    getDefaultTexture2DUnit ()
    {

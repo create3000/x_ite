@@ -119,8 +119,8 @@ Object .assign (TextureProjectorParallelContainer .prototype,
          lightNode   = this .lightNode,
          texture     = lightNode .getTexture (),
          textureUnit = this .global
-            ? this .textureUnit ??= this .browser .getGlobalTextureUnit ()
-            : this .browser .getTextureUnit ();
+            ? this .textureUnit ??= this .browser .popGlobalTextureUnit ()
+            : this .browser .popTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());

@@ -245,7 +245,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          gl          = browser .getContext (),
          shaderNode  = browser .getPanoramaShader (),
          framebuffer = gl .createFramebuffer (),
-         textureUnit = browser .getTextureUnit (),
+         textureUnit = browser .popTextureUnit (),
          size        = Math .floor (height / 2),
          data        = new Uint8Array (size * size * 4);
 

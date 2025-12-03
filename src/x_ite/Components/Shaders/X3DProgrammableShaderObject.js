@@ -963,7 +963,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       {
          const
             texture     = location .texture,
-            textureUnit = this .getBrowser () .getTextureUnit ();
+            textureUnit = this .getBrowser () .popTextureUnit ();
 
          if (textureUnit === undefined)
          {

@@ -991,7 +991,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
             if (this .numTexCoords)
             {
-               const textureUnit = browser .getTextureUnit ();
+               const textureUnit = browser .popTextureUnit ();
 
                gl .activeTexture (gl .TEXTURE0 + textureUnit);
                gl .bindTexture (gl .TEXTURE_2D, this [ParticleSampler .texCoords]);

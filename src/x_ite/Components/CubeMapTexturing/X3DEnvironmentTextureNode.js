@@ -90,7 +90,7 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, X3
    },
    setShaderUniforms (gl, channel)
    {
-      const textureUnit = this .getBrowser () .getTextureUnit ();
+      const textureUnit = this .getBrowser () .popTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .getTexture ());
