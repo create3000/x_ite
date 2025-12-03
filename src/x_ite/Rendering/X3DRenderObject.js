@@ -955,7 +955,7 @@ Object .assign (X3DRenderObject .prototype,
                                        : this .activeCollisions;
 
             for (const collision of inActiveCollisions)
-               collision .set_active (false);
+               collision .set_active__ (false);
          }
 
          // Set isActive to TRUE for affected nodes.
@@ -963,7 +963,7 @@ Object .assign (X3DRenderObject .prototype,
          this .activeCollisions = activeCollisions;
 
          for (const collision of activeCollisions)
-            collision .set_active (true);
+            collision .set_active__ (true);
       };
    })(),
    gravitate: (() =>
