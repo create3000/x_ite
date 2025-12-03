@@ -47,10 +47,9 @@ Object .assign (X3DTexturingContext .prototype,
 
       let maxCombinedTextureUnits = gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS);
 
-      this [_defaultTexture2DUnit]   = -- maxCombinedTextureUnits;
-      this [_defaultTexture3DUnit]   = -- maxCombinedTextureUnits;
-      this [_defaultTextureCubeUnit] = -- maxCombinedTextureUnits;
-
+      this [_defaultTexture2DUnit]    = -- maxCombinedTextureUnits;
+      this [_defaultTexture3DUnit]    = -- maxCombinedTextureUnits;
+      this [_defaultTextureCubeUnit]  = -- maxCombinedTextureUnits;
       this [_numCombinedTextureUnits] = maxCombinedTextureUnits;
 
       // Default Texture 2D Unit
