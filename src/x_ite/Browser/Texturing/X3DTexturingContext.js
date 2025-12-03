@@ -170,10 +170,10 @@ Object .assign (X3DTexturingContext .prototype,
    },
    pushTextureUnit (textureUnit)
    {
+      ++ this [_textureUnitIndex];
+
       if (textureUnit === undefined)
          return;
-
-      ++ this [_textureUnitIndex];
 
       this [_combinedTextureUnits] .push (textureUnit);
    },

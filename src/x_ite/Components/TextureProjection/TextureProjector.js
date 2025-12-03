@@ -98,7 +98,7 @@ Object .assign (TextureProjectorContainer .prototype,
          lightNode   = this .lightNode,
          texture     = lightNode .getTexture (),
          textureUnit = this .global
-            ? (this .textureUnit = this .textureUnit ?? this .browser .popTextureUnit ())
+            ? this .textureUnit ??= this .browser .popTextureUnit ()
             : this .browser .getTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
@@ -120,7 +120,8 @@ Object .assign (TextureProjectorContainer .prototype,
    },
    dispose ()
    {
-      this .browser .pushTextureUnit (this .textureUnit);
+      if (this .global)
+         this .browser .pushTextureUnit (this .textureUnit);
 
       this .modelViewMatrix .clear ();
 
