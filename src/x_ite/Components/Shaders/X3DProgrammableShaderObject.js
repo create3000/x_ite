@@ -12,15 +12,10 @@ function X3DProgrammableShaderObject (executionContext)
 
    this .uniformNames = [ ];
 
-   this .fogNode                    = null;
-   this .numClipPlanes              = 0;
-   this .numEnvironmentLights       = 0;
-   this .environmentLightNodes      = [ ];
-   this .numLights                  = 0;
-   this .lightNodes                 = [ ];
-   this .numTextureProjectors       = 0;
-   this .textureProjectorNodes      = [ ];
-   this .textures                   = new Set ();
+   this .environmentLightNodes  = [ ];
+   this .lightNodes             = [ ];
+   this .textureProjectorNodes  = [ ];
+   this .textures               = new Set ();
 
    this .x3d_ClipPlane                  = [ ];
    this .x3d_EnvironmentLight           = [ ];
