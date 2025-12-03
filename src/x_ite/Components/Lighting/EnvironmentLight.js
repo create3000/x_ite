@@ -125,9 +125,7 @@ Object .assign (EnvironmentLightContainer .prototype,
    },
    dispose ()
    {
-      const { global } = this;
-
-      if (global)
+      if (this .global)
       {
          this .diffuseTextureUnit    = undefined;
          this .specularTextureUnit   = undefined;
