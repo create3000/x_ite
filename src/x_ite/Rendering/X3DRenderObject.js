@@ -693,13 +693,10 @@ Object .assign (X3DRenderObject .prototype,
          renderContext .hAnimNode = this .hAnimNode .at (-1);
          renderContext .shapeNode = shapeNode;
 
-         // Collisions
-
-         assign (renderContext .collisions, this .collisions);
-
-         // Clip planes
+         // Clip planes & Collision nodes
 
          assign (renderContext .clipPlanes, this .localObjects);
+         assign (renderContext .collisions, this .collisions);
 
          return true;
       };
