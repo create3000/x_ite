@@ -960,7 +960,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
          if (textureUnit === undefined)
          {
-            console .warn ("Not enough combined texture units for uniform variable '" + location .name + "' available.");
+            console .warn (`Not enough combined texture units for uniform variable '${location .name}' available.`);
             return;
          }
 
