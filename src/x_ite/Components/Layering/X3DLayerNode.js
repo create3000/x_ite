@@ -379,12 +379,14 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
             return;
       }
 
+      const { viewportNode, groupNodes } = this;
+
       this .setHitRay (this .getProjectionMatrix () .get (), viewport, browser .getPointer ());
       this .getModelViewMatrix () .push (this .getViewMatrix () .get ());
 
-      this .viewportNode .push (this);
-      renderObject .render (type, this .groupNodes .traverse, this .groupNodes);
-      this .viewportNode .pop (this);
+      viewportNode .push (this);
+      renderObject .render (type, groupNodes .traverse, groupNodes);
+      viewportNode .pop (this);
 
       this .getModelViewMatrix () .pop ();
    },
@@ -392,9 +394,11 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    {
       this .getModelViewMatrix () .push (Matrix4 .IDENTITY);
 
-      this .viewportNode .push (this);
-      this .groupNodes .traverse (type, renderObject);
-      this .viewportNode .pop (this);
+      const { viewportNode, groupNodes } = this;
+
+      viewportNode .push (this);
+      groupNodes .traverse (type, renderObject);
+      viewportNode .pop (this);
 
       this .getModelViewMatrix () .pop ();
 
@@ -410,11 +414,13 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
       if (!this ._pickable .getValue ())
          return;
 
+      const { viewportNode, groupNodes } = this;
+
       this .getModelViewMatrix () .push (Matrix4 .IDENTITY);
 
-      this .viewportNode .push (this);
-      this .groupNodes .traverse (type, renderObject);
-      this .viewportNode .pop (this);
+      viewportNode .push (this);
+      groupNodes .traverse (type, renderObject);
+      viewportNode .pop (this);
 
       this .getModelViewMatrix () .pop ();
    },
@@ -434,15 +440,17 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
             avatarHeight    = navigationInfoNode .getAvatarHeight (),
             size            = Math .max (collisionRadius * 2, avatarHeight * 2);
 
+         const { viewportNode, groupNodes } = this;
+
          Camera .ortho (-size, size, -size, size, -size, size, projectionMatrix);
 
          this .getProjectionMatrix () .push (projectionMatrix);
          this .getModelViewMatrix  () .push (this .getViewMatrix () .get ());
 
          // Render
-         this .viewportNode .push (this);
-         renderObject .render (type, this .groupNodes .traverse, this .groupNodes);
-         this .viewportNode .pop (this);
+         viewportNode .push (this);
+         renderObject .render (type, groupNodes .traverse, groupNodes);
+         viewportNode .pop (this);
 
          this .getModelViewMatrix  () .pop ();
          this .getProjectionMatrix () .pop ();
@@ -450,12 +458,14 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    })(),
    display (type, renderObject)
    {
+      const { viewportNode, groupNodes } = this;
+
       this .getNavigationInfo () .enable (type, renderObject);
       this .getModelViewMatrix () .push (this .getViewMatrix () .get ());
 
-      this .viewportNode .push (this);
-      renderObject .render (type, this .groupNodes .traverse, this .groupNodes);
-      this .viewportNode .pop (this);
+      viewportNode .push (this);
+      renderObject .render (type, groupNodes .traverse, groupNodes);
+      viewportNode .pop (this);
 
       this .getModelViewMatrix () .pop ();
    },
