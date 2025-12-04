@@ -277,15 +277,15 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          }
       }
 
-      if (this .x3d_TexCoord .length === 0)
-      {
-         this .enableTexCoordAttribute  = Function .prototype;
-         this .texCoordAttributeDivisor = Function .prototype;
-      }
-      else
+      if (this .x3d_TexCoord .length)
       {
          delete this .enableTexCoordAttribute;
          delete this .texCoordAttributeDivisor;
+      }
+      else
+      {
+         this .enableTexCoordAttribute  = Function .prototype;
+         this .texCoordAttributeDivisor = Function .prototype;
       }
 
       /*
