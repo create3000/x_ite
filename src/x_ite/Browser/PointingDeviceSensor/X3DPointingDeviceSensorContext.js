@@ -31,7 +31,6 @@ function X3DPointingDeviceSensorContext ()
 {
    this [_pointingDevice]            = new PointingDevice (this .getPrivateScene ());
    this [_pointingDeviceSensorNodes] = new Set ();
-   this [_cursorTypes]               = { };
    this [_pointer]                   = new Vector2 ();
    this [_sensors]                   = [ ];
    this [_overSensors]               = new Map ();
@@ -97,9 +96,6 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    },
    setCursors (cursorTypes)
    {
-      if (typeof cursorTypes !== "object")
-         throw new Error ("Argument to setCursors must be of type Object.");
-
       this [_cursorTypes] = cursorTypes;
 
       this .updateCursor ();
@@ -117,7 +113,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    {
       const
          cursorType = this .getDisplayLoadCount () ? "WAIT" : this [_cursorType],
-         css        = this [_cursorTypes] [cursorType] ?? cursorType .toLowerCase ();
+         css        = this [_cursorTypes] ?.[cursorType] ?? cursorType .toLowerCase ();
 
       this .getSurface () .css ("cursor", css);
    },
