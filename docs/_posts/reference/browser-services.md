@@ -657,6 +657,8 @@ type CursorTypes = {
 };
 ```
 
+##### See Also
+
 * [CSS cursor](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/cursor)
 
 #### **constrainTranslation** (*[layer: X3DLayerNode,] translation: SFVec3d | SFVec3f*): SFVec3f <small><span class="blue">non-standard</span></small>
