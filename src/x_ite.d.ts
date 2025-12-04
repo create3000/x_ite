@@ -248,6 +248,10 @@ declare namespace X3D
       changeViewpoint (layer: X3DLayerNodeProxy, name: string): void;
       changeViewpoint (name: string): void;
       /**
+       * Changes the default cursor images to the one is specified in *cursorTypes*. You can omit values if you wish the default cursor image.
+       */
+      setCursors (cursorTypes: CursorTypes): void;
+      /**
        * Constrains a *translation*, which should be added to the position of the active viewpoint, to a possible value that avatar can move to. If the avatar reaches or intersects with an obstacle the translation is either constrained to slide along the wall or to stop. If *layer* is omitted, the active layer is used.
        */
       constrainTranslation (layer: X3DLayerNodeProxy, translation: SFVec3d | SFVec3f): SFVec3f;
@@ -255,7 +259,7 @@ declare namespace X3D
       /**
        * Returns the closest collidable object when looked in *direction*, measured from the active viewpoint position. The maximum detection radius is `2 * avatarHeight` (where *avatarHeight* is the second value of NavigationInfo *avatarSize*). Compare *distance* with *collisionRadius* (first value of NavigationInfo *avatarSize*) to detect if a collision with an object occurs. If *layer* is omitted, the active layer is used.
        *
-       * The return value is an object with two properties *node* and *distance*.
+       * The return value is an object with the properties *node*, *distance* and *normal*.
        */
       getClosestObject (layer: X3DLayerNodeProxy, direction: SFVec3d | SFVec3f): ClosestObject;
       getClosestObject (direction: SFVec3d | SFVec3f): ClosestObject;
@@ -430,6 +434,14 @@ declare namespace X3D
       distance: number,
       normal: SFVec3f | null,
       frontFacing: boolean,
+   };
+
+   type CursorTypes = {
+      DEFAULT: string;
+      GRABBING: string;
+      MOVE: string;
+      POINTER: string;
+      WAIT: string;
    };
 
    class ContextMenu

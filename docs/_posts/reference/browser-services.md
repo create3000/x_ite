@@ -641,6 +641,24 @@ Changes the bound viewpoint node to the last viewpoint in the list of user viewp
 
 Changes the bound viewpoint node to the viewpoint named *name*. The viewpoint must be available in *layer*. If *layer* is omitted, the active layer is used.
 
+#### **setCursors** (*cursorTypes: CursorTypes*): void <small><span class="blue">non-standard</span></small>
+
+Changes the default cursor images to the one specified in *cursorTypes*. You can omit properties if you wish the default cursor image for this action. The values can be any valid CSS cursors.
+
+The CursorTypes object has the following properties:
+
+```ts
+type CursorTypes = {
+   DEFAULT: string;
+   GRABBING: string;
+   MOVE: string;
+   POINTER: string;
+   WAIT: string;
+};
+```
+
+* [CSS cursor](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/cursor)
+
 #### **constrainTranslation** (*[layer: X3DLayerNode,] translation: SFVec3d | SFVec3f*): SFVec3f <small><span class="blue">non-standard</span></small>
 
 Constrains a *translation*, which should be added to the position of the active viewpoint, to a possible value that avatar can move to. If the avatar reaches or intersects with an obstacle the translation is either constrained to slide along the wall or to stop. If *layer* is omitted, the active layer is used.

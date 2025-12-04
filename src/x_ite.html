@@ -35,6 +35,8 @@ const
    Browser      = X3D .getBrowser (),
    localStorage = Browser .getLocalStorage ();
 
+Browser .setCursors ({ MOVE: "crosshair" });
+
 Browser .contextMenu .userMenu = () =>
 {
    return {
