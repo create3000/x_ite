@@ -901,7 +901,9 @@ Object .assign (X3DRenderObject .prototype,
          Vector3 .NEGATIVE_Z_AXIS,
       ];
 
-      const closestShapes = new Set ();
+      const
+         closestShapes    = new Set (),
+         activeCollisions = [ ]; // current active Collision nodes
 
       return function ()
       {
@@ -913,9 +915,7 @@ Object .assign (X3DRenderObject .prototype,
 
          // Collision nodes are handled here.
 
-         const
-            activeCollisions = [ ], // current active Collision nodes
-            collisionRadius  = this .getNavigationInfo () .getCollisionRadius () * Math .SQRT2;
+         const collisionRadius = this .getNavigationInfo () .getCollisionRadius () * Math .SQRT2;
 
          if (this .numCollisionShapes)
          {
@@ -945,22 +945,22 @@ Object .assign (X3DRenderObject .prototype,
 
          // Set isActive to FALSE for affected nodes.
 
-         if (this .activeCollisions .length)
+         for (const collision of this .activeCollisions)
          {
-            const inActiveCollisions = activeCollisions .length
-                                       ? this .activeCollisions .filter (a => !activeCollisions .includes (a))
-                                       : this .activeCollisions;
+            if (activeCollisions .includes (collision))
+               continue;
 
-            for (const collision of inActiveCollisions)
-               collision .set_active__ (false);
+            collision .set_active__ (false);
          }
 
          // Set isActive to TRUE for affected nodes.
 
-         this .activeCollisions = activeCollisions;
-
          for (const collision of activeCollisions)
             collision .set_active__ (true);
+
+         assign (this .activeCollisions, activeCollisions);
+
+         activeCollisions .length = 0;
       };
    })(),
    gravitate: (() =>
