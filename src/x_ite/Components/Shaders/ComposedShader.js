@@ -22,7 +22,6 @@ function ComposedShader (executionContext)
 Object .assign (Object .setPrototypeOf (ComposedShader .prototype, X3DShaderNode .prototype),
    X3DProgrammableShaderObject .prototype,
 {
-   wireframe: false,
    initialize ()
    {
       X3DShaderNode               .prototype .initialize .call (this);
