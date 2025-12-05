@@ -919,8 +919,6 @@ Object .assign (X3DRenderObject .prototype,
 
          if (this .numCollisionShapes)
          {
-            closestShapes .clear ();
-
             for (const axis of axes)
             {
                const closestObject = this .getClosestObject (axis);
@@ -941,6 +939,8 @@ Object .assign (X3DRenderObject .prototype,
                for (const collision of collisions)
                   activeCollisions .push (collision);
             }
+
+            closestShapes .clear ();
          }
 
          // Set isActive to FALSE for affected nodes.
