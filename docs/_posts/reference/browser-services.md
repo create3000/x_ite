@@ -643,7 +643,7 @@ Changes the bound viewpoint node to the viewpoint named *name*. The viewpoint mu
 
 #### **setCursors** (*cursorTypes: CursorTypes*): void <small><span class="blue">non-standard</span></small>
 
-Changes the default cursor images to the one specified in *cursorTypes*. You can omit properties if you wish the default cursor image for this action. The values can be any valid CSS cursors.
+Changes the default cursor images to the ones specified in *cursorTypes*. You can omit properties if you want to use the default cursor image for this action. The values can be any valid CSS cursor.
 
 The CursorTypes object has the following properties:
 

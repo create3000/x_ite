@@ -248,7 +248,7 @@ declare namespace X3D
       changeViewpoint (layer: X3DLayerNodeProxy, name: string): void;
       changeViewpoint (name: string): void;
       /**
-       * Changes the default cursor images to the one is specified in *cursorTypes*. You can omit values if you wish the default cursor image.
+       * Changes the default cursor images to the ones specified in *cursorTypes*. You can omit properties if you want to use the default cursor image for this action. The values can be any valid CSS cursor.
        */
       setCursors (cursorTypes: CursorTypes): void;
       /**
