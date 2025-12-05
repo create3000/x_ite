@@ -968,11 +968,12 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
                appearanceNode  = this .getAppearance (),
                renderModeNodes = appearanceNode .getRenderModes (),
                shaderNode      = appearanceNode .getShader (this .geometryContext, renderContext),
-               primitiveMode   = browser .getPrimitiveMode (this .primitiveMode);
+               primitiveMode   = browser .getPrimitiveMode (this .primitiveMode),
+               opaquePoints    = this .geometryType === GeometryType .POINT && !renderContext .transparent;
 
             // Enable sample alpha to coverage if not transparent.
 
-            if (this .geometryType === GeometryType .POINT && !renderContext .transparent)
+            if (opaquePoints)
                gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
 
             // Set viewport.
@@ -1041,7 +1042,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
             // Disable sample alpha to coverage if not transparent.
 
-            if (this .geometryType === GeometryType .POINT && !renderContext .transparent)
+            if (opaquePoints)
                gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
 
             break;
