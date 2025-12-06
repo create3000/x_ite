@@ -166,25 +166,25 @@ getTexture (const in int i, const in int textureTransformMapping, const in int t
       {
          vec3 texCoord = getTexCoord (textureTransformMapping, textureCoordinateMapping);
 
-         #if defined (X3D_TEXTURE${i}_FLIP_Y)
+         #if defined (X3D_TEXTURE_${i}_FLIP_Y)
             // Flip Y if needed. Must be done after.
             texCoord .y = 1.0 - texCoord .y;
          #endif
 
-         #if defined (X3D_TEXTURE${i}_2D)
+         #if defined (X3D_TEXTURE_${i}_2D)
             textureColor = texture (x3d_Texture2D [${i}], texCoord .st);
-         #elif defined (X3D_TEXTURE${i}_3D)
+         #elif defined (X3D_TEXTURE_${i}_3D)
             textureColor = texture (x3d_Texture3D [${i}], texCoord .stp);
-         #elif defined (X3D_TEXTURE${i}_CUBE)
+         #elif defined (X3D_TEXTURE_${i}_CUBE)
             textureColor = texture (x3d_TextureCube [${i}], texCoord .stp);
          #endif
 
          #if defined (X3D_COLORSPACE_SRGB)
-            #if defined (X3D_TEXTURE${i}_LINEAR)
+            #if defined (X3D_TEXTURE_${i}_LINEAR)
                textureColor = linearToSRGB (textureColor);
             #endif
          #elif defined (X3D_COLORSPACE_LINEAR)
-            #if !defined (X3D_TEXTURE${i}_LINEAR)
+            #if !defined (X3D_TEXTURE_${i}_LINEAR)
                textureColor = sRGBToLinear (textureColor);
             #endif
          #endif
@@ -490,12 +490,8 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 
 #if defined (X3D_TEXTURE_PROJECTION)
 
-uniform vec3      x3d_TextureProjectorColor     [X3D_NUM_TEXTURE_PROJECTORS];
-uniform float     x3d_TextureProjectorIntensity [X3D_NUM_TEXTURE_PROJECTORS];
-uniform vec3      x3d_TextureProjectorLocation  [X3D_NUM_TEXTURE_PROJECTORS];
-uniform vec3      x3d_TextureProjectorParams    [X3D_NUM_TEXTURE_PROJECTORS]; // near, far, linear
-uniform mat4      x3d_TextureProjectorMatrix    [X3D_NUM_TEXTURE_PROJECTORS];
-uniform sampler2D x3d_TextureProjectorTexture   [X3D_NUM_TEXTURE_PROJECTORS];
+uniform x3d_TextureProjectorParameters x3d_TextureProjector [X3D_NUM_TEXTURE_PROJECTORS];
+uniform sampler2D x3d_TextureProjectorTexture [X3D_NUM_TEXTURE_PROJECTORS];
 
 vec4
 getTextureProjectorTexture (const in int i, const in vec2 texCoord)
@@ -509,6 +505,17 @@ getTextureProjectorTexture (const in int i, const in vec2 texCoord)
       #if X3D_NUM_TEXTURE_PROJECTORS > ${i}
       case ${i}:
          textureColor = texture (x3d_TextureProjectorTexture [${i}], texCoord);
+
+         #if defined (X3D_COLORSPACE_SRGB)
+            #if defined (X3D_TEXTURE_PROJECTOR_${i}_LINEAR)
+               textureColor = linearToSRGB (textureColor);
+            #endif
+         #elif defined (X3D_COLORSPACE_LINEAR)
+            #if !defined (X3D_TEXTURE_PROJECTOR_${i}_LINEAR)
+               textureColor = sRGBToLinear (textureColor);
+            #endif
+         #endif
+
          break;
       #endif
 
@@ -531,31 +538,25 @@ getTextureProjectorColor ()
 
    for (int i = 0; i < X3D_NUM_TEXTURE_PROJECTORS; ++ i)
    {
-      vec4 texCoord = x3d_TextureProjectorMatrix [i] * vec4 (vertex, 1.0);
+      x3d_TextureProjectorParameters textureProjector = x3d_TextureProjector [i];
+
+      vec4 texCoord = textureProjector .matrix * vec4 (vertex, 1.0);
 
       texCoord .stp /= texCoord .q;
-      texCoord .p    = clamp (texCoord .p, x3d_TextureProjectorParams [i] .x, x3d_TextureProjectorParams [i] .y);
+      texCoord .p    = clamp (texCoord .p, textureProjector .params .x, textureProjector .params .y);
 
       if (any (greaterThan (abs (texCoord .stp - 0.5), vec3 (0.5))))
          continue;
 
       // We do not need to normalize p, as we only need the sign of the dot product.
-      vec3 p = x3d_TextureProjectorLocation [i] - vertex;
+      vec3 p = textureProjector .location - vertex;
 
       if (dot (N, p) < 0.0)
          continue;
 
       vec4 T = getTextureProjectorTexture (i, texCoord .st);
 
-      #if defined (X3D_COLORSPACE_SRGB)
-         if (bool (x3d_TextureProjectorParams [i] .z))
-            T = linearToSRGB (T);
-      #elif defined (X3D_COLORSPACE_LINEAR)
-         if (!bool (x3d_TextureProjectorParams [i] .z))
-            T = sRGBToLinear (T);
-      #endif
-
-      currentColor *= mix (vec3 (1.0), T .rgb * x3d_TextureProjectorColor [i], T .a * x3d_TextureProjectorIntensity [i]);
+      currentColor *= mix (vec3 (1.0), T .rgb * textureProjector .color, T .a * textureProjector .intensity);
    }
 
    return currentColor;

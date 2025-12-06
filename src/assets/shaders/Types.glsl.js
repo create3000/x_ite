@@ -124,7 +124,7 @@ struct x3d_LightSourceParameters {
 };
 #endif
 
-//uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
+//uniform x3d_LightSourceParameters x3d_LightSource [X3D_NUM_LIGHTS];
 
 #if defined (X3D_USE_IBL)
 struct x3d_EnvironmentLightSourceParameters {
@@ -255,7 +255,7 @@ struct x3d_MultiTextureParameters
 };
 #endif
 
-//uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];
+//uniform x3d_MultiTextureParameters x3d_MultiTexture [X3D_NUM_TEXTURES];
 
 #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
 struct x3d_TextureCoordinateGeneratorParameters
@@ -265,5 +265,18 @@ struct x3d_TextureCoordinateGeneratorParameters
 };
 #endif
 
-//uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];
+//uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [X3D_NUM_TEXTURE_COORDINATES];
+
+#if defined (X3D_TEXTURE_PROJECTION)
+struct x3d_TextureProjectorParameters
+{
+   mediump vec3  color;
+   mediump float intensity;
+   mediump vec3  location;
+   mediump vec2  params; // near, far
+   mediump mat4  matrix;
+};
+#endif
+
+//uniform x3d_TextureProjectorParameters x3d_TextureProjector [X3D_NUM_TEXTURE_PROJECTORS];
 `;

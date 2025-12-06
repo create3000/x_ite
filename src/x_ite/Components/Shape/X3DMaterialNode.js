@@ -88,7 +88,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          key += appearanceNode .getTextureTransformMapping () .size || 1;
          key += geometryContext .textureCoordinateMapping .size || 1;
          key += hAnimNode ?.getHAnimKey () ?? "[]";
-         key += localObjectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
+         key += localObjectsKeys .join (""); // ClipPlane, X3DLightNode
          key += ".";
          key += textureNode ? 2 : appearanceNode .getTextureBits () .toString (16);
       }
@@ -101,7 +101,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          key += alphaMode;
          key += renderObject .getRenderKey ();
          key += "000011[]";
-         key += localObjectsKeys .sort () .join (""); // ClipPlane
+         key += localObjectsKeys .join (""); // ClipPlane
          key += ".";
          key += textureNode ?.getTextureBits () .toString (16) ?? 0;
       }
@@ -181,11 +181,12 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          hAnimNode ?.getShaderOptions (options);
 
          const
-            objectsKeys          = localObjectsKeys .concat (renderObject .getGlobalLightsKeys ()),
+            lights               = renderObject .getGlobalLights () .concat (renderContext .localObjects),
+            objectsKeys          = renderObject .getGlobalLightsKeys () .concat (localObjectsKeys),
             numClipPlanes        = objectsKeys .reduce ((a, k) => a + (k === 0), 0),
             numLights            = objectsKeys .reduce ((a, k) => a + (k === 1), 0),
             numEnvironmentLights = objectsKeys .reduce ((a, k) => a + k .toString () .startsWith ("[2."), 0),
-            numTextureProjectors = objectsKeys .reduce ((a, k) => a + (k === 3), 0);
+            numTextureProjectors = objectsKeys .reduce ((a, k) => a + k .toString () .startsWith ("[3."), 0);
 
          if (numClipPlanes)
          {
@@ -202,7 +203,6 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          if (numEnvironmentLights && geometryContext .hasNormals)
          {
             const
-               lights    = renderObject .getGlobalLights () .concat (renderContext .localObjects),
                container = lights .find (c => c .lightNode .getLightKey () .toString () .startsWith ("[2.")),
                lightNode = container .lightNode;
 
@@ -222,8 +222,16 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
          if (numTextureProjectors)
          {
+            const textureProjectors = lights .filter (c => c .lightNode .getLightKey () .toString () .startsWith ("[3."));
+
             options .push ("X3D_TEXTURE_PROJECTION")
             options .push (`X3D_NUM_TEXTURE_PROJECTORS ${Math .min (numTextureProjectors, browser .getMaxTextures ())}`);
+
+            for (const [i, textureProjector] of textureProjectors .entries ())
+            {
+               if (textureProjector .lightNode .getTexture () .isLinear ())
+                  options .push (`X3D_TEXTURE_PROJECTOR_${i}_LINEAR`);
+            }
          }
 
          if (appearanceNode .getStyleProperties (geometryContext .geometryType))

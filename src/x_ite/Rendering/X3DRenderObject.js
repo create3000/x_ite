@@ -329,10 +329,6 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .collisionTime;
    },
-   setNumPointingShapes (value)
-   {
-      this .numPointingShapes = value;
-   },
    getNumPointingShapes ()
    {
       return this .numPointingShapes;
@@ -341,10 +337,6 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .pointingShapes;
    },
-   setNumCollisionShapes (value)
-   {
-      this .numCollisionShapes = value;
-   },
    getNumCollisionShapes ()
    {
       return this .numCollisionShapes;
@@ -352,10 +344,6 @@ Object .assign (X3DRenderObject .prototype,
    getCollisionShapes ()
    {
       return this .collisionShapes;
-   },
-   setNumShadowShapes (value)
-   {
-      this .numShadowShapes = value;
    },
    getNumShadowShapes ()
    {
@@ -369,11 +357,6 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .numOpaqueShapes;
    },
-   setNumOpaqueShapes (value)
-   {
-      // Needed for StaticGroup.
-      this .numOpaqueShapes = value;
-   },
    getOpaqueShapes ()
    {
       return this .opaqueShapes;
@@ -381,11 +364,6 @@ Object .assign (X3DRenderObject .prototype,
    getNumTransparentShapes ()
    {
       return this .numTransparentShapes;
-   },
-   setNumTransparentShapes (value)
-   {
-      // Needed for StaticGroup.
-      this .numTransparentShapes = value;
    },
    getTransparentShapes ()
    {
@@ -715,13 +693,10 @@ Object .assign (X3DRenderObject .prototype,
          renderContext .hAnimNode = this .hAnimNode .at (-1);
          renderContext .shapeNode = shapeNode;
 
-         // Collisions
-
-         assign (renderContext .collisions, this .collisions);
-
-         // Clip planes
+         // Clip planes & Collision nodes
 
          assign (renderContext .clipPlanes, this .localObjects);
+         assign (renderContext .collisions, this .collisions);
 
          return true;
       };
@@ -926,20 +901,24 @@ Object .assign (X3DRenderObject .prototype,
          Vector3 .NEGATIVE_Z_AXIS,
       ];
 
-      const closestShapes = new Set ();
+      const
+         closestShapes    = new Set (),
+         activeCollisions = [ ]; // current active Collision nodes
 
       return function ()
       {
+         const browser = this .getBrowser ();
+
+         // Check if there are enabled Collision nodes.
+         if (!browser .getCollisionCount ())
+            return;
+
          // Collision nodes are handled here.
 
-         const
-            activeCollisions = [ ], // current active Collision nodes
-            collisionRadius  = this .getNavigationInfo () .getCollisionRadius () * Math .SQRT2;
+         const collisionRadius = this .getNavigationInfo () .getCollisionRadius () * Math .SQRT2;
 
          if (this .numCollisionShapes)
          {
-            closestShapes .clear ();
-
             for (const axis of axes)
             {
                const closestObject = this .getClosestObject (axis);
@@ -960,26 +939,28 @@ Object .assign (X3DRenderObject .prototype,
                for (const collision of collisions)
                   activeCollisions .push (collision);
             }
+
+            closestShapes .clear ();
          }
 
          // Set isActive to FALSE for affected nodes.
 
-         if (this .activeCollisions .length)
+         for (const collision of this .activeCollisions)
          {
-            const inActiveCollisions = activeCollisions .length
-                                       ? this .activeCollisions .filter (a => !activeCollisions .includes (a))
-                                       : this .activeCollisions;
+            if (activeCollisions .includes (collision))
+               continue;
 
-            for (const collision of inActiveCollisions)
-               collision .set_active (false);
+            collision .set_active__ (false);
          }
 
          // Set isActive to TRUE for affected nodes.
 
-         this .activeCollisions = activeCollisions;
-
          for (const collision of activeCollisions)
-            collision .set_active (true);
+            collision .set_active__ (true);
+
+         assign (this .activeCollisions, activeCollisions);
+
+         activeCollisions .length = 0;
       };
    })(),
    gravitate: (() =>
@@ -1162,7 +1143,7 @@ Object .assign (X3DRenderObject .prototype,
          viewport                 = this .viewVolumes .at (-1) .getViewport (),
          lights                   = this .lights,
          globalLightsKeys         = this .globalLightsKeys,
-         globalLightsKey          = globalLightsKeys .sort () .join (""),
+         globalLightsKey          = globalLightsKeys .join (""),
          globalLights             = this .globalLights,
          generatedCubeMapTextures = this .generatedCubeMapTextures,
          globalShadows            = this .globalShadows,
@@ -1310,6 +1291,8 @@ Object .assign (X3DRenderObject .prototype,
 
          for (const globalObject of globalLights)
             globalObject .dispose ();
+
+         browser .resetGlobalTextureUnits ();
       }
 
       // Reset containers.

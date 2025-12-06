@@ -118,7 +118,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
    },
    setShaderUniforms (gl, channel)
    {
-      const textureUnit = this .getBrowser () .getTextureUnit ();
+      const textureUnit = this .getBrowser () .popTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());

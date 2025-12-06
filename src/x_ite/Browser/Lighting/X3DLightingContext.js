@@ -143,12 +143,10 @@ Object .assign (X3DLightingContext .prototype,
 
       // Setup specular texture uniforms.
 
-      const specularTextureUnit = this .popTextureUnit ();
-
       gl .useProgram (shaderNode .getProgram ());
-      gl .activeTexture (gl .TEXTURE0 + specularTextureUnit);
+      gl .activeTexture (gl .TEXTURE0);
       gl .bindTexture (gl .TEXTURE_CUBE_MAP, texture .getTexture ());
-      gl .uniform1i (shaderNode .x3d_TextureEXT, specularTextureUnit);
+      gl .uniform1i (shaderNode .x3d_TextureEXT, 0);
       gl .uniform1i (shaderNode .x3d_TextureSizeEXT, size);
       gl .uniform1i (shaderNode .x3d_TextureLinearEXT, texture .isLinear ());
       gl .uniform1i (shaderNode .x3d_DistributionEXT, distribution);
@@ -184,8 +182,6 @@ Object .assign (X3DLightingContext .prototype,
       gl .enable (gl .DEPTH_TEST);
       gl .deleteFramebuffer (framebuffer);
       gl .useProgram (currentProgram);
-
-      this .pushTextureUnit (specularTextureUnit);
 
       return filtered;
    },

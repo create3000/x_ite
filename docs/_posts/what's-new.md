@@ -7,6 +7,17 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
+## X_ITE v12.2 Series
+
+*Leipzig, 7th December 2025:* This update introduces several performance-focused enhancements and new browser-level controls, giving developers finer tuning options for rendering and interaction. It also includes important fixes that improve visual correctness and overall graphics stability.
+
+### Notable Changes
+
+- [x] New [browser option](/x_ite/reference/browser-services/#browser-options) `MaximumFrameRate`.
+- [x] New browser function [`setCursors`](/x_ite/reference/browser-services/#setcursors-cursortypes-cursortypes-void-non-standard).
+- [x] Optimized texture units handling.
+- [x] Fixed a bug when opaque points are rendered.
+
 ## X_ITE v12.1 Series
 
 *Leipzig, 28th September 2025:* The X_ITE team proudly announces version 12.1, bringing new features, important fixes, and improved standards support for an even smoother Web3D experience.

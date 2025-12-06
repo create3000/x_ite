@@ -123,9 +123,7 @@ main ()
 
    #if defined (X3D_ALPHA_MODE_OPAQUE)
       finalColor .a = 1.0;
-   #endif
-
-   #if defined (X3D_ALPHA_MODE_MASK)
+   #elif defined (X3D_ALPHA_MODE_MASK)
       if (finalColor .a < x3d_AlphaCutoff)
          discard;
 

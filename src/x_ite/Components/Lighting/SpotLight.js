@@ -144,8 +144,8 @@ Object .assign (SpotLightContainer .prototype,
       if (this .shadowBuffer)
       {
          const textureUnit = this .global
-            ? this .textureUnit ??= this .browser .popTextureUnit ()
-            : this .browser .getTextureUnit ();
+            ? this .textureUnit ??= this .browser .popGlobalTextureUnit ()
+            : this .browser .popTextureUnit ();
 
          gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
@@ -155,16 +155,13 @@ Object .assign (SpotLightContainer .prototype,
       if (shaderObject .hasLight (i, this))
          return;
 
-      const
-         { lightNode, location, direction } = this,
-         color                              = lightNode .getColor (),
-         attenuation                        = lightNode .getAttenuation ();
+      const { lightNode, location, direction } = this;
 
       gl .uniform1i        (uniforms .type,             3);
-      gl .uniform3f        (uniforms .color,            ... color);
+      gl .uniform3f        (uniforms .color,            ... lightNode .getColor ());
       gl .uniform1f        (uniforms .intensity,        lightNode .getIntensity ());
       gl .uniform1f        (uniforms .ambientIntensity, lightNode .getAmbientIntensity ());
-      gl .uniform3fv       (uniforms .attenuation,      attenuation);
+      gl .uniform3fv       (uniforms .attenuation,      lightNode .getAttenuation ());
       gl .uniform3f        (uniforms .location,         ... location);
       gl .uniform3f        (uniforms .direction,        ... direction);
       gl .uniform1f        (uniforms .radius,           lightNode .getRadius ());
@@ -174,9 +171,7 @@ Object .assign (SpotLightContainer .prototype,
 
       if (this .renderShadow && this .shadowBuffer)
       {
-         const shadowColor = lightNode .getShadowColor ();
-
-         gl .uniform3f        (uniforms .shadowColor,         ... shadowColor);
+         gl .uniform3f        (uniforms .shadowColor,         ... lightNode .getShadowColor ());
          gl .uniform1f        (uniforms .shadowIntensity,     lightNode .getShadowIntensity ());
          gl .uniform1f        (uniforms .shadowBias,          lightNode .getShadowBias ());
          gl .uniformMatrix4fv (uniforms .shadowMatrix, false, this .shadowMatrixArray);
@@ -200,11 +195,7 @@ Object .assign (SpotLightContainer .prototype,
          this .shadowBuffer = null;
 
          if (global)
-         {
-            browser .pushTextureUnit (this .textureUnit);
-
             this .textureUnit = undefined;
-         }
       }
 
       this .modelViewMatrix .clear ();

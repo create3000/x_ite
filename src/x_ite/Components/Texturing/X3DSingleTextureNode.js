@@ -172,13 +172,13 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
    {
       if (typeof name === "number")
       {
-         options .push (`X3D_TEXTURE${name}_${this .getTextureTypeString ()}`);
+         options .push (`X3D_TEXTURE_${name}_${this .getTextureTypeString ()}`);
 
          if (this .getTextureType () === 1)
-            options .push (`X3D_TEXTURE${name}_FLIP_Y`);
+            options .push (`X3D_TEXTURE_${name}_FLIP_Y`);
 
          if (this .isLinear ())
-            options .push (`X3D_TEXTURE${name}_LINEAR`);
+            options .push (`X3D_TEXTURE_${name}_LINEAR`);
       }
       else
       {

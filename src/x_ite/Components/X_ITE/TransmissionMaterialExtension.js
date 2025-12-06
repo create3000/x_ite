@@ -91,8 +91,8 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
          browser                            = this .getBrowser (),
          transmissionBuffer                 = browser .getTransmissionBuffer (),
          transmissionBackfacesBuffer        = browser .getTransmissionBackfacesBuffer (),
-         transmissionUnit                   = browser .getTextureUnit (),
-         transmissionBackfacesUnit          = browser .getTextureUnit (),
+         transmissionUnit                   = browser .popTextureUnit (),
+         transmissionBackfacesUnit          = browser .popTextureUnit (),
          transmissionBufferTexture          = transmissionBuffer .getColorTexture (),
          transmissionBackfacesBufferTexture = transmissionBackfacesBuffer .getColorTexture ();
 

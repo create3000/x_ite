@@ -123,8 +123,8 @@ Object .assign (DirectionalLightContainer .prototype,
       if (this .shadowBuffer)
       {
          const textureUnit = this .global
-            ? this .textureUnit ??= this .browser .popTextureUnit ()
-            : this .browser .getTextureUnit ();
+            ? this .textureUnit ??= this .browser .popGlobalTextureUnit ()
+            : this .browser .popTextureUnit ();
 
          gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
@@ -134,12 +134,10 @@ Object .assign (DirectionalLightContainer .prototype,
       if (shaderObject .hasLight (i, this))
          return;
 
-      const
-         { lightNode, direction} = this,
-         color                   = lightNode .getColor ();
+      const { lightNode, direction} = this;
 
       gl .uniform1i (uniforms .type,             1);
-      gl .uniform3f (uniforms .color,            ... color);
+      gl .uniform3f (uniforms .color,            ... lightNode .getColor ());
       gl .uniform1f (uniforms .intensity,        lightNode .getIntensity ());
       gl .uniform1f (uniforms .ambientIntensity, lightNode .getAmbientIntensity ());
       gl .uniform3f (uniforms .direction,        ... direction);
@@ -147,9 +145,7 @@ Object .assign (DirectionalLightContainer .prototype,
 
       if (this .shadowBuffer)
       {
-         const shadowColor = lightNode .getShadowColor ();
-
-         gl .uniform3f        (uniforms .shadowColor,         ... shadowColor);
+         gl .uniform3f        (uniforms .shadowColor,         ... lightNode .getShadowColor ());
          gl .uniform1f        (uniforms .shadowIntensity,     lightNode .getShadowIntensity ());
          gl .uniform1f        (uniforms .shadowBias,          lightNode .getShadowBias ());
          gl .uniformMatrix4fv (uniforms .shadowMatrix, false, this .shadowMatrixArray);
@@ -173,11 +169,7 @@ Object .assign (DirectionalLightContainer .prototype,
          this .shadowBuffer = null;
 
          if (global)
-         {
-            browser .pushTextureUnit (this .textureUnit);
-
             this .textureUnit = undefined;
-         }
       }
 
       this .modelViewMatrix .clear ();

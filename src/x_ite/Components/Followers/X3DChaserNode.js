@@ -49,7 +49,7 @@ Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, X3DFollowerNod
          this .setValue (initialDestination);
 
       else
-         this .set_active (true);
+         this .set_active__ (true);
    },
    getNumBuffers ()
    {
@@ -85,7 +85,7 @@ Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, X3DFollowerNod
    },
    set_value__ ()
    {
-      if (! this ._isActive .getValue ())
+      if (!this ._isActive .getValue ())
          this .bufferEndTime = this .getBrowser () .getCurrentTime ();
 
       const
@@ -98,16 +98,16 @@ Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, X3DFollowerNod
       this .setPreviousValue (value);
       this .setValue (value);
 
-      this .set_active (true);
+      this .set_active__ (true);
    },
    set_destination__ ()
    {
       this .setDestination (this .getDestination ());
 
-      if (! this ._isActive .getValue ())
+      if (!this ._isActive .getValue ())
          this .bufferEndTime = this .getBrowser () .getCurrentTime ();
 
-      this .set_active (true);
+      this .set_active__ (true);
    },
    set_duration__ ()
    {
@@ -132,7 +132,7 @@ Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, X3DFollowerNod
       this .setValue (this .output);
 
       if (this .equals (this .output, this .destination, this .getTolerance ()))
-         this .set_active (false);
+         this .set_active__ (false);
    },
    updateBuffer ()
    {

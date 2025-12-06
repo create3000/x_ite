@@ -9,11 +9,9 @@ function WalkViewer (executionContext, navigationInfo)
 
 Object .assign (Object .setPrototypeOf (WalkViewer .prototype, X3DFlyViewer .prototype),
 {
-   initialize ()
+   isCollidable ()
    {
-      X3DFlyViewer .prototype .initialize .call (this);
-
-      this .getBrowser () .addCollision (this);
+      return true;
    },
    getStraightenHorizon ()
    {
@@ -51,12 +49,6 @@ Object .assign (Object .setPrototypeOf (WalkViewer .prototype, X3DFlyViewer .pro
          direction .y = 0;
 
       return direction;
-   },
-   dispose ()
-   {
-      this .getBrowser () .removeCollision (this);
-
-      X3DFlyViewer .prototype .dispose .call (this);
    },
 });
 

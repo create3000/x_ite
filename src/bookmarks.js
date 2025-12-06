@@ -268,20 +268,20 @@ Object .assign (Bookmarks .prototype,
       $("<span></span>") .addClass ("dot") .appendTo ($("#toolbar"));
 
       const contentScale = $("<span></span>")
-         .text ("contentScale "+ { "0.5": 0, "1": 1, "2": 2, "-1": "auto" } [this .browser .getBrowserOption ("ContentScale")])
+         .text ("contentScale " + { "0.5": 0, "1": 1, "2": 2, "-1": "auto" } [this .browser .getBrowserOption ("ContentScale")])
          .attr ("index", { "0.5": 0, "1": 1, "2": 2, "-1": 3 } [this .browser .getBrowserOption ("ContentScale")])
-         .attr ("title", "Toggle contentScale between 0.5, 1.0, 2.0, auto.")
+         .attr ("title", "Toggle content scale between 0.5, 1.0, 2.0, auto.")
          .on ("click", () =>
          {
             const
                index = (parseInt (contentScale .attr ("index")) + 1) % 4,
-               value = [0.5, 1, 2, -1][index];
+               value = [0.5, 1, 2, -1] [index];
 
             this .browser .setBrowserOption ("ContentScale", value);
 
             contentScale
                .attr ("index", index)
-               .text ("contentScale " + (value === -1 ? "auto" : value .toFixed (1)))
+               .text ("contentScale " + (value === -1 ? "auto" : value .toFixed (1)));
          })
          .appendTo ($("#toolbar"));
 
@@ -331,6 +331,26 @@ Object .assign (Bookmarks .prototype,
          })
          .appendTo ($("#toolbar"));
 
+      $("<span></span>") .addClass ("dot") .appendTo ($("#toolbar"));
+
+      const frameRate = $("<span></span>")
+         .text ("frameRate " + this .browser .getBrowserOption ("MaximumFrameRate"))
+         .attr ("index", { "20": 0, "40": 1, "80": 2, "Infinity": 3 } [this .browser .getBrowserOption ("MaximumFrameRate")])
+         .attr ("title", "Toggle maximum frame rate between 20, 40, 80, Infinity.")
+         .on ("click", () =>
+         {
+            const
+               index = (parseInt (frameRate .attr ("index")) + 1) % 4,
+               value = [20, 40, 80, Infinity] [index];
+
+            this .browser .setBrowserOption ("MaximumFrameRate", value);
+
+            frameRate
+               .attr ("index", index)
+               .text ("frameRate " + value);
+         })
+         .appendTo ($("#toolbar"));
+
       // this .browser .setBrowserOption ("Antialiased", false)
       // this .browser .setBrowserOption ("OrderIndependentTransparency", true)
       // this .browser .setBrowserOption ("ContentScale", -1)
@@ -348,7 +368,9 @@ Object .assign (Bookmarks .prototype,
 
          specularTexture .url = new X3D .MFString ("https://create3000.github.io/Library/Tests/Components/images/helipad-specular.jpg");
 
+         environmentLight .global          = true;
          environmentLight .intensity       = 1;
+         environmentLight .color           = new X3D .SFColor (1, 1, 1);
          environmentLight .specularTexture = specularTexture;
 
          return environmentLight;

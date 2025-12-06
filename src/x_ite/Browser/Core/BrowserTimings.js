@@ -209,11 +209,11 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
       const
          layers            = browser .getWorld () .getLayerSet () .getLayers (),
          activeLayer       = browser .getActiveLayer (),
-         navigationTime    = activeLayer && browser .getCollisionCount () ? activeLayer .getCollisionTime () .averageTime : 0,
+         navigationTime    = activeLayer ?.getCollisionTime () .averageTime ?? 0,
          collisionTime     = browser .getCollisionTime () .averageTime + navigationTime,
          routingTime       = Math .max (0, browser .getBrowserTime () .averageTime - (browser .getCameraTime () .averageTime + browser .getCollisionTime () .averageTime + browser .getDisplayTime () .averageTime)),
          prepareEvents     = browser .prepareEvents () .getInterests () .size - 1,
-         sensors           = browser .sensorEvents () .getInterests () .size,
+         sensors           = browser .timeEvents () .getInterests () .size + browser .sensorEvents () .getInterests () .size + browser .getCollisionCount (),
          primitives        = this .getPrimitives (layers),
          opaqueShapes      = this .getOpaqueShapes (layers),
          transparentShapes = this .getTransparentShapes (layers);
