@@ -974,7 +974,10 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
             // Enable sample alpha to coverage if not transparent.
 
             if (opaquePoints)
+            {
                gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
+               gl .colorMask (true, true, true, false);
+            }
 
             // Set viewport.
 
@@ -1043,7 +1046,10 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
             // Disable sample alpha to coverage if not transparent.
 
             if (opaquePoints)
+            {
                gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
+               gl .colorMask (true, true, true, true);
+            }
 
             break;
          }
