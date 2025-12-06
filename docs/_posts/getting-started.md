@@ -399,7 +399,7 @@ cache
 : A Boolean value (`true` or `false`) to indicate whether files transferred over the internet should be cached on the local computer. The default value for the *cache* attribute is `true`. It works by appending "_={timestamp}" to the GET parameters of every request.
 
 colorSpace
-: A String value that specifies the color space in which color calculations take place. The default value for the *colorSpace* attribute is `LINEAR_WHEN_PHYSICAL_MATERIAL`. For a list of possible values see [browser options](/x_ite/reference/browser-services/#browser-options).
+: A String value that specifies the color space in which colors are defined and color calculations take place. The default value for the *colorSpace* attribute is `LINEAR_WHEN_PHYSICAL_MATERIAL`. For a list of possible values see [browser options](/x_ite/reference/browser-services/#browser-options).
 
 contentScale
 : A Float value that specifies how much higher the physical resolution of the internal \<canvas\> element is. The default value for the *contentScale* attribute is `1.0`, which is sufficient for most cases. A higher value increases the resolution of the internal \<canvas\> element and can be used to increase the anti-aliasing effect, making the rendered image sharper. If set to `auto`, contentScale will match »window.devicePixelRatio«, which is useful for HiDPI or Retina displays. A value between `0.0` and `1.0` will result in a pixelated image, see also the *antialiased* attribute.
@@ -415,6 +415,9 @@ exposure
 
 logarithmicDepthBuffer
 : A Boolean value (`true` or `false`) to indicate whether logarithmic depth buffer rendering technique should be used. The default value for the *logarithmicDepthBuffer* attribute is `false`.
+
+maximumFrameRate
+: A Float value that caps the rendering frequency to reduce CPU usage and improve overall browser responsiveness. Animations will run at this controlled maximum FPS instead of the full device refresh rate. The default value for the *maximumFrameRate* attribute is `80`.
 
 multisampling
 : An Integer value that specifies the number of samples used by multisampling. The default value is 4, which is sufficient for most cases. A higher value increases the effect of anti-aliasing. Check the [rendering property](/x_ite/reference/browser-services/#rendering-properties) »MaxSamples«, which is browser dependent.

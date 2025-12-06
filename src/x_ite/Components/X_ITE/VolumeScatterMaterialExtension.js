@@ -100,8 +100,8 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
 
       const
          scatterSampleBuffer       = browser .getVolumeScatterBuffer (),
-         scatterSampleUnit         = browser .getTextureUnit (),
-         scatterDepthSampleUnit    = browser .getTextureUnit (),
+         scatterSampleUnit         = browser .popTextureUnit (),
+         scatterDepthSampleUnit    = browser .popTextureUnit (),
          scatterSampleTexture      = scatterSampleBuffer .getColorTexture (),
          scatterDepthSampleTexture = scatterSampleBuffer .getDepthTexture ();
 

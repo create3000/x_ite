@@ -98,8 +98,8 @@ Object .assign (TextureProjectorContainer .prototype,
          lightNode   = this .lightNode,
          texture     = lightNode .getTexture (),
          textureUnit = this .global
-            ? (this .textureUnit = this .textureUnit ?? this .browser .popTextureUnit ())
-            : this .browser .getTextureUnit ();
+            ? this .textureUnit ??= this .browser .popGlobalTextureUnit ()
+            : this .browser .popTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
@@ -115,16 +115,15 @@ Object .assign (TextureProjectorContainer .prototype,
       gl .uniform3f        (uniforms .color,         ... lightNode .getColor ());
       gl .uniform1f        (uniforms .intensity,     lightNode .getIntensity ());
       gl .uniform3fv       (uniforms .location,      this .locationArray);
-      gl .uniform3f        (uniforms .params,        nearParameter, farParameter, texture .isLinear ());
+      gl .uniform2f        (uniforms .params,        nearParameter, farParameter);
       gl .uniformMatrix4fv (uniforms .matrix, false, this .matrixArray);
    },
    dispose ()
    {
-      this .browser .pushTextureUnit (this .textureUnit);
+      if (this .global)
+         this .textureUnit = undefined;
 
       this .modelViewMatrix .clear ();
-
-      this .textureUnit = undefined;
 
       TextureProjectorCache .push (this);
    },

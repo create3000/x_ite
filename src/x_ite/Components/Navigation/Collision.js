@@ -45,10 +45,13 @@ Object .assign (Object .setPrototypeOf (Collision .prototype, X3DGroupingNode .p
    },
    set_enabled__ ()
    {
+      if (!this ._enabled .getValue ())
+         this .set_active__ (false);
+
       this .set_live__ ();
       this .set_children__ ();
    },
-   set_active (value)
+   set_active__ (value)
    {
       if (this ._isActive .getValue () === value)
          return;

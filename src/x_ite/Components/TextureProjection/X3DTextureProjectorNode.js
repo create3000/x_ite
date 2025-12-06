@@ -34,7 +34,7 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, X3DL
    },
    getLightKey ()
    {
-      return 3;
+      return this .lightKey;
    },
    getGlobal ()
    {
@@ -101,19 +101,21 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, X3DL
    },
    set_texture__ ()
    {
-      this .textureNode ?.removeInterest ("set_aspectRatio__", this);
+      this .textureNode ?.removeInterest ("set_textureNode__", this);
 
       this .textureNode = X3DCast (X3DConstants .X3DTexture2DNode, this ._texture);
 
-      this .textureNode ?.addInterest ("set_aspectRatio__", this);
+      this .textureNode ?.addInterest ("set_textureNode__", this);
 
       this .setEnabled (!!this .textureNode);
 
-      this .set_aspectRatio__ ();
+      this .set_textureNode__ ();
       this .set_on__ ();
    },
-   set_aspectRatio__ ()
+   set_textureNode__ ()
    {
+      this .lightKey = `[3.${this .textureNode ?.isLinear () ? 1 : 0}]`;
+
       if (this .textureNode)
          this ._aspectRatio = this .textureNode .getWidth () / this .textureNode .getHeight ();
       else

@@ -51,7 +51,7 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
       for (const texture of [this .displacementsTexture, this .displacementWeightsTexture, this .jointMatricesTexture])
       {
          gl .bindTexture (gl .TEXTURE_2D, texture);
-         
+
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
@@ -264,9 +264,9 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, X3DGroupingNode
    {
       const
          browser                               = this .getBrowser (),
-         jointMatricesTextureUnit              = browser .getTextureUnit (),
-         displacementsTextureTextureUnit       = browser .getTextureUnit (),
-         displacementWeightsTextureTextureUnit = browser .getTextureUnit ();
+         jointMatricesTextureUnit              = browser .popTextureUnit (),
+         displacementsTextureTextureUnit       = browser .popTextureUnit (),
+         displacementWeightsTextureTextureUnit = browser .popTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + jointMatricesTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);

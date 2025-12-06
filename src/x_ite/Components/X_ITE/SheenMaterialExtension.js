@@ -101,12 +101,12 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X3DMa
 
       const
          browser              = this .getBrowser (),
-         SheenELUTTexture     = browser .getLibraryTexture ("lut_sheen_E.png"),
-         SheenELUTTextureUnit = browser .getTextureUnit ();
+         sheenELUTTexture     = browser .getLibraryTexture ("lut_sheen_E.png"),
+         sheenELUTTextureUnit = browser .popTextureUnit ();
 
-      gl .activeTexture (gl .TEXTURE0 + SheenELUTTextureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, SheenELUTTexture .getTexture ());
-      gl .uniform1i (shaderObject .x3d_SheenELUTTextureEXT, SheenELUTTextureUnit);
+      gl .activeTexture (gl .TEXTURE0 + sheenELUTTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, sheenELUTTexture .getTexture ());
+      gl .uniform1i (shaderObject .x3d_SheenELUTTextureEXT, sheenELUTTextureUnit);
 
       if (!+this .getTextureBits ())
          return;

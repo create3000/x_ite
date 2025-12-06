@@ -345,7 +345,7 @@ print (Browser .getBrowserOption ("TextCompression"));
       </tr>
       <tr>
          <td>AutoUpdate</td>
-         <td>Whether the update control of the browser should be done automatically or not. If true, animations will be disabled if x3d-canvas is not visible.<small class="blue">non-standard</small></td>
+         <td>Whether the update control of the browser should be done automatically or not. If true, animations will be disabled if the &lt;x3d-canvas&gt; element is not visible. <small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>false</td>
       </tr>
@@ -357,7 +357,7 @@ print (Browser .getBrowserOption ("TextCompression"));
       </tr>
       <tr>
          <td>ColorSpace</td>
-         <td>The color space in which color calculations take place. <small class="blue">non-standard</small></td>
+         <td>The color space in which colors are defined and color calculations take place. <small class="blue">non-standard</small></td>
          <td>SRGB, LINEAR_WHEN_PHYSICAL_MATERIAL, LINEAR</td>
          <td>LINEAR_WHEN_PHYSICAL_MATERIAL</td>
       </tr>
@@ -393,15 +393,21 @@ print (Browser .getBrowserOption ("TextCompression"));
       </tr>
       <tr>
          <td>LoadUrlObjects</td>
-         <td>Wether X3DUrlObject should be loaded. <small class="blue">non-standard</small></td>
+         <td>Wether X3DUrlObject nodes should be loaded. <small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>true</td>
       </tr>
       <tr>
          <td>LogarithmicDepthBuffer</td>
-         <td>Whether to use a logarithmic depth buffer. It may be necessary to use this if dealing with huge differences in scale in a single scene. It is automatically enabled if a GeoViewpoint is bound. <small class="blue">non-standard</small></td>
+         <td>Whether to use a logarithmic depth buffer. It may be necessary to use this if dealing with huge differences in scale in a single scene. It is automatically enabled if a GeoViewpoint node is bound. <small class="blue">non-standard</small></td>
          <td>Boolean</td>
          <td>false</td>
+      </tr>
+      <tr>
+         <td>MaximumFrameRate</td>
+         <td>Caps the rendering frequency to reduce CPU usage and improve overall browser responsiveness. Animations will run at this controlled maximum FPS instead of the full device refresh rate. <small class="blue">non-standard</small></td>
+         <td>Float</td>
+         <td>80</td>
       </tr>
       <tr>
          <td>Multisampling</td>
@@ -634,6 +640,26 @@ Changes the bound viewpoint node to the last viewpoint in the list of user viewp
 #### **changeViewpoint** (*[layer: X3DLayerNode,] name: string*): void
 
 Changes the bound viewpoint node to the viewpoint named *name*. The viewpoint must be available in *layer*. If *layer* is omitted, the active layer is used.
+
+#### **setCursors** (*cursorTypes: CursorTypes*): void <small><span class="blue">non-standard</span></small>
+
+Changes the default cursor images to the ones specified in *cursorTypes*. You can omit properties if you want to use the default cursor image for this action. The values can be any valid CSS cursor.
+
+The CursorTypes object has the following properties:
+
+```ts
+type CursorTypes = {
+   DEFAULT: string;
+   GRABBING: string;
+   MOVE: string;
+   POINTER: string;
+   WAIT: string;
+};
+```
+
+##### See Also
+
+* [CSS cursor](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/cursor)
 
 #### **constrainTranslation** (*[layer: X3DLayerNode,] translation: SFVec3d | SFVec3f*): SFVec3f <small><span class="blue">non-standard</span></small>
 

@@ -57,16 +57,16 @@ Object .assign (EnvironmentLightContainer .prototype,
          ggxLUTTexture   = browser .getLibraryTexture ("lut_ggx.png");
 
       const diffuseTextureUnit = global
-         ? this .diffuseTextureUnit ??= browser .popTextureUnit ()
-         : browser .getTextureUnit ();
+         ? this .diffuseTextureUnit ??= browser .popGlobalTextureUnit ()
+         : browser .popTextureUnit ();
 
       const specularTextureUnit = global
-         ? this .specularTextureUnit ??= browser .popTextureUnit ()
-         : browser .getTextureUnit ();
+         ? this .specularTextureUnit ??= browser .popGlobalTextureUnit ()
+         : browser .popTextureUnit ();
 
       const ggxLUTTextureUnit = global
-         ? this .ggxLUTTextureUnit ??= browser .popTextureUnit ()
-         : browser .getTextureUnit ();
+         ? this .ggxLUTTextureUnit ??= browser .popGlobalTextureUnit ()
+         : browser .popTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + diffuseTextureUnit);
       gl .bindTexture (gl .TEXTURE_CUBE_MAP, diffuseTexture ?.getTexture () ?? browser .getDefaultTextureCube ());
@@ -87,12 +87,12 @@ Object .assign (EnvironmentLightContainer .prototype,
             charlieLUTTexture = browser .getLibraryTexture ("lut_charlie.png");
 
          const sheenTextureUnit = global
-            ? this .sheenTextureUnit ??= browser .popTextureUnit ()
-            : browser .getTextureUnit ();
+            ? this .sheenTextureUnit ??= browser .popGlobalTextureUnit ()
+            : browser .popTextureUnit ();
 
          const charlieLUTTextureUnit = global
-            ? this .charlieLUTTextureUnit ??= browser .popTextureUnit ()
-            : browser .getTextureUnit ();
+            ? this .charlieLUTTextureUnit ??= browser .popGlobalTextureUnit ()
+            : browser .popTextureUnit ();
 
          gl .activeTexture (gl .TEXTURE0 + sheenTextureUnit);
          gl .bindTexture (gl .TEXTURE_CUBE_MAP, sheenTexture ?.getTexture () ?? browser .getDefaultTextureCube ());
@@ -106,9 +106,7 @@ Object .assign (EnvironmentLightContainer .prototype,
       if (shaderObject .hasEnvironmentLight (i, this))
          return;
 
-      const color = lightNode .getColor ();
-
-      gl .uniform3f        (uniforms .color,                 ... color);
+      gl .uniform3f        (uniforms .color,                 ... lightNode .getColor ());
       gl .uniform1f        (uniforms .intensity,             lightNode .getIntensity ());
       gl .uniformMatrix3fv (uniforms .rotation, false,       this .rotationMatrix);
       gl .uniform1i        (uniforms .diffuseTextureLevels,  diffuseTexture ?.getLevels () ?? 0);
@@ -123,22 +121,12 @@ Object .assign (EnvironmentLightContainer .prototype,
    },
    dispose ()
    {
-      const { global } = this;
-
-      if (global)
+      if (this .global)
       {
-         const { browser } = this;
-
-         browser .pushTextureUnit (this .diffuseTextureUnit);
-         browser .pushTextureUnit (this .specularTextureUnit);
-         browser .pushTextureUnit (this .sheenTextureUnit);
-         browser .pushTextureUnit (this .ggxLUTTextureUnit);
-         browser .pushTextureUnit (this .charlieLUTTextureUnit);
-
          this .diffuseTextureUnit    = undefined;
          this .specularTextureUnit   = undefined;
-         this .sheenTextureUnit      = undefined;
          this .ggxLUTTextureUnit     = undefined;
+         this .sheenTextureUnit      = undefined;
          this .charlieLUTTextureUnit = undefined;
       }
 
@@ -182,7 +170,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
             specularLinear = this .getSpecularTexture () ?.isLinear () ? 1 : 0,
             sheenLinear    = this .getSheenTexture ()    ?.isLinear () ? 1 : 0;
 
-         return `[2.${diffuseLinear}.${specularLinear}.${sheenLinear}]`;
+         return `[2.${diffuseLinear}.${specularLinear}${sheenLinear}]`;
       })();
    },
    getDiffuseTexture ()

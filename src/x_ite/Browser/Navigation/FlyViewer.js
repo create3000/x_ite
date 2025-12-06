@@ -7,13 +7,9 @@ function FlyViewer (executionContext, navigationInfo)
 
 Object .assign (Object .setPrototypeOf (FlyViewer .prototype, X3DFlyViewer .prototype),
 {
-   addCollision ()
+   isCollidable ()
    {
-      this .getBrowser () .addCollision (this);
-   },
-   removeCollision ()
-   {
-      this .getBrowser () .removeCollision (this);
+      return this .isActive ();
    },
    getFlyDirection (fromVector, toVector, direction)
    {

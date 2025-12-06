@@ -34,7 +34,7 @@ Object .assign (Object .setPrototypeOf (X3DDamperNode .prototype, X3DFollowerNod
          this .setValue (initialDestination);
 
       else
-         this .set_active (true);
+         this .set_active__ (true);
    },
    getOrder ()
    {
@@ -66,7 +66,7 @@ Object .assign (Object .setPrototypeOf (X3DDamperNode .prototype, X3DFollowerNod
 
          this .setValue (buffer [order]);
 
-         if (! this .equals (buffer [order], buffer [0], this .getTolerance ()))
+         if (!this .equals (buffer [order], buffer [0], this .getTolerance ()))
             return;
       }
       else
@@ -79,7 +79,7 @@ Object .assign (Object .setPrototypeOf (X3DDamperNode .prototype, X3DFollowerNod
       for (let i = 1, length = buffer .length; i < length; ++ i)
          this .assign (buffer, i, buffer [order]);
 
-      this .set_active (false);
+      this .set_active__ (false);
    },
    set_value__ ()
    {
@@ -92,13 +92,13 @@ Object .assign (Object .setPrototypeOf (X3DDamperNode .prototype, X3DFollowerNod
 
       this .setValue (value);
 
-      this .set_active (true);
+      this .set_active__ (true);
    },
    set_destination__ ()
    {
       this .assign (this .getBuffer (), 0, this .getDestination ());
 
-      this .set_active (true);
+      this .set_active__ (true);
    },
    set_order__ ()
    {

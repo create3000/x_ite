@@ -35,6 +35,8 @@ const
    Browser      = X3D .getBrowser (),
    localStorage = Browser .getLocalStorage ();
 
+// Browser .setCursors ({ MOVE: "crosshair" });
+
 Browser .contextMenu .userMenu = () =>
 {
    return {
@@ -308,6 +310,7 @@ main.color-management #browser {
    height: auto;
    aspect-ratio: 16 / 9;
    box-shadow: 0px 2px 12px 1px rgba(0, 0, 0, 0.75);
+   background-color: white;
 }
 
 #browser:focus {
@@ -490,7 +493,6 @@ main.color-management #browser {
    font-family: monospace;
    white-space: pre;
 }
-
    </style>
 </head>
 <body>

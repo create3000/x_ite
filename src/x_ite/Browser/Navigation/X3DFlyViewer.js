@@ -65,8 +65,6 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
       this .orientationChaser ._duration = ROTATE_TIME;
       this .orientationChaser .setup ();
    },
-   addCollision () { },
-   removeCollision () { },
    set_controlKey__ ()
    {
       if (this .event && this .event .button === 0)
@@ -107,7 +105,6 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
             this .disconnect ();
             this .getActiveViewpoint () .transitionStop ();
             this .getBrowser () .setCursor ("MOVE");
-            this .addCollision ();
 
             if (this .getBrowser () .getControlKey () || this .getBrowser () .getCommandKey () || this .lookAround)
             {
@@ -148,7 +145,6 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
             this .disconnect ();
             this .getActiveViewpoint () .transitionStop ();
             this .getBrowser () .setCursor ("MOVE");
-            this .addCollision ();
 
             this .fromVector .set (x, y, 0);
             this .toVector   .assign (this .fromVector);
@@ -184,7 +180,6 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
       this .disconnect ();
       this .getBrowser () .setCursor ("DEFAULT");
-      this .removeCollision ();
 
       this ._isActive = false;
    },

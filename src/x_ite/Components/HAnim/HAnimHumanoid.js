@@ -574,8 +574,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    {
       const
          browser                  = this .getBrowser (),
-         jointsTextureTextureUnit = browser .getTextureUnit (),
-         jointMatricesTextureUnit = browser .getTextureUnit ();
+         jointsTextureTextureUnit = browser .popTextureUnit (),
+         jointMatricesTextureUnit = browser .popTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + jointsTextureTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .jointsTexture);
@@ -589,8 +589,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          return;
 
       const
-         displacementsTextureTextureUnit       = browser .getTextureUnit (),
-         displacementWeightsTextureTextureUnit = browser .getTextureUnit ();
+         displacementsTextureTextureUnit       = browser .popTextureUnit (),
+         displacementWeightsTextureTextureUnit = browser .popTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + displacementsTextureTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .displacementsTexture);
