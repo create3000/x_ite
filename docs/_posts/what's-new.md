@@ -9,7 +9,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 ## X_ITE v12.2 Series
 
-*Leipzig, 6th December 2025:*
+*Leipzig, 7th December 2025:* This update introduces several performance-focused enhancements and new browser-level controls, giving developers finer tuning options for rendering and interaction. It also includes important fixes that improve visual correctness and overall graphics stability.
 
 ### Notable Changes
 
