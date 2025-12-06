@@ -14,7 +14,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 ### Notable Changes
 
 - [x] New [browser option](/x_ite/reference/browser-services/#browser-options) `MaximumFrameRate`.
-- [x] New browser function [`setCursors`](https://weiputer:4000/x_ite/reference/browser-services/#setcursors-cursortypes-cursortypes-void-non-standard).
+- [x] New browser function [`setCursors`](/x_ite/reference/browser-services/#setcursors-cursortypes-cursortypes-void-non-standard).
 - [x] Optimized texture units handling.
 - [x] Fixed a bug when opaque points are rendered.
 
