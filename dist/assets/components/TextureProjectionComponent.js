@@ -1,5 +1,5 @@
-/* X_ITE v12.1.10 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.10")];
+/* X_ITE v12.2.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.2.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -106,7 +106,7 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, (ext
    },
    getLightKey ()
    {
-      return 3;
+      return this .lightKey;
    },
    getGlobal ()
    {
@@ -173,19 +173,21 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, (ext
    },
    set_texture__ ()
    {
-      this .textureNode ?.removeInterest ("set_aspectRatio__", this);
+      this .textureNode ?.removeInterest ("set_textureNode__", this);
 
       this .textureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture2DNode, this ._texture);
 
-      this .textureNode ?.addInterest ("set_aspectRatio__", this);
+      this .textureNode ?.addInterest ("set_textureNode__", this);
 
       this .setEnabled (!!this .textureNode);
 
-      this .set_aspectRatio__ ();
+      this .set_textureNode__ ();
       this .set_on__ ();
    },
-   set_aspectRatio__ ()
+   set_textureNode__ ()
    {
+      this .lightKey = `[3.${this .textureNode ?.isLinear () ? 1 : 0}]`;
+
       if (this .textureNode)
          this ._aspectRatio = this .textureNode .getWidth () / this .textureNode .getHeight ();
       else
@@ -315,8 +317,8 @@ Object .assign (TextureProjectorContainer .prototype,
          lightNode   = this .lightNode,
          texture     = lightNode .getTexture (),
          textureUnit = this .global
-            ? (this .textureUnit = this .textureUnit ?? this .browser .popTextureUnit ())
-            : this .browser .getTextureUnit ();
+            ? this .textureUnit ??= this .browser .popGlobalTextureUnit ()
+            : this .browser .popTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
@@ -332,16 +334,15 @@ Object .assign (TextureProjectorContainer .prototype,
       gl .uniform3f        (uniforms .color,         ... lightNode .getColor ());
       gl .uniform1f        (uniforms .intensity,     lightNode .getIntensity ());
       gl .uniform3fv       (uniforms .location,      this .locationArray);
-      gl .uniform3f        (uniforms .params,        nearParameter, farParameter, texture .isLinear ());
+      gl .uniform2f        (uniforms .params,        nearParameter, farParameter);
       gl .uniformMatrix4fv (uniforms .matrix, false, this .matrixArray);
    },
    dispose ()
    {
-      this .browser .pushTextureUnit (this .textureUnit);
+      if (this .global)
+         this .textureUnit = undefined;
 
       this .modelViewMatrix .clear ();
-
-      this .textureUnit = undefined;
 
       TextureProjectorCache .push (this);
    },
@@ -535,8 +536,8 @@ Object .assign (TextureProjectorParallelContainer .prototype,
          lightNode   = this .lightNode,
          texture     = lightNode .getTexture (),
          textureUnit = this .global
-            ? (this .textureUnit = this .textureUnit ?? this .browser .popTextureUnit ())
-            : this .browser .getTextureUnit ();
+            ? this .textureUnit ??= this .browser .popGlobalTextureUnit ()
+            : this .browser .popTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
@@ -552,16 +553,15 @@ Object .assign (TextureProjectorParallelContainer .prototype,
       gl .uniform3f        (uniforms .color,         ... lightNode .getColor ());
       gl .uniform1f        (uniforms .intensity,     lightNode .getIntensity ());
       gl .uniform3fv       (uniforms .location,      this .locationArray);
-      gl .uniform3f        (uniforms .params,        nearParameter, farParameter, texture .isLinear ());
+      gl .uniform2f        (uniforms .params,        nearParameter, farParameter);
       gl .uniformMatrix4fv (uniforms .matrix, false, this .matrixArray);
    },
    dispose ()
    {
-      this .browser .pushTextureUnit (this .textureUnit);
+      if (this .global)
+         this .textureUnit = undefined;
 
       this .modelViewMatrix .clear ();
-
-      this .textureUnit = undefined;
 
       TextureProjectorParallelCache .push (this);
    },
