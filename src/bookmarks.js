@@ -78,8 +78,8 @@ Object .assign (Bookmarks .prototype,
       this .browser .getBrowserOptions () .reset ();
 
       $(this .browser .element)
-         .removeClass (["tr", "br", "bl", "tl"] .map (p => `xr-button-${p}`))
-         .addClass (`xr-button-${options .xrButtonPosition ?? "br"}`);
+         .removeClass (["tr", "br", "bl", "tl"] .map (p => `buttons-${p}`))
+         .addClass (`buttons-${options .buttonsPosition ?? "br"}`);
 
       await this .browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
 

@@ -458,8 +458,9 @@ Object .assign (X3DWebXRContext .prototype,
    },
    xrAddButton ()
    {
+      this .getSurface () .find (".x_ite-private-xr-button") .remove ();
+
       $("<div></div>")
-         .attr ("part", "xr-button")
          .attr ("title", external_X_ITE_X3D_gettext_default()("Start WebXR session."))
          .addClass (["x_ite-private-xr-button", "x_ite-private-button"])
          .on ("mousedown touchstart", false)
@@ -476,7 +477,7 @@ Object .assign (X3DWebXRContext .prototype,
             else
                this .xrStopSession ();
          })
-         .appendTo (this .getSurface ());
+         .appendTo (this .getSurface () .find (".x_ite-private-buttons"));
    },
    async xrStartSession ()
    {

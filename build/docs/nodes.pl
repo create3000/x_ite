@@ -387,11 +387,11 @@ sub update_example {
 
    return $file unless -d "../media/docs/examples/$componentName/$typeName";
 
-   $xrButtonPosition  = "xr-button-" . ($tree -> {$componentName} -> {$typeName} -> {"xrButtonPosition"} // "br");
+   $buttonsPosition  = "buttons-" . ($tree -> {$componentName} -> {$typeName} -> {"buttonsPosition"} // "br");
 
    $string = "## Example\n";
    $string .= "\n";
-   $string .= "<x3d-canvas class=\"$xrButtonPosition\" src=\"https://create3000.github.io/media/examples/$componentName/$typeName/$typeName.x3d\" contentScale=\"auto\" update=\"auto\">\n";
+   $string .= "<x3d-canvas class=\"$buttonsPosition\" src=\"https://create3000.github.io/media/examples/$componentName/$typeName/$typeName.x3d\" contentScale=\"auto\" update=\"auto\">\n";
    $string .= "  <img src=\"https://create3000.github.io/media/examples/$componentName/$typeName/screenshot.avif\" alt=\"$typeName\"/>\n";
    $string .= "</x3d-canvas>\n";
    $string .= "\n";

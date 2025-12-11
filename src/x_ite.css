@@ -735,8 +735,16 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 /* No Sound Button */
 
-.x_ite-private-button {
+.x_ite-private-buttons {
+  display: flex;
+  gap: 8px;
   position: absolute;
+  right: 10px;
+  bottom: 10px;
+}
+
+.x_ite-private-button {
+  align-self: center;
   background: no-repeat;
   cursor: pointer;
   transition: transform .2s ease-in-out;
@@ -747,8 +755,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-no-sound-button {
-  left: 10px;
-  top: 10px;
+  order: 1;
   width: 32px;
   height: 32px;
   background-image: url(assets/images/no_sound.svg);
@@ -758,8 +765,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 /* WebXR */
 
 .x_ite-private-xr-button {
-  right: 10px;
-  bottom: 10px;
+  order: 2;
   width: 32px;
   height: 18px;
   background-image: url(assets/images/xr.svg);

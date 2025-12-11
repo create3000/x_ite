@@ -37,8 +37,8 @@ sub examples
       my $typeName  = $2;
       my $extra     = "";
 
-      $extra .= ", xrButtonPosition: \"$tree->{$component}->{$typeName}->{xrButtonPosition}\""
-         if $tree -> {$component} -> {$typeName} -> {"xrButtonPosition"};
+      $extra .= ", buttonsPosition: \"$tree->{$component}->{$typeName}->{buttonsPosition}\""
+         if $tree -> {$component} -> {$typeName} -> {"buttonsPosition"};
 
       say FILE "   { component: \"$component\", test: \"$typeName\"$extra },",
    }

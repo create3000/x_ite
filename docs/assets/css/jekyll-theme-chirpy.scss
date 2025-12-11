@@ -275,35 +275,37 @@ small, .small {
 
 /* xr-button */
 
-x3d-canvas.xr-button-tr::part(xr-button) {
+x3d-canvas.buttons-tr::part(buttons) {
   top: 10px;
   right: 10px;
   bottom: unset;
   left: unset;
 }
 
-x3d-canvas.xr-button-cr::part(xr-button) {
+x3d-canvas.buttons-cr::part(buttons) {
   top: 50%;
   right: 10px;
   bottom: unset;
   left: unset;
 }
 
-x3d-canvas.xr-button-br::part(xr-button) {
+x3d-canvas.buttons-br::part(buttons) {
   top: unset;
   right: 10px;
   bottom: 10px;
   left: unset;
 }
 
-x3d-canvas.xr-button-bl::part(xr-button) {
+x3d-canvas.buttons-bl::part(buttons) {
+  flex-direction: row-reverse;
   top: unset;
   right: unset;
   bottom: 10px;
   left: 10px;
 }
 
-x3d-canvas.xr-button-tl::part(xr-button) {
+x3d-canvas.buttons-tl::part(buttons) {
+  flex-direction: row-reverse;
   top: 10px;
   right: unset;
   bottom: unset;
