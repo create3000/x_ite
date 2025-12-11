@@ -469,7 +469,7 @@ url
 xrSessionMode
 : A String value that specifies what kind of WebXR session should be created. The default value for the *xrSessionMode* attribute is `IMMERSIVE_VR`. A value of `NONE` completely disables the possibility to use WebXR. For a list of possible values see [browser options](/x_ite/reference/browser-services/#browser-options).
 
->**Tip:** If you want to change the position of the WebXR button, use the CSS `x3d-canvas::part(xr-button)` selector.
+>**Tip:** If you want to change the position of the WebXR button, use the CSS `x3d-canvas::part(buttons)` selector.
 {: .prompt-tip }
 
 ### Example of Use
