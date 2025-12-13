@@ -37,8 +37,6 @@ Object .assign (X3DWebXRContext .prototype,
    },
    xrAddButton ()
    {
-      this .getSurface () .find (".x_ite-private-xr-button") .remove ();
-
       $("<div></div>")
          .attr ("title", _("Start WebXR session."))
          .addClass (["x_ite-private-xr-button", "x_ite-private-button"])

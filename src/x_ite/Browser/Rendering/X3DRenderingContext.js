@@ -406,7 +406,7 @@ Object .assign (X3DRenderingContext .prototype,
    {
       return Lock .acquire (this [_buttonLock], async () =>
       {
-         this .getSurface () .children (".x_ite-private-xr-button") .remove ();
+         this .getSurface () .find (".x_ite-private-xr-button") .remove ();
 
          if (!await this .xrCheckSupport ())
             return;
