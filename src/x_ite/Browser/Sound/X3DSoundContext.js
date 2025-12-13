@@ -105,15 +105,20 @@ Object .assign (X3DSoundContext .prototype,
             .appendTo (this .getSurface () .find (".x_ite-private-buttons"));
 
          const
-            count   = this [_audioElements] .size,
-            fade    = count ? "x_ite-private-fade-in-300" : "x_ite-private-fade-out-300",
-            display = count ? "show" : "hide";
+            count = this [_audioElements] .size,
+            fade  = count ? "x_ite-private-fade-in-300" : "x_ite-private-fade-out-300";
+
+         if (count)
+            this [_noSoundButton] .show ();
 
          this [_noSoundButton] .addClass (fade);
 
          await $.sleep (400);
 
-         this [_noSoundButton] [display] () .removeClass (fade);
+         if (!count)
+            this [_noSoundButton] .hide ();
+
+         this [_noSoundButton] .removeClass (fade);
       },
       200);
    },
