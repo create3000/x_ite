@@ -115,13 +115,13 @@ Object .assign (X3DSoundContext .prototype,
 
          await $.sleep (400);
 
+         this [_noSoundButton] .removeClass (fade);
+
          if (count !== !!this [_audioElements] .size)
             return;
 
          if (!count)
             this [_noSoundButton] .hide ();
-
-         this [_noSoundButton] .removeClass (fade);
       },
       200);
    },
