@@ -53,8 +53,6 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDes
    },
    async set_mediaDeviceID_impl__ ()
    {
-      // Safari has no support for `setSinkId` yet, as of Aug 2023.
-
       const sinkId = this ._mediaDeviceID .getValue () || "default";
 
       return this .audioElement .setSinkId ?.(sinkId) ?? Promise .resolve ();
