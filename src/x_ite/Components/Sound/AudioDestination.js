@@ -53,7 +53,7 @@ Object .assign (Object .setPrototypeOf (AudioDestination .prototype, X3DSoundDes
    {
       this .getBrowser () .startAudioElement (this, "set_mediaDeviceID_impl__");
    },
-   async set_mediaDeviceID_impl__ ()
+   set_mediaDeviceID_impl__ ()
    {
       const sinkId = this ._mediaDeviceID .getValue () || "default";
 
