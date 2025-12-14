@@ -1,5 +1,5 @@
-/* X_ITE v12.2.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.2.1")];
+/* X_ITE v12.2.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.2.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -458,8 +458,6 @@ Object .assign (X3DWebXRContext .prototype,
    },
    xrAddButton ()
    {
-      this .getSurface () .find (".x_ite-private-xr-button") .remove ();
-
       $("<div></div>")
          .attr ("title", external_X_ITE_X3D_gettext_default()("Start WebXR session."))
          .addClass (["x_ite-private-xr-button", "x_ite-private-button"])
