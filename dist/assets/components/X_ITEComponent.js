@@ -1,5 +1,5 @@
-/* X_ITE v12.1.10 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.10")];
+/* X_ITE v12.2.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.2.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1514,12 +1514,12 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X_ITE
 
       const
          browser              = this .getBrowser (),
-         SheenELUTTexture     = browser .getLibraryTexture ("lut_sheen_E.png"),
-         SheenELUTTextureUnit = browser .getTextureUnit ();
+         sheenELUTTexture     = browser .getLibraryTexture ("lut_sheen_E.png"),
+         sheenELUTTextureUnit = browser .popTextureUnit ();
 
-      gl .activeTexture (gl .TEXTURE0 + SheenELUTTextureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, SheenELUTTexture .getTexture ());
-      gl .uniform1i (shaderObject .x3d_SheenELUTTextureEXT, SheenELUTTextureUnit);
+      gl .activeTexture (gl .TEXTURE0 + sheenELUTTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, sheenELUTTexture .getTexture ());
+      gl .uniform1i (shaderObject .x3d_SheenELUTTextureEXT, sheenELUTTextureUnit);
 
       if (!+this .getTextureBits ())
          return;
@@ -2091,7 +2091,7 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
       const
          browser                   = this .getBrowser (),
          transmissionBuffer        = browser .getTransmissionBuffer (),
-         transmissionUnit          = browser .getTextureUnit (),
+         transmissionUnit          = browser .popTextureUnit (),
          transmissionBufferTexture = transmissionBuffer .getColorTexture ();
 
       gl .uniform1f (shaderObject .x3d_TransmissionEXT, this .transmission);
@@ -2556,8 +2556,8 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
 
       const
          scatterSampleBuffer       = browser .getVolumeScatterBuffer (),
-         scatterSampleUnit         = browser .getTextureUnit (),
-         scatterDepthSampleUnit    = browser .getTextureUnit (),
+         scatterSampleUnit         = browser .popTextureUnit (),
+         scatterDepthSampleUnit    = browser .popTextureUnit (),
          scatterSampleTexture      = scatterSampleBuffer .getColorTexture (),
          scatterDepthSampleTexture = scatterSampleBuffer .getDepthTexture ();
 

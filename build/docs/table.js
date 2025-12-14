@@ -31,13 +31,13 @@ for (const example of html)
 		doc       = fs .existsSync (`${docs}/${component}/${basename}.md`),
 		size      = sh (`identify -format "%w %h" "${examples}/${component}/${basename}/screenshot-small.png"`) .trim () .split (" ");
 
-	const xrButtonPosition  = tree [component] [basename] ?.["xrButtonPosition"] ?? "br";
+	const buttonsPosition  = tree [component] [basename] ?.["buttonsPosition"] ?? "br";
 
 	folder = folder .replace (/^.*\/media\/docs\//, "");
 
 	const image = `![${basename}](https://create3000.github.io/media/${folder}/screenshot-small.png){: width="${size [0]}" height="${size [1]}" }`;
 
-	const link = `[${image}](https://create3000.github.io/media/${folder}/${basename}.x3d){: title="${component} » ${basename}" componentName="${component}" typeName="${basename}" doc="${doc}" xrButtonPosition="${xrButtonPosition}" }`;
+	const link = `[${image}](https://create3000.github.io/media/${folder}/${basename}.x3d){: title="${component} » ${basename}" componentName="${component}" typeName="${basename}" doc="${doc}" buttonsPosition="${buttonsPosition}" }`;
 
 	output += `${link}\n`;
 }

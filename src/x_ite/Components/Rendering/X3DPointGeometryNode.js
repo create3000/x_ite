@@ -17,6 +17,24 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
    },
    generateTexCoords ()
    { },
+   displaySimple (gl, renderContext, shaderNode)
+   {
+      if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
+      {
+         if (this .coordIndices .length)
+            shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
+
+         if (this .multiTexCoords .length)
+            shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+
+         if (this .hasNormals)
+            shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
+
+         shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+      }
+
+      gl .drawArrays (gl .POINTS, 0, this .vertexCount);
+   },
    display (gl, renderContext)
    {
       const
@@ -94,6 +112,34 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
          gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
          gl .colorMask (true, true, true, true);
       }
+   },
+   displaySimpleInstanced (gl, shaderNode, shapeNode)
+   {
+      const instances = shapeNode .getInstances ();
+
+      if (instances .vertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
+      {
+         const { instancesStride, particleOffset, matrixOffset, normalMatrixOffset } = shapeNode;
+
+         if (particleOffset !== undefined)
+            shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleOffset, 1);
+
+         shaderNode .enableInstanceMatrixAttribute (gl, instances, instancesStride, matrixOffset, 1);
+
+         if (normalMatrixOffset !== undefined)
+            shaderNode .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 1);
+
+         if (this .coordIndices .length)
+            shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
+
+         shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+         shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
+         shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
+
+         this .updateInstances = false;
+      }
+
+      gl .drawArraysInstanced (gl .POINTS, 0, this .vertexCount, shapeNode .getNumInstances ());
    },
    displayInstanced (gl, renderContext, shapeNode)
    {

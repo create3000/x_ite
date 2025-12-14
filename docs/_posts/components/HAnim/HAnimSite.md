@@ -193,6 +193,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 ### Hints
 
 - HAnimSite nodes are stored as children of an [HAnimSegment](/x_ite/components/hanim/hanimsegment/) node.
+- [HAnim Architecture draft version 2.1](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-1/ISO-IEC19774-1v2.1/ISO-IEC19774-1v2.1-WD/Architecture/ObjectInterfaces.html#Site)
 - [HAnim Specification](https://www.web3d.org/documents/specifications/19774/V2.0)
 - [HAnim Specification part 1, Site](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/ObjectInterfaces.html#Site)
 - [HAnim Specification part 1, Annex B, Feature points for the human body](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/FeaturePoints.html)

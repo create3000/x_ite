@@ -205,7 +205,7 @@ Load the scene using `Browser.createX3DFromURL`, then access the [TimeSensor](/x
 
 #### Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Networking/Inline/Inline.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Networking/Inline/Inline.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Networking/Inline/screenshot.avif" alt="Inline"/>
 </x3d-canvas>
 
@@ -226,7 +226,7 @@ Load the scene using `Browser.createX3DFromURL`, then access the [TimeSensor](/x
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Networking/Inline/Inline.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Networking/Inline/Inline.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Networking/Inline/screenshot.avif" alt="Inline"/>
 </x3d-canvas>
 
