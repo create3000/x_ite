@@ -298,6 +298,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 - HAnimJoint may only get inserted as one (or more) root nodes of [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skeleton field, as a child of another HAnimJoint node, or as a USE node in the [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) joints field.
 - Visualization shapes for HAnimJoint nodes can be placed in child [HAnimSegment](/x_ite/components/hanim/hanimsegment/) or [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes.
+- [HAnim Architecture draft version 2.1](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-1/ISO-IEC19774-1v2.1/ISO-IEC19774-1v2.1-WD/Architecture/ObjectInterfaces.html#Joint)
 - [HAnim Specification](https://www.web3d.org/documents/specifications/19774/V2.0)
 - [HAnim Specification part 1, Joint](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/ObjectInterfaces.html#Joint)
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/HumanoidAnimation.pdf)

@@ -102,18 +102,26 @@ Object .assign (X3DSoundContext .prototype,
             .attr ("title", _("Activate sound."))
             .addClass (["x_ite-private-no-sound-button", "x_ite-private-button"])
             .on ("mouseup touchend", () => this .startAudioElements ())
-            .appendTo (this .getSurface ());
+            .appendTo (this .getSurface () .find (".x_ite-private-buttons"));
 
          const
-            count   = this [_audioElements] .size,
-            add     = count ? "x_ite-private-fade-in-300" : "x_ite-private-fade-out-300",
-            display = count ? "show" : "hide";
+            count = !!this [_audioElements] .size,
+            fade  = count ? "x_ite-private-fade-in-300" : "x_ite-private-fade-out-300";
 
-         this [_noSoundButton] .addClass (add);
+         if (count)
+            this [_noSoundButton] .show ();
+
+         this [_noSoundButton] .addClass (fade);
 
          await $.sleep (400);
 
-         this [_noSoundButton] [display] () .removeClass (add);
+         this [_noSoundButton] .removeClass (fade);
+
+         if (count !== !!this [_audioElements] .size)
+            return;
+
+         if (!count)
+            this [_noSoundButton] .hide ();
       },
       200);
    },

@@ -1,5 +1,5 @@
-/* X_ITE v12.1.10 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.10")];
+/* X_ITE v12.2.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.2.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -558,7 +558,7 @@ precision highp float;void main(){}`
       {
          const location = gl .getUniformLocation (program, name);
 
-         gl .uniform1i (location, program [name + "TextureUnit"] = browser .getTextureUnit ());
+         gl .uniform1i (location, program [name + "TextureUnit"] = browser .popTextureUnit ());
       }
 
       for (const [key, symbol] of Object .entries (ParticleSystems_ParticleSampler))
@@ -594,12 +594,12 @@ precision highp float;void main(){}`
 
       return texture;
    },
-   getTextureUnit (browser, object, property)
+   popTextureUnit (browser, object, property)
    {
       const textureUnit = object [property];
 
       if (textureUnit === undefined)
-         return object [property] = browser .getTextureUnit ();
+         return object [property] = browser .popTextureUnit ();
 
       return textureUnit;
    },
@@ -2462,12 +2462,16 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
                appearanceNode  = this .getAppearance (),
                renderModeNodes = appearanceNode .getRenderModes (),
                shaderNode      = appearanceNode .getShader (this .geometryContext, renderContext),
-               primitiveMode   = browser .getPrimitiveMode (this .primitiveMode);
+               primitiveMode   = browser .getPrimitiveMode (this .primitiveMode),
+               opaquePoints    = this .geometryType === (external_X_ITE_X3D_GeometryType_default()).POINT && !renderContext .transparent;
 
             // Enable sample alpha to coverage if not transparent.
 
-            if (this .geometryType === (external_X_ITE_X3D_GeometryType_default()).POINT && !renderContext .transparent)
+            if (opaquePoints)
+            {
                gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
+               gl .colorMask (true, true, true, false);
+            }
 
             // Set viewport.
 
@@ -2485,7 +2489,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
 
             if (this .numTexCoords)
             {
-               const textureUnit = browser .getTextureUnit ();
+               const textureUnit = browser .popTextureUnit ();
 
                gl .activeTexture (gl .TEXTURE0 + textureUnit);
                gl .bindTexture (gl .TEXTURE_2D, this [ParticleSystems_ParticleSampler .texCoords]);
@@ -2535,8 +2539,11 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
 
             // Disable sample alpha to coverage if not transparent.
 
-            if (this .geometryType === (external_X_ITE_X3D_GeometryType_default()).POINT && !renderContext .transparent)
+            if (opaquePoints)
+            {
                gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
+               gl .colorMask (true, true, true, true);
+            }
 
             break;
          }

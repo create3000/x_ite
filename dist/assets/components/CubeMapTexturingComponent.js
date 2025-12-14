@@ -1,5 +1,5 @@
-/* X_ITE v12.1.10 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.10")];
+/* X_ITE v12.2.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.2.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -213,7 +213,7 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, (e
    },
    setShaderUniforms (gl, channel)
    {
-      const textureUnit = this .getBrowser () .getTextureUnit ();
+      const textureUnit = this .getBrowser () .popTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .getTexture ());
@@ -1070,7 +1070,6 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
          gl          = browser .getContext (),
          shaderNode  = browser .getPanoramaShader (),
          framebuffer = gl .createFramebuffer (),
-         textureUnit = browser .getTextureUnit (),
          size        = Math .floor (height / 2),
          data        = new Uint8Array (size * size * 4);
 
@@ -1093,9 +1092,9 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
 
       gl .useProgram (shaderNode .getProgram ());
 
-      gl .activeTexture (gl .TEXTURE0 + textureUnit);
+      gl .activeTexture (gl .TEXTURE0);
       gl .bindTexture (gl .TEXTURE_2D, panoramaTexture);
-      gl .uniform1i (shaderNode .x3d_PanoramaTextureEXT, textureUnit);
+      gl .uniform1i (shaderNode .x3d_PanoramaTextureEXT, 0);
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, framebuffer);
       gl .viewport (0, 0, size, size);
@@ -1126,8 +1125,6 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
       gl .enable (gl .DEPTH_TEST);
       gl .deleteFramebuffer (framebuffer);
       gl .deleteTexture (panoramaTexture);
-
-      browser .resetTextureUnits ();
 
       // Update size and transparent field.
 

@@ -172,7 +172,7 @@ Another test file using an Inline node with a glTF sample (1.5 million triangles
 
 ## X_ITE v10.3 Series
 
-*Leipzig, 18th August 2024:* With this release there is now basic WebXR support built directly into X_ITE. If WebXR is possible then a new button (Cardboard Glasses) appears in the lower right corner of the \<x3d-canvas\>. In addition, there are now three new [attributes](/x_ite/#attributes-of-the-x3d-canvas-element) (*xrButton, xrMovementControl, xrSessionMode*) and the corresponding [browser options](/x_ite/reference/browser-services/#browser-options) (*XRButton, XRMovementControl, XRSessionMode*).
+*Leipzig, 18th August 2024:* With this release there is now basic WebXR support built directly into X_ITE. If WebXR is possible then a new button (Cardboard Glasses) appears in the lower right corner of the \<x3d-canvas\>. In addition, there is now a new [attribute](/x_ite/#attributes-of-the-x3d-canvas-element) (*xrSessionMode*) and the corresponding [browser option](/x_ite/reference/browser-services/#browser-options) (*XRSessionMode*).
 
 If you don't have a VR headset, there is a browser extension for Chrome and Firefox that emulates a WebXR device:
 

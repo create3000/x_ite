@@ -191,7 +191,8 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ### Hints
 
-- HAnimSegment displays geometry between parent [HAnimJoint](/x_ite/components/hanim/hanimjoint/) and sibling [HAnimJoint](/x_ite/components/hanim/hanimjoint/) nodes.
+- HAnimSegment can contain [Shape](/x_ite/components/shape/shape/) geometry and [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes for a parent [HAnimJoint](/x_ite/components/hanim/hanimjoint/) node.
+- [HAnim Architecture draft version 2.1](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-1/ISO-IEC19774-1v2.1/ISO-IEC19774-1v2.1-WD/Architecture/ObjectInterfaces.html#Segment)
 - [HAnim Specification](https://www.web3d.org/documents/specifications/19774/V2.0)
 - [HAnim Specification part 1, Segment](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/ObjectInterfaces.html#Segment)
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/HumanoidAnimation.pdf)

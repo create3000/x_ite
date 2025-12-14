@@ -1,1 +1,1 @@
-export default "12.2.0";
+export default "12.2.2";

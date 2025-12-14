@@ -197,7 +197,7 @@ It is possible to specify in the *url* of a [FontLibrary](/x_ite/components/text
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Layout/ScreenFontStyle/ScreenFontStyle.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Layout/ScreenFontStyle/ScreenFontStyle.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Layout/ScreenFontStyle/screenshot.avif" alt="ScreenFontStyle"/>
 </x3d-canvas>
 

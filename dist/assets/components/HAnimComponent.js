@@ -1,5 +1,5 @@
-/* X_ITE v12.1.10 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.10")];
+/* X_ITE v12.2.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.2.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -707,8 +707,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
    {
       const
          browser                  = this .getBrowser (),
-         jointsTextureTextureUnit = browser .getTextureUnit (),
-         jointMatricesTextureUnit = browser .getTextureUnit ();
+         jointsTextureTextureUnit = browser .popTextureUnit (),
+         jointMatricesTextureUnit = browser .popTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + jointsTextureTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .jointsTexture);
@@ -722,8 +722,8 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
          return;
 
       const
-         displacementsTextureTextureUnit       = browser .getTextureUnit (),
-         displacementWeightsTextureTextureUnit = browser .getTextureUnit ();
+         displacementsTextureTextureUnit       = browser .popTextureUnit (),
+         displacementWeightsTextureTextureUnit = browser .popTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + displacementsTextureTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .displacementsTexture);
@@ -1448,7 +1448,7 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, (external_X_ITE
       for (const texture of [this .displacementsTexture, this .displacementWeightsTexture, this .jointMatricesTexture])
       {
          gl .bindTexture (gl .TEXTURE_2D, texture);
-         
+
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
          gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
@@ -1661,9 +1661,9 @@ Object .assign (Object .setPrototypeOf (HAnimSegment .prototype, (external_X_ITE
    {
       const
          browser                               = this .getBrowser (),
-         jointMatricesTextureUnit              = browser .getTextureUnit (),
-         displacementsTextureTextureUnit       = browser .getTextureUnit (),
-         displacementWeightsTextureTextureUnit = browser .getTextureUnit ();
+         jointMatricesTextureUnit              = browser .popTextureUnit (),
+         displacementsTextureTextureUnit       = browser .popTextureUnit (),
+         displacementWeightsTextureTextureUnit = browser .popTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + jointMatricesTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .jointMatricesTexture);
