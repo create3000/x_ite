@@ -10,7 +10,8 @@ function X3DAppearanceNode (executionContext)
 
    this .addChildObjects (X3DConstants .outputOnly, "transparent",   new Fields .SFBool (),
                           X3DConstants .outputOnly, "transmission",  new Fields .SFBool (),
-                          X3DConstants .outputOnly, "volumeScatter", new Fields .SFBool ());
+                          X3DConstants .outputOnly, "volumeScatter", new Fields .SFBool (),
+                          X3DConstants .outputOnly, "baseTexture",   new Fields .SFBool ());
 }
 
 Object .assign (Object .setPrototypeOf (X3DAppearanceNode .prototype, X3DNode .prototype),
@@ -41,6 +42,15 @@ Object .assign (Object .setPrototypeOf (X3DAppearanceNode .prototype, X3DNode .p
    isVolumeScatter ()
    {
       return this ._volumeScatter .getValue ();
+   },
+   setBaseTexture (value)
+   {
+      if (!!value !== this ._baseTexture .getValue ())
+         this ._baseTexture = value;
+   },
+   hasBaseTexture ()
+   {
+      return this ._baseTexture .getValue ();
    },
 });
 

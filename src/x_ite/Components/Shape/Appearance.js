@@ -93,7 +93,9 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    updateTextureBits ()
    {
       this .textureBits .clear ();
-      this .textureNode .updateTextureBits (this .textureBits);
+      this .textureNode ?.updateTextureBits (this .textureBits);
+
+      this .set_baseTexture__ ();
    },
    getTextureTransform ()
    {
@@ -188,6 +190,7 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
       {
          this .materialNode ._transparent   .removeInterest ("set_transparent__",   this);
          this .materialNode ._transmission  .removeInterest ("set_transmission__",  this);
+         this .materialNode ._baseTexture  ?.removeInterest ("set_baseTexture__",   this);
          this .materialNode ._volumeScatter .removeInterest ("set_volumeScatter__", this);
       }
 
@@ -196,12 +199,12 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
 
       this .materialNode ._transparent   .addInterest ("set_transparent__",   this);
       this .materialNode ._transmission  .addInterest ("set_transmission__",  this);
+      this .materialNode ._baseTexture  ?.addInterest ("set_baseTexture__",   this);
       this .materialNode ._volumeScatter .addInterest ("set_volumeScatter__", this);
 
       this .set_transmission__ ();
+      this .set_baseTexture__ ();
       this .set_volumeScatter__ ();
-
-      this .set_transmission__ ();
 
       // Depreciated TwoSidedMaterial handling.
 
@@ -210,16 +213,32 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    },
    set_backMaterial__ ()
    {
-      this .backMaterialNode ?._transparent .removeInterest ("set_transparent__", this);
+      if (this .backMaterialNode)
+      {
+         this .backMaterialNode ._transparent   .removeInterest ("set_transparent__",   this);
+         this .backMaterialNode ._transmission  .removeInterest ("set_transmission__",  this);
+         this .backMaterialNode ._baseTexture  ?.removeInterest ("set_baseTexture__",   this);
+         this .backMaterialNode ._volumeScatter .removeInterest ("set_volumeScatter__", this);
+      }
 
       this .backMaterialNode = X3DCast (X3DConstants .X3DOneSidedMaterialNode, this ._backMaterial);
 
-      this .backMaterialNode ?._transparent .addInterest ("set_transparent__", this);
+      if (this .backMaterialNode)
+      {
+         this .backMaterialNode ._transparent   .addInterest ("set_transparent__",   this);
+         this .backMaterialNode ._transmission  .addInterest ("set_transmission__",  this);
+         this .backMaterialNode ._baseTexture  ?.addInterest ("set_baseTexture__",   this);
+         this .backMaterialNode ._volumeScatter .addInterest ("set_volumeScatter__", this);
+      }
 
       // Depreciated TwoSidedMaterial handling.
 
       if (!this .backMaterialNode && X3DCast (X3DConstants .TwoSidedMaterial, this .materialNode))
          this .backMaterialNode = this .materialNode;
+
+      this .set_transmission__ ();
+      this .set_baseTexture__ ();
+      this .set_volumeScatter__ ();
    },
    set_texture__ ()
    {
@@ -235,13 +254,9 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
       {
          this .textureNode .addInterest ("updateTextureBits", this);
          this .textureNode ._transparent .addInterest ("set_transparent__", this);
+      }
 
-         this .updateTextureBits ();
-      }
-      else
-      {
-         this .textureBits .clear ();
-      }
+      this .updateTextureBits ();
    },
    set_textureTransform__ ()
    {
@@ -344,6 +359,12 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
       this .setTransmission (this .materialNode ?.isTransmission () ||
                              this .backMaterialNode ?.isTransmission ());
 
+   },
+   set_baseTexture__ ()
+   {
+      this .setBaseTexture (this .materialNode ?.getBaseTexture () ||
+                            this .backMaterialNode ?.getBaseTexture () ||
+                            +this .textureBits);
    },
    set_volumeScatter__ ()
    {

@@ -155,6 +155,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
          this .appearanceNode ._alphaMode     .removeInterest ("set_transparent__",   this);
          this .appearanceNode ._transparent   .removeInterest ("set_transparent__",   this);
          this .appearanceNode ._transmission  .removeInterest ("set_transmission__",  this);
+         this .appearanceNode ._baseTexture   .removeInterest ("set_transmission__",  this);
          this .appearanceNode ._volumeScatter .removeInterest ("set_volumeScatter__", this);
       }
 
@@ -164,6 +165,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
       this .appearanceNode ._alphaMode     .addInterest ("set_transparent__",   this);
       this .appearanceNode ._transparent   .addInterest ("set_transparent__",   this);
       this .appearanceNode ._transmission  .addInterest ("set_transmission__",  this);
+      this .appearanceNode ._baseTexture   .addInterest ("set_transmission__",  this);
       this .appearanceNode ._volumeScatter .addInterest ("set_volumeScatter__", this);
 
       this .set_transparent__ ();
@@ -209,12 +211,14 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    },
    set_transmission__ ()
    {
-      const transmission = this .appearanceNode .isTransmission ();
+      const
+         transmission = this .appearanceNode .isTransmission (),
+         baseTexture  = this .appearanceNode .hasBaseTexture ();
 
       this .set_renderPass__ (transmission, RenderPass .TRANSMISSION_BIT);
 
       this [RenderPass .TRANSMISSION_KEY]           = transmission ? null : this;
-      this [RenderPass .TRANSMISSION_BACKFACES_KEY] = transmission ? this : null;
+      this [RenderPass .TRANSMISSION_BACKFACES_KEY] = transmission && baseTexture ? this : null;
    },
    set_volumeScatter__ ()
    {
