@@ -348,7 +348,8 @@ getMaterialColor (const in vec4 fragCoord)
             vec3 transmittedLight = lightIntensity * getPunctualRadianceTransmission (n, v, l, materialInfo .alphaRoughness, baseColor .rgb, materialInfo .ior, fragCoord);
 
             #if defined (X3D_VOLUME_MATERIAL_EXT)
-               transmittedLight = applyVolumeAttenuation (transmittedLight, length (transmissionRay), materialInfo .attenuationColor, materialInfo .attenuationDistance);
+               transmittedLight  = applyVolumeAttenuation (transmittedLight, length (transmissionRay), materialInfo .attenuationColor, materialInfo .attenuationDistance);
+               transmittedLight *= baseColor .rgb;
             #endif
 
             l_diffuse = mix (l_diffuse, transmittedLight, materialInfo .transmissionFactor);

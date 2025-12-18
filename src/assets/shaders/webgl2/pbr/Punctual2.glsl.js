@@ -111,11 +111,11 @@ getPunctualRadianceTransmission (const in vec3 normal, const in vec3 view, const
     float D   = D_GGX (clamp (dot (n, h), 0.0, 1.0), transmissionRoughness);
     float Vis = V_GGX (clamp (dot (n, l_mirror), 0.0, 1.0), clamp (dot (n, v), 0.0, 1.0), transmissionRoughness);
 
-   #if defined (X3D_VOLUME_MATERIAL_EXT)
-      vec2 uvCoords             = fragCoord .xy * (1.0 / vec2 (x3d_Viewport .zw));
+   #if defined (X3D_VOLUME_MATERIAL_EXT) && (defined (X3D_BASE_TEXTURE) || defined (X3D_TEXTURE))
+      vec2 uvCoords             = fragCoord .xy / vec2 (x3d_Viewport .zw);
       vec3 transmissionBackface = texture (x3d_TransmissionBackfacesSamplerEXT, uvCoords) .rgb;
 
-      baseColor *= transmissionBackface;
+      baseColor = transmissionBackface;
    #endif
 
     // Transmission BTDF

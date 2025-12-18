@@ -213,7 +213,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
 
       this .set_renderPass__ (transmission, RenderPass .TRANSMISSION_BIT);
 
-      this [RenderPass .TRANSMISSION_KEY]          = transmission ? null : this;
+      this [RenderPass .TRANSMISSION_KEY]           = transmission ? null : this;
       this [RenderPass .TRANSMISSION_BACKFACES_KEY] = transmission ? this : null;
    },
    set_volumeScatter__ ()
