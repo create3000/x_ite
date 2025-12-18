@@ -2009,7 +2009,10 @@ function eventsProcessed ()
 
 function eventsProcessed ()
 {
-   value_changed = new MFFloat (-xmag, -ymag, xmag, ymag);
+   value_changed [0] = -xmag;
+   value_changed [1] = -ymag;
+   value_changed [2] =  xmag;
+   value_changed [3] =  ymag;
 }
 `];
 
@@ -3655,7 +3658,10 @@ function eventsProcessed ()
 
 function eventsProcessed ()
 {
-   value_changed = new SFColorRGBA (... color, alpha);
+   value_changed [0] = color [0];
+   value_changed [1] = color [1];
+   value_changed [2] = color [2];
+   value_changed [3] = alpha;
 }
    `];
 
