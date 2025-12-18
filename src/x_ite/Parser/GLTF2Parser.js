@@ -1556,22 +1556,20 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
                scriptNode ._url = [/* js */ `ecmascript:
 
-const
-   flipY  = new SFMatrix3f (1, 0, 0, 0, -1, 0, 0, 1, 1),
-   matrix = new SFMatrix3f ();
+const m = new SFMatrix3f ();
 
 function eventsProcessed ()
 {
-   matrix .setTransform (translation, -rotation, scale);
+   m .setTransform (translation, -rotation, scale);
 
-   const m = flipY .multLeft (matrix);
+   // m' = m * flipY
 
    value_changed [0]  = m [0];
-   value_changed [1]  = m [1];
+   value_changed [1]  = -m [1] + m [2];
    value_changed [4]  = m [3];
-   value_changed [5]  = m [4];
+   value_changed [5]  = -m [4] + m [5];
    value_changed [12] = m [6];
-   value_changed [13] = m [7];
+   value_changed [13] = -m [7] + m [8];
 }
 `];
 
