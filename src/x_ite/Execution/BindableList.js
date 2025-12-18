@@ -106,6 +106,8 @@ Object .assign (Object .setPrototypeOf (BindableList .prototype, X3DBaseNode .pr
 
          this .nodes          = collectedNodes;
          this .collectedNodes = tmp;
+
+         this .addNodeEvent ();
       }
 
       // Clear collected nodes.
@@ -128,14 +130,16 @@ Object .assign (Object .setPrototypeOf (BindableList .prototype, X3DBaseNode .pr
 for (const key of Object .keys (BindableList .prototype))
    Object .defineProperty (BindableList .prototype, key, { enumerable: false });
 
-// Compares two nodes.
+// Compares two arrays.
 
 function equals (lhs, rhs)
 {
-   if (lhs .length !== rhs .length)
+   const lhsLength = lhs .length;
+
+   if (lhsLength !== rhs .length)
       return false;
 
-   for (let i = 0; i < lhs .length; ++ i)
+   for (let i = 0; i < lhsLength; ++ i)
    {
       if (lhs [i] !== rhs [i])
          return false;
