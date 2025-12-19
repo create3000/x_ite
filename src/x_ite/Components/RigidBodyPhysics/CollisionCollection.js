@@ -98,12 +98,11 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChild
          const collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, node);
 
          if (collisionSpaceNode)
-         {
-            collisionSpaceNode .addInterest ("collect", this);
-
             collisionSpaceNodes .push (collisionSpaceNode);
-         }
       }
+
+      for (const collisionSpaceNode of collisionSpaceNodes)
+         collisionSpaceNode .addInterest ("collect", this);
 
       this .collect ();
    },
