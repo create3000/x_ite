@@ -1477,11 +1477,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    textureTransformObject: (() =>
    {
       const
-         translation = new Vector2 (),
-         scale       = new Vector2 (1),
-         matrix      = new Matrix4 (),
-         vector      = new Vector3 (),
-         rotation    = new Rotation4 ();
+         matrix   = new Matrix4 (),
+         vector   = new Vector3 (),
+         rotation = new Rotation4 ();
 
       return function (KHR_texture_transform, texCoord)
       {
@@ -1492,6 +1490,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             return;
 
          texCoord = KHR_texture_transform .texCoord ?? texCoord;
+
+         const
+            translation = new Vector2 (),
+            scale       = new Vector2 (1);
 
          // Reset matrix.
          matrix .set ();
