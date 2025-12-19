@@ -40,11 +40,11 @@ The CollisionCollection node belongs to the [RigidBodyPhysics](/x_ite/components
 | SFVec2f | [in, out] | [slipFactors](#fields-slipFactors) | 0 0  |
 | SFFloat | [in, out] | [softnessConstantForceMix](#fields-softnessConstantForceMix) | 0.0001  |
 | SFFloat | [in, out] | [softnessErrorCorrection](#fields-softnessErrorCorrection) | 0.8  |
-| MFNode | [in, out] | [collidables](#fields-collidables) | [ ] |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
 | SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
 | SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| MFNode | [in, out] | [collidables](#fields-collidables) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -114,11 +114,6 @@ Default global parameters for collision outputs of rigid body physics system. [C
 
 *softnessErrorCorrection* indicates fraction of collision error fixed in a set of evaluations (0 = no error correction, 1 = all errors corrected in single step).
 
-### MFNode [in, out] **collidables** [ ] <small>[X3DNBodyCollisionSpaceNode,X3DNBodyCollidableNode]</small>
-{: #fields-collidables }
-
-CollisionCollection node holds a collection of objects in the *collidables* field that can be managed as a single entity for resolution of inter-object collisions with other groups of collidable objects. A group consists of both collidable objects as well as spaces that may be collided against each other.
-
 ### SFBool [in, out] **visible** TRUE
 {: #fields-visible }
 
@@ -160,6 +155,11 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
 - [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#BoundingBoxes)
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
+
+### MFNode [in, out] **collidables** [ ] <small>[X3DNBodyCollisionSpaceNode,X3DNBodyCollidableNode]</small>
+{: #fields-collidables }
+
+CollisionCollection node holds a collection of objects in the *collidables* field that can be managed as a single entity for resolution of inter-object collisions with other groups of collidable objects. A group consists of both collidable objects as well as spaces that may be collided against each other.
 
 ## Advice
 
