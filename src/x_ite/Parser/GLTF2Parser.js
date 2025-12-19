@@ -1503,7 +1503,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          if (this .vectorValue (KHR_texture_transform .offset, translation))
             matrix .translate (vector .set (... translation, 0));
 
-         matrix .rotate (rotation .set (0, 0, -1, this .numberValue (KHR_texture_transform .rotation, 0)));
+         const angle = this .numberValue (KHR_texture_transform .rotation, 0)
+
+         matrix .rotate (rotation .set (0, 0, -1, angle));
 
          if (this .vectorValue (KHR_texture_transform .scale, scale))
             matrix .scale (vector .set (... scale, 1));
@@ -1549,9 +1551,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             {
                const scriptNode = scene .createNode ("Script", false);
 
-               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "translation",   new Fields .SFVec2f ());
-               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "rotation",      new Fields .SFFloat ());
-               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "scale",         new Fields .SFVec2f (1, 1));
+               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "translation",   new Fields .SFVec2f (... translation));
+               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "rotation",      new Fields .SFFloat (angle));
+               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "scale",         new Fields .SFVec2f (... scale));
                scriptNode .addUserDefinedField (X3DConstants .outputOnly,  "value_changed", new Fields .SFMatrix4f ());
 
                scriptNode ._url = [/* js */ `ecmascript:
@@ -1970,19 +1972,14 @@ function eventsProcessed ()
 
       const
          scene         = this .getScene (),
-         viewpointNode = scene .createNode ("OrthoViewpoint", false);
+         viewpointNode = scene .createNode ("OrthoViewpoint", false),
+         xmag          = typeof camera .xmag === "number" ? camera .xmag : 1,
+         ymag          = typeof camera .ymag === "number" ? camera .ymag : 1;
 
-      if (typeof camera .xmag === "number")
-      {
-         viewpointNode ._fieldOfView [0] = -camera .xmag;
-         viewpointNode ._fieldOfView [2] = +camera .xmag;
-      }
-
-      if (typeof camera .ymag === "number")
-      {
-         viewpointNode ._fieldOfView [1] = -camera .ymag;
-         viewpointNode ._fieldOfView [3] = +camera .ymag;
-      }
+      viewpointNode ._fieldOfView [0] = -xmag;
+      viewpointNode ._fieldOfView [1] = -ymag;
+      viewpointNode ._fieldOfView [2] =  xmag;
+      viewpointNode ._fieldOfView [3] =  ymag;
 
       if (typeof camera .znear === "number")
          viewpointNode ._nearDistance = camera .znear;
@@ -2001,8 +1998,8 @@ function eventsProcessed ()
          {
             const scriptNode = scene .createNode ("Script", false);
 
-            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "xmag",          new Fields .SFFloat (1));
-            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "ymag",          new Fields .SFFloat (1));
+            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "xmag",          new Fields .SFFloat (xmag));
+            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "ymag",          new Fields .SFFloat (ymag));
             scriptNode .addUserDefinedField (X3DConstants .outputOnly,  "value_changed", new Fields .MFFloat ());
 
             scriptNode ._url = [/* js */ `ecmascript:
