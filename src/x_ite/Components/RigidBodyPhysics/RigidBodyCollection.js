@@ -114,15 +114,15 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    },
    set_collider__ ()
    {
-      this .colliderNode ?.removeInterest ("applyColliderParameters", this);
+      this .colliderNode ?.removeInterest ("set_colliderParameters__", this);
 
       this .colliderNode = X3DCast (X3DConstants .CollisionCollection, this ._collider);
 
-      this .colliderNode ?.addInterest ("applyColliderParameters", this);
+      this .colliderNode ?.addInterest ("set_colliderParameters__", this);
 
-      this .applyColliderParameters ();
+      this .set_colliderParameters__ ();
    },
-   applyColliderParameters ()
+   set_colliderParameters__ ()
    {
       const colliderNode = this .colliderNode;
 
@@ -208,7 +208,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
       for (const bodyNode of this .bodyNodes)
          bodyNode ._enabled .addInterest ("set_dynamicsWorld__", this);
 
-      this .applyColliderParameters ();
+      this .set_colliderParameters__ ();
       this .set_contactSurfaceThickness__ ();
       this .set_dynamicsWorld__ ();
       this .set_joints__ ();
