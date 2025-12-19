@@ -126,19 +126,17 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    {
       const colliderNode = this .colliderNode;
 
-      if (!colliderNode ?._enabled .getValue ())
+      for (const bodyNode of this .bodyNodes)
       {
-         for (const bodyNode of this .bodyNodes)
-         {
-            const rigidBody = bodyNode .getRigidBody ();
+         const rigidBody = bodyNode .getRigidBody ();
 
-            rigidBody .setRestitution (0);
-            rigidBody .setFriction (0.5);
-            rigidBody .setRollingFriction (0);
-         }
-
-         return;
+         rigidBody .setRestitution (0);
+         rigidBody .setFriction (0.5);
+         rigidBody .setRollingFriction (0);
       }
+
+      if (!colliderNode)
+         return;
 
       for (const parameter of colliderNode .getAppliedParameters ())
       {
