@@ -2132,7 +2132,7 @@ function eventsProcessed ()
             }
             case "KHR_physics_rigid_bodies":
             {
-               console .log (extension);
+               // console .log (extension);
                break;
             }
          }
