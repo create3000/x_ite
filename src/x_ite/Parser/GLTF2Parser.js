@@ -2110,16 +2110,33 @@ function eventsProcessed ()
       node .childNode = node .humanoidNode ?? node .transformNode;
       node .pointers  = [node .childNode];
 
-      // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_visibility
-      const visibility = node .extensions ?.KHR_node_visibility;
-
-      if (visibility)
-      {
-         visibility .pointers      = [node .childNode];
-         node .childNode ._visible = visibility .visible ?? true;
-      }
+      this .nodeExtensions (node);
 
       return node;
+   },
+   nodeExtensions (node)
+   {
+      if (!(node .extensions instanceof Object))
+         return;
+
+      for (const [key, extension] of Object .entries (node .extensions))
+      {
+         switch (key)
+         {
+            case "KHR_node_visibility":
+            {
+               // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_visibility
+               extension .pointers       = [node .childNode];
+               node .childNode ._visible = extension .visible ?? true;
+               break;
+            }
+            case "KHR_physics_rigid_bodies":
+            {
+               console .log (extension);
+               break;
+            }
+         }
+      }
    },
    nodeSkeleton (node, index)
    {
