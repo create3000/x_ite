@@ -2332,11 +2332,13 @@ function eventsProcessed ()
                      }
                      case "collider":
                      {
-                        console .log (value);
-
                         if (value .geometry .node !== undefined)
                         {
-
+                           console .log (value);
+                        }
+                        else if (value .geometry .shape !== undefined)
+                        {
+                           console .log (value);
                         }
 
                         break;
