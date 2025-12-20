@@ -2317,41 +2317,6 @@ function eventsProcessed ()
                node .childNode ._visible = extension .visible ?? true;
                break;
             }
-            case "KHR_physics_rigid_bodies":
-            {
-               for (const [key, value] of Object .entries (extension))
-               {
-                  if (!(value instanceof Object))
-                     continue;
-
-                  switch (key)
-                  {
-                     case "motion":
-                     {
-                        break;
-                     }
-                     case "collider":
-                     {
-                        if (value .geometry .node !== undefined)
-                        {
-                           console .log (value);
-                        }
-                        else if (value .geometry .shape !== undefined)
-                        {
-                           console .log (value);
-                        }
-
-                        break;
-                     }
-                     case "joint":
-                     {
-                        break;
-                     }
-                  }
-               }
-
-               break;
-            }
          }
       }
    },
