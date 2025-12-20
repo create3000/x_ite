@@ -50,6 +50,7 @@ function GLTF2Parser (scene)
    this .joints                = new Set ();
    this .pointerAliases        = new Map ();
    this .animationScripts      = [ ];
+   this .physicsNodes          = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .prototype),
@@ -2110,33 +2111,7 @@ function eventsProcessed ()
       node .childNode = node .humanoidNode ?? node .transformNode;
       node .pointers  = [node .childNode];
 
-      this .nodeExtensions (node);
-
       return node;
-   },
-   nodeExtensions (node)
-   {
-      if (!(node .extensions instanceof Object))
-         return;
-
-      for (const [key, extension] of Object .entries (node .extensions))
-      {
-         switch (key)
-         {
-            case "KHR_node_visibility":
-            {
-               // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_visibility
-               extension .pointers       = [node .childNode];
-               node .childNode ._visible = extension .visible ?? true;
-               break;
-            }
-            case "KHR_physics_rigid_bodies":
-            {
-               // console .log (extension);
-               break;
-            }
-         }
-      }
    },
    nodeSkeleton (node, index)
    {
@@ -2219,9 +2194,9 @@ function eventsProcessed ()
          if (viewpointNode)
             transformNode ._children .push (viewpointNode);
 
-         // Add light.
+         // Handle extensions.
 
-         this .nodeLight (node .extensions ?.KHR_lights_punctual, transformNode);
+         this .nodeExtensions (node);
 
          // Add children.
 
@@ -2313,17 +2288,73 @@ function eventsProcessed ()
          humanoidNode ._skin .push (transformNode);
       };
    })(),
-   nodeLight (KHR_lights_punctual, transformNode)
+   nodeExtensions (node)
    {
-      if (!(KHR_lights_punctual instanceof Object))
+      if (!(node .extensions instanceof Object))
          return;
 
-      const lightNode = this .lightObject (KHR_lights_punctual .light);
+      for (const [key, extension] of Object .entries (node .extensions))
+      {
+         switch (key)
+         {
+            case "KHR_lights_punctual":
+            {
+               if (!(extension instanceof Object))
+                  break;
 
-      if (!lightNode)
-         return;
+               const lightNode = this .lightObject (extension .light);
 
-      transformNode ._children .push (lightNode);
+               if (!lightNode)
+                  break;
+
+               node .transformNode ._children .push (lightNode);
+               break;
+            }
+            case "KHR_node_visibility":
+            {
+               // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_visibility
+               extension .pointers       = [node .childNode];
+               node .childNode ._visible = extension .visible ?? true;
+               break;
+            }
+            case "KHR_physics_rigid_bodies":
+            {
+               if (!(extension instanceof Object))
+                  break;
+
+               for (const [key, value] of Object .entries (extension))
+               {
+                  if (!(value instanceof Object))
+                     continue;
+
+                  switch (key)
+                  {
+                     case "motion":
+                     {
+                        break;
+                     }
+                     case "collider":
+                     {
+                        console .log (value);
+
+                        if (value .geometry .node !== undefined)
+                        {
+
+                        }
+
+                        break;
+                     }
+                     case "joint":
+                     {
+                        break;
+                     }
+                  }
+               }
+
+               break;
+            }
+         }
+      }
    },
    nodeChildrenArray (children)
    {
