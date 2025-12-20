@@ -2295,13 +2295,13 @@ function eventsProcessed ()
 
       for (const [key, extension] of Object .entries (node .extensions))
       {
+         if (!(extension instanceof Object))
+            continue;
+
          switch (key)
          {
             case "KHR_lights_punctual":
             {
-               if (!(extension instanceof Object))
-                  break;
-
                const lightNode = this .lightObject (extension .light);
 
                if (!lightNode)
@@ -2319,9 +2319,6 @@ function eventsProcessed ()
             }
             case "KHR_physics_rigid_bodies":
             {
-               if (!(extension instanceof Object))
-                  break;
-
                for (const [key, value] of Object .entries (extension))
                {
                   if (!(value instanceof Object))
