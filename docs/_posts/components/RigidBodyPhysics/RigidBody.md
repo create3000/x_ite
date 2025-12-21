@@ -33,7 +33,7 @@ The RigidBody node belongs to the [RigidBodyPhysics](/x_ite/components/overview/
 | SFBool | [in, out] | [fixed](#fields-fixed) | FALSE |
 | SFVec3f | [in, out] | [position](#fields-position) | 0 0 0  |
 | SFRotation | [in, out] | [orientation](#fields-orientation) | 0 0 1 0  |
-| SFVec3f | [in, out] | [scale](#fields-scale) | 1 1 1  |
+| SFVec3f | [in, out] | [size](#fields-size) | 1 1 1  |
 | SFVec3f | [in, out] | [linearVelocity](#fields-linearVelocity) | 0 0 0  |
 | SFVec3f | [in, out] | [angularVelocity](#fields-angularVelocity) | 0 0 0  |
 | SFBool | [in, out] | [useFiniteRotation](#fields-useFiniteRotation) | FALSE |
@@ -92,10 +92,10 @@ Enables/disables node operation.
 
 *orientation* sets body direction in world space, then reports physics updates.
 
-### SFVec3f [in, out] **scale** 1 1 1 <small>(-∞,∞)</small>
-{: #fields-scale }
+### SFVec3f [in, out] **size** 1 1 1 <small>(-∞,∞)</small>
+{: #fields-size }
 
-Input/Output field *scale*.
+Input/Output field *size*.
 
 ### SFVec3f [in, out] **linearVelocity** 0 0 0 <small>(-∞,∞)</small>
 {: #fields-linearVelocity }
@@ -279,6 +279,11 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
 - [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#BoundingBoxes)
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
+
+###  [] **scale** 1 1 1 <small>(-∞,∞)</small>
+{: #fields-scale }
+
+Input/Output field *scale*.
 
 ## Example
 
