@@ -2103,7 +2103,6 @@ function eventsProcessed ()
       // 2. Add children.
 
       this .nodes .forEach ((node, index) => this .nodeSkeleton (node, index));
-      this .nodes .forEach ((node, index) => this .nodeChildren (node, index));
    },
    nodeObject (node, index)
    {
@@ -2418,6 +2417,8 @@ function eventsProcessed ()
    {
       if (!(children instanceof Array))
          return [ ];
+
+      children .forEach (index => this .nodeChildren (this .nodes [index], index));
 
       const nodes = Array .from (new Set (children
          .map (index => this .nodes [index] ?.childNode)
