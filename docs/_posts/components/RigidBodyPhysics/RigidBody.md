@@ -161,7 +161,7 @@ Enables/disables node operation.
 
 *centerOfMass* defines local center of mass for physics calculations.
 
-### SFNode [in, out] **massDensityModel** NULL <small class="red">not supported</small>
+### SFNode [in, out] **massDensityModel** NULL <small>[Sphere, Box, Cone]</small> <small class="red">not supported</small>
 {: #fields-massDensityModel }
 
 The *massDensityModel* field is used to describe the geometry type and dimensions used to calculate the mass density in the physics model. It is not rendered, nor modified by the physics model.

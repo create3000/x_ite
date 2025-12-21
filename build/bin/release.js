@@ -233,7 +233,10 @@ function release ()
 	tags (version);
 
 	if (!version .endsWith ("a"))
+	{
+		systemSync (`npm login`);
 		systemSync (`npm publish`);
+	}
 
 	// code
 
