@@ -2396,6 +2396,7 @@ function eventsProcessed ()
 
                               node .modelMatrix .get (translation, rotation, scale);
 
+                              rigidBodyNode ._fixed       = true;
                               rigidBodyNode ._position    = translation;
                               rigidBodyNode ._orientation = rotation;
                               rigidBodyNode ._size        = scale;
