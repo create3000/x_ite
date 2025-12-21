@@ -251,7 +251,8 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
    eventsProcessed ()
    {
       this .matrix .set (this ._translation .getValue (),
-                         this ._rotation    .getValue ());
+                         this ._rotation    .getValue (),
+                         this ._scale       .getValue ());
 
       if (this .compoundShape .getNumChildShapes ())
          this .compoundShape .updateChildTransform (0, this .getLocalTransform (), true);

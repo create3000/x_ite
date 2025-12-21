@@ -34,6 +34,7 @@ The CollidableShape node belongs to the [RigidBodyPhysics](/x_ite/components/ove
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFVec3f | [in, out] | [translation](#fields-translation) | 0 0 0  |
 | SFRotation | [in, out] | [rotation](#fields-rotation) | 0 0 1 0  |
+| SFVec3f | [in, out] | [scale](#fields-scale) |  |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
 | SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
@@ -72,6 +73,11 @@ Orientation (axis, angle in radians) of children relative to local coordinate sy
 #### Hint
 
 - The order of operation is first apply the center offset, then scaleOrientation and scale, then *rotation*, then restore the center offset, then translation.
+
+### SFVec3f [in, out] **scale** 1 1 1 <small>(-∞,∞)</small>
+{: #fields-scale }
+
+Input/Output field *scale*.
 
 ### SFBool [in, out] **visible** TRUE
 {: #fields-visible }

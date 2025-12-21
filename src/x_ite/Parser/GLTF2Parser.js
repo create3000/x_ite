@@ -2171,8 +2171,11 @@ function eventsProcessed ()
          quaternion       = new Quaternion (),
          matrix           = new Matrix4 ();
 
-      return function (node, index)
+      return function (node, index, modelMatrix)
       {
+         if (node .modelMatrix)
+            return;
+
          const
             scene         = this .getScene (),
             transformNode = node .transformNode,
@@ -2218,6 +2221,15 @@ function eventsProcessed ()
             EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing,
             shapeNodes              = this .meshObject (this .meshes [node .mesh], skin, EXT_mesh_gpu_instancing);
 
+         // ModelMatrix
+
+         matrix .set (transformNode ._translation .getValue (),
+                      transformNode ._rotation .getValue (),
+                      transformNode ._scale .getValue (),
+                      transformNode ._scaleOrientation .getValue ());
+
+         node .modelMatrix = modelMatrix = modelMatrix .copy () .multLeft (matrix);
+
          // Add camera.
 
          const viewpointNode = this .cameraObject (node .camera, this .cameras [node .camera]);
@@ -2231,7 +2243,9 @@ function eventsProcessed ()
 
          // Add children.
 
-         let children = this .nodeChildrenArray (node .children);
+         let children = this .nodeChildrenArray (node .children, modelMatrix);
+
+         // HAnim
 
          if (transformNode .getType () .at (-1) === X3DConstants .HAnimJoint)
          {
@@ -2319,106 +2333,119 @@ function eventsProcessed ()
          humanoidNode ._skin .push (transformNode);
       };
    })(),
-   nodeExtensions (node)
+   nodeExtensions: (() =>
    {
-      if (!(node .extensions instanceof Object))
-         return;
+      const
+         translation = new Vector3 (),
+         rotation    = new Rotation4 (),
+         scale       = new Vector3 ();
 
-      for (const [key, extension] of Object .entries (node .extensions))
+      return function (node)
       {
-         if (!(extension instanceof Object))
-            continue;
+         if (!(node .extensions instanceof Object))
+            return;
 
-         switch (key)
+         for (const [key, extension] of Object .entries (node .extensions))
          {
-            case "KHR_lights_punctual":
-            {
-               const lightNode = this .lightObject (extension .light);
+            if (!(extension instanceof Object))
+               continue;
 
-               if (!lightNode)
-                  break;
-
-               node .transformNode ._children .push (lightNode);
-               break;
-            }
-            case "KHR_node_visibility":
+            switch (key)
             {
-               // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_visibility
-               extension .pointers       = [node .childNode];
-               node .childNode ._visible = extension .visible ?? true;
-               break;
-            }
-            case "KHR_physics_rigid_bodies":
-            {
-               for (const [key, value] of Object .entries (extension))
+               case "KHR_lights_punctual":
                {
-                  if (!(value instanceof Object))
-                     continue;
+                  const lightNode = this .lightObject (extension .light);
 
-                  switch (key)
+                  if (!lightNode)
+                     break;
+
+                  node .transformNode ._children .push (lightNode);
+                  break;
+               }
+               case "KHR_node_visibility":
+               {
+                  // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_visibility
+                  extension .pointers       = [node .childNode];
+                  node .childNode ._visible = extension .visible ?? true;
+                  break;
+               }
+               case "KHR_physics_rigid_bodies":
+               {
+                  for (const [key, value] of Object .entries (extension))
                   {
-                     case "motion":
-                     {
-                        break;
-                     }
-                     case "collider":
-                     {
-                        const scene = this .getScene ();
+                     if (!(value instanceof Object))
+                        continue;
 
-                        if (value .geometry .node !== undefined)
+                     switch (key)
+                     {
+                        case "motion":
                         {
-                           const
-                              rigidBodyNode = scene .createNode ("RigidBody", false),
-                              childNode     = this .nodes [value .geometry .node] ?.childNode;
+                           break;
+                        }
+                        case "collider":
+                        {
+                           const scene = this .getScene ();
 
-                           rigidBodyNode ._translation = childNode ._translation;
-                           rigidBodyNode ._rotation    = childNode ._rotation;
-
-                           for (const shapeNode of childNode ._children)
+                           if (value .geometry .node !== undefined)
                            {
-                              const collidableShapeNode = scene .createNode ("CollidableShape", false);
+                              this .nodeChildrenArray ([value .geometry .node], node .modelMatrix);
 
-                              collidableShapeNode ._shape = shapeNode;
+                              const
+                                 rigidBodyNode = scene .createNode ("RigidBody", false),
+                                 childNode     = this .nodes [value .geometry .node] ?.childNode;
 
-                              collidableShapeNode .setup ();
+                              node .modelMatrix .get (translation, rotation, scale);
 
-                              rigidBodyNode ._geometry .push (collidableShapeNode);
+                              rigidBodyNode ._position    = translation;
+                              rigidBodyNode ._orientation = rotation;
+                              rigidBodyNode ._scale       = scale;
 
-                              this .collidables .push (collidableShapeNode);
+                              for (const shapeNode of childNode ._children)
+                              {
+                                 const collidableShapeNode = scene .createNode ("CollidableShape", false);
 
-                              // DEBUG
-                              // node .transformNode ._children .push (collidableShapeNode);
+                                 collidableShapeNode ._shape = shapeNode;
+
+                                 collidableShapeNode .setup ();
+
+                                 rigidBodyNode ._geometry .push (collidableShapeNode);
+
+                                 this .collidables .push (collidableShapeNode);
+
+                                 // DEBUG
+                                 // node .transformNode ._children .push (collidableShapeNode);
+                              }
+
+                              rigidBodyNode .setup ();
+
+                              this .rigidBodies .push (rigidBodyNode);
+                           }
+                           else if (value .geometry .shape !== undefined)
+                           {
+                              // console .log (value);
                            }
 
-                           rigidBodyNode .setup ();
-
-                           this .rigidBodies .push (rigidBodyNode);
+                           break;
                         }
-                        else if (value .geometry .shape !== undefined)
+                        case "joint":
                         {
-                           // console .log (value);
+                           break;
                         }
-
-                        break;
-                     }
-                     case "joint":
-                     {
-                        break;
                      }
                   }
-               }
 
-               break;
+                  break;
+               }
             }
          }
-      }
-   },
-   nodeChildrenArray (children)
+      };
+   })(),
+   nodeChildrenArray (children, modelMatrix)
    {
       if (!(children instanceof Array))
          return [ ];
 
-      children .forEach (index => this .nodeChildren (this .nodes [index], index));
+      children .forEach (index => this .nodeChildren (this .nodes [index], index, modelMatrix));
 
       const nodes = Array .from (new Set (children
          .map (index => this .nodes [index] ?.childNode)
@@ -2603,9 +2630,9 @@ function eventsProcessed ()
    },
    sceneNodesArray (nodes)
    {
-      return this .nodeChildrenArray (nodes);
+      return this .nodeChildrenArray (nodes, new Matrix4 ());
    },
-   exportGroup (name, array)
+   exportGroup (name, array, visible = false)
    {
       if (!(array instanceof Array))
          return;
@@ -2622,7 +2649,7 @@ function eventsProcessed ()
       scene .addNamedNode    (scene .getUniqueName       (name), groupNode);
       scene .addExportedNode (scene .getUniqueExportName (name), groupNode);
 
-      groupNode ._visible  = false;
+      groupNode ._visible  = visible;
       groupNode ._children = nodes;
 
       groupNode .setup ();

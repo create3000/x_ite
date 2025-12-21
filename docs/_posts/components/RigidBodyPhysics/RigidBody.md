@@ -33,6 +33,7 @@ The RigidBody node belongs to the [RigidBodyPhysics](/x_ite/components/overview/
 | SFBool | [in, out] | [fixed](#fields-fixed) | FALSE |
 | SFVec3f | [in, out] | [position](#fields-position) | 0 0 0  |
 | SFRotation | [in, out] | [orientation](#fields-orientation) | 0 0 1 0  |
+| SFVec3f | [in, out] | [scale](#fields-scale) |  |
 | SFVec3f | [in, out] | [linearVelocity](#fields-linearVelocity) | 0 0 0  |
 | SFVec3f | [in, out] | [angularVelocity](#fields-angularVelocity) | 0 0 0  |
 | SFBool | [in, out] | [useFiniteRotation](#fields-useFiniteRotation) | FALSE |
@@ -90,6 +91,11 @@ Enables/disables node operation.
 {: #fields-orientation }
 
 *orientation* sets body direction in world space, then reports physics updates.
+
+### SFVec3f [in, out] **scale** 1 1 1 <small>(-∞,∞)</small>
+{: #fields-scale }
+
+Input/Output field *scale*.
 
 ### SFVec3f [in, out] **linearVelocity** 0 0 0 <small>(-∞,∞)</small>
 {: #fields-linearVelocity }
