@@ -228,7 +228,7 @@ Send *previous* output value in values array, using/updating various frame value
 - [HAnim Architecture draft version 2.1](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-2/ISO-IEC19774-2v2.1/ISO-IEC19774-2v2.1-WD/MotionDataAnimation/MotionNodes.html#MotionObject)
 - [HAnim Architecture draft version 2.1, 6.4 Extended definition of Humanoid object](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-2/ISO-IEC19774-2v2.1/ISO-IEC19774-2v2.1-WD/MotionDataAnimation/MotionNodes.html#HumanoidObjectExtension)
 - [HAnim Specification](https://www.web3d.org/documents/specifications/19774/V2.0)
-- HAnim Specification, clause 6.2 Introduction to Motion objectshttps://www.web3d.org/documents/specifications/19774/V2.0/MotionDataAnimation/MotionNodes.html#IntroductionToMotionNodes
+- [HAnim Specification, clause 6.2 Introduction to Motion objects](https://www.web3d.org/documents/specifications/19774/V2.0/MotionDataAnimation/MotionNodes.html#IntroductionToMotionNodes)
 - [HAnim Specification part 2, clause 6.6 Example Usage of Motion object](https://www.web3d.org/documents/specifications/19774/V2.0/MotionDataAnimation/MotionNodes.html#MotionObjectExample)
 
 ## See Also

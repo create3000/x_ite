@@ -82,10 +82,12 @@ Single contained [TextureProperties](/x_ite/components/texturing/textureproperti
 
 - Can contain a single [TextureProperties](/x_ite/components/texturing/textureproperties/) node.
 - Typically a [Box](/x_ite/components/geometry3d/box/) is used for applying the GeneratedCubeMapTexture.
+- [Wikipedia reference, Droste effect](https://en.wikipedia.org/wiki/Droste_effect)
+- Requires X3D `profile='Full'` or else include `<component name='CubeMapTexturing' level='3'/>`
 
 ### Warning
 
-- Requires X3D `profile='Full'` or else include `<component name='CubeMapTexturing' level='3'/>`
+- X3D specification recommends against recursive perspective when generating textures at run time.
 
 ## Example
 

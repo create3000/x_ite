@@ -129,7 +129,8 @@ sub update_node {
    $from           = $5;
    $to             = $6 // "Infinity";
 
-   $deprecated = $source =~ /THIS NODE IS DEPRECIATED SINCE X3D VERSION ([\d\.]+)./ ? $1 : "";
+   $deprecated   = $source =~ /THIS NODE IS DEPRECIATED SINCE X3D VERSION ([\d\.]+)./ ? $1 : "";
+   $experimental = $source =~ /THIS NODE IS STILL EXPERIMENTAL./;
 
    1 while $node =~ s/^\s*(?:\[.*?\]|\(.*?\))\s*//so;
    1 while $node =~ s/^(?:\s*or)?\s*(?:[\[\()].*?[\]\)]|-1\.)\s*//so;
@@ -219,6 +220,7 @@ sub update_node {
    $string .= "\n";
    $string .= "\n";
    $string .= ">**Deprecated:** This node is **deprecated** as of X3D version $deprecated. Future versions of the standard may remove this node.\n{: .prompt-danger }\n\n" if $deprecated;
+   $string .= ">**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.\n{: .prompt-info }\n\n" if $experimental;
 
    $file =~ s/(## Overview\n).*?\n(?=##\s+)/$1$string/s;
 
