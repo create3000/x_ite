@@ -142,7 +142,10 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
       {
          const copy = value .copy (instance);
 
-         copy .setup ();
+         if (!copy .isInitialized () && !instance .getExecutionContext () .getOuterNode () ?.getType () .includes (X3DConstants .X3DProtoDeclaration))
+         {
+            copy .setup ();
+         }
 
          return new SFNode (copy);
       }

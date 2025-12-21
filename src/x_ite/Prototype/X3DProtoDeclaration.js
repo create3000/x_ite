@@ -12,7 +12,7 @@ function X3DProtoDeclaration (executionContext)
 {
    X3DProtoDeclarationNode .call (this, executionContext);
 
-   this .addType (X3DConstants .X3DProtoDeclaration)
+   this .addType (X3DConstants .X3DProtoDeclaration);
 
    this [_body] = new X3DExecutionContext (executionContext, this);
    this [_body] .setLive (false);
