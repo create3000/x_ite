@@ -50,7 +50,9 @@ function GLTF2Parser (scene)
    this .joints                = new Set ();
    this .pointerAliases        = new Map ();
    this .animationScripts      = [ ];
-   this .physicsNodes          = [ ];
+   this .physics               = [ ];
+   this .rigidBodies           = [ ];
+   this .collidables           = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .prototype),
@@ -169,18 +171,43 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .scenesArray     (glTF, glTF .scenes, glTF .scene);
       this .animationsArray (glTF .animations);
 
+      this .physicsNodes ();
       this .viewpointsCenterOfRotation (scene);
       this .optimizeSceneGraph (scene .getRootNodes ());
 
       this .exportGroup ("Viewpoints",        this .cameras);
       this .exportGroup ("EnvironmentLights", this .envLights);
       this .exportGroup ("Lights",            this .lights);
+      this .exportGroup ("Physics",           this .physics);
       this .exportGroup ("Animations",        glTF .animations);
 
       this .cleanupAnimationScripts ();
       this .materialVariantsSwitch ();
 
       return scene;
+   },
+   physicsNodes ()
+   {
+      if (!this .collidables .length)
+         return;
+
+      const
+         scene       = this .getScene (),
+         collidables = scene .createNode ("Group", false),
+         collection  = scene .createNode ("RigidBodyCollection", false);
+
+      scene .addNamedNode (scene .getUniqueName ("Collidables"), collidables);
+
+      collidables ._visible  = false;
+      collidables ._children = this .collidables;
+
+      collection ._bodies = this .rigidBodies;
+
+      collidables .setup ();
+      collection  .setup ();
+
+      this .physics .push ({ node: collidables });
+      this .physics .push ({ node: collection });
    },
    assetObject (asset, extensions)
    {
@@ -289,6 +316,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             {
                components .push (browser .getComponent ("EventUtilities", 1));
                components .push (browser .getComponent ("Scripting",      1));
+               break;
+            }
+            case "KHR_physics_rigid_bodies":
+            {
+               components .push (browser .getComponent ("RigidBodyPhysics", 2));
                break;
             }
          }
@@ -2332,13 +2364,40 @@ function eventsProcessed ()
                      }
                      case "collider":
                      {
+                        const scene = this .getScene ();
+
                         if (value .geometry .node !== undefined)
                         {
-                           console .log (value);
+                           const
+                              rigidBodyNode = scene .createNode ("RigidBody", false),
+                              childNode     = this .nodes [value .geometry .node] ?.childNode;
+
+                           rigidBodyNode ._translation = childNode ._translation;
+                           rigidBodyNode ._rotation    = childNode ._rotation;
+
+                           for (const shapeNode of childNode ._children)
+                           {
+                              const collidableShapeNode = scene .createNode ("CollidableShape", false);
+
+                              collidableShapeNode ._shape = shapeNode;
+
+                              collidableShapeNode .setup ();
+
+                              rigidBodyNode ._geometry .push (collidableShapeNode);
+
+                              this .collidables .push (collidableShapeNode);
+
+                              // DEBUG
+                              // node .transformNode ._children .push (collidableShapeNode);
+                           }
+
+                           rigidBodyNode .setup ();
+
+                           this .rigidBodies .push (rigidBodyNode);
                         }
                         else if (value .geometry .shape !== undefined)
                         {
-                           console .log (value);
+                           // console .log (value);
                         }
 
                         break;
