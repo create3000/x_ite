@@ -15,7 +15,7 @@ function X3DExternProtoDeclaration (executionContext, url)
    X3DProtoDeclarationNode .call (this, executionContext);
    X3DUrlObject            .call (this, executionContext);
 
-   this .addType (X3DConstants .X3DExternProtoDeclaration)
+   this .addType (X3DConstants .X3DExternProtoDeclaration);
 
    this .addChildObjects (X3DConstants .inputOutput, "load",                 new Fields .SFBool (true),
                           X3DConstants .inputOutput, "url",                  url .copy (), // Must be of type MFString.
