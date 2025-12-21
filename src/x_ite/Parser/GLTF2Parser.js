@@ -50,6 +50,7 @@ function GLTF2Parser (scene)
    this .joints                = new Set ();
    this .pointerAliases        = new Map ();
    this .animationScripts      = [ ];
+   this .physicsNodes          = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .prototype),
@@ -1477,11 +1478,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    textureTransformObject: (() =>
    {
       const
-         translation = new Vector2 (),
-         scale       = new Vector2 (1),
-         matrix      = new Matrix4 (),
-         vector      = new Vector3 (),
-         rotation    = new Rotation4 ();
+         matrix   = new Matrix4 (),
+         vector   = new Vector3 (),
+         rotation = new Rotation4 ();
 
       return function (KHR_texture_transform, texCoord)
       {
@@ -1493,6 +1492,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
          texCoord = KHR_texture_transform .texCoord ?? texCoord;
 
+         const
+            translation = new Vector2 (),
+            scale       = new Vector2 (1);
+
          // Reset matrix.
          matrix .set ();
 
@@ -1503,7 +1506,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          if (this .vectorValue (KHR_texture_transform .offset, translation))
             matrix .translate (vector .set (... translation, 0));
 
-         matrix .rotate (rotation .set (0, 0, -1, this .numberValue (KHR_texture_transform .rotation, 0)));
+         const angle = this .numberValue (KHR_texture_transform .rotation, 0)
+
+         matrix .rotate (rotation .set (0, 0, -1, angle));
 
          if (this .vectorValue (KHR_texture_transform .scale, scale))
             matrix .scale (vector .set (... scale, 1));
@@ -1549,29 +1554,27 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             {
                const scriptNode = scene .createNode ("Script", false);
 
-               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "translation",   new Fields .SFVec2f ());
-               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "rotation",      new Fields .SFFloat ());
-               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "scale",         new Fields .SFVec2f (1, 1));
+               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "translation",   new Fields .SFVec2f (... translation));
+               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "rotation",      new Fields .SFFloat (angle));
+               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "scale",         new Fields .SFVec2f (... scale));
                scriptNode .addUserDefinedField (X3DConstants .outputOnly,  "value_changed", new Fields .SFMatrix4f ());
 
                scriptNode ._url = [/* js */ `ecmascript:
 
-const
-   flipY  = new SFMatrix3f (1, 0, 0, 0, -1, 0, 0, 1, 1),
-   matrix = new SFMatrix3f ();
+const m = new SFMatrix3f ();
 
 function eventsProcessed ()
 {
-   matrix .setTransform (translation, -rotation, scale);
+   m .setTransform (translation, -rotation, scale);
 
-   const m = flipY .multLeft (matrix);
+   // m' = m * flipY
 
    value_changed [0]  = m [0];
-   value_changed [1]  = m [1];
+   value_changed [1]  = -m [1] + m [2];
    value_changed [4]  = m [3];
-   value_changed [5]  = m [4];
+   value_changed [5]  = -m [4] + m [5];
    value_changed [12] = m [6];
-   value_changed [13] = m [7];
+   value_changed [13] = -m [7] + m [8];
 }
 `];
 
@@ -1972,19 +1975,14 @@ function eventsProcessed ()
 
       const
          scene         = this .getScene (),
-         viewpointNode = scene .createNode ("OrthoViewpoint", false);
+         viewpointNode = scene .createNode ("OrthoViewpoint", false),
+         xmag          = typeof camera .xmag === "number" ? camera .xmag : 1,
+         ymag          = typeof camera .ymag === "number" ? camera .ymag : 1;
 
-      if (typeof camera .xmag === "number")
-      {
-         viewpointNode ._fieldOfView [0] = -camera .xmag;
-         viewpointNode ._fieldOfView [2] = +camera .xmag;
-      }
-
-      if (typeof camera .ymag === "number")
-      {
-         viewpointNode ._fieldOfView [1] = -camera .ymag;
-         viewpointNode ._fieldOfView [3] = +camera .ymag;
-      }
+      viewpointNode ._fieldOfView [0] = -xmag;
+      viewpointNode ._fieldOfView [1] = -ymag;
+      viewpointNode ._fieldOfView [2] =  xmag;
+      viewpointNode ._fieldOfView [3] =  ymag;
 
       if (typeof camera .znear === "number")
          viewpointNode ._nearDistance = camera .znear;
@@ -2003,15 +2001,18 @@ function eventsProcessed ()
          {
             const scriptNode = scene .createNode ("Script", false);
 
-            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "xmag",          new Fields .SFFloat (1));
-            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "ymag",          new Fields .SFFloat (1));
+            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "xmag",          new Fields .SFFloat (xmag));
+            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "ymag",          new Fields .SFFloat (ymag));
             scriptNode .addUserDefinedField (X3DConstants .outputOnly,  "value_changed", new Fields .MFFloat ());
 
             scriptNode ._url = [/* js */ `ecmascript:
 
 function eventsProcessed ()
 {
-   value_changed = new MFFloat (-xmag, -ymag, xmag, ymag);
+   value_changed [0] = -xmag;
+   value_changed [1] = -ymag;
+   value_changed [2] =  xmag;
+   value_changed [3] =  ymag;
 }
 `];
 
@@ -2110,15 +2111,6 @@ function eventsProcessed ()
       node .childNode = node .humanoidNode ?? node .transformNode;
       node .pointers  = [node .childNode];
 
-      // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_visibility
-      const visibility = node .extensions ?.KHR_node_visibility;
-
-      if (visibility)
-      {
-         visibility .pointers      = [node .childNode];
-         node .childNode ._visible = visibility .visible ?? true;
-      }
-
       return node;
    },
    nodeSkeleton (node, index)
@@ -2202,9 +2194,9 @@ function eventsProcessed ()
          if (viewpointNode)
             transformNode ._children .push (viewpointNode);
 
-         // Add light.
+         // Handle extensions.
 
-         this .nodeLight (node .extensions ?.KHR_lights_punctual, transformNode);
+         this .nodeExtensions (node);
 
          // Add children.
 
@@ -2296,17 +2288,37 @@ function eventsProcessed ()
          humanoidNode ._skin .push (transformNode);
       };
    })(),
-   nodeLight (KHR_lights_punctual, transformNode)
+   nodeExtensions (node)
    {
-      if (!(KHR_lights_punctual instanceof Object))
+      if (!(node .extensions instanceof Object))
          return;
 
-      const lightNode = this .lightObject (KHR_lights_punctual .light);
+      for (const [key, extension] of Object .entries (node .extensions))
+      {
+         if (!(extension instanceof Object))
+            continue;
 
-      if (!lightNode)
-         return;
+         switch (key)
+         {
+            case "KHR_lights_punctual":
+            {
+               const lightNode = this .lightObject (extension .light);
 
-      transformNode ._children .push (lightNode);
+               if (!lightNode)
+                  break;
+
+               node .transformNode ._children .push (lightNode);
+               break;
+            }
+            case "KHR_node_visibility":
+            {
+               // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_visibility
+               extension .pointers       = [node .childNode];
+               node .childNode ._visible = extension .visible ?? true;
+               break;
+            }
+         }
+      }
    },
    nodeChildrenArray (children)
    {
@@ -3657,7 +3669,10 @@ function eventsProcessed ()
 
 function eventsProcessed ()
 {
-   value_changed = new SFColorRGBA (... color, alpha);
+   value_changed [0] = color [0];
+   value_changed [1] = color [1];
+   value_changed [2] = color [2];
+   value_changed [3] = alpha;
 }
    `];
 

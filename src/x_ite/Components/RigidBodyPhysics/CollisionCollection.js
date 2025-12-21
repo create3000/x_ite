@@ -98,12 +98,11 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChild
          const collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, node);
 
          if (collisionSpaceNode)
-         {
-            collisionSpaceNode .addInterest ("collect", this);
-
             collisionSpaceNodes .push (collisionSpaceNode);
-         }
       }
+
+      for (const collisionSpaceNode of collisionSpaceNodes)
+         collisionSpaceNode .addInterest ("collect", this);
 
       this .collect ();
    },
@@ -161,11 +160,11 @@ Object .defineProperties (CollisionCollection,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "slipFactors",              new Fields .SFVec2f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "softnessConstantForceMix", new Fields .SFFloat (0.0001)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "softnessErrorCorrection",  new Fields .SFFloat (0.8)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "collidables",              new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",                  new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",              new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",                 new Fields .SFVec3f (-1, -1, -1)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",               new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "collidables",              new Fields .MFNode ()),
       ]),
       enumerable: true,
    },

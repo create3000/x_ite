@@ -1,5 +1,5 @@
-/* X_ITE v12.2.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.2.2")];
+/* X_ITE v12.2.3 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.2.3")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -1345,12 +1345,11 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, (externa
          const collisionSpaceNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DNBodyCollisionSpaceNode, node);
 
          if (collisionSpaceNode)
-         {
-            collisionSpaceNode .addInterest ("collect", this);
-
             collisionSpaceNodes .push (collisionSpaceNode);
-         }
       }
+
+      for (const collisionSpaceNode of collisionSpaceNodes)
+         collisionSpaceNode .addInterest ("collect", this);
 
       this .collect ();
    },
@@ -1408,11 +1407,11 @@ Object .defineProperties (CollisionCollection,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "slipFactors",              new (external_X_ITE_X3D_Fields_default()).SFVec2f ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "softnessConstantForceMix", new (external_X_ITE_X3D_Fields_default()).SFFloat (0.0001)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "softnessErrorCorrection",  new (external_X_ITE_X3D_Fields_default()).SFFloat (0.8)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "collidables",              new (external_X_ITE_X3D_Fields_default()).MFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",                  new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay",              new (external_X_ITE_X3D_Fields_default()).SFBool ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",                 new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxCenter",               new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "collidables",              new (external_X_ITE_X3D_Fields_default()).MFNode ()),
       ]),
       enumerable: true,
    },
@@ -2363,7 +2362,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3
          if (this ._fixed .getValue ())
             lv .setValue (0, 0, 0);
          else
-            lv .setValue (this ._linearVelocity .x, this ._linearVelocity .y, this ._linearVelocity .z);
+            lv .setValue (... this ._linearVelocity);
 
          this .rigidBody .setLinearVelocity (lv);
          this .rigidBody .activate ();
@@ -2378,7 +2377,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3
          if (this ._fixed .getValue ())
             av .setValue (0, 0, 0);
          else
-            av .setValue (this ._angularVelocity .x, this ._angularVelocity .y, this ._angularVelocity .z);
+            av .setValue (... this ._angularVelocity);
 
          this .rigidBody .setAngularVelocity (av);
          this .rigidBody .activate ();
@@ -2391,7 +2390,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3
       return function ()
       {
          if (this ._useFiniteRotation .getValue ())
-            angularFactor .setValue (this ._finiteRotationAxis .x, this ._finiteRotationAxis .y, this ._finiteRotationAxis .z);
+            angularFactor .setValue (... this ._finiteRotationAxis);
          else
             angularFactor .setValue (1, 1, 1);
 
@@ -2416,7 +2415,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3
 
       return function ()
       {
-         origin .setValue (this ._centerOfMass .x, this ._centerOfMass .y, this ._centerOfMass .z);
+         origin .setValue (... this ._centerOfMass);
          centerOfMass .setOrigin (origin);
 
          this .rigidBody .setCenterOfMassTransform (centerOfMass);
@@ -2564,12 +2563,12 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3
             return;
 
          if (this ._useGlobalGravity .getValue ())
-            g .setValue (gravity .x, gravity .y, gravity .z);
+            g .setValue (... gravity);
          else
             g .setValue (0, 0, 0);
 
-         f .setValue (this .force  .x, this .force  .y, this .force  .z);
-         t .setValue (this .torque .x, this .torque .y, this .torque .z);
+         f .setValue (... this .force);
+         t .setValue (... this .torque);
 
          this .rigidBody .setGravity (g);
          this .rigidBody .applyForce (f, z);
@@ -2776,19 +2775,57 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (externa
    },
    set_collider__ ()
    {
+      this .colliderNode ?.removeInterest ("set_colliderParameters__", this);
+
       this .colliderNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).CollisionCollection, this ._collider);
+
+      this .colliderNode ?.addInterest ("set_colliderParameters__", this);
+
+      this .set_colliderParameters__ ();
+   },
+   set_colliderParameters__ ()
+   {
+      const colliderNode = this .colliderNode;
+
+      for (const bodyNode of this .bodyNodes)
+      {
+         const rigidBody = bodyNode .getRigidBody ();
+
+         rigidBody .setFriction (0.5);
+         rigidBody .setRollingFriction (0);
+      }
+
+      if (!colliderNode)
+         return;
+
+      for (const parameter of colliderNode .getAppliedParameters ())
+      {
+         switch (parameter)
+         {
+            case RigidBodyPhysics_AppliedParametersType .FRICTION_COEFFICIENT_2:
+            {
+               for (const bodyNode of this .bodyNodes)
+               {
+                  const rigidBody = bodyNode .getRigidBody ();
+
+                  rigidBody .setFriction (colliderNode ._frictionCoefficients .x);
+                  rigidBody .setRollingFriction (colliderNode ._frictionCoefficients .y);
+               }
+
+               break;
+            }
+         }
+      }
    },
    set_bounce__ ()
    {
-      const
-         colliderNode = this .colliderNode,
-         bodyNodes    = this .bodyNodes;
+      const colliderNode = this .colliderNode;
 
-      if (colliderNode && colliderNode ._enabled .getValue ())
+      if (colliderNode ?._enabled .getValue ())
       {
          if (colliderNode .getAppliedParameters () .has (RigidBodyPhysics_AppliedParametersType .BOUNCE))
          {
-            for (const bodyNode of bodyNodes)
+            for (const bodyNode of this .bodyNodes)
             {
                const rigidBody = bodyNode .getRigidBody ();
 
@@ -2802,34 +2839,8 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (externa
          }
       }
 
-      for (const bodyNode of bodyNodes)
-         bodyNode .getRigidBody () .setRestitution (0);
-   },
-   set_frictionCoefficients__ ()
-   {
-      if (this .colliderNode && this .colliderNode ._enabled .getValue ())
-      {
-         if (this .colliderNode .getAppliedParameters () .has (RigidBodyPhysics_AppliedParametersType .FRICTION_COEFFICIENT_2))
-         {
-            for (const bodyNode of this .bodyNodes)
-            {
-               const rigidBody = bodyNode .getRigidBody ();
-
-               rigidBody .setFriction (this .colliderNode ._frictionCoefficients .x);
-               rigidBody .setRollingFriction (this .colliderNode ._frictionCoefficients .y);
-            }
-
-            return;
-         }
-      }
-
       for (const bodyNode of this .bodyNodes)
-      {
-         const rigidBody = bodyNode .getRigidBody ();
-
-         rigidBody .setFriction (0.5);
-         rigidBody .setRollingFriction (0);
-      }
+         bodyNode .getRigidBody () .setRestitution (0);
    },
    set_bodies__ ()
    {
@@ -2848,7 +2859,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (externa
       {
          const bodyNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).RigidBody, node);
 
-         if (! bodyNode)
+         if (!bodyNode)
             continue;
 
          if (bodyNode .getCollection ())
@@ -2866,6 +2877,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (externa
       for (const bodyNode of this .bodyNodes)
          bodyNode ._enabled .addInterest ("set_dynamicsWorld__", this);
 
+      this .set_colliderParameters__ ();
       this .set_contactSurfaceThickness__ ();
       this .set_dynamicsWorld__ ();
       this .set_joints__ ();
@@ -2879,7 +2891,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (externa
 
       for (const bodyNode of this .bodyNodes)
       {
-         if (! bodyNode ._enabled .getValue ())
+         if (!bodyNode ._enabled .getValue ())
             continue;
 
          this .rigidBodies .push (bodyNode .getRigidBody ());
@@ -2904,7 +2916,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (externa
       {
          const jointNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DRigidJointNode, node);
 
-         if (! jointNode)
+         if (!jointNode)
             continue;
 
          if (jointNode .getCollection ())
@@ -2928,7 +2940,6 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, (externa
             gravity    = this ._gravity .getValue ();
 
          this .set_bounce__ ();
-         this .set_frictionCoefficients__ ();
 
          if (this ._preferAccuracy .getValue ())
          {

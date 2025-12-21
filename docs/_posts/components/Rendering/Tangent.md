@@ -13,9 +13,9 @@ tags: [Tangent, Rendering]
 
 ## Overview
 
-Tangent.
+Tangent defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate or CoordinateDouble node, or else to a parent ElevationGrid node. Tangent values are perpendicular directions that are used per-polygon or per-vertex when computing lighting and shading.
 
-The Tangent node belongs to the **Rendering** component and requires at least support level **5,** its default container field is *tangent.* It is available from X3D version 4.0 or higher.
+The Tangent node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **5,** its default container field is *tangent.* It is available from X3D version 4.0 or higher.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
@@ -49,7 +49,22 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### MFVec4f [in, out] **vector** [ ] <small>[-1,1]</small>
 {: #fields-vector }
 
-A unit XYZ vector defining a tangent direction on the surface, and a W component whose sign value (-1 or +1) indicates the handedness of the tangent base.
+Set of x-y-z-w orthogonal *vector* values for a surface, applied either per-vertex or per-face to a mesh. This is an advanced technique for surface shading.
+
+#### Hint
+
+- Values for w are handedness of the tangent base, either +1 or -1. All vertexes of the same triangle must have the same w value for their tangent vectors.
+
+#### Warning
+
+- Unit length means a magnitude of 1.0, so x-y-z normal values of (0,0,0) are invalid.
+
+## Advice
+
+### Hints
+
+- [Normal vectors perpendicular to 3D surface](https://en.wikipedia.org/wiki/Normal_(geometry))
+- [Tangent plane](https://en.wikipedia.org/wiki/Tangent)
 
 ## See Also
 
