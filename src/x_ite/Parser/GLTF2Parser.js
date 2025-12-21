@@ -2398,7 +2398,7 @@ function eventsProcessed ()
 
                               rigidBodyNode ._position    = translation;
                               rigidBodyNode ._orientation = rotation;
-                              rigidBodyNode ._scale       = scale;
+                              rigidBodyNode ._size        = scale;
 
                               for (const shapeNode of childNode ._children)
                               {
