@@ -53,6 +53,7 @@ function GLTF2Parser (scene)
    this .physics               = [ ];
    this .rigidBodies           = [ ];
    this .collidables           = [ ];
+   this .implicitShapes        = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .prototype),
@@ -185,29 +186,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .materialVariantsSwitch ();
 
       return scene;
-   },
-   physicsNodes ()
-   {
-      if (!this .collidables .length)
-         return;
-
-      const
-         scene       = this .getScene (),
-         collidables = scene .createNode ("Group", false),
-         collection  = scene .createNode ("RigidBodyCollection", false);
-
-      scene .addNamedNode (scene .getUniqueName ("Collidables"), collidables);
-
-      collidables ._visible  = false;
-      collidables ._children = this .collidables;
-
-      collection ._bodies = this .rigidBodies;
-
-      collidables .setup ();
-      collection  .setup ();
-
-      this .physics .push ({ node: collidables });
-      this .physics .push ({ node: collection });
    },
    assetObject (asset, extensions)
    {
@@ -355,6 +333,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                break;
             case "KHR_materials_variants":
                this .khrMaterialsVariantsObjectVariants (value);
+               break;
+            case "KHR_implicit_shapes":
+               this .khrImplicitShapes (value);
                break;
          }
       }
@@ -590,6 +571,46 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             continue;
 
          worldInfoNode ._info .push (`${match [1]}: ${value}`);
+      }
+   },
+   khrImplicitShapes ({ shapes })
+   {
+      if (!(shapes instanceof Array))
+         return;
+
+      const scene = this .getScene ();
+
+      for (const [i, shape] of shapes .entries ())
+      {
+         switch (shape ?.type)
+         {
+            case "box":
+            {
+               const
+                  node = scene .createNode ("Box", false),
+                  size = new Vector3 (1);
+
+               this .vectorValue (shape .box ?.size, size);
+
+               node ._size = size;
+
+               node .setup ();
+
+               this .implicitShapes [i] = node;
+               break;
+            }
+            case "sphere":
+            {
+               const node = scene .createNode ("Sphere", false);
+
+               node ._radius = this .numberValue (shape .sphere ?.radius, 0.5);
+
+               node .setup ();
+
+               this .implicitShapes [i] = node;
+               break;
+            }
+         }
       }
    },
    async buffersArray (buffers)
@@ -4247,6 +4268,29 @@ function eventsProcessed ()
       a1 *= td * (t3 - t2);
 
       return v0 + b0 + v1 + a1;
+   },
+   physicsNodes ()
+   {
+      if (!this .collidables .length)
+         return;
+
+      const
+         scene       = this .getScene (),
+         collidables = scene .createNode ("Group", false),
+         collection  = scene .createNode ("RigidBodyCollection", false);
+
+      scene .addNamedNode (scene .getUniqueName ("Collidables"), collidables);
+
+      collidables ._visible  = false;
+      collidables ._children = this .collidables;
+
+      collection ._bodies = this .rigidBodies;
+
+      collidables .setup ();
+      collection  .setup ();
+
+      this .physics .push ({ node: collidables });
+      this .physics .push ({ node: collection });
    },
    vectorValue (array, vector)
    {
