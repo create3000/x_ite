@@ -8,6 +8,7 @@ import Vector2      from "../../standard/Math/Numbers/Vector2.js";
 import Vector3      from "../../standard/Math/Numbers/Vector3.js";
 import Quaternion   from "../../standard/Math/Numbers/Quaternion.js";
 import Rotation4    from "../../standard/Math/Numbers/Rotation4.js";
+import Matrix3      from "../../standard/Math/Numbers/Matrix3.js";
 import Matrix4      from "../../standard/Math/Numbers/Matrix4.js";
 import Color3       from "../../standard/Math/Numbers/Color3.js";
 import Color4       from "../../standard/Math/Numbers/Color4.js";
@@ -15,7 +16,9 @@ import Color4       from "../../standard/Math/Numbers/Color4.js";
 // https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html
 // https://github.com/KhronosGroup/glTF-Sample-Assets
 
-const SAMPLES_PER_SECOND = 30; // in 1/s
+const
+   GRAVITY            = -9.80665, // im m/s²
+   SAMPLES_PER_SECOND = 10;       // in 1/s
 
 function GLTF2Parser (scene)
 {
@@ -2365,7 +2368,8 @@ function eventsProcessed ()
       const
          translation = new Vector3 (),
          rotation    = new Rotation4 (),
-         scale       = new Vector3 ();
+         scale       = new Vector3 (),
+         vector3     = new Vector3 ();
 
       return function (node)
       {
@@ -2472,6 +2476,23 @@ function eventsProcessed ()
                         {
                            rigidBodyNode ._fixed = value .isKinematic;
                            rigidBodyNode ._mass  = this .numberValue (value .mass, 1);
+
+                           if (this .vectorValue (value .centerOfMass, vector3))
+                              rigidBodyNode ._centerOfMass = vector3;
+
+                           if (this .vectorValue (value .inertiaDiagonal, vector3))
+                              rigidBodyNode ._inertia = new Matrix3 (vector3 [0], 0, 0, 0, vector3 [1], 0, 0, 0, vector3 [2]);
+
+                           // TODO: inertiaOrientation
+
+                           if (this .vectorValue (value .linearVelocity, vector3))
+                              rigidBodyNode ._linearVelocity = vector3;
+
+                           if (this .vectorValue (value .angularVelocity, vector3))
+                              rigidBodyNode ._angularVelocity = vector3;
+
+                           rigidBodyNode ._useGlobalGravity = false;
+                           rigidBodyNode ._forces           = [0, GRAVITY * this .numberValue (value .gravityFactor, 1), 0];
 
                            // Script
 
