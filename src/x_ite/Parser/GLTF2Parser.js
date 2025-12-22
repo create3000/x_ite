@@ -2491,8 +2491,10 @@ function eventsProcessed ()
                            if (this .vectorValue (value .angularVelocity, vector3))
                               rigidBodyNode ._angularVelocity = vector3;
 
+                           const gravity = GRAVITY * this .numberValue (value .gravityFactor, 1);
+
                            rigidBodyNode ._useGlobalGravity = false;
-                           rigidBodyNode ._forces           = [0, GRAVITY * this .numberValue (value .gravityFactor, 1), 0];
+                           rigidBodyNode ._forces           = [0, gravity * rigidBodyNode ._mass .getValue (), 0];
 
                            // Script
 
