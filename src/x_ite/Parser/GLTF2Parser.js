@@ -2442,8 +2442,7 @@ function eventsProcessed ()
                               {
                                  const collidableShapeNode = scene .createNode ("CollidableShape", false);
 
-                                 collidableShapeNode ._convexHull = value .geometry .convexHull;
-                                 collidableShapeNode ._shape      = shapeNode;
+                                 collidableShapeNode ._shape = shapeNode;
 
                                  collidableShapeNode .setup ();
 
