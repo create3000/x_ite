@@ -17,8 +17,8 @@ import Color4       from "../../standard/Math/Numbers/Color4.js";
 // https://github.com/KhronosGroup/glTF-Sample-Assets
 
 const
-   GRAVITY            = -9.80665, // im m/s²
-   SAMPLES_PER_SECOND = 10;       // in 1/s
+   GRAVITY            = -9.81, // in m/s²
+   SAMPLES_PER_SECOND = 10;    // in 1/s
 
 function GLTF2Parser (scene)
 {
