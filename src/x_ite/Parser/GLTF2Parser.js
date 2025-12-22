@@ -2199,7 +2199,7 @@ function eventsProcessed ()
 
       return function (node, index, modelMatrix)
       {
-         if (node .matrix)
+         if (node .modelMatrix)
             return;
 
          const
