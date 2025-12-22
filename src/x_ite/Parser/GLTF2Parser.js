@@ -2247,17 +2247,15 @@ function eventsProcessed ()
                         transformNode ._scaleOrientation .getValue ());
          }
 
+         node .matrix      = matrix;
+         node .modelMatrix = matrix .copy () .multRight (modelMatrix);
+
          // Add mesh.
 
          const
             skin                    = this .skins [node .skin],
             EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing,
             shapeNodes              = this .meshObject (this .meshes [node .mesh], skin, EXT_mesh_gpu_instancing);
-
-         // ModelMatrix
-
-         node .matrix      = matrix;
-         node .modelMatrix = matrix .copy () .multRight (modelMatrix);
 
          // Add camera.
 
