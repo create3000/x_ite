@@ -249,18 +249,19 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       return function ()
       {
-         const inertia = this ._inertia .getValue ();
+         const
+            fixed   = this ._fixed .getValue (),
+            mass    = this ._mass .getValue (),
+            inertia = this ._inertia .getValue ();
 
          localInertia .setValue (inertia [0] + inertia [1] + inertia [2],
                                  inertia [3] + inertia [4] + inertia [5],
                                  inertia [6] + inertia [7] + inertia [8]);
 
-         this .compoundShape .calculateLocalInertia (this ._fixed .getValue () ? 0 : this ._mass .getValue (), localInertia);
+         this .compoundShape .calculateLocalInertia (fixed ? 0 : mass, localInertia);
 
-         this .rigidBody .setMassProps (this ._fixed .getValue () ? 0 : this ._mass .getValue (), localInertia);
+         this .rigidBody .setMassProps (fixed ? 0 : mass, localInertia);
          this .rigidBody .updateInertiaTensor ();
-
-         this ._updateWorld .addEvent ();
       };
    })(),
    set_forces__ ()
