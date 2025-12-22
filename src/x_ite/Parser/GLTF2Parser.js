@@ -614,7 +614,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                geometryNode ._radius = Math .max (this .numberValue (shape .capsule ?.radiusBottom, 0.25),
                   this .numberValue (shape .capsule ?.radiusTop, 0.25));
 
-               geometryNode ._size  = size;
                shapeNode ._geometry = geometryNode;
 
                geometryNode .setup ();
@@ -628,7 +627,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                geometryNode ._radius = Math .max (this .numberValue (shape .cylinder ?.radiusBottom, 0.25),
                   this .numberValue (shape .cylinder ?.radiusTop, 0.25));
 
-               geometryNode ._size  = size;
                shapeNode ._geometry = geometryNode;
 
                geometryNode .setup ();
