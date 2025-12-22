@@ -2377,6 +2377,8 @@ function eventsProcessed ()
             if (!(extension instanceof Object))
                continue;
 
+            const scene = this .getScene ();
+
             switch (key)
             {
                case "KHR_lights_punctual":
@@ -2398,6 +2400,20 @@ function eventsProcessed ()
                }
                case "KHR_physics_rigid_bodies":
                {
+                  let rigidBodyNode;
+
+                  if (extension .collider || extension .motion)
+                  {
+                     rigidBodyNode = scene .createNode ("RigidBody", false);
+
+                     node .modelMatrix .get (translation, rotation, scale);
+
+                     rigidBodyNode ._fixed       = true;
+                     rigidBodyNode ._position    = translation;
+                     rigidBodyNode ._orientation = rotation;
+                     rigidBodyNode ._size        = scale;
+                  }
+
                   for (const [key, value] of Object .entries (extension))
                   {
                      if (!(value instanceof Object))
@@ -2405,23 +2421,8 @@ function eventsProcessed ()
 
                      switch (key)
                      {
-                        case "motion":
-                        {
-                           break;
-                        }
                         case "collider":
                         {
-                           const
-                              scene         = this .getScene (),
-                              rigidBodyNode = scene .createNode ("RigidBody", false);
-
-                           node .modelMatrix .get (translation, rotation, scale);
-
-                           rigidBodyNode ._fixed       = true;
-                           rigidBodyNode ._position    = translation;
-                           rigidBodyNode ._orientation = rotation;
-                           rigidBodyNode ._size        = scale;
-
                            if (value .geometry .node !== undefined)
                            {
                               this .nodeChildrenArray ([value .geometry .node], node .modelMatrix);
@@ -2460,9 +2461,12 @@ function eventsProcessed ()
                               // node .transformNode ._children .push (collidableShapeNode);
                            }
 
-                           rigidBodyNode .setup ();
-
-                           this .rigidBodies .push (rigidBodyNode);
+                           break;
+                        }
+                        case "motion":
+                        {
+                           rigidBodyNode ._fixed = value .isKinematic;
+                           rigidBodyNode ._mass  = this .numberValue (value .mass, 1);
 
                            break;
                         }
@@ -2470,7 +2474,18 @@ function eventsProcessed ()
                         {
                            break;
                         }
+                        case "trigger":
+                        {
+                           break;
+                        }
                      }
+                  }
+
+                  if (rigidBodyNode)
+                  {
+                     rigidBodyNode .setup ();
+
+                     this .rigidBodies .push (rigidBodyNode);
                   }
 
                   break;
