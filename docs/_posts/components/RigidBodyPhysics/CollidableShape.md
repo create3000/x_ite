@@ -35,6 +35,7 @@ The CollidableShape node belongs to the [RigidBodyPhysics](/x_ite/components/ove
 | SFVec3f | [in, out] | [translation](#fields-translation) | 0 0 0  |
 | SFRotation | [in, out] | [rotation](#fields-rotation) | 0 0 1 0  |
 | SFVec3f | [in, out] | [scale](#fields-scale) | 1 1 1  |
+| SFBool | [in, out] | [convexHull](#fields-convexHull) |  |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
 | SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
@@ -78,6 +79,11 @@ Orientation (axis, angle in radians) of children relative to local coordinate sy
 {: #fields-scale }
 
 Input/Output field *scale*.
+
+### SFBool [in, out] **convexHull** FALSE
+{: #fields-convexHull }
+
+Flag to indicate that the geometry should be a convex hull.
 
 ### SFBool [in, out] **visible** TRUE
 {: #fields-visible }

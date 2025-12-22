@@ -95,10 +95,10 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
 
          shapeNode .setPrivate (true);
          collidableShapeNode .setPrivate (true);
-         collidableShapeNode .setConvex (true);
 
-         shapeNode ._geometry        = geometryNode;
-         collidableShapeNode ._shape = shapeNode;
+         shapeNode ._geometry             = geometryNode;
+         collidableShapeNode ._convexHull = true;
+         collidableShapeNode ._shape      = shapeNode;
 
          shapeNode           .setup ();
          collidableShapeNode .setup ();

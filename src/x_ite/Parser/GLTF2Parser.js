@@ -2432,7 +2432,7 @@ function eventsProcessed ()
                      {
                         case "collider":
                         {
-                           if (value .geometry .node !== undefined)
+                           if (value .geometry ?.node !== undefined)
                            {
                               this .nodeChildrenArray ([value .geometry .node], node .modelMatrix);
 
@@ -2442,7 +2442,8 @@ function eventsProcessed ()
                               {
                                  const collidableShapeNode = scene .createNode ("CollidableShape", false);
 
-                                 collidableShapeNode ._shape = shapeNode;
+                                 collidableShapeNode ._convexHull = value .geometry .convexHull;
+                                 collidableShapeNode ._shape      = shapeNode;
 
                                  collidableShapeNode .setup ();
 
@@ -2454,7 +2455,7 @@ function eventsProcessed ()
                                  // node .transformNode ._children .push (collidableShapeNode);
                               }
                            }
-                           else if (value .geometry .shape !== undefined)
+                           else if (value .geometry ?.shape !== undefined)
                            {
                               const collidableShapeNode = scene .createNode ("CollidableShape", false);
 
@@ -2474,8 +2475,12 @@ function eventsProcessed ()
                         }
                         case "motion":
                         {
-                           rigidBodyNode ._fixed = value .isKinematic;
-                           rigidBodyNode ._mass  = this .numberValue (value .mass, 1);
+                           const invModelMatrix = node .modelMatrix .copy () .inverse ();
+
+                           rigidBodyNode ._fixed = false;
+                           rigidBodyNode ._mass  = value .isKinematic
+                              ? Infinity
+                              : this .numberValue (value .mass, 1);
 
                            if (this .vectorValue (value .centerOfMass, vector3))
                               rigidBodyNode ._centerOfMass = vector3;
@@ -2486,15 +2491,17 @@ function eventsProcessed ()
                            // TODO: inertiaOrientation
 
                            if (this .vectorValue (value .linearVelocity, vector3))
-                              rigidBodyNode ._linearVelocity = vector3;
+                              rigidBodyNode ._linearVelocity = invModelMatrix .multDirMatrix (vector3);
 
                            if (this .vectorValue (value .angularVelocity, vector3))
-                              rigidBodyNode ._angularVelocity = vector3;
+                              rigidBodyNode ._angularVelocity = invModelMatrix .multDirMatrix (vector3);
 
                            const gravity = GRAVITY * this .numberValue (value .gravityFactor, 1);
 
                            rigidBodyNode ._useGlobalGravity = false;
-                           rigidBodyNode ._forces           = [0, gravity * rigidBodyNode ._mass .getValue (), 0];
+
+                           if (!value .isKinematic)
+                              rigidBodyNode ._forces = [0, gravity * rigidBodyNode ._mass .getValue (), 0];
 
                            // Script
 
@@ -4383,8 +4390,10 @@ function eventsProcessed ()
       scene .addNamedNode (scene .getUniqueName ("Collidables"),   collidables);
       scene .addNamedNode (scene .getUniqueName ("MotionScripts"), motionScripts);
 
-      collidables ._visible  = false;
+      collidables ._visible  = true; // DEBUG
       collidables ._children = this .collidables;
+
+      this .getScene () .rootNodes .push (collidables); // DEBUG
 
       collection ._bodies = this .rigidBodies;
 

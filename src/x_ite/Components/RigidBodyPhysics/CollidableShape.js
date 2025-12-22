@@ -12,10 +12,6 @@ function CollidableShape (executionContext)
    X3DNBodyCollidableNode .call (this, executionContext);
 
    this .addType (X3DConstants .CollidableShape);
-
-   // Private properties
-
-   this .convex = false;
 }
 
 Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyCollidableNode .prototype),
@@ -24,18 +20,11 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    {
       X3DNBodyCollidableNode .prototype .initialize .call (this);
 
-      this ._enabled .addInterest ("set_collidableGeometry__", this);
-      this ._shape   .addInterest ("requestRebuild",           this);
+      this ._enabled    .addInterest ("set_collidableGeometry__", this);
+      this ._convexHull .addInterest ("set_collidableGeometry__", this);
+      this ._shape      .addInterest ("requestRebuild",           this);
 
       this .set_child__ ();
-   },
-   isConvex ()
-   {
-      return this .convex;
-   },
-   setConvex (value)
-   {
-      this .convex = value;
    },
    createConvexGeometry: (() =>
    {
@@ -232,7 +221,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                   }
                   case X3DConstants .X3DGeometryNode:
                   {
-                     if (this .convex)
+                     if (this ._convexHull .getValue ())
                         this .collisionShape = this .createConvexGeometry ();
                      else
                         this .collisionShape = this .createConcaveGeometry ();
@@ -302,6 +291,7 @@ Object .defineProperties (CollidableShape,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "translation", new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",    new Fields .SFRotation ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "scale",       new Fields .SFVec3f (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "convexHull",  new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
