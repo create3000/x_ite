@@ -2195,12 +2195,11 @@ function eventsProcessed ()
          rotation         = new Rotation4 (),
          scale            = new Vector3 (1),
          scaleOrientation = new Rotation4 (),
-         quaternion       = new Quaternion (),
-         matrix           = new Matrix4 ();
+         quaternion       = new Quaternion ();
 
       return function (node, index, modelMatrix)
       {
-         if (node .modelMatrix)
+         if (node .matrix)
             return;
 
          const
@@ -2219,6 +2218,8 @@ function eventsProcessed ()
          }
 
          // Set transformation matrix.
+
+         const matrix = new Matrix4 ();
 
          if (this .vectorValue (node .matrix, matrix))
          {
@@ -2239,6 +2240,11 @@ function eventsProcessed ()
 
             if (this .vectorValue (node .scale, scale))
                transformNode ._scale = scale;
+
+            matrix .set (transformNode ._translation .getValue (),
+                        transformNode ._rotation .getValue (),
+                        transformNode ._scale .getValue (),
+                        transformNode ._scaleOrientation .getValue ());
          }
 
          // Add mesh.
@@ -2250,12 +2256,8 @@ function eventsProcessed ()
 
          // ModelMatrix
 
-         matrix .set (transformNode ._translation .getValue (),
-                      transformNode ._rotation .getValue (),
-                      transformNode ._scale .getValue (),
-                      transformNode ._scaleOrientation .getValue ());
-
-         node .modelMatrix = modelMatrix = modelMatrix .copy () .multLeft (matrix);
+         node .matrix      = matrix;
+         node .modelMatrix = matrix .copy () .multRight (modelMatrix);
 
          // Add camera.
 
@@ -2270,7 +2272,7 @@ function eventsProcessed ()
 
          // Add children.
 
-         let children = this .nodeChildrenArray (node .children, modelMatrix);
+         let children = this .nodeChildrenArray (node .children, node .modelMatrix);
 
          // HAnim
 
