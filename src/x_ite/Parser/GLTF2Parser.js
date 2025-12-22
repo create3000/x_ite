@@ -1665,7 +1665,7 @@ function eventsProcessed ()
    meshObject (mesh, skin, EXT_mesh_gpu_instancing)
    {
       if (!(mesh instanceof Object))
-         return;
+         return [ ];
 
       if (mesh .shapeNodes)
       {
@@ -2301,12 +2301,10 @@ function eventsProcessed ()
             });
          }
 
+         // Add children and shape nodes.
+
          transformNode ._children .push (... children);
-
-         // Add Shape nodes.
-
-         if (shapeNodes)
-            transformNode ._children .push (... shapeNodes);
+         transformNode ._children .push (... shapeNodes);
 
          transformNode .setup ();
 
@@ -2351,7 +2349,7 @@ function eventsProcessed ()
             humanoidNode .setup ();
          }
 
-         if (shapeNodes ?.length)
+         if (shapeNodes .length)
          {
             humanoidNode ._skinNormal = shapeNodes [0] ._geometry .normal;
             humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
