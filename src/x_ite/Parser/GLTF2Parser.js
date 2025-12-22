@@ -602,9 +602,66 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                shapeNode ._geometry = geometryNode;
 
                geometryNode .setup ();
-               shapeNode .setup ();
+               break;
+            }
+            case "capsule":
+            {
+               // TODO: create Capsule.
 
-               this .implicitShapes [i] = shapeNode;
+               const geometryNode = scene .createNode ("Cylinder", false);
+
+               geometryNode ._height = this .numberValue (shape .capsule ?.height, 0.5);
+               geometryNode ._radius = Math .max (this .numberValue (shape .capsule ?.radiusBottom, 0.25),
+                  this .numberValue (shape .capsule ?.radiusTop, 0.25));
+
+               geometryNode ._size  = size;
+               shapeNode ._geometry = geometryNode;
+
+               geometryNode .setup ();
+               break;
+            }
+            case "cylinder":
+            {
+               const geometryNode = scene .createNode ("Cylinder", false);
+
+               geometryNode ._height = this .numberValue (shape .cylinder ?.height, 0.5);
+               geometryNode ._radius = Math .max (this .numberValue (shape .cylinder ?.radiusBottom, 0.25),
+                  this .numberValue (shape .cylinder ?.radiusTop, 0.25));
+
+               geometryNode ._size  = size;
+               shapeNode ._geometry = geometryNode;
+
+               geometryNode .setup ();
+               break;
+            }
+            case "plane":
+            {
+               const
+                  geometryNode   = scene .createNode ("IndexedTriangleSet", false),
+                  coordinateNode = scene .createNode ("Coordinate", false);
+
+               const
+                  x = this .numberValue (shape .sphere ?.sizeX, 1) / 2,
+                  z = this .numberValue (shape .sphere ?.sizeZ, 1) / 2;
+
+               /* 3---2
+                * | / |
+                * 0---1
+                */
+
+               coordinateNode ._point = [
+                  -x, 0,  z,
+                   x, 0,  z,
+                   x, 0, -z,
+                  -x, 0, -z,
+               ];
+
+               geometryNode ._index = [0, 1, 2, 0, 2, 3];
+               geometryNode ._coord = coordinateNode;
+               shapeNode ._geometry = geometryNode;
+
+               coordinateNode .setup ();
+               geometryNode .setup ();
                break;
             }
             case "sphere":
@@ -615,12 +672,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                shapeNode ._geometry  = geometryNode;
 
                geometryNode .setup ();
-               shapeNode .setup ();
-
-               this .implicitShapes [i] = shapeNode;
                break;
             }
          }
+
+         shapeNode .setup ();
+
+         this .implicitShapes [i] = shapeNode;
       }
    },
    async buffersArray (buffers)
