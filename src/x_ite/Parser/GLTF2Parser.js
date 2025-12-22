@@ -2404,7 +2404,12 @@ function eventsProcessed ()
 
                   if (extension .collider || extension .motion)
                   {
+                     const name = node .childNode .getName ();
+
                      rigidBodyNode = scene .createNode ("RigidBody", false);
+
+                     if (name)
+                        scene .addNamedNode (scene .getUniqueName (name), rigidBodyNode);
 
                      node .modelMatrix .get (translation, rotation, scale);
 
