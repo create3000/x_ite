@@ -582,32 +582,38 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       for (const [i, shape] of shapes .entries ())
       {
+         const shapeNode = scene .createNode ("Shape", false);
+
          switch (shape ?.type)
          {
             case "box":
             {
                const
-                  node = scene .createNode ("Box", false),
-                  size = new Vector3 (1);
+                  geometryNode = scene .createNode ("Box", false),
+                  size         = new Vector3 (1);
 
                this .vectorValue (shape .box ?.size, size);
 
-               node ._size = size;
+               geometryNode ._size  = size;
+               shapeNode ._geometry = geometryNode;
 
-               node .setup ();
+               geometryNode .setup ();
+               shapeNode .setup ();
 
-               this .implicitShapes [i] = node;
+               this .implicitShapes [i] = shapeNode;
                break;
             }
             case "sphere":
             {
-               const node = scene .createNode ("Sphere", false);
+               const geometryNode = scene .createNode ("Sphere", false);
 
-               node ._radius = this .numberValue (shape .sphere ?.radius, 0.5);
+               geometryNode ._radius = this .numberValue (shape .sphere ?.radius, 0.5);
+               shapeNode ._geometry  = geometryNode;
 
-               node .setup ();
+               geometryNode .setup ();
+               shapeNode .setup ();
 
-               this .implicitShapes [i] = node;
+               this .implicitShapes [i] = shapeNode;
                break;
             }
          }
@@ -2405,22 +2411,22 @@ function eventsProcessed ()
                         }
                         case "collider":
                         {
-                           const scene = this .getScene ();
+                           const
+                              scene         = this .getScene (),
+                              rigidBodyNode = scene .createNode ("RigidBody", false);
+
+                           node .modelMatrix .get (translation, rotation, scale);
+
+                           rigidBodyNode ._fixed       = true;
+                           rigidBodyNode ._position    = translation;
+                           rigidBodyNode ._orientation = rotation;
+                           rigidBodyNode ._size        = scale;
 
                            if (value .geometry .node !== undefined)
                            {
                               this .nodeChildrenArray ([value .geometry .node], node .modelMatrix);
 
-                              const
-                                 rigidBodyNode = scene .createNode ("RigidBody", false),
-                                 childNode     = this .nodes [value .geometry .node] ?.childNode;
-
-                              node .modelMatrix .get (translation, rotation, scale);
-
-                              rigidBodyNode ._fixed       = true;
-                              rigidBodyNode ._position    = translation;
-                              rigidBodyNode ._orientation = rotation;
-                              rigidBodyNode ._size        = scale;
+                              const childNode = this .nodes [value .geometry .node] ?.childNode;
 
                               for (const shapeNode of childNode ._children)
                               {
@@ -2437,15 +2443,26 @@ function eventsProcessed ()
                                  // DEBUG
                                  // node .transformNode ._children .push (collidableShapeNode);
                               }
-
-                              rigidBodyNode .setup ();
-
-                              this .rigidBodies .push (rigidBodyNode);
                            }
                            else if (value .geometry .shape !== undefined)
                            {
-                              // console .log (value);
+                              const collidableShapeNode = scene .createNode ("CollidableShape", false);
+
+                              collidableShapeNode ._shape = this .implicitShapes [value .geometry .shape];
+
+                              collidableShapeNode .setup ();
+
+                              rigidBodyNode ._geometry .push (collidableShapeNode);
+
+                              this .collidables .push (collidableShapeNode);
+
+                              // DEBUG
+                              // node .transformNode ._children .push (collidableShapeNode);
                            }
+
+                           rigidBodyNode .setup ();
+
+                           this .rigidBodies .push (rigidBodyNode);
 
                            break;
                         }

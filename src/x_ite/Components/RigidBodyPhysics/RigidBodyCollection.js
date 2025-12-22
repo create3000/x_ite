@@ -185,7 +185,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    {
       for (const bodyNode of this .bodyNodes)
       {
-         bodyNode ._enabled .removeInterest ("set_dynamicsWorld__", this);
+         bodyNode ._updateWorld .removeInterest ("set_dynamicsWorld__", this);
          bodyNode .setCollection (null);
       }
 
@@ -214,7 +214,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
       }
 
       for (const bodyNode of this .bodyNodes)
-         bodyNode ._enabled .addInterest ("set_dynamicsWorld__", this);
+         bodyNode ._updateWorld .addInterest ("set_dynamicsWorld__", this);
 
       this .set_colliderParameters__ ();
       this .set_contactSurfaceThickness__ ();

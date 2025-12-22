@@ -20,7 +20,8 @@ function RigidBody (executionContext)
 
    this .addChildObjects (X3DConstants .inputOutput, "collection",    new Fields .SFNode (),
                           X3DConstants .outputOnly,  "transform",     new Fields .SFTime (),
-                          X3DConstants .outputOnly,  "otherGeometry", new Fields .MFNode ());
+                          X3DConstants .outputOnly,  "otherGeometry", new Fields .MFNode (),
+                          X3DConstants .outputOnly,  "updateWorld",   new Fields .SFTime ());
 
    // Units
 
@@ -54,6 +55,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       X3DNode          .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
 
+      this ._enabled              .addInterest ("set_enabled__",            this);
       this ._linearVelocity       .addInterest ("set_linearVelocity__",     this);
       this ._angularVelocity      .addInterest ("set_angularVelocity__",    this);
       this ._useFiniteRotation    .addInterest ("set_finiteRotationAxis__", this);
@@ -102,6 +104,10 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    getMatrix ()
    {
       return this .matrix;
+   },
+   set_enabled__ ()
+   {
+      this ._updateWorld .addEvent ();
    },
    set_position__ ()
    {
@@ -252,6 +258,8 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          this .compoundShape .calculateLocalInertia (this ._fixed .getValue () ? 0 : this ._mass .getValue (), localInertia);
 
          this .rigidBody .setMassProps (this ._fixed .getValue () ? 0 : this ._mass .getValue (), localInertia);
+
+         this ._updateWorld .addEvent ();
       };
    })(),
    set_forces__ ()
