@@ -53,6 +53,7 @@ function GLTF2Parser (scene)
    this .physics               = [ ];
    this .rigidBodies           = [ ];
    this .collidables           = [ ];
+   this .motionScripts         = [ ];
    this .implicitShapes        = [ ];
 }
 
@@ -2247,8 +2248,9 @@ function eventsProcessed ()
                         transformNode ._scaleOrientation .getValue ());
          }
 
-         node .matrix      = matrix;
-         node .modelMatrix = matrix .copy () .multRight (modelMatrix);
+         node .matrix       = matrix;
+         node .modelMatrix  = matrix .copy () .multRight (modelMatrix);
+         node .parentMatrix = modelMatrix .copy ();
 
          // Add mesh.
 
@@ -2466,6 +2468,46 @@ function eventsProcessed ()
                            rigidBodyNode ._fixed = value .isKinematic;
                            rigidBodyNode ._mass  = this .numberValue (value .mass, 1);
 
+                           // Script
+
+                           const scriptNode = scene .createNode ("Script", false);
+
+                           scriptNode .addUserDefinedField (X3DConstants .inputOutput, "invParentMatrix", new Fields .SFMatrix4f (... node .parentMatrix .copy () .inverse ()));
+
+                           scriptNode .addUserDefinedField (X3DConstants .inputOutput, "position",    new Fields .SFVec3f ());
+                           scriptNode .addUserDefinedField (X3DConstants .inputOutput, "orientation", new Fields .SFRotation ());
+                           scriptNode .addUserDefinedField (X3DConstants .inputOutput, "size",        new Fields .SFVec3f (1, 1, 1));
+
+                           scriptNode .addUserDefinedField (X3DConstants .outputOnly, "translation_changed", new Fields .SFVec3f ());
+                           scriptNode .addUserDefinedField (X3DConstants .outputOnly, "rotation_changed",    new Fields .SFRotation ());
+                           scriptNode .addUserDefinedField (X3DConstants .outputOnly, "scale_changed",       new Fields .SFVec3f (1, 1, 1));
+
+                           scriptNode ._url = [/* js */ `ecmascript:
+const modelMatrix = new SFMatrix4f ();
+
+function eventsProcessed ()
+{
+   modelMatrix .setTransform (position, orientation, size);
+
+   const matrix = modelMatrix .multRight (invParentMatrix);
+
+   matrix .getTransform (translation_changed, rotation_changed, scale_changed);
+}
+   `];
+
+                           scriptNode .setup ();
+
+                           scene .addNamedNode (scene .getUniqueName ("MotionScript"), scriptNode);
+
+                           scene .addRoute (rigidBodyNode, "position",    scriptNode, "position");
+                           scene .addRoute (rigidBodyNode, "orientation", scriptNode, "orientation");
+                           scene .addRoute (rigidBodyNode, "size",        scriptNode, "size");
+
+                           scene .addRoute (scriptNode, "translation_changed", node .childNode, "translation");
+                           scene .addRoute (scriptNode, "rotation_changed",    node .childNode, "rotation");
+                           scene .addRoute (scriptNode, "scale_changed",       node .childNode, "scale");
+
+                           this .motionScripts .push (scriptNode);
                            break;
                         }
                         case "joint":
@@ -4301,26 +4343,31 @@ function eventsProcessed ()
    },
    physicsNodes ()
    {
-      if (!this .collidables .length)
+      if (!this .collidables .length && !this .motionScripts .length)
          return;
 
       const
-         scene       = this .getScene (),
-         collidables = scene .createNode ("Group", false),
-         collection  = scene .createNode ("RigidBodyCollection", false);
+         scene         = this .getScene (),
+         collidables   = scene .createNode ("Group", false),
+         collection    = scene .createNode ("RigidBodyCollection", false),
+         motionScripts = scene .createNode ("Group", false);
 
-      scene .addNamedNode (scene .getUniqueName ("Collidables"), collidables);
+      scene .addNamedNode (scene .getUniqueName ("Collidables"),   collidables);
+      scene .addNamedNode (scene .getUniqueName ("MotionScripts"), motionScripts);
 
       collidables ._visible  = false;
       collidables ._children = this .collidables;
 
       collection ._bodies = this .rigidBodies;
 
-      collidables .setup ();
-      collection  .setup ();
+      motionScripts ._visible  = false;
+      motionScripts ._children = this .motionScripts;
 
-      this .physics .push ({ node: collidables });
-      this .physics .push ({ node: collection });
+      collidables   .setup ();
+      collection    .setup ();
+      motionScripts .setup ();
+
+      this .physics .push ({ node: collidables }, { node: collection }, { node: motionScripts });
    },
    vectorValue (array, vector)
    {
