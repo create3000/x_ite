@@ -43,11 +43,11 @@ The RigidBody node belongs to the [RigidBodyPhysics](/x_ite/components/overview/
 | SFFloat | [in, out] | [angularDampingFactor](#fields-angularDampingFactor) | 0.001  |
 | SFFloat | [in, out] | [mass](#fields-mass) | 1  |
 | SFVec3f | [in, out] | [centerOfMass](#fields-centerOfMass) | 0 0 0  |
+| SFMatrix3f | [in, out] | [inertia](#fields-inertia) | 1 0 0 0 1 0 0 0 1  |
 | SFNode | [in, out] | [massDensityModel](#fields-massDensityModel) | NULL  |
 | SFBool | [in, out] | [useGlobalGravity](#fields-useGlobalGravity) | TRUE |
 | MFVec3f | [in, out] | [forces](#fields-forces) | [ ] |
 | MFVec3f | [in, out] | [torques](#fields-torques) | [ ] |
-| SFMatrix3f | [in, out] | [inertia](#fields-inertia) | 1 0 0 0 1 0 0 0 1  |
 | SFBool | [in, out] | [autoDisable](#fields-autoDisable) | FALSE |
 | SFTime | [in, out] | [disableTime](#fields-disableTime) | 0  |
 | SFFloat | [in, out] | [disableLinearSpeed](#fields-disableLinearSpeed) | 0  |
@@ -167,6 +167,15 @@ Input/Output field *size*.
 
 *centerOfMass* defines local center of mass for physics calculations.
 
+### SFMatrix3f [in, out] **inertia** 1 0 0 0 1 0 0 0 1 <small>(-∞,∞)</small>
+{: #fields-inertia }
+
+*inertia* matrix defines a 3x2 *inertia* tensor matrix.
+
+#### Warning
+
+- Only the first 6 values are used.
+
 ### SFNode [in, out] **massDensityModel** NULL <small>[Sphere, Box, Cone]</small> <small class="red">not supported</small>
 {: #fields-massDensityModel }
 
@@ -190,15 +199,6 @@ The *massDensityModel* field is used to describe the geometry type and dimension
 {: #fields-torques }
 
 *torques* defines rotational force values applied to the object every frame.
-
-### SFMatrix3f [in, out] **inertia** 1 0 0 0 1 0 0 0 1 <small>1 0 0</small>
-{: #fields-inertia }
-
-*inertia* matrix defines a 3x2 *inertia* tensor matrix.
-
-#### Warning
-
-- Only the first 6 values are used.
 
 ### SFBool [in, out] **autoDisable** FALSE
 {: #fields-autoDisable }
