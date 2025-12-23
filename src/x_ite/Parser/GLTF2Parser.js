@@ -2530,12 +2530,12 @@ function eventsProcessed ()
                         }
                         case "motion":
                         {
-                           const invModelMatrix = node .modelMatrix .copy () .inverse ();
+                           const
+                              invModelMatrix = node .modelMatrix .copy () .inverse (),
+                              mass           = this .numberValue (value .mass, 1);
 
                            rigidBodyNode ._fixed = false;
-                           rigidBodyNode ._mass  = value .isKinematic
-                              ? Infinity
-                              : this .numberValue (value .mass, 1);
+                           rigidBodyNode ._mass  = value .isKinematic ? Infinity : mass;
 
                            if (this .vectorValue (value .centerOfMass, vector3))
                               rigidBodyNode ._centerOfMass = vector3;
@@ -2556,7 +2556,7 @@ function eventsProcessed ()
                            rigidBodyNode ._useGlobalGravity = false;
 
                            if (!value .isKinematic)
-                              rigidBodyNode ._forces = [0, gravity * rigidBodyNode ._mass .getValue (), 0];
+                              rigidBodyNode ._forces = [0, gravity * mass, 0];
 
                            // Script
 
