@@ -303,6 +303,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_physics_rigid_bodies":
             {
                components .push (browser .getComponent ("RigidBodyPhysics", 2));
+               components .push (browser .getComponent ("Scripting",        1));
                break;
             }
          }
