@@ -26,6 +26,13 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
 
       this .set_child__ ();
    },
+   createGeometry ()
+   {
+      if (this ._convexHull .getValue ())
+         return this .createConvexGeometry ();
+      else
+         return this .createConcaveGeometry ();
+   },
    createConvexGeometry: (() =>
    {
       const p = new Ammo .btVector3 ();
@@ -149,7 +156,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                      if (cone ._side .getValue () && cone ._bottom .getValue ())
                         this .collisionShape = new Ammo .btConeShape (cone ._bottomRadius .getValue (), cone ._height .getValue ());
                      else
-                        this .collisionShape = this .createConcaveGeometry ();
+                        this .collisionShape = this .createGeometry ();
 
                      break;
                   }
@@ -163,7 +170,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                      if (cylinder ._side .getValue () && cylinder ._top .getValue () && cylinder ._bottom .getValue ())
                         this .collisionShape = new Ammo .btCylinderShape (new Ammo .btVector3 (radius, height1_2, radius));
                      else
-                        this .collisionShape = this .createConcaveGeometry ();
+                        this .collisionShape = this .createGeometry ();
 
                      break;
                   }
@@ -219,11 +226,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                   }
                   case X3DConstants .X3DGeometryNode:
                   {
-                     if (this ._convexHull .getValue ())
-                        this .collisionShape = this .createConvexGeometry ();
-                     else
-                        this .collisionShape = this .createConcaveGeometry ();
-
+                     this .collisionShape = this .createGeometry ();
                      break;
                   }
                   default:
