@@ -2490,9 +2490,11 @@ function eventsProcessed ()
                         {
                            if (value .geometry ?.node !== undefined)
                            {
-                              this .nodeChildrenArray ([value .geometry .node], node .modelMatrix);
+                              const child = this .nodes [value .geometry .node];
 
-                              const childNode = this .nodes [value .geometry .node] ?.childNode;
+                              this .nodeChildren (child, 0, node .modelMatrix);
+
+                              const childNode = child ?.childNode;
 
                               for (const shapeNode of childNode ._children)
                               {
