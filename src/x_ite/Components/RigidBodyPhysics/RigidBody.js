@@ -46,6 +46,7 @@ function RigidBody (executionContext)
    this .torque             = new Vector3 ();
 
    // Enable CCD.
+   // https://docs.panda3d.org/1.10/python/programming/physics/bullet/ccd
    this .rigidBody .setCcdMotionThreshold (1e-7);
    this .rigidBody .setCcdSweptSphereRadius (0.50);
 }
