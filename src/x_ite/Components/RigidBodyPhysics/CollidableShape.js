@@ -90,12 +90,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    {
       // Remove node.
 
-      if (this .getChild ())
-      {
-         const shapeNode = this .getChild ();
-
-         shapeNode ._geometry .removeInterest ("set_geometry__", this);
-      }
+      this .getChild () ?._geometry .removeInterest ("set_geometry__", this);
 
       // Add node.
 
@@ -103,10 +98,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
 
       this .setChild (shapeNode);
 
-      if (shapeNode)
-      {
-         shapeNode ._geometry .addInterest ("set_geometry__", this);
-      }
+      shapeNode ?._geometry .addInterest ("set_geometry__", this);
 
       this .set_geometry__ ();
    },
