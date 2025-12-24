@@ -61,14 +61,16 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
 
       return function ()
       {
-         const vertices = this .geometryNode .getVertices () .getValue ();
+         const
+            vertices    = this .geometryNode .getVertices () .getValue (),
+            numVertices = vertices .length;
 
-         if (vertices .length === 0)
+         if (numVertices === 0)
             return null;
 
          this .triangleMesh = new Ammo .btTriangleMesh ();
 
-         for (let i = 0, length = vertices .length; i < length; i += 12)
+         for (let i = 0; i < numVertices; i += 12)
          {
             p1 .setValue (vertices [i],     vertices [i + 1], vertices [i + 2]);
             p2 .setValue (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
