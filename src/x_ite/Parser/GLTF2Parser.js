@@ -2259,6 +2259,9 @@ function eventsProcessed ()
 
       return function (node, index, modelMatrix)
       {
+         if (!(node instanceof Object))
+            return;
+         
          if (node .modelMatrix)
             return;
 
