@@ -44,6 +44,10 @@ function RigidBody (executionContext)
    this .matrix             = new Matrix4 ();
    this .force              = new Vector3 ();
    this .torque             = new Vector3 ();
+
+   // Enable CCD.
+   this .rigidBody .setCcdMotionThreshold (1e-7);
+   this .rigidBody .setCcdSweptSphereRadius (0.50);
 }
 
 Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype),
