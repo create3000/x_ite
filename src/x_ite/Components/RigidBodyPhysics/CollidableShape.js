@@ -51,6 +51,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          }
 
          convexHull .recalcLocalAabb ();
+         convexHull .initializePolyhedralFeatures();
 
          return convexHull;
       };
