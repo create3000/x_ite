@@ -55,6 +55,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
             convexHull .addPoint (p, false);
          }
 
+         convexHull .setMargin (0.001);
          convexHull .initializePolyhedralFeatures ();
          convexHull .recalcLocalAabb ();
 
@@ -147,6 +148,8 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                         size = box ._size .getValue ();
 
                      this .collisionShape = new Ammo .btBoxShape (new Ammo .btVector3 (size .x / 2, size .y / 2, size .z / 2));
+                     
+                     this .collisionShape .setMargin (0.001);
                      break;
                   }
                   case X3DConstants .Cone:
@@ -154,9 +157,15 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                      const cone = this .geometryNode;
 
                      if (cone ._side .getValue () && cone ._bottom .getValue ())
+                     {
                         this .collisionShape = new Ammo .btConeShape (cone ._bottomRadius .getValue (), cone ._height .getValue ());
+
+                        this .collisionShape .setMargin (0.001);
+                     }
                      else
+                     {
                         this .collisionShape = this .createGeometry ();
+                     }
 
                      break;
                   }
@@ -168,9 +177,15 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                         height1_2 = cylinder ._height .getValue () * 0.5;
 
                      if (cylinder ._side .getValue () && cylinder ._top .getValue () && cylinder ._bottom .getValue ())
+                     {
                         this .collisionShape = new Ammo .btCylinderShape (new Ammo .btVector3 (radius, height1_2, radius));
+
+                        this .collisionShape .setMargin (0.001);
+                     }
                      else
+                     {
                         this .collisionShape = this .createGeometry ();
+                     }
 
                      break;
                   }
@@ -208,6 +223,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                                                                                     "PHY_FLOAT",
                                                                                     true);
 
+                        this .collisionShape .setMargin (0.001);
                         this .collisionShape .setLocalScaling (new Ammo .btVector3 (elevationGrid ._xSpacing .getValue (), 1, elevationGrid ._zSpacing .getValue ()));
 
                         this .setOffset (elevationGrid ._xSpacing .getValue () * (elevationGrid ._xDimension .getValue () - 1) * 0.5,
@@ -222,6 +238,8 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                      const sphere = this .geometryNode;
 
                      this .collisionShape = new Ammo .btSphereShape (sphere ._radius .getValue ());
+
+                     this .collisionShape .setMargin (0.001);
                      break;
                   }
                   case X3DConstants .X3DGeometryNode:
@@ -244,11 +262,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          }
 
          if (this .collisionShape)
-         {
-            this .collisionShape .setMargin (0.001);
-
             this .getCompoundShape () .addChildShape (this .getLocalTransform (), this .collisionShape);
-         }
 
          this .getCompoundShape () .setLocalScaling (localScaling);
 
