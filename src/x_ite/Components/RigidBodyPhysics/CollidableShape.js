@@ -38,7 +38,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
             vertices    = this .geometryNode .getVertices () .getValue (),
             numVertices = vertices .length;
 
-         if (numVertices === 0)
+         if (!numVertices)
             return null;
 
          const convexHull = new Ammo .btConvexHullShape ();
@@ -69,7 +69,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
             vertices    = this .geometryNode .getVertices () .getValue (),
             numVertices = vertices .length;
 
-         if (numVertices === 0)
+         if (!numVertices)
             return null;
 
          this .triangleMesh = new Ammo .btTriangleMesh ();
