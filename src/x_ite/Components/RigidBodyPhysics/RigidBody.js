@@ -175,10 +175,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       return function ()
       {
-         if (this ._fixed .getValue ())
-            lv .setValue (0, 0, 0);
-         else
-            lv .setValue (... this ._linearVelocity);
+         lv .setValue (... this ._linearVelocity);
 
          this .rigidBody .setLinearVelocity (lv);
          this .rigidBody .activate ();
@@ -190,10 +187,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       return function ()
       {
-         if (this ._fixed .getValue ())
-            av .setValue (0, 0, 0);
-         else
-            av .setValue (... this ._angularVelocity);
+         av .setValue (... this ._angularVelocity);
 
          this .rigidBody .setAngularVelocity (av);
          this .rigidBody .activate ();
@@ -252,7 +246,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
                                  inertia [3] + inertia [4] + inertia [5],
                                  inertia [6] + inertia [7] + inertia [8]);
 
-         this .compoundShape .calculateLocalInertia (fixed ? 0 : mass, localInertia);
+         this .compoundShape .calculateLocalInertia (mass, localInertia);
 
          this .rigidBody .setMassProps (fixed ? 0 : mass, localInertia);
          this .rigidBody .updateInertiaTensor ();
