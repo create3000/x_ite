@@ -2536,9 +2536,7 @@ function eventsProcessed ()
                         }
                         case "motion":
                         {
-                           const
-                              invModelMatrix = node .modelMatrix .copy () .inverse (),
-                              mass           = this .numberValue (value .mass, 1);
+                           const mass = this .numberValue (value .mass, 1);
 
                            rigidBodyNode ._fixed = false;
                            rigidBodyNode ._mass  = value .isKinematic ? Infinity : mass;
@@ -2552,10 +2550,10 @@ function eventsProcessed ()
                            // TODO: inertiaOrientation
 
                            if (this .vectorValue (value .linearVelocity, vector3))
-                              rigidBodyNode ._linearVelocity = invModelMatrix .multDirMatrix (vector3);
+                              rigidBodyNode ._linearVelocity = node .modelMatrix .multDirMatrix (vector3) .negate ();
 
                            if (this .vectorValue (value .angularVelocity, vector3))
-                              rigidBodyNode ._angularVelocity = invModelMatrix .multDirMatrix (vector3);
+                              rigidBodyNode ._angularVelocity = node .modelMatrix .multDirMatrix (vector3) .negate ();
 
                            const gravity = GRAVITY * this .numberValue (value .gravityFactor, 1);
 
