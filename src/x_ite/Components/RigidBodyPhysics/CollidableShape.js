@@ -12,8 +12,6 @@ function CollidableShape (executionContext)
    X3DNBodyCollidableNode .call (this, executionContext);
 
    this .addType (X3DConstants .CollidableShape);
-
-   this .addChildObjects (X3DConstants .inputOutput, "convexHull", new Fields .SFBool ());
 }
 
 Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyCollidableNode .prototype),
@@ -50,8 +48,9 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
             convexHull .addPoint (p, false);
          }
 
+         convexHull .setMargin (0.001);
+         convexHull .initializePolyhedralFeatures ();
          convexHull .recalcLocalAabb ();
-         convexHull .initializePolyhedralFeatures();
 
          return convexHull;
       };
@@ -291,6 +290,7 @@ Object .defineProperties (CollidableShape,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "translation", new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",    new Fields .SFRotation ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "scale",       new Fields .SFVec3f (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "convexHull",  new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
