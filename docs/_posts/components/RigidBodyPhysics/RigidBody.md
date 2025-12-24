@@ -92,7 +92,7 @@ Enables/disables node operation.
 
 *orientation* sets body direction in world space, then reports physics updates.
 
-### SFVec3f [in, out] **size** 1 1 1 <small>(-∞,∞)</small>
+### SFVec3f [in, out] **size** 1 1 1 <small>(-∞,∞)</small> <small class="blue">non-standard</small>
 {: #fields-size }
 
 Input/Output field *size*.

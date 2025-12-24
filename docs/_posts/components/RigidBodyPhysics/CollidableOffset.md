@@ -77,7 +77,7 @@ Orientation (axis, angle in radians) of children relative to local coordinate sy
 
 - The order of operation is first apply the center offset, then scaleOrientation and scale, then *rotation*, then restore the center offset, then translation.
 
-### SFVec3f [in, out] **scale** 1 1 1 <small>(-∞,∞)</small>
+### SFVec3f [in, out] **scale** 1 1 1 <small>(-∞,∞)</small> <small class="blue">non-standard</small>
 {: #fields-scale }
 
 Input/Output field *scale*.
