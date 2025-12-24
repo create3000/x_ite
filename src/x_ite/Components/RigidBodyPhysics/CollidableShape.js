@@ -7,6 +7,9 @@ import X3DConstants           from "../../Base/X3DConstants.js";
 import X3DCast                from "../../Base/X3DCast.js";
 import Ammo                   from "../../../lib/ammojs/AmmoClass.js";
 
+const
+   MARGIN = 0.0001;
+
 function CollidableShape (executionContext)
 {
    X3DNBodyCollidableNode .call (this, executionContext);
@@ -55,7 +58,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
             convexHull .addPoint (p, false);
          }
 
-         convexHull .setMargin (0.001);
+         convexHull .setMargin (MARGIN);
          convexHull .initializePolyhedralFeatures ();
          convexHull .recalcLocalAabb ();
 
@@ -148,8 +151,8 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                         size = box ._size .getValue ();
 
                      this .collisionShape = new Ammo .btBoxShape (new Ammo .btVector3 (size .x / 2, size .y / 2, size .z / 2));
-                     
-                     this .collisionShape .setMargin (0.001);
+
+                     this .collisionShape .setMargin (MARGIN);
                      break;
                   }
                   case X3DConstants .Cone:
@@ -160,7 +163,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                      {
                         this .collisionShape = new Ammo .btConeShape (cone ._bottomRadius .getValue (), cone ._height .getValue ());
 
-                        this .collisionShape .setMargin (0.001);
+                        this .collisionShape .setMargin (MARGIN);
                      }
                      else
                      {
@@ -180,7 +183,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                      {
                         this .collisionShape = new Ammo .btCylinderShape (new Ammo .btVector3 (radius, height1_2, radius));
 
-                        this .collisionShape .setMargin (0.001);
+                        this .collisionShape .setMargin (MARGIN);
                      }
                      else
                      {
@@ -223,7 +226,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                                                                                     "PHY_FLOAT",
                                                                                     true);
 
-                        this .collisionShape .setMargin (0.001);
+                        this .collisionShape .setMargin (MARGIN);
                         this .collisionShape .setLocalScaling (new Ammo .btVector3 (elevationGrid ._xSpacing .getValue (), 1, elevationGrid ._zSpacing .getValue ()));
 
                         this .setOffset (elevationGrid ._xSpacing .getValue () * (elevationGrid ._xDimension .getValue () - 1) * 0.5,
@@ -239,7 +242,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
 
                      this .collisionShape = new Ammo .btSphereShape (sphere ._radius .getValue ());
 
-                     this .collisionShape .setMargin (0.001);
+                     this .collisionShape .setMargin (MARGIN);
                      break;
                   }
                   case X3DConstants .X3DGeometryNode:
