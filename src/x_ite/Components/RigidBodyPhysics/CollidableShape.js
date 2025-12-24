@@ -48,7 +48,6 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
             convexHull .addPoint (p, false);
          }
 
-         convexHull .setMargin (0.001);
          convexHull .initializePolyhedralFeatures ();
          convexHull .recalcLocalAabb ();
 
@@ -242,7 +241,11 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          }
 
          if (this .collisionShape)
+         {
+            this .collisionShape .setMargin (0.001);
+
             this .getCompoundShape () .addChildShape (this .getLocalTransform (), this .collisionShape);
+         }
 
          this .getCompoundShape () .setLocalScaling (localScaling);
 

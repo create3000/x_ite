@@ -109,8 +109,9 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    })(),
    set_contactSurfaceThickness__ ()
    {
-      for (const bodyNode of this .bodyNodes)
-         bodyNode .getRigidBody () .getCollisionShape () .setMargin (this ._contactSurfaceThickness .getValue ());
+      // Margin is set in CollidableShape.
+      // for (const bodyNode of this .bodyNodes)
+      //    bodyNode .getRigidBody () .getCollisionShape () .setMargin (this ._contactSurfaceThickness .getValue ());
    },
    set_collider__ ()
    {
