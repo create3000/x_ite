@@ -2498,9 +2498,7 @@ function eventsProcessed ()
 
                               this .nodeChildren (child, 0, node .modelMatrix);
 
-                              const childNode = child ?.childNode;
-
-                              for (const shapeNode of childNode ?._children ?? [ ])
+                              for (const shapeNode of child ?.childNode ?._children ?? [ ])
                               {
                                  const collidableShapeNode = scene .createNode ("CollidableShape", false);
 
