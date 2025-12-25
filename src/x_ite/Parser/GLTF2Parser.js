@@ -2258,7 +2258,7 @@ function eventsProcessed ()
          scaleOrientation = new Rotation4 (),
          quaternion       = new Quaternion ();
 
-      return function (node, index, modelMatrix)
+      return function (node, index, modelMatrix, physicsParent)
       {
          if (!(node instanceof Object))
             return;
@@ -2331,11 +2331,11 @@ function eventsProcessed ()
 
          // Handle extensions.
 
-         this .nodeExtensions (node);
+         this .nodeExtensions (node, physicsParent);
 
          // Add children.
 
-         let children = this .nodeChildrenArray (node .children, node .modelMatrix);
+         let children = this .nodeChildrenArray (node .children, node .modelMatrix, node .rigidBodyNode ? node : null);
 
          // HAnim
 
@@ -2431,7 +2431,7 @@ function eventsProcessed ()
          scale       = new Vector3 (),
          vector3     = new Vector3 ();
 
-      return function (node)
+      return function (node, physicsParent)
       {
          if (!(node .extensions instanceof Object))
             return;
@@ -2470,17 +2470,28 @@ function eventsProcessed ()
                   {
                      const name = node .childNode .getName ();
 
-                     rigidBodyNode = scene .createNode ("RigidBody", false);
+                     if (physicsParent)
+                     {
+                        rigidBodyNode = physicsParent .rigidBodyNode;
+                     }
+                     else
+                     {
+                        rigidBodyNode = scene .createNode ("RigidBody", false);
 
-                     if (name)
-                        scene .addNamedNode (scene .getUniqueName (name), rigidBodyNode);
+                        node .rigidBodyNode = rigidBodyNode;
 
-                     node .modelMatrix .get (translation, rotation, scale);
+                        if (name && !rigidBodyNode .getName ())
+                           scene .addNamedNode (scene .getUniqueName (name), rigidBodyNode);
 
-                     rigidBodyNode ._fixed       = true;
-                     rigidBodyNode ._position    = translation;
-                     rigidBodyNode ._orientation = rotation;
-                     rigidBodyNode ._size        = scale;
+                        node .modelMatrix .get (translation, rotation, scale);
+
+                        rigidBodyNode ._fixed       = true;
+                        rigidBodyNode ._position    = translation;
+                        rigidBodyNode ._orientation = rotation;
+                        rigidBodyNode ._size        = scale;
+
+                        this .rigidBodies .push (rigidBodyNode);
+                     }
                   }
 
                   for (const [key, value] of Object .entries (extension))
@@ -2505,11 +2516,34 @@ function eventsProcessed ()
                                  collidableShapeNode ._convexHull = value .geometry .convexHull;
                                  collidableShapeNode ._shape      = shapeNode;
 
+                                 if (physicsParent)
+                                 {
+                                    physicsParent .modelMatrix .copy ()
+                                       .inverse ()
+                                       .multLeft (node .modelMatrix) .get (translation, rotation, scale);
+
+                                    collidableShapeNode ._translation = translation;
+                                    collidableShapeNode ._rotation    = rotation;
+                                    collidableShapeNode ._scale       = scale;
+
+                                    const collidableOffsetNode = scene .createNode ("CollidableOffset", false);
+
+                                    collidableOffsetNode ._collidable = collidableShapeNode;
+
+                                    collidableOffsetNode .setup ();
+
+                                    rigidBodyNode ._geometry .push (collidableOffsetNode);
+
+                                    this .collidables .push (collidableOffsetNode);
+                                 }
+                                 else
+                                 {
+                                    rigidBodyNode ._geometry .push (collidableShapeNode);
+
+                                    this .collidables .push (collidableShapeNode);
+                                 }
+
                                  collidableShapeNode .setup ();
-
-                                 rigidBodyNode ._geometry .push (collidableShapeNode);
-
-                                 this .collidables .push (collidableShapeNode);
 
                                  // DEBUG
                                  // node .transformNode ._children .push (collidableShapeNode);
@@ -2614,25 +2648,18 @@ function eventsProcessed ()
                      }
                   }
 
-                  if (rigidBodyNode)
-                  {
-                     rigidBodyNode .setup ();
-
-                     this .rigidBodies .push (rigidBodyNode);
-                  }
-
                   break;
                }
             }
          }
       };
    })(),
-   nodeChildrenArray (children, modelMatrix)
+   nodeChildrenArray (children, modelMatrix, physicsParent)
    {
       if (!(children instanceof Array))
          return [ ];
 
-      children .forEach (index => this .nodeChildren (this .nodes [index], index, modelMatrix));
+      children .forEach (index => this .nodeChildren (this .nodes [index], index, modelMatrix, physicsParent));
 
       const nodes = Array .from (new Set (children
          .map (index => this .nodes [index] ?.childNode)
@@ -4452,6 +4479,8 @@ function eventsProcessed ()
       collidables ._children = this .collidables;
 
       this .getScene () .rootNodes .push (collidables); // DEBUG
+
+      this .rigidBodies .forEach (rigidBodyNode => rigidBodyNode .setup ());
 
       collection ._bodies = this .rigidBodies;
 

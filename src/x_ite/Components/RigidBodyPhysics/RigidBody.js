@@ -295,9 +295,11 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
          geometryNode ._translation .removeFieldInterest (this ._position);
          geometryNode ._rotation    .removeFieldInterest (this ._orientation);
+         geometryNode ._scale       .removeFieldInterest (this ._size);
 
          this ._position    .removeFieldInterest (geometryNode ._translation);
          this ._orientation .removeFieldInterest (geometryNode ._rotation);
+         this ._size        .removeFieldInterest (geometryNode ._scale);
       }
 
       for (const otherGeometryNode of this .otherGeometryNodes)
@@ -331,9 +333,11 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
          geometryNode ._translation .addFieldInterest (this ._position);
          geometryNode ._rotation    .addFieldInterest (this ._orientation);
+         geometryNode ._scale       .addFieldInterest (this ._size);
 
          this ._position    .addFieldInterest (geometryNode ._translation);
          this ._orientation .addFieldInterest (geometryNode ._rotation);
+         this ._size        .addFieldInterest (geometryNode ._scale);
       }
 
       this .set_compoundShape__ ();
