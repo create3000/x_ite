@@ -58,6 +58,8 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
       if (this .getChild () && this ._enabled .getValue ())
          this .getCompoundShape () .addChildShape (this .getLocalTransform (), this .getChild () .getCompoundShape ());
 
+      this .getCompoundShape () .recalculateLocalAabb ();
+
       this ._compoundShape = this .getBrowser () .getCurrentTime ();
    },
 });

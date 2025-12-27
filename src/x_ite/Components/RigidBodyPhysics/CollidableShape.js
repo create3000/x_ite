@@ -268,6 +268,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
             this .getCompoundShape () .addChildShape (this .getLocalTransform (), this .collisionShape);
 
          this .getCompoundShape () .setLocalScaling (localScaling);
+         this .getCompoundShape () .recalculateLocalAabb ();
 
          this .addNodeEvent ();
          this ._compoundShape = this .getBrowser () .getCurrentTime ();

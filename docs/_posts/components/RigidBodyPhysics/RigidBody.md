@@ -52,11 +52,11 @@ The RigidBody node belongs to the [RigidBodyPhysics](/x_ite/components/overview/
 | SFTime | [in, out] | [disableTime](#fields-disableTime) | 0  |
 | SFFloat | [in, out] | [disableLinearSpeed](#fields-disableLinearSpeed) | 0  |
 | SFFloat | [in, out] | [disableAngularSpeed](#fields-disableAngularSpeed) | 0  |
-| MFNode | [in, out] | [geometry](#fields-geometry) | [ ] |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
 | SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
 | SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| MFNode | [in, out] | [geometry](#fields-geometry) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -233,11 +233,6 @@ The *massDensityModel* field is used to describe the geometry type and dimension
 
 - Only activated if autoDisable='true'
 
-### MFNode [in, out] **geometry** [ ] <small>[X3DNBodyCollidableNode]</small>
-{: #fields-geometry }
-
-The *geometry* field is used to connect the body modelled by the physics engine implementation to the real *geometry* of the scene through the use of collidable nodes. This allows the *geometry* to be connected directly to the physics model as well as collision detection. Collidable nodes have their location set to the same location as the body instance in which they are located.
-
 ### SFBool [in, out] **visible** TRUE
 {: #fields-visible }
 
@@ -279,6 +274,11 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
 - [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#BoundingBoxes)
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
+
+### MFNode [in, out] **geometry** [ ] <small>[X3DNBodyCollidableNode]</small>
+{: #fields-geometry }
+
+The *geometry* field is used to connect the body modelled by the physics engine implementation to the real *geometry* of the scene through the use of collidable nodes. This allows the *geometry* to be connected directly to the physics model as well as collision detection. Collidable nodes have their location set to the same location as the body instance in which they are located.
 
 ###  [] **scale** 1 1 1 <small>(-∞,∞)</small>
 {: #fields-scale }
