@@ -300,7 +300,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
             for (const bodyNode of this .bodyNodes)
                bodyNode .applyForces (gravity);
 
-            this .dynamicsWorld .stepSimulation (deltaTime, iterations + 2, deltaTime / iterations);
+            this .dynamicsWorld .stepSimulation (deltaTime, iterations, deltaTime / iterations);
          }
 
          for (const bodyNode of this .bodyNodes)
