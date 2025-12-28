@@ -196,6 +196,9 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
 
       const material = this .physics .createMaterial (0, 0, 1);
 
+      // material .setFrictionCombineMode (this .PhysX .PxCombineModeEnum .eAVERAGE);
+      // material .setRestitutionCombineMode (this .PhysX .PxCombineModeEnum .eAVERAGE);
+
       const shapeFlags = new this .PhysX .PxShapeFlags (
          this .PhysX .PxShapeFlagEnum .eSCENE_QUERY_SHAPE |
          this .PhysX .PxShapeFlagEnum .eSIMULATION_SHAPE |
