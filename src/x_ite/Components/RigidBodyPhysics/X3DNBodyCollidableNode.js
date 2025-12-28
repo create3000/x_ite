@@ -33,7 +33,12 @@ function X3DNBodyCollidableNode (executionContext)
 
    // Private properties
 
-   this .offset         = new Vector3 ();
+   // Private properties
+
+   this .parentEnabled  = true;
+   this .enabled        = true;
+   this .parentMatrix   = new Matrix4 ();
+   this .offsetMatrix   = new Matrix4 ();
    this .matrix         = new Matrix4 ();
    this .visibleObjects = [ ];
 }
@@ -77,6 +82,9 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
    setBody (value)
    {
       this ._body = value;
+
+      this .setEnabled (this .parentEnabled);
+      this .setLocalPose (this .parentMatrix);
    },
    getBody ()
    {
@@ -220,6 +228,11 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
       this .matrix .set (this ._translation .getValue (),
                          this ._rotation    .getValue (),
                          this ._scale       .getValue ());
+
+      if (this .getBody ())
+         return;
+
+      this .setLocalPose (this .parentMatrix);
    },
    traverse (type, renderObject)
    {

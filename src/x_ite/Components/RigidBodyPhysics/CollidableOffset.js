@@ -12,13 +12,6 @@ function CollidableOffset (executionContext)
    X3DNBodyCollidableNode .call (this, executionContext);
 
    this .addType (X3DConstants .CollidableOffset);
-
-   // Private properties
-
-   this .parentEnabled = true;
-   this .enabled       = true;
-   this .parentMatrix  = new Matrix4 ();
-   this .offsetMatrix  = new Matrix4 ();
 }
 
 Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCollidableNode .prototype),
@@ -82,13 +75,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
 
       this ._physicsShape = this .getBrowser () .getCurrentTime ();
 
-      this .set_enabled__ ();
-      this .eventsProcessed ();
-   },
-   eventsProcessed ()
-   {
-      X3DNBodyCollidableNode .prototype .eventsProcessed .call (this);
-
+      this .setEnabled (this .parentEnabled);
       this .setLocalPose (this .parentMatrix);
    },
 });

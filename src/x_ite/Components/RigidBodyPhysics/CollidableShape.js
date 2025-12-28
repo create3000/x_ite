@@ -19,13 +19,6 @@ function CollidableShape (executionContext)
    X3DNBodyCollidableNode .call (this, executionContext);
 
    this .addType (X3DConstants .CollidableShape);
-
-   // Private properties
-
-   this .parentEnabled = true;
-   this .enabled       = true;
-   this .parentMatrix  = new Matrix4 ();
-   this .offsetMatrix  = new Matrix4 ();
 }
 
 Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyCollidableNode .prototype),
@@ -38,7 +31,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
 
       this .material .setStaticFriction (0);
       this .material .setDynamicFriction (0);
-      this .material .setRestitution (0);
+      this .material .setRestitution (1);
       this .material .setFrictionCombineMode (this .PhysX .PxCombineModeEnum .eAVERAGE);
       this .material .setRestitutionCombineMode (this .PhysX .PxCombineModeEnum .eAVERAGE);
 
@@ -335,23 +328,17 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          this .shape = null;
       }
 
-      this .set_enabled__ ();
-      this .eventsProcessed ();
+      this ._physicsShape = this .getBrowser () .getCurrentTime ();
+
+      this .setEnabled (this .parentEnabled);
+      this .setLocalPose (this .parentMatrix);
 
       this .PhysX .destroy (shapeFlags);
-
-      this ._physicsShape = this .getBrowser () .getCurrentTime ();
    },
    removeCollidableGeometry ()
    {
       if (this .shape)
          this .PhysX .destroy (this .shape);
-   },
-   eventsProcessed ()
-   {
-      X3DNBodyCollidableNode .prototype .eventsProcessed .call (this);
-
-      this .setLocalPose (this .parentMatrix);
    },
    dispose ()
    {
