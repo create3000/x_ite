@@ -267,7 +267,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       if (this .shape)
       {
          const
-            word0      = 0x80000000,
+            word0      = this ._enabled .getValue () ? 0x80000000 : 0,
             word1      = this ._enabled .getValue () ? 0xffffffff : 0,
             filterData = new this .PhysX .PxFilterData (word0, word1, 0, 0);
 
