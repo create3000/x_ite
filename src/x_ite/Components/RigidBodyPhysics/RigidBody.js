@@ -55,6 +55,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       this .PhysX   = await browser .getPhysX ();
       this .physics = await browser .getPhysics ();
 
+      this ._fixed                .addInterest ("set_geometry__",           this);
       this ._linearVelocity       .addInterest ("set_linearVelocity__",     this);
       this ._angularVelocity      .addInterest ("set_angularVelocity__",    this);
       this ._useFiniteRotation    .addInterest ("set_finiteRotationAxis__", this);
@@ -71,7 +72,6 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       this ._geometry             .addInterest ("set_geometry__",           this);
       this ._otherGeometry        .addInterest ("set_geometry__",           this);
 
-      this ._fixed        .addInterest ("set_mass__", this);
       this ._mass         .addInterest ("set_mass__", this);
       this ._centerOfMass .addInterest ("set_mass__", this);
       this ._inertia      .addInterest ("set_mass__", this);
