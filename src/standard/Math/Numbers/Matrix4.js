@@ -638,7 +638,7 @@ Object .defineProperties (Matrix4 .prototype,
          return function () { return vector .set (this [12], this [13], this [14], this [15]); };
       })(),
    },
-   X_AXIS:
+   xAxis:
    {
       get: (() =>
       {
@@ -647,7 +647,7 @@ Object .defineProperties (Matrix4 .prototype,
          return function () { return vector .set (this [0], this [1], this [2]); };
       })(),
    },
-   Y_AXIS:
+   yAxis:
    {
       get: (() =>
       {
@@ -656,7 +656,7 @@ Object .defineProperties (Matrix4 .prototype,
          return function () { return vector .set (this [4], this [5], this [6]); };
       })(),
    },
-   Z_AXIS:
+   zAxis:
    {
       get: (() =>
       {
