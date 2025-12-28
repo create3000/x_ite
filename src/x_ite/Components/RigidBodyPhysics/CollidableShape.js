@@ -8,6 +8,7 @@ import X3DCast                from "../../Base/X3DCast.js";
 import Matrix4                from "../../../standard/Math/Numbers/Matrix4.js";
 import Vector3                from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4              from "../../../standard/Math/Numbers/Rotation4.js";
+import Quaternion             from "../../../standard/Math/Numbers/Quaternion.js";
 import Ammo                   from "../../../lib/ammojs/AmmoClass.js";
 
 const
@@ -60,7 +61,8 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    {
       const
          t = new Vector3 (),
-         r = new Rotation4 ();
+         r = new Rotation4 (),
+         q = new Quaternion ();
 
       return function (parentMatrix)
       {
@@ -78,7 +80,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
 
          const
             translation = new this .PhysX .PxVec3 (... t),
-            rotation    = new this .PhysX .PxQuat (... r .getQuaternion ()),
+            rotation    = new this .PhysX .PxQuat (... r .getQuaternion (q)),
             pose        = new this .PhysX .PxTransform (translation, rotation);
 
          this .shape .setLocalPose (pose);
