@@ -41,8 +41,8 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          return;
 
       const
-         word0      = this .enabled ? 0x80000000 : 0,
-         word1      = this .enabled ? 0xffffffff : 0,
+         word0      = this .enabled ? 0x80000000 : 0, // group id
+         word1      = this .enabled ? 0xffffffff : 0, // collides with mask
          filterData = new this .PhysX .PxFilterData (word0, word1, 0, 0);
 
       this .shape .setSimulationFilterData (filterData);
