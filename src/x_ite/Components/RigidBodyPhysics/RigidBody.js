@@ -81,8 +81,6 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       this ._transform .addInterest ("set_transform__", this);
 
-      this .set_forces__ ();
-      this .set_torques__ ();
       this .set_geometry__ ();
    },
    getBBox (bbox, shadows)
@@ -207,10 +205,13 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    },
    set_forces__ ()
    {
+      if (!this .actor)
+         return;
+
       if (this ._fixed .getValue ())
          return;
 
-      this .actor ?.clearForce ();
+      this .actor .clearForce ();
 
       for (const force of this ._forces)
       {
@@ -218,15 +219,18 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          this .force .y = force .y;
          this .force .z = force .z;
 
-         this .actor ?.addForce (this .force);
+         this .actor .addForce (this .force);
       }
    },
    set_torques__ ()
    {
+      if (!this .actor)
+         return;
+
       if (this ._fixed .getValue ())
          return;
 
-      this .actor ?.clearTorque ();
+      this .actor .clearTorque ();
 
       for (const torque of this ._torques)
       {
@@ -234,7 +238,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          this .torque .y = torque .y;
          this .torque .z = torque .z;
 
-         this .actor ?.addTorque (this .torque);
+         this .actor .addTorque (this .torque);
       }
    },
    set_disable__ ()
@@ -317,6 +321,8 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       this .set_damping__ ();
       this .set_mass__ ();
       this .set_useGlobalGravity__ ();
+      this .set_forces__ ();
+      this .set_torques__ ();
       this .set_disable__ ();
    },
    set_body__ ()
