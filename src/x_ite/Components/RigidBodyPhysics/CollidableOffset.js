@@ -50,6 +50,10 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
 
       this .getChild () ?.setLocalPose (this .offsetMatrix);
    },
+   getShape ()
+   {
+      return this .getChild () ?.getShape ();
+   },
    set_enabled__ ()
    {
       this .setEnabled (this .parentEnabled);
