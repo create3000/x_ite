@@ -50,9 +50,9 @@ Object .assign (X3DLayoutContext .prototype,
          renderObject .getViewpoint () .getScreenScale (modelViewMatrix .origin, viewport, screenScale); // in meter/pixel
 
          const
-            x = modelViewMatrix .X_AXIS .normalize () .multiply (screenScale .x * contentScale),
-            y = modelViewMatrix .Y_AXIS .normalize () .multiply (screenScale .y * contentScale),
-            z = modelViewMatrix .Z_AXIS .normalize () .multiply (screenScale .x * contentScale);
+            x = modelViewMatrix .xAxis .normalize () .multiply (screenScale .x * contentScale),
+            y = modelViewMatrix .yAxis .normalize () .multiply (screenScale .y * contentScale),
+            z = modelViewMatrix .zAxis .normalize () .multiply (screenScale .x * contentScale);
 
          screenMatrix .set (... x, 0,
                             ... y, 0,

@@ -8647,7 +8647,7 @@ declare namespace X3D
       zSpacing: number;
    }
 
-   /** GeoLocation positions a regular X3D model onto earth's surface. */
+   /** GeoLocation positions a regular X3D model onto the earth's surface. */
    interface GeoLocationProxy extends X3DGroupingNodeProxy
    {
       /**

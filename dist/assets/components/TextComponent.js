@@ -1,15 +1,15 @@
-/* X_ITE v12.2.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.2.3")];
+/* X_ITE v12.2.4 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.2.4")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 254:
-/***/ ((module) => {
+/***/ 254
+(module) {
 
 module.exports = __X_ITE_X3D__ .jquery;
 
-/***/ })
+/***/ }
 
 /******/ 	});
 /************************************************************************/

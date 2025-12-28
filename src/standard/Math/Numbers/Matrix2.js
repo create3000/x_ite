@@ -209,7 +209,7 @@ Object .defineProperties (Matrix2 .prototype,
          return function () { return vector .set (this [2], this [3]); };
       })(),
    },
-   X_AXIS:
+   xAxis:
    {
       get () { return this [0]; },
    },
