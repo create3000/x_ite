@@ -37,9 +37,6 @@ function RigidBody (executionContext)
    this .geometryNodes      = [ ];
    this .otherGeometryNodes = [ ];
    this .shapes             = [ ];
-   this .matrix             = new Matrix4 ();
-   this .force              = new Vector3 ();
-   this .torque             = new Vector3 ();
 }
 
 Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype),
@@ -57,6 +54,9 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       this .pose            = new this .PhysX .PxTransform ();
       this .linearVelocity  = new this .PhysX .PxVec3 (0, 0, 0);
       this .angularVelocity = new this .PhysX .PxVec3 (0, 0, 0);
+      this .centerOfMass    = new this .PhysX .PxVec3 (0, 0, 0);
+      this .force           = new this .PhysX .PxVec3 (0, 0, 0);
+      this .torque          = new this .PhysX .PxVec3 (0, 0, 0);
 
       this ._fixed                .addInterest ("set_geometry__",           this);
       this ._linearVelocity       .addInterest ("set_linearVelocity__",     this);
@@ -103,10 +103,6 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    getActor ()
    {
       return this .actor;
-   },
-   getMatrix ()
-   {
-      return this .matrix;
    },
    set_position__ ()
    {
@@ -197,11 +193,13 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       if (this ._fixed .getValue ())
          return;
 
-      const centerOfMass = new this .PhysX .PxVec3 (... this ._centerOfMass);
+      const centerOfMass = this ._centerOfMass .getValue ();
 
-      this .PhysX .PxRigidBodyExt .prototype .setMassAndUpdateInertia (this .actor, this ._mass .getValue (), centerOfMass);
+      this .centerOfMass .x = centerOfMass .x;
+      this .centerOfMass .y = centerOfMass .y;
+      this .centerOfMass .z = centerOfMass .z;
 
-      this .PhysX .destroy (centerOfMass);
+      this .PhysX .PxRigidBodyExt .prototype .setMassAndUpdateInertia (this .actor, this ._mass .getValue (), this .centerOfMass);
    },
    set_useGlobalGravity__ ()
    {
@@ -209,17 +207,35 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    },
    set_forces__ ()
    {
-      this .force .set (0);
+      if (this ._fixed .getValue ())
+         return;
+
+      this .actor ?.clearForce ();
 
       for (const force of this ._forces)
-         this .force .add (force .getValue ());
+      {
+         this .force .x = force .x;
+         this .force .y = force .y;
+         this .force .z = force .z;
+
+         this .actor ?.addForce (this .force);
+      }
    },
    set_torques__ ()
    {
-      this .torque .set (0);
+      if (this ._fixed .getValue ())
+         return;
+
+      this .actor ?.clearTorque ();
 
       for (const torque of this ._torques)
-         this .torque .add (torque .getValue ());
+      {
+         this .torque .x = torque .x;
+         this .torque .y = torque .y;
+         this .torque .z = torque .z;
+
+         this .actor ?.addTorque (this .torque);
+      }
    },
    set_disable__ ()
    {
@@ -385,6 +401,11 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          this .PhysX .destroy (this .actor);
 
       this .PhysX .destroy (this .pose);
+      this .PhysX .destroy (this .linearVelocity);
+      this .PhysX .destroy (this .angularVelocity);
+      this .PhysX .destroy (this .centerOfMass);
+      this .PhysX .destroy (this .force);
+      this .PhysX .destroy (this .torque);
 
       X3DBoundedObject .prototype .dispose .call (this);
       X3DNode          .prototype .dispose .call (this);
