@@ -85,9 +85,9 @@ Object .assign (ScreenPoint .prototype,
             scale       = radius * screenScale;
 
          const
-            x = modelViewMatrix .X_AXIS .normalize () .multiply (scale),
-            y = modelViewMatrix .Y_AXIS .normalize () .multiply (scale),
-            z = modelViewMatrix .Z_AXIS .normalize () .multiply (scale);
+            x = modelViewMatrix .xAxis .normalize () .multiply (scale),
+            y = modelViewMatrix .yAxis .normalize () .multiply (scale),
+            z = modelViewMatrix .zAxis .normalize () .multiply (scale);
 
          screenMatrix .set (... x, 0, ... y, 0, ... z, 0, ... modelViewMatrix .origin, 1);
 
