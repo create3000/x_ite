@@ -19,15 +19,19 @@ function CollidableShape (executionContext)
 
 Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyCollidableNode .prototype),
 {
-   initialize ()
+   async initialize ()
    {
-      X3DNBodyCollidableNode .prototype .initialize .call (this);
+      await X3DNBodyCollidableNode .prototype .initialize .call (this);
 
       this ._enabled    .addInterest ("set_collidableGeometry__", this);
       this ._convexHull .addInterest ("set_collidableGeometry__", this);
       this ._shape      .addInterest ("requestRebuild",           this);
 
       this .set_child__ ();
+   },
+   getShape ()
+   {
+      return this .shape;
    },
    createGeometry ()
    {
@@ -121,178 +125,168 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
 
       this .set_collidableGeometry__ ();
    },
-   set_collidableGeometry__: (() =>
+   set_collidableGeometry__ ()
    {
-      const
-         localScaling   = new Ammo .btVector3 (),
-         defaultScaling = new Ammo .btVector3 (1, 1, 1);
+      this .removeCollidableGeometry ();
 
-      return function ()
+      const material = this .physics .createMaterial (0, 0, 1);
+
+      const shapeFlags = new this .PhysX .PxShapeFlags (
+         this .PhysX .PxShapeFlagEnum .eSCENE_QUERY_SHAPE |
+         this .PhysX .PxShapeFlagEnum .eSIMULATION_SHAPE |
+         this .PhysX .PxShapeFlagEnum .eVISUALIZATION
+      );
+
+      if (this ._enabled .getValue () && this .geometryNode && this .geometryNode .getGeometryType () >= 2)
       {
-         const ls = this .getCompoundShape () .getLocalScaling ();
-         localScaling .setValue (ls .x (), ls .y (), ls .z ());
+         const type = this .geometryNode .getType ();
 
-         this .removeCollidableGeometry ();
-         this .setOffset (0, 0, 0);
-         this .getCompoundShape () .setLocalScaling (defaultScaling);
-
-         if (this ._enabled .getValue () && this .geometryNode && this .geometryNode .getGeometryType () > 1)
+         for (let t = type .length - 1; t >= 0; -- t)
          {
-            const type = this .geometryNode .getType ();
-
-            for (let t = type .length - 1; t >= 0; -- t)
+            switch (type [t])
             {
-               switch (type [t])
+               case X3DConstants .Box:
                {
-                  case X3DConstants .Box:
-                  {
-                     const
-                        box  = this .geometryNode,
-                        size = box ._size .getValue ();
+                  const
+                     box      = this .geometryNode,
+                     size     = box ._size .getValue (),
+                     geometry = new this .PhysX .PxBoxGeometry (size .x / 2, size .y / 2, size .z / 2);
 
-                     this .collisionShape = new Ammo .btBoxShape (new Ammo .btVector3 (size .x / 2, size .y / 2, size .z / 2));
-
-                     this .collisionShape .setMargin (MARGIN);
-                     break;
-                  }
-                  case X3DConstants .Cone:
-                  {
-                     const cone = this .geometryNode;
-
-                     if (cone ._side .getValue () && cone ._bottom .getValue ())
-                     {
-                        this .collisionShape = new Ammo .btConeShape (cone ._bottomRadius .getValue (), cone ._height .getValue ());
-
-                        this .collisionShape .setMargin (MARGIN);
-                     }
-                     else
-                     {
-                        this .collisionShape = this .createGeometry ();
-                     }
-
-                     break;
-                  }
-                  case X3DConstants .Cylinder:
-                  {
-                     const
-                        cylinder  = this .geometryNode,
-                        radius    = cylinder ._radius .getValue (),
-                        height1_2 = cylinder ._height .getValue () * 0.5;
-
-                     if (cylinder ._side .getValue () && cylinder ._top .getValue () && cylinder ._bottom .getValue ())
-                     {
-                        this .collisionShape = new Ammo .btCylinderShape (new Ammo .btVector3 (radius, height1_2, radius));
-
-                        this .collisionShape .setMargin (MARGIN);
-                     }
-                     else
-                     {
-                        this .collisionShape = this .createGeometry ();
-                     }
-
-                     break;
-                  }
-                  case X3DConstants .ElevationGrid:
-                  {
-                     const elevationGrid = this .geometryNode;
-
-                     if (elevationGrid ._xDimension .getValue () > 1 && elevationGrid ._zDimension .getValue () > 1)
-                     {
-                        const heightField = this .heightField = Ammo ._malloc (4 * elevationGrid ._xDimension .getValue () * elevationGrid ._zDimension .getValue ());
-
-                        let
-                           min = Number .POSITIVE_INFINITY,
-                           max = Number .NEGATIVE_INFINITY;
-
-                        for (let i = 0, i4 = 0, length = elevationGrid ._height .length; i < length; ++ i)
-                        {
-                           const value = elevationGrid ._height [i];
-
-                           min = Math .min (min, value);
-                           max = Math .max (max, value);
-
-                           Ammo .HEAPF32 [heightField + i4 >>> 2] = elevationGrid ._height [i];
-
-                           i4 += 4;
-                        }
-
-                        this .collisionShape = new Ammo .btHeightfieldTerrainShape (elevationGrid ._xDimension .getValue (),
-                                                                                    elevationGrid ._zDimension .getValue (),
-                                                                                    heightField,
-                                                                                    1,
-                                                                                    min,
-                                                                                    max,
-                                                                                    1,
-                                                                                    "PHY_FLOAT",
-                                                                                    true);
-
-                        this .collisionShape .setMargin (MARGIN);
-                        this .collisionShape .setLocalScaling (new Ammo .btVector3 (elevationGrid ._xSpacing .getValue (), 1, elevationGrid ._zSpacing .getValue ()));
-
-                        this .setOffset (elevationGrid ._xSpacing .getValue () * (elevationGrid ._xDimension .getValue () - 1) * 0.5,
-                                         (min + max) * 0.5,
-                                         elevationGrid ._zSpacing .getValue () * (elevationGrid ._zDimension .getValue () - 1) * 0.5);
-                     }
-
-                     break;
-                  }
-                  case X3DConstants .Sphere:
-                  {
-                     const sphere = this .geometryNode;
-
-                     this .collisionShape = new Ammo .btSphereShape (sphere ._radius .getValue ());
-
-                     this .collisionShape .setMargin (MARGIN);
-                     break;
-                  }
-                  case X3DConstants .X3DGeometryNode:
-                  {
-                     this .collisionShape = this .createGeometry ();
-                     break;
-                  }
-                  default:
-                  {
-                     continue;
-                  }
+                  this .shape = this .physics .createShape (geometry, material, true, shapeFlags);
+                  break;
                }
+               case X3DConstants .Cone:
+               {
+                  const cone = this .geometryNode;
 
-               break;
+                  // if (cone ._side .getValue () && cone ._bottom .getValue ())
+                  // {
+                  //    this .collisionShape = new Ammo .btConeShape (cone ._bottomRadius .getValue (), cone ._height .getValue ());
+
+                  //    this .collisionShape .setMargin (MARGIN);
+                  // }
+                  // else
+                  // {
+                  //    this .collisionShape = this .createGeometry ();
+                  // }
+
+                  break;
+               }
+               case X3DConstants .Cylinder:
+               {
+                  const
+                     cylinder  = this .geometryNode,
+                     radius    = cylinder ._radius .getValue (),
+                     height1_2 = cylinder ._height .getValue () * 0.5;
+
+                  // if (cylinder ._side .getValue () && cylinder ._top .getValue () && cylinder ._bottom .getValue ())
+                  // {
+                  //    this .collisionShape = new Ammo .btCylinderShape (new Ammo .btVector3 (radius, height1_2, radius));
+
+                  //    this .collisionShape .setMargin (MARGIN);
+                  // }
+                  // else
+                  // {
+                  //    this .collisionShape = this .createGeometry ();
+                  // }
+
+                  break;
+               }
+               case X3DConstants .ElevationGrid:
+               {
+                  const elevationGrid = this .geometryNode;
+
+                  // if (elevationGrid ._xDimension .getValue () > 1 && elevationGrid ._zDimension .getValue () > 1)
+                  // {
+                  //    const heightField = this .heightField = Ammo ._malloc (4 * elevationGrid ._xDimension .getValue () * elevationGrid ._zDimension .getValue ());
+
+                  //    let
+                  //       min = Number .POSITIVE_INFINITY,
+                  //       max = Number .NEGATIVE_INFINITY;
+
+                  //    for (let i = 0, i4 = 0, length = elevationGrid ._height .length; i < length; ++ i)
+                  //    {
+                  //       const value = elevationGrid ._height [i];
+
+                  //       min = Math .min (min, value);
+                  //       max = Math .max (max, value);
+
+                  //       Ammo .HEAPF32 [heightField + i4 >>> 2] = elevationGrid ._height [i];
+
+                  //       i4 += 4;
+                  //    }
+
+                  //    this .collisionShape = new Ammo .btHeightfieldTerrainShape (elevationGrid ._xDimension .getValue (),
+                  //                                                                elevationGrid ._zDimension .getValue (),
+                  //                                                                heightField,
+                  //                                                                1,
+                  //                                                                min,
+                  //                                                                max,
+                  //                                                                1,
+                  //                                                                "PHY_FLOAT",
+                  //                                                                true);
+
+                  //    this .collisionShape .setMargin (MARGIN);
+                  //    this .collisionShape .setLocalScaling (new Ammo .btVector3 (elevationGrid ._xSpacing .getValue (), 1, elevationGrid ._zSpacing .getValue ()));
+
+                  //    this .setOffset (elevationGrid ._xSpacing .getValue () * (elevationGrid ._xDimension .getValue () - 1) * 0.5,
+                  //                     (min + max) * 0.5,
+                  //                     elevationGrid ._zSpacing .getValue () * (elevationGrid ._zDimension .getValue () - 1) * 0.5);
+                  // }
+
+                  break;
+               }
+               case X3DConstants .Sphere:
+               {
+                  const
+                     sphere   = this .geometryNode,
+                     geometry = new this .PhysX .PxSphereGeometry (sphere ._radius .getValue ());
+
+                  this .shape = this .physics .createShape (geometry, material, true, shapeFlags);
+                  break;
+               }
+               case X3DConstants .X3DGeometryNode:
+               {
+                  // this .collisionShape = this .createGeometry ();
+                  break;
+               }
+               default:
+               {
+                  continue;
+               }
             }
+
+            break;
          }
-         else
-         {
-            this .collisionShape = null;
-         }
+      }
+      else
+      {
+         this .shape = null;
+      }
 
-         if (this .collisionShape)
-            this .getCompoundShape () .addChildShape (this .getLocalTransform (), this .collisionShape);
+      if (this .shape)
+      {
+         const
+            word0      = 0x80000000,
+            word1      = 0xffffffff,
+            filterData = new this .PhysX .PxFilterData (word0, word1, 0, 0);
 
-         this .getCompoundShape () .setLocalScaling (localScaling);
-         this .getCompoundShape () .recalculateLocalAabb ();
+         this .shape .setSimulationFilterData (filterData);
 
-         this .addNodeEvent ();
-         this ._compoundShape = this .getBrowser () .getCurrentTime ();
-      };
-   })(),
+         this .PhysX .destroy (filterData);
+      }
+
+      this .PhysX .destroy (material);
+      this .PhysX .destroy (shapeFlags);
+
+      // this .addNodeEvent ();
+      this ._physicsShape = this .getBrowser () .getCurrentTime ();
+   },
    removeCollidableGeometry ()
    {
-      if (this .collisionShape)
+      if (this .shape)
       {
-         this .getCompoundShape () .removeChildShapeByIndex (0);
-         Ammo .destroy (this .collisionShape);
-         this .collisionShape = null;
-      }
-
-      if (this .heightField)
-      {
-         Ammo ._free (this .heightField);
-         this .heightField = null;
-      }
-
-      if (this .triangleMesh)
-      {
-         Ammo .destroy (this .triangleMesh);
-         this .triangleMesh = null;
+         this .PhysX .destroy (this .shape);
       }
    },
    dispose ()

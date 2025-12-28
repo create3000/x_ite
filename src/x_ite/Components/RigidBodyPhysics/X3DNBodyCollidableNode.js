@@ -17,7 +17,7 @@ function X3DNBodyCollidableNode (executionContext)
    this .addType (X3DConstants .X3DNBodyCollidableNode);
 
    this .addChildObjects (X3DConstants .outputOnly, "body",          new Fields .SFNode (),
-                          X3DConstants .outputOnly, "compoundShape", new Fields .SFTime (),
+                          X3DConstants .outputOnly, "physicsShape", new Fields .SFTime (),
                           X3DConstants .outputOnly, "rebuild",       new Fields .SFTime ());
 
 
@@ -33,7 +33,6 @@ function X3DNBodyCollidableNode (executionContext)
 
    // Members
 
-   this .compoundShape  = new Ammo .btCompoundShape ()
    this .offset         = new Vector3 ();
    this .matrix         = new Matrix4 ();
    this .visibleObjects = [ ];
@@ -42,10 +41,15 @@ function X3DNBodyCollidableNode (executionContext)
 Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DChildNode .prototype),
    X3DBoundedObject .prototype,
 {
-   initialize ()
+   async initialize ()
    {
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
+
+      const browser = this .getBrowser ();
+
+      this .PhysX   = await browser .getPhysX ();
+      this .physics = await browser .getPhysics ();
 
       this ._rebuild  .addInterest ("set_child__",          this);
       this ._bboxSize .addInterest ("set_boundedObjects__", this);
@@ -70,31 +74,6 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
 
       return shapes;
    },
-   getLocalTransform: (() =>
-   {
-      const
-         m = new Matrix4 (),
-         o = new Ammo .btVector3 (0, 0, 0),
-         l = new Ammo .btTransform ();
-
-      return function ()
-      {
-         m .assign (this .matrix);
-         m .translate (this .offset);
-
-         //this .localTransform .setFromOpenGLMatrix (m);
-
-         o .setValue (m [12], m [13], m [14]);
-
-         l .getBasis () .setValue (m [0], m [4], m [8],
-                                   m [1], m [5], m [9],
-                                   m [2], m [6], m [10]);
-
-         l .setOrigin (o);
-
-         return l;
-      };
-   })(),
    setBody (value)
    {
       this ._body = value;
@@ -102,18 +81,6 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
    getBody ()
    {
       return this ._body .getValue ();
-   },
-   getCompoundShape ()
-   {
-      return this .compoundShape;
-   },
-   setOffset (x, y, z)
-   {
-      this .offset .set (x, y, z);
-   },
-   getOffset ()
-   {
-      return this .offset;
    },
    getMatrix ()
    {
@@ -253,9 +220,6 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
       this .matrix .set (this ._translation .getValue (),
                          this ._rotation    .getValue (),
                          this ._scale       .getValue ());
-
-      if (this .compoundShape .getNumChildShapes ())
-         this .compoundShape .updateChildTransform (0, this .getLocalTransform (), true);
    },
    traverse (type, renderObject)
    {

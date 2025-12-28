@@ -7,7 +7,6 @@ import X3DBoundedObject      from "../Grouping/X3DBoundedObject.js";
 import X3DConstants          from "../../Base/X3DConstants.js";
 import X3DCast               from "../../Base/X3DCast.js";
 import AppliedParametersType from "../../Browser/RigidBodyPhysics/AppliedParametersType.js";
-import Ammo                  from "../../../lib/ammojs/AmmoClass.js";
 
 function RigidBodyCollection (executionContext)
 {
@@ -27,26 +26,39 @@ function RigidBodyCollection (executionContext)
 
    // Members
 
-   this .broadphase             = new Ammo .btDbvtBroadphase ();
-   this .collisionConfiguration = new Ammo .btDefaultCollisionConfiguration ();
-   this .dispatcher             = new Ammo .btCollisionDispatcher (this .collisionConfiguration);
-   this .solver                 = new Ammo .btSequentialImpulseConstraintSolver ();
-   this .dynamicsWorld          = new Ammo .btDiscreteDynamicsWorld (this .dispatcher, this .broadphase, this .solver, this .collisionConfiguration);
-   this .deltaTime              = 0;
-   this .bodyNodes              = [ ];
-   this .otherBodyNodes         = [ ];
-   this .rigidBodies            = [ ];
-   this .jointNodes             = [ ];
-   this .otherJointNodes        = [ ];
+   this .deltaTime       = 0;
+   this .bodyNodes       = [ ];
+   this .otherBodyNodes  = [ ];
+   this .actors          = [ ];
+   this .jointNodes      = [ ];
+   this .otherJointNodes = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChildNode .prototype),
    X3DBoundedObject .prototype,
 {
-   initialize ()
+   async initialize ()
    {
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
+
+      const browser = this .getBrowser ();
+
+      this .PhysX   = await browser .getPhysX ();
+      this .physics = await browser .getPhysics ();
+
+      const
+         gravity   = new this .PhysX .PxVec3 (... this ._gravity),
+         sceneDesc = new this .PhysX .PxSceneDesc (this.tolerances);
+
+      sceneDesc .set_gravity (gravity);
+      sceneDesc .set_cpuDispatcher (this .PhysX .DefaultCpuDispatcherCreate (0));
+      sceneDesc .set_filterShader (this .PhysX .DefaultFilterShader());
+
+      this .scene   = this .physics .createScene (sceneDesc);
+      this .gravity = gravity;
+
+      this .PhysX .destroy (sceneDesc);
 
       this .getLive () .addInterest ("set_enabled__", this);
 
@@ -70,10 +82,6 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   getDynamicsWorld ()
-   {
-      return this .dynamicsWorld;
-   },
    getTimeStep ()
    {
       const DELAY = 15; // Delay in frames when dt full applies.
@@ -94,19 +102,18 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    set_contacts__ ()
    {
    },
-   set_gravity__: (() =>
+   set_gravity__ ()
    {
-      const gravity = new Ammo .btVector3 (0, 0, 0);
+      const
+         gravity = this .gravity,
+         value   = this ._gravity .getValue ();
 
-      return function ()
-      {
-         gravity .setValue (this ._gravity .x,
-                            this ._gravity .y,
-                            this ._gravity .z);
+      gravity .x = value .x;
+      gravity .y = value .y;
+      gravity .z = value .z;
 
-         this .dynamicsWorld .setGravity (gravity);
-      };
-   })(),
+      this .scene .setGravity (gravity);
+   },
    set_contactSurfaceThickness__ ()
    {
       // Margin is set in CollidableShape.
@@ -125,68 +132,68 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    },
    set_colliderParameters__ ()
    {
-      const colliderNode = this .colliderNode;
+      // const colliderNode = this .colliderNode;
 
-      for (const bodyNode of this .bodyNodes)
-      {
-         const rigidBody = bodyNode .getRigidBody ();
+      // for (const bodyNode of this .bodyNodes)
+      // {
+      //    const rigidBody = bodyNode .getRigidBody ();
 
-         rigidBody .setFriction (0.5);
-         rigidBody .setRollingFriction (0);
-      }
+      //    rigidBody .setFriction (0.5);
+      //    rigidBody .setRollingFriction (0);
+      // }
 
-      if (!colliderNode)
-         return;
+      // if (!colliderNode)
+      //    return;
 
-      for (const parameter of colliderNode .getAppliedParameters ())
-      {
-         switch (parameter)
-         {
-            case AppliedParametersType .FRICTION_COEFFICIENT_2:
-            {
-               for (const bodyNode of this .bodyNodes)
-               {
-                  const rigidBody = bodyNode .getRigidBody ();
+      // for (const parameter of colliderNode .getAppliedParameters ())
+      // {
+      //    switch (parameter)
+      //    {
+      //       case AppliedParametersType .FRICTION_COEFFICIENT_2:
+      //       {
+      //          for (const bodyNode of this .bodyNodes)
+      //          {
+      //             const rigidBody = bodyNode .getRigidBody ();
 
-                  rigidBody .setFriction (colliderNode ._frictionCoefficients .x);
-                  rigidBody .setRollingFriction (colliderNode ._frictionCoefficients .y);
-               }
+      //             rigidBody .setFriction (colliderNode ._frictionCoefficients .x);
+      //             rigidBody .setRollingFriction (colliderNode ._frictionCoefficients .y);
+      //          }
 
-               break;
-            }
-         }
-      }
+      //          break;
+      //       }
+      //    }
+      // }
    },
    set_bounce__ ()
    {
-      const colliderNode = this .colliderNode;
+      // const colliderNode = this .colliderNode;
 
-      if (colliderNode ?._enabled .getValue ())
-      {
-         if (colliderNode .getAppliedParameters () .has (AppliedParametersType .BOUNCE))
-         {
-            for (const bodyNode of this .bodyNodes)
-            {
-               const rigidBody = bodyNode .getRigidBody ();
+      // if (colliderNode ?._enabled .getValue ())
+      // {
+      //    if (colliderNode .getAppliedParameters () .has (AppliedParametersType .BOUNCE))
+      //    {
+      //       for (const bodyNode of this .bodyNodes)
+      //       {
+      //          const rigidBody = bodyNode .getRigidBody ();
 
-               if (rigidBody .getLinearVelocity () .length () >= colliderNode ._minBounceSpeed .getValue ())
-                  rigidBody .setRestitution (colliderNode ._bounce .getValue ());
-               else
-                  rigidBody .setRestitution (0);
-            }
+      //          if (rigidBody .getLinearVelocity () .length () >= colliderNode ._minBounceSpeed .getValue ())
+      //             rigidBody .setRestitution (colliderNode ._bounce .getValue ());
+      //          else
+      //             rigidBody .setRestitution (0);
+      //       }
 
-            return;
-         }
-      }
+      //       return;
+      //    }
+      // }
 
-      for (const bodyNode of this .bodyNodes)
-         bodyNode .getRigidBody () .setRestitution (0);
+      // for (const bodyNode of this .bodyNodes)
+      //    bodyNode .getRigidBody () .setRestitution (0);
    },
    set_bodies__ ()
    {
       for (const bodyNode of this .bodyNodes)
       {
-         bodyNode ._enabled .removeInterest ("set_dynamicsWorld__", this);
+         bodyNode ._enabled .removeInterest ("set_actors__", this);
          bodyNode .setCollection (null);
       }
 
@@ -215,104 +222,110 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
       }
 
       for (const bodyNode of this .bodyNodes)
-         bodyNode ._enabled .addInterest ("set_dynamicsWorld__", this);
+      {
+         bodyNode ._enabled .addInterest ("set_actors__", this);
+      }
 
       this .set_colliderParameters__ ();
       this .set_contactSurfaceThickness__ ();
-      this .set_dynamicsWorld__ ();
+      this .set_actors__ ();
       this .set_joints__ ();
    },
-   set_dynamicsWorld__ ()
+   set_actors__ ()
    {
-      for (const rigidBody of this .rigidBodies)
-         this .dynamicsWorld .removeRigidBody (rigidBody);
+      for (const actor of this .actors)
+         this .scene .removeActor (actor);
 
-      this .rigidBodies .length = 0;
+      this .actors .length = 0;
 
       for (const bodyNode of this .bodyNodes)
       {
          if (!bodyNode ._enabled .getValue ())
             continue;
 
-         this .rigidBodies .push (bodyNode .getRigidBody ());
+         const actor = bodyNode .getActor ();
+
+         if (!actor)
+            continue;
+
+         this .actors .push (actor);
       }
 
-      for (const rigidBody of this .rigidBodies)
-         this .dynamicsWorld .addRigidBody (rigidBody);
+      for (const actor of this .actors)
+         this .scene .addActor (actor);
    },
    set_joints__ ()
    {
-      for (const jointNode of this .jointNodes)
-         jointNode .setCollection (null);
+      // for (const jointNode of this .jointNodes)
+      //    jointNode .setCollection (null);
 
-      this .jointNodes .length = 0;
+      // this .jointNodes .length = 0;
 
-      for (const otherJointNode of this .otherJointNodes)
-         otherJointNode ._collection .removeInterest ("set_joints__", this);
+      // for (const otherJointNode of this .otherJointNodes)
+      //    otherJointNode ._collection .removeInterest ("set_joints__", this);
 
-      this .otherJointNodes .length = 0;
+      // this .otherJointNodes .length = 0;
 
-      for (const node of this ._joints)
-      {
-         const jointNode = X3DCast (X3DConstants .X3DRigidJointNode, node);
+      // for (const node of this ._joints)
+      // {
+      //    const jointNode = X3DCast (X3DConstants .X3DRigidJointNode, node);
 
-         if (!jointNode)
-            continue;
+      //    if (!jointNode)
+      //       continue;
 
-         if (jointNode .getCollection ())
-         {
-            jointNode ._collection .addInterest ("set_joints__", this);
-            this .otherJointNodes .push (bodyNode);
-            continue;
-         }
+      //    if (jointNode .getCollection ())
+      //    {
+      //       jointNode ._collection .addInterest ("set_joints__", this);
+      //       this .otherJointNodes .push (bodyNode);
+      //       continue;
+      //    }
 
-         jointNode .setCollection (this);
+      //    jointNode .setCollection (this);
 
-         this .jointNodes .push (jointNode);
-      }
+      //    this .jointNodes .push (jointNode);
+      // }
    },
    update ()
    {
-      try
+      const
+         scene      = this .scene,
+         iterations = this ._iterations .getValue (),
+         gravity    = this ._gravity .getValue ();
+
+      this .set_bounce__ ();
+
+      if (this ._preferAccuracy .getValue ())
       {
-         const
-            iterations = this ._iterations .getValue (),
-            gravity    = this ._gravity .getValue ();
+         const deltaTime = this .getTimeStep () / iterations;
 
-         this .set_bounce__ ();
-
-         if (this ._preferAccuracy .getValue ())
+         for (let i = 0; i < iterations; ++ i)
          {
-            const deltaTime = this .getTimeStep () / iterations;
-
-            for (let i = 0; i < iterations; ++ i)
-            {
-               for (const bodyNode of this .bodyNodes)
-                  bodyNode .applyForces (gravity);
-
-               this .dynamicsWorld .stepSimulation (deltaTime, 0);
-            }
-         }
-         else
-         {
-            const deltaTime = this .getTimeStep ();
-
             for (const bodyNode of this .bodyNodes)
                bodyNode .applyForces (gravity);
 
-            this .dynamicsWorld .stepSimulation (deltaTime, iterations, deltaTime / iterations);
+            scene .simulate (deltaTime);
          }
+      }
+      else
+      {
+         const deltaTime = this .getTimeStep ();
 
          for (const bodyNode of this .bodyNodes)
-            bodyNode .update ();
+            bodyNode .applyForces (gravity);
+
+         scene .simulate (deltaTime);
       }
-      catch (error)
-      {
-         console .error (error);
-      }
+
+      scene .fetchResults (true);
+
+      for (const bodyNode of this .bodyNodes)
+         bodyNode .update ();
    },
    dispose ()
    {
+      this .PhysX .destroy (this .gravity);
+      this .PhysX .destroy (this .scene);
+
       X3DBoundedObject .prototype .dispose .call (this);
       X3DChildNode     .prototype .dispose .call (this);
    },

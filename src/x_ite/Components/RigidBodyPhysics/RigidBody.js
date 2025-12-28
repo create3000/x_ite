@@ -9,7 +9,6 @@ import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Quaternion           from "../../../standard/Math/Numbers/Quaternion.js";
 import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
-import Ammo                 from "../../../lib/ammojs/AmmoClass.js";
 
 function RigidBody (executionContext)
 {
@@ -35,29 +34,26 @@ function RigidBody (executionContext)
 
    // Private properties
 
-   this .compoundShape      = new Ammo .btCompoundShape ();
-   this .motionState        = new Ammo .btDefaultMotionState ();
-   this .constructionInfo   = new Ammo .btRigidBodyConstructionInfo (0, this .motionState, this .compoundShape);
-   this .rigidBody          = new Ammo .btRigidBody (this .constructionInfo);
    this .geometryNodes      = [ ];
    this .otherGeometryNodes = [ ];
+   this .shapes             = [ ];
    this .matrix             = new Matrix4 ();
    this .force              = new Vector3 ();
    this .torque             = new Vector3 ();
-
-   // Enable CCD.
-   // https://docs.panda3d.org/1.10/python/programming/physics/bullet/ccd
-   this .rigidBody .setCcdMotionThreshold (1e-7);
-   this .rigidBody .setCcdSweptSphereRadius (0.50);
 }
 
 Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype),
    X3DBoundedObject .prototype,
 {
-   initialize ()
+   async initialize ()
    {
       X3DNode          .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
+
+      const browser = this .getBrowser ();
+
+      this .PhysX   = await browser .getPhysX ();
+      this .physics = await browser .getPhysics ();
 
       this ._linearVelocity       .addInterest ("set_linearVelocity__",     this);
       this ._angularVelocity      .addInterest ("set_angularVelocity__",    this);
@@ -66,18 +62,19 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       this ._autoDamp             .addInterest ("set_damping__",            this);
       this ._linearDampingFactor  .addInterest ("set_damping__",            this);
       this ._angularDampingFactor .addInterest ("set_damping__",            this);
+      this ._useGlobalGravity     .addInterest ("set_useGlobalGravity__",   this);
       this ._forces               .addInterest ("set_forces__",             this);
       this ._torques              .addInterest ("set_torques__",            this);
-      this ._disableTime          .addInterest ("set_disable__",            this);
       this ._disableTime          .addInterest ("set_disable__",            this);
       this ._disableLinearSpeed   .addInterest ("set_disable__",            this);
       this ._disableAngularSpeed  .addInterest ("set_disable__",            this);
       this ._geometry             .addInterest ("set_geometry__",           this);
       this ._otherGeometry        .addInterest ("set_geometry__",           this);
 
-      this ._fixed   .addInterest ("set_massProps__", this);
-      this ._mass    .addInterest ("set_massProps__", this);
-      this ._inertia .addInterest ("set_massProps__", this);
+      this ._fixed        .addInterest ("set_mass__", this);
+      this ._mass         .addInterest ("set_mass__", this);
+      this ._centerOfMass .addInterest ("set_mass__", this);
+      this ._inertia      .addInterest ("set_mass__", this);
 
       this ._transform .addInterest ("set_transform__", this);
 
@@ -100,9 +97,9 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    {
       return this ._collection .getValue ();
    },
-   getRigidBody ()
+   getActor ()
    {
-      return this .rigidBody;
+      return this .actor;
    },
    getMatrix ()
    {
@@ -118,145 +115,118 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       for (const geometryNode of this .geometryNodes)
          geometryNode ._rotation = this ._orientation;
    },
-   set_size__ ()
-   {
-      for (const geometryNode of this .geometryNodes)
-         geometryNode ._scale = this ._size;
-   },
    set_transform__: (() =>
    {
-      const
-         o  = new Ammo .btVector3 (0, 0, 0),
-         t  = new Ammo .btTransform (),
-         im = new Matrix4 (),
-         it = new Ammo .btTransform (),
-         io = new Ammo .btVector3 (0, 0, 0);
-
       return function ()
       {
-         const m = this .matrix;
+         // const m = this .matrix;
 
-         m .set (this ._position .getValue (), this ._orientation .getValue ());
+         // m .set (this ._position .getValue (), this ._orientation .getValue ());
 
-         //t .setFromOpenGLMatrix (m);
+         // //t .setFromOpenGLMatrix (m);
 
-         o .setValue (m [12], m [13], m [14]);
+         // o .setValue (m [12], m [13], m [14]);
 
-         t .getBasis () .setValue (m [0], m [4], m [8],
-                                   m [1], m [5], m [9],
-                                   m [2], m [6], m [10]);
+         // t .getBasis () .setValue (m [0], m [4], m [8],
+         //                           m [1], m [5], m [9],
+         //                           m [2], m [6], m [10]);
 
-         t .setOrigin (o);
+         // t .setOrigin (o);
 
-         //
+         // //
 
-         im .assign (m);
-         im .inverse ();
+         // im .assign (m);
+         // im .inverse ();
 
-         //it .setFromOpenGLMatrix (im);
+         // //it .setFromOpenGLMatrix (im);
 
-         io .setValue (im [12], im [13], im [14]);
+         // io .setValue (im [12], im [13], im [14]);
 
-         it .getBasis () .setValue (im [0], im [4], im [8],
-                                    im [1], im [5], im [9],
-                                    im [2], im [6], im [10]);
+         // it .getBasis () .setValue (im [0], im [4], im [8],
+         //                            im [1], im [5], im [9],
+         //                            im [2], im [6], im [10]);
 
-         it .setOrigin (io);
+         // it .setOrigin (io);
 
-         const compoundShape = this .compoundShape;
+         // const compoundShape = this .compoundShape;
 
-         for (let i = 0, length = this .compoundShape .getNumChildShapes (); i < length; ++ i)
-            compoundShape .updateChildTransform (i, it, false);
+         // for (let i = 0, length = this .compoundShape .getNumChildShapes (); i < length; ++ i)
+         //    compoundShape .updateChildTransform (i, it, false);
 
-         this .compoundShape .recalculateLocalAabb ();
-         this .motionState .setWorldTransform (t);
+         // this .compoundShape .recalculateLocalAabb ();
+         // this .motionState .setWorldTransform (t);
 
-         this .rigidBody .setMotionState (this .motionState);
+         // this .rigidBody .setMotionState (this .motionState);
       };
    })(),
    set_linearVelocity__: (() =>
    {
-      const lv = new Ammo .btVector3 (0, 0, 0);
+      // const lv = new Ammo .btVector3 (0, 0, 0);
 
       return function ()
       {
-         lv .setValue (... this ._linearVelocity);
+         // lv .setValue (... this ._linearVelocity);
 
-         this .rigidBody .setLinearVelocity (lv);
-         this .rigidBody .activate ();
+         // this .rigidBody .setLinearVelocity (lv);
+         // this .rigidBody .activate ();
       };
    }) (),
    set_angularVelocity__: (() =>
    {
-      const av = new Ammo .btVector3 (0, 0, 0);
+      // const av = new Ammo .btVector3 (0, 0, 0);
 
       return function ()
       {
-         av .setValue (... this ._angularVelocity);
+         // av .setValue (... this ._angularVelocity);
 
-         this .rigidBody .setAngularVelocity (av);
-         this .rigidBody .activate ();
+         // this .rigidBody .setAngularVelocity (av);
+         // this .rigidBody .activate ();
       };
    })(),
    set_finiteRotationAxis__: (() =>
    {
-      const angularFactor = new Ammo .btVector3 (1, 1, 1);
+      // const angularFactor = new Ammo .btVector3 (1, 1, 1);
 
       return function ()
       {
-         if (this ._useFiniteRotation .getValue ())
-            angularFactor .setValue (... this ._finiteRotationAxis);
-         else
-            angularFactor .setValue (1, 1, 1);
+         // if (this ._useFiniteRotation .getValue ())
+         //    angularFactor .setValue (... this ._finiteRotationAxis);
+         // else
+         //    angularFactor .setValue (1, 1, 1);
 
-         this .rigidBody .setAngularFactor (angularFactor);
+         // this .rigidBody .setAngularFactor (angularFactor);
       };
    })(),
    set_damping__ ()
    {
-      if (this ._autoDamp .getValue ())
-         this .rigidBody .setDamping (this ._linearDampingFactor .getValue (), this ._angularDampingFactor .getValue ());
-      else
-         this .rigidBody .setDamping (0, 0);
+      // if (this ._autoDamp .getValue ())
+      //    this .rigidBody .setDamping (this ._linearDampingFactor .getValue (), this ._angularDampingFactor .getValue ());
+      // else
+      //    this .rigidBody .setDamping (0, 0);
 
-      this .rigidBody .activate ();
+      // this .rigidBody .activate ();
    },
-   set_centerOfMass__: (() =>
+   set_mass__ ()
    {
-      const
-         rotation     = new Ammo .btQuaternion (0, 0, 0, 1),
-         origin       = new Ammo .btVector3 (0, 0, 0),
-         centerOfMass = new Ammo .btTransform (rotation, origin);
+      if (!this .actor)
+         return;
 
-      return function ()
-      {
-         origin .setValue (... this ._centerOfMass);
-         centerOfMass .setOrigin (origin);
+      if (this ._fixed .getValue ())
+         return;
 
-         this .rigidBody .setCenterOfMassTransform (centerOfMass);
-      };
-   })(),
-   set_massProps__: (() =>
+      const centerOfMass = new this .PhysX .PxVec3 (... this ._centerOfMass);
+
+      this .PhysX .PxRigidBodyExt .prototype .setMassAndUpdateInertia (this .actor, this ._mass .getValue (), centerOfMass);
+
+      this .PhysX .destroy (centerOfMass);
+   },
+   set_useGlobalGravity__ ()
    {
-      const localInertia = new Ammo .btVector3 (0, 0, 0);
+      if (!this .actor)
+         return;
 
-      return function ()
-      {
-         const
-            fixed   = this ._fixed .getValue (),
-            mass    = this ._mass .getValue (),
-            inertia = this ._inertia .getValue ();
-
-         localInertia .setValue (inertia [0] + inertia [1] + inertia [2],
-                                 inertia [3] + inertia [4] + inertia [5],
-                                 inertia [6] + inertia [7] + inertia [8]);
-
-         this .compoundShape .calculateLocalInertia (mass, localInertia);
-
-         this .rigidBody .setMassProps (fixed ? 0 : mass, localInertia);
-         this .rigidBody .updateInertiaTensor ();
-      };
-   })(),
+      this .actor .setActorFlag (this .PhysX .PxActorFlagEnum .eDISABLE_GRAVITY, !this ._useGlobalGravity .getValue ());
+   },
    set_forces__ ()
    {
       this .force .set (0);
@@ -273,14 +243,14 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    },
    set_disable__ ()
    {
-      if (this ._autoDisable .getValue ())
-      {
-         this .rigidBody .setSleepingThresholds (this ._disableLinearSpeed .getValue (), this ._disableAngularSpeed .getValue ());
-      }
-      else
-      {
-         this .rigidBody .setSleepingThresholds (0, 0);
-      }
+      // if (this ._autoDisable .getValue ())
+      // {
+      //    this .rigidBody .setSleepingThresholds (this ._disableLinearSpeed .getValue (), this ._disableAngularSpeed .getValue ());
+      // }
+      // else
+      // {
+      //    this .rigidBody .setSleepingThresholds (0, 0);
+      // }
    },
    set_geometry__ ()
    {
@@ -289,23 +259,24 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       for (const geometryNode of geometryNodes)
       {
          geometryNode .removeInterest ("addEvent", this ._transform);
-         geometryNode ._compoundShape .removeInterest ("set_compoundShape__", this);
-
+         geometryNode ._physicsShape .removeInterest ("set_shapes__", this);
          geometryNode .setBody (null);
 
          geometryNode ._translation .removeFieldInterest (this ._position);
          geometryNode ._rotation    .removeFieldInterest (this ._orientation);
-         geometryNode ._scale       .removeFieldInterest (this ._size);
 
          this ._position    .removeFieldInterest (geometryNode ._translation);
          this ._orientation .removeFieldInterest (geometryNode ._rotation);
-         this ._size        .removeFieldInterest (geometryNode ._scale);
       }
 
       for (const otherGeometryNode of this .otherGeometryNodes)
          otherGeometryNode ._body .removeInterest ("set_body__", this);
 
+      if (this .actor)
+         this .PhysX .destroy (this .actor);
+
       geometryNodes .length = 0;
+      this .actor           = null;
 
       for (const node of this ._geometry)
       {
@@ -322,87 +293,97 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          }
 
          geometryNode .setBody (this);
-
          geometryNodes .push (geometryNode);
       }
 
       for (const geometryNode of geometryNodes)
       {
          geometryNode .addInterest ("addEvent", this ._transform);
-         geometryNode ._compoundShape .addInterest ("set_compoundShape__", this);
+         geometryNode ._physicsShape .addInterest ("set_shapes__", this);
 
-         geometryNode ._translation .addFieldInterest (this ._position);
-         geometryNode ._rotation    .addFieldInterest (this ._orientation);
-         geometryNode ._scale       .addFieldInterest (this ._size);
+         geometryNode ._translation . addFieldInterest (this ._position);
+         geometryNode ._rotation     .addFieldInterest (this ._orientation);
 
          this ._position    .addFieldInterest (geometryNode ._translation);
          this ._orientation .addFieldInterest (geometryNode ._rotation);
-         this ._size        .addFieldInterest (geometryNode ._scale);
+
+         const
+            position    = new this .PhysX .PxVec3 (... this ._position),
+            orientation = new this .PhysX .PxQuat (... this ._orientation .getValue () .getQuaternion ()),
+            pose        = new this .PhysX .PxTransform (position, orientation);
+
+         this .actor = this ._fixed .getValue ()
+            ? this .physics .createRigidStatic (pose)
+            : this .physics .createRigidDynamic (pose);
+
+         this .PhysX .destroy (position);
+         this .PhysX .destroy (orientation);
+         this .PhysX .destroy (pose);
       }
 
-      this .set_compoundShape__ ();
+      this .set_shapes__ ();
+      this .set_position__ ();
+      this .set_orientation__ ();
+      this .set_transform__ ();
+      this .set_linearVelocity__ ();
+      this .set_angularVelocity__ ();
+      this .set_finiteRotationAxis__ ();
+      this .set_damping__ ();
+      this .set_mass__ ();
+      this .set_useGlobalGravity__ ();
+      this .set_disable__ ();
    },
    set_body__ ()
    {
       this ._otherGeometry .addEvent ();
    },
-   set_compoundShape__: (() =>
+   set_shapes__ ()
    {
-      const transform = new Ammo .btTransform ();
+      for (const shape of this .shapes)
+         this .actor .detachShape (shape);
 
-      return function ()
+      this .shapes .length = 0;
+
+      for (const geometryNode of this .geometryNodes)
       {
-         const compoundShape = this .compoundShape;
+         const shape = geometryNode .getShape ();
 
-         for (let i = compoundShape .getNumChildShapes () - 1; i >= 0; -- i)
-            compoundShape .removeChildShapeByIndex (i);
+         if (!shape)
+            continue;
 
-         for (const geometryNode of this .geometryNodes)
-            compoundShape .addChildShape (transform, geometryNode .getCompoundShape ());
-
-         this .set_position__ ();
-         this .set_orientation__ ();
-         this .set_size__ ();
-         this .set_transform__ ();
-         this .set_linearVelocity__ ();
-         this .set_angularVelocity__ ();
-         this .set_finiteRotationAxis__ ();
-         this .set_damping__ ();
-         this .set_centerOfMass__ ();
-         this .set_massProps__ ();
-         this .set_disable__ ();
-      };
-   })(),
+         this .shapes .push (shape);
+         this .actor .attachShape (shape);
+      }
+   },
    applyForces: (() =>
    {
-      const
-         g = new Ammo .btVector3 (0, 0, 0),
-         f = new Ammo .btVector3 (0, 0, 0),
-         t = new Ammo .btVector3 (0, 0, 0),
-         z = new Ammo .btVector3 (0, 0, 0);
+      // const
+      //    g = new Ammo .btVector3 (0, 0, 0),
+      //    f = new Ammo .btVector3 (0, 0, 0),
+      //    t = new Ammo .btVector3 (0, 0, 0),
+      //    z = new Ammo .btVector3 (0, 0, 0);
 
       return function (gravity)
       {
          if (this ._fixed .getValue ())
             return;
 
-         if (this ._useGlobalGravity .getValue ())
-            g .setValue (... gravity);
-         else
-            g .setValue (0, 0, 0);
+         // if (this ._useGlobalGravity .getValue ())
+         //    g .setValue (... gravity);
+         // else
+         //    g .setValue (0, 0, 0);
 
-         f .setValue (... this .force);
-         t .setValue (... this .torque);
+         // f .setValue (... this .force);
+         // t .setValue (... this .torque);
 
-         this .rigidBody .setGravity (g);
-         this .rigidBody .applyForce (f, z);
-         this .rigidBody .applyTorque (t);
+         // this .rigidBody .setGravity (g);
+         // this .rigidBody .applyForce (f, z);
+         // this .rigidBody .applyTorque (t);
       };
    })(),
    update: (() =>
    {
       const
-         transform       = new Ammo .btTransform (),
          position        = new Vector3 (),
          quaternion      = new Quaternion (),
          orientation     = new Rotation4 (),
@@ -411,28 +392,37 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       return function ()
       {
-         this .motionState .getWorldTransform (transform);
+         // this .motionState .getWorldTransform (transform);
 
-         const
-            btOrigin          = transform .getOrigin (),
-            btQuaternion      = transform .getRotation (),
-            btLinearVeloctity = this .rigidBody .getLinearVelocity (),
-            btAngularVelocity = this .rigidBody .getAngularVelocity ();
+         // const
+         //    btOrigin          = transform .getOrigin (),
+         //    btQuaternion      = transform .getRotation (),
+         //    btLinearVeloctity = this .rigidBody .getLinearVelocity (),
+         //    btAngularVelocity = this .rigidBody .getAngularVelocity ();
 
-         quaternion .set (btQuaternion .x (), btQuaternion .y (), btQuaternion .z (), btQuaternion .w ());
+         // quaternion .set (btQuaternion .x (), btQuaternion .y (), btQuaternion .z (), btQuaternion .w ());
 
-         this ._position        = position .set (btOrigin .x (), btOrigin .y (), btOrigin .z ());
-         this ._orientation     = orientation .setQuaternion (quaternion);
-         this ._linearVelocity  = linearVelocity .set (btLinearVeloctity .x (), btLinearVeloctity .y (), btLinearVeloctity .z ());
-         this ._angularVelocity = angularVelocity .set (btAngularVelocity .x (), btAngularVelocity .y (), btAngularVelocity .z ());
+         // this ._position        = position .set (btOrigin .x (), btOrigin .y (), btOrigin .z ());
+         // this ._orientation     = orientation .setQuaternion (quaternion);
+         // this ._linearVelocity  = linearVelocity .set (btLinearVeloctity .x (), btLinearVeloctity .y (), btLinearVeloctity .z ());
+         // this ._angularVelocity = angularVelocity .set (btAngularVelocity .x (), btAngularVelocity .y (), btAngularVelocity .z ());
+
+         if (this ._fixed .getValue ())
+            return;
+
+         const transform = this .actor .getGlobalPose ();
+
+         position .set (transform .p .x, transform .p .y, transform .p .z);
+         quaternion .set (transform .q .x, transform .q .y, transform .q .z, transform .q .w);
+
+         this ._position    = position;
+         this ._orientation = orientation .setQuaternion (quaternion);
       };
    })(),
    dispose ()
    {
-      Ammo .destroy (this .rigidBody);
-      Ammo .destroy (this .constructionInfo);
-      Ammo .destroy (this .motionState);
-      Ammo .destroy (this .compoundShape);
+      if (this .actor)
+         this .PhysX .destroy (this .actor);
 
       X3DBoundedObject .prototype .dispose .call (this);
       X3DNode          .prototype .dispose .call (this);
@@ -450,7 +440,6 @@ Object .defineProperties (RigidBody,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "fixed",                new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "position",             new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "orientation",          new Fields .SFRotation ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "size",                 new Fields .SFVec3f (1, 1, 1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "linearVelocity",       new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "angularVelocity",      new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "useFiniteRotation",    new Fields .SFBool ()),

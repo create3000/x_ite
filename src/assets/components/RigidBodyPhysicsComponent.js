@@ -1,4 +1,5 @@
 import Components                 from "../../x_ite/Components.js";
+import X3DRigidBodyPhysicsContext from "../../x_ite/Browser/RigidBodyPhysics/X3DRigidBodyPhysicsContext.js";
 import BallJoint                  from "../../x_ite/Components/RigidBodyPhysics/BallJoint.js";
 import CollidableOffset           from "../../x_ite/Components/RigidBodyPhysics/CollidableOffset.js";
 import CollidableShape            from "../../x_ite/Components/RigidBodyPhysics/CollidableShape.js";
@@ -42,6 +43,7 @@ Components .add ({
       X3DNBodyCollisionSpaceNode,
       X3DRigidJointNode,
    ],
+   browserContext: X3DRigidBodyPhysicsContext,
 });
 
 export default undefined;
