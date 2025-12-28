@@ -52,8 +52,11 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       const browser = this .getBrowser ();
 
-      this .PhysX   = await browser .getPhysX ();
-      this .physics = await browser .getPhysics ();
+      this .PhysX           = await browser .getPhysX ();
+      this .physics         = await browser .getPhysics ();
+      this .pose            = new this .PhysX .PxTransform ();
+      this .linearVelocity  = new this .PhysX .PxVec3 (0, 0, 0);
+      this .angularVelocity = new this .PhysX .PxVec3 (0, 0, 0);
 
       this ._fixed                .addInterest ("set_geometry__",           this);
       this ._linearVelocity       .addInterest ("set_linearVelocity__",     this);
@@ -117,72 +120,52 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    },
    set_transform__: (() =>
    {
+      const quaternion = new Quaternion ();
+
       return function ()
       {
-         // const m = this .matrix;
+         const position = this ._position .getValue ();
 
-         // m .set (this ._position .getValue (), this ._orientation .getValue ());
+         this ._orientation .getValue () .getQuaternion (quaternion);
 
-         // //t .setFromOpenGLMatrix (m);
+         this .pose .p .x = position .x;
+         this .pose .p .y = position .y;
+         this .pose .p .z = position .z;
 
-         // o .setValue (m [12], m [13], m [14]);
+         this .pose .q .x = quaternion .x;
+         this .pose .q .y = quaternion .y;
+         this .pose .q .z = quaternion .z;
+         this .pose .q .w = quaternion .w;
 
-         // t .getBasis () .setValue (m [0], m [4], m [8],
-         //                           m [1], m [5], m [9],
-         //                           m [2], m [6], m [10]);
-
-         // t .setOrigin (o);
-
-         // //
-
-         // im .assign (m);
-         // im .inverse ();
-
-         // //it .setFromOpenGLMatrix (im);
-
-         // io .setValue (im [12], im [13], im [14]);
-
-         // it .getBasis () .setValue (im [0], im [4], im [8],
-         //                            im [1], im [5], im [9],
-         //                            im [2], im [6], im [10]);
-
-         // it .setOrigin (io);
-
-         // const compoundShape = this .compoundShape;
-
-         // for (let i = 0, length = this .compoundShape .getNumChildShapes (); i < length; ++ i)
-         //    compoundShape .updateChildTransform (i, it, false);
-
-         // this .compoundShape .recalculateLocalAabb ();
-         // this .motionState .setWorldTransform (t);
-
-         // this .rigidBody .setMotionState (this .motionState);
+         this .actor ?.setGlobalPose (this .pose);
       };
    })(),
-   set_linearVelocity__: (() =>
+   set_linearVelocity__ ()
    {
-      // const lv = new Ammo .btVector3 (0, 0, 0);
+      if (this ._fixed .getValue ())
+         return;
 
-      return function ()
-      {
-         // lv .setValue (... this ._linearVelocity);
+      const linearVelocity = this ._linearVelocity .getValue ();
 
-         // this .rigidBody .setLinearVelocity (lv);
-         // this .rigidBody .activate ();
-      };
-   }) (),
-   set_angularVelocity__: (() =>
+      this .linearVelocity .x = linearVelocity .x;
+      this .linearVelocity .y = linearVelocity .y;
+      this .linearVelocity .z = linearVelocity .z;
+
+      this .actor ?.setLinearVelocity (this .linearVelocity);
+   },
+   set_angularVelocity__ ()
    {
-      // const av = new Ammo .btVector3 (0, 0, 0);
+      if (this ._fixed .getValue ())
+         return;
 
-      return function ()
-      {
-         // av .setValue (... this ._angularVelocity);
+      const angularVelocity = this ._angularVelocity .getValue ();
 
-         // this .rigidBody .setAngularVelocity (av);
-         // this .rigidBody .activate ();
-      };
-   })(),
+      this .angularVelocity .x = angularVelocity .x;
+      this .angularVelocity .y = angularVelocity .y;
+      this .angularVelocity .z = angularVelocity .z;
+
+      this .actor ?.setAngularVelocity (this .angularVelocity);
+   },
    set_finiteRotationAxis__: (() =>
    {
       // const angularFactor = new Ammo .btVector3 (1, 1, 1);
@@ -222,10 +205,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    },
    set_useGlobalGravity__ ()
    {
-      if (!this .actor)
-         return;
-
-      this .actor .setActorFlag (this .PhysX .PxActorFlagEnum .eDISABLE_GRAVITY, !this ._useGlobalGravity .getValue ());
+      this .actor ?.setActorFlag (this .PhysX .PxActorFlagEnum .eDISABLE_GRAVITY, !this ._useGlobalGravity .getValue ());
    },
    set_forces__ ()
    {
@@ -258,12 +238,12 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       for (const geometryNode of geometryNodes)
       {
-         geometryNode .removeInterest ("addEvent", this ._transform);
-         geometryNode ._physicsShape .removeInterest ("set_shapes__", this);
          geometryNode .setBody (null);
 
-         geometryNode ._translation .removeFieldInterest (this ._position);
-         geometryNode ._rotation    .removeFieldInterest (this ._orientation);
+         geometryNode .removeInterest ("addEvent", this ._transform);
+         geometryNode ._translation  .removeFieldInterest (this ._position);
+         geometryNode ._rotation     .removeFieldInterest (this ._orientation);
+         geometryNode ._physicsShape .removeInterest ("set_shapes__", this);
 
          this ._position    .removeFieldInterest (geometryNode ._translation);
          this ._orientation .removeFieldInterest (geometryNode ._rotation);
@@ -299,26 +279,16 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       for (const geometryNode of geometryNodes)
       {
          geometryNode .addInterest ("addEvent", this ._transform);
-         geometryNode ._physicsShape .addInterest ("set_shapes__", this);
-
          geometryNode ._translation . addFieldInterest (this ._position);
          geometryNode ._rotation     .addFieldInterest (this ._orientation);
+         geometryNode ._physicsShape .addInterest ("set_shapes__", this);
 
          this ._position    .addFieldInterest (geometryNode ._translation);
          this ._orientation .addFieldInterest (geometryNode ._rotation);
 
-         const
-            position    = new this .PhysX .PxVec3 (... this ._position),
-            orientation = new this .PhysX .PxQuat (... this ._orientation .getValue () .getQuaternion ()),
-            pose        = new this .PhysX .PxTransform (position, orientation);
-
          this .actor = this ._fixed .getValue ()
-            ? this .physics .createRigidStatic (pose)
-            : this .physics .createRigidDynamic (pose);
-
-         this .PhysX .destroy (position);
-         this .PhysX .destroy (orientation);
-         this .PhysX .destroy (pose);
+            ? this .physics .createRigidStatic (this .pose)
+            : this .physics .createRigidDynamic (this .pose);
       }
 
       this .set_shapes__ ();
@@ -392,37 +362,29 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       return function ()
       {
-         // this .motionState .getWorldTransform (transform);
-
-         // const
-         //    btOrigin          = transform .getOrigin (),
-         //    btQuaternion      = transform .getRotation (),
-         //    btLinearVeloctity = this .rigidBody .getLinearVelocity (),
-         //    btAngularVelocity = this .rigidBody .getAngularVelocity ();
-
-         // quaternion .set (btQuaternion .x (), btQuaternion .y (), btQuaternion .z (), btQuaternion .w ());
-
-         // this ._position        = position .set (btOrigin .x (), btOrigin .y (), btOrigin .z ());
-         // this ._orientation     = orientation .setQuaternion (quaternion);
-         // this ._linearVelocity  = linearVelocity .set (btLinearVeloctity .x (), btLinearVeloctity .y (), btLinearVeloctity .z ());
-         // this ._angularVelocity = angularVelocity .set (btAngularVelocity .x (), btAngularVelocity .y (), btAngularVelocity .z ());
-
          if (this ._fixed .getValue ())
             return;
 
-         const transform = this .actor .getGlobalPose ();
+         const
+            transform = this .actor .getGlobalPose (),
+            v         = this .actor .getLinearVelocity (),
+            w         = this .actor .getAngularVelocity ();
 
          position .set (transform .p .x, transform .p .y, transform .p .z);
          quaternion .set (transform .q .x, transform .q .y, transform .q .z, transform .q .w);
 
-         this ._position    = position;
-         this ._orientation = orientation .setQuaternion (quaternion);
+         this ._position        = position;
+         this ._orientation     = orientation .setQuaternion (quaternion);
+         this ._linearVelocity  = linearVelocity .set (v .x, v .y, v .z);
+         this ._angularVelocity = angularVelocity .set (w .x, w .y, w .z);
       };
    })(),
    dispose ()
    {
       if (this .actor)
          this .PhysX .destroy (this .actor);
+
+      this .PhysX .destroy (this .pose);
 
       X3DBoundedObject .prototype .dispose .call (this);
       X3DNode          .prototype .dispose .call (this);
