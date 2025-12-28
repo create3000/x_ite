@@ -15,6 +15,9 @@ function CollidableShape (executionContext)
    X3DNBodyCollidableNode .call (this, executionContext);
 
    this .addType (X3DConstants .CollidableShape);
+
+   this .parentEnabled = true;
+   this .enabled       = true;
 }
 
 Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyCollidableNode .prototype),
@@ -23,11 +26,28 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    {
       await X3DNBodyCollidableNode .prototype .initialize .call (this);
 
-      this ._enabled    .addInterest ("set_collidableGeometry__", this);
+      this ._enabled    .addInterest ("set_enabled__",            this);
       this ._convexHull .addInterest ("set_collidableGeometry__", this);
       this ._shape      .addInterest ("requestRebuild",           this);
 
       this .set_child__ ();
+   },
+   setEnabled (parentEnabled)
+   {
+      this .parentEnabled = parentEnabled;
+      this .enabled       = this ._enabled .getValue () && parentEnabled;
+
+      if (!this .shape)
+         return;
+
+      const
+         word0      = this .enabled ? 0x80000000 : 0,
+         word1      = this .enabled ? 0xffffffff : 0,
+         filterData = new this .PhysX .PxFilterData (word0, word1, 0, 0);
+
+      this .shape .setSimulationFilterData (filterData);
+
+      this .PhysX .destroy (filterData);
    },
    getShape ()
    {
@@ -99,6 +119,10 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          return new Ammo .btBvhTriangleMeshShape (this .triangleMesh, false);
       };
    })(),
+   set_enabled__ ()
+   {
+      this .setEnabled (this .parentEnabled);
+   },
    set_child__ ()
    {
       // Remove node.
@@ -264,17 +288,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          this .shape = null;
       }
 
-      if (this .shape)
-      {
-         const
-            word0      = this ._enabled .getValue () ? 0x80000000 : 0,
-            word1      = this ._enabled .getValue () ? 0xffffffff : 0,
-            filterData = new this .PhysX .PxFilterData (word0, word1, 0, 0);
-
-         this .shape .setSimulationFilterData (filterData);
-
-         this .PhysX .destroy (filterData);
-      }
+      this .set_enabled__ ();
 
       this .PhysX .destroy (material);
       this .PhysX .destroy (shapeFlags);

@@ -11,6 +11,11 @@ function CollidableOffset (executionContext)
    X3DNBodyCollidableNode .call (this, executionContext);
 
    this .addType (X3DConstants .CollidableOffset);
+
+   // Private properties
+
+   this .parentEnabled = true;
+   this .enabled       = true;
 }
 
 Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCollidableNode .prototype),
@@ -19,10 +24,21 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
    {
       X3DNBodyCollidableNode .prototype .initialize .call (this);
 
-      this ._enabled    .addInterest ("set_collidableGeometry__", this);
-      this ._collidable .addInterest ("requestRebuild",           this);
+      this ._enabled    .addInterest ("set_enabled__", this);
+      this ._collidable .addInterest ("requestRebuild", this);
 
       this .set_child__ ();
+   },
+   setEnabled (parentEnabled)
+   {
+      this .parentEnabled = parentEnabled;
+      this .enabled       = this ._enabled .getValue () && parentEnabled;
+
+      this .getChild () ?.setEnabled (this .enabled);
+   },
+   set_enabled__ ()
+   {
+      this .setEnabled (this .parentEnabled);
    },
    set_child__ ()
    {
@@ -34,6 +50,8 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
 
          collidableNode .removeInterest ("addNodeEvent", this);
          collidableNode ._compoundShape .removeFieldInterest (this ._compoundShape);
+
+         collidableNode .setEnabled (true);
       }
 
       // Add node.
@@ -48,6 +66,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
          collidableNode ._compoundShape .addFieldInterest (this ._compoundShape);
       }
 
+      this .set_enabled__ ();
       this .set_collidableGeometry__ ();
    },
    set_collidableGeometry__ ()
@@ -55,7 +74,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
       if (this .getCompoundShape () .getNumChildShapes ())
          this .getCompoundShape () .removeChildShapeByIndex (0);
 
-      if (this .getChild () && this ._enabled .getValue ())
+      if (this .getChild ())
          this .getCompoundShape () .addChildShape (this .getLocalTransform (), this .getChild () .getCompoundShape ());
 
       this .getCompoundShape () .recalculateLocalAabb ();
