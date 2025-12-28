@@ -34,6 +34,14 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    {
       await X3DNBodyCollidableNode .prototype .initialize .call (this);
 
+      this .material = this .physics .createMaterial (0, 0, 0);
+
+      this .material .setStaticFriction (0);
+      this .material .setDynamicFriction (0);
+      this .material .setRestitution (0);
+      this .material .setFrictionCombineMode (this .PhysX .PxCombineModeEnum .eAVERAGE);
+      this .material .setRestitutionCombineMode (this .PhysX .PxCombineModeEnum .eAVERAGE);
+
       this ._enabled    .addInterest ("set_enabled__",            this);
       this ._convexHull .addInterest ("set_collidableGeometry__", this);
       this ._shape      .addInterest ("requestRebuild",           this);
@@ -194,11 +202,6 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    {
       this .removeCollidableGeometry ();
 
-      const material = this .physics .createMaterial (0, 0, 1);
-
-      // material .setFrictionCombineMode (this .PhysX .PxCombineModeEnum .eAVERAGE);
-      // material .setRestitutionCombineMode (this .PhysX .PxCombineModeEnum .eAVERAGE);
-
       const shapeFlags = new this .PhysX .PxShapeFlags (
          this .PhysX .PxShapeFlagEnum .eSCENE_QUERY_SHAPE |
          this .PhysX .PxShapeFlagEnum .eSIMULATION_SHAPE |
@@ -220,7 +223,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                      size     = box ._size .getValue (),
                      geometry = new this .PhysX .PxBoxGeometry (size .x / 2, size .y / 2, size .z / 2);
 
-                  this .shape = this .physics .createShape (geometry, material, true, shapeFlags);
+                  this .shape = this .physics .createShape (geometry, this .material, true, shapeFlags);
                   break;
                }
                case X3DConstants .Cone:
@@ -310,7 +313,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                      sphere   = this .geometryNode,
                      geometry = new this .PhysX .PxSphereGeometry (sphere ._radius .getValue ());
 
-                  this .shape = this .physics .createShape (geometry, material, true, shapeFlags);
+                  this .shape = this .physics .createShape (geometry, this .material, true, shapeFlags);
                   break;
                }
                case X3DConstants .X3DGeometryNode:
@@ -335,7 +338,6 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       this .set_enabled__ ();
       this .eventsProcessed ();
 
-      this .PhysX .destroy (material);
       this .PhysX .destroy (shapeFlags);
 
       this ._physicsShape = this .getBrowser () .getCurrentTime ();
@@ -343,9 +345,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    removeCollidableGeometry ()
    {
       if (this .shape)
-      {
          this .PhysX .destroy (this .shape);
-      }
    },
    eventsProcessed ()
    {
