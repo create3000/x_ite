@@ -74,8 +74,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
 
       this .setChild (collidableNode);
 
-      if (collidableNode)
-         collidableNode ._physicsShape .addFieldInterest (this ._physicsShape);
+      collidableNode ?._physicsShape .addFieldInterest (this ._physicsShape);
 
       this ._physicsShape = this .getBrowser () .getCurrentTime ();
 
