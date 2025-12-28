@@ -16,9 +16,9 @@ function X3DNBodyCollidableNode (executionContext)
 
    this .addType (X3DConstants .X3DNBodyCollidableNode);
 
-   this .addChildObjects (X3DConstants .outputOnly, "body",          new Fields .SFNode (),
-                          X3DConstants .outputOnly, "physicsShape", new Fields .SFTime (),
-                          X3DConstants .outputOnly, "rebuild",       new Fields .SFTime ());
+   this .addChildObjects (X3DConstants .inputOutput, "body",         new Fields .SFNode (),
+                          X3DConstants .outputOnly,  "physicsShape", new Fields .SFTime (),
+                          X3DConstants .outputOnly,  "rebuild",      new Fields .SFTime ());
 
 
    this .setBoundedObject (true);
@@ -31,7 +31,7 @@ function X3DNBodyCollidableNode (executionContext)
 
    this ._translation .setUnit ("length");
 
-   // Members
+   // Private properties
 
    this .offset         = new Vector3 ();
    this .matrix         = new Matrix4 ();

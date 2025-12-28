@@ -5,6 +5,7 @@ import X3DNode                from "../Core/X3DNode.js";
 import X3DNBodyCollidableNode from "./X3DNBodyCollidableNode.js";
 import X3DConstants           from "../../Base/X3DConstants.js";
 import X3DCast                from "../../Base/X3DCast.js";
+import Matrix4                from "../../../standard/Math/Numbers/Matrix4.js";
 
 function CollidableOffset (executionContext)
 {
@@ -16,6 +17,8 @@ function CollidableOffset (executionContext)
 
    this .parentEnabled = true;
    this .enabled       = true;
+   this .parentMatrix  = new Matrix4 ();
+   this .offsetMatrix  = new Matrix4 ();
 }
 
 Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCollidableNode .prototype),
@@ -36,6 +39,17 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
 
       this .getChild () ?.setEnabled (this .enabled);
    },
+   setLocalPose (parentMatrix)
+   {
+      this .parentMatrix .assign (parentMatrix);
+
+      if (this .getBody ())
+         this .offsetMatrix .assign (parentMatrix);
+      else
+         this .offsetMatrix .assign (this .getMatrix ()) .multRight (parentMatrix);
+
+      this .getChild () ?.setLocalPose (this .offsetMatrix);
+   },
    set_enabled__ ()
    {
       this .setEnabled (this .parentEnabled);
@@ -48,10 +62,10 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
       {
          const collidableNode = this .getChild ();
 
-         collidableNode .removeInterest ("addNodeEvent", this);
-         collidableNode ._compoundShape .removeFieldInterest (this ._compoundShape);
+         collidableNode ._physicsShape .removeFieldInterest (this ._physicsShape);
 
          collidableNode .setEnabled (true);
+         collidableNode .setLocalPose (Matrix4 .IDENTITY);
       }
 
       // Add node.
@@ -61,25 +75,18 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
       this .setChild (collidableNode);
 
       if (collidableNode)
-      {
-         collidableNode .addInterest ("addNodeEvent", this);
-         collidableNode ._compoundShape .addFieldInterest (this ._compoundShape);
-      }
+         collidableNode ._physicsShape .addFieldInterest (this ._physicsShape);
+
+      this ._physicsShape = this .getBrowser () .getCurrentTime ();
 
       this .set_enabled__ ();
-      this .set_collidableGeometry__ ();
+      this .eventsProcessed ();
    },
-   set_collidableGeometry__ ()
+   eventsProcessed ()
    {
-      if (this .getCompoundShape () .getNumChildShapes ())
-         this .getCompoundShape () .removeChildShapeByIndex (0);
+      X3DNBodyCollidableNode .prototype .eventsProcessed .call (this);
 
-      if (this .getChild ())
-         this .getCompoundShape () .addChildShape (this .getLocalTransform (), this .getChild () .getCompoundShape ());
-
-      this .getCompoundShape () .recalculateLocalAabb ();
-
-      this ._compoundShape = this .getBrowser () .getCurrentTime ();
+      this .setLocalPose (this .parentMatrix);
    },
 });
 

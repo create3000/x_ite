@@ -5,6 +5,9 @@ import X3DNode                from "../Core/X3DNode.js";
 import X3DNBodyCollidableNode from "./X3DNBodyCollidableNode.js";
 import X3DConstants           from "../../Base/X3DConstants.js";
 import X3DCast                from "../../Base/X3DCast.js";
+import Matrix4                from "../../../standard/Math/Numbers/Matrix4.js";
+import Vector3                from "../../../standard/Math/Numbers/Vector3.js";
+import Rotation4              from "../../../standard/Math/Numbers/Rotation4.js";
 import Ammo                   from "../../../lib/ammojs/AmmoClass.js";
 
 const
@@ -16,8 +19,12 @@ function CollidableShape (executionContext)
 
    this .addType (X3DConstants .CollidableShape);
 
+   // Private properties
+
    this .parentEnabled = true;
    this .enabled       = true;
+   this .parentMatrix  = new Matrix4 ();
+   this .offsetMatrix  = new Matrix4 ();
 }
 
 Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyCollidableNode .prototype),
@@ -49,6 +56,38 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
 
       this .PhysX .destroy (filterData);
    },
+   setLocalPose: (() =>
+   {
+      const
+         t = new Vector3 (),
+         r = new Rotation4 ();
+
+      return function (parentMatrix)
+      {
+         this .parentMatrix .assign (parentMatrix);
+
+         if (this .getBody ())
+            this .offsetMatrix .assign (parentMatrix);
+         else
+            this .offsetMatrix .assign (this .getMatrix ()) .multRight (parentMatrix);
+
+         if (!this .shape)
+            return;
+
+         this .offsetMatrix .get (t, r);
+
+         const
+            translation = new this .PhysX .PxVec3 (... t),
+            rotation    = new this .PhysX .PxQuat (... r .getQuaternion ()),
+            pose        = new this .PhysX .PxTransform (translation, rotation);
+
+         this .shape .setLocalPose (pose);
+
+         this .PhysX .destroy (translation);
+         this .PhysX .destroy (rotation);
+         this .PhysX .destroy (pose);
+      };
+   })(),
    getShape ()
    {
       return this .shape;
@@ -289,11 +328,11 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       }
 
       this .set_enabled__ ();
+      this .eventsProcessed ();
 
       this .PhysX .destroy (material);
       this .PhysX .destroy (shapeFlags);
 
-      // this .addNodeEvent ();
       this ._physicsShape = this .getBrowser () .getCurrentTime ();
    },
    removeCollidableGeometry ()
@@ -302,6 +341,12 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       {
          this .PhysX .destroy (this .shape);
       }
+   },
+   eventsProcessed ()
+   {
+      X3DNBodyCollidableNode .prototype .eventsProcessed .call (this);
+
+      this .setLocalPose (this .parentMatrix);
    },
    dispose ()
    {
