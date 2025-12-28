@@ -530,7 +530,7 @@ Object .defineProperties (Matrix3 .prototype,
          return function () { return vector .set (this [6], this [7], this [8]); };
       })(),
    },
-   X_AXIS:
+   xAxis:
    {
       get: (() =>
       {
@@ -539,7 +539,7 @@ Object .defineProperties (Matrix3 .prototype,
          return function () { return vector .set (this [0], this [1]); };
       })(),
    },
-   Y_AXIS:
+   yAxis:
    {
       get: (() =>
       {
