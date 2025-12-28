@@ -137,7 +137,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          this .PhysX .PxShapeFlagEnum .eVISUALIZATION
       );
 
-      if (this ._enabled .getValue () && this .geometryNode && this .geometryNode .getGeometryType () >= 2)
+      if (this .geometryNode && this .geometryNode .getGeometryType () >= 2)
       {
          const type = this .geometryNode .getType ();
 
@@ -268,7 +268,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       {
          const
             word0      = 0x80000000,
-            word1      = 0xffffffff,
+            word1      = this ._enabled .getValue () ? 0xffffffff : 0,
             filterData = new this .PhysX .PxFilterData (word0, word1, 0, 0);
 
          this .shape .setSimulationFilterData (filterData);
