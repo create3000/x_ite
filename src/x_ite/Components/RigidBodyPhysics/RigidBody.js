@@ -256,6 +256,8 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    {
       const geometryNodes = this .geometryNodes;
 
+      // Remove geometries.
+
       for (const geometryNode of geometryNodes)
       {
          geometryNode .setBody (null);
@@ -272,11 +274,14 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       for (const otherGeometryNode of this .otherGeometryNodes)
          otherGeometryNode ._body .removeInterest ("set_body__", this);
 
+      geometryNodes .length = 0;
+
       if (this .actor)
          this .PhysX .destroy (this .actor);
 
-      geometryNodes .length = 0;
-      this .actor           = null;
+      this .actor = null;
+
+      // Add geometries.
 
       for (const node of this ._geometry)
       {
