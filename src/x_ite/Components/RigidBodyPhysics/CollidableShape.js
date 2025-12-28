@@ -357,6 +357,9 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    {
       this .removeCollidableGeometry ();
 
+      if (this .material)
+         this .PhysX .destroy (this .material);
+
       X3DNBodyCollidableNode .prototype .dispose .call (this);
    },
 });
