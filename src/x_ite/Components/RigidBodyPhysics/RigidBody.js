@@ -380,6 +380,9 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    },
    applyForces ()
    {
+      if (!this .actor)
+         return;
+
       if (this ._fixed .getValue ())
          return;
 
