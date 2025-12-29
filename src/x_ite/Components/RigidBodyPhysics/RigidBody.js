@@ -434,15 +434,18 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    })(),
    dispose ()
    {
-      if (this .actor)
-         this .PhysX .destroy (this .actor);
+      if (this .pose)
+      {
+         if (this .actor)
+            this .PhysX .destroy (this .actor);
 
-      this .PhysX .destroy (this .pose);
-      this .PhysX .destroy (this .linearVelocity);
-      this .PhysX .destroy (this .angularVelocity);
-      this .PhysX .destroy (this .centerOfMass);
-      this .PhysX .destroy (this .force);
-      this .PhysX .destroy (this .torque);
+         this .PhysX .destroy (this .pose);
+         this .PhysX .destroy (this .linearVelocity);
+         this .PhysX .destroy (this .angularVelocity);
+         this .PhysX .destroy (this .centerOfMass);
+         this .PhysX .destroy (this .force);
+         this .PhysX .destroy (this .torque);
+      }
 
       X3DBoundedObject .prototype .dispose .call (this);
       X3DNode          .prototype .dispose .call (this);
