@@ -96,7 +96,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       this .material .setDynamicFriction (dynamicFriction);
       this .material .setRestitution (restitution);
    },
-   getShape (convexHull)
+   getPhysicsShape (convexHull)
    {
       return convexHull ? this .convexShape : this .concaveShape;
    },
@@ -123,7 +123,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       desc .flags = new this .PhysX .PxConvexFlags (descFlags);
 
       const
-         tolerances    = new this .PhysX .PxTolerancesScale (),
+         tolerances    = this .physics .getTolerancesScale (),
          cookingParams = new this .PhysX .PxCookingParams (tolerances),
          mesh          = this .PhysX .CreateConvexMesh (cookingParams, desc);
 
@@ -139,7 +139,6 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       this .PhysX .destroy (meshScale);
       this .PhysX .destroy (flags);
       this .PhysX .destroy (cookingParams);
-      this .PhysX .destroy (tolerances);
       this .PhysX .destroy (desc);
 
       return this .physics .createShape (geometry, this .material, true, shapeFlags);
@@ -165,7 +164,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       desc .triangles .data   = this .malloc (indices);
 
       const
-         tolerances    = new this .PhysX .PxTolerancesScale (),
+         tolerances    = this .physics .getTolerancesScale (),
          cookingParams = new this .PhysX .PxCookingParams (tolerances),
          mesh          = this .PhysX .CreateTriangleMesh (cookingParams, desc);
 
@@ -181,7 +180,6 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       this .PhysX .destroy (meshScale);
       this .PhysX .destroy (flags);
       this .PhysX .destroy (cookingParams);
-      this .PhysX .destroy (tolerances);
       this .PhysX .destroy (desc);
 
       return this .physics .createShape (geometry, this .material, true, shapeFlags);

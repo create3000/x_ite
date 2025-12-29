@@ -31,24 +31,23 @@ Object .assign (X3DRigidBodyPhysicsContext .prototype,
    },
    getPhysics ()
    {
-      return this [_physics] ??= this .createPhysics ();
+      return this [_physics] ??= (async () =>
+      {
+         const
+            PhysX      = await this .getPhysX (),
+            version    = PhysX .PHYSICS_VERSION,
+            allocator  = new PhysX .PxDefaultAllocator (),
+            errorCb    = new PhysX .PxDefaultErrorCallback (),
+            foundation = PhysX .CreateFoundation (version, allocator, errorCb),
+            tolerances = new PhysX .PxTolerancesScale (),
+            physics    = PhysX .CreatePhysics (version, foundation, tolerances);
+
+         if (Features .ENVIRONMENT === "NODE")
+            PhysX .destroy = Function .prototype;
+
+         return physics;
+      })();
    },
-   async createPhysics ()
-   {
-      const
-         PhysX      = await this .getPhysX (),
-         version    = PhysX .PHYSICS_VERSION,
-         allocator  = new PhysX .PxDefaultAllocator (),
-         errorCb    = new PhysX .PxDefaultErrorCallback (),
-         foundation = PhysX .CreateFoundation (version, allocator, errorCb),
-         tolerances = new PhysX .PxTolerancesScale (),
-         physics    = PhysX .CreatePhysics (version, foundation, tolerances);
-
-      if (Features .ENVIRONMENT === "NODE")
-         PhysX .destroy = Function .prototype;
-
-      return physics;
-   }
 });
 
 export default X3DRigidBodyPhysicsContext;

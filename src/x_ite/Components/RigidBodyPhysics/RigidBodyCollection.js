@@ -48,8 +48,9 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
       this .physics = await browser .getPhysics ();
 
       const
-         gravity   = new this .PhysX .PxVec3 (... this ._gravity),
-         sceneDesc = new this .PhysX .PxSceneDesc (this.tolerances);
+         gravity    = new this .PhysX .PxVec3 (... this ._gravity),
+         tolerances = this .physics .getTolerancesScale (),
+         sceneDesc  = new this .PhysX .PxSceneDesc (tolerances);
 
       sceneDesc .set_gravity (gravity);
       sceneDesc .set_cpuDispatcher (this .PhysX .DefaultCpuDispatcherCreate (0));
@@ -84,13 +85,16 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    },
    getTimeStep ()
    {
-      const DELAY = 15; // Delay in frames when dt full applies.
-
       const
+         DELAY     = 15, // Delay in frames when dt full applies.
          dt        = 1 / Math .max (10, this .getBrowser () .getCurrentFrameRate ()),
          deltaTime = this .deltaTime = ((DELAY - 1) * this .deltaTime + dt) / DELAY; // Moving average about DELAY frames.
 
       return deltaTime;
+   },
+   getPhysicsScene ()
+   {
+      return this .scene;
    },
    set_enabled__ ()
    {
@@ -192,10 +196,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    set_bodies__ ()
    {
       for (const bodyNode of this .bodyNodes)
-      {
-         bodyNode ._actor .removeInterest ("set_actors__", this);
          bodyNode .setCollection (null);
-      }
 
       for (const otherBodyNode of this .otherBodyNodes)
          otherBodyNode ._collection .removeInterest ("set_bodies__", this);
@@ -221,41 +222,9 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
          this .bodyNodes .push (bodyNode);
       }
 
-      for (const bodyNode of this .bodyNodes)
-         bodyNode ._actor .addInterest ("set_actors__", this);
-
       this .set_colliderParameters__ ();
       this .set_contactSurfaceThickness__ ();
-      this .set_actors__ ();
       this .set_joints__ ();
-   },
-   set_actors__ ()
-   {
-      for (const [actor, body] of this .actors)
-      {
-         if (body .released)
-            continue;
-
-         this .scene .removeActor (actor);
-      }
-
-      this .actors .clear ();
-
-      for (const bodyNode of this .bodyNodes)
-      {
-         if (!bodyNode ._enabled .getValue ())
-            continue;
-
-         const body = bodyNode .getBody ();
-
-         if (!body || body .released)
-            continue;
-
-         this .actors .set (body .actor, body);
-      }
-
-      for (const actor of this .actors .keys ())
-         this .scene .addActor (actor);
    },
    set_joints__ ()
    {

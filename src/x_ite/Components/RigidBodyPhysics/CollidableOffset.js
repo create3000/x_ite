@@ -43,9 +43,9 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
 
       this .getChild () ?.setLocalPose (this .offsetMatrix);
    },
-   getShape (convexHull)
+   getPhysicsShape (convexHull)
    {
-      return this .getChild () ?.getShape (convexHull);
+      return this .getChild () ?.getPhysicsShape (convexHull);
    },
    set_enabled__ ()
    {
