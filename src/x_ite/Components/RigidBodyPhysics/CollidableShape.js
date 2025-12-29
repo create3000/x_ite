@@ -41,7 +41,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       this .parentEnabled = parentEnabled;
       this .enabled       = this ._enabled .getValue () && parentEnabled;
 
-      if (!this .shape)
+      if (!this .PhysX)
          return;
 
       const
@@ -49,7 +49,8 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          word1      = this .enabled ? 0xffffffff : 0, // collides with mask
          filterData = new this .PhysX .PxFilterData (word0, word1, 0, 0);
 
-      this .shape .setSimulationFilterData (filterData);
+      this .convexShape  ?.setSimulationFilterData (filterData);
+      this .concaveShape ?.setSimulationFilterData (filterData);
 
       this .PhysX .destroy (filterData);
    },
@@ -69,7 +70,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          else
             this .offsetMatrix .assign (this .getMatrix ()) .multRight (parentMatrix);
 
-         if (!this .shape)
+         if (!this .PhysX)
             return;
 
          this .offsetMatrix .get (t, r);
@@ -79,22 +80,17 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
             rotation    = new this .PhysX .PxQuat (... r .getQuaternion (q)),
             pose        = new this .PhysX .PxTransform (translation, rotation);
 
-         this .shape .setLocalPose (pose);
+         this .convexShape  ?.setLocalPose (pose);
+         this .concaveShape ?.setLocalPose (pose);
 
          this .PhysX .destroy (translation);
          this .PhysX .destroy (rotation);
          this .PhysX .destroy (pose);
       };
    })(),
-   getShape ()
+   getShape (convexHull)
    {
-      return this .shape;
-   },
-   createShape (shapeFlags)
-   {
-      return this ._convexHull .getValue ()
-         ? this .createConvexShape (shapeFlags)
-         : this .createConcaveShape (shapeFlags);
+      return convexHull ? this .convexShape : this .concaveShape;
    },
    createConvexShape (shapeFlags)
    {
@@ -246,73 +242,87 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                   const
                      box      = this .geometryNode,
                      size     = box ._size .getValue (),
-                     geometry = new this .PhysX .PxBoxGeometry (size .x / 2, size .y / 2, size .z / 2);
+                     geometry = new this .PhysX .PxBoxGeometry (size .x / 2, size .y / 2, size .z / 2),
+                     shape    = this .physics .createShape (geometry, this .material, true, shapeFlags);
 
-                  this .shape = this .physics .createShape (geometry, this .material, true, shapeFlags);
+                  this .convexShape  = shape;
+                  this .concaveShape = shape;
                   break;
                }
                case X3DConstants .Cone:
                case X3DConstants .Cylinder:
                {
-                  this .shape = this .createConvexShape (shapeFlags);
+                  const shape = this .createConvexShape (shapeFlags);
+
+                  this .convexShape  = shape;
+                  this .concaveShape = shape;
                   break;
                }
-               case X3DConstants .ElevationGrid:
-               {
-                  const elevationGrid = this .geometryNode;
+               // case X3DConstants .ElevationGrid:
+               // {
+               //    const elevationGrid = this .geometryNode;
 
-                  // if (elevationGrid ._xDimension .getValue () > 1 && elevationGrid ._zDimension .getValue () > 1)
-                  // {
-                  //    const heightField = this .heightField = Ammo ._malloc (4 * elevationGrid ._xDimension .getValue () * elevationGrid ._zDimension .getValue ());
+               //    if (elevationGrid ._xDimension .getValue () > 1 && elevationGrid ._zDimension .getValue () > 1)
+               //    {
+               //       const heightField = this .heightField = Ammo ._malloc (4 * elevationGrid ._xDimension .getValue () * elevationGrid ._zDimension .getValue ());
 
-                  //    let
-                  //       min = Number .POSITIVE_INFINITY,
-                  //       max = Number .NEGATIVE_INFINITY;
+               //       let
+               //          min = Number .POSITIVE_INFINITY,
+               //          max = Number .NEGATIVE_INFINITY;
 
-                  //    for (let i = 0, i4 = 0, length = elevationGrid ._height .length; i < length; ++ i)
-                  //    {
-                  //       const value = elevationGrid ._height [i];
+               //       for (let i = 0, i4 = 0, length = elevationGrid ._height .length; i < length; ++ i)
+               //       {
+               //          const value = elevationGrid ._height [i];
 
-                  //       min = Math .min (min, value);
-                  //       max = Math .max (max, value);
+               //          min = Math .min (min, value);
+               //          max = Math .max (max, value);
 
-                  //       Ammo .HEAPF32 [heightField + i4 >>> 2] = elevationGrid ._height [i];
+               //          Ammo .HEAPF32 [heightField + i4 >>> 2] = elevationGrid ._height [i];
 
-                  //       i4 += 4;
-                  //    }
+               //          i4 += 4;
+               //       }
 
-                  //    this .collisionShape = new Ammo .btHeightfieldTerrainShape (elevationGrid ._xDimension .getValue (),
-                  //                                                                elevationGrid ._zDimension .getValue (),
-                  //                                                                heightField,
-                  //                                                                1,
-                  //                                                                min,
-                  //                                                                max,
-                  //                                                                1,
-                  //                                                                "PHY_FLOAT",
-                  //                                                                true);
+               //       this .collisionShape = new Ammo .btHeightfieldTerrainShape (elevationGrid ._xDimension .getValue (),
+               //                                                                   elevationGrid ._zDimension .getValue (),
+               //                                                                   heightField,
+               //                                                                   1,
+               //                                                                   min,
+               //                                                                   max,
+               //                                                                   1,
+               //                                                                   "PHY_FLOAT",
+               //                                                                   true);
 
-                  //    this .collisionShape .setMargin (MARGIN);
-                  //    this .collisionShape .setLocalScaling (new Ammo .btVector3 (elevationGrid ._xSpacing .getValue (), 1, elevationGrid ._zSpacing .getValue ()));
+               //       this .collisionShape .setMargin (MARGIN);
+               //       this .collisionShape .setLocalScaling (new Ammo .btVector3 (elevationGrid ._xSpacing .getValue (), 1, elevationGrid ._zSpacing .getValue ()));
 
-                  //    this .setOffset (elevationGrid ._xSpacing .getValue () * (elevationGrid ._xDimension .getValue () - 1) * 0.5,
-                  //                     (min + max) * 0.5,
-                  //                     elevationGrid ._zSpacing .getValue () * (elevationGrid ._zDimension .getValue () - 1) * 0.5);
-                  // }
+               //       this .setOffset (elevationGrid ._xSpacing .getValue () * (elevationGrid ._xDimension .getValue () - 1) * 0.5,
+               //                        (min + max) * 0.5,
+               //                        elevationGrid ._zSpacing .getValue () * (elevationGrid ._zDimension .getValue () - 1) * 0.5);
+               //    }
 
-                  break;
-               }
+               //    break;
+               // }
                case X3DConstants .Sphere:
                {
                   const
                      sphere   = this .geometryNode,
-                     geometry = new this .PhysX .PxSphereGeometry (sphere ._radius .getValue ());
+                     geometry = new this .PhysX .PxSphereGeometry (sphere ._radius .getValue ()),
+                     shape    = this .physics .createShape (geometry, this .material, true, shapeFlags);
 
-                  this .shape = this .physics .createShape (geometry, this .material, true, shapeFlags);
+                  this .convexShape  = shape;
+                  this .concaveShape = shape;
                   break;
                }
                case X3DConstants .X3DGeometryNode:
                {
-                  this .shape = this .createShape (shapeFlags);
+                  this .concaveShape = this ._convexHull .getValue ()
+                     ? this .createConvexShape (shapeFlags)
+                     : this .createConcaveShape (shapeFlags);
+
+                  this .convexShape = this ._convexHull .getValue ()
+                     ? this .concaveShape
+                     : this .createConvexShape (shapeFlags);
+                     
                   break;
                }
                default:
@@ -326,7 +336,8 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       }
       else
       {
-         this .shape = null;
+         this .convexShape  = null;
+         this .concaveShape = null;
       }
 
       this ._physicsShape = this .getBrowser () .getCurrentTime ();
@@ -338,7 +349,8 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    },
    removeCollidableGeometry ()
    {
-      this .shape ?.release ();
+      this .convexShape  ?.release ();
+      this .concaveShape ?.release ();
    },
    dispose ()
    {

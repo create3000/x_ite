@@ -402,7 +402,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       for (const geometryNode of this .geometryNodes)
       {
-         const shape = geometryNode .getShape ();
+         const shape = geometryNode .getShape (!this ._fixed .getValue ());
 
          if (!shape)
             continue;
