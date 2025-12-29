@@ -324,8 +324,8 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       {
          this .actor .release ();
 
-         this .body .released = true;
          this .actor          = null;
+         this .body .released = true;
       }
 
       // Add geometries.
