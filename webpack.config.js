@@ -478,6 +478,9 @@ export default Namespace .add ("${base}", __default__);`;
                      `perl -p0i -e 's|sourceMappingURL=.*?\\.map||sg' dist/assets/components/${name}Component{,.min}.js`,
                      // Per component
                      ... {
+                        RigidBodyPhysics: [
+                           `rm dist/assets/components/*.wasm`,
+                        ],
                         Texturing3D: [
                            `perl -p0i -e 's|("./index.js"\\).*?\\})|$1.bind({})|sg' dist/assets/components/${name}Component{,.min}.js`,
                            `perl -p0i -e 's/[,;]*(var\\s+)?(CharLS|OpenJPEG)\\s*=\\s*function/;module.exports=function/sg' dist/assets/components/${name}Component{,.min}.js`,

@@ -1,5 +1,6 @@
 
 import PhysX from "../../../../node_modules/physx-js-webidl/physx-js-webidl.mjs";
+import URLs  from "../Networking/URLs.js";
 
 const
    _PhysX   = Symbol (),
@@ -22,7 +23,7 @@ Object .assign (X3DRigidBodyPhysicsContext .prototype,
    },
    getPhysX ()
    {
-      return this [_PhysX] ??= PhysX ();
+      return this [_PhysX] ??= PhysX ({ locateFile: () => URLs .getLibraryURL ("physx-js-webidl.wasm") });
    },
    getPhysics ()
    {
