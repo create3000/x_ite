@@ -8,7 +8,6 @@ import X3DCast              from "../../Base/X3DCast.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Quaternion           from "../../../standard/Math/Numbers/Quaternion.js";
 import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
-import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
 function RigidBody (executionContext)
 {
@@ -413,6 +412,9 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       return function ()
       {
+         if (!this .actor)
+            return;
+
          if (this ._fixed .getValue ())
             return;
 
