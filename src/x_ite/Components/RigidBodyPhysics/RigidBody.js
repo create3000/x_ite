@@ -192,14 +192,34 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          // this .rigidBody .setAngularFactor (angularFactor);
       };
    })(),
+   set_linearDampingFactor__ ()
+   {
+      if (!this .actor)
+         return;
+
+      if (this ._fixed .getValue ())
+         return;
+
+      this .actor .setLinearDamping (this ._linearDampingFactor .getValue ());
+   },
    set_damping__ ()
    {
-      // if (this ._autoDamp .getValue ())
-      //    this .rigidBody .setDamping (this ._linearDampingFactor .getValue (), this ._angularDampingFactor .getValue ());
-      // else
-      //    this .rigidBody .setDamping (0, 0);
+      if (!this .actor)
+         return;
 
-      // this .rigidBody .activate ();
+      if (this ._fixed .getValue ())
+         return;
+
+      if (this ._autoDamp .getValue ())
+      {
+         this .actor .setLinearDamping (this ._linearDampingFactor .getValue ());
+         this .actor .setAngularDamping (this ._angularDampingFactor .getValue ());
+      }
+      else
+      {
+         this .actor .setLinearDamping (0);
+         this .actor .setAngularDamping (0);
+      }
    },
    set_inertia__ ()
    {
