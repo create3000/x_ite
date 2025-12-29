@@ -15,15 +15,17 @@ Object .assign (X3DRigidBodyPhysicsContext .prototype,
       if (!this .getBrowserOption ("Debug"))
          return;
 
-      const PhysX = await this .getPhysX ();
-
-      const version = PhysX .PHYSICS_VERSION;
+      const
+         PhysX   = await this .getPhysX (),
+         version = PhysX .PHYSICS_VERSION;
 
       console .log (`PhysX version: ${(version >> 24) & 0xff}.${(version >> 16) & 0xff}.${(version >> 8) & 0xff}`);
    },
    getPhysX ()
    {
-      return this [_PhysX] ??= PhysX ({ locateFile: () => URLs .getLibraryURL ("physx-js-webidl.wasm") });
+      return this [_PhysX] ??= PhysX ({
+         locateFile: () => URLs .getLibraryURL ("physx-js-webidl.wasm"),
+      });
    },
    getPhysics ()
    {
