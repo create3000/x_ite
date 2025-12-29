@@ -122,20 +122,22 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       if (!this .actor)
          return;
 
-         const position = this ._position .getValue ();
+         const
+            position = this ._position .getValue (),
+            pose     = this .pose;
 
          this ._orientation .getValue () .getQuaternion (quaternion);
 
-         this .pose .p .x = position .x;
-         this .pose .p .y = position .y;
-         this .pose .p .z = position .z;
+         pose .p .x = position .x;
+         pose .p .y = position .y;
+         pose .p .z = position .z;
 
-         this .pose .q .x = quaternion .x;
-         this .pose .q .y = quaternion .y;
-         this .pose .q .z = quaternion .z;
-         this .pose .q .w = quaternion .w;
+         pose .q .x = quaternion .x;
+         pose .q .y = quaternion .y;
+         pose .q .z = quaternion .z;
+         pose .q .w = quaternion .w;
 
-         this .actor .setGlobalPose (this .pose);
+         this .actor .setGlobalPose (pose);
       };
    })(),
    set_linearVelocity__ ()
