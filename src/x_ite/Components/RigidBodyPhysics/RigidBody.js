@@ -229,7 +229,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       const
          inertiaTensor = new this .PhysX .PxMat33 (col0, col1, col2),
-         rotation      = new this .PhysX .PxQuat (this .PhysX .PxIDENTITYEnum .PxIdentity),
+         rotation      = new this .PhysX .PxQuat (0, 0, 0, 1),
          inertia       = this .PhysX .PxMassProperties .prototype .getMassSpaceInertia (inertiaTensor, rotation);
 
       this .actor .setMassSpaceInertiaTensor (inertia);

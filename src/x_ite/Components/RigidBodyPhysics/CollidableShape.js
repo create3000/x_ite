@@ -27,11 +27,11 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    {
       await X3DNBodyCollidableNode .prototype .initialize .call (this);
 
-      this .material = this .physics .createMaterial (0, 0, 0);
+      this .material = this .physics .createMaterial (1, 1, 0);
 
-      this .material .setStaticFriction (0);
-      this .material .setDynamicFriction (0);
-      this .material .setRestitution (1);
+      this .material .setStaticFriction (1);
+      this .material .setDynamicFriction (1);
+      this .material .setRestitution (0);
       this .material .setFrictionCombineMode (this .PhysX .PxCombineModeEnum .eAVERAGE);
       this .material .setRestitutionCombineMode (this .PhysX .PxCombineModeEnum .eAVERAGE);
 
@@ -95,72 +95,112 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    {
       return this .shape;
    },
-   createGeometry ()
+   createShape (shapeFlags)
    {
-      if (this ._convexHull .getValue ())
-         return this .createConvexGeometry ();
-      else
-         return this .createConcaveGeometry ();
+      // if (this ._convexHull .getValue ())
+      //    return this .createConvexShape (shapeFlags);
+      // else
+         return this .createConcaveShape (shapeFlags);
    },
-   createConvexGeometry: (() =>
-   {
-      const p = new Ammo .btVector3 ();
-
-      return function ()
-      {
-         const
-            vertices    = this .geometryNode .getVertices () .getValue (),
-            numVertices = vertices .length;
-
-         if (!numVertices)
-            return null;
-
-         const convexHull = new Ammo .btConvexHullShape ();
-
-         for (let i = 0; i < numVertices; i += 4)
-         {
-            p .setValue (vertices [i], vertices [i + 1], vertices [i + 2]);
-
-            convexHull .addPoint (p, false);
-         }
-
-         convexHull .setMargin (MARGIN);
-         convexHull .initializePolyhedralFeatures ();
-         convexHull .recalcLocalAabb ();
-
-         return convexHull;
-      };
-   })(),
-   createConcaveGeometry: (() =>
+   createConvexShape (shapeFlags)
    {
       const
-         p1 = new Ammo .btVector3 (),
-         p2 = new Ammo .btVector3 (),
-         p3 = new Ammo .btVector3 ();
+         vertices    = this .geometryNode .getVertices () .getValue () .filter ((_, i) => i % 4 < 3),
+         indices     = Uint32Array .from ({ length: vertices .length / 3 }, (_, i) => i),
+         numVertices = vertices .length;
 
-      return function ()
-      {
-         const
-            vertices    = this .geometryNode .getVertices () .getValue (),
-            numVertices = vertices .length;
+      if (!numVertices)
+         return null;
 
-         if (!numVertices)
-            return null;
+      const desc = new this .PhysX .PxConvexMeshDesc ();
 
-         this .triangleMesh = new Ammo .btTriangleMesh ();
+      desc .points .stride = vertices .BYTES_PER_ELEMENT * 3;
+      desc .points .count  = vertices .length / 3;
+      desc .points .data   = this .malloc (vertices);
 
-         for (let i = 0; i < numVertices; i += 12)
-         {
-            p1 .setValue (vertices [i],     vertices [i + 1], vertices [i + 2]);
-            p2 .setValue (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
-            p3 .setValue (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
+      const descFlags = 0
+         | this .PhysX ._emscripten_enum_PxConvexFlagEnum_eCOMPUTE_CONVEX ()
+         | this .PhysX ._emscripten_enum_PxConvexFlagEnum_eQUANTIZE_INPUT ()
+         | this .PhysX ._emscripten_enum_PxConvexFlagEnum_eDISABLE_MESH_VALIDATION ();
 
-            this .triangleMesh .addTriangle (p1, p2, p3);
-         }
+      desc .flags = new this .PhysX .PxConvexFlags (descFlags);
 
-         return new Ammo .btBvhTriangleMeshShape (this .triangleMesh, false);
-      };
-   })(),
+      const
+         tolerances    = new this .PhysX .PxTolerancesScale (),
+         cookingParams = new this .PhysX .PxCookingParams (tolerances),
+         mesh          = this .PhysX .CreateConvexMesh (cookingParams, desc);
+
+      const
+         scale     = new this .PhysX .PxVec3 (1, 1, 1),
+         quat      = new this .PhysX .PxQuat (0, 0, 0, 1),
+         meshScale = new this .PhysX .PxMeshScale (scale, quat),
+         flags     = new this .PhysX .PxConvexMeshGeometryFlags (),
+         geometry  = new this .PhysX .PxConvexMeshGeometry (mesh, meshScale, flags);
+
+      this .PhysX .destroy (scale);
+      this .PhysX .destroy (quat);
+      this .PhysX .destroy (meshScale);
+      this .PhysX .destroy (flags);
+      this .PhysX .destroy (cookingParams);
+      this .PhysX .destroy (tolerances);
+      this .PhysX .destroy (desc);
+
+      return this .physics .createShape (geometry, this .material, true, shapeFlags);
+   },
+   createConcaveShape (shapeFlags)
+   {
+      const
+         vertices    = this .geometryNode .getVertices () .getValue () .filter ((_, i) => i % 4 < 3),
+         indices     = Uint32Array .from ({ length: vertices .length / 3 }, (_, i) => i),
+         numVertices = vertices .length;
+
+      if (!numVertices)
+         return null;
+
+      const desc = new this .PhysX .PxTriangleMeshDesc ();
+
+      desc .points .stride = vertices .BYTES_PER_ELEMENT * 3;
+      desc .points .count  = vertices .length / 3;
+      desc .points .data   = this .malloc (vertices);
+
+      desc .triangles .stride = indices .BYTES_PER_ELEMENT * 3;
+      desc .triangles .count  = indices .length / 3;
+      desc .triangles .data   = this .malloc (indices);
+
+      const
+         tolerances    = new this .PhysX .PxTolerancesScale (),
+         cookingParams = new this .PhysX .PxCookingParams (tolerances),
+         mesh          = this .PhysX .CreateTriangleMesh (cookingParams, desc);
+
+      const
+         scale     = new this .PhysX .PxVec3 (1, 1, 1),
+         quat      = new this .PhysX .PxQuat (0, 0, 0, 1),
+         meshScale = new this .PhysX .PxMeshScale (scale, quat),
+         flags     = new this .PhysX .PxMeshGeometryFlags (),
+         geometry  = new this .PhysX .PxTriangleMeshGeometry (mesh, meshScale, flags);
+
+      this .PhysX .destroy (scale);
+      this .PhysX .destroy (quat);
+      this .PhysX .destroy (meshScale);
+      this .PhysX .destroy (flags);
+      this .PhysX .destroy (cookingParams);
+      this .PhysX .destroy (tolerances);
+      this .PhysX .destroy (desc);
+
+      return this .physics .createShape (geometry, this .material, true, shapeFlags);
+   },
+   malloc (f, q)
+   {
+      const nDataBytes = f .length * f .BYTES_PER_ELEMENT;
+
+      q ??= this .PhysX ._webidl_malloc (nDataBytes);
+
+      const dataHeap = new Uint8Array (this .PhysX .HEAPU8 .buffer, q, nDataBytes);
+
+      dataHeap .set (new Uint8Array (f .buffer));
+
+      return q;
+   },
    set_enabled__ ()
    {
       this .setEnabled (this .parentEnabled);
@@ -197,11 +237,10 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
 
       const shapeFlags = new this .PhysX .PxShapeFlags (
          this .PhysX .PxShapeFlagEnum .eSCENE_QUERY_SHAPE |
-         this .PhysX .PxShapeFlagEnum .eSIMULATION_SHAPE |
-         this .PhysX .PxShapeFlagEnum .eVISUALIZATION
+         this .PhysX .PxShapeFlagEnum .eSIMULATION_SHAPE
       );
 
-      if (this .geometryNode && this .geometryNode .getGeometryType () >= 2)
+      if (this .geometryNode ?.getGeometryType () >= 2)
       {
          const type = this .geometryNode .getType ();
 
@@ -220,40 +259,9 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                   break;
                }
                case X3DConstants .Cone:
-               {
-                  const cone = this .geometryNode;
-
-                  // if (cone ._side .getValue () && cone ._bottom .getValue ())
-                  // {
-                  //    this .collisionShape = new Ammo .btConeShape (cone ._bottomRadius .getValue (), cone ._height .getValue ());
-
-                  //    this .collisionShape .setMargin (MARGIN);
-                  // }
-                  // else
-                  // {
-                  //    this .collisionShape = this .createGeometry ();
-                  // }
-
-                  break;
-               }
                case X3DConstants .Cylinder:
                {
-                  const
-                     cylinder  = this .geometryNode,
-                     radius    = cylinder ._radius .getValue (),
-                     height1_2 = cylinder ._height .getValue () * 0.5;
-
-                  // if (cylinder ._side .getValue () && cylinder ._top .getValue () && cylinder ._bottom .getValue ())
-                  // {
-                  //    this .collisionShape = new Ammo .btCylinderShape (new Ammo .btVector3 (radius, height1_2, radius));
-
-                  //    this .collisionShape .setMargin (MARGIN);
-                  // }
-                  // else
-                  // {
-                  //    this .collisionShape = this .createGeometry ();
-                  // }
-
+                  this .shape = this .createConvexShape (shapeFlags);
                   break;
                }
                case X3DConstants .ElevationGrid:
@@ -311,7 +319,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                }
                case X3DConstants .X3DGeometryNode:
                {
-                  // this .collisionShape = this .createGeometry ();
+                  this .shape = this .createShape (shapeFlags);
                   break;
                }
                default:
