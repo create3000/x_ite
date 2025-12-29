@@ -193,7 +193,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    {
       for (const bodyNode of this .bodyNodes)
       {
-         bodyNode ._enabled .removeInterest ("set_actors__", this);
+         bodyNode ._actors .removeInterest ("set_actors__", this);
          bodyNode .setCollection (null);
       }
 
@@ -222,9 +222,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
       }
 
       for (const bodyNode of this .bodyNodes)
-      {
-         bodyNode ._enabled .addInterest ("set_actors__", this);
-      }
+         bodyNode ._actors .addInterest ("set_actors__", this);
 
       this .set_colliderParameters__ ();
       this .set_contactSurfaceThickness__ ();
@@ -233,7 +231,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    },
    set_actors__ ()
    {
-      for (const actor of this .actors)
+      for (const actor of this .actors .filter (actor => !actor .released))
          this .scene .removeActor (actor);
 
       this .actors .length = 0;
@@ -245,7 +243,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
 
          const actor = bodyNode .getActor ();
 
-         if (!actor)
+         if (!actor || actor .released)
             continue;
 
          this .actors .push (actor);

@@ -18,7 +18,8 @@ function RigidBody (executionContext)
 
    this .addChildObjects (X3DConstants .inputOutput, "collection",    new Fields .SFNode (),
                           X3DConstants .outputOnly,  "transform",     new Fields .SFTime (),
-                          X3DConstants .outputOnly,  "otherGeometry", new Fields .MFNode ());
+                          X3DConstants .outputOnly,  "otherGeometry", new Fields .MFNode (),
+                          X3DConstants .outputOnly,  "actors",        new Fields .SFTime ());
 
    // Units
 
@@ -62,6 +63,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       this .centerOfMass .q .z = 0;
       this .centerOfMass .q .w = 1;
 
+      this ._enabled              .addInterest ("set_enabled__",            this);
       this ._fixed                .addInterest ("set_geometry__",           this);
       this ._linearVelocity       .addInterest ("set_linearVelocity__",     this);
       this ._angularVelocity      .addInterest ("set_angularVelocity__",    this);
@@ -102,6 +104,10 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    getActor ()
    {
       return this .actor;
+   },
+   set_enabled__ ()
+   {
+      this ._actors = this .getBrowser () .getCurrentTime ();
    },
    set_position__ ()
    {
@@ -285,6 +291,13 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    {
       const geometryNodes = this .geometryNodes;
 
+      // Detach shapes.
+
+      for (const shape of this .shapes)
+         this .actor .detachShape (shape);
+
+      this .shapes .length = 0;
+
       // Remove geometries.
 
       for (const geometryNode of geometryNodes)
@@ -306,9 +319,12 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       geometryNodes .length = 0;
 
       if (this .actor)
-         this .PhysX .destroy (this .actor);
+      {
+         this .actor .release ();
 
-      this .actor = null;
+         this .actor .released = true;
+         this .actor           = null;
+      }
 
       // Add geometries.
 
@@ -344,6 +360,8 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
             ? this .physics .createRigidStatic (this .pose)
             : this .physics .createRigidDynamic (this .pose);
       }
+
+      this ._actors = this .getBrowser () .getCurrentTime ();
 
       this .set_shapes__ ();
       this .set_position__ ();
