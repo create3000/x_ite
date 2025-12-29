@@ -369,6 +369,8 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       this ._actor = this .getBrowser () .getCurrentTime ();
 
+      // Setup actor properties.
+
       this .set_shapes__ ();
       this .set_position__ ();
       this .set_orientation__ ();
