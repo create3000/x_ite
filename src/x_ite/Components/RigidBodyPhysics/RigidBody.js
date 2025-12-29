@@ -417,16 +417,18 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       return function ()
       {
-         if (!this .actor)
+         const actor = this .actor;
+
+         if (!actor)
             return;
 
          if (this ._fixed .getValue ())
             return;
 
          const
-            transform = this .actor .getGlobalPose (),
-            v         = this .actor .getLinearVelocity (),
-            w         = this .actor .getAngularVelocity ();
+            transform = actor .getGlobalPose (),
+            v         = actor .getLinearVelocity (),
+            w         = actor .getAngularVelocity ();
 
          position .set (transform .p .x, transform .p .y, transform .p .z);
          quaternion .set (transform .q .x, transform .q .y, transform .q .z, transform .q .w);
