@@ -24,9 +24,6 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
 
       this .material = this .physics .createMaterial (1, 1, 0);
 
-      this .material .setStaticFriction (1);
-      this .material .setDynamicFriction (1);
-      this .material .setRestitution (0);
       this .material .setFrictionCombineMode (this .PhysX .PxCombineModeEnum .eAVERAGE);
       this .material .setRestitutionCombineMode (this .PhysX .PxCombineModeEnum .eAVERAGE);
 
@@ -88,6 +85,12 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          this .PhysX .destroy (pose);
       };
    })(),
+   updateMaterial (staticFriction, dynamicFriction, restitution)
+   {
+      this .material .setStaticFriction (staticFriction);
+      this .material .setDynamicFriction (dynamicFriction);
+      this .material .setRestitution (restitution);
+   },
    getShape (convexHull)
    {
       return convexHull ? this .convexShape : this .concaveShape;
