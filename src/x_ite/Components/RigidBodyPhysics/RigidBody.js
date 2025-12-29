@@ -49,19 +49,13 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       const browser = this .getBrowser ();
 
-      this .PhysX           = await browser .getPhysX ();
-      this .physics         = await browser .getPhysics ();
-      this .pose            = new this .PhysX .PxTransform ();
-      this .linearVelocity  = new this .PhysX .PxVec3 (0, 0, 0);
-      this .angularVelocity = new this .PhysX .PxVec3 (0, 0, 0);
-      this .centerOfMass    = new this .PhysX .PxTransform ();
-      this .force           = new this .PhysX .PxVec3 (0, 0, 0);
-      this .torque          = new this .PhysX .PxVec3 (0, 0, 0);
-
-      this .centerOfMass .q .x = 0;
-      this .centerOfMass .q .y = 0;
-      this .centerOfMass .q .z = 0;
-      this .centerOfMass .q .w = 1;
+      this .PhysX            = await browser .getPhysX ();
+      this .physics          = await browser .getPhysics ();
+      this .pose             = new this .PhysX .PxTransform ();
+      this .linearVelocity   = new this .PhysX .PxVec3 (0, 0, 0);
+      this .angularVelocity  = new this .PhysX .PxVec3 (0, 0, 0);
+      this .force            = new this .PhysX .PxVec3 (0, 0, 0);
+      this .torque           = new this .PhysX .PxVec3 (0, 0, 0);
 
       this ._enabled              .addInterest ("set_enabled__",            this);
       this ._fixed                .addInterest ("set_geometry__",           this);
@@ -192,16 +186,6 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          // this .rigidBody .setAngularFactor (angularFactor);
       };
    })(),
-   set_linearDampingFactor__ ()
-   {
-      if (!this .actor)
-         return;
-
-      if (this ._fixed .getValue ())
-         return;
-
-      this .actor .setLinearDamping (this ._linearDampingFactor .getValue ());
-   },
    set_damping__ ()
    {
       if (!this .actor)
@@ -268,12 +252,6 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       if (this ._fixed .getValue ())
          return;
 
-      const centerOfMass = this ._centerOfMass .getValue ();
-
-      this .centerOfMass .x = centerOfMass .x;
-      this .centerOfMass .y = centerOfMass .y;
-      this .centerOfMass .z = centerOfMass .z;
-
       this .actor .setMass (this ._mass .getValue ());
    },
    set_centerOfMass__ ()
@@ -284,13 +262,14 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       if (this ._fixed .getValue ())
          return;
 
-      const centerOfMass = this ._centerOfMass .getValue ();
+      const
+         centerOfMass     = new this .PhysX .PxVec3 (... this ._centerOfMass .getValue ()),
+         centerOfMassPose = new this .PhysX .PxTransform (centerOfMass);
 
-      this .centerOfMass .p .x = centerOfMass .x;
-      this .centerOfMass .p .y = centerOfMass .y;
-      this .centerOfMass .p .z = centerOfMass .z;
+      this .actor .setCMassLocalPose (centerOfMassPose);
 
-      this .actor .setCMassLocalPose (this .centerOfMass);
+      this .PhysX .destroy (centerOfMass);
+      this .PhysX .destroy (centerOfMassPose);
    },
    set_useGlobalGravity__ ()
    {
