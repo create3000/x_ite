@@ -143,6 +143,7 @@ export default Namespace .add ("${base}", __default__);`;
          "x_ite.min": "./src/x_ite.js",
       },
       output: {
+         publicPath: "",
          path: path .resolve (__dirname, "dist"),
          filename: "[name].js",
          library: {
@@ -247,6 +248,7 @@ export default Namespace .add ("${base}", __default__);`;
          "x_ite.min": "./src/x_ite.js",
       },
       output: {
+         publicPath: "",
          path: path .resolve (__dirname, "dist"),
          filename: "[name].mjs",
          library: {
@@ -413,6 +415,7 @@ export default Namespace .add ("${base}", __default__);`;
             [`${name}Component.min`]: "./src/assets/components/" + filename,
          },
          output: {
+            publicPath: "",
             path: path .resolve (__dirname, "dist/assets/components"),
             filename: "[name].js",
          },
@@ -480,6 +483,7 @@ export default Namespace .add ("${base}", __default__);`;
                      ... {
                         RigidBodyPhysics: [
                            `rm dist/assets/components/*.wasm`,
+                           `perl -p0i -e 's/process.versions.node/"2147483647.0.0"/sg' dist/assets/components/${name}Component{,.min}.js`,
                         ],
                         Texturing3D: [
                            `perl -p0i -e 's|("./index.js"\\).*?\\})|$1.bind({})|sg' dist/assets/components/${name}Component{,.min}.js`,

@@ -1,6 +1,8 @@
 
-import PhysX from "../../../../node_modules/physx-js-webidl/physx-js-webidl.mjs";
-import URLs  from "../Networking/URLs.js";
+import PhysX    from "../../../../node_modules/physx-js-webidl/physx-js-webidl.mjs";
+import URLs     from "../Networking/URLs.js";
+import Features from "../../Features.js";
+
 
 const
    _PhysX   = Symbol (),
@@ -41,6 +43,9 @@ Object .assign (X3DRigidBodyPhysicsContext .prototype,
          foundation = PhysX .CreateFoundation (version, allocator, errorCb),
          tolerances = new PhysX .PxTolerancesScale (),
          physics    = PhysX .CreatePhysics (version, foundation, tolerances);
+
+      if (Features .ENVIRONMENT === "NODE")
+         PhysX .destroy = Function .prototype;
 
       return physics;
    }
