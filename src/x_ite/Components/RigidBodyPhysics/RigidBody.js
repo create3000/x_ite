@@ -118,11 +118,6 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       for (const geometryNode of this .geometryNodes)
          geometryNode ._rotation = this ._orientation;
    },
-   set_size__ ()
-   {
-      for (const geometryNode of this .geometryNodes)
-         geometryNode ._scale = this ._size;
-   },
    set_transform__: (() =>
    {
       const
@@ -295,11 +290,9 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
          geometryNode ._translation .removeFieldInterest (this ._position);
          geometryNode ._rotation    .removeFieldInterest (this ._orientation);
-         geometryNode ._scale       .removeFieldInterest (this ._size);
 
          this ._position    .removeFieldInterest (geometryNode ._translation);
          this ._orientation .removeFieldInterest (geometryNode ._rotation);
-         this ._size        .removeFieldInterest (geometryNode ._scale);
       }
 
       for (const otherGeometryNode of this .otherGeometryNodes)
@@ -333,11 +326,9 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
          geometryNode ._translation .addFieldInterest (this ._position);
          geometryNode ._rotation    .addFieldInterest (this ._orientation);
-         geometryNode ._scale       .addFieldInterest (this ._size);
 
          this ._position    .addFieldInterest (geometryNode ._translation);
          this ._orientation .addFieldInterest (geometryNode ._rotation);
-         this ._size        .addFieldInterest (geometryNode ._scale);
       }
 
       this .set_compoundShape__ ();
@@ -362,7 +353,6 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
          this .set_position__ ();
          this .set_orientation__ ();
-         this .set_size__ ();
          this .set_transform__ ();
          this .set_linearVelocity__ ();
          this .set_angularVelocity__ ();
@@ -450,7 +440,6 @@ Object .defineProperties (RigidBody,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "fixed",                new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "position",             new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "orientation",          new Fields .SFRotation ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "size",                 new Fields .SFVec3f (1, 1, 1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "linearVelocity",       new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "angularVelocity",      new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "useFiniteRotation",    new Fields .SFBool ()),

@@ -2488,7 +2488,6 @@ function eventsProcessed ()
                         rigidBodyNode ._fixed       = true;
                         rigidBodyNode ._position    = translation;
                         rigidBodyNode ._orientation = rotation;
-                        rigidBodyNode ._size        = scale;
 
                         this .rigidBodies .push (rigidBodyNode);
                      }
@@ -2603,22 +2602,20 @@ function eventsProcessed ()
 
                            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "position",    new Fields .SFVec3f ());
                            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "orientation", new Fields .SFRotation ());
-                           scriptNode .addUserDefinedField (X3DConstants .inputOutput, "size",        new Fields .SFVec3f (1, 1, 1));
 
                            scriptNode .addUserDefinedField (X3DConstants .outputOnly, "translation_changed", new Fields .SFVec3f ());
                            scriptNode .addUserDefinedField (X3DConstants .outputOnly, "rotation_changed",    new Fields .SFRotation ());
-                           scriptNode .addUserDefinedField (X3DConstants .outputOnly, "scale_changed",       new Fields .SFVec3f (1, 1, 1));
 
                            scriptNode ._url = [/* js */ `ecmascript:
 const modelMatrix = new SFMatrix4f ();
 
 function eventsProcessed ()
 {
-   modelMatrix .setTransform (position, orientation, size);
+   modelMatrix .setTransform (position, orientation);
 
    const matrix = modelMatrix .multRight (invParentMatrix);
 
-   matrix .getTransform (translation_changed, rotation_changed, scale_changed);
+   matrix .getTransform (translation_changed, rotation_changed);
 }
    `];
 
@@ -2628,11 +2625,9 @@ function eventsProcessed ()
 
                            scene .addRoute (rigidBodyNode, "position",    scriptNode, "position");
                            scene .addRoute (rigidBodyNode, "orientation", scriptNode, "orientation");
-                           scene .addRoute (rigidBodyNode, "size",        scriptNode, "size");
 
                            scene .addRoute (scriptNode, "translation_changed", node .childNode, "translation");
                            scene .addRoute (scriptNode, "rotation_changed",    node .childNode, "rotation");
-                           scene .addRoute (scriptNode, "scale_changed",       node .childNode, "scale");
 
                            this .motionScripts .push (scriptNode);
                            break;
