@@ -231,8 +231,13 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    },
    set_actors__ ()
    {
-      for (const actor of this .actors .filter (actor => !actor .released))
+      for (const actor of this .actors)
+      {
+         if (actor .released)
+            continue;
+
          this .scene .removeActor (actor);
+      }
 
       this .actors .length = 0;
 
