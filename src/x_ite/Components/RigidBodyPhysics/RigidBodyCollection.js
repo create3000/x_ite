@@ -29,7 +29,7 @@ function RigidBodyCollection (executionContext)
    this .deltaTime       = 0;
    this .bodyNodes       = [ ];
    this .otherBodyNodes  = [ ];
-   this .actors          = new Set ();
+   this .actors          = new Map ();
    this .jointNodes      = [ ];
    this .otherJointNodes = [ ];
 }
@@ -231,9 +231,9 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    },
    set_actors__ ()
    {
-      for (const actor of this .actors)
+      for (const [actor, body] of this .actors)
       {
-         if (actor .released)
+         if (body .released)
             continue;
 
          this .scene .removeActor (actor);
@@ -246,15 +246,15 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
          if (!bodyNode ._enabled .getValue ())
             continue;
 
-         const actor = bodyNode .getActor ();
+         const body = bodyNode .getBody ();
 
-         if (!actor || actor .released)
+         if (!body || body .released)
             continue;
 
-         this .actors .add (actor);
+         this .actors .set (body .actor, body);
       }
 
-      for (const actor of this .actors)
+      for (const actor of this .actors .keys ())
          this .scene .addActor (actor);
    },
    set_joints__ ()

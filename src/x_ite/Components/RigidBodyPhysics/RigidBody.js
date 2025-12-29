@@ -101,9 +101,9 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    {
       return this ._collection .getValue ();
    },
-   getActor ()
+   getBody ()
    {
-      return this .actor;
+      return this .body;
    },
    set_enabled__ ()
    {
@@ -324,8 +324,8 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       {
          this .actor .release ();
 
-         this .actor .released = true;
-         this .actor           = null;
+         this .body .released = true;
+         this .actor          = null;
       }
 
       // Add geometries.
@@ -365,7 +365,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          ? this .physics .createRigidStatic (this .pose)
          : this .physics .createRigidDynamic (this .pose);
 
-      this .actor .released = false;
+      this .body = { actor: this .actor };
 
       this ._actor = this .getBrowser () .getCurrentTime ();
 

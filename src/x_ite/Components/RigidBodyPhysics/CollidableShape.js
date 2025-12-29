@@ -337,8 +337,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    },
    removeCollidableGeometry ()
    {
-      if (this .shape)
-         this .PhysX .destroy (this .shape);
+      this .shape ?.release ();
    },
    dispose ()
    {
