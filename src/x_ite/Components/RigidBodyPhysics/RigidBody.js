@@ -383,22 +383,24 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       if (this ._fixed .getValue ())
          return;
 
-      for (const force of this ._forces)
-      {
-         this .force .x = force .x;
-         this .force .y = force .y;
-         this .force .z = force .z;
+      const { force, torque, actor } = this;
 
-         this .actor .addForce (this .force);
+      for (const f of this ._forces)
+      {
+         force .x = f .x;
+         force .y = f .y;
+         force .z = f .z;
+
+         actor .addForce (force);
       }
 
-      for (const torque of this ._torques)
+      for (const t of this ._torques)
       {
-         this .torque .x = torque .x;
-         this .torque .y = torque .y;
-         this .torque .z = torque .z;
+         torque .x = t .x;
+         torque .y = t .y;
+         torque .z = t .z;
 
-         this .actor .addTorque (this .torque);
+         actor .addTorque (torque);
       }
    },
    update: (() =>
