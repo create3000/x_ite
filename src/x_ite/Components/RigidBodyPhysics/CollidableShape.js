@@ -22,6 +22,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    {
       await X3DNBodyCollidableNode .prototype .initialize .call (this);
 
+      this .pose     = new this .PhysX .PxTransform ();
       this .material = this .physics .createMaterial (1, 1, 0);
 
       this .material .setFrictionCombineMode (this .PhysX .PxCombineModeEnum .eAVERAGE);
@@ -54,9 +55,9 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    setLocalPose: (() =>
    {
       const
-         t = new Vector3 (),
-         r = new Rotation4 (),
-         q = new Quaternion ();
+         translation = new Vector3 (),
+         rotation    = new Rotation4 (),
+         quaternion  = new Quaternion ();
 
       return function (parentMatrix)
       {
@@ -67,22 +68,26 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          else
             this .offsetMatrix .assign (this .getMatrix ()) .multRight (parentMatrix);
 
-         if (!this .PhysX)
+         const pose = this .pose;
+
+         if (!pose)
             return;
 
-         this .offsetMatrix .get (t, r);
+         this .offsetMatrix .get (translation, rotation);
 
-         const
-            translation = new this .PhysX .PxVec3 (... t),
-            rotation    = new this .PhysX .PxQuat (... r .getQuaternion (q)),
-            pose        = new this .PhysX .PxTransform (translation, rotation);
+         rotation .getQuaternion (quaternion);
+
+         pose .p .x = translation .x;
+         pose .p .y = translation .y;
+         pose .p .z = translation .z;
+
+         pose .q .x = quaternion .x;
+         pose .q .y = quaternion .y;
+         pose .q .z = quaternion .z;
+         pose .q .w = quaternion .w;
 
          this .convexShape  ?.setLocalPose (pose);
          this .concaveShape ?.setLocalPose (pose);
-
-         this .PhysX .destroy (translation);
-         this .PhysX .destroy (rotation);
-         this .PhysX .destroy (pose);
       };
    })(),
    updateMaterial (staticFriction, dynamicFriction, restitution)
@@ -359,8 +364,11 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    {
       this .removeCollidableGeometry ();
 
-      if (this .material)
+      if (this .pose)
+      {
+         this .PhysX .destroy (this .pose);
          this .PhysX .destroy (this .material);
+      }
 
       X3DNBodyCollidableNode .prototype .dispose .call (this);
    },
