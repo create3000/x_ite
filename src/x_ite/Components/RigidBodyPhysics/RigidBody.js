@@ -49,13 +49,19 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       const browser = this .getBrowser ();
 
-      this .PhysX            = await browser .getPhysX ();
-      this .physics          = await browser .getPhysics ();
-      this .pose             = new this .PhysX .PxTransform ();
-      this .linearVelocity   = new this .PhysX .PxVec3 (0, 0, 0);
-      this .angularVelocity  = new this .PhysX .PxVec3 (0, 0, 0);
-      this .force            = new this .PhysX .PxVec3 (0, 0, 0);
-      this .torque           = new this .PhysX .PxVec3 (0, 0, 0);
+      this .PhysX           = await browser .getPhysX ();
+      this .physics         = await browser .getPhysics ();
+      this .pose            = new this .PhysX .PxTransform ();
+      this .linearVelocity  = new this .PhysX .PxVec3 (0, 0, 0);
+      this .angularVelocity = new this .PhysX .PxVec3 (0, 0, 0);
+      this .centerOfMass    = new this .PhysX .PxTransform ();
+      this .force           = new this .PhysX .PxVec3 (0, 0, 0);
+      this .torque          = new this .PhysX .PxVec3 (0, 0, 0);
+
+      this .centerOfMass .q .x = 0;
+      this .centerOfMass .q .y = 0;
+      this .centerOfMass .q .z = 0;
+      this .centerOfMass .q .w = 1;
 
       this ._enabled              .addInterest ("set_enabled__",            this);
       this ._fixed                .addInterest ("set_geometry__",           this);
@@ -262,14 +268,13 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       if (this ._fixed .getValue ())
          return;
 
-      const
-         centerOfMass     = new this .PhysX .PxVec3 (... this ._centerOfMass .getValue ()),
-         centerOfMassPose = new this .PhysX .PxTransform (centerOfMass);
+      const centerOfMass = this ._centerOfMass .getValue ();
 
-      this .actor .setCMassLocalPose (centerOfMassPose);
+      this .centerOfMass .p .x = centerOfMass .x;
+      this .centerOfMass .p .y = centerOfMass .y;
+      this .centerOfMass .p .z = centerOfMass .z;
 
-      this .PhysX .destroy (centerOfMass);
-      this .PhysX .destroy (centerOfMassPose);
+      this .actor .setCMassLocalPose (this .centerOfMass);
    },
    set_useGlobalGravity__ ()
    {
