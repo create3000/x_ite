@@ -119,8 +119,8 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       return function ()
       {
-      if (!this .actor)
-         return;
+         if (!this .actor)
+            return;
 
          const
             position = this ._position .getValue (),
