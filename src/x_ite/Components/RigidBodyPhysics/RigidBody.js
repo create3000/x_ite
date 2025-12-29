@@ -53,9 +53,14 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       this .pose            = new this .PhysX .PxTransform ();
       this .linearVelocity  = new this .PhysX .PxVec3 (0, 0, 0);
       this .angularVelocity = new this .PhysX .PxVec3 (0, 0, 0);
-      this .centerOfMass    = new this .PhysX .PxVec3 (0, 0, 0);
+      this .centerOfMass    = new this .PhysX .PxTransform ();
       this .force           = new this .PhysX .PxVec3 (0, 0, 0);
       this .torque          = new this .PhysX .PxVec3 (0, 0, 0);
+
+      this .centerOfMass .q .x = 0;
+      this .centerOfMass .q .y = 0;
+      this .centerOfMass .q .z = 0;
+      this .centerOfMass .q .w = 1;
 
       this ._fixed                .addInterest ("set_geometry__",           this);
       this ._linearVelocity       .addInterest ("set_linearVelocity__",     this);
@@ -253,15 +258,11 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       const centerOfMass = this ._centerOfMass .getValue ();
 
-      this .centerOfMass .x = centerOfMass .x;
-      this .centerOfMass .y = centerOfMass .y;
-      this .centerOfMass .z = centerOfMass .z;
+      this .centerOfMass .p .x = centerOfMass .x;
+      this .centerOfMass .p .y = centerOfMass .y;
+      this .centerOfMass .p .z = centerOfMass .z;
 
-      const pose = new this .PhysX .PxTransform (this .centerOfMass);
-
-      this .actor .setCMassLocalPose (pose);
-
-      this .PhysX .destroy (pose);
+      this .actor .setCMassLocalPose (this .centerOfMass);
    },
    set_useGlobalGravity__ ()
    {
