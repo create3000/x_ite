@@ -30,9 +30,9 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       this .material .setFrictionCombineMode (this .PhysX .PxCombineModeEnum .eAVERAGE);
       this .material .setRestitutionCombineMode (this .PhysX .PxCombineModeEnum .eAVERAGE);
 
-      this ._enabled    .addInterest ("set_enabled__",            this);
-      this ._convexHull .addInterest ("set_collidableGeometry__", this);
-      this ._shape      .addInterest ("requestRebuild",           this);
+      this ._enabled    .addInterest ("set_enabled__",  this);
+      this ._convexHull .addInterest ("requestRebuild", this);
+      this ._shape      .addInterest ("requestRebuild", this);
 
       this .set_child__ ();
    },
@@ -322,7 +322,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                   this .convexShape = this ._convexHull .getValue ()
                      ? this .concaveShape
                      : this .createConvexShape (shapeFlags);
-                     
+
                   break;
                }
                default:
