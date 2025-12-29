@@ -29,7 +29,7 @@ function RigidBodyCollection (executionContext)
    this .deltaTime       = 0;
    this .bodyNodes       = [ ];
    this .otherBodyNodes  = [ ];
-   this .actors          = [ ];
+   this .actors          = new Set ();
    this .jointNodes      = [ ];
    this .otherJointNodes = [ ];
 }
@@ -193,7 +193,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    {
       for (const bodyNode of this .bodyNodes)
       {
-         bodyNode ._actors .removeInterest ("set_actors__", this);
+         bodyNode ._actor .removeInterest ("set_actors__", this);
          bodyNode .setCollection (null);
       }
 
@@ -222,7 +222,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
       }
 
       for (const bodyNode of this .bodyNodes)
-         bodyNode ._actors .addInterest ("set_actors__", this);
+         bodyNode ._actor .addInterest ("set_actors__", this);
 
       this .set_colliderParameters__ ();
       this .set_contactSurfaceThickness__ ();
@@ -239,7 +239,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
          this .scene .removeActor (actor);
       }
 
-      this .actors .length = 0;
+      this .actors .clear ();
 
       for (const bodyNode of this .bodyNodes)
       {
@@ -251,7 +251,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
          if (!actor || actor .released)
             continue;
 
-         this .actors .push (actor);
+         this .actors .add (actor);
       }
 
       for (const actor of this .actors)

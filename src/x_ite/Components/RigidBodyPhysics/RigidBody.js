@@ -19,7 +19,7 @@ function RigidBody (executionContext)
    this .addChildObjects (X3DConstants .inputOutput, "collection",    new Fields .SFNode (),
                           X3DConstants .outputOnly,  "transform",     new Fields .SFTime (),
                           X3DConstants .outputOnly,  "otherGeometry", new Fields .MFNode (),
-                          X3DConstants .outputOnly,  "actors",        new Fields .SFTime ());
+                          X3DConstants .outputOnly,  "actor",         new Fields .SFTime ());
 
    // Units
 
@@ -36,7 +36,7 @@ function RigidBody (executionContext)
 
    this .geometryNodes      = [ ];
    this .otherGeometryNodes = [ ];
-   this .shapes             = [ ];
+   this .shapes             = new Set ();
 }
 
 Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype),
@@ -107,7 +107,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    },
    set_enabled__ ()
    {
-      this ._actors = this .getBrowser () .getCurrentTime ();
+      this ._actor = this .getBrowser () .getCurrentTime ();
    },
    set_position__ ()
    {
@@ -296,7 +296,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       for (const shape of this .shapes)
          this .actor .detachShape (shape);
 
-      this .shapes .length = 0;
+      this .shapes .clear ();
 
       // Remove geometries.
 
@@ -317,6 +317,8 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          otherGeometryNode ._body .removeInterest ("set_body__", this);
 
       geometryNodes .length = 0;
+
+      // Release actor.
 
       if (this .actor)
       {
@@ -355,13 +357,17 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
          this ._position    .addFieldInterest (geometryNode ._translation);
          this ._orientation .addFieldInterest (geometryNode ._rotation);
-
-         this .actor = this ._fixed .getValue ()
-            ? this .physics .createRigidStatic (this .pose)
-            : this .physics .createRigidDynamic (this .pose);
       }
 
-      this ._actors = this .getBrowser () .getCurrentTime ();
+      // Create actor.
+
+      this .actor = this ._fixed .getValue ()
+         ? this .physics .createRigidStatic (this .pose)
+         : this .physics .createRigidDynamic (this .pose);
+
+      this .actor .released = false;
+
+      this ._actor = this .getBrowser () .getCurrentTime ();
 
       this .set_shapes__ ();
       this .set_position__ ();
@@ -386,7 +392,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       for (const shape of this .shapes)
          this .actor .detachShape (shape);
 
-      this .shapes .length = 0;
+      this .shapes .clear ();
 
       for (const geometryNode of this .geometryNodes)
       {
@@ -395,7 +401,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          if (!shape)
             continue;
 
-         this .shapes .push (shape);
+         this .shapes .add (shape);
          this .actor .attachShape (shape);
       }
    },
