@@ -106,7 +106,6 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    {
       const
          vertices    = this .geometryNode .getVertices () .getValue () .filter ((_, i) => i % 4 < 3),
-         indices     = Uint32Array .from ({ length: vertices .length / 3 }, (_, i) => i),
          numVertices = vertices .length;
 
       if (!numVertices)
