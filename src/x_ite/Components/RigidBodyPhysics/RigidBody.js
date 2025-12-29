@@ -66,18 +66,15 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       this ._autoDamp             .addInterest ("set_damping__",            this);
       this ._linearDampingFactor  .addInterest ("set_damping__",            this);
       this ._angularDampingFactor .addInterest ("set_damping__",            this);
+      this ._mass                 .addInterest ("set_mass__",               this);
+      this ._centerOfMass         .addInterest ("set_centerOfMass__",       this);
+      this ._inertia              .addInterest ("set_inertia__",            this);
       this ._useGlobalGravity     .addInterest ("set_useGlobalGravity__",   this);
-      this ._forces               .addInterest ("set_forces__",             this);
-      this ._torques              .addInterest ("set_torques__",            this);
       this ._disableTime          .addInterest ("set_disable__",            this);
       this ._disableLinearSpeed   .addInterest ("set_disable__",            this);
       this ._disableAngularSpeed  .addInterest ("set_disable__",            this);
       this ._geometry             .addInterest ("set_geometry__",           this);
       this ._otherGeometry        .addInterest ("set_geometry__",           this);
-
-      this ._mass         .addInterest ("set_mass__", this);
-      this ._centerOfMass .addInterest ("set_mass__", this);
-      this ._inertia      .addInterest ("set_mass__", this);
 
       this ._transform .addInterest ("set_transform__", this);
 
@@ -118,6 +115,9 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       return function ()
       {
+      if (!this .actor)
+         return;
+
          const position = this ._position .getValue ();
 
          this ._orientation .getValue () .getQuaternion (quaternion);
@@ -131,11 +131,14 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          this .pose .q .z = quaternion .z;
          this .pose .q .w = quaternion .w;
 
-         this .actor ?.setGlobalPose (this .pose);
+         this .actor .setGlobalPose (this .pose);
       };
    })(),
    set_linearVelocity__ ()
    {
+      if (!this .actor)
+         return;
+
       if (this ._fixed .getValue ())
          return;
 
@@ -145,10 +148,13 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       this .linearVelocity .y = linearVelocity .y;
       this .linearVelocity .z = linearVelocity .z;
 
-      this .actor ?.setLinearVelocity (this .linearVelocity);
+      this .actor .setLinearVelocity (this .linearVelocity);
    },
    set_angularVelocity__ ()
    {
+      if (!this .actor)
+         return;
+
       if (this ._fixed .getValue ())
          return;
 
@@ -158,7 +164,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       this .angularVelocity .y = angularVelocity .y;
       this .angularVelocity .z = angularVelocity .z;
 
-      this .actor ?.setAngularVelocity (this .angularVelocity);
+      this .actor .setAngularVelocity (this .angularVelocity);
    },
    set_finiteRotationAxis__: (() =>
    {
@@ -183,6 +189,45 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       // this .rigidBody .activate ();
    },
+   set_inertia__ ()
+   {
+      if (!this .actor)
+         return;
+
+      if (this ._fixed .getValue ())
+         return;
+
+      const col0 = new this .PhysX .PxVec3 (
+         this ._inertia [0],
+         this ._inertia [1],
+         this ._inertia [2],
+      );
+
+      const col1 = new this .PhysX .PxVec3 (
+         this ._inertia [3],
+         this ._inertia [4],
+         this ._inertia [5],
+      );
+
+      const col2 = new this .PhysX .PxVec3 (
+         this ._inertia [6],
+         this ._inertia [7],
+         this ._inertia [8],
+      );
+
+      const
+         inertiaTensor = new this .PhysX .PxMat33 (col0, col1, col2),
+         rotation      = new this .PhysX .PxQuat (this .PhysX .PxIDENTITYEnum .PxIdentity),
+         inertia       = this .PhysX .PxMassProperties .prototype .getMassSpaceInertia (inertiaTensor, rotation);
+
+      this .actor .setMassSpaceInertiaTensor (inertia);
+
+      this .PhysX .destroy (col0);
+      this .PhysX .destroy (col1);
+      this .PhysX .destroy (col2);
+      this .PhysX .destroy (inertiaTensor);
+      this .PhysX .destroy (rotation);
+   },
    set_mass__ ()
    {
       if (!this .actor)
@@ -197,49 +242,31 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       this .centerOfMass .y = centerOfMass .y;
       this .centerOfMass .z = centerOfMass .z;
 
-      this .PhysX .PxRigidBodyExt .prototype .setMassAndUpdateInertia (this .actor, this ._mass .getValue (), this .centerOfMass);
+      this .actor .setMass (this ._mass .getValue ());
+   },
+   set_centerOfMass__ ()
+   {
+      if (!this .actor)
+         return;
+
+      if (this ._fixed .getValue ())
+         return;
+
+      const centerOfMass = this ._centerOfMass .getValue ();
+
+      this .centerOfMass .x = centerOfMass .x;
+      this .centerOfMass .y = centerOfMass .y;
+      this .centerOfMass .z = centerOfMass .z;
+
+      const pose = new this .PhysX .PxTransform (this .centerOfMass);
+
+      this .actor .setCMassLocalPose (pose);
+
+      this .PhysX .destroy (pose);
    },
    set_useGlobalGravity__ ()
    {
       this .actor ?.setActorFlag (this .PhysX .PxActorFlagEnum .eDISABLE_GRAVITY, !this ._useGlobalGravity .getValue ());
-   },
-   set_forces__ ()
-   {
-      if (!this .actor)
-         return;
-
-      if (this ._fixed .getValue ())
-         return;
-
-      this .actor .clearForce ();
-
-      for (const force of this ._forces)
-      {
-         this .force .x = force .x;
-         this .force .y = force .y;
-         this .force .z = force .z;
-
-         this .actor .addForce (this .force);
-      }
-   },
-   set_torques__ ()
-   {
-      if (!this .actor)
-         return;
-
-      if (this ._fixed .getValue ())
-         return;
-
-      this .actor .clearTorque ();
-
-      for (const torque of this ._torques)
-      {
-         this .torque .x = torque .x;
-         this .torque .y = torque .y;
-         this .torque .z = torque .z;
-
-         this .actor .addTorque (this .torque);
-      }
    },
    set_disable__ ()
    {
@@ -325,9 +352,9 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       this .set_finiteRotationAxis__ ();
       this .set_damping__ ();
       this .set_mass__ ();
+      this .set_centerOfMass__ ();
+      this .set_inertia__ ();
       this .set_useGlobalGravity__ ();
-      this .set_forces__ ();
-      this .set_torques__ ();
       this .set_disable__ ();
    },
    set_body__ ()
@@ -352,32 +379,29 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          this .actor .attachShape (shape);
       }
    },
-   applyForces: (() =>
+   applyForces ()
    {
-      // const
-      //    g = new Ammo .btVector3 (0, 0, 0),
-      //    f = new Ammo .btVector3 (0, 0, 0),
-      //    t = new Ammo .btVector3 (0, 0, 0),
-      //    z = new Ammo .btVector3 (0, 0, 0);
+      if (this ._fixed .getValue ())
+         return;
 
-      return function (gravity)
+      for (const force of this ._forces)
       {
-         if (this ._fixed .getValue ())
-            return;
+         this .force .x = force .x;
+         this .force .y = force .y;
+         this .force .z = force .z;
 
-         // if (this ._useGlobalGravity .getValue ())
-         //    g .setValue (... gravity);
-         // else
-         //    g .setValue (0, 0, 0);
+         this .actor .addForce (this .force);
+      }
 
-         // f .setValue (... this .force);
-         // t .setValue (... this .torque);
+      for (const torque of this ._torques)
+      {
+         this .torque .x = torque .x;
+         this .torque .y = torque .y;
+         this .torque .z = torque .z;
 
-         // this .rigidBody .setGravity (g);
-         // this .rigidBody .applyForce (f, z);
-         // this .rigidBody .applyTorque (t);
-      };
-   })(),
+         this .actor .addTorque (this .torque);
+      }
+   },
    update: (() =>
    {
       const
