@@ -92,10 +92,9 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    },
    createShape (shapeFlags)
    {
-      // if (this ._convexHull .getValue ())
-      //    return this .createConvexShape (shapeFlags);
-      // else
-         return this .createConcaveShape (shapeFlags);
+      return this ._convexHull .getValue ()
+         ? this .createConvexShape (shapeFlags)
+         : this .createConcaveShape (shapeFlags);
    },
    createConvexShape (shapeFlags)
    {
