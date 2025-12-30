@@ -61,6 +61,9 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       this .centerOfMass .q .z = 0;
       this .centerOfMass .q .w = 1;
 
+      this ._position             .addInterest ("addEvent",                 this ._transform);
+      this ._orientation          .addInterest ("addEvent",                 this ._transform);
+      this ._transform            .addInterest ("set_transform__",          this);
       this ._fixed                .addInterest ("set_geometry__",           this);
       this ._linearVelocity       .addInterest ("set_linearVelocity__",     this);
       this ._angularVelocity      .addInterest ("set_angularVelocity__",    this);
@@ -78,8 +81,6 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       this ._disableAngularSpeed  .addInterest ("set_disable__",            this);
       this ._geometry             .addInterest ("set_geometry__",           this);
       this ._otherGeometry        .addInterest ("set_geometry__",           this);
-
-      this ._transform .addInterest ("set_transform__", this);
 
       this .set_geometry__ ();
    },
@@ -307,7 +308,6 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       {
          geometryNode .setBody (null);
 
-         geometryNode .removeInterest ("addEvent", this ._transform);
          geometryNode ._translation  .removeFieldInterest (this ._position);
          geometryNode ._rotation     .removeFieldInterest (this ._orientation);
          geometryNode ._physicsShape .removeInterest ("set_shapes__", this);
@@ -353,7 +353,6 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       for (const geometryNode of geometryNodes)
       {
-         geometryNode .addInterest ("addEvent", this ._transform);
          geometryNode ._translation . addFieldInterest (this ._position);
          geometryNode ._rotation     .addFieldInterest (this ._orientation);
          geometryNode ._physicsShape .addInterest ("set_shapes__", this);
