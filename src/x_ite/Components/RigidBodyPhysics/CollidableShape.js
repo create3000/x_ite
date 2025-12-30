@@ -114,13 +114,13 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       switch (mode)
       {
          default:
-         case "average":
+         case "AVERAGE":
                return this .PhysX .PxCombineModeEnum .eAVERAGE;
-         case "minimum":
+         case "MINIMUM":
                return this .PhysX .PxCombineModeEnum .eMIN;
-         case "maximum":
+         case "MAXIMUM":
                return this .PhysX .PxCombineModeEnum .eMAX;
-         case "multiply":
+         case "MULTIPLY":
                return this .PhysX .PxCombineModeEnum .eMULTIPLY;
       }
    },
