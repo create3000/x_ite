@@ -489,10 +489,12 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
             const
                transform = actor .getGlobalPose (),
                v         = actor .getLinearVelocity (),
-               w         = actor .getAngularVelocity ();
+               w         = actor .getAngularVelocity (),
+               p         = transform .p,
+               q         = transform .q;
 
-            position .set (transform .p .x, transform .p .y, transform .p .z);
-            quaternion .set (transform .q .x, transform .q .y, transform .q .z, transform .q .w);
+            position .set (p .x, p .y, p .z);
+            quaternion .set (q .x, q .y, q .z, q .w);
 
             this ._position        = position;
             this ._orientation     = orientation .setQuaternion (quaternion);
