@@ -33,14 +33,18 @@ function X3DNBodyCollidableNode (executionContext)
 
    // Private properties
 
-   // Private properties
-
    this .parentEnabled  = true;
    this .enabled        = true;
    this .parentMatrix   = new Matrix4 ();
    this .offsetMatrix   = new Matrix4 ();
    this .matrix         = new Matrix4 ();
    this .visibleObjects = [ ];
+
+   this .material = {
+      staticFriction: 1,
+      dynamicFriction: 1,
+      restitution: 0,
+   };
 }
 
 Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DChildNode .prototype),

@@ -23,7 +23,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       await X3DNBodyCollidableNode .prototype .initialize .call (this);
 
       this .pose     = new this .PhysX .PxTransform ();
-      this .material = this .physics .createMaterial (1, 1, 0);
+      this .material = this .physics .createMaterial (... Object .values (this .material));
 
       this .material .setFrictionCombineMode (this .PhysX .PxCombineModeEnum .eAVERAGE);
       this .material .setRestitutionCombineMode (this .PhysX .PxCombineModeEnum .eAVERAGE);
@@ -32,6 +32,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       this ._convexHull .addInterest ("requestRebuild", this);
       this ._shape      .addInterest ("requestRebuild", this);
 
+      this .set_enabled__ ();
       this .set_child__ ();
    },
    setEnabled (parentEnabled)
@@ -92,11 +93,18 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          this .concaveShape ?.setLocalPose (pose);
       };
    })(),
-   updatePhysicsMaterial (staticFriction, dynamicFriction, restitution)
+   updatePhysicsMaterial (material)
    {
-      this .material .setStaticFriction (staticFriction);
-      this .material .setDynamicFriction (dynamicFriction);
-      this .material .setRestitution (restitution);
+      if (this .pose)
+      {
+         this .material .setStaticFriction (material .staticFriction);
+         this .material .setDynamicFriction (material .dynamicFriction);
+         this .material .setRestitution (material .restitution);
+      }
+      else
+      {
+         Object .assign (this .material, material);
+      }
    },
    getPhysicsShape (convexHull)
    {
