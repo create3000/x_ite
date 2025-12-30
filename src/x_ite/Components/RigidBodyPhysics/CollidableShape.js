@@ -25,9 +25,6 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       this .pose     = new this .PhysX .PxTransform ();
       this .material = this .physics .createMaterial (... Object .values (this .material));
 
-      this .material .setFrictionCombineMode (this .PhysX .PxCombineModeEnum .eAVERAGE);
-      this .material .setRestitutionCombineMode (this .PhysX .PxCombineModeEnum .eAVERAGE);
-
       this ._enabled    .addInterest ("set_enabled__",  this);
       this ._convexHull .addInterest ("requestRebuild", this);
       this ._shape      .addInterest ("requestRebuild", this);
@@ -93,17 +90,38 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          this .concaveShape ?.setLocalPose (pose);
       };
    })(),
-   updatePhysicsMaterial (material)
+   updatePhysicsMaterial: (() =>
    {
-      if (this .pose)
+      return function (material)
       {
-         this .material .setStaticFriction (material .staticFriction);
-         this .material .setDynamicFriction (material .dynamicFriction);
-         this .material .setRestitution (material .restitution);
-      }
-      else
+         if (this .pose)
+         {
+            this .material .setStaticFriction (material .staticFriction);
+            this .material .setDynamicFriction (material .dynamicFriction);
+            this .material .setRestitution (material .restitution);
+
+            this .material .setRestitutionCombineMode (this .getCombineMode (material .restitutionCombine));
+            this .material .setFrictionCombineMode (this .getCombineMode (material .frictionCombine));
+         }
+         else
+         {
+            Object .assign (this .material, material);
+         }
+      };
+   })(),
+   getCombineMode (mode)
+   {
+      switch (mode)
       {
-         Object .assign (this .material, material);
+         default:
+         case "average":
+               return this .PhysX .PxCombineModeEnum .eAVERAGE;
+         case "minimum":
+               return this .PhysX .PxCombineModeEnum .eMIN;
+         case "maximum":
+               return this .PhysX .PxCombineModeEnum .eMAX;
+         case "multiply":
+               return this .PhysX .PxCombineModeEnum .eMULTIPLY;
       }
    },
    getPhysicsShape (convexHull)

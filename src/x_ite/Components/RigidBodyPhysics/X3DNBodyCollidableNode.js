@@ -44,6 +44,8 @@ function X3DNBodyCollidableNode (executionContext)
       staticFriction: 1,
       dynamicFriction: 1,
       restitution: 0,
+      restitutionCombine: "AVERAGE",
+      frictionCombine: "AVERAGE",
    };
 }
 
