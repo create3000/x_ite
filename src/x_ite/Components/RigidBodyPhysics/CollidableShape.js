@@ -73,9 +73,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          if (!pose)
             return;
 
-         const
-            p = pose .p,
-            q = pose .q;
+         const { p, q } = pose;
 
          this .offsetMatrix .get (translation, rotation);
 
