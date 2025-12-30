@@ -31,9 +31,9 @@ The RigidBody node belongs to the [RigidBodyPhysics](/x_ite/components/overview/
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFBool | [in, out] | [fixed](#fields-fixed) | FALSE |
+| SFBool | [in, out] | [kinematic](#fields-kinematic) | FALSE |
 | SFVec3f | [in, out] | [position](#fields-position) | 0 0 0  |
 | SFRotation | [in, out] | [orientation](#fields-orientation) | 0 0 1 0  |
-| SFVec3f | [in, out] | [size](#fields-size) | 1 1 1  |
 | SFVec3f | [in, out] | [linearVelocity](#fields-linearVelocity) | 0 0 0  |
 | SFVec3f | [in, out] | [angularVelocity](#fields-angularVelocity) | 0 0 0  |
 | SFBool | [in, out] | [useFiniteRotation](#fields-useFiniteRotation) | FALSE |
@@ -82,6 +82,11 @@ Enables/disables node operation.
 
 - *fixed* is useful for indicating objects that do not move: walls, ground, etc.
 
+### SFBool [in, out] **kinematic** FALSE
+{: #fields-kinematic }
+
+When true, treat the rigid body as having infinite mass. Its velocity will be constant during simulation.
+
 ### SFVec3f [in, out] **position** 0 0 0 <small>(-∞,∞)</small>
 {: #fields-position }
 
@@ -91,11 +96,6 @@ Enables/disables node operation.
 {: #fields-orientation }
 
 *orientation* sets body direction in world space, then reports physics updates.
-
-### SFVec3f [in, out] **size** 1 1 1 <small>(-∞,∞)</small> <small class="blue">non-standard</small>
-{: #fields-size }
-
-Input/Output field *size*.
 
 ### SFVec3f [in, out] **linearVelocity** 0 0 0 <small>(-∞,∞)</small>
 {: #fields-linearVelocity }
@@ -279,6 +279,11 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 {: #fields-geometry }
 
 The *geometry* field is used to connect the body modelled by the physics engine implementation to the real *geometry* of the scene through the use of collidable nodes. This allows the *geometry* to be connected directly to the physics model as well as collision detection. Collidable nodes have their location set to the same location as the body instance in which they are located.
+
+###  [] **size** 1 1 1 <small>(-∞,∞)</small> <small class="blue">non-standard</small>
+{: #fields-size }
+
+Input/Output field *size*.
 
 ###  [] **scale** 1 1 1 <small>(-∞,∞)</small>
 {: #fields-scale }

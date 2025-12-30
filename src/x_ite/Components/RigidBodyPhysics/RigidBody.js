@@ -106,6 +106,16 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       if (this .actor)
          this .collection ?.getPhysicsScene () .addActor (this .actor);
    },
+   set_kinematic__ ()
+   {
+      if (!this .actor)
+         return;
+
+      if (this ._fixed .getValue ())
+         return;
+
+      this .actor .setRigidBodyFlag (this .PhysX .PxRigidBodyFlagEnum .eKINEMATIC, this ._kinematic .getValue ());
+   },
    set_position__ ()
    {
       for (const geometryNode of this .geometryNodes)
@@ -146,16 +156,6 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
             this .actor .setGlobalPose (pose);
       };
    })(),
-   set_kinematic__ ()
-   {
-      if (!this .actor)
-         return;
-
-      if (this ._fixed .getValue ())
-         return;
-
-      this .actor .setRigidBodyFlag (this .PhysX .PxRigidBodyFlagEnum .eKINEMATIC, this ._kinematic .getValue ());
-   },
    set_linearVelocity__ ()
    {
       if (!this .actor)
