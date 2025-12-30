@@ -63,8 +63,9 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
 
       this .getLive () .addInterest ("set_enabled__", this);
 
-      this ._enabled                 .addInterest ("set_enabled__",                 this);
       this ._set_contacts            .addInterest ("set_contacts__",                this);
+      this ._enabled                 .addInterest ("set_enabled__",                 this);
+      this ._iterations              .addInterest ("set_iterations__",              this);
       this ._gravity                 .addInterest ("set_gravity__",                 this);
       this ._contactSurfaceThickness .addInterest ("set_contactSurfaceThickness__", this);
       this ._collider                .addInterest ("set_collider__",                this);
@@ -72,6 +73,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
       this ._joints                  .addInterest ("set_joints__",                  this);
 
       this .set_enabled__ ();
+      this .set_iterations__ ();
       this .set_gravity__ ();
       this .set_collider__ ();
       this .set_bodies__ ();
@@ -96,6 +98,9 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    {
       return this .scene;
    },
+   set_contacts__ ()
+   {
+   },
    set_enabled__ ()
    {
       if (this .getLive () .getValue () && this ._enabled .getValue ())
@@ -103,8 +108,9 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
       else
          this .getBrowser () .sensorEvents () .removeInterest ("update", this);
    },
-   set_contacts__ ()
+   set_iterations__ ()
    {
+      this .iterations = Math .max (this ._iterations .getValue (), 0);
    },
    set_gravity__ ()
    {
@@ -260,10 +266,8 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    update ()
    {
       const
-         scene      = this .scene,
-         bodyNodes  = this .bodyNodes,
-         iterations = this ._iterations .getValue (),
-         deltaTime  = this .getTimeStep () / iterations;
+         { scene, bodyNodes, iterations } = this,
+         deltaTime = this .getTimeStep () / iterations;
 
       for (let i = 0; i < iterations; ++ i)
       {
@@ -294,8 +298,8 @@ Object .defineProperties (RigidBodyCollection,
    {
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",                new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",                 new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_contacts",            new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",                 new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "preferAccuracy",          new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "errorCorrection",         new Fields .SFFloat (0.8)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "iterations",              new Fields .SFInt32 (10)),
