@@ -137,18 +137,20 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
          const
             position = this ._position .getValue (),
-            pose     = this .pose;
+            pose     = this .pose,
+            p        = pose .p,
+            q        = pose .q;
 
          this ._orientation .getValue () .getQuaternion (quaternion);
 
-         pose .p .x = position .x;
-         pose .p .y = position .y;
-         pose .p .z = position .z;
+         p .x = position .x;
+         p .y = position .y;
+         p .z = position .z;
 
-         pose .q .x = quaternion .x;
-         pose .q .y = quaternion .y;
-         pose .q .z = quaternion .z;
-         pose .q .w = quaternion .w;
+         q .x = quaternion .x;
+         q .y = quaternion .y;
+         q .z = quaternion .z;
+         q .w = quaternion .w;
 
          if (this ._kinematic .getValue ())
             this .actor .setKinematicTarget (pose);
@@ -164,13 +166,15 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       if (this ._fixed .getValue ())
          return;
 
-      const linearVelocity = this ._linearVelocity .getValue ();
+      const
+         value          = this ._linearVelocity .getValue (),
+         linearVelocity = this .linearVelocity;
 
-      this .linearVelocity .x = linearVelocity .x;
-      this .linearVelocity .y = linearVelocity .y;
-      this .linearVelocity .z = linearVelocity .z;
+      linearVelocity .x = value .x;
+      linearVelocity .y = value .y;
+      linearVelocity .z = value .z;
 
-      this .actor .setLinearVelocity (this .linearVelocity);
+      this .actor .setLinearVelocity (linearVelocity);
    },
    set_angularVelocity__ ()
    {
@@ -180,13 +184,15 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       if (this ._fixed .getValue ())
          return;
 
-      const angularVelocity = this ._angularVelocity .getValue ();
+      const
+         value           = this ._angularVelocity .getValue (),
+         angularVelocity = this .angularVelocity;
 
-      this .angularVelocity .x = angularVelocity .x;
-      this .angularVelocity .y = angularVelocity .y;
-      this .angularVelocity .z = angularVelocity .z;
+      angularVelocity .x = value .x;
+      angularVelocity .y = value .y;
+      angularVelocity .z = value .z;
 
-      this .actor .setAngularVelocity (this .angularVelocity);
+      this .actor .setAngularVelocity (angularVelocity);
    },
    set_finiteRotationAxis__: (() =>
    {
@@ -278,13 +284,16 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       if (this ._fixed .getValue ())
          return;
 
-      const centerOfMass = this ._centerOfMass .getValue ();
+      const
+         value        = this ._centerOfMass .getValue (),
+         centerOfMass = this .centerOfMass,
+         p            = centerOfMass .p;
 
-      this .centerOfMass .p .x = centerOfMass .x;
-      this .centerOfMass .p .y = centerOfMass .y;
-      this .centerOfMass .p .z = centerOfMass .z;
+      p .x = value .x;
+      p .y = value .y;
+      p .z = value .z;
 
-      this .actor .setCMassLocalPose (this .centerOfMass);
+      this .actor .setCMassLocalPose (centerOfMass);
    },
    set_useGlobalGravity__ ()
    {
