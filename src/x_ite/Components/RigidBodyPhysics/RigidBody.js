@@ -65,7 +65,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       this ._position             .addInterest ("addEvent",                 this ._transform);
       this ._orientation          .addInterest ("addEvent",                 this ._transform);
       this ._transform            .addInterest ("set_transform__",          this);
-      this ._fixed                .addInterest ("set_geometry__",           this);
+      this ._fixed                .addInterest ("set_fixed__",              this);
       this ._kinematic            .addInterest ("set_kinematic__",          this);
       this ._linearVelocity       .addInterest ("set_linearVelocity__",     this);
       this ._angularVelocity      .addInterest ("set_angularVelocity__",    this);
@@ -84,6 +84,8 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       this ._geometry             .addInterest ("set_geometry__",           this);
       this ._otherGeometry        .addInterest ("set_geometry__",           this);
 
+      this .set_fixed__ ();
+      this .set_kinematic__ ();
       this .set_geometry__ ();
    },
    getBBox (bbox, shadows)
@@ -107,15 +109,25 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       if (this .actor)
          this .collection ?.getPhysicsScene () .addActor (this .actor);
    },
+   set_fixed__ ()
+   {
+      this .fixed = this ._fixed .getValue ();
+
+      this .set_geometry__ ();
+   },
    set_kinematic__ ()
    {
-      if (!this .actor)
+      const { actor, fixed } = this;
+
+      if (!actor)
          return;
 
-      if (this ._fixed .getValue ())
+      if (fixed)
          return;
 
-      this .actor .setRigidBodyFlag (this .PhysX .PxRigidBodyFlagEnum .eKINEMATIC, this ._kinematic .getValue ());
+      this .kinematic = this ._kinematic .getValue ();
+
+      actor .setRigidBodyFlag (this .PhysX .PxRigidBodyFlagEnum .eKINEMATIC, this .kinematic);
    },
    set_position__ ()
    {
@@ -133,7 +145,9 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       return function ()
       {
-         if (!this .actor)
+         const { actor } = this;
+
+         if (!actor)
             return;
 
          const
@@ -153,18 +167,20 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          q .z = quaternion .z;
          q .w = quaternion .w;
 
-         if (this ._kinematic .getValue ())
-            this .actor .setKinematicTarget (pose);
+         if (this .kinematic)
+            actor .setKinematicTarget (pose);
          else
-            this .actor .setGlobalPose (pose);
+            actor .setGlobalPose (pose);
       };
    })(),
    set_linearVelocity__ ()
    {
-      if (!this .actor)
+      const { actor, fixed } = this;
+
+      if (!actor)
          return;
 
-      if (this ._fixed .getValue ())
+      if (fixed)
          return;
 
       const
@@ -175,14 +191,16 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       linearVelocity .y = value .y;
       linearVelocity .z = value .z;
 
-      this .actor .setLinearVelocity (linearVelocity);
+      actor .setLinearVelocity (linearVelocity);
    },
    set_angularVelocity__ ()
    {
-      if (!this .actor)
+      const { actor, fixed } = this;
+
+      if (!actor)
          return;
 
-      if (this ._fixed .getValue ())
+      if (fixed)
          return;
 
       const
@@ -193,7 +211,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       angularVelocity .y = value .y;
       angularVelocity .z = value .z;
 
-      this .actor .setAngularVelocity (angularVelocity);
+      actor .setAngularVelocity (angularVelocity);
    },
    set_finiteRotationAxis__: (() =>
    {
@@ -211,29 +229,33 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    })(),
    set_damping__ ()
    {
-      if (!this .actor)
+      const { actor, fixed } = this;
+
+      if (!actor)
          return;
 
-      if (this ._fixed .getValue ())
+      if (fixed)
          return;
 
       if (this ._autoDamp .getValue ())
       {
-         this .actor .setLinearDamping (Algorithm .clamp (this ._linearDampingFactor .getValue (), 0, 1));
-         this .actor .setAngularDamping (Algorithm .clamp (this ._angularDampingFactor .getValue (), 0, 1));
+         actor .setLinearDamping (Algorithm .clamp (this ._linearDampingFactor .getValue (), 0, 1));
+         actor .setAngularDamping (Algorithm .clamp (this ._angularDampingFactor .getValue (), 0, 1));
       }
       else
       {
-         this .actor .setLinearDamping (0);
-         this .actor .setAngularDamping (0);
+         actor .setLinearDamping (0);
+         actor .setAngularDamping (0);
       }
    },
    set_inertia__ ()
    {
-      if (!this .actor)
+      const { actor, fixed } = this;
+
+      if (!actor)
          return;
 
-      if (this ._fixed .getValue ())
+      if (fixed)
          return;
 
       const col0 = new this .PhysX .PxVec3 (
@@ -259,7 +281,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          rotation      = new this .PhysX .PxQuat (0, 0, 0, 1),
          inertia       = this .PhysX .PxMassProperties .prototype .getMassSpaceInertia (inertiaTensor, rotation);
 
-      this .actor .setMassSpaceInertiaTensor (inertia);
+      actor .setMassSpaceInertiaTensor (inertia);
 
       this .PhysX .destroy (col0);
       this .PhysX .destroy (col1);
@@ -269,20 +291,24 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    },
    set_mass__ ()
    {
-      if (!this .actor)
+      const { actor, fixed } = this;
+
+      if (!actor)
          return;
 
-      if (this ._fixed .getValue ())
+      if (fixed)
          return;
 
-      this .actor .setMass (this ._mass .getValue ());
+      actor .setMass (this ._mass .getValue ());
    },
    set_centerOfMass__ ()
    {
-      if (!this .actor)
+      const { actor, fixed } = this;
+
+      if (!actor)
          return;
 
-      if (this ._fixed .getValue ())
+      if (fixed)
          return;
 
       const
@@ -294,7 +320,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       p .y = value .y;
       p .z = value .z;
 
-      this .actor .setCMassLocalPose (centerOfMass);
+      actor .setCMassLocalPose (centerOfMass);
    },
    set_useGlobalGravity__ ()
    {
@@ -383,11 +409,11 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       // Create actor.
 
-      this .actor = this ._fixed .getValue ()
+      this .actor = this .fixed
          ? this .physics .createRigidStatic (this .pose)
          : this .physics .createRigidDynamic (this .pose);
 
-      if (!this ._fixed .getValue ())
+      if (!this .fixed)
          this .actor .setSolverIterationCounts (16, 4);
 
       this .collection ?.getPhysicsScene () .addActor (this .actor);
@@ -422,7 +448,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       for (const geometryNode of this .geometryNodes)
       {
-         const shape = geometryNode .getPhysicsShape (!this ._fixed .getValue ());
+         const shape = geometryNode .getPhysicsShape (!this .fixed);
 
          if (!shape)
             continue;
@@ -433,12 +459,12 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    },
    applyForces ()
    {
-      const { force, torque, actor } = this;
+      const { actor, force, torque } = this;
 
       if (!actor)
          return;
 
-      if (this ._fixed .getValue ())
+      if (this .fixed)
          return;
 
       for (const value of this ._forces)
@@ -471,15 +497,15 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       return function (deltaTime)
       {
-         const actor = this .actor;
+         const { actor, fixed } = this;
 
          if (!actor)
             return;
 
-         if (this ._fixed .getValue ())
+         if (fixed)
             return;
 
-         if (this ._kinematic .getValue ())
+         if (this .kinematic)
          {
             position
                .assign (this ._linearVelocity .getValue ())
