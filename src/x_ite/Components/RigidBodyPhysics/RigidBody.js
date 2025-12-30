@@ -441,20 +441,20 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       if (this ._fixed .getValue ())
          return;
 
-      for (const f of this ._forces)
+      for (const value of this ._forces)
       {
-         force .x = f .x;
-         force .y = f .y;
-         force .z = f .z;
+         force .x = value .x;
+         force .y = value .y;
+         force .z = value .z;
 
          actor .addForce (force);
       }
 
-      for (const t of this ._torques)
+      for (const value of this ._torques)
       {
-         torque .x = t .x;
-         torque .y = t .y;
-         torque .z = t .z;
+         torque .x = value .x;
+         torque .y = value .y;
+         torque .z = value .z;
 
          actor .addTorque (torque);
       }
