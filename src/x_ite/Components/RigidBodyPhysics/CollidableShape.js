@@ -73,18 +73,22 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          if (!pose)
             return;
 
+         const
+            p = pose .p,
+            q = pose .q;
+
          this .offsetMatrix .get (translation, rotation);
 
          rotation .getQuaternion (quaternion);
 
-         pose .p .x = translation .x;
-         pose .p .y = translation .y;
-         pose .p .z = translation .z;
+         p .x = translation .x;
+         p .y = translation .y;
+         p .z = translation .z;
 
-         pose .q .x = quaternion .x;
-         pose .q .y = quaternion .y;
-         pose .q .z = quaternion .z;
-         pose .q .w = quaternion .w;
+         q .x = quaternion .x;
+         q .y = quaternion .y;
+         q .z = quaternion .z;
+         q .w = quaternion .w;
 
          this .convexShape  ?.setLocalPose (pose);
          this .concaveShape ?.setLocalPose (pose);
