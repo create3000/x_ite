@@ -5,6 +5,7 @@ import X3DNode              from "../Core/X3DNode.js";
 import X3DBoundedObject     from "../Grouping/X3DBoundedObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
+import Algorithm            from "../../../standard/Math/Algorithm.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Quaternion           from "../../../standard/Math/Numbers/Quaternion.js";
 import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
@@ -218,8 +219,8 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       if (this ._autoDamp .getValue ())
       {
-         this .actor .setLinearDamping (this ._linearDampingFactor .getValue ());
-         this .actor .setAngularDamping (this ._angularDampingFactor .getValue ());
+         this .actor .setLinearDamping (Algorithm .clamp (this ._linearDampingFactor .getValue (), 0, 1));
+         this .actor .setAngularDamping (Algorithm .clamp (this ._angularDampingFactor .getValue (), 0, 1));
       }
       else
       {
