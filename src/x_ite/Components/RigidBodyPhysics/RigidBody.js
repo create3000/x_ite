@@ -368,6 +368,9 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          ? this .physics .createRigidStatic (this .pose)
          : this .physics .createRigidDynamic (this .pose);
 
+      if (!this ._fixed .getValue ())
+         this .actor .setSolverIterationCounts (16, 4); // preferAccuracy: 20, 8
+
       this .collection ?.getPhysicsScene () .addActor (this .actor);
 
       // Setup actor properties.

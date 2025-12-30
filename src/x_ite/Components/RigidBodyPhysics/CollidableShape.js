@@ -90,7 +90,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          this .concaveShape ?.setLocalPose (pose);
       };
    })(),
-   updateMaterial (staticFriction, dynamicFriction, restitution)
+   updatePhysicsMaterial (staticFriction, dynamicFriction, restitution)
    {
       this .material .setStaticFriction (staticFriction);
       this .material .setDynamicFriction (dynamicFriction);
