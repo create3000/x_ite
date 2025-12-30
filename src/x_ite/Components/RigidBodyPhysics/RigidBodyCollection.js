@@ -270,7 +270,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
             bodyNode .applyForces ();
 
          scene .simulate (deltaTime);
-         scene .fetchResults (i === iterations - 1);
+         scene .fetchResults (true);
       }
 
       for (const bodyNode of this .bodyNodes)
