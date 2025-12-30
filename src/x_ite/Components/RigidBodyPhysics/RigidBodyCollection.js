@@ -267,19 +267,20 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    {
       const
          { scene, bodyNodes, iterations } = this,
-         deltaTime = this .getTimeStep () / iterations;
+         deltaTime = this .getTimeStep (),
+         timeStep  = deltaTime / iterations;
 
       for (let i = 0; i < iterations; ++ i)
       {
          for (const bodyNode of bodyNodes)
             bodyNode .applyForces ();
 
-         scene .simulate (deltaTime);
+         scene .simulate (timeStep);
          scene .fetchResults (true);
       }
 
       for (const bodyNode of bodyNodes)
-         bodyNode .update ();
+         bodyNode .update (deltaTime);
    },
    dispose ()
    {

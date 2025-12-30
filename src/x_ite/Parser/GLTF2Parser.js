@@ -2537,6 +2537,8 @@ function eventsProcessed ()
                                  }
                                  else
                                  {
+                                    collidableShapeNode ._scale = scale;
+
                                     rigidBodyNode ._geometry .push (collidableShapeNode);
 
                                     this .collidables .push (collidableShapeNode);
@@ -2570,8 +2572,9 @@ function eventsProcessed ()
                         {
                            const mass = this .numberValue (value .mass, 1);
 
-                           rigidBodyNode ._fixed = false;
-                           rigidBodyNode ._mass  = value .isKinematic ? Infinity : mass;
+                           rigidBodyNode ._fixed     = false;
+                           rigidBodyNode ._kinematic = value .isKinematic;
+                           rigidBodyNode ._mass      = mass;
 
                            if (this .vectorValue (value .centerOfMass, vector3))
                               rigidBodyNode ._centerOfMass = vector3;

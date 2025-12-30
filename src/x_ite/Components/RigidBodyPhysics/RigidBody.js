@@ -65,6 +65,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       this ._orientation          .addInterest ("addEvent",                 this ._transform);
       this ._transform            .addInterest ("set_transform__",          this);
       this ._fixed                .addInterest ("set_geometry__",           this);
+      this ._kinematic            .addInterest ("set_kinematic__",          this);
       this ._linearVelocity       .addInterest ("set_linearVelocity__",     this);
       this ._angularVelocity      .addInterest ("set_angularVelocity__",    this);
       this ._useFiniteRotation    .addInterest ("set_finiteRotationAxis__", this);
@@ -105,10 +106,6 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       if (this .actor)
          this .collection ?.getPhysicsScene () .addActor (this .actor);
    },
-   getBody ()
-   {
-      return this .body;
-   },
    set_position__ ()
    {
       for (const geometryNode of this .geometryNodes)
@@ -143,9 +140,22 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          pose .q .z = quaternion .z;
          pose .q .w = quaternion .w;
 
-         this .actor .setGlobalPose (pose);
+         if (this ._kinematic .getValue ())
+            this .actor .setKinematicTarget (pose);
+         else
+            this .actor .setGlobalPose (pose);
       };
    })(),
+   set_kinematic__ ()
+   {
+      if (!this .actor)
+         return;
+
+      if (this ._fixed .getValue ())
+         return;
+
+      this .actor .setRigidBodyFlag (this .PhysX .PxRigidBodyFlagEnum .eKINEMATIC, this ._kinematic .getValue ());
+   },
    set_linearVelocity__ ()
    {
       if (!this .actor)
@@ -378,6 +388,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       this .set_position__ ();
       this .set_orientation__ ();
       this .set_transform__ ();
+      this .set_kinematic__ ();
       this .set_linearVelocity__ ();
       this .set_angularVelocity__ ();
       this .set_finiteRotationAxis__ ();
@@ -444,10 +455,11 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          position        = new Vector3 (),
          quaternion      = new Quaternion (),
          orientation     = new Rotation4 (),
+         rotation        = new Rotation4 (),
          linearVelocity  = new Vector3 (),
          angularVelocity = new Vector3 ();
 
-      return function ()
+      return function (deltaTime)
       {
          const actor = this .actor;
 
@@ -457,18 +469,36 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          if (this ._fixed .getValue ())
             return;
 
-         const
-            transform = actor .getGlobalPose (),
-            v         = actor .getLinearVelocity (),
-            w         = actor .getAngularVelocity ();
+         if (this ._kinematic .getValue ())
+         {
+            position
+               .assign (this ._linearVelocity .getValue ())
+               .multiply (deltaTime)
+               .add (this ._position .getValue ());
 
-         position .set (transform .p .x, transform .p .y, transform .p .z);
-         quaternion .set (transform .q .x, transform .q .y, transform .q .z, transform .q .w);
+            orientation .assign (this ._orientation .getValue ())
+               .multRight (rotation .set (0, 0, 1, this ._angularVelocity .z * deltaTime))
+               .multRight (rotation .set (0, 1, 0, this ._angularVelocity .y * deltaTime))
+               .multRight (rotation .set (1, 0, 0, this ._angularVelocity .x * deltaTime));
 
-         this ._position        = position;
-         this ._orientation     = orientation .setQuaternion (quaternion);
-         this ._linearVelocity  = linearVelocity .set (v .x, v .y, v .z);
-         this ._angularVelocity = angularVelocity .set (w .x, w .y, w .z);
+            this ._position    = position;
+            this ._orientation = orientation;
+         }
+         else
+         {
+            const
+               transform = actor .getGlobalPose (),
+               v         = actor .getLinearVelocity (),
+               w         = actor .getAngularVelocity ();
+
+            position .set (transform .p .x, transform .p .y, transform .p .z);
+            quaternion .set (transform .q .x, transform .q .y, transform .q .z, transform .q .w);
+
+            this ._position        = position;
+            this ._orientation     = orientation .setQuaternion (quaternion);
+            this ._linearVelocity  = linearVelocity .set (v .x, v .y, v .z);
+            this ._angularVelocity = angularVelocity .set (w .x, w .y, w .z);
+         }
       };
    })(),
    dispose ()
@@ -500,6 +530,7 @@ Object .defineProperties (RigidBody,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",              new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "fixed",                new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "kinematic",            new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "position",             new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "orientation",          new Fields .SFRotation ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "linearVelocity",       new Fields .SFVec3f ()),
