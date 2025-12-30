@@ -248,6 +248,39 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          actor .setAngularDamping (0);
       }
    },
+   set_mass__ ()
+   {
+      const { actor, fixed } = this;
+
+      if (!actor)
+         return;
+
+      if (fixed)
+         return;
+
+      actor .setMass (this ._mass .getValue ());
+   },
+   set_centerOfMass__ ()
+   {
+      const { actor, fixed } = this;
+
+      if (!actor)
+         return;
+
+      if (fixed)
+         return;
+
+      const
+         value        = this ._centerOfMass .getValue (),
+         centerOfMass = this .centerOfMass,
+         p            = centerOfMass .p;
+
+      p .x = value .x;
+      p .y = value .y;
+      p .z = value .z;
+
+      actor .setCMassLocalPose (centerOfMass);
+   },
    set_inertia__ ()
    {
       const { actor, fixed } = this;
@@ -288,39 +321,6 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       this .PhysX .destroy (col2);
       this .PhysX .destroy (inertiaTensor);
       this .PhysX .destroy (rotation);
-   },
-   set_mass__ ()
-   {
-      const { actor, fixed } = this;
-
-      if (!actor)
-         return;
-
-      if (fixed)
-         return;
-
-      actor .setMass (this ._mass .getValue ());
-   },
-   set_centerOfMass__ ()
-   {
-      const { actor, fixed } = this;
-
-      if (!actor)
-         return;
-
-      if (fixed)
-         return;
-
-      const
-         value        = this ._centerOfMass .getValue (),
-         centerOfMass = this .centerOfMass,
-         p            = centerOfMass .p;
-
-      p .x = value .x;
-      p .y = value .y;
-      p .z = value .z;
-
-      actor .setCMassLocalPose (centerOfMass);
    },
    set_useGlobalGravity__ ()
    {
