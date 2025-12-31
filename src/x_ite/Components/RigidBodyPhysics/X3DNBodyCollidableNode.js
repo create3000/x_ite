@@ -39,14 +39,6 @@ function X3DNBodyCollidableNode (executionContext)
    this .offsetMatrix   = new Matrix4 ();
    this .matrix         = new Matrix4 ();
    this .visibleObjects = [ ];
-
-   this .material = {
-      restitution: 0,
-      staticFriction: 1,
-      dynamicFriction: 1,
-      restitutionCombine: "MAXIMUM",
-      frictionCombine: "MINIMUM",
-   };
 }
 
 Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DChildNode .prototype),

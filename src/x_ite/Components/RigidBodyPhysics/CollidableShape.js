@@ -14,6 +14,16 @@ function CollidableShape (executionContext)
    X3DNBodyCollidableNode .call (this, executionContext);
 
    this .addType (X3DConstants .CollidableShape);
+
+   // Private properties
+
+   this .material = {
+      restitution: 0,
+      staticFriction: 1,
+      dynamicFriction: 1,
+      restitutionCombine: "MAXIMUM",
+      frictionCombine: "MINIMUM",
+   };
 }
 
 Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyCollidableNode .prototype),

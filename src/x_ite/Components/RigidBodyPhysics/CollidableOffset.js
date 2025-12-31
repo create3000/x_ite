@@ -12,6 +12,10 @@ function CollidableOffset (executionContext)
    X3DNBodyCollidableNode .call (this, executionContext);
 
    this .addType (X3DConstants .CollidableOffset);
+
+   // Private properties
+
+   this .material = { };
 }
 
 Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCollidableNode .prototype),
