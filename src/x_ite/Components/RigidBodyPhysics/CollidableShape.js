@@ -22,8 +22,12 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    {
       await X3DNBodyCollidableNode .prototype .initialize .call (this);
 
+      const material = this .material;
+
       this .pose     = new this .PhysX .PxTransform ();
-      this .material = this .physics .createMaterial (... Object .values (this .material));
+      this .material = this .physics .createMaterial ();
+
+      this .setPhysicsMaterial (material);
 
       this ._enabled    .addInterest ("set_enabled__",  this);
       this ._convexHull .addInterest ("requestRebuild", this);
@@ -100,8 +104,8 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
             this .material .setDynamicFriction (material .dynamicFriction);
             this .material .setRestitution (material .restitution);
 
-            this .material .setRestitutionCombineMode (this .getCombineMode (material .restitutionCombine));
             this .material .setFrictionCombineMode (this .getCombineMode (material .frictionCombine));
+            this .material .setRestitutionCombineMode (this .getCombineMode (material .restitutionCombine));
          }
          else
          {

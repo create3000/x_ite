@@ -44,8 +44,8 @@ function X3DNBodyCollidableNode (executionContext)
       staticFriction: 0,
       dynamicFriction: 0,
       restitution: 0,
-      restitutionCombine: "AVERAGE",
-      frictionCombine: "AVERAGE",
+      restitutionCombine: "MAXIMUM",
+      frictionCombine: "MAXIMUM",
    };
 }
 

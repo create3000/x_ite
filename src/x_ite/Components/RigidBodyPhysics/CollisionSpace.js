@@ -13,8 +13,7 @@ function CollisionSpace (executionContext)
 
    this .addType (X3DConstants .CollisionSpace);
 
-   this .collidableNodes     = [ ];
-   this .collisionSpaceNodes = [ ];
+   this .collidableNodes = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, X3DNBodyCollisionSpaceNode .prototype),
@@ -29,67 +28,34 @@ Object .assign (Object .setPrototypeOf (CollisionSpace .prototype, X3DNBodyColli
    },
    getBBox (bbox, shadows)
    {
-      // TODO: add space node.
       if (this .isDefaultBBoxSize ())
          return X3DBoundedObject .prototype .getBBox .call (this, this .collidableNodes, bbox, shadows);
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   getCollidables ()
+   setPhysicsMaterial (material)
    {
-      return this .collidableNodes;
+      Object .assign (this .material, material);
+
+      for (const collidableNode of collidableNodes)
+         collidableNode .setPhysicsMaterial (material);
    },
    set_collidables__ ()
    {
-      const collisionSpaceNodes = this .collisionSpaceNodes;
+      const { collidableNodes } = this;
 
-      for (const collisionSpaceNode of collisionSpaceNodes)
-         collisionSpaceNode .removeInterest ("collect", this);
-
-      collisionSpaceNodes .length = 0;
+      collidableNodes .length = 0;
 
       for (const node of this ._collidables)
       {
-         const collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, node);
-
-         if (collisionSpaceNode)
-            collisionSpaceNodes .push (collisionSpaceNode);
-      }
-
-      for (const collisionSpaceNode of collisionSpaceNodes)
-         collisionSpaceNode .addInterest ("collect", this);
-
-      this .collect ();
-   },
-   collect ()
-   {
-      const
-         collidableNodes     = this .collidableNodes,
-         collisionSpaceNodes = this .collisionSpaceNodes;
-
-      collidableNodes     .length = 0;
-      collisionSpaceNodes .length = 0;
-
-      for (const node of this ._collidables)
-      {
-         const collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, node);
+         const collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, node)
+            ?? X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, node);
 
          if (collidableNode)
-         {
             collidableNodes .push (collidableNode);
-            continue;
-         }
-
-         const collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this ._collidables [i]);
-
-         if (collisionSpaceNode)
-         {
-            collidableNodes .push (... collisionSpaceNode .getCollidables ());
-            continue;
-         }
       }
 
-      this .addNodeEvent ();
+      this .setPhysicsMaterial (this .material);
    },
 });
 
