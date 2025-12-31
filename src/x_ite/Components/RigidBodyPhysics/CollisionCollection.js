@@ -96,9 +96,9 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChild
    {
       const { collidableNodes, material } = this;
 
+      material .restitution     = Algorithm .clamp (this ._bounce .getValue (), 0, 1);
       material .staticFriction  = Math .max (this ._frictionCoefficients .x, 0);
       material .dynamicFriction = Math .max (this ._frictionCoefficients .y, 0);
-      material .restitution     = Algorithm .clamp (this ._bounce .getValue (), 0, 1);
 
       for (const collidableNode of collidableNodes)
          collidableNode .setPhysicsMaterial (material);

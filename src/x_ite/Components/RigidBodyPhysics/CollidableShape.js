@@ -100,12 +100,12 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       {
          if (this .pose)
          {
+            this .material .setRestitution (material .restitution);
             this .material .setStaticFriction (material .staticFriction);
             this .material .setDynamicFriction (material .dynamicFriction);
-            this .material .setRestitution (material .restitution);
 
-            this .material .setFrictionCombineMode (this .getCombineMode (material .frictionCombine));
             this .material .setRestitutionCombineMode (this .getCombineMode (material .restitutionCombine));
+            this .material .setFrictionCombineMode (this .getCombineMode (material .frictionCombine));
          }
          else
          {

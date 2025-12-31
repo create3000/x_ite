@@ -41,9 +41,9 @@ function X3DNBodyCollidableNode (executionContext)
    this .visibleObjects = [ ];
 
    this .material = {
+      restitution: 0,
       staticFriction: 0,
       dynamicFriction: 0,
-      restitution: 0,
       restitutionCombine: "MAXIMUM",
       frictionCombine: "MAXIMUM",
    };
