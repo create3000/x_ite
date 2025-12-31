@@ -22,8 +22,11 @@ The RigidBodyCollection node belongs to the [RigidBodyPhysics](/x_ite/components
 ```
 + X3DNode
   + X3DChildNode
-    + RigidBodyCollection
+    + RigidBodyCollection (X3DBoundedObject)*
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

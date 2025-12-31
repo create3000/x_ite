@@ -21,8 +21,11 @@ The RigidBody node belongs to the [RigidBodyPhysics](/x_ite/components/overview/
 
 ```
 + X3DNode
-  + RigidBody
+  + RigidBody (X3DBoundedObject)*
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

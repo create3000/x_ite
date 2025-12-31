@@ -41,8 +41,8 @@ function X3DNBodyCollidableNode (executionContext)
    this .visibleObjects = [ ];
 
    this .material = {
-      staticFriction: 1,
-      dynamicFriction: 1,
+      staticFriction: 0,
+      dynamicFriction: 0,
       restitution: 0,
       restitutionCombine: "AVERAGE",
       frictionCombine: "AVERAGE",

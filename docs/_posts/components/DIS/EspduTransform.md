@@ -22,7 +22,7 @@ The EspduTransform node belongs to the [DIS](/x_ite/components/overview/#dis) co
 ```
 + X3DNode
   + X3DChildNode
-    + X3DGroupingNode
+    + X3DGroupingNode (X3DBoundedObject)*
       + EspduTransform (X3DSensorNode)*
 ```
 

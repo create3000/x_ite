@@ -7,6 +7,7 @@ import X3DBoundedObject      from "../Grouping/X3DBoundedObject.js";
 import X3DConstants          from "../../Base/X3DConstants.js";
 import X3DCast               from "../../Base/X3DCast.js";
 import AppliedParametersType from "../../Browser/RigidBodyPhysics/AppliedParametersType.js";
+import Algorithm             from "../../../standard/Math/Algorithm.js";
 
 function CollisionCollection (executionContext)
 {
@@ -23,9 +24,9 @@ function CollisionCollection (executionContext)
 
    // Private properties
 
-   this .appliedParameters   = new Set ();
-   this .collidableNodes     = [ ];
-   this .collisionSpaceNodes = [ ];
+   this .appliedParameters = new Set ();
+   this .collidableNodes   = [ ];
+   this .material          = { };
 }
 
 Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChildNode .prototype),
@@ -37,10 +38,13 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChild
       X3DBoundedObject .prototype .initialize .call (this);
 
       this ._appliedParameters .addInterest ("set_appliedParameters__", this);
+      this ._appliedParameters .addInterest ("set_material__",          this);
       this ._collidables       .addInterest ("set_collidables__",       this);
+      this ._collidables       .addInterest ("set_material__",          this);
 
       this .set_appliedParameters__ ();
       this .set_collidables__ ();
+      this .set_material__ ();
    },
    getBBox (bbox, shadows)
    {
@@ -65,39 +69,39 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChild
 
       return function ()
       {
-         this .appliedParameters .clear ();
+         const { appliedParameters } = this;
+
+         appliedParameters .clear ();
 
          for (const appliedParameter of this ._appliedParameters)
-            this .appliedParameters .add (appliedParametersIndex .get (appliedParameter));
-
-         this .appliedParameters .delete (undefined);
+            appliedParameters .add (appliedParametersIndex .get (appliedParameter));
       };
    })(),
    set_collidables__ ()
    {
-      const { collidableNodes, collisionSpaceNodes } = this;
+      const { collidableNodes } = this;
 
-      collidableNodes     .length = 0;
-      collisionSpaceNodes .length = 0;
+      collidableNodes .length = 0;
 
       for (const node of this ._collidables)
       {
-         const collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, node);
+         const collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, node)
+            ?? X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, node);
 
          if (collidableNode)
-         {
             collidableNodes .push (collidableNode);
-            continue;
-         }
-
-         const collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, node);
-
-         if (collisionSpaceNode)
-         {
-            collisionSpaceNodes .push (collisionSpaceNode);
-            continue;
-         }
       }
+   },
+   set_material__ ()
+   {
+      const { collidableNodes, material } = this;
+
+      material .staticFriction  = Math .max (this ._frictionCoefficients .x, 0);
+      material .dynamicFriction = Math .max (this ._frictionCoefficients .y, 0);
+      material .restitution     = Algorithm .clamp (this ._bounce .getValue (), 0, 1);
+
+      for (const collidableNode of collidableNodes)
+         collidableNode .setPhysicsMaterial (material);
    },
    dispose ()
    {
