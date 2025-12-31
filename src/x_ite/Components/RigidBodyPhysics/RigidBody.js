@@ -414,7 +414,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          : this .physics .createRigidDynamic (this .pose);
 
       if (!this .fixed)
-         this .actor .setSolverIterationCounts (16, 4);
+         this .actor .setSolverIterationCounts (6, 2); // default: (4, 1)
 
       this .collection ?.getPhysicsScene () .addActor (this .actor);
 
