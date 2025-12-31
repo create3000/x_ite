@@ -94,25 +94,22 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          this .concaveShape ?.setLocalPose (pose);
       };
    })(),
-   setPhysicsMaterial: (() =>
+   setPhysicsMaterial (material)
    {
-      return function (material)
+      if (this .pose)
       {
-         if (this .pose)
-         {
-            this .material .setRestitution (material .restitution);
-            this .material .setStaticFriction (material .staticFriction);
-            this .material .setDynamicFriction (material .dynamicFriction);
+         this .material .setRestitution (material .restitution);
+         this .material .setStaticFriction (material .staticFriction);
+         this .material .setDynamicFriction (material .dynamicFriction);
 
-            this .material .setRestitutionCombineMode (this .getCombineMode (material .restitutionCombine));
-            this .material .setFrictionCombineMode (this .getCombineMode (material .frictionCombine));
-         }
-         else
-         {
-            Object .assign (this .material, material);
-         }
-      };
-   })(),
+         this .material .setRestitutionCombineMode (this .getCombineMode (material .restitutionCombine));
+         this .material .setFrictionCombineMode (this .getCombineMode (material .frictionCombine));
+      }
+      else
+      {
+         Object .assign (this .material, material);
+      }
+   },
    getCombineMode (mode)
    {
       switch (mode)
