@@ -22,12 +22,10 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    {
       await X3DNBodyCollidableNode .prototype .initialize .call (this);
 
-      const material = this .material;
+      this .pose            = new this .PhysX .PxTransform ();
+      this .physicsMaterial = this .physics .createMaterial ();
 
-      this .pose     = new this .PhysX .PxTransform ();
-      this .material = this .physics .createMaterial ();
-
-      this .setPhysicsMaterial (material);
+      this .setPhysicsMaterial (this .material);
 
       this ._enabled    .addInterest ("set_enabled__",  this);
       this ._convexHull .addInterest ("requestRebuild", this);
@@ -96,25 +94,22 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    })(),
    setPhysicsMaterial (material)
    {
-      if (this .pose)
-      {
-         this .material .setRestitution (material .restitution);
-         this .material .setStaticFriction (material .staticFriction);
-         this .material .setDynamicFriction (material .dynamicFriction);
+      Object .assign (this .material, material);
 
-         this .material .setRestitutionCombineMode (this .getCombineMode (material .restitutionCombine));
-         this .material .setFrictionCombineMode (this .getCombineMode (material .frictionCombine));
-      }
-      else
-      {
-         Object .assign (this .material, material);
-      }
+      if (!this .physicsMaterial)
+         return;
+
+      this .physicsMaterial .setRestitution (this .material .restitution);
+      this .physicsMaterial .setStaticFriction (this .material .staticFriction);
+      this .physicsMaterial .setDynamicFriction (this .material .dynamicFriction);
+
+      this .physicsMaterial .setRestitutionCombineMode (this .getCombineMode (this .material .restitutionCombine));
+      this .physicsMaterial .setFrictionCombineMode (this .getCombineMode (this .material .frictionCombine));
    },
    getCombineMode (mode)
    {
       switch (mode)
       {
-         default:
          case "AVERAGE":
                return this .PhysX .PxCombineModeEnum .eAVERAGE;
          case "MINIMUM":
@@ -170,7 +165,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       this .PhysX .destroy (cookingParams);
       this .PhysX .destroy (desc);
 
-      return this .physics .createShape (geometry, this .material, true, shapeFlags);
+      return this .physics .createShape (geometry, this .physicsMaterial, true, shapeFlags);
    },
    createConcaveShape (shapeFlags)
    {
@@ -211,7 +206,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       this .PhysX .destroy (cookingParams);
       this .PhysX .destroy (desc);
 
-      return this .physics .createShape (geometry, this .material, true, shapeFlags);
+      return this .physics .createShape (geometry, this .physicsMaterial, true, shapeFlags);
    },
    malloc (f, q)
    {
@@ -278,7 +273,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                      box      = this .geometryNode,
                      size     = box ._size .getValue (),
                      geometry = new this .PhysX .PxBoxGeometry (size .x / 2, size .y / 2, size .z / 2),
-                     shape    = this .physics .createShape (geometry, this .material, true, shapeFlags);
+                     shape    = this .physics .createShape (geometry, this .physicsMaterial, true, shapeFlags);
 
                   this .convexShape  = shape;
                   this .concaveShape = shape;
@@ -342,7 +337,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                   const
                      sphere   = this .geometryNode,
                      geometry = new this .PhysX .PxSphereGeometry (sphere ._radius .getValue ()),
-                     shape    = this .physics .createShape (geometry, this .material, true, shapeFlags);
+                     shape    = this .physics .createShape (geometry, this .physicsMaterial, true, shapeFlags);
 
                   this .convexShape  = shape;
                   this .concaveShape = shape;
@@ -394,7 +389,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       if (this .pose)
       {
          this .PhysX .destroy (this .pose);
-         this .PhysX .destroy (this .material);
+         this .PhysX .destroy (this .physicsMaterial);
       }
 
       X3DNBodyCollidableNode .prototype .dispose .call (this);
