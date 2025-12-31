@@ -43,11 +43,11 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
 
       this .getChild () ?.setLocalPose (this .offsetMatrix);
    },
-   updatePhysicsMaterial (material)
+   setPhysicsMaterial (material)
    {
       Object .assign (this .material, material);
 
-      this .getChild () ?.updatePhysicsMaterial (material);
+      this .getChild () ?.setPhysicsMaterial (material);
    },
    getPhysicsShape (convexHull)
    {
@@ -83,7 +83,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
 
       this .setEnabled (this .parentEnabled);
       this .setLocalPose (this .parentMatrix);
-      this .updatePhysicsMaterial (this .material);
+      this .setPhysicsMaterial (this .material);
    },
 });
 

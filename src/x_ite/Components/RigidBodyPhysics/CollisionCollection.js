@@ -49,14 +49,6 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChild
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   getAppliedParameters ()
-   {
-      return this .appliedParameters;
-   },
-   getCollidables ()
-   {
-      return this .collidableNodes;
-   },
    set_appliedParameters__: (() =>
    {
       const appliedParametersIndex = new Map ([
@@ -76,41 +68,14 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChild
          this .appliedParameters .clear ();
 
          for (const appliedParameter of this ._appliedParameters)
-         {
-            const value = appliedParametersIndex .get (appliedParameter);
+            this .appliedParameters .add (appliedParametersIndex .get (appliedParameter));
 
-            if (value !== undefined)
-               this .appliedParameters .add (value);
-         }
+         this .appliedParameters .delete (undefined);
       };
    })(),
    set_collidables__ ()
    {
-      const collisionSpaceNodes = this .collisionSpaceNodes;
-
-      for (const collisionSpaceNode of collisionSpaceNodes)
-         collisionSpaceNode .removeInterest ("collect", this);
-
-      collisionSpaceNodes .length = 0;
-
-      for (const node of this ._collidables)
-      {
-         const collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, node);
-
-         if (collisionSpaceNode)
-            collisionSpaceNodes .push (collisionSpaceNode);
-      }
-
-      for (const collisionSpaceNode of collisionSpaceNodes)
-         collisionSpaceNode .addInterest ("collect", this);
-
-      this .collect ();
-   },
-   collect ()
-   {
-      const
-         collidableNodes     = this .collidableNodes,
-         collisionSpaceNodes = this .collisionSpaceNodes;
+      const { collidableNodes, collisionSpaceNodes } = this;
 
       collidableNodes     .length = 0;
       collisionSpaceNodes .length = 0;
@@ -129,12 +94,10 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChild
 
          if (collisionSpaceNode)
          {
-            Array .prototype .push .apply (collidableNodes, collisionSpaceNode .getCollidables ());
+            collisionSpaceNodes .push (collisionSpaceNode);
             continue;
          }
       }
-
-      this .addNodeEvent ();
    },
    dispose ()
    {

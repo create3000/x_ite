@@ -90,7 +90,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          this .concaveShape ?.setLocalPose (pose);
       };
    })(),
-   updatePhysicsMaterial: (() =>
+   setPhysicsMaterial: (() =>
    {
       return function (material)
       {
