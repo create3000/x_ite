@@ -420,11 +420,10 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       // Setup actor properties.
 
-      this .set_shapes__ ();
+      this .set_kinematic__ ();
       this .set_position__ ();
       this .set_orientation__ ();
       this .set_transform__ ();
-      this .set_kinematic__ ();
       this .set_linearVelocity__ ();
       this .set_angularVelocity__ ();
       this .set_finiteRotationAxis__ ();
@@ -434,6 +433,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       this .set_inertia__ ();
       this .set_useGlobalGravity__ ();
       this .set_disable__ ();
+      this .set_shapes__ ();
    },
    set_body__ ()
    {
