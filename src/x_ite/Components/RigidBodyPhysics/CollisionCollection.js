@@ -1,13 +1,12 @@
-import Fields                from "../../Fields.js";
-import X3DFieldDefinition    from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray  from "../../Base/FieldDefinitionArray.js";
-import X3DNode               from "../Core/X3DNode.js";
-import X3DChildNode          from "../Core/X3DChildNode.js";
-import X3DBoundedObject      from "../Grouping/X3DBoundedObject.js";
-import X3DConstants          from "../../Base/X3DConstants.js";
-import X3DCast               from "../../Base/X3DCast.js";
-import AppliedParametersType from "../../Browser/RigidBodyPhysics/AppliedParametersType.js";
-import Algorithm             from "../../../standard/Math/Algorithm.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode              from "../Core/X3DNode.js";
+import X3DChildNode         from "../Core/X3DChildNode.js";
+import X3DBoundedObject     from "../Grouping/X3DBoundedObject.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
+import X3DCast              from "../../Base/X3DCast.js";
+import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 function CollisionCollection (executionContext)
 {
@@ -53,30 +52,25 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChild
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
    },
-   set_appliedParameters__: (() =>
+   set_appliedParameters__ ()
    {
-      const appliedParametersIndex = new Map ([
-         ["BOUNCE",                 AppliedParametersType .BOUNCE],
-         ["USER_FRICTION",          AppliedParametersType .USER_FRICTION],
-         ["FRICTION_COEFFICIENT-2", AppliedParametersType .FRICTION_COEFFICIENT_2],
-         ["ERROR_REDUCTION",        AppliedParametersType .ERROR_REDUCTION],
-         ["CONSTANT_FORCE",         AppliedParametersType .CONSTANT_FORCE],
-         ["SPEED-1",                AppliedParametersType .SPEED_1],
-         ["SPEED-2",                AppliedParametersType .SPEED_2],
-         ["SLIP-1",                 AppliedParametersType .SLIP_1],
-         ["SLIP-2",                 AppliedParametersType .SLIP_2],
-      ]);
+      // "BOUNCE",
+      // "USER_FRICTION",
+      // "FRICTION_COEFFICIENT_2",
+      // "ERROR_REDUCTION",
+      // "CONSTANT_FORCE",
+      // "SPEED_1",
+      // "SPEED_2",
+      // "SLIP_1",
+      // "SLIP_2",
 
-      return function ()
-      {
-         const { appliedParameters } = this;
+      const { appliedParameters } = this;
 
-         appliedParameters .clear ();
+      appliedParameters .clear ();
 
-         for (const appliedParameter of this ._appliedParameters)
-            appliedParameters .add (appliedParametersIndex .get (appliedParameter));
-      };
-   })(),
+      for (const appliedParameter of this ._appliedParameters)
+         appliedParameters .add (appliedParameter);
+   },
    set_collidables__ ()
    {
       const { collidableNodes } = this;
@@ -94,11 +88,21 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChild
    },
    set_material__ ()
    {
-      const { collidableNodes, material } = this;
+      const { appliedParameters, collidableNodes, material } = this;
 
-      material .restitution     = Algorithm .clamp (this ._bounce .getValue (), 0, 1);
-      material .staticFriction  = Math .max (this ._frictionCoefficients .x, 0);
-      material .dynamicFriction = Math .max (this ._frictionCoefficients .y, 0);
+      for (const key in material)
+         delete material [key];
+
+      if (appliedParameters .has ("BOUNCE"))
+      {
+         material .restitution = Algorithm .clamp (this ._bounce .getValue (), 0, 1);
+      }
+
+      if (appliedParameters .has ("FRICTION_COEFFICIENT_2"))
+      {
+         material .staticFriction  = Math .max (this ._frictionCoefficients .x, 0);
+         material .dynamicFriction = Math .max (this ._frictionCoefficients .y, 0);
+      }
 
       for (const collidableNode of collidableNodes)
          collidableNode .setPhysicsMaterial (material);
