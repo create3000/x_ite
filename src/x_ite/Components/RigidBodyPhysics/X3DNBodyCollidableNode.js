@@ -42,10 +42,10 @@ function X3DNBodyCollidableNode (executionContext)
 
    this .material = {
       restitution: 0,
-      staticFriction: 0,
-      dynamicFriction: 0,
+      staticFriction: 1,
+      dynamicFriction: 1,
       restitutionCombine: "MAXIMUM",
-      frictionCombine: "MAXIMUM",
+      frictionCombine: "MINIMUM",
    };
 }
 
