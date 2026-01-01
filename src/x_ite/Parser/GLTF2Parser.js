@@ -690,7 +690,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return physicsMaterial .node ??= (() =>
          {
             const
-               scene = this .getScene (),
+               scene                   = this .getScene (),
                collisionCollectionNode = scene .createNode ("CollisionCollection", false);
 
             collisionCollectionNode ._appliedParameters    = ["BOUNCE", "FRICTION_COEFFICIENT_2"];
@@ -709,7 +709,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return this .defaultCollisionCollectionNode ??= (() =>
          {
             const
-               scene = this .getScene (),
+               scene                   = this .getScene (),
                collisionCollectionNode = scene .createNode ("CollisionCollection", false);
 
             collisionCollectionNode ._appliedParameters    = ["BOUNCE", "FRICTION_COEFFICIENT_2"];
