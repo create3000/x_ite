@@ -17,7 +17,8 @@ function RigidBody (executionContext)
 
    this .addType (X3DConstants .RigidBody);
 
-   this .addChildObjects (X3DConstants .outputOnly, "transform",     new Fields .SFTime (),
+   this .addChildObjects (X3DConstants .outputOnly, "collection",    new Fields .SFNode (),
+                          X3DConstants .outputOnly, "transform",     new Fields .SFTime (),
                           X3DConstants .outputOnly, "otherGeometry", new Fields .MFNode ());
 
    // Units
@@ -96,21 +97,21 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    },
    getCollection ()
    {
-      return this .collection;
-   },
-   getActor ()
-   {
-      return this .actor;
+      return this ._collection .getValue ();
    },
    setCollection (collection)
    {
       if (this .actor)
-         this .collection ?.getPhysicsScene () .removeActor (this .actor);
+         this .getCollection () ?.getPhysicsScene () .removeActor (this .actor);
 
-      this .collection = collection;
+      this ._collection = collection;
 
       if (this .actor)
-         this .collection ?.getPhysicsScene () .addActor (this .actor);
+         this .getCollection () ?.getPhysicsScene () .addActor (this .actor);
+   },
+   getActor ()
+   {
+      return this .actor;
    },
    set_fixed__ ()
    {
@@ -367,7 +368,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       if (this .actor)
       {
-         this .collection ?.getPhysicsScene () .removeActor (this .actor);
+         this .getCollection () ?.getPhysicsScene () .removeActor (this .actor);
          this .actor .release ();
 
          this .actor = null;
@@ -382,7 +383,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       if (!this .fixed)
          this .actor .setSolverIterationCounts (6, 2); // default: (4, 1)
 
-      this .collection ?.getPhysicsScene () .addActor (this .actor);
+      this .getCollection () ?.getPhysicsScene () .addActor (this .actor);
 
       // Add geometries.
 
