@@ -17,7 +17,7 @@ function CollidableShape (executionContext)
 
    // Private properties
 
-   this .material = {
+   this .materialParameters = {
       restitution: 0,
       staticFriction: 0,
       dynamicFriction: 0,
@@ -35,7 +35,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       this .pose            = new this .PhysX .PxTransform ();
       this .physicsMaterial = this .physics .createMaterial ();
 
-      this .setPhysicsMaterial (this .material);
+      this .setPhysicsMaterial (this .materialParameters);
 
       this ._enabled    .addInterest ("set_enabled__",  this);
       this ._convexHull .addInterest ("requestRebuild", this);
@@ -102,19 +102,21 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          this .concaveShape ?.setLocalPose (pose);
       };
    })(),
-   setPhysicsMaterial (material)
+   setPhysicsMaterial (appliedParameters)
    {
-      Object .assign (this .material, material);
+      const { materialParameters, physicsMaterial } = this;
 
-      if (!this .physicsMaterial)
+      Object .assign (materialParameters, appliedParameters);
+
+      if (!physicsMaterial)
          return;
 
-      this .physicsMaterial .setRestitution (this .material .restitution);
-      this .physicsMaterial .setStaticFriction (this .material .staticFriction);
-      this .physicsMaterial .setDynamicFriction (this .material .dynamicFriction);
+      physicsMaterial .setRestitution (materialParameters .restitution);
+      physicsMaterial .setStaticFriction (materialParameters .staticFriction);
+      physicsMaterial .setDynamicFriction (materialParameters .dynamicFriction);
 
-      this .physicsMaterial .setRestitutionCombineMode (this .getCombineMode (this .material .restitutionCombine));
-      this .physicsMaterial .setFrictionCombineMode (this .getCombineMode (this .material .frictionCombine));
+      physicsMaterial .setRestitutionCombineMode (this .getCombineMode (materialParameters .restitutionCombine));
+      physicsMaterial .setFrictionCombineMode (this .getCombineMode (materialParameters .frictionCombine));
    },
    getCombineMode (mode)
    {

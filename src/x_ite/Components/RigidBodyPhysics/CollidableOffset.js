@@ -15,7 +15,7 @@ function CollidableOffset (executionContext)
 
    // Private properties
 
-   this .material = { };
+   this .materialParameters = { };
 }
 
 Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCollidableNode .prototype),
@@ -47,11 +47,11 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
 
       this .getChild () ?.setLocalPose (this .offsetMatrix);
    },
-   setPhysicsMaterial (material)
+   setPhysicsMaterial (appliedParameters)
    {
-      Object .assign (this .material, material);
+      Object .assign (this .materialParameters, appliedParameters);
 
-      this .getChild () ?.setPhysicsMaterial (material);
+      this .getChild () ?.setPhysicsMaterial (appliedParameters);
    },
    setBody (body, root)
    {
@@ -85,7 +85,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
       this .setBody (this .getBody ());
       this .setEnabled (this .parentEnabled);
       this .setLocalPose (this .parentMatrix);
-      this .setPhysicsMaterial (this .material);
+      this .setPhysicsMaterial (this .materialParameters);
    },
 });
 
