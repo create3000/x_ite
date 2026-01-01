@@ -1,12 +1,11 @@
-import Fields                from "../../Fields.js";
-import X3DFieldDefinition    from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray  from "../../Base/FieldDefinitionArray.js";
-import X3DNode               from "../Core/X3DNode.js";
-import X3DChildNode          from "../Core/X3DChildNode.js";
-import X3DBoundedObject      from "../Grouping/X3DBoundedObject.js";
-import X3DConstants          from "../../Base/X3DConstants.js";
-import X3DCast               from "../../Base/X3DCast.js";
-import AppliedParametersType from "../../Browser/RigidBodyPhysics/AppliedParametersType.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode              from "../Core/X3DNode.js";
+import X3DChildNode         from "../Core/X3DChildNode.js";
+import X3DBoundedObject     from "../Grouping/X3DBoundedObject.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
+import X3DCast              from "../../Base/X3DCast.js";
 
 function RigidBodyCollection (executionContext)
 {
@@ -63,19 +62,16 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
 
       this .getLive () .addInterest ("set_enabled__", this);
 
-      this ._set_contacts            .addInterest ("set_contacts__",                this);
-      this ._enabled                 .addInterest ("set_enabled__",                 this);
-      this ._iterations              .addInterest ("set_iterations__",              this);
-      this ._gravity                 .addInterest ("set_gravity__",                 this);
-      this ._contactSurfaceThickness .addInterest ("set_contactSurfaceThickness__", this);
-      this ._collider                .addInterest ("set_collider__",                this);
-      this ._bodies                  .addInterest ("set_bodies__",                  this);
-      this ._joints                  .addInterest ("set_joints__",                  this);
+      this ._set_contacts .addInterest ("set_contacts__",   this);
+      this ._enabled      .addInterest ("set_enabled__",    this);
+      this ._iterations   .addInterest ("set_iterations__", this);
+      this ._gravity      .addInterest ("set_gravity__",    this);
+      this ._bodies       .addInterest ("set_bodies__",     this);
+      this ._joints       .addInterest ("set_joints__",     this);
 
       this .set_enabled__ ();
       this .set_iterations__ ();
       this .set_gravity__ ();
-      this .set_collider__ ();
       this .set_bodies__ ();
    },
    getBBox (bbox, shadows)
@@ -124,81 +120,6 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
 
       this .scene .setGravity (gravity);
    },
-   set_contactSurfaceThickness__ ()
-   {
-      // Margin is set in CollidableShape.
-      // for (const bodyNode of this .bodyNodes)
-      //    bodyNode .getRigidBody () .getCollisionShape () .setMargin (this ._contactSurfaceThickness .getValue ());
-   },
-   set_collider__ ()
-   {
-      this .colliderNode ?.removeInterest ("set_colliderParameters__", this);
-
-      this .colliderNode = X3DCast (X3DConstants .CollisionCollection, this ._collider);
-
-      this .colliderNode ?.addInterest ("set_colliderParameters__", this);
-
-      this .set_colliderParameters__ ();
-   },
-   set_colliderParameters__ ()
-   {
-      // const colliderNode = this .colliderNode;
-
-      // for (const bodyNode of this .bodyNodes)
-      // {
-      //    const rigidBody = bodyNode .getRigidBody ();
-
-      //    rigidBody .setFriction (0.5);
-      //    rigidBody .setRollingFriction (0);
-      // }
-
-      // if (!colliderNode)
-      //    return;
-
-      // for (const parameter of colliderNode .getAppliedParameters ())
-      // {
-      //    switch (parameter)
-      //    {
-      //       case AppliedParametersType .FRICTION_COEFFICIENT_2:
-      //       {
-      //          for (const bodyNode of this .bodyNodes)
-      //          {
-      //             const rigidBody = bodyNode .getRigidBody ();
-
-      //             rigidBody .setFriction (colliderNode ._frictionCoefficients .x);
-      //             rigidBody .setRollingFriction (colliderNode ._frictionCoefficients .y);
-      //          }
-
-      //          break;
-      //       }
-      //    }
-      // }
-   },
-   set_bounce__ ()
-   {
-      // const colliderNode = this .colliderNode;
-
-      // if (colliderNode ?._enabled .getValue ())
-      // {
-      //    if (colliderNode .getAppliedParameters () .has (AppliedParametersType .BOUNCE))
-      //    {
-      //       for (const bodyNode of this .bodyNodes)
-      //       {
-      //          const rigidBody = bodyNode .getRigidBody ();
-
-      //          if (rigidBody .getLinearVelocity () .length () >= colliderNode ._minBounceSpeed .getValue ())
-      //             rigidBody .setRestitution (colliderNode ._bounce .getValue ());
-      //          else
-      //             rigidBody .setRestitution (0);
-      //       }
-
-      //       return;
-      //    }
-      // }
-
-      // for (const bodyNode of this .bodyNodes)
-      //    bodyNode .getRigidBody () .setRestitution (0);
-   },
    set_bodies__ ()
    {
       for (const bodyNode of this .bodyNodes)
@@ -227,9 +148,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
 
          this .bodyNodes .push (bodyNode);
       }
-
-      this .set_colliderParameters__ ();
-      this .set_contactSurfaceThickness__ ();
+      
       this .set_joints__ ();
    },
    set_joints__ ()

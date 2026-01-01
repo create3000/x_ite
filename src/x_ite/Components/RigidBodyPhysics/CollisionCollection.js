@@ -23,9 +23,8 @@ function CollisionCollection (executionContext)
 
    // Private properties
 
-   this .appliedParameters = new Set ();
-   this .collidableNodes   = [ ];
-   this .material          = { };
+   this .collidableNodes = [ ];
+   this .material        = { };
 }
 
 Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChildNode .prototype),
@@ -36,12 +35,10 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChild
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
 
-      this ._appliedParameters .addInterest ("set_appliedParameters__", this);
-      this ._appliedParameters .addInterest ("set_material__",          this);
-      this ._collidables       .addInterest ("set_collidables__",       this);
-      this ._collidables       .addInterest ("set_material__",          this);
+      this ._appliedParameters .addInterest ("set_material__",    this);
+      this ._collidables       .addInterest ("set_collidables__", this);
+      this ._collidables       .addInterest ("set_material__",    this);
 
-      this .set_appliedParameters__ ();
       this .set_collidables__ ();
       this .set_material__ ();
    },
@@ -51,25 +48,6 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChild
          return bbox .set ();
 
       return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
-   },
-   set_appliedParameters__ ()
-   {
-      // "BOUNCE",
-      // "USER_FRICTION",
-      // "FRICTION_COEFFICIENT_2",
-      // "ERROR_REDUCTION",
-      // "CONSTANT_FORCE",
-      // "SPEED_1",
-      // "SPEED_2",
-      // "SLIP_1",
-      // "SLIP_2",
-
-      const { appliedParameters } = this;
-
-      appliedParameters .clear ();
-
-      for (const appliedParameter of this ._appliedParameters)
-         appliedParameters .add (appliedParameter);
    },
    set_collidables__ ()
    {
@@ -88,20 +66,27 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChild
    },
    set_material__ ()
    {
-      const { appliedParameters, collidableNodes, material } = this;
+      const { collidableNodes, material } = this;
 
       for (const key in material)
          delete material [key];
 
-      if (appliedParameters .has ("BOUNCE"))
+      for (const appliedParameter of this ._appliedParameters)
       {
-         material .restitution = Algorithm .clamp (this ._bounce .getValue (), 0, 1);
-      }
-
-      if (appliedParameters .has ("FRICTION_COEFFICIENT_2"))
-      {
-         material .staticFriction  = Math .max (this ._frictionCoefficients .x, 0);
-         material .dynamicFriction = Math .max (this ._frictionCoefficients .y, 0);
+         switch (appliedParameter)
+         {
+            case "BOUNCE":
+            {
+               material .restitution = Algorithm .clamp (this ._bounce .getValue (), 0, 1);
+               break;
+            }
+            case "FRICTION_COEFFICIENT_2":
+            {
+               material .staticFriction  = Math .max (this ._frictionCoefficients .x, 0);
+               material .dynamicFriction = Math .max (this ._frictionCoefficients .y, 0);
+               break;
+            }
+         }
       }
 
       for (const collidableNode of collidableNodes)
