@@ -715,7 +715,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                collisionCollectionNode = scene .createNode ("CollisionCollection", false);
 
             collisionCollectionNode ._appliedParameters    = ["BOUNCE", "FRICTION_COEFFICIENT_2"];
-            collisionCollectionNode ._bounce               = 0;
             collisionCollectionNode ._frictionCoefficients = new Vector2 (0.6, 0.6);
 
             collisionCollectionNode .setup ();
