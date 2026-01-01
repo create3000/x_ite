@@ -696,7 +696,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             collisionCollectionNode ._appliedParameters    = ["BOUNCE", "FRICTION_COEFFICIENT_2"];
             collisionCollectionNode ._bounce               = physicsMaterial .restitution ?? 0;
             collisionCollectionNode ._bounceCombine        = physicsMaterial .restitutionCombine ?.toUpperCase () ?? "MINIMUM";
-            collisionCollectionNode ._frictionCoefficients = new Vector2 (physicsMaterial .staticFriction ?? 0.6, physicsMaterial .dynamicFriction ?? 0.6);
+            collisionCollectionNode ._frictionCoefficients = new Vector2 (physicsMaterial .staticFriction ?? 0.5, physicsMaterial .dynamicFriction ?? 0.5);
             collisionCollectionNode ._frictionCombine      = physicsMaterial .frictionCombine ?.toUpperCase () ?? "MAXIMUM";
 
             this .collisionCollections .push (collisionCollectionNode);
