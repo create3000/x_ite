@@ -46,7 +46,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    },
    setEnabled (parentEnabled)
    {
-      this .parentEnabled = this .isRoot () ? true : parentEnabled;
+      this .parentEnabled = parentEnabled;
       this .enabled       = this ._enabled .getValue () && parentEnabled;
 
       if (!this .PhysX)
@@ -130,27 +130,31 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                return this .PhysX .PxCombineModeEnum .eMULTIPLY;
       }
    },
-   setActor (actor)
+   setBody (body, root)
    {
-      if (this .actor)
+      if (this .getActor ())
       {
-         if (this .convexShape && this .actor instanceof this .PhysX .PxRigidDynamic)
-            this .actor .detachShape (this .convexShape);
+         if (this .convexShape && this .getActor () instanceof this .PhysX .PxRigidDynamic)
+            this .getActor () .detachShape (this .convexShape);
 
-         else if (this .concaveShape && this .actor instanceof this .PhysX .PxRigidStatic)
-            this .actor .detachShape (this .concaveShape);
+         else if (this .concaveShape && this .getActor () instanceof this .PhysX .PxRigidStatic)
+            this .getActor () .detachShape (this .concaveShape);
       }
 
-      this .actor = actor;
+      X3DNBodyCollidableNode .prototype .setBody .call (this, body, root);
 
-      if (this .actor)
+      if (this .getActor ())
       {
-         if (this .convexShape && this .actor instanceof this .PhysX .PxRigidDynamic)
-            this .actor .attachShape (this .convexShape);
+         if (this .convexShape && this .getActor () instanceof this .PhysX .PxRigidDynamic)
+            this .getActor () .attachShape (this .convexShape);
 
-         else if (this .concaveShape && this .actor instanceof this .PhysX .PxRigidStatic)
-            this .actor .attachShape (this .concaveShape);
+         else if (this .concaveShape && this .getActor () instanceof this .PhysX .PxRigidStatic)
+            this .getActor () .attachShape (this .concaveShape);
       }
+   },
+   getActor ()
+   {
+      return this .getBody () ?.getActor ();
    },
    createConvexShape (shapeFlags)
    {
@@ -398,13 +402,13 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          this .concaveShape = null;
       }
 
-      if (this .actor)
+      if (this .getActor ())
       {
-         if (this .convexShape && this .actor instanceof this .PhysX .PxRigidDynamic)
-            this .actor .attachShape (this .convexShape);
+         if (this .convexShape && this .getActor () instanceof this .PhysX .PxRigidDynamic)
+            this .getActor () .attachShape (this .convexShape);
 
-         else if (this .concaveShape && this .actor instanceof this .PhysX .PxRigidStatic)
-            this .actor .attachShape (this .concaveShape);
+         else if (this .concaveShape && this .getActor () instanceof this .PhysX .PxRigidStatic)
+            this .getActor () .attachShape (this .concaveShape);
       }
 
       this .setEnabled (this .parentEnabled);
@@ -414,13 +418,13 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    },
    removeCollidableGeometry ()
    {
-      if (this .actor)
+      if (this .getActor ())
       {
-         if (this .convexShape && this .actor instanceof this .PhysX .PxRigidDynamic)
-            this .actor .detachShape (this .convexShape);
+         if (this .convexShape && this .getActor () instanceof this .PhysX .PxRigidDynamic)
+            this .getActor () .detachShape (this .convexShape);
 
-         else if (this .concaveShape && this .actor instanceof this .PhysX .PxRigidStatic)
-            this .actor .detachShape (this .concaveShape);
+         else if (this .concaveShape && this .getActor () instanceof this .PhysX .PxRigidStatic)
+            this .getActor () .detachShape (this .concaveShape);
       }
 
       this .convexShape ?.release ();

@@ -31,7 +31,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
    },
    setEnabled (parentEnabled)
    {
-      this .parentEnabled = this .isRoot () ? true : parentEnabled;
+      this .parentEnabled = parentEnabled;
       this .enabled       = this ._enabled .getValue () && parentEnabled;
 
       this .getChild () ?.setEnabled (this .enabled);
@@ -53,11 +53,11 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
 
       this .getChild () ?.setPhysicsMaterial (material);
    },
-   setActor (actor)
+   setBody (body, root)
    {
-      this .actor = actor;
+      X3DNBodyCollidableNode .prototype .setBody .call (this, body, root);
 
-      return this .getChild () ?.setActor (actor);
+      this .getChild () ?.setBody (body);
    },
    set_enabled__ ()
    {
@@ -71,9 +71,9 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
       {
          const collidableNode = this .getChild ();
 
+         collidableNode .setBody (null);
          collidableNode .setEnabled (true);
          collidableNode .setLocalPose (Matrix4 .IDENTITY);
-         collidableNode .setActor (null);
       }
 
       // Add node.
@@ -82,10 +82,10 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
 
       this .setChild (collidableNode);
 
+      this .setBody (this .getBody ());
       this .setEnabled (this .parentEnabled);
       this .setLocalPose (this .parentMatrix);
       this .setPhysicsMaterial (this .material);
-      this .setActor (this .actor);
    },
 });
 
