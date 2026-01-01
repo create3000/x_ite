@@ -405,11 +405,11 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          this .concaveShape = null;
       }
 
-      // this .convexShape ?.setContactOffset (0.01);
-      // this .convexShape ?.setRestOffset (0.0);
+      this .convexShape ?.setContactOffset (0.001);
+      this .convexShape ?.setRestOffset (0.0);
 
-      // this .concaveShape ?.setContactOffset (0.01);
-      // this .concaveShape ?.setRestOffset (0.0);
+      this .concaveShape ?.setContactOffset (0.001);
+      this .concaveShape ?.setRestOffset (0.0);
 
       if (this .getActor ())
       {

@@ -695,9 +695,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
             collisionCollectionNode ._appliedParameters    = ["BOUNCE", "FRICTION_COEFFICIENT_2"];
             collisionCollectionNode ._bounce               = physicsMaterial .restitution ?? 0;
-            collisionCollectionNode ._bounceCombine        = physicsMaterial .restitutionCombine ?.toUpperCase () ?? "AVERAGE";
+            collisionCollectionNode ._bounceCombine        = physicsMaterial .restitutionCombine ?.toUpperCase () ?? "MINIMUM";
             collisionCollectionNode ._frictionCoefficients = new Vector2 (physicsMaterial .staticFriction ?? 0.6, physicsMaterial .dynamicFriction ?? 0.6);
-            collisionCollectionNode ._frictionCombine      = physicsMaterial .frictionCombine ?.toUpperCase () ?? "AVERAGE";
+            collisionCollectionNode ._frictionCombine      = physicsMaterial .frictionCombine ?.toUpperCase () ?? "MAXIMUM";
 
             this .collisionCollections .push (collisionCollectionNode);
 
@@ -2529,8 +2529,9 @@ function eventsProcessed ()
                         rigidBodyNode ._fixed                = true;
                         rigidBodyNode ._position             = translation;
                         rigidBodyNode ._orientation          = rotation;
-                        rigidBodyNode ._linearDampingFactor  = 0;
-                        rigidBodyNode ._angularDampingFactor = 0;
+                        rigidBodyNode ._autoDamp             = true;
+                        rigidBodyNode ._linearDampingFactor  = 0.05;
+                        rigidBodyNode ._angularDampingFactor = 0.05;
 
                         this .rigidBodies .push (rigidBodyNode);
                      }
