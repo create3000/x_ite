@@ -84,7 +84,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
       this ._body = body;
 
       this .setActor (body ?.getActor ());
-      this .setLocalPose (this .parentEnabled);
+      this .setLocalPose (this .parentMatrix);
    },
    getMatrix ()
    {
