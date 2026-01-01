@@ -2548,71 +2548,62 @@ function eventsProcessed ()
                         {
                            const collisionCollectionNode = this .collisionCollectionObject (value .physicsMaterial);
 
+                           let children;
+
                            if (value .geometry ?.node !== undefined)
                            {
                               const child = this .nodes [value .geometry .node];
 
                               this .nodeChildren (child, 0, node .modelMatrix);
 
-                              for (const shapeNode of child ?.childNode ?._children ?? [ ])
-                              {
-                                 const collidableShapeNode = scene .createNode ("CollidableShape", false);
-
-                                 collidableShapeNode ._convexHull = value .geometry .convexHull;
-                                 collidableShapeNode ._shape      = shapeNode;
-
-                                 if (physicsParent)
-                                 {
-                                    physicsParent .modelMatrix .copy ()
-                                       .inverse ()
-                                       .multLeft (node .modelMatrix) .get (translation, rotation, scale);
-
-                                    collidableShapeNode ._translation = translation;
-                                    collidableShapeNode ._rotation    = rotation;
-                                    collidableShapeNode ._scale       = scale;
-
-                                    const collidableOffsetNode = scene .createNode ("CollidableOffset", false);
-
-                                    collidableOffsetNode ._collidable = collidableShapeNode;
-
-                                    collidableOffsetNode .setup ();
-
-                                    rigidBodyNode ._geometry .push (collidableOffsetNode);
-
-                                    collisionCollectionNode ._collidables .push (collidableOffsetNode);
-
-                                    this .collidables .push (collidableOffsetNode);
-                                 }
-                                 else
-                                 {
-                                    collidableShapeNode ._scale = scale;
-
-                                    rigidBodyNode ._geometry .push (collidableShapeNode);
-
-                                    collisionCollectionNode ._collidables .push (collidableShapeNode);
-
-                                    this .collidables .push (collidableShapeNode);
-                                 }
-
-                                 collidableShapeNode .setup ();
-
-                                 // DEBUG
-                                 // node .transformNode ._children .push (collidableShapeNode);
-                              }
+                              children = child ?.childNode ?._children;
                            }
                            else if (value .geometry ?.shape !== undefined)
                            {
+                              children = [this .implicitShapes [value .geometry .shape]];
+                           }
+
+                           for (const shapeNode of children ?? [ ])
+                           {
                               const collidableShapeNode = scene .createNode ("CollidableShape", false);
 
-                              collidableShapeNode ._shape = this .implicitShapes [value .geometry .shape];
+                              collidableShapeNode ._convexHull = value .geometry .convexHull;
+                              collidableShapeNode ._shape      = shapeNode;
+
+                              if (physicsParent)
+                              {
+                                 physicsParent .modelMatrix .copy ()
+                                    .inverse ()
+                                    .multLeft (node .modelMatrix) .get (translation, rotation, scale);
+
+                                 collidableShapeNode ._translation = translation;
+                                 collidableShapeNode ._rotation    = rotation;
+                                 collidableShapeNode ._scale       = scale;
+
+                                 const collidableOffsetNode = scene .createNode ("CollidableOffset", false);
+
+                                 collidableOffsetNode ._collidable = collidableShapeNode;
+
+                                 collidableOffsetNode .setup ();
+
+                                 rigidBodyNode ._geometry .push (collidableOffsetNode);
+
+                                 collisionCollectionNode ._collidables .push (collidableOffsetNode);
+
+                                 this .collidables .push (collidableOffsetNode);
+                              }
+                              else
+                              {
+                                 collidableShapeNode ._scale = scale;
+
+                                 rigidBodyNode ._geometry .push (collidableShapeNode);
+
+                                 collisionCollectionNode ._collidables .push (collidableShapeNode);
+
+                                 this .collidables .push (collidableShapeNode);
+                              }
 
                               collidableShapeNode .setup ();
-
-                              rigidBodyNode ._geometry .push (collidableShapeNode);
-
-                              collisionCollectionNode ._collidables .push (collidableShapeNode);
-
-                              this .collidables .push (collidableShapeNode);
 
                               // DEBUG
                               // node .transformNode ._children .push (collidableShapeNode);
@@ -4546,7 +4537,7 @@ function eventsProcessed ()
       collidables ._visible  = true; // DEBUG
       collidables ._children = this .collidables;
 
-      // this .getScene () .rootNodes .push (collidables); // DEBUG
+      this .getScene () .rootNodes .push (collidables); // DEBUG
 
       collection           .setup ();
       collidables          .setup ();
