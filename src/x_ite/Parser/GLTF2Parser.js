@@ -56,6 +56,7 @@ function GLTF2Parser (scene)
    this .physics               = [ ];
    this .rigidBodies           = [ ];
    this .collidables           = [ ];
+   this .collisionCollections  = [ ];
    this .motionScripts         = [ ];
    this .implicitShapes        = [ ];
 }
@@ -678,6 +679,51 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          shapeNode .setup ();
 
          this .implicitShapes [i] = shapeNode;
+      }
+   },
+   collisionCollectionObject (index)
+   {
+      const physicsMaterial = this .input .extensions ?.KHR_physics_rigid_bodies ?.physicsMaterials ?.[index];
+
+      if (physicsMaterial instanceof Object)
+      {
+         return physicsMaterial .node ??= (() =>
+         {
+            const
+               scene = this .getScene (),
+               collisionCollectionNode = scene .createNode ("CollisionCollection", false);
+
+            collisionCollectionNode ._appliedParameters    = ["BOUNCE", "FRICTION_COEFFICIENT_2"];
+            collisionCollectionNode ._bounce               = physicsMaterial .restitution ?? 0;
+            collisionCollectionNode ._bounceCombine        = physicsMaterial .restitutionCombine ?? "AVERAGE";
+            collisionCollectionNode ._frictionCoefficients = new Vector2 (physicsMaterial .staticFriction ?? 0.6, physicsMaterial .dynamicFriction ?? 0.6);
+            collisionCollectionNode ._frictionCombine      = physicsMaterial .frictionCombine ?? "AVERAGE";
+
+            collisionCollectionNode .setup ();
+
+            this .collisionCollections .push (collisionCollectionNode);
+
+            return collisionCollectionNode;
+         })();
+      }
+      else
+      {
+         return this .defaultCollisionCollectionNode ??= (() =>
+         {
+            const
+               scene = this .getScene (),
+               collisionCollectionNode = scene .createNode ("CollisionCollection", false);
+
+            collisionCollectionNode ._appliedParameters    = ["BOUNCE", "FRICTION_COEFFICIENT_2"];
+            collisionCollectionNode ._bounce               = 0;
+            collisionCollectionNode ._frictionCoefficients = new Vector2 (0.6, 0.6);
+
+            collisionCollectionNode .setup ();
+
+            this .collisionCollections .unshift (collisionCollectionNode);
+
+            return collisionCollectionNode;
+         })();
       }
    },
    async buffersArray (buffers)
@@ -2485,9 +2531,11 @@ function eventsProcessed ()
 
                         node .modelMatrix .get (translation, rotation, scale);
 
-                        rigidBodyNode ._fixed       = true;
-                        rigidBodyNode ._position    = translation;
-                        rigidBodyNode ._orientation = rotation;
+                        rigidBodyNode ._fixed                = true;
+                        rigidBodyNode ._position             = translation;
+                        rigidBodyNode ._orientation          = rotation;
+                        rigidBodyNode ._linearDampingFactor  = 0;
+                        rigidBodyNode ._angularDampingFactor = 0;
 
                         this .rigidBodies .push (rigidBodyNode);
                      }
@@ -2502,6 +2550,8 @@ function eventsProcessed ()
                      {
                         case "collider":
                         {
+                           const collisionCollectionNode = this .collisionCollectionObject (value .physicsMaterial);
+
                            if (value .geometry ?.node !== undefined)
                            {
                               const child = this .nodes [value .geometry .node];
@@ -2533,6 +2583,8 @@ function eventsProcessed ()
 
                                     rigidBodyNode ._geometry .push (collidableOffsetNode);
 
+                                    collisionCollectionNode ._collidables .push (collidableOffsetNode);
+
                                     this .collidables .push (collidableOffsetNode);
                                  }
                                  else
@@ -2540,6 +2592,8 @@ function eventsProcessed ()
                                     collidableShapeNode ._scale = scale;
 
                                     rigidBodyNode ._geometry .push (collidableShapeNode);
+
+                                    collisionCollectionNode ._collidables .push (collidableShapeNode);
 
                                     this .collidables .push (collidableShapeNode);
                                  }
@@ -2559,6 +2613,8 @@ function eventsProcessed ()
                               collidableShapeNode .setup ();
 
                               rigidBodyNode ._geometry .push (collidableShapeNode);
+
+                              collisionCollectionNode ._collidables .push (collidableShapeNode);
 
                               this .collidables .push (collidableShapeNode);
 
@@ -4465,13 +4521,15 @@ function eventsProcessed ()
          return;
 
       const
-         scene         = this .getScene (),
-         collidables   = scene .createNode ("Group", false),
-         collection    = scene .createNode ("RigidBodyCollection", false),
-         motionScripts = scene .createNode ("Group", false);
+         scene                = this .getScene (),
+         collidables          = scene .createNode ("Group", false),
+         collection           = scene .createNode ("RigidBodyCollection", false),
+         motionScripts        = scene .createNode ("Group", false),
+         collisionCollections = scene .createNode ("Group", false);
 
-      scene .addNamedNode (scene .getUniqueName ("Collidables"),   collidables);
-      scene .addNamedNode (scene .getUniqueName ("MotionScripts"), motionScripts);
+      scene .addNamedNode (scene .getUniqueName ("Collidables"),          collidables);
+      scene .addNamedNode (scene .getUniqueName ("MotionScripts"),        motionScripts);
+      scene .addNamedNode (scene .getUniqueName ("CollisionCollections"), collisionCollections);
 
       collidables ._visible  = true; // DEBUG
       collidables ._children = this .collidables;
@@ -4485,11 +4543,25 @@ function eventsProcessed ()
       motionScripts ._visible  = false;
       motionScripts ._children = this .motionScripts;
 
-      collidables   .setup ();
-      collection    .setup ();
-      motionScripts .setup ();
+      collisionCollections ._visible  = false;
+      collisionCollections ._children = this .collisionCollections;
 
-      this .physics .push ({ node: collidables }, { node: collection }, { node: motionScripts });
+      collidables          .setup ();
+      collection           .setup ();
+      motionScripts        .setup ();
+      collisionCollections .setup ();
+
+      if (collidables ._children .length)
+         this .physics .push ({ node: collidables });
+
+      if (collection ._bodies .length)
+         this .physics .push ({ node: collection });
+
+      if (motionScripts ._children .length)
+         this .physics .push ({ node: motionScripts });
+
+      if (collisionCollections ._children .length)
+         this .physics .push ({ node: collisionCollections });
    },
    vectorValue (array, vector)
    {
