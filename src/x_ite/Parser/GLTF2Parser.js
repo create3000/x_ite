@@ -4517,24 +4517,20 @@ function eventsProcessed ()
 
       const
          scene                = this .getScene (),
-         collidables          = scene .createNode ("Group", false),
          collection           = scene .createNode ("RigidBodyCollection", false),
          motionScripts        = scene .createNode ("Group", false),
-         collisionCollections = scene .createNode ("Group", false);
+         collisionCollections = scene .createNode ("Group", false),
+         collidables          = scene .createNode ("Group", false);
 
-      scene .addNamedNode (scene .getUniqueName ("Collidables"),          collidables);
       scene .addNamedNode (scene .getUniqueName ("MotionScripts"),        motionScripts);
       scene .addNamedNode (scene .getUniqueName ("CollisionCollections"), collisionCollections);
-
-      collidables ._visible  = true; // DEBUG
-      collidables ._children = this .collidables;
-
-      this .getScene () .rootNodes .push (collidables); // DEBUG
+      scene .addNamedNode (scene .getUniqueName ("Collidables"),          collidables);
 
       this .rigidBodies .forEach (rigidBodyNode => rigidBodyNode .setup ());
       this .collisionCollections .forEach (collisionCollection => collisionCollection .setup ());
 
-      collection ._bodies = this .rigidBodies;
+      collection ._iterations = 4;
+      collection ._bodies     = this .rigidBodies;
 
       motionScripts ._visible  = false;
       motionScripts ._children = this .motionScripts;
@@ -4542,13 +4538,15 @@ function eventsProcessed ()
       collisionCollections ._visible  = false;
       collisionCollections ._children = this .collisionCollections;
 
-      collidables          .setup ();
+      collidables ._visible  = true; // DEBUG
+      collidables ._children = this .collidables;
+
+      this .getScene () .rootNodes .push (collidables); // DEBUG
+
       collection           .setup ();
+      collidables          .setup ();
       motionScripts        .setup ();
       collisionCollections .setup ();
-
-      if (collidables ._children .length)
-         this .physics .push ({ node: collidables });
 
       if (collection ._bodies .length)
          this .physics .push ({ node: collection });
@@ -4558,6 +4556,9 @@ function eventsProcessed ()
 
       if (collisionCollections ._children .length)
          this .physics .push ({ node: collisionCollections });
+
+      if (collidables ._children .length)
+         this .physics .push ({ node: collidables });
    },
    vectorValue (array, vector)
    {
