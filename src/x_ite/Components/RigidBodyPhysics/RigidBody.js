@@ -35,7 +35,6 @@ function RigidBody (executionContext)
 
    this .geometryNodes      = [ ];
    this .otherGeometryNodes = [ ];
-   this .shapes             = new Set ();
 }
 
 Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype),
@@ -344,13 +343,6 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    set_geometry__ ()
    {
       const geometryNodes = this .geometryNodes;
-
-      // Detach shapes.
-
-      for (const shape of this .shapes)
-         this .actor .detachShape (shape);
-
-      this .shapes .clear ();
 
       // Remove geometries.
 
