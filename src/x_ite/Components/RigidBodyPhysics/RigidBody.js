@@ -342,7 +342,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    },
    set_geometry__ ()
    {
-      const geometryNodes = this .geometryNodes;
+      const { geometryNodes, otherGeometryNodes } = this;
 
       // Remove geometries.
 
@@ -357,10 +357,11 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          this ._orientation .removeFieldInterest (geometryNode ._rotation);
       }
 
-      for (const otherGeometryNode of this .otherGeometryNodes)
+      for (const otherGeometryNode of otherGeometryNodes)
          otherGeometryNode ._body .removeInterest ("set_body__", this);
 
-      geometryNodes .length = 0;
+      geometryNodes      .length = 0;
+      otherGeometryNodes .length = 0;
 
       // Release actor.
 
@@ -395,7 +396,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          if (geometryNode .getBody ())
          {
             geometryNode ._body .addInterest ("set_body__", this);
-            this .otherGeometryNodes .push (geometryNode);
+            otherGeometryNodes .push (geometryNode);
             continue;
          }
 

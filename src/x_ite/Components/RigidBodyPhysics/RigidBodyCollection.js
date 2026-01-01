@@ -122,15 +122,16 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    },
    set_bodies__ ()
    {
-      const bodyNodes = this .bodyNodes;
+      const { bodyNodes, otherBodyNodes } = this;
 
       for (const bodyNode of bodyNodes)
          bodyNode .setCollection (null);
 
-      for (const otherBodyNode of this .otherBodyNodes)
+      for (const otherBodyNode of otherBodyNodes)
          otherBodyNode ._collection .removeInterest ("set_bodies__", this);
 
-      bodyNodes .length = 0;
+      bodyNodes      .length = 0;
+      otherBodyNodes .length = 0;
 
       for (const node of this ._bodies)
       {
@@ -142,7 +143,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
          if (bodyNode .getCollection ())
          {
             bodyNode ._collection .addInterest ("set_bodies__", this);
-            this .otherBodyNodes .push (bodyNode);
+            otherBodyNodes .push (bodyNode);
             continue;
          }
 
