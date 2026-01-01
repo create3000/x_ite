@@ -2641,12 +2641,15 @@ function eventsProcessed ()
                            if (this .vectorValue (value .angularVelocity, vector3))
                               rigidBodyNode ._angularVelocity = node .modelMatrix .multDirMatrix (vector3) .negate ();
 
-                           const gravity = GRAVITY * this .numberValue (value .gravityFactor, 1);
+                           const gravityFactor = this .numberValue (value .gravityFactor, 1);
 
-                           rigidBodyNode ._useGlobalGravity = false;
+                           if (gravityFactor !== 1)
+                           {
+                              rigidBodyNode ._useGlobalGravity = false;
 
-                           if (!value .isKinematic)
-                              rigidBodyNode ._forces = [0, gravity * mass, 0];
+                              if (!value .isKinematic)
+                                 rigidBodyNode ._forces = [0, GRAVITY * gravityFactor * mass, 0];
+                           }
 
                            // Script
 
@@ -4526,10 +4529,11 @@ function eventsProcessed ()
       scene .addNamedNode (scene .getUniqueName ("CollisionCollections"), collisionCollections);
       scene .addNamedNode (scene .getUniqueName ("Collidables"),          collidables);
 
-      this .rigidBodies .forEach (rigidBodyNode => rigidBodyNode .setup ());
-      this .collisionCollections .forEach (collisionCollection => collisionCollection .setup ());
+      this .rigidBodies .forEach (node => node .setup ());
+      this .collisionCollections .forEach (node => node .setup ());
 
       collection ._iterations = 4;
+      collection ._gravity    = new Vector3 (0, GRAVITY, 0);
       collection ._bodies     = this .rigidBodies;
 
       motionScripts ._visible  = false;
@@ -4541,7 +4545,7 @@ function eventsProcessed ()
       collidables ._visible  = true; // DEBUG
       collidables ._children = this .collidables;
 
-      this .getScene () .rootNodes .push (collidables); // DEBUG
+      // this .getScene () .rootNodes .push (collidables); // DEBUG
 
       collection           .setup ();
       collidables          .setup ();
