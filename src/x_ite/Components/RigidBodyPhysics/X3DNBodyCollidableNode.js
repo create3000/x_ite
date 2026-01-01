@@ -5,9 +5,7 @@ import X3DBoundedObject from "../Grouping/X3DBoundedObject.js";
 import X3DConstants     from "../../Base/X3DConstants.js";
 import X3DCast          from "../../Base/X3DCast.js";
 import TraverseType     from "../../Rendering/TraverseType.js";
-import Vector3          from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4          from "../../../standard/Math/Numbers/Matrix4.js";
-import Ammo             from "../../../lib/ammojs/AmmoClass.js";
 
 function X3DNBodyCollidableNode (executionContext)
 {
@@ -77,15 +75,16 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
    },
    isRoot ()
    {
-      return !!this ._body .getValue ();
+      return this .root;
    },
    getBody ()
    {
       return this ._body .getValue ();
    },
-   setBody (body)
+   setBody (body, root = false)
    {
       this ._body = body;
+      this .root  = root;
 
       this .setActor (body ?.getActor ());
       this .setEnabled (this .parentEnabled);

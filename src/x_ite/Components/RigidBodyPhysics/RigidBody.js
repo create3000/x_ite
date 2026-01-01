@@ -399,12 +399,13 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
             continue;
          }
 
-         geometryNode .setBody (this);
          geometryNodes .push (geometryNode);
       }
 
       for (const geometryNode of geometryNodes)
       {
+         geometryNode .setBody (this, true);
+
          geometryNode ._translation .addFieldInterest (this ._position);
          geometryNode ._rotation    .addFieldInterest (this ._orientation);
 
