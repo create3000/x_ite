@@ -75,6 +75,10 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
 
       return shapes;
    },
+   isRoot ()
+   {
+      return !!this ._body .getValue ();
+   },
    getBody ()
    {
       return this ._body .getValue ();
@@ -84,6 +88,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
       this ._body = body;
 
       this .setActor (body ?.getActor ());
+      this .setEnabled (this .parentEnabled);
       this .setLocalPose (this .parentMatrix);
    },
    getMatrix ()

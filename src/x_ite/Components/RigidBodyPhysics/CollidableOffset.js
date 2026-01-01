@@ -31,7 +31,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
    },
    setEnabled (parentEnabled)
    {
-      this .parentEnabled = parentEnabled;
+      this .parentEnabled = this .isRoot () ? true : parentEnabled;
       this .enabled       = this ._enabled .getValue () && parentEnabled;
 
       this .getChild () ?.setEnabled (this .enabled);
@@ -40,7 +40,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
    {
       this .parentMatrix .assign (parentMatrix);
 
-      if (this .getBody ())
+      if (this .isRoot ())
          this .offsetMatrix .assign (parentMatrix);
       else
          this .offsetMatrix .assign (this .getMatrix ()) .multRight (parentMatrix);
