@@ -19,10 +19,10 @@ function CollidableShape (executionContext)
 
    this .material = {
       restitution: 0,
-      staticFriction: 1,
-      dynamicFriction: 1,
+      staticFriction: 0,
+      dynamicFriction: 0,
       restitutionCombine: "MAXIMUM",
-      frictionCombine: "MINIMUM",
+      frictionCombine: "MAXIMUM",
    };
 }
 
