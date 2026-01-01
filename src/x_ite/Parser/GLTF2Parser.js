@@ -681,45 +681,27 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          this .implicitShapes [i] = shapeNode;
       }
    },
-   collisionCollectionObject (index)
+   physicsMaterialObject (index)
    {
-      const physicsMaterial = this .input .extensions ?.KHR_physics_rigid_bodies ?.physicsMaterials ?.[index];
+      const physicsMaterial = this .input .extensions ?.KHR_physics_rigid_bodies ?.physicsMaterials ?.[index]
+         ?? (this .defaultPhysicsMaterial ??= { });
 
-      if (physicsMaterial instanceof Object)
+      return physicsMaterial .node ??= (() =>
       {
-         return physicsMaterial .node ??= (() =>
-         {
-            const
-               scene                   = this .getScene (),
-               collisionCollectionNode = scene .createNode ("CollisionCollection", false);
+         const
+            scene                   = this .getScene (),
+            collisionCollectionNode = scene .createNode ("CollisionCollection", false);
 
-            collisionCollectionNode ._appliedParameters    = ["BOUNCE", "FRICTION_COEFFICIENT_2"];
-            collisionCollectionNode ._bounce               = physicsMaterial .restitution ?? 0;
-            collisionCollectionNode ._bounceCombine        = physicsMaterial .restitutionCombine ?.toUpperCase () ?? "MINIMUM";
-            collisionCollectionNode ._frictionCoefficients = new Vector2 (physicsMaterial .staticFriction ?? 0.5, physicsMaterial .dynamicFriction ?? 0.5);
-            collisionCollectionNode ._frictionCombine      = physicsMaterial .frictionCombine ?.toUpperCase () ?? "MAXIMUM";
+         collisionCollectionNode ._appliedParameters    = ["BOUNCE", "FRICTION_COEFFICIENT_2"];
+         collisionCollectionNode ._bounce               = physicsMaterial .restitution ?? 0;
+         collisionCollectionNode ._bounceCombine        = physicsMaterial .restitutionCombine ?.toUpperCase () ?? "MINIMUM";
+         collisionCollectionNode ._frictionCoefficients = new Vector2 (physicsMaterial .staticFriction ?? 0.5, physicsMaterial .dynamicFriction ?? 0.5);
+         collisionCollectionNode ._frictionCombine      = physicsMaterial .frictionCombine ?.toUpperCase () ?? "MAXIMUM";
 
-            this .collisionCollections .push (collisionCollectionNode);
+         this .collisionCollections .push (collisionCollectionNode);
 
-            return collisionCollectionNode;
-         })();
-      }
-      else
-      {
-         return this .defaultCollisionCollectionNode ??= (() =>
-         {
-            const
-               scene                   = this .getScene (),
-               collisionCollectionNode = scene .createNode ("CollisionCollection", false);
-
-            collisionCollectionNode ._appliedParameters    = ["BOUNCE", "FRICTION_COEFFICIENT_2"];
-            collisionCollectionNode ._frictionCoefficients = new Vector2 (0.6, 0.6);
-
-            this .collisionCollections .unshift (collisionCollectionNode);
-
-            return collisionCollectionNode;
-         })();
-      }
+         return collisionCollectionNode;
+      })();
    },
    async buffersArray (buffers)
    {
@@ -2546,7 +2528,7 @@ function eventsProcessed ()
                      {
                         case "collider":
                         {
-                           const collisionCollectionNode = this .collisionCollectionObject (value .physicsMaterial);
+                           const collisionCollectionNode = this .physicsMaterialObject (value .physicsMaterial);
 
                            let children;
 
