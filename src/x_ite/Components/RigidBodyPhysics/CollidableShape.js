@@ -130,9 +130,27 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                return this .PhysX .PxCombineModeEnum .eMULTIPLY;
       }
    },
-   getPhysicsShape (convexHull)
+   setActor (actor)
    {
-      return convexHull ? this .convexShape : this .concaveShape;
+      if (this .actor)
+      {
+         if (this .concaveShape && !this .actor .setSolverIterationCounts)
+            this .actor .detachShape (this .concaveShape);
+
+         else if (this .convexShape && this .actor .setSolverIterationCounts)
+            this .actor .detachShape (this .convexShape);
+      }
+
+      this .actor = actor;
+
+      if (this .actor)
+      {
+         if (this .concaveShape && !this .actor .setSolverIterationCounts)
+            this .actor .attachShape (this .concaveShape);
+
+         else if (this .convexShape && this .actor .setSolverIterationCounts)
+            this .actor .attachShape (this .convexShape);
+      }
    },
    createConvexShape (shapeFlags)
    {
@@ -380,6 +398,15 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          this .concaveShape = null;
       }
 
+      if (this .actor)
+      {
+         if (this .concaveShape && !this .actor .setSolverIterationCounts)
+            this .actor .attachShape (this .concaveShape);
+
+         else if (this .convexShape && this .actor .setSolverIterationCounts)
+            this .actor .attachShape (this .convexShape);
+      }
+
       this ._physicsShape = this .getBrowser () .getCurrentTime ();
 
       this .setEnabled (this .parentEnabled);
@@ -389,8 +416,20 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    },
    removeCollidableGeometry ()
    {
-      this .convexShape  ?.release ();
-      this .concaveShape ?.release ();
+      if (this .actor)
+      {
+         if (this .concaveShape && !this .actor .setSolverIterationCounts)
+            this .actor .detachShape (this .concaveShape);
+
+         else if (this .convexShape && this .actor .setSolverIterationCounts)
+            this .actor .detachShape (this .convexShape);
+      }
+
+      if (this .convexShape)
+         this .PhysX .destroy (this .convexShape);
+
+      if (this .concaveShape)
+         this .PhysX .destroy (this .concaveShape);
    },
    dispose ()
    {

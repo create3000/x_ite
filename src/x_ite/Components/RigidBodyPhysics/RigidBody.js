@@ -353,10 +353,10 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       for (const geometryNode of geometryNodes)
       {
          geometryNode .setBody (null);
+         geometryNode .setActor (null);
 
-         geometryNode ._translation  .removeFieldInterest (this ._position);
-         geometryNode ._rotation     .removeFieldInterest (this ._orientation);
-         geometryNode ._physicsShape .removeInterest ("set_shapes__", this);
+         geometryNode ._translation .removeFieldInterest (this ._position);
+         geometryNode ._rotation    .removeFieldInterest (this ._orientation);
 
          this ._position    .removeFieldInterest (geometryNode ._translation);
          this ._orientation .removeFieldInterest (geometryNode ._rotation);
@@ -399,9 +399,8 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       for (const geometryNode of geometryNodes)
       {
-         geometryNode ._translation . addFieldInterest (this ._position);
-         geometryNode ._rotation     .addFieldInterest (this ._orientation);
-         geometryNode ._physicsShape .addInterest ("set_shapes__", this);
+         geometryNode ._translation .addFieldInterest (this ._position);
+         geometryNode ._rotation    .addFieldInterest (this ._orientation);
 
          this ._position    .addFieldInterest (geometryNode ._translation);
          this ._orientation .addFieldInterest (geometryNode ._rotation);
@@ -415,6 +414,9 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       if (!this .fixed)
          this .actor .setSolverIterationCounts (6, 2); // default: (4, 1)
+
+      for (const geometryNode of geometryNodes)
+         geometryNode .setActor (this .actor);
 
       this .collection ?.getPhysicsScene () .addActor (this .actor);
 
@@ -433,29 +435,10 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       this .set_inertia__ ();
       this .set_useGlobalGravity__ ();
       this .set_disable__ ();
-      this .set_shapes__ ();
    },
    set_body__ ()
    {
       this ._otherGeometry .addEvent ();
-   },
-   set_shapes__ ()
-   {
-      for (const shape of this .shapes)
-         this .actor .detachShape (shape);
-
-      this .shapes .clear ();
-
-      for (const geometryNode of this .geometryNodes)
-      {
-         const shape = geometryNode .getPhysicsShape (!this .fixed);
-
-         if (!shape)
-            continue;
-
-         this .shapes .add (shape);
-         this .actor .attachShape (shape);
-      }
    },
    applyForces ()
    {
@@ -541,6 +524,12 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    })(),
    dispose ()
    {
+      for (const geometryNode of this .geometryNodes)
+      {
+         geometryNode .setBody (null);
+         geometryNode .setActor (null);
+      }
+
       if (this .pose)
       {
          if (this .actor)

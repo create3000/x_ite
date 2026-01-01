@@ -53,9 +53,11 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
 
       this .getChild () ?.setPhysicsMaterial (material);
    },
-   getPhysicsShape (convexHull)
+   setActor (actor)
    {
-      return this .getChild () ?.getPhysicsShape (convexHull);
+      this .actor = actor;
+      
+      return this .getChild () ?.setActor (actor);
    },
    set_enabled__ ()
    {
@@ -73,6 +75,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
 
          collidableNode .setEnabled (true);
          collidableNode .setLocalPose (Matrix4 .IDENTITY);
+         collidableNode .setActor (null);
       }
 
       // Add node.
@@ -88,6 +91,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
       this .setEnabled (this .parentEnabled);
       this .setLocalPose (this .parentMatrix);
       this .setPhysicsMaterial (this .material);
+      this .setActor (this .actor);
    },
 });
 
