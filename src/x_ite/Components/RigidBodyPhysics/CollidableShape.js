@@ -134,10 +134,10 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    {
       if (this .actor)
       {
-         if (this .convexShape && this .actor .setSolverIterationCounts)
+         if (this .convexShape && this .actor instanceof this .PhysX .PxRigidDynamic)
             this .actor .detachShape (this .convexShape);
 
-         else if (this .concaveShape && !this .actor .setSolverIterationCounts)
+         else if (this .concaveShape && this .actor instanceof this .PhysX .PxRigidStatic)
             this .actor .detachShape (this .concaveShape);
       }
 
@@ -145,10 +145,10 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
 
       if (this .actor)
       {
-         if (this .convexShape && this .actor .setSolverIterationCounts)
+         if (this .convexShape && this .actor instanceof this .PhysX .PxRigidDynamic)
             this .actor .attachShape (this .convexShape);
 
-         else if (this .concaveShape && !this .actor .setSolverIterationCounts)
+         else if (this .concaveShape && this .actor instanceof this .PhysX .PxRigidStatic)
             this .actor .attachShape (this .concaveShape);
       }
    },
@@ -400,10 +400,10 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
 
       if (this .actor)
       {
-         if (this .convexShape && this .actor .setSolverIterationCounts)
+         if (this .convexShape && this .actor instanceof this .PhysX .PxRigidDynamic)
             this .actor .attachShape (this .convexShape);
 
-         else if (this .concaveShape && !this .actor .setSolverIterationCounts)
+         else if (this .concaveShape && this .actor instanceof this .PhysX .PxRigidStatic)
             this .actor .attachShape (this .concaveShape);
       }
 
@@ -416,10 +416,10 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    {
       if (this .actor)
       {
-         if (this .convexShape && this .actor .setSolverIterationCounts)
+         if (this .convexShape && this .actor instanceof this .PhysX .PxRigidDynamic)
             this .actor .detachShape (this .convexShape);
 
-         else if (this .concaveShape && !this .actor .setSolverIterationCounts)
+         else if (this .concaveShape && this .actor instanceof this .PhysX .PxRigidStatic)
             this .actor .detachShape (this .concaveShape);
       }
 
