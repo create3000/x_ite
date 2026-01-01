@@ -137,7 +137,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
          if (!bodyNode)
             continue;
 
-         if (bodyNode .getCollection ())
+         if (bodyNode .getCollection () !== this)
          {
             bodyNode ._collection .addInterest ("set_bodies__", this);
             this .otherBodyNodes .push (bodyNode);
@@ -148,7 +148,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
 
          this .bodyNodes .push (bodyNode);
       }
-      
+
       this .set_joints__ ();
    },
    set_joints__ ()
