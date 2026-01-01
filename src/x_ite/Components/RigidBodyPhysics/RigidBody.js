@@ -392,7 +392,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          if (!geometryNode)
             continue;
 
-         if (geometryNode .getBody () !== this)
+         if (geometryNode .getBody () && geometryNode .getBody () !== this)
          {
             geometryNode ._body .addInterest ("set_body__", this);
             this .otherGeometryNodes .push (geometryNode);
