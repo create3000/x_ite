@@ -21,8 +21,8 @@ function CollidableShape (executionContext)
       restitution: 0,
       staticFriction: 0,
       dynamicFriction: 0,
-      restitutionCombine: "MAXIMUM",
-      frictionCombine: "MAXIMUM",
+      restitutionCombine: "AVERAGE",
+      frictionCombine: "AVERAGE",
    };
 }
 
@@ -120,6 +120,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    {
       switch (mode)
       {
+         default:
          case "AVERAGE":
                return this .PhysX .PxCombineModeEnum .eAVERAGE;
          case "MINIMUM":

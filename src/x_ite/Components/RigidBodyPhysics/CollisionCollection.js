@@ -35,9 +35,13 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChild
       X3DChildNode     .prototype .initialize .call (this);
       X3DBoundedObject .prototype .initialize .call (this);
 
-      this ._appliedParameters .addInterest ("set_material__",    this);
-      this ._collidables       .addInterest ("set_collidables__", this);
-      this ._collidables       .addInterest ("set_material__",    this);
+      this ._appliedParameters    .addInterest ("set_material__",    this);
+      this ._bounce               .addInterest ("set_material__",    this);
+      this ._bounceCombine        .addInterest ("set_material__",    this);
+      this ._frictionCoefficients .addInterest ("set_material__",    this);
+      this ._frictionCombine      .addInterest ("set_material__",    this);
+      this ._collidables          .addInterest ("set_collidables__", this);
+      this ._collidables          .addInterest ("set_material__",    this);
 
       this .set_collidables__ ();
       this .set_material__ ();
@@ -77,13 +81,15 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChild
          {
             case "BOUNCE":
             {
-               material .restitution = Algorithm .clamp (this ._bounce .getValue (), 0, 1);
+               material .restitution        = Algorithm .clamp (this ._bounce .getValue (), 0, 1);
+               material .restitutionCombine = this ._bounceCombine .getValue ();
                break;
             }
             case "FRICTION_COEFFICIENT_2":
             {
                material .staticFriction  = Math .max (this ._frictionCoefficients .x, 0);
                material .dynamicFriction = Math .max (this ._frictionCoefficients .y, 0);
+               material .frictionCombine = this ._frictionCombine .getValue ();
                break;
             }
          }
@@ -111,7 +117,9 @@ Object .defineProperties (CollisionCollection,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "appliedParameters",        new Fields .MFString ("BOUNCE")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "bounce",                   new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "minBounceSpeed",           new Fields .SFFloat (0.1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bounceCombine",            new Fields .SFString ("AVERAGE")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "frictionCoefficients",     new Fields .SFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "frictionCombine",          new Fields .SFString ("AVERAGE")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "surfaceSpeed",             new Fields .SFVec2f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "slipFactors",              new Fields .SFVec2f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "softnessConstantForceMix", new Fields .SFFloat (0.0001)),
