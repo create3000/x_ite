@@ -699,8 +699,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             collisionCollectionNode ._frictionCoefficients = new Vector2 (physicsMaterial .staticFriction ?? 0.6, physicsMaterial .dynamicFriction ?? 0.6);
             collisionCollectionNode ._frictionCombine      = physicsMaterial .frictionCombine ?.toUpperCase () ?? "AVERAGE";
 
-            collisionCollectionNode .setup ();
-
             this .collisionCollections .push (collisionCollectionNode);
 
             return collisionCollectionNode;
@@ -716,8 +714,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
             collisionCollectionNode ._appliedParameters    = ["BOUNCE", "FRICTION_COEFFICIENT_2"];
             collisionCollectionNode ._frictionCoefficients = new Vector2 (0.6, 0.6);
-
-            collisionCollectionNode .setup ();
 
             this .collisionCollections .unshift (collisionCollectionNode);
 
@@ -4536,6 +4532,7 @@ function eventsProcessed ()
       this .getScene () .rootNodes .push (collidables); // DEBUG
 
       this .rigidBodies .forEach (rigidBodyNode => rigidBodyNode .setup ());
+      this .collisionCollections .forEach (collisionCollection => collisionCollection .setup ());
 
       collection ._bodies = this .rigidBodies;
 
