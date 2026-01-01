@@ -56,7 +56,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
    setActor (actor)
    {
       this .actor = actor;
-      
+
       return this .getChild () ?.setActor (actor);
    },
    set_enabled__ ()
@@ -71,8 +71,6 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
       {
          const collidableNode = this .getChild ();
 
-         collidableNode ._physicsShape .removeFieldInterest (this ._physicsShape);
-
          collidableNode .setEnabled (true);
          collidableNode .setLocalPose (Matrix4 .IDENTITY);
          collidableNode .setActor (null);
@@ -83,10 +81,6 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
       const collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this ._collidable);
 
       this .setChild (collidableNode);
-
-      collidableNode ?._physicsShape .addFieldInterest (this ._physicsShape);
-
-      this ._physicsShape = this .getBrowser () .getCurrentTime ();
 
       this .setEnabled (this .parentEnabled);
       this .setLocalPose (this .parentMatrix);

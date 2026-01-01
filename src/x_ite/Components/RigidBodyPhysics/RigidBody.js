@@ -99,6 +99,10 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    {
       return this .collection;
    },
+   getActor ()
+   {
+      return this .actor;
+   },
    setCollection (collection)
    {
       if (this .actor)
@@ -353,7 +357,6 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       for (const geometryNode of geometryNodes)
       {
          geometryNode .setBody (null);
-         geometryNode .setActor (null);
 
          geometryNode ._translation .removeFieldInterest (this ._position);
          geometryNode ._rotation    .removeFieldInterest (this ._orientation);
@@ -376,6 +379,17 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
          this .actor = null;
       }
+
+      // Create actor.
+
+      this .actor = this .fixed
+         ? this .physics .createRigidStatic (this .pose)
+         : this .physics .createRigidDynamic (this .pose);
+
+      if (!this .fixed)
+         this .actor .setSolverIterationCounts (6, 2); // default: (4, 1)
+
+      this .collection ?.getPhysicsScene () .addActor (this .actor);
 
       // Add geometries.
 
@@ -405,20 +419,6 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          this ._position    .addFieldInterest (geometryNode ._translation);
          this ._orientation .addFieldInterest (geometryNode ._rotation);
       }
-
-      // Create actor.
-
-      this .actor = this .fixed
-         ? this .physics .createRigidStatic (this .pose)
-         : this .physics .createRigidDynamic (this .pose);
-
-      if (!this .fixed)
-         this .actor .setSolverIterationCounts (6, 2); // default: (4, 1)
-
-      for (const geometryNode of geometryNodes)
-         geometryNode .setActor (this .actor);
-
-      this .collection ?.getPhysicsScene () .addActor (this .actor);
 
       // Setup actor properties.
 
@@ -525,10 +525,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    dispose ()
    {
       for (const geometryNode of this .geometryNodes)
-      {
          geometryNode .setBody (null);
-         geometryNode .setActor (null);
-      }
 
       if (this .pose)
       {

@@ -134,22 +134,22 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    {
       if (this .actor)
       {
-         if (this .concaveShape && !this .actor .setSolverIterationCounts)
-            this .actor .detachShape (this .concaveShape);
-
-         else if (this .convexShape && this .actor .setSolverIterationCounts)
+         if (this .convexShape && this .actor .setSolverIterationCounts)
             this .actor .detachShape (this .convexShape);
+
+         else if (this .concaveShape && !this .actor .setSolverIterationCounts)
+            this .actor .detachShape (this .concaveShape);
       }
 
       this .actor = actor;
 
       if (this .actor)
       {
-         if (this .concaveShape && !this .actor .setSolverIterationCounts)
-            this .actor .attachShape (this .concaveShape);
-
-         else if (this .convexShape && this .actor .setSolverIterationCounts)
+         if (this .convexShape && this .actor .setSolverIterationCounts)
             this .actor .attachShape (this .convexShape);
+
+         else if (this .concaveShape && !this .actor .setSolverIterationCounts)
+            this .actor .attachShape (this .concaveShape);
       }
    },
    createConvexShape (shapeFlags)
@@ -193,7 +193,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       this .PhysX .destroy (cookingParams);
       this .PhysX .destroy (desc);
 
-      return this .physics .createShape (geometry, this .physicsMaterial, true, shapeFlags);
+      return this .physics .createShape (geometry, this .physicsMaterial, false, shapeFlags);
    },
    createConcaveShape (shapeFlags)
    {
@@ -234,7 +234,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       this .PhysX .destroy (cookingParams);
       this .PhysX .destroy (desc);
 
-      return this .physics .createShape (geometry, this .physicsMaterial, true, shapeFlags);
+      return this .physics .createShape (geometry, this .physicsMaterial, false, shapeFlags);
    },
    malloc (f, q)
    {
@@ -301,7 +301,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                      box      = this .geometryNode,
                      size     = box ._size .getValue (),
                      geometry = new this .PhysX .PxBoxGeometry (size .x / 2, size .y / 2, size .z / 2),
-                     shape    = this .physics .createShape (geometry, this .physicsMaterial, true, shapeFlags);
+                     shape    = this .physics .createShape (geometry, this .physicsMaterial, false, shapeFlags);
 
                   this .convexShape  = shape;
                   this .concaveShape = shape;
@@ -365,7 +365,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                   const
                      sphere   = this .geometryNode,
                      geometry = new this .PhysX .PxSphereGeometry (sphere ._radius .getValue ()),
-                     shape    = this .physics .createShape (geometry, this .physicsMaterial, true, shapeFlags);
+                     shape    = this .physics .createShape (geometry, this .physicsMaterial, false, shapeFlags);
 
                   this .convexShape  = shape;
                   this .concaveShape = shape;
@@ -400,14 +400,12 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
 
       if (this .actor)
       {
-         if (this .concaveShape && !this .actor .setSolverIterationCounts)
-            this .actor .attachShape (this .concaveShape);
-
-         else if (this .convexShape && this .actor .setSolverIterationCounts)
+         if (this .convexShape && this .actor .setSolverIterationCounts)
             this .actor .attachShape (this .convexShape);
-      }
 
-      this ._physicsShape = this .getBrowser () .getCurrentTime ();
+         else if (this .concaveShape && !this .actor .setSolverIterationCounts)
+            this .actor .attachShape (this .concaveShape);
+      }
 
       this .setEnabled (this .parentEnabled);
       this .setLocalPose (this .parentMatrix);
@@ -418,18 +416,17 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    {
       if (this .actor)
       {
-         if (this .concaveShape && !this .actor .setSolverIterationCounts)
-            this .actor .detachShape (this .concaveShape);
-
-         else if (this .convexShape && this .actor .setSolverIterationCounts)
+         if (this .convexShape && this .actor .setSolverIterationCounts)
             this .actor .detachShape (this .convexShape);
+
+         else if (this .concaveShape && !this .actor .setSolverIterationCounts)
+            this .actor .detachShape (this .concaveShape);
       }
 
-      if (this .convexShape)
-         this .PhysX .destroy (this .convexShape);
+      this .convexShape ?.release ();
 
-      if (this .concaveShape)
-         this .PhysX .destroy (this .concaveShape);
+      if (this .concaveShape !== this .convexShape)
+         this .concaveShape ?.release ();
    },
    dispose ()
    {

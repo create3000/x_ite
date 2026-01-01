@@ -16,10 +16,8 @@ function X3DNBodyCollidableNode (executionContext)
 
    this .addType (X3DConstants .X3DNBodyCollidableNode);
 
-   this .addChildObjects (X3DConstants .inputOutput, "body",         new Fields .SFNode (),
-                          X3DConstants .outputOnly,  "physicsShape", new Fields .SFTime (),
-                          X3DConstants .outputOnly,  "rebuild",      new Fields .SFTime ());
-
+   this .addChildObjects (X3DConstants .inputOutput, "body",    new Fields .SFNode (),
+                          X3DConstants .outputOnly,  "rebuild", new Fields .SFTime ());
 
    this .setBoundedObject (true);
    this .setPointingObject (true);
@@ -77,12 +75,13 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
 
       return shapes;
    },
-   setBody (value)
+   setBody (body)
    {
-      this ._body = value;
+      this ._body = body;
 
       this .setEnabled (this .parentEnabled);
       this .setLocalPose (this .parentMatrix);
+      this .setActor (body ?.getActor ());
    },
    getBody ()
    {
