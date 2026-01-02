@@ -67,6 +67,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       this ._transform            .addInterest ("set_transform__",          this);
       this ._fixed                .addInterest ("set_fixed__",              this);
       this ._kinematic            .addInterest ("set_kinematic__",          this);
+      this ._kinematic            .addInterest ("set_geometry__",           this);
       this ._linearVelocity       .addInterest ("set_linearVelocity__",     this);
       this ._angularVelocity      .addInterest ("set_angularVelocity__",    this);
       this ._useFiniteRotation    .addInterest ("set_finiteRotationAxis__", this);

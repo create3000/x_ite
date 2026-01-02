@@ -4519,7 +4519,7 @@ function eventsProcessed ()
       collidables ._visible  = true; // DEBUG
       collidables ._children = this .collidables;
 
-      this .getScene () .rootNodes .push (collidables); // DEBUG
+      // this .getScene () .rootNodes .push (collidables); // DEBUG
 
       collection           .setup ();
       collidables          .setup ();
