@@ -75,27 +75,27 @@ Threshold value used for pixel rendering either transparent or opaque, used when
 ### SFNode [in, out] **acousticProperties** NULL <small>[AcousticProperties]</small>
 {: #fields-acousticProperties }
 
-Single contained *acousticProperties* node that can specify additional acoustic attributes applied to associated surface geometry.
+Optional single contained *acousticProperties* node that can specify additional acoustic attributes applied to associated surface geometry.
 
 ### SFNode [in, out] **pointProperties** NULL <small>[PointProperties]</small>
 {: #fields-pointProperties }
 
-Single contained [PointProperties](/x_ite/components/shape/pointproperties/) node that can specify additional visual attributes applied to corresponding point geometry.
+Optional single contained [PointProperties](/x_ite/components/shape/pointproperties/) node that can specify additional visual attributes applied to corresponding point geometry.
 
 ### SFNode [in, out] **lineProperties** NULL <small>[LineProperties]</small>
 {: #fields-lineProperties }
 
-Single contained [LineProperties](/x_ite/components/shape/lineproperties/) node that can specify additional visual attributes applied to corresponding line geometry.
+Optional single contained [LineProperties](/x_ite/components/shape/lineproperties/) node that can specify additional visual attributes applied to corresponding line geometry.
 
 ### SFNode [in, out] **fillProperties** NULL <small>[FillProperties]</small>
 {: #fields-fillProperties }
 
-Single contained [FillProperties](/x_ite/components/shape/fillproperties/) node that can specify additional visual attributes applied to polygonal areas of corresponding geometry, on top of whatever other appearance is already defined.
+Optional single contained [FillProperties](/x_ite/components/shape/fillproperties/) node that can specify additional visual attributes applied to polygonal areas of corresponding geometry, on top of whatever other appearance is already defined.
 
 ### SFNode [in, out] **material** NULL <small>[X3DMaterialNode]</small>
 {: #fields-material }
 
-Single contained [Material](/x_ite/components/shape/material/), [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/), [TwoSidedMaterial](/x_ite/components/shape/twosidedmaterial/) (deprecated), or [UnlitMaterial](/x_ite/components/shape/unlitmaterial/) node that can specify visual attributes for lighting response (color types, transparency, etc.) applied to corresponding geometry.
+Optional single contained [Material](/x_ite/components/shape/material/), [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/), [TwoSidedMaterial](/x_ite/components/shape/twosidedmaterial/) (deprecated), or [UnlitMaterial](/x_ite/components/shape/unlitmaterial/) node that can specify visual attributes for lighting response (color types, transparency, etc.) applied to corresponding geometry.
 
 #### Warning
 
@@ -104,7 +104,7 @@ Single contained [Material](/x_ite/components/shape/material/), [PhysicalMateria
 ### SFNode [in, out] **backMaterial** NULL <small>[X3DOneSidedMaterialNode]</small>
 {: #fields-backMaterial }
 
-Single contained [Material](/x_ite/components/shape/material/), [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/) or [UnlitMaterial](/x_ite/components/shape/unlitmaterial/) node that can specify visual attributes for lighting response (color types, transparency, etc.) applied to back faces of corresponding geometry.
+Optional single contained [Material](/x_ite/components/shape/material/), [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/) or [UnlitMaterial](/x_ite/components/shape/unlitmaterial/) node that can specify visual attributes for lighting response (color types, transparency, etc.) applied to back faces of corresponding geometry.
 
 #### Warnings
 
@@ -115,7 +115,7 @@ Single contained [Material](/x_ite/components/shape/material/), [PhysicalMateria
 ### SFNode [in, out] **texture** NULL <small>[X3DTextureNode]</small>
 {: #fields-texture }
 
-Single contained *texture* node ([ImageTexture](/x_ite/components/texturing/imagetexture/), [MovieTexture](/x_ite/components/texturing/movietexture/), [PixelTexture](/x_ite/components/texturing/pixeltexture/), [MultiTexture](/x_ite/components/texturing/multitexture/)) that maps image(s) to surface geometry.
+Optional single contained *texture* node ([ImageTexture](/x_ite/components/texturing/imagetexture/), [MovieTexture](/x_ite/components/texturing/movietexture/), [PixelTexture](/x_ite/components/texturing/pixeltexture/), [MultiTexture](/x_ite/components/texturing/multitexture/)) that maps image(s) to surface geometry.
 
 #### Hints
 
@@ -127,7 +127,7 @@ Single contained *texture* node ([ImageTexture](/x_ite/components/texturing/imag
 ### SFNode [in, out] **textureTransform** NULL <small>[X3DTextureTransformNode]</small>
 {: #fields-textureTransform }
 
-Single contained [TextureTransform](/x_ite/components/texturing/texturetransform/) node that defines 2D transformation applied to texture coordinates.
+Optional single contained [TextureTransform](/x_ite/components/texturing/texturetransform/) node that defines 2D transformation applied to texture coordinates.
 
 #### Hints
 

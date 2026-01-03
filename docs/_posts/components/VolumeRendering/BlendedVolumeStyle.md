@@ -115,12 +115,12 @@ The weightTransferFunction1 and *weightTransferFunction2* fields specify two-dim
 ### SFNode [in, out] **renderStyle** NULL <small>[X3DComposableVolumeRenderStyleNode]</small>
 {: #fields-renderStyle }
 
-Single contained X3DComposableVolumeRenderStyleNode node that defines specific rendering technique for data in the voxels field, and the result is blended with parent [VolumeData](/x_ite/components/volumerendering/volumedata/) or SegmentedVoliumeData node.
+Optional single contained X3DComposableVolumeRenderStyleNode node that defines specific rendering technique for data in the voxels field, and the result is blended with parent [VolumeData](/x_ite/components/volumerendering/volumedata/) or SegmentedVoliumeData node.
 
 ### SFNode [in, out] **voxels** NULL <small>[X3DTexture3DNode]</small>
 {: #fields-voxels }
 
-Single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/), [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/)) that provides second set of raw voxel information utilized by corresponding rendering styles. Any number of color components (1-4) may be defined.
+Optional single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/), [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/)) that provides second set of raw voxel information utilized by corresponding rendering styles. Any number of color components (1-4) may be defined.
 
 ## Advice
 
