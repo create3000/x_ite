@@ -38,7 +38,9 @@ The CollisionCollection node belongs to the [RigidBodyPhysics](/x_ite/components
 | MFString | [in, out] | [appliedParameters](#fields-appliedParameters) | "BOUNCE" |
 | SFFloat | [in, out] | [bounce](#fields-bounce) | 0  |
 | SFFloat | [in, out] | [minBounceSpeed](#fields-minBounceSpeed) | 0.1  |
+| SFString | [in, out] | [bounceCombine](#fields-bounceCombine) |  |
 | SFVec2f | [in, out] | [frictionCoefficients](#fields-frictionCoefficients) | 0 0  |
+| SFString | [in, out] | [frictionCombine](#fields-frictionCombine) |  |
 | SFVec2f | [in, out] | [surfaceSpeed](#fields-surfaceSpeed) | 0 0  |
 | SFVec2f | [in, out] | [slipFactors](#fields-slipFactors) | 0 0  |
 | SFFloat | [in, out] | [softnessConstantForceMix](#fields-softnessConstantForceMix) | 0.0001  |
@@ -92,10 +94,20 @@ Default global parameters for collision outputs of rigid body physics system. [C
 
 *minBounceSpeed* m/s needed to bounce.
 
+### SFString [in, out] **bounceCombine** "AVERAGE" <small>["AVERAGE", "MINIMUM", "MAXIMUM", "MULTIPLY"]</small>
+{: #fields-bounceCombine }
+
+Input/Output field *bounceCombine*.
+
 ### SFVec2f [in, out] **frictionCoefficients** 0 0 <small>[0,∞)</small>
 {: #fields-frictionCoefficients }
 
 *frictionCoefficients* used for computing surface drag.
+
+### SFString [in, out] **frictionCombine** "AVERAGE" <small>["AVERAGE", "MINIMUM", "MAXIMUM", "MULTIPLY"]</small>
+{: #fields-frictionCombine }
+
+Input/Output field *frictionCombine*.
 
 ### SFVec2f [in, out] **surfaceSpeed** 0 0 <small>(-∞,∞)</small>
 {: #fields-surfaceSpeed }
