@@ -22,9 +22,12 @@ The Shape node belongs to the [Shape](/x_ite/components/overview/#shape) compone
 ```
 + X3DNode
   + X3DChildNode
-    + X3DShapeNode
+    + X3DShapeNode (X3DBoundedObject)*
       + Shape
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
