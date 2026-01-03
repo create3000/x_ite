@@ -38,9 +38,9 @@ The CollisionCollection node belongs to the [RigidBodyPhysics](/x_ite/components
 | MFString | [in, out] | [appliedParameters](#fields-appliedParameters) | "BOUNCE" |
 | SFFloat | [in, out] | [bounce](#fields-bounce) | 0  |
 | SFFloat | [in, out] | [minBounceSpeed](#fields-minBounceSpeed) | 0.1  |
-| SFString | [in, out] | [bounceCombine](#fields-bounceCombine) |  |
+| SFString | [in, out] | [bounceCombine](#fields-bounceCombine) | "AVERAGE"  |
 | SFVec2f | [in, out] | [frictionCoefficients](#fields-frictionCoefficients) | 0 0  |
-| SFString | [in, out] | [frictionCombine](#fields-frictionCombine) |  |
+| SFString | [in, out] | [frictionCombine](#fields-frictionCombine) | "AVERAGE"  |
 | SFVec2f | [in, out] | [surfaceSpeed](#fields-surfaceSpeed) | 0 0  |
 | SFVec2f | [in, out] | [slipFactors](#fields-slipFactors) | 0 0  |
 | SFFloat | [in, out] | [softnessConstantForceMix](#fields-softnessConstantForceMix) | 0.0001  |
