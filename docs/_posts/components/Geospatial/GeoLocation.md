@@ -22,9 +22,12 @@ The GeoLocation node belongs to the [Geospatial](/x_ite/components/overview/#geo
 ```
 + X3DNode
   + X3DChildNode
-    + X3DGroupingNode
+    + X3DGroupingNode (X3DBoundedObject)*
       + GeoLocation
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

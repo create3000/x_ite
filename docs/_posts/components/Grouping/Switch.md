@@ -22,9 +22,12 @@ The Switch node belongs to the [Grouping](/x_ite/components/overview/#grouping) 
 ```
 + X3DNode
   + X3DChildNode
-    + X3DGroupingNode
+    + X3DGroupingNode (X3DBoundedObject)*
       + Switch
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
