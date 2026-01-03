@@ -25,9 +25,12 @@ The InstancedShape node belongs to the [X_ITE](/x_ite/components/overview/#x_ite
 ```
 + X3DNode
   + X3DChildNode
-    + X3DShapeNode
+    + X3DShapeNode (X3DBoundedObject)*
       + InstancedShape
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
