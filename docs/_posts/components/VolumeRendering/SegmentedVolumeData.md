@@ -22,9 +22,12 @@ The SegmentedVolumeData node belongs to the [VolumeRendering](/x_ite/components/
 ```
 + X3DNode
   + X3DChildNode
-    + X3DVolumeDataNode
+    + X3DVolumeDataNode (X3DBoundedObject)*
       + SegmentedVolumeData
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
