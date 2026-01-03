@@ -110,12 +110,12 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 ### SFNode [in, out] **appearance** NULL <small>[X3DAppearanceNode]</small>
 {: #fields-appearance }
 
-Single contained [Appearance](/x_ite/components/shape/appearance/) node that can specify visual attributes (such as material, texture, fillProperties and lineProperties) applied to corresponding geometry.
+Optional single contained [Appearance](/x_ite/components/shape/appearance/) node that can specify visual attributes (such as material, texture, fillProperties and lineProperties) applied to corresponding geometry.
 
 ### SFNode [in, out] **geometry** NULL <small>[X3DGeometryNode]</small>
 {: #fields-geometry }
 
-Single contained *geometry* node that is rendered according to corresponding appearance.
+Optional single contained *geometry* node that is rendered according to corresponding appearance.
 
 ## Advice
 

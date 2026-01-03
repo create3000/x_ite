@@ -82,7 +82,7 @@ Output values for computational interpolation, each corresponding to knots.
 ### SFNode [in, out] **controlPoint** NULL <small>[X3DCoordinateNode]</small>
 {: #fields-controlPoint }
 
-Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node that can specify control points for NURBS geometry definitions.
+Optional single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node that can specify control points for NURBS geometry definitions.
 
 ### SFRotation [out] **value_changed**
 {: #fields-value_changed }

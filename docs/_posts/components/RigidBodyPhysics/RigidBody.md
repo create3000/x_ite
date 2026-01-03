@@ -34,6 +34,7 @@ The RigidBody node belongs to the [RigidBodyPhysics](/x_ite/components/overview/
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFBool | [in, out] | [fixed](#fields-fixed) | FALSE |
+| SFBool | [in, out] | [kinematic](#fields-kinematic) |  |
 | SFVec3f | [in, out] | [position](#fields-position) | 0 0 0  |
 | SFRotation | [in, out] | [orientation](#fields-orientation) | 0 0 1 0  |
 | SFVec3f | [in, out] | [linearVelocity](#fields-linearVelocity) | 0 0 0  |
@@ -83,6 +84,11 @@ Enables/disables node operation.
 #### Hint
 
 - *fixed* is useful for indicating objects that do not move: walls, ground, etc.
+
+### SFBool [in, out] **kinematic**
+{: #fields-kinematic }
+
+Input/Output field *kinematic*.
 
 ### SFVec3f [in, out] **position** 0 0 0 <small>(-∞,∞)</small>
 {: #fields-position }

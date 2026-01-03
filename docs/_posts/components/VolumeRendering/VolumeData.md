@@ -99,12 +99,12 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 ### SFNode [in, out] **renderStyle** NULL <small>[X3DVolumeRenderStyleNode]</small>
 {: #fields-renderStyle }
 
-Single contained X3DVolumeRenderStyleNode node that defines specific rendering technique for this volumetric object. If field is not defined, default is [OpacityMapVolumeStyle](/x_ite/components/volumerendering/opacitymapvolumestyle/) node.
+Optional single contained X3DVolumeRenderStyleNode node that defines specific rendering technique for this volumetric object. If field is not defined, default is [OpacityMapVolumeStyle](/x_ite/components/volumerendering/opacitymapvolumestyle/) node.
 
 ### SFNode [in, out] **voxels** NULL <small>[X3DTexture3DNode]</small>
 {: #fields-voxels }
 
-Single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/), [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/)) that provides raw voxel information utilized by corresponding rendering styles. Any number of color components (1-4) may be defined.
+Optional single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/), [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/)) that provides raw voxel information utilized by corresponding rendering styles. Any number of color components (1-4) may be defined.
 
 ## Advice
 
