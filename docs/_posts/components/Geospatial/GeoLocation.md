@@ -22,9 +22,12 @@ The GeoLocation node belongs to the [Geospatial](/x_ite/components/overview/#geo
 ```
 + X3DNode
   + X3DChildNode
-    + X3DGroupingNode
+    + X3DGroupingNode (X3DBoundedObject)*
       + GeoLocation
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
@@ -55,7 +58,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### SFNode [ ] **geoOrigin** NULL <small>[GeoOrigin] (deprecated)</small>
 {: #fields-geoOrigin }
 
-Single contained [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node that can specify a local coordinate frame for extended precision.
+Optional single contained [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node that can specify a local coordinate frame for extended precision.
 
 #### Hint
 

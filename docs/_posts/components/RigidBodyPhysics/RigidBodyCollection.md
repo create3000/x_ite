@@ -22,16 +22,19 @@ The RigidBodyCollection node belongs to the [RigidBodyPhysics](/x_ite/components
 ```
 + X3DNode
   + X3DChildNode
-    + RigidBodyCollection
+    + RigidBodyCollection (X3DBoundedObject)*
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | MFNode | [in] | [set_contacts](#fields-set_contacts) |  |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFBool | [in, out] | [preferAccuracy](#fields-preferAccuracy) | FALSE |
 | SFFloat | [in, out] | [errorCorrection](#fields-errorCorrection) | 0.8  |
 | SFInt32 | [in, out] | [iterations](#fields-iterations) | 10  |
@@ -61,11 +64,6 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
-### SFBool [in, out] **enabled** TRUE
-{: #fields-enabled }
-
-Enables/disables node operation.
-
 ### MFNode [in] **set_contacts** <small class="red">not supported</small>
 {: #fields-set_contacts }
 
@@ -74,6 +72,11 @@ Enables/disables node operation.
 #### Warning
 
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
+
+### SFBool [in, out] **enabled** TRUE
+{: #fields-enabled }
+
+Enables/disables node operation.
 
 ### SFBool [in, out] **preferAccuracy** FALSE
 {: #fields-preferAccuracy }

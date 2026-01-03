@@ -22,8 +22,11 @@ The CollisionCollection node belongs to the [RigidBodyPhysics](/x_ite/components
 ```
 + X3DNode
   + X3DChildNode
-    + CollisionCollection
+    + CollisionCollection (X3DBoundedObject)*
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

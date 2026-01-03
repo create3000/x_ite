@@ -22,9 +22,12 @@ The HAnimJoint node belongs to the [HAnim](/x_ite/components/overview/#hanim) co
 ```
 + X3DNode
   + X3DChildNode
-    + X3DGroupingNode
+    + X3DGroupingNode (X3DBoundedObject)*
       + HAnimJoint
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

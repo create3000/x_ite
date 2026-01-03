@@ -21,8 +21,11 @@ The RigidBody node belongs to the [RigidBodyPhysics](/x_ite/components/overview/
 
 ```
 + X3DNode
-  + RigidBody
+  + RigidBody (X3DBoundedObject)*
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
@@ -31,6 +34,7 @@ The RigidBody node belongs to the [RigidBodyPhysics](/x_ite/components/overview/
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFBool | [in, out] | [fixed](#fields-fixed) | FALSE |
+| SFBool | [in, out] | [kinematic](#fields-kinematic) |  |
 | SFVec3f | [in, out] | [position](#fields-position) | 0 0 0  |
 | SFRotation | [in, out] | [orientation](#fields-orientation) | 0 0 1 0  |
 | SFVec3f | [in, out] | [size](#fields-size) | 1 1 1  |
@@ -81,6 +85,11 @@ Enables/disables node operation.
 #### Hint
 
 - *fixed* is useful for indicating objects that do not move: walls, ground, etc.
+
+### SFBool [in, out] **kinematic**
+{: #fields-kinematic }
+
+Input/Output field *kinematic*.
 
 ### SFVec3f [in, out] **position** 0 0 0 <small>(-∞,∞)</small>
 {: #fields-position }
@@ -279,6 +288,11 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 {: #fields-geometry }
 
 The *geometry* field is used to connect the body modelled by the physics engine implementation to the real *geometry* of the scene through the use of collidable nodes. This allows the *geometry* to be connected directly to the physics model as well as collision detection. Collidable nodes have their location set to the same location as the body instance in which they are located.
+
+###  [] **size** 1 1 1 <small>(-∞,∞)</small> <small class="blue">non-standard</small>
+{: #fields-size }
+
+Input/Output field *size*.
 
 ###  [] **scale** 1 1 1 <small>(-∞,∞)</small>
 {: #fields-scale }

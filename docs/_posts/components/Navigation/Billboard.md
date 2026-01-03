@@ -22,9 +22,12 @@ The Billboard node belongs to the [Navigation](/x_ite/components/overview/#navig
 ```
 + X3DNode
   + X3DChildNode
-    + X3DGroupingNode
+    + X3DGroupingNode (X3DBoundedObject)*
       + Billboard
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

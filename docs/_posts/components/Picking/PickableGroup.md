@@ -22,7 +22,7 @@ The PickableGroup node belongs to the [Picking](/x_ite/components/overview/#pick
 ```
 + X3DNode
   + X3DChildNode
-    + X3DGroupingNode
+    + X3DGroupingNode (X3DBoundedObject)*
       + PickableGroup (X3DPickableObject)*
 ```
 

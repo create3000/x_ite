@@ -22,7 +22,7 @@ The Collision node belongs to the [Navigation](/x_ite/components/overview/#navig
 ```
 + X3DNode
   + X3DChildNode
-    + X3DGroupingNode
+    + X3DGroupingNode (X3DBoundedObject)*
       + Collision (X3DSensorNode)*
 ```
 

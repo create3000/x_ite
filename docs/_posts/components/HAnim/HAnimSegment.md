@@ -22,9 +22,12 @@ The HAnimSegment node belongs to the [HAnim](/x_ite/components/overview/#hanim) 
 ```
 + X3DNode
   + X3DChildNode
-    + X3DGroupingNode
+    + X3DGroupingNode (X3DBoundedObject)*
       + HAnimSegment
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
