@@ -137,7 +137,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                   this .convexShape .setGeometry (geometry);
                }
 
-               if (this .concaveGeometry)
+               if (this .concaveGeometry !== this .convexGeometry)
                {
                   const geometry = this .concaveGeometry;
 
