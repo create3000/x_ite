@@ -79,6 +79,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       this ._centerOfMass         .addInterest ("set_centerOfMass__",       this);
       this ._inertia              .addInterest ("set_inertia__",            this);
       this ._useGlobalGravity     .addInterest ("set_useGlobalGravity__",   this);
+      this ._autoDisable          .addInterest ("set_disable__",            this);
       this ._disableTime          .addInterest ("set_disable__",            this);
       this ._disableLinearSpeed   .addInterest ("set_disable__",            this);
       this ._disableAngularSpeed  .addInterest ("set_disable__",            this);
@@ -241,12 +242,12 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       if (this ._autoDamp .getValue ())
       {
-         actor .setLinearDamping (Algorithm .clamp (this ._linearDampingFactor .getValue (), 0, 1));
+         actor .setLinearDamping  (Algorithm .clamp (this ._linearDampingFactor .getValue (),  0, 1));
          actor .setAngularDamping (Algorithm .clamp (this ._angularDampingFactor .getValue (), 0, 1));
       }
       else
       {
-         actor .setLinearDamping (0);
+         actor .setLinearDamping  (0);
          actor .setAngularDamping (0);
       }
    },
@@ -330,14 +331,18 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    },
    set_disable__ ()
    {
-      // if (this ._autoDisable .getValue ())
-      // {
-      //    this .rigidBody .setSleepingThresholds (this ._disableLinearSpeed .getValue (), this ._disableAngularSpeed .getValue ());
-      // }
-      // else
-      // {
-      //    this .rigidBody .setSleepingThresholds (0, 0);
-      // }
+      const { actor, fixed } = this;
+
+      if (!actor)
+         return;
+
+      if (fixed)
+         return;
+
+      if (this ._autoDisable .getValue ())
+         actor .setSleepThreshold (this ._disableLinearSpeed .getValue () ** 2 / 2);
+      else
+         actor .setSleepThreshold (0);
    },
    set_geometry__ ()
    {
