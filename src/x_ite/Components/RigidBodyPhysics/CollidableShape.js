@@ -123,13 +123,14 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
             }
             case X3DConstants .X3DGeometryNode:
             {
+               const
+                  scale     = new this .PhysX .PxVec3 (... this .scale),
+                  quat      = new this .PhysX .PxQuat (0, 0, 0, 1),
+                  meshScale = new this .PhysX .PxMeshScale (scale, quat);
+
                if (this .convexGeometry)
                {
-                  const
-                     scale     = new this .PhysX .PxVec3 (... this .scale),
-                     quat      = new this .PhysX .PxQuat (0, 0, 0, 1),
-                     meshScale = new this .PhysX .PxMeshScale (scale, quat),
-                     geometry  = this .convexGeometry;
+                  const geometry = this .convexGeometry;
 
                   geometry .scale = meshScale;
 
@@ -138,17 +139,16 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
 
                if (this .concaveGeometry)
                {
-                  const
-                     scale     = new this .PhysX .PxVec3 (... this .scale),
-                     quat      = new this .PhysX .PxQuat (0, 0, 0, 1),
-                     meshScale = new this .PhysX .PxMeshScale (scale, quat),
-                     geometry  = this .concaveGeometry;
+                  const geometry = this .concaveGeometry;
 
                   geometry .scale = meshScale;
 
                   this .concaveShape .setGeometry (geometry);
                }
 
+               this .PhysX .destroy (scale);
+               this .PhysX .destroy (quat);
+               this .PhysX .destroy (meshScale);
                break;
             }
          }
