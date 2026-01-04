@@ -17,6 +17,8 @@ function CollidableShape (executionContext)
 
    // Private properties
 
+   this .scale = new Vector3 (1, 1, 1);
+
    this .materialParameters = {
       restitution: 0,
       staticFriction: 0,
@@ -74,7 +76,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          this .parentMatrix .assign (parentMatrix);
 
          if (this .isRoot ())
-            this .offsetMatrix .assign (parentMatrix);
+            this .offsetMatrix .set () .scale (this ._scale .getValue ()) .multRight (parentMatrix);
          else
             this .offsetMatrix .assign (this .getMatrix ()) .multRight (parentMatrix);
 
@@ -85,7 +87,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
 
          const { p, q } = pose;
 
-         this .offsetMatrix .get (translation, rotation);
+         this .offsetMatrix .get (translation, rotation, this .scale);
 
          rotation .getQuaternion (quaternion);
 
@@ -100,6 +102,34 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
 
          this .convexShape  ?.setLocalPose (pose);
          this .concaveShape ?.setLocalPose (pose);
+
+         switch (this .type)
+         {
+            case X3DConstants .Box:
+            {
+               const
+                  box         = this .geometryNode,
+                  size        = box ._size .getValue (),
+                  scale       = this .scale,
+                  halfExtents = this .geometry .halfExtents;
+
+               halfExtents .x = size .x / 2 * scale .x;
+               halfExtents .y = size .y / 2 * scale .y;
+               halfExtents .z = size .z / 2 * scale .z;
+
+               this .concaveShape .setGeometry (this .geometry);
+               break;
+            }
+         }
+
+         const body = this .getBody ();
+
+         if (body)
+         {
+            body .set_mass__ ();
+            body .set_centerOfMass__ ();
+            body .set_inertia__ ();
+         }
       };
    })(),
    setPhysicsMaterial (appliedParameters)
@@ -154,6 +184,13 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          else if (this .concaveShape && this .getActor () instanceof this .PhysX .PxRigidStatic)
             this .getActor () .attachShape (this .concaveShape);
       }
+
+      if (body)
+      {
+         body .set_mass__ ();
+         body .set_centerOfMass__ ();
+         body .set_inertia__ ();
+      }
    },
    getActor ()
    {
@@ -200,6 +237,8 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       this .PhysX .destroy (cookingParams);
       this .PhysX .destroy (desc);
 
+      this .geometry = geometry;
+
       return this .physics .createShape (geometry, this .physicsMaterial, false, shapeFlags);
    },
    createConcaveShape (shapeFlags)
@@ -240,6 +279,8 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       this .PhysX .destroy (flags);
       this .PhysX .destroy (cookingParams);
       this .PhysX .destroy (desc);
+
+      this .geometry = geometry;
 
       return this .physics .createShape (geometry, this .physicsMaterial, false, shapeFlags);
    },
@@ -307,9 +348,15 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                   const
                      box      = this .geometryNode,
                      size     = box ._size .getValue (),
-                     geometry = new this .PhysX .PxBoxGeometry (size .x / 2, size .y / 2, size .z / 2),
+                     scale    = this .scale,
+                     hx       = size .x / 2 * scale .x,
+                     hy       = size .y / 2 * scale .y,
+                     hz       = size .z / 2 * scale .z,
+                     geometry = new this .PhysX .PxBoxGeometry (hx, hy, hz),
                      shape    = this .physics .createShape (geometry, this .physicsMaterial, false, shapeFlags);
 
+                  this .type         = X3DConstants .Box;
+                  this .geometry     = geometry;
                   this .convexShape  = shape;
                   this .concaveShape = shape;
                   break;
@@ -319,6 +366,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                {
                   const shape = this .createConvexShape (shapeFlags);
 
+                  this .type         = X3DConstants .X3DGeometryNode;
                   this .convexShape  = shape;
                   this .concaveShape = shape;
                   break;
@@ -374,12 +422,16 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                      geometry = new this .PhysX .PxSphereGeometry (sphere ._radius .getValue ()),
                      shape    = this .physics .createShape (geometry, this .physicsMaterial, false, shapeFlags);
 
+                  this .type         = X3DConstants .Sphere;
+                  this .geometry     = geometry;
                   this .convexShape  = shape;
                   this .concaveShape = shape;
                   break;
                }
                case X3DConstants .X3DGeometryNode:
                {
+                  this .type = X3DConstants .X3DGeometryNode;
+
                   this .concaveShape = this ._convexHull .getValue ()
                      ? this .createConvexShape (shapeFlags)
                      : this .createConcaveShape (shapeFlags);

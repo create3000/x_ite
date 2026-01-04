@@ -41,7 +41,7 @@ Object .assign (Object .setPrototypeOf (CollidableOffset .prototype, X3DNBodyCol
       this .parentMatrix .assign (parentMatrix);
 
       if (this .isRoot ())
-         this .offsetMatrix .assign (parentMatrix);
+         this .offsetMatrix .set () .scale (this ._scale .getValue ()) .multRight (parentMatrix);
       else
          this .offsetMatrix .assign (this .getMatrix ()) .multRight (parentMatrix);
 
