@@ -111,13 +111,44 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                   box         = this .geometryNode,
                   size        = box ._size .getValue (),
                   scale       = this .scale,
-                  halfExtents = this .geometry .halfExtents;
+                  geometry    = this .convexGeometry,
+                  halfExtents = geometry .halfExtents;
 
                halfExtents .x = size .x / 2 * scale .x;
                halfExtents .y = size .y / 2 * scale .y;
                halfExtents .z = size .z / 2 * scale .z;
 
-               this .concaveShape .setGeometry (this .geometry);
+               this .convexShape .setGeometry (geometry);
+               break;
+            }
+            case X3DConstants .X3DGeometryNode:
+            {
+               if (this .convexGeometry)
+               {
+                  const
+                     scale     = new this .PhysX .PxVec3 (... this .scale),
+                     quat      = new this .PhysX .PxQuat (0, 0, 0, 1),
+                     meshScale = new this .PhysX .PxMeshScale (scale, quat),
+                     geometry  = this .convexGeometry;
+
+                  geometry .scale = meshScale;
+
+                  this .convexShape .setGeometry (geometry);
+               }
+
+               if (this .concaveGeometry)
+               {
+                  const
+                     scale     = new this .PhysX .PxVec3 (... this .scale),
+                     quat      = new this .PhysX .PxQuat (0, 0, 0, 1),
+                     meshScale = new this .PhysX .PxMeshScale (scale, quat),
+                     geometry  = this .concaveGeometry;
+
+                  geometry .scale = meshScale;
+
+                  this .concaveShape .setGeometry (geometry);
+               }
+
                break;
             }
          }
@@ -224,7 +255,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          mesh          = this .PhysX .CreateConvexMesh (cookingParams, desc);
 
       const
-         scale     = new this .PhysX .PxVec3 (1, 1, 1),
+         scale     = new this .PhysX .PxVec3 (... this .scale),
          quat      = new this .PhysX .PxQuat (0, 0, 0, 1),
          meshScale = new this .PhysX .PxMeshScale (scale, quat),
          flags     = new this .PhysX .PxConvexMeshGeometryFlags (),
@@ -237,7 +268,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       this .PhysX .destroy (cookingParams);
       this .PhysX .destroy (desc);
 
-      this .geometry = geometry;
+      this .convexGeometry = geometry;
 
       return this .physics .createShape (geometry, this .physicsMaterial, false, shapeFlags);
    },
@@ -267,7 +298,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
          mesh          = this .PhysX .CreateTriangleMesh (cookingParams, desc);
 
       const
-         scale     = new this .PhysX .PxVec3 (1, 1, 1),
+         scale     = new this .PhysX .PxVec3 (... this .scale),
          quat      = new this .PhysX .PxQuat (0, 0, 0, 1),
          meshScale = new this .PhysX .PxMeshScale (scale, quat),
          flags     = new this .PhysX .PxMeshGeometryFlags (),
@@ -280,7 +311,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       this .PhysX .destroy (cookingParams);
       this .PhysX .destroy (desc);
 
-      this .geometry = geometry;
+      this .concaveGeometry = geometry;
 
       return this .physics .createShape (geometry, this .physicsMaterial, false, shapeFlags);
    },
@@ -355,10 +386,10 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                      geometry = new this .PhysX .PxBoxGeometry (hx, hy, hz),
                      shape    = this .physics .createShape (geometry, this .physicsMaterial, false, shapeFlags);
 
-                  this .type         = X3DConstants .Box;
-                  this .geometry     = geometry;
-                  this .convexShape  = shape;
-                  this .concaveShape = shape;
+                  this .type           = X3DConstants .Box;
+                  this .convexGeometry = geometry;
+                  this .convexShape    = shape;
+                  this .concaveShape   = shape;
                   break;
                }
                case X3DConstants .Cone:
@@ -422,10 +453,10 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                      geometry = new this .PhysX .PxSphereGeometry (sphere ._radius .getValue ()),
                      shape    = this .physics .createShape (geometry, this .physicsMaterial, false, shapeFlags);
 
-                  this .type         = X3DConstants .Sphere;
-                  this .geometry     = geometry;
-                  this .convexShape  = shape;
-                  this .concaveShape = shape;
+                  this .type           = X3DConstants .Sphere;
+                  this .convexGeometry = geometry;
+                  this .convexShape    = shape;
+                  this .concaveShape   = shape;
                   break;
                }
                case X3DConstants .X3DGeometryNode:
@@ -453,8 +484,11 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
       }
       else
       {
-         this .convexShape  = null;
-         this .concaveShape = null;
+         this .type            = undefined;
+         this .convexGeometry  = null;
+         this .concaveGeometry = null;
+         this .convexShape     = null;
+         this .concaveShape    = null;
       }
 
       this .convexShape ?.setContactOffset (0.001);
