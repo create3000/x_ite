@@ -121,6 +121,19 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                this .convexShape .setGeometry (geometry);
                break;
             }
+            case X3DConstants .Sphere:
+            {
+               const
+                  sphere   = this .geometryNode,
+                  radius   = sphere ._radius .getValue (),
+                  scale    = Math .max (... this .scale),
+                  geometry = this .convexGeometry;
+
+               geometry .radius = radius * scale;
+
+               this .convexShape .setGeometry (geometry);
+               break;
+            }
             case X3DConstants .X3DGeometryNode:
             {
                const
@@ -397,9 +410,10 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                {
                   const shape = this .createConvexShape (shapeFlags);
 
-                  this .type         = X3DConstants .X3DGeometryNode;
-                  this .convexShape  = shape;
-                  this .concaveShape = shape;
+                  this .type            = X3DConstants .X3DGeometryNode;
+                  this .concaveGeometry = this .convexGeometry;
+                  this .convexShape     = shape;
+                  this .concaveShape    = shape;
                   break;
                }
                // case X3DConstants .ElevationGrid:
@@ -450,7 +464,8 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                {
                   const
                      sphere   = this .geometryNode,
-                     geometry = new this .PhysX .PxSphereGeometry (sphere ._radius .getValue ()),
+                     scale    = Math .max (... this .scale),
+                     geometry = new this .PhysX .PxSphereGeometry (sphere ._radius .getValue () * scale),
                      shape    = this .physics .createShape (geometry, this .physicsMaterial, false, shapeFlags);
 
                   this .type           = X3DConstants .Sphere;
@@ -470,6 +485,9 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
                   this .convexShape = this ._convexHull .getValue ()
                      ? this .concaveShape
                      : this .createConvexShape (shapeFlags);
+
+                  if (this ._convexHull .getValue ())
+                     this .convexGeometry = this .concaveGeometry;
 
                   break;
                }
