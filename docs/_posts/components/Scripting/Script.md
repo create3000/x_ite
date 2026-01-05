@@ -22,7 +22,7 @@ The Script node belongs to the [Scripting](/x_ite/components/overview/#scripting
 ```
 + X3DNode
   + X3DChildNode
-    + X3DScriptNode (X3DURLObject)*
+    + X3DScriptNode (X3DUrlObject)*
       + Script
 ```
 
