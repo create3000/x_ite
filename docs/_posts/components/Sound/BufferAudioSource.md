@@ -27,6 +27,9 @@ The BufferAudioSource node belongs to the [Sound](/x_ite/components/overview/#so
         + BufferAudioSource (X3DUrlObject)*
 ```
 
+\* Derived from multiple interfaces.
+{: .small }
+
 ## Fields
 
 | Type | Access Type | Name | Default Value |

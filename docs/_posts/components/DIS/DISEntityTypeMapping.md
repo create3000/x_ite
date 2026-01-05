@@ -20,8 +20,14 @@ The DISEntityTypeMapping node belongs to the [DIS](/x_ite/components/overview/#d
 ## Hierarchy
 
 ```
-+ DISEntityTypeMapping
++ X3DNode
+  + X3DChildNode
+    + X3DInfoNode
+      + DISEntityTypeMapping (X3DUrlObject)*
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
