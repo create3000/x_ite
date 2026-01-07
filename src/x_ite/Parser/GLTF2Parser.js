@@ -4522,9 +4522,9 @@ function eventsProcessed ()
       // this .getScene () .rootNodes .push (collidables); // DEBUG
 
       collection           .setup ();
-      collidables          .setup ();
       motionScripts        .setup ();
       collisionCollections .setup ();
+      collidables          .setup ();
 
       if (collection ._bodies .length)
          this .physics .push ({ node: collection });
