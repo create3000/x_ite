@@ -3,7 +3,7 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DGroupingNode      from "../Grouping/X3DGroupingNode.js";
-import X3DSensorNode        from "../Core/X3DSensorNode.js";
+import X3DNetworkSensorNode from "../Networking/X3DNetworkSensorNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 
 /**
@@ -12,8 +12,8 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 
 function EspduTransform (executionContext)
 {
-   X3DGroupingNode .call (this, executionContext);
-   X3DSensorNode   .call (this, executionContext);
+   X3DGroupingNode      .call (this, executionContext);
+   X3DNetworkSensorNode .call (this, executionContext);
 
    this .addType (X3DConstants .EspduTransform);
 
@@ -27,12 +27,12 @@ function EspduTransform (executionContext)
 }
 
 Object .assign (Object .setPrototypeOf (EspduTransform .prototype, X3DGroupingNode .prototype),
-   X3DSensorNode .prototype,
+   X3DNetworkSensorNode .prototype,
 {
    initialize ()
    {
-      X3DGroupingNode .prototype .initialize .call (this);
-      X3DSensorNode   .prototype .initialize .call (this);
+      X3DGroupingNode      .prototype .initialize .call (this);
+      X3DNetworkSensorNode .prototype .initialize .call (this);
    },
 });
 
