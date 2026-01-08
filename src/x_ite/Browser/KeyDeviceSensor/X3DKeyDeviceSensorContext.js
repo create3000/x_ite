@@ -1,7 +1,8 @@
 const
    _keyDeviceSensorNodes = Symbol (),
    _keydown              = Symbol (),
-   _keyup                = Symbol ();
+   _keyup                = Symbol (),
+   _processEvents        = Symbol .for ("X_ITE.X3DRoutingContext.processEvents");
 
 function X3DKeyDeviceSensorContext ()
 {
@@ -35,6 +36,9 @@ Object .assign (X3DKeyDeviceSensorContext .prototype,
 
       for (const keyDeviceSensorNode of this [_keyDeviceSensorNodes])
          keyDeviceSensorNode .keydown (event);
+
+      // Immediately process events to handle event from two or more keys.
+      this [_processEvents] ();
    },
    [_keyup] (event)
    {
@@ -42,6 +46,9 @@ Object .assign (X3DKeyDeviceSensorContext .prototype,
 
       for (const keyDeviceSensorNode of this [_keyDeviceSensorNodes])
          keyDeviceSensorNode .keyup (event);
+
+      // Immediately process events to handle event from two or more keys.
+      this [_processEvents] ();
    },
    dispose ()
    {
