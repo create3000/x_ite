@@ -32,7 +32,7 @@ Object .assign (X3DKeyDeviceSensorContext .prototype,
    },
    [_keydown] (event)
    {
-      // Must advance time, because event are later processed.
+      // Must advance time, because event are later processed pressed simultaneously.
       this .advanceOnlyTime ();
 
       //console .log (event .keyCode);
@@ -53,7 +53,7 @@ Object .assign (X3DKeyDeviceSensorContext .prototype,
       for (const keyDeviceSensorNode of this [_keyDeviceSensorNodes])
          keyDeviceSensorNode .keyup (event);
 
-      // Immediately process events to handle event from two or more keys.
+      // Immediately process events to handle event from two or more keys pressed simultaneously.
       this [_processEvents] ();
    },
    dispose ()
