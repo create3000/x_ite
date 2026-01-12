@@ -22,9 +22,12 @@ The CollidableShape node belongs to the [RigidBodyPhysics](/x_ite/components/ove
 ```
 + X3DNode
   + X3DChildNode
-    + X3DNBodyCollidableNode
+    + X3DNBodyCollidableNode (X3DBoundedObject)*
       + CollidableShape
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

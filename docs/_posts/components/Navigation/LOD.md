@@ -22,9 +22,12 @@ The LOD node belongs to the [Navigation](/x_ite/components/overview/#navigation)
 ```
 + X3DNode
   + X3DChildNode
-    + X3DGroupingNode
+    + X3DGroupingNode (X3DBoundedObject)*
       + LOD
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

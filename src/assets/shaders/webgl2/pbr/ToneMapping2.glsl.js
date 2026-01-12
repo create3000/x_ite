@@ -1,6 +1,6 @@
 export default () => /* glsl */ `
 
-// Originally from:
+// Original source code from:
 // https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/tonemapping.glsl
 
 const float GAMMA     = 2.2;

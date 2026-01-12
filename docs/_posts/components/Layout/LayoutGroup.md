@@ -22,9 +22,12 @@ The LayoutGroup node belongs to the [Layout](/x_ite/components/overview/#layout)
 ```
 + X3DNode
   + X3DChildNode
-    + X3DGroupingNode
+    + X3DGroupingNode (X3DBoundedObject)*
       + LayoutGroup
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

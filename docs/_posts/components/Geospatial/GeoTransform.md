@@ -22,9 +22,12 @@ The GeoTransform node belongs to the [Geospatial](/x_ite/components/overview/#ge
 ```
 + X3DNode
   + X3DChildNode
-    + X3DGroupingNode
+    + X3DGroupingNode (X3DBoundedObject)*
       + GeoTransform
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
@@ -95,7 +98,7 @@ Preliminary rotation of coordinate sys tem before scaling (to allow scaling arou
 ### SFNode [ ] **geoOrigin** NULL <small>[GeoOrigin] (deprecated)</small>
 {: #fields-geoOrigin }
 
-Single contained [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node that can specify a local coordinate frame for extended precision.
+Optional single contained [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node that can specify a local coordinate frame for extended precision.
 
 #### Hint
 

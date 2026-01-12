@@ -21,8 +21,11 @@ The RigidBody node belongs to the [RigidBodyPhysics](/x_ite/components/overview/
 
 ```
 + X3DNode
-  + RigidBody
+  + RigidBody (X3DBoundedObject)*
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
@@ -31,6 +34,7 @@ The RigidBody node belongs to the [RigidBodyPhysics](/x_ite/components/overview/
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFBool | [in, out] | [fixed](#fields-fixed) | FALSE |
+| SFBool | [in, out] | [kinematic](#fields-kinematic) |  |
 | SFVec3f | [in, out] | [position](#fields-position) | 0 0 0  |
 | SFRotation | [in, out] | [orientation](#fields-orientation) | 0 0 1 0  |
 | SFVec3f | [in, out] | [linearVelocity](#fields-linearVelocity) | 0 0 0  |
@@ -42,20 +46,20 @@ The RigidBody node belongs to the [RigidBodyPhysics](/x_ite/components/overview/
 | SFFloat | [in, out] | [angularDampingFactor](#fields-angularDampingFactor) | 0.001  |
 | SFFloat | [in, out] | [mass](#fields-mass) | 1  |
 | SFVec3f | [in, out] | [centerOfMass](#fields-centerOfMass) | 0 0 0  |
+| SFMatrix3f | [in, out] | [inertia](#fields-inertia) | 1 0 0 0 1 0 0 0 1  |
 | SFNode | [in, out] | [massDensityModel](#fields-massDensityModel) | NULL  |
 | SFBool | [in, out] | [useGlobalGravity](#fields-useGlobalGravity) | TRUE |
 | MFVec3f | [in, out] | [forces](#fields-forces) | [ ] |
 | MFVec3f | [in, out] | [torques](#fields-torques) | [ ] |
-| SFMatrix3f | [in, out] | [inertia](#fields-inertia) | 1 0 0 0 1 0 0 0 1  |
 | SFBool | [in, out] | [autoDisable](#fields-autoDisable) | FALSE |
 | SFTime | [in, out] | [disableTime](#fields-disableTime) | 0  |
 | SFFloat | [in, out] | [disableLinearSpeed](#fields-disableLinearSpeed) | 0  |
 | SFFloat | [in, out] | [disableAngularSpeed](#fields-disableAngularSpeed) | 0  |
-| MFNode | [in, out] | [geometry](#fields-geometry) | [ ] |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
 | SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
 | SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| MFNode | [in, out] | [geometry](#fields-geometry) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -80,6 +84,11 @@ Enables/disables node operation.
 #### Hint
 
 - *fixed* is useful for indicating objects that do not move: walls, ground, etc.
+
+### SFBool [in, out] **kinematic**
+{: #fields-kinematic }
+
+Input/Output field *kinematic*.
 
 ### SFVec3f [in, out] **position** 0 0 0 <small>(-∞,∞)</small>
 {: #fields-position }
@@ -161,6 +170,15 @@ Enables/disables node operation.
 
 *centerOfMass* defines local center of mass for physics calculations.
 
+### SFMatrix3f [in, out] **inertia** 1 0 0 0 1 0 0 0 1 <small>(-∞,∞)</small>
+{: #fields-inertia }
+
+*inertia* matrix defines a 3x2 *inertia* tensor matrix.
+
+#### Warning
+
+- Only the first 6 values are used.
+
 ### SFNode [in, out] **massDensityModel** NULL <small>[Sphere, Box, Cone]</small> <small class="red">not supported</small>
 {: #fields-massDensityModel }
 
@@ -184,15 +202,6 @@ The *massDensityModel* field is used to describe the geometry type and dimension
 {: #fields-torques }
 
 *torques* defines rotational force values applied to the object every frame.
-
-### SFMatrix3f [in, out] **inertia** 1 0 0 0 1 0 0 0 1 <small>1 0 0</small>
-{: #fields-inertia }
-
-*inertia* matrix defines a 3x2 *inertia* tensor matrix.
-
-#### Warning
-
-- Only the first 6 values are used.
 
 ### SFBool [in, out] **autoDisable** FALSE
 {: #fields-autoDisable }
@@ -226,11 +235,6 @@ The *massDensityModel* field is used to describe the geometry type and dimension
 #### Hint
 
 - Only activated if autoDisable='true'
-
-### MFNode [in, out] **geometry** [ ] <small>[X3DNBodyCollidableNode]</small>
-{: #fields-geometry }
-
-The *geometry* field is used to connect the body modelled by the physics engine implementation to the real *geometry* of the scene through the use of collidable nodes. This allows the *geometry* to be connected directly to the physics model as well as collision detection. Collidable nodes have their location set to the same location as the body instance in which they are located.
 
 ### SFBool [in, out] **visible** TRUE
 {: #fields-visible }
@@ -273,6 +277,21 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
 - [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#BoundingBoxes)
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
+
+### MFNode [in, out] **geometry** [ ] <small>[X3DNBodyCollidableNode]</small>
+{: #fields-geometry }
+
+The *geometry* field is used to connect the body modelled by the physics engine implementation to the real *geometry* of the scene through the use of collidable nodes. This allows the *geometry* to be connected directly to the physics model as well as collision detection. Collidable nodes have their location set to the same location as the body instance in which they are located.
+
+###  [] **size** 1 1 1 <small>(-∞,∞)</small> <small class="blue">non-standard</small>
+{: #fields-size }
+
+Input/Output field *size*.
+
+###  [] **scale** 1 1 1 <small>(-∞,∞)</small>
+{: #fields-scale }
+
+Input/Output field *scale*.
 
 ## Example
 

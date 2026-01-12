@@ -13,7 +13,7 @@ tags: [Tangent, Rendering]
 
 ## Overview
 
-Tangent defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate or CoordinateDouble node, or else to a parent ElevationGrid node. Tangent values are perpendicular directions that are used per-polygon or per-vertex when computing lighting and shading.
+Tangent defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate or CoordinateDouble node, or else to a parent ElevationGrid node. Tangent values are perpendicular directions that are used per-polygon or per-vertex when computing lighting and shading for advanced physically based rendering (PBR) effects.
 
 The Tangent node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **5,** its default container field is *tangent.* It is available from X3D version 4.0 or higher.
 

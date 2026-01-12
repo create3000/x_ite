@@ -57,7 +57,7 @@ Damping of velocity in the event of a collision.
 ### SFNode [in, out] **geometry** NULL <small>[X3DGeometryNode]</small>
 {: #fields-geometry }
 
-Single contained *geometry* node provides the *geometry* used for each particle when the parent [ParticleSystem](/x_ite/components/particlesystems/particlesystem/) node has geometryType=GEOMETRY.
+Optional single contained *geometry* node provides the *geometry* used for each particle when the parent [ParticleSystem](/x_ite/components/particlesystems/particlesystem/) node has geometryType=GEOMETRY.
 
 #### Hint
 

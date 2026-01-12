@@ -297,7 +297,7 @@ The *appearance* field holds an [Appearance](/x_ite/components/shape/appearance/
 ### SFNode [in, out] **geometry** NULL <small>[X3DGeometryNode]</small>
 {: #fields-geometry }
 
-Single contained *geometry* node provides *geometry* used for each particle when geometryType=GEOMETRY.
+Optional single contained *geometry* node provides *geometry* used for each particle when geometryType=GEOMETRY.
 
 #### Hint
 

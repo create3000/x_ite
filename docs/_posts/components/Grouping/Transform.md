@@ -22,9 +22,12 @@ The Transform node belongs to the [Grouping](/x_ite/components/overview/#groupin
 ```
 + X3DNode
   + X3DChildNode
-    + X3DGroupingNode
+    + X3DGroupingNode (X3DBoundedObject)*
       + Transform
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

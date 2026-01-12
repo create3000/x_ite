@@ -22,9 +22,12 @@ The CADLayer node belongs to the [CADGeometry](/x_ite/components/overview/#cadge
 ```
 + X3DNode
   + X3DChildNode
-    + X3DGroupingNode
+    + X3DGroupingNode (X3DBoundedObject)*
       + CADLayer
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

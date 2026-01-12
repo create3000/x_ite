@@ -123,7 +123,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageT
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
 {: #fields-textureProperties }
 
-Single contained [TextureProperties](/x_ite/components/texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
+Optional single contained [TextureProperties](/x_ite/components/texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
 
 #### Warning
 
