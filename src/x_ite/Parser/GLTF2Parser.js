@@ -414,7 +414,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                if (name)
                   scene .addNamedNode (scene .getUniqueName (name), textureNode);
 
-               textureNode ._description = image ?.name ?? "";
+               textureNode ._description = image ?.name ?? `${$.toUpperCaseFirst (faces [i])} Texture`;
                textureNode ._url         = image ? [image .uri] : [ ];
                textureNode .setup ();
 

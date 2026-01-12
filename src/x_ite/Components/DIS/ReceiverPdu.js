@@ -2,7 +2,7 @@ import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
-import X3DSensorNode        from "../Core/X3DSensorNode.js";
+import X3DNetworkSensorNode from "../Networking/X3DNetworkSensorNode.js";
 import X3DBoundedObject     from "../Grouping/X3DBoundedObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 
@@ -12,8 +12,8 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 
 function ReceiverPdu (executionContext)
 {
-   X3DSensorNode    .call (this, executionContext);
-   X3DBoundedObject .call (this, executionContext);
+   X3DNetworkSensorNode .call (this, executionContext);
+   X3DBoundedObject     .call (this, executionContext);
 
    this .addType (X3DConstants .ReceiverPdu);
 
@@ -26,13 +26,13 @@ function ReceiverPdu (executionContext)
    }
 }
 
-Object .assign (Object .setPrototypeOf (ReceiverPdu .prototype, X3DSensorNode .prototype),
+Object .assign (Object .setPrototypeOf (ReceiverPdu .prototype, X3DNetworkSensorNode .prototype),
    X3DBoundedObject .prototype,
 {
    initialize ()
    {
-      X3DSensorNode    .prototype .initialize .call (this);
-      X3DBoundedObject .prototype .initialize .call (this);
+      X3DNetworkSensorNode .prototype .initialize .call (this);
+      X3DBoundedObject     .prototype .initialize .call (this);
    },
    getBBox (bbox, shadows)
    {
@@ -43,8 +43,8 @@ Object .assign (Object .setPrototypeOf (ReceiverPdu .prototype, X3DSensorNode .p
    },
    dispose ()
    {
-      X3DBoundedObject .prototype .dispose .call (this);
-      X3DSensorNode    .prototype .dispose .call (this);
+      X3DBoundedObject     .prototype .dispose .call (this);
+      X3DNetworkSensorNode .prototype .dispose .call (this);
    },
 });
 

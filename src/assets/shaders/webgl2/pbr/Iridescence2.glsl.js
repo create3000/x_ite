@@ -1,6 +1,6 @@
 export default () => /* glsl */ `
 
-// Originally from:
+// Original source code from:
 // https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/iridescence.glsl
 
 #if defined (X3D_IRIDESCENCE_MATERIAL_EXT)

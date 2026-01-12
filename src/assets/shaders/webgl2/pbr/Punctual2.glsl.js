@@ -1,6 +1,6 @@
 export default () => /* glsl */ `
 
-// Originally from:
+// Original source code from:
 // https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/punctual.glsl
 
 #if defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
