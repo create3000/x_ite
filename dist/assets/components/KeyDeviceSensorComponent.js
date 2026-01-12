@@ -49,7 +49,8 @@ var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(ex
 const
    _keyDeviceSensorNodes = Symbol (),
    _keydown              = Symbol (),
-   _keyup                = Symbol ();
+   _keyup                = Symbol (),
+   _processEvents        = Symbol .for ("X_ITE.X3DRoutingContext.processEvents");
 
 function X3DKeyDeviceSensorContext ()
 {
@@ -79,17 +80,29 @@ Object .assign (X3DKeyDeviceSensorContext .prototype,
    },
    [_keydown] (event)
    {
+      // Must advance time, because event are later processed pressed simultaneously.
+      this .advanceOnlyTime ();
+
       //console .log (event .keyCode);
 
       for (const keyDeviceSensorNode of this [_keyDeviceSensorNodes])
          keyDeviceSensorNode .keydown (event);
+
+      // Immediately process events to handle event from two or more keys.
+      this [_processEvents] ();
    },
    [_keyup] (event)
    {
+      // Must advance time, because event are later processed.
+      this .advanceOnlyTime ();
+
       //console .log (event .which);
 
       for (const keyDeviceSensorNode of this [_keyDeviceSensorNodes])
          keyDeviceSensorNode .keyup (event);
+
+      // Immediately process events to handle event from two or more keys pressed simultaneously.
+      this [_processEvents] ();
    },
    dispose ()
    {

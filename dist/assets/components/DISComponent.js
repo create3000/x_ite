@@ -185,9 +185,9 @@ const DISEntityTypeMapping_default_ = DISEntityTypeMapping;
 ;// external "__X_ITE_X3D__ .X3DGroupingNode"
 const external_X_ITE_X3D_X3DGroupingNode_namespaceObject = __X_ITE_X3D__ .X3DGroupingNode;
 var external_X_ITE_X3D_X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DGroupingNode_namespaceObject);
-;// external "__X_ITE_X3D__ .X3DSensorNode"
-const external_X_ITE_X3D_X3DSensorNode_namespaceObject = __X_ITE_X3D__ .X3DSensorNode;
-var external_X_ITE_X3D_X3DSensorNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DSensorNode_namespaceObject);
+;// external "__X_ITE_X3D__ .X3DNetworkSensorNode"
+const external_X_ITE_X3D_X3DNetworkSensorNode_namespaceObject = __X_ITE_X3D__ .X3DNetworkSensorNode;
+var external_X_ITE_X3D_X3DNetworkSensorNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DNetworkSensorNode_namespaceObject);
 ;// ./src/x_ite/Components/DIS/EspduTransform.js
 
 
@@ -204,7 +204,7 @@ var external_X_ITE_X3D_X3DSensorNode_default = /*#__PURE__*/__webpack_require__.
 function EspduTransform (executionContext)
 {
    external_X_ITE_X3D_X3DGroupingNode_default().call (this, executionContext);
-   external_X_ITE_X3D_X3DSensorNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DNetworkSensorNode_default().call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).EspduTransform);
 
@@ -218,12 +218,12 @@ function EspduTransform (executionContext)
 }
 
 Object .assign (Object .setPrototypeOf (EspduTransform .prototype, (external_X_ITE_X3D_X3DGroupingNode_default()).prototype),
-   (external_X_ITE_X3D_X3DSensorNode_default()).prototype,
+   (external_X_ITE_X3D_X3DNetworkSensorNode_default()).prototype,
 {
    initialize ()
    {
       external_X_ITE_X3D_X3DGroupingNode_default().prototype .initialize .call (this);
-      external_X_ITE_X3D_X3DSensorNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DNetworkSensorNode_default().prototype .initialize .call (this);
    },
 });
 
@@ -354,7 +354,7 @@ var external_X_ITE_X3D_X3DBoundedObject_default = /*#__PURE__*/__webpack_require
 
 function ReceiverPdu (executionContext)
 {
-   external_X_ITE_X3D_X3DSensorNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DNetworkSensorNode_default().call (this, executionContext);
    external_X_ITE_X3D_X3DBoundedObject_default().call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).ReceiverPdu);
@@ -368,12 +368,12 @@ function ReceiverPdu (executionContext)
    }
 }
 
-Object .assign (Object .setPrototypeOf (ReceiverPdu .prototype, (external_X_ITE_X3D_X3DSensorNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (ReceiverPdu .prototype, (external_X_ITE_X3D_X3DNetworkSensorNode_default()).prototype),
    (external_X_ITE_X3D_X3DBoundedObject_default()).prototype,
 {
    initialize ()
    {
-      external_X_ITE_X3D_X3DSensorNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DNetworkSensorNode_default().prototype .initialize .call (this);
       external_X_ITE_X3D_X3DBoundedObject_default().prototype .initialize .call (this);
    },
    getBBox (bbox, shadows)
@@ -386,7 +386,7 @@ Object .assign (Object .setPrototypeOf (ReceiverPdu .prototype, (external_X_ITE_
    dispose ()
    {
       external_X_ITE_X3D_X3DBoundedObject_default().prototype .dispose .call (this);
-      external_X_ITE_X3D_X3DSensorNode_default().prototype .dispose .call (this);
+      external_X_ITE_X3D_X3DNetworkSensorNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -454,7 +454,7 @@ const ReceiverPdu_default_ = ReceiverPdu;
 
 function SignalPdu (executionContext)
 {
-   external_X_ITE_X3D_X3DSensorNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DNetworkSensorNode_default().call (this, executionContext);
    external_X_ITE_X3D_X3DBoundedObject_default().call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).SignalPdu);
@@ -467,12 +467,12 @@ function SignalPdu (executionContext)
    }
 }
 
-Object .assign (Object .setPrototypeOf (SignalPdu .prototype, (external_X_ITE_X3D_X3DSensorNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (SignalPdu .prototype, (external_X_ITE_X3D_X3DNetworkSensorNode_default()).prototype),
    (external_X_ITE_X3D_X3DBoundedObject_default()).prototype,
 {
    initialize ()
    {
-      external_X_ITE_X3D_X3DSensorNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DNetworkSensorNode_default().prototype .initialize .call (this);
       external_X_ITE_X3D_X3DBoundedObject_default().prototype .initialize .call (this);
    },
    getBBox (bbox, shadows)
@@ -485,7 +485,7 @@ Object .assign (Object .setPrototypeOf (SignalPdu .prototype, (external_X_ITE_X3
    dispose ()
    {
       external_X_ITE_X3D_X3DBoundedObject_default().prototype .dispose .call (this);
-      external_X_ITE_X3D_X3DSensorNode_default().prototype .dispose .call (this);
+      external_X_ITE_X3D_X3DNetworkSensorNode_default().prototype .dispose .call (this);
    },
 });
 
@@ -553,7 +553,7 @@ const SignalPdu_default_ = SignalPdu;
 
 function TransmitterPdu (executionContext)
 {
-   external_X_ITE_X3D_X3DSensorNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DNetworkSensorNode_default().call (this, executionContext);
    external_X_ITE_X3D_X3DBoundedObject_default().call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).TransmitterPdu);
@@ -566,12 +566,12 @@ function TransmitterPdu (executionContext)
    }
 }
 
-Object .assign (Object .setPrototypeOf (TransmitterPdu .prototype, (external_X_ITE_X3D_X3DSensorNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (TransmitterPdu .prototype, (external_X_ITE_X3D_X3DNetworkSensorNode_default()).prototype),
    (external_X_ITE_X3D_X3DBoundedObject_default()).prototype,
 {
    initialize ()
    {
-      external_X_ITE_X3D_X3DSensorNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DNetworkSensorNode_default().prototype .initialize .call (this);
       external_X_ITE_X3D_X3DBoundedObject_default().prototype .initialize .call (this);
    },
    getBBox (bbox, shadows)
@@ -584,7 +584,7 @@ Object .assign (Object .setPrototypeOf (TransmitterPdu .prototype, (external_X_I
    dispose ()
    {
       external_X_ITE_X3D_X3DBoundedObject_default().prototype .dispose .call (this);
-      external_X_ITE_X3D_X3DSensorNode_default().prototype .dispose .call (this);
+      external_X_ITE_X3D_X3DNetworkSensorNode_default().prototype .dispose .call (this);
    },
 });
 

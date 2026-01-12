@@ -3218,7 +3218,7 @@ declare namespace X3D
    interface AppearanceProxy extends X3DAppearanceNodeProxy
    {
       /**
-       * Single contained acousticProperties node that can specify additional acoustic attributes applied to associated surface geometry.
+       * Optional single contained acousticProperties node that can specify additional acoustic attributes applied to associated surface geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -3236,7 +3236,7 @@ declare namespace X3D
        */
       alphaMode: "AUTO" | "OPAQUE" | "MASK" | "BLEND";
       /**
-       * Single contained Material, PhysicalMaterial or UnlitMaterial node that can specify visual attributes for lighting response (color types, transparency, etc.
+       * Optional single contained Material, PhysicalMaterial or UnlitMaterial node that can specify visual attributes for lighting response (color types, transparency, etc.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -3254,19 +3254,19 @@ declare namespace X3D
        */
       depthMode: DepthModeProxy | null;
       /**
-       * Single contained FillProperties node that can specify additional visual attributes applied to polygonal areas of corresponding geometry, on top of whatever other appearance is already defined.
+       * Optional single contained FillProperties node that can specify additional visual attributes applied to polygonal areas of corresponding geometry, on top of whatever other appearance is already defined.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
       fillProperties: FillPropertiesProxy | null;
       /**
-       * Single contained LineProperties node that can specify additional visual attributes applied to corresponding line geometry.
+       * Optional single contained LineProperties node that can specify additional visual attributes applied to corresponding line geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
       lineProperties: LinePropertiesProxy | null;
       /**
-       * Single contained Material, PhysicalMaterial, TwoSidedMaterial (deprecated), or UnlitMaterial node that can specify visual attributes for lighting response (color types, transparency, etc.
+       * Optional single contained Material, PhysicalMaterial, TwoSidedMaterial (deprecated), or UnlitMaterial node that can specify visual attributes for lighting response (color types, transparency, etc.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -3278,7 +3278,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * Single contained PointProperties node that can specify additional visual attributes applied to corresponding point geometry.
+       * Optional single contained PointProperties node that can specify additional visual attributes applied to corresponding point geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -3290,13 +3290,13 @@ declare namespace X3D
        */
       shaders: MFNode <X3DShaderNodeProxy>;
       /**
-       * Single contained texture node (ImageTexture, MovieTexture, PixelTexture, MultiTexture) that maps image(s) to surface geometry.
+       * Optional single contained texture node (ImageTexture, MovieTexture, PixelTexture, MultiTexture) that maps image(s) to surface geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
       texture: X3DTextureNodeProxy | null;
       /**
-       * Single contained TextureTransform node that defines 2D transformation applied to texture coordinates.
+       * Optional single contained TextureTransform node that defines 2D transformation applied to texture coordinates.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -3895,13 +3895,13 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * Single contained X3DComposableVolumeRenderStyleNode node that defines specific rendering technique for data in the voxels field, and the result is blended with parent VolumeData or SegmentedVoliumeData node.
+       * Optional single contained X3DComposableVolumeRenderStyleNode node that defines specific rendering technique for data in the voxels field, and the result is blended with parent VolumeData or SegmentedVoliumeData node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
       renderStyle: X3DComposableVolumeRenderStyleNodeProxy | null;
       /**
-       * Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides second set of raw voxel information utilized by corresponding rendering styles.
+       * Optional single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides second set of raw voxel information utilized by corresponding rendering styles.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -4176,7 +4176,7 @@ declare namespace X3D
        */
       enabled: boolean;
       /**
-       * Single contained geometry node provides the geometry used for each particle when the parent ParticleSystem node has geometryType=GEOMETRY.
+       * Optional single contained geometry node provides the geometry used for each particle when the parent ParticleSystem node has geometryType=GEOMETRY.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -5567,7 +5567,7 @@ declare namespace X3D
        */
       rightTexture: X3DTexture2DNodeProxy | null;
       /**
-       * Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
+       * Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
        *
        * This field is of access type 'initializeOnly' and type SFNode.
        */
@@ -5667,7 +5667,7 @@ declare namespace X3D
        */
       texture: MFNode <X3DTexture2DNodeProxy>;
       /**
-       * Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
+       * Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
        *
        * This field is of access type 'initializeOnly' and type SFNode.
        */
@@ -7217,7 +7217,7 @@ declare namespace X3D
    interface ElevationGridProxy extends X3DGeometryNodeProxy
    {
       /**
-       * Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
+       * Optional single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
@@ -7229,7 +7229,7 @@ declare namespace X3D
        */
       ccw: boolean;
       /**
-       * Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorPerVertex field.
+       * Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorPerVertex field.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -7247,7 +7247,7 @@ declare namespace X3D
        */
       creaseAngle: number;
       /**
-       * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
+       * Optional single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -7265,7 +7265,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
+       * Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -7295,7 +7295,7 @@ declare namespace X3D
        */
       tangent: TangentProxy | null;
       /**
-       * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
+       * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -8472,7 +8472,7 @@ declare namespace X3D
        */
       size: number;
       /**
-       * Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
+       * Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
        *
        * This field is of access type 'initializeOnly' and type SFNode.
        */
@@ -8489,7 +8489,7 @@ declare namespace X3D
    interface GeoCoordinateProxy extends X3DCoordinateNodeProxy
    {
       /**
-       * Single contained GeoOrigin node that can specify a local coordinate frame for extended precision.
+       * Optional single contained GeoOrigin node that can specify a local coordinate frame for extended precision.
        *
        * This field is of access type 'initializeOnly' and type SFNode.
        */
@@ -8524,7 +8524,7 @@ declare namespace X3D
        */
       ccw: boolean;
       /**
-       * Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorPerVertex field.
+       * Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorPerVertex field.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -8548,7 +8548,7 @@ declare namespace X3D
        */
       geoGridOrigin: SFVec3d;
       /**
-       * Single contained GeoOrigin node that can specify a local coordinate frame for extended precision.
+       * Optional single contained GeoOrigin node that can specify a local coordinate frame for extended precision.
        *
        * This field is of access type 'initializeOnly' and type SFNode.
        */
@@ -8572,7 +8572,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
+       * Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -8602,7 +8602,7 @@ declare namespace X3D
        */
       tangent: TangentProxy | null;
       /**
-       * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
+       * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -8677,7 +8677,7 @@ declare namespace X3D
        */
       geoCoords: SFVec3d;
       /**
-       * Single contained GeoOrigin node that can specify a local coordinate frame for extended precision.
+       * Optional single contained GeoOrigin node that can specify a local coordinate frame for extended precision.
        *
        * This field is of access type 'initializeOnly' and type SFNode.
        */
@@ -8764,7 +8764,7 @@ declare namespace X3D
        */
       readonly children: MFNode <X3DChildNodeProxy>;
       /**
-       * Single contained GeoOrigin node that can specify a local coordinate frame for extended precision.
+       * Optional single contained GeoOrigin node that can specify a local coordinate frame for extended precision.
        *
        * This field is of access type 'initializeOnly' and type SFNode.
        */
@@ -8899,7 +8899,7 @@ declare namespace X3D
    interface GeoPositionInterpolatorProxy extends X3DInterpolatorNodeProxy
    {
       /**
-       * Single contained GeoOrigin node that can specify a local coordinate frame for extended precision.
+       * Optional single contained GeoOrigin node that can specify a local coordinate frame for extended precision.
        *
        * This field is of access type 'initializeOnly' and type SFNode.
        */
@@ -9000,7 +9000,7 @@ declare namespace X3D
        */
       readonly geoCoord_changed: SFVec3d;
       /**
-       * Single contained GeoOrigin node that can specify a local coordinate frame for extended precision.
+       * Optional single contained GeoOrigin node that can specify a local coordinate frame for extended precision.
        *
        * This field is of access type 'initializeOnly' and type SFNode.
        */
@@ -9059,7 +9059,7 @@ declare namespace X3D
        */
       enabled: boolean;
       /**
-       * Single contained GeoOrigin node that can specify a local coordinate frame for extended precision.
+       * Optional single contained GeoOrigin node that can specify a local coordinate frame for extended precision.
        *
        * This field is of access type 'initializeOnly' and type SFNode.
        */
@@ -9158,7 +9158,7 @@ declare namespace X3D
        */
       geoCenter: SFVec3d;
       /**
-       * Single contained GeoOrigin node that can specify a local coordinate frame for extended precision.
+       * Optional single contained GeoOrigin node that can specify a local coordinate frame for extended precision.
        *
        * This field is of access type 'initializeOnly' and type SFNode.
        */
@@ -9245,7 +9245,7 @@ declare namespace X3D
        */
       fieldOfView: number;
       /**
-       * Single contained GeoOrigin node that can specify a local coordinate frame for extended precision.
+       * Optional single contained GeoOrigin node that can specify a local coordinate frame for extended precision.
        *
        * This field is of access type 'initializeOnly' and type SFNode.
        */
@@ -10079,7 +10079,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
+       * Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
        *
        * This field is of access type 'initializeOnly' and type SFNode.
        */
@@ -10138,7 +10138,7 @@ declare namespace X3D
        */
       repeatT: boolean;
       /**
-       * Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
+       * Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
        *
        * This field is of access type 'initializeOnly' and type SFNode.
        */
@@ -10203,7 +10203,7 @@ declare namespace X3D
        */
       repeatT: boolean;
       /**
-       * Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
+       * Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
        *
        * This field is of access type 'initializeOnly' and type SFNode.
        */
@@ -10303,7 +10303,7 @@ declare namespace X3D
    interface IndexedFaceSetProxy extends X3DComposedGeometryNodeProxy
    {
       /**
-       * Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
+       * Optional single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
@@ -10315,7 +10315,7 @@ declare namespace X3D
        */
       ccw: boolean;
       /**
-       * Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
+       * Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10339,7 +10339,7 @@ declare namespace X3D
        */
       convex: boolean;
       /**
-       * Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
+       * Optional single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10357,7 +10357,7 @@ declare namespace X3D
        */
       creaseAngle: number;
       /**
-       * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
+       * Optional single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10369,7 +10369,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
+       * Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10423,7 +10423,7 @@ declare namespace X3D
        */
       tangent: TangentProxy | null;
       /**
-       * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
+       * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10440,13 +10440,13 @@ declare namespace X3D
    interface IndexedLineSetProxy extends X3DGeometryNodeProxy
    {
       /**
-       * Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
+       * Optional single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
       attrib: MFNode <X3DVertexAttributeNodeProxy>;
       /**
-       * Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
+       * Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10464,7 +10464,7 @@ declare namespace X3D
        */
       colorPerVertex: boolean;
       /**
-       * Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
+       * Optional single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10476,7 +10476,7 @@ declare namespace X3D
        */
       coordIndex: MFInt32;
       /**
-       * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
+       * Optional single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10488,7 +10488,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
+       * Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10517,7 +10517,7 @@ declare namespace X3D
    interface IndexedQuadSetProxy extends X3DComposedGeometryNodeProxy
    {
       /**
-       * Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
+       * Optional single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
@@ -10529,7 +10529,7 @@ declare namespace X3D
        */
       ccw: boolean;
       /**
-       * Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
+       * Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10541,13 +10541,13 @@ declare namespace X3D
        */
       colorPerVertex: boolean;
       /**
-       * Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
+       * Optional single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
       coord: X3DCoordinateNodeProxy | null;
       /**
-       * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
+       * Optional single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10565,7 +10565,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
+       * Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10595,7 +10595,7 @@ declare namespace X3D
        */
       tangent: TangentProxy | null;
       /**
-       * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
+       * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10606,7 +10606,7 @@ declare namespace X3D
    interface IndexedTriangleFanSetProxy extends X3DComposedGeometryNodeProxy
    {
       /**
-       * Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
+       * Optional single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
@@ -10618,7 +10618,7 @@ declare namespace X3D
        */
       ccw: boolean;
       /**
-       * Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
+       * Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10630,13 +10630,13 @@ declare namespace X3D
        */
       colorPerVertex: boolean;
       /**
-       * Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
+       * Optional single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
       coord: X3DCoordinateNodeProxy | null;
       /**
-       * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
+       * Optional single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10654,7 +10654,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
+       * Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10684,7 +10684,7 @@ declare namespace X3D
        */
       tangent: TangentProxy | null;
       /**
-       * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
+       * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10695,7 +10695,7 @@ declare namespace X3D
    interface IndexedTriangleSetProxy extends X3DComposedGeometryNodeProxy
    {
       /**
-       * Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
+       * Optional single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
@@ -10707,7 +10707,7 @@ declare namespace X3D
        */
       ccw: boolean;
       /**
-       * Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
+       * Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10719,13 +10719,13 @@ declare namespace X3D
        */
       colorPerVertex: boolean;
       /**
-       * Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
+       * Optional single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
       coord: X3DCoordinateNodeProxy | null;
       /**
-       * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
+       * Optional single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10743,7 +10743,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
+       * Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10773,7 +10773,7 @@ declare namespace X3D
        */
       tangent: TangentProxy | null;
       /**
-       * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
+       * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10784,7 +10784,7 @@ declare namespace X3D
    interface IndexedTriangleStripSetProxy extends X3DComposedGeometryNodeProxy
    {
       /**
-       * Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
+       * Optional single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
@@ -10796,7 +10796,7 @@ declare namespace X3D
        */
       ccw: boolean;
       /**
-       * Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
+       * Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10808,13 +10808,13 @@ declare namespace X3D
        */
       colorPerVertex: boolean;
       /**
-       * Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
+       * Optional single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
       coord: X3DCoordinateNodeProxy | null;
       /**
-       * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
+       * Optional single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10832,7 +10832,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
+       * Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10862,7 +10862,7 @@ declare namespace X3D
        */
       tangent: TangentProxy | null;
       /**
-       * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
+       * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -11215,7 +11215,7 @@ declare namespace X3D
        */
       dimensions: SFVec3f;
       /**
-       * Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides explicit per-voxel gradient direction information for determining surface boundaries, rather than having it implicitly calculated by the implementation.
+       * Optional single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides explicit per-voxel gradient direction information for determining surface boundaries, rather than having it implicitly calculated by the implementation.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -11251,7 +11251,7 @@ declare namespace X3D
        */
       visible: boolean;
       /**
-       * Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides raw voxel information utilized by corresponding rendering styles.
+       * Optional single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides raw voxel information utilized by corresponding rendering styles.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -11692,25 +11692,25 @@ declare namespace X3D
    interface LineSetProxy extends X3DGeometryNodeProxy
    {
       /**
-       * Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
+       * Optional single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
       attrib: MFNode <X3DVertexAttributeNodeProxy>;
       /**
-       * Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
+       * Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
       color: X3DColorNodeProxy | null;
       /**
-       * Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
+       * Optional single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
       coord: X3DCoordinateNodeProxy | null;
       /**
-       * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
+       * Optional single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -11722,7 +11722,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
+       * Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -12746,7 +12746,7 @@ declare namespace X3D
        */
       stopTime: number;
       /**
-       * Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
+       * Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
        *
        * This field is of access type 'initializeOnly' and type SFNode.
        */
@@ -12923,7 +12923,7 @@ declare namespace X3D
       visibilityLimit: number;
    }
 
-   /** Normal defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node, or else to a parent ElevationGrid node. */
+   /** Normal defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate | CoordinateDouble node, or else to a parent ElevationGrid node. */
    interface NormalProxy extends X3DNormalNodeProxy
    {
       /**
@@ -12985,7 +12985,7 @@ declare namespace X3D
        */
       closed: boolean;
       /**
-       * Single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions.
+       * Optional single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -13073,7 +13073,7 @@ declare namespace X3D
    interface NurbsOrientationInterpolatorProxy extends X3DChildNodeProxy
    {
       /**
-       * Single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions.
+       * Optional single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -13120,7 +13120,7 @@ declare namespace X3D
    interface NurbsPatchSurfaceProxy extends X3DNurbsSurfaceGeometryNodeProxy
    {
       /**
-       * Single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions.
+       * Optional single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -13138,7 +13138,7 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Single contained NurbsTextureCoordinate, TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
+       * Optional single contained NurbsTextureCoordinate, TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -13215,7 +13215,7 @@ declare namespace X3D
    interface NurbsPositionInterpolatorProxy extends X3DChildNodeProxy
    {
       /**
-       * Single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions.
+       * Optional single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -13317,7 +13317,7 @@ declare namespace X3D
    interface NurbsSurfaceInterpolatorProxy extends X3DChildNodeProxy
    {
       /**
-       * Single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions.
+       * Optional single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -13527,7 +13527,7 @@ declare namespace X3D
        */
       addTrimmingContour: MFNode <Contour2DProxy>;
       /**
-       * Single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions.
+       * Optional single contained Coordinate or CoordinateDouble node that can specify control points for NURBS geometry definitions.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -13549,7 +13549,7 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Single contained NurbsTextureCoordinate, TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
+       * Optional single contained NurbsTextureCoordinate, TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -14123,7 +14123,7 @@ declare namespace X3D
        */
       enabled: boolean;
       /**
-       * Single contained geometry node provides geometry used for each particle when geometryType=GEOMETRY.
+       * Optional single contained geometry node provides geometry used for each particle when geometryType=GEOMETRY.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -14463,7 +14463,7 @@ declare namespace X3D
        */
       repeatT: boolean;
       /**
-       * Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
+       * Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
        *
        * This field is of access type 'initializeOnly' and type SFNode.
        */
@@ -14510,7 +14510,7 @@ declare namespace X3D
        */
       repeatT: boolean;
       /**
-       * Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
+       * Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
        *
        * This field is of access type 'initializeOnly' and type SFNode.
        */
@@ -14834,25 +14834,25 @@ declare namespace X3D
    interface PointSetProxy extends X3DGeometryNodeProxy
    {
       /**
-       * Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
+       * Optional single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
       attrib: MFNode <X3DVertexAttributeNodeProxy>;
       /**
-       * Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
+       * Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
       color: X3DColorNodeProxy | null;
       /**
-       * Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
+       * Optional single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
       coord: X3DCoordinateNodeProxy | null;
       /**
-       * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
+       * Optional single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -14864,7 +14864,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations.
+       * Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -15496,7 +15496,7 @@ declare namespace X3D
    interface QuadSetProxy extends X3DComposedGeometryNodeProxy
    {
       /**
-       * Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
+       * Optional single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
@@ -15508,7 +15508,7 @@ declare namespace X3D
        */
       ccw: boolean;
       /**
-       * Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
+       * Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -15520,13 +15520,13 @@ declare namespace X3D
        */
       colorPerVertex: boolean;
       /**
-       * Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
+       * Optional single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
       coord: X3DCoordinateNodeProxy | null;
       /**
-       * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
+       * Optional single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -15538,7 +15538,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
+       * Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -15562,7 +15562,7 @@ declare namespace X3D
        */
       tangent: TangentProxy | null;
       /**
-       * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
+       * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -16483,7 +16483,7 @@ declare namespace X3D
        */
       segmentEnabled: MFBool;
       /**
-       * Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) holds component texture that provides corresponding segment identifier.
+       * Optional single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) holds component texture that provides corresponding segment identifier.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -16495,7 +16495,7 @@ declare namespace X3D
        */
       visible: boolean;
       /**
-       * Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides raw voxel information utilized by corresponding rendering styles.
+       * Optional single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides raw voxel information utilized by corresponding rendering styles.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -16665,7 +16665,7 @@ declare namespace X3D
    interface ShapeProxy extends X3DShapeNodeProxy
    {
       /**
-       * Single contained Appearance node that can specify visual attributes (such as material, texture, fillProperties and lineProperties) applied to corresponding geometry.
+       * Optional single contained Appearance node that can specify visual attributes (such as material, texture, fillProperties and lineProperties) applied to corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -16695,7 +16695,7 @@ declare namespace X3D
        */
       castShadow: boolean;
       /**
-       * Single contained geometry node that is rendered according to corresponding appearance.
+       * Optional single contained geometry node that is rendered according to corresponding appearance.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -18749,7 +18749,7 @@ declare namespace X3D
        */
       shadows: boolean;
       /**
-       * Single contained texture node (ImageTexture, MovieTexture, PixelTexture, MultiTexture) that maps image(s) to surface geometry.
+       * Optional single contained texture node (ImageTexture, MovieTexture, PixelTexture, MultiTexture) that maps image(s) to surface geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -18856,7 +18856,7 @@ declare namespace X3D
        */
       shadows: boolean;
       /**
-       * Single contained texture node (ImageTexture, MovieTexture, PixelTexture, MultiTexture) that maps image(s) to surface geometry.
+       * Optional single contained texture node (ImageTexture, MovieTexture, PixelTexture, MultiTexture) that maps image(s) to surface geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -19751,7 +19751,7 @@ declare namespace X3D
    interface TriangleFanSetProxy extends X3DComposedGeometryNodeProxy
    {
       /**
-       * Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
+       * Optional single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
@@ -19763,7 +19763,7 @@ declare namespace X3D
        */
       ccw: boolean;
       /**
-       * Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
+       * Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -19775,7 +19775,7 @@ declare namespace X3D
        */
       colorPerVertex: boolean;
       /**
-       * Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
+       * Optional single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -19787,7 +19787,7 @@ declare namespace X3D
        */
       fanCount: MFInt32;
       /**
-       * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
+       * Optional single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -19799,7 +19799,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
+       * Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -19823,7 +19823,7 @@ declare namespace X3D
        */
       tangent: TangentProxy | null;
       /**
-       * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
+       * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -19834,7 +19834,7 @@ declare namespace X3D
    interface TriangleSetProxy extends X3DComposedGeometryNodeProxy
    {
       /**
-       * Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
+       * Optional single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
@@ -19846,7 +19846,7 @@ declare namespace X3D
        */
       ccw: boolean;
       /**
-       * Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
+       * Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -19858,13 +19858,13 @@ declare namespace X3D
        */
       colorPerVertex: boolean;
       /**
-       * Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
+       * Optional single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
       coord: X3DCoordinateNodeProxy | null;
       /**
-       * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
+       * Optional single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -19876,7 +19876,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
+       * Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -19900,7 +19900,7 @@ declare namespace X3D
        */
       tangent: TangentProxy | null;
       /**
-       * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
+       * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -19934,7 +19934,7 @@ declare namespace X3D
    interface TriangleStripSetProxy extends X3DComposedGeometryNodeProxy
    {
       /**
-       * Single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
+       * Optional single contained FloatVertexAttribute node that can specify list of per-vertex attribute information for programmable shaders.
        *
        * This field is of access type 'inputOutput' and type MFNode.
        */
@@ -19946,7 +19946,7 @@ declare namespace X3D
        */
       ccw: boolean;
       /**
-       * Single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
+       * Optional single contained Color or ColorRGBA node that can specify color values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -19958,13 +19958,13 @@ declare namespace X3D
        */
       colorPerVertex: boolean;
       /**
-       * Single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
+       * Optional single contained Coordinate or CoordinateDouble node that can specify a list of vertex values.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
       coord: X3DCoordinateNodeProxy | null;
       /**
-       * Single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
+       * Optional single contained FogCoordinate node that can specify depth parameters for fog in corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -19976,7 +19976,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * Single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
+       * Optional single contained Normal node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -20006,7 +20006,7 @@ declare namespace X3D
        */
       tangent: TangentProxy | null;
       /**
-       * Single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
+       * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -20534,7 +20534,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * Single contained X3DVolumeRenderStyleNode node that defines specific rendering technique for this volumetric object.
+       * Optional single contained X3DVolumeRenderStyleNode node that defines specific rendering technique for this volumetric object.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -20546,7 +20546,7 @@ declare namespace X3D
        */
       visible: boolean;
       /**
-       * Single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides raw voxel information utilized by corresponding rendering styles.
+       * Optional single contained X3DTexture3DNode (ComposedTexture3D, ImageTexture3D, PixelTexture3D) that provides raw voxel information utilized by corresponding rendering styles.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
