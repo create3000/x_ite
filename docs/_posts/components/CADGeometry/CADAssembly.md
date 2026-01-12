@@ -22,7 +22,7 @@ The CADAssembly node belongs to the [CADGeometry](/x_ite/components/overview/#ca
 ```
 + X3DNode
   + X3DChildNode
-    + X3DGroupingNode
+    + X3DGroupingNode (X3DBoundedObject)*
       + CADAssembly (X3DProductStructureChildNode)*
 ```
 

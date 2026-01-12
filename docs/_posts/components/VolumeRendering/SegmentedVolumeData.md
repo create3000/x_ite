@@ -22,9 +22,12 @@ The SegmentedVolumeData node belongs to the [VolumeRendering](/x_ite/components/
 ```
 + X3DNode
   + X3DChildNode
-    + X3DVolumeDataNode
+    + X3DVolumeDataNode (X3DBoundedObject)*
       + SegmentedVolumeData
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
@@ -110,7 +113,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 ### SFNode [in, out] **segmentIdentifiers** NULL <small>[X3DTexture3DNode]</small>
 {: #fields-segmentIdentifiers }
 
-Single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/), [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/)) holds component texture that provides corresponding segment identifier.
+Optional single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/), [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/)) holds component texture that provides corresponding segment identifier.
 
 #### Hint
 
@@ -132,7 +135,7 @@ Multiple contained X3DVolumeRenderStyleNode nodes corresponding to each isosurfa
 ### SFNode [in, out] **voxels** NULL <small>[X3DTexture3DNode]</small>
 {: #fields-voxels }
 
-Single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/), [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/)) that provides raw voxel information utilized by corresponding rendering styles. Any number of color components (1-4) may be defined.
+Optional single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/), [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/)) that provides raw voxel information utilized by corresponding rendering styles. Any number of color components (1-4) may be defined.
 
 ## Advice
 

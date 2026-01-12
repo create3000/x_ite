@@ -22,9 +22,12 @@ The HAnimSite node belongs to the [HAnim](/x_ite/components/overview/#hanim) com
 ```
 + X3DNode
   + X3DChildNode
-    + X3DGroupingNode
+    + X3DGroupingNode (X3DBoundedObject)*
       + HAnimSite
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

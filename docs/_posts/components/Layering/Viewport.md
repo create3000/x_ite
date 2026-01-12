@@ -22,9 +22,9 @@ The Viewport node belongs to the [Layering](/x_ite/components/overview/#layering
 ```
 + X3DNode
   + X3DChildNode
-    + X3DGroupingNode
+    + X3DGroupingNode (X3DBoundedObject)*
       + X3DViewportNode
-        + Viewport (X3DBoundedObject)*
+        + Viewport
 ```
 
 \* Derived from multiple interfaces.

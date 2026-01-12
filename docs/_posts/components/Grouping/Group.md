@@ -22,9 +22,12 @@ The Group node belongs to the [Grouping](/x_ite/components/overview/#grouping) c
 ```
 + X3DNode
   + X3DChildNode
-    + X3DGroupingNode
+    + X3DGroupingNode (X3DBoundedObject)*
       + Group
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 

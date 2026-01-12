@@ -22,20 +22,23 @@ The RigidBodyCollection node belongs to the [RigidBodyPhysics](/x_ite/components
 ```
 + X3DNode
   + X3DChildNode
-    + RigidBodyCollection
+    + RigidBodyCollection (X3DBoundedObject)*
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | MFNode | [in] | [set_contacts](#fields-set_contacts) |  |
-| SFVec3f | [in, out] | [gravity](#fields-gravity) | 0 -9.8 0  |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFBool | [in, out] | [preferAccuracy](#fields-preferAccuracy) | FALSE |
 | SFFloat | [in, out] | [errorCorrection](#fields-errorCorrection) | 0.8  |
 | SFInt32 | [in, out] | [iterations](#fields-iterations) | 10  |
+| SFVec3f | [in, out] | [gravity](#fields-gravity) | 0 -9.8 0  |
 | SFFloat | [in, out] | [constantForceMix](#fields-constantForceMix) | 0.0001  |
 | SFFloat | [in, out] | [maxCorrectionSpeed](#fields-maxCorrectionSpeed) | -1  |
 | SFFloat | [in, out] | [contactSurfaceThickness](#fields-contactSurfaceThickness) | 0  |
@@ -43,13 +46,13 @@ The RigidBodyCollection node belongs to the [RigidBodyPhysics](/x_ite/components
 | SFTime | [in, out] | [disableTime](#fields-disableTime) | 0  |
 | SFFloat | [in, out] | [disableLinearSpeed](#fields-disableLinearSpeed) | 0  |
 | SFFloat | [in, out] | [disableAngularSpeed](#fields-disableAngularSpeed) | 0  |
-| SFNode | [ ] | [collider](#fields-collider) | NULL  |
-| MFNode | [in, out] | [bodies](#fields-bodies) | [ ] |
-| MFNode | [in, out] | [joints](#fields-joints) | [ ] |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
 | SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
 | SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| SFNode | [ ] | [collider](#fields-collider) | NULL  |
+| MFNode | [in, out] | [bodies](#fields-bodies) | [ ] |
+| MFNode | [in, out] | [joints](#fields-joints) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -61,11 +64,6 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
-### SFBool [in, out] **enabled** TRUE
-{: #fields-enabled }
-
-Enables/disables node operation.
-
 ### MFNode [in] **set_contacts** <small class="red">not supported</small>
 {: #fields-set_contacts }
 
@@ -75,10 +73,10 @@ Enables/disables node operation.
 
 - It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
-### SFVec3f [in, out] **gravity** 0 -9.8 0 <small>(-∞,∞)</small>
-{: #fields-gravity }
+### SFBool [in, out] **enabled** TRUE
+{: #fields-enabled }
 
-*gravity* indicates direction and strength of local *gravity* vector for this collection of bodies (units m/sec^2).
+Enables/disables node operation.
 
 ### SFBool [in, out] **preferAccuracy** FALSE
 {: #fields-preferAccuracy }
@@ -94,6 +92,11 @@ Enables/disables node operation.
 {: #fields-iterations }
 
 *iterations* controls number of *iterations* performed over collectioned joints and bodies during each evaluation.
+
+### SFVec3f [in, out] **gravity** 0 -9.8 0 <small>(-∞,∞)</small>
+{: #fields-gravity }
+
+*gravity* indicates direction and strength of local *gravity* vector for this collection of bodies (units m/sec^2).
 
 ### SFFloat [in, out] **constantForceMix** 0.0001 <small>[0,∞)</small> <small class="red">not supported</small>
 {: #fields-constantForceMix }
@@ -148,27 +151,6 @@ Or -1, *maxCorrectionSpeed* .
 
 - Only activated if autoDisable='true'
 
-### SFNode [ ] **collider** NULL <small>[CollisionCollection]</small>
-{: #fields-collider }
-
-The *collider* field associates a collision collection with this rigid body collection allowing seamless updates and integration without the need to use the X3D event model.
-
-### MFNode [in, out] **bodies** [ ] <small>[RigidBody]</small>
-{: #fields-bodies }
-
-Collection of top-level nodes that comprise a set of *bodies* evaluated as a single set of interactions.
-
-### MFNode [in, out] **joints** [ ] <small>[X3DRigidJointNode]</small>
-{: #fields-joints }
-
-The *joints* field is used to register all *joints* between bodies contained in this collection.
-
-#### Warnings
-
-- If a joint is connected between bodies in two different collections, the result is implementation-dependent.
-- If a joint instance is registered with more than one collection, the results are implementation dependent.
-- Joints not registered with any collection are not evaluated.
-
 ### SFBool [in, out] **visible** TRUE
 {: #fields-visible }
 
@@ -210,6 +192,27 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
 - [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#BoundingBoxes)
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
+
+### SFNode [ ] **collider** NULL <small>[CollisionCollection]</small>
+{: #fields-collider }
+
+The *collider* field associates a collision collection with this rigid body collection allowing seamless updates and integration without the need to use the X3D event model.
+
+### MFNode [in, out] **bodies** [ ] <small>[RigidBody]</small>
+{: #fields-bodies }
+
+Collection of top-level nodes that comprise a set of *bodies* evaluated as a single set of interactions.
+
+### MFNode [in, out] **joints** [ ] <small>[X3DRigidJointNode]</small>
+{: #fields-joints }
+
+The *joints* field is used to register all *joints* between bodies contained in this collection.
+
+#### Warnings
+
+- If a joint is connected between bodies in two different collections, the result is implementation-dependent.
+- If a joint instance is registered with more than one collection, the results are implementation dependent.
+- Joints not registered with any collection are not evaluated.
 
 ## Example
 

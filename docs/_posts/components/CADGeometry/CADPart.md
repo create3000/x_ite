@@ -22,7 +22,7 @@ The CADPart node belongs to the [CADGeometry](/x_ite/components/overview/#cadgeo
 ```
 + X3DNode
   + X3DChildNode
-    + X3DGroupingNode
+    + X3DGroupingNode (X3DBoundedObject)*
       + CADPart (X3DProductStructureChildNode)*
 ```
 
