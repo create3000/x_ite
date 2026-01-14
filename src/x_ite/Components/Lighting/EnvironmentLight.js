@@ -285,7 +285,8 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
 
 Object .defineProperties (EnvironmentLight,
 {
-   ... X3DNode .getStaticProperties ("EnvironmentLight", "Lighting", 3, "children", "4.1"),
+   // X_ITE introduces this node in 4.0, but X3D specification adds this node in 4.1.
+   ... X3DNode .getStaticProperties ("EnvironmentLight", "Lighting", 3, "children", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

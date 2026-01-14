@@ -73,7 +73,8 @@ Object .assign (Object .setPrototypeOf (Tangent .prototype, X3DTangentNode .prot
 
 Object .defineProperties (Tangent,
 {
-   ... X3DNode .getStaticProperties ("Tangent", "Rendering", 5, "tangent", "4.1"),
+   // X_ITE introduces this node in 4.0, but X3D specification adds this node in 4.1.
+   ... X3DNode .getStaticProperties ("Tangent", "Rendering", 5, "tangent", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

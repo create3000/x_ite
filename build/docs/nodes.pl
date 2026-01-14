@@ -123,10 +123,13 @@ sub update_node {
    $source        = shift;
    $node          = $node -> [1];
 
+   $source =~ /X3D specification adds this node in (\d+\.\d+)/;
+   $from = $1;
+
    $source =~ /getStaticProperties\s*\("(.*?)",\s*"(.*?)",\s*(\d+),\s*"(.*?)",\s*"(.*?)"(?:,\s*"(.*?)")?\)/;
    $componentLevel = $3;
    $containerField = $4;
-   $from           = $5;
+   $from           = $5 unless $from;
    $to             = $6 // "Infinity";
 
    $deprecated   = $source =~ /THIS NODE IS DEPRECIATED SINCE X3D VERSION ([\d\.]+)./ ? $1 : "";
