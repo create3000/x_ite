@@ -38,7 +38,7 @@ The ParticleSystem node belongs to the [ParticleSystems](/x_ite/components/overv
 | SFString | [ ] | [geometryType](#fields-geometryType) | "QUAD"  |
 | SFBool | [in, out] | [createParticles](#fields-createParticles) | TRUE |
 | SFInt32 | [in, out] | [maxParticles](#fields-maxParticles) | 200  |
-| SFFloat | [in, out] | [particleLifetime](#fields-particleLifetime) | 5  |
+| SFTime | [in, out] | [particleLifetime](#fields-particleLifetime) | 5  |
 | SFFloat | [in, out] | [lifetimeVariation](#fields-lifetimeVariation) | 0.25  |
 | SFVec2f | [in, out] | [particleSize](#fields-particleSize) | 0.02 0.02  |
 | SFNode | [ ] | [emitter](#fields-emitter) | NULL  |

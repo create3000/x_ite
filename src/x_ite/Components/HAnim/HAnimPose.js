@@ -175,7 +175,7 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
 
 Object .defineProperties (HAnimPose,
 {
-   ... X3DNode .getStaticProperties ("HAnimPose", "HAnim", 3, "poses", "4.1"),
+   ... X3DNode .getStaticProperties ("HAnimPose", "HAnim", 3, "children", "4.1"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

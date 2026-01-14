@@ -13,9 +13,9 @@ tags: [FontLibrary, Text]
 
 ## Overview
 
-FontLibrary specifies a collection of one or more font family definitions. A font family may include one or more related font style definitions. FontLibrary provides the ability to selectively load font files for use by [FontStyle](/x_ite/components/text/fontstyle/) and [ScreenFontStyle](/x_ite/components/layout/screenfontstyle/) nodes.
+FontLibrary can load additional fonts for use by Text and FontStyle nodes.
 
-The FontLibrary node belongs to the **Text** component and requires at least level **2,** its default container field is *rootNode.* It is available from X3D version 4.1 or higher.
+The FontLibrary node belongs to the [Text](/x_ite/components/overview/#text) component and requires at least support level **2,** its default container field is *FontLibrary.* It is available from X3D version 4.1 or higher.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
@@ -63,28 +63,42 @@ Author-provided prose that describes intended purpose of the url asset.
 ### SFString [in, out] **family** ""
 {: #fields-family }
 
-Input/Output field *family*.
+Array of quoted font *family* names in preference order, browsers use the first supported *family*.
+
+#### Hints
+
+- Example *family* array might be "Times" "SERIF"
+- Values with guaranteed support include "SERIF" "SANS" "TYPEWRITER".
+- SERIF and SANS are variable-width fonts (for example, Times Roman and Arial).
+- TYPEWRITER is a fixed-width font (for example, Courier).
+- MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
+- [See 15.2.2.2 Font *family* and style](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/text.html#Fontfamilyandstyle) for details.
+- [Supports supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
+- AccessType relaxed to inputOutput in order to support animation and user accessibility.
+
+#### Warning
+
+- Font *family* support often varies.
 
 ### SFBool [in, out] **load** TRUE
 {: #fields-load }
 
-*load*=true means *load* immediately, *load*=false means defer loading or else unload a previously loaded scene.
-
-#### Hints
-
-- Allows author to design when [Inline](/x_ite/components/networking/inline/) loading occurs via user interaction, event chains or scripting.
-- Use a separate [LoadSensor](/x_ite/components/networking/loadsensor/) node to detect when loading is complete.
+The *load* field has no effect, [Anchor](/x_ite/components/networking/anchor/) operation is only triggered by user selection.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 {: #fields-url }
 
-Location and filename of font. Multiple locations are more reliable, and including a Web address lets e-mail attachments work.
+Address of replacement world, or #ViewpointDEFName within the current scene, or alternate Web resource, activated by the user selecting [Shape](/x_ite/components/shape/shape/) geometry within the [Anchor](/x_ite/components/networking/anchor/) children nodes.
 
 #### Hints
 
+- Jump to a world's internal viewpoint by appending viewpoint name (for example, #ViewpointName, someOtherCoolWorld.x3d#GrandTour).
+- Jump to a local viewpoint by only using viewpoint name (for example, #GrandTour).
+- Binding a different [Viewpoint](/x_ite/components/navigation/viewpoint/) triggers an isBound event that can initiate other user-arrival reactions via event chains to interpolators or scripts.
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
 - Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
 - Can replace embedded blank(s) in *url* queries with %20 for each blank character.
+- Pop up a new window with *url* value as follows: "JavaScript:window.open('somePage.html','popup','width=240,height=240');location.href='HelloWorld.x3d'"
 - [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls)
 
 #### Warning
@@ -94,29 +108,12 @@ Location and filename of font. Multiple locations are more reliable, and includi
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
 {: #fields-autoRefresh }
 
-*autoRefresh* defines interval in seconds before automatic reload of current url asset is performed.
-
-#### Hints
-
-- If preceding file loading fails or load field is false, no refresh is performed.
-- Repeated refresh attempts to reload currently loaded entry of url list. If that fails, the browser retries other entries in the url list.
-
-#### Warning
-
-- Automatically reloading content has security considerations and needs to be considered carefully.
+The [*autoRefresh* field has no effect, [Anchor](/x_ite/components/networking/anchor/) operation is only triggered by user selection.
 
 ### SFTime [in, out] **autoRefreshTimeLimit** 3600 <small>[0,∞)</small>
 {: #fields-autoRefreshTimeLimit }
 
-*autoRefreshTimeLimit* defines maximum duration that automatic refresh activity can occur.
-
-#### Hint
-
-- Automatic refresh is different than query and response timeouts performed by a networking library while sequentially attempting to retrieve addressed content from a url list.
-
-#### Warning
-
-- Automatically reloading content has security considerations and needs to be considered carefully.
+The [*autoRefreshTimeLimit* field has no effect, [Anchor](/x_ite/components/networking/anchor/) operation is only triggered by user selection.
 
 ## Supported File Formats
 
@@ -128,6 +125,16 @@ It is possible to specify in the *url* field one or more URLs of a custom font f
 | WOFF      | .woff          | font/woff  |
 | Open Type | .otf           | font/otf   |
 | True Type | .ttf           | font/ttf   |
+
+## Advice
+
+### Hints
+
+- Full Internationalization (i18n) and Localization (l10n) features are available for any written language.
+- [Supports supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
+- [Wikipedia](https://en.wikipedia.org/wiki/Font)
+- [Wikipedia](https://en.wikipedia.org/wiki/Typeface)
+- [Open-source font libraries](https://fonts.google.com) and https://fontlibrary.org
 
 ## See Also
 

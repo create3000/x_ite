@@ -2,6 +2,7 @@ import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
+import X3DChildNode         from "../Core/X3DChildNode.js";
 import X3DUrlObject         from "../Networking/X3DUrlObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 
@@ -11,18 +12,18 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 
 function FontLibrary (executionContext)
 {
-   X3DNode       .call (this, executionContext);
+   X3DChildNode .call (this, executionContext);
    X3DUrlObject .call (this, executionContext);
 
    this .addType (X3DConstants .FontLibrary);
 }
 
-Object .assign (Object .setPrototypeOf (FontLibrary .prototype, X3DNode .prototype),
+Object .assign (Object .setPrototypeOf (FontLibrary .prototype, X3DChildNode .prototype),
    X3DUrlObject .prototype,
 {
    initialize ()
    {
-      X3DNode      .prototype .initialize .call (this);
+      X3DChildNode .prototype .initialize .call (this);
       X3DUrlObject .prototype .initialize .call (this);
 
       this ._family .addInterest ("set_family__", this);
@@ -70,13 +71,13 @@ Object .assign (Object .setPrototypeOf (FontLibrary .prototype, X3DNode .prototy
    dispose ()
    {
       X3DUrlObject .prototype .dispose .call (this);
-      X3DNode      .prototype .dispose .call (this);
+      X3DChildNode .prototype .dispose .call (this);
    },
 });
 
 Object .defineProperties (FontLibrary,
 {
-   ... X3DNode .getStaticProperties ("FontLibrary", "Text", 2, "FontLibrary", "4.1"),
+   ... X3DNode .getStaticProperties ("FontLibrary", "Text", 2, "children", "4.1"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

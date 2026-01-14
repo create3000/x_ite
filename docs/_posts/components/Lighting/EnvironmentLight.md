@@ -13,12 +13,9 @@ tags: [EnvironmentLight, Lighting]
 
 ## Overview
 
-EnvironmentLight is a light node for [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/) and [SpecularGlossinessMaterial](/x_ite/components/x-ite/specularglossinessmaterial/) nodes.
+EnvironmentLight defines image-based lighting (IBL). Lights have no visible shape themselves and lighting effects continue through any intermediate geometry.
 
-The EnvironmentLight node belongs to the **Lighting** component and its default container field is *children.* It is available since X3D version 4.0 or later.
-
->**Info:** This node only affects the [PhysicalMaterial](../../shape/physicalmaterial/) and [SpecularGlossinessMaterial](../../x-ite/specularglossinessmaterial/) nodes.
-{: .prompt-info }
+The EnvironmentLight node belongs to the [Lighting](/x_ite/components/overview/#lighting) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 
@@ -99,26 +96,37 @@ Brightness of ambient (nondirectional background) emission from the light. Inter
 ### SFRotation [in, out] **rotation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
 {: #fields-rotation }
 
-Input/Output field *rotation*.
+Orientation (axis, angle in radians) of light *rotation* relative to local coordinate system.
 
 ### MFFloat [in, out] **diffuseCoefficients** [ ]
 {: #fields-diffuseCoefficients }
 
-Input/Output field *diffuseCoefficients*. Coefficients used during generation of diffuse texture from specular texture.
+*diffuseCoefficients* field provides a 3 x 9 array of float values that declares spherical harmonic coefficients for irradiance up to l=2, corresponding to glTF irradianceCoefficients field.
+
+#### Hint
+
+- The *diffuseCoefficients* field overrides the diffuseTexture field if both are provided.
 
 ### SFNode [in, out] **diffuseTexture** NULL <small>[X3DEnvironmentTextureNode]</small>
 {: #fields-diffuseTexture }
 
-Input/Output field *diffuseTexture*. If `NULL` the texture is generated from specular texture.
+When applying diffuseColor for this light node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
+
+#### Hints
+
+- If texture node is NULL or unspecified, no effect is applied to material values.
+- Contained texture node must include `containerField='diffuseTexture'`
+- The diffuseCoefficients field overrides the *diffuseTexture* field if both are provided.
 
 ### SFNode [in, out] **specularTexture** NULL <small>[X3DEnvironmentTextureNode]</small>
 {: #fields-specularTexture }
 
-Input/Output field *specularTexture*.
+When applying specularColor for this light node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
 
-#### Hint
+#### Hints
 
-- [glTF Sample Environments](https://github.com/KhronosGroup/glTF-Sample-Environments)
+- If texture node is NULL or unspecified, no effect is applied to material values.
+- Contained texture node must include `containerField='specularTexture'`
 
 ### SFBool [in, out] **shadows** FALSE
 {: #fields-shadows }
@@ -144,6 +152,13 @@ The shadowBias value controls the visibility of *shadow acne*.
 {: #fields-shadowMapSize }
 
 Size of the shadow map in pixels, must be power of two.
+
+## Advice
+
+### Hints
+
+- The bound [NavigationInfo](/x_ite/components/navigation/navigationinfo/) controls whether headlight is enabled on/off. TODO add contained nodes.
+- [Wikipedia Cube mapping](https://en.wikipedia.org/wiki/Cube_mapping)
 
 ## See Also
 

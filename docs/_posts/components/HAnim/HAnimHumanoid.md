@@ -56,7 +56,7 @@ The HAnimHumanoid node belongs to the [HAnim](/x_ite/components/overview/#hanim)
 | MFNode | [in, out] | [segments](#fields-segments) | [ ] |
 | MFNode | [in, out] | [sites](#fields-sites) | [ ] |
 | MFNode | [in, out] | [viewpoints](#fields-viewpoints) | [ ] |
-| MFNode | [in, out] | [poses](#fields-poses) | [ ] |
+| MFNode | [in, out] | [children](#fields-children) | [ ] |
 | MFBool | [in, out] | [motionsEnabled](#fields-motionsEnabled) | [ ] |
 | MFNode | [in, out] | [motions](#fields-motions) | [ ] |
 | SFNode | [in, out] | [skinBindingNormals](#fields-skinBindingNormals) | NULL  |
@@ -336,8 +336,8 @@ List of [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes containing [Viewpo
 - These are actual node declarations, not USE nodes.
 - Top-level [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes (in turn containing [Viewpoint](/x_ite/components/navigation/viewpoint/) nodes) must include `containerField='viewpoints'` for proper validation and operation.
 
-### MFNode [in, out] **poses** [ ] <small>[HAnimPose]</small>
-{: #fields-poses }
+### MFNode [in, out] **children** [ ] <small>[HAnimPose]</small>
+{: #fields-children }
 
 Contains any [HAnimPose](/x_ite/components/hanim/hanimpose/) nodes that can animate the HAnimHumanoid.
 

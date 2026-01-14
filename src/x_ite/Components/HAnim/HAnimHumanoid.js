@@ -140,7 +140,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       // Events
 
-      this ._poses                      .addInterest ("set_poses__",                      this);
+      this ._children                   .addInterest ("set_children__",                   this);
       this ._motionsEnabled             .addInterest ("set_motions__",                    this);
       this ._motions                    .addInterest ("set_motions__",                    this);
       this ._jointBindingPositions      .addInterest ("set_joints__",                     this);
@@ -153,7 +153,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       this ._displacementWeightsTexture .addInterest ("set_displacementWeightsTexture__", this);
       this ._skinCoord                  .addInterest ("set_skinCoord__",                  this);
 
-      this .set_poses__ ();
+      this .set_children__ ();
       this .set_motions__ ();
       this .set_joints__ ();
       this .set_skinCoord__ ();
@@ -182,7 +182,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    {
       this .humanoidKey = `[${this .numJoints}.${this .numDisplacements}]`;
    },
-   set_poses__ ()
+   set_children__ ()
    {
       const poseNodes = this .poseNodes;
 
@@ -196,7 +196,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       poseNodes .length = 0;
 
-      for (const node of this ._poses)
+      for (const node of this ._children)
       {
          const poseNode = X3DCast (X3DConstants .HAnimPose, node);
 
@@ -215,7 +215,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    set_pose_fraction__ (currentPoseNode)
    {
       // There is a set_fraction event in currentPoseNode,
-      // all other poses must be updated now.
+      // all other children must be updated now.
 
       for (const poseNode of this .poseNodes)
       {
@@ -231,7 +231,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          return;
 
       // A pose node has finished its animation,
-      // all poses must be updated now.
+      // all children must be updated now.
 
       for (const poseNode of this .poseNodes)
          poseNode .setNeedsUpdateInterpolators ();
@@ -637,7 +637,7 @@ Object .defineProperties (HAnimHumanoid,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "segments",              new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "sites",                 new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "viewpoints",            new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "poses",                 new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",              new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "motionsEnabled",        new Fields .MFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "motions",               new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "skinBindingNormals",    new Fields .SFNode ()),

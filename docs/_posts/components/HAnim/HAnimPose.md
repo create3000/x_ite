@@ -13,9 +13,9 @@ tags: [HAnimPose, HAnim]
 
 ## Overview
 
-An HAnimPose node supports...
+HAnimPose nodes support setting HAnimJoint values in a corresponding HAnimHumanoid skeleton.
 
-The HAnimPose node belongs to the [HAnim](/x_ite/components/overview/#hanim) component and requires at least support level **2,** its default container field is *poses.* It is available from X3D version 4.1 or higher.
+The HAnimPose node belongs to the [HAnim](/x_ite/components/overview/#hanim) component and requires at least support level **3,** its default container field is *poses.* It is available from X3D version 4.1 or higher.
 
 ## Hierarchy
 
@@ -64,7 +64,7 @@ Author-provided prose that describes intended purpose of this node.
 ### SFString [in, out] **name** ""
 {: #fields-name }
 
-Unique *name* attribute must be defined so that [HAnimMotion](/x_ite/components/hanim/hanimmotion/) node can be identified at run time for animation purposes.
+Unique *name* attribute must be defined so that HAnimPose node can be identified at run time for animation purposes.
 
 ### SFInt32 [in, out] **loa** -1 <small>[-1,4]</small>
 {: #fields-loa }
@@ -84,42 +84,69 @@ Enables/disables node operation.
 ### SFFloat [in, out] **transitionDuration** 0 <small>(0,∞)</small>
 {: #fields-transitionDuration }
 
-Input/Output field *transitionDuration*.
+Duration in seconds for a pose transition.
 
 ### SFBool [in] **resetAllJoints**
 {: #fields-resetAllJoints }
 
-Input field *resetAllJoints*.
+*resetAllJoints* is an input boolean event that zeroes all Joint objects in the skeleton field to their default values, matching the default binding pose (i.e. the I pose).
+
+#### Warning
+
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFBool [in] **commencePose**
 {: #fields-commencePose }
 
-Input field *commencePose*.
+*commencePose* is an input boolean event that triggers the animation of Joint values to achieve the pose.
+
+#### Warning
+
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFTime [in] **set_startTime**
 {: #fields-set_startTime }
 
-Input field *set_startTime*.
+*set_startTime* is an input event that commences the animation of Joint objects in the parent Humanoid object.
+
+#### Warning
+
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFFloat [in] **set_fraction**
 {: #fields-set_fraction }
 
-Input field *set_fraction*.
+Setting *fraction* in range [0,1] provides an input event that allows gradual change of each joint in the pose, where 0 indicates no change and 1 indicates fully changed.
+
+#### Warning
+
+- It is an error to define this transient inputOnly field in an X3D file, instead only use it a destination for ROUTE events.
 
 ### SFBool [out] **isActive**
 {: #fields-isActive }
 
-Output field *isActive*.
+*isActive* true/false events are sent when pose animation starts/stops.
+
+#### Warning
+
+- It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
 
 ### MFNode [in, out] **children** [ ] <small>[HAnimJoint]</small>
 {: #fields-children }
 
-Input/Output field *children*.
+The *children* field lists all [HAnimJoint](/x_ite/components/hanim/hanimjoint/) nodes making up this pose. Contained [HAnimJoint](/x_ite/components/hanim/hanimjoint/) nodes provide center, rotation, and scale values which are applied to corresponding [HAnimJoint](/x_ite/components/hanim/hanimjoint/) nodes with the same name in the parent [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skeleton.
 
-###  [] **resetOtherJoints** FALSE
-{: #fields-resetOtherJoints }
+#### Warnings
 
-Input/Output field *resetOtherJoints*.
+- These nodes must be independent of [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skeleton joints, do not re-USE any skeleton [HAnimJoint](/x_ite/components/hanim/hanimjoint/) nodes.
+- No other node types are allowed in the HAnimPose *children* field.
+
+## Advice
+
+### Hints
+
+- [HAnim Architecture draft version 2.1, clause 4.10.3 Poses](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-1/ISO-IEC19774-1v2.1/ISO-IEC19774-1v2.1-WD/Architecture/concepts.html#Poses)
+- [HAnim Architecture draft version 2.1, 6.5 Pose](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-1/ISO-IEC19774-1v2.1/ISO-IEC19774-1v2.1-WD/Architecture/ObjectInterfaces.html#Pose)
 
 ## See Also
 
