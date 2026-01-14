@@ -40,7 +40,7 @@ The HAnimPose node belongs to the [HAnim](/x_ite/components/overview/#hanim) com
 | SFTime | [in] | [set_startTime](#fields-set_startTime) |  |
 | SFFloat | [in] | [set_fraction](#fields-set_fraction) |  |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
-| MFNode | [in, out] | [poseJoints](#fields-poseJoints) | [ ] |
+| MFNode | [in, out] | [children](#fields-children) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -111,10 +111,10 @@ Input field *set_fraction*.
 
 Output field *isActive*.
 
-### MFNode [in, out] **poseJoints** [ ] <small>[HAnimJoint]</small>
-{: #fields-poseJoints }
+### MFNode [in, out] **children** [ ] <small>[HAnimJoint]</small>
+{: #fields-children }
 
-Input/Output field *poseJoints*.
+Input/Output field *children*.
 
 ###  [] **resetOtherJoints** FALSE
 {: #fields-resetOtherJoints }

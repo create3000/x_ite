@@ -45,9 +45,9 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
       this ._commencePose   .addInterest ("set_commencePose__",   this);
       this ._set_startTime  .addInterest ("set_startTime__",      this);
       this ._set_fraction   .addInterest ("set_fraction__",       this);
-      this ._poseJoints     .addInterest ("set_poseJoints__",     this);
+      this ._children       .addInterest ("set_children__",       this);
 
-      this .set_poseJoints__ ();
+      this .set_children__ ();
    },
    addJoints (jointNodes)
    {
@@ -159,11 +159,11 @@ Object .assign (Object .setPrototypeOf (HAnimPose .prototype, X3DChildNode .prot
       for (const interpolator of this .interpolators)
          interpolator ._set_fraction = fraction;
    },
-   set_poseJoints__ ()
+   set_children__ ()
    {
       this .poseJointNodes .clear ();
 
-      for (const node of this ._poseJoints)
+      for (const node of this ._children)
       {
          const jointNode = X3DCast (X3DConstants .HAnimJoint, node);
 
@@ -190,7 +190,7 @@ Object .defineProperties (HAnimPose,
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_startTime",      new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",       new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",           new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "poseJoints",         new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "children",           new Fields .MFNode ()),
       ]),
       enumerable: true,
    },
