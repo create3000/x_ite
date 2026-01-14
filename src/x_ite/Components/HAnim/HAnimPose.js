@@ -7,6 +7,10 @@ import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
 import TimeSensor           from "../Time/TimeSensor.js";
 
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
 function HAnimPose (executionContext)
 {
    X3DChildNode .call (this, executionContext);

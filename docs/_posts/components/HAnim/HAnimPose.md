@@ -17,6 +17,9 @@ HAnimPose nodes support setting HAnimJoint values in a corresponding HAnimHumano
 
 The HAnimPose node belongs to the [HAnim](/x_ite/components/overview/#hanim) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 4.1 or higher.
 
+>**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
+{: .prompt-info }
+
 ## Hierarchy
 
 ```

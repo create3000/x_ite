@@ -17,6 +17,9 @@ EnvironmentLight defines image-based lighting (IBL). Lights have no visible shap
 
 The EnvironmentLight node belongs to the [Lighting](/x_ite/components/overview/#lighting) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 4.1 or higher.
 
+>**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
+{: .prompt-info }
+
 ## Hierarchy
 
 ```
