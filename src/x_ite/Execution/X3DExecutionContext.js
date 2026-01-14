@@ -157,7 +157,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          const { from, to } = ConcreteNode .specificationRange;
 
          if (this .getSpecificationVersion () < from || this .getSpecificationVersion () > to)
-            return null;
+            console .warn (`Node type '${typeName}' does not match specification version in '${this .getWorldURL ()}.`);
 
          if (!this .hasComponent (ConcreteNode .componentInfo .name))
             console .warn (`Node type '${typeName}' does not match component/profile statements in '${this .getWorldURL ()}'.`);
