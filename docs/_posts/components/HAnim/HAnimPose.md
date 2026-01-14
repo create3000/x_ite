@@ -15,7 +15,7 @@ tags: [HAnimPose, HAnim]
 
 HAnimPose nodes support setting HAnimJoint values in a corresponding HAnimHumanoid skeleton.
 
-The HAnimPose node belongs to the [HAnim](/x_ite/components/overview/#hanim) component and requires at least support level **3,** its default container field is *poses.* It is available from X3D version 4.1 or higher.
+The HAnimPose node belongs to the [HAnim](/x_ite/components/overview/#hanim) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 4.1 or higher.
 
 ## Hierarchy
 

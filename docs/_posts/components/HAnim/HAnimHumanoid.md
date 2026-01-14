@@ -339,7 +339,11 @@ List of [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes containing [Viewpo
 ### MFNode [in, out] **children** [ ] <small>[HAnimPose]</small>
 {: #fields-children }
 
-Contains any [HAnimPose](/x_ite/components/hanim/hanimpose/) nodes that can animate the HAnimHumanoid.
+Contains zero or more [HAnimPose](/x_ite/components/hanim/hanimpose/) nodes that can animate the HAnimHumanoid.
+
+#### Warning
+
+- No other node types are allowed in HAnimHumanoid with this containerField.
 
 ### MFBool [in, out] **motionsEnabled** [ ]
 {: #fields-motionsEnabled }
