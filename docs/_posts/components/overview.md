@@ -194,7 +194,7 @@ Highest supported level: **3**
 - [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/hanim/hanimhumanoid/#example)
 - [HAnimJoint](/x_ite/components/hanim/hanimjoint/)
 - [HAnimMotion](/x_ite/components/hanim/hanimmotion/)
-- [HAnimPose](/x_ite/components/hanim/hanimpose/)
+- [HAnimPose](/x_ite/components/hanim/hanimpose/) <small class="blue">experimental</small>
 - [HAnimSegment](/x_ite/components/hanim/hanimsegment/)
 - [HAnimSite](/x_ite/components/hanim/hanimsite/)
 
@@ -256,7 +256,7 @@ Highest supported level: **3**
 {: .small }
 
 - [DirectionalLight](/x_ite/components/lighting/directionallight/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/lighting/directionallight/#example)
-- [EnvironmentLight](/x_ite/components/lighting/environmentlight/)
+- [EnvironmentLight](/x_ite/components/lighting/environmentlight/) <small class="blue">experimental</small>
 - [PointLight](/x_ite/components/lighting/pointlight/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/lighting/pointlight/#example)
 - [SpotLight](/x_ite/components/lighting/spotlight/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/lighting/spotlight/#example)
 
