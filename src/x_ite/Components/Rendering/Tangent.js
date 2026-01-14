@@ -73,7 +73,7 @@ Object .assign (Object .setPrototypeOf (Tangent .prototype, X3DTangentNode .prot
 
 Object .defineProperties (Tangent,
 {
-   ... X3DNode .getStaticProperties ("Tangent", "Rendering", 5, "tangent", "4.0"),
+   ... X3DNode .getStaticProperties ("Tangent", "Rendering", 5, "tangent", "4.1"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
