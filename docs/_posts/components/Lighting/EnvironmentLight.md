@@ -15,7 +15,7 @@ tags: [EnvironmentLight, Lighting]
 
 Environment maps can represent incident illumination at a point, and can be used to show reflections of distant objects. The EnvironmentLight node supports Image Based Lighting (IBL) techniques by specifying light-source intensity around a given location (i.e., the environment) as a cube map. EnvironmentLight defines both specular radiance and diffuse irradiance, converting an environment map into an irradiance map that shows how much light comes from any particular direction.
 
-The EnvironmentLight node belongs to the [Lighting](/x_ite/components/overview/#lighting) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 4.0 or higher.
+The EnvironmentLight node belongs to the [Lighting](/x_ite/components/overview/#lighting) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 4.1 or higher.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
