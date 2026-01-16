@@ -13,7 +13,7 @@ tags: [SpotLight, Lighting]
 
 ## Overview
 
-SpotLight is a light source that illuminates geometry within a conical beam. Lighting illuminates all geometry except lines and points. By default, light scope only illuminates peer geometry and children nodes within the scene graph hierarchy. Lights have no visible shape themselves and lighting effects continue through any intermediate geometry.
+SpotLight is a light source that illuminates geometry within a conical beam. Lighting illuminates all geometry except lines and points. By default, light scope only illuminates peer geometry and children nodes within the scene graph hierarchy.
 
 The SpotLight node belongs to the [Lighting](/x_ite/components/overview/#lighting) component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
@@ -170,9 +170,10 @@ Size of the shadow map in pixels, must be power of two.
 
 ## Advice
 
-### Hint
+### Hints
 
-- The bound [NavigationInfo](/x_ite/components/navigation/navigationinfo/) controls whether headlight is enabled on/off.
+- Lights have no visible shape themselves and lighting effects continue through any intermediate geometry.
+- The bound [NavigationInfo](/x_ite/components/navigation/navigationinfo/) controls whether the user headlight is enabled on/off.
 
 ## Example
 

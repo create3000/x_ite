@@ -70,11 +70,11 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### SFFloat [in, out] **ambientIntensity** 0.2 <small>[0,1]</small>
 {: #fields-ambientIntensity }
 
-How much ambient omnidirectional light is reflected from all light sources. Interchange profile
+How much ambient omnidirectional light is reflected from all light sources.
 
 #### Hint
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### SFColor [in, out] **diffuseColor** 0.8 0.8 0.8 <small>[0,1]</small>
 {: #fields-diffuseColor }
@@ -88,11 +88,11 @@ How much direct, angle-dependent light is reflected from all light sources.
 ### SFColor [in, out] **specularColor** 0 0 0 <small>[0,1]</small>
 {: #fields-specularColor }
 
-Specular highlights are brightness reflections (example: shiny spots on an apple). Interchange profile
+Specular highlights are brightness reflections (example: shiny spots on an apple).
 
 #### Hint
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### SFColor [in, out] **emissiveColor** 0 0 0 <small>[0,1]</small>
 {: #fields-emissiveColor }
@@ -112,29 +112,29 @@ How much glowing light is emitted from this object.
 ### SFFloat [in, out] **shininess** 0.2 <small>[0,1]</small>
 {: #fields-shininess }
 
-Lower *shininess* values provide soft specular glows, while higher values result in sharper, smaller highlights. Interchange profile
+Lower *shininess* values provide soft specular glows, while higher values result in sharper, smaller highlights.
 
 #### Hint
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### SFFloat [in, out] **transparency** 0 <small>[0,1]</small>
 {: #fields-transparency }
 
-How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile
+How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque.
 
 #### Hint
 
-- *transparency* \< .5 opaque, *transparency* \> .5 transparent.
+- In Interchange profile *transparency* \< .5 opaque, *transparency* \> .5 transparent.
 
 ### SFFloat [in, out] **backAmbientIntensity** 0.2 <small>[0,1]</small>
 {: #fields-backAmbientIntensity }
 
-How much ambient omnidirectional light is reflected from all light sources. Interchange profile
+How much ambient omnidirectional light is reflected from all light sources.
 
 #### Hint
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### SFColor [in, out] **backDiffuseColor** 0.8 0.8 0.8 <small>[0,1]</small>
 {: #fields-backDiffuseColor }
@@ -148,11 +148,11 @@ How much direct, angle-dependent light is reflected from all light sources.
 ### SFColor [in, out] **backSpecularColor** 0 0 0 <small>[0,1]</small>
 {: #fields-backSpecularColor }
 
-Specular highlights are brightness reflections (example: shiny spots on an apple). Interchange profile
+Specular highlights are brightness reflections (example: shiny spots on an apple).
 
 #### Hint
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### SFColor [in, out] **backEmissiveColor** 0 0 0 <small>[0,1]</small>
 {: #fields-backEmissiveColor }
@@ -172,20 +172,20 @@ How much glowing light is emitted from this object.
 ### SFFloat [in, out] **backShininess** 0.2 <small>[0,1]</small>
 {: #fields-backShininess }
 
-Lower shininess values provide soft specular glows, while higher values result in sharper, smaller highlights. Interchange profile
+Lower shininess values provide soft specular glows, while higher values result in sharper, smaller highlights.
 
 #### Hint
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### SFFloat [in, out] **backTransparency** 0 <small>[0,1]</small>
 {: #fields-backTransparency }
 
-How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile
+How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque.
 
 #### Hint
 
-- Transparency \< .5 opaque, transparency \> .5 transparent.
+- In Interchange profile transparency \< .5 opaque, transparency \> .5 transparent.
 
 ## Advice
 

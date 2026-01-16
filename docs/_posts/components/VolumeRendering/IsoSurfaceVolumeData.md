@@ -80,7 +80,7 @@ If *surfaceValues* has one value defined, render corresponding isosurface plus a
 
 Threshold for gradient magnitude for voxel inolusion in isosurface.
 
-#### Hint
+#### Warning
 
 - Contained Texture3D node with `containerField='gradients'` can provide explicit per-voxel gradient direction information for determining surface boundaries.
 
