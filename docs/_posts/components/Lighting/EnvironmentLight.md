@@ -97,7 +97,7 @@ Brightness of ambient (nondirectional background) emission from the light.
 
 - In Interchange profile this field may be ignored, applying the default value regardless.
 
-### SFVec3f [in, out] **origin**
+### SFVec3f [in, out] **origin** 0 0 0 <small>(-∞,∞)</small>
 {: #fields-origin }
 
 *origin* defines the relative position for observing the surrounding scene to create an environment texture. Input illumination to the EnvironmentLight node reflects all scene illumination visible at the node *origin*.
