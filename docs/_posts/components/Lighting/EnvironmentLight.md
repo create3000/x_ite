@@ -39,7 +39,7 @@ The EnvironmentLight node belongs to the [Lighting](/x_ite/components/overview/#
 | SFColor | [in, out] | [color](#fields-color) | 1 1 1  |
 | SFFloat | [in, out] | [intensity](#fields-intensity) | 1  |
 | SFFloat | [in, out] | [ambientIntensity](#fields-ambientIntensity) | 0  |
-| SFVec3f | [in, out] | [origin](#fields-origin) |  |
+| SFVec3f | [in, out] | [origin](#fields-origin) | 0 0 0  |
 | SFRotation | [in, out] | [rotation](#fields-rotation) | 0 0 1 0  |
 | MFFloat | [in, out] | [diffuseCoefficients](#fields-diffuseCoefficients) | [ ] |
 | SFNode | [in, out] | [diffuseTexture](#fields-diffuseTexture) | NULL  |
