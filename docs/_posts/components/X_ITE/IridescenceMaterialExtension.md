@@ -65,7 +65,7 @@ Input/Output field *iridescenceTextureMapping*.
 ### SFNode [in, out] **iridescenceTexture** NULL <small>[X3DSingleTextureNode]</small>
 {: #fields-iridescenceTexture }
 
-The iridescence intensity texture.
+The iridescence intensity texture, stored in the red (R) channel.
 
 ### SFFloat [in, out] **iridescenceIndexOfRefraction** 1.3 <small>[1,∞)</small>
 {: #fields-iridescenceIndexOfRefraction }
@@ -90,7 +90,7 @@ Input/Output field *iridescenceThicknessTextureMapping*.
 ### SFNode [in, out] **iridescenceThicknessTexture** NULL <small>[X3DSingleTextureNode]</small>
 {: #fields-iridescenceThicknessTexture }
 
-The thickness texture of the thin-film layer.
+The thickness texture of the thin-film layer, stored in the green (G) channel.
 
 ## Example
 

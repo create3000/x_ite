@@ -65,7 +65,7 @@ Input/Output field *clearcoatTextureMapping*.
 ### SFNode [in, out] **clearcoatTexture** NULL <small>[X3DSingleTextureNode]</small>
 {: #fields-clearcoatTexture }
 
-The clearcoat layer intensity texture.
+The clearcoat layer intensity texture, stored in the red (R) channel.
 
 ### SFFloat [in, out] **clearcoatRoughness** 0 <small>[0,∞)</small>
 {: #fields-clearcoatRoughness }
@@ -80,7 +80,7 @@ Input/Output field *clearcoatRoughnessTextureMapping*.
 ### SFNode [in, out] **clearcoatRoughnessTexture** NULL <small>[X3DSingleTextureNode]</small>
 {: #fields-clearcoatRoughnessTexture }
 
-The clearcoat layer roughness texture.
+The clearcoat layer roughness texture, stored in the green (G) channel.
 
 ### SFString [in, out] **clearcoatNormalTextureMapping** ""
 {: #fields-clearcoatNormalTextureMapping }

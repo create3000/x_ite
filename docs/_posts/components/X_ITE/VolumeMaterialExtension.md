@@ -62,7 +62,7 @@ Input/Output field *thicknessTextureMapping*.
 ### SFNode [in, out] **thicknessTexture** NULL <small>[X3DSingleTextureNode]</small>
 {: #fields-thicknessTexture }
 
-A texture that defines the thickness, stored in the G channel. This will be multiplied by thicknessFactor.
+A texture that defines the thickness, stored in the green (G) channel. This will be multiplied by thicknessFactor.
 
 ### SFFloat [in, out] **attenuationDistance** 1000000 <small>[0,∞)</small>
 {: #fields-attenuationDistance }
