@@ -5,10 +5,6 @@ import X3DNode                 from "../Core/X3DNode.js";
 import X3DSoundDestinationNode from "./X3DSoundDestinationNode.js";
 import X3DConstants            from "../../Base/X3DConstants.js";
 
-/**
- * THIS NODE IS NOT SUPPORTED.
- */
-
 function StreamAudioDestination (executionContext)
 {
    X3DSoundDestinationNode .call (this, executionContext);
@@ -17,7 +13,9 @@ function StreamAudioDestination (executionContext)
 
    const audioContext = this .getBrowser () .getAudioContext ();
 
+   this .audioElement                    = new Audio ();
    this .mediaStreamAudioDestinationNode = new MediaStreamAudioDestinationNode (audioContext);
+   this .audioElement .srcObject         = this .mediaStreamAudioDestinationNode .stream;
 }
 
 Object .assign (Object .setPrototypeOf (StreamAudioDestination .prototype, X3DSoundDestinationNode .prototype),
@@ -34,10 +32,28 @@ Object .assign (Object .setPrototypeOf (StreamAudioDestination .prototype, X3DSo
    {
       return this .mediaStreamAudioDestinationNode;
    },
-   set_enabled__ () { /* remove this function if implemented */ },
+   set_enabled__ ()
+   {
+      const
+         browser = this .getBrowser (),
+         active  = this ._enabled .getValue () && this .getLive () .getValue ();
+
+      if (active)
+         browser .startAudioElement (this .audioElement);
+      else
+         browser .stopAudioElement (this .audioElement);
+
+      X3DSoundDestinationNode .prototype .set_enabled__ .call (this);
+   },
    set_mediaDeviceID__ ()
    {
+      this .getBrowser () .startAudioElement (this, "set_mediaDeviceID_impl__");
+   },
+   set_mediaDeviceID_impl__ ()
+   {
+      const sinkId = this ._mediaDeviceID .getValue () || "default";
 
+      return this .audioElement .setSinkId ?.(sinkId) ?? Promise .resolve ();
    },
 });
 
