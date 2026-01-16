@@ -15,7 +15,7 @@ tags: [EnvironmentLight, Lighting]
 
 Environment maps can represent incident illumination at a point, and can be used to show reflections of distant objects. The EnvironmentLight node supports Image Based Lighting (IBL) techniques by specifying light-source intensity around a given location (i.e., the environment) as a cube map. EnvironmentLight defines both specular radiance and diffuse irradiance, converting an environment map into an irradiance map that shows how much light comes from any particular direction.
 
-The EnvironmentLight node belongs to the [Lighting](/x_ite/components/overview/#lighting) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 4.0 or higher.
+The EnvironmentLight node belongs to the [Lighting](/x_ite/components/overview/#lighting) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 4.1 or higher.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
@@ -39,6 +39,7 @@ The EnvironmentLight node belongs to the [Lighting](/x_ite/components/overview/#
 | SFColor | [in, out] | [color](#fields-color) | 1 1 1  |
 | SFFloat | [in, out] | [intensity](#fields-intensity) | 1  |
 | SFFloat | [in, out] | [ambientIntensity](#fields-ambientIntensity) | 0  |
+| SFVec3f | [in, out] | [origin](#fields-origin) |  |
 | SFRotation | [in, out] | [rotation](#fields-rotation) | 0 0 1 0  |
 | MFFloat | [in, out] | [diffuseCoefficients](#fields-diffuseCoefficients) | [ ] |
 | SFNode | [in, out] | [diffuseTexture](#fields-diffuseTexture) | NULL  |
@@ -96,6 +97,11 @@ Brightness of ambient (nondirectional background) emission from the light.
 
 - In Interchange profile this field may be ignored, applying the default value regardless.
 
+### SFVec3f [in, out] **origin** 0 0 0 <small>(-∞,∞)</small>
+{: #fields-origin }
+
+*origin* defines the relative position for observing the surrounding scene to create an environment texture. Input illumination to the EnvironmentLight node reflects all scene illumination visible at the node *origin*.
+
 ### SFRotation [in, out] **rotation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
 {: #fields-rotation }
 
@@ -128,7 +134,7 @@ Single *rotation* angle of texture about center (opposite effect appears on geom
 
 *specularTexture* defines explicit precomputed X3DEnvironmentTextureNode ([ComposedCubeMapTexture](/x_ite/components/cubemaptexturing/composedcubemaptexture/), [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/), [ImageCubeMapTexture](/x_ite/components/cubemaptexturing/imagecubemaptexture/)) nodes as the image source for the EnvironmentLight. When applying specularColor for this light node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
 
-#### Hints
+#### Hint
 
 - If texture node is NULL or unspecified, no effect is applied.
 
