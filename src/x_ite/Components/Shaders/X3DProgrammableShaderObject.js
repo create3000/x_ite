@@ -343,7 +343,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       {
          return location;
       }
-      else
+      else if (depreciated)
       {
          // Look for depreciated location.
 
@@ -355,6 +355,10 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          }
 
          return location;
+      }
+      else
+      {
+         return -1;
       }
    },
    addShaderFields ()
