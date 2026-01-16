@@ -98,11 +98,11 @@ Brightness of direct emission from the light.
 ### SFFloat [in, out] **ambientIntensity** 0 <small>[0,1]</small>
 {: #fields-ambientIntensity }
 
-Brightness of ambient (nondirectional background) emission from the light. Interchange profile
+Brightness of ambient (nondirectional background) emission from the light.
 
 #### Hint
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### SFVec3f [in, out] **location** 0 0 0 <small>(-∞,∞)</small>
 {: #fields-location }

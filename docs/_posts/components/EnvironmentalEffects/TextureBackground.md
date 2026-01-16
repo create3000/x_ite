@@ -77,13 +77,13 @@ The angle array values increase from 0.0 zenith (straight up) to π/2=1.570796 (
 
 #### Hints
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 - [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 #### Warnings
 
 - You must have one more skyColor value than *skyAngle* values.
-- Colors at *skyAngle*=0 are ignored. Interchange profile
+- Colors at *skyAngle*=0 are ignored.
 
 ### MFColor [in, out] **skyColor** 0 0 0 <small>[0,1]</small>
 {: #fields-skyColor }
@@ -93,12 +93,12 @@ The angle array values increase from 0.0 zenith (straight up) to π/2=1.570796 (
 #### Hints
 
 - Setting the same color at two consecutive angles produces a solid color band.
-- Only one color might be rendered, others can be ignored.
+- In Interchange profile only one color might be rendered, others can be ignored.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
 #### Warning
 
-- You must have one more *skyColor* value than skyAngle values. Interchange profile
+- You must have one more *skyColor* value than skyAngle values.
 
 ### MFFloat [in, out] **groundAngle** [ ] <small>[0,π/2]</small>
 {: #fields-groundAngle }
@@ -107,13 +107,13 @@ The angle array values increase from 0.0 nadir (straight down) to π/2=1.570796 
 
 #### Hints
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 - [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 #### Warnings
 
 - You must have one more groundColor value than *groundAngle* values.
-- Colors at *groundAngle*=0 are ignored. Interchange profile
+- Colors at *groundAngle*=0 are ignored.
 
 ### MFColor [in, out] **groundColor** [ ] <small>[0,1]</small>
 {: #fields-groundColor }
@@ -123,12 +123,12 @@ The angle array values increase from 0.0 nadir (straight down) to π/2=1.570796 
 #### Hints
 
 - Setting the same color at two consecutive angles produces a solid color band.
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
 #### Warning
 
-- You must have one more *groundColor* value than groundAngle values. Interchange profile
+- You must have one more *groundColor* value than groundAngle values.
 
 ### SFFloat [in, out] **transparency** 0 <small>[0,1]</small>
 {: #fields-transparency }

@@ -68,11 +68,11 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### SFFloat [in, out] **ambientIntensity** 0.2 <small>[0,1]</small>
 {: #fields-ambientIntensity }
 
-How much ambient omnidirectional light is reflected from all light sources. Interchange profile
+How much ambient omnidirectional light is reflected from all light sources.
 
 #### Hint
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### SFString [in, out] **ambientTextureMapping** ""
 {: #fields-ambientTextureMapping }
@@ -88,9 +88,12 @@ The mapping label identifies which texture coordinates and transformations are u
 
 When applying ambientIntensity for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
 
-#### Hints
+#### Hint
 
 - If texture node is NULL or unspecified, no effect is applied to material values.
+
+#### Warning
+
 - Contained texture node must include `containerField='ambientTexture'`
 
 ### SFColor [in, out] **diffuseColor** 0.8 0.8 0.8 <small>[0,1]</small>
@@ -116,19 +119,22 @@ The mapping label identifies which texture coordinates and transformations are u
 
 When applying diffuseColor for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
 
-#### Hints
+#### Hint
 
 - If texture node is NULL or unspecified, no effect is applied to material values.
+
+#### Warning
+
 - Contained texture node must include `containerField='diffuseTexture'`
 
 ### SFColor [in, out] **specularColor** 0 0 0 <small>[0,1]</small>
 {: #fields-specularColor }
 
-Specular highlights are brightness reflections (example: shiny spots on an apple). Interchange profile
+Specular highlights are brightness reflections (example: shiny spots on an apple).
 
 #### Hint
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### SFString [in, out] **specularTextureMapping** ""
 {: #fields-specularTextureMapping }
@@ -144,9 +150,12 @@ The mapping label identifies which texture coordinates and transformations are u
 
 When applying specularColor for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
 
-#### Hints
+#### Hint
 
 - If texture node is NULL or unspecified, no effect is applied to material values.
+
+#### Warning
+
 - Contained texture node must include `containerField='specularTexture'`
 
 ### SFColor [in, out] **emissiveColor** 0 0 0 <small>[0,1]</small>
@@ -178,19 +187,22 @@ The mapping label identifies which texture coordinates and transformations are u
 
 When applying emissiveColor for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
 
-#### Hints
+#### Hint
 
 - If texture node is NULL or unspecified, no effect is applied to material values.
+
+#### Warning
+
 - Contained texture node must include `containerField='emissiveTexture'`
 
 ### SFFloat [in, out] **shininess** 0.2 <small>[0,1]</small>
 {: #fields-shininess }
 
-Lower *shininess* values provide soft specular glows, while higher values result in sharper, smaller highlights. Interchange profile
+Lower *shininess* values provide soft specular glows, while higher values result in sharper, smaller highlights.
 
 #### Hint
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### SFString [in, out] **shininessTextureMapping** ""
 {: #fields-shininessTextureMapping }
@@ -206,9 +218,12 @@ The mapping label identifies which texture coordinates and transformations are u
 
 When applying shininess for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
 
-#### Hints
+#### Hint
 
 - If texture node is NULL or unspecified, no effect is applied to material values.
+
+#### Warning
+
 - Contained texture node must include `containerField='shininessTexture'`
 
 ### SFFloat [in, out] **occlusionStrength** 1 <small>[0,1]</small>
@@ -235,9 +250,12 @@ The mapping label identifies which texture coordinates and transformations are u
 
 When applying occlusionStrength for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
 
-#### Hints
+#### Hint
 
 - If texture node is NULL or unspecified, no effect is applied to material values.
+
+#### Warning
+
 - Contained texture node must include `containerField='occlusionTexture'`
 
 ### SFFloat [in, out] **normalScale** 1 <small>[0,∞)</small>
@@ -268,16 +286,19 @@ When applying normalScale for this material node, the contained texture modulate
 
 - [*normalTexture* techniques apply Bump mapping](https://en.wikipedia.org/wiki/Bump_mapping)
 - If texture node is NULL or unspecified, no effect is applied to material values.
+
+#### Warning
+
 - Contained texture node must include `containerField='normalTexture'`
 
 ### SFFloat [in, out] **transparency** 0 <small>[0,1]</small>
 {: #fields-transparency }
 
-How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile
+How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque.
 
 #### Hint
 
-- *transparency* \< .5 opaque, *transparency* \> .5 transparent.
+- In Interchange profile *transparency* \< .5 opaque, *transparency* \> .5 transparent.
 
 ## Advice
 

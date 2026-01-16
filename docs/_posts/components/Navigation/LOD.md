@@ -161,7 +161,6 @@ Grouping nodes contain an ordered list of *children* nodes.
 - Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 - [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) and [Viewpoint](/x_ite/components/navigation/viewpoint/) share the same binding stack, so no more than one of these nodes can be bound and active at a given time.
 - Security mechanisms such as encryption and authentication can be applied to high levels of detail, allowing authors to protect intellectual property at high resolution for authorized users while still rendering simple unrestricted models for other users.
-- Contained nodes must have type X3DChildNode, such as [Group](/x_ite/components/grouping/group/) or [Transform](/x_ite/components/grouping/transform/) or [Shape](/x_ite/components/shape/shape/).
 - Apply `containerField='shape'` if parent node is [CADFace](/x_ite/components/cadgeometry/cadface/).
 - [ConformanceNist X3D Examples Archive](https://www.web3d.org/x3d/content/examples/ConformanceNist/SpecialGroups/LOD)
 
@@ -170,6 +169,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 - Do not include [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) or [Viewpoint](/x_ite/components/navigation/viewpoint/) as a child of LOD or [Switch](/x_ite/components/grouping/switch/), instead use [ViewpointGroup](/x_ite/components/navigation/viewpointgroup/) as parent to constrain location proximity where the viewpoint is available to user.
 - Results are undefined if a bindable node ([Background](/x_ite/components/environmentaleffects/background/), [Fog](/x_ite/components/environmentaleffects/fog/), [NavigationInfo](/x_ite/components/navigation/navigationinfo/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/), [Viewpoint](/x_ite/components/navigation/viewpoint/)) is a contained descendant node of either LOD or [Switch](/x_ite/components/grouping/switch/). Avoid this authoring pattern.
 - Nested LOD (and/or [GeoLOD](/x_ite/components/geospatial/geolod/)) nodes with overlapping range intervals can lead to unexpected or undefined behavior.
+- Contained nodes must have type X3DChildNode, such as [Group](/x_ite/components/grouping/group/) or [Transform](/x_ite/components/grouping/transform/) or [Shape](/x_ite/components/shape/shape/).
 - LOD is not allowed as a direct parent of [Appearance](/x_ite/components/shape/appearance/), [Material](/x_ite/components/shape/material/), [Color](/x_ite/components/rendering/color/), [Coordinate](/x_ite/components/rendering/coordinate/), [Normal](/x_ite/components/rendering/normal/) or Texture nodes, instead ensure that a [Shape](/x_ite/components/shape/shape/) is present.
 
 ## See Also

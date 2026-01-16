@@ -13,9 +13,9 @@ tags: [EnvironmentLight, Lighting]
 
 ## Overview
 
-EnvironmentLight defines image-based lighting (IBL). Lights have no visible shape themselves and lighting effects continue through any intermediate geometry.
+Environment maps can represent incident illumination at a point, and can be used to show reflections of distant objects. The EnvironmentLight node supports Image Based Lighting (IBL) techniques by specifying light-source intensity around a given location (i.e., the environment) as a cube map. EnvironmentLight defines both specular radiance and diffuse irradiance, converting an environment map into an irradiance map that shows how much light comes from any particular direction.
 
-The EnvironmentLight node belongs to the [Lighting](/x_ite/components/overview/#lighting) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 4.1 or higher.
+The EnvironmentLight node belongs to the [Lighting](/x_ite/components/overview/#lighting) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 4.0 or higher.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
@@ -62,7 +62,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### SFBool [in, out] **global** FALSE
 {: #fields-global }
 
-Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
+*global* field affects the scope of lighting effects produced by the EnvironmentLight node, and has no effect on the computation of environment textures. Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
 
 #### Warning
 
@@ -90,45 +90,50 @@ Brightness of direct emission from the light.
 ### SFFloat [in, out] **ambientIntensity** 0 <small>[0,1]</small>
 {: #fields-ambientIntensity }
 
-Brightness of ambient (nondirectional background) emission from the light. Interchange profile
+Brightness of ambient (nondirectional background) emission from the light.
 
 #### Hint
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### SFRotation [in, out] **rotation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
 {: #fields-rotation }
 
-Orientation (axis, angle in radians) of light *rotation* relative to local coordinate system.
+Single *rotation* angle of texture about center (opposite effect appears on geometry).
+
+#### Warning
+
+- Use a single radian angle value, not a 4-tuple Rotation.
 
 ### MFFloat [in, out] **diffuseCoefficients** [ ]
 {: #fields-diffuseCoefficients }
 
-*diffuseCoefficients* field provides a 3 x 9 array of float values that declares spherical harmonic coefficients for irradiance up to l=2, corresponding to glTF irradianceCoefficients field.
-
-#### Hint
-
-- The *diffuseCoefficients* field overrides the diffuseTexture field if both are provided.
+*diffuseCoefficients* field provides a 3 x 9 array of float values providing spherical harmonic coefficients for low-frequency characteristics of the environment map to produce an irradiance map corresponding to glTF irradianceCoefficients field.
 
 ### SFNode [in, out] **diffuseTexture** NULL <small>[X3DEnvironmentTextureNode]</small>
 {: #fields-diffuseTexture }
 
-When applying diffuseColor for this light node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
+*diffuseTexture* defines explicit precomputed X3DEnvironmentTextureNode ([ComposedCubeMapTexture](/x_ite/components/cubemaptexturing/composedcubemaptexture/), [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/), [ImageCubeMapTexture](/x_ite/components/cubemaptexturing/imagecubemaptexture/)) nodes as the image source for the EnvironmentLight. When applying diffuseColor for this light node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
 
-#### Hints
+#### Hint
 
-- If texture node is NULL or unspecified, no effect is applied to material values.
+- If texture node is NULL or unspecified, no effect is applied.
+
+#### Warning
+
 - Contained texture node must include `containerField='diffuseTexture'`
-- The diffuseCoefficients field overrides the *diffuseTexture* field if both are provided.
 
 ### SFNode [in, out] **specularTexture** NULL <small>[X3DEnvironmentTextureNode]</small>
 {: #fields-specularTexture }
 
-When applying specularColor for this light node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
+*specularTexture* defines explicit precomputed X3DEnvironmentTextureNode ([ComposedCubeMapTexture](/x_ite/components/cubemaptexturing/composedcubemaptexture/), [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/), [ImageCubeMapTexture](/x_ite/components/cubemaptexturing/imagecubemaptexture/)) nodes as the image source for the EnvironmentLight. When applying specularColor for this light node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
 
 #### Hints
 
-- If texture node is NULL or unspecified, no effect is applied to material values.
+- If texture node is NULL or unspecified, no effect is applied.
+
+#### Warning
+
 - Contained texture node must include `containerField='specularTexture'`
 
 ### SFBool [in, out] **shadows** FALSE
@@ -160,7 +165,8 @@ Size of the shadow map in pixels, must be power of two.
 
 ### Hints
 
-- The bound [NavigationInfo](/x_ite/components/navigation/navigationinfo/) controls whether headlight is enabled on/off. TODO add contained nodes.
+- Lights have no visible shape themselves and lighting effects continue through any intermediate geometry.
+- The bound [NavigationInfo](/x_ite/components/navigation/navigationinfo/) controls whether the user headlight is enabled on/off.
 - [Wikipedia Cube mapping](https://en.wikipedia.org/wiki/Cube_mapping)
 
 ## See Also

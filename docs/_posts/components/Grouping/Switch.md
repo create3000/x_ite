@@ -133,12 +133,12 @@ Grouping nodes contain an ordered list of *children* nodes.
 - Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 - Authors can temporarily hide test geometry under an unselected child of a Switch. This is a good alternative to "commenting out" nodes.
 - [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) and [Viewpoint](/x_ite/components/navigation/viewpoint/) share the same binding stack, so no more than one of these nodes can be bound and active at a given time.
-- Contained nodes must have type X3DChildNode, such as [Group](/x_ite/components/grouping/group/) or [Transform](/x_ite/components/grouping/transform/) or [Shape](/x_ite/components/shape/shape/).
 
 ### Warnings
 
 - Do not include [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) or [Viewpoint](/x_ite/components/navigation/viewpoint/) as a child of [LOD](/x_ite/components/navigation/lod/) or Switch, instead use [ViewpointGroup](/x_ite/components/navigation/viewpointgroup/) as parent to constrain location proximity where the viewpoint is available to user.
 - Results are undefined if a bindable node ([Background](/x_ite/components/environmentaleffects/background/), [Fog](/x_ite/components/environmentaleffects/fog/), [NavigationInfo](/x_ite/components/navigation/navigationinfo/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/), [Viewpoint](/x_ite/components/navigation/viewpoint/)) is a contained descendant node of either [LOD](/x_ite/components/navigation/lod/) or Switch. Avoid this authoring pattern.
+- Contained nodes must have type X3DChildNode, such as [Group](/x_ite/components/grouping/group/) or [Transform](/x_ite/components/grouping/transform/) or [Shape](/x_ite/components/shape/shape/).
 - Switch is not allowed as parent of [Appearance](/x_ite/components/shape/appearance/), [Material](/x_ite/components/shape/material/), [Color](/x_ite/components/rendering/color/), [Coordinate](/x_ite/components/rendering/coordinate/), [Normal](/x_ite/components/rendering/normal/) or Texture nodes.
 
 ## Example

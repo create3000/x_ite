@@ -189,7 +189,7 @@ The *massDensityModel* field is used to describe the geometry type and dimension
 
 *useGlobalGravity* indicates whether this particular body is influenced by parent [RigidBodyCollection](/x_ite/components/rigidbodyphysics/rigidbodycollection/)'s gravity setting.
 
-#### Hint
+#### Warning
 
 - Contained sub-bodies are not affected by this setting.
 
