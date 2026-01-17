@@ -190,7 +190,7 @@ Object .defineProperties (X3DObject .prototype,
    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/using
    // [Symbol .dispose]:
    // {
-   //    get () { return this .dispose (); },
+   //    get () { this .dispose (); },
    // },
 });
 
