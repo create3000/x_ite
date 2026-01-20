@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.1//EN" "https://www.web3d.org/specifications/x3d-4.1.dtd">
-<X3D profile='Interchange' version='4.1' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.1.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
+<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
   <head>
     <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
     <meta name='created' content='Sat, 14 Dec 2024 18:52:06 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.11.18, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Tue, 20 Jan 2026 10:45:58 GMT'/>
+    <meta name='modified' content='Tue, 20 Jan 2026 10:48:42 GMT'/>
   </head>
   <Scene>
     <WorldInfo>
@@ -34,7 +34,7 @@
         transparency='1'/>
     <DirectionalLight
         direction='0.5 0 -1'/>
-    <Transform DEF='Mascot'
+    <Transform DEF='Mascot_1'
         translation='6.245774 -2.835049 1.865648'
         rotation='0 -1 0 87.184210933567'
         scale='7.402182 7.402182 7.402182'>
