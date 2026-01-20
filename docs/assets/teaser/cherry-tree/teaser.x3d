@@ -9,7 +9,7 @@
     <meta name='created' content='Sat, 17 May 2025 17:44:03 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.11.18, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Tue, 20 Jan 2026 00:42:37 GMT'/>
+    <meta name='modified' content='Tue, 20 Jan 2026 00:46:52 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='ColorScheme'>
@@ -113,7 +113,8 @@ function changeColorScheme (colorScheme)
         <Inline
             url='"wk8_freeby_tj_plant_32417188.glb"'/>
         <DirectionalLight
-            intensity='10'/>
+            intensity='10'
+            direction='0 -0.7 -1'/>
       </Layer>
       <Layer DEF='Text'>
         <Transform DEF='Rectangle2D_1'
