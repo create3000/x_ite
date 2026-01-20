@@ -10,7 +10,7 @@
     <meta name='created' content='Sat, 17 May 2025 17:44:03 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.11.18, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Tue, 20 Jan 2026 10:49:18 GMT'/>
+    <meta name='modified' content='Tue, 20 Jan 2026 10:52:00 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='ColorScheme'>
@@ -122,8 +122,8 @@ function changeColorScheme (colorScheme)
             translation='-4.957083 9.349036 6.15567'>
           <ParticleSystem
               geometryType='SPRITE'
-              maxParticles='100'
-              particleLifetime='10'
+              maxParticles='150'
+              particleLifetime='20'
               particleSize='0.2 0.2'>
             <PolylineEmitter
                 direction='1 0 -1'
