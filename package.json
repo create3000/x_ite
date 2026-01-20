@@ -117,7 +117,7 @@
     "fast-xml-parser": "^5.3.3",
     "jpeg-js": "^0.4.4",
     "jpeg-lossless-decoder-js": "2.1.2",
-    "jquery": "^3.7.1",
+    "jquery": "^4.0.0",
     "jquery-mousewheel": "^3.2.2",
     "libtess": "^1.2.2",
     "madge": "^8.0.0",
