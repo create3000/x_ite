@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
-<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.1//EN" "https://www.web3d.org/specifications/x3d-4.1.dtd">
+<X3D profile='Interchange' version='4.1' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.1.xsd'>
   <head>
     <component name='Geometry2D' level='2'/>
     <component name='Layering' level='1'/>
+    <component name='ParticleSystems' level='3'/>
     <component name='Scripting' level='1'/>
-    <component name='Text' level='1'/>
+    <component name='Text' level='2'/>
     <meta name='created' content='Sat, 17 May 2025 17:44:03 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.11.18, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Tue, 20 Jan 2026 00:46:52 GMT'/>
+    <meta name='modified' content='Tue, 20 Jan 2026 10:37:39 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='ColorScheme'>
@@ -105,16 +106,49 @@ function changeColorScheme (colorScheme)
               groundColor='0.105712 0.156051 0.297, 0.187629 0.255857 0.398, 0.33604 0.405546 0.542, 0.3612 0.469145 0.602, 0.39471 0.522059 0.669'/>
         </Transform>
       </Layer>
-      <Layer DEF='Forest'>
+      <Layer DEF='Tree'>
         <Viewpoint
             position='2.251459 9.353062 3.698962'
             orientation='-0.0443144702923588 -0.998777762621043 0.0218908340729588 5.36456046404725'
             centerOfRotation='-2.043365 9.590233 0.4126665'/>
-        <Inline
-            url='"wk8_freeby_tj_plant_32417188.glb"'/>
-        <DirectionalLight
-            intensity='10'
-            direction='0 -0.7 -1'/>
+        <Group DEF='Tree_1'>
+          <Inline
+              url='"wk8_freeby_tj_plant_32417188.glb"'/>
+          <DirectionalLight
+              intensity='10'
+              direction='0 -0.7 -1'/>
+        </Group>
+        <Transform DEF='Blossoms'
+            translation='-4.957083 9.349036 6.15567'>
+          <ParticleSystem
+              geometryType='SPRITE'
+              maxParticles='100'
+              particleLifetime='10'
+              particleSize='0.2 0.2'>
+            <PolylineEmitter
+                direction='1 0 -1'
+                speed='1'
+                mass='1'
+                surfaceArea='1'
+                coordIndex='0, 1, 1'>
+              <Coordinate
+                  point='0 2 0, 0 -2 0'/>
+            </PolylineEmitter>
+            <WindPhysicsModel
+                direction='0 1 0'
+                speed='0.605'
+                gustiness='1'
+                turbulence='1'/>
+            <Appearance
+                alphaMode='BLEND'>
+              <Material
+                  diffuseColor='1 1 1'>
+                <ImageTexture containerField='diffuseTexture'
+                    url='"delicate-pink-cherry-blossom-flower-with-intricate-petals-and-stamens-png.png"'/>
+              </Material>
+            </Appearance>
+          </ParticleSystem>
+        </Transform>
       </Layer>
       <Layer DEF='Text'>
         <Transform DEF='Rectangle2D_1'
@@ -159,7 +193,7 @@ function changeColorScheme (colorScheme)
                       emissiveColor='0 0 0'/>
                 </Appearance>
                 <Text DEF='_5'
-                    string='"X_ITE v12.2.6"'
+                    string='"X_ITE v12.2.5"'
                     solid='true'>
                   <FontStyle
                       family='"Neuropol.otf", "SANS"'
