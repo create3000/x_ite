@@ -36,7 +36,7 @@ The HAnimHumanoid node belongs to the [HAnim](/x_ite/components/overview/#hanim)
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFString | [in, out] | [name](#fields-name) | "" |
 | MFString | [in, out] | [info](#fields-info) | [ ] |
-| SFString | [in, out] | [version](#fields-version) | "2.0" |
+| SFString | [in, out] | [version](#fields-version) | "2.1" |
 | SFString | [in, out] | [skeletalConfiguration](#fields-skeletalConfiguration) | "BASIC" |
 | SFInt32 | [in, out] | [loa](#fields-loa) | -1  |
 | SFVec3f | [in, out] | [translation](#fields-translation) | 0 0 0  |
@@ -221,9 +221,6 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
 - [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#BoundingBoxes)
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
-
-### MFNode [in, out] **children** [ ] <small>[HAnimPose]</small>
-{: #fields-children }
 
 ### MFNode [in, out] **skeleton** [ ] <small>[HAnimJoint, HAnimSite]</small>
 {: #fields-skeleton }
@@ -431,6 +428,15 @@ List of one or more indexed mesh definitions (such as [IndexedFaceSet](/x_ite/co
 - Top-level node must include `containerField='skin'` for proper validation and operation.
 - Requires X3D `profile='Full'` or else include `<component name='HAnim' level='2'/>`
 - For X3D3 HAnim1, previous spelling of component name was 'H-Anim' (including hyphen)
+
+### MFNode [in, out] **children** [ ] <small>[HAnimPose]</small>
+{: #fields-children }
+
+Contains zero or more [HAnimPose](/x_ite/components/hanim/hanimpose/) nodes that can animate the HAnimHumanoid.
+
+#### Warning
+
+- No other node types are allowed in HAnimHumanoid with this containerField.
 
 ## Advice
 
