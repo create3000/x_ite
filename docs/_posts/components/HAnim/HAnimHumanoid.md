@@ -429,10 +429,6 @@ List of one or more indexed mesh definitions (such as [IndexedFaceSet](/x_ite/co
 - Requires X3D `profile='Full'` or else include `<component name='HAnim' level='2'/>`
 - For X3D3 HAnim1, previous spelling of component name was 'H-Anim' (including hyphen)
 
-#### Warning
-
-- No other node types are allowed in HAnimHumanoid with this containerField.
-
 ## Advice
 
 ### Hints
