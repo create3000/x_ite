@@ -13,7 +13,7 @@ tags: [EnvironmentLight, Lighting]
 
 ## Overview
 
-Environment maps can represent incident illumination around a point, and can be used to show reflections of distant objects. The EnvironmentLight node supports Image Based Lighting (IBL) techniques by specifying light-source intensity around a given location (i.e., the environment) as a cube map. EnvironmentLight defines both specular radiance and diffuse irradiance, converting an environment map into an irradiance map that shows how much light comes from any particular direction.
+EnvironmentLight node uses an environment map to represent incident illumination around a point, and can be used to show reflections of distant objects. The EnvironmentLight node supports Image Based Lighting (IBL) techniques by specifying light-source intensity around a given location (i.e., the environment) as a cube map. EnvironmentLight defines both specular radiance and diffuse irradiance, converting an environment map into an irradiance map that shows how much light comes from any particular direction.
 
 The EnvironmentLight node belongs to the [Lighting](/x_ite/components/overview/#lighting) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 4.1 or higher.
 
@@ -105,11 +105,7 @@ Brightness of ambient (nondirectional background) emission from the light.
 ### SFRotation [in, out] **rotation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
 {: #fields-rotation }
 
-Single *rotation* angle of texture about center (opposite effect appears on geometry).
-
-#### Warning
-
-- Use a single radian angle value, not a 4-tuple Rotation.
+*rotation* field represents the overall *rotation* of the IBL environment.
 
 ### MFFloat [in, out] **diffuseCoefficients** [ ]
 {: #fields-diffuseCoefficients }

@@ -558,10 +558,8 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
             if (Grammar .DESCRIPTION .parse (this))
             {
-               if (this .string ());
-               {
+               if (this .string ())
                   description = this .value;
-               }
             }
 
             try
@@ -625,10 +623,8 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
                   if (Grammar .DESCRIPTION .parse (this))
                   {
-                     if (this .string ());
-                     {
+                     if (this .string ())
                         description = this .value;
-                     }
                   }
 
                   // Rename existing imported node.
