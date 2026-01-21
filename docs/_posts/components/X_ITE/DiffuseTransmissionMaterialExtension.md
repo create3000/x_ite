@@ -82,7 +82,7 @@ A texture that defines the color of the transmitted light, stored in the RGB cha
 
 ## Example
 
-- [View »Diffuse Transmission Teacup« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=DiffuseTransmissionTeacup)
+- [View »Diffuse Transmission Plant in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=DiffuseTransmissionPlant)
 
 ## See Also
 

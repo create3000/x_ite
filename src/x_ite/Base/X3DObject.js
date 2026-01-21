@@ -186,6 +186,12 @@ Object .defineProperties (X3DObject .prototype,
    {
       get () { return this .getTypeName (); },
    },
+   // using and Symbol.dispose are not yet supported by Safari.
+   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/using
+   // [Symbol .dispose]:
+   // {
+   //    get () { this .dispose (); },
+   // },
 });
 
 Object .assign (X3DObject,

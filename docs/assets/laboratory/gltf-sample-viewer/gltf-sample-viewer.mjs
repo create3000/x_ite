@@ -237,7 +237,6 @@ const glTF = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/LightVisibility/glTF/LightVisibility.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/LightsPunctualLamp/glTF/LightsPunctualLamp.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/MandarinOrange/glTF/MandarinOrange.gltf",
-   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/MarblesForever/glTF/MarblesForever.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/MaterialsVariantsShoe/glTF/MaterialsVariantsShoe.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/MeshPrimitiveModes/glTF/MeshPrimitiveModes.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/MetalRoughSpheres/glTF/MetalRoughSpheres.gltf",
@@ -456,7 +455,6 @@ const glb = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/Lantern/glTF-Binary/Lantern.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/LightVisibility/glTF-Binary/LightVisibility.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/LightsPunctualLamp/glTF-Binary/LightsPunctualLamp.glb",
-   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/MarblesForever/glTF-Binary/MarblesForever.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/MaterialsVariantsShoe/glTF-Binary/MaterialsVariantsShoe.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/MetalRoughSpheres/glTF-Binary/MetalRoughSpheres.glb",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/MetalRoughSpheresNoTextures/glTF-Binary/MetalRoughSpheresNoTextures.glb",
@@ -746,23 +744,22 @@ class SampleViewer
 
       // Handle url parameter.
 
-      this .browser .addBrowserCallback ("init", X3D .X3DConstants .INITIALIZED_EVENT, () =>
+      const url = new URL (location) .searchParams .get ("url");
+
+      if (url)
       {
-         this .browser .removeBrowserCallback ("init", X3D .X3DConstants .INITIALIZED_EVENT);
-
-         const url = new URL (location) .searchParams .get ("url");
-
-         if (!url)
-            return;
-
          const a = Array .from ($(".viewer-column2") .find ("a"))
-             .find (a => $(a) .attr ("href") .includes (url));
+            .find (a => $(a) .attr ("href") .includes (url));
 
          if (a)
             $(a) .trigger ("click");
          else
             this .loadURL (url);
-      });
+      }
+      else
+      {
+         browser .loadURL (new X3D .MFString ("/x_ite/assets/laboratory/gltf-sample-viewer/gltf-sample-viewer.x3d"));
+      }
    }
 
    async changeColorScheme (event)
