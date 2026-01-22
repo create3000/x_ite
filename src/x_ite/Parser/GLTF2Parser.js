@@ -194,6 +194,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          if (typeof value !== "string")
             continue;
 
+         if (key === "version")
+            continue;
+
          worldInfoNode ._info .push (`${key}: ${value}`);
       }
 
