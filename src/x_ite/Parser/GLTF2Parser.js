@@ -607,14 +607,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    bufferViewObject: (() =>
    {
       const ComponentSize = new Map ([
-         [5120, 1],
-         [5121, 1],
-         [5122, 2],
-         [5123, 2],
-         [5124, 4],
-         [5125, 4],
-         [5126, 4],
-         [5130, 8],
+         [5120, 1], // Int8Array
+         [5121, 1], // Uint8Array
+         [5122, 2], // Int16Array
+         [5123, 2], // Uint16Array
+         [5124, 4], // Int32Array
+         [5125, 4], // Uint32Array
+         [5126, 4], // Float32Array
+         [5130, 8], // Float64Array
       ]);
 
       return function (bufferView, componentType)
