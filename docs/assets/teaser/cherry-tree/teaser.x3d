@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
-<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.1//EN" "https://www.web3d.org/specifications/x3d-4.1.dtd">
+<X3D profile='Interchange' version='4.1' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.1.xsd'>
   <head>
     <component name='Geometry2D' level='2'/>
     <component name='Layering' level='1'/>
     <component name='ParticleSystems' level='3'/>
     <component name='Scripting' level='1'/>
-    <component name='Text' level='1'/>
+    <component name='Text' level='2'/>
     <meta name='created' content='Sat, 17 May 2025 17:44:03 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.11.18, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Tue, 20 Jan 2026 10:52:00 GMT'/>
+    <meta name='modified' content='Thu, 22 Jan 2026 12:53:49 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='ColorScheme'>
@@ -176,6 +176,9 @@ function changeColorScheme (colorScheme)
             rotation='1 0 0 3.14159265358979'
             scale='0.8288495 0.8288495 0.8288495'
             center='5.160146 0 0'>
+          <FontLibrary
+              family='Neuropol'
+              url='"Neuropol.otf"'/>
           <Group DEF='Animation'>
             <TimeSensor DEF='_3'
                 cycleInterval='0.5'
@@ -196,7 +199,7 @@ function changeColorScheme (colorScheme)
                     string='"X_ITE v12.2.6"'
                     solid='true'>
                   <FontStyle
-                      family='"Neuropol.otf", "SANS"'
+                      family='"Neuropol", "SANS"'
                       size='1.4'
                       justify='"BEGIN", "MIDDLE"'/>
                 </Text>
