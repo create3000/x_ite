@@ -40,7 +40,7 @@ The TextureProjectorParallel node belongs to the [TextureProjection](/x_ite/comp
 | SFFloat | [in, out] | [ambientIntensity](#fields-ambientIntensity) | 0  |
 | SFVec3f | [in, out] | [location](#fields-location) | 0 0 0  |
 | SFVec3f | [in, out] | [direction](#fields-direction) | 0 0 1  |
-| SFVec3f | [in, out] | [upVector](#fields-upVector) | 0 0 1  |
+| SFVec3f | [in, out] | [upVector](#fields-upVector) | 0 1 0  |
 | SFVec4f | [in, out] | [fieldOfView](#fields-fieldOfView) | -1 -1 1 1  |
 | SFFloat | [in, out] | [nearDistance](#fields-nearDistance) | -1  |
 | SFFloat | [in, out] | [farDistance](#fields-farDistance) | -1  |
@@ -114,7 +114,7 @@ Position of center of texture projection relative to local coordinate system.
 
 Direction for projection.
 
-### SFVec3f [in, out] **upVector** 0 0 1 <small>(-∞,∞)</small>
+### SFVec3f [in, out] **upVector** 0 1 0 <small>(-∞,∞)</small>
 {: #fields-upVector }
 
 *upVector* describes the roll of the camera by defining which direction is up for camera orientation.

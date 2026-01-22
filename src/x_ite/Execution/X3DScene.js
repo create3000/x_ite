@@ -277,21 +277,22 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    {
       return this [_metadata] .map (entry => entry .slice ());
    },
-   addExportedNode (exportedName, node)
+   addExportedNode (exportedName, node, description = "")
    {
       exportedName = String (exportedName);
 
       if (this [_exportedNodes] .has (exportedName))
          throw new Error (`Couldn't add exported node: exported name '${exportedName}' already in use.`);
 
-      this .updateExportedNode (exportedName, node);
+      this .updateExportedNode (exportedName, node, description);
 
       this ._sceneGraph_changed = Date .now () / 1000;
    },
-   updateExportedNode (exportedName, node)
+   updateExportedNode (exportedName, node, description = "")
    {
       exportedName = String (exportedName);
       node         = X3DCast (X3DConstants .X3DNode, node, false);
+      description  = String (description);
 
       if (exportedName .length === 0)
          throw new Error ("Couldn't update exported node: node exported name is empty.");
@@ -302,7 +303,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       //if (node .getExecutionContext () !== this)
       //   throw new Error ("Couldn't update exported node: node does not belong to this execution context.");
 
-      const exportedNode = new X3DExportedNode (this, exportedName, node);
+      const exportedNode = new X3DExportedNode (this, exportedName, node, description);
 
       this [_exportedNodes] .update (exportedName, exportedName, exportedNode);
 

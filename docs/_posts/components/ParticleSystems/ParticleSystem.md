@@ -38,7 +38,7 @@ The ParticleSystem node belongs to the [ParticleSystems](/x_ite/components/overv
 | SFString | [ ] | [geometryType](#fields-geometryType) | "QUAD"  |
 | SFBool | [in, out] | [createParticles](#fields-createParticles) | TRUE |
 | SFInt32 | [in, out] | [maxParticles](#fields-maxParticles) | 200  |
-| SFFloat | [in, out] | [particleLifetime](#fields-particleLifetime) | 5  |
+| SFTime | [in, out] | [particleLifetime](#fields-particleLifetime) | 5  |
 | SFFloat | [in, out] | [lifetimeVariation](#fields-lifetimeVariation) | 0.25  |
 | SFVec2f | [in, out] | [particleSize](#fields-particleSize) | 0.02 0.02  |
 | SFNode | [ ] | [emitter](#fields-emitter) | NULL  |
@@ -108,7 +108,7 @@ Enables/disables creation of new particles, while any existing particles remain 
 
 Maximum number of particles to be generated at one time (subject to player limitations).
 
-### SFFloat [in, out] **particleLifetime** 5 <small>[0,∞)</small>
+### SFTime [in, out] **particleLifetime** 5 <small>[0,∞)</small>
 {: #fields-particleLifetime }
 
 TODO not properly defined in X3D specification. Particle animation lifetime in base time units (default is seconds).

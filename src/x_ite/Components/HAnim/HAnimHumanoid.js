@@ -53,6 +53,7 @@ function HAnimHumanoid (executionContext)
    this .viewpointsNode       = new Group (executionContext);
    this .skinNode             = new Skin (executionContext, this);
    this .transformNode        = new Transform (executionContext);
+   this .poseNodes            = [ ];
    this .motionNodes          = [ ];
    this .jointNodes           = [ ];
    this .jointBindingMatrices = [ ];
@@ -139,6 +140,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
 
       // Events
 
+      this ._children                   .addInterest ("set_children__",                   this);
       this ._motionsEnabled             .addInterest ("set_motions__",                    this);
       this ._motions                    .addInterest ("set_motions__",                    this);
       this ._jointBindingPositions      .addInterest ("set_joints__",                     this);
@@ -151,6 +153,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       this ._displacementWeightsTexture .addInterest ("set_displacementWeightsTexture__", this);
       this ._skinCoord                  .addInterest ("set_skinCoord__",                  this);
 
+      this .set_children__ ();
       this .set_motions__ ();
       this .set_joints__ ();
       this .set_skinCoord__ ();
@@ -178,6 +181,60 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    set_humanoidKey__ ()
    {
       this .humanoidKey = `[${this .numJoints}.${this .numDisplacements}]`;
+   },
+   set_children__ ()
+   {
+      const poseNodes = this .poseNodes;
+
+      for (const poseNode of this .poseNodes)
+      {
+         poseNode ._set_fraction .removeInterest ("set_pose_fraction__", this);
+         poseNode ._isActive     .removeInterest ("set_pose_active__",   this);
+
+         poseNode .removeJoints (this .jointNodes);
+      }
+
+      poseNodes .length = 0;
+
+      for (const node of this ._children)
+      {
+         const poseNode = X3DCast (X3DConstants .HAnimPose, node);
+
+         if (poseNode)
+            poseNodes .push (poseNode);
+      }
+
+      for (const poseNode of this .poseNodes)
+      {
+         poseNode ._set_fraction .addInterest ("set_pose_fraction__", this, poseNode);
+         poseNode ._isActive     .addInterest ("set_pose_active__",   this,);
+
+         poseNode .addJoints (this .jointNodes);
+      }
+   },
+   set_pose_fraction__ (currentPoseNode)
+   {
+      // There is a set_fraction event in currentPoseNode,
+      // all other children must be updated now.
+
+      for (const poseNode of this .poseNodes)
+      {
+         if (poseNode === currentPoseNode)
+            continue;
+
+         poseNode .setNeedsUpdateInterpolators ();
+      }
+   },
+   set_pose_active__ (value)
+   {
+      if (value .getValue ())
+         return;
+
+      // A pose node has finished its animation,
+      // all children must be updated now.
+
+      for (const poseNode of this .poseNodes)
+         poseNode .setNeedsUpdateInterpolators ();
    },
    set_motions__ ()
    {
@@ -240,6 +297,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          numJointBindingRotations = jointBindingRotations .length,
          numJointBindingScales    = jointBindingScales .length;
 
+      for (const poseNode of this .poseNodes)
+         poseNode .removeJoints (jointNodes);
+
       for (const motionNode of this .motionNodes)
          motionNode .disconnectJoints ();
 
@@ -283,6 +343,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
          jointNode ._displacements       .addInterest ("addEvent", this ._displacementsTexture);
          jointNode ._displacementWeights .addInterest ("addEvent", this ._displacementWeightsTexture);
       }
+
+      for (const poseNode of this .poseNodes)
+         poseNode .addJoints (jointNodes);
 
       for (const motionNode of this .motionNodes)
          motionNode .connectJoints (jointNodes);
@@ -554,7 +617,7 @@ Object .defineProperties (HAnimHumanoid,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "description",           new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "name",                  new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "info",                  new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "version",               new Fields .SFString ("2.0")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "version",               new Fields .SFString ("2.1")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "skeletalConfiguration", new Fields .SFString ("BASIC")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "loa",                   new Fields .SFInt32 (-1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "translation",           new Fields .SFVec3f ()),
@@ -574,6 +637,7 @@ Object .defineProperties (HAnimHumanoid,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "segments",              new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "sites",                 new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "viewpoints",            new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",              new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "motionsEnabled",        new Fields .MFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "motions",               new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "skinBindingNormals",    new Fields .SFNode ()),

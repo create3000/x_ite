@@ -72,7 +72,7 @@ Full
 - [Shaders](/x_ite/components/overview/#shaders) : **1**
 - [Shape](/x_ite/components/overview/#shape) : **4**
 - [Sound](/x_ite/components/overview/#sound) : **3**
-- [Text](/x_ite/components/overview/#text) : **1**
+- [Text](/x_ite/components/overview/#text) : **2**
 - [TextureProjection](/x_ite/components/overview/#textureprojection) : **2**
 - [Texturing](/x_ite/components/overview/#texturing) : **4**
 - [Texturing3D](/x_ite/components/overview/#texturing3d) : **2**
@@ -101,7 +101,7 @@ Immersive
 - [Scripting](/x_ite/components/overview/#scripting) : **1**
 - [Shape](/x_ite/components/overview/#shape) : **2**
 - [Sound](/x_ite/components/overview/#sound) : **1**
-- [Text](/x_ite/components/overview/#text) : **1**
+- [Text](/x_ite/components/overview/#text) : **2**
 - [Texturing](/x_ite/components/overview/#texturing) : **3**
 - [Time](/x_ite/components/overview/#time) : **1**
 
@@ -182,7 +182,7 @@ Medical interchange
 - [Networking](/x_ite/components/overview/#networking) : **2**
 - [Rendering](/x_ite/components/overview/#rendering) : **5**
 - [Shape](/x_ite/components/overview/#shape) : **3**
-- [Text](/x_ite/components/overview/#text) : **1**
+- [Text](/x_ite/components/overview/#text) : **2**
 - [Texturing](/x_ite/components/overview/#texturing) : **2**
 - [Texturing3D](/x_ite/components/overview/#texturing3d) : **2**
 - [Time](/x_ite/components/overview/#time) : **1**

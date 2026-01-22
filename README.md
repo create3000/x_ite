@@ -70,7 +70,7 @@ This script initializes an X3D canvas within an HTML page, configuring it to con
 ```html
 <script defer src="https://cdn.jsdelivr.net/npm/x_ite@12.2.6/dist/x_ite.min.js"></script>
 <x3d-canvas contentScale="auto" update="auto">
-  <X3D profile='Interchange' version='4.0'>
+  <X3D profile='Interchange' version='4.1'>
     <head>
       <unit category='angle' name='degree' conversionFactor='0.017453292519943295'></unit>
     </head>

@@ -37,7 +37,7 @@ The OrthoViewpoint node belongs to the [Navigation](/x_ite/components/overview/#
 | SFVec3f | [in, out] | [position](#fields-position) | 0 0 10  |
 | SFRotation | [in, out] | [orientation](#fields-orientation) | 0 0 1 0  |
 | SFVec3f | [in, out] | [centerOfRotation](#fields-centerOfRotation) | 0 0 0  |
-| MFFloat | [in, out] | [fieldOfView](#fields-fieldOfView) | [ -1, -1, 1, 1 ] |
+| SFVec4f | [in, out] | [fieldOfView](#fields-fieldOfView) | -1 -1 1 1  |
 | SFFloat | [in, out] | [nearDistance](#fields-nearDistance) | -1  |
 | SFFloat | [in, out] | [farDistance](#fields-farDistance) | -1  |
 | SFBool | [in, out] | [viewAll](#fields-viewAll) | FALSE |
@@ -111,7 +111,7 @@ Rotation (axis, angle in radians) of [Viewpoint](/x_ite/components/navigation/vi
 
 *centerOfRotation* specifies center point about which to rotate user's eyepoint when in EXAMINE or LOOKAT mode.
 
-### MFFloat [in, out] **fieldOfView** [ -1, -1, 1, 1 ] <small>(-∞,∞)</small>
+### SFVec4f [in, out] **fieldOfView** -1 -1 1 1 <small>(-∞,∞)</small>
 {: #fields-fieldOfView }
 
 Minimum and maximum extents of view in units of local coordinate system. Small field of view roughly corresponds to a telephoto lens, large field of view roughly corresponds to a wide-angle lens.
