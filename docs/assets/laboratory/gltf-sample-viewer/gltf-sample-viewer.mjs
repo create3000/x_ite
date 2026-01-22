@@ -630,6 +630,9 @@ const meshopt = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/DragonAttenuation/glTF-Meshopt/DragonAttenuation.gltf",
 ];
 
+const meshoptEXT = [
+];
+
 const ibl = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/EnvironmentTest/glTF-IBL/EnvironmentTest.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/EnvironmentTest/glTF-IBL/EnvironmentTest.gltf",
@@ -682,17 +685,18 @@ class SampleViewer
          background: false,
       });
 
-      this .createList ("glTF Random Models",           models);
-      this .createList ("glTF Sample Models",           glTF);
-      this .createList ("glb Sample Models",            glb);
-      this .createList ("glTF Embedded Sample Models",  embedded);
-      this .createList ("glTF Quantized Sample Models", quantized);
-      this .createList ("glTF Draco Sample Models",     draco);
-      this .createList ("glTF Meshopt Sample Models",   meshopt);
-      this .createList ("glTF IBL Sample Models",       ibl);
-      this .createList ("glTF WebP Sample Models",      webp);
-      this .createList ("glTF KTX2 Sample Models",      ktx);
-      this .createList ("glTF JPG/PNG Sample Models",   jpg);
+      this .createList ("glTF Random Models",             models);
+      this .createList ("glTF Sample Models",             glTF);
+      this .createList ("glb Sample Models",              glb);
+      this .createList ("glTF Embedded Sample Models",    embedded);
+      this .createList ("glTF Quantized Sample Models",   quantized);
+      this .createList ("glTF Draco Sample Models",       draco);
+      this .createList ("glTF Meshopt Sample Models",     meshopt);
+      this .createList ("glTF Meshopt EXT Sample Models", meshoptEXT);
+      this .createList ("glTF IBL Sample Models",         ibl);
+      this .createList ("glTF WebP Sample Models",        webp);
+      this .createList ("glTF KTX2 Sample Models",        ktx);
+      this .createList ("glTF JPG/PNG Sample Models",     jpg);
 
       $(".viewer-column2") .on ("scroll", () =>
       {
