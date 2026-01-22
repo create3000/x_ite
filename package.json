@@ -121,6 +121,7 @@
     "jquery-mousewheel": "^3.2.2",
     "libtess": "^1.2.2",
     "madge": "^8.0.0",
+    "meshoptimizer": "^1.0.1",
     "nurbs": "^1.1.1",
     "OpenJPEG.js": "^0.10.2",
     "opentype.js": "^1.3.4",

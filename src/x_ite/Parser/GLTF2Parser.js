@@ -143,16 +143,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       // Parse root objects.
 
-      this .assetObject      (glTF .asset, glTF .extensions);
-      this .extensionsArray  (glTF .extensionsRequired, this .extensions);
-      this .extensionsArray  (glTF .extensionsUsed, this .extensions);
+      this .assetObject (glTF .asset, glTF .extensions);
+      await this .extensionsArray (glTF .extensionsRequired, this .extensions);
+      await this .extensionsArray (glTF .extensionsUsed, this .extensions);
       this .extensionsObject (glTF .extensions);
 
       await browser .loadComponents (scene);
       await this .buffersArray (glTF .buffers);
-
-      if (this .extensions .has ("KHR_draco_mesh_compression"))
-         this .draco = await this .createDraco ();
 
       this .bufferViewsArray (glTF .bufferViews);
       this .accessorsArray   (glTF .accessors);
@@ -236,7 +233,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       scene .getRootNodes () .push (worldInfoNode);
    },
-   extensionsArray (extensions, set)
+   async extensionsArray (extensions, set)
    {
       if (!(extensions instanceof Array))
          return;
@@ -289,6 +286,17 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             {
                components .push (browser .getComponent ("EventUtilities", 1));
                components .push (browser .getComponent ("Scripting",      1));
+               break;
+            }
+            case "KHR_draco_mesh_compression":
+            {
+               this .draco ??= await this .createDraco ();
+               break;
+            }
+            case "KHR_meshopt_compression":
+            case "EXT_meshopt_compression":
+            {
+               this .MeshoptDecoder ??= await this .createMeshoptDecoder ();
                break;
             }
          }
@@ -591,24 +599,74 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .bufferViews = bufferViews;
 
       for (const bufferView of bufferViews)
-         bufferView .buffer = this .bufferViewObject (bufferView);
+         bufferView .getBuffer = (componentType) => this .bufferViewObject (bufferView, componentType);
    },
-   bufferViewObject (bufferView)
+   bufferViewObject: (() =>
    {
-      if (!(bufferView instanceof Object))
-         return;
+      const ComponentSize = new Map ([
+         [5120, 1],
+         [5121, 1],
+         [5122, 2],
+         [5123, 2],
+         [5124, 4],
+         [5125, 4],
+         [5126, 4],
+         [5130, 8],
+      ]);
 
-      const buffer = this .buffers [bufferView .buffer];
+      return function (bufferView, componentType)
+      {
+         if (!(bufferView instanceof Object))
+            return;
 
-      if (!buffer)
-         return;
+         const meshopt = bufferView .extensions ?.KHR_meshopt_compression
+            ?? bufferView .extensions ?.EXT_meshopt_compression;
 
-      const
-         byteOffset = bufferView .byteOffset || 0,
-         byteLength = bufferView .byteLength;
+         if (meshopt instanceof Object)
+         {
+            const
+               MeshoptDecoder = this .MeshoptDecoder,
+               byteOffset     = meshopt .byteOffset || 0,
+               byteLength     = meshopt .byteLength,
+               byteStride     = meshopt .byteStride,
+               count          = meshopt .count,
+               mode           = meshopt .mode,
+               filter         = meshopt .filter || "NONE",
+               buffer         = this .buffers [meshopt .buffer];
 
-      return buffer .slice (byteOffset, byteOffset + byteLength);
-   },
+            const
+               componentSize   = ComponentSize .get (componentType),
+               componentCount  = byteStride / componentSize,
+               viewArrayLength = count * componentCount * componentSize,
+               encoded         = new Uint8Array (buffer, byteOffset, byteLength),
+               decoded         = new Uint8Array (viewArrayLength);
+
+            MeshoptDecoder .decodeGltfBuffer (
+               decoded,
+               count,
+               byteStride,
+               encoded,
+               mode,
+               filter
+            );
+
+            return decoded .buffer;
+         }
+         else
+         {
+            const buffer = this .buffers [bufferView .buffer];
+
+            if (!buffer)
+               return;
+
+            const
+               byteOffset = bufferView .byteOffset || 0,
+               byteLength = bufferView .byteLength;
+
+            return buffer .slice (byteOffset, byteOffset + byteLength);
+         }
+      };
+   })(),
    accessorsArray (accessors)
    {
       if (!(accessors instanceof Array))
@@ -662,7 +720,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                   count      = accessor .count || 0,
                   stride     = byteStride ? byteStride / TypedArray .BYTES_PER_ELEMENT : components,
                   length     = Math .min (stride * count, (bufferView .byteLength - byteOffset) / TypedArray .BYTES_PER_ELEMENT),
-                  array      = new TypedArray (bufferView .buffer, byteOffset, length);
+                  array      = new TypedArray (bufferView .getBuffer (accessor .componentType), byteOffset, length);
 
                let value;
 
@@ -715,16 +773,17 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             return array;
 
          const
-            IndicesTypedArray = TypedArrays .get (sparse .indices .componentType),
+            componentType     = sparse .indices .componentType,
+            IndicesTypedArray = TypedArrays .get (componentType),
             indicesBufferView = this .bufferViews [sparse .indices .bufferView],
             indicesByteOffset = sparse .indices .byteOffset,
-            indices           = new IndicesTypedArray (indicesBufferView .buffer, indicesByteOffset, sparse .count);
+            indices           = new IndicesTypedArray (indicesBufferView .getBuffer (componentType), indicesByteOffset, sparse .count);
 
          const
             ValuesTypedArray = array .constructor,
             valuesBufferView = this .bufferViews [sparse .values .bufferView],
             valuesByteOffset = sparse .values .byteOffset,
-            values           = new ValuesTypedArray (valuesBufferView .buffer, valuesByteOffset, sparse .count * components);
+            values           = new ValuesTypedArray (valuesBufferView .getBuffer (), valuesByteOffset, sparse .count * components);
 
          array = array .slice ();
 
@@ -867,7 +926,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return image;
 
       const
-         buffer = bufferView .buffer,
+         buffer = bufferView .getBuffer (),
          blob   = new Blob ([new Uint8Array (buffer)], { type: image .mimeType }),
          uri    = await this .blobToDataUrl (blob);
 
@@ -1734,7 +1793,7 @@ function eventsProcessed ()
 
       const
          attributes = primitive .attributes,
-         dataView   = new Uint8Array (this .bufferViews [draco .bufferView] .buffer);
+         dataView   = new Uint8Array (this .bufferViews [draco .bufferView] .getBuffer ());
 
       this .dracoDecodeMesh (this .draco, dataView, draco .attributes, indicesCallback, attributeCallback);
    },
@@ -1830,19 +1889,27 @@ function eventsProcessed ()
    },
    async createDraco ()
    {
-      if (this .constructor .draco)
-      {
-         return this .constructor .draco;
-      }
-      else
+      return this .constructor .draco ??= (async () =>
       {
          const
             response = await fetch (URLs .getLibraryURL ("draco_decoder_gltf.js")),
             text     = await response .text (),
-            draco    = await new Function (text) () ();
+            lib      = await new Function (text) () ();
 
-         return this .constructor .draco = draco;
-      }
+         return lib;
+      })();
+   },
+   async createMeshoptDecoder ()
+   {
+      return this .constructor .MeshoptDecoder ??= (async () =>
+      {
+         const
+            response = await fetch (URLs .getLibraryURL ("meshopt_decoder.js")),
+            text     = await response .text (),
+            lib      = await new Function (text) ();
+
+         return lib;
+      })();
    },
    khrMaterialsVariantsExtension (extensions, shapeNode)
    {
