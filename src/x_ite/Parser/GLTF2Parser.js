@@ -619,6 +619,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          if (!(bufferView instanceof Object))
             return;
 
+         if (bufferView .buffer instanceof Object)
+            return bufferView .buffer;
+
          const meshopt = bufferView .extensions ?.KHR_meshopt_compression
             ?? bufferView .extensions ?.EXT_meshopt_compression;
 
@@ -650,7 +653,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                filter
             );
 
-            return decoded .buffer;
+            return bufferView .buffer = decoded .buffer;
          }
          else
          {
@@ -663,7 +666,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                byteOffset = bufferView .byteOffset || 0,
                byteLength = bufferView .byteLength;
 
-            return buffer .slice (byteOffset, byteOffset + byteLength);
+            return bufferView .buffer = buffer .slice (byteOffset, byteOffset + byteLength);
          }
       };
    })(),
