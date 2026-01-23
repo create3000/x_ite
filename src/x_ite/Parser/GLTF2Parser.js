@@ -1900,9 +1900,9 @@ function eventsProcessed ()
          const
             response = await fetch (URLs .getLibraryURL ("draco_decoder_gltf.js")),
             text     = await response .text (),
-            lib      = await new Function (text) () ();
+            library  = await new Function (text) () ();
 
-         return lib;
+         return library;
       })();
    },
    async createMeshoptDecoder ()
@@ -1912,9 +1912,9 @@ function eventsProcessed ()
          const
             response = await fetch (URLs .getLibraryURL ("meshopt_decoder.js")),
             text     = await response .text (),
-            lib      = await new Function (text) ();
+            library  = await new Function (text) ();
 
-         return lib;
+         return library;
       })();
    },
    khrMaterialsVariantsExtension (extensions, shapeNode)
