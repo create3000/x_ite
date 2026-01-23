@@ -313,7 +313,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene .updateComponent (component);
       }
    },
-   async createLibrary (file)
+   createLibrary (file)
    {
       return this .constructor [file] ??= (async () =>
       {
