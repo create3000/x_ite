@@ -61,7 +61,11 @@ We use npm's package management now, npm is **the** package manager for JavaScri
 
 We don't uses browser-sniffing. We keep the code consistent that makes our life easier.
 
-## glTF Extensions
+## glTF Support
+
+In the X_ITE X3D Browser, glTF support is quite solid and integrated, allowing authors to load and render glTF (including .gltf and .glb) assets alongside X3D and VRML content. Internally X_ITE converts imported glTF models into X3D scene graph nodes, so they become part of the interactive X3D scene and can be manipulated just like native X3D content. Recent versions have even expanded this support to include a wide range of glTF material extensions, automatically translating PBR material definitions and KHR_* extensions into corresponding X3D material extension nodes, which enhances visual fidelity and compatibility with modern glTF assets.
+
+### glTF Extensions
 
 X_ITE supports most Khronos extensions and some multi-vendor extensions in the input scenes, with newer extensions added regularly. The following extensions are fully supported:
 
