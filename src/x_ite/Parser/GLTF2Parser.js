@@ -293,13 +293,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             }
             case "KHR_draco_mesh_compression":
             {
-               this .draco ??= await this .createDraco ();
+               this .draco ??= await this .createLibrary ("draco_decoder_gltf.js");
                break;
             }
             case "KHR_meshopt_compression":
             case "EXT_meshopt_compression":
             {
-               this .MeshoptDecoder ??= await this .createMeshoptDecoder ();
+               this .MeshoptDecoder ??= await this .createLibrary ("meshopt_decoder.js");
                break;
             }
          }
@@ -312,6 +312,18 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
          scene .updateComponent (component);
       }
+   },
+   async createLibrary (file)
+   {
+      return this .constructor [file] ??= (async () =>
+      {
+         const
+            response = await fetch (URLs .getLibraryURL (file)),
+            text     = await response .text (),
+            library  = await new Function (text) ();
+
+         return library;
+      })();
    },
    extensionsObject (extensions)
    {
@@ -1892,30 +1904,6 @@ function eventsProcessed ()
          draco .destroy (decoder);
          draco .destroy (buffer);
       }
-   },
-   async createDraco ()
-   {
-      return this .constructor .draco ??= (async () =>
-      {
-         const
-            response = await fetch (URLs .getLibraryURL ("draco_decoder_gltf.js")),
-            text     = await response .text (),
-            library  = await new Function (text) () ();
-
-         return library;
-      })();
-   },
-   async createMeshoptDecoder ()
-   {
-      return this .constructor .MeshoptDecoder ??= (async () =>
-      {
-         const
-            response = await fetch (URLs .getLibraryURL ("meshopt_decoder.js")),
-            text     = await response .text (),
-            library  = await new Function (text) ();
-
-         return library;
-      })();
    },
    khrMaterialsVariantsExtension (extensions, shapeNode)
    {
