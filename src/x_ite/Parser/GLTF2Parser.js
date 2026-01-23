@@ -46,7 +46,6 @@ function GLTF2Parser (scene)
    this .cameras               = [ ];
    this .nodes                 = [ ];
    this .skins                 = [ ];
-   this .humanoidIndex         = new Map ();
    this .joints                = new Set ();
    this .pointerAliases        = new Map ();
    this .animationScripts      = [ ];
@@ -2157,8 +2156,6 @@ function eventsProcessed ()
          if (!skin .humanoidNode)
          {
             skin .humanoidNode = scene .createNode ("HAnimHumanoid", false);
-
-            skin .joints .map (joint => this .humanoidIndex .set (joint, skin .humanoidNode))
          }
 
          node .humanoidNode = skin .humanoidNode;
