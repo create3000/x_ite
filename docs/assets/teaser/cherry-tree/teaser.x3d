@@ -103,7 +103,7 @@ function changeColorScheme (colorScheme)
             <Appearance>
               <UnlitMaterial>
                 <ImageTexture containerField='emissiveTexture'
-                    url='"Spring-in-Tokyo-1024x683.jpg"'/>
+                    url='"Spring-in-Tokyo.avif"'/>
               </UnlitMaterial>
             </Appearance>
             <Rectangle2D/>
@@ -141,7 +141,7 @@ function changeColorScheme (colorScheme)
               <Material
                   diffuseColor='1 1 1'>
                 <ImageTexture containerField='diffuseTexture'
-                    url='"delicate-pink-cherry-blossom-flower-with-intricate-petals-and-stamens-png.png"'/>
+                    url='"cherry-blossom.avif"'/>
               </Material>
             </Appearance>
           </ParticleSystem>

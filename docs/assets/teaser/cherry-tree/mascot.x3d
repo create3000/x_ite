@@ -39,7 +39,7 @@
         rotation='0 -1 0 87.184210933567'
         scale='7.402182 7.402182 7.402182'>
       <Inline DEF='_1'
-          url='"sparrow_-_quirky_series.glb"'/>
+          url='"sparrow.glb"'/>
       <LoadSensor DEF='_2'>
         <Inline USE='_1'/>
       </LoadSensor>
