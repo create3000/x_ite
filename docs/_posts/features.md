@@ -98,3 +98,5 @@ X_ITE supports most Khronos extensions and some multi-vendor extensions in the i
 * [EXT_mesh_gpu_instancing](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Vendor/EXT_mesh_gpu_instancing/README.md)
 * [EXT_meshopt_compression](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Vendor/EXT_meshopt_compression/README.md)
 * [EXT_texture_webp](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Vendor/EXT_texture_webp/README.md)
+
+Overall, glTF support in the X_ITE X3D Browser enables modern, high-quality 3D assets to be used natively within X3D workflows, bridging contemporary glTF pipelines with standards-based, interactive web 3D.
