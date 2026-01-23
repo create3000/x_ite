@@ -764,9 +764,18 @@ class SampleViewer
             .find (a => $(a) .attr ("href") .includes (url));
 
          if (a)
+         {
+            a .scrollIntoView ({
+               behavior: "instant",
+               block: "center",
+            });
+
             $(a) .trigger ("click");
+         }
          else
+         {
             this .loadURL (url);
+         }
       }
       else
       {
