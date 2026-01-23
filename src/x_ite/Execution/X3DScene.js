@@ -130,6 +130,9 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    },
    updateComponent (component)
    {
+      if (this .hasComponent (component))
+         return;
+
       this [_components] .update (component .name, component .name, component);
 
       this ._components_changed = Date .now () / 1000;

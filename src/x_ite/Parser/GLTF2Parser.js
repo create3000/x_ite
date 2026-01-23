@@ -306,12 +306,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       }
 
       for (const component of components)
-      {
-         if (scene .hasComponent (component))
-            continue;
-
          scene .updateComponent (component);
-      }
    },
    createLibrary (file)
    {
