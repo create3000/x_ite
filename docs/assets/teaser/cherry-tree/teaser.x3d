@@ -10,7 +10,7 @@
     <meta name='created' content='Sat, 17 May 2025 17:44:03 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V1.11.18, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Thu, 22 Jan 2026 12:53:49 GMT'/>
+    <meta name='modified' content='Fri, 23 Jan 2026 09:27:10 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='ColorScheme'>
@@ -97,13 +97,17 @@ function changeColorScheme (colorScheme)
         activeLayer='-1'
         order='1, 2, 3'>
       <Layer DEF='Background'>
-        <Transform
-            rotation='1 0 0 1'>
-          <Background DEF='Summer'
-              skyAngle='0.8, 1.3, 1.4, 1.5708'
-              skyColor='0.21 0.31 0.59, 0.33 0.45 0.7, 0.57 0.66 0.85, 0.6 0.73 0.89, 0.7 0.83 0.98'
-              groundAngle='0.659972, 1.2, 1.39912, 1.5708'
-              groundColor='0.105712 0.156051 0.297, 0.187629 0.255857 0.398, 0.33604 0.405546 0.542, 0.3612 0.469145 0.602, 0.39471 0.522059 0.669'/>
+        <Transform DEF='Rectangle2D_2'
+            scale='13.87105 7.969158 7.969158'>
+          <Shape>
+            <Appearance>
+              <UnlitMaterial>
+                <ImageTexture containerField='emissiveTexture'
+                    url='"Spring-in-Tokyo-1024x683.jpg"'/>
+              </UnlitMaterial>
+            </Appearance>
+            <Rectangle2D/>
+          </Shape>
         </Transform>
       </Layer>
       <Layer DEF='Tree'>
@@ -111,13 +115,6 @@ function changeColorScheme (colorScheme)
             position='2.251459 9.353062 3.698962'
             orientation='-0.0443144702923588 -0.998777762621043 0.0218908340729588 5.36456046404725'
             centerOfRotation='-2.043365 9.590233 0.4126665'/>
-        <Group DEF='Tree_1'>
-          <Inline
-              url='"wk8_freeby_tj_plant_32417188.glb"'/>
-          <DirectionalLight
-              intensity='10'
-              direction='0 -0.7 -1'/>
-        </Group>
         <Transform DEF='Blossoms'
             translation='-4.957083 9.349036 6.15567'>
           <ParticleSystem
@@ -196,7 +193,7 @@ function changeColorScheme (colorScheme)
                       emissiveColor='0 0 0'/>
                 </Appearance>
                 <Text DEF='_5'
-                    string='"X_ITE v12.2.6"'
+                    string='"X_ITE v14.0.0"'
                     solid='true'>
                   <FontStyle
                       family='"Neuropol", "SANS"'
