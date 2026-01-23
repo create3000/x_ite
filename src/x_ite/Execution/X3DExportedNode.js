@@ -77,7 +77,7 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
          generator .attribute ("AS", this [_exportedName]);
 
       if (this [_description])
-         generator .attribute ("DESCRIPTION", this [_description]);
+         generator .attribute ("description", this [_description]);
 
       generator .closeTag ("EXPORT");
    },
@@ -95,7 +95,7 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
          generator .stringProperty ("@AS", this [_exportedName]);
 
       if (this [_description])
-         generator .stringProperty ("@DESCRIPTION", this [_description]);
+         generator .stringProperty ("@description", this [_description]);
 
       generator .endObject ();
       generator .endObject ();
