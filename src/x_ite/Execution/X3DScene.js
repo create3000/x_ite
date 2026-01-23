@@ -130,7 +130,12 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    },
    updateComponent (component)
    {
-      if (this .hasComponent (component))
+      const
+         browser          = this .getBrowser (),
+         profile          = this [_profile] ?? browser .getProfile ("Full"),
+         profileComponent = profile .components .get (component .name);
+
+      if (profileComponent && component .level <= profileComponent .level)
          return;
 
       this [_components] .update (component .name, component .name, component);
