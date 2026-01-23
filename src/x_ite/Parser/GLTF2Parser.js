@@ -2305,7 +2305,7 @@ function eventsProcessed ()
                scene .addNamedNode (scene .getUniqueName (name), humanoidNode);
 
             humanoidNode ._name                  = skin .name ?? node .name ?? "";
-            humanoidNode ._version               = "2.0";
+            humanoidNode ._version               = "2.1";
             humanoidNode ._skeletalConfiguration = "GLTF";
 
             humanoidNode ._skeleton .push (... skin .skeleton
