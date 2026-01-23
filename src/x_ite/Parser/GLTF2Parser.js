@@ -662,8 +662,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                filter
             );
 
-            console .log (decoded)
-
             return bufferView .buffer = decoded .buffer;
          }
          else
