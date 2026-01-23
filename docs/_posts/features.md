@@ -60,3 +60,38 @@ X_ITE provides meaningful error messages for syntax and scripting problems if yo
 We use npm's package management now, npm is **the** package manager for JavaScript. That makes it easy for us to keep the code base up to date.
 
 We don't uses browser-sniffing. We keep the code consistent that makes our life easier.
+
+## glTF Extensions
+
+X_ITE supports most Khronos extensions and some multi-vendor extensions in the input scenes, with newer extensions added regularly. The following extensions are fully supported:
+
+* KHR_accessor_float64
+* KHR_animation_pointer
+* KHR_draco_mesh_compression
+* KHR_lights_punctual
+* KHR_materials_anisotropy
+* KHR_materials_clearcoat
+* KHR_materials_diffuse_transmission
+* KHR_materials_dispersion
+* KHR_materials_emissive_strength
+* KHR_materials_ior
+* KHR_materials_iridescence
+* KHR_materials_pbrSpecularGlossiness
+* KHR_materials_sheen
+* KHR_materials_specular
+* KHR_materials_transmission
+* KHR_materials_unlit
+* KHR_materials_variants
+* KHR_materials_variants
+* KHR_materials_volume
+* KHR_materials_volume_scatter
+* KHR_mesh_quantization
+* KHR_meshopt_compression
+* KHR_node_visibility
+* KHR_texture_basisu
+* KHR_texture_transform
+* KHR_xmp_json_ld
+* EXT_lights_image_based
+* EXT_mesh_gpu_instancing
+* EXT_meshopt_compression
+* EXT_texture_webp
