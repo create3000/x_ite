@@ -139,7 +139,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       scene .setProfile (browser .getProfile ("Interchange"));
 
       if (glTF .skins)
-         scene .addComponent (browser .getComponent ("HAnim"));
+         scene .updateComponent (browser .getComponent ("HAnim"));
 
       // Parse root objects.
 
