@@ -239,6 +239,7 @@ const glTF = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/MandarinOrange/glTF/MandarinOrange.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/MaterialsVariantsShoe/glTF/MaterialsVariantsShoe.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/MeshPrimitiveModes/glTF/MeshPrimitiveModes.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/MeshoptCubeTest/glTF/MeshoptCubeTest.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/MetalRoughSpheres/glTF/MetalRoughSpheres.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/MetalRoughSpheresNoTextures/glTF/MetalRoughSpheresNoTextures.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/MorphPrimitivesTest/glTF/MorphPrimitivesTest.gltf",
@@ -628,9 +629,12 @@ const meshopt = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Models/master/2.0/DragonAttenuation/glTF-Meshopt/DragonAttenuation.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/BrainStem/glTF-Meshopt/BrainStem.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/DragonAttenuation/glTF-Meshopt/DragonAttenuation.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/MeshoptCubeTest/glTF-Meshopt/MeshoptCubeTest.gltf",
 ];
 
 const meshoptEXT = [
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/BrainStem/glTF-Meshopt-EXT/BrainStem.gltf",
+   "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/DragonAttenuation/glTF-Meshopt-EXT/DragonAttenuation.gltf",
 ];
 
 const ibl = [
