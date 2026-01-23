@@ -1,5 +1,5 @@
-/* X_ITE v12.2.6 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.2.6")];
+/* X_ITE v14.0.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -249,6 +249,7 @@ function HAnimHumanoid (executionContext)
    this .viewpointsNode       = new (external_X_ITE_X3D_Group_default()) (executionContext);
    this .skinNode             = new Skin (executionContext, this);
    this .transformNode        = new (external_X_ITE_X3D_Transform_default()) (executionContext);
+   this .poseNodes            = [ ];
    this .motionNodes          = [ ];
    this .jointNodes           = [ ];
    this .jointBindingMatrices = [ ];
@@ -335,6 +336,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
 
       // Events
 
+      this ._children                   .addInterest ("set_children__",                   this);
       this ._motionsEnabled             .addInterest ("set_motions__",                    this);
       this ._motions                    .addInterest ("set_motions__",                    this);
       this ._jointBindingPositions      .addInterest ("set_joints__",                     this);
@@ -347,9 +349,25 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
       this ._displacementWeightsTexture .addInterest ("set_displacementWeightsTexture__", this);
       this ._skinCoord                  .addInterest ("set_skinCoord__",                  this);
 
+      this .set_children__ ();
       this .set_motions__ ();
       this .set_joints__ ();
       this .set_skinCoord__ ();
+
+      // Depreciated
+
+      this ._segments .addInterest ("set_depreciated__", this);
+      this ._sites    .addInterest ("set_depreciated__", this);
+
+      this .set_depreciated__ (this ._segments);
+      this .set_depreciated__ (this ._sites);
+   },
+   set_depreciated__ (field)
+   {
+      if (!field .length)
+         return;
+
+      console .warn (`Use of field ${this .getTypeName ()}.${field .getName ()} is depreciated. This field will be removed in future versions of X3D.`);
    },
    getBBox (bbox, shadows)
    {
@@ -374,6 +392,60 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
    set_humanoidKey__ ()
    {
       this .humanoidKey = `[${this .numJoints}.${this .numDisplacements}]`;
+   },
+   set_children__ ()
+   {
+      const poseNodes = this .poseNodes;
+
+      for (const poseNode of this .poseNodes)
+      {
+         poseNode ._set_fraction .removeInterest ("set_pose_fraction__", this);
+         poseNode ._isActive     .removeInterest ("set_pose_active__",   this);
+
+         poseNode .removeJoints (this .jointNodes);
+      }
+
+      poseNodes .length = 0;
+
+      for (const node of this ._children)
+      {
+         const poseNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).HAnimPose, node);
+
+         if (poseNode)
+            poseNodes .push (poseNode);
+      }
+
+      for (const poseNode of this .poseNodes)
+      {
+         poseNode ._set_fraction .addInterest ("set_pose_fraction__", this, poseNode);
+         poseNode ._isActive     .addInterest ("set_pose_active__",   this,);
+
+         poseNode .addJoints (this .jointNodes);
+      }
+   },
+   set_pose_fraction__ (currentPoseNode)
+   {
+      // There is a set_fraction event in currentPoseNode,
+      // all other children must be updated now.
+
+      for (const poseNode of this .poseNodes)
+      {
+         if (poseNode === currentPoseNode)
+            continue;
+
+         poseNode .setNeedsUpdateInterpolators ();
+      }
+   },
+   set_pose_active__ (value)
+   {
+      if (value .getValue ())
+         return;
+
+      // A pose node has finished its animation,
+      // all children must be updated now.
+
+      for (const poseNode of this .poseNodes)
+         poseNode .setNeedsUpdateInterpolators ();
    },
    set_motions__ ()
    {
@@ -436,6 +508,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
          numJointBindingRotations = jointBindingRotations .length,
          numJointBindingScales    = jointBindingScales .length;
 
+      for (const poseNode of this .poseNodes)
+         poseNode .removeJoints (jointNodes);
+
       for (const motionNode of this .motionNodes)
          motionNode .disconnectJoints ();
 
@@ -479,6 +554,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
          jointNode ._displacements       .addInterest ("addEvent", this ._displacementsTexture);
          jointNode ._displacementWeights .addInterest ("addEvent", this ._displacementWeightsTexture);
       }
+
+      for (const poseNode of this .poseNodes)
+         poseNode .addJoints (jointNodes);
 
       for (const motionNode of this .motionNodes)
          motionNode .connectJoints (jointNodes);
@@ -750,7 +828,7 @@ Object .defineProperties (HAnimHumanoid,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "description",           new (external_X_ITE_X3D_Fields_default()).SFString ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "name",                  new (external_X_ITE_X3D_Fields_default()).SFString ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "info",                  new (external_X_ITE_X3D_Fields_default()).MFString ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "version",               new (external_X_ITE_X3D_Fields_default()).SFString ("2.0")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "version",               new (external_X_ITE_X3D_Fields_default()).SFString ("2.1")),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "skeletalConfiguration", new (external_X_ITE_X3D_Fields_default()).SFString ("BASIC")),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "loa",                   new (external_X_ITE_X3D_Fields_default()).SFInt32 (-1)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "translation",           new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
@@ -770,6 +848,7 @@ Object .defineProperties (HAnimHumanoid,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "segments",              new (external_X_ITE_X3D_Fields_default()).MFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "sites",                 new (external_X_ITE_X3D_Fields_default()).MFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "viewpoints",            new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "children",              new (external_X_ITE_X3D_Fields_default()).MFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "motionsEnabled",        new (external_X_ITE_X3D_Fields_default()).MFBool ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "motions",               new (external_X_ITE_X3D_Fields_default()).MFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "skinBindingNormals",    new (external_X_ITE_X3D_Fields_default()).SFNode ()),
@@ -851,6 +930,13 @@ function HAnimJoint (executionContext)
 
    this .setVisibleObject (true);
    this .addAllowedTypes ((external_X_ITE_X3D_X3DConstants_default()).HAnimJoint, (external_X_ITE_X3D_X3DConstants_default()).HAnimSegment);
+
+   // Units
+
+   // this ._llimit .setUnit ("angle"); // TODO: seems to be angle, but is it in radians or degrees?
+   // this ._ulimit .setUnit ("angle"); // TODO: seems to be angle, but is it in radians or degrees?
+   this ._minAngle .setUnit ("angle");
+   this ._maxAngle .setUnit ("angle");
 
    // Legacy
 
@@ -953,9 +1039,11 @@ Object .defineProperties (HAnimJoint,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "scale",            new (external_X_ITE_X3D_Fields_default()).SFVec3f (1, 1, 1)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "scaleOrientation", new (external_X_ITE_X3D_Fields_default()).SFRotation ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "center",           new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "limitOrientation", new (external_X_ITE_X3D_Fields_default()).SFRotation ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "llimit",           new (external_X_ITE_X3D_Fields_default()).MFFloat (0, 0, 0)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "ulimit",           new (external_X_ITE_X3D_Fields_default()).MFFloat (0, 0, 0)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "limitOrientation", new (external_X_ITE_X3D_Fields_default()).SFRotation ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "minAngle",         new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "maxAngle",         new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "stiffness",        new (external_X_ITE_X3D_Fields_default()).MFFloat (0, 0, 0)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "skinCoordIndex",   new (external_X_ITE_X3D_Fields_default()).MFInt32 ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "skinCoordWeight",  new (external_X_ITE_X3D_Fields_default()).MFFloat ()),
@@ -1010,6 +1098,8 @@ function HAnimMotion (executionContext)
    external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).HAnimMotion);
+
+   // Private properties
 
    this .timeSensor    = new (external_X_ITE_X3D_TimeSensor_default()) (this .getExecutionContext ());
    this .interpolators = [ ];
@@ -1391,6 +1481,213 @@ const HAnimMotion_default_ = HAnimMotion;
 ;
 
 /* harmony default export */ const HAnim_HAnimMotion = (external_X_ITE_X3D_Namespace_default().add ("HAnimMotion", HAnimMotion_default_));
+;// ./src/x_ite/Components/HAnim/HAnimPose.js
+
+
+
+
+
+
+
+
+
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
+function HAnimPose (executionContext)
+{
+   external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
+
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).HAnimPose);
+
+   // Private properties
+
+   this .timeSensor     = new (external_X_ITE_X3D_TimeSensor_default()) (this .getExecutionContext ());
+   this .interpolators  = [ ];
+   this .poseJointNodes = new Map ();
+   this .joints         = new Set ();
+}
+
+Object .assign (Object .setPrototypeOf (HAnimPose .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype),
+{
+   initialize ()
+   {
+      external_X_ITE_X3D_X3DChildNode_default().prototype .initialize .call (this);
+
+      // TimeSensor
+
+      this ._enabled            .addFieldInterest (this .timeSensor ._enabled);
+      this ._transitionDuration .addFieldInterest (this .timeSensor ._cycleInterval);
+
+      this .timeSensor ._isActive .addFieldInterest (this ._isActive);
+
+      this .timeSensor ._enabled       = this ._enabled;
+      this .timeSensor ._cycleInterval = this ._transitionDuration;
+
+      this .timeSensor .setup ();
+
+      // Fields
+
+      this ._resetAllJoints .addInterest ("set_resetAllJoints__", this);
+      this ._commencePose   .addInterest ("set_commencePose__",   this);
+      this ._set_startTime  .addInterest ("set_startTime__",      this);
+      this ._set_fraction   .addInterest ("set_fraction__",       this);
+      this ._children       .addInterest ("set_children__",       this);
+
+      this .set_children__ ();
+   },
+   addJoints (jointNodes)
+   {
+      this .joints .add (jointNodes);
+
+      this .needsUpdateInterpolators = true;
+   },
+   removeJoints (jointNodes)
+   {
+      this .joints .delete (jointNodes);
+   },
+   setNeedsUpdateInterpolators ()
+   {
+      this .needsUpdateInterpolators = true;
+   },
+   updateInterpolators (reset)
+   {
+      this .needsUpdateInterpolators = false;
+
+      for (const interpolator of this .interpolators)
+         this .timeSensor ._fraction_changed .removeFieldInterest (interpolator ._set_fraction);
+
+      this .interpolators .length = 0;
+
+      for (const humanoid of this .joints)
+      {
+         for (const jointNode of humanoid)
+            this .processJoint (jointNode, reset);
+      }
+
+      for (const interpolator of this .interpolators)
+         this .timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
+   },
+   processJoint: (() =>
+   {
+      const interpolators = [
+         ["translation", "PositionInterpolator"],
+         ["rotation",    "OrientationInterpolator"],
+         ["scale",       "PositionInterpolator"],
+      ];
+
+      return function (jointNode, reset)
+      {
+         let poseJointNode;
+
+         if (!reset)
+         {
+            poseJointNode = this .poseJointNodes .get (jointNode ._name .getValue ());
+
+            if (!poseJointNode && this .poseJointNodes .size)
+               return;
+         }
+
+         const executionContext = this .getExecutionContext ();
+
+         for (const [name, interpolatorName] of interpolators)
+         {
+            const jointField = jointNode .getField (name);
+
+            const destinationField = poseJointNode
+               ? poseJointNode .getField (name)
+               : jointNode .getFieldDefinition (name) .value;
+
+            if (jointField .equals (destinationField))
+               continue;
+
+            const interpolator = executionContext .createNode (interpolatorName, false);
+
+            interpolator ._value_changed .addFieldInterest (jointField);
+
+            interpolator ._key      = [0, 1];
+            interpolator ._keyValue = [... jointField, ... destinationField];
+
+            interpolator .setup ();
+
+            this .interpolators .push (interpolator);
+         }
+      };
+   })(),
+   set_resetAllJoints__ ()
+   {
+      if (!this ._resetAllJoints .getValue ())
+         return;
+
+      this .updateInterpolators (true);
+
+      this .timeSensor ._startTime = Date .now () / 1000;
+   },
+   set_commencePose__ ()
+   {
+      if (!this ._commencePose .getValue ())
+         return;
+
+      this .set_startTime__ ();
+   },
+   set_startTime__ ()
+   {
+      this .updateInterpolators (false);
+
+      this .timeSensor ._startTime = Date .now () / 1000;
+   },
+   set_fraction__ ()
+   {
+      if (this .needsUpdateInterpolators)
+         this .updateInterpolators ();
+
+      const fraction = this ._set_fraction .getValue ();
+
+      for (const interpolator of this .interpolators)
+         interpolator ._set_fraction = fraction;
+   },
+   set_children__ ()
+   {
+      this .poseJointNodes .clear ();
+
+      for (const node of this ._children)
+      {
+         const jointNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).HAnimJoint, node);
+
+         if (jointNode)
+            this .poseJointNodes .set (jointNode ._name .getValue (), jointNode);
+      }
+   },
+});
+
+Object .defineProperties (HAnimPose,
+{
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("HAnimPose", "HAnim", 3, "children", "4.1"),
+   fieldDefinitions:
+   {
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",           new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "description",        new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "name",               new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "loa",                new (external_X_ITE_X3D_Fields_default()).SFInt32 (-1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "enabled",            new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "transitionDuration", new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,   "resetAllJoints",     new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,   "commencePose",       new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,   "set_startTime",      new (external_X_ITE_X3D_Fields_default()).SFTime ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOnly,   "set_fraction",       new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,  "isActive",           new (external_X_ITE_X3D_Fields_default()).SFBool ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "children",           new (external_X_ITE_X3D_Fields_default()).MFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const HAnimPose_default_ = HAnimPose;
+;
+
+/* harmony default export */ const HAnim_HAnimPose = (external_X_ITE_X3D_Namespace_default().add ("HAnimPose", HAnimPose_default_));
 ;// external "__X_ITE_X3D__ .X3DGroupingNode"
 const external_X_ITE_X3D_X3DGroupingNode_namespaceObject = __X_ITE_X3D__ .X3DGroupingNode;
 var external_X_ITE_X3D_X3DGroupingNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DGroupingNode_namespaceObject);
@@ -1765,6 +2062,7 @@ const HAnimSite_default_ = HAnimSite;
 
 
 
+
 external_X_ITE_X3D_Components_default().add ({
    name: "HAnim",
    concreteNodes:
@@ -1773,6 +2071,7 @@ external_X_ITE_X3D_Components_default().add ({
       HAnim_HAnimHumanoid,
       HAnim_HAnimJoint,
       HAnim_HAnimMotion,
+      HAnim_HAnimPose,
       HAnim_HAnimSegment,
       HAnim_HAnimSite,
    ],
