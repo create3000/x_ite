@@ -2200,7 +2200,8 @@ function eventsProcessed ()
          const
             scene         = this .getScene (),
             transformNode = node .transformNode,
-            name          = this .sanitizeName (node .name);
+            name          = this .sanitizeName (node .name),
+            skin          = this .skins [node .skin];
 
          // Name
 
@@ -2214,31 +2215,33 @@ function eventsProcessed ()
 
          // Set transformation matrix.
 
-         if (this .vectorValue (node .matrix, matrix))
+         if (!skin)
          {
-            matrix .get (translation, rotation, scale, scaleOrientation);
+            if (this .vectorValue (node .matrix, matrix))
+            {
+               matrix .get (translation, rotation, scale, scaleOrientation);
 
-            transformNode ._translation      = translation;
-            transformNode ._rotation         = rotation;
-            transformNode ._scale            = scale;
-            transformNode ._scaleOrientation = scaleOrientation;
-         }
-         else
-         {
-            if (this .vectorValue (node .translation, translation))
-               transformNode ._translation = translation;
+               transformNode ._translation      = translation;
+               transformNode ._rotation         = rotation;
+               transformNode ._scale            = scale;
+               transformNode ._scaleOrientation = scaleOrientation;
+            }
+            else
+            {
+               if (this .vectorValue (node .translation, translation))
+                  transformNode ._translation = translation;
 
-            if (this .vectorValue (node .rotation, quaternion))
-               transformNode ._rotation = rotation .setQuaternion (quaternion);
+               if (this .vectorValue (node .rotation, quaternion))
+                  transformNode ._rotation = rotation .setQuaternion (quaternion);
 
-            if (this .vectorValue (node .scale, scale))
-               transformNode ._scale = scale;
+               if (this .vectorValue (node .scale, scale))
+                  transformNode ._scale = scale;
+            }
          }
 
          // Add mesh.
 
          const
-            skin                    = this .skins [node .skin],
             EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing,
             shapeNodes              = this .meshObject (this .meshes [node .mesh], skin, EXT_mesh_gpu_instancing);
 
