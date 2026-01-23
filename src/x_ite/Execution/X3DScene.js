@@ -124,13 +124,29 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    },
    addComponent (component)
    {
+      const
+         browser          = this .getBrowser (),
+         profile          = this [_profile] ?? browser .getProfile ("Full"),
+         profileComponent = profile .components .get (component .name);
+
+      if (profileComponent || this [_components] .get (component .name))
+         throw new Error (`Couldn't add component. Component '${component .name}' already exists.`);
+
       this [_components] .add (component .name, component);
 
       this ._components_changed = Date .now () / 1000;
    },
    updateComponent (component)
    {
-      this [_components] .update (component .name, component .name, component);
+      const
+         browser          = this .getBrowser (),
+         profile          = this [_profile] ?? browser .getProfile ("Full"),
+         profileComponent = profile .components .get (component .name);
+
+      if (profileComponent && component .level <= profileComponent .level)
+         this [_components] .remove (component .name)
+      else
+         this [_components] .update (component .name, component .name, component);
 
       this ._components_changed = Date .now () / 1000;
    },

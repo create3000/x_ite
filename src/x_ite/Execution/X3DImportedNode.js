@@ -141,7 +141,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
          generator .attribute ("AS", importedName);
 
       if (this [_description])
-         generator .attribute ("DESCRIPTION", this [_description]);
+         generator .attribute ("description", this [_description]);
 
       generator .closeTag ("IMPORT");
    },
@@ -164,7 +164,7 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
          generator .stringProperty ("@AS", importedName);
 
       if (this [_description])
-         generator .stringProperty ("@DESCRIPTION", this [_description]);
+         generator .stringProperty ("@description", this [_description]);
 
       generator .endObject ();
       generator .endObject ();

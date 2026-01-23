@@ -1,6 +1,6 @@
 {
   "name": "x_ite",
-  "version": "12.2.6",
+  "version": "14.0.0",
   "description": "X_ITE X3D Browser, view and manipulate X3D, VRML, glTF and other 3D sources in HTML.",
   "main": "dist/x_ite.js",
   "module": "dist/x_ite.mjs",
@@ -121,6 +121,7 @@
     "jquery-mousewheel": "^3.2.2",
     "libtess": "^1.2.2",
     "madge": "^8.0.0",
+    "meshoptimizer": "^1.0.1",
     "nurbs": "^1.1.1",
     "OpenJPEG.js": "^0.10.2",
     "opentype.js": "^1.3.4",
