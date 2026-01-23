@@ -25,21 +25,6 @@ const no_headlight = [
 
 // SAMPLES_BEGIN
 
-const models = [
-   "https://create3000.github.io/media/glTF/Animated Bee/Animated Bee.glb",
-   "https://create3000.github.io/media/glTF/BlackDragon/BlackDragon.glb",
-   "https://create3000.github.io/media/glTF/Bonsai 1/Bonsai 1.gltf",
-   "https://create3000.github.io/media/glTF/Bus Stop 1/Bus Stop 1.gltf",
-   "https://create3000.github.io/media/glTF/FurInstancing/FurInstancing.glb",
-   "https://create3000.github.io/media/glTF/Futuristic Bike/Futuristic Bike.gltf",
-   "https://create3000.github.io/media/glTF/GunBot/GunBot.glb",
-   "https://create3000.github.io/media/glTF/NeilArmstrong/NeilArmstrong.glb",
-   "https://create3000.github.io/media/glTF/Telephone/Telephone.gltf",
-   "https://create3000.github.io/media/glTF/Walking Alien/Walking Alien.gltf",
-   "https://create3000.github.io/media/glTF/WebP/WebP.gltf",
-   "https://create3000.github.io/media/glTF/YetiWarrior/YetiWarrior.gltf",
-];
-
 const glTF = [
    "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/AnalyticalCubes/glTF/AnalyticalCubes.gltf",
    "https://raw.githubusercontent.com/KhronosGroup/3DC-Certification/main/models/AnalyticalGrayscale/glTF/AnalyticalGrayscale.gltf",
@@ -661,6 +646,21 @@ const jpg = [
    "https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/CarConcept/glTF-JPG/CarConcept.gltf",
 ];
 
+const models = [
+   "https://create3000.github.io/media/glTF/Animated Bee/Animated Bee.glb",
+   "https://create3000.github.io/media/glTF/BlackDragon/BlackDragon.glb",
+   "https://create3000.github.io/media/glTF/Bonsai 1/Bonsai 1.gltf",
+   "https://create3000.github.io/media/glTF/Bus Stop 1/Bus Stop 1.gltf",
+   "https://create3000.github.io/media/glTF/FurInstancing/FurInstancing.glb",
+   "https://create3000.github.io/media/glTF/Futuristic Bike/Futuristic Bike.gltf",
+   "https://create3000.github.io/media/glTF/GunBot/GunBot.glb",
+   "https://create3000.github.io/media/glTF/NeilArmstrong/NeilArmstrong.glb",
+   "https://create3000.github.io/media/glTF/Telephone/Telephone.gltf",
+   "https://create3000.github.io/media/glTF/Walking Alien/Walking Alien.gltf",
+   "https://create3000.github.io/media/glTF/WebP/WebP.gltf",
+   "https://create3000.github.io/media/glTF/YetiWarrior/YetiWarrior.gltf",
+];
+
 // SAMPLES_END
 
 $.try = function (callback)
@@ -689,7 +689,6 @@ class SampleViewer
          background: false,
       });
 
-      this .createList ("glTF Random Models",             models);
       this .createList ("glTF Sample Models",             glTF);
       this .createList ("glb Sample Models",              glb);
       this .createList ("glTF Embedded Sample Models",    embedded);
@@ -701,6 +700,7 @@ class SampleViewer
       this .createList ("glTF WebP Sample Models",        webp);
       this .createList ("glTF KTX2 Sample Models",        ktx);
       this .createList ("glTF JPG/PNG Sample Models",     jpg);
+      this .createList ("glTF Random Models",             models);
 
       $(".viewer-column2") .on ("scroll", () =>
       {

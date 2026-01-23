@@ -81,8 +81,6 @@ system "git pull origin";
 
 $string = "";
 $string .= "// SAMPLES_BEGIN\n\n";
-$string .= media;
-$string .= "\n";
 $string .= glTF (["glTF"], ".gltf", "glTF");
 $string .= "\n";
 $string .= glTF (["glTF-Binary"], ".glb", "glb");
@@ -104,6 +102,8 @@ $string .= "\n";
 $string .= glTF (["glTF-KTX", "glTF-KTX-BasisU"], ".gltf", "ktx");
 $string .= "\n";
 $string .= glTF (["glTF-JPG-PNG", "glTF-JPG"], ".gltf", "jpg");
+$string .= "\n";
+$string .= media;
 $string .= "\n// SAMPLES_END";
 
 $viewer =~ s|// SAMPLES_BEGIN.*?// SAMPLES_END|$string|s;
