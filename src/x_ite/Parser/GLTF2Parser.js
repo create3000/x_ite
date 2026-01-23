@@ -2272,10 +2272,6 @@ function eventsProcessed ()
 
                   segmentNode .setup ();
 
-                  const humanoidNode = this .humanoidIndex .get (index);
-
-                  humanoidNode ?._segments .push (segmentNode);
-
                   return segmentNode;
                }
                else

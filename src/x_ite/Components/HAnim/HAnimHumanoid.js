@@ -157,6 +157,21 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       this .set_motions__ ();
       this .set_joints__ ();
       this .set_skinCoord__ ();
+
+      // Depreciated
+
+      this ._segments .addInterest ("set_depreciated__", this);
+      this ._sites    .addInterest ("set_depreciated__", this);
+
+      this .set_depreciated__ (this ._segments);
+      this .set_depreciated__ (this ._sites);
+   },
+   set_depreciated__ (field)
+   {
+      if (!field .length)
+         return;
+
+      console .warn (`Use of field ${this .getTypeName ()}.${field .getName ()} is depreciated. This field will be removed in future versions of X3D.`);
    },
    getBBox (bbox, shadows)
    {
