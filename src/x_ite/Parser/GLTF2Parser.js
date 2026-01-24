@@ -2332,39 +2332,39 @@ function eventsProcessed ()
             humanoidNode .setup ();
          }
 
-         if (shapeNodes ?.length)
+         humanoidNode ._skin .push (transformNode);
+
+         if (!shapeNodes ?.length)
+            return;
+
+         humanoidNode ._skinNormal = shapeNodes [0] ._geometry .normal;
+         humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
+
+         // Create better bbox in case mesh quantization is used.
+
+         if (!this .vectorValue (node .matrix, matrix))
          {
-            humanoidNode ._skinNormal = shapeNodes [0] ._geometry .normal;
-            humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
-
-            // Create better bbox in case mesh quantization is used.
-
-            if (!this .vectorValue (node .matrix, matrix))
-            {
-               this .vectorValue (node .translation, translation .set (0, 0, 0));
-               this .vectorValue (node .rotation, quaternion .set (0, 0, 0, 1));
-               rotation .setQuaternion (quaternion);
-               this .vectorValue (node .scale, scale .set (1, 1, 1));
-               matrix .set (translation, rotation, scale);
-            }
-
-            if (!matrix .equals (Matrix4 .IDENTITY))
-            {
-               const
-                  points     = Array .from (humanoidNode ._skinCoord .point, point => matrix .multVecMatrix (point .getValue () .copy ())),
-                  bbox       = Box3 .fromPoints (points),
-                  bboxSize   = bbox .size,
-                  bboxCenter = bbox .center;
-
-               for (const shapeNode of shapeNodes)
-               {
-                  shapeNode ._bboxSize   = bboxSize;
-                  shapeNode ._bboxCenter = bboxCenter;
-               }
-            }
+            this .vectorValue (node .translation, translation .set (0, 0, 0));
+            this .vectorValue (node .rotation, quaternion .set (0, 0, 0, 1));
+            rotation .setQuaternion (quaternion);
+            this .vectorValue (node .scale, scale .set (1, 1, 1));
+            matrix .set (translation, rotation, scale);
          }
 
-         humanoidNode ._skin .push (transformNode);
+         if (matrix .equals (Matrix4 .IDENTITY))
+            return;
+         
+         const
+            points     = Array .from (humanoidNode ._skinCoord .point, point => matrix .multVecMatrix (point .getValue () .copy ())),
+            bbox       = Box3 .fromPoints (points),
+            bboxSize   = bbox .size,
+            bboxCenter = bbox .center;
+
+         for (const shapeNode of shapeNodes)
+         {
+            shapeNode ._bboxSize   = bboxSize;
+            shapeNode ._bboxCenter = bboxCenter;
+         }
       };
    })(),
    nodeExtensions (node)
