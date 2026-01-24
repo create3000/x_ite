@@ -2353,7 +2353,7 @@ function eventsProcessed ()
 
          if (matrix .equals (Matrix4 .IDENTITY))
             return;
-         
+
          const
             points     = Array .from (humanoidNode ._skinCoord .point, point => matrix .multVecMatrix (point .getValue () .copy ())),
             bbox       = Box3 .fromPoints (points),
