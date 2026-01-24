@@ -87,7 +87,7 @@ async function loadURL (url)
 function toVRMLString ()
 {
    console .time ("VRML");
-   Browser .toVRMLString ({ style: "COMPACT" });
+   console .log (Browser .toVRMLString ({ style: "COMPACT" }));
    console .timeEnd ("VRML");
 
    // console .log (Browser .toVRMLString ({ style: "CLEAN" }));
@@ -98,7 +98,7 @@ function toVRMLString ()
 function toXMLString ()
 {
    console .time ("XML");
-   Browser .toXMLString ();
+   console .log (Browser .toXMLString ());
    console .timeEnd ("XML");
 
    // console .log (Browser .toXMLString ());
@@ -107,7 +107,7 @@ function toXMLString ()
 function toJSONString ()
 {
    console .time ("JSON");
-   Browser .toJSONString ({ style: "COMPACT" });
+   console .log (Browser .toJSONString ({ style: "COMPACT" }));
    console .timeEnd ("JSON");
 
    // console .log (Browser .toJSONString ());
