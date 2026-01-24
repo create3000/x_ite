@@ -2154,12 +2154,8 @@ function eventsProcessed ()
       {
          // Skins can be cloned.
 
-         if (!skin .humanoidNode)
-         {
-            skin .humanoidNode = scene .createNode ("HAnimHumanoid", false);
-         }
-
-         node .humanoidNode = skin .humanoidNode;
+         skin .humanoidNode ??= scene .createNode ("HAnimHumanoid", false);
+         node .humanoidNode   = skin .humanoidNode;
       }
 
       node .childNode = node .humanoidNode ?? node .transformNode;
