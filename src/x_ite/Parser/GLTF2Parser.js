@@ -11,6 +11,7 @@ import Rotation4    from "../../standard/Math/Numbers/Rotation4.js";
 import Matrix4      from "../../standard/Math/Numbers/Matrix4.js";
 import Color3       from "../../standard/Math/Numbers/Color3.js";
 import Color4       from "../../standard/Math/Numbers/Color4.js";
+import Box3         from "../../standard/Math/Geometry/Box3.js";
 
 // https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html
 // https://github.com/KhronosGroup/glTF-Sample-Assets
@@ -2335,6 +2336,32 @@ function eventsProcessed ()
          {
             humanoidNode ._skinNormal = shapeNodes [0] ._geometry .normal;
             humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
+
+            // Create better bbox in case mesh quantization is used.
+
+            if (!this .vectorValue (node .matrix, matrix))
+            {
+               this .vectorValue (node .translation, translation .set (0, 0, 0));
+               this .vectorValue (node .rotation, quaternion .set (0, 0, 0, 1));
+               rotation .setQuaternion (quaternion);
+               this .vectorValue (node .scale, scale .set (1, 1, 1));
+               matrix .set (translation, rotation, scale);
+            }
+
+            if (!matrix .equals (Matrix4 .IDENTITY))
+            {
+               const
+                  points     = Array .from (humanoidNode ._skinCoord .point, point => matrix .multVecMatrix (point .getValue () .copy ())),
+                  bbox       = Box3 .fromPoints (points),
+                  bboxSize   = bbox .size,
+                  bboxCenter = bbox .center;
+
+               for (const shapeNode of shapeNodes)
+               {
+                  shapeNode ._bboxSize   = bboxSize;
+                  shapeNode ._bboxCenter = bboxCenter;
+               }
+            }
          }
 
          humanoidNode ._skin .push (transformNode);

@@ -867,7 +867,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          bbox          = new Box2 ();
 
       for (const points of contours)
-         bbox .add (Box2 .Points (points));
+         bbox .add (Box2 .fromPoints (points));
 
       this .groupNodes .push (transformNode);
 
