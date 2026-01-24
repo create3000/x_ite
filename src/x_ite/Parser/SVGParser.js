@@ -2478,7 +2478,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          m     = this .transformAttribute (xmlElement .getAttribute ("transform"));
 
       this .modelMatrix .push ();
-      this .modelMatrix .multLeft (Matrix4 .Matrix3 (m));
+      this .modelMatrix .multLeft (Matrix4 .fromMatrix3 (m));
 
       m .translate (t);
       m .scale (s);
@@ -2487,7 +2487,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
       const
          transformNode    = scene .createNode ("Transform"),
-         matrix           = Matrix4 .Matrix3 (m),
+         matrix           = Matrix4 .fromMatrix3 (m),
          translation      = new Vector3 (),
          rotation         = new Rotation4 (),
          scale            = new Vector3 (1),
