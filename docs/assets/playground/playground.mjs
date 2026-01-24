@@ -418,30 +418,6 @@ class Playground
          canvas  = this .canvas;
 
       return {
-         "antialiased": {
-            name: "Antialiased",
-            type: "checkbox",
-            selected: browser .getBrowserOption ("Antialiased"),
-            events: {
-               click ()
-               {
-                  canvas .attr ("antialiased", !browser .getBrowserOption ("Antialiased"));
-               },
-            },
-         },
-         "pixelated": {
-            name: "Pixelated",
-            type: "checkbox",
-            selected: this .pixelated,
-            events: {
-               click: () =>
-               {
-                  this .pixelated = !this .pixelated;
-
-                  canvas .css ("image-rendering", this .pixelated ? "pixelated" : "unset");
-               },
-            },
-         },
          "content-scale": {
             name: "Content Scale",
             items: {
@@ -485,9 +461,33 @@ class Playground
                      click () { canvas .attr ("contentScale", "auto"); },
                   },
                },
+               "separator0": "--------",
+               "antialiased": {
+                  name: "Antialiased",
+                  type: "checkbox",
+                  selected: browser .getBrowserOption ("Antialiased"),
+                  events: {
+                     click ()
+                     {
+                        canvas .attr ("antialiased", String (!browser .getBrowserOption ("Antialiased")));
+                     },
+                  },
+               },
+               "pixelated": {
+                  name: "Pixelated",
+                  type: "checkbox",
+                  selected: this .pixelated,
+                  events: {
+                     click: () =>
+                     {
+                        this .pixelated = !this .pixelated;
+
+                        canvas .css ("image-rendering", this .pixelated ? "pixelated" : "unset");
+                     },
+                  },
+               },
             },
          },
-         "separator0": "--------",
          "oit": {
             name: "Order Independent Transparency",
             type: "checkbox",
@@ -495,7 +495,7 @@ class Playground
             events: {
                click ()
                {
-                  canvas .attr ("orderIndependentTransparency", !browser .getBrowserOption ("OrderIndependentTransparency"));
+                  canvas .attr ("orderIndependentTransparency", String (!browser .getBrowserOption ("OrderIndependentTransparency")));
                },
             },
          },
@@ -506,7 +506,7 @@ class Playground
             events: {
                click ()
                {
-                  canvas .attr ("logarithmicDepthBuffer", !browser .getBrowserOption ("LogarithmicDepthBuffer"));
+                  canvas .attr ("logarithmicDepthBuffer", String (!browser .getBrowserOption ("LogarithmicDepthBuffer")));
                },
             },
          },

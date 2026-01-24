@@ -41,7 +41,7 @@ const Legacy =
          return;
 
       // Make element focusable.
-      element .attr ("tabindex", element .attr ("tabindex") ?? 0);
+      element .attr ("tabindex", element .attr ("tabindex") ?? "0");
 
       // Process initial attributes.
       browser .connectedCallback ();

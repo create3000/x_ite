@@ -284,8 +284,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    {
       const browser = this .getBrowser ();
 
-      if (this .removeUpdateContentScale)
-         this .removeUpdateContentScale ();
+      this .removeUpdateContentScale ?.();
 
       if (contentScale .getValue () === -1)
          this .updateContentScale ();
@@ -301,8 +300,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          media   = window .matchMedia (`(resolution: ${window .devicePixelRatio}dppx)`),
          update  = this .updateContentScale .bind (this);
 
-      if (this .removeUpdateContentScale)
-         this .removeUpdateContentScale ();
+      this .removeUpdateContentScale ?.();
 
       this .removeUpdateContentScale = function () { media .removeEventListener ("change", update) };
 
