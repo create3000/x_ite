@@ -58,8 +58,6 @@ Object .assign (Object .setPrototypeOf (FontLibrary .prototype, X3DChildNode .pr
          if (!this .font)
             continue;
 
-         browser .registerFont (executionContext, this .font);
-
          this .set_family__ ();
 
          this .setLoadState (X3DConstants .COMPLETE_STATE);
