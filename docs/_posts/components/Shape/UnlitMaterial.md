@@ -13,7 +13,7 @@ tags: [UnlitMaterial, Shape]
 
 ## Overview
 
-UnlitMaterial specifies surface rendering properties for associated geometry nodes. Material attributes are used by the X3D lighting equations during rendering.
+UnlitMaterial specifies surface rendering properties for associated geometry that is unaffected by scene lighting. Material attributes are used by the X3D lighting equations during rendering.
 
 The UnlitMaterial node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **1,** its default container field is *material.* It is available from X3D version 4.0 or higher.
 
@@ -133,6 +133,7 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 
 ### Hints
 
+- [These capabilities match glTF 2.0 rendering](https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html#materials)
 - Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding material.
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)

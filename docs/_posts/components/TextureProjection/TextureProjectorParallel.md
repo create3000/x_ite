@@ -117,7 +117,7 @@ Direction for projection.
 ### SFVec3f [in, out] **upVector** 0 1 0 <small>(-∞,∞)</small>
 {: #fields-upVector }
 
-*upVector* describes the roll of the camera by defining which direction is up for camera orientation.
+*upVector* describes camera orientation by defining which direction is up.
 
 ### SFVec4f [in, out] **fieldOfView** -1 -1 1 1 <small>(-∞,∞)</small>
 {: #fields-fieldOfView }
@@ -136,17 +136,17 @@ Minimum and maximum extents of projection texture in units of local coordinate s
 ### SFFloat [in, out] **nearDistance** -1 <small>-1 or (0,∞)</small>
 {: #fields-nearDistance }
 
-Minimum distance necessary for texture display.
+Minimum distance necessary for texture display, -1 if unconstrained
 
 ### SFFloat [in, out] **farDistance** -1 <small>-1 or (0,∞)</small>
 {: #fields-farDistance }
 
-Maximum distance necessary for texture display.
+Maximum distance necessary for texture display, -1 if unconstrained
 
 ### SFFloat [out] **aspectRatio**
 {: #fields-aspectRatio }
 
-*aspectRatio* is the ratio of width and height that is projected.
+*aspectRatio* is the ratio of width and height that is projected, reported as output event when contained image is loaded.
 
 ### SFNode [in, out] **texture** NULL <small>[X3DTexture2DNode]</small>
 {: #fields-texture }

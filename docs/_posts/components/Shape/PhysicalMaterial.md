@@ -13,7 +13,7 @@ tags: [PhysicalMaterial, Shape]
 
 ## Overview
 
-PhysicalMaterial specifies surface rendering properties for associated geometry nodes. Material attributes are used by the X3D lighting equations during rendering.
+PhysicalMaterial specifies Physically Based Rendering (PBR) properties for associated geometry. PhysicalMaterial attributes are used by the X3D lighting equations for advanced high-fidelity rendering.
 
 The PhysicalMaterial node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **2,** its default container field is *material.* It is available from X3D version 4.0 or higher.
 
@@ -240,10 +240,10 @@ Input/Output field *extensions*.
 
 ### Hints
 
+- [These capabilities match glTF 2.0 rendering](https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html#materials)
 - Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding material.
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
-- [X3D Example Archives, Basic, Universal Media Materials](https://www.web3d.org/x3d/content/examples/Basic/UniversalMediaMaterials)
 - [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/lighting.html#Lightingmodel)
 - [Rendering](https://en.wikipedia.org/wiki/Rendering_(computer_graphics))
 - [3D rendering](https://en.wikipedia.org/wiki/3D_rendering)

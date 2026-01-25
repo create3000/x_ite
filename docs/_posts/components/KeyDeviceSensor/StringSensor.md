@@ -13,7 +13,7 @@ tags: [StringSensor, KeyDeviceSensor]
 
 ## Overview
 
-StringSensor generates events as the user presses keys on the keyboard. Browser support includes the notion of "keyboard focus".
+StringSensor generates events as the user enters strings on the keyboard. Browser support includes the notion of "keyboard focus".
 
 The StringSensor node belongs to the [KeyDeviceSensor](/x_ite/components/overview/#keydevicesensor) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
