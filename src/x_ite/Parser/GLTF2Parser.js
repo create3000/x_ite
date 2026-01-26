@@ -2188,8 +2188,7 @@ function eventsProcessed ()
          const
             scene         = this .getScene (),
             transformNode = node .transformNode,
-            name          = this .sanitizeName (node .name),
-            skin          = this .skins [node .skin];
+            name          = this .sanitizeName (node .name);
 
          // Name
 
@@ -2203,34 +2202,32 @@ function eventsProcessed ()
 
          // Set transformation matrix.
 
-         if (!skin)
+         if (this .vectorValue (node .matrix, matrix))
          {
-            if (this .vectorValue (node .matrix, matrix))
-            {
-               matrix .get (translation, rotation, scale, scaleOrientation);
+            matrix .get (translation, rotation, scale, scaleOrientation);
 
-               transformNode ._translation      = translation;
-               transformNode ._rotation         = rotation;
-               transformNode ._scale            = scale;
-               transformNode ._scaleOrientation = scaleOrientation;
-            }
-            else
-            {
-               if (this .vectorValue (node .translation, translation))
-                  transformNode ._translation = translation;
+            transformNode ._translation      = translation;
+            transformNode ._rotation         = rotation;
+            transformNode ._scale            = scale;
+            transformNode ._scaleOrientation = scaleOrientation;
+         }
+         else
+         {
+            if (this .vectorValue (node .translation, translation))
+               transformNode ._translation = translation;
 
-               if (this .vectorValue (node .rotation, quaternion))
-                  transformNode ._rotation = rotation .setQuaternion (quaternion);
+            if (this .vectorValue (node .rotation, quaternion))
+               transformNode ._rotation = rotation .setQuaternion (quaternion);
 
-               if (this .vectorValue (node .scale, scale))
-                  transformNode ._scale = scale;
-            }
+            if (this .vectorValue (node .scale, scale))
+               transformNode ._scale = scale;
          }
 
          // Add mesh.
 
          const
             EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing,
+            skin                    = this .skins [node .skin],
             shapeNodes              = this .meshObject (this .meshes [node .mesh], skin, EXT_mesh_gpu_instancing);
 
          // Add camera.
@@ -2321,7 +2318,7 @@ function eventsProcessed ()
             humanoidNode .setup ();
          }
 
-         humanoidNode ._skin .push (transformNode);
+         humanoidNode ._skin .push (... shapeNodes);
 
          if (!shapeNodes ?.length)
             return;
@@ -2329,7 +2326,7 @@ function eventsProcessed ()
          humanoidNode ._skinNormal = shapeNodes [0] ._geometry .normal;
          humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
 
-         // Create better bbox in case mesh quantization is used.
+         // Create better bbox in case of mesh quantization is used.
 
          if (!this .vectorValue (node .matrix, matrix))
          {
