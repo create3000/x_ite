@@ -2318,13 +2318,13 @@ function eventsProcessed ()
             humanoidNode .setup ();
          }
 
-         humanoidNode ._skin .push (... shapeNodes);
-
          if (!shapeNodes ?.length)
             return;
 
          humanoidNode ._skinNormal = shapeNodes [0] ._geometry .normal;
          humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
+
+         humanoidNode ._skin .push (... shapeNodes);
 
          // Create better bbox in case of mesh quantization is used.
 
