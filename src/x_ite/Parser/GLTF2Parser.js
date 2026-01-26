@@ -2151,12 +2151,7 @@ function eventsProcessed ()
       const skin = this .skins [node .skin];
 
       if (skin)
-      {
-         // Skins can be cloned.
-
-         skin .humanoidNode ??= scene .createNode ("HAnimHumanoid", false);
-         node .humanoidNode   = skin .humanoidNode;
-      }
+         node .humanoidNode = skin .humanoidNode;
 
       node .childNode = node .humanoidNode ?? node .transformNode;
       node .pointers  = [node .childNode];
@@ -2401,9 +2396,10 @@ function eventsProcessed ()
          return [ ];
 
       const nodes = Array .from (new Set (children
-         .map (index => this .nodes [index] ?.childNode)
+         .map (index => this .nodes [index])
+         .filter (node => node ?.skin === undefined)
+         .map (node => node ?.childNode)
          .filter (node => node)
-         .filter (node => node .getType () .at (-1) !== X3DConstants .HAnimHumanoid || !node .getCloneCount ())
       ));
 
       return nodes;
@@ -2442,6 +2438,7 @@ function eventsProcessed ()
          skin .joints .push (skeleton);
       }
 
+      skin .humanoidNode               = scene .createNode ("HAnimHumanoid",          false);
       skin .textureCoordinateNode      = scene .createNode ("TextureCoordinate",      false);
       skin .multiTextureCoordinateNode = scene .createNode ("MultiTextureCoordinate", false);
       skin .normalNode                 = scene .createNode ("Normal",                 false);
