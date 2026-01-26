@@ -2318,7 +2318,7 @@ function eventsProcessed ()
             humanoidNode .setup ();
          }
 
-         humanoidNode ._skin .push (... shapeNodes);
+         humanoidNode ._skin .push (transformNode);
 
          if (!shapeNodes ?.length)
             return;
