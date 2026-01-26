@@ -2150,11 +2150,9 @@ function eventsProcessed ()
 
       const skin = this .skins [node .skin];
 
-      if (skin)
-         node .humanoidNode = skin .humanoidNode;
-
-      node .childNode = node .humanoidNode ?? node .transformNode;
-      node .pointers  = [node .childNode];
+      node .humanoidNode = skin ?.humanoidNode;
+      node .childNode    = node .humanoidNode ?? node .transformNode;
+      node .pointers     = [node .childNode];
 
       return node;
    },
