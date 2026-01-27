@@ -1,5 +1,7 @@
 - title: "Text"
   children:
+    - title: "FontLibrary"
+      url: /components/text/fontlibrary/
     - title: "FontStyle"
       url: /components/text/fontstyle/
     - title: "Text"

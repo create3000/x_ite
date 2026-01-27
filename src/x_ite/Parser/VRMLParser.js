@@ -36,6 +36,7 @@ const Grammar = Expressions ({
    AS:          /AS/gy,
    COMPONENT:   /COMPONENT/gy,
    DEF:         /DEF/gy,
+   DESCRIPTION: /DESCRIPTION/gy,
    EXPORT:      /EXPORT/gy,
    EXTERNPROTO: /EXTERNPROTO/gy,
    FALSE:       /FALSE|false/gy,
@@ -391,12 +392,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       let component;
 
       while (component = this .componentStatement ())
-      {
-         if (this .getScene () .hasComponent (component))
-            continue;
-
          this .getScene () .updateComponent (component);
-      }
    },
    componentStatement ()
    {
@@ -531,13 +527,13 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       {
          if (this .nodeNameId ())
          {
-            const localNodeNameId = this .result [0];
-
-            this .comments ();
-
-            const node = this .getScene () .getLocalNode (localNodeNameId);
+            const
+               localNodeNameId = this .result [0],
+               node            = this .getScene () .getLocalNode (localNodeNameId);
 
             let exportedNodeNameId;
+
+            this .comments ();
 
             if (Grammar .AS .parse (this))
             {
@@ -551,6 +547,16 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                exportedNodeNameId = localNodeNameId;
             }
 
+            let description = "";
+
+            this .comments ();
+
+            if (Grammar .DESCRIPTION .parse (this))
+            {
+               if (this .string ())
+                  description = this .value;
+            }
+
             try
             {
                const existingNode = this .getScene () .getExportedNode (exportedNodeNameId);
@@ -560,7 +566,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
             catch
             { }
 
-            this .getScene () .updateExportedNode (exportedNodeNameId, node);
+            this .getScene () .updateExportedNode (exportedNodeNameId, node, description);
             return true;
          }
 
@@ -606,13 +612,23 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
                      nodeNameId = exportedNodeNameId;
                   }
 
+                  let description = "";
+
+                  this .comments ();
+
+                  if (Grammar .DESCRIPTION .parse (this))
+                  {
+                     if (this .string ())
+                        description = this .value;
+                  }
+
                   // Rename existing imported node.
 
                   this .renameExistingNode (nodeNameId);
 
                   // Add new imported node.
 
-                  this .getExecutionContext () .addImportedNode (namedNode, exportedNodeNameId, nodeNameId);
+                  this .getExecutionContext () .addImportedNode (namedNode, exportedNodeNameId, nodeNameId, description);
 
                   if (!this .getImportedNodes () .has (nodeNameId))
                   {

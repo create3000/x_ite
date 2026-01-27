@@ -86,7 +86,12 @@ The *gain* field is a factor that represents the amount of linear amplification 
 ### SFFloat [in, out] **detune** 0 <small>[0,∞)</small>
 {: #fields-detune }
 
-The *detune* ffield is an a-rate AudioParam representing detuning of oscillation in cents (though the AudioParam returned is read-only, the value it represents is not).
+The *detune* field, measured in cents, modulates the speed at which the the audio stream is rendered. It is an a-rate AudioParam representing detuning of oscillation.
+
+#### Hints
+
+- The cent is a logarithmic unit of measure used for musical intervals. Twelve-tone equal temperament divides the octave into 12 semitones of 100 cents each. Typically, cents are used to express small intervals, to check intonation, or to compare the sizes of comparable intervals in different tuning systems. For humans, a single cent is too small to be perceived between successive notes.
+- [Cent(music)](https://en.wikipedia.org/wiki/Cent_(music))
 
 ### SFFloat [in, out] **frequency** 440 <small>[0,∞)</small>
 {: #fields-frequency }

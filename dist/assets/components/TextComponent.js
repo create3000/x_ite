@@ -1,5 +1,5 @@
-/* X_ITE v12.2.5 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.2.5")];
+/* X_ITE v14.0.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -1351,7 +1351,7 @@ function FontStyle (executionContext)
 
 Object .assign (Object .setPrototypeOf (FontStyle .prototype, Text_X3DFontStyleNode .prototype),
 {
-   getTextGeometry (text)
+   createTextGeometry (text)
    {
       return new Text_PolygonText (text, this);
    },
@@ -17851,6 +17851,109 @@ const X3DTextContext_default_ = X3DTextContext;
 ;
 
 /* harmony default export */ const Text_X3DTextContext = (external_X_ITE_X3D_Namespace_default().add ("X3DTextContext", X3DTextContext_default_));
+;// external "__X_ITE_X3D__ .X3DChildNode"
+const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
+var external_X_ITE_X3D_X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DChildNode_namespaceObject);
+;// ./src/x_ite/Components/Text/FontLibrary.js
+
+
+
+
+
+
+
+
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
+function FontLibrary (executionContext)
+{
+   external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DUrlObject_default().call (this, executionContext);
+
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).FontLibrary);
+}
+
+Object .assign (Object .setPrototypeOf (FontLibrary .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype),
+   (external_X_ITE_X3D_X3DUrlObject_default()).prototype,
+{
+   initialize ()
+   {
+      external_X_ITE_X3D_X3DChildNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DUrlObject_default().prototype .initialize .call (this);
+
+      this ._family .addInterest ("set_family__", this);
+
+      this .requestImmediateLoad () .catch (Function .prototype);
+   },
+   set_family__ ()
+   {
+      if (!this .font)
+         return;
+
+      const familyName = this ._family .getValue ();
+
+      if (!familyName)
+         return;
+
+      this .getBrowser () .registerFontLibrary (this .getExecutionContext (), familyName, this .font);
+   },
+   async loadData ()
+   {
+      const
+         browser          = this .getBrowser (),
+         executionContext = this .getExecutionContext (),
+         fileURLs         = Array .from (this ._url) .map (fileURL => new URL (fileURL, executionContext .getBaseURL ()));
+
+      this .font = null;
+
+      for (const fileURL of fileURLs)
+      {
+         this .font = await browser .loadFont (fileURL, this .getCache ());
+
+         if (!this .font)
+            continue;
+
+         browser .registerFont (executionContext, this .font);
+
+         this .set_family__ ();
+
+         this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
+         return;
+      }
+
+      this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE);
+   },
+   dispose ()
+   {
+      external_X_ITE_X3D_X3DUrlObject_default().prototype .dispose .call (this);
+      external_X_ITE_X3D_X3DChildNode_default().prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (FontLibrary,
+{
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("FontLibrary", "Text", 2, "children", "4.1"),
+   fieldDefinitions:
+   {
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",             new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "description",          new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "family",               new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "load",                 new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "url",                  new (external_X_ITE_X3D_Fields_default()).MFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "autoRefresh",          new (external_X_ITE_X3D_Fields_default()).SFTime (0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "autoRefreshTimeLimit", new (external_X_ITE_X3D_Fields_default()).SFTime (3600)),
+      ]),
+      enumerable: true,
+   },
+});
+
+const FontLibrary_default_ = FontLibrary;
+;
+
+/* harmony default export */ const Text_FontLibrary = (external_X_ITE_X3D_Namespace_default().add ("FontLibrary", FontLibrary_default_));
 ;// external "__X_ITE_X3D__ .X3DGeometryNode"
 const external_X_ITE_X3D_X3DGeometryNode_namespaceObject = __X_ITE_X3D__ .X3DGeometryNode;
 var external_X_ITE_X3D_X3DGeometryNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DGeometryNode_namespaceObject);
@@ -17930,7 +18033,7 @@ Object .assign (Object .setPrototypeOf (Text .prototype, (external_X_ITE_X3D_X3D
 
       this .fontStyleNode .addInterest ("requestRebuild", this);
 
-      this .textGeometry = this .fontStyleNode .getTextGeometry (this);
+      this .textGeometry = this .fontStyleNode .createTextGeometry (this);
    },
    build ()
    {
@@ -18002,10 +18105,12 @@ const Text_default_ = Text;
 
 
 
+
 external_X_ITE_X3D_Components_default().add ({
    name: "Text",
    concreteNodes:
    [
+      Text_FontLibrary,
       Text_FontStyle,
       Text_Text,
    ],

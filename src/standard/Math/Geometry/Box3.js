@@ -482,11 +482,11 @@ Object .assign (Box3 .prototype,
 
 Object .assign (Box3,
 {
-   Extents (min, max)
+   fromExtents (min, max)
    {
       return new Box3 () .setExtents (min, max);
    },
-   Points (points)
+   fromPoints (points)
    {
       const
          min = new Vector3 (Number .POSITIVE_INFINITY),

@@ -105,7 +105,7 @@ Object .assign (Line2 .prototype,
 
 Object .assign (Line2,
 {
-   Points (point1, point2)
+   fromPoints (point1, point2)
    {
       const line = Object .create (Line2 .prototype);
       line .point     = point1 .copy ();

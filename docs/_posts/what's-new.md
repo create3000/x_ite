@@ -7,6 +7,12 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
+## X_ITE v14.0 Series
+
+*Leipzig, 27th January 2026:* This series of X_ITE comes with experimental support for X3D4.1, meaning that all the new features and nodes ([EnvironmentLight](/x_ite/components/lighting/environmentlight/), [HAnimPose](/x_ite/components/hanim/hanimpose/), [FontLibrary](/x_ite/components/text/fontlibrary/), [Tangent](/x_ite/components/rendering/tangent/)) are available and ready to be tested.
+
+In addition, the glTF parser can now handle KHR_meshopt_compression. With KHR_meshopt_compression, glTF files can be shrunk up to 1/10 of their size. gltfpack is very well suited for this. Run `npx gltfpack` with options `-cc` and `-tc` and see what happens.
+
 ## X_ITE v12.2 Series
 
 *Leipzig, 7th December 2025:* This update introduces several performance-focused enhancements and new browser-level controls, giving developers finer tuning options for rendering and interaction. It also includes important fixes that improve visual correctness and overall graphics stability.

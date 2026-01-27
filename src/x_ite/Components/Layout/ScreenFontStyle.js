@@ -21,7 +21,7 @@ Object .assign (Object .setPrototypeOf (ScreenFontStyle .prototype, X3DFontStyle
 
       this .getBrowser () .getRenderingProperties () ._ContentScale .addInterest ("addNodeEvent", this);
    },
-   getTextGeometry (text)
+   createTextGeometry (text)
    {
       return new ScreenText (text, this);
    },

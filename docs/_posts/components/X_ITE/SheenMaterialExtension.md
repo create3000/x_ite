@@ -78,7 +78,7 @@ Input/Output field *sheenRoughnessTextureMapping*.
 ### SFNode [in, out] **sheenRoughnessTexture** NULL <small>[X3DSingleTextureNode]</small>
 {: #fields-sheenRoughnessTexture }
 
-The sheen roughness (Alpha) texture.
+The sheen roughness (Alpha) texture, stored in the alpha (A) channel.
 
 ## Example
 

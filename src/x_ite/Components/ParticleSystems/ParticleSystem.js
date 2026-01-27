@@ -1097,7 +1097,7 @@ Object .defineProperties (ParticleSystem,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "geometryType",      new Fields .SFString ("QUAD")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "createParticles",   new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "maxParticles",      new Fields .SFInt32 (200)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "particleLifetime",  new Fields .SFFloat (5)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "particleLifetime",  new Fields .SFTime (5)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "lifetimeVariation", new Fields .SFFloat (0.25)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "particleSize",      new Fields .SFVec2f (0.02, 0.02)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "emitter",           new Fields .SFNode ()),
@@ -1106,10 +1106,10 @@ Object .defineProperties (ParticleSystem,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "color",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "texCoordKey",       new Fields .MFFloat ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "texCoord",          new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "scaleKey",          new Fields .MFFloat ()), // skip test
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "scale",             new Fields .SFNode ()), // skip test
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "scaleKey",          new Fields .MFFloat ()),    // experimental
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "scale",             new Fields .SFNode ()),     // experimental
          new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",          new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "pointerEvents",     new Fields .SFBool (true)), // skip test
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "pointerEvents",     new Fields .SFBool (true)), // experimental
          new X3DFieldDefinition (X3DConstants .inputOutput,    "castShadow",        new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",           new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",       new Fields .SFBool ()),
