@@ -70,7 +70,7 @@ Object .assign (Object .setPrototypeOf (Text .prototype, X3DGeometryNode .protot
 
       this .fontStyleNode .addInterest ("requestRebuild", this);
 
-      this .textGeometry = this .fontStyleNode .getTextGeometry (this);
+      this .textGeometry = this .fontStyleNode .createTextGeometry (this);
    },
    build ()
    {

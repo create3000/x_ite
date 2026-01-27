@@ -295,7 +295,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    {
       return getUniqueName (this [_namedNodes], name);
    },
-   addImportedNode (inlineNode, exportedName, importedName = exportedName)
+   addImportedNode (inlineNode, exportedName, importedName = exportedName, description = "")
    {
       exportedName = String (exportedName);
       importedName = String (importedName);
@@ -303,13 +303,14 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (this [_importedNodes] .has (importedName))
          throw new Error (`Couldn't add imported node: imported name '${importedName}' already in use.`);
 
-      this .updateImportedNode (inlineNode, exportedName, importedName);
+      this .updateImportedNode (inlineNode, exportedName, importedName, description);
    },
-   updateImportedNode (inlineNode, exportedName, importedName)
+   updateImportedNode (inlineNode, exportedName, importedName, description = "")
    {
       inlineNode   = X3DCast (X3DConstants .Inline, inlineNode, false);
       exportedName = String (exportedName);
       importedName = importedName === undefined ? exportedName : String (importedName);
+      description  = String (description);
 
       if (!inlineNode)
          throw new Error ("Node must be of type Inline node.");
@@ -327,7 +328,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       this .removeImportedNode (importedName);
 
-      const importedNode = new X3DImportedNode (this, inlineNode, exportedName, importedName);
+      const importedNode = new X3DImportedNode (this, inlineNode, exportedName, importedName, description);
 
       this [_importedNodes] .add (importedName, importedNode);
 

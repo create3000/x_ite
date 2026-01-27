@@ -161,11 +161,11 @@ Object .assign (Box2 .prototype,
 
 Object .assign (Box2,
 {
-   Extents (min, max)
+   fromExtents (min, max)
    {
       return new Box2 () .setExtents (min, max);
    },
-   Points (points)
+   fromPoints (points)
    {
       const
          min = new Vector2 (Number .POSITIVE_INFINITY),

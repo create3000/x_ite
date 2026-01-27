@@ -15,6 +15,7 @@ const
    _predefinedFields  = Symbol (),
    _userDefinedFields = Symbol (),
    _childObjects      = Symbol (),
+   _changedTypes      = Symbol (),
    _initialized       = Symbol (),
    _live              = Symbol (),
    _set_live__        = Symbol .for ("X_ITE.X3DBaseNode.set_live__");
@@ -253,6 +254,10 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
          set (value) { field .setValue (value); },
       });
    },
+   getFieldDefinition (name)
+   {
+      return this [_fieldDefinitions] .get (name);
+   },
    getFieldDefinitions ()
    {
       return this [_fieldDefinitions];
@@ -298,6 +303,32 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
 
       if (field .isInitializable ())
          HTMLSupport .addFieldName (alias);
+   },
+   changeField (accessType, name, value)
+   {
+      const
+         original = this [_predefinedFields] .get (name),
+         field    = value .copy ();
+
+      field .setTainted (!this [_initialized]);
+      field .addParent (this);
+      field .setName (name);
+      field .setAccessType (accessType);
+
+      this [_fieldDefinitions] = this [_fieldDefinitions] .copy ();
+      this [_fieldDefinitions] .update (name, name, new X3DFieldDefinition (accessType, name, value));
+      this [_predefinedFields] .update (name, name, field);
+
+      Object .defineProperty (this, `_${name}`,
+      {
+         get () { return field; },
+         set (value) { field .setValue (value); },
+         configurable: true,
+      });
+
+      this [_changedTypes] ??= new Map ();
+
+      this [_changedTypes] .set (field, original);
    },
    removePredefinedField (name)
    {
@@ -411,6 +442,14 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
       }
 
       return changedFields;
+   },
+   getConvertedFields (fields)
+   {
+      return this .convertFields (fields .map (field => this [_changedTypes] ?.get (field) ?? field));
+   },
+   convertFields (fields)
+   {
+      return fields;
    },
    isDefaultValue (field)
    {

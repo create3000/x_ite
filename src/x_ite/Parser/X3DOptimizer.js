@@ -121,7 +121,7 @@ Object .assign (X3DOptimizer .prototype,
             return node;
       }
 
-      if (!node .children)
+      if (!node .getNodeType () .includes (X3DConstants .X3DGroupingNode))
          return node;
 
       const children = Array .from (node .children);

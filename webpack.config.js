@@ -176,8 +176,8 @@ export default Namespace .add ("${base}", __default__);`;
       plugins: [
          new StringReplacePlugin (),
          new webpack .ProvidePlugin ({
-            $: "jquery",
-            jQuery: "jquery",
+            $: ["jquery", "default"],
+            jQuery: ["jquery", "default"],
             jquery_mousewheel: "jquery-mousewheel/jquery.mousewheel.js",
             libtess: "libtess/libtess.cat.js",
             pako: "pako/dist/pako_inflate.js",
@@ -231,7 +231,7 @@ export default Namespace .add ("${base}", __default__);`;
             fs: false,
          },
          alias: {
-           "jquery": "jquery/dist/jquery.slim.js",
+           "jquery": "jquery/slim",
          },
       },
       stats: "errors-warnings",
@@ -323,8 +323,8 @@ export default Namespace .add ("${base}", __default__);`;
       plugins: [
          new StringReplacePlugin (),
          new webpack .ProvidePlugin ({
-            $: "jquery",
-            jQuery: "jquery",
+            $: ["jquery", "default"],
+            jQuery: ["jquery", "default"],
             jquery_mousewheel: "jquery-mousewheel/jquery.mousewheel.js",
             libtess: "libtess/libtess.cat.js",
             pako: "pako/dist/pako_inflate.js",
@@ -373,7 +373,7 @@ export default Namespace .add ("${base}", __default__);`;
             fs: false,
          },
          alias: {
-           "jquery": "jquery/dist/jquery.slim.js",
+           "jquery": "jquery/slim",
          },
       },
       stats: "errors-warnings",

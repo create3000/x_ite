@@ -84,11 +84,11 @@ Brightness of direct emission from the light.
 ### SFFloat [in, out] **ambientIntensity** 0 <small>[0,1]</small>
 {: #fields-ambientIntensity }
 
-Brightness of ambient (nondirectional background) emission from the light. Interchange profile
+Brightness of ambient (nondirectional background) emission from the light.
 
 #### Hint
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### SFVec3f [in, out] **direction** 0 0 -1 <small>(-∞,∞)</small>
 {: #fields-direction }
@@ -129,8 +129,8 @@ Size of the shadow map in pixels, must be power of two.
 ### Hints
 
 - Animate direction to simulate time-of-day sunlight effects.
-- The bound [NavigationInfo](/x_ite/components/navigation/navigationinfo/) controls whether headlight is enabled on/off. Interchange profile
-- Light might not be scoped by parent [Group](/x_ite/components/grouping/group/) or [Transform](/x_ite/components/grouping/transform/).
+- The bound [NavigationInfo](/x_ite/components/navigation/navigationinfo/) controls whether the user headlight is enabled on/off.
+- In Interchange profile light might not be scoped by parent [Group](/x_ite/components/grouping/group/) or [Transform](/x_ite/components/grouping/transform/).
 
 ## Example
 

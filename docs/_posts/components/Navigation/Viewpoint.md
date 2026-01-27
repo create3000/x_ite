@@ -119,12 +119,12 @@ Preferred minimum viewing angle from this viewpoint in radians, providing minimu
 #### Hints
 
 - Modifying Viewpoint distance to object may be better for zooming.
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 #### Warnings
 
 - *fieldOfView* may not be correct for different window sizes and aspect ratios.
-- For VR/AR/MR/XR users wearing a head-mounted display (HMD), animating this field may induce motion sickness. Interchange profile
+- For VR/AR/MR/XR users wearing a head-mounted display (HMD), animating this field may induce motion sickness.
 
 ### SFFloat [in, out] **nearDistance** -1 <small>-1 or (0,∞)</small>
 {: #fields-nearDistance }

@@ -7,9 +7,10 @@ const
    _inlineNode       = Symbol (),
    _exportedName     = Symbol (),
    _importedName     = Symbol (),
+   _description      = Symbol (),
    _exportedNodes    = Symbol ();
 
-function X3DImportedNode (executionContext, inlineNode, exportedName, importedName)
+function X3DImportedNode (executionContext, inlineNode, exportedName, importedName, description)
 {
    X3DObject .call (this);
 
@@ -17,6 +18,7 @@ function X3DImportedNode (executionContext, inlineNode, exportedName, importedNa
    this [_inlineNode]       = inlineNode;
    this [_exportedName]     = exportedName;
    this [_importedName]     = importedName;
+   this [_description]      = description;
    this [_exportedNodes]    = executionContext [_exportedNodes] ??= new Map ();
 }
 
@@ -80,6 +82,14 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
 
       exportedNode .setName (importedName);
    },
+   getDescription ()
+   {
+      return this [_description];
+   },
+   setDescription (value)
+   {
+      this [_description] = String (value);
+   },
    toVRMLStream (generator)
    {
       if (!generator .ExistsNode (this .getInlineNode ()))
@@ -103,6 +113,16 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
          generator .Space ();
          generator .string += importedName;
       }
+
+      if (this [_description])
+      {
+         generator .Space ();
+         generator .string += "DESCRIPTION";
+         generator .Space ();
+         generator .string += '"';
+         generator .string += this [_description];
+         generator .string += '"';
+      }
    },
    toXMLStream (generator)
    {
@@ -119,6 +139,9 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
 
       if (importedName !== this .getExportedName ())
          generator .attribute ("AS", importedName);
+
+      if (this [_description])
+         generator .attribute ("description", this [_description]);
 
       generator .closeTag ("IMPORT");
    },
@@ -139,6 +162,9 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
 
       if (importedName !== this .getExportedName ())
          generator .stringProperty ("@AS", importedName);
+
+      if (this [_description])
+         generator .stringProperty ("@description", this [_description]);
 
       generator .endObject ();
       generator .endObject ();
@@ -179,10 +205,7 @@ Object .defineProperties (X3DImportedNode .prototype,
    },
    exportedName:
    {
-      get ()
-      {
-         return this [_exportedName];
-      },
+      get: X3DImportedNode .prototype .getExportedName,
       enumerable: true,
    },
    exportedNode:
@@ -195,10 +218,13 @@ Object .defineProperties (X3DImportedNode .prototype,
    },
    importedName:
    {
-      get ()
-      {
-         return this [_importedName];
-      },
+      get: X3DImportedNode .prototype .getImportedName,
+      enumerable: true,
+   },
+   description:
+   {
+      get: X3DImportedNode .prototype .getDescription,
+      set: X3DImportedNode .prototype .setDescription,
       enumerable: true,
    },
 });

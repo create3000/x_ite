@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
-<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.1//EN" "https://www.web3d.org/specifications/x3d-4.1.dtd">
+<X3D profile='Interchange' version='4.1' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.1.xsd'>
   <head>
     <component name='Geometry2D' level='2'/>
     <component name='Layering' level='1'/>
     <component name='ParticleSystems' level='3'/>
     <component name='Scripting' level='1'/>
-    <component name='Text' level='1'/>
+    <component name='Text' level='2'/>
     <meta name='created' content='Sat, 17 May 2025 17:44:03 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V1.11.8, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 21 Nov 2025 12:59:16 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V2.0.0, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Fri, 23 Jan 2026 23:08:49 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='ColorScheme'>
@@ -136,6 +136,9 @@ function changeColorScheme (colorScheme)
         </ParticleSystem>
       </Layer>
       <Layer DEF='Text'>
+        <FontLibrary DEF='Neuropol'
+            family='Neuropol'
+            url='"Neuropol.otf"'/>
         <Transform DEF='Rectangle2D_1'
             translation='0 0.04948798 0'
             scale='32 1.2 1'>
@@ -178,10 +181,10 @@ function changeColorScheme (colorScheme)
                       emissiveColor='0 0 0'/>
                 </Appearance>
                 <Text DEF='_5'
-                    string='"X_ITE v12.1.8"'
+                    string='"X_ITE v14.0.0"'
                     solid='true'>
                   <FontStyle
-                      family='"Neuropol.otf", "SANS"'
+                      family='"Neuropol", "SANS"'
                       size='1.4'
                       justify='"BEGIN", "MIDDLE"'/>
                 </Text>

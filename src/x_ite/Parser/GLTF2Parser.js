@@ -12,6 +12,7 @@ import Matrix3      from "../../standard/Math/Numbers/Matrix3.js";
 import Matrix4      from "../../standard/Math/Numbers/Matrix4.js";
 import Color3       from "../../standard/Math/Numbers/Color3.js";
 import Color4       from "../../standard/Math/Numbers/Color4.js";
+import Box3         from "../../standard/Math/Geometry/Box3.js";
 
 // https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html
 // https://github.com/KhronosGroup/glTF-Sample-Assets
@@ -49,7 +50,6 @@ function GLTF2Parser (scene)
    this .cameras               = [ ];
    this .nodes                 = [ ];
    this .skins                 = [ ];
-   this .humanoidIndex         = new Map ();
    this .joints                = new Set ();
    this .pointerAliases        = new Map ();
    this .animationScripts      = [ ];
@@ -147,20 +147,17 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       scene .setProfile (browser .getProfile ("Interchange"));
 
       if (glTF .skins)
-         scene .addComponent (browser .getComponent ("HAnim"));
+         scene .updateComponent (browser .getComponent ("HAnim"));
 
       // Parse root objects.
 
-      this .assetObject      (glTF .asset, glTF .extensions);
-      this .extensionsArray  (glTF .extensionsRequired, this .extensions);
-      this .extensionsArray  (glTF .extensionsUsed, this .extensions);
+      this .assetObject (glTF .asset, glTF .extensions);
+      await this .extensionsArray (glTF .extensionsRequired, this .extensions);
+      await this .extensionsArray (glTF .extensionsUsed, this .extensions);
       this .extensionsObject (glTF .extensions);
 
       await browser .loadComponents (scene);
       await this .buffersArray (glTF .buffers);
-
-      if (this .extensions .has ("KHR_draco_mesh_compression"))
-         this .draco = await this .createDraco ();
 
       this .bufferViewsArray (glTF .bufferViews);
       this .accessorsArray   (glTF .accessors);
@@ -207,6 +204,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          if (typeof value !== "string")
             continue;
 
+         if (key === "version")
+            continue;
+
          worldInfoNode ._info .push (`${key}: ${value}`);
       }
 
@@ -246,7 +246,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       scene .getRootNodes () .push (worldInfoNode);
    },
-   extensionsArray (extensions, set)
+   async extensionsArray (extensions, set)
    {
       if (!(extensions instanceof Array))
          return;
@@ -307,16 +307,34 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                components .push (browser .getComponent ("Scripting",        1));
                break;
             }
+            case "KHR_draco_mesh_compression":
+            {
+               this .draco ??= await this .createLibrary ("draco_decoder_gltf.js");
+               break;
+            }
+            case "KHR_meshopt_compression":
+            case "EXT_meshopt_compression":
+            {
+               this .MeshoptDecoder ??= await this .createLibrary ("meshopt_decoder.js");
+               break;
+            }
          }
       }
 
       for (const component of components)
-      {
-         if (scene .hasComponent (component))
-            continue;
-
          scene .updateComponent (component);
-      }
+   },
+   createLibrary (file)
+   {
+      return this .constructor [file] ??= (async () =>
+      {
+         const
+            response = await fetch (URLs .getLibraryURL (file)),
+            text     = await response .text (),
+            library  = await new Function (text) ();
+
+         return library;
+      })();
    },
    extensionsObject (extensions)
    {
@@ -734,24 +752,77 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .bufferViews = bufferViews;
 
       for (const bufferView of bufferViews)
-         bufferView .buffer = this .bufferViewObject (bufferView);
+         bufferView .getBuffer = (componentType) => this .bufferViewObject (bufferView, componentType);
    },
-   bufferViewObject (bufferView)
+   bufferViewObject: (() =>
    {
-      if (!(bufferView instanceof Object))
-         return;
+      const ComponentSize = new Map ([
+         [5120, 1], // Int8Array
+         [5121, 1], // Uint8Array
+         [5122, 2], // Int16Array
+         [5123, 2], // Uint16Array
+         [5124, 4], // Int32Array
+         [5125, 4], // Uint32Array
+         [5126, 4], // Float32Array
+         [5130, 8], // Float64Array
+      ]);
 
-      const buffer = this .buffers [bufferView .buffer];
+      return function (bufferView, componentType)
+      {
+         if (!(bufferView instanceof Object))
+            return;
 
-      if (!buffer)
-         return;
+         if (bufferView .buffer instanceof Object)
+            return bufferView .buffer;
 
-      const
-         byteOffset = bufferView .byteOffset || 0,
-         byteLength = bufferView .byteLength;
+         const meshopt = bufferView .extensions ?.KHR_meshopt_compression
+            ?? bufferView .extensions ?.EXT_meshopt_compression;
 
-      return buffer .slice (byteOffset, byteOffset + byteLength);
-   },
+         if (meshopt instanceof Object)
+         {
+            const
+               MeshoptDecoder = this .MeshoptDecoder,
+               byteOffset     = meshopt .byteOffset || 0,
+               byteLength     = meshopt .byteLength,
+               byteStride     = meshopt .byteStride,
+               count          = meshopt .count,
+               mode           = meshopt .mode,
+               filter         = meshopt .filter || "NONE",
+               buffer         = this .buffers [meshopt .buffer];
+
+            const
+               componentSize   = ComponentSize .get (componentType),
+               componentCount  = byteStride / componentSize,
+               viewArrayLength = count * componentCount * componentSize,
+               encoded         = new Uint8Array (buffer, byteOffset, byteLength),
+               decoded         = new Uint8Array (viewArrayLength);
+
+            MeshoptDecoder .decodeGltfBuffer (
+               decoded,
+               count,
+               byteStride,
+               encoded,
+               mode,
+               filter
+            );
+
+            return bufferView .buffer = decoded .buffer;
+         }
+         else
+         {
+            const buffer = this .buffers [bufferView .buffer];
+
+            if (!buffer)
+               return;
+
+            const
+               byteOffset = bufferView .byteOffset || 0,
+               byteLength = bufferView .byteLength;
+
+            return bufferView .buffer = buffer .slice (byteOffset, byteOffset + byteLength);
+         }
+      };
+   })(),
    accessorsArray (accessors)
    {
       if (!(accessors instanceof Array))
@@ -805,7 +876,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                   count      = accessor .count || 0,
                   stride     = byteStride ? byteStride / TypedArray .BYTES_PER_ELEMENT : components,
                   length     = Math .min (stride * count, (bufferView .byteLength - byteOffset) / TypedArray .BYTES_PER_ELEMENT),
-                  array      = new TypedArray (bufferView .buffer, byteOffset, length);
+                  array      = new TypedArray (bufferView .getBuffer (accessor .componentType), byteOffset, length);
 
                let value;
 
@@ -858,16 +929,17 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             return array;
 
          const
-            IndicesTypedArray = TypedArrays .get (sparse .indices .componentType),
+            componentType     = sparse .indices .componentType,
+            IndicesTypedArray = TypedArrays .get (componentType),
             indicesBufferView = this .bufferViews [sparse .indices .bufferView],
             indicesByteOffset = sparse .indices .byteOffset,
-            indices           = new IndicesTypedArray (indicesBufferView .buffer, indicesByteOffset, sparse .count);
+            indices           = new IndicesTypedArray (indicesBufferView .getBuffer (componentType), indicesByteOffset, sparse .count);
 
          const
             ValuesTypedArray = array .constructor,
             valuesBufferView = this .bufferViews [sparse .values .bufferView],
             valuesByteOffset = sparse .values .byteOffset,
-            values           = new ValuesTypedArray (valuesBufferView .buffer, valuesByteOffset, sparse .count * components);
+            values           = new ValuesTypedArray (valuesBufferView .getBuffer (), valuesByteOffset, sparse .count * components);
 
          array = array .slice ();
 
@@ -1010,7 +1082,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return image;
 
       const
-         buffer = bufferView .buffer,
+         buffer = bufferView .getBuffer (),
          blob   = new Blob ([new Uint8Array (buffer)], { type: image .mimeType }),
          uri    = await this .blobToDataUrl (blob);
 
@@ -1877,7 +1949,7 @@ function eventsProcessed ()
 
       const
          attributes = primitive .attributes,
-         dataView   = new Uint8Array (this .bufferViews [draco .bufferView] .buffer);
+         dataView   = new Uint8Array (this .bufferViews [draco .bufferView] .getBuffer ());
 
       this .dracoDecodeMesh (this .draco, dataView, draco .attributes, indicesCallback, attributeCallback);
    },
@@ -1969,22 +2041,6 @@ function eventsProcessed ()
 
          draco .destroy (decoder);
          draco .destroy (buffer);
-      }
-   },
-   async createDraco ()
-   {
-      if (this .constructor .draco)
-      {
-         return this .constructor .draco;
-      }
-      else
-      {
-         const
-            response = await fetch (URLs .getLibraryURL ("draco_decoder_gltf.js")),
-            text     = await response .text (),
-            draco    = await new Function (text) () ();
-
-         return this .constructor .draco = draco;
       }
    },
    khrMaterialsVariantsExtension (extensions, shapeNode)
@@ -2236,22 +2292,9 @@ function eventsProcessed ()
 
       const skin = this .skins [node .skin];
 
-      if (skin)
-      {
-         // Skins can be cloned.
-
-         if (!skin .humanoidNode)
-         {
-            skin .humanoidNode = scene .createNode ("HAnimHumanoid", false);
-
-            skin .joints .map (joint => this .humanoidIndex .set (joint, skin .humanoidNode))
-         }
-
-         node .humanoidNode = skin .humanoidNode;
-      }
-
-      node .childNode = node .humanoidNode ?? node .transformNode;
-      node .pointers  = [node .childNode];
+      node .humanoidNode = skin ?.humanoidNode;
+      node .childNode    = node .humanoidNode ?? node .transformNode;
+      node .pointers     = [node .childNode];
 
       return node;
    },
@@ -2341,8 +2384,8 @@ function eventsProcessed ()
          // Add mesh.
 
          const
-            skin                    = this .skins [node .skin],
             EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing,
+            skin                    = this .skins [node .skin],
             shapeNodes              = this .meshObject (this .meshes [node .mesh], skin, EXT_mesh_gpu_instancing);
 
          // Add camera.
@@ -2376,10 +2419,6 @@ function eventsProcessed ()
 
                   segmentNode .setup ();
 
-                  const humanoidNode = this .humanoidIndex .get (index);
-
-                  humanoidNode ?._segments .push (segmentNode);
-
                   return segmentNode;
                }
                else
@@ -2411,7 +2450,7 @@ function eventsProcessed ()
                scene .addNamedNode (scene .getUniqueName (name), humanoidNode);
 
             humanoidNode ._name                  = skin .name ?? node .name ?? "";
-            humanoidNode ._version               = "2.0";
+            humanoidNode ._version               = "2.1";
             humanoidNode ._skeletalConfiguration = "GLTF";
 
             humanoidNode ._skeleton .push (... skin .skeleton
@@ -2437,13 +2476,39 @@ function eventsProcessed ()
             humanoidNode .setup ();
          }
 
-         if (shapeNodes .length)
+         if (!shapeNodes ?.length)
+            return;
+
+         humanoidNode ._skinNormal = shapeNodes [0] ._geometry .normal;
+         humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
+
+         humanoidNode ._skin .push (... shapeNodes);
+
+         // Create better bbox in case of mesh quantization is used.
+
+         if (!this .vectorValue (node .matrix, matrix))
          {
-            humanoidNode ._skinNormal = shapeNodes [0] ._geometry .normal;
-            humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
+            this .vectorValue (node .translation, translation .set (0, 0, 0));
+            this .vectorValue (node .rotation, quaternion .set (0, 0, 0, 1));
+            rotation .setQuaternion (quaternion);
+            this .vectorValue (node .scale, scale .set (1, 1, 1));
+            matrix .set (translation, rotation, scale);
          }
 
-         humanoidNode ._skin .push (transformNode);
+         if (matrix .equals (Matrix4 .IDENTITY))
+            return;
+
+         const
+            points     = Array .from (humanoidNode ._skinCoord .point, point => matrix .multVecMatrix (point .getValue () .copy ())),
+            bbox       = Box3 .fromPoints (points),
+            bboxSize   = bbox .size,
+            bboxCenter = bbox .center;
+
+         for (const shapeNode of shapeNodes)
+         {
+            shapeNode ._bboxSize   = bboxSize;
+            shapeNode ._bboxCenter = bboxCenter;
+         }
       };
    })(),
    nodeExtensions: (() =>
@@ -2688,9 +2753,10 @@ function eventsProcessed ()
       children .forEach (index => this .nodeChildren (this .nodes [index], index, modelMatrix, physicsParent));
 
       const nodes = Array .from (new Set (children
-         .map (index => this .nodes [index] ?.childNode)
+         .map (index => this .nodes [index])
+         .filter (node => node ?.skin === undefined)
+         .map (node => node ?.childNode)
          .filter (node => node)
-         .filter (node => node .getType () .at (-1) !== X3DConstants .HAnimHumanoid || !node .getCloneCount ())
       ));
 
       return nodes;
@@ -2729,6 +2795,7 @@ function eventsProcessed ()
          skin .joints .push (skeleton);
       }
 
+      skin .humanoidNode               = scene .createNode ("HAnimHumanoid",          false);
       skin .textureCoordinateNode      = scene .createNode ("TextureCoordinate",      false);
       skin .multiTextureCoordinateNode = scene .createNode ("MultiTextureCoordinate", false);
       skin .normalNode                 = scene .createNode ("Normal",                 false);

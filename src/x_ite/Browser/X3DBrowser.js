@@ -360,7 +360,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
             if (!(component instanceof ComponentInfo))
                throw new Error ("Couldn't create scene: component must be of type ComponentInfo.");
 
-            scene .addComponent (component);
+            scene .updateComponent (component);
          }
       }
 

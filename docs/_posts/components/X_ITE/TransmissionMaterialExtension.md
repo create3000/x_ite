@@ -60,11 +60,11 @@ Input/Output field *transmissionTextureMapping*.
 ### SFNode [in, out] **transmissionTexture** NULL <small>[X3DSingleTextureNode]</small>
 {: #fields-transmissionTexture }
 
-A texture that defines the transmission percentage of the surface, stored in the R channel. This will be multiplied by transmissionFactor.
+A texture that defines the transmission percentage of the surface, stored in the red (R) channel. This will be multiplied by transmissionFactor.
 
 ## Example
 
-- [View »Transmission Test« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=TransmissionTest)
+- [View »Transmission Test« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=/TransmissionTest/)
 
 ## See Also
 
