@@ -11,6 +11,7 @@ import Rotation4    from "../../standard/Math/Numbers/Rotation4.js";
 import Matrix4      from "../../standard/Math/Numbers/Matrix4.js";
 import Color3       from "../../standard/Math/Numbers/Color3.js";
 import Color4       from "../../standard/Math/Numbers/Color4.js";
+import Box3         from "../../standard/Math/Geometry/Box3.js";
 
 // https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html
 // https://github.com/KhronosGroup/glTF-Sample-Assets
@@ -2149,20 +2150,9 @@ function eventsProcessed ()
 
       const skin = this .skins [node .skin];
 
-      if (skin)
-      {
-         // Skins can be cloned.
-
-         if (!skin .humanoidNode)
-         {
-            skin .humanoidNode = scene .createNode ("HAnimHumanoid", false);
-         }
-
-         node .humanoidNode = skin .humanoidNode;
-      }
-
-      node .childNode = node .humanoidNode ?? node .transformNode;
-      node .pointers  = [node .childNode];
+      node .humanoidNode = skin ?.humanoidNode;
+      node .childNode    = node .humanoidNode ?? node .transformNode;
+      node .pointers     = [node .childNode];
 
       return node;
    },
@@ -2198,8 +2188,7 @@ function eventsProcessed ()
          const
             scene         = this .getScene (),
             transformNode = node .transformNode,
-            name          = this .sanitizeName (node .name),
-            skin          = this .skins [node .skin];
+            name          = this .sanitizeName (node .name);
 
          // Name
 
@@ -2213,34 +2202,32 @@ function eventsProcessed ()
 
          // Set transformation matrix.
 
-         if (!skin)
+         if (this .vectorValue (node .matrix, matrix))
          {
-            if (this .vectorValue (node .matrix, matrix))
-            {
-               matrix .get (translation, rotation, scale, scaleOrientation);
+            matrix .get (translation, rotation, scale, scaleOrientation);
 
-               transformNode ._translation      = translation;
-               transformNode ._rotation         = rotation;
-               transformNode ._scale            = scale;
-               transformNode ._scaleOrientation = scaleOrientation;
-            }
-            else
-            {
-               if (this .vectorValue (node .translation, translation))
-                  transformNode ._translation = translation;
+            transformNode ._translation      = translation;
+            transformNode ._rotation         = rotation;
+            transformNode ._scale            = scale;
+            transformNode ._scaleOrientation = scaleOrientation;
+         }
+         else
+         {
+            if (this .vectorValue (node .translation, translation))
+               transformNode ._translation = translation;
 
-               if (this .vectorValue (node .rotation, quaternion))
-                  transformNode ._rotation = rotation .setQuaternion (quaternion);
+            if (this .vectorValue (node .rotation, quaternion))
+               transformNode ._rotation = rotation .setQuaternion (quaternion);
 
-               if (this .vectorValue (node .scale, scale))
-                  transformNode ._scale = scale;
-            }
+            if (this .vectorValue (node .scale, scale))
+               transformNode ._scale = scale;
          }
 
          // Add mesh.
 
          const
             EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing,
+            skin                    = this .skins [node .skin],
             shapeNodes              = this .meshObject (this .meshes [node .mesh], skin, EXT_mesh_gpu_instancing);
 
          // Add camera.
@@ -2305,7 +2292,7 @@ function eventsProcessed ()
                scene .addNamedNode (scene .getUniqueName (name), humanoidNode);
 
             humanoidNode ._name                  = skin .name ?? node .name ?? "";
-            humanoidNode ._version               = "2.0";
+            humanoidNode ._version               = "2.1";
             humanoidNode ._skeletalConfiguration = "GLTF";
 
             humanoidNode ._skeleton .push (... skin .skeleton
@@ -2331,13 +2318,39 @@ function eventsProcessed ()
             humanoidNode .setup ();
          }
 
-         if (shapeNodes ?.length)
+         if (!shapeNodes ?.length)
+            return;
+
+         humanoidNode ._skinNormal = shapeNodes [0] ._geometry .normal;
+         humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
+
+         humanoidNode ._skin .push (... shapeNodes);
+
+         // Create better bbox in case of mesh quantization is used.
+
+         if (!this .vectorValue (node .matrix, matrix))
          {
-            humanoidNode ._skinNormal = shapeNodes [0] ._geometry .normal;
-            humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
+            this .vectorValue (node .translation, translation .set (0, 0, 0));
+            this .vectorValue (node .rotation, quaternion .set (0, 0, 0, 1));
+            rotation .setQuaternion (quaternion);
+            this .vectorValue (node .scale, scale .set (1, 1, 1));
+            matrix .set (translation, rotation, scale);
          }
 
-         humanoidNode ._skin .push (transformNode);
+         if (matrix .equals (Matrix4 .IDENTITY))
+            return;
+
+         const
+            points     = Array .from (humanoidNode ._skinCoord .point, point => matrix .multVecMatrix (point .getValue () .copy ())),
+            bbox       = Box3 .fromPoints (points),
+            bboxSize   = bbox .size,
+            bboxCenter = bbox .center;
+
+         for (const shapeNode of shapeNodes)
+         {
+            shapeNode ._bboxSize   = bboxSize;
+            shapeNode ._bboxCenter = bboxCenter;
+         }
       };
    })(),
    nodeExtensions (node)
@@ -2378,9 +2391,10 @@ function eventsProcessed ()
          return [ ];
 
       const nodes = Array .from (new Set (children
-         .map (index => this .nodes [index] ?.childNode)
+         .map (index => this .nodes [index])
+         .filter (node => node ?.skin === undefined)
+         .map (node => node ?.childNode)
          .filter (node => node)
-         .filter (node => node .getType () .at (-1) !== X3DConstants .HAnimHumanoid || !node .getCloneCount ())
       ));
 
       return nodes;
@@ -2419,6 +2433,7 @@ function eventsProcessed ()
          skin .joints .push (skeleton);
       }
 
+      skin .humanoidNode               = scene .createNode ("HAnimHumanoid",          false);
       skin .textureCoordinateNode      = scene .createNode ("TextureCoordinate",      false);
       skin .multiTextureCoordinateNode = scene .createNode ("MultiTextureCoordinate", false);
       skin .normalNode                 = scene .createNode ("Normal",                 false);

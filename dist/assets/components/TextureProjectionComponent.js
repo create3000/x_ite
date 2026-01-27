@@ -1,5 +1,5 @@
-/* X_ITE v12.2.6 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.2.6")];
+/* X_ITE v14.0.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -655,7 +655,7 @@ Object .defineProperties (TextureProjectorParallel,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "location",         new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "direction",        new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 0, 1)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "upVector",         new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 1, 0)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "fieldOfView",      new (external_X_ITE_X3D_Fields_default()).MFFloat (-1, -1, 1, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "fieldOfView",      new (external_X_ITE_X3D_Fields_default()).SFVec4f (-1, -1, 1, 1)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "nearDistance",     new (external_X_ITE_X3D_Fields_default()).SFFloat (-1)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "farDistance",      new (external_X_ITE_X3D_Fields_default()).SFFloat (-1)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "aspectRatio",      new (external_X_ITE_X3D_Fields_default()).SFFloat ()),

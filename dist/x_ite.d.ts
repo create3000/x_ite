@@ -611,7 +611,7 @@ declare namespace X3D
    class X3DExecutionContext extends X3DObject
    {
       /**
-       * The string represent the basic specification version used by the parsed file in decimal format. For example, a scene conforming to this specification returns a value such as "4.0". This property is read-only.
+       * The string represent the basic specification version used by the parsed file in decimal format. For example, a scene conforming to this specification returns a value such as "4.1". This property is read-only.
        */
       readonly specificationVersion: string;
       /**
@@ -887,6 +887,10 @@ declare namespace X3D
        * A string of the imported name. This property is read-only.
        */
       readonly importedName: string;
+      /**
+       * An optional simple DESCRIPTION of intended purpose for the node provided via IMPORT.
+       */
+      description: string;
    }
 
    /**
@@ -907,6 +911,10 @@ declare namespace X3D
        * The SFNode object of the corresponding node. This property is read-only.
        */
       readonly localNode: SFNode;
+      /**
+       * An optional simple DESCRIPTION of intended purpose for the node provided via EXPORT.
+       */
+      description: string;
    }
 
    /**

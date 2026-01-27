@@ -64,7 +64,7 @@ A texture that defines the transmission percentage of the surface, stored in the
 
 ## Example
 
-- [View »Transmission Test« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=TransmissionTest)
+- [View »Transmission Test« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=/TransmissionTest/)
 
 ## See Also
 

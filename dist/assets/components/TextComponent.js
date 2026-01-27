@@ -1,5 +1,5 @@
-/* X_ITE v12.2.6 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.2.6")];
+/* X_ITE v14.0.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -15,7 +15,7 @@ module.exports = __X_ITE_X3D__ .jquery;
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/
+/******/ 	
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -29,14 +29,14 @@ module.exports = __X_ITE_X3D__ .jquery;
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/
+/******/ 	
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/
+/******/ 	
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
+/******/ 	
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
@@ -49,7 +49,7 @@ module.exports = __X_ITE_X3D__ .jquery;
 /******/ 			return getter;
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -61,12 +61,12 @@ module.exports = __X_ITE_X3D__ .jquery;
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/
+/******/ 	
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/
+/******/ 	
 /************************************************************************/
 
 // UNUSED EXPORTS: default
@@ -11606,8 +11606,8 @@ var PaletteManager = class {
    */
   // defaultValue = 0x000000FF;
   /**
-   *
-   * @param {opentype.Font} font
+   * 
+   * @param {opentype.Font} font 
    */
   constructor(font) {
     this.defaultValue = 255;
@@ -11625,7 +11625,7 @@ var PaletteManager = class {
   }
   /**
    * Returns an array of arrays of color values for each palette, optionally in a specified color format
-   * @param {string} colorFormat
+   * @param {string} colorFormat 
    * @returns {Array<Array>}
    */
   getAll(colorFormat) {
@@ -11644,7 +11644,7 @@ var PaletteManager = class {
   }
   /**
    * Converts a color value string or array of color value strings to CPAL integer color value(s)
-   * @param {string|Array<string></string>} color
+   * @param {string|Array<string></string>} color 
    * @returns {integer}
    */
   toCPALcolor(color) {
@@ -11658,7 +11658,7 @@ var PaletteManager = class {
    * @param {Array<string>|integer} palette Palette index integer or Array of colors to be filled
    * @param {Array<string|integer>} colors Colors to fill the palette with
    * @param {integer} _colorCount Number of colors to fill the palette with, defaults to the value of the numPaletteEntries field. Used internally by extend() and shouldn't be set manually
-   * @returns
+   * @returns 
    */
   fillPalette(palette, colors = [], _colorCount = this.cpal().numPaletteEntries) {
     palette = Number.isInteger(palette) ? this.get(palette, "raw") : palette;
@@ -11681,7 +11681,7 @@ var PaletteManager = class {
   }
   /**
    * Get a specific palette by its zero-based index
-   * @param {integer} paletteIndex
+   * @param {integer} paletteIndex 
    * @param {string} [colorFormat='hexa']
    * @returns {Array}
    */
@@ -11690,10 +11690,10 @@ var PaletteManager = class {
   }
   /**
    * Get a color from a specific palette by its zero-based index
-   * @param {integer} index
+   * @param {integer} index 
    * @param {integer} paletteIndex
    * @param {string} [colorFormat ='hexa']
-   * @returns
+   * @returns 
    */
   getColor(index, paletteIndex = 0, colorFormat = "hexa") {
     return getPaletteColor(this.font, index, paletteIndex, colorFormat);
@@ -11703,7 +11703,7 @@ var PaletteManager = class {
    * @param {integer} index zero-based color index to start filling from
    * @param {string|integer|Array<string|integer>} color color value or array of color values
    * @param {integer} paletteIndex
-   * @returns
+   * @returns 
    */
   setColor(index, colors, paletteIndex = 0) {
     index = parseInt(index);
@@ -11730,9 +11730,9 @@ var PaletteManager = class {
     this.updateIndices();
   }
   /**
-   * Add a new palette.
+   * Add a new palette. 
    * @param {Array} colors (optional) colors to add to the palette, differences to existing palettes will be filled with the defaultValue.
-   * @returns
+   * @returns 
    */
   add(colors) {
     if (this.ensureCPAL(colors)) {
@@ -11756,7 +11756,7 @@ var PaletteManager = class {
   }
   /**
    * deletes a palette by its zero-based index
-   * @param {integer} paletteIndex
+   * @param {integer} paletteIndex 
    */
   delete(paletteIndex) {
     const palettes = this.getAll("raw");
@@ -11979,7 +11979,7 @@ var LayerManager = class {
    * Mainly used internally. Mainly used internally. Updates the colr table, adding a baseGlyphRecord if needed,
    * ensuring that it's inserted at the correct position, updating numLayers, and adjusting firstLayerIndex values
    * for all baseGlyphRecords according to any deletions or insertions.
-   * @param {integer} glyphIndex
+   * @param {integer} glyphIndex 
    * @param {Array<Object>} layers array of layer objects {glyphID, paletteIndex}
    */
   updateColrTable(glyphIndex, layers) {
@@ -17851,53 +17851,10 @@ const X3DTextContext_default_ = X3DTextContext;
 ;
 
 /* harmony default export */ const Text_X3DTextContext = (external_X_ITE_X3D_Namespace_default().add ("X3DTextContext", X3DTextContext_default_));
+;// external "__X_ITE_X3D__ .X3DChildNode"
+const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
+var external_X_ITE_X3D_X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DChildNode_namespaceObject);
 ;// ./src/x_ite/Components/Text/FontLibrary.js
-/*******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011 - 2022.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2011 - 2022, Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <https://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
 
 
 
@@ -17912,42 +17869,58 @@ const X3DTextContext_default_ = X3DTextContext;
 
 function FontLibrary (executionContext)
 {
-   external_X_ITE_X3D_X3DNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
    external_X_ITE_X3D_X3DUrlObject_default().call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).FontLibrary);
 }
 
-Object .assign (Object .setPrototypeOf (FontLibrary .prototype, (external_X_ITE_X3D_X3DNode_default()).prototype),
+Object .assign (Object .setPrototypeOf (FontLibrary .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype),
    (external_X_ITE_X3D_X3DUrlObject_default()).prototype,
 {
    initialize ()
    {
-      external_X_ITE_X3D_X3DNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DChildNode_default().prototype .initialize .call (this);
       external_X_ITE_X3D_X3DUrlObject_default().prototype .initialize .call (this);
 
+      this ._family .addInterest ("set_family__", this);
+
       this .requestImmediateLoad () .catch (Function .prototype);
+   },
+   set_family__ ()
+   {
+      if (!this .font)
+         return;
+
+      const familyName = this ._family .getValue ();
+
+      if (!familyName)
+         return;
+
+      this .getBrowser () .registerFontLibrary (this .getExecutionContext (), familyName, this .font);
    },
    async loadData ()
    {
       const
-         browser  = this .getBrowser (),
-         fileURLs = this ._url .map (fileURL => new URL (fileURL, this .getExecutionContext () .getBaseURL ()));
+         browser          = this .getBrowser (),
+         executionContext = this .getExecutionContext (),
+         fileURLs         = Array .from (this ._url) .map (fileURL => new URL (fileURL, executionContext .getBaseURL ()));
+
+      this .font = null;
 
       for (const fileURL of fileURLs)
       {
-         try
-         {
-            await browser .loadFont (fileURL, this .getCache ());
+         this .font = await browser .loadFont (fileURL, this .getCache ());
 
-            this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
-            return;
-         }
-         catch (error)
-         {
-            if (fileURL .protocol !== "data:")
-               console .warn (`Error loading font '${decodeURI (fileURL .href)}':`, error);
-         }
+         if (!this .font)
+            continue;
+
+         browser .registerFont (executionContext, this .font);
+
+         this .set_family__ ();
+
+         this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
+         return;
       }
 
       this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE);
@@ -17955,18 +17928,19 @@ Object .assign (Object .setPrototypeOf (FontLibrary .prototype, (external_X_ITE_
    dispose ()
    {
       external_X_ITE_X3D_X3DUrlObject_default().prototype .dispose .call (this);
-      external_X_ITE_X3D_X3DNode_default().prototype .dispose .call (this);
+      external_X_ITE_X3D_X3DChildNode_default().prototype .dispose .call (this);
    },
 });
 
 Object .defineProperties (FontLibrary,
 {
-   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("FontLibrary", "Text", 2, "FontLibrary", "4.1"),
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("FontLibrary", "Text", 2, "children", "4.1"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",             new (external_X_ITE_X3D_Fields_default()).SFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "description",          new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "family",               new (external_X_ITE_X3D_Fields_default()).SFString ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "load",                 new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "url",                  new (external_X_ITE_X3D_Fields_default()).MFString ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "autoRefresh",          new (external_X_ITE_X3D_Fields_default()).SFTime (0)),

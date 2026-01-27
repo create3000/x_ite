@@ -87,31 +87,6 @@ Object .assign (X3DTextContext .prototype,
 
       return promise;
    },
-   registerFont (executionContext, font)
-   {
-      const families = this [_families] .getOrInsertComputed (executionContext, () => new Map ());
-
-      // fontFamily - fontStyle
-
-      const fontFamilies = new Map (Object .values (font .names)
-         .flatMap (name => Object .values (name .fontFamily ?? { }) .map (fontFamily => [fontFamily, name])));
-
-      for (const [fontFamily, name] of fontFamilies)
-      {
-         const fontStyles = families .getOrInsertComputed (fontFamily .toUpperCase (), () => new Map ());
-
-         for (const fontStyle of new Set (Object .values (name .fontSubfamily ?? { })))
-         {
-            if (this .getBrowserOption ("Debug"))
-               console .info (`Registering font family ${fontFamily} - ${fontStyle}.`);
-
-            fontStyles .set (fontStyle .toUpperCase () .replaceAll (" ", ""), font);
-         }
-      }
-
-      // console .log (name .preferredFamily);
-      // console .log (name .preferredSubfamily);
-   },
    registerFontLibrary (executionContext, fontFamily, font)
    {
       const library = this [_library] .getOrInsertComputed (executionContext, () => new Map ());
