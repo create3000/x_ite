@@ -98,11 +98,13 @@ The *gain* field is a factor that represents the amount of linear amplification 
 ### SFFloat [in, out] **detune** 0 <small>[0,∞)</small>
 {: #fields-detune }
 
-The *detune* field forms a compound field together with playbackRate that together determine a computedPlaybackRate value.
+The *detune* field, measured in cents, modulates the speed at which the the audio stream is rendered. It forms a compound field together with playbackRate that together determine a computedPlaybackRate value.
 
-#### Hint
+#### Hints
 
 - ComputedPlaybackRate(t) = playbackRate(t) * pow(2, *detune*(t) / 1200)
+- The cent is a logarithmic unit of measure used for musical intervals. Twelve-tone equal temperament divides the octave into 12 semitones of 100 cents each. Typically, cents are used to express small intervals, to check intonation, or to compare the sizes of comparable intervals in different tuning systems. For humans, a single cent is too small to be perceived between successive notes.
+- [Cent(music)](https://en.wikipedia.org/wiki/Cent_(music))
 
 ### SFString [in, out] **type** "LOWPASS" <small>["LOWPASS", "HIGHPASS", "BANDPASS", "LOWSHELF", "HIGHSHELF", "PEAKING", "NOTCH", "ALLPASS"]</small>
 {: #fields-type }

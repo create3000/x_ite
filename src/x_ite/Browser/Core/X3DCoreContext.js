@@ -294,6 +294,11 @@ Object .assign (X3DCoreContext .prototype,
             this .setBrowserOption ("Debug", this .parseBooleanAttribute (newValue) ?? false);
             break;
          }
+         case "displaycolorspace":
+         {
+            this .setBrowserOption ("DisplayColorSpace", newValue);
+            break;
+         }
          case "exposure":
          {
             this .setBrowserOption ("Exposure", newValue);

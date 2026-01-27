@@ -13,7 +13,7 @@ tags: [TimeSensor, Time]
 
 ## Overview
 
-TimeSensor continuously generates events as time passes. Typical use: ROUTE thisTimeSensorDEF.fraction_changed TO someInterpolatorDEF.set_fraction. Interchange profile
+TimeSensor continuously generates events as time passes. Typical use: ROUTE thisTimeSensorDEF.fraction_changed TO someInterpolatorDEF.set_fraction.
 
 The TimeSensor node belongs to the [Time](/x_ite/components/overview/#time) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
@@ -76,11 +76,11 @@ Enables/disables node operation.
 ### SFTime [in, out] **cycleInterval** 1 <small>(0,∞)</small>
 {: #fields-cycleInterval }
 
-*cycleInterval* is loop duration in seconds. Interchange profile
+*cycleInterval* is loop duration in seconds.
 
 #### Hints
 
-- TimeSensor may be ignored if *cycleInterval* \< 0.01 second.
+- In Interchange profile TimeSensor may be ignored if *cycleInterval* \< 0.01 second.
 - *cycleInterval* is a nonnegative SFTime duration interval, not an absolute clock time.
 
 #### Warning
@@ -210,7 +210,7 @@ Time continuously sends the absolute *time* (value 0.0 matches 1 January 1970) i
 
 ### Hints
 
-- TimeSensor may be ignored if cycleInterval \< 0.01 second.
+- In Interchange profile TimeSensor may be ignored if cycleInterval \< 0.01 second.
 - [Event timing details are explained in X3D Specification 4.4.8.3 Execution model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/concepts.html#ExecutionModel)
 - [X3D Architecture 8 Time component](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/time.html)
 - [Example scenes and authoring assets](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter07EventAnimationInterpolation)

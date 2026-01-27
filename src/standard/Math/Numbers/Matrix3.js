@@ -456,7 +456,7 @@ Object .assign (Matrix3 .prototype,
    },
    rotate (rotation)
    {
-      return this .multLeft (Matrix3 .Rotation (rotation));
+      return this .multLeft (Matrix3 .fromRotation (rotation));
    },
    scale (scale)
    {
@@ -576,7 +576,7 @@ Object .defineProperties (Matrix3 .prototype,
 Object .assign (Matrix3,
 {
    IDENTITY: Object .freeze (new Matrix3 ()),
-   Rotation (rotation)
+   fromRotation (rotation)
    {
       const
          sinAngle = Math .sin (rotation),
@@ -586,7 +586,7 @@ Object .assign (Matrix3,
                           -sinAngle, cosAngle, 0,
                            0, 0, 1);
    },
-   Matrix2 (matrix)
+   fromMatrix2 (matrix)
    {
       return new Matrix3 (matrix [0], matrix [1], 0,
                           matrix [2], matrix [3], 0,

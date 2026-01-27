@@ -159,8 +159,8 @@ The *convex* field is a hint to renderers whether all polygons in a shape are *c
 
 #### Hints
 
-- Concave is the opposite of *convex*. Interchange profile
-- Only *convex*=true IndexedFaceSets have guaranteed support.
+- Concave is the opposite of *convex*.
+- In Interchange profile only *convex*=true IndexedFaceSets have guaranteed support.
 - Select *convex*=false (i.e. concave) and solid=false (i.e. two-sided display) for greatest visibility of geometry.
 - [*convex* polygon](https://en.wikipedia.org/wiki/Convex_polygon)
 - [Tessellation](https://en.wikipedia.org/wiki/Tessellation)
@@ -172,11 +172,11 @@ The *convex* field is a hint to renderers whether all polygons in a shape are *c
 ### SFFloat [ ] **creaseAngle** 0 <small>[0,∞)</small>
 {: #fields-creaseAngle }
 
-*creaseAngle* defines angle (in radians) for determining whether adjacent polygons are drawn with sharp edges or smooth shading. If angle between normals of two adjacent polygons is less than *creaseAngle*, smooth shading is rendered across the shared line segment. Interchange profile
+*creaseAngle* defines angle (in radians) for determining whether adjacent polygons are drawn with sharp edges or smooth shading. If angle between normals of two adjacent polygons is less than *creaseAngle*, smooth shading is rendered across the shared line segment.
 
 #### Hints
 
-- Only 0 and π radians supported.
+- In Interchange profile only 0 and π radians supported.
 - *creaseAngle*=0 means render all edges sharply, *creaseAngle*=3.14159 means render all edges smoothly.
 - [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
@@ -237,8 +237,8 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 - If *normalIndex* array is not provided, then [Normal](/x_ite/components/rendering/normal/) values are indexed according to the coordIndex field. Omitting duplicative *normalIndex* fields can reduce file size.
 - If normalPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
 - If normalPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
-- If no child [Normal](/x_ite/components/rendering/normal/) node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices. Interchange profile
-- This field may be ignored, applying the default value regardless.
+- If no child [Normal](/x_ite/components/rendering/normal/) node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### MFInt32 [ ] **coordIndex** [ ] <small>[0,∞) or -1</small>
 {: #fields-coordIndex }

@@ -42,6 +42,7 @@ class X3DCanvasElement extends HTMLElement
          "contentScale",
          "contextMenu",
          "debug",
+         "displayColorSpace",
          "exposure",
          "logarithmicDepthBuffer",
          "maximumFrameRate",

@@ -13,7 +13,7 @@ tags: [FillProperties, Shape]
 
 ## Overview
 
-FillProperties indicates whether appearance is filled or hatched for associated geometry nodes inside the same Shape. Hatches are applied on top of the already rendered appearance of the node, and are not affected by lighting.
+FillProperties indicates whether appearance is filled or hatched for associated geometry inside the same Shape. Hatches are applied on top of the already rendered appearance of the node, and are not affected by lighting.
 
 The FillProperties node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **3,** its default container field is *fillProperties.* It is available from X3D version 3.0 or higher.
 

@@ -36,7 +36,7 @@ function X3DGeometryNode (executionContext)
 
    this .min                      = new Vector3 ();
    this .max                      = new Vector3 ();
-   this .bbox                     = Box3 .Extents (this .min, this .max);
+   this .bbox                     = Box3 .fromExtents (this .min, this .max);
    this .solid                    = true;
    this .geometryType             = 3;
    this .colorMaterial            = false;

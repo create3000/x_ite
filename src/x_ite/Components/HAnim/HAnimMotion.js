@@ -17,6 +17,8 @@ function HAnimMotion (executionContext)
 
    this .addType (X3DConstants .HAnimMotion);
 
+   // Private properties
+
    this .timeSensor    = new TimeSensor (this .getExecutionContext ());
    this .interpolators = [ ];
 }

@@ -40,7 +40,7 @@ The TextureProjector node belongs to the [TextureProjection](/x_ite/components/o
 | SFFloat | [in, out] | [ambientIntensity](#fields-ambientIntensity) | 0  |
 | SFVec3f | [in, out] | [location](#fields-location) | 0 0 0  |
 | SFVec3f | [in, out] | [direction](#fields-direction) | 0 0 1  |
-| SFVec3f | [in, out] | [upVector](#fields-upVector) | 0 0 1  |
+| SFVec3f | [in, out] | [upVector](#fields-upVector) | 0 1 0  |
 | SFFloat | [in, out] | [fieldOfView](#fields-fieldOfView) | π/4  |
 | SFFloat | [in, out] | [nearDistance](#fields-nearDistance) | -1  |
 | SFFloat | [in, out] | [farDistance](#fields-farDistance) | -1  |
@@ -98,11 +98,11 @@ Brightness of direct emission from the light.
 ### SFFloat [in, out] **ambientIntensity** 0 <small>[0,1]</small>
 {: #fields-ambientIntensity }
 
-Brightness of ambient (nondirectional background) emission from the light. Interchange profile
+Brightness of ambient (nondirectional background) emission from the light.
 
 #### Hint
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### SFVec3f [in, out] **location** 0 0 0 <small>(-∞,∞)</small>
 {: #fields-location }
@@ -114,10 +114,10 @@ Position of center of texture projection relative to local coordinate system.
 
 Direction for projection.
 
-### SFVec3f [in, out] **upVector** 0 0 1 <small>(-∞,∞)</small>
+### SFVec3f [in, out] **upVector** 0 1 0 <small>(-∞,∞)</small>
 {: #fields-upVector }
 
-*upVector* describes the roll of the camera by defining which direction is up for camera orientation.
+*upVector* describes camera orientation by defining which direction is up.
 
 ### SFFloat [in, out] **fieldOfView** π/4 <small>(0,π)</small>
 {: #fields-fieldOfView }
@@ -131,17 +131,17 @@ Preferred minimum viewing angle for this projection in radians, providing minimu
 ### SFFloat [in, out] **nearDistance** -1 <small>-1 or (0,∞)</small>
 {: #fields-nearDistance }
 
-Minimum distance necessary for texture display.
+Minimum distance necessary for texture display, -1 if unconstrained
 
 ### SFFloat [in, out] **farDistance** -1 <small>-1 or (0,∞)</small>
 {: #fields-farDistance }
 
-Maximum distance necessary for texture display.
+Maximum distance necessary for texture display, -1 if unconstrained
 
 ### SFFloat [out] **aspectRatio**
 {: #fields-aspectRatio }
 
-*aspectRatio* is the ratio of width and height that is projected.
+*aspectRatio* is the ratio of width and height that is projected, reported as output event when contained image is loaded.
 
 ### SFNode [in, out] **texture** NULL <small>[X3DTexture2DNode]</small>
 {: #fields-texture }

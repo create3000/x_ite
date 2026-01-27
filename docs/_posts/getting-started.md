@@ -410,6 +410,9 @@ contextMenu
 debug
 : A Boolean value (`true` or `false`) to indicate whether additional debug message should be printed into the web browsers console and whether additional context menu items should be enabled. The default value for the *debug* attribute is `false`.
 
+displayColorSpace
+: A String value that specifies the color space which is used for the framebuffer and when textures are converted. You may want to set the `colorSpace` attribute to `LINEAR` if you use `DISPLAY_P3`. The default value for the *colorSpace* attribute is `SRGB`. For a list of possible values see [browser options](/x_ite/reference/browser-services/#browser-options).
+
 exposure
 : A Float value that describes the amount of light that is captured. The default value for the *exposure* attribute is `1`.
 

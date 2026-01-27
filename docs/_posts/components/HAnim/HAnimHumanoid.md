@@ -36,7 +36,7 @@ The HAnimHumanoid node belongs to the [HAnim](/x_ite/components/overview/#hanim)
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFString | [in, out] | [name](#fields-name) | "" |
 | MFString | [in, out] | [info](#fields-info) | [ ] |
-| SFString | [in, out] | [version](#fields-version) | "2.0" |
+| SFString | [in, out] | [version](#fields-version) | "2.1" |
 | SFString | [in, out] | [skeletalConfiguration](#fields-skeletalConfiguration) | "BASIC" |
 | SFInt32 | [in, out] | [loa](#fields-loa) | -1  |
 | SFVec3f | [in, out] | [translation](#fields-translation) | 0 0 0  |
@@ -56,6 +56,7 @@ The HAnimHumanoid node belongs to the [HAnim](/x_ite/components/overview/#hanim)
 | MFNode | [in, out] | [segments](#fields-segments) | [ ] |
 | MFNode | [in, out] | [sites](#fields-sites) | [ ] |
 | MFNode | [in, out] | [viewpoints](#fields-viewpoints) | [ ] |
+| MFNode | [in, out] | [children](#fields-children) | [ ] |
 | MFBool | [in, out] | [motionsEnabled](#fields-motionsEnabled) | [ ] |
 | MFNode | [in, out] | [motions](#fields-motions) | [ ] |
 | SFNode | [in, out] | [skinBindingNormals](#fields-skinBindingNormals) | NULL  |
@@ -109,7 +110,7 @@ Contains metadata keyword=value pairs, where approved keyword terms are humanoid
 - Height and weight are in base units (typically meters), hanimVersion is for author use and separate from HAnimHumanoid version field.
 - Alternate metadata keywords are also allowed.
 
-### SFString [in, out] **version** "2.0"
+### SFString [in, out] **version** "2.1"
 {: #fields-version }
 
 HAnimHumanoid *version*, where allowed value is 2.0 for final ISO 19774 *version* 2019.
@@ -334,6 +335,15 @@ List of [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes containing [Viewpo
 
 - These are actual node declarations, not USE nodes.
 - Top-level [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes (in turn containing [Viewpoint](/x_ite/components/navigation/viewpoint/) nodes) must include `containerField='viewpoints'` for proper validation and operation.
+
+### MFNode [in, out] **children** [ ] <small>[HAnimPose]</small>
+{: #fields-children }
+
+Contains zero or more [HAnimPose](/x_ite/components/hanim/hanimpose/) nodes that can animate the HAnimHumanoid.
+
+#### Warning
+
+- No other node types are allowed in HAnimHumanoid with this containerField.
 
 ### MFBool [in, out] **motionsEnabled** [ ]
 {: #fields-motionsEnabled }
