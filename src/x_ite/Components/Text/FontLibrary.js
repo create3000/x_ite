@@ -53,15 +53,12 @@ Object .assign (Object .setPrototypeOf (FontLibrary .prototype, X3DChildNode .pr
 
       for (const fileURL of fileURLs)
       {
-         await browser .loadFont (fileURL, this .getCache ()) .then (font =>
-         {
-            this .font = font;
-
-            this .set_family__ ();
-         });
+         this .font = await browser .loadFont (fileURL, this .getCache ());
 
          if (!this .font)
             continue;
+
+         this .set_family__ ();
 
          this .setLoadState (X3DConstants .COMPLETE_STATE);
          return;
