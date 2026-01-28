@@ -2142,17 +2142,13 @@ function eventsProcessed ()
       const
          scene         = this .getScene (),
          typeName      = this .joints .has (index) ? "HAnimJoint" : "Transform",
-         transformNode = scene .createNode (typeName, false);
+         transformNode = scene .createNode (typeName, false),
+         skin          = this .skins [node .skin];
 
       node .transformNode = transformNode;
-
-      // Create humanoid.
-
-      const skin = this .skins [node .skin];
-
-      node .humanoidNode = skin ?.humanoidNode;
-      node .childNode    = node .humanoidNode ?? node .transformNode;
-      node .pointers     = [node .childNode];
+      node .humanoidNode  = skin ?.humanoidNode;
+      node .childNode     = node .humanoidNode ?? node .transformNode;
+      node .pointers      = [node .childNode];
 
       return node;
    },
