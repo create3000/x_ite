@@ -136,7 +136,7 @@ Object .assign (X3DUrlObject .prototype,
       {
          const _loading = Symbol ();
 
-         const test = () =>
+         const check = () =>
          {
             switch (this .checkLoadState ())
             {
@@ -157,7 +157,7 @@ Object .assign (X3DUrlObject .prototype,
 
          this ._loadState .addFieldCallback (_loading, test);
 
-         test ();
+         check ();
       });
    },
    loadNow ()
