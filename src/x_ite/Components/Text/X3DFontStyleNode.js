@@ -38,6 +38,7 @@ function X3DFontStyleNode (executionContext)
    X3DNode      .call (this, executionContext);
    X3DUrlObject .call (this, executionContext);
 
+   this .getType () .pop (); // Remove X3DUrlObject type.
    this .addType (X3DConstants .X3DFontStyleNode);
 
    this .addChildObjects (X3DConstants .inputOutput, "description",          new Fields .SFString (),
@@ -45,6 +46,8 @@ function X3DFontStyleNode (executionContext)
                           X3DConstants .inputOutput, "load",                 new Fields .SFBool (true),
                           X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime (0),
                           X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600));
+
+   // Private properties
 
    this .alignments = [ ];
 }
