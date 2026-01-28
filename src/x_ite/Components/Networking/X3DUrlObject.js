@@ -155,7 +155,7 @@ Object .assign (X3DUrlObject .prototype,
             }
          }
 
-         this ._loadState .addFieldCallback (_loading, test);
+         this ._loadState .addFieldCallback (_loading, check);
 
          check ();
       });
