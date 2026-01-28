@@ -171,7 +171,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
          // Try to get font from family names.
 
-         const font = await browser .getFont (executionContext, fontFamily, fontStyle);
+         const font = await browser .getFont (executionContext, fontFamily);
 
          if (font)
          {

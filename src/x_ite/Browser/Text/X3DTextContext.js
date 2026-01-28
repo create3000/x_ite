@@ -7,7 +7,6 @@ const
    _defaultFontStyle = Symbol (),
    _fontCache        = Symbol (),
    _loadingFonts     = Symbol (),
-   _families         = Symbol (),
    _library          = Symbol (),
    _woff2Decoder     = Symbol ();
 
@@ -15,7 +14,6 @@ function X3DTextContext ()
 {
    this [_loadingFonts] = new Set ();
    this [_fontCache]    = new Map ();
-   this [_families]     = new WeakMap ();
    this [_library]      = new WeakMap ();
 }
 
@@ -96,21 +94,15 @@ Object .assign (X3DTextContext .prototype,
 
       library .set (fontFamily .toUpperCase (), font);
    },
-   async getFont (executionContext, fontFamily, fontStyle)
+   async getFont (executionContext, fontFamily)
    {
       try
       {
          fontFamily = fontFamily .toUpperCase ();
-         fontStyle  = fontStyle .toUpperCase () .replaceAll (" ", "");
 
          for (;;)
          {
-            const
-               library  = this [_library]  .get (executionContext),
-               families = this [_families] .get (executionContext);
-
-            const font = library ?.get (fontFamily)
-               ?? families ?.get (fontFamily) ?.get (fontStyle);
+            const font = this [_library] .get (executionContext) ?.get (fontFamily);
 
             if (font)
                return font;
