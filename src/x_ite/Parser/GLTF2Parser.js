@@ -293,13 +293,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             }
             case "KHR_draco_mesh_compression":
             {
-               this .draco ??= await this .createLibrary ("draco_decoder_gltf.js");
+               this .draco ??= await this .getLibrary ("draco_decoder_gltf.js");
                break;
             }
             case "KHR_meshopt_compression":
             case "EXT_meshopt_compression":
             {
-               this .MeshoptDecoder ??= await this .createLibrary ("meshopt_decoder.js");
+               this .MeshoptDecoder ??= await this .getLibrary ("meshopt_decoder.js");
                break;
             }
          }
@@ -308,7 +308,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       for (const component of components)
          scene .updateComponent (component);
    },
-   createLibrary (file)
+   getLibrary (file)
    {
       return this .constructor [file] ??= (async () =>
       {
