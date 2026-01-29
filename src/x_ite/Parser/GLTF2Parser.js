@@ -263,7 +263,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             //    break;
             // },
             case "EXT_mesh_gpu_instancing":
-            case "KHR_materials_pbrSpecularGlossiness":
             case "KHR_materials_anisotropy":
             case "KHR_materials_clearcoat":
             case "KHR_materials_diffuse_transmission":
@@ -271,11 +270,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_emissive_strength":
             case "KHR_materials_ior":
             case "KHR_materials_iridescence":
+            case "KHR_materials_pbrSpecularGlossiness":
             case "KHR_materials_sheen":
             case "KHR_materials_specular":
             case "KHR_materials_transmission":
-            case "KHR_materials_volume":
             case "KHR_materials_volume_scatter":
+            case "KHR_materials_volume":
             {
                components .push (browser .getComponent ("X_ITE", 1));
                break;
