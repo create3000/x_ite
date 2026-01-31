@@ -114,7 +114,7 @@
     "apng-js": "^1.1.5",
     "CharLS.js": "^2.0.1",
     "dicom-parser": "^1.8.21",
-    "fast-xml-parser": "^5.3.3",
+    "fast-xml-parser": "^5.3.4",
     "jpeg-js": "^0.4.4",
     "jpeg-lossless-decoder-js": "2.1.2",
     "jquery": "^4.0.0",
