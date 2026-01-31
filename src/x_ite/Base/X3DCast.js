@@ -7,10 +7,7 @@ function X3DCast (type, node, innerNode = true)
       if (node instanceof Fields .SFNode)
          node = node .getValue ();
 
-      if (innerNode)
-         node = node ?.getInnerNode ();
-
-      node = node ?.valueOf ();
+      node = innerNode ? node ?.getInnerNode () : node ?.valueOf ();
 
       if (node ?.getType () .includes (type))
          return node;
