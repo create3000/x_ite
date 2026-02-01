@@ -240,7 +240,14 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
    {
       const
          scene    = this .getScene (),
-         material = scene .createNode ("Material");
+         material = scene .createNode ("Material"),
+         name     = this .sanitizeName (id);
+
+      if (name)
+      {
+         scene .addNamedNode (scene .getUniqueName (name), material);
+         scene .addExportedNode (scene .getUniqueExportName (name), material);
+      }
 
       this .materials .set (id, material);
 
