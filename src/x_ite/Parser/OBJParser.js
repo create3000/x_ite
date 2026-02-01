@@ -294,13 +294,12 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
          {
             const id = this .result [0];
 
-            this .material = this .materials .get (id) || this .defaultMaterial;
-            this .texture  = this .textures .get (id);
+            const
+               material = this .materials .get (id) ?? this .defaultMaterial,
+               texture  = this .textures .get (id);
 
-            const smoothingGroup = this .smoothingGroups .get (this .group .getNodeName ());
-
-            if (smoothingGroup)
-               smoothingGroup .delete (this .smoothingGroup);
+            this .material = material;
+            this .texture  = texture;
          }
 
          return true;
@@ -388,6 +387,18 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
       }
 
       return false;
+   },
+   getSmoothingGroupId ()
+   {
+      let id = "";
+
+      id += this .group .getNodeName ();
+      id += ".";
+      id += this .material .getId ();
+      id += ".";
+      id += this .texture ?.getId () ?? "-";
+
+      return id;
    },
    s ()
    {
@@ -497,7 +508,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
       {
          try
          {
-            this .shape    = this .smoothingGroups .get (this .group .getNodeName ()) .get (this .smoothingGroup);
+            this .shape    = this .smoothingGroups .get (this .getSmoothingGroupId ()) .get (this .smoothingGroup);
             this .geometry = this .shape .geometry;
 
             const indices = this .geometryIndices .get (this .geometry);
@@ -533,10 +544,9 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
             this .group .children .push (this .shape);
 
-            if (!this .smoothingGroups .has (this .group .getNodeName ()))
-               this .smoothingGroups .set (this .group .getNodeName (), new Map ());
+            const smoothingGroup = this .smoothingGroups .getOrInsert (this .getSmoothingGroupId (), new Map ());
 
-            this .smoothingGroups .get (this .group .getNodeName ()) .set (this .smoothingGroup, this .shape);
+            smoothingGroup .set (this .smoothingGroup, this .shape);
          }
 
          while (this .f ())
