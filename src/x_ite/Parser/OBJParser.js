@@ -116,12 +116,11 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
       // Init nodes.
 
-      this .object          = scene .createNode ("Transform");
-      this .group           = scene .createNode ("Group");
-      this .defaultMaterial = scene .createNode ("Material");
-      this .texCoord        = scene .createNode ("TextureCoordinate");
-      this .normal          = scene .createNode ("Normal");
-      this .coord           = scene .createNode ("Coordinate");
+      this .object   = scene .createNode ("Transform");
+      this .group    = scene .createNode ("Group");
+      this .texCoord = scene .createNode ("TextureCoordinate");
+      this .normal   = scene .createNode ("Normal");
+      this .coord    = scene .createNode ("Coordinate");
 
       this .texCoords = [ ];
       this .normals   = [ ];
@@ -237,6 +236,16 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
       return false;
    },
+   createDefaultMaterial (id)
+   {
+      const
+         scene    = this .getScene (),
+         material = scene .createNode ("Material");
+
+      this .materials .set (id, material);
+
+      return material;
+   },
    async mtllib (path)
    {
       try
@@ -295,7 +304,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
             const id = this .result [0];
 
             const
-               material = this .materials .get (id) ?? this .defaultMaterial,
+               material = this .materials .get (id) ?? this .createDefaultMaterial (id),
                texture  = this .textures .get (id);
 
             this .material = material;
