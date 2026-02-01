@@ -392,13 +392,13 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
    {
       let id = "";
 
-      id += this .group .getNodeName ();
+      id += this .smoothingGroup;
+      id += ".";
+      id += this .group .getId ();
       id += ".";
       id += this .material .getId ();
       id += ".";
       id += this .texture ?.getId () ?? "-";
-      id += ".";
-      id += this .smoothingGroup;
 
       return id;
    },
