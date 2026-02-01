@@ -397,6 +397,8 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
       id += this .material .getId ();
       id += ".";
       id += this .texture ?.getId () ?? "-";
+      id += ".";
+      id += this .smoothingGroup;
 
       return id;
    },
@@ -506,9 +508,11 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
       if (Grammar .f .lookahead (this))
       {
-         try
+         const shape = this .smoothingGroups .get (this .getSmoothingGroupId ());
+
+         if (shape)
          {
-            this .shape    = this .smoothingGroups .get (this .getSmoothingGroupId ()) .get (this .smoothingGroup);
+            this .shape    = shape;
             this .geometry = this .shape .geometry;
 
             const indices = this .geometryIndices .get (this .geometry);
@@ -517,7 +521,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
             this .normalIndex   = indices .normalIndex;
             this .coordIndex    = indices .coordIndex;
          }
-         catch
+         else
          {
             const
                scene      = this .getExecutionContext (),
@@ -544,9 +548,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
             this .group .children .push (this .shape);
 
-            const smoothingGroup = this .smoothingGroups .getOrInsert (this .getSmoothingGroupId (), new Map ());
-
-            smoothingGroup .set (this .smoothingGroup, this .shape);
+            this .smoothingGroups .set (this .getSmoothingGroupId (), this .shape);
          }
 
          while (this .f ())
