@@ -340,7 +340,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
                scene .getRootNodes () .push (this .object);
             }
 
-            if (name && !this .object .getValue () .getName ())
+            if (name && !this .object .getNodeName ())
             {
                scene .addNamedNode (scene .getUniqueName (name), this .object);
                scene .addExportedNode (scene .getUniqueExportName (name), this .object);
@@ -384,7 +384,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
             this .groups .set (id, this .group);
 
-            if (name && !this .group .getValue () .getName ())
+            if (name && !this .group .getNodeName ())
             {
                scene .addNamedNode (scene .getUniqueName (name), this .group);
                scene .addExportedNode (scene .getUniqueExportName (name), this .group);
@@ -559,7 +559,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
             appearance .material        = this .material;
             appearance .texture         = this .texture;
-            this .geometry .creaseAngle = Math .PI;
+            this .geometry .creaseAngle = this .smoothingGroup ? Math .PI : 0;
             this .shape .appearance     = appearance;
             this .shape .geometry       = this .geometry;
 
