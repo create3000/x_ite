@@ -65,7 +65,7 @@ function OBJParser (scene)
    // Globals
 
    this .geometryIndices = new Map ();
-   this .smoothingGroup  = 0;
+   this .smoothingGroup  = -1;
    this .smoothingGroups = new Map ();
    this .groups          = new Map ();
    this .materials       = new Map ();
@@ -391,7 +391,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
                scene .addExportedNode (scene .getUniqueExportName (name), this .group);
             }
 
-            this .smoothingGroup = 0;
+            this .smoothingGroup = -1;
          }
 
          return true;
