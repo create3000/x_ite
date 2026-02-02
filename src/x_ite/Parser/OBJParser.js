@@ -118,6 +118,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
       this .object   = scene .createNode ("Transform");
       this .group    = scene .createNode ("Group");
+      this .material = this .createDefaultMaterial ();
       this .color    = scene .createNode ("Color");
       this .texCoord = scene .createNode ("TextureCoordinate");
       this .normal   = scene .createNode ("Normal");
@@ -407,7 +408,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
       id += ".";
       id += this .material .getId ();
       id += ".";
-      id += this .texture ?.getId () ?? "-";
+      id += this .texture ?.getId () ?? "";
 
       return id;
    },
