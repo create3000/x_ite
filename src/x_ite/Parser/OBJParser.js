@@ -118,10 +118,12 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
       this .object   = scene .createNode ("Transform");
       this .group    = scene .createNode ("Group");
+      this .color    = scene .createNode ("Color");
       this .texCoord = scene .createNode ("TextureCoordinate");
       this .normal   = scene .createNode ("Normal");
       this .coord    = scene .createNode ("Coordinate");
 
+      this .colors    = [ ];
       this .texCoords = [ ];
       this .normals   = [ ];
       this .vertices  = [ ];
@@ -143,6 +145,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
          geometry .coordIndex    = indices .coordIndex;
       }
 
+      this .color    .color  = this .colors;
       this .texCoord .point  = this .texCoords;
       this .normal   .vector = this .normals;
       this .coord    .point  = this .vertices;
@@ -485,23 +488,30 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
    },
    vs ()
    {
-      const vertices = this .vertices;
+      const
+         colors   = this .colors,
+         vertices = this .vertices;
 
       let result = false;
 
-      while (this .v (vertices))
+      while (this .v (vertices, colors))
          result = true;
 
       return result;
    },
-   v (vertices)
+   v (vertices, colors)
    {
       this .comments ();
 
       if (Grammar .v .parse (this))
       {
          if (this .vec3 (vertices))
+         {
+            this .whitespacesNoLineTerminator ();
+            this .vec3 (colors);
+
             return true;
+         }
 
          throw new Error ("Expected a vertex coordinate.");
       }
@@ -559,6 +569,9 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
          while (this .f ())
             ;
+
+         if (this .colors .length)
+            this .geometry .color = this .color;
 
          if (this .texCoordIndex .length)
             this .geometry .texCoord = this .texCoord;
