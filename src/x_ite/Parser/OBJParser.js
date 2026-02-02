@@ -723,7 +723,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
             {
                const z = this .value;
 
-               array .push (x, y, z)
+               array .push (x, y, z);
                return true;
             }
          }
