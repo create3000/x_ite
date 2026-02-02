@@ -240,14 +240,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
    {
       const
          scene    = this .getScene (),
-         material = scene .createNode ("Material"),
-         name     = this .sanitizeName (id);
-
-      if (name)
-      {
-         scene .addNamedNode (scene .getUniqueName (name), material);
-         scene .addExportedNode (scene .getUniqueExportName (name), material);
-      }
+         material = scene .createNode ("Material");
 
       this .materials .set (id, material);
 
@@ -268,30 +261,10 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
          parser .parse ();
 
          for (const [id, material] of parser .materials)
-         {
-            const name = this .sanitizeName (id);
-
-            if (name)
-            {
-               scene .addNamedNode (scene .getUniqueName (name), material);
-               scene .addExportedNode (scene .getUniqueExportName (name), material);
-            }
-
             this .materials .set (id, material);
-         }
 
          for (const [id, texture] of parser .textures)
-         {
-            const name = this .sanitizeName (id);
-
-            if (name)
-            {
-               scene .addNamedNode (scene .getUniqueName (name), texture);
-               scene .addExportedNode (scene .getUniqueExportName (name), texture);
-            }
-
             this .textures .set (id, texture);
-         }
       }
       catch (error)
       {
@@ -311,8 +284,25 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
             const id = this .result [0];
 
             const
+               scene    = this .getScene (),
                material = this .materials .get (id) ?? this .createDefaultMaterial (id),
-               texture  = this .textures .get (id);
+               texture  = this .textures .get (id),
+               name     = this .sanitizeName (id);
+
+            if (name)
+            {
+               if (!material .getNodeName ())
+               {
+                  scene .addNamedNode (scene .getUniqueName (name), material);
+                  scene .addExportedNode (scene .getUniqueExportName (name), material);
+               }
+
+               if (texture && !texture .getNodeName ())
+               {
+                  scene .addNamedNode (scene .getUniqueName (name), texture);
+                  scene .addExportedNode (scene .getUniqueExportName (name), texture);
+               }
+            }
 
             this .material = material;
             this .texture  = texture;
