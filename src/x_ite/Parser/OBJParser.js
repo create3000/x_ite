@@ -510,10 +510,12 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
          if (this .vec3 (vertices))
          {
             this .whitespacesNoLineTerminator ();
-            this .vec3 (colors);
 
-            if (this .double ())
-               colors .push (this .value);
+            if (this .vec3 (colors))
+            {
+               if (this .double ()) // RGBA
+                  colors .push (this .value);
+            }
 
             return true;
          }
