@@ -875,7 +875,7 @@ Object .assign (MaterialParser .prototype,
       {
          if (this .col3 ())
          {
-            const hsv = this .color3 .getHSV ([ ]);
+            const hsv = this .color3 .getHSV ();
 
             this .material .ambientIntensity = hsv [2];
 
