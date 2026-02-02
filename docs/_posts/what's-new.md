@@ -11,7 +11,13 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 *Leipzig, 27th January 2026:* This series of X_ITE comes with experimental support for X3D4.1, meaning that all the new features and nodes ([EnvironmentLight](/x_ite/components/lighting/environmentlight/), [HAnimPose](/x_ite/components/hanim/hanimpose/), [FontLibrary](/x_ite/components/text/fontlibrary/), [Tangent](/x_ite/components/rendering/tangent/)) are available and ready to be tested.
 
-In addition, the glTF parser can now handle KHR_meshopt_compression. With KHR_meshopt_compression, glTF files can be shrunk up to 1/10 of their size. gltfpack is very well suited for this. Run `npx gltfpack` with options `-cc` and `-tc` and see what happens.
+In addition, the glTF parser can now handle [KHR_meshopt_compression](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Vendor/EXT_meshopt_compression/README.md). With KHR_meshopt_compression, glTF files can be shrunk up to 1/10 of their size. gltfpack is very well suited for this. Run `npx gltfpack` with options `-cc` and `-tc` and see what happens.
+
+### Notable Changes
+
+- [x] Added experimental support for X3D4.1.
+- [x] glTF parser can now handle [KHR_meshopt_compression](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Vendor/EXT_meshopt_compression/README.md).
+- [x] Improved Wavefront OBJ Parser to handle multi materials and color per vertex.
 
 ## X_ITE v12.2 Series
 
