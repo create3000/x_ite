@@ -1,6 +1,7 @@
 import X3DParser    from "./X3DParser.js";
 import X3DOptimizer from "./X3DOptimizer.js";
 import Expressions  from "./Expressions.js";
+import X3DConstants from "../Base/X3DConstants.js";
 import Color3       from "../../standard/Math/Numbers/Color3.js";
 import DEVELOPMENT  from "../DEVELOPMENT.js";
 
@@ -243,7 +244,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
    createDefaultMaterial (id)
    {
       const
-         scene    = this .getScene (),
+         scene    = this .getExecutionContext (),
          material = scene .createNode ("Material");
 
       this .materials .set (id, material);
@@ -288,7 +289,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
             const id = this .result [0];
 
             const
-               scene    = this .getScene (),
+               scene    = this .getExecutionContext (),
                material = this .materials .get (id) ?? this .createDefaultMaterial (id),
                texture  = this .textures .get (id),
                name     = this .sanitizeName (id);
@@ -511,6 +512,9 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
             this .whitespacesNoLineTerminator ();
             this .vec3 (colors);
 
+            if (this .double ())
+               colors .push (this .value);
+
             return true;
          }
 
@@ -570,6 +574,15 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
          while (this .f ())
             ;
+
+         if (this .colors .length > this .coord .length && this .color .getNodeType () .includes (X3DConstants .Color))
+         {
+            const scene = this .getExecutionContext ();
+
+            this .color = scene .createNode ("ColorRGBA");
+
+            this .color .color = this .colors;
+         }
 
          if (this .colors .length)
             this .geometry .color = this .color;
