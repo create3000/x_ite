@@ -548,7 +548,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
             appearance .material        = this .material;
             appearance .texture         = this .texture;
-            this .geometry .creaseAngle = this .smoothingGroup ? Math .PI : 0;
+            this .geometry .creaseAngle = Math .PI;
             this .shape .appearance     = appearance;
             this .shape .geometry       = this .geometry;
 
