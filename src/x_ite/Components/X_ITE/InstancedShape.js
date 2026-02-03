@@ -123,7 +123,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
          numCenters           = centers .length,
          numInstances         = Math .max (numTranslations, numRotations, numScales, numScaleOrientations, numCenters),
          stride               = this .instancesStride / Float32Array .BYTES_PER_ELEMENT,
-         length               = this .instancesStride * numInstances,
+         length               = stride * numInstances,
          data                 = new Float32Array (length);
 
       this .numInstances = numInstances;
@@ -141,6 +141,8 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
          data .set (matrix, o);
          data .set (matrix .submatrix .transpose () .inverse (), o + 16);
       }
+
+      console .log (data)
 
       this .matrices .length = numInstances;
 
