@@ -147,7 +147,7 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
 
                            intersections .length = 0;
 
-                           if (geometryNode .intersectsLine (line, target .modelMatrix, intersections))
+                           if (geometryNode .intersectsLine (line, intersections))
                            {
                               for (const intersection of intersections)
                               {

@@ -73,7 +73,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          const
             projectionMatrix = renderObject .getProjectionMatrix () .get (),
             lineStipples     = this .lineStipples,
-            vertices         = this .getVertices () .getValue (),
+            vertices         = this .getVertices (),
             numVertices      = vertices .length;
 
          modelViewProjectionMatrix .assign (modelViewMatrix) .multRight (projectionMatrix);

@@ -292,7 +292,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          hit .shapeNode = shapeNode;
 
          hit .viewMatrix      .assign (renderObject .getViewpoint () .getViewMatrix ());
-         hit .modelViewMatrix .assign (modelViewMatrix);
+         hit .modelViewMatrix .assign (geometryContext .getMatrix ()) .inverse () .multRight (modelViewMatrix);
 
          // A ParticleSystem has only a geometry context.
          // Hit normal must be normalized if used.

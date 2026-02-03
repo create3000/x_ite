@@ -40,40 +40,47 @@ Object .assign (Object .setPrototypeOf (Arc2D .prototype, X3DLineGeometryNode .p
       if (start > end)
          return (Math .PI * 2) - sweepAngle;
 
-      if (! isNaN (sweepAngle))
+      if (!isNaN (sweepAngle))
          return sweepAngle;
 
-      // We must test for NAN, as NAN to int is undefined.
+      // We must test for NaN, as NaN to int is undefined.
       return 0;
    },
-   build ()
+   build: (() =>
    {
       const
-         options     = this .getBrowser () .getArc2DOptions (),
-         dimension   = options ._dimension .getValue (),
-         startAngle  = this ._startAngle .getValue  (),
-         radius      = Math .abs (this ._radius .getValue ()),
-         sweepAngle  = this .getSweepAngle (),
-         steps       = Math .max (3, Math .floor (sweepAngle * dimension / (Math .PI * 2))),
-         vertexArray = this .getVertices ();
+         p1 = new Complex (),
+         p2 = new Complex ();
 
-      for (let n = 0; n < steps; ++ n)
+      return function ()
       {
          const
-            t1     = n / steps,
-            theta1 = startAngle + (sweepAngle * t1),
-            point1 = Complex .Polar (radius, theta1),
-            t2     = (n + 1) / steps,
-            theta2 = startAngle + (sweepAngle * t2),
-            point2 = Complex .Polar (radius, theta2);
+            options     = this .getBrowser () .getArc2DOptions (),
+            dimension   = options ._dimension .getValue (),
+            startAngle  = this ._startAngle .getValue  (),
+            radius      = Math .abs (this ._radius .getValue ()),
+            sweepAngle  = this .getSweepAngle (),
+            steps       = Math .max (3, Math .floor (sweepAngle * dimension / (Math .PI * 2))),
+            vertexArray = this .getVertices ();
 
-         vertexArray .push (point1 .real, point1 .imag, 0, 1);
-         vertexArray .push (point2 .real, point2 .imag, 0, 1);
-      }
+         for (let n = 0; n < steps; ++ n)
+         {
+            const
+               t1     = n / steps,
+               theta1 = startAngle + (sweepAngle * t1),
+               point1 = p1 .setPolar (radius, theta1),
+               t2     = (n + 1) / steps,
+               theta2 = startAngle + (sweepAngle * t2),
+               point2 = p2 .setPolar (radius, theta2);
 
-      this .getMin () .set (-radius, -radius, 0);
-      this .getMax () .set ( radius,  radius, 0);
-   },
+            vertexArray .push (point1 .real, point1 .imag, 0, 1);
+            vertexArray .push (point2 .real, point2 .imag, 0, 1);
+         }
+
+         this .getMin () .set (-radius, -radius, 0);
+         this .getMax () .set ( radius,  radius, 0);
+      };
+   })(),
 });
 
 Object .defineProperties (Arc2D,

@@ -45,8 +45,8 @@ Object .assign (Object .setPrototypeOf (BoundedPhysicsModel .prototype, X3DParti
 
       const
          damping  = this ._damping .getValue (),
-         normals  = this .geometryNode .getNormals ()  .getValue (),
-         vertices = this .geometryNode .getVertices () .getValue ();
+         normals  = this .geometryNode .getNormals (),
+         vertices = this .geometryNode .getVertices ();
 
       for (const value of normals)
          boundedNormals .push (value * damping);

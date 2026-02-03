@@ -1270,7 +1270,7 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 
 ## X_ITE v4.1.4 Released
 
-*Leipzig, 11th January 2018:* We finally released version 4.1.4 now. X_ITE has become a huge change in the shader specification. It is now even more like GLSL. There are new uniform variables *x3d\_LightSourceParameters, x3d\_MaterialParameters,* and *x3d\_FogParameters.* Old shaders are fully compatible with this version, although old shader light and material uniforms are depreciated. For more information have a look at <custom-shaders>.
+*Leipzig, 11th January 2018:* We finally released version 4.1.4 now. X_ITE has become a huge change in the shader specification. It is now even more like GLSL. There are new uniform variables *x3d\_LightSourceParameters, x3d\_MaterialParameters,* and *x3d\_FogParameters.* Old shaders are fully compatible with this version, although old shader light and material uniforms are deprecated. For more information have a look at <custom-shaders>.
 
 ## X_ITE v4.1.3 Released
 

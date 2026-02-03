@@ -29,29 +29,33 @@ in vec4 x3d_Vertex;
 void
 main ()
 {
+   vec4 tVertex = x3d_Vertex;
+
    #if defined (X3D_NORMALS)
-      vec4 x3d_TransformedVertex = getInstanceVertex (getSkinVertex (x3d_Vertex, x3d_Normal, vec3 (0.0)));
-      vec3 x3d_TransformedNormal = getInstanceNormal (getSkinNormal (x3d_Normal));
+      vec3 tNormal  = x3d_Normal;
+
+      tVertex = getInstanceVertex (getSkinVertex (tVertex, tNormal, vec3 (0.0)));
+      tNormal = getInstanceNormal (getSkinNormal (tNormal));
    #else
-      vec4 x3d_TransformedVertex = getInstanceVertex (getSkinVertex (x3d_Vertex, vec3 (0.0), vec3 (0.0)));
+      tVertex = getInstanceVertex (getSkinVertex (tVertex, vec3 (0.0), vec3 (0.0)));
    #endif
 
-   vec4 position = x3d_ModelViewMatrix * x3d_TransformedVertex;
+   tVertex = x3d_ModelViewMatrix * tVertex;
 
    #if defined (X3D_CLIP_PLANES)
-      vertex = position .xyz;
+      vertex = tVertex .xyz;
    #endif
 
    #if defined (X3D_NORMALS)
-      normal = x3d_TransformedNormal;
+      normal = tNormal;
    #endif
 
    #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
-      gl_PointSize = pointSize = getPointSize (position .xyz);
+      gl_PointSize = pointSize = getPointSize (tVertex .xyz);
    #else
       gl_PointSize = 1.0;
    #endif
 
-   gl_Position = x3d_ProjectionMatrix * position;
+   gl_Position = x3d_ProjectionMatrix * tVertex;
 }
 `;

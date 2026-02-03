@@ -432,29 +432,21 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       return refinedNormals;
    },
-   transformLine (hitRay)
-   {
-      // Apply screen nodes transformation in place here.
-   },
-   transformMatrix (hitRay)
-   {
-      // Apply screen nodes transformation in place here.
-   },
    intersectsLine: (() =>
    {
       const
-         modelViewMatrix = new Matrix4 (),
-         uvt             = { u: 0, v: 0, t: 0 },
-         v0              = new Vector3 (),
-         v1              = new Vector3 (),
-         v2              = new Vector3 ();
+         invModelViewMatrix = new Matrix4 (),
+         uvt                = { u: 0, v: 0, t: 0 },
+         v0                 = new Vector3 (),
+         v1                 = new Vector3 (),
+         v2                 = new Vector3 ();
 
-      return function (hitRay, matrix, intersections)
+      return function (hitRay, intersections)
       {
          if (this .intersectsBBox (hitRay))
          {
-            this .transformLine (hitRay); // Apply screen transformations from screen nodes.
-            this .transformMatrix (modelViewMatrix .assign (matrix)); // Apply screen transformations from screen nodes.
+            // Apply transformations from geometry primitives and Text with ScreenFontStyle.
+            hitRay .multLineMatrix (invModelViewMatrix .assign (this .getMatrix ()) .inverse ());
 
             const
                texCoords   = this .multiTexCoords [0] .getValue (),
@@ -815,8 +807,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          this .displayInstanced       = Function .prototype;
       }
    },
-   traverse (type, renderObject)
-   { },
    displaySimple (gl, renderContext, shaderNode)
    {
       if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
