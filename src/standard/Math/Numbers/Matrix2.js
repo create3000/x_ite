@@ -107,27 +107,33 @@ Object .assign (Matrix2 .prototype,
    },
    multLeft (matrix)
    {
-      const
-         { 0: a0, 1: a1, 2: a2, 3: a3 } = this,
-         { 0: b0, 1: b1, 2: b2, 3: b3 } = matrix;
+      const { 0: a0, 1: a1, 2: a2, 3: a3 } = this;
+
+      var { 0: b0, 1: b1 } = matrix;
 
       this [0] = a0 * b0 + a2 * b1;
       this [1] = a1 * b0 + a3 * b1;
-      this [2] = a0 * b2 + a2 * b3;
-      this [3] = a1 * b2 + a3 * b3;
+
+      var { 2: b0, 3: b1 } = matrix;
+
+      this [2] = a0 * b0 + a2 * b1;
+      this [3] = a1 * b0 + a3 * b1;
 
       return this;
    },
    multRight (matrix)
    {
-      const
-         { 0: a0, 1: a1, 2: a2, 3: a3 } = this,
-         { 0: b0, 1: b1, 2: b2, 3: b3 } = matrix;
+      const { 0: b0, 1: b1, 2: b2, 3: b3 } = matrix;
+
+      var { 0: a0, 1: a1 } = this;
 
       this [0] = b0 * a0 + b2 * a1;
       this [1] = b1 * a0 + b3 * a1;
-      this [2] = b0 * a2 + b2 * a3;
-      this [3] = b1 * a2 + b3 * a3;
+
+      var { 2: a0, 3: a1 } = this;
+
+      this [2] = b0 * a0 + b2 * a1;
+      this [3] = b1 * a0 + b3 * a1;
 
       return this;
    },
