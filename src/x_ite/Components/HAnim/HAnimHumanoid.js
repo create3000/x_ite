@@ -171,7 +171,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
       if (!field .length)
          return;
 
-      console .warn (`Use of field ${this .getTypeName ()}.${field .getName ()} is depreciated. This field will be removed in future versions of X3D.`);
+      console .warn (`Use of field ${this .getTypeName ()}.${field .getName ()} is deprecated. This field will be removed in future versions of X3D.`);
    },
    getBBox (bbox, shadows)
    {

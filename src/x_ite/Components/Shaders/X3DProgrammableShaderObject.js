@@ -309,7 +309,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          gl .uniform1i (uniform .textureCube, textureCubeUnit);
       }
    },
-   getUniformLocation (gl, program, name, depreciated)
+   getUniformLocation (gl, program, name, deprecated)
    {
       // Legacy function to get uniform location.
 
@@ -321,19 +321,19 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       }
       else
       {
-         // Look for depreciated location.
+         // Look for deprecated location.
 
-         const location = gl .getUniformLocation (program, depreciated);
+         const location = gl .getUniformLocation (program, deprecated);
 
          if (location)
          {
-            console .warn (this .getTypeName (), this .getName (), `Using uniform location name '${depreciated}' is depreciated, use '${name}'. See https://create3000.github.io/x_ite/custom-shaders.`);
+            console .warn (this .getTypeName (), this .getName (), `Using uniform location name '${deprecated}' is deprecated, use '${name}'. See https://create3000.github.io/x_ite/custom-shaders.`);
          }
 
          return location;
       }
    },
-   getAttribLocation (gl, program, name, depreciated)
+   getAttribLocation (gl, program, name, deprecated)
    {
       // Legacy function to get uniform location.
 
@@ -343,15 +343,15 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       {
          return location;
       }
-      else if (depreciated)
+      else if (deprecated)
       {
-         // Look for depreciated location.
+         // Look for deprecated location.
 
-         const location = gl .getAttribLocation (program, depreciated);
+         const location = gl .getAttribLocation (program, deprecated);
 
          if (location >= 0)
          {
-            console .warn (this .getTypeName (), this .getName (), `Using attribute location name '${depreciated}' is depreciated, use '${name}'. See https://create3000.github.io/x_ite/custom-shaders.`);
+            console .warn (this .getTypeName (), this .getName (), `Using attribute location name '${deprecated}' is deprecated, use '${name}'. See https://create3000.github.io/x_ite/custom-shaders.`);
          }
 
          return location;

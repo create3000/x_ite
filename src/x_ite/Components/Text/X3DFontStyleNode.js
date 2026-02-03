@@ -186,7 +186,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
          if (fileURL .protocol === "data:" || fileURL .pathname .match (/\.(?:woff2|woff|otf|ttf)$/i))
          {
             if (executionContext .getSpecificationVersion () >= 4.1)
-               console .warn (`Loading a font file via family field is depreciated, please use new FontLibrary node instead.`);
+               console .warn (`Loading a font file via family field is deprecated, please use new FontLibrary node instead.`);
 
             const font = await browser .loadFont (fileURL, this .getCache ());
 
