@@ -142,8 +142,6 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
          data .set (matrix .submatrix .transpose () .inverse (), o + 16);
       }
 
-      console .log (data)
-
       this .matrices .length = numInstances;
 
       gl .bindBuffer (gl .ARRAY_BUFFER, this .instances);
