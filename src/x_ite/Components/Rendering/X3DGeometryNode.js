@@ -124,7 +124,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       this .coordIndexBuffer      = gl .createBuffer ();
       this .attribBuffers         = [ ];
       this .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
-      this .texCoordBuffers       = Array .from ({length: browser .getMaxTexCoords ()}, () => gl .createBuffer ());
+      this .texCoordBuffers       = Array .from ({ length: browser .getMaxTexCoords () }, () => gl .createBuffer ());
       this .fogDepthBuffer        = gl .createBuffer ();
       this .colorBuffer           = gl .createBuffer ();
       this .tangentBuffer         = gl .createBuffer ();
