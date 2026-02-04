@@ -1019,6 +1019,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (this .extensions .has ("EXT_texture_webp"))
          images .unshift (this .images [texture .extensions ?.EXT_texture_webp ?.source]);
 
+      if (this .extensions .has ("EXT_texture_avif"))
+         images .unshift (this .images [texture .extensions ?.EXT_texture_avif ?.source]);
+
       return images .filter (image => image);
    },
    materialsArray (materials)
