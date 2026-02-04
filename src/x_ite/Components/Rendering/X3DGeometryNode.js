@@ -55,10 +55,7 @@ function X3DGeometryNode (executionContext)
    this .hasNormals               = false;
    this .geometryKey              = "";
    this .vertexCount              = 0;
-   this .planes                   = [ ];
-
-   for (let i = 0; i < 5; ++ i)
-      this .planes [i] = new Plane3 ();
+   this .planes                   = Array .from ({ length: 5 }, () => new Plane3 ());
 }
 
 class GeometryArray extends Array
@@ -165,12 +162,12 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       if (bbox .equals (this .bbox))
          return;
 
-      bbox .getExtents (this .min, this .max);
+      const { min, max } = this;
+
+      bbox .getExtents (min, max);
 
       this .bbox .assign (bbox);
-
-      for (let i = 0; i < 5; ++ i)
-         this .planes [i] .set (i % 2 ? this .min : this .max, boxNormals [i]);
+      this .planes .forEach ((plane, i) => plane .set (i % 2 ? min : max, boxNormals [i]));
 
       this ._bbox_changed .addEvent ();
    },
