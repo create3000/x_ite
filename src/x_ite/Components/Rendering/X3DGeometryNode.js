@@ -32,7 +32,7 @@ function X3DGeometryNode (executionContext)
                           X3DConstants .outputOnly, "bbox_changed", new Fields .SFTime (),
                           X3DConstants .outputOnly, "rebuild",      new Fields .SFTime (Date .now () / 1000));
 
-   // Members
+   // Private members
 
    this .min                      = new Vector3 ();
    this .max                      = new Vector3 ();
