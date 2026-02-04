@@ -182,8 +182,8 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 | VRML 2.0         | .wrl, .wrz     | model/vrml      |                                               |
 | glTF             | .gltf, .glb    | model/gltf+json | [glTF Support](/x_ite/features/#gltf-support) |
 | Wavefront OBJ    | .obj           | model/obj       |                                               |
-| STL              | .stl           | model/stl       |                                               |
-| PLY              | .ply           | model/ply       |                                               |
+| STL              | .stl           | model/stl       | ASCII & Binary                                |
+| PLY              | .ply           | model/ply       | ASCII & Binary                                |
 | SVG Document     | .svg, .svgz    | image/svg+xml   |                                               |
 
 >**Tip:** All files can be compressed using GZip compression (usually denoted by a 'z' at the end of the filename suffix). This saves bandwidth and speeds up download time.
