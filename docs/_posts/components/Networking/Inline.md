@@ -3,7 +3,7 @@ title: Inline
 date: 2023-01-07
 nav: components-Networking
 categories: [components, Networking]
-tags: [Inline, Networking]
+tags: [Inline, Networking, glTF]
 ---
 <style>
 .post h3 {
@@ -174,17 +174,17 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 ## Supported File Formats
 
-| Encoding         | File Extension | MIME Type       |
-|------------------|----------------|-----------------|
-| X3D XML          | .x3d, .x3dz    | model/x3d+xml   |
-| X3D JSON         | .x3dj, .x3djz  | model/x3d+json  |
-| X3D Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml  |
-| VRML 2.0         | .wrl, .wrz     | model/vrml      |
-| glTF             | .gltf, .glb    | model/gltf+json |
-| Wavefront OBJ    | .obj           | model/obj       |
-| STL              | .stl           | model/stl       |
-| PLY              | .ply           | model/ply       |
-| SVG Document     | .svg, .svgz    | image/svg+xml   |
+| Encoding         | File Extension | MIME Type       | Comment                                       |
+|------------------|----------------|-----------------|-----------------------------------------------|
+| X3D XML          | .x3d, .x3dz    | model/x3d+xml   |                                               |
+| X3D JSON         | .x3dj, .x3djz  | model/x3d+json  |                                               |
+| X3D Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml  |                                               |
+| VRML 2.0         | .wrl, .wrz     | model/vrml      |                                               |
+| glTF             | .gltf, .glb    | model/gltf+json | [glTF Support](/x_ite/features/#gltf-support) |
+| Wavefront OBJ    | .obj           | model/obj       |                                               |
+| STL              | .stl           | model/stl       |                                               |
+| PLY              | .ply           | model/ply       |                                               |
+| SVG Document     | .svg, .svgz    | image/svg+xml   |                                               |
 
 >**Tip:** All files can be compressed using GZip compression (usually denoted by a 'z' at the end of the filename suffix). This saves bandwidth and speeds up download time.
 {: .prompt-tip }
