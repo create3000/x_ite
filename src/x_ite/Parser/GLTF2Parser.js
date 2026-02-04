@@ -156,6 +156,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .samplersArray    (glTF .samplers);
 
       await this .imagesArray (glTF .images);
+      await this .videosArray (glTF .extensions ?.EXT_texture_video ?.videos);
 
       this .texturesArray   (glTF .textures);
       this .materialsArray  (glTF .materials);
@@ -923,6 +924,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .images = await Promise .all (images .map ((image, index) => this .imageObject (image, index)));
    },
+   async videosArray (videos)
+   {
+      if (!(videos instanceof Array))
+         return;
+
+      this .videos = await Promise .all (videos .map ((video, index) => this .imageObject (video, index)));
+   },
    async imageObject (image, index)
    {
       if (!(image instanceof Object))
@@ -975,13 +983,16 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (texture .textureNode)
          return texture .textureNode;
 
-      const images = this .textureImageObject (texture);
+      const
+         videos = this .textureVideoObject (texture),
+         images = this .textureImageObject (texture),
+         medias = videos .length ? videos : images;
 
-      if (!images .length)
+      if (!medias .length)
          return null;
 
       const
-         key    = `${images .map (image => image .index) .join (",")}:${texture .sampler}`,
+         key    = `${medias .map (media => media .index) .join (",")}:${texture .sampler}`,
          cached = this .textureCache .get (key);
 
       if (cached)
@@ -989,14 +1000,22 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const
          scene       = this .getScene (),
-         textureNode = scene .createNode ("ImageTexture", false),
-         name        = this .sanitizeName (texture .name || images [0] .name);
+         textureNode = scene .createNode (videos .length ? "MovieTexture" : "ImageTexture", false),
+         name        = this .sanitizeName (texture .name || medias [0] .name);
 
       if (name)
          scene .addNamedNode (scene .getUniqueName (name), textureNode);
 
-      textureNode ._url                  = images .map (image => image .uri);
+      textureNode ._url                  = medias .map (image => image .uri);
       textureNode ._colorSpaceConversion = false;
+
+      if (videos .length)
+      {
+         if (name)
+            scene .addExportedNode (scene .getUniqueExportName (name), textureNode);
+
+         textureNode ._loop = true;
+      }
 
       const sampler = this .samplers [texture .sampler];
 
@@ -1009,18 +1028,29 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return texture .textureNode = textureNode;
    },
+   textureVideoObject (texture)
+   {
+      const videos = [ ];
+
+      if (this .extensions .has ("EXT_texture_video"))
+         videos .push (this .videos [texture .extensions ?.EXT_texture_video ?.source]);
+
+      return videos .filter (video => video);
+   },
    textureImageObject (texture)
    {
-      const images = [this .images [texture .source]];
+      const images = [ ];
 
       if (this .extensions .has ("KHR_texture_basisu"))
-         images .unshift (this .images [texture .extensions ?.KHR_texture_basisu ?.source]);
+         images .push (this .images [texture .extensions ?.KHR_texture_basisu ?.source]);
 
       if (this .extensions .has ("EXT_texture_webp"))
-         images .unshift (this .images [texture .extensions ?.EXT_texture_webp ?.source]);
+         images .push (this .images [texture .extensions ?.EXT_texture_webp ?.source]);
 
       if (this .extensions .has ("EXT_texture_avif"))
-         images .unshift (this .images [texture .extensions ?.EXT_texture_avif ?.source]);
+         images .push (this .images [texture .extensions ?.EXT_texture_avif ?.source]);
+
+      images .push (this .images [texture .source]);
 
       return images .filter (image => image);
    },
