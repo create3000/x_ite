@@ -102,7 +102,7 @@ X_ITE supports most [Khronos extensions](https://github.com/KhronosGroup/glTF/tr
 * [EXT_lights_image_based](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Vendor/EXT_lights_image_based)
 * [EXT_mesh_gpu_instancing](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Vendor/EXT_mesh_gpu_instancing/README.md)
 * [EXT_meshopt_compression](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Vendor/EXT_meshopt_compression/README.md)
-* EXT_texture_avif
+* [EXT_texture_avif](https://gltf-transform.dev/modules/extensions/classes/EXTTextureAVIF)
 * [EXT_texture_video](https://github.com/takahirox/EXT_texture_video/README.md)
 * [EXT_texture_webp](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Vendor/EXT_texture_webp/README.md)
 
