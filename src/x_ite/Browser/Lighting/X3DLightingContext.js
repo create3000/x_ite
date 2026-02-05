@@ -159,11 +159,7 @@ Object .assign (X3DLightingContext .prototype,
       gl .uniform1i (shaderNode .x3d_SampleCountEXT, sampleCount);
       gl .uniform1f (shaderNode .x3d_LodBiasEXT, 0);
       gl .uniform1f (shaderNode .x3d_IntensityEXT, 1);
-
-      if (flipX)
-         gl .uniform3f (shaderNode .x3d_FlipEXT, -1, 1, 1);
-      else
-         gl .uniform3f (shaderNode .x3d_FlipEXT, 1, 1, 1);
+      gl .uniform3f (shaderNode .x3d_FlipEXT, flipX ? -1 : 1, 1, 1);
 
       for (const [level, r] of roughness .entries ())
       {
