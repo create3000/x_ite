@@ -202,7 +202,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
             distribution: this .diffuseTexture ? Distribution .GGX : Distribution .LAMBERTIAN,
             sampleCount: 2048,
             roughness: [0],
-            flipX: this .traverseDiffuse || !this .diffuseTexture && this .traverseSpecular,
+            flipX: this .diffuseTexture ? this .traverseDiffuse : this .traverseSpecular,
             cachedNode: this .cachedDiffuseTexture,
          });
       })();
