@@ -202,7 +202,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
             distribution: this .diffuseTexture ? Distribution .GGX : Distribution .LAMBERTIAN,
             sampleCount: this .diffuseTexture ? 1024 : 2048,
             roughness: [0],
-            flipX: this .diffuseTexture ? this .traverseDiffuse : this .traverseSpecular,
+            flipX: this .diffuseTexture ? !this .traverseDiffuse : !this .traverseSpecular,
             cachedNode: this .cachedDiffuseTexture,
          });
       })();
@@ -231,7 +231,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
             distribution: Distribution .GGX,
             sampleCount: 1024,
             roughness,
-            flipX: this .traverseSpecular,
+            flipX: !this .traverseSpecular,
             cachedNode: this .cachedSpecularTexture,
          });
       })();
@@ -260,7 +260,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
             distribution: Distribution .CHARLIE,
             sampleCount: 64,
             roughness: roughness,
-            flipX: this .traverseSpecular,
+            flipX: !this .traverseSpecular,
             cachedNode: this .cachedSheenTexture,
          });
       })();
