@@ -311,7 +311,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
          })();
       }
 
-      this .lightKey ??= (() =>
+      this .lightKey = (() =>
       {
          const
             diffuseLinear  = this .getDiffuseTexture ()  ?.isLinear () ? 1 : 0,
