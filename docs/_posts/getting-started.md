@@ -345,15 +345,20 @@ X_ITE can load several file formats, either directly as the source of the \<x3d-
 
 | Encoding         | File Extension | MIME Type       | Comment                                       |
 |------------------|----------------|-----------------|-----------------------------------------------|
-| X3D XML          | .x3d, .x3dz    | model/x3d+xml   | [X3D Encoding: XML](https://www.web3d.org/documents/specifications/19776-1/V3.3/index.html) |
-| X3D JSON         | .x3dj, .x3djz  | model/x3d+json  | [X3D Encoding: JSON](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19776-5v4.0-WD1/Part05/X3D_JSON.html) |
-| X3D Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml  | [X3D Encoding: Classic VRML](https://www.web3d.org/documents/specifications/19776-2/V3.3/index.html) |
-| VRML 2.0         | .wrl, .wrz     | model/vrml      | [VRML Specification](https://www.web3d.org/documents/specifications/14772/V2.0/) |
+| X3D XML          | .x3d, .x3dz    | model/x3d+xml   | [X3D Encoding: XML][1]                        |
+| X3D JSON         | .x3dj, .x3djz  | model/x3d+json  | [X3D Encoding: JSON][2]                       |
+| X3D Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml  | [X3D Encoding: Classic VRML][3]               |
+| VRML 2.0         | .wrl, .wrz     | model/vrml      | [VRML Specification][4]                       |
 | glTF             | .gltf, .glb    | model/gltf+json | [glTF Support](/x_ite/features/#gltf-support) |
 | Wavefront OBJ    | .obj           | model/obj       |                                               |
 | STL              | .stl           | model/stl       | ASCII & Binary                                |
 | PLY              | .ply           | model/ply       | ASCII & Binary                                |
 | SVG Document     | .svg, .svgz    | image/svg+xml   |                                               |
+
+  [1]: https://www.web3d.org/documents/specifications/19776-1/V3.3/index.html
+  [2]: https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19776-5v4.0-WD1/Part05/X3D_JSON.html
+  [3]: https://www.web3d.org/documents/specifications/19776-2/V3.3/index.html
+  [4]: https://www.web3d.org/documents/specifications/14772/V2.0/
 
 All files can be compressed using GZip compression (usually denoted by a 'z' at the end of the filename suffix). This saves bandwidth and speeds up download time.
 
