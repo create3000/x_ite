@@ -271,11 +271,18 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    },
    set_diffuseTexture__ ()
    {
+      this .diffuseTexture ?.removeInterest ("requestGenerateTextures", this);
+
       this .diffuseTexture  = X3DCast (X3DConstants .X3DEnvironmentTextureNode, this ._diffuseTexture);
-      this .traverseDiffuse = this .diffuseTexture ?.getType () .includes (X3DConstants .GeneratedCubeMapTexture),
+      this .traverseDiffuse = this .diffuseTexture ?.getType () .includes (X3DConstants .GeneratedCubeMapTexture);
+
+      if (this .traverseDiffuse)
+         this .diffuseTexture .addUpdateCallback (this, () => this .requestGenerateTextures ("diffuse"));
+      else
+         this .diffuseTexture ?.addInterest ("requestGenerateTextures", this, "diffuse");
 
       this .set_visibleObject__ ();
-      this .requestGenerateTextures ();
+      this .requestGenerateTextures ("diffuse");
    },
    set_specularTexture__ ()
    {
@@ -287,22 +294,32 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       this .specularTexture  = X3DCast (X3DConstants .X3DEnvironmentTextureNode, this ._specularTexture);
       this .traverseSpecular = this .specularTexture ?.getType () .includes (X3DConstants .GeneratedCubeMapTexture);
 
-      if (!this .traverseSpecular)
-         this .specularTexture ?.addInterest ("requestGenerateTextures", this);
+      if (this .traverseSpecular)
+         this .specularTexture .addUpdateCallback (this, () => this .requestGenerateTextures ("specular"));
+      else
+         this .specularTexture ?.addInterest ("requestGenerateTextures", this, "specular");
 
       this .set_visibleObject__ ();
-      this .requestGenerateTextures ();
+      this .requestGenerateTextures ("specular");
    },
    set_visibleObject__ ()
    {
       this .setVisibleObject (this .traverseDiffuse || this .traverseSpecular);
    },
-   requestGenerateTextures ()
+   requestGenerateTextures (target)
    {
-      this .lightKey                 = undefined;
-      this .generatedDiffuseTexture  = null;
-      this .generatedSpecularTexture = null;
-      this .generatedSheenTexture    = null;
+      this .lightKey = undefined;
+
+      if (target === "diffuse" || !this .diffuseTexture)
+         this .generatedDiffuseTexture = null;
+
+      if (target === "specular")
+      {
+         this .generatedSpecularTexture = null;
+         this .generatedSheenTexture    = null;
+      }
+
+      this .getLightKey ();
    },
    traverse (type, renderObject)
    {
@@ -315,16 +332,10 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       modelViewMatrix .translate (this ._origin .getValue ());
 
       if (this .traverseDiffuse && this .diffuseTexture ._update .getValue () !== "NONE")
-      {
          this .diffuseTexture .traverse (type, renderObject);
-         setTimeout (() => this .requestGenerateTextures ());
-      }
 
       if (this .traverseSpecular && this .specularTexture ._update .getValue () !== "NONE")
-      {
          this .specularTexture .traverse (type, renderObject);
-         setTimeout (() => this .requestGenerateTextures ());
-      }
 
       modelViewMatrix .pop ();
    },
