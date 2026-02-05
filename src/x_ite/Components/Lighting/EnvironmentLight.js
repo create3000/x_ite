@@ -274,7 +274,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       this .diffuseTexture  = X3DCast (X3DConstants .X3DEnvironmentTextureNode, this ._diffuseTexture);
       this .traverseDiffuse = this .diffuseTexture ?.getType () .includes (X3DConstants .GeneratedCubeMapTexture),
 
-      this .set_displayObject__ ();
+      this .set_visibleObject__ ();
       this .requestGenerateTextures ();
    },
    set_specularTexture__ ()
@@ -290,10 +290,10 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       if (!this .traverseSpecular)
          this .specularTexture ?.addInterest ("requestGenerateTextures", this);
 
-      this .set_displayObject__ ();
+      this .set_visibleObject__ ();
       this .requestGenerateTextures ();
    },
-   set_displayObject__ ()
+   set_visibleObject__ ()
    {
       this .setVisibleObject (this .traverseDiffuse || this .traverseSpecular);
    },
