@@ -103,12 +103,13 @@ Object .assign (X3DLightingContext .prototype,
 
       const
          gl                 = this .getContext (),
+         executionContext   = texture .getExecutionContext (),
          currentFramebuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING),
          currentProgram     = gl .getParameter (gl .CURRENT_PROGRAM),
          shaderNode         = this .getEnvironmentTextureShader (),
          framebuffer        = this [_filterFrameBuffer] ??= gl .createFramebuffer (),
          size               = texture .getSize (),
-         filtered           = cachedNode ?? texture .getExecutionContext () .createNode ("ImageCubeMapTexture", false);
+         filtered           = cachedNode ?? executionContext .createNode ("ImageCubeMapTexture", false);
 
       // Setup texture.
 
