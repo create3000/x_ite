@@ -116,10 +116,11 @@ Object .assign (X3DLightingContext .prototype,
       {
          filtered .setName (name);
          filtered .setPrivate (true);
-         filtered .setSize (size);
          filtered .setLinear (true);
          filtered .setup ();
       }
+
+      filtered .setSize (size);
 
       // Resize texture.
 
