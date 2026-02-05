@@ -163,16 +163,155 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       // Preload LUTs.
       this .getBrowser () .getLibraryTexture ("lut_ggx.png");
 
-      this ._diffuseCoefficients .addInterest ("requestGenerateTextures", this);
-      this ._diffuseTexture      .addInterest ("set_diffuseTexture__",    this);
-      this ._specularTexture     .addInterest ("set_specularTexture__",   this);
+      this ._diffuseTexture  .addInterest ("set_diffuseTexture__",  this);
+      this ._specularTexture .addInterest ("set_specularTexture__", this);
 
       this .set_diffuseTexture__ ();
       this .set_specularTexture__ ();
    },
    getLightKey ()
    {
-      return this .lightKey ??= (() =>
+      return this .lightKey;
+   },
+   getDiffuseTexture ()
+   {
+      return this .generatedDiffuseTexture;
+   },
+   getSpecularTexture ()
+   {
+      return this .generatedSpecularTexture;
+   },
+   getSheenTexture ()
+   {
+      return this .generatedSheenTexture;
+   },
+   getLights ()
+   {
+      return EnvironmentLights;
+   },
+   set_diffuseTexture__ ()
+   {
+      this .diffuseTexture ?.removeInterest ("generateTextures", this);
+
+      this .diffuseTexture  = X3DCast (X3DConstants .X3DEnvironmentTextureNode, this ._diffuseTexture);
+      this .traverseDiffuse = this .diffuseTexture ?.getType () .includes (X3DConstants .GeneratedCubeMapTexture);
+
+      if (this .traverseDiffuse)
+         this .diffuseTexture .addUpdateCallback (this, () => this .generateTextures ("diffuse"));
+      else
+         this .diffuseTexture ?.addInterest ("generateTextures", this, "diffuse");
+
+      this .set_visibleObject__ ();
+      this .generateTextures ("diffuse");
+   },
+   set_specularTexture__ ()
+   {
+      if (this .traverseSpecular)
+         this .specularTexture .removeUpdateCallback (this);
+
+      this .specularTexture ?.removeInterest ("generateTextures", this);
+
+      this .specularTexture  = X3DCast (X3DConstants .X3DEnvironmentTextureNode, this ._specularTexture);
+      this .traverseSpecular = this .specularTexture ?.getType () .includes (X3DConstants .GeneratedCubeMapTexture);
+
+      if (this .traverseSpecular)
+         this .specularTexture .addUpdateCallback (this, () => this .generateTextures ("specular"));
+      else
+         this .specularTexture ?.addInterest ("generateTextures", this, "specular");
+
+      this .set_visibleObject__ ();
+      this .generateTextures ("specular");
+   },
+   set_visibleObject__ ()
+   {
+      this .setVisibleObject (this .traverseDiffuse || this .traverseSpecular);
+   },
+   generateTextures (target)
+   {
+      if (target === "diffuse" || target === "specular" && !this .diffuseTexture)
+      {
+         this .generatedDiffuseTexture = (() =>
+         {
+            if (!this .diffuseTexture && !this .specularTexture)
+               return;
+
+            // Render the texture.
+
+            const browser = this .getBrowser ();
+
+            if (browser .getBrowserOption ("Debug") && this .specularTexture .getSize () > 1)
+               console .info ("Generating diffuse texture for EnvironmentLight.");
+
+            return this .cachedDiffuseTexture = browser .filterEnvironmentTexture ({
+               name: "GeneratedDiffuseTexture",
+               texture: this .diffuseTexture ?? this .specularTexture,
+               distribution: this .diffuseTexture ? Distribution .GGX : Distribution .LAMBERTIAN,
+               sampleCount: this .diffuseTexture ? 1024 : 2048,
+               roughness: [0],
+               flipX: this .diffuseTexture ? !this .traverseDiffuse : !this .traverseSpecular,
+               cachedNode: this .cachedDiffuseTexture,
+            });
+         })();
+      }
+
+      if (target === "specular")
+      {
+         this .generatedSpecularTexture = (() =>
+         {
+            if (!this .specularTexture)
+               return;
+
+            // Render the texture.
+
+            const browser = this .getBrowser ();
+
+            if (browser .getBrowserOption ("Debug") && this .specularTexture .getSize () > 1)
+               console .info ("Generating specular texture for EnvironmentLight.");
+
+            const
+               levels    = this .specularTexture .getLevels (),
+               roughness = Array .from ({ length: levels + 1 }, (_, i) => i / (levels || 1));
+
+            return this .cachedSpecularTexture = browser .filterEnvironmentTexture ({
+               name: "GeneratedSpecularTexture",
+               texture: this .specularTexture,
+               distribution: Distribution .GGX,
+               sampleCount: 1024,
+               roughness,
+               flipX: !this .traverseSpecular,
+               cachedNode: this .cachedSpecularTexture,
+            });
+         })();
+
+         this .generatedSpecularTexture = (() =>
+         {
+            if (!this .specularTexture)
+               return;
+
+            // Render the texture.
+
+            const browser = this .getBrowser ();
+
+            if (browser .getBrowserOption ("Debug") && this .specularTexture .getSize () > 1)
+               console .info ("Generating specular texture for EnvironmentLight.");
+
+            const
+               levels    = this .specularTexture .getLevels (),
+               roughness = Array .from ({ length: levels + 1 }, (_, i) => i / (levels || 1));
+
+            return this .cachedSpecularTexture = browser .filterEnvironmentTexture ({
+               name: "GeneratedSpecularTexture",
+               texture: this .specularTexture,
+               distribution: Distribution .GGX,
+               sampleCount: 1024,
+               roughness,
+               flipX: !this .traverseSpecular,
+               cachedNode: this .cachedSpecularTexture,
+            });
+         })();
+      }
+
+      this .lightKey ??= (() =>
       {
          const
             diffuseLinear  = this .getDiffuseTexture ()  ?.isLinear () ? 1 : 0,
@@ -181,146 +320,6 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
 
          return `[2.${diffuseLinear}.${specularLinear}${sheenLinear}]`;
       })();
-   },
-   getDiffuseTexture ()
-   {
-      return this .generatedDiffuseTexture ??= (() =>
-      {
-         if (!this .diffuseTexture && !this .specularTexture)
-            return;
-
-         // Render the texture.
-
-         const browser = this .getBrowser ();
-
-         if (browser .getBrowserOption ("Debug") && this .specularTexture .getSize () > 1)
-            console .info ("Generating diffuse texture for EnvironmentLight.");
-
-         return this .cachedDiffuseTexture = browser .filterEnvironmentTexture ({
-            name: "GeneratedDiffuseTexture",
-            texture: this .diffuseTexture ?? this .specularTexture,
-            distribution: this .diffuseTexture ? Distribution .GGX : Distribution .LAMBERTIAN,
-            sampleCount: this .diffuseTexture ? 1024 : 2048,
-            roughness: [0],
-            flipX: this .diffuseTexture ? !this .traverseDiffuse : !this .traverseSpecular,
-            cachedNode: this .cachedDiffuseTexture,
-         });
-      })();
-   },
-   getSpecularTexture ()
-   {
-      return this .generatedSpecularTexture ??= (() =>
-      {
-         if (!this .specularTexture)
-            return;
-
-         // Render the texture.
-
-         const browser = this .getBrowser ();
-
-         if (browser .getBrowserOption ("Debug") && this .specularTexture .getSize () > 1)
-            console .info ("Generating specular texture for EnvironmentLight.");
-
-         const
-            levels    = this .specularTexture .getLevels (),
-            roughness = Array .from ({ length: levels + 1 }, (_, i) => i / (levels || 1));
-
-         return this .cachedSpecularTexture = browser .filterEnvironmentTexture ({
-            name: "GeneratedSpecularTexture",
-            texture: this .specularTexture,
-            distribution: Distribution .GGX,
-            sampleCount: 1024,
-            roughness,
-            flipX: !this .traverseSpecular,
-            cachedNode: this .cachedSpecularTexture,
-         });
-      })();
-   },
-   getSheenTexture ()
-   {
-      return this .generatedSheenTexture ??= (() =>
-      {
-         if (!this .specularTexture)
-            return;
-
-         // Render the texture.
-
-         const browser = this .getBrowser ();
-
-         if (browser .getBrowserOption ("Debug") && this .specularTexture .getSize () > 1)
-            console .info ("Generating sheen texture for EnvironmentLight.");
-
-         const
-            levels    = this .specularTexture .getLevels (),
-            roughness = Array .from ({ length: levels + 1 }, (_, i) => Math .max (i / (levels || 1), 2, 0.000001));
-
-         return this .cachedSheenTexture = browser .filterEnvironmentTexture ({
-            name: "GeneratedSheenTexture",
-            texture: this .specularTexture,
-            distribution: Distribution .CHARLIE,
-            sampleCount: 64,
-            roughness: roughness,
-            flipX: !this .traverseSpecular,
-            cachedNode: this .cachedSheenTexture,
-         });
-      })();
-   },
-   getLights ()
-   {
-      return EnvironmentLights;
-   },
-   set_diffuseTexture__ ()
-   {
-      this .diffuseTexture ?.removeInterest ("requestGenerateTextures", this);
-
-      this .diffuseTexture  = X3DCast (X3DConstants .X3DEnvironmentTextureNode, this ._diffuseTexture);
-      this .traverseDiffuse = this .diffuseTexture ?.getType () .includes (X3DConstants .GeneratedCubeMapTexture);
-
-      if (this .traverseDiffuse)
-         this .diffuseTexture .addUpdateCallback (this, () => this .requestGenerateTextures ("diffuse"));
-      else
-         this .diffuseTexture ?.addInterest ("requestGenerateTextures", this, "diffuse");
-
-      this .set_visibleObject__ ();
-      this .requestGenerateTextures ("diffuse");
-   },
-   set_specularTexture__ ()
-   {
-      if (this .traverseSpecular)
-         this .specularTexture .removeUpdateCallback (this);
-
-      this .specularTexture ?.removeInterest ("requestGenerateTextures", this);
-
-      this .specularTexture  = X3DCast (X3DConstants .X3DEnvironmentTextureNode, this ._specularTexture);
-      this .traverseSpecular = this .specularTexture ?.getType () .includes (X3DConstants .GeneratedCubeMapTexture);
-
-      if (this .traverseSpecular)
-         this .specularTexture .addUpdateCallback (this, () => this .requestGenerateTextures ("specular"));
-      else
-         this .specularTexture ?.addInterest ("requestGenerateTextures", this, "specular");
-
-      this .set_visibleObject__ ();
-      this .requestGenerateTextures ("specular");
-   },
-   set_visibleObject__ ()
-   {
-      this .setVisibleObject (this .traverseDiffuse || this .traverseSpecular);
-   },
-   requestGenerateTextures (target)
-   {
-      this .lightKey = undefined;
-
-      if (target === "diffuse" || !this .diffuseTexture)
-         this .generatedDiffuseTexture = null;
-
-      if (target === "specular")
-      {
-         this .generatedSpecularTexture = null;
-         this .generatedSheenTexture    = null;
-      }
-
-      // This call will generate all textures.
-      this .getLightKey ();
    },
    traverse (type, renderObject)
    {
