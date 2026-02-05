@@ -20,6 +20,7 @@ In addition, the glTF parser can now handle [KHR_meshopt_compression](https://gi
 - [x] glTF parser can now handle [EXT_texture_avif](https://gltf-transform.dev/modules/extensions/classes/EXTTextureAVIF)
 - [x] glTF parser can now handle [EXT_texture_video](https://github.com/takahirox/EXT_texture_video/README.md)
 - [x] Improved Wavefront OBJ Parser to handle multi materials and color per vertex.
+- [x] EnvironmentLight is now able to handle [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/) nodes.
 
 ## X_ITE v12.2 Series
 
