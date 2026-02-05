@@ -163,10 +163,8 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       // Preload LUTs.
       this .getBrowser () .getLibraryTexture ("lut_ggx.png");
 
-      this ._diffuseTexture  .addInterest ("set_diffuseTexture__",  this);
       this ._specularTexture .addInterest ("set_specularTexture__", this);
 
-      this .set_diffuseTexture__ ();
       this .set_specularTexture__ ();
    },
    getLightKey ()
@@ -189,13 +187,6 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    {
       return EnvironmentLights;
    },
-   set_diffuseTexture__ ()
-   {
-      this .diffuseTexture = X3DCast (X3DConstants .X3DEnvironmentTextureNode, this ._diffuseTexture);
-
-      if (this .diffuseTexture)
-         this .generatedDiffuseTexture = this .diffuseTexture;
-   },
    set_specularTexture__ ()
    {
       if (this .traverseSpecular)
@@ -216,7 +207,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    },
    generateTextures ()
    {
-      this .generatedDiffuseTexture = this .diffuseTexture ?? (() =>
+      this .generatedDiffuseTexture = (() =>
       {
          if (!this .specularTexture)
             return;
@@ -336,8 +327,8 @@ Object .defineProperties (EnvironmentLight,
 
          new X3DFieldDefinition (X3DConstants .inputOutput,    "origin",              new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",            new Fields .SFRotation ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "diffuseCoefficients", new Fields .MFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "diffuseTexture",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "diffuseCoefficients", new Fields .MFFloat ()), // not supported
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "diffuseTexture",      new Fields .SFNode ()),  // not supported
          new X3DFieldDefinition (X3DConstants .inputOutput,    "specularTexture",     new Fields .SFNode ()),
 
          new X3DFieldDefinition (X3DConstants .inputOutput,    "shadows",             new Fields .SFBool ()),
