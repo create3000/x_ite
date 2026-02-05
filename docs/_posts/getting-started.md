@@ -74,7 +74,7 @@ X_ITE needs your support, with a small contribution you can make a big differenc
 [John Carlson](mailto:yottzumm@gmail.com)
 [N Polys](mailto:nicholas.polys@gmail.com),
 [Sandy Ressler](https://acm.org),
-[UND DREAM Lab](https://und.edu),
+[UND DREAM Lab](https://und.edu)
 
 ## X3D Examples
 
