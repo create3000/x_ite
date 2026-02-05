@@ -319,6 +319,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
          this .generatedSheenTexture    = null;
       }
 
+      // This call will generate all textures.
       this .getLightKey ();
    },
    traverse (type, renderObject)
