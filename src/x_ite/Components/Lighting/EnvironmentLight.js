@@ -211,12 +211,8 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       else
          this .specularTexture ?.addInterest ("generateTextures", this);
 
-      this .set_visibleObject__ ();
+      this .setVisibleObject (this .traverseSpecular);
       this .generateTextures ();
-   },
-   set_visibleObject__ ()
-   {
-      this .setVisibleObject (this .traverseDiffuse || this .traverseSpecular);
    },
    generateTextures ()
    {
