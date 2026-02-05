@@ -199,7 +199,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
          return this .cachedDiffuseTexture = browser .filterEnvironmentTexture ({
             name: "GeneratedDiffuseTexture",
             texture: this .diffuseTexture ?? this .specularTexture,
-            distribution: Distribution .LAMBERTIAN,
+            distribution: this .diffuseTexture ? Distribution .GGX : Distribution .LAMBERTIAN,
             sampleCount: 2048,
             roughness: [0],
             flipX: this .traverseDiffuse || !this .diffuseTexture && this .traverseSpecular,
