@@ -315,7 +315,10 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       modelViewMatrix .translate (this ._origin .getValue ());
 
       if (this .traverseDiffuse && this .diffuseTexture ._update .getValue () !== "NONE")
+      {
          this .diffuseTexture .traverse (type, renderObject);
+         setTimeout (() => this .requestGenerateTextures ());
+      }
 
       if (this .traverseSpecular && this .specularTexture ._update .getValue () !== "NONE")
       {
