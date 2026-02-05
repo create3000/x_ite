@@ -330,7 +330,6 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       // Picking end.
 
-      this .addBrowserEvent ();
       this [_pointingTime] .stop ();
 
       return !! hit .id;
