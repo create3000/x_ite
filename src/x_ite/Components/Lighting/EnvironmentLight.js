@@ -200,7 +200,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
             name: "GeneratedDiffuseTexture",
             texture: this .diffuseTexture ?? this .specularTexture,
             distribution: this .diffuseTexture ? Distribution .GGX : Distribution .LAMBERTIAN,
-            sampleCount: 2048,
+            sampleCount: this .diffuseTexture ? 1024 : 2048,
             roughness: [0],
             flipX: this .diffuseTexture ? this .traverseDiffuse : this .traverseSpecular,
             cachedNode: this .cachedDiffuseTexture,
