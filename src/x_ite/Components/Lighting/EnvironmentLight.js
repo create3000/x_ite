@@ -163,10 +163,8 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       // Preload LUTs.
       this .getBrowser () .getLibraryTexture ("lut_ggx.png");
 
-      this ._diffuseTexture  .addInterest ("set_diffuseTexture__",  this);
       this ._specularTexture .addInterest ("set_specularTexture__", this);
 
-      this .set_diffuseTexture__ ();
       this .set_specularTexture__ ();
    },
    getLightKey ()
@@ -189,21 +187,6 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    {
       return EnvironmentLights;
    },
-   set_diffuseTexture__ ()
-   {
-      this .diffuseTexture ?.removeInterest ("generateTextures", this);
-
-      this .diffuseTexture  = X3DCast (X3DConstants .X3DEnvironmentTextureNode, this ._diffuseTexture);
-      this .traverseDiffuse = this .diffuseTexture ?.getType () .includes (X3DConstants .GeneratedCubeMapTexture);
-
-      if (this .traverseDiffuse)
-         this .diffuseTexture .addUpdateCallback (this, () => this .generateTextures ("diffuse"));
-      else
-         this .diffuseTexture ?.addInterest ("generateTextures", this, "diffuse");
-
-      this .set_visibleObject__ ();
-      this .generateTextures ("diffuse");
-   },
    set_specularTexture__ ()
    {
       if (this .traverseSpecular)
@@ -215,101 +198,95 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       this .traverseSpecular = this .specularTexture ?.getType () .includes (X3DConstants .GeneratedCubeMapTexture);
 
       if (this .traverseSpecular)
-         this .specularTexture .addUpdateCallback (this, () => this .generateTextures ("specular"));
+         this .specularTexture .addUpdateCallback (this, () => this .generateTextures ());
       else
-         this .specularTexture ?.addInterest ("generateTextures", this, "specular");
+         this .specularTexture ?.addInterest ("generateTextures", this);
 
       this .set_visibleObject__ ();
-      this .generateTextures ("specular");
+      this .generateTextures ();
    },
    set_visibleObject__ ()
    {
       this .setVisibleObject (this .traverseDiffuse || this .traverseSpecular);
    },
-   generateTextures (target)
+   generateTextures ()
    {
-      if (target === "diffuse" || target === "specular" && !this .diffuseTexture)
+      this .generatedDiffuseTexture = (() =>
       {
-         this .generatedDiffuseTexture = (() =>
-         {
-            if (!this .diffuseTexture && !this .specularTexture)
-               return;
+         if (!this .specularTexture)
+            return;
 
-            // Render the texture.
+         // Render the texture.
 
-            const browser = this .getBrowser ();
+         const browser = this .getBrowser ();
 
-            if (browser .getBrowserOption ("Debug") && this .specularTexture .getSize () > 1)
-               console .info ("Generating diffuse texture for EnvironmentLight.");
+         if (browser .getBrowserOption ("Debug") && this .specularTexture .getSize () > 1)
+            console .info ("Generating diffuse texture for EnvironmentLight.");
 
-            return this .cachedDiffuseTexture = browser .filterEnvironmentTexture ({
-               name: "GeneratedDiffuseTexture",
-               texture: this .diffuseTexture ?? this .specularTexture,
-               distribution: this .diffuseTexture ? Distribution .GGX : Distribution .LAMBERTIAN,
-               sampleCount: this .diffuseTexture ? 1024 : 2048,
-               roughness: [0],
-               flipX: this .diffuseTexture ? !this .traverseDiffuse : !this .traverseSpecular,
-               cachedNode: this .cachedDiffuseTexture,
-            });
-         })();
-      }
+         return this .cachedDiffuseTexture = browser .filterEnvironmentTexture ({
+            name: "GeneratedDiffuseTexture",
+            texture: this .specularTexture,
+            distribution: Distribution .LAMBERTIAN,
+            sampleCount: 2048,
+            roughness: [0],
+            flipX: !this .traverseSpecular,
+            cachedNode: this .cachedDiffuseTexture,
+         });
+      })();
 
-      if (target === "specular")
+      this .generatedSpecularTexture = (() =>
       {
-         this .generatedSpecularTexture = (() =>
-         {
-            if (!this .specularTexture)
-               return;
+         if (!this .specularTexture)
+            return;
 
-            // Render the texture.
+         // Render the texture.
 
-            const browser = this .getBrowser ();
+         const browser = this .getBrowser ();
 
-            if (browser .getBrowserOption ("Debug") && this .specularTexture .getSize () > 1)
-               console .info ("Generating specular texture for EnvironmentLight.");
+         if (browser .getBrowserOption ("Debug") && this .specularTexture .getSize () > 1)
+            console .info ("Generating specular texture for EnvironmentLight.");
 
-            const
-               levels    = this .specularTexture .getLevels (),
-               roughness = Array .from ({ length: levels + 1 }, (_, i) => i / (levels || 1));
+         const
+            levels    = this .specularTexture .getLevels (),
+            roughness = Array .from ({ length: levels + 1 }, (_, i) => i / (levels || 1));
 
-            return this .cachedSpecularTexture = browser .filterEnvironmentTexture ({
-               name: "GeneratedSpecularTexture",
-               texture: this .specularTexture,
-               distribution: Distribution .GGX,
-               sampleCount: 1024,
-               roughness,
-               flipX: !this .traverseSpecular,
-               cachedNode: this .cachedSpecularTexture,
-            });
-         })();
+         return this .cachedSpecularTexture = browser .filterEnvironmentTexture ({
+            name: "GeneratedSpecularTexture",
+            texture: this .specularTexture,
+            distribution: Distribution .GGX,
+            sampleCount: 1024,
+            roughness,
+            flipX: !this .traverseSpecular,
+            cachedNode: this .cachedSpecularTexture,
+         });
+      })();
 
-         this .generatedSpecularTexture = (() =>
-         {
-            if (!this .specularTexture)
-               return;
+      this .generatedSpecularTexture = (() =>
+      {
+         if (!this .specularTexture)
+            return;
 
-            // Render the texture.
+         // Render the texture.
 
-            const browser = this .getBrowser ();
+         const browser = this .getBrowser ();
 
-            if (browser .getBrowserOption ("Debug") && this .specularTexture .getSize () > 1)
-               console .info ("Generating specular texture for EnvironmentLight.");
+         if (browser .getBrowserOption ("Debug") && this .specularTexture .getSize () > 1)
+            console .info ("Generating specular texture for EnvironmentLight.");
 
-            const
-               levels    = this .specularTexture .getLevels (),
-               roughness = Array .from ({ length: levels + 1 }, (_, i) => i / (levels || 1));
+         const
+            levels    = this .specularTexture .getLevels (),
+            roughness = Array .from ({ length: levels + 1 }, (_, i) => i / (levels || 1));
 
-            return this .cachedSpecularTexture = browser .filterEnvironmentTexture ({
-               name: "GeneratedSpecularTexture",
-               texture: this .specularTexture,
-               distribution: Distribution .GGX,
-               sampleCount: 1024,
-               roughness,
-               flipX: !this .traverseSpecular,
-               cachedNode: this .cachedSpecularTexture,
-            });
-         })();
-      }
+         return this .cachedSpecularTexture = browser .filterEnvironmentTexture ({
+            name: "GeneratedSpecularTexture",
+            texture: this .specularTexture,
+            distribution: Distribution .GGX,
+            sampleCount: 1024,
+            roughness,
+            flipX: !this .traverseSpecular,
+            cachedNode: this .cachedSpecularTexture,
+         });
+      })();
 
       this .lightKey = (() =>
       {
@@ -330,9 +307,6 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
 
       modelViewMatrix .push ();
       modelViewMatrix .translate (this ._origin .getValue ());
-
-      if (this .traverseDiffuse && this .diffuseTexture ._update .getValue () !== "NONE")
-         this .diffuseTexture .traverse (type, renderObject);
 
       if (this .traverseSpecular && this .specularTexture ._update .getValue () !== "NONE")
          this .specularTexture .traverse (type, renderObject);
