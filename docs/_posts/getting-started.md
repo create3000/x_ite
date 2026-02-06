@@ -70,11 +70,11 @@ X_ITE needs your support, with a small contribution you can make a big differenc
 
 #### Special Thanks to Our Active Supporters
 
-[CRISE](https://vr-crisis.com),
-[John Carlson](mailto:yottzumm@gmail.com)
-[N Polys](mailto:nicholas.polys@gmail.com),
-[Sandy Ressler](https://acm.org),
-[UND DREAM Lab](https://und.edu)
+[![CRISE](/assets/sponsors/crise.png){: .normal width="32" height="32" }](https://vr-crisis.com){: title="CRISE" }
+[![John Carlson](/assets/sponsors/john-carlson.png){: .normal width="32" height="32" }](mailto:yottzumm@gmail.com){: title="John Carlson" }
+[![N Polys](/assets/sponsors/n-polys.png){: .normal width="32" height="32" }](mailto:nicholas.polys@gmail.com){: title="N Polys" }
+[![Sandy Ressler](/assets/sponsors/sandy-ressler.png){: .normal width="32" height="32" }](https://acm.org){: title="Sandy Ressler" }
+[![UND DREAM Lab](/assets/sponsors/und-dream-lab.png){: .normal width="32" height="32" }](https://und.edu){: title="UND DREAM Lab" }
 
 ## X3D Examples
 
