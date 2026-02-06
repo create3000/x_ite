@@ -68,7 +68,7 @@ X_ITE needs your support, with a small contribution you can make a big differenc
 
 [<i class="fa-solid fa-heart"></i> Support us on Patreon](https://patreon.com/X_ITE){: .patreon }
 
-#### Special Thanks to Our Active Supporters
+#### Special Thanks to All Active Supporters
 
 [![CRISE](/assets/sponsors/crise.png){: .normal width="42" height="42" }](https://vr-crisis.com){: title="CRISE" }
 [![John Carlson](/assets/sponsors/john-carlson.png){: .normal width="42" height="42" }](mailto:yottzumm@gmail.com){: title="John Carlson" }
