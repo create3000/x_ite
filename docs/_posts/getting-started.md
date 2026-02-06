@@ -70,11 +70,12 @@ X_ITE needs your support, with a small contribution you can make a big differenc
 
 #### Special Thanks to All Active Supporters
 
-[![CRISE](/assets/sponsors/crise.png){: .normal width="42" height="42" }](https://vr-crisis.com){: title="CRISE" }
-[![John Carlson](/assets/sponsors/john-carlson.png){: .normal width="42" height="42" }](mailto:yottzumm@gmail.com){: title="John Carlson" }
-[![N Polys](/assets/sponsors/n-polys.png){: .normal width="42" height="42" }](mailto:nicholas.polys@gmail.com){: title="N Polys" }
-[![Sandy Ressler](/assets/sponsors/sandy-ressler.png){: .normal width="42" height="42" }](https://acm.org){: title="Sandy Ressler" }
-[![UND DREAM Lab](/assets/sponsors/und-dream-lab.png){: .normal width="42" height="42" }](https://und.edu){: title="UND DREAM Lab" }
+[![CRISE](/assets/sponsors/crise.png){: .normal }](https://vr-crisis.com){: title="CRISE" }
+[![John Carlson](/assets/sponsors/john-carlson.png){: .normal }](mailto:yottzumm@gmail.com){: title="John Carlson" }
+[![N Polys](/assets/sponsors/n-polys.png){: .normal }](mailto:nicholas.polys@gmail.com){: title="N Polys" }
+[![Sandy Ressler](/assets/sponsors/sandy-ressler.png){: .normal }](https://acm.org){: title="Sandy Ressler" }
+[![UND DREAM Lab](/assets/sponsors/und-dream-lab.png){: .normal }](https://und.edu){: title="UND DREAM Lab" }
+{: .sponsors }
 
 ## X3D Examples
 
