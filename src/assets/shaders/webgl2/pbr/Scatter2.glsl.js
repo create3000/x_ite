@@ -108,7 +108,7 @@ getMaterialColor (const in vec4 fragCoord)
             diffuseTransmissionIBL = applyVolumeAttenuation (diffuseTransmissionIBL, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
          #endif
 
-         f_diffuse += diffuseTransmissionIBL * (1.0 -singleScatter) * singleScatter;
+         f_diffuse += diffuseTransmissionIBL * (1.0 - singleScatter) * singleScatter;
          f_diffuse *= materialInfo .diffuseTransmissionFactor;
       #endif
 
