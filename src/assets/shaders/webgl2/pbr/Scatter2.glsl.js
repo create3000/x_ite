@@ -98,9 +98,17 @@ getMaterialColor (const in vec4 fragCoord)
    #endif
 
    // Calculate lighting contribution from image based lighting source (IBL)
-   #if defined (X3D_USE_IBL)
+   #if defined (X3D_USE_IBL) || defined (X3D_TRANSMISSION_MATERIAL_EXT)
       #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
-         f_diffuse  = getDiffuseLight (n) * materialInfo .diffuseTransmissionColorFactor;
+         f_diffuse = getDiffuseLight (n) * materialInfo .diffuseTransmissionColorFactor;
+
+         vec3 diffuseTransmissionIBL = getDiffuseLight (-n) * materialInfo .diffuseTransmissionColorFactor;
+
+         #if defined (X3D_VOLUME_MATERIAL_EXT)
+            diffuseTransmissionIBL = applyVolumeAttenuation (diffuseTransmissionIBL, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
+         #endif
+
+         f_diffuse += diffuseTransmissionIBL * (1.0 -singleScatter) * singleScatter;
          f_diffuse *= materialInfo .diffuseTransmissionFactor;
       #endif
 

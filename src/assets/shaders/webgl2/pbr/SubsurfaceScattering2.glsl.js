@@ -49,7 +49,6 @@ vec3
 getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in vec3 scatterDistance, const in vec3 diffuseColor, const in vec3 multiscatterColor, const in vec4 fragCoord)
 {
    float maxColor            = max3 (scatterDistance);
-   vec3  vMaxColor           = max (vec3 (maxColor), vec3 (0.00001));
    vec2  texelSize           = 1.0 / vec2 (x3d_Viewport .zw);
    mat4  invProjectionMatrix = inverse (projectionMatrix);
    vec2  uv                  = fragCoord .xy * texelSize;
