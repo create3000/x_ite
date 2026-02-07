@@ -74,7 +74,7 @@ X_ITE needs your support, with a small contribution you can make a big differenc
 [![John Carlson](/assets/sponsors/john-carlson.png){: .normal }](mailto:yottzumm@gmail.com){: title="John Carlson" }
 [![N Polys](/assets/sponsors/n-polys.png){: .normal }](mailto:nicholas.polys@gmail.com){: title="N Polys" }
 [![Sandy Ressler](/assets/sponsors/sandy-ressler.png){: .normal }](https://acm.org){: title="Sandy Ressler" }
-[![UND DREAM Lab](/assets/sponsors/und-dream-lab.png){: .normal }](https://und.edu){: title="UND DREAM Lab" }
+[![UND DREAM Lab](/assets/sponsors/und-dream-lab.png){: .normal }](https://dream.crc.und.edu){: title="UND DREAM Lab" }
 {: .sponsors }
 
 ## X3D Examples
