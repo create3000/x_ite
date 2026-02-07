@@ -54,6 +54,9 @@ struct MaterialInfo
 
    // KHR_materials_dispersion
    float dispersion;
+
+   // KHR_materials_volume_scatter
+   vec3 multiscatterColor;
 };
 
 #if defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
@@ -217,6 +220,24 @@ getDiffuseTransmissionInfo (in MaterialInfo info)
 
    #if defined (X3D_DIFFUSE_TRANSMISSION_COLOR_TEXTURE_EXT)
       info .diffuseTransmissionColorFactor *= getDiffuseTransmissionColorTextureEXT ();
+   #endif
+
+   return info;
+}
+#endif
+
+#if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+
+${MaterialTextures .texture ("x3d_MultiscatterColorTextureEXT", "rgb", "linear")}
+
+uniform vec3 x3d_MultiscatterColorEXT;
+
+MaterialInfo getVolumeScatterInfo (in MaterialInfo info)
+{
+   info .multiscatterColor = x3d_MultiscatterColorEXT;
+
+   #if defined (X3D_MULTISCATTER_COLOR_TEXTURE_EXT)
+      info .multiscatterColor *= getMultiscatterColorTextureEXT ();
    #endif
 
    return info;

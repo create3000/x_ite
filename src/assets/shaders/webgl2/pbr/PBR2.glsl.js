@@ -114,6 +114,10 @@ getMaterialColor (const in vec4 fragCoord)
       materialInfo = getDiffuseTransmissionInfo (materialInfo);
    #endif
 
+   #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+      materialInfo = getVolumeScatterInfo (materialInfo);
+   #endif
+
    #if defined (X3D_ANISOTROPY_MATERIAL_EXT)
       materialInfo = getAnisotropyInfo (materialInfo, normalInfo);
    #endif
@@ -163,7 +167,7 @@ getMaterialColor (const in vec4 fragCoord)
 
    #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
       // Used for weighting absorption and scattering.
-      vec3 singleScatter = multiToSingleScatter ();
+      vec3 singleScatter = multiToSingleScatter (materialInfo .multiscatterColor);
    #endif
 
    #if defined (X3D_CLEARCOAT_MATERIAL_EXT)
@@ -392,7 +396,7 @@ getMaterialColor (const in vec4 fragCoord)
 
    #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
       // Subsurface scattering is calculated based on fresnel weighted diffuse terms.
-      vec3 l_color = getSubsurfaceScattering (vertex, x3d_ProjectionMatrix, materialInfo .attenuationDistance, materialInfo .diffuseTransmissionColorFactor, fragCoord);
+      vec3 l_color = getSubsurfaceScattering (vertex, x3d_ProjectionMatrix, materialInfo .attenuationDistance * materialInfo .attenuationColor, materialInfo .diffuseTransmissionColorFactor, materialInfo .multiscatterColor, fragCoord);
 
       color += l_color * (1.0 - materialInfo .metallic) * (1.0 - clearcoatFactor * clearcoatFresnel) * (1.0 - materialInfo .iridescenceFactor) * (1.0 - materialInfo .transmissionFactor);
    #endif

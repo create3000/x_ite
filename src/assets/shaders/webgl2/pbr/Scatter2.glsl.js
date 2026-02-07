@@ -13,8 +13,7 @@ uniform float x3d_ScatterMaterialIdEXT;
 vec4
 getMaterialColor (const in vec4 fragCoord)
 {
-   vec3 singleScatter = multiToSingleScatter ();
-   vec4 baseColor     = getBaseColor ();
+   vec4 baseColor = getBaseColor ();
 
    #if defined (X3D_TEXTURE_PROJECTION)
       baseColor .rgb *= getTextureProjectorColor ();
@@ -71,6 +70,13 @@ getMaterialColor (const in vec4 fragCoord)
       materialInfo = getDiffuseTransmissionInfo (materialInfo);
    #endif
 
+   materialInfo = getVolumeScatterInfo (materialInfo);
+
+   #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+      // The single scatter color defines the ratio of scattering. 1 - singleScatter is the ratio of absorption.
+      vec3 singleScatter = multiToSingleScatter (materialInfo .multiscatterColor);
+   #endif
+
    materialInfo .perceptualRoughness = clamp (materialInfo .perceptualRoughness, 0.0, 1.0);
 
    // Roughness is authored as perceptual roughness; as is convention,
@@ -94,15 +100,7 @@ getMaterialColor (const in vec4 fragCoord)
    // Calculate lighting contribution from image based lighting source (IBL)
    #if defined (X3D_USE_IBL)
       #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
-         f_diffuse = getDiffuseLight (n) * materialInfo .diffuseTransmissionColorFactor * singleScatter;
-
-         vec3 diffuseTransmissionIBL = getDiffuseLight (-n) * materialInfo .diffuseTransmissionColorFactor;
-
-         #if defined (X3D_VOLUME_MATERIAL_EXT)
-            diffuseTransmissionIBL = applyVolumeAttenuation (diffuseTransmissionIBL, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
-         #endif
-
-         f_diffuse += diffuseTransmissionIBL * (1.0 - singleScatter) * singleScatter;
+         f_diffuse  = getDiffuseLight (n) * materialInfo .diffuseTransmissionColorFactor;
          f_diffuse *= materialInfo .diffuseTransmissionFactor;
       #endif
 
@@ -114,7 +112,7 @@ getMaterialColor (const in vec4 fragCoord)
 
       vec3 f_dielectric_fresnel_ibl = getIBLGGXFresnel (n, v, materialInfo .perceptualRoughness, materialInfo .f0_dielectric, materialInfo .specularWeight);
 
-      frontColor += mix (f_diffuse, f_specular_dielectric, f_dielectric_fresnel_ibl) * albedoSheenScaling;
+      frontColor += mix (f_diffuse, f_specular_dielectric, f_dielectric_fresnel_ibl) * albedoSheenScaling * materialInfo .multiscatterColor;
    #endif
 
    #if defined (X3D_LIGHTING)
@@ -156,25 +154,7 @@ getMaterialColor (const in vec4 fragCoord)
             // https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
             vec3 lightIntensity = getLightIntensity (light, l, distanceToLight);
 
-            l_diffuse = lightIntensity * NdotL * BRDF_lambertian (materialInfo .diffuseTransmissionColorFactor) * singleScatter;
-
-            if (dot (n, l) < 0.0)
-            {
-               float diffuseNdotL = clamp (dot (-n, l), 0.0, 1.0);
-               vec3  diffuse_btdf = lightIntensity * diffuseNdotL * BRDF_lambertian (materialInfo .diffuseTransmissionColorFactor);
-
-               vec3  l_mirror     = normalize (reflect (l, n)); // Mirror light reflection vector on surface
-               float diffuseVdotH = clamp (dot (v, normalize (l_mirror + v)), 0.0, 1.0);
-
-               dielectric_fresnel = F_Schlick (materialInfo .f0_dielectric * materialInfo .specularWeight, materialInfo .f90_dielectric, abs (diffuseVdotH));
-
-               #if defined (X3D_VOLUME_MATERIAL_EXT)
-                  diffuse_btdf = applyVolumeAttenuation (diffuse_btdf, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
-               #endif
-
-               l_diffuse += diffuse_btdf * (1.0 - singleScatter) * singleScatter;
-            }
-
+            l_diffuse  = lightIntensity * NdotL * BRDF_lambertian (materialInfo .diffuseTransmissionColorFactor);
             l_diffuse *= materialInfo .diffuseTransmissionFactor;
          #endif // X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT
 
@@ -189,6 +169,6 @@ getMaterialColor (const in vec4 fragCoord)
    }
    #endif
 
-   return vec4 (frontColor, x3d_ScatterMaterialIdEXT);
+   return vec4 (frontColor * materialInfo .multiscatterColor, x3d_ScatterMaterialIdEXT);
 }
 `;

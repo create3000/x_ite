@@ -1550,7 +1550,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (this .vectorValue (KHR_materials_volume_scatter .multiscatterColor, multiscatterColor))
          extension ._multiscatterColor = multiscatterColor;
 
-      extension ._scatterAnisotropy = this .numberValue (KHR_materials_volume_scatter .scatterAnisotropy, 0);
+      extension ._multiscatterColorTexture        = this .textureInfo (KHR_materials_volume_scatter .multiscatterColorTexture);
+      extension ._multiscatterColorTextureMapping = this .textureMapping (KHR_materials_volume_scatter .multiscatterColorTexture);
+      extension ._scatterAnisotropy               = this .numberValue (KHR_materials_volume_scatter .scatterAnisotropy, 0);
 
       extension .setup ();
 

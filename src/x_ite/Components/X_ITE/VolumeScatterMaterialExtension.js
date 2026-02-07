@@ -4,6 +4,7 @@ import FieldDefinitionArray     from "../../Base/FieldDefinitionArray.js";
 import X3DNode                  from "../Core/X3DNode.js";
 import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
+import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
 import ScatterSamples           from "../../Browser/X_ITE/ScatterSamples.js";
 import Algorithm                from "../../../standard/Math/Algorithm.js";
@@ -11,6 +12,12 @@ import Algorithm                from "../../../standard/Math/Algorithm.js";
 // Register key.
 
 ExtensionKeys .add ("VOLUME_SCATTER_MATERIAL_EXTENSION");
+
+// Register textures.
+
+import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
+
+MaterialTextures .add ("x3d_MultiscatterColorTextureEXT");
 
 // Register shaders.
 
@@ -42,15 +49,23 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
    {
       X3DMaterialExtensionNode .prototype .initialize .call (this);
 
-      this ._multiscatterColor .addInterest ("set_multiscatterColor__", this);
-      this ._scatterAnisotropy .addInterest ("set_scatterAnisotropy__", this);
+      this ._multiscatterColor        .addInterest ("set_multiscatterColor__",        this);
+      this ._multiscatterColorTexture .addInterest ("set_multiscatterColorTexture__", this);
+      this ._scatterAnisotropy        .addInterest ("set_scatterAnisotropy__",        this);
 
       this .set_multiscatterColor__ ();
+      this .set_multiscatterColorTexture__ ();
       this .set_scatterAnisotropy__ ();
    },
    set_multiscatterColor__ ()
    {
       this .multiscatterColorArray .set (this ._multiscatterColor .getValue ());
+   },
+   set_multiscatterColorTexture__ ()
+   {
+      this .multiscatterColorTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._multiscatterColorTexture);
+
+      this .setTexture (0, this .multiscatterColorTextureNode);
    },
    set_scatterAnisotropy__ ()
    {
@@ -62,13 +77,15 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
    },
    getShaderOptions (options)
    {
-      const gl = this .getBrowser () .getContext ();
-
-      if (gl .getVersion () < 2)
-         return;
-
       options .push ("X3D_VOLUME_SCATTER_MATERIAL_EXT");
       options .push (`X3D_SCATTER_SAMPLES_COUNT_EXT ${ScatterSamples .SCATTER_SAMPLES_COUNT}`);
+
+      if (!+this .getTextureBits ())
+         return;
+
+      options .push ("X3D_MATERIAL_TEXTURES");
+
+      this .multiscatterColorTextureNode ?.getShaderOptions (options, "MULTISCATTER_COLOR", true);
    },
    getShaderUniforms (uniforms)
    {
@@ -112,6 +129,15 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
       gl .activeTexture (gl .TEXTURE0 + scatterDepthSampleUnit);
       gl .bindTexture (gl .TEXTURE_2D, scatterDepthSampleTexture);
       gl .uniform1i (shaderObject .x3d_ScatterDepthSamplerEXT, scatterDepthSampleUnit);
+
+      if (!+this .getTextureBits ())
+         return;
+
+      this .multiscatterColorTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject .x3d_MultiscatterColorTextureEXT,
+         this ._multiscatterColorTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
    },
 });
 
@@ -121,9 +147,11 @@ Object .defineProperties (VolumeScatterMaterialExtension,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "multiscatterColor", new Fields .SFColor ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "scatterAnisotropy", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "multiscatterColor",               new Fields .SFColor ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "multiscatterColorTextureMapping", new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "multiscatterColorTexture",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "scatterAnisotropy",               new Fields .SFFloat ()),
       ]),
       enumerable: true,
    },
