@@ -10,7 +10,7 @@ tags: [Features, glTF]
 ![JavaScript Logo](/assets/img/features/javascript.png){: .left .w-25 }
 X_ITE is a fast, small, and feature-rich JavaScript library and VRML viewer for displaying and executing X3D files, and other formats like VRML, glTF and [more](/x_ite/#supported-file-formats). It makes things like WebGL programming, document access and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers.
 
-X_ITE is freely downloadable for any usage and licensed under the GPL3. You can use them for commercial and noncommercial purposes.
+X_ITE is freely downloadable for any usage and licensed under the MIT license. You can use them for commercial and noncommercial purposes.
 
 Runs completely standalone, ie. there are no other library dependencies. You just need to include *x_ite.js* into your HTML page.
 
