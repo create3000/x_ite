@@ -1,5 +1,5 @@
-/* X_ITE v14.0.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.1")];
+/* X_ITE v14.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -999,10 +999,9 @@ function ScreenText (text, fontStyle)
 
    text .setTransparent (true);
 
-   this .textureNode     = new (external_X_ITE_X3D_PixelTexture_default()) (text .getExecutionContext ());
-   this .context         = document .createElement ("canvas") .getContext ("2d", { willReadFrequently: true });
-   this .modelViewMatrix = new (external_X_ITE_X3D_Matrix4_default()) ();
-   this .matrix          = new (external_X_ITE_X3D_Matrix4_default()) ();
+   this .textureNode = new (external_X_ITE_X3D_PixelTexture_default()) (text .getExecutionContext ());
+   this .context     = document .createElement ("canvas") .getContext ("2d", { willReadFrequently: true });
+   this .matrix      = new (external_X_ITE_X3D_Matrix4_default()) ();
 
    this .textureNode ._textureProperties = fontStyle .getBrowser () .getScreenTextureProperties ();
    this .textureNode .setup ();
@@ -1010,10 +1009,13 @@ function ScreenText (text, fontStyle)
 
 Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X3D_X3DTextGeometry_default()).prototype),
 {
-   modelViewMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
    getMatrix ()
    {
       return this .matrix;
+   },
+   getTextureNode ()
+   {
+      return this .textureNode;
    },
    update: (() =>
    {
@@ -1319,7 +1321,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
       min .set ((glyph .xMin || 0) / unitsPerEm, (glyph .yMin || 0) / unitsPerEm, 0);
       max .set ((glyph .xMax || 0) / unitsPerEm, (glyph .yMax || 0) / unitsPerEm, 0);
    },
-   traverse: (() =>
+   traverseBefore: (() =>
    {
       const bbox = new (external_X_ITE_X3D_Box3_default()) ();
 
@@ -1327,9 +1329,10 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
       {
          this .getBrowser () .getScreenScaleMatrix (renderObject, this .matrix, 1, true);
 
-         this .modelViewMatrix
-            .assign (renderObject .getModelViewMatrix () .get ())
-            .multLeft (this .matrix);
+         const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+         modelViewMatrix .push ();
+         modelViewMatrix .multLeft (this .matrix);
 
          // Update Text bbox.
 
@@ -1338,32 +1341,9 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
          this .getText () .setBBox (bbox);
       };
    })(),
-   displaySimple (gl, renderContext, shaderNode)
+   traverseAfter (type, renderObject)
    {
-      renderContext .modelViewMatrix .set (this .modelViewMatrix);
-
-      gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, renderContext .modelViewMatrix);
-   },
-   display (gl, renderContext)
-   {
-      renderContext .modelViewMatrix .set (this .modelViewMatrix);
-
-      renderContext .textureNode = this .textureNode;
-   },
-   transformLine: (() =>
-   {
-      const invMatrix = new (external_X_ITE_X3D_Matrix4_default()) ();
-
-      return function (line)
-      {
-         // Apply screen nodes transformation in place here.
-         return line .multLineMatrix (invMatrix .assign (this .matrix) .inverse ());
-      };
-   })(),
-   transformMatrix (matrix)
-   {
-      // Apply screen nodes transformation in place here.
-      return matrix .multLeft (this .matrix);
+      renderObject .getModelViewMatrix () .pop ();
    },
 });
 

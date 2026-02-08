@@ -1,5 +1,5 @@
-/* X_ITE v14.0.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.1")];
+/* X_ITE v14.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -167,7 +167,7 @@ Object .assign (Object .setPrototypeOf (Circle2DOptions .prototype, (external_X_
 
       for (let n = 0; n < dimension; ++ n)
       {
-         const p = external_X_ITE_X3D_Complex_default().Polar (1, angle * n);
+         const p = external_X_ITE_X3D_Complex_default().fromPolar (1, angle * n);
 
          point .push (new (external_X_ITE_X3D_Fields_default()).SFVec3f (p .real, p .imag, 0));
       }
@@ -541,40 +541,47 @@ Object .assign (Object .setPrototypeOf (Arc2D .prototype, (external_X_ITE_X3D_X3
       if (start > end)
          return (Math .PI * 2) - sweepAngle;
 
-      if (! isNaN (sweepAngle))
+      if (!isNaN (sweepAngle))
          return sweepAngle;
 
-      // We must test for NAN, as NAN to int is undefined.
+      // We must test for NaN, as NaN to int is undefined.
       return 0;
    },
-   build ()
+   build: (() =>
    {
       const
-         options     = this .getBrowser () .getArc2DOptions (),
-         dimension   = options ._dimension .getValue (),
-         startAngle  = this ._startAngle .getValue  (),
-         radius      = Math .abs (this ._radius .getValue ()),
-         sweepAngle  = this .getSweepAngle (),
-         steps       = Math .max (3, Math .floor (sweepAngle * dimension / (Math .PI * 2))),
-         vertexArray = this .getVertices ();
+         p1 = new (external_X_ITE_X3D_Complex_default()) (),
+         p2 = new (external_X_ITE_X3D_Complex_default()) ();
 
-      for (let n = 0; n < steps; ++ n)
+      return function ()
       {
          const
-            t1     = n / steps,
-            theta1 = startAngle + (sweepAngle * t1),
-            point1 = external_X_ITE_X3D_Complex_default().Polar (radius, theta1),
-            t2     = (n + 1) / steps,
-            theta2 = startAngle + (sweepAngle * t2),
-            point2 = external_X_ITE_X3D_Complex_default().Polar (radius, theta2);
+            options     = this .getBrowser () .getArc2DOptions (),
+            dimension   = options ._dimension .getValue (),
+            startAngle  = this ._startAngle .getValue  (),
+            radius      = Math .abs (this ._radius .getValue ()),
+            sweepAngle  = this .getSweepAngle (),
+            steps       = Math .max (3, Math .floor (sweepAngle * dimension / (Math .PI * 2))),
+            vertexArray = this .getVertices ();
 
-         vertexArray .push (point1 .real, point1 .imag, 0, 1);
-         vertexArray .push (point2 .real, point2 .imag, 0, 1);
-      }
+         for (let n = 0; n < steps; ++ n)
+         {
+            const
+               t1     = n / steps,
+               theta1 = startAngle + (sweepAngle * t1),
+               point1 = p1 .setPolar (radius, theta1),
+               t2     = (n + 1) / steps,
+               theta2 = startAngle + (sweepAngle * t2),
+               point2 = p2 .setPolar (radius, theta2);
 
-      this .getMin () .set (-radius, -radius, 0);
-      this .getMax () .set ( radius,  radius, 0);
-   },
+            vertexArray .push (point1 .real, point1 .imag, 0, 1);
+            vertexArray .push (point2 .real, point2 .imag, 0, 1);
+         }
+
+         this .getMin () .set (-radius, -radius, 0);
+         this .getMax () .set ( radius,  radius, 0);
+      };
+   })(),
 });
 
 Object .defineProperties (Arc2D,
@@ -641,15 +648,18 @@ Object .assign (Object .setPrototypeOf (ArcClose2D .prototype, (external_X_ITE_X
       if (start > end)
          return (Math .PI * 2) - sweepAngle;
 
-      if (! isNaN (sweepAngle))
+      if (!isNaN (sweepAngle))
          return sweepAngle;
 
-      // We must test for NAN, as NAN to int is undefined.
+      // We must test for NaN, as NaN to int is undefined.
       return 0;
    },
    build: (() =>
    {
-      const half = new (external_X_ITE_X3D_Complex_default()) (0.5, 0.5);
+      const
+         texCoords = [ ],
+         points    = [ ],
+         half      = new (external_X_ITE_X3D_Complex_default()) (0.5, 0.5);
 
       return function ()
       {
@@ -663,9 +673,7 @@ Object .assign (Object .setPrototypeOf (ArcClose2D .prototype, (external_X_ITE_X
             steps         = Math .max (4, Math .floor (sweepAngle * dimension / (Math .PI * 2))),
             texCoordArray = this .getTexCoords (),
             normalArray   = this .getNormals (),
-            vertexArray   = this .getVertices (),
-            texCoords     = [ ],
-            points        = [ ];
+            vertexArray   = this .getVertices ();
 
          this .getMultiTexCoords () .push (texCoordArray);
 
@@ -677,8 +685,14 @@ Object .assign (Object .setPrototypeOf (ArcClose2D .prototype, (external_X_ITE_X
                t     = n / steps_1,
                theta = startAngle + (sweepAngle * t);
 
-            texCoords .push (external_X_ITE_X3D_Complex_default().Polar (0.5, theta) .add (half));
-            points    .push (external_X_ITE_X3D_Complex_default().Polar (radius, theta));
+            if (n >= texCoords .length)
+               texCoords .push (new (external_X_ITE_X3D_Complex_default()) ());
+
+            if (n >= points .length)
+               points .push (new (external_X_ITE_X3D_Complex_default()) ());
+
+            texCoords [n] .setPolar (0.5, theta) .add (half);
+            points    [n] .setPolar (radius, theta);
          }
 
          if (chord)
@@ -1260,7 +1274,7 @@ Object .assign (Object .setPrototypeOf (TriangleSet2D .prototype, (external_X_IT
             p             = this .getTexCoordParams (),
             min           = p .min,
             Ssize         = p .Ssize,
-            vertexArray   = this .getVertices () .getValue ();
+            vertexArray   = this .getVertices ();
 
          for (let i = 0, length = vertexArray .length; i < length; i += 4)
          {
