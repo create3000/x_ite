@@ -18,7 +18,8 @@
     "./X3DUOM.xml": "./dist/X3DUOM.xml"
   },
   "files": [
-    "dist/*"
+    "dist/*",
+    "LICENSES/*"
   ],
   "scripts": {
     "test": "cd ../x_ite-tests && npm test",
