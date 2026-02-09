@@ -25,16 +25,18 @@ Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, X3DParser .protot
       if (!(this .arrayBuffer instanceof ArrayBuffer))
          return false;
 
-      if (this .dataView .byteLength < 12)
+      const { dataView } = this;
+
+      if (dataView .byteLength < 12)
          return false;
 
-      if (this .dataView .getUint32 (0, true) !== 0x46546C67) // glTF
+      if (dataView .getUint32 (0, true) !== 0x46546C67) // glTF
          return false;
 
-      if (this .dataView .getUint32 (4, true) !== 2) // Version
+      if (dataView .getUint32 (4, true) !== 2) // Version
          return false;
 
-      if (this .dataView .getUint32 (8, true) !== this .dataView .byteLength)
+      if (dataView .getUint32 (8, true) !== dataView .byteLength)
          return false;
 
       return true;
@@ -67,11 +69,13 @@ Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, X3DParser .protot
    },
    chunks ()
    {
-      for (let i = 12; i < this .dataView .byteLength;)
+      const { dataView, arrayBuffer, json, buffers } = this;
+
+      for (let i = 12; i < dataView .byteLength;)
       {
          const
-            length = this .dataView .getUint32 (i, true),
-            type   = this .dataView .getUint32 (i + 4, true);
+            length = dataView .getUint32 (i, true),
+            type   = dataView .getUint32 (i + 4, true);
 
          i += 8;
 
@@ -79,12 +83,12 @@ Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, X3DParser .protot
          {
             case 0x4e4f534a: // Structured JSON content
             {
-               this .json .push ($.decodeText (this .arrayBuffer .slice (i, i + length)));
+               json .push ($.decodeText (arrayBuffer .slice (i, i + length)));
                break;
             }
             case 0x004e4942: // Binary buffer
             {
-               this .buffers .push (this .arrayBuffer .slice (i, i + length));
+               buffers .push (arrayBuffer .slice (i, i + length));
                break;
             }
          }
