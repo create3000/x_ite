@@ -657,7 +657,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
          const
             normalMatrix = modelMatrix .submatrix .inverse () .transpose (),
-            tangentArray = geometryNode .getTangents () .getValue ();
+            tangentArray = geometryNode .getTangents ();
 
          if (tangentArray .length)
          {
@@ -679,7 +679,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
          // Normals
 
-         const normalArray = geometryNode .getNormals () .getValue ();
+         const normalArray = geometryNode .getNormals ();
 
          if (normalArray .length)
          {
@@ -702,7 +702,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
          // Coordinate
 
          const
-            vertexArray  = geometryNode .getVertices () .getValue (),
+            vertexArray  = geometryNode .getVertices (),
             numVertices  = vertexArray .length,
             newCoordNode = new Coordinate (executionContext),
             newPoints    = new Float32Array (numVertices / 4 * 3);

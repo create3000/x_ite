@@ -335,19 +335,25 @@ Object .assign (Matrix3 .prototype,
    {
       // Complexity 18 +, 27 *.
 
-      const
-         { 0: a0, 1: a1, 2: a2, 3: a3, 4: a4, 5: a5, 6: a6, 7: a7, 8: a8 } = this,
-         { 0: b0, 1: b1, 2: b2, 3: b3, 4: b4, 5: b5, 6: b6, 7: b7, 8: b8 } = matrix;
+      const { 0: a0, 1: a1, 2: a2, 3: a3, 4: a4, 5: a5, 6: a6, 7: a7, 8: a8 } = this;
+
+      var { 0: b0, 1: b1, 2: b2 } = matrix;
 
       this [0] = a0 * b0 + a3 * b1 + a6 * b2;
       this [1] = a1 * b0 + a4 * b1 + a7 * b2;
       this [2] = a2 * b0 + a5 * b1 + a8 * b2;
-      this [3] = a0 * b3 + a3 * b4 + a6 * b5;
-      this [4] = a1 * b3 + a4 * b4 + a7 * b5;
-      this [5] = a2 * b3 + a5 * b4 + a8 * b5;
-      this [6] = a0 * b6 + a3 * b7 + a6 * b8;
-      this [7] = a1 * b6 + a4 * b7 + a7 * b8;
-      this [8] = a2 * b6 + a5 * b7 + a8 * b8;
+
+      var { 3: b0, 4: b1, 5: b2 } = matrix;
+
+      this [3] = a0 * b0 + a3 * b1 + a6 * b2;
+      this [4] = a1 * b0 + a4 * b1 + a7 * b2;
+      this [5] = a2 * b0 + a5 * b1 + a8 * b2;
+
+      var { 6: b0, 7: b1, 8: b2 } = matrix;
+
+      this [6] = a0 * b0 + a3 * b1 + a6 * b2;
+      this [7] = a1 * b0 + a4 * b1 + a7 * b2;
+      this [8] = a2 * b0 + a5 * b1 + a8 * b2;
 
       return this;
    },
@@ -355,19 +361,25 @@ Object .assign (Matrix3 .prototype,
    {
       // Complexity 18 +, 27 *.
 
-      const
-         { 0: a0, 1: a1, 2: a2, 3: a3, 4: a4, 5: a5, 6: a6, 7: a7, 8: a8 } = this,
-         { 0: b0, 1: b1, 2: b2, 3: b3, 4: b4, 5: b5, 6: b6, 7: b7, 8: b8 } = matrix;
+      const { 0: b0, 1: b1, 2: b2, 3: b3, 4: b4, 5: b5, 6: b6, 7: b7, 8: b8 } = matrix;
+
+      var { 0: a0, 1: a1, 2: a2 } = this;
 
       this [0] = a0 * b0 + a1 * b3 + a2 * b6;
       this [1] = a0 * b1 + a1 * b4 + a2 * b7;
       this [2] = a0 * b2 + a1 * b5 + a2 * b8;
-      this [3] = a3 * b0 + a4 * b3 + a5 * b6;
-      this [4] = a3 * b1 + a4 * b4 + a5 * b7;
-      this [5] = a3 * b2 + a4 * b5 + a5 * b8;
-      this [6] = a6 * b0 + a7 * b3 + a8 * b6;
-      this [7] = a6 * b1 + a7 * b4 + a8 * b7;
-      this [8] = a6 * b2 + a7 * b5 + a8 * b8;
+
+      var { 3: a0, 4: a1, 5: a2 } = this;
+
+      this [3] = a0 * b0 + a1 * b3 + a2 * b6;
+      this [4] = a0 * b1 + a1 * b4 + a2 * b7;
+      this [5] = a0 * b2 + a1 * b5 + a2 * b8;
+
+      var { 6: a0, 7: a1, 8: a2 } = this;
+
+      this [6] = a0 * b0 + a1 * b3 + a2 * b6;
+      this [7] = a0 * b1 + a1 * b4 + a2 * b7;
+      this [8] = a0 * b2 + a1 * b5 + a2 * b8;
 
       return this;
    },

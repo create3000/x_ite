@@ -49,7 +49,7 @@ function X3DRenderObject (executionContext)
    this .layouts                  = [ ];
    this .hAnimNode                = [ null ];
    this .invHumanoidMatrix        = new MatrixStack (Matrix4);
-   this .generatedCubeMapTextures = [ ];
+   this .generatedCubeMapTextures = new Set ();
    this .collisions               = [ ];
    this .collisionTime            = new StopWatch ();
    this .numPointingShapes        = 0;
@@ -1270,6 +1270,7 @@ Object .assign (X3DRenderObject .prototype,
          const frameBuffer = framebuffers [i];
 
          this .drawShapes (RenderPass .RENDER_KEY, gl, frameBuffer, 0, viewport);
+         this .drawShapes (RenderPass .RENDER_KEY, gl, frameBuffer, 0, viewport);
       }
 
       this .view = null;
@@ -1297,12 +1298,14 @@ Object .assign (X3DRenderObject .prototype,
 
       // Reset containers.
 
-      globalLightsKeys         .length = 0;
-      globalLights             .length = 0;
-      lights                   .length = 0;
-      globalShadows            .length = 1;
-      generatedCubeMapTextures .length = 0;
+      globalLightsKeys .length = 0;
+      globalLights     .length = 0;
+      lights           .length = 0;
+      globalShadows    .length = 1;
+
+      generatedCubeMapTextures .clear ();
    },
+   drawShapes (renderPass, gl, frameBuffer, clearBits, viewport)
    drawShapes (renderPass, gl, frameBuffer, clearBits, viewport)
    {
       const { opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes } = this;

@@ -425,7 +425,7 @@ Highest supported level: **4**
 - [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/)
 - [PointProperties](/x_ite/components/shape/pointproperties/)
 - [Shape](/x_ite/components/shape/shape/)
-- [TwoSidedMaterial](/x_ite/components/shape/twosidedmaterial/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/shape/twosidedmaterial/#example) <small class="yellow">depreciated</small>
+- [TwoSidedMaterial](/x_ite/components/shape/twosidedmaterial/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/shape/twosidedmaterial/#example) <small class="yellow">deprecated</small>
 - [UnlitMaterial](/x_ite/components/shape/unlitmaterial/)
 
 ### Sound
@@ -552,7 +552,7 @@ Highest supported level: **1**
 - [InstancedShape](/x_ite/components/x-ite/instancedshape/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/x-ite/instancedshape/#example) <small class="blue">experimental</small>
 - [IridescenceMaterialExtension](/x_ite/components/x-ite/iridescencematerialextension/) <small class="blue">experimental</small>
 - [SheenMaterialExtension](/x_ite/components/x-ite/sheenmaterialextension/) <small class="blue">experimental</small>
-- [SpecularGlossinessMaterial](/x_ite/components/x-ite/specularglossinessmaterial/) <small class="yellow">depreciated</small>
+- [SpecularGlossinessMaterial](/x_ite/components/x-ite/specularglossinessmaterial/) <small class="yellow">deprecated</small>
 - [SpecularMaterialExtension](/x_ite/components/x-ite/specularmaterialextension/) <small class="blue">experimental</small>
 - [TransmissionMaterialExtension](/x_ite/components/x-ite/transmissionmaterialextension/) <small class="blue">experimental</small>
 - [VolumeMaterialExtension](/x_ite/components/x-ite/volumematerialextension/) <small class="blue">experimental</small>

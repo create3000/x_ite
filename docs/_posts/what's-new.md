@@ -11,7 +11,16 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 *Leipzig, 27th January 2026:* This series of X_ITE comes with experimental support for X3D4.1, meaning that all the new features and nodes ([EnvironmentLight](/x_ite/components/lighting/environmentlight/), [HAnimPose](/x_ite/components/hanim/hanimpose/), [FontLibrary](/x_ite/components/text/fontlibrary/), [Tangent](/x_ite/components/rendering/tangent/)) are available and ready to be tested.
 
-In addition, the glTF parser can now handle KHR_meshopt_compression. With KHR_meshopt_compression, glTF files can be shrunk up to 1/10 of their size. gltfpack is very well suited for this. Run `npx gltfpack` with options `-cc` and `-tc` and see what happens.
+In addition, the glTF parser can now handle [KHR_meshopt_compression](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Vendor/EXT_meshopt_compression/README.md). With KHR_meshopt_compression, glTF files can be shrunk up to 1/10 of their size. gltfpack is very well suited for this. Run `npx gltfpack` with options `-cc` and `-tc` and see what happens.
+
+### Notable Changes
+
+- [x] Added experimental support for X3D4.1.
+- [x] glTF parser can now handle [KHR_meshopt_compression](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Vendor/EXT_meshopt_compression/README.md).
+- [x] glTF parser can now handle [EXT_texture_avif](https://gltf-transform.dev/modules/extensions/classes/EXTTextureAVIF).
+- [x] glTF parser can now handle [EXT_texture_video](https://github.com/takahirox/EXT_texture_video/README.md).
+- [x] Improved Wavefront OBJ Parser to handle multi materials and color per vertex.
+- [x] EnvironmentLight is now able to handle [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/) nodes.
 
 ## X_ITE v12.2 Series
 
@@ -1264,7 +1273,7 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 
 ## X_ITE v4.1.4 Released
 
-*Leipzig, 11th January 2018:* We finally released version 4.1.4 now. X_ITE has become a huge change in the shader specification. It is now even more like GLSL. There are new uniform variables *x3d\_LightSourceParameters, x3d\_MaterialParameters,* and *x3d\_FogParameters.* Old shaders are fully compatible with this version, although old shader light and material uniforms are depreciated. For more information have a look at <custom-shaders>.
+*Leipzig, 11th January 2018:* We finally released version 4.1.4 now. X_ITE has become a huge change in the shader specification. It is now even more like GLSL. There are new uniform variables *x3d\_LightSourceParameters, x3d\_MaterialParameters,* and *x3d\_FogParameters.* Old shaders are fully compatible with this version, although old shader light and material uniforms are deprecated. For more information have a look at <custom-shaders>.
 
 ## X_ITE v4.1.3 Released
 

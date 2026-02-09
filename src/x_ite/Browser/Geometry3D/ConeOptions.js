@@ -88,7 +88,7 @@ Object .assign (Object .setPrototypeOf (ConeOptions .prototype, X3DBaseNode .pro
          const
             u     = i / dimension,
             theta = 2 * Math .PI * u,
-            t     = Complex .Polar (-1, theta);
+            t     = Complex .fromPolar (-1, theta);
 
          point .push (new Vector2 ((t .imag + 1) / 2, (t .real + 1) / 2));
       }
@@ -117,7 +117,7 @@ Object .assign (Object .setPrototypeOf (ConeOptions .prototype, X3DBaseNode .pro
       const
          dimension = this ._dimension .getValue (),
          vector    = this .sideGeometry ._normal .getValue () ._vector,
-         nz        = Complex .Polar (1, -Math .PI / 4);
+         nz        = Complex .fromPolar (1, -Math .PI / 4);
 
       // Side Bottom
 
@@ -126,7 +126,7 @@ Object .assign (Object .setPrototypeOf (ConeOptions .prototype, X3DBaseNode .pro
          const
             u     = i / dimension,
             theta = 2 * Math .PI * u,
-            n     = Complex .Polar (nz .imag, theta);
+            n     = Complex .fromPolar (nz .imag, theta);
 
          vector .push (new Vector3 (n .imag, nz .real, n .real));
       }
@@ -138,7 +138,7 @@ Object .assign (Object .setPrototypeOf (ConeOptions .prototype, X3DBaseNode .pro
          const
             u     = (i + 0.5) / dimension,
             theta = 2 * Math .PI * u,
-            n    = Complex .Polar (nz .imag, theta);
+            n    = Complex .fromPolar (nz .imag, theta);
 
          vector .push (new Vector3 (n .imag, nz .real, n .real));
       }
@@ -177,7 +177,7 @@ Object .assign (Object .setPrototypeOf (ConeOptions .prototype, X3DBaseNode .pro
          const
             u     = i / dimension,
             theta = 2 * Math .PI * u,
-            p     = Complex .Polar (-1, theta);
+            p     = Complex .fromPolar (-1, theta);
 
          point .push (new Vector3 (p .imag, -1, p .real));
       }

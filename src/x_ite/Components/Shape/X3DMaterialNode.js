@@ -181,7 +181,8 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          hAnimNode ?.getShaderOptions (options);
 
          const
-            lights               = renderObject .getGlobalLights () .concat (renderContext .localObjects),
+            localLights          = renderContext .localObjects .filter (o => o .lightNode),
+            lights               = renderObject .getGlobalLights () .concat (localLights),
             objectsKeys          = renderObject .getGlobalLightsKeys () .concat (localObjectsKeys),
             numClipPlanes        = objectsKeys .reduce ((a, k) => a + (k === 0), 0),
             numLights            = objectsKeys .reduce ((a, k) => a + (k === 1), 0),

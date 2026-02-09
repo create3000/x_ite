@@ -25,6 +25,7 @@ function GeneratedCubeMapTexture (executionContext)
    this .projectionMatrix   = new Matrix4 ();
    this .modelMatrix        = new Matrix4 ();
    this .viewVolume         = new ViewVolume ();
+   this .updateCallbacks    = new Map ();
 }
 
 Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DEnvironmentTextureNode .prototype),
@@ -42,6 +43,14 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
       this ._size .addInterest ("set_size__", this);
 
       this .set_size__ ();
+   },
+   addUpdateCallback (key, callback)
+   {
+      this .updateCallbacks .set (key, callback);
+   },
+   removeUpdateCallback (key)
+   {
+      this .updateCallbacks .delete (key);
    },
    set_size__ ()
    {
@@ -93,9 +102,10 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
       if (!this .frameBuffer)
          return;
 
-      renderObject .getGeneratedCubeMapTextures () .push (this);
+      renderObject .getGeneratedCubeMapTextures () .add (this);
 
-      this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ()) .multRight (renderObject .getCameraSpaceMatrix () .get ());
+      this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ())
+         .multRight (renderObject .getCameraSpaceMatrix () .get ());
    },
    renderTexture: (() =>
    {
@@ -207,6 +217,9 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
 
          if (this ._update .getValue () === "NEXT_FRAME_ONLY")
             this ._update = "NONE";
+
+         for (const callback of this .updateCallbacks .values ())
+            callback ();
 
          this .textureRenderingPass = false;
       };

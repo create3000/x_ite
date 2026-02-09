@@ -50,10 +50,12 @@ main ()
       midPoint    = x3d_LineStipple .xy;
    #endif
 
-   vec4 x3d_TransformedVertex = getInstanceVertex (getSkinVertex (x3d_Vertex, x3d_Normal, vec3 (0.0)));
-   vec4 position              = x3d_ModelViewMatrix * x3d_TransformedVertex;
+   vec4 tVertex = x3d_Vertex;
 
-   vertex = position .xyz;
+   tVertex = getInstanceVertex (getSkinVertex (tVertex, x3d_Normal, vec3 (0.0)));
+   tVertex = x3d_ModelViewMatrix * tVertex;
+
+   vertex = tVertex .xyz;
    normal = getInstanceNormal (getSkinNormal (x3d_Normal));
 
    #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
@@ -66,6 +68,6 @@ main ()
       texCoord0 = x3d_TexCoord0;
    #endif
 
-   gl_Position = x3d_ProjectionMatrix * position;
+   gl_Position = x3d_ProjectionMatrix * tVertex;
 }
 `;

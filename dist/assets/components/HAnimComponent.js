@@ -1,5 +1,5 @@
-/* X_ITE v14.0.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.0")];
+/* X_ITE v14.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -367,7 +367,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
       if (!field .length)
          return;
 
-      console .warn (`Use of field ${this .getTypeName ()}.${field .getName ()} is depreciated. This field will be removed in future versions of X3D.`);
+      console .warn (`Use of field ${this .getTypeName ()}.${field .getName ()} is deprecated. This field may be removed in future versions of X3D.`);
    },
    getBBox (bbox, shadows)
    {

@@ -36,7 +36,9 @@ class DOMIntegration
       this .rootElement    = undefined;
       this .canvasObserver = new MutationObserver (() => this .processCanvasMutation (browser));
 
-      this .canvasObserver .observe (browser .getElement () [0], {
+      this .canvasObserver .observe (browser .getElement () [0],
+      {
+         attributes: false,
          childList: true,
       });
 
@@ -86,12 +88,11 @@ class DOMIntegration
 
             // Start observing, also catches inlined Inline elements.
 
-            this .observer .observe (rootElement, {
+            this .observer .observe (rootElement,
+            {
                attributes: true,
                childList: true,
-               characterData: false,
                subtree: true,
-               attributeOldValue: true,
             });
 
             // Add Inline elements from initial scene, and connect to node events.
@@ -118,7 +119,7 @@ class DOMIntegration
       {
          case "attributes":
          {
-            this .processAttribute (mutation, mutation .target);
+            this .processAttribute (mutation);
             break;
          }
          case "childList":
@@ -134,7 +135,7 @@ class DOMIntegration
       }
    }
 
-   processAttribute (mutation, element)
+   processAttribute ({ target: element, attributeName })
    {
       const
          parser = this .parser,
@@ -142,12 +143,9 @@ class DOMIntegration
 
       if (node)
       {
-         const
-            attributeName = mutation .attributeName,
-            attribute     = element .attributes .getNamedItem (attributeName);
+         const attribute = element .getAttributeNode (attributeName);
 
          parser .nodeAttribute (attribute, node);
-         parser .setupNodes ();
       }
       else
       {

@@ -38,6 +38,7 @@ function X3DFontStyleNode (executionContext)
    X3DNode      .call (this, executionContext);
    X3DUrlObject .call (this, executionContext);
 
+   this .getType () .pop (); // Remove X3DUrlObject type.
    this .addType (X3DConstants .X3DFontStyleNode);
 
    this .addChildObjects (X3DConstants .inputOutput, "description",          new Fields .SFString (),
@@ -45,6 +46,8 @@ function X3DFontStyleNode (executionContext)
                           X3DConstants .inputOutput, "load",                 new Fields .SFBool (true),
                           X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime (0),
                           X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600));
+
+   // Private properties
 
    this .alignments = [ ];
 }
@@ -168,7 +171,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
          // Try to get font from family names.
 
-         const font = await browser .getFont (executionContext, fontFamily, fontStyle);
+         const font = await browser .getFont (executionContext, fontFamily);
 
          if (font)
          {
@@ -183,7 +186,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
          if (fileURL .protocol === "data:" || fileURL .pathname .match (/\.(?:woff2|woff|otf|ttf)$/i))
          {
             if (executionContext .getSpecificationVersion () >= 4.1)
-               console .warn (`Loading a font file via family field is depreciated, please use new FontLibrary node instead.`);
+               console .warn (`Loading a font file via family field is deprecated, please use new FontLibrary node instead.`);
 
             const font = await browser .loadFont (fileURL, this .getCache ());
 

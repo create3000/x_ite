@@ -1,5 +1,5 @@
-/* X_ITE v14.0.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.0")];
+/* X_ITE v14.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -952,7 +952,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
 
       return function ()
       {
-         const vertices = this .geometryNode .getVertices () .getValue ();
+         const vertices = this .geometryNode .getVertices ();
 
          if (vertices .length === 0)
             return null;
@@ -979,7 +979,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, RigidBodyPhy
 
       return function ()
       {
-         const vertices = this .geometryNode .getVertices () .getValue ();
+         const vertices = this .geometryNode .getVertices ();
 
          if (vertices .length === 0)
             return null;

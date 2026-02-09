@@ -270,6 +270,9 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    },
    traverse (type, renderObject)
    {
+      // Needed for geometry primitives, Text with ScreenFontStyle and tools.
+      this .geometryNode ?.traverseBefore ?.(type, renderObject);
+
       switch (type)
       {
          case TraverseType .POINTER:
@@ -303,8 +306,8 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
          }
       }
 
-      // Needed for ScreenText and Tools.
-      this .geometryNode ?.traverse (type, renderObject);
+      // Needed for geometry primitives, Text with ScreenFontStyle and tools.
+      this .geometryNode ?.traverseAfter ?.(type, renderObject);
    },
    picking (renderObject)
    {
