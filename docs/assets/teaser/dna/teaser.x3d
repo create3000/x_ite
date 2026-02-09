@@ -9,7 +9,7 @@
     <meta name='created' content='Sat, 17 May 2025 17:44:03 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V2.0.2, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Mon, 09 Feb 2026 05:39:08 GMT'/>
+    <meta name='modified' content='Mon, 09 Feb 2026 11:09:29 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='ColorScheme'>
@@ -141,7 +141,7 @@ function changeColorScheme (colorScheme)
             <Appearance>
               <UnlitMaterial
                   emissiveColor='0 0 0'
-                  transparency='0.5'/>
+                  transparency='0.4'/>
             </Appearance>
             <Rectangle2D USE='_6'/>
           </Shape>
