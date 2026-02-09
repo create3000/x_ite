@@ -1,6 +1,6 @@
 {
   "name": "x_ite",
-  "version": "14.0.1",
+  "version": "14.0.2",
   "description": "X_ITE X3D Browser, view and manipulate X3D, VRML, glTF and other 3D sources in HTML.",
   "main": "dist/x_ite.js",
   "module": "dist/x_ite.mjs",
@@ -18,7 +18,8 @@
     "./X3DUOM.xml": "./dist/X3DUOM.xml"
   },
   "files": [
-    "dist/*"
+    "dist/*",
+    "LICENSES/*"
   ],
   "scripts": {
     "test": "cd ../x_ite-tests && npm test",

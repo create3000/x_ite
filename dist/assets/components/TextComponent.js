@@ -1,5 +1,5 @@
-/* X_ITE v14.0.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.1")];
+/* X_ITE v14.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -303,7 +303,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
          if (fileURL .protocol === "data:" || fileURL .pathname .match (/\.(?:woff2|woff|otf|ttf)$/i))
          {
             if (executionContext .getSpecificationVersion () >= 4.1)
-               console .warn (`Loading a font file via family field is depreciated, please use new FontLibrary node instead.`);
+               console .warn (`Loading a font file via family field is deprecated, please use new FontLibrary node instead.`);
 
             const font = await browser .loadFont (fileURL, this .getCache ());
 
@@ -996,8 +996,6 @@ Object .assign (X3DTextGeometry .prototype,
 
       return glyphs;
    },
-   traverse (type, renderObject)
-   { },
 });
 
 const X3DTextGeometry_default_ = X3DTextGeometry;
@@ -1035,6 +1033,10 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeom
    getMatrix ()
    {
       return (external_X_ITE_X3D_Matrix4_default()).IDENTITY;
+   },
+   getTextureNode ()
+   {
+      return null;
    },
    build: (() =>
    {
@@ -1318,14 +1320,6 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeom
          return triangles;
       };
    })(),
-   displaySimple (gl, renderContext)
-   { },
-   display (gl, renderContext)
-   { },
-   transformLine (line)
-   { },
-   transformMatrix (matrix)
-   { },
 });
 
 const PolygonText_default_ = PolygonText;
@@ -18007,35 +18001,21 @@ Object .assign (Object .setPrototypeOf (Text .prototype, (external_X_ITE_X3D_X3D
 
       this .setSolid (this ._solid .getValue ());
    },
-   traverse (type, renderObject)
+   traverseBefore (type, renderObject)
    {
-      this .textGeometry .traverse (type, renderObject);
-
-      external_X_ITE_X3D_X3DGeometryNode_default().prototype .traverse .call (this, type, renderObject);
+      this .textGeometry .traverseBefore ?.(type, renderObject);
    },
-   displaySimple (gl, renderContext, shaderNode)
+   traverseAfter (type, renderObject)
    {
-      this .textGeometry .displaySimple (gl, renderContext, shaderNode);
-
-      external_X_ITE_X3D_X3DGeometryNode_default().prototype .displaySimple .call (this, gl, renderContext, shaderNode);
+      this .textGeometry .traverseAfter ?.(type, renderObject);
    },
    display (gl, renderContext)
    {
-      this .textGeometry .display (gl, renderContext);
+      renderContext .textureNode = this .textGeometry .getTextureNode ();
 
       external_X_ITE_X3D_X3DGeometryNode_default().prototype .display .call (this, gl, renderContext);
 
       renderContext .textureNode = null;
-   },
-   transformLine (line)
-   {
-      // Apply screen nodes transformation in place here.
-      return this .textGeometry .transformLine (line);
-   },
-   transformMatrix (matrix)
-   {
-      // Apply screen nodes transformation in place here.
-      return this .textGeometry .transformMatrix (matrix);
    },
 });
 

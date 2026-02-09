@@ -1,5 +1,5 @@
-/* X_ITE v14.0.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.1")];
+/* X_ITE v14.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -467,9 +467,15 @@ const X3DPickSensorNode_default_ = X3DPickSensorNode;
 ;
 
 /* harmony default export */ const Picking_X3DPickSensorNode = (external_X_ITE_X3D_Namespace_default().add ("X3DPickSensorNode", X3DPickSensorNode_default_));
+;// external "__X_ITE_X3D__ .X3DGeometryNode"
+const external_X_ITE_X3D_X3DGeometryNode_namespaceObject = __X_ITE_X3D__ .X3DGeometryNode;
+var external_X_ITE_X3D_X3DGeometryNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DGeometryNode_namespaceObject);
 ;// external "__X_ITE_X3D__ .Vector3"
 const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
 var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
+;// external "__X_ITE_X3D__ .Vector4"
+const external_X_ITE_X3D_Vector4_namespaceObject = __X_ITE_X3D__ .Vector4;
+var external_X_ITE_X3D_Vector4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector4_namespaceObject);
 ;// external "__X_ITE_X3D__ .Box3"
 const external_X_ITE_X3D_Box3_namespaceObject = __X_ITE_X3D__ .Box3;
 var external_X_ITE_X3D_Box3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Box3_namespaceObject);
@@ -477,6 +483,8 @@ var external_X_ITE_X3D_Box3_default = /*#__PURE__*/__webpack_require__.n(externa
 const external_X_ITE_X3D_Line3_namespaceObject = __X_ITE_X3D__ .Line3;
 var external_X_ITE_X3D_Line3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Line3_namespaceObject);
 ;// ./src/x_ite/Components/Picking/LinePickSensor.js
+
+
 
 
 
@@ -626,7 +634,7 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, Picking_X3DPi
 
                            intersections .length = 0;
 
-                           if (geometryNode .intersectsLine (line, target .modelMatrix, intersections))
+                           if (geometryNode .intersectsLine (line, intersections))
                            {
                               for (const intersection of intersections)
                               {
@@ -734,6 +742,130 @@ Object .defineProperties (LinePickSensor,
       ]),
       enumerable: true,
    },
+});
+
+Object .assign ((external_X_ITE_X3D_X3DGeometryNode_default()).prototype,
+{
+   intersectsLine: (() =>
+   {
+      const
+         invModelViewMatrix = new (external_X_ITE_X3D_Matrix4_default()) (),
+         uvt                = { u: 0, v: 0, t: 0 },
+         v0                 = new (external_X_ITE_X3D_Vector3_default()) (),
+         v1                 = new (external_X_ITE_X3D_Vector3_default()) (),
+         v2                 = new (external_X_ITE_X3D_Vector3_default()) ();
+
+      return function (hitRay, intersections)
+      {
+         if (!this .intersectsBBox (hitRay))
+            return intersections .length;
+
+         // Apply transformations from geometry primitives and Text with ScreenFontStyle.
+         hitRay .multLineMatrix (invModelViewMatrix .assign (this .getMatrix ()) .inverse ());
+
+         const
+            texCoords   = this .multiTexCoords [0] .getValue (),
+            normals     = this .normals .getValue (),
+            vertices    = this .vertices .getValue (),
+            vertexCount = this .vertexCount;
+
+         for (let i = 0; i < vertexCount; i += 3)
+         {
+            const i4 = i * 4;
+
+            v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
+            v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
+            v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
+
+            if (!hitRay .intersectsTriangle (v0, v1, v2, uvt))
+               continue;
+
+            // Get barycentric coordinates.
+
+            const { u, v, t } = uvt;
+
+            // Determine vectors for LinePickSensor.
+
+            const point = new (external_X_ITE_X3D_Vector3_default()) (u * vertices [i4]     + v * vertices [i4 + 4] + t * vertices [i4 +  8],
+                                       u * vertices [i4 + 1] + v * vertices [i4 + 5] + t * vertices [i4 +  9],
+                                       u * vertices [i4 + 2] + v * vertices [i4 + 6] + t * vertices [i4 + 10]);
+
+            const texCoord = new (external_X_ITE_X3D_Vector4_default()) (u * texCoords [i4]     + v * texCoords [i4 + 4] + t * texCoords [i4 + 8],
+                                          u * texCoords [i4 + 1] + v * texCoords [i4 + 5] + t * texCoords [i4 + 9],
+                                          u * texCoords [i4 + 2] + v * texCoords [i4 + 6] + t * texCoords [i4 + 10],
+                                          u * texCoords [i4 + 3] + v * texCoords [i4 + 7] + t * texCoords [i4 + 11]);
+
+            const i3 = i * 3;
+
+            const normal = new (external_X_ITE_X3D_Vector3_default()) (u * normals [i3]     + v * normals [i3 + 3] + t * normals [i3 + 6],
+                                          u * normals [i3 + 1] + v * normals [i3 + 4] + t * normals [i3 + 7],
+                                          u * normals [i3 + 2] + v * normals [i3 + 5] + t * normals [i3 + 8]);
+
+            intersections .push ({ texCoord, normal, point: this .getMatrix () .multVecMatrix (point) });
+         }
+
+         return intersections .length;
+      };
+   })(),
+   intersectsBBox: (() =>
+   {
+      const intersection = new (external_X_ITE_X3D_Vector3_default()) ();
+
+      return function (hitRay)
+      {
+         const { min, max, planes } = this;
+
+         const
+            minX = min .x,
+            maxX = max .x,
+            minY = min .y,
+            maxY = max .y,
+            minZ = min .z,
+            maxZ = max .z;
+
+         // front
+         if (planes [0] .intersectsLine (hitRay, intersection))
+         {
+            if (intersection .x >= minX && intersection .x <= maxX &&
+                intersection .y >= minY && intersection .y <= maxY)
+               return true;
+         }
+
+         // back
+         if (planes [1] .intersectsLine (hitRay, intersection))
+         {
+            if (intersection .x >= minX && intersection .x <= maxX &&
+                intersection .y >= minY && intersection .y <= maxY)
+               return true;
+         }
+
+         // top
+         if (planes [2] .intersectsLine (hitRay, intersection))
+         {
+            if (intersection .x >= minX && intersection .x <= maxX &&
+                intersection .z >= minZ && intersection .z <= maxZ)
+               return true;
+         }
+
+         // bottom
+         if (planes [3] .intersectsLine (hitRay, intersection))
+         {
+            if (intersection .x >= minX && intersection .x <= maxX &&
+                intersection .z >= minZ && intersection .z <= maxZ)
+               return true;
+         }
+
+         // right
+         if (planes [4] .intersectsLine (hitRay, intersection))
+         {
+            if (intersection .y >= minY && intersection .y <= maxY &&
+                intersection .z >= minZ && intersection .z <= maxZ)
+               return true;
+         }
+
+         return false;
+      };
+   })(),
 });
 
 const LinePickSensor_default_ = LinePickSensor;

@@ -1,5 +1,5 @@
-/* X_ITE v14.0.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.1")];
+/* X_ITE v14.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -597,6 +597,7 @@ function GeneratedCubeMapTexture (executionContext)
    this .projectionMatrix   = new (external_X_ITE_X3D_Matrix4_default()) ();
    this .modelMatrix        = new (external_X_ITE_X3D_Matrix4_default()) ();
    this .viewVolume         = new (external_X_ITE_X3D_ViewVolume_default()) ();
+   this .updateCallbacks    = new Map ();
 }
 
 Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, CubeMapTexturing_X3DEnvironmentTextureNode .prototype),
@@ -614,6 +615,14 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
       this ._size .addInterest ("set_size__", this);
 
       this .set_size__ ();
+   },
+   addUpdateCallback (key, callback)
+   {
+      this .updateCallbacks .set (key, callback);
+   },
+   removeUpdateCallback (key)
+   {
+      this .updateCallbacks .delete (key);
    },
    set_size__ ()
    {
@@ -665,9 +674,10 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
       if (!this .frameBuffer)
          return;
 
-      renderObject .getGeneratedCubeMapTextures () .push (this);
+      renderObject .getGeneratedCubeMapTextures () .add (this);
 
-      this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ()) .multRight (renderObject .getCameraSpaceMatrix () .get ());
+      this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ())
+         .multRight (renderObject .getCameraSpaceMatrix () .get ());
    },
    renderTexture: (() =>
    {
@@ -779,6 +789,9 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
 
          if (this ._update .getValue () === "NEXT_FRAME_ONLY")
             this ._update = "NONE";
+
+         for (const callback of this .updateCallbacks .values ())
+            callback ();
 
          this .textureRenderingPass = false;
       };
