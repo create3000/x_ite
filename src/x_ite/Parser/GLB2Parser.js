@@ -91,8 +91,6 @@ Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, X3DParser .protot
 
          i += length;
       }
-
-      return this .getScene ();
    },
 });
 
