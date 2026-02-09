@@ -1714,7 +1714,7 @@ function eventsProcessed ()
       if (!(mesh instanceof Object))
          return;
 
-      if (mesh .shapeNodes)
+      if (mesh .shapeNodes && !EXT_mesh_gpu_instancing)
       {
          const primitives = mesh .primitives;
 
@@ -2798,8 +2798,11 @@ function eventsProcessed ()
       const
          scene          = this .getScene (),
          shapeNode      = this .meshInstancing (EXT_mesh_gpu_instancing) ?? scene .createNode ("Shape", false),
-         appearanceNode = this .materialObject (primitive),
-         geometryNode   = this .createGeometry (primitive, weights, skin);
+         appearanceNode = primitive .appearanceNode ?? this .materialObject (primitive),
+         geometryNode   = primitive .geometryNode ?? this .createGeometry (primitive, weights, skin);
+
+      primitive .appearanceNode = appearanceNode;
+      primitive .geometryNode   = geometryNode;
 
       shapeNode ._appearance = appearanceNode;
       shapeNode ._geometry   = geometryNode;
