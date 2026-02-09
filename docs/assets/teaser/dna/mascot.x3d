@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.1//EN" "https://www.web3d.org/specifications/x3d-4.1.dtd">
+<X3D profile='Interchange' version='4.1' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.1.xsd'>
+  <head>
+    <component name='ParticleSystems' level='3'/>
+    <component name='Shaders' level='1'/>
+    <component name='X_ITE' level='1'/>
+    <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
+    <meta name='created' content='Sat, 14 Dec 2024 18:52:06 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Sunrize X3D Editor V2.0.2, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Mon, 09 Feb 2026 05:27:22 GMT'/>
+  </head>
+  <Scene>
+    <WorldInfo>
+      <MetadataSet containerField='metadata'
+          name='Sunrize'
+          reference='https://create3000.github.io/sunrize/'>
+        <MetadataSet
+            name='BrowserFrame'>
+          <MetadataBoolean
+              name='fixedSize'
+              value='true'/>
+          <MetadataDouble
+              name='aspectRatio'
+              value='780, 280'/>
+          <MetadataString
+              name='backgroundColor'
+              value='""'/>
+        </MetadataSet>
+      </MetadataSet>
+    </WorldInfo>
+    <NavigationInfo
+        type='"NONE"'
+        headlight='false'/>
+    <Background
+        transparency='1'/>
+    <Transform
+        translation='7.237416 -2.666255 0'
+        rotation='0.874821700884646 -0.204057968088552 0.439371525386963 72.648887120954'
+        scale='1.5 1.5 1.5'>
+      <ParticleSystem DEF='Fire_33'
+          geometryType='SPRITE'
+          maxParticles='151'
+          particleLifetime='8.31'
+          particleSize='0.64 0.64'
+          colorKey='0, 0.0778606, 0.202283, 1'>
+        <VolumeEmitter
+            speed='0.64'
+            coordIndex='2, 0, 1, -1, 3, 0, 2, -1, 4, 0, 3, -1, 5, 0, 4, -1, 1, 0, 5, -1, 6, 3, 2, -1, 7, 2, 1, -1, 8, 1, 5, -1, 9, 5, 4, -1, 10, 4, 3, -1, 7, 11, 6, -1, 8, 11, 7, -1, 9, 11, 8, -1, 10, 11, 9, -1, 6, 11, 10, -1, 2, 7, 6, -1, 1, 8, 7, -1, 5, 9, 8, -1, 4, 10, 9, -1, 3, 6, 10, -1'>
+          <Coordinate
+              point='-0.850651 0.447214 -0.276393, -0.850651 -0.447214 0.276393, -0.525731 0.447214 0.723607, 0 1 2.77556e-17, 2.94903e-16 0.447214 -0.894427, -0.525731 -0.447214 -0.723607, 0.525731 0.447214 0.723607, -2.94903e-16 -0.447214 0.894427, 0 -1 -2.77556e-17, 0.525731 -0.447214 -0.723607, 0.850651 0.447214 -0.276393, 0.850651 -0.447214 0.276393'/>
+        </VolumeEmitter>
+        <ColorRGBA
+            color='0.684018 0.374525 0.19722 0, 0.684018 0.374525 0.19722 1, 0.684018 0.374525 0.19722 1, 0.684018 0.374525 0.19722 0'/>
+        <Appearance>
+          <ImageTexture
+              url='"https://create3000.github.io/media/examples/X_ITE/BlendMode/assets/glow.png"'
+              repeatS='false'
+              repeatT='false'/>
+          <ComposedShader DEF='ComposedShader'
+              language='GLSL'>
+            <ShaderPart DEF='VertexShader'>
+<![CDATA[data:x-shader/x-vertes,
+
+precision mediump float;
+
+uniform mat4 x3d_ProjectionMatrix;
+uniform mat4 x3d_ModelViewMatrix;
+uniform mat4 x3d_EyeMatrix;
+
+attribute vec4 x3d_Color;
+attribute vec4 x3d_TexCoord0;
+attribute vec4 x3d_Vertex;
+
+attribute vec4 x3d_Particle;
+attribute mat4 x3d_ParticleMatrix;
+
+varying vec4 color;
+varying vec4 texCoord;
+
+#define PI 3.1415
+
+mat4
+getXZRotation (in float a)
+{
+	float s = sin (a);
+	float c = cos (a);
+
+	return mat4 (  c, 0.0 ,  s, 0.0,
+	             0.0, 1.0, 0.0, 0.0,
+	              -s, 0.0,   c, 0.0,
+	             0.0, 0.0, 0.0, 1.0);
+}
+
+void
+main ()
+{
+  float e = x3d_Particle [2] / x3d_Particle [1];
+	float s = 1.0 - e;
+	mat4  r = getXZRotation (e * 2.0 * PI / 2.0);
+	vec4  p = x3d_ParticleMatrix [3] * vec4 (pow (s, 0.3), 1.0, pow (s, 0.3), 1.0);
+	vec4  v = vec4 (x3d_Vertex .xyz * s, 0.0) + r * p;
+
+	color    = x3d_Color;
+	texCoord = x3d_TexCoord0;
+
+	gl_Position = x3d_ProjectionMatrix * x3d_EyeMatrix * x3d_ModelViewMatrix * v;
+}
+]]>
+            </ShaderPart>
+            <ShaderPart DEF='FragmentShader'
+                type='FRAGMENT'>
+<![CDATA[data:x-shader/x-fragment,
+
+precision mediump float;
+
+uniform x3d_MaterialParameters x3d_Material;
+uniform sampler2D x3d_Texture2D [1];
+
+varying vec4 color;
+varying vec4 texCoord;
+
+void
+main ()
+{
+	vec4  t = texture2D (x3d_Texture2D [0], texCoord .st);
+	float a = 1.0 - x3d_Material .transparency;
+
+	gl_FragColor = vec4 (color .rgb * t .rgb, a * color .a * t .a);
+}]]>
+            </ShaderPart>
+          </ComposedShader>
+          <BlendMode
+              destinationColorFactor='ONE'/>
+        </Appearance>
+      </ParticleSystem>
+    </Transform>
+  </Scene>
+</X3D>

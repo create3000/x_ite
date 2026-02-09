@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.1//EN" "https://www.web3d.org/specifications/x3d-4.1.dtd">
+<X3D profile='Interchange' version='4.1' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.1.xsd'>
+  <head>
+    <component name='Geometry2D' level='2'/>
+    <component name='Layering' level='1'/>
+    <component name='Scripting' level='1'/>
+    <component name='Text' level='2'/>
+    <meta name='created' content='Sat, 17 May 2025 17:44:03 GMT'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='generator' content='Sunrize X3D Editor V2.0.2, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Mon, 09 Feb 2026 05:29:46 GMT'/>
+  </head>
+  <Scene>
+    <ProtoDeclare name='ColorScheme'>
+      <ProtoInterface>
+        <field accessType='outputOnly' type='SFBool' name='light'/>
+        <field accessType='outputOnly' type='SFBool' name='dark'/>
+      </ProtoInterface>
+      <ProtoBody>
+        <Script DEF='ColorSchemeScript'>
+          <field accessType='outputOnly' type='SFBool' name='light'/>
+          <field accessType='outputOnly' type='SFBool' name='dark'/>
+          <IS>
+            <connect nodeField='light' protoField='light'/>
+            <connect nodeField='dark' protoField='dark'/>
+          </IS>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+   const colorScheme = window .matchMedia ("(prefers-color-scheme: light)");
+
+   colorScheme .addEventListener ("change", event => changeColorScheme (event));
+
+   if (typeof $ !== "undefined")
+   {
+      const observer = new MutationObserver (() => changeColorScheme (colorScheme));
+
+      observer .observe ($("html") [0],
+      {
+         attributes: true,
+         attributeFilter: ["data-mode"],
+         attributeOldValue: false,
+      });
+   }
+
+   changeColorScheme (colorScheme);
+}
+
+function changeColorScheme (colorScheme)
+{
+   light = colorScheme .matches;
+
+   if (typeof $ !== "undefined")
+   {
+      if ($("html") .attr ("data-mode") === "light")
+         light = true;
+
+      if ($("html") .attr ("data-mode") === "dark")
+         light = false;
+   }
+
+   dark = !light;
+}
+]]>
+        </Script>
+      </ProtoBody>
+    </ProtoDeclare>
+    <WorldInfo DEF='_1'
+        title='Winter Forest'
+        info='"Credits: [oxterium](https://sketchfab.com/oxterium) (DNA)"'>
+      <MetadataSet containerField='metadata'
+          name='Sunrize'
+          reference='https://create3000.github.io/sunrize/'>
+        <MetadataSet
+            name='BrowserFrame'
+            reference='https://create3000.github.io/sunrize/'>
+          <MetadataBoolean
+              name='fixedSize'
+              reference='https://create3000.github.io/sunrize/'
+              value='true'/>
+          <MetadataDouble
+              name='aspectRatio'
+              reference='https://create3000.github.io/sunrize/'
+              value='16, 5'/>
+          <MetadataString
+              name='backgroundColor'
+              reference='https://create3000.github.io/sunrize/'
+              value='""'/>
+        </MetadataSet>
+      </MetadataSet>
+    </WorldInfo>
+    <ProtoInstance name='ColorScheme' DEF='_12'/>
+    <LayerSet
+        activeLayer='2'
+        order='1, 2, 3'>
+      <Layer DEF='Background'>
+        <Background DEF='Dark_3'/>
+        <Background DEF='Light_2'
+            skyColor='1 1 1'/>
+        <Transform DEF='Rectangle2D'
+            scale='14.35624 8.265657 8.265657'>
+          <Shape>
+            <Appearance>
+              <UnlitMaterial/>
+              <ImageTexture
+                  url='"blue-stars.avif"'/>
+            </Appearance>
+            <Rectangle2D/>
+          </Shape>
+        </Transform>
+      </Layer>
+      <Layer DEF='DNA'>
+        <Viewpoint
+            position='-0.1727666 0.06745123 0.1988215'
+            orientation='-0.775173517152588 -0.620170030626233 -0.12039581146513 0.490783284172985'
+            centerOfRotation='-0.1015173 -0.02732614 -0.02501625'/>
+        <Inline DEF='_2'
+            url='"dna_hologram_optimized.glb"'/>
+        <LoadSensor DEF='_3'>
+          <Inline USE='_2'/>
+        </LoadSensor>
+      </Layer>
+      <Layer DEF='Text'>
+        <FontLibrary DEF='Neuropol'
+            family='Neuropol'
+            url='"Neuropol.otf"'/>
+        <Transform DEF='Rectangle2D_1'
+            translation='0 0.04948798 0'
+            scale='32 1.2 1'>
+          <Shape DEF='Light_3'
+              visible='false'>
+            <Appearance>
+              <UnlitMaterial
+                  transparency='0.5'/>
+            </Appearance>
+            <Rectangle2D DEF='_6'/>
+          </Shape>
+          <Shape DEF='Dark_2'>
+            <Appearance>
+              <UnlitMaterial
+                  emissiveColor='0 0 0'
+                  transparency='0.5'/>
+            </Appearance>
+            <Rectangle2D USE='_6'/>
+          </Shape>
+        </Transform>
+        <Transform DEF='Text_1'
+            translation='-9 0 3'
+            rotation='1 0 0 3.14159265358979'
+            scale='0.8288495 0.8288495 0.8288495'
+            center='5.160146 0 0'>
+          <Group DEF='Animation'>
+            <TimeSensor DEF='_4'
+                cycleInterval='0.5'
+                startTime='1744035866.764'/>
+            <OrientationInterpolator DEF='_7'
+                key='0, 0.5, 1'
+                keyValue='1 0 0 0, 1 0 0 1.5707963267949, 1 0 0 3.14159265358979'/>
+          </Group>
+          <Group DEF='Light_1'
+              visible='false'>
+            <Transform DEF='Front_1'>
+              <Shape DEF='_13'>
+                <Appearance>
+                  <UnlitMaterial
+                      emissiveColor='0 0 0'/>
+                </Appearance>
+                <Text DEF='_5'
+                    string='"X_ITE v14.0.2"'
+                    solid='true'>
+                  <FontStyle
+                      family='"Neuropol", "SANS"'
+                      size='1.4'
+                      justify='"BEGIN", "MIDDLE"'/>
+                </Text>
+              </Shape>
+            </Transform>
+            <Transform DEF='Back_1'
+                rotation='1 0 0 3.14159265358979'>
+              <Shape USE='_13'/>
+            </Transform>
+          </Group>
+          <Group DEF='Dark_1'>
+            <Transform DEF='Front'>
+              <Shape DEF='_14'>
+                <Appearance>
+                  <UnlitMaterial/>
+                </Appearance>
+                <Text USE='_5'/>
+              </Shape>
+            </Transform>
+            <Transform DEF='Back'
+                rotation='1 0 0 3.14159265358979'>
+              <Shape USE='_14'/>
+            </Transform>
+          </Group>
+          <Script DEF='X_ITE'>
+            <field accessType='outputOnly' type='MFString' name='string_changed'/>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+   string_changed = new MFString (Browser .name + " v" + Browser .version);
+}
+]]>
+          </Script>
+        </Transform>
+      </Layer>
+    </LayerSet>
+    <Script DEF='CreditsScript'>
+      <field accessType='initializeOnly' type='SFNode' name='worldInfo'>
+        <WorldInfo USE='_1'/>
+      </field>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+   if (typeof $ === "undefined")
+      return;
+
+   const html = worldInfo .info .join ("\n")
+      .replace (/\[(.*?)\]\((.*?)\)/g, `<a href="\$2" target="_blank">\$1</a>`);
+
+   $("#teaser-credits") .html (html);
+}
+]]>
+    </Script>
+    <IMPORT inlineDEF='_2' importedDEF='Timer1'/>
+    <ROUTE fromNode='_4' fromField='fraction_changed' toNode='_7' toField='set_fraction'/>
+    <ROUTE fromNode='_7' fromField='value_changed' toNode='Text_1' toField='set_rotation'/>
+    <ROUTE fromNode='X_ITE' fromField='string_changed' toNode='_5' toField='set_string'/>
+    <ROUTE fromNode='_12' fromField='light' toNode='Light_1' toField='set_visible'/>
+    <ROUTE fromNode='_12' fromField='light' toNode='Light_3' toField='set_visible'/>
+    <ROUTE fromNode='_12' fromField='dark' toNode='Dark_1' toField='set_visible'/>
+    <ROUTE fromNode='_12' fromField='dark' toNode='Dark_2' toField='set_visible'/>
+    <ROUTE fromNode='_3' fromField='isLoaded' toNode='Timer1' toField='set_loop'/>
+  </Scene>
+</X3D>
