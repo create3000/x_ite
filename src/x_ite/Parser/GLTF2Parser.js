@@ -2796,16 +2796,14 @@ function eventsProcessed ()
    createShape (primitive, weights, skin, EXT_mesh_gpu_instancing)
    {
       const
-         scene          = this .getScene (),
-         shapeNode      = this .meshInstancing (EXT_mesh_gpu_instancing) ?? scene .createNode ("Shape", false),
-         appearanceNode = primitive .appearanceNode ?? this .materialObject (primitive),
-         geometryNode   = primitive .geometryNode ?? this .createGeometry (primitive, weights, skin);
+         scene     = this .getScene (),
+         shapeNode = this .meshInstancing (EXT_mesh_gpu_instancing) ?? scene .createNode ("Shape", false);
 
-      primitive .appearanceNode = appearanceNode;
-      primitive .geometryNode   = geometryNode;
+      primitive .appearanceNode ??= this .materialObject (primitive);
+      primitive .geometryNode   ??= this .createGeometry (primitive, weights, skin);
 
-      shapeNode ._appearance = appearanceNode;
-      shapeNode ._geometry   = geometryNode;
+      shapeNode ._appearance = primitive .appearanceNode;
+      shapeNode ._geometry   = primitive .geometryNode;
 
       shapeNode .setup ();
 
