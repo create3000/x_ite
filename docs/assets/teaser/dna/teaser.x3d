@@ -9,7 +9,7 @@
     <meta name='created' content='Sat, 17 May 2025 17:44:03 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V2.0.2, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Mon, 09 Feb 2026 05:29:46 GMT'/>
+    <meta name='modified' content='Mon, 09 Feb 2026 05:39:08 GMT'/>
   </head>
   <Scene>
     <ProtoDeclare name='ColorScheme'>
@@ -93,7 +93,7 @@ function changeColorScheme (colorScheme)
     </WorldInfo>
     <ProtoInstance name='ColorScheme' DEF='_12'/>
     <LayerSet
-        activeLayer='2'
+        activeLayer='-1'
         order='1, 2, 3'>
       <Layer DEF='Background'>
         <Background DEF='Dark_3'/>
