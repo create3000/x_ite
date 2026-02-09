@@ -28,10 +28,10 @@ Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, X3DParser .protot
       if (this .dataView .byteLength < 12)
          return false;
 
-      if (this .dataView .getUint32 (0, true) !== 0x46546C67)
+      if (this .dataView .getUint32 (0, true) !== 0x46546C67) // glTF
          return false;
 
-      if (this .dataView .getUint32 (4, true) !== 2)
+      if (this .dataView .getUint32 (4, true) !== 2) // Version
          return false;
 
       if (this .dataView .getUint32 (8, true) !== this .dataView .byteLength)
