@@ -46,7 +46,7 @@ burley_eval (const in vec3 d, const in float r)
 }
 
 vec3
-getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in vec3 scatterDistance, const in vec3 diffuseColor, const in vec3 multiscatterColor, const in vec4 fragCoord)
+getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in vec3 scatterDistance, const in vec3 diffuseColor, const in vec3 multiscatterColor, const in vec3 singleScatterColor, const in vec4 fragCoord)
 {
    float maxColor            = max3 (scatterDistance);
    vec2  texelSize           = 1.0 / vec2 (x3d_Viewport .zw);
@@ -77,7 +77,7 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
    vec3 totalDiffuse = vec3 (0.0);
 
    vec3 clampedScatterDistance = max (vec3 (x3d_ScatterMinRadiusEXT), scatterDistance / maxColor) * maxColor;
-   vec3 d                      = burley_setup (clampedScatterDistance, diffuseColor); // Setup the Burley model parameters.
+   vec3 d                      = burley_setup (clampedScatterDistance, vec3 (1.0)); // Setup the Burley model parameters.
 
    for (int i = 0; i < X3D_SCATTER_SAMPLES_COUNT_EXT; ++ i)
    {
@@ -111,7 +111,7 @@ getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, c
 
    totalWeight = max (totalWeight, vec3 (0.0001)); // Avoid division by zero.
 
-   return totalDiffuse / totalWeight * diffuseColor;
+   return totalDiffuse / totalWeight * diffuseColor * multiscatterColor * singleScatterColor;
 }
 #endif
 #endif

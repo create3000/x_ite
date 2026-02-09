@@ -102,6 +102,10 @@ getMaterialColor (const in vec4 fragCoord)
       #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
          f_diffuse  = getDiffuseLight (n) * materialInfo .diffuseTransmissionColorFactor;
          f_diffuse *= materialInfo .diffuseTransmissionFactor;
+
+         #if defined (X3D_VOLUME_MATERIAL_EXT)
+            f_diffuse =  1.0 - applyVolumeAttenuation (f_diffuse, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
+         #endif
       #endif
 
       #if defined (X3D_SHEEN_MATERIAL_EXT)
@@ -156,6 +160,11 @@ getMaterialColor (const in vec4 fragCoord)
 
             l_diffuse  = lightIntensity * NdotL * BRDF_lambertian (materialInfo .diffuseTransmissionColorFactor);
             l_diffuse *= materialInfo .diffuseTransmissionFactor;
+
+            #if defined (X3D_VOLUME_MATERIAL_EXT)
+               l_diffuse = 1.0 - applyVolumeAttenuation (l_diffuse, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
+            #endif
+
          #endif // X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT
 
          // We need to multiply with sheen scaling, since we aggregate all lights in one texture, for IBL this can be done in the normal PBR shader
@@ -169,6 +178,6 @@ getMaterialColor (const in vec4 fragCoord)
    }
    #endif
 
-   return vec4 (frontColor * materialInfo .multiscatterColor, x3d_ScatterMaterialIdEXT);
+   return vec4 (frontColor, x3d_ScatterMaterialIdEXT);
 }
 `;
