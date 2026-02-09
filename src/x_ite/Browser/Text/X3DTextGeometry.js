@@ -637,8 +637,6 @@ Object .assign (X3DTextGeometry .prototype,
 
       return glyphs;
    },
-   traverse (type, renderObject)
-   { },
 });
 
 export default X3DTextGeometry;

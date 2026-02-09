@@ -172,6 +172,7 @@ getMaterialColor (const in vec4 fragCoord)
    #endif
 
    // Calculate lighting contribution from image based lighting source (IBL)
+   // Holger: no (|| X3D_TRANSMISSION_MATERIAL_EXT)
    #if defined (X3D_USE_IBL)
       f_diffuse = getDiffuseLight (n) * baseColor .rgb;
 

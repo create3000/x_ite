@@ -34,7 +34,7 @@ The EnvironmentLight node belongs to the [Lighting](/x_ite/components/overview/#
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFBool | [in, out] | [global](#fields-global) | FALSE |
+| SFBool | [in, out] | [global](#fields-global) | TRUE |
 | SFBool | [in, out] | [on](#fields-on) | TRUE |
 | SFColor | [in, out] | [color](#fields-color) | 1 1 1  |
 | SFFloat | [in, out] | [intensity](#fields-intensity) | 1  |
@@ -60,7 +60,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
-### SFBool [in, out] **global** FALSE
+### SFBool [in, out] **global** TRUE
 {: #fields-global }
 
 *global* field affects the scope of lighting effects produced by the EnvironmentLight node, and has no effect on the computation of environment textures. Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.

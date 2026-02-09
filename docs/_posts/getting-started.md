@@ -68,6 +68,15 @@ X_ITE needs your support, with a small contribution you can make a big differenc
 
 [<i class="fa-solid fa-heart"></i> Support us on Patreon](https://patreon.com/X_ITE){: .patreon }
 
+#### Special Thanks to All Active Supporters
+
+[![CRISE](/assets/sponsors/crise.png){: .normal }](https://vr-crisis.com){: title="CRISE" }
+[![John Carlson](/assets/sponsors/john-carlson.png){: .normal }](mailto:yottzumm@gmail.com){: title="John Carlson" }
+[![N Polys](/assets/sponsors/n-polys.png){: .normal }](mailto:nicholas.polys@gmail.com){: title="N Polys" }
+[![Sandy Ressler](/assets/sponsors/sandy-ressler.png){: .normal }](https://acm.org){: title="Sandy Ressler" }
+[![UND DREAM Lab](/assets/sponsors/und-dream-lab.png){: .normal }](https://dream.crc.und.edu){: title="UND DREAM Lab" }
+{: .sponsors }
+
 ## X3D Examples
 
 <script type="module" src="assets/js/examples.js"></script>
@@ -343,17 +352,22 @@ To get X_ITE working you need to include the JavaScript file »x_ite.min.js«. O
 
 X_ITE can load several file formats, either directly as the source of the \<x3d-canvas\> element or as the source of an Inline node, as well as using API methods of the [Browser object](/x_ite/reference/browser-services/). Foreign formats such as glTF are converted internally to X3D and then made available to the scene graph.
 
-| Encoding         | File Extension | MIME Type       |
-|------------------|----------------|-----------------|
-| X3D XML          | .x3d, .x3dz    | model/x3d+xml   |
-| X3D JSON         | .x3dj, .x3djz  | model/x3d+json  |
-| X3D Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml  |
-| VRML 2.0         | .wrl, .wrz     | model/vrml      |
-| glTF             | .gltf, .glb    | model/gltf+json |
-| Wavefront OBJ    | .obj           | model/obj       |
-| STL              | .stl           | model/stl       |
-| PLY              | .ply           | model/ply       |
-| SVG Document     | .svg, .svgz    | image/svg+xml   |
+| Encoding         | File Extension | MIME Type       | Comment                                       |
+|------------------|----------------|-----------------|-----------------------------------------------|
+| X3D XML          | .x3d, .x3dz    | model/x3d+xml   | [X3D Encoding: XML][1]                        |
+| X3D JSON         | .x3dj, .x3djz  | model/x3d+json  | [X3D Encoding: JSON][2]                       |
+| X3D Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml  | [X3D Encoding: Classic VRML][3]               |
+| VRML 2.0         | .wrl, .wrz     | model/vrml      | [VRML Specification][4]                       |
+| glTF             | .gltf, .glb    | model/gltf+json | [glTF Support](/x_ite/features/#gltf-support) |
+| Wavefront OBJ    | .obj           | model/obj       |                                               |
+| STL              | .stl           | model/stl       | ASCII & Binary                                |
+| PLY              | .ply           | model/ply       | ASCII & Binary                                |
+| SVG Document     | .svg, .svgz    | image/svg+xml   |                                               |
+
+  [1]: https://www.web3d.org/documents/specifications/19776-1/V3.3/index.html
+  [2]: https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19776-5v4.0-WD1/Part05/X3D_JSON.html
+  [3]: https://www.web3d.org/documents/specifications/19776-2/V3.3/index.html
+  [4]: https://www.web3d.org/documents/specifications/14772/V2.0/
 
 All files can be compressed using GZip compression (usually denoted by a 'z' at the end of the filename suffix). This saves bandwidth and speeds up download time.
 

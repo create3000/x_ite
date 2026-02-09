@@ -176,17 +176,6 @@ The *justify* field determines horizontal and vertical alignment of text layout,
 - Exactly two string values are provided for major and minor axis alignment.
 - Do not use illegal values such as LEFT RIGHT TOP BOTTOM or CENTER.
 
-## Supported File Formats
-
-It is possible to specify in the *url* of a [FontLibrary](/x_ite/components/text/fontlibrary/) node one or more URLs of a custom font file of the following types:
-
-| Encoding  | File Extension | MIME Type  |
-|-----------|----------------|------------|
-| WOFF2     | .woff2         | font/woff2 |
-| WOFF      | .woff          | font/woff  |
-| Open Type | .otf           | font/otf   |
-| True Type | .ttf           | font/ttf   |
-
 ## Advice
 
 ### Hints

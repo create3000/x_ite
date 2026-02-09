@@ -107,12 +107,12 @@ If provided, *parameter* tells the X3D player where to to redirect the loaded ur
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
 {: #fields-autoRefresh }
 
-The [*autoRefresh* field has no effect, Anchor operation is only triggered by user selection.
+The *autoRefresh* field has no effect, Anchor operation is only triggered by user selection.
 
 ### SFTime [in, out] **autoRefreshTimeLimit** 3600 <small>[0,∞)</small>
 {: #fields-autoRefreshTimeLimit }
 
-The [*autoRefreshTimeLimit* field has no effect, Anchor operation is only triggered by user selection.
+The *autoRefreshTimeLimit* field has no effect, Anchor operation is only triggered by user selection.
 
 ### SFBool [in, out] **visible** TRUE
 {: #fields-visible }

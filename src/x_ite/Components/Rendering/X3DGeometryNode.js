@@ -5,7 +5,6 @@ import X3DConstants from "../../Base/X3DConstants.js";
 import X3DCast      from "../../Base/X3DCast.js";
 import MikkTSpace   from "../../Browser/Rendering/MikkTSpace.js";
 import Vector3      from "../../../standard/Math/Numbers/Vector3.js";
-import Vector4      from "../../../standard/Math/Numbers/Vector4.js";
 import Matrix4      from "../../../standard/Math/Numbers/Matrix4.js";
 import Box3         from "../../../standard/Math/Geometry/Box3.js";
 import Plane3       from "../../../standard/Math/Geometry/Plane3.js";
@@ -32,7 +31,7 @@ function X3DGeometryNode (executionContext)
                           X3DConstants .outputOnly, "bbox_changed", new Fields .SFTime (),
                           X3DConstants .outputOnly, "rebuild",      new Fields .SFTime (Date .now () / 1000));
 
-   // Members
+   // Private members
 
    this .min                      = new Vector3 ();
    this .max                      = new Vector3 ();
@@ -55,10 +54,7 @@ function X3DGeometryNode (executionContext)
    this .hasNormals               = false;
    this .geometryKey              = "";
    this .vertexCount              = 0;
-   this .planes                   = [ ];
-
-   for (let i = 0; i < 5; ++ i)
-      this .planes [i] = new Plane3 ();
+   this .planes                   = Array .from ({ length: 5 }, () => new Plane3 ()); // For LinePickSensor
 }
 
 class GeometryArray extends Array
@@ -127,7 +123,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       this .coordIndexBuffer      = gl .createBuffer ();
       this .attribBuffers         = [ ];
       this .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
-      this .texCoordBuffers       = Array .from ({length: browser .getMaxTexCoords ()}, () => gl .createBuffer ());
+      this .texCoordBuffers       = Array .from ({ length: browser .getMaxTexCoords () }, () => gl .createBuffer ());
       this .fogDepthBuffer        = gl .createBuffer ();
       this .colorBuffer           = gl .createBuffer ();
       this .tangentBuffer         = gl .createBuffer ();
@@ -165,12 +161,12 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       if (bbox .equals (this .bbox))
          return;
 
-      bbox .getExtents (this .min, this .max);
+      const { min, max } = this;
+
+      bbox .getExtents (min, max);
 
       this .bbox .assign (bbox);
-
-      for (let i = 0; i < 5; ++ i)
-         this .planes [i] .set (i % 2 ? this .min : this .max, boxNormals [i]);
+      this .planes .forEach ((plane, i) => plane .set (i % 2 ? min : max, boxNormals [i]));
 
       this ._bbox_changed .addEvent ();
    },
@@ -432,134 +428,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       return refinedNormals;
    },
-   transformLine (hitRay)
-   {
-      // Apply screen nodes transformation in place here.
-   },
-   transformMatrix (hitRay)
-   {
-      // Apply screen nodes transformation in place here.
-   },
-   intersectsLine: (() =>
-   {
-      const
-         modelViewMatrix = new Matrix4 (),
-         uvt             = { u: 0, v: 0, t: 0 },
-         v0              = new Vector3 (),
-         v1              = new Vector3 (),
-         v2              = new Vector3 ();
-
-      return function (hitRay, matrix, intersections)
-      {
-         if (this .intersectsBBox (hitRay))
-         {
-            this .transformLine (hitRay); // Apply screen transformations from screen nodes.
-            this .transformMatrix (modelViewMatrix .assign (matrix)); // Apply screen transformations from screen nodes.
-
-            const
-               texCoords   = this .multiTexCoords [0] .getValue (),
-               normals     = this .normals .getValue (),
-               vertices    = this .vertices .getValue (),
-               vertexCount = this .vertexCount;
-
-            for (let i = 0; i < vertexCount; i += 3)
-            {
-               const i4 = i * 4;
-
-               v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
-               v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
-               v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
-
-               if (!hitRay .intersectsTriangle (v0, v1, v2, uvt))
-                  continue;
-
-               // Get barycentric coordinates.
-
-               const { u, v, t } = uvt;
-
-               // Determine vectors for LinePickSensor.
-
-               const point = new Vector3 (u * vertices [i4]     + v * vertices [i4 + 4] + t * vertices [i4 +  8],
-                                          u * vertices [i4 + 1] + v * vertices [i4 + 5] + t * vertices [i4 +  9],
-                                          u * vertices [i4 + 2] + v * vertices [i4 + 6] + t * vertices [i4 + 10]);
-
-               const texCoord = new Vector4 (u * texCoords [i4]     + v * texCoords [i4 + 4] + t * texCoords [i4 + 8],
-                                             u * texCoords [i4 + 1] + v * texCoords [i4 + 5] + t * texCoords [i4 + 9],
-                                             u * texCoords [i4 + 2] + v * texCoords [i4 + 6] + t * texCoords [i4 + 10],
-                                             u * texCoords [i4 + 3] + v * texCoords [i4 + 7] + t * texCoords [i4 + 11]);
-
-               const i3 = i * 3;
-
-               const normal = new Vector3 (u * normals [i3]     + v * normals [i3 + 3] + t * normals [i3 + 6],
-                                           u * normals [i3 + 1] + v * normals [i3 + 4] + t * normals [i3 + 7],
-                                           u * normals [i3 + 2] + v * normals [i3 + 5] + t * normals [i3 + 8]);
-
-               intersections .push ({ texCoord, normal, point: this .getMatrix () .multVecMatrix (point) });
-            }
-         }
-
-         return intersections .length;
-      };
-   })(),
-   intersectsBBox: (() =>
-   {
-      const intersection = new Vector3 ();
-
-      return function (hitRay)
-      {
-         const { min, max, planes } = this;
-
-         const
-            minX = min .x,
-            maxX = max .x,
-            minY = min .y,
-            maxY = max .y,
-            minZ = min .z,
-            maxZ = max .z;
-
-         // front
-         if (planes [0] .intersectsLine (hitRay, intersection))
-         {
-            if (intersection .x >= minX && intersection .x <= maxX &&
-                intersection .y >= minY && intersection .y <= maxY)
-               return true;
-         }
-
-         // back
-         if (planes [1] .intersectsLine (hitRay, intersection))
-         {
-            if (intersection .x >= minX && intersection .x <= maxX &&
-                intersection .y >= minY && intersection .y <= maxY)
-               return true;
-         }
-
-         // top
-         if (planes [2] .intersectsLine (hitRay, intersection))
-         {
-            if (intersection .x >= minX && intersection .x <= maxX &&
-                intersection .z >= minZ && intersection .z <= maxZ)
-               return true;
-         }
-
-         // bottom
-         if (planes [3] .intersectsLine (hitRay, intersection))
-         {
-            if (intersection .x >= minX && intersection .x <= maxX &&
-                intersection .z >= minZ && intersection .z <= maxZ)
-               return true;
-         }
-
-         // right
-         if (planes [4] .intersectsLine (hitRay, intersection))
-         {
-            if (intersection .y >= minY && intersection .y <= maxY &&
-                intersection .z >= minZ && intersection .z <= maxZ)
-               return true;
-         }
-
-         return false;
-      };
-   })(),
    set_live__ ()
    {
       // Is overloaded by primitives with option nodes.
@@ -815,8 +683,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          this .displayInstanced       = Function .prototype;
       }
    },
-   traverse (type, renderObject)
-   { },
    displaySimple (gl, renderContext, shaderNode)
    {
       if (this .vertexArrayObject .enable (shaderNode .getProgram ()))

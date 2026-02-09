@@ -1,5 +1,5 @@
-/* X_ITE v14.0.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.0")];
+/* X_ITE v14.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -823,8 +823,8 @@ Object .assign (Object .setPrototypeOf (BoundedPhysicsModel .prototype, Particle
 
       const
          damping  = this ._damping .getValue (),
-         normals  = this .geometryNode .getNormals ()  .getValue (),
-         vertices = this .geometryNode .getVertices () .getValue ();
+         normals  = this .geometryNode .getNormals (),
+         vertices = this .geometryNode .getVertices ();
 
       for (const value of normals)
          boundedNormals .push (value * damping);
@@ -2761,7 +2761,7 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, ParticleSyst
       {
          const
             gl                = this .getBrowser () .getContext (),
-            vertices          = this .polylinesNode .getVertices () .getValue (),
+            vertices          = this .polylinesNode .getVertices (),
             numVertices       = vertices .length / 4,
             numLengthSoFar    = numVertices / 2 + 1,
             polylineArraySize = Math .ceil (Math .sqrt (numLengthSoFar + numVertices));
@@ -2970,8 +2970,8 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, ParticleSyste
          if (this .surfaceNode)
          {
             const
-               vertices         = this .surfaceNode .getVertices () .getValue (),
-               normals          = this .surfaceNode .getNormals () .getValue (),
+               vertices         = this .surfaceNode .getVertices (),
+               normals          = this .surfaceNode .getNormals (),
                numVertices      = vertices .length / 4,
                numAreaSoFar     = numVertices / 3 + 1,
                surfaceArraySize = Math .ceil (Math .sqrt (numAreaSoFar + numVertices + numVertices));
@@ -3236,8 +3236,8 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, ParticleSystem
       {
          const
             gl              = this .getBrowser () .getContext (),
-            vertices        = this .volumeNode .getVertices () .getValue (),
-            normals         = this .volumeNode .getNormals () .getValue (),
+            vertices        = this .volumeNode .getVertices (),
+            normals         = this .volumeNode .getNormals (),
             hierarchy       = new Utility_BVH (vertices, normals) .toArray ([ ]),
             numVertices     = vertices .length / 4,
             numNormals      = normals .length / 3,

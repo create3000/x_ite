@@ -422,28 +422,40 @@ Object .assign (Matrix4 .prototype,
    {
       // Complexity 48 +, 64 *.
 
-      const
-         { 0: a00, 1: a01, 2: a02, 3: a03, 4: a04, 5: a05, 6: a06, 7: a07,
-           8: a08, 9: a09, 10: a10, 11: a11, 12: a12, 13: a13, 14: a14, 15: a15 } = this,
-         { 0: b00, 1: b01, 2: b02, 3: b03, 4: b04, 5: b05, 6: b06, 7: b07,
-           8: b08, 9: b09, 10: b10, 11: b11, 12: b12, 13: b13, 14: b14, 15: b15 } = matrix;
+      const {
+         0:  a00, 1:  a01, 2:  a02, 3:  a03,
+         4:  a04, 5:  a05, 6:  a06, 7:  a07,
+         8:  a08, 9:  a09, 10: a10, 11: a11,
+         12: a12, 13: a13, 14: a14, 15: a15
+      } = this;
 
-      this [ 0] = a00 * b00 + a04 * b01 + a08 * b02 + a12 * b03;
-      this [ 1] = a01 * b00 + a05 * b01 + a09 * b02 + a13 * b03;
-      this [ 2] = a02 * b00 + a06 * b01 + a10 * b02 + a14 * b03;
-      this [ 3] = a03 * b00 + a07 * b01 + a11 * b02 + a15 * b03;
-      this [ 4] = a00 * b04 + a04 * b05 + a08 * b06 + a12 * b07;
-      this [ 5] = a01 * b04 + a05 * b05 + a09 * b06 + a13 * b07;
-      this [ 6] = a02 * b04 + a06 * b05 + a10 * b06 + a14 * b07;
-      this [ 7] = a03 * b04 + a07 * b05 + a11 * b06 + a15 * b07;
-      this [ 8] = a00 * b08 + a04 * b09 + a08 * b10 + a12 * b11;
-      this [ 9] = a01 * b08 + a05 * b09 + a09 * b10 + a13 * b11;
-      this [10] = a02 * b08 + a06 * b09 + a10 * b10 + a14 * b11;
-      this [11] = a03 * b08 + a07 * b09 + a11 * b10 + a15 * b11;
-      this [12] = a00 * b12 + a04 * b13 + a08 * b14 + a12 * b15;
-      this [13] = a01 * b12 + a05 * b13 + a09 * b14 + a13 * b15;
-      this [14] = a02 * b12 + a06 * b13 + a10 * b14 + a14 * b15;
-      this [15] = a03 * b12 + a07 * b13 + a11 * b14 + a15 * b15;
+      var { 0: b0, 1: b1, 2: b2, 3: b3 } = matrix;
+
+      this [ 0] = a00 * b0 + a04 * b1 + a08 * b2 + a12 * b3;
+      this [ 1] = a01 * b0 + a05 * b1 + a09 * b2 + a13 * b3;
+      this [ 2] = a02 * b0 + a06 * b1 + a10 * b2 + a14 * b3;
+      this [ 3] = a03 * b0 + a07 * b1 + a11 * b2 + a15 * b3;
+
+      var { 4: b0, 5: b1, 6: b2, 7: b3 } = matrix;
+
+      this [ 4] = a00 * b0 + a04 * b1 + a08 * b2 + a12 * b3;
+      this [ 5] = a01 * b0 + a05 * b1 + a09 * b2 + a13 * b3;
+      this [ 6] = a02 * b0 + a06 * b1 + a10 * b2 + a14 * b3;
+      this [ 7] = a03 * b0 + a07 * b1 + a11 * b2 + a15 * b3;
+
+      var { 8: b0, 9: b1, 10: b2, 11: b3 } = matrix;
+
+      this [ 8] = a00 * b0 + a04 * b1 + a08 * b2 + a12 * b3;
+      this [ 9] = a01 * b0 + a05 * b1 + a09 * b2 + a13 * b3;
+      this [10] = a02 * b0 + a06 * b1 + a10 * b2 + a14 * b3;
+      this [11] = a03 * b0 + a07 * b1 + a11 * b2 + a15 * b3;
+
+      var { 12: b0, 13: b1, 14: b2, 15: b3 } = matrix;
+
+      this [12] = a00 * b0 + a04 * b1 + a08 * b2 + a12 * b3;
+      this [13] = a01 * b0 + a05 * b1 + a09 * b2 + a13 * b3;
+      this [14] = a02 * b0 + a06 * b1 + a10 * b2 + a14 * b3;
+      this [15] = a03 * b0 + a07 * b1 + a11 * b2 + a15 * b3;
 
       return this;
    },
@@ -451,28 +463,40 @@ Object .assign (Matrix4 .prototype,
    {
       // Complexity 48 +, 64 *.
 
-      const
-         { 0: a00, 1: a01, 2: a02, 3: a03, 4: a04, 5: a05, 6: a06, 7: a07,
-           8: a08, 9: a09, 10: a10, 11: a11, 12: a12, 13: a13, 14: a14, 15: a15 } = this,
-         { 0: b00, 1: b01, 2: b02, 3: b03, 4: b04, 5: b05, 6: b06, 7: b07,
-           8: b08, 9: b09, 10: b10, 11: b11, 12: b12, 13: b13, 14: b14, 15: b15 } = matrix;
+      const {
+         0:  b00, 1:  b01, 2:  b02, 3:  b03,
+         4:  b04, 5:  b05, 6:  b06, 7:  b07,
+         8:  b08, 9:  b09, 10: b10, 11: b11,
+         12: b12, 13: b13, 14: b14, 15: b15
+      } = matrix;
 
-      this [ 0] = a00 * b00 + a01 * b04 + a02 * b08 + a03 * b12;
-      this [ 1] = a00 * b01 + a01 * b05 + a02 * b09 + a03 * b13;
-      this [ 2] = a00 * b02 + a01 * b06 + a02 * b10 + a03 * b14;
-      this [ 3] = a00 * b03 + a01 * b07 + a02 * b11 + a03 * b15;
-      this [ 4] = a04 * b00 + a05 * b04 + a06 * b08 + a07 * b12;
-      this [ 5] = a04 * b01 + a05 * b05 + a06 * b09 + a07 * b13;
-      this [ 6] = a04 * b02 + a05 * b06 + a06 * b10 + a07 * b14;
-      this [ 7] = a04 * b03 + a05 * b07 + a06 * b11 + a07 * b15;
-      this [ 8] = a08 * b00 + a09 * b04 + a10 * b08 + a11 * b12;
-      this [ 9] = a08 * b01 + a09 * b05 + a10 * b09 + a11 * b13;
-      this [10] = a08 * b02 + a09 * b06 + a10 * b10 + a11 * b14;
-      this [11] = a08 * b03 + a09 * b07 + a10 * b11 + a11 * b15;
-      this [12] = a12 * b00 + a13 * b04 + a14 * b08 + a15 * b12;
-      this [13] = a12 * b01 + a13 * b05 + a14 * b09 + a15 * b13;
-      this [14] = a12 * b02 + a13 * b06 + a14 * b10 + a15 * b14;
-      this [15] = a12 * b03 + a13 * b07 + a14 * b11 + a15 * b15;
+      var { 0: a0, 1: a1, 2: a2, 3: a3 } = this;
+
+      this [ 0] = a0 * b00 + a1 * b04 + a2 * b08 + a3 * b12;
+      this [ 1] = a0 * b01 + a1 * b05 + a2 * b09 + a3 * b13;
+      this [ 2] = a0 * b02 + a1 * b06 + a2 * b10 + a3 * b14;
+      this [ 3] = a0 * b03 + a1 * b07 + a2 * b11 + a3 * b15;
+
+      var { 4: a0, 5: a1, 6: a2, 7: a3 } = this;
+
+      this [ 4] = a0 * b00 + a1 * b04 + a2 * b08 + a3 * b12;
+      this [ 5] = a0 * b01 + a1 * b05 + a2 * b09 + a3 * b13;
+      this [ 6] = a0 * b02 + a1 * b06 + a2 * b10 + a3 * b14;
+      this [ 7] = a0 * b03 + a1 * b07 + a2 * b11 + a3 * b15;
+
+      var { 8: a0, 9: a1, 10: a2, 11: a3 } = this;
+
+      this [ 8] = a0 * b00 + a1 * b04 + a2 * b08 + a3 * b12;
+      this [ 9] = a0 * b01 + a1 * b05 + a2 * b09 + a3 * b13;
+      this [10] = a0 * b02 + a1 * b06 + a2 * b10 + a3 * b14;
+      this [11] = a0 * b03 + a1 * b07 + a2 * b11 + a3 * b15;
+
+      var { 12: a0, 13: a1, 14: a2, 15: a3 } = this;
+
+      this [12] = a0 * b00 + a1 * b04 + a2 * b08 + a3 * b12;
+      this [13] = a0 * b01 + a1 * b05 + a2 * b09 + a3 * b13;
+      this [14] = a0 * b02 + a1 * b06 + a2 * b10 + a3 * b14;
+      this [15] = a0 * b03 + a1 * b07 + a2 * b11 + a3 * b15;
 
       return this;
    },
