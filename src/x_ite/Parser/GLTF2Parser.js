@@ -301,6 +301,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "EXT_meshopt_compression":
             {
                this .MeshoptDecoder ??= await this .getLibrary ("meshopt_decoder.js");
+               await this .MeshoptDecoder .ready;
                break;
             }
          }
