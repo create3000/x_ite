@@ -103,7 +103,7 @@ Object .assign (Object .setPrototypeOf (CylinderOptions .prototype, X3DBaseNode 
          const
             u     = i / dimension,
             theta = 2 * Math .PI * u,
-            t     = Complex .Polar (-1, theta);
+            t     = Complex .fromPolar (-1, theta);
 
          point .push (new Vector2 ((t .imag + 1) / 2, (t .real + 1) / 2));
       }
@@ -115,7 +115,7 @@ Object .assign (Object .setPrototypeOf (CylinderOptions .prototype, X3DBaseNode 
          const
             u     = i / dimension,
             theta = 2 * Math .PI * u,
-            t     = Complex .Polar (1, theta);
+            t     = Complex .fromPolar (1, theta);
 
          point .push (new Vector2 (1 - (t .imag + 1) / 2, (t .real + 1) / 2));
       }
@@ -160,7 +160,7 @@ Object .assign (Object .setPrototypeOf (CylinderOptions .prototype, X3DBaseNode 
          const
             u     = i / dimension,
             theta = 2 * Math .PI * u,
-            n     = Complex .Polar (-1, theta);
+            n     = Complex .fromPolar (-1, theta);
 
          vector .push (new Vector3 (n .imag, 0, n .real));
       }
@@ -213,7 +213,7 @@ Object .assign (Object .setPrototypeOf (CylinderOptions .prototype, X3DBaseNode 
          const
             u     = i / dimension,
             theta = 2 * Math .PI * u,
-            p     = Complex .Polar (-1, theta);
+            p     = Complex .fromPolar (-1, theta);
 
          point  .push (new Vector3 (p .imag, -1, p .real));
       }
@@ -225,7 +225,7 @@ Object .assign (Object .setPrototypeOf (CylinderOptions .prototype, X3DBaseNode 
          const
             u     = i / dimension,
             theta = 2 * Math .PI * u,
-            p     = Complex .Polar (-1, theta);
+            p     = Complex .fromPolar (-1, theta);
 
          point  .push (new Vector3 (p .imag, 1, p .real));
       }

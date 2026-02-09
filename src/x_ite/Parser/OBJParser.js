@@ -1,6 +1,7 @@
 import X3DParser    from "./X3DParser.js";
 import X3DOptimizer from "./X3DOptimizer.js";
 import Expressions  from "./Expressions.js";
+import X3DConstants from "../Base/X3DConstants.js";
 import Color3       from "../../standard/Math/Numbers/Color3.js";
 import DEVELOPMENT  from "../DEVELOPMENT.js";
 
@@ -64,7 +65,7 @@ function OBJParser (scene)
    // Globals
 
    this .geometryIndices = new Map ();
-   this .smoothingGroup  = 0;
+   this .smoothingGroup  = -1;
    this .smoothingGroups = new Map ();
    this .groups          = new Map ();
    this .materials       = new Map ();
@@ -116,13 +117,15 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
       // Init nodes.
 
-      this .object          = scene .createNode ("Transform");
-      this .group           = scene .createNode ("Group");
-      this .defaultMaterial = scene .createNode ("Material");
-      this .texCoord        = scene .createNode ("TextureCoordinate");
-      this .normal          = scene .createNode ("Normal");
-      this .coord           = scene .createNode ("Coordinate");
+      this .object   = scene .createNode ("Transform");
+      this .group    = scene .createNode ("Group");
+      this .material = this .createDefaultMaterial ();
+      this .color    = scene .createNode ("Color");
+      this .texCoord = scene .createNode ("TextureCoordinate");
+      this .normal   = scene .createNode ("Normal");
+      this .coord    = scene .createNode ("Coordinate");
 
+      this .colors    = [ ];
       this .texCoords = [ ];
       this .normals   = [ ];
       this .vertices  = [ ];
@@ -144,6 +147,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
          geometry .coordIndex    = indices .coordIndex;
       }
 
+      this .color    .color  = this .colors;
       this .texCoord .point  = this .texCoords;
       this .normal   .vector = this .normals;
       this .coord    .point  = this .vertices;
@@ -237,6 +241,16 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
       return false;
    },
+   createDefaultMaterial (id)
+   {
+      const
+         scene    = this .getExecutionContext (),
+         material = scene .createNode ("Material");
+
+      this .materials .set (id, material);
+
+      return material;
+   },
    async mtllib (path)
    {
       try
@@ -252,30 +266,10 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
          parser .parse ();
 
          for (const [id, material] of parser .materials)
-         {
-            const name = this .sanitizeName (id);
-
-            if (name)
-            {
-               scene .addNamedNode (scene .getUniqueName (name), material);
-               scene .addExportedNode (scene .getUniqueExportName (name), material);
-            }
-
             this .materials .set (id, material);
-         }
 
          for (const [id, texture] of parser .textures)
-         {
-            const name = this .sanitizeName (id);
-
-            if (name)
-            {
-               scene .addNamedNode (scene .getUniqueName (name), texture);
-               scene .addExportedNode (scene .getUniqueExportName (name), texture);
-            }
-
             this .textures .set (id, texture);
-         }
       }
       catch (error)
       {
@@ -294,13 +288,29 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
          {
             const id = this .result [0];
 
-            this .material = this .materials .get (id) || this .defaultMaterial;
-            this .texture  = this .textures .get (id);
+            const
+               scene    = this .getExecutionContext (),
+               material = this .materials .get (id) ?? this .createDefaultMaterial (id),
+               texture  = this .textures .get (id),
+               name     = this .sanitizeName (id);
 
-            const smoothingGroup = this .smoothingGroups .get (this .group .getNodeName ());
+            if (name)
+            {
+               if (!material .getNodeName ())
+               {
+                  scene .addNamedNode (scene .getUniqueName (name), material);
+                  scene .addExportedNode (scene .getUniqueExportName (name), material);
+               }
 
-            if (smoothingGroup)
-               smoothingGroup .delete (this .smoothingGroup);
+               if (texture && !texture .getNodeName ())
+               {
+                  scene .addNamedNode (scene .getUniqueName (name), texture);
+                  scene .addExportedNode (scene .getUniqueExportName (name), texture);
+               }
+            }
+
+            this .material = material;
+            this .texture  = texture;
          }
 
          return true;
@@ -331,7 +341,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
                scene .getRootNodes () .push (this .object);
             }
 
-            if (name && !this .object .getValue () .getName ())
+            if (name && !this .object .getNodeName ())
             {
                scene .addNamedNode (scene .getUniqueName (name), this .object);
                scene .addExportedNode (scene .getUniqueExportName (name), this .object);
@@ -375,19 +385,33 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
             this .groups .set (id, this .group);
 
-            if (name && !this .group .getValue () .getName ())
+            if (name && !this .group .getNodeName ())
             {
                scene .addNamedNode (scene .getUniqueName (name), this .group);
                scene .addExportedNode (scene .getUniqueExportName (name), this .group);
             }
 
-            this .smoothingGroup = 0;
+            this .smoothingGroup = -1;
          }
 
          return true;
       }
 
       return false;
+   },
+   getSmoothingGroupId ()
+   {
+      let id = "";
+
+      id += this .smoothingGroup;
+      id += ".";
+      id += this .group .getId ();
+      id += ".";
+      id += this .material .getId ();
+      id += ".";
+      id += this .texture ?.getId () ?? "";
+
+      return id;
    },
    s ()
    {
@@ -466,23 +490,35 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
    },
    vs ()
    {
-      const vertices = this .vertices;
+      const
+         colors   = this .colors,
+         vertices = this .vertices;
 
       let result = false;
 
-      while (this .v (vertices))
+      while (this .v (vertices, colors))
          result = true;
 
       return result;
    },
-   v (vertices)
+   v (vertices, colors)
    {
       this .comments ();
 
       if (Grammar .v .parse (this))
       {
          if (this .vec3 (vertices))
+         {
+            this .whitespacesNoLineTerminator ();
+
+            if (this .vec3 (colors))
+            {
+               if (this .double ()) // RGBA
+                  colors .push (this .value);
+            }
+
             return true;
+         }
 
          throw new Error ("Expected a vertex coordinate.");
       }
@@ -495,9 +531,11 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
       if (Grammar .f .lookahead (this))
       {
-         try
+         const shape = this .smoothingGroups .get (this .getSmoothingGroupId ());
+
+         if (shape)
          {
-            this .shape    = this .smoothingGroups .get (this .group .getNodeName ()) .get (this .smoothingGroup);
+            this .shape    = shape;
             this .geometry = this .shape .geometry;
 
             const indices = this .geometryIndices .get (this .geometry);
@@ -506,7 +544,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
             this .normalIndex   = indices .normalIndex;
             this .coordIndex    = indices .coordIndex;
          }
-         catch
+         else
          {
             const
                scene      = this .getExecutionContext (),
@@ -533,14 +571,23 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
             this .group .children .push (this .shape);
 
-            if (!this .smoothingGroups .has (this .group .getNodeName ()))
-               this .smoothingGroups .set (this .group .getNodeName (), new Map ());
-
-            this .smoothingGroups .get (this .group .getNodeName ()) .set (this .smoothingGroup, this .shape);
+            this .smoothingGroups .set (this .getSmoothingGroupId (), this .shape);
          }
 
          while (this .f ())
             ;
+
+         if (this .colors .length > this .coord .length && this .color .getNodeType () .includes (X3DConstants .Color))
+         {
+            const scene = this .getExecutionContext ();
+
+            this .color = scene .createNode ("ColorRGBA");
+
+            this .color .color = this .colors;
+         }
+
+         if (this .colors .length)
+            this .geometry .color = this .color;
 
          if (this .texCoordIndex .length)
             this .geometry .texCoord = this .texCoord;
@@ -691,7 +738,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
             {
                const z = this .value;
 
-               array .push (x, y, z)
+               array .push (x, y, z);
                return true;
             }
          }
@@ -830,7 +877,7 @@ Object .assign (MaterialParser .prototype,
       {
          if (this .col3 ())
          {
-            const hsv = this .color3 .getHSV ([ ]);
+            const hsv = this .color3 .getHSV ();
 
             this .material .ambientIntensity = hsv [2];
 

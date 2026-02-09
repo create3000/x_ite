@@ -45,7 +45,7 @@ Object .assign (Object .setPrototypeOf (TriangleSet2D .prototype, X3DGeometryNod
             p             = this .getTexCoordParams (),
             min           = p .min,
             Ssize         = p .Ssize,
-            vertexArray   = this .getVertices () .getValue ();
+            vertexArray   = this .getVertices ();
 
          for (let i = 0, length = vertexArray .length; i < length; i += 4)
          {

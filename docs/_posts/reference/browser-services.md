@@ -164,7 +164,7 @@ Replace the current world with this new scene that has been loaded or constructe
 
 #### **createX3DFromString** (*x3dSyntax: string*): Promise\<X3DScene\>
 
-The string may be any valid X3D content in any language supported by the browser implementation. If the browser does not support the content encoding the appropriate exception will be thrown.
+The string may be any valid X3D content in any language supported by the browser implementation ([Supported File Formats](/x_ite/#supported-file-formats)). If the browser does not support the content encoding the appropriate exception will be thrown.
 
 <x3d-script-area name="X3D ECMAScript Example: X3DBrowser createX3DFromString">
 <pre>
@@ -181,15 +181,15 @@ print (scene .rootNodes .length);
 
 #### **createX3DFromURL** (*url: MFString, node: SFNode, event: string*): void
 
-Parse the passed URL into an X3D scene. When complete send the passed event to the passed node. The event is a string with the name of an MFNode inputOnly field of the passed node.
+Parse the passed URL into an X3D scene. When complete send the passed event to the passed node. The event is a string with the name of an MFNode inputOnly field of the passed node. The loaded file can be any of the [Supported File Formats](/x_ite/#supported-file-formats).
 
 #### **createX3DFromURL** (*url: MFString*): Promise\<X3DScene\>
 
-Parse the passed URL into an X3D scene and return a Promise that resolves to an X3DScene object.
+Parse the passed URL into an X3D scene and return a Promise that resolves to an X3DScene object. The loaded file can be any of the [Supported File Formats](/x_ite/#supported-file-formats).
 
 #### **loadURL** (*url: MFString, parameter?: MFString*): Promise\<void\>
 
-Load the passed URL, using the passed parameter string to possibly redirect it to another frame. If the destination is the frame containing the current scene, this method may never return. The return value is a Promise object, that is resolved when the new scene is loaded.
+Load the passed URL, using the passed parameter string to possibly redirect it to another frame. If the destination is the frame containing the current scene, this method may never return. The return value is a Promise object, that is resolved when the new scene is loaded. The loaded file can be any of the [Supported File Formats](/x_ite/#supported-file-formats).
 
 #### **importDocument** (*dom: HTMLElement | string*): Promise\<X3DScene\>
 

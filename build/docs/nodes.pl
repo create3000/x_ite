@@ -289,7 +289,8 @@ sub spelling {
    $string = shift;
 
    $string =~ s/\*next\* to/next to/sgo;
-   $string =~ s/\[autoRefresh\b/autoRefresh/sgo;
+   $string =~ s/\[\*autoRefresh\b/*autoRefresh/sgo;
+   $string =~ s/\[\*autoRefreshTimeLimit\b/*autoRefreshTimeLimit/sgo;
    $string =~ s/incldes/includes/sgo;
    $string =~ s/polgyonal/polygonal/sgo;
    $string =~ s/renderStryle/renderStyle/sgo;

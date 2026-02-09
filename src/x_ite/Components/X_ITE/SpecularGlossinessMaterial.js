@@ -28,7 +28,7 @@ MaterialTextures .add ("x3d_SpecularGlossinessTexture");
 
 function SpecularGlossinessMaterial (executionContext)
 {
-   console .warn ("SpecularGlossinessMaterial is depreciated, please use PhysicalMaterial instead.");
+   console .warn ("SpecularGlossinessMaterial is deprecated, please use PhysicalMaterial instead.");
 
    X3DOneSidedMaterialNode .call (this, executionContext);
 

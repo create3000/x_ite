@@ -12,10 +12,9 @@ function ScreenText (text, fontStyle)
 
    text .setTransparent (true);
 
-   this .textureNode     = new PixelTexture (text .getExecutionContext ());
-   this .context         = document .createElement ("canvas") .getContext ("2d", { willReadFrequently: true });
-   this .modelViewMatrix = new Matrix4 ();
-   this .matrix          = new Matrix4 ();
+   this .textureNode = new PixelTexture (text .getExecutionContext ());
+   this .context     = document .createElement ("canvas") .getContext ("2d", { willReadFrequently: true });
+   this .matrix      = new Matrix4 ();
 
    this .textureNode ._textureProperties = fontStyle .getBrowser () .getScreenTextureProperties ();
    this .textureNode .setup ();
@@ -23,10 +22,13 @@ function ScreenText (text, fontStyle)
 
 Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .prototype),
 {
-   modelViewMatrix: new Matrix4 (),
    getMatrix ()
    {
       return this .matrix;
+   },
+   getTextureNode ()
+   {
+      return this .textureNode;
    },
    update: (() =>
    {
@@ -332,7 +334,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
       min .set ((glyph .xMin || 0) / unitsPerEm, (glyph .yMin || 0) / unitsPerEm, 0);
       max .set ((glyph .xMax || 0) / unitsPerEm, (glyph .yMax || 0) / unitsPerEm, 0);
    },
-   traverse: (() =>
+   traverseBefore: (() =>
    {
       const bbox = new Box3 ();
 
@@ -340,9 +342,10 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
       {
          this .getBrowser () .getScreenScaleMatrix (renderObject, this .matrix, 1, true);
 
-         this .modelViewMatrix
-            .assign (renderObject .getModelViewMatrix () .get ())
-            .multLeft (this .matrix);
+         const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+         modelViewMatrix .push ();
+         modelViewMatrix .multLeft (this .matrix);
 
          // Update Text bbox.
 
@@ -351,32 +354,9 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
          this .getText () .setBBox (bbox);
       };
    })(),
-   displaySimple (gl, renderContext, shaderNode)
+   traverseAfter (type, renderObject)
    {
-      renderContext .modelViewMatrix .set (this .modelViewMatrix);
-
-      gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, renderContext .modelViewMatrix);
-   },
-   display (gl, renderContext)
-   {
-      renderContext .modelViewMatrix .set (this .modelViewMatrix);
-
-      renderContext .textureNode = this .textureNode;
-   },
-   transformLine: (() =>
-   {
-      const invMatrix = new Matrix4 ();
-
-      return function (line)
-      {
-         // Apply screen nodes transformation in place here.
-         return line .multLineMatrix (invMatrix .assign (this .matrix) .inverse ());
-      };
-   })(),
-   transformMatrix (matrix)
-   {
-      // Apply screen nodes transformation in place here.
-      return matrix .multLeft (this .matrix);
+      renderObject .getModelViewMatrix () .pop ();
    },
 });
 

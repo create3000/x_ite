@@ -104,24 +104,33 @@ out vec3 vertex;
 void
 main ()
 {
+   vec4 tVertex = x3d_Vertex;
+
    #if defined (X3D_NORMALS)
-      vec4 x3d_TransformedVertex = getInstanceVertex (getSkinVertex (x3d_Vertex, x3d_Normal, x3d_Tangent .xyz));
-      vec3 x3d_TransformedNormal = getInstanceNormal (getSkinNormal (x3d_Normal));
+      vec3 tNormal  = x3d_Normal;
+      vec3 tTangent = x3d_Tangent .xyz;
+
+      tVertex = getInstanceVertex (getSkinVertex (tVertex, tNormal, tTangent));
+      tNormal = getInstanceNormal (getSkinNormal (tNormal));
 
       #if defined (X3D_TANGENTS)
-         vec3 x3d_TransformedTangent = getInstanceNormal (getSkinTangent (x3d_Tangent .xyz));
+         tTangent = getInstanceNormal (getSkinTangent (tTangent));
       #endif
    #else
-      vec4 x3d_TransformedVertex = getInstanceVertex (getSkinVertex (x3d_Vertex, vec3 (0.0), vec3 (0.0)));
+      tVertex = getInstanceVertex (getSkinVertex (tVertex, vec3 (0.0), vec3 (0.0)));
    #endif
 
-   vec4 position = x3d_ModelViewMatrix * x3d_TransformedVertex;
+   #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
+      localVertex = tVertex .xyz;
+   #endif
+
+   tVertex = x3d_ModelViewMatrix * tVertex;
 
    #if defined (X3D_XR_SESSION)
-      position = x3d_EyeMatrix * position;
+      tVertex = x3d_EyeMatrix * tVertex;
    #endif
 
-   vertex = position .xyz;
+   vertex = tVertex .xyz;
 
    #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
       gl_PointSize = pointSize = getInstancePointSize (getPointSize (vertex));
@@ -156,25 +165,21 @@ main ()
    #endif
 
    #if defined (X3D_NORMALS)
-      normal = x3d_NormalMatrix * x3d_TransformedNormal;
+      normal = x3d_NormalMatrix * tNormal;
 
       #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
-         localNormal = x3d_TransformedNormal;
+         localNormal = tNormal;
       #endif
 
       #if defined (X3D_TANGENTS)
-         vec3 tangent   = x3d_NormalMatrix * x3d_TransformedTangent;
+         vec3 tangent   = x3d_NormalMatrix * tTangent;
          vec3 bitangent = cross (normal, tangent) * x3d_Tangent .w;
 
          TBN = mat3 (tangent, bitangent, normal);
       #endif
    #endif
 
-   #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
-      localVertex = x3d_TransformedVertex .xyz;
-   #endif
-
-   gl_Position = x3d_ProjectionMatrix * position;
+   gl_Position = x3d_ProjectionMatrix * tVertex;
 
    #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
       depth = 1.0 + gl_Position .w;

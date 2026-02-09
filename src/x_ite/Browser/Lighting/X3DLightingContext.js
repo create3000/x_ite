@@ -8,7 +8,8 @@ const
    _maxLights                = Symbol (),
    _textures                 = Symbol (),
    _shadowBuffers            = Symbol (),
-   _environmentTextureShader = Symbol ();
+   _environmentTextureShader = Symbol (),
+   _filterFrameBuffer        = Symbol ();
 
 function X3DLightingContext ()
 {
@@ -94,27 +95,33 @@ Object .assign (X3DLightingContext .prototype,
    },
    getEnvironmentTextureShader ()
    {
-      return this [_environmentTextureShader] ??= this .createShader ("EnvironmentTexture", "FullScreen", `data:x-shader/x-fragment,${Filter2FS}`, [ ], ["x3d_TextureEXT", "x3d_TextureSizeEXT", "x3d_TextureLinearEXT", "x3d_CurrentFaceEXT", "x3d_DistributionEXT", "x3d_SampleCountEXT", "x3d_RoughnessEXT", "x3d_LodBiasEXT", "x3d_IntensityEXT"]);
+      return this [_environmentTextureShader] ??= this .createShader ("EnvironmentTexture", "FullScreen", `data:x-shader/x-fragment,${Filter2FS}`, [ ], ["x3d_TextureEXT", "x3d_TextureSizeEXT", "x3d_TextureLinearEXT", "x3d_CurrentFaceEXT", "x3d_DistributionEXT", "x3d_SampleCountEXT", "x3d_RoughnessEXT", "x3d_LodBiasEXT", "x3d_IntensityEXT", "x3d_FlipEXT"]);
    },
-   filterEnvironmentTexture ({ name, texture, distribution, sampleCount, roughness })
+   filterEnvironmentTexture ({ name, texture, distribution, sampleCount, roughness, flipX, cachedNode })
    {
       // Render the texture.
 
       const
-         gl             = this .getContext (),
-         currentProgram = gl .getParameter (gl .CURRENT_PROGRAM),
-         shaderNode     = this .getEnvironmentTextureShader (),
-         framebuffer    = gl .createFramebuffer (),
-         size           = texture .getSize (),
-         filtered       = texture .getExecutionContext () .createNode ("ImageCubeMapTexture", false);
+         gl                 = this .getContext (),
+         executionContext   = texture .getExecutionContext (),
+         currentFramebuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING),
+         currentProgram     = gl .getParameter (gl .CURRENT_PROGRAM),
+         shaderNode         = this .getEnvironmentTextureShader (),
+         framebuffer        = this [_filterFrameBuffer] ??= gl .createFramebuffer (),
+         size               = texture .getSize (),
+         filtered           = cachedNode ?? executionContext .createNode ("ImageCubeMapTexture", false);
 
       // Setup texture.
 
-      filtered .setName (name);
-      filtered .setPrivate (true);
-      filtered .setup ();
+      if (!cachedNode)
+      {
+         filtered .setName (name);
+         filtered .setPrivate (true);
+         filtered .setLinear (true);
+         filtered .setup ();
+      }
+
       filtered .setSize (size);
-      filtered .setLinear (true);
 
       // Resize texture.
 
@@ -153,6 +160,7 @@ Object .assign (X3DLightingContext .prototype,
       gl .uniform1i (shaderNode .x3d_SampleCountEXT, sampleCount);
       gl .uniform1f (shaderNode .x3d_LodBiasEXT, 0);
       gl .uniform1f (shaderNode .x3d_IntensityEXT, 1);
+      gl .uniform3f (shaderNode .x3d_FlipEXT, flipX ? -1 : 1, 1, 1);
 
       for (const [level, r] of roughness .entries ())
       {
@@ -180,8 +188,8 @@ Object .assign (X3DLightingContext .prototype,
       }
 
       gl .enable (gl .DEPTH_TEST);
-      gl .deleteFramebuffer (framebuffer);
       gl .useProgram (currentProgram);
+      gl .bindFramebuffer (gl .FRAMEBUFFER, currentFramebuffer);
 
       return filtered;
    },

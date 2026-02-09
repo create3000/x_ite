@@ -90,18 +90,20 @@ Object .assign (Object .setPrototypeOf (X3DPointingDeviceSensorNode .prototype, 
    },
    set_over__ (over, hit)
    {
-      if (over !== this ._isOver .getValue ())
-      {
-         this ._isOver = over;
+      if (over === this ._isOver .getValue ())
+         return;
 
-         if (over)
-            this .getBrowser () .setDescription (this ._description);
-      }
+      this ._isOver = over;
+
+      if (over)
+         this .getBrowser () .setDescription (this ._description);
    },
    set_active__ (active, hit)
    {
-      if (active !== this ._isActive .getValue ())
-         this ._isActive = active
+      if (active === this ._isActive .getValue ())
+         return;
+
+      this ._isActive = active
    },
    set_motion__ (hit)
    { },

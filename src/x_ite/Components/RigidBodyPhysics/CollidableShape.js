@@ -243,7 +243,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    createConvexShape (shapeFlags)
    {
       const
-         vertices    = this .geometryNode .getVertices () .getValue () .filter ((_, i) => i % 4 < 3),
+         vertices    = this .geometryNode .getVertices () .filter ((_, i) => i % 4 < 3),
          numVertices = vertices .length;
 
       if (!numVertices)
@@ -288,7 +288,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
    createConcaveShape (shapeFlags)
    {
       const
-         vertices    = this .geometryNode .getVertices () .getValue () .filter ((_, i) => i % 4 < 3),
+         vertices    = this .geometryNode .getVertices () .filter ((_, i) => i % 4 < 3),
          indices     = Uint32Array .from ({ length: vertices .length / 3 }, (_, i) => i),
          numVertices = vertices .length;
 

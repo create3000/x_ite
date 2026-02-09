@@ -233,11 +233,6 @@ html {
   margin-bottom: .5rem;
 }
 
-.content a:has(> .example-icon),
-.content a:has(> .example-icon):hover {
-  border-bottom: none;
-}
-
 .content .example-icon {
   margin: 0 0.2rem;
 }
@@ -523,7 +518,7 @@ select.select option {
   background: var(--main-bg);
 }
 
-/* Patreon link  */
+/* Patreon Link  */
 
 .content .patreon {
   display: block;
@@ -531,6 +526,13 @@ select.select option {
   border-radius: .625rem;
   padding: .5rem;
   text-align: center;
+}
+
+.content .sponsors img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid #4a4a4a;
 }
 
 /* Documentation */
@@ -578,7 +580,7 @@ table.slim-table tbody tr td:has(img) {
   transform: translateY(-70%);
 }
 
-/* table examples */
+/* examples grid */
 
 .examples {
   display: grid;

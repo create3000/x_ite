@@ -3,7 +3,7 @@ title: Inline
 date: 2023-01-07
 nav: components-Networking
 categories: [components, Networking]
-tags: [Inline, Networking]
+tags: [Inline, Networking, glTF]
 ---
 <style>
 .post h3 {
@@ -174,17 +174,22 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 ## Supported File Formats
 
-| Encoding         | File Extension | MIME Type       |
-|------------------|----------------|-----------------|
-| X3D XML          | .x3d, .x3dz    | model/x3d+xml   |
-| X3D JSON         | .x3dj, .x3djz  | model/x3d+json  |
-| X3D Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml  |
-| VRML 2.0         | .wrl, .wrz     | model/vrml      |
-| glTF             | .gltf, .glb    | model/gltf+json |
-| Wavefront OBJ    | .obj           | model/obj       |
-| STL              | .stl           | model/stl       |
-| PLY              | .ply           | model/ply       |
-| SVG Document     | .svg, .svgz    | image/svg+xml   |
+| Encoding         | File Extension | MIME Type       | Comment                                       |
+|------------------|----------------|-----------------|-----------------------------------------------|
+| X3D XML          | .x3d, .x3dz    | model/x3d+xml   | [X3D Encoding: XML][1]                        |
+| X3D JSON         | .x3dj, .x3djz  | model/x3d+json  | [X3D Encoding: JSON][2]                       |
+| X3D Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml  | [X3D Encoding: Classic VRML][3]               |
+| VRML 2.0         | .wrl, .wrz     | model/vrml      | [VRML Specification][4]                       |
+| glTF             | .gltf, .glb    | model/gltf+json | [glTF Support](/x_ite/features/#gltf-support) |
+| Wavefront OBJ    | .obj           | model/obj       |                                               |
+| STL              | .stl           | model/stl       | ASCII & Binary                                |
+| PLY              | .ply           | model/ply       | ASCII & Binary                                |
+| SVG Document     | .svg, .svgz    | image/svg+xml   |                                               |
+
+  [1]: https://www.web3d.org/documents/specifications/19776-1/V3.3/index.html
+  [2]: https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19776-5v4.0-WD1/Part05/X3D_JSON.html
+  [3]: https://www.web3d.org/documents/specifications/19776-2/V3.3/index.html
+  [4]: https://www.web3d.org/documents/specifications/14772/V2.0/
 
 >**Tip:** All files can be compressed using GZip compression (usually denoted by a 'z' at the end of the filename suffix). This saves bandwidth and speeds up download time.
 {: .prompt-tip }

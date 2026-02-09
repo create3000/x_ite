@@ -570,7 +570,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
             for (let i = 0, N = this .CIRCLE_STEPS / 4; i < N; ++ i)
             {
-               const p = Complex .Polar (1, s + Math .PI / 2 * i / (N - 1));
+               const p = Complex .fromPolar (1, s + Math .PI / 2 * i / (N - 1));
 
                points .push (new Vector3 (xOffsets [c] + p .real * rx, yOffsets [c] + p .imag * ry, 0));
             }

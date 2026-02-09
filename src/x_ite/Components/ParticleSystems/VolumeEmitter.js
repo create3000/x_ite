@@ -175,8 +175,8 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, X3DParticleEmi
       {
          const
             gl              = this .getBrowser () .getContext (),
-            vertices        = this .volumeNode .getVertices () .getValue (),
-            normals         = this .volumeNode .getNormals () .getValue (),
+            vertices        = this .volumeNode .getVertices (),
+            normals         = this .volumeNode .getNormals (),
             hierarchy       = new BVH (vertices, normals) .toArray ([ ]),
             numVertices     = vertices .length / 4,
             numNormals      = normals .length / 3,

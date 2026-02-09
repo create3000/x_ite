@@ -119,7 +119,7 @@ The *displacers* field stores [HAnimDisplacer](/x_ite/components/hanim/hanimdisp
 ### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
 {: #fields-coord }
 
-The *coord* field is used for HAnimSegment objects that have deformable meshes and shall contain coordinates referenced from the [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) for the paarent HAnimSegment object. The coordinates are given the same name as the HAnim Segment object, but with "_coords" appended to the name (for example, "skull_coords").
+The *coord* field is used for HAnimSegment objects that have deformable meshes and shall contain coordinates referenced from the [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) for the parent HAnimSegment object. The coordinates are given the same name as the HAnim Segment object, but with "_coords" appended to the name (for example, "skull_coords").
 
 #### Warning
 

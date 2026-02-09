@@ -49,7 +49,7 @@ function X3DRenderObject (executionContext)
    this .layouts                  = [ ];
    this .hAnimNode                = [ null ];
    this .invHumanoidMatrix        = new MatrixStack (Matrix4);
-   this .generatedCubeMapTextures = [ ];
+   this .generatedCubeMapTextures = new Set ();
    this .collisions               = [ ];
    this .collisionTime            = new StopWatch ();
    this .numPointingShapes        = 0;
@@ -1226,7 +1226,7 @@ Object .assign (X3DRenderObject .prototype,
 
                const volumeScatterBuffer = browser .getVolumeScatterBuffer ();
 
-               this .drawShapes (RenderPass .VOLUME_SCATTER_KEY, gl, browser, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport);
+               this .drawShapes (RenderPass .VOLUME_SCATTER_KEY, gl, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport);
             }
 
             // Render to transmission buffer.
@@ -1238,7 +1238,7 @@ Object .assign (X3DRenderObject .prototype,
 
                const transmissionBuffer = browser .getTransmissionBuffer ();
 
-               this .drawShapes (RenderPass .TRANSMISSION_KEY, gl, browser, transmissionBuffer, gl .COLOR_BUFFER_BIT, viewport);
+               this .drawShapes (RenderPass .TRANSMISSION_KEY, gl, transmissionBuffer, gl .COLOR_BUFFER_BIT, viewport);
 
                // Mipmap is later selected based on roughness and ior.
                gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
@@ -1253,7 +1253,7 @@ Object .assign (X3DRenderObject .prototype,
 
          const frameBuffer = framebuffers [i];
 
-         this .drawShapes (RenderPass .RENDER_KEY, gl, browser, frameBuffer, 0, viewport);
+         this .drawShapes (RenderPass .RENDER_KEY, gl, frameBuffer, 0, viewport);
       }
 
       this .view = null;
@@ -1281,13 +1281,14 @@ Object .assign (X3DRenderObject .prototype,
 
       // Reset containers.
 
-      globalLightsKeys         .length = 0;
-      globalLights             .length = 0;
-      lights                   .length = 0;
-      globalShadows            .length = 1;
-      generatedCubeMapTextures .length = 0;
+      globalLightsKeys .length = 0;
+      globalLights     .length = 0;
+      lights           .length = 0;
+      globalShadows    .length = 1;
+
+      generatedCubeMapTextures .clear ();
    },
-   drawShapes (renderPass, gl, browser, frameBuffer, clearBits, viewport)
+   drawShapes (renderPass, gl, frameBuffer, clearBits, viewport)
    {
       const { opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes } = this;
 

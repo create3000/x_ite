@@ -1,5 +1,5 @@
-/* X_ITE v14.0.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.0")];
+/* X_ITE v14.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1101,7 +1101,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (external_X_I
          numCenters           = centers .length,
          numInstances         = Math .max (numTranslations, numRotations, numScales, numScaleOrientations, numCenters),
          stride               = this .instancesStride / Float32Array .BYTES_PER_ELEMENT,
-         length               = this .instancesStride * numInstances,
+         length               = stride * numInstances,
          data                 = new Float32Array (length);
 
       this .numInstances = numInstances;
@@ -1666,7 +1666,7 @@ external_X_ITE_X3D_MaterialTextures_default().add ("x3d_SpecularGlossinessTextur
 
 function SpecularGlossinessMaterial (executionContext)
 {
-   console .warn ("SpecularGlossinessMaterial is depreciated, please use PhysicalMaterial instead.");
+   console .warn ("SpecularGlossinessMaterial is deprecated, please use PhysicalMaterial instead.");
 
    external_X_ITE_X3D_X3DOneSidedMaterialNode_default().call (this, executionContext);
 
@@ -2410,7 +2410,7 @@ materialInfo.perceptualRoughness=clamp(materialInfo.perceptualRoughness,0.,1.);m
 diffuseTransmissionThickness=materialInfo.thickness*(length(x3d_ModelViewMatrix[0].xyz)+length(x3d_ModelViewMatrix[1].xyz)+length(x3d_ModelViewMatrix[2].xyz))/3.;
 #endif
 #endif
-#if defined(X3D_USE_IBL)
+#if defined(X3D_USE_IBL)||defined(X3D_TRANSMISSION_MATERIAL_EXT)
 #if defined(X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
 f_diffuse=getDiffuseLight(n)*materialInfo.diffuseTransmissionColorFactor*singleScatter;vec3 diffuseTransmissionIBL=getDiffuseLight(-n)*materialInfo.diffuseTransmissionColorFactor;
 #if defined(X3D_VOLUME_MATERIAL_EXT)
