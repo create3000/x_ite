@@ -55,7 +55,7 @@ X_ITE is a comprehensive 3D library entirely written in JavaScript and uses WebG
 
 X3D is an ISO-ratified, royalty-free open standards file format and run-time architecture to represent and communicate 3D scenes and objects specified by the [Web3D® Consortium](https://www.web3d.org). X3D has evolved from its beginnings as the Virtual Reality Modeling Language (VRML) to the considerably more mature and refined ISO X3D standard. X3D provides a system for the storage, retrieval and playback of real time 3D scene in multiple applications, all within an open architecture to support a wide array of domains and user scenarios.
 
-glTF (GL Transmission Format) is an open standard file format by the [Khronos® Group](https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html), designed for efficient transmission and loading of 3D models in real-time applications, such as web and mobile platforms. It optimizes the storage and rendering of 3D assets, including geometry, textures, materials, and animations, while minimizing file sizes and loading times.
+glTF (GL Transmission Format) is an open standard file format by the [Khronos® Group](https://www.khronos.org), designed for efficient transmission and loading of 3D models in real-time applications, such as web and mobile platforms. It optimizes the storage and rendering of 3D assets, including geometry, textures, materials, and animations, while minimizing file sizes and loading times.
 
 >**Tip:** If you ever run into trouble, please [report a bug or just ask a question](/x_ite/report-a-bug/).
 {: .prompt-tip }
