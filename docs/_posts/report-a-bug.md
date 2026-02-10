@@ -13,4 +13,4 @@ AI image (Fry catches a Buggalow, [Futurama](https://www.syfy.com/futurama), [20
 
 Even the best 3D browsers sometimes stumble over a wayward polygon or two, and when that happens we need your help to herd the Buggalo back into the pen. If you encounter something strange, unexpected, or just plain broken in X_ITE, please let us know by opening an issue on GitHub. Every report helps us track down those elusive critters and make the browser stronger, faster, and more reliable for everyone.
 
-👉 Go ahead and visit the [X_ITE Issue Tracker](https://github.com/create3000/x_ite/issues) to post your concern.
+👉 Go ahead and visit the [X_ITE Issue Tracker](https://github.com/create3000/x_ite/issues) to post your concern, or visit [X_ITE Discussions](https://github.com/create3000/x_ite/discussions) to get in contact.
