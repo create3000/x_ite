@@ -513,9 +513,13 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
                   const linkify = function ()
                   {
-                     const regex = /(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*[^)\]\>\.,;:]))/ig;
+                     const link = /(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*[^)\]\>\.,;:]))/ig;
 
-                     const replaced_text = $(this) .html () .replace (regex, `<a href="$1" target="_blank">$1</a>`);
+                     const email = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/ig;
+
+                     const replaced_text = $(this) .html ()
+                        .replace (link, `<a href="$1" target="_blank">$1</a>`)
+                        .replace (email, `<a href="mailto:$1" target="_blank">$1</a>`);
 
                      $(this) .html (replaced_text);
                   };
