@@ -371,6 +371,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   font-weight: bold;
   font-style: italic;
   font-size: 9pt;
+  margin: 0.3em 0;
 }
 
 .x_ite-private-world-info .x_ite-private-world-info-title {
@@ -386,13 +387,21 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-world-info table {
-  border-spacing: 8pt 4pt;
+  margin: 0.5em 0;
+  border-collapse: collapse;
+  line-height: 1.3;
+  width: 100%;
+}
+
+.x_ite-private-world-info tr:nth-child(odd) {
+  background-color: var(--button-color);
 }
 
 .x_ite-private-world-info td {
   vertical-align: top;
   font-size: 12pt;
   color: var(--text-color);
+  padding: 4pt;
 }
 
 .x_ite-private-world-info a {
