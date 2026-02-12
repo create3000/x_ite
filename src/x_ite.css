@@ -53,6 +53,7 @@ X3DCanvas {
   --text-color: white;
   --text-color-dark: white;
   --text-shadow-color: black;
+  --link-color: rgb(43, 239, 255);
   --logo-opacity: 0.6;
   --progress-color: rgba(255, 255, 255, 0.5);
   --color1: rgb(35, 37, 40);
@@ -78,6 +79,7 @@ X3DCanvas {
       contrast(121%);
     --text-color: black;
     --text-shadow-color: white;
+    --link-color: rgb(0, 127, 138);
     --logo-opacity: 0.8;
     --progress-color: rgba(0, 0, 0, 0.6);
     --color1: rgb(247, 247, 252);
@@ -389,6 +391,11 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 .x_ite-private-world-info td {
   vertical-align: top;
   font-size: 12pt;
+  color: var(--text-color);
+}
+
+.x_ite-private-world-info a {
+  color: var(--link-color);
 }
 
 /* Context Menu */
