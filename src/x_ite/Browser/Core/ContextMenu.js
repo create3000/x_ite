@@ -575,7 +575,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                   const metaDataButton = $("<button></button>")
                      .addClass ("x_ite-private-browser-button")
                      .css ("width", "100pt")
-                     .text ("Meta Data")
+                     .text ("MetaData")
                      .on ("click", event =>
                      {
                         event .preventDefault ();
@@ -589,7 +589,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
                         $("<div></div>")
                            .addClass ("x_ite-private-world-info-top")
-                           .text ("Meta Data")
+                           .text ("MetaData")
                            .appendTo (content);
 
                         const table = $("<table></table>") .appendTo (content);
