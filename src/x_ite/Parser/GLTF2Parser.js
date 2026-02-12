@@ -1045,11 +1045,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (this .extensions .has ("KHR_texture_basisu"))
          images .push (this .images [texture .extensions ?.KHR_texture_basisu ?.source]);
 
-      if (this .extensions .has ("EXT_texture_webp"))
-         images .push (this .images [texture .extensions ?.EXT_texture_webp ?.source]);
-
       if (this .extensions .has ("EXT_texture_avif"))
          images .push (this .images [texture .extensions ?.EXT_texture_avif ?.source]);
+
+      if (this .extensions .has ("EXT_texture_webp"))
+         images .push (this .images [texture .extensions ?.EXT_texture_webp ?.source]);
 
       images .push (this .images [texture .source]);
 
