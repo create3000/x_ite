@@ -168,7 +168,6 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
          }
 
          transform .rotation = new Rotation4 (-1, 0, 0, Math .PI / 2);
-
          transform .children .push (shape);
 
          scene .getRootNodes () .push (transform);
