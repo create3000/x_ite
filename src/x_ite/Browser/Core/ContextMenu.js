@@ -508,8 +508,9 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      overlay      = $("<div></div>") .addClass ("x_ite-private-world-info-overlay") .appendTo (priv),
                      div          = $("<div></div>") .hide () .addClass (["x_ite-private-world-info", "x_ite-private-hidden"]) .appendTo (overlay),
                      content      = $("<div></div>"),
-                     worldInfo    = browser .getExecutionContext () .getWorldInfos () [0],
-                     hasWorldInfo = worldInfo && (worldInfo .title .length || worldInfo .info .length);
+                     worldInfos   = browser .getExecutionContext () .getWorldInfos (),
+                     worldInfo    = worldInfos .length ? worldInfos [0] : null,
+                     hasWorldInfo = worldInfo ?.title .length || worldInfo .info ?.length;
 
                   const linkify = function ()
                   {
