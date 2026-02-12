@@ -371,7 +371,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-world-info .x_ite-private-world-info-title {
-  margin: 0.3em 0 1em 0;
+  margin: 0.3em 0;
   font-weight: bold;
   font-size: 21pt;
 }
@@ -380,6 +380,14 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 .x_ite-private-world-info .x_ite-private-world-info-info p {
   margin: 0.5em 0 0.5em 0;
   font-size: 14pt;
+}
+
+.x_ite-private-world-info table {
+  border-spacing: 8pt 4pt;
+}
+
+.x_ite-private-world-info td {
+  vertical-align: top;
 }
 
 /* Context Menu */
