@@ -1,6 +1,5 @@
 import X3DParser   from "./X3DParser.js";
 import Expressions from "./Expressions.js";
-import Rotation4   from "../../standard/Math/Numbers/Rotation4.js";
 
 /*
  *  Grammar
@@ -323,7 +322,6 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       {
          const
             hasNormals = this .normals ?.some (v => v !== 0),
-            transform  = scene .createNode ("Transform"),
             shape      = scene .createNode ("Shape"),
             appearance = scene .createNode ("Appearance"),
             material   = scene .createNode ("Material"),
@@ -370,9 +368,13 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          {
             const normal = scene .createNode ("Normal");
 
+            this .rotateAxes (this .normals);
+
             normal .vector   = this .normals;
             geometry .normal = normal;
          }
+
+         this .rotateAxes (this .points);
 
          coordinate .point = this .points;
          geometry .coord   = coordinate;
@@ -381,17 +383,12 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          shape .appearance    = appearance;
          shape .geometry      = geometry;
 
-         transform .rotation = new Rotation4 (-1, 0, 0, Math .PI / 2);
-         transform .children .push (shape);
-
-         scene .getRootNodes () .push (transform);
-
+         scene .getRootNodes () .push (shape);
       }
       else // PointSet
       {
          const
             hasNormals = this .normals ?.some (v => v !== 0),
-            transform  = scene .createNode ("Transform"),
             shape      = scene .createNode ("Shape"),
             appearance = scene .createNode ("Appearance"),
             material   = scene .createNode (hasNormals ? "Material" : "UnlitMaterial"),
@@ -412,9 +409,13 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          {
             const normal = scene .createNode ("Normal");
 
+            this .rotateAxes (this .normals);
+
             normal .vector   = this .normals;
             geometry .normal = normal;
          }
+
+         this .rotateAxes (this .points);
 
          coordinate .point = this .points;
          geometry .coord   = coordinate;
@@ -423,10 +424,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          shape .appearance    = appearance;
          shape .geometry      = geometry;
 
-         transform .rotation = new Rotation4 (-1, 0, 0, Math .PI / 2);
-         transform .children .push (shape);
-
-         scene .getRootNodes () .push (transform);
+         scene .getRootNodes () .push (shape);
       }
    },
    processElement (element)

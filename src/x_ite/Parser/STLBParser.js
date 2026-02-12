@@ -1,6 +1,5 @@
 import X3DParser from "./X3DParser.js";
 import Color3    from "../../standard/Math/Numbers/Color3.js";
-import Rotation4 from "../../standard/Math/Numbers/Rotation4.js";
 
 // http://paulbourke.net/dataformats/stl/
 // https://people.sc.fsu.edu/~jburkardt/data/obj/obj.html
@@ -76,14 +75,13 @@ Object .assign (Object .setPrototypeOf (STLBParser .prototype, X3DParser .protot
    {
       const
          scene      = this .getExecutionContext (),
-         transform  = scene .createNode ("Transform"),
          shape      = scene .createNode ("Shape"),
          geometry   = scene .createNode ("TriangleSet"),
          coordinate = scene .createNode ("Coordinate"),
          dataView   = this .dataView,
          byteLength = this .dataView .byteLength,
          normals    = [ ],
-         point      = [ ];
+         points     = [ ];
 
       for (let i = 84; i < byteLength; i += 50)
       {
@@ -91,12 +89,14 @@ Object .assign (Object .setPrototypeOf (STLBParser .prototype, X3DParser .protot
             normals .push (dataView .getFloat32 (i + f * 4, true));
 
          for (let f = 3; f < 12; ++ f)
-            point .push (dataView .getFloat32 (i + f * 4, true));
+            points .push (dataView .getFloat32 (i + f * 4, true));
       }
+
+      this .rotateAxes (points);
 
       shape .appearance         = this .appearance;
       shape .geometry           = geometry;
-      coordinate .point         = point;
+      coordinate .point         = points;
       geometry .normalPerVertex = false;
       geometry .coord           = coordinate;
 
@@ -104,14 +104,13 @@ Object .assign (Object .setPrototypeOf (STLBParser .prototype, X3DParser .protot
       {
          const normal = scene .createNode ("Normal");
 
+         this .rotateAxes (normals);
+
          normal .vector   = normals;
          geometry .normal = normal;
       }
 
-      transform .rotation = new Rotation4 (-1, 0, 0, Math .PI / 2);
-      transform .children .push (shape);
-
-      scene .getRootNodes () .push (transform);
+      scene .getRootNodes () .push (shape);
    },
 });
 
