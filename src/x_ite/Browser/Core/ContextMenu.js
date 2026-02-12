@@ -510,7 +510,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                      content      = $("<div></div>"),
                      worldInfos   = browser .getExecutionContext () .getWorldInfos (),
                      worldInfo    = worldInfos .length ? worldInfos [0] : null,
-                     hasWorldInfo = worldInfo ?.title .length || worldInfo .info ?.length;
+                     hasWorldInfo = worldInfo ?.title .length || worldInfo ?.info .length;
 
                   const linkify = function ()
                   {
