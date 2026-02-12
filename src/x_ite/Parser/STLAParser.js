@@ -1,5 +1,6 @@
 import X3DParser   from "./X3DParser.js";
 import Expressions from "./Expressions.js";
+import Rotation4   from "../../standard/Math/Numbers/Rotation4.js";
 import Color3      from "../../standard/Math/Numbers/Color3.js";
 
 // http://paulbourke.net/dataformats/stl/
@@ -135,6 +136,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
 
          const
             scene      = this .getExecutionContext (),
+            transform  = scene .createNode ("Transform"),
             shape      = scene .createNode ("Shape"),
             geometry   = scene .createNode ("TriangleSet"),
             coordinate = scene .createNode ("Coordinate"),
@@ -165,7 +167,11 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
             scene .addExportedNode (scene .getUniqueExportName (name), shape);
          }
 
-         scene .getRootNodes () .push (shape);
+         transform .rotation = new Rotation4 (-1, 0, 0, Math .PI / 2);
+
+         transform .children .push (shape);
+
+         scene .getRootNodes () .push (transform);
 
          this .comments ();
 
