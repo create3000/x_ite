@@ -521,7 +521,10 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                         .replace (email, `<a href="mailto:$1" target="_blank">$1</a>`)
                         .replace (link, `<a href="$1" target="_blank">$1</a>`);
 
-                     $(this) .html (replaced_text);
+                     $(this)
+                        .html (replaced_text)
+                        .find ("a")
+                        .on ("click", event => event .stopPropagation ());
                   };
 
                   const buttons = $("<div></div>")
@@ -566,8 +569,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                               .addClass ("x_ite-private-world-info-info")
                               .text (line)
                               .appendTo (content)
-                              .each (linkify)
-                              .find ("a") .on ("click", event => event .stopPropagation ());
+                              .each (linkify);
                         }
                      })
                      .appendTo (buttons);
@@ -602,8 +604,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                            $("<td></td>")
                               .text (value)
                               .appendTo (tr)
-                              .each (linkify)
-                              .find ("a") .on ("click", event => event .stopPropagation ());
+                              .each (linkify);
                         }
 
                      })
