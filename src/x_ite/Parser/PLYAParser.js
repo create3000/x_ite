@@ -330,7 +330,6 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
             geometry   = scene .createNode ("IndexedFaceSet"),
             coordinate = scene .createNode ("Coordinate");
 
-         geometry .solid      = false;
          geometry .coordIndex = this .coordIndex;
 
          if (this .colors ?.length)
