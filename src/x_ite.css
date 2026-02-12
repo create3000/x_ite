@@ -338,6 +338,14 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   color: var(--text-color);
 }
 
+.x_ite-private-world-info button:hover {
+  background-color: var(--button-color);
+}
+
+.x_ite-private-world-info button.active {
+  font-weight: bold;
+}
+
 .x_ite-private-world-info :is(.x_ite-private-world-info-top, .x_ite-private-world-info-title, .x_ite-private-world-info-info, p) {
   box-sizing: border-box;
   outline: 0;

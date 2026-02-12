@@ -529,6 +529,9 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                            title = worldInfo .title,
                            info  = worldInfo .info;
 
+                        buttons .find ("button") .removeClass ("active");
+                        worldInfoButton .addClass ("active");
+
                         content .empty ();
 
                         $("<div></div>")
@@ -563,6 +566,9 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                         event .preventDefault ();
                         event .stopPropagation ();
                         event .stopImmediatePropagation ();
+
+                        buttons .find ("button") .removeClass ("active");
+                        metaDataButton .addClass ("active");
 
                         content .empty ();
 
