@@ -513,7 +513,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
                   const linkify = function ()
                   {
-                     const link = /(https?:\/\/[-a-zA-Z0-9@:%._\+~#=]+\.[a-zA-Z0-9]{2,}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*[^)\]\>\.,;:]))/ig;
+                     const link = /(https?:\/\/[-a-zA-Z0-9@:%._\+~#=]+\.[a-zA-Z0-9]{2,}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*\b))/ig;
 
                      const email = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9]{2,})/ig;
 
