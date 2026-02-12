@@ -171,6 +171,10 @@ Size of the shadow map in pixels, must be power of two.
 - The bound [NavigationInfo](/x_ite/components/navigation/navigationinfo/) controls whether the user headlight is enabled on/off.
 - [Wikipedia Cube mapping](https://en.wikipedia.org/wiki/Cube_mapping)
 
+## X_ITE
+
+- Any clear and sharp image should be added to *specularTexture*. The *diffuseTexture* should be a blurry image, but if not set, X_ITE will automatically generate this texture from the *specularTexture*.
+
 ## See Also
 
 - [X3D Specification of EnvironmentLight Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/lighting.html#EnvironmentLight)
