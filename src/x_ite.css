@@ -322,6 +322,20 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   border: var(--border);
   border-radius: 15px;
   padding: 21pt;
+  padding-top: 0;
+}
+
+.x_ite-private-world-info .x_ite-private-world-info-buttons {
+  border-bottom: var(--border);
+  margin-bottom: 12pt;
+}
+
+.x_ite-private-world-info button {
+  width: 100pt;
+  height: 21pt;
+  background: none;
+  border: none;
+  color: var(--text-color);
 }
 
 .x_ite-private-world-info :is(.x_ite-private-world-info-top, .x_ite-private-world-info-title, .x_ite-private-world-info-info, p) {

@@ -504,24 +504,95 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                   browser .getShadow () .find (".x_ite-private-world-info") .remove ();
 
                   const
-                     priv      = browser .getShadow () .find (".x_ite-private-browser"),
-                     overlay   = $("<div></div>") .addClass ("x_ite-private-world-info-overlay") .appendTo (priv),
-                     div       = $("<div></div>") .hide () .addClass (["x_ite-private-world-info", "x_ite-private-hidden"]) .appendTo (overlay),
-                     worldInfo = browser .getExecutionContext () .getWorldInfos () [0],
-                     title     = worldInfo .title,
-                     info      = worldInfo .info;
+                     priv         = browser .getShadow () .find (".x_ite-private-browser"),
+                     overlay      = $("<div></div>") .addClass ("x_ite-private-world-info-overlay") .appendTo (priv),
+                     div          = $("<div></div>") .hide () .addClass (["x_ite-private-world-info", "x_ite-private-hidden"]) .appendTo (overlay),
+                     content      = $("<div></div>"),
+                     worldInfo    = browser .getExecutionContext () .getWorldInfos () [0],
+                     hasWorldInfo = worldInfo && (worldInfo .title .length || worldInfo .info .length);
 
-                  $("<div></div>") .addClass ("x_ite-private-world-info-top") .text ("World Info") .appendTo (div);
+                  const buttons = $("<div></div>")
+                     .addClass ("x_ite-private-world-info-buttons")
+                     .appendTo (div);
 
-                  if (title .length)
-                  {
-                     $("<div></div>") .addClass ("x_ite-private-world-info-title") .text (title) .appendTo (div);
-                  }
+                  const worldInfoButton = $("<button></button>")
+                     .addClass ("x_ite-private-browser-button")
+                     .css ("width", "100pt")
+                     .text ("World Info")
+                     .on ("click", event =>
+                     {
+                        event .preventDefault ();
+                        event .stopPropagation ();
+                        event .stopImmediatePropagation ();
 
-                  for (const line of info)
-                  {
-                     $("<div></div>") .addClass ("x_ite-private-world-info-info") .text (line) .appendTo (div);
-                  }
+                        const
+                           title = worldInfo .title,
+                           info  = worldInfo .info;
+
+                        content .empty ();
+
+                        $("<div></div>")
+                           .addClass ("x_ite-private-world-info-top")
+                           .text ("World Info")
+                           .appendTo (content);
+
+                        if (title .length)
+                        {
+                           $("<div></div>")
+                              .addClass ("x_ite-private-world-info-title")
+                              .text (title)
+                              .appendTo (content);
+                        }
+
+                        for (const line of info)
+                        {
+                           $("<div></div>")
+                              .addClass ("x_ite-private-world-info-info")
+                              .text (line)
+                              .appendTo (content);
+                        }
+                     })
+                     .appendTo (buttons);
+
+                  const metaDataButton = $("<button></button>")
+                     .addClass ("x_ite-private-browser-button")
+                     .css ("width", "100pt")
+                     .text ("Meta Data")
+                     .on ("click", event =>
+                     {
+                        event .preventDefault ();
+                        event .stopPropagation ();
+                        event .stopImmediatePropagation ();
+
+                        content .empty ();
+
+                        $("<div></div>")
+                           .addClass ("x_ite-private-world-info-top")
+                           .text ("Meta Data")
+                           .appendTo (content);
+
+                        for (const [key, value] of browser .currentScene .getMetaDatas ())
+                        {
+                           $("<div></div>")
+                              .addClass ("x_ite-private-world-info-info")
+                              .text (`${key}: ${value}`)
+                              .appendTo (content);
+                        }
+                     })
+                     .appendTo (buttons);
+
+                  content .appendTo (div);
+
+                  if (!hasWorldInfo)
+                     worldInfoButton .hide ();
+
+                  if (!browser .currentScene .getMetaDatas () .length)
+                     metaDataButton .hide ();
+
+                  if (hasWorldInfo)
+                     worldInfoButton .trigger ("click");
+                  else
+                     metaDataButton .trigger ("click");
 
                   div
                      .show ()
@@ -571,7 +642,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       const worldInfo = browser .getExecutionContext () .getWorldInfos () [0];
 
-      if (!worldInfo || (worldInfo .title .length === 0 && worldInfo .info .length === 0))
+      if ((!worldInfo || (worldInfo .title .length === 0 && worldInfo .info .length === 0)) && !browser .currentScene .getMetaDatas () .length)
       {
          delete menu .items ["world-info"];
       }
