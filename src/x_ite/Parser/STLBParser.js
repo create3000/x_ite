@@ -94,16 +94,16 @@ Object .assign (Object .setPrototypeOf (STLBParser .prototype, X3DParser .protot
 
       shape .appearance         = this .appearance;
       shape .geometry           = geometry;
+      coordinate .point         = point;
       geometry .normalPerVertex = false;
       geometry .coord           = coordinate;
-      coordinate .point         = point;
 
       if (normals ?.some (v => v !== 0))
       {
          const normal = scene .createNode ("Normal");
 
-         geometry .normal = normal;
          normal .vector   = this .normals;
+         geometry .normal = normal;
       }
 
       scene .getRootNodes () .push (shape);

@@ -147,16 +147,16 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
 
          shape .appearance         = this .appearance;
          shape .geometry           = geometry;
+         coordinate .point         = this .vertices;
          geometry .normalPerVertex = false;
          geometry .coord           = coordinate;
-         coordinate .point         = this .vertices;
 
          if (hasNormals)
          {
             const normal = scene .createNode ("Normal");
 
-            geometry .normal = normal;
             normal .vector   = this .normals;
+            geometry .normal = normal;
          }
 
          if (name)
