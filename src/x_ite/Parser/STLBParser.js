@@ -102,7 +102,7 @@ Object .assign (Object .setPrototypeOf (STLBParser .prototype, X3DParser .protot
       {
          const normal = scene .createNode ("Normal");
 
-         normal .vector   = this .normals;
+         normal .vector   = normals;
          geometry .normal = normal;
       }
 
