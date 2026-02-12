@@ -137,8 +137,8 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
             scene      = this .getExecutionContext (),
             shape      = scene .createNode ("Shape"),
             geometry   = scene .createNode ("TriangleSet"),
-            normal     = scene .createNode ("Normal"),
             coordinate = scene .createNode ("Coordinate"),
+            hasNormals = this .normals ?.some (v => v !== 0),
             name       = this .sanitizeName (Grammar .name .parse (this) ? this .result [0] : "");
 
          Grammar .untilEndOfLine .parse (this);
@@ -148,10 +148,16 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
          shape .appearance         = this .appearance;
          shape .geometry           = geometry;
          geometry .normalPerVertex = false;
-         geometry .normal          = normal;
          geometry .coord           = coordinate;
-         normal .vector            = this .normals;
          coordinate .point         = this .vertices;
+
+         if (hasNormals)
+         {
+            const normal = scene .createNode ("Normal");
+
+            geometry .normal = normal;
+            normal .vector   = this .normals;
+         }
 
          if (name)
          {

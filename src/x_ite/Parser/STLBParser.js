@@ -77,17 +77,16 @@ Object .assign (Object .setPrototypeOf (STLBParser .prototype, X3DParser .protot
          scene      = this .getExecutionContext (),
          shape      = scene .createNode ("Shape"),
          geometry   = scene .createNode ("TriangleSet"),
-         normal     = scene .createNode ("Normal"),
          coordinate = scene .createNode ("Coordinate"),
          dataView   = this .dataView,
          byteLength = this .dataView .byteLength,
-         vector     = [ ],
+         normals    = [ ],
          point      = [ ];
 
       for (let i = 84; i < byteLength; i += 50)
       {
          for (let f = 0; f < 3; ++ f)
-            vector .push (dataView .getFloat32 (i + f * 4, true));
+            normals .push (dataView .getFloat32 (i + f * 4, true));
 
          for (let f = 3; f < 12; ++ f)
             point .push (dataView .getFloat32 (i + f * 4, true));
@@ -96,10 +95,16 @@ Object .assign (Object .setPrototypeOf (STLBParser .prototype, X3DParser .protot
       shape .appearance         = this .appearance;
       shape .geometry           = geometry;
       geometry .normalPerVertex = false;
-      geometry .normal          = normal;
       geometry .coord           = coordinate;
-      normal .vector            = vector;
       coordinate .point         = point;
+
+      if (normals ?.some (v => v !== 0))
+      {
+         const normal = scene .createNode ("Normal");
+
+         geometry .normal = normal;
+         normal .vector   = this .normals;
+      }
 
       scene .getRootNodes () .push (shape);
    },
