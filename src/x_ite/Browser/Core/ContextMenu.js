@@ -515,7 +515,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                   {
                      const email = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9]{2,})/ig;
 
-                     const link = /(https?:\/\/[-a-zA-Z0-9@:%._\+~#=]+\.[a-zA-Z0-9]{2,}\b[-a-zA-Z0-9()@:%_\+.~#?&//=]*\b)/ig;
+                     const link = /(https?:\/\/[-a-zA-Z0-9@:%._\+~#=]+\.[a-zA-Z0-9]{2,}\b[-a-zA-Z0-9()@:%_\+.~#?&\/=]*\b\/?)/ig;
 
                      const replaced_text = $(this) .html ()
                         .replace (email, `<a href="mailto:$1" target="_blank">$1</a>`)
