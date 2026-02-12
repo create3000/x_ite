@@ -198,6 +198,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          if (key === "version")
             continue;
 
+         scene .addMetaData (key, value);
+
          worldInfoNode ._info .push (`${key}: ${value}`);
       }
 
@@ -207,6 +209,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          {
             if (typeof value !== "string")
                continue;
+
+            scene .addMetaData (key, value);
 
             if (key === "title")
                worldInfoNode ._title = value;
@@ -232,7 +236,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          this .khrXmpJsonLdObject (packet, extensions ?.KHR_xmp_json_ld, worldInfoNode);
       }
 
-      worldInfoNode ._info .sort ();
       worldInfoNode .setup ();
 
       scene .getRootNodes () .push (worldInfoNode);
@@ -548,7 +551,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(KHR_xmp_json_ld instanceof Object))
          return;
 
-      const packet = KHR_xmp_json_ld .packets [index];
+      const
+         scene  = this .getScene (),
+         packet = KHR_xmp_json_ld .packets [index];
 
       for (const [key, value] of Object .entries (packet))
       {
@@ -557,19 +562,27 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          if (!match)
             continue;
 
+         const k = match [1];
+
          if (value instanceof Object)
          {
             const array = value ["@set"] ?? value ["@list"];
 
             if (array instanceof Array)
             {
-               worldInfoNode ._info .push (`${match [1]}: ${array .map (v => v .toString ()) .join (", ")}`);
+               const v = array .map (v => v .toString ()) .join (", ");
+
+               scene .addMetaData (k, v);
+               worldInfoNode ._info .push (`${k}: ${v}`);
                continue;
             }
 
             if (value ["rdf:_1"] ?.["@value"])
             {
-               worldInfoNode ._info .push (`${match [1]}: ${JSON .stringify (value ["rdf:_1"] ["@value"])}`);
+               const v = value ["rdf:_1"] ["@value"];
+
+               scene .addMetaData (k, v);
+               worldInfoNode ._info .push (`${k}: ${v}`);
                continue;
             }
          };
@@ -577,7 +590,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          if (typeof value !== "string")
             continue;
 
-         worldInfoNode ._info .push (`${match [1]}: ${value}`);
+         const v = value;
+
+         scene .addMetaData (k, v);
+         worldInfoNode ._info .push (`${k}: ${v}`);
       }
    },
    async buffersArray (buffers)
