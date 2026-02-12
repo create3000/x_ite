@@ -188,7 +188,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          worldInfo = scene .createNode ("WorldInfo"),
          url       = new URL (scene .worldURL);
 
-      worldInfo .title = url .protocol === "data:" ? "PLY Model" : url .pathname .split ('/') .at (-1);
+      worldInfo .title = url .protocol === "data:" ? "PLY Model" : decodeURIComponent (url .pathname .split ('/') .at (-1));
       worldInfo .info  = this .comments;
 
       scene .rootNodes .push (worldInfo);
