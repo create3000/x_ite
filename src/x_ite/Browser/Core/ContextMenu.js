@@ -513,13 +513,10 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
                   const linkify = function ()
                   {
-                     // Get the content
-                     const str = $(this) .html ();
-                     // Set the regex string
-                     const regex = /(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*[^)\]\>\.,;:]))/ig
-                     // Replace plain text links by hyperlinks
-                     var replaced_text = str .replace (regex, `<a href="$1" target="_blank">$1</a>`);
-                     // Echo link
+                     const regex = /(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*[^)\]\>\.,;:]))/ig;
+
+                     const replaced_text = $(this) .html () .replace (regex, `<a href="$1" target="_blank">$1</a>`);
+
                      $(this) .html (replaced_text);
                   };
 
