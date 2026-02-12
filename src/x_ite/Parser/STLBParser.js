@@ -98,7 +98,7 @@ Object .assign (Object .setPrototypeOf (STLBParser .prototype, X3DParser .protot
       geometry .normalPerVertex = false;
       geometry .coord           = coordinate;
 
-      if (normals ?.some (v => v !== 0))
+      if (normals .some (v => v !== 0))
       {
          const normal = scene .createNode ("Normal");
 
