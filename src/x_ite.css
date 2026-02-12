@@ -388,6 +388,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 
 .x_ite-private-world-info td {
   vertical-align: top;
+  font-size: 12pt;
 }
 
 /* Context Menu */
