@@ -513,9 +513,9 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
                   const linkify = function ()
                   {
-                     const link = /(https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*[^)\]\>\.,;:]))/ig;
+                     const link = /(https?:\/\/[-a-zA-Z0-9@:%._\+~#=]+\.[a-zA-Z0-9]{2,}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*[^)\]\>\.,;:]))/ig;
 
-                     const email = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/ig;
+                     const email = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9]{2,})/ig;
 
                      const replaced_text = $(this) .html ()
                         .replace (link, `<a href="$1" target="_blank">$1</a>`)
