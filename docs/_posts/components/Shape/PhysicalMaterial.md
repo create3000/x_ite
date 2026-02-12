@@ -249,6 +249,10 @@ Input/Output field *extensions*.
 - [3D rendering](https://en.wikipedia.org/wiki/3D_rendering)
 - [Physically based rendering (PBR)](https://en.wikipedia.org/wiki/Physically_based_rendering)
 
+## X_ITE
+
+- Most scenes with PhysicalMaterial require an [EnvironmentLight](/x_ite/components/lighting/environmentlight/) node.
+
 ## Example
 
 - [View »Damaged Helmet« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=DamagedHelmet)
