@@ -577,13 +577,16 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                            .text ("Meta Data")
                            .appendTo (content);
 
+                        const lines = $("<div></div>")
+                           .addClass ("x_ite-private-world-info-info")
+                           .appendTo (content);
+
                         for (const [key, value] of browser .currentScene .getMetaDatas ())
                         {
-                           $("<div></div>")
-                              .addClass ("x_ite-private-world-info-info")
-                              .text (`${key}: ${value}`)
-                              .appendTo (content);
+                           $("<span></span>") .text (`${key}: ${value}`) .appendTo (lines);
+                           $("<br></br>") .appendTo (lines);
                         }
+
                      })
                      .appendTo (buttons);
 
