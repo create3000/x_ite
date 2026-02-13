@@ -64,7 +64,7 @@ glTF (GL Transmission Format) is an open standard file format by the [Khronos® 
 
 Yeah, tell me!
 
-X_ITE needs your support, with a small contribution you can make a big difference, or simply subscribe on [Patreon](https://patreon.com/X_ITE) to receive the latest news.
+X_ITE needs your support, with a small contribution you can make a big difference, or simply [subscribe on Patreon](https://patreon.com/X_ITE) to receive the latest news.
 
 ### Using X_ITE for a personal project?
 
