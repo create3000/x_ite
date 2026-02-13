@@ -67,9 +67,27 @@ Object .assign (Object .setPrototypeOf (STLBParser .prototype, X3DParser .protot
 
       // Parse scene.
 
+      this .header ();
       this .shape ();
 
       return this .getScene ();
+   },
+   header ()
+   {
+      const header = $.decodeText (this .arrayBuffer .slice (3, 80)) .trim ();
+
+      if (!header)
+         return;
+
+      const
+         scene     = this .getScene (),
+         worldInfo = scene .createNode ("WorldInfo"),
+         url       = new URL (scene .worldURL);
+
+      worldInfo .title = url .protocol === "data:" ? "STL Model" : decodeURIComponent (url .pathname .split ('/') .at (-1));
+      worldInfo .info  = [header];
+
+      scene .rootNodes .push (worldInfo);
    },
    shape ()
    {
