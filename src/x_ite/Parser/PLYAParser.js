@@ -37,7 +37,8 @@ function PLYAParser (scene)
 {
    X3DParser .call (this, scene);
 
-   this .comments = [ ];
+   this .triangles = true;
+   this .comments  = [ ];
 
    this .typeMapping = new Map ([
       ["char",    this .int32],
@@ -324,13 +325,17 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       {
          const
             hasNormals = this .normals ?.some (v => v !== 0),
+            triangles  = this .triangles && !this .texCoordIndex ?.length,
             shape      = scene .createNode ("Shape"),
             appearance = scene .createNode ("Appearance"),
             material   = scene .createNode ("Material"),
-            geometry   = scene .createNode ("IndexedFaceSet"),
+            geometry   = scene .createNode (triangles ? "IndexedTriangleSet" : "IndexedFaceSet"),
             coordinate = scene .createNode ("Coordinate");
 
-         geometry .coordIndex = this .coordIndex;
+         if (triangles)
+            geometry .index = this .coordIndex .filter (v => v !== -1);
+         else
+            geometry .coordIndex = this .coordIndex;
 
          if (this .colors ?.length)
          {
@@ -522,6 +527,8 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
                throw new Error (`Couldn't parse property count for ${name}.`);
 
             const length = this .value;
+
+            this .triangles &&= length === 3;
 
             for (let i = 0; i < length; ++ i)
             {
