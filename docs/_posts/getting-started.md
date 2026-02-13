@@ -60,15 +60,23 @@ glTF (GL Transmission Format) is an open standard file format by the [Khronos® 
 >**Tip:** If you ever run into trouble, please [report a bug or just ask a question](/x_ite/report-a-bug/).
 {: .prompt-tip }
 
-### Become a Patreon of X_ITE
+## Become a Patreon of X_ITE
 
 Yeah, tell me!
 
 X_ITE needs your support, with a small contribution you can make a big difference, or simply subscribe to receive the latest news.
 
+### Using X_ITE for a personal project?
+
+That's great! Sponsorship is neither expected nor required. Feel free to [share screenshots](https://github.com/create3000/x_ite/discussions) if you've made something you're excited about — I enjoy seeing those!
+
+### Using X_ITE in for-profit work?
+
+That's wonderful! Your support is important to keep X_ITE maintained, independent, and open source under MIT License. Please consider a [Patreon sponsorship](https://patreon.com/X_ITE).
+
 [<i class="fa-solid fa-heart"></i> Support us on Patreon](https://patreon.com/X_ITE){: .patreon }
 
-#### Special Thanks to All Active Supporters
+### Special Thanks to All Active Supporters
 
 [![CRISE](/assets/sponsors/crise.png){: .normal }](https://vr-crisis.com){: title="CRISE" }
 [![John Carlson](/assets/sponsors/john-carlson.png){: .normal }](mailto:yottzumm@gmail.com){: title="John Carlson" }
