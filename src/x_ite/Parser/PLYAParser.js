@@ -115,7 +115,11 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    {
       if (Grammar .comment .parse (this) && Grammar .untilEndOfLine .parse (this))
       {
-         this .comments .push (this .result [0] .trim ());
+         const value = this .result [0] .trim ();
+
+         this .comments .push (value);
+
+         this .mustRotateAxes = value .includes ("Blender");
          return true;
       }
 
@@ -269,7 +273,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
             {
                const name = this .result [0];
 
-               properties .push ({ count: value, type, value, name });
+               properties .push ({ type, value, name });
                return true;
             }
          }
@@ -368,13 +372,15 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          {
             const normal = scene .createNode ("Normal");
 
-            this .rotateAxes (this .normals);
+            if (this .mustRotateAxes)
+               this .rotateAxes (this .normals);
 
             normal .vector   = this .normals;
             geometry .normal = normal;
          }
 
-         this .rotateAxes (this .points);
+         if (this .mustRotateAxes)
+            this .rotateAxes (this .points);
 
          coordinate .point = this .points;
          geometry .coord   = coordinate;
@@ -409,13 +415,15 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          {
             const normal = scene .createNode ("Normal");
 
-            this .rotateAxes (this .normals);
+            if (this .mustRotateAxes)
+               this .rotateAxes (this .normals);
 
             normal .vector   = this .normals;
             geometry .normal = normal;
          }
 
-         this .rotateAxes (this .points);
+         if (this .mustRotateAxes)
+            this .rotateAxes (this .points);
 
          coordinate .point = this .points;
          geometry .coord   = coordinate;
@@ -524,7 +532,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
          for (const { count, value, name } of properties)
          {
-            if (!count .call (this))
+            if (!(count ?? value) .call (this))
                throw new Error (`Couldn't parse property count for ${name}.`);
 
             const length = this .value;
