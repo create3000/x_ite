@@ -68,11 +68,11 @@ X_ITE needs your support, with a small contribution you can make a big differenc
 
 [<i class="fa-solid fa-heart"></i> Support us on Patreon](https://patreon.com/X_ITE){: .patreon }
 
-### Using X_ITE for a personal project?
+### Using X_ITE for a Personal Project?
 
 That's great! Sponsorship is neither expected nor required. Feel free to [share screenshots](https://github.com/create3000/x_ite/discussions) if you've made something you're excited about — I enjoy seeing those!
 
-### Using X_ITE in for-profit work?
+### Using X_ITE in For-Profit Work?
 
 That's wonderful! Your support is important to keep X_ITE maintained, independent, and open source under MIT License. Please consider a [Patreon sponsorship](https://patreon.com/X_ITE).
 
