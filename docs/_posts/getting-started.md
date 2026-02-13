@@ -70,7 +70,7 @@ X_ITE needs your support, with a small contribution you can make a big differenc
 
 ### Using X_ITE for a Personal Project?
 
-That's great! Sponsorship is neither expected nor required. Feel free to [share screenshots](https://github.com/create3000/x_ite/discussions) if you've made something you're excited about — I enjoy seeing those!
+That's great! Sponsorship is neither expected nor required. Feel free to [share screenshots](https://github.com/create3000/x_ite/discussions/categories/show-and-tell) if you've made something you're excited about — I enjoy seeing those!
 
 ### Using X_ITE in For-Profit Work?
 
