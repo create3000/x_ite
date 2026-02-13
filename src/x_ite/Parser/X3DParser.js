@@ -179,11 +179,9 @@ Object .assign (X3DParser .prototype,
 
       for (let i = 0; i < length; i += 3)
       {
-         const
-            z = -array [i + 1],
-            y = array [i + 2];
+         const z = -array [i + 1];
 
-         array [i + 1] = y;
+         array [i + 1] = array [i + 2];
          array [i + 2] = z;
       }
    },
