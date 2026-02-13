@@ -269,7 +269,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
             {
                const name = this .result [0];
 
-               properties .push ({ type, value, name });
+               properties .push ({ count: value, type, value, name });
                return true;
             }
          }
