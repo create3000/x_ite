@@ -118,8 +118,6 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          const value = this .result [0] .trim ();
 
          this .comments .push (value);
-
-         this .mustRotateAxes = value .includes ("Blender");
          return true;
       }
 
@@ -372,15 +370,9 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          {
             const normal = scene .createNode ("Normal");
 
-            if (this .mustRotateAxes)
-               this .rotateAxes (this .normals);
-
             normal .vector   = this .normals;
             geometry .normal = normal;
          }
-
-         if (this .mustRotateAxes)
-            this .rotateAxes (this .points);
 
          coordinate .point = this .points;
          geometry .coord   = coordinate;
@@ -415,15 +407,9 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          {
             const normal = scene .createNode ("Normal");
 
-            if (this .mustRotateAxes)
-               this .rotateAxes (this .normals);
-
             normal .vector   = this .normals;
             geometry .normal = normal;
          }
-
-         if (this .mustRotateAxes)
-            this .rotateAxes (this .points);
 
          coordinate .point = this .points;
          geometry .coord   = coordinate;
