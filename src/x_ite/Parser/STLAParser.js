@@ -18,15 +18,15 @@ const Grammar = Expressions ({
    untilEndOfLine: /[^\r\n]+/gy,
 
    // Keywords
-   solid: /solid/gy,
-   facet: /facet/gy,
-   normal: /normal/gy,
-   outer: /outer/gy,
-   loop: /loop/gy,
-   vertex: /vertex/gy,
-   endloop: /endloop/gy,
-   endfacet: /endfacet/gy,
-   endsolid: /endsolid/gy,
+   solid: /\bsolid\b/gy,
+   facet: /\bfacet\b/gy,
+   normal: /\bnormal\b/gy,
+   outer: /\bouter\b/gy,
+   loop: /\bloop\b/gy,
+   vertex: /\bvertex\b/gy,
+   endloop: /\bendloop\b/gy,
+   endfacet: /\bendfacet\b/gy,
+   endsolid: /\bendsolid\b/gy,
 
    // Values
    name: /\w+/gy,
@@ -129,56 +129,54 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
    {
       this .comments ();
 
-      if (Grammar .solid .parse (this))
+      if (!Grammar .solid .parse (this))
+         return false;
+
+      this .whitespacesNoLineTerminator ();
+
+      const
+         scene      = this .getExecutionContext (),
+         shape      = scene .createNode ("Shape"),
+         geometry   = scene .createNode ("TriangleSet"),
+         coordinate = scene .createNode ("Coordinate"),
+         hasNormals = this .normals ?.some (v => v !== 0),
+         name       = this .sanitizeName (Grammar .name .parse (this) ? this .result [0] : "");
+
+      Grammar .untilEndOfLine .parse (this);
+
+      this .facets ();
+      this .rotateAxes (this .vertices);
+
+      shape .appearance         = this .appearance;
+      shape .geometry           = geometry;
+      coordinate .point         = this .vertices;
+      geometry .normalPerVertex = false;
+      geometry .coord           = coordinate;
+
+      if (hasNormals)
       {
-         this .whitespacesNoLineTerminator ();
+         const normal = scene .createNode ("Normal");
 
-         const
-            scene      = this .getExecutionContext (),
-            shape      = scene .createNode ("Shape"),
-            geometry   = scene .createNode ("TriangleSet"),
-            coordinate = scene .createNode ("Coordinate"),
-            hasNormals = this .normals ?.some (v => v !== 0),
-            name       = this .sanitizeName (Grammar .name .parse (this) ? this .result [0] : "");
+         this .rotateAxes (this .normals);
 
-         Grammar .untilEndOfLine .parse (this);
-
-         this .facets ();
-         this .rotateAxes (this .vertices);
-
-         shape .appearance         = this .appearance;
-         shape .geometry           = geometry;
-         coordinate .point         = this .vertices;
-         geometry .normalPerVertex = false;
-         geometry .coord           = coordinate;
-
-         if (hasNormals)
-         {
-            const normal = scene .createNode ("Normal");
-
-            this .rotateAxes (this .normals);
-
-            normal .vector   = this .normals;
-            geometry .normal = normal;
-         }
-
-         if (name)
-         {
-            scene .addNamedNode (scene .getUniqueName (name), shape);
-            scene .addExportedNode (scene .getUniqueExportName (name), shape);
-         }
-
-         scene .getRootNodes () .push (shape);
-
-         this .comments ();
-
-         if (Grammar .endsolid .parse (this))
-            return true;
-
-         throw new Error ("Expected 'endsolid' statement.");
+         normal .vector   = this .normals;
+         geometry .normal = normal;
       }
 
-      return false;
+      if (name)
+      {
+         scene .addNamedNode (scene .getUniqueName (name), shape);
+         scene .addExportedNode (scene .getUniqueExportName (name), shape);
+      }
+
+      scene .getRootNodes () .push (shape);
+
+      this .comments ();
+
+      if (Grammar .endsolid .parse (this))
+         return true;
+
+      throw new Error ("Expected 'endsolid' statement.");
    },
    facets ()
    {
