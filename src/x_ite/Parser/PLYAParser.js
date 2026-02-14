@@ -121,6 +121,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          this .comments .push (value);
 
          this .mustRotateAxes ||= !! value .match (/Blender|Artec/i);
+
          return true;
       }
 
