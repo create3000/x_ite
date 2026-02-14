@@ -523,7 +523,13 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
          for (const { count, value, name } of properties)
          {
-            if (!(count ?? value) .call (this))
+            if (!count)
+            {
+               value .call (this);
+               continue;
+            }
+
+            if (!count .call (this))
                throw new Error (`Couldn't parse property count for ${name}.`);
 
             const length = this .value;
