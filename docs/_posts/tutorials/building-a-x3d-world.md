@@ -3,7 +3,7 @@ title: Building an X3D World
 date: 2022-11-28
 nav: tutorials-shapes-geometry-and-appearance
 categories: [Tutorials]
-tags: [Building, World]
+tags: [Basic, Getting Started]
 ---
 ## X3D file structure
 
