@@ -525,7 +525,9 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          {
             if (!count)
             {
-               value .call (this);
+               if (!value .call (this))
+                  throw new Error (`Couldn't parse a property value for ${name}.`);
+
                continue;
             }
 
