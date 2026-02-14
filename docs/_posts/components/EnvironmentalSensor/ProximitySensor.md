@@ -3,7 +3,7 @@ title: ProximitySensor
 date: 2023-01-07
 nav: components-EnvironmentalSensor
 categories: [components, EnvironmentalSensor]
-tags: [ProximitySensor, EnvironmentalSensor]
+tags: [ProximitySensor, EnvironmentalSensor, VRML]
 ---
 <style>
 .post h3 {

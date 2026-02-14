@@ -3,7 +3,7 @@ title: PointSet
 date: 2023-01-07
 nav: components-Rendering
 categories: [components, Rendering]
-tags: [PointSet, Rendering]
+tags: [PointSet, Rendering, VRML]
 ---
 <style>
 .post h3 {

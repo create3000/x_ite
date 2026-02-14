@@ -3,7 +3,7 @@ title: PixelTexture
 date: 2023-01-07
 nav: components-Texturing
 categories: [components, Texturing]
-tags: [PixelTexture, Texturing]
+tags: [PixelTexture, Texturing, VRML]
 ---
 <style>
 .post h3 {

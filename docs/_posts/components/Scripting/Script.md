@@ -3,7 +3,7 @@ title: Script
 date: 2023-01-07
 nav: components-Scripting
 categories: [components, Scripting]
-tags: [Script, Scripting]
+tags: [Script, Scripting, VRML]
 ---
 <style>
 .post h3 {

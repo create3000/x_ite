@@ -3,7 +3,7 @@ title: WorldInfo
 date: 2023-01-07
 nav: components-Core
 categories: [components, Core]
-tags: [WorldInfo, Core]
+tags: [WorldInfo, Core, VRML]
 ---
 <style>
 .post h3 {

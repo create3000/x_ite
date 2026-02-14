@@ -3,7 +3,7 @@ title: Inline
 date: 2023-01-07
 nav: components-Networking
 categories: [components, Networking]
-tags: [Inline, Networking, glTF]
+tags: [Inline, Networking, VRML, glTF]
 ---
 <style>
 .post h3 {

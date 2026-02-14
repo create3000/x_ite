@@ -3,7 +3,7 @@ title: PointLight
 date: 2023-01-07
 nav: components-Lighting
 categories: [components, Lighting]
-tags: [PointLight, Lighting]
+tags: [PointLight, Lighting, VRML]
 ---
 <style>
 .post h3 {

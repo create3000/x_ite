@@ -3,7 +3,7 @@ title: DirectionalLight
 date: 2023-01-07
 nav: components-Lighting
 categories: [components, Lighting]
-tags: [DirectionalLight, Lighting]
+tags: [DirectionalLight, Lighting, VRML]
 ---
 <style>
 .post h3 {

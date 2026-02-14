@@ -3,7 +3,7 @@ title: SphereSensor
 date: 2023-01-07
 nav: components-PointingDeviceSensor
 categories: [components, PointingDeviceSensor]
-tags: [SphereSensor, PointingDeviceSensor]
+tags: [SphereSensor, PointingDeviceSensor, VRML]
 ---
 <style>
 .post h3 {

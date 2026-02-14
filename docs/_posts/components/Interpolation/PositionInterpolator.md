@@ -3,7 +3,7 @@ title: PositionInterpolator
 date: 2023-01-07
 nav: components-Interpolation
 categories: [components, Interpolation]
-tags: [PositionInterpolator, Interpolation]
+tags: [PositionInterpolator, Interpolation, VRML]
 ---
 <style>
 .post h3 {

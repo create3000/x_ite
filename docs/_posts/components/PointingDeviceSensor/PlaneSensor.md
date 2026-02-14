@@ -3,7 +3,7 @@ title: PlaneSensor
 date: 2023-01-07
 nav: components-PointingDeviceSensor
 categories: [components, PointingDeviceSensor]
-tags: [PlaneSensor, PointingDeviceSensor]
+tags: [PlaneSensor, PointingDeviceSensor, VRML]
 ---
 <style>
 .post h3 {

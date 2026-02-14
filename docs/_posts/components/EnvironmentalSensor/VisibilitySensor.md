@@ -3,7 +3,7 @@ title: VisibilitySensor
 date: 2023-01-07
 nav: components-EnvironmentalSensor
 categories: [components, EnvironmentalSensor]
-tags: [VisibilitySensor, EnvironmentalSensor]
+tags: [VisibilitySensor, EnvironmentalSensor, VRML]
 ---
 <style>
 .post h3 {

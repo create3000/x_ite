@@ -3,7 +3,7 @@ title: Text
 date: 2023-01-07
 nav: components-Text
 categories: [components, Text]
-tags: [Text, Text]
+tags: [Text, Text, VRML]
 ---
 <style>
 .post h3 {

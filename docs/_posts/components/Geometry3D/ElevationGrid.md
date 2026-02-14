@@ -3,7 +3,7 @@ title: ElevationGrid
 date: 2023-01-07
 nav: components-Geometry3D
 categories: [components, Geometry3D]
-tags: [ElevationGrid, Geometry3D]
+tags: [ElevationGrid, Geometry3D, VRML]
 ---
 <style>
 .post h3 {

@@ -3,7 +3,7 @@ title: IndexedLineSet
 date: 2023-01-07
 nav: components-Rendering
 categories: [components, Rendering]
-tags: [IndexedLineSet, Rendering]
+tags: [IndexedLineSet, Rendering, VRML]
 ---
 <style>
 .post h3 {
