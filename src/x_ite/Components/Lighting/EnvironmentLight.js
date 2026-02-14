@@ -257,7 +257,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
          });
       })();
 
-      this .generatedSpecularTexture = (() =>
+      this .generatedSheenTexture = (() =>
       {
          if (!this .specularTexture)
             return;
@@ -267,20 +267,20 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
          const browser = this .getBrowser ();
 
          if (browser .getBrowserOption ("Debug") && this .specularTexture .getSize () > 1)
-            console .info ("Generating specular texture for EnvironmentLight.");
+            console .info ("Generating sheen texture for EnvironmentLight.");
 
          const
             levels    = this .specularTexture .getLevels (),
-            roughness = Array .from ({ length: levels + 1 }, (_, i) => i / (levels || 1));
+            roughness = Array .from ({ length: levels + 1 }, (_, i) => Math .max (i / (levels || 1), 2, 0.000001));
 
-         return this .cachedSpecularTexture = browser .filterEnvironmentTexture ({
-            name: "GeneratedSpecularTexture",
+         return this .cachedSheenTexture = browser .filterEnvironmentTexture ({
+            name: "GeneratedSheenTexture",
             texture: this .specularTexture,
-            distribution: Distribution .GGX,
-            sampleCount: 1024,
-            roughness,
+            distribution: Distribution .CHARLIE,
+            sampleCount: 64,
+            roughness: roughness,
             flipX: !this .traverseSpecular,
-            cachedNode: this .cachedSpecularTexture,
+            cachedNode: this .cachedSheenTexture,
          });
       })();
 
