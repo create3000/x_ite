@@ -3,7 +3,7 @@ title: Building Shapes out of Points, Lines, and Faces
 date: 2022-11-28
 nav: tutorials-animation-sensors-and-geometry
 categories: [Tutorials]
-tags: [Building, Shapes, Points, Lines, Faces]
+tags: [Shape, PointSet, IndexedLineSet, IndexedFaceSet, Coordinate]
 ---
 ## Motivation
 

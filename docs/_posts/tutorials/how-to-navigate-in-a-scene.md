@@ -3,7 +3,7 @@ title: How to Navigate in a Scene
 date: 2023-09-05
 nav: tutorials-basic
 categories: [Tutorials]
-tags: [Navigate, Scene]
+tags: [NavigationInfo]
 ---
 There are various types of viewers available to navigate in an X3D scene to move around quickly and efficiently in a scene. These can be set in the [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node *type* field.
 

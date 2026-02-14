@@ -3,7 +3,7 @@ title: Naming Nodes
 date: 2022-11-28
 nav: tutorials-shapes-geometry-and-appearance
 categories: [Tutorials]
-tags: [Naming, Nodes]
+tags: [DEF, USE]
 ---
 ## Motivation
 

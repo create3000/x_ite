@@ -3,7 +3,7 @@ title: Controlling Detail
 date: 2022-11-28
 nav: tutorials-scripts-and-prototypes
 categories: [Tutorials]
-tags: [Controlling, Detail]
+tags: [LOD]
 ---
 ## Motivation
 

@@ -3,7 +3,7 @@ title: Introducing Script Use
 date: 2022-11-28
 nav: tutorials-scripts-and-prototypes
 categories: [Tutorials]
-tags: [Introducing, Script]
+tags: [Script]
 ---
 ## Motivation
 
