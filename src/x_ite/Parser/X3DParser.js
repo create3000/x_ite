@@ -173,7 +173,7 @@ Object .assign (X3DParser .prototype,
    },
    rotateAxes (array)
    {
-      // This function is for STL models.
+      // This function is for STL and PLY models.
 
       const length = array .length;
 
