@@ -127,60 +127,6 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       return false;
    },
-   double ()
-   {
-      this .whitespacesNoLineTerminator ();
-
-      if (Grammar .double .parse (this))
-      {
-         this .value = parseFloat (this .result [0]);
-
-         return true;
-      }
-
-      return false;
-   },
-   int32 ()
-   {
-      this .whitespacesNoLineTerminator ();
-
-      if (Grammar .int32 .parse (this))
-      {
-         this .value = parseInt (this .result [0]);
-
-         return true;
-      }
-
-      return false;
-   },
-   convertColor (value, type)
-   {
-      switch (type)
-      {
-         case "uchar":
-         case "uint8":
-            return value / 0xff;
-         case "ushort":
-         case "uint16":
-            return value / 0xfffff;
-         case "uint":
-         case "uint32":
-            return value / 0xffffffff;
-         case "float":
-         case "float32":
-         case "double":
-         case "float64":
-            return value;
-      }
-   },
-   convertFDC (f_dc)
-   {
-      // https://github.com/graphdeco-inria/gaussian-splatting/issues/485
-
-      const C0 = 0.28209479177387814;
-
-      return 0.5 + C0 * f_dc;
-   },
    header (elements)
    {
       Grammar .ply .parse (this);
@@ -633,6 +579,60 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       for (let i = 0; i < count; ++ i)
          Grammar .line .parse (this);
+   },
+   double ()
+   {
+      this .whitespacesNoLineTerminator ();
+
+      if (Grammar .double .parse (this))
+      {
+         this .value = parseFloat (this .result [0]);
+
+         return true;
+      }
+
+      return false;
+   },
+   int32 ()
+   {
+      this .whitespacesNoLineTerminator ();
+
+      if (Grammar .int32 .parse (this))
+      {
+         this .value = parseInt (this .result [0]);
+
+         return true;
+      }
+
+      return false;
+   },
+   convertColor (value, type)
+   {
+      switch (type)
+      {
+         case "uchar":
+         case "uint8":
+            return value / 0xff;
+         case "ushort":
+         case "uint16":
+            return value / 0xfffff;
+         case "uint":
+         case "uint32":
+            return value / 0xffffffff;
+         case "float":
+         case "float32":
+         case "double":
+         case "float64":
+            return value;
+      }
+   },
+   convertFDC (f_dc)
+   {
+      // https://github.com/graphdeco-inria/gaussian-splatting/issues/485
+
+      const C0 = 0.28209479177387814;
+
+      return 0.5 + C0 * f_dc;
    },
 });
 
