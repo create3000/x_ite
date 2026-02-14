@@ -63,7 +63,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
       if (typeof this .input !== "string")
          return false;
 
-      return !! this .input .match (/^(?:[\x20\n\t\r]+|;.*?[\r\n])*\b(?:solid)\b/);
+      return !! this .input .match (/^(?:[\x20\n\t\r]+|;.*?[\r\n])*\bsolid\b.*?\bendsolid\b/s);
    },
    parseIntoScene (resolve, reject)
    {
@@ -144,6 +144,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
          Grammar .untilEndOfLine .parse (this);
 
          this .facets ();
+         this .rotateAxes (this .vertices);
 
          shape .appearance         = this .appearance;
          shape .geometry           = geometry;
@@ -154,6 +155,8 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
          if (hasNormals)
          {
             const normal = scene .createNode ("Normal");
+
+            this .rotateAxes (this .normals);
 
             normal .vector   = this .normals;
             geometry .normal = normal;

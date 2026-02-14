@@ -110,6 +110,8 @@ Object .assign (Object .setPrototypeOf (STLBParser .prototype, X3DParser .protot
             points .push (dataView .getFloat32 (i + f * 4, true));
       }
 
+      this .rotateAxes (points);
+
       shape .appearance         = this .appearance;
       shape .geometry           = geometry;
       coordinate .point         = points;
@@ -119,6 +121,8 @@ Object .assign (Object .setPrototypeOf (STLBParser .prototype, X3DParser .protot
       if (normals .some (v => v !== 0))
       {
          const normal = scene .createNode ("Normal");
+
+         this .rotateAxes (normals);
 
          normal .vector   = normals;
          geometry .normal = normal;
