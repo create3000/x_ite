@@ -329,7 +329,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-world-info .x_ite-private-world-info-buttons {
-  border-bottom: var(--border);
+  border-bottom: 4px solid var(--button-color);
   margin-bottom: 12pt;
 }
 
