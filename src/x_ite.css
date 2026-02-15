@@ -60,7 +60,7 @@ X3DCanvas {
   --color2: rgb(13, 16, 21);
   --gradient: linear-gradient(to bottom, rgba(35, 37, 40, 0.553) 0%, rgba(13, 16, 21, 0.831) 100%);
   --border: 4px solid rgba(43, 45, 47, 0.675);
-  --button-color: rgba(0, 0, 0, 0.38196601);
+  --tint-color: rgba(0, 0, 0, 0.38196601);
   --icon-filter: none;
 }
 
@@ -86,7 +86,7 @@ X3DCanvas {
     --color2: rgb(222, 221, 226);
     --gradient: linear-gradient(to bottom, rgba(247, 247, 252, 0.642) 0%, rgba(222, 221, 226, 0.6) 100%);
     --border: 4px solid rgba(229, 229, 234, 0.66);
-    --button-color: rgba(255, 255, 255, 0.38196601);
+    --tint-color: rgba(255, 255, 255, 0.38196601);
     --icon-filter: invert(100%);
   }
 }
@@ -112,7 +112,7 @@ X3DCanvas[theme=light] {
   --color2: rgb(222, 221, 226);
   --gradient: linear-gradient(to bottom, rgba(247, 247, 252, 0.642) 0%, rgba(222, 221, 226, 0.6) 100%);
   --border: 4px solid rgba(229, 229, 234, 0.66);
-  --button-color: rgba(255, 255, 255, 0.38196601);
+  --tint-color: rgba(255, 255, 255, 0.38196601);
   --icon-filter: invert(100%);
 }
 
@@ -297,7 +297,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
   width: 100%;
   height: 14pt;
   padding: 0;
-  background: var(--button-color);
+  background: var(--tint-color);
   color: var(--text-color);
   font-family: X_ITE PT Sans, sans-serif;
   font-style: italic;
@@ -329,7 +329,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-world-info .x_ite-private-world-info-buttons {
-  border-bottom: 4px solid var(--button-color);
+  border-bottom: 4px solid var(--tint-color);
   margin-bottom: 12pt;
 }
 
@@ -342,7 +342,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-world-info button:hover {
-  background-color: var(--button-color);
+  background-color: var(--tint-color);
 }
 
 .x_ite-private-world-info button.active {
@@ -396,7 +396,7 @@ X3DCanvas > :not(.x_ite-private-browser, .x_ite-private-menu) {
 }
 
 .x_ite-private-world-info tr:nth-child(odd) {
-  background-color: var(--button-color);
+  background-color: var(--tint-color);
 }
 
 .x_ite-private-world-info td:first-child {
