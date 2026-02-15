@@ -112,7 +112,7 @@ Brightness of ambient (nondirectional background) emission from the light.
 
 *diffuseCoefficients* field provides a 3 x 9 array of float values providing spherical harmonic coefficients for low-frequency characteristics of the environment map to produce an irradiance map corresponding to glTF irradianceCoefficients field.
 
-### SFNode [in, out] **diffuseTexture** NULL <small>[X3DEnvironmentTextureNode]</small>
+### SFNode [in, out] **diffuseTexture** NULL <small>[X3DEnvironmentTextureNode]</small> <small class="red">not supported</small>
 {: #fields-diffuseTexture }
 
 *diffuseTexture* defines explicit precomputed X3DEnvironmentTextureNode ([ComposedCubeMapTexture](/x_ite/components/cubemaptexturing/composedcubemaptexture/), [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/), [ImageCubeMapTexture](/x_ite/components/cubemaptexturing/imagecubemaptexture/)) nodes as the image source for the EnvironmentLight. When applying diffuseColor for this light node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
@@ -174,7 +174,7 @@ Size of the shadow map in pixels, must be power of two.
 ## X_ITE
 
 - Most scenes with [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/) require an EnvironmentLight node.
-- Any clear and sharp image should be added to *specularTexture*. The *diffuseTexture* should be a blurry image, but if not set, X_ITE will automatically generate this texture from the *specularTexture*.
+- If *diffuseTexture* is not present, X_ITE will automatically generate this texture using the *specularTexture*.
 
 ## See Also
 
