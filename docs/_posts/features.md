@@ -19,7 +19,7 @@ All code is held by [CREATE3000](https://github.com/create3000) and all contribu
 
 ## Core Features
 
-![WebGL Logo](/assets/img/features/webgl.png){: .normal }
+![WebGL Logo](/assets/img/features/webgl.png){: .normal width="985" height="200" }
 
 Although WebGL acts behind the scenes you do not need any special knowledge about that. There are many of ready to use [X3D nodes](/x_ite/supported-nodes/) that will make life easier. X_ITE provides comprehensive X3D support, which is complete and standard compliant.
 
@@ -56,7 +56,7 @@ We don't uses browser-sniffing. We keep the code consistent that makes our life 
 
 ## glTF Support
 
-![glTF Logo](/assets/img/features/glTF.png){: .normal }
+![glTF Logo](/assets/img/features/glTF.png){: .normal width="985" height="200" }
 
 In the X_ITE X3D Browser, glTF support is very solid and integrated, allowing authors to load and render glTF 2.0 (including .gltf and .glb) assets alongside X3D and VRML content. Internally X_ITE converts imported glTF models into X3D scene graph nodes, so they become part of the interactive X3D scene and can be manipulated just like native X3D content. Recent versions have even expanded this support to include a wide range of glTF material extensions, automatically translating PBR material definitions and KHR_* extensions into corresponding X3D material extension nodes, which enhances visual fidelity and compatibility with modern glTF assets.
 
