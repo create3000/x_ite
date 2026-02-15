@@ -1,7 +1,7 @@
-/* X_ITE v14.0.2 */
+/* X_ITE v14.0.3 */
 var __webpack_modules__ = ({
 
-/***/ 5408
+/***/ 5212
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1006,7 +1006,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 2538
+/***/ 8550
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2002,7 +2002,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 417
+/***/ 7181
 (module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -2016,7 +2016,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
     if ( true ) {
 
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(7354) ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(3470) ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -2247,7 +2247,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 1242
+/***/ 5254
 (module) {
 
 /**
@@ -7026,7 +7026,7 @@ if (true) {
 
 /***/ },
 
-/***/ 5797
+/***/ 257
 (__unused_webpack_module, exports) {
 
 
@@ -10271,93 +10271,14 @@ if (true) {
 
 /***/ },
 
-/***/ 8657
+/***/ 2959
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Features_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6264);
-/* harmony import */ var _BROWSER_VERSION_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7302);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7028);
-
-
-
-const URLs =
-{
-   getScriptURL: (() =>
-   {
-      let src;
-
-      switch (_Features_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A .ENVIRONMENT)
-      {
-         case "NODE":
-         {
-            src = __webpack_require__.g .require ("url") .pathToFileURL (__filename) .href;
-            break;
-         }
-         case "BROWSER":
-         {
-            src = document .currentScript ?.src ?? document .location .href;
-            break;
-         }
-         case "MODULE":
-         {
-            src = import .meta .url;
-            break;
-         }
-      }
-
-      // Prevent caching issues with jsDelivr and UNPKG.
-      src = src .replace ("/x_ite@latest/", `/x_ite@${_BROWSER_VERSION_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A}/`);
-
-      return function ()
-      {
-         return src;
-      };
-   })(),
-   getProviderURL (component)
-   {
-      if (!component)
-         return "https://create3000.github.io/x_ite/";
-
-      const min = this .getScriptURL () .match (/\.min\.m?js$/) ? ".min" : "";
-
-      return new URL (`assets/components/${component}Component${min}.js`, this .getScriptURL ()) .href;
-   },
-   getFontsURL (file)
-   {
-      return new URL (`assets/fonts/${file}`, this .getScriptURL ()) .href;
-   },
-   getLinetypeURL ()
-   {
-      return new URL ("assets/linetype/linetypes.png", this .getScriptURL ()) .href;
-   },
-   getHatchingURL (index)
-   {
-      return new URL (`assets/hatching/${index}.png`, this .getScriptURL ()) .href;
-   },
-   getLibraryURL (file)
-   {
-      return new URL (`assets/lib/${file}`, this .getScriptURL ()) .href;
-   },
-};
-
-const __default__ = URLs;
-;
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_Namespace_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A .add ("URLs", __default__));
-
-/***/ },
-
-/***/ 6264
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var _DEVELOPMENT_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9368);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7028);
+/* harmony import */ var _DEVELOPMENT_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2972);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1739);
 
 
 const MODULE = true;
@@ -10490,13 +10411,92 @@ const __default__ = Features;
 
 /***/ },
 
-/***/ 859
+/***/ 5066
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7028);
+/* harmony import */ var _Features_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2959);
+/* harmony import */ var _BROWSER_VERSION_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2714);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1739);
+
+
+
+const URLs =
+{
+   getScriptURL: (() =>
+   {
+      let src;
+
+      switch (_Features_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A .ENVIRONMENT)
+      {
+         case "NODE":
+         {
+            src = __webpack_require__.g .require ("url") .pathToFileURL (__filename) .href;
+            break;
+         }
+         case "BROWSER":
+         {
+            src = document .currentScript ?.src ?? document .location .href;
+            break;
+         }
+         case "MODULE":
+         {
+            src = import .meta .url;
+            break;
+         }
+      }
+
+      // Prevent caching issues with jsDelivr and UNPKG.
+      src = src .replace ("/x_ite@latest/", `/x_ite@${_BROWSER_VERSION_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .A}/`);
+
+      return function ()
+      {
+         return src;
+      };
+   })(),
+   getProviderURL (component)
+   {
+      if (!component)
+         return "https://create3000.github.io/x_ite/";
+
+      const min = this .getScriptURL () .match (/\.min\.m?js$/) ? ".min" : "";
+
+      return new URL (`assets/components/${component}Component${min}.js`, this .getScriptURL ()) .href;
+   },
+   getFontsURL (file)
+   {
+      return new URL (`assets/fonts/${file}`, this .getScriptURL ()) .href;
+   },
+   getLinetypeURL ()
+   {
+      return new URL ("assets/linetype/linetypes.png", this .getScriptURL ()) .href;
+   },
+   getHatchingURL (index)
+   {
+      return new URL (`assets/hatching/${index}.png`, this .getScriptURL ()) .href;
+   },
+   getLibraryURL (file)
+   {
+      return new URL (`assets/lib/${file}`, this .getScriptURL ()) .href;
+   },
+};
+
+const __default__ = URLs;
+;
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_Namespace_js__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .A .add ("URLs", __default__));
+
+/***/ },
+
+/***/ 1975
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1739);
 const Algorithm =
 {
    radians (value)
@@ -10672,13 +10672,13 @@ const __default__ = Algorithm;
 
 /***/ },
 
-/***/ 1165
+/***/ 2737
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7028);
+/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1739);
 const
    extents1 = { min: 0, max: 0 },
    extents2 = { min: 0, max: 0 };
@@ -10747,13 +10747,13 @@ const __default__ = SAT;
 
 /***/ },
 
-/***/ 2305
+/***/ 5845
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7028);
+/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1739);
 const a = [ ]; // more scratch
 const b = [ ]; // more scratch
 const z = [ ]; // more scratch
@@ -10903,16 +10903,16 @@ const __default__ = eigen_decomposition;
 
 /***/ },
 
-/***/ 49
+/***/ 9381
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Numbers_Matrix4_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4972);
-/* harmony import */ var _Numbers_Vector3_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2523);
-/* harmony import */ var _Algorithms_SAT_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1165);
-/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7028);
+/* harmony import */ var _Numbers_Matrix4_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7232);
+/* harmony import */ var _Numbers_Vector3_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1223);
+/* harmony import */ var _Algorithms_SAT_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2737);
+/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1739);
 
 
 
@@ -11453,14 +11453,14 @@ const __default__ = Box3;
 
 /***/ },
 
-/***/ 8332
+/***/ 6680
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Numbers_Vector3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2523);
-/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7028);
+/* harmony import */ var _Numbers_Vector3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1223);
+/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1739);
 
 
 const Camera =
@@ -11547,14 +11547,14 @@ const __default__ = Camera;
 
 /***/ },
 
-/***/ 2528
+/***/ 1148
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Numbers_Vector3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2523);
-/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7028);
+/* harmony import */ var _Numbers_Vector3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1223);
+/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1739);
 
 
 function Line3 (point = _Numbers_Vector3_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A .ZERO, direction = _Numbers_Vector3_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A .Z_AXIS)
@@ -11774,15 +11774,15 @@ const __default__ = Line3;
 
 /***/ },
 
-/***/ 3088
+/***/ 9716
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Numbers_Vector3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2523);
-/* harmony import */ var _Numbers_Matrix4_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4972);
-/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7028);
+/* harmony import */ var _Numbers_Vector3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1223);
+/* harmony import */ var _Numbers_Matrix4_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7232);
+/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1739);
 
 
 
@@ -11916,15 +11916,15 @@ const __default__ = Plane3;
 
 /***/ },
 
-/***/ 3622
+/***/ 9602
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Numbers_Vector3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2523);
-/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7028);
-/* provided dependency */ var libtess = __webpack_require__(1242);
+/* harmony import */ var _Numbers_Vector3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1223);
+/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1739);
+/* provided dependency */ var libtess = __webpack_require__(5254);
 
 
 const Triangle3 =
@@ -12053,20 +12053,20 @@ const __default__ = Triangle3;
 
 /***/ },
 
-/***/ 7560
+/***/ 7724
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Plane3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3088);
-/* harmony import */ var _Triangle3_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3622);
-/* harmony import */ var _Numbers_Vector2_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8228);
-/* harmony import */ var _Numbers_Vector3_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2523);
-/* harmony import */ var _Numbers_Vector4_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4898);
-/* harmony import */ var _Numbers_Matrix4_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(4972);
-/* harmony import */ var _Algorithms_SAT_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1165);
-/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(7028);
+/* harmony import */ var _Plane3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(9716);
+/* harmony import */ var _Triangle3_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9602);
+/* harmony import */ var _Numbers_Vector2_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7072);
+/* harmony import */ var _Numbers_Vector3_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1223);
+/* harmony import */ var _Numbers_Vector4_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1542);
+/* harmony import */ var _Numbers_Matrix4_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7232);
+/* harmony import */ var _Algorithms_SAT_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(2737);
+/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1739);
 
 
 
@@ -12370,14 +12370,14 @@ const __default__ = ViewVolume;
 
 /***/ },
 
-/***/ 6355
+/***/ 5503
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Algorithm_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(859);
-/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7028);
+/* harmony import */ var _Algorithm_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1975);
+/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1739);
 
 
 const { interval, degrees } = _Algorithm_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A;
@@ -12628,14 +12628,14 @@ const __default__ = Color3;
 
 /***/ },
 
-/***/ 8842
+/***/ 9550
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Color3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6355);
-/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7028);
+/* harmony import */ var _Color3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5503);
+/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1739);
 
 
 const
@@ -12803,13 +12803,13 @@ const __default__ = Color4;
 
 /***/ },
 
-/***/ 595
+/***/ 3119
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7028);
+/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1739);
 function Complex (real = 0, imag = 0)
 {
    this .real = real;
@@ -13014,7 +13014,7 @@ const __default__ = Complex;
 
 /***/ },
 
-/***/ 1883
+/***/ 9857
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 
@@ -13024,11 +13024,11 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Vector2.js
-var Vector2 = __webpack_require__(8228);
+var Vector2 = __webpack_require__(7072);
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Vector3.js
-var Vector3 = __webpack_require__(2523);
+var Vector3 = __webpack_require__(1223);
 // EXTERNAL MODULE: ./src/x_ite/Namespace.js
-var Namespace = __webpack_require__(7028);
+var Namespace = __webpack_require__(1739);
 ;// ./src/standard/Math/Numbers/Matrix2.js
 
 
@@ -13271,7 +13271,7 @@ const __default__ = Matrix2;
 
 /* harmony default export */ const Numbers_Matrix2 = (Namespace/* default */.A .add ("Matrix2", __default__));
 // EXTERNAL MODULE: ./src/standard/Math/Algorithms/eigen_decomposition.js
-var eigen_decomposition = __webpack_require__(2305);
+var eigen_decomposition = __webpack_require__(5845);
 ;// ./src/standard/Math/Numbers/Matrix3.js
 
 
@@ -13890,19 +13890,19 @@ const Matrix3_default_ = Matrix3;
 
 /***/ },
 
-/***/ 4972
+/***/ 7232
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Vector3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2523);
-/* harmony import */ var _Vector4_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4898);
-/* harmony import */ var _Quaternion_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(751);
-/* harmony import */ var _Rotation4_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4689);
-/* harmony import */ var _Matrix3_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1883);
-/* harmony import */ var _Algorithms_eigen_decomposition_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2305);
-/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7028);
+/* harmony import */ var _Vector3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1223);
+/* harmony import */ var _Vector4_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1542);
+/* harmony import */ var _Quaternion_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8995);
+/* harmony import */ var _Rotation4_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7213);
+/* harmony import */ var _Matrix3_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9857);
+/* harmony import */ var _Algorithms_eigen_decomposition_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(5845);
+/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1739);
 
 
 
@@ -14658,16 +14658,16 @@ const __default__ = Matrix4;
 
 /***/ },
 
-/***/ 751
+/***/ 8995
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Vector3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2523);
-/* harmony import */ var _Matrix3_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1883);
-/* harmony import */ var _Algorithm_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(859);
-/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7028);
+/* harmony import */ var _Vector3_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1223);
+/* harmony import */ var _Matrix3_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9857);
+/* harmony import */ var _Algorithm_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1975);
+/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1739);
 
 
 
@@ -15313,18 +15313,18 @@ const __default__ = Quaternion;
 
 /***/ },
 
-/***/ 4689
+/***/ 7213
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Quaternion_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(751);
-/* harmony import */ var _Vector3_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2523);
-/* harmony import */ var _Vector4_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4898);
-/* harmony import */ var _Matrix3_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1883);
-/* harmony import */ var _Algorithm_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(859);
-/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7028);
+/* harmony import */ var _Quaternion_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8995);
+/* harmony import */ var _Vector3_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1223);
+/* harmony import */ var _Vector4_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1542);
+/* harmony import */ var _Matrix3_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9857);
+/* harmony import */ var _Algorithm_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1975);
+/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1739);
 
 
 
@@ -15803,14 +15803,14 @@ const __default__ = Rotation4;
 
 /***/ },
 
-/***/ 8228
+/***/ 7072
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Algorithm_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(859);
-/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7028);
+/* harmony import */ var _Algorithm_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1975);
+/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1739);
 
 
 function Vector2 (x = 0, y = x)
@@ -16026,14 +16026,14 @@ const __default__ = Vector2;
 
 /***/ },
 
-/***/ 2523
+/***/ 1223
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Algorithm_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(859);
-/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7028);
+/* harmony import */ var _Algorithm_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1975);
+/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1739);
 
 
 function Vector3 (x = 0, y = x, z = y)
@@ -16301,14 +16301,14 @@ const __default__ = Vector3;
 
 /***/ },
 
-/***/ 4898
+/***/ 1542
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Algorithm_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(859);
-/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7028);
+/* harmony import */ var _Algorithm_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1975);
+/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1739);
 
 
 function Vector4 (x = 0, y = x, z = y, w = z)
@@ -16590,13 +16590,13 @@ const __default__ = Vector4;
 
 /***/ },
 
-/***/ 6150
+/***/ 714
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7028);
+/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1739);
 class MatrixStack extends Array
 {
    #top = 0;
@@ -16686,13 +16686,13 @@ const __default__ = MatrixStack;
 
 /***/ },
 
-/***/ 9878
+/***/ 3954
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7028);
+/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1739);
 class StopWatch
 {
    #startTime = 0;
@@ -16736,14 +16736,14 @@ const __default__ = StopWatch;
 
 /***/ },
 
-/***/ 5899
+/***/ 9975
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Math_Algorithm_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(859);
-/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7028);
+/* harmony import */ var _Math_Algorithm_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1975);
+/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1739);
 
 
 const _value = Symbol ();
@@ -16830,13 +16830,13 @@ const __default__ = BitSet;
 
 /***/ },
 
-/***/ 4019
+/***/ 447
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7028);
+/* harmony import */ var _x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1739);
 function ObjectCache (Type)
 {
    return Object .assign ([ ],
@@ -16868,27 +16868,27 @@ const __default__ = ObjectCache;
 
 /***/ },
 
-/***/ 7302
+/***/ 2714
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7028);
-const __default__ = "14.0.2";
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1739);
+const __default__ = "14.0.3";
 ;
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_Namespace_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A .add ("BROWSER_VERSION", __default__));
 
 /***/ },
 
-/***/ 8690
+/***/ 7838
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7028);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1739);
 const Events = Object .assign ([ ],
 {
    create (field)
@@ -16929,15 +16929,15 @@ const __default__ = Events;
 
 /***/ },
 
-/***/ 2553
+/***/ 2837
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _X3DInfoArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(495);
-/* harmony import */ var _X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2459);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7028);
+/* harmony import */ var _X3DInfoArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4163);
+/* harmony import */ var _X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4927);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1739);
 
 
 
@@ -16967,14 +16967,14 @@ const __default__ = FieldDefinitionArray;
 
 /***/ },
 
-/***/ 6429
+/***/ 8985
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Features_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6264);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7028);
+/* harmony import */ var _Features_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2959);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1739);
 
 
 const __default__ = _Features_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A .WEAK_REF && _Features_js__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .A .FINALIZATION_REGISTRY ?
@@ -17072,15 +17072,15 @@ class IterableWeakSet extends Set
 
 /***/ },
 
-/***/ 6751
+/***/ 1555
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _X3DField_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1122);
-/* harmony import */ var _Features_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6264);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7028);
+/* harmony import */ var _X3DField_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5086);
+/* harmony import */ var _Features_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2959);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1739);
 
 
 
@@ -17180,7 +17180,7 @@ const __default__ = X3DArrayField;
 
 /***/ },
 
-/***/ 3152
+/***/ 2502
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 
@@ -17190,19 +17190,19 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/x_ite/Base/X3DChildObject.js
-var X3DChildObject = __webpack_require__(6019);
+var X3DChildObject = __webpack_require__(3607);
 // EXTERNAL MODULE: ./src/x_ite/Base/Events.js
-var Events = __webpack_require__(8690);
+var Events = __webpack_require__(7838);
 // EXTERNAL MODULE: ./src/x_ite/Base/X3DFieldDefinition.js
-var X3DFieldDefinition = __webpack_require__(2459);
+var X3DFieldDefinition = __webpack_require__(4927);
 // EXTERNAL MODULE: ./src/x_ite/Base/FieldDefinitionArray.js
-var FieldDefinitionArray = __webpack_require__(2553);
+var FieldDefinitionArray = __webpack_require__(2837);
 // EXTERNAL MODULE: ./src/x_ite/Base/X3DInfoArray.js
-var X3DInfoArray = __webpack_require__(495);
+var X3DInfoArray = __webpack_require__(4163);
 // EXTERNAL MODULE: ./src/x_ite/Base/X3DField.js
-var X3DField = __webpack_require__(1122);
+var X3DField = __webpack_require__(5086);
 // EXTERNAL MODULE: ./src/x_ite/Namespace.js
-var Namespace = __webpack_require__(7028);
+var Namespace = __webpack_require__(1739);
 ;// ./src/x_ite/Base/FieldArray.js
 
 
@@ -17231,11 +17231,11 @@ const __default__ = FieldArray;
 
 /* harmony default export */ const Base_FieldArray = (Namespace/* default */.A .add ("FieldArray", __default__));
 // EXTERNAL MODULE: ./src/x_ite/Fields.js + 15 modules
-var Fields = __webpack_require__(7102);
+var Fields = __webpack_require__(5706);
 // EXTERNAL MODULE: ./src/x_ite/Base/X3DConstants.js
-var X3DConstants = __webpack_require__(1543);
+var X3DConstants = __webpack_require__(7227);
 // EXTERNAL MODULE: ./src/x_ite/Parser/HTMLSupport.js
-var HTMLSupport = __webpack_require__(8257);
+var HTMLSupport = __webpack_require__(1165);
 ;// ./src/x_ite/Base/X3DBaseNode.js
 
 
@@ -17857,14 +17857,14 @@ const X3DBaseNode_default_ = X3DBaseNode;
 
 /***/ },
 
-/***/ 2535
+/***/ 3555
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1739);
 
 
 function X3DCast (type, node, innerNode = true)
@@ -17892,15 +17892,15 @@ const __default__ = X3DCast;
 
 /***/ },
 
-/***/ 6019
+/***/ 3607
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _X3DObject_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6352);
-/* harmony import */ var _IterableWeakSet_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6429);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7028);
+/* harmony import */ var _X3DObject_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1075);
+/* harmony import */ var _IterableWeakSet_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8985);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1739);
 
 
 
@@ -18024,13 +18024,13 @@ const __default__ = X3DChildObject;
 
 /***/ },
 
-/***/ 1543
+/***/ 7227
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7028);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1739);
 const X3DConstants =
 {
    [Symbol .toStringTag]: "X3DConstants",
@@ -18145,17 +18145,17 @@ const __default__ = X3DConstants;
 
 /***/ },
 
-/***/ 1122
+/***/ 5086
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _X3DChildObject_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6019);
-/* harmony import */ var _X3DConstants_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1543);
-/* harmony import */ var _Events_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8690);
-/* harmony import */ var _IterableWeakSet_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6429);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7028);
+/* harmony import */ var _X3DChildObject_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3607);
+/* harmony import */ var _X3DConstants_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7227);
+/* harmony import */ var _Events_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7838);
+/* harmony import */ var _IterableWeakSet_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8985);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1739);
 
 
 
@@ -18536,14 +18536,14 @@ const __default__ = X3DField;
 
 /***/ },
 
-/***/ 2459
+/***/ 4927
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _X3DObject_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6352);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7028);
+/* harmony import */ var _X3DObject_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1075);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1739);
 
 
 const
@@ -18649,14 +18649,14 @@ const __default__ = X3DFieldDefinition;
 
 /***/ },
 
-/***/ 495
+/***/ 4163
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _X3DChildObject_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6019);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7028);
+/* harmony import */ var _X3DChildObject_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3607);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1739);
 
 
 const
@@ -19001,7 +19001,7 @@ const __default__ = X3DInfoArray;
 
 /***/ },
 
-/***/ 6352
+/***/ 1075
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 
@@ -19011,13 +19011,13 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/x_ite/Base/X3DConstants.js
-var X3DConstants = __webpack_require__(1543);
+var X3DConstants = __webpack_require__(7227);
 // EXTERNAL MODULE: ./src/standard/Math/Algorithm.js
-var Algorithm = __webpack_require__(859);
+var Algorithm = __webpack_require__(1975);
 // EXTERNAL MODULE: ./src/x_ite/Execution/NamedNodesHandling.js
-var NamedNodesHandling = __webpack_require__(121);
+var NamedNodesHandling = __webpack_require__(9781);
 // EXTERNAL MODULE: ./src/x_ite/Namespace.js
-var Namespace = __webpack_require__(7028);
+var Namespace = __webpack_require__(1739);
 ;// ./src/x_ite/InputOutput/X3DGenerator.js
 
 
@@ -19747,9 +19747,9 @@ const JSONGenerator_default_ = JSONGenerator;
 
 /* harmony default export */ const InputOutput_JSONGenerator = (Namespace/* default */.A .add ("JSONGenerator", JSONGenerator_default_));
 // EXTERNAL MODULE: ./src/x_ite/Features.js
-var Features = __webpack_require__(6264);
+var Features = __webpack_require__(2959);
 ;// ./src/x_ite/Base/X3DObject.js
-/* provided dependency */ var $ = __webpack_require__(7678)["default"];
+/* provided dependency */ var $ = __webpack_require__(5758)["default"];
 
 
 
@@ -20009,16 +20009,16 @@ const X3DObject_default_ = X3DObject;
 
 /***/ },
 
-/***/ 2570
+/***/ 4318
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Components_Rendering_X3DGeometryNode_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(832);
-/* harmony import */ var _Shape_AlphaMode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2247);
-/* harmony import */ var _standard_Math_Numbers_Matrix4_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4972);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7028);
+/* harmony import */ var _Components_Rendering_X3DGeometryNode_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7145);
+/* harmony import */ var _Shape_AlphaMode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(995);
+/* harmony import */ var _standard_Math_Numbers_Matrix4_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7232);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1739);
 
 
 
@@ -20067,13 +20067,13 @@ const __default__ = GeometryContext;
 
 /***/ },
 
-/***/ 2247
+/***/ 995
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7028);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1739);
 let i = 0;
 
 const AlphaMode =
@@ -20091,16 +20091,16 @@ const __default__ = Object .assign (new Map (Object .entries (AlphaMode)), Alpha
 
 /***/ },
 
-/***/ 8312
+/***/ 1660
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7939);
-/* harmony import */ var _X3DChildNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8013);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1543);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7028);
+/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8679);
+/* harmony import */ var _X3DChildNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1913);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7227);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1739);
 
 
 
@@ -20164,17 +20164,17 @@ const __default__ = X3DBindableNode;
 
 /***/ },
 
-/***/ 8013
+/***/ 1913
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _X3DNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7939);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1543);
-/* harmony import */ var _Rendering_TraverseType_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6009);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _X3DNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8679);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7227);
+/* harmony import */ var _Rendering_TraverseType_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3786);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1739);
 
 
 
@@ -20337,17 +20337,17 @@ const __default__ = X3DChildNode;
 
 /***/ },
 
-/***/ 2327
+/***/ 4771
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Base_X3DChildObject_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6019);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1543);
-/* harmony import */ var _X3DNode_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7939);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7028);
-/* provided dependency */ var $ = __webpack_require__(7678)["default"];
+/* harmony import */ var _Base_X3DChildObject_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3607);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7227);
+/* harmony import */ var _X3DNode_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8679);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1739);
+/* provided dependency */ var $ = __webpack_require__(5758)["default"];
 
 
 
@@ -20554,18 +20554,18 @@ const __default__ = X3DImportedNodeProxy;
 
 /***/ },
 
-/***/ 7939
+/***/ 8679
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Base_X3DBaseNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3152);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1543);
-/* harmony import */ var _Base_X3DField_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1122);
-/* harmony import */ var _Fields_SFNodeCache_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5366);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Base_X3DBaseNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2502);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7227);
+/* harmony import */ var _Base_X3DField_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5086);
+/* harmony import */ var _Fields_SFNodeCache_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(2490);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1739);
 
 
 
@@ -22060,17 +22060,17 @@ const __default__ = X3DNode;
 
 /***/ },
 
-/***/ 9498
+/***/ 7806
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Base_X3DChildObject_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6019);
-/* harmony import */ var _X3DNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7939);
-/* harmony import */ var _Execution_X3DExecutionContext_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2258);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1543);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7028);
+/* harmony import */ var _Base_X3DChildObject_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3607);
+/* harmony import */ var _X3DNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8679);
+/* harmony import */ var _Execution_X3DExecutionContext_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6686);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7227);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1739);
 
 
 
@@ -22798,16 +22798,16 @@ const __default__ = X3DPrototypeInstance;
 
 /***/ },
 
-/***/ 1957
+/***/ 6609
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7939);
-/* harmony import */ var _X3DChildNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8013);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1543);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7028);
+/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8679);
+/* harmony import */ var _X3DChildNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1913);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7227);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1739);
 
 
 
@@ -22830,21 +22830,21 @@ const __default__ = X3DSensorNode;
 
 /***/ },
 
-/***/ 6485
+/***/ 8697
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2459);
-/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2553);
-/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7939);
-/* harmony import */ var _X3DBackgroundNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4794);
-/* harmony import */ var _Texturing_ImageTexture_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7045);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1543);
-/* harmony import */ var _standard_Math_Numbers_Color3_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(6355);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4927);
+/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2837);
+/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8679);
+/* harmony import */ var _X3DBackgroundNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4046);
+/* harmony import */ var _Texturing_ImageTexture_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9569);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7227);
+/* harmony import */ var _standard_Math_Numbers_Color3_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(5503);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(1739);
 
 
 
@@ -22946,21 +22946,21 @@ const __default__ = Background;
 
 /***/ },
 
-/***/ 8533
+/***/ 6785
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2459);
-/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2553);
-/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7939);
-/* harmony import */ var _Core_X3DBindableNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8312);
-/* harmony import */ var _X3DFogObject_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(5623);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1543);
-/* harmony import */ var _standard_Math_Numbers_Matrix4_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4972);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4927);
+/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2837);
+/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8679);
+/* harmony import */ var _Core_X3DBindableNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1660);
+/* harmony import */ var _X3DFogObject_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6971);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7227);
+/* harmony import */ var _standard_Math_Numbers_Matrix4_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(7232);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(1739);
 
 
 
@@ -23031,28 +23031,28 @@ const __default__ = Fog;
 
 /***/ },
 
-/***/ 4794
+/***/ 4046
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7939);
-/* harmony import */ var _Core_X3DBindableNode_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8312);
-/* harmony import */ var _Browser_Rendering_GeometryContext_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2570);
-/* harmony import */ var _Rendering_VertexArray_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3925);
-/* harmony import */ var _Rendering_TraverseType_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6009);
-/* harmony import */ var _Browser_Shape_AlphaMode_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(2247);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1543);
-/* harmony import */ var _Rendering_RenderPass_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(9617);
-/* harmony import */ var _standard_Math_Numbers_Complex_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(595);
-/* harmony import */ var _standard_Math_Numbers_Vector3_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(2523);
-/* harmony import */ var _standard_Math_Numbers_Rotation4_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(4689);
-/* harmony import */ var _standard_Math_Numbers_Matrix4_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(4972);
-/* harmony import */ var _standard_Math_Algorithm_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(859);
-/* harmony import */ var _standard_Utility_BitSet_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(5899);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8679);
+/* harmony import */ var _Core_X3DBindableNode_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1660);
+/* harmony import */ var _Browser_Rendering_GeometryContext_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4318);
+/* harmony import */ var _Rendering_VertexArray_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9553);
+/* harmony import */ var _Rendering_TraverseType_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(3786);
+/* harmony import */ var _Browser_Shape_AlphaMode_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(995);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(7227);
+/* harmony import */ var _Rendering_RenderPass_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(8981);
+/* harmony import */ var _standard_Math_Numbers_Complex_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(3119);
+/* harmony import */ var _standard_Math_Numbers_Vector3_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(1223);
+/* harmony import */ var _standard_Math_Numbers_Rotation4_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(7213);
+/* harmony import */ var _standard_Math_Numbers_Matrix4_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(7232);
+/* harmony import */ var _standard_Math_Algorithm_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(1975);
+/* harmony import */ var _standard_Utility_BitSet_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(9975);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(1739);
 
 
 
@@ -23673,17 +23673,17 @@ const __default__ = X3DBackgroundNode;
 
 /***/ },
 
-/***/ 5623
+/***/ 6971
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7939);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1543);
-/* harmony import */ var _standard_Utility_ObjectCache_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(4019);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8679);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7227);
+/* harmony import */ var _standard_Utility_ObjectCache_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(447);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1739);
 
 
 
@@ -23816,19 +23816,19 @@ const __default__ = X3DFogObject;
 
 /***/ },
 
-/***/ 3029
+/***/ 5121
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2459);
-/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2553);
-/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7939);
-/* harmony import */ var _X3DGroupingNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(2964);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1543);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4927);
+/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2837);
+/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8679);
+/* harmony import */ var _X3DGroupingNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3544);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7227);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1739);
 
 
 
@@ -23871,7 +23871,7 @@ const __default__ = Group;
 
 /***/ },
 
-/***/ 1770
+/***/ 6089
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 
@@ -23881,27 +23881,27 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/x_ite/Fields.js + 15 modules
-var Fields = __webpack_require__(7102);
+var Fields = __webpack_require__(5706);
 // EXTERNAL MODULE: ./src/x_ite/Components/Core/X3DNode.js
-var X3DNode = __webpack_require__(7939);
+var X3DNode = __webpack_require__(8679);
 // EXTERNAL MODULE: ./src/x_ite/Base/X3DConstants.js
-var X3DConstants = __webpack_require__(1543);
+var X3DConstants = __webpack_require__(7227);
 // EXTERNAL MODULE: ./src/x_ite/Base/X3DFieldDefinition.js
-var X3DFieldDefinition = __webpack_require__(2459);
+var X3DFieldDefinition = __webpack_require__(4927);
 // EXTERNAL MODULE: ./src/x_ite/Base/FieldDefinitionArray.js
-var FieldDefinitionArray = __webpack_require__(2553);
+var FieldDefinitionArray = __webpack_require__(2837);
 // EXTERNAL MODULE: ./src/x_ite/Components/Core/X3DChildNode.js
-var X3DChildNode = __webpack_require__(8013);
+var X3DChildNode = __webpack_require__(1913);
 // EXTERNAL MODULE: ./src/x_ite/Rendering/TraverseType.js
-var TraverseType = __webpack_require__(6009);
+var TraverseType = __webpack_require__(3786);
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Matrix4.js
-var Matrix4 = __webpack_require__(4972);
+var Matrix4 = __webpack_require__(7232);
 // EXTERNAL MODULE: ./src/standard/Math/Geometry/Box3.js
-var Box3 = __webpack_require__(49);
+var Box3 = __webpack_require__(9381);
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Vector3.js
-var Vector3 = __webpack_require__(2523);
+var Vector3 = __webpack_require__(1223);
 // EXTERNAL MODULE: ./src/x_ite/Namespace.js
-var Namespace = __webpack_require__(7028);
+var Namespace = __webpack_require__(1739);
 ;// ./src/x_ite/Browser/Grouping/X3DBBoxNode.js
 
 
@@ -24112,20 +24112,20 @@ const X3DBoundedObject_default_ = X3DBoundedObject;
 
 /***/ },
 
-/***/ 2964
+/***/ 3544
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7939);
-/* harmony import */ var _Core_X3DChildNode_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8013);
-/* harmony import */ var _X3DBoundedObject_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1770);
-/* harmony import */ var _Rendering_TraverseType_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6009);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1543);
-/* harmony import */ var _Base_X3DCast_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(2535);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8679);
+/* harmony import */ var _Core_X3DChildNode_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1913);
+/* harmony import */ var _X3DBoundedObject_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6089);
+/* harmony import */ var _Rendering_TraverseType_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3786);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7227);
+/* harmony import */ var _Base_X3DCast_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(3555);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1739);
 
 
 
@@ -24667,19 +24667,19 @@ const __default__ = X3DGroupingNode;
 
 /***/ },
 
-/***/ 1926
+/***/ 4346
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2459);
-/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2553);
-/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7939);
-/* harmony import */ var _X3DInterpolatorNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6597);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1543);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4927);
+/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2837);
+/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8679);
+/* harmony import */ var _X3DInterpolatorNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7993);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7227);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1739);
 
 
 
@@ -24774,20 +24774,20 @@ const __default__ = EaseInEaseOut;
 
 /***/ },
 
-/***/ 6780
+/***/ 5616
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2459);
-/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2553);
-/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7939);
-/* harmony import */ var _X3DInterpolatorNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6597);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1543);
-/* harmony import */ var _standard_Math_Numbers_Rotation4_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(4689);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4927);
+/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2837);
+/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8679);
+/* harmony import */ var _X3DInterpolatorNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7993);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7227);
+/* harmony import */ var _standard_Math_Numbers_Rotation4_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7213);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1739);
 
 
 
@@ -24869,20 +24869,20 @@ const __default__ = OrientationInterpolator;
 
 /***/ },
 
-/***/ 6469
+/***/ 8889
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2459);
-/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2553);
-/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7939);
-/* harmony import */ var _X3DInterpolatorNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6597);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1543);
-/* harmony import */ var _standard_Math_Numbers_Vector3_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(2523);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4927);
+/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2837);
+/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8679);
+/* harmony import */ var _X3DInterpolatorNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7993);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7227);
+/* harmony import */ var _standard_Math_Numbers_Vector3_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1223);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1739);
 
 
 
@@ -24953,20 +24953,20 @@ const __default__ = PositionInterpolator;
 
 /***/ },
 
-/***/ 2454
+/***/ 2130
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2459);
-/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2553);
-/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7939);
-/* harmony import */ var _X3DInterpolatorNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6597);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1543);
-/* harmony import */ var _standard_Math_Algorithm_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(859);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4927);
+/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2837);
+/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8679);
+/* harmony import */ var _X3DInterpolatorNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7993);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7227);
+/* harmony import */ var _standard_Math_Algorithm_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1975);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1739);
 
 
 
@@ -25032,17 +25032,17 @@ const __default__ = ScalarInterpolator;
 
 /***/ },
 
-/***/ 6597
+/***/ 7993
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7939);
-/* harmony import */ var _Core_X3DChildNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8013);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1543);
-/* harmony import */ var _standard_Math_Algorithm_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(859);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7028);
+/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8679);
+/* harmony import */ var _Core_X3DChildNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1913);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7227);
+/* harmony import */ var _standard_Math_Algorithm_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1975);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1739);
 
 
 
@@ -25124,21 +25124,21 @@ const __default__ = X3DInterpolatorNode;
 
 /***/ },
 
-/***/ 2613
+/***/ 7249
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2459);
-/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2553);
-/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7939);
-/* harmony import */ var _X3DLayerNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5325);
-/* harmony import */ var _Navigation_Viewpoint_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(4548);
-/* harmony import */ var _Grouping_Group_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(3029);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1543);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4927);
+/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2837);
+/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8679);
+/* harmony import */ var _X3DLayerNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3127);
+/* harmony import */ var _Navigation_Viewpoint_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(8544);
+/* harmony import */ var _Grouping_Group_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(5121);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(7227);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(1739);
 
 
 
@@ -25206,20 +25206,20 @@ const __default__ = Layer;
 
 /***/ },
 
-/***/ 2189
+/***/ 9745
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2459);
-/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2553);
-/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7939);
-/* harmony import */ var _Layer_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(2613);
-/* harmony import */ var _Base_X3DCast_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2535);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1543);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4927);
+/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2837);
+/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8679);
+/* harmony import */ var _Layer_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7249);
+/* harmony import */ var _Base_X3DCast_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(3555);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7227);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1739);
 
 
 
@@ -25379,7 +25379,7 @@ const __default__ = LayerSet;
 
 /***/ },
 
-/***/ 5325
+/***/ 3127
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 
@@ -25389,19 +25389,19 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/x_ite/Fields.js + 15 modules
-var Fields = __webpack_require__(7102);
+var Fields = __webpack_require__(5706);
 // EXTERNAL MODULE: ./src/x_ite/Components/Core/X3DNode.js
-var X3DNode = __webpack_require__(7939);
+var X3DNode = __webpack_require__(8679);
 // EXTERNAL MODULE: ./src/x_ite/Rendering/TextureBuffer.js
-var TextureBuffer = __webpack_require__(5111);
+var TextureBuffer = __webpack_require__(9275);
 // EXTERNAL MODULE: ./src/x_ite/Rendering/TraverseType.js
-var TraverseType = __webpack_require__(6009);
+var TraverseType = __webpack_require__(3786);
 // EXTERNAL MODULE: ./src/x_ite/Rendering/RenderPass.js
-var RenderPass = __webpack_require__(9617);
+var RenderPass = __webpack_require__(8981);
 // EXTERNAL MODULE: ./src/standard/Math/Algorithm.js
-var Algorithm = __webpack_require__(859);
+var Algorithm = __webpack_require__(1975);
 // EXTERNAL MODULE: ./src/x_ite/Namespace.js
-var Namespace = __webpack_require__(7028);
+var Namespace = __webpack_require__(1739);
 ;// ./src/standard/Math/Algorithms/MergeSort.js
 function MergeSort (array, compare)
 {
@@ -25464,25 +25464,25 @@ const __default__ = MergeSort;
 
 /* harmony default export */ const Algorithms_MergeSort = (Namespace/* default */.A .add ("MergeSort", __default__));
 // EXTERNAL MODULE: ./src/standard/Math/Geometry/Camera.js
-var Camera = __webpack_require__(8332);
+var Camera = __webpack_require__(6680);
 // EXTERNAL MODULE: ./src/standard/Math/Geometry/Line3.js
-var Line3 = __webpack_require__(2528);
+var Line3 = __webpack_require__(1148);
 // EXTERNAL MODULE: ./src/standard/Math/Geometry/ViewVolume.js
-var ViewVolume = __webpack_require__(7560);
+var ViewVolume = __webpack_require__(7724);
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Vector3.js
-var Vector3 = __webpack_require__(2523);
+var Vector3 = __webpack_require__(1223);
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Vector4.js
-var Vector4 = __webpack_require__(4898);
+var Vector4 = __webpack_require__(1542);
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Rotation4.js
-var Rotation4 = __webpack_require__(4689);
+var Rotation4 = __webpack_require__(7213);
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Matrix4.js
-var Matrix4 = __webpack_require__(4972);
+var Matrix4 = __webpack_require__(7232);
 // EXTERNAL MODULE: ./src/standard/Math/Utility/MatrixStack.js
-var MatrixStack = __webpack_require__(6150);
+var MatrixStack = __webpack_require__(714);
 // EXTERNAL MODULE: ./src/standard/Math/Geometry/Plane3.js
-var Plane3 = __webpack_require__(3088);
+var Plane3 = __webpack_require__(9716);
 // EXTERNAL MODULE: ./src/standard/Time/StopWatch.js
-var StopWatch = __webpack_require__(9878);
+var StopWatch = __webpack_require__(3954);
 ;// ./src/x_ite/Rendering/X3DRenderObject.js
 
 
@@ -26841,7 +26841,7 @@ const X3DRenderObject_default_ = X3DRenderObject;
 
 /* harmony default export */ const Rendering_X3DRenderObject = (Namespace/* default */.A .add ("X3DRenderObject", X3DRenderObject_default_));
 // EXTERNAL MODULE: ./src/x_ite/Base/X3DBaseNode.js + 1 modules
-var X3DBaseNode = __webpack_require__(3152);
+var X3DBaseNode = __webpack_require__(2502);
 ;// ./src/x_ite/Execution/BindableStack.js
 
 
@@ -26970,7 +26970,7 @@ const BindableStack_default_ = BindableStack;
 
 /* harmony default export */ const Execution_BindableStack = (Namespace/* default */.A .add ("BindableStack", BindableStack_default_));
 // EXTERNAL MODULE: ./src/x_ite/Components/Core/X3DBindableNode.js
-var X3DBindableNode = __webpack_require__(8312);
+var X3DBindableNode = __webpack_require__(1660);
 ;// ./src/x_ite/Execution/BindableList.js
 
 
@@ -27136,19 +27136,19 @@ const BindableList_default_ = BindableList;
 
 /* harmony default export */ const Execution_BindableList = (Namespace/* default */.A .add ("BindableList", BindableList_default_));
 // EXTERNAL MODULE: ./src/x_ite/Components/Grouping/Group.js
-var Group = __webpack_require__(3029);
+var Group = __webpack_require__(5121);
 // EXTERNAL MODULE: ./src/x_ite/Components/Navigation/NavigationInfo.js
-var NavigationInfo = __webpack_require__(1975);
+var NavigationInfo = __webpack_require__(5075);
 // EXTERNAL MODULE: ./src/x_ite/Components/EnvironmentalEffects/Fog.js
-var Fog = __webpack_require__(8533);
+var Fog = __webpack_require__(6785);
 // EXTERNAL MODULE: ./src/x_ite/Components/EnvironmentalEffects/Background.js
-var Background = __webpack_require__(6485);
+var Background = __webpack_require__(8697);
 // EXTERNAL MODULE: ./src/x_ite/Base/X3DCast.js
-var X3DCast = __webpack_require__(2535);
+var X3DCast = __webpack_require__(3555);
 // EXTERNAL MODULE: ./src/x_ite/Base/X3DConstants.js
-var X3DConstants = __webpack_require__(1543);
+var X3DConstants = __webpack_require__(7227);
 // EXTERNAL MODULE: ./src/standard/Math/Geometry/Box3.js
-var Box3 = __webpack_require__(49);
+var Box3 = __webpack_require__(9381);
 ;// ./src/x_ite/Components/Layering/X3DLayerNode.js
 
 
@@ -27632,19 +27632,19 @@ const X3DLayerNode_default_ = X3DLayerNode;
 
 /***/ },
 
-/***/ 1975
+/***/ 5075
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2459);
-/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2553);
-/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7939);
-/* harmony import */ var _Core_X3DBindableNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8312);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1543);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4927);
+/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2837);
+/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8679);
+/* harmony import */ var _Core_X3DBindableNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1660);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7227);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1739);
 
 
 
@@ -27938,22 +27938,22 @@ const __default__ = NavigationInfo;
 
 /***/ },
 
-/***/ 4548
+/***/ 8544
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2459);
-/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2553);
-/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7939);
-/* harmony import */ var _X3DViewpointNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5901);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1543);
-/* harmony import */ var _standard_Math_Geometry_Camera_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(8332);
-/* harmony import */ var _standard_Math_Numbers_Vector2_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(8228);
-/* harmony import */ var _standard_Math_Numbers_Matrix4_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(4972);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4927);
+/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2837);
+/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8679);
+/* harmony import */ var _X3DViewpointNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3017);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7227);
+/* harmony import */ var _standard_Math_Geometry_Camera_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(6680);
+/* harmony import */ var _standard_Math_Numbers_Vector2_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(7072);
+/* harmony import */ var _standard_Math_Numbers_Matrix4_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(7232);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(1739);
 
 
 
@@ -28116,28 +28116,28 @@ const __default__ = Viewpoint;
 
 /***/ },
 
-/***/ 5901
+/***/ 3017
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7939);
-/* harmony import */ var _Core_X3DBindableNode_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8312);
-/* harmony import */ var _Time_TimeSensor_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1719);
-/* harmony import */ var _Interpolation_EaseInEaseOut_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1926);
-/* harmony import */ var _Interpolation_PositionInterpolator_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(6469);
-/* harmony import */ var _Interpolation_OrientationInterpolator_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(6780);
-/* harmony import */ var _Interpolation_ScalarInterpolator_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(2454);
-/* harmony import */ var _Base_X3DCast_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(2535);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(1543);
-/* harmony import */ var _standard_Math_Numbers_Vector3_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(2523);
-/* harmony import */ var _standard_Math_Numbers_Rotation4_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(4689);
-/* harmony import */ var _standard_Math_Numbers_Matrix3_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(1883);
-/* harmony import */ var _standard_Math_Numbers_Matrix4_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(4972);
-/* harmony import */ var _standard_Math_Geometry_Box3_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(49);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8679);
+/* harmony import */ var _Core_X3DBindableNode_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1660);
+/* harmony import */ var _Time_TimeSensor_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9187);
+/* harmony import */ var _Interpolation_EaseInEaseOut_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(4346);
+/* harmony import */ var _Interpolation_PositionInterpolator_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(8889);
+/* harmony import */ var _Interpolation_OrientationInterpolator_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(5616);
+/* harmony import */ var _Interpolation_ScalarInterpolator_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(2130);
+/* harmony import */ var _Base_X3DCast_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(3555);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(7227);
+/* harmony import */ var _standard_Math_Numbers_Vector3_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(1223);
+/* harmony import */ var _standard_Math_Numbers_Rotation4_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(7213);
+/* harmony import */ var _standard_Math_Numbers_Matrix3_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(9857);
+/* harmony import */ var _standard_Math_Numbers_Matrix4_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(7232);
+/* harmony import */ var _standard_Math_Geometry_Box3_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(9381);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(1739);
 
 
 
@@ -28775,16 +28775,16 @@ const __default__ = X3DViewpointNode;
 
 /***/ },
 
-/***/ 3382
+/***/ 8898
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7939);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1543);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8679);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7227);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1739);
 
 
 
@@ -29043,7 +29043,7 @@ const __default__ = X3DUrlObject;
 
 /***/ },
 
-/***/ 832
+/***/ 7145
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 
@@ -29053,19 +29053,19 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/x_ite/Fields.js + 15 modules
-var Fields = __webpack_require__(7102);
+var Fields = __webpack_require__(5706);
 // EXTERNAL MODULE: ./src/x_ite/Rendering/VertexArray.js
-var VertexArray = __webpack_require__(3925);
+var VertexArray = __webpack_require__(9553);
 // EXTERNAL MODULE: ./src/x_ite/Components/Core/X3DNode.js
-var X3DNode = __webpack_require__(7939);
+var X3DNode = __webpack_require__(8679);
 // EXTERNAL MODULE: ./src/x_ite/Base/X3DConstants.js
-var X3DConstants = __webpack_require__(1543);
+var X3DConstants = __webpack_require__(7227);
 // EXTERNAL MODULE: ./src/x_ite/Base/X3DCast.js
-var X3DCast = __webpack_require__(2535);
+var X3DCast = __webpack_require__(3555);
 // EXTERNAL MODULE: ./src/x_ite/Browser/Networking/URLs.js
-var URLs = __webpack_require__(8657);
+var URLs = __webpack_require__(5066);
 // EXTERNAL MODULE: ./src/x_ite/Namespace.js
-var Namespace = __webpack_require__(7028);
+var Namespace = __webpack_require__(1739);
 ;// ./src/x_ite/Browser/Rendering/MikkTSpace.js
 
 
@@ -29273,17 +29273,17 @@ const __default__ = new class MikkTSpace
 
 /* harmony default export */ const MikkTSpace = (Namespace/* default */.A .add ("MikkTSpace", __default__));
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Vector3.js
-var Vector3 = __webpack_require__(2523);
+var Vector3 = __webpack_require__(1223);
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Matrix4.js
-var Matrix4 = __webpack_require__(4972);
+var Matrix4 = __webpack_require__(7232);
 // EXTERNAL MODULE: ./src/standard/Math/Geometry/Box3.js
-var Box3 = __webpack_require__(49);
+var Box3 = __webpack_require__(9381);
 // EXTERNAL MODULE: ./src/standard/Math/Geometry/Plane3.js
-var Plane3 = __webpack_require__(3088);
+var Plane3 = __webpack_require__(9716);
 // EXTERNAL MODULE: ./src/standard/Math/Algorithm.js
-var Algorithm = __webpack_require__(859);
+var Algorithm = __webpack_require__(1975);
 // EXTERNAL MODULE: ./src/x_ite/DEVELOPMENT.js
-var DEVELOPMENT = __webpack_require__(9368);
+var DEVELOPMENT = __webpack_require__(2972);
 ;// ./src/x_ite/Components/Rendering/X3DGeometryNode.js
 
 
@@ -30381,15 +30381,15 @@ const X3DGeometryNode_default_ = X3DGeometryNode;
 
 /***/ },
 
-/***/ 8487
+/***/ 8763
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7939);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1543);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7028);
+/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8679);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7227);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1739);
 
 
 
@@ -30411,22 +30411,22 @@ const __default__ = X3DAppearanceChildNode;
 
 /***/ },
 
-/***/ 7045
+/***/ 9569
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2459);
-/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2553);
-/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7939);
-/* harmony import */ var _X3DTexture2DNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8273);
-/* harmony import */ var _Networking_X3DUrlObject_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(3382);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1543);
-/* harmony import */ var _DEVELOPMENT_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(9368);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(7028);
-/* provided dependency */ var $ = __webpack_require__(7678)["default"];
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4927);
+/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2837);
+/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8679);
+/* harmony import */ var _X3DTexture2DNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(8389);
+/* harmony import */ var _Networking_X3DUrlObject_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(8898);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7227);
+/* harmony import */ var _DEVELOPMENT_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(2972);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(1739);
+/* provided dependency */ var $ = __webpack_require__(5758)["default"];
 
 
 
@@ -30612,20 +30612,20 @@ const __default__ = ImageTexture;
 
 /***/ },
 
-/***/ 9723
+/***/ 5655
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7939);
-/* harmony import */ var _X3DTextureNode_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4687);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1543);
-/* harmony import */ var _Base_X3DCast_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(2535);
-/* harmony import */ var _standard_Math_Numbers_Matrix4_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(4972);
-/* harmony import */ var _standard_Math_Algorithm_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(859);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8679);
+/* harmony import */ var _X3DTextureNode_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3899);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7227);
+/* harmony import */ var _Base_X3DCast_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3555);
+/* harmony import */ var _standard_Math_Numbers_Matrix4_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7232);
+/* harmony import */ var _standard_Math_Algorithm_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1975);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1739);
 
 
 
@@ -30839,16 +30839,16 @@ const __default__ = X3DSingleTextureNode;
 
 /***/ },
 
-/***/ 8273
+/***/ 8389
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7939);
-/* harmony import */ var _X3DSingleTextureNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9723);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1543);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7028);
+/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8679);
+/* harmony import */ var _X3DSingleTextureNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5655);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7227);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1739);
 
 
 
@@ -30986,17 +30986,17 @@ const __default__ = X3DTexture2DNode;
 
 /***/ },
 
-/***/ 4687
+/***/ 3899
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7939);
-/* harmony import */ var _Shape_X3DAppearanceChildNode_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8487);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1543);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8679);
+/* harmony import */ var _Shape_X3DAppearanceChildNode_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8763);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7227);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1739);
 
 
 
@@ -31033,21 +31033,21 @@ const __default__ = X3DTextureNode;
 
 /***/ },
 
-/***/ 1719
+/***/ 9187
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2459);
-/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2553);
-/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7939);
-/* harmony import */ var _Core_X3DSensorNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1957);
-/* harmony import */ var _X3DTimeDependentNode_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2897);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1543);
-/* harmony import */ var _standard_Math_Algorithm_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(859);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4927);
+/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2837);
+/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8679);
+/* harmony import */ var _Core_X3DSensorNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6609);
+/* harmony import */ var _X3DTimeDependentNode_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(493);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7227);
+/* harmony import */ var _standard_Math_Algorithm_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1975);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(1739);
 
 
 
@@ -31217,17 +31217,17 @@ const __default__ = TimeSensor;
 
 /***/ },
 
-/***/ 2897
+/***/ 493
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7939);
-/* harmony import */ var _Core_X3DChildNode_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8013);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1543);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8679);
+/* harmony import */ var _Core_X3DChildNode_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1913);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7227);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1739);
 
 
 
@@ -31537,15 +31537,15 @@ const __default__ = X3DTimeDependentNode;
 
 /***/ },
 
-/***/ 2819
+/***/ 6063
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Base_X3DObject_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6352);
-/* harmony import */ var _Browser_Networking_URLs_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8657);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7028);
+/* harmony import */ var _Base_X3DObject_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1075);
+/* harmony import */ var _Browser_Networking_URLs_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5066);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1739);
 
 
 
@@ -31618,15 +31618,15 @@ const __default__ = ComponentInfo;
 
 /***/ },
 
-/***/ 1218
+/***/ 3814
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Base_X3DInfoArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(495);
-/* harmony import */ var _ComponentInfo_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2819);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7028);
+/* harmony import */ var _Base_X3DInfoArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4163);
+/* harmony import */ var _ComponentInfo_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6063);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1739);
 
 
 
@@ -31662,14 +31662,14 @@ const __default__ = ComponentInfoArray;
 
 /***/ },
 
-/***/ 928
+/***/ 1044
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Base_X3DObject_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6352);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7028);
+/* harmony import */ var _Base_X3DObject_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1075);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1739);
 
 
 function UnitInfo (category, name, conversionFactor)
@@ -31740,15 +31740,15 @@ const __default__ = UnitInfo;
 
 /***/ },
 
-/***/ 1559
+/***/ 819
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Base_X3DInfoArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(495);
-/* harmony import */ var _UnitInfo_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(928);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7028);
+/* harmony import */ var _Base_X3DInfoArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4163);
+/* harmony import */ var _UnitInfo_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1044);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1739);
 
 
 
@@ -31778,13 +31778,13 @@ const __default__ = UnitInfoArray;
 
 /***/ },
 
-/***/ 9368
+/***/ 2972
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7028);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1739);
 // Modified during dist build.
 
 const __default__ = false;
@@ -31794,15 +31794,15 @@ const __default__ = false;
 
 /***/ },
 
-/***/ 6235
+/***/ 5383
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Base_X3DInfoArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(495);
-/* harmony import */ var _X3DExportedNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3020);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7028);
+/* harmony import */ var _Base_X3DInfoArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4163);
+/* harmony import */ var _X3DExportedNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9448);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1739);
 
 
 
@@ -31832,15 +31832,15 @@ const __default__ = ExportedNodesArray;
 
 /***/ },
 
-/***/ 6960
+/***/ 7580
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Base_X3DInfoArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(495);
-/* harmony import */ var _X3DImportedNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3367);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7028);
+/* harmony import */ var _Base_X3DInfoArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4163);
+/* harmony import */ var _X3DImportedNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7411);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1739);
 
 
 
@@ -31870,15 +31870,15 @@ const __default__ = ImportedNodesArray;
 
 /***/ },
 
-/***/ 1015
+/***/ 7795
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Base_X3DInfoArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(495);
-/* harmony import */ var _Fields_SFNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8390);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7028);
+/* harmony import */ var _Base_X3DInfoArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4163);
+/* harmony import */ var _Fields_SFNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2410);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1739);
 
 
 
@@ -31908,7 +31908,7 @@ const __default__ = NamedNodesArray;
 
 /***/ },
 
-/***/ 121
+/***/ 9781
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -31964,30 +31964,30 @@ const getUniqueName = function (map, name = "")
 
 /***/ },
 
-/***/ 2258
+/***/ 6686
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Base_X3DBaseNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3152);
-/* harmony import */ var _Components_Grouping_X3DBoundedObject_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1770);
-/* harmony import */ var _NamedNodesHandling_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(121);
-/* harmony import */ var _NamedNodesArray_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1015);
-/* harmony import */ var _X3DImportedNode_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(3367);
-/* harmony import */ var _ImportedNodesArray_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(6960);
-/* harmony import */ var _Components_Core_X3DImportedNodeProxy_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(2327);
-/* harmony import */ var _Prototype_ExternProtoDeclarationArray_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(9393);
-/* harmony import */ var _Prototype_ProtoDeclarationArray_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(3675);
-/* harmony import */ var _Prototype_X3DProtoDeclaration_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(8361);
-/* harmony import */ var _Prototype_X3DExternProtoDeclaration_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(2763);
-/* harmony import */ var _Routing_RouteArray_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(3296);
-/* harmony import */ var _Routing_X3DRoute_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(8178);
-/* harmony import */ var _Base_X3DCast_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(2535);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(1543);
-/* harmony import */ var _Fields_SFNodeCache_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(5366);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Base_X3DBaseNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2502);
+/* harmony import */ var _Components_Grouping_X3DBoundedObject_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6089);
+/* harmony import */ var _NamedNodesHandling_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9781);
+/* harmony import */ var _NamedNodesArray_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7795);
+/* harmony import */ var _X3DImportedNode_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7411);
+/* harmony import */ var _ImportedNodesArray_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7580);
+/* harmony import */ var _Components_Core_X3DImportedNodeProxy_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(4771);
+/* harmony import */ var _Prototype_ExternProtoDeclarationArray_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(9661);
+/* harmony import */ var _Prototype_ProtoDeclarationArray_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(1031);
+/* harmony import */ var _Prototype_X3DProtoDeclaration_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(2493);
+/* harmony import */ var _Prototype_X3DExternProtoDeclaration_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(1327);
+/* harmony import */ var _Routing_RouteArray_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(7548);
+/* harmony import */ var _Routing_X3DRoute_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(6886);
+/* harmony import */ var _Base_X3DCast_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(3555);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(7227);
+/* harmony import */ var _Fields_SFNodeCache_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(2490);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(1739);
 
 
 
@@ -32959,15 +32959,15 @@ const __default__ = X3DExecutionContext;
 
 /***/ },
 
-/***/ 3020
+/***/ 9448
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Base_X3DObject_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6352);
-/* harmony import */ var _Fields_SFNodeCache_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5366);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7028);
+/* harmony import */ var _Base_X3DObject_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1075);
+/* harmony import */ var _Fields_SFNodeCache_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2490);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1739);
 
 
 
@@ -33114,16 +33114,16 @@ const __default__ = X3DExportedNode;
 
 /***/ },
 
-/***/ 3367
+/***/ 7411
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Base_X3DObject_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6352);
-/* harmony import */ var _Fields_SFNodeCache_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(5366);
-/* harmony import */ var _Components_Core_X3DImportedNodeProxy_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2327);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7028);
+/* harmony import */ var _Base_X3DObject_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1075);
+/* harmony import */ var _Fields_SFNodeCache_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2490);
+/* harmony import */ var _Components_Core_X3DImportedNodeProxy_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4771);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1739);
 
 
 
@@ -33371,26 +33371,26 @@ const __default__ = X3DImportedNode;
 
 /***/ },
 
-/***/ 5879
+/***/ 379
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _X3DExecutionContext_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2258);
-/* harmony import */ var _NamedNodesHandling_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(121);
-/* harmony import */ var _Configuration_ComponentInfo_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2819);
-/* harmony import */ var _Configuration_ComponentInfoArray_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1218);
-/* harmony import */ var _Configuration_UnitInfo_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(928);
-/* harmony import */ var _Configuration_UnitInfoArray_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1559);
-/* harmony import */ var _X3DExportedNode_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(3020);
-/* harmony import */ var _ExportedNodesArray_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(6235);
-/* harmony import */ var _Base_X3DCast_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(2535);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(1543);
-/* harmony import */ var _Fields_SFNodeCache_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(5366);
-/* harmony import */ var _LATEST_VERSION_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(6041);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _X3DExecutionContext_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6686);
+/* harmony import */ var _NamedNodesHandling_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9781);
+/* harmony import */ var _Configuration_ComponentInfo_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6063);
+/* harmony import */ var _Configuration_ComponentInfoArray_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3814);
+/* harmony import */ var _Configuration_UnitInfo_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1044);
+/* harmony import */ var _Configuration_UnitInfoArray_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(819);
+/* harmony import */ var _X3DExportedNode_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(9448);
+/* harmony import */ var _ExportedNodesArray_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(5383);
+/* harmony import */ var _Base_X3DCast_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(3555);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(7227);
+/* harmony import */ var _Fields_SFNodeCache_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(2490);
+/* harmony import */ var _LATEST_VERSION_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(7725);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(1739);
 
 
 
@@ -34207,19 +34207,19 @@ const __default__ = X3DScene;
 
 /***/ },
 
-/***/ 5123
+/***/ 1919
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_SFNode_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8390);
-/* harmony import */ var _Base_X3DBaseNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3152);
-/* harmony import */ var _Components_Layering_LayerSet_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2189);
-/* harmony import */ var _Components_Layering_Layer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2613);
-/* harmony import */ var _Base_X3DCast_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(2535);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1543);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_SFNode_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2410);
+/* harmony import */ var _Base_X3DBaseNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2502);
+/* harmony import */ var _Components_Layering_LayerSet_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9745);
+/* harmony import */ var _Components_Layering_Layer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7249);
+/* harmony import */ var _Base_X3DCast_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3555);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7227);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1739);
 
 
 
@@ -34343,7 +34343,7 @@ const __default__ = X3DWorld;
 
 /***/ },
 
-/***/ 7102
+/***/ 5706
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 
@@ -34353,11 +34353,11 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/x_ite/Base/X3DField.js
-var X3DField = __webpack_require__(1122);
+var X3DField = __webpack_require__(5086);
 // EXTERNAL MODULE: ./src/x_ite/Base/X3DConstants.js
-var X3DConstants = __webpack_require__(1543);
+var X3DConstants = __webpack_require__(7227);
 // EXTERNAL MODULE: ./src/x_ite/Namespace.js
-var Namespace = __webpack_require__(7028);
+var Namespace = __webpack_require__(1739);
 ;// ./src/x_ite/Fields/SFScalar.js
 
 
@@ -34578,7 +34578,7 @@ const __default__ = SFScalar;
 
 /* harmony default export */ const Fields_SFScalar = (Namespace/* default */.A .add ("SFScalar", __default__));
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Color3.js
-var Color3 = __webpack_require__(6355);
+var Color3 = __webpack_require__(5503);
 ;// ./src/x_ite/Fields/SFColor.js
 
 
@@ -34782,7 +34782,7 @@ const SFColor_default_ = SFColor;
 
 /* harmony default export */ const Fields_SFColor = (Namespace/* default */.A .add ("SFColor", SFColor_default_));
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Color4.js
-var Color4 = __webpack_require__(8842);
+var Color4 = __webpack_require__(9550);
 ;// ./src/x_ite/Fields/SFColorRGBA.js
 
 
@@ -35180,7 +35180,7 @@ const SFMatrixPrototypeTemplate_default_ = SFMatrixPrototypeTemplate;
 
 /* harmony default export */ const Fields_SFMatrixPrototypeTemplate = (Namespace/* default */.A .add ("SFMatrixPrototypeTemplate", SFMatrixPrototypeTemplate_default_));
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Matrix3.js + 1 modules
-var Matrix3 = __webpack_require__(1883);
+var Matrix3 = __webpack_require__(9857);
 ;// ./src/x_ite/Fields/SFMatrix3.js
 
 
@@ -35276,7 +35276,7 @@ const SFMatrix3_default_ = SFMatrix3;
 
 /* harmony default export */ const Fields_SFMatrix3 = (Namespace/* default */.A .add ("SFMatrix3", SFMatrix3_default_));
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Matrix4.js
-var Matrix4 = __webpack_require__(4972);
+var Matrix4 = __webpack_require__(7232);
 ;// ./src/x_ite/Fields/SFMatrix4.js
 
 
@@ -35342,7 +35342,7 @@ const SFMatrix4_default_ = SFMatrix4;
 
 /* harmony default export */ const Fields_SFMatrix4 = (Namespace/* default */.A .add ("SFMatrix4", SFMatrix4_default_));
 // EXTERNAL MODULE: ./src/x_ite/Fields/SFNode.js
-var SFNode = __webpack_require__(8390);
+var SFNode = __webpack_require__(2410);
 ;// ./src/x_ite/Fields/SFVecPrototypeTemplate.js
 
 
@@ -35585,7 +35585,7 @@ const SFVecPrototypeTemplate_default_ = SFVecPrototypeTemplate;
 
 /* harmony default export */ const Fields_SFVecPrototypeTemplate = (Namespace/* default */.A .add ("SFVecPrototypeTemplate", SFVecPrototypeTemplate_default_));
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Vector3.js
-var Vector3 = __webpack_require__(2523);
+var Vector3 = __webpack_require__(1223);
 ;// ./src/x_ite/Fields/SFVec3.js
 
 
@@ -35633,9 +35633,9 @@ const SFVec3_default_ = SFVec3;
 
 /* harmony default export */ const Fields_SFVec3 = (Namespace/* default */.A .add ("SFVec3", SFVec3_default_));
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Rotation4.js
-var Rotation4 = __webpack_require__(4689);
+var Rotation4 = __webpack_require__(7213);
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Quaternion.js
-var Quaternion = __webpack_require__(751);
+var Quaternion = __webpack_require__(8995);
 ;// ./src/x_ite/Fields/SFRotation.js
 
 
@@ -35899,7 +35899,7 @@ const SFRotation_default_ = SFRotation;
 
 /* harmony default export */ const Fields_SFRotation = (Namespace/* default */.A .add ("SFRotation", SFRotation_default_));
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Vector2.js
-var Vector2 = __webpack_require__(8228);
+var Vector2 = __webpack_require__(7072);
 ;// ./src/x_ite/Fields/SFVec2.js
 
 
@@ -35941,7 +35941,7 @@ const SFVec2_default_ = SFVec2;
 
 /* harmony default export */ const Fields_SFVec2 = (Namespace/* default */.A .add ("SFVec2", SFVec2_default_));
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Vector4.js
-var Vector4 = __webpack_require__(4898);
+var Vector4 = __webpack_require__(1542);
 ;// ./src/x_ite/Fields/SFVec4.js
 
 
@@ -35989,7 +35989,7 @@ const SFVec4_default_ = SFVec4;
 
 /* harmony default export */ const Fields_SFVec4 = (Namespace/* default */.A .add ("SFVec4", SFVec4_default_));
 // EXTERNAL MODULE: ./src/x_ite/Base/X3DArrayField.js
-var X3DArrayField = __webpack_require__(6751);
+var X3DArrayField = __webpack_require__(1555);
 ;// ./src/x_ite/Base/X3DObjectArrayField.js
 
 
@@ -36505,7 +36505,7 @@ const X3DObjectArrayField_default_ = X3DObjectArrayField;
 
 /* harmony default export */ const Base_X3DObjectArrayField = (Namespace/* default */.A .add ("X3DObjectArrayField", X3DObjectArrayField_default_));
 // EXTERNAL MODULE: ./src/standard/Math/Algorithm.js
-var Algorithm = __webpack_require__(859);
+var Algorithm = __webpack_require__(1975);
 ;// ./src/x_ite/Base/X3DTypedArrayField.js
 
 
@@ -38411,16 +38411,16 @@ const Fields_default_ = Fields;
 
 /***/ },
 
-/***/ 8390
+/***/ 2410
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Base_X3DField_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1122);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1543);
-/* harmony import */ var _SFNodeCache_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5366);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7028);
+/* harmony import */ var _Base_X3DField_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5086);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7227);
+/* harmony import */ var _SFNodeCache_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2490);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1739);
 
 
 
@@ -38857,14 +38857,14 @@ const __default__ = SFNode;
 
 /***/ },
 
-/***/ 5366
+/***/ 2490
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _SFNode_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8390);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7028);
+/* harmony import */ var _SFNode_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2410);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1739);
 
 
 const cache = new WeakMap ();
@@ -38930,7 +38930,7 @@ const __default__ = SFNodeCache;
 
 /***/ },
 
-/***/ 4326
+/***/ 4408
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 
@@ -38940,29 +38940,29 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/x_ite/Base/X3DObject.js + 4 modules
-var X3DObject = __webpack_require__(6352);
+var X3DObject = __webpack_require__(1075);
 // EXTERNAL MODULE: ./src/x_ite/Fields.js + 15 modules
-var Fields = __webpack_require__(7102);
+var Fields = __webpack_require__(5706);
 // EXTERNAL MODULE: ./src/x_ite/Parser/X3DParser.js
-var X3DParser = __webpack_require__(1813);
+var X3DParser = __webpack_require__(4449);
 // EXTERNAL MODULE: ./src/x_ite/Parser/JSONParser.js
-var JSONParser = __webpack_require__(5252);
+var JSONParser = __webpack_require__(6992);
 // EXTERNAL MODULE: ./src/x_ite/Parser/VRMLParser.js
-var VRMLParser = __webpack_require__(2303);
+var VRMLParser = __webpack_require__(9635);
 // EXTERNAL MODULE: ./src/x_ite/Parser/XMLParser.js
-var XMLParser = __webpack_require__(707);
+var XMLParser = __webpack_require__(6295);
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Vector3.js
-var Vector3 = __webpack_require__(2523);
+var Vector3 = __webpack_require__(1223);
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Rotation4.js
-var Rotation4 = __webpack_require__(4689);
+var Rotation4 = __webpack_require__(7213);
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Matrix4.js
-var Matrix4 = __webpack_require__(4972);
+var Matrix4 = __webpack_require__(7232);
 // EXTERNAL MODULE: ./src/standard/Math/Geometry/Box3.js
-var Box3 = __webpack_require__(49);
+var Box3 = __webpack_require__(9381);
 // EXTERNAL MODULE: ./src/x_ite/Base/X3DConstants.js
-var X3DConstants = __webpack_require__(1543);
+var X3DConstants = __webpack_require__(7227);
 // EXTERNAL MODULE: ./src/x_ite/Namespace.js
-var Namespace = __webpack_require__(7028);
+var Namespace = __webpack_require__(1739);
 ;// ./src/x_ite/Parser/X3DOptimizer.js
 
 
@@ -39350,19 +39350,19 @@ const __default__ = X3DOptimizer;
 
 /* harmony default export */ const Parser_X3DOptimizer = (Namespace/* default */.A .add ("X3DOptimizer", __default__));
 // EXTERNAL MODULE: ./src/x_ite/Browser/Networking/URLs.js
-var URLs = __webpack_require__(8657);
+var URLs = __webpack_require__(5066);
 // EXTERNAL MODULE: ./src/standard/Math/Algorithm.js
-var Algorithm = __webpack_require__(859);
+var Algorithm = __webpack_require__(1975);
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Vector2.js
-var Vector2 = __webpack_require__(8228);
+var Vector2 = __webpack_require__(7072);
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Quaternion.js
-var Quaternion = __webpack_require__(751);
+var Quaternion = __webpack_require__(8995);
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Color3.js
-var Color3 = __webpack_require__(6355);
+var Color3 = __webpack_require__(5503);
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Color4.js
-var Color4 = __webpack_require__(8842);
+var Color4 = __webpack_require__(9550);
 ;// ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var $ = __webpack_require__(7678)["default"];
+/* provided dependency */ var $ = __webpack_require__(5758)["default"];
 
 
 
@@ -39550,10 +39550,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser/* defa
       if (!(asset instanceof Object))
          return;
 
-      const
-         scene         = this .getScene (),
-         worldURL      = scene .getWorldURL (),
-         worldInfoNode = scene .createNode ("WorldInfo", false);
+      const scene = this .getScene ();
 
       for (const [key, value] of Object .entries (asset))
       {
@@ -39563,7 +39560,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser/* defa
          if (key === "version")
             continue;
 
-         worldInfoNode ._info .push (`${key}: ${value}`);
+         scene .addMetaData (key, value);
       }
 
       if (asset .extras instanceof Object)
@@ -39573,34 +39570,16 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser/* defa
             if (typeof value !== "string")
                continue;
 
-            if (key === "title")
-               worldInfoNode ._title = value;
-            else
-               worldInfoNode ._info .push (`${key}: ${value}`);
+            scene .addMetaData (key, value);
          }
-      }
-
-      if (!worldInfoNode ._title .getValue ())
-      {
-         const url = new URL (worldURL);
-
-         if (url .protocol === "data:")
-            worldInfoNode ._title = "glTF Model";
-         else
-            worldInfoNode ._title = decodeURIComponent (url .pathname .split ("/") .at (-1) || worldURL);
       }
 
       if (asset .extensions ?.KHR_xmp_json_ld instanceof Object)
       {
          const packet = asset .extensions .KHR_xmp_json_ld .packet;
 
-         this .khrXmpJsonLdObject (packet, extensions ?.KHR_xmp_json_ld, worldInfoNode);
+         this .khrXmpJsonLdObject (packet, extensions ?.KHR_xmp_json_ld);
       }
-
-      worldInfoNode ._info .sort ();
-      worldInfoNode .setup ();
-
-      scene .getRootNodes () .push (worldInfoNode);
    },
    async extensionsArray (extensions, set)
    {
@@ -39666,6 +39645,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser/* defa
             case "EXT_meshopt_compression":
             {
                this .MeshoptDecoder ??= await this .getLibrary ("meshopt_decoder.js");
+               await this .MeshoptDecoder .ready;
                break;
             }
          }
@@ -39907,12 +39887,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser/* defa
 
       this .materialVariants = variants;
    },
-   khrXmpJsonLdObject (index, KHR_xmp_json_ld, worldInfoNode)
+   khrXmpJsonLdObject (index, KHR_xmp_json_ld)
    {
       if (!(KHR_xmp_json_ld instanceof Object))
          return;
 
-      const packet = KHR_xmp_json_ld .packets [index];
+      const
+         scene  = this .getScene (),
+         packet = KHR_xmp_json_ld .packets [index];
 
       for (const [key, value] of Object .entries (packet))
       {
@@ -39921,19 +39903,25 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser/* defa
          if (!match)
             continue;
 
+         const k = match [1];
+
          if (value instanceof Object)
          {
             const array = value ["@set"] ?? value ["@list"];
 
             if (array instanceof Array)
             {
-               worldInfoNode ._info .push (`${match [1]}: ${array .map (v => v .toString ()) .join (", ")}`);
+               const v = array .map (v => v .toString ()) .join (", ");
+
+               scene .addMetaData (k, v);
                continue;
             }
 
             if (value ["rdf:_1"] ?.["@value"])
             {
-               worldInfoNode ._info .push (`${match [1]}: ${JSON .stringify (value ["rdf:_1"] ["@value"])}`);
+               const v = value ["rdf:_1"] ["@value"];
+
+               scene .addMetaData (k, v);
                continue;
             }
          };
@@ -39941,7 +39929,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser/* defa
          if (typeof value !== "string")
             continue;
 
-         worldInfoNode ._info .push (`${match [1]}: ${value}`);
+         const v = value;
+
+         scene .addMetaData (k, v);
       }
    },
    async buffersArray (buffers)
@@ -40409,11 +40399,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser/* defa
       if (this .extensions .has ("KHR_texture_basisu"))
          images .push (this .images [texture .extensions ?.KHR_texture_basisu ?.source]);
 
-      if (this .extensions .has ("EXT_texture_webp"))
-         images .push (this .images [texture .extensions ?.EXT_texture_webp ?.source]);
-
       if (this .extensions .has ("EXT_texture_avif"))
          images .push (this .images [texture .extensions ?.EXT_texture_avif ?.source]);
+
+      if (this .extensions .has ("EXT_texture_webp"))
+         images .push (this .images [texture .extensions ?.EXT_texture_webp ?.source]);
 
       images .push (this .images [texture .source]);
 
@@ -41078,7 +41068,7 @@ function eventsProcessed ()
       if (!(mesh instanceof Object))
          return;
 
-      if (mesh .shapeNodes)
+      if (mesh .shapeNodes && !EXT_mesh_gpu_instancing)
       {
          const primitives = mesh .primitives;
 
@@ -42160,13 +42150,14 @@ function eventsProcessed ()
    createShape (primitive, weights, skin, EXT_mesh_gpu_instancing)
    {
       const
-         scene          = this .getScene (),
-         shapeNode      = this .meshInstancing (EXT_mesh_gpu_instancing) ?? scene .createNode ("Shape", false),
-         appearanceNode = this .materialObject (primitive),
-         geometryNode   = this .createGeometry (primitive, weights, skin);
+         scene     = this .getScene (),
+         shapeNode = this .meshInstancing (EXT_mesh_gpu_instancing) ?? scene .createNode ("Shape", false);
 
-      shapeNode ._appearance = appearanceNode;
-      shapeNode ._geometry   = geometryNode;
+      primitive .appearanceNode ??= this .materialObject (primitive);
+      primitive .geometryNode   ??= this .createGeometry (primitive, weights, skin);
+
+      shapeNode ._appearance = primitive .appearanceNode;
+      shapeNode ._geometry   = primitive .geometryNode;
 
       shapeNode .setup ();
 
@@ -43623,7 +43614,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 
 /* harmony default export */ const Parser_GLTF2Parser = (Namespace/* default */.A .add ("GLTF2Parser", GLTF2Parser_default_));
 ;// ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(7678)["default"];
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(5758)["default"];
 
 
 
@@ -43651,16 +43642,18 @@ Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, X3DParser/* defau
       if (!(this .arrayBuffer instanceof ArrayBuffer))
          return false;
 
-      if (this .dataView .byteLength < 12)
+      const { dataView } = this;
+
+      if (dataView .byteLength < 12)
          return false;
 
-      if (this .dataView .getUint32 (0, true) !== 0x46546C67)
+      if (dataView .getUint32 (0, true) !== 0x46546C67) // glTF
          return false;
 
-      if (this .dataView .getUint32 (4, true) !== 2)
+      if (dataView .getUint32 (4, true) !== 2) // Version
          return false;
 
-      if (this .dataView .getUint32 (8, true) !== this .dataView .byteLength)
+      if (dataView .getUint32 (8, true) !== dataView .byteLength)
          return false;
 
       return true;
@@ -43693,11 +43686,13 @@ Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, X3DParser/* defau
    },
    chunks ()
    {
-      for (let i = 12; i < this .dataView .byteLength;)
+      const { dataView, arrayBuffer, json, buffers } = this;
+
+      for (let i = 12; i < dataView .byteLength;)
       {
          const
-            length = this .dataView .getUint32 (i, true),
-            type   = this .dataView .getUint32 (i + 4, true);
+            length = dataView .getUint32 (i, true),
+            type   = dataView .getUint32 (i + 4, true);
 
          i += 8;
 
@@ -43705,20 +43700,18 @@ Object .assign (Object .setPrototypeOf (GLB2Parser .prototype, X3DParser/* defau
          {
             case 0x4e4f534a: // Structured JSON content
             {
-               this .json .push (GLB2Parser_$.decodeText (this .arrayBuffer .slice (i, i + length)));
+               json .push (GLB2Parser_$.decodeText (arrayBuffer .slice (i, i + length)));
                break;
             }
             case 0x004e4942: // Binary buffer
             {
-               this .buffers .push (this .arrayBuffer .slice (i, i + length));
+               buffers .push (arrayBuffer .slice (i, i + length));
                break;
             }
          }
 
          i += length;
       }
-
-      return this .getScene ();
    },
 });
 
@@ -43727,11 +43720,11 @@ const GLB2Parser_default_ = GLB2Parser;
 
 /* harmony default export */ const Parser_GLB2Parser = (Namespace/* default */.A .add ("GLB2Parser", GLB2Parser_default_));
 // EXTERNAL MODULE: ./src/x_ite/Parser/Expressions.js
-var Expressions = __webpack_require__(3462);
+var Expressions = __webpack_require__(9698);
 // EXTERNAL MODULE: ./src/x_ite/DEVELOPMENT.js
-var DEVELOPMENT = __webpack_require__(9368);
+var DEVELOPMENT = __webpack_require__(2972);
 ;// ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(7678)["default"];
+/* provided dependency */ var OBJParser_$ = __webpack_require__(5758)["default"];
 
 
 
@@ -44867,15 +44860,15 @@ const STLAParser_Grammar = (0,Expressions/* default */.A) ({
    untilEndOfLine: /[^\r\n]+/gy,
 
    // Keywords
-   solid: /solid/gy,
-   facet: /facet/gy,
-   normal: /normal/gy,
-   outer: /outer/gy,
-   loop: /loop/gy,
-   vertex: /vertex/gy,
-   endloop: /endloop/gy,
-   endfacet: /endfacet/gy,
-   endsolid: /endsolid/gy,
+   solid: /\bsolid\b/gy,
+   facet: /\bfacet\b/gy,
+   normal: /\bnormal\b/gy,
+   outer: /\bouter\b/gy,
+   loop: /\bloop\b/gy,
+   vertex: /\bvertex\b/gy,
+   endloop: /\bendloop\b/gy,
+   endfacet: /\bendfacet\b/gy,
+   endsolid: /\bendsolid\b/gy,
 
    // Values
    name: /\w+/gy,
@@ -44912,7 +44905,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser/* defau
       if (typeof this .input !== "string")
          return false;
 
-      return !! this .input .match (/^(?:[\x20\n\t\r]+|;.*?[\r\n])*\b(?:solid)\b/);
+      return !! this .input .match (/^(?:[\x20\n\t\r]+|;.*?[\r\n])*\bsolid\b.*?\bendsolid\b/s);
    },
    parseIntoScene (resolve, reject)
    {
@@ -44978,47 +44971,54 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser/* defau
    {
       this .comments ();
 
-      if (STLAParser_Grammar .solid .parse (this))
+      if (!STLAParser_Grammar .solid .parse (this))
+         return false;
+
+      this .whitespacesNoLineTerminator ();
+
+      const
+         scene      = this .getExecutionContext (),
+         shape      = scene .createNode ("Shape"),
+         geometry   = scene .createNode ("TriangleSet"),
+         coordinate = scene .createNode ("Coordinate"),
+         hasNormals = this .normals ?.some (v => v !== 0),
+         name       = this .sanitizeName (STLAParser_Grammar .name .parse (this) ? this .result [0] : "");
+
+      STLAParser_Grammar .untilEndOfLine .parse (this);
+
+      this .facets ();
+      this .rotateAxes (this .vertices);
+
+      shape .appearance         = this .appearance;
+      shape .geometry           = geometry;
+      coordinate .point         = this .vertices;
+      geometry .normalPerVertex = false;
+      geometry .coord           = coordinate;
+
+      if (hasNormals)
       {
-         this .whitespacesNoLineTerminator ();
+         const normal = scene .createNode ("Normal");
 
-         const
-            scene      = this .getExecutionContext (),
-            shape      = scene .createNode ("Shape"),
-            geometry   = scene .createNode ("TriangleSet"),
-            normal     = scene .createNode ("Normal"),
-            coordinate = scene .createNode ("Coordinate"),
-            name       = this .sanitizeName (STLAParser_Grammar .name .parse (this) ? this .result [0] : "");
+         this .rotateAxes (this .normals);
 
-         STLAParser_Grammar .untilEndOfLine .parse (this);
-
-         this .facets ();
-
-         shape .appearance         = this .appearance;
-         shape .geometry           = geometry;
-         geometry .normalPerVertex = false;
-         geometry .normal          = normal;
-         geometry .coord           = coordinate;
-         normal .vector            = this .normals;
-         coordinate .point         = this .vertices;
-
-         if (name)
-         {
-            scene .addNamedNode (scene .getUniqueName (name), shape);
-            scene .addExportedNode (scene .getUniqueExportName (name), shape);
-         }
-
-         scene .getRootNodes () .push (shape);
-
-         this .comments ();
-
-         if (STLAParser_Grammar .endsolid .parse (this))
-            return true;
-
-         throw new Error ("Expected 'endsolid' statement.");
+         normal .vector   = this .normals;
+         geometry .normal = normal;
       }
 
-      return false;
+      if (name)
+      {
+         scene .addNamedNode (scene .getUniqueName (name), shape);
+         scene .addExportedNode (scene .getUniqueExportName (name), shape);
+      }
+
+      scene .getRootNodes () .push (shape);
+
+      this .comments ();
+
+      if (STLAParser_Grammar .endsolid .parse (this))
+         return true;
+
+      throw new Error ("Expected 'endsolid' statement.");
    },
    facets ()
    {
@@ -45178,6 +45178,7 @@ const STLAParser_default_ = STLAParser;
 
 /* harmony default export */ const Parser_STLAParser = (Namespace/* default */.A .add ("STLAParser", STLAParser_default_));
 ;// ./src/x_ite/Parser/STLBParser.js
+/* provided dependency */ var STLBParser_$ = __webpack_require__(5758)["default"];
 
 
 
@@ -45247,9 +45248,27 @@ Object .assign (Object .setPrototypeOf (STLBParser .prototype, X3DParser/* defau
 
       // Parse scene.
 
+      this .header ();
       this .shape ();
 
       return this .getScene ();
+   },
+   header ()
+   {
+      const header = STLBParser_$.decodeText (this .arrayBuffer .slice (0, 80)) .trim ();
+
+      if (!header)
+         return;
+
+      const
+         scene     = this .getScene (),
+         worldInfo = scene .createNode ("WorldInfo"),
+         url       = new URL (scene .worldURL);
+
+      worldInfo .title = url .protocol === "data:" ? "STL Model" : decodeURIComponent (url .pathname .split ('/') .at (-1));
+      worldInfo .info  = [header];
+
+      scene .rootNodes .push (worldInfo);
    },
    shape ()
    {
@@ -45257,29 +45276,38 @@ Object .assign (Object .setPrototypeOf (STLBParser .prototype, X3DParser/* defau
          scene      = this .getExecutionContext (),
          shape      = scene .createNode ("Shape"),
          geometry   = scene .createNode ("TriangleSet"),
-         normal     = scene .createNode ("Normal"),
          coordinate = scene .createNode ("Coordinate"),
          dataView   = this .dataView,
          byteLength = this .dataView .byteLength,
-         vector     = [ ],
-         point      = [ ];
+         normals    = [ ],
+         points     = [ ];
 
       for (let i = 84; i < byteLength; i += 50)
       {
          for (let f = 0; f < 3; ++ f)
-            vector .push (dataView .getFloat32 (i + f * 4, true));
+            normals .push (dataView .getFloat32 (i + f * 4, true));
 
          for (let f = 3; f < 12; ++ f)
-            point .push (dataView .getFloat32 (i + f * 4, true));
+            points .push (dataView .getFloat32 (i + f * 4, true));
       }
+
+      this .rotateAxes (points);
 
       shape .appearance         = this .appearance;
       shape .geometry           = geometry;
+      coordinate .point         = points;
       geometry .normalPerVertex = false;
-      geometry .normal          = normal;
       geometry .coord           = coordinate;
-      normal .vector            = vector;
-      coordinate .point         = point;
+
+      if (normals .some (v => v !== 0))
+      {
+         const normal = scene .createNode ("Normal");
+
+         this .rotateAxes (normals);
+
+         normal .vector   = normals;
+         geometry .normal = normal;
+      }
 
       scene .getRootNodes () .push (shape);
    },
@@ -45329,7 +45357,8 @@ function PLYAParser (scene)
 {
    X3DParser/* default */.A .call (this, scene);
 
-   this .comments = [ ];
+   this .triangles = true;
+   this .comments  = [ ];
 
    this .typeMapping = new Map ([
       ["char",    this .int32],
@@ -45407,65 +45436,16 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser/* defau
    {
       if (PLYAParser_Grammar .comment .parse (this) && PLYAParser_Grammar .untilEndOfLine .parse (this))
       {
-         this .comments .push (this .result [0] .trim ());
-         return true;
-      }
+         const value = this .result [0] .trim ();
 
-      return false;
-   },
-   double ()
-   {
-      this .whitespacesNoLineTerminator ();
+         this .comments .push (value);
 
-      if (PLYAParser_Grammar .double .parse (this))
-      {
-         this .value = parseFloat (this .result [0]);
+         this .mustRotateAxes ||= !! value .match (/Blender|Artec/i);
 
          return true;
       }
 
       return false;
-   },
-   int32 ()
-   {
-      this .whitespacesNoLineTerminator ();
-
-      if (PLYAParser_Grammar .int32 .parse (this))
-      {
-         this .value = parseInt (this .result [0]);
-
-         return true;
-      }
-
-      return false;
-   },
-   convertColor (value, type)
-   {
-      switch (type)
-      {
-         case "uchar":
-         case "uint8":
-            return value / 0xff;
-         case "ushort":
-         case "uint16":
-            return value / 0xfffff;
-         case "uint":
-         case "uint32":
-            return value / 0xffffffff;
-         case "float":
-         case "float32":
-         case "double":
-         case "float64":
-            return value;
-      }
-   },
-   convertFDC (f_dc)
-   {
-      // https://github.com/graphdeco-inria/gaussian-splatting/issues/485
-
-      const C0 = 0.28209479177387814;
-
-      return 0.5 + C0 * f_dc;
    },
    header (elements)
    {
@@ -45480,7 +45460,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser/* defau
          worldInfo = scene .createNode ("WorldInfo"),
          url       = new URL (scene .worldURL);
 
-      worldInfo .title = url .protocol === "data:" ? "PLY Model" : url .pathname .split ('/') .at (-1);
+      worldInfo .title = url .protocol === "data:" ? "PLY Model" : decodeURIComponent (url .pathname .split ('/') .at (-1));
       worldInfo .info  = this .comments;
 
       scene .rootNodes .push (worldInfo);
@@ -45614,14 +45594,17 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser/* defau
       {
          const
             hasNormals = this .normals ?.some (v => v !== 0),
+            triangles  = this .triangles && !this .texCoordIndex ?.length,
             shape      = scene .createNode ("Shape"),
             appearance = scene .createNode ("Appearance"),
             material   = scene .createNode ("Material"),
-            geometry   = scene .createNode ("IndexedFaceSet"),
+            geometry   = scene .createNode (triangles ? "IndexedTriangleSet" : "IndexedFaceSet"),
             coordinate = scene .createNode ("Coordinate");
 
-         geometry .solid      = false;
-         geometry .coordIndex = this .coordIndex;
+         if (triangles)
+            geometry .index = this .coordIndex .filter (v => v !== -1);
+         else
+            geometry .coordIndex = this .coordIndex;
 
          if (this .colors ?.length)
          {
@@ -45661,9 +45644,15 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser/* defau
          {
             const normal = scene .createNode ("Normal");
 
+            if (this .mustRotateAxes)
+               this .rotateAxes (this .normals);
+
             normal .vector   = this .normals;
             geometry .normal = normal;
          }
+
+         if (this .mustRotateAxes)
+            this .rotateAxes (this .points);
 
          coordinate .point = this .points;
          geometry .coord   = coordinate;
@@ -45672,7 +45661,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser/* defau
          shape .appearance    = appearance;
          shape .geometry      = geometry;
 
-         scene .rootNodes .push (shape);
+         scene .getRootNodes () .push (shape);
       }
       else // PointSet
       {
@@ -45698,9 +45687,15 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser/* defau
          {
             const normal = scene .createNode ("Normal");
 
+            if (this .mustRotateAxes)
+               this .rotateAxes (this .normals);
+
             normal .vector   = this .normals;
             geometry .normal = normal;
          }
+
+         if (this .mustRotateAxes)
+            this .rotateAxes (this .points);
 
          coordinate .point = this .points;
          geometry .coord   = coordinate;
@@ -45709,7 +45704,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser/* defau
          shape .appearance    = appearance;
          shape .geometry      = geometry;
 
-         scene .rootNodes .push (shape);
+         scene .getRootNodes () .push (shape);
       }
    },
    processElement (element)
@@ -45809,10 +45804,20 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser/* defau
 
          for (const { count, value, name } of properties)
          {
+            if (!count)
+            {
+               if (!value .call (this))
+                  throw new Error (`Couldn't parse a property value for ${name}.`);
+
+               continue;
+            }
+
             if (!count .call (this))
                throw new Error (`Couldn't parse property count for ${name}.`);
 
             const length = this .value;
+
+            this .triangles &&= length === 3;
 
             for (let i = 0; i < length; ++ i)
             {
@@ -45894,6 +45899,60 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser/* defau
 
       for (let i = 0; i < count; ++ i)
          PLYAParser_Grammar .line .parse (this);
+   },
+   double ()
+   {
+      this .whitespacesNoLineTerminator ();
+
+      if (PLYAParser_Grammar .double .parse (this))
+      {
+         this .value = parseFloat (this .result [0]);
+
+         return true;
+      }
+
+      return false;
+   },
+   int32 ()
+   {
+      this .whitespacesNoLineTerminator ();
+
+      if (PLYAParser_Grammar .int32 .parse (this))
+      {
+         this .value = parseInt (this .result [0]);
+
+         return true;
+      }
+
+      return false;
+   },
+   convertColor (value, type)
+   {
+      switch (type)
+      {
+         case "uchar":
+         case "uint8":
+            return value / 0xff;
+         case "ushort":
+         case "uint16":
+            return value / 0xfffff;
+         case "uint":
+         case "uint32":
+            return value / 0xffffffff;
+         case "float":
+         case "float32":
+         case "double":
+         case "float64":
+            return value;
+      }
+   },
+   convertFDC (f_dc)
+   {
+      // https://github.com/graphdeco-inria/gaussian-splatting/issues/485
+
+      const C0 = 0.28209479177387814;
+
+      return 0.5 + C0 * f_dc;
    },
 });
 
@@ -46081,11 +46140,11 @@ const PLYBParser_default_ = PLYBParser;
 
 /* harmony default export */ const Parser_PLYBParser = (Namespace/* default */.A .add ("PLYBParser", PLYBParser_default_));
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Vector4.js
-var Vector4 = __webpack_require__(4898);
+var Vector4 = __webpack_require__(1542);
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Matrix3.js + 1 modules
-var Matrix3 = __webpack_require__(1883);
+var Matrix3 = __webpack_require__(9857);
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Complex.js
-var Complex = __webpack_require__(595);
+var Complex = __webpack_require__(3119);
 ;// ./src/standard/Math/Geometry/Box2.js
 
 
@@ -46495,10 +46554,10 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (Namespace/* default */.A .add ("Bezier", Bezier_default_));
 // EXTERNAL MODULE: ./src/standard/Math/Utility/MatrixStack.js
-var MatrixStack = __webpack_require__(6150);
+var MatrixStack = __webpack_require__(714);
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(7678)["default"];
-/* provided dependency */ var libtess = __webpack_require__(1242);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(5758)["default"];
+/* provided dependency */ var libtess = __webpack_require__(5254);
 
 
 
@@ -49232,7 +49291,7 @@ const SVGParser_default_ = SVGParser;
 
 /* harmony default export */ const Parser_SVGParser = (Namespace/* default */.A .add ("SVGParser", SVGParser_default_));
 ;// ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(7678)["default"];
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(5758)["default"];
 
 
 
@@ -49370,11 +49429,11 @@ const GoldenGate_default_ = GoldenGate;
 
 /* harmony default export */ const Parser_GoldenGate = (Namespace/* default */.A .add ("GoldenGate", GoldenGate_default_));
 // EXTERNAL MODULE: ./src/x_ite/Execution/X3DWorld.js
-var X3DWorld = __webpack_require__(5123);
+var X3DWorld = __webpack_require__(1919);
 // EXTERNAL MODULE: ./src/x_ite/Execution/X3DScene.js
-var X3DScene = __webpack_require__(5879);
+var X3DScene = __webpack_require__(379);
 ;// ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(7678)["default"];
+/* provided dependency */ var FileLoader_$ = __webpack_require__(5758)["default"];
 
 
 
@@ -49653,13 +49712,13 @@ const FileLoader_default_ = FileLoader;
 
 /***/ },
 
-/***/ 6041
+/***/ 7725
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7028);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1739);
 // Latest implemented X3D specification version:
 
 const __default__ = "4.1";
@@ -49669,13 +49728,13 @@ const __default__ = "4.1";
 
 /***/ },
 
-/***/ 3462
+/***/ 9698
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7028);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1739);
 const functions =
 {
    parse (parser)
@@ -49719,14 +49778,14 @@ const __default__ = Expressions;
 
 /***/ },
 
-/***/ 8257
+/***/ 1165
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1543);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7028);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7227);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1739);
 
 
 const
@@ -49777,16 +49836,16 @@ const __default__ = HTMLSupport;
 
 /***/ },
 
-/***/ 5252
+/***/ 6992
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _XMLParser_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(707);
-/* harmony import */ var _X3DParser_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1813);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7028);
-/* provided dependency */ var $ = __webpack_require__(7678)["default"];
+/* harmony import */ var _XMLParser_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6295);
+/* harmony import */ var _X3DParser_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4449);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1739);
+/* provided dependency */ var $ = __webpack_require__(5758)["default"];
 
 
 
@@ -50174,16 +50233,16 @@ const __default__ = JSONParser;
 
 /***/ },
 
-/***/ 6168
+/***/ 1428
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Components_Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7939);
-/* harmony import */ var _Execution_X3DImportedNode_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3367);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Components_Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8679);
+/* harmony import */ var _Execution_X3DImportedNode_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7411);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1739);
 
 
 
@@ -50266,32 +50325,32 @@ const __default__ = Placeholder;
 
 /***/ },
 
-/***/ 2303
+/***/ 9635
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _X3DParser_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1813);
-/* harmony import */ var _Expressions_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3462);
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7102);
-/* harmony import */ var _Base_X3DField_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1122);
-/* harmony import */ var _Execution_X3DImportedNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3367);
-/* harmony import */ var _Prototype_X3DExternProtoDeclaration_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2763);
-/* harmony import */ var _Prototype_X3DProtoDeclaration_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(8361);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1543);
-/* harmony import */ var _Placeholder_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(6168);
-/* harmony import */ var _standard_Math_Numbers_Color3_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(6355);
-/* harmony import */ var _standard_Math_Numbers_Color4_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(8842);
-/* harmony import */ var _standard_Math_Numbers_Matrix3_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(1883);
-/* harmony import */ var _standard_Math_Numbers_Matrix4_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(4972);
-/* harmony import */ var _standard_Math_Numbers_Rotation4_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(4689);
-/* harmony import */ var _standard_Math_Numbers_Vector2_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(8228);
-/* harmony import */ var _standard_Math_Numbers_Vector3_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(2523);
-/* harmony import */ var _standard_Math_Numbers_Vector4_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(4898);
-/* harmony import */ var _DEVELOPMENT_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(9368);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(7028);
-/* provided dependency */ var $ = __webpack_require__(7678)["default"];
+/* harmony import */ var _X3DParser_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4449);
+/* harmony import */ var _Expressions_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(9698);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5706);
+/* harmony import */ var _Base_X3DField_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5086);
+/* harmony import */ var _Execution_X3DImportedNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7411);
+/* harmony import */ var _Prototype_X3DExternProtoDeclaration_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1327);
+/* harmony import */ var _Prototype_X3DProtoDeclaration_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(2493);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(7227);
+/* harmony import */ var _Placeholder_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(1428);
+/* harmony import */ var _standard_Math_Numbers_Color3_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(5503);
+/* harmony import */ var _standard_Math_Numbers_Color4_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(9550);
+/* harmony import */ var _standard_Math_Numbers_Matrix3_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(9857);
+/* harmony import */ var _standard_Math_Numbers_Matrix4_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(7232);
+/* harmony import */ var _standard_Math_Numbers_Rotation4_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(7213);
+/* harmony import */ var _standard_Math_Numbers_Vector2_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(7072);
+/* harmony import */ var _standard_Math_Numbers_Vector3_js__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(1223);
+/* harmony import */ var _standard_Math_Numbers_Vector4_js__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(1542);
+/* harmony import */ var _DEVELOPMENT_js__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(2972);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(1739);
+/* provided dependency */ var $ = __webpack_require__(5758)["default"];
 
 
 
@@ -52996,15 +53055,15 @@ const __default__ = VRMLParser;
 
 /***/ },
 
-/***/ 1813
+/***/ 4449
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Prototype_X3DProtoDeclaration_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(8361);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7028);
-/* provided dependency */ var $ = __webpack_require__(7678)["default"];
+/* harmony import */ var _Prototype_X3DProtoDeclaration_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2493);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1739);
+/* provided dependency */ var $ = __webpack_require__(5758)["default"];
 
 
 function X3DParser (scene)
@@ -53178,6 +53237,20 @@ Object .assign (X3DParser .prototype,
 
       nodes .length = 0;;
    },
+   rotateAxes (array)
+   {
+      // This function is for STL and PLY models.
+
+      const length = array .length;
+
+      for (let i = 0; i < length; i += 3)
+      {
+         const z = -array [i + 1];
+
+         array [i + 1] = array [i + 2];
+         array [i + 2] = z;
+      }
+   },
 });
 
 const __default__ = X3DParser;
@@ -53187,28 +53260,28 @@ const __default__ = X3DParser;
 
 /***/ },
 
-/***/ 707
+/***/ 6295
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Base_X3DField_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1122);
-/* harmony import */ var _Base_X3DBaseNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3152);
-/* harmony import */ var _Components_Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7939);
-/* harmony import */ var _Components_Core_X3DPrototypeInstance_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(9498);
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7102);
-/* harmony import */ var _X3DParser_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1813);
-/* harmony import */ var _VRMLParser_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(2303);
-/* harmony import */ var _HTMLSupport_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(8257);
-/* harmony import */ var _Execution_X3DImportedNode_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(3367);
-/* harmony import */ var _Prototype_X3DExternProtoDeclaration_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(2763);
-/* harmony import */ var _Prototype_X3DProtoDeclaration_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(8361);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(1543);
-/* harmony import */ var _Placeholder_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(6168);
-/* harmony import */ var _DEVELOPMENT_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(9368);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(7028);
-/* provided dependency */ var $ = __webpack_require__(7678)["default"];
+/* harmony import */ var _Base_X3DField_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5086);
+/* harmony import */ var _Base_X3DBaseNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2502);
+/* harmony import */ var _Components_Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(8679);
+/* harmony import */ var _Components_Core_X3DPrototypeInstance_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7806);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(5706);
+/* harmony import */ var _X3DParser_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(4449);
+/* harmony import */ var _VRMLParser_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9635);
+/* harmony import */ var _HTMLSupport_js__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1165);
+/* harmony import */ var _Execution_X3DImportedNode_js__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(7411);
+/* harmony import */ var _Prototype_X3DExternProtoDeclaration_js__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(1327);
+/* harmony import */ var _Prototype_X3DProtoDeclaration_js__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(2493);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(7227);
+/* harmony import */ var _Placeholder_js__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(1428);
+/* harmony import */ var _DEVELOPMENT_js__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(2972);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(1739);
+/* provided dependency */ var $ = __webpack_require__(5758)["default"];
 
 
 
@@ -54489,15 +54562,15 @@ const __default__ = XMLParser;
 
 /***/ },
 
-/***/ 9393
+/***/ 9661
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Base_X3DInfoArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(495);
-/* harmony import */ var _X3DExternProtoDeclaration_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2763);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7028);
+/* harmony import */ var _Base_X3DInfoArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4163);
+/* harmony import */ var _X3DExternProtoDeclaration_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1327);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1739);
 
 
 
@@ -54527,15 +54600,15 @@ const __default__ = ExternProtoDeclarationArray;
 
 /***/ },
 
-/***/ 3675
+/***/ 1031
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Base_X3DInfoArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(495);
-/* harmony import */ var _X3DProtoDeclaration_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8361);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7028);
+/* harmony import */ var _Base_X3DInfoArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4163);
+/* harmony import */ var _X3DProtoDeclaration_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2493);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1739);
 
 
 
@@ -54565,19 +54638,19 @@ const __default__ = ProtoDeclarationArray;
 
 /***/ },
 
-/***/ 2763
+/***/ 1327
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2459);
-/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2553);
-/* harmony import */ var _Components_Networking_X3DUrlObject_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(3382);
-/* harmony import */ var _X3DProtoDeclarationNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6221);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1543);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4927);
+/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2837);
+/* harmony import */ var _Components_Networking_X3DUrlObject_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8898);
+/* harmony import */ var _X3DProtoDeclarationNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(2977);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7227);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1739);
 
 
 
@@ -54663,7 +54736,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, _X
          return;
       }
 
-      const { default: FileLoader } = await Promise.resolve(/* import() */).then(__webpack_require__.bind(__webpack_require__, 4326));
+      const { default: FileLoader } = await Promise.resolve(/* import() */).then(__webpack_require__.bind(__webpack_require__, 4408));
 
       for (const url of this ._url)
       {
@@ -54963,19 +55036,19 @@ const __default__ = X3DExternProtoDeclaration;
 
 /***/ },
 
-/***/ 8361
+/***/ 2493
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2459);
-/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2553);
-/* harmony import */ var _Execution_X3DExecutionContext_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2258);
-/* harmony import */ var _X3DProtoDeclarationNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(6221);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1543);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Base_X3DFieldDefinition_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4927);
+/* harmony import */ var _Base_FieldDefinitionArray_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2837);
+/* harmony import */ var _Execution_X3DExecutionContext_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(6686);
+/* harmony import */ var _X3DProtoDeclarationNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(2977);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7227);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1739);
 
 
 
@@ -55352,18 +55425,18 @@ const __default__ = X3DProtoDeclaration;
 
 /***/ },
 
-/***/ 6221
+/***/ 2977
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7102);
-/* harmony import */ var _Base_X3DBaseNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(3152);
-/* harmony import */ var _Components_Core_X3DPrototypeInstance_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(9498);
-/* harmony import */ var _Fields_SFNodeCache_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5366);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(1543);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7028);
+/* harmony import */ var _Fields_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5706);
+/* harmony import */ var _Base_X3DBaseNode_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2502);
+/* harmony import */ var _Components_Core_X3DPrototypeInstance_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7806);
+/* harmony import */ var _Fields_SFNodeCache_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2490);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7227);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1739);
 
 
 
@@ -55486,13 +55559,13 @@ const __default__ = X3DProtoDeclarationNode;
 
 /***/ },
 
-/***/ 9617
+/***/ 8981
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7028);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1739);
 const RenderPass =
 {
    // Bits
@@ -55512,16 +55585,16 @@ const __default__ = RenderPass;
 
 /***/ },
 
-/***/ 5111
+/***/ 9275
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _standard_Math_Geometry_ViewVolume_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7560);
-/* harmony import */ var _standard_Math_Numbers_Vector3_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2523);
-/* harmony import */ var _standard_Math_Numbers_Matrix4_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(4972);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7028);
+/* harmony import */ var _standard_Math_Geometry_ViewVolume_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7724);
+/* harmony import */ var _standard_Math_Numbers_Vector3_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1223);
+/* harmony import */ var _standard_Math_Numbers_Matrix4_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7232);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(1739);
 
 
 
@@ -55728,13 +55801,13 @@ const __default__ = TextureBuffer;
 
 /***/ },
 
-/***/ 6009
+/***/ 3786
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7028);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1739);
 let i = 0;
 
 const TraverseType = Object .freeze ({
@@ -55754,13 +55827,13 @@ const __default__ = TraverseType;
 
 /***/ },
 
-/***/ 3925
+/***/ 9553
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7028);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1739);
 function VertexArray (gl)
 {
    this .gl           = gl;
@@ -55823,15 +55896,15 @@ const __default__ = VertexArray;
 
 /***/ },
 
-/***/ 3296
+/***/ 7548
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Base_X3DInfoArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(495);
-/* harmony import */ var _X3DRoute_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(8178);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7028);
+/* harmony import */ var _Base_X3DInfoArray_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4163);
+/* harmony import */ var _X3DRoute_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(6886);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(1739);
 
 
 
@@ -55861,19 +55934,19 @@ const __default__ = RouteArray;
 
 /***/ },
 
-/***/ 8178
+/***/ 6886
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _Base_X3DObject_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6352);
-/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(1543);
-/* harmony import */ var _Fields_SFNodeCache_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(5366);
-/* harmony import */ var _Components_Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(7939);
-/* harmony import */ var _Execution_X3DImportedNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(3367);
-/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(7028);
-/* provided dependency */ var $ = __webpack_require__(7678)["default"];
+/* harmony import */ var _Base_X3DObject_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1075);
+/* harmony import */ var _Base_X3DConstants_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(7227);
+/* harmony import */ var _Fields_SFNodeCache_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(2490);
+/* harmony import */ var _Components_Core_X3DNode_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(8679);
+/* harmony import */ var _Execution_X3DImportedNode_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(7411);
+/* harmony import */ var _Namespace_js__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(1739);
+/* provided dependency */ var $ = __webpack_require__(5758)["default"];
 
 
 
@@ -56233,7 +56306,7 @@ const __default__ = X3DRoute;
 
 /***/ },
 
-/***/ 7028
+/***/ 1739
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
@@ -56251,7 +56324,7 @@ Object .defineProperty (Namespace, "add",
          return module;
       }
 
-      const X3D = window [Symbol .for ("X_ITE.X3D-14.0.2")];
+      const X3D = window [Symbol .for ("X_ITE.X3D-14.0.3")];
 
       if (X3D)
          X3D [name] = module;
@@ -56266,19 +56339,19 @@ Object .defineProperty (Namespace, "add",
 
 /***/ },
 
-/***/ 7354
+/***/ 3470
 (module, __unused_webpack_exports, __webpack_require__) {
 
 
 
 // Bundlers are able to synchronously require an ESM module from a CommonJS one.
-const { jQuery } = __webpack_require__( 7678 );
+const { jQuery } = __webpack_require__( 5758 );
 module.exports = jQuery;
 
 
 /***/ },
 
-/***/ 7678
+/***/ 5758
 (__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
 __webpack_require__.r(__webpack_exports__);
@@ -56287,7 +56360,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__),
 /* harmony export */   jQuery: () => (/* binding */ jQuery)
 /* harmony export */ });
-/* harmony import */ var _src_x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(7028);
+/* harmony import */ var _src_x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1739);
 /*!
  * jQuery JavaScript Library v4.0.0+slim
  * https://jquery.com/
@@ -63213,21 +63286,21 @@ const __default__ = jQuery;
 var __webpack_exports__ = {};
 
 // EXTERNAL MODULE: ./src/x_ite/Namespace.js
-var Namespace = __webpack_require__(7028);
+var Namespace = __webpack_require__(1739);
 // EXTERNAL MODULE: ./src/x_ite/Base/X3DBaseNode.js + 1 modules
-var X3DBaseNode = __webpack_require__(3152);
+var X3DBaseNode = __webpack_require__(2502);
 // EXTERNAL MODULE: ./src/x_ite/Base/X3DFieldDefinition.js
-var X3DFieldDefinition = __webpack_require__(2459);
+var X3DFieldDefinition = __webpack_require__(4927);
 // EXTERNAL MODULE: ./src/x_ite/Base/FieldDefinitionArray.js
-var FieldDefinitionArray = __webpack_require__(2553);
+var FieldDefinitionArray = __webpack_require__(2837);
 // EXTERNAL MODULE: ./src/x_ite/Base/X3DField.js
-var X3DField = __webpack_require__(1122);
+var X3DField = __webpack_require__(5086);
 // EXTERNAL MODULE: ./src/x_ite/Base/X3DArrayField.js
-var X3DArrayField = __webpack_require__(6751);
+var X3DArrayField = __webpack_require__(1555);
 // EXTERNAL MODULE: ./src/x_ite/Fields.js + 15 modules
-var Fields = __webpack_require__(7102);
+var Fields = __webpack_require__(5706);
 ;// ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var $ = __webpack_require__(7678)["default"];
+/* provided dependency */ var $ = __webpack_require__(5758)["default"];
 const Legacy =
 {
    elements (elements, X3DBrowser)
@@ -63291,9 +63364,9 @@ const __default__ = Legacy;
 
 /* harmony default export */ const Browser_Legacy = (Namespace/* default */.A .add ("Legacy", __default__));
 // EXTERNAL MODULE: ./src/x_ite/BROWSER_VERSION.js
-var BROWSER_VERSION = __webpack_require__(7302);
+var BROWSER_VERSION = __webpack_require__(2714);
 // EXTERNAL MODULE: ./src/x_ite/Base/X3DConstants.js
-var X3DConstants = __webpack_require__(1543);
+var X3DConstants = __webpack_require__(7227);
 ;// ./src/x_ite/Browser/Core/Context.js
 const Context =
 {
@@ -63473,7 +63546,7 @@ const Context_default_ = Context;
 
 /* harmony default export */ const Core_Context = (Namespace/* default */.A .add ("Context", Context_default_));
 // EXTERNAL MODULE: ./src/standard/Time/StopWatch.js
-var StopWatch = __webpack_require__(9878);
+var StopWatch = __webpack_require__(3954);
 ;// ./src/x_ite/Browser/Shape/GeometryType.js
 let i = 0;
 
@@ -63833,7 +63906,7 @@ const gettext_default_ = (string) => locale .get (string) || string;
 
 /* harmony default export */ const gettext = (Namespace/* default */.A .add ("gettext", gettext_default_));
 ;// ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(7678)["default"];
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(5758)["default"];
 
 
 
@@ -64284,9 +64357,9 @@ const TextCompression_default_ = TextCompression;
 
 /* harmony default export */ const Core_TextCompression = (Namespace/* default */.A .add ("TextCompression", TextCompression_default_));
 // EXTERNAL MODULE: ./src/standard/Math/Algorithm.js
-var Algorithm = __webpack_require__(859);
+var Algorithm = __webpack_require__(1975);
 ;// ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(7678)["default"];
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(5758)["default"];
 
 
 
@@ -64764,7 +64837,7 @@ const BrowserProperties_default_ = BrowserProperties;
 
 /* harmony default export */ const Core_BrowserProperties = (Namespace/* default */.A .add ("BrowserProperties", BrowserProperties_default_));
 ;// ./src/x_ite/Browser/Core/RenderingProperties.js
-/* provided dependency */ var RenderingProperties_$ = __webpack_require__(7678)["default"];
+/* provided dependency */ var RenderingProperties_$ = __webpack_require__(5758)["default"];
 
 
 
@@ -64848,7 +64921,7 @@ const RenderingProperties_default_ = RenderingProperties;
 
 /* harmony default export */ const Core_RenderingProperties = (Namespace/* default */.A .add ("RenderingProperties", RenderingProperties_default_));
 ;// ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(7678)["default"];
+/* provided dependency */ var Notification_$ = __webpack_require__(5758)["default"];
 
 
 
@@ -64934,7 +65007,7 @@ const Notification_default_ = Notification;
 
 /* harmony default export */ const Core_Notification = (Namespace/* default */.A .add ("Notification", Notification_default_));
 ;// ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(7678)["default"];
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(5758)["default"];
 
 
 
@@ -65441,24 +65514,125 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode/* de
                   browser .getShadow () .find (".x_ite-private-world-info") .remove ();
 
                   const
-                     priv      = browser .getShadow () .find (".x_ite-private-browser"),
-                     overlay   = ContextMenu_$("<div></div>") .addClass ("x_ite-private-world-info-overlay") .appendTo (priv),
-                     div       = ContextMenu_$("<div></div>") .hide () .addClass (["x_ite-private-world-info", "x_ite-private-hidden"]) .appendTo (overlay),
-                     worldInfo = browser .getExecutionContext () .getWorldInfos () [0],
-                     title     = worldInfo .title,
-                     info      = worldInfo .info;
+                     priv         = browser .getShadow () .find (".x_ite-private-browser"),
+                     overlay      = ContextMenu_$("<div></div>") .addClass ("x_ite-private-world-info-overlay") .appendTo (priv),
+                     div          = ContextMenu_$("<div></div>") .hide () .addClass (["x_ite-private-world-info", "x_ite-private-hidden"]) .appendTo (overlay),
+                     content      = ContextMenu_$("<div></div>"),
+                     worldInfos   = browser .getExecutionContext () .getWorldInfos (),
+                     worldInfo    = worldInfos .length ? worldInfos [0] : null,
+                     hasWorldInfo = worldInfo ?.title .length || worldInfo ?.info .length;
 
-                  ContextMenu_$("<div></div>") .addClass ("x_ite-private-world-info-top") .text ("World Info") .appendTo (div);
-
-                  if (title .length)
+                  const linkify = function ()
                   {
-                     ContextMenu_$("<div></div>") .addClass ("x_ite-private-world-info-title") .text (title) .appendTo (div);
-                  }
+                     const email = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9]{2,})/ig;
 
-                  for (const line of info)
-                  {
-                     ContextMenu_$("<div></div>") .addClass ("x_ite-private-world-info-info") .text (line) .appendTo (div);
-                  }
+                     const link = /(https?:\/\/[-a-zA-Z0-9@:%._\+~#=]+\.[a-zA-Z0-9]{2,}\b[-a-zA-Z0-9()@:%_\+.~#?&\/=]*\b\/?)/ig;
+
+                     const replaced_text = ContextMenu_$(this) .html ()
+                        .replace (email, `<a href="mailto:$1" target="_blank">$1</a>`)
+                        .replace (link, `<a href="$1" target="_blank">$1</a>`);
+
+                     ContextMenu_$(this)
+                        .html (replaced_text)
+                        .find ("a")
+                        .on ("click", event => event .stopPropagation ());
+                  };
+
+                  const buttons = ContextMenu_$("<div></div>")
+                     .addClass ("x_ite-private-world-info-buttons")
+                     .appendTo (div);
+
+                  const worldInfoButton = ContextMenu_$("<button></button>")
+                     .addClass ("x_ite-private-browser-button")
+                     .css ("width", "100pt")
+                     .text ("World Info")
+                     .on ("click", event =>
+                     {
+                        event .preventDefault ();
+                        event .stopPropagation ();
+                        event .stopImmediatePropagation ();
+
+                        const
+                           title = worldInfo .title,
+                           info  = worldInfo .info;
+
+                        buttons .find ("button") .removeClass ("active");
+                        worldInfoButton .addClass ("active");
+
+                        content .empty ();
+
+                        ContextMenu_$("<div></div>")
+                           .addClass ("x_ite-private-world-info-top")
+                           .text ("World Info")
+                           .appendTo (content);
+
+                        if (title .length)
+                        {
+                           ContextMenu_$("<div></div>")
+                              .addClass ("x_ite-private-world-info-title")
+                              .text (title)
+                              .appendTo (content);
+                        }
+
+                        for (const line of info)
+                        {
+                           ContextMenu_$("<div></div>")
+                              .addClass ("x_ite-private-world-info-info")
+                              .text (line)
+                              .appendTo (content)
+                              .each (linkify);
+                        }
+                     })
+                     .appendTo (buttons);
+
+                  const metaDataButton = ContextMenu_$("<button></button>")
+                     .addClass ("x_ite-private-browser-button")
+                     .css ("width", "100pt")
+                     .text ("Metadata")
+                     .on ("click", event =>
+                     {
+                        event .preventDefault ();
+                        event .stopPropagation ();
+                        event .stopImmediatePropagation ();
+
+                        buttons .find ("button") .removeClass ("active");
+                        metaDataButton .addClass ("active");
+
+                        content .empty ();
+
+                        ContextMenu_$("<div></div>")
+                           .addClass ("x_ite-private-world-info-top")
+                           .text ("Metadata")
+                           .appendTo (content);
+
+                        const table = ContextMenu_$("<table></table>") .appendTo (content);
+
+                        for (const [key, value] of browser .currentScene .getMetaDatas ())
+                        {
+                           const tr = ContextMenu_$("<tr></tr>") .appendTo (table);
+
+                           ContextMenu_$("<td></td>") .text (key + ":") .appendTo (tr);
+                           ContextMenu_$("<td></td>")
+                              .text (value)
+                              .appendTo (tr)
+                              .each (linkify);
+                        }
+
+                     })
+                     .appendTo (buttons);
+
+                  content .appendTo (div);
+
+                  if (!hasWorldInfo)
+                     worldInfoButton .hide ();
+
+                  if (!browser .currentScene .getMetaDatas () .length)
+                     metaDataButton .hide ();
+
+                  if (hasWorldInfo)
+                     worldInfoButton .trigger ("click");
+                  else
+                     metaDataButton .trigger ("click");
 
                   div
                      .show ()
@@ -65508,7 +65682,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode/* de
 
       const worldInfo = browser .getExecutionContext () .getWorldInfos () [0];
 
-      if (!worldInfo || (worldInfo .title .length === 0 && worldInfo .info .length === 0))
+      if ((!worldInfo || (worldInfo .title .length === 0 && worldInfo .info .length === 0)) && !browser .currentScene .getMetaDatas () .length)
       {
          delete menu .items ["world-info"];
       }
@@ -65688,9 +65862,9 @@ const ContextMenu_default_ = ContextMenu;
 
 /* harmony default export */ const Core_ContextMenu = (Namespace/* default */.A .add ("ContextMenu", ContextMenu_default_));
 // EXTERNAL MODULE: ./src/x_ite/Browser/Networking/URLs.js
-var URLs = __webpack_require__(8657);
+var URLs = __webpack_require__(5066);
 // EXTERNAL MODULE: ./src/x_ite/Execution/X3DScene.js
-var X3DScene = __webpack_require__(5879);
+var X3DScene = __webpack_require__(379);
 ;// ./src/standard/Utility/DataStorage.js
 const
    storages   = new WeakMap (),
@@ -65779,9 +65953,9 @@ const DataStorage_default_ = DataStorage;
 
 /* harmony default export */ const Utility_DataStorage = (Namespace/* default */.A .add ("DataStorage", DataStorage_default_));
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Vector3.js
-var Vector3 = __webpack_require__(2523);
+var Vector3 = __webpack_require__(1223);
 // EXTERNAL MODULE: ./src/x_ite/Features.js
-var Features = __webpack_require__(6264);
+var Features = __webpack_require__(2959);
 ;// ./src/x_ite/Browser/Core/Fonts.js
 
 
@@ -65811,7 +65985,7 @@ add ("PT_Sans/PTSans-Italic.woff2",     false, true);
 // add ("PT_Sans/PTSans-BoldItalic.woff2", true,  true);
 
 ;// ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(7678)["default"];
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(5758)["default"];
 
 
 
@@ -66617,7 +66791,7 @@ const X3DCoreContext_default_ = X3DCoreContext;
 
 /* harmony default export */ const Core_X3DCoreContext = (Namespace/* default */.A .add ("X3DCoreContext", X3DCoreContext_default_));
 // EXTERNAL MODULE: ./src/x_ite/Components/Core/X3DNode.js
-var X3DNode = __webpack_require__(7939);
+var X3DNode = __webpack_require__(8679);
 ;// ./src/x_ite/Components/Texturing/TextureProperties.js
 
 
@@ -66796,7 +66970,7 @@ const X3DEnvironmentalEffectsContext_default_ = X3DEnvironmentalEffectsContext;
 
 /* harmony default export */ const EnvironmentalEffects_X3DEnvironmentalEffectsContext = (Namespace/* default */.A .add ("X3DEnvironmentalEffectsContext", X3DEnvironmentalEffectsContext_default_));
 // EXTERNAL MODULE: ./src/x_ite/Components/Rendering/X3DGeometryNode.js + 1 modules
-var X3DGeometryNode = __webpack_require__(832);
+var X3DGeometryNode = __webpack_require__(7145);
 ;// ./src/x_ite/Components/Rendering/X3DComposedGeometryNode.js
 
 
@@ -67061,7 +67235,7 @@ const X3DComposedGeometryNode_default_ = X3DComposedGeometryNode;
 
 /* harmony default export */ const Rendering_X3DComposedGeometryNode = (Namespace/* default */.A .add ("X3DComposedGeometryNode", X3DComposedGeometryNode_default_));
 // EXTERNAL MODULE: ./src/standard/Math/Geometry/Triangle3.js
-var Triangle3 = __webpack_require__(3622);
+var Triangle3 = __webpack_require__(9602);
 ;// ./src/x_ite/Components/Geometry3D/IndexedFaceSet.js
 
 
@@ -67733,7 +67907,7 @@ const X3DSingleTextureCoordinateNode_default_ = X3DSingleTextureCoordinateNode;
 
 /* harmony default export */ const Texturing_X3DSingleTextureCoordinateNode = (Namespace/* default */.A .add ("X3DSingleTextureCoordinateNode", X3DSingleTextureCoordinateNode_default_));
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Vector2.js
-var Vector2 = __webpack_require__(8228);
+var Vector2 = __webpack_require__(7072);
 ;// ./src/x_ite/Components/Texturing/TextureCoordinate.js
 
 
@@ -68024,7 +68198,7 @@ const Normal_default_ = Normal;
 
 /* harmony default export */ const Rendering_Normal = (Namespace/* default */.A .add ("Normal", Normal_default_));
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Complex.js
-var Complex = __webpack_require__(595);
+var Complex = __webpack_require__(3119);
 ;// ./src/x_ite/Browser/Geometry3D/ConeOptions.js
 
 
@@ -68896,19 +69070,19 @@ const X3DGeometry3DContext_default_ = X3DGeometry3DContext;
 
 /* harmony default export */ const Geometry3D_X3DGeometry3DContext = (Namespace/* default */.A .add ("X3DGeometry3DContext", X3DGeometry3DContext_default_));
 // EXTERNAL MODULE: ./src/x_ite/Components/Core/X3DChildNode.js
-var X3DChildNode = __webpack_require__(8013);
+var X3DChildNode = __webpack_require__(1913);
 // EXTERNAL MODULE: ./src/x_ite/Components/Grouping/X3DBoundedObject.js + 1 modules
-var X3DBoundedObject = __webpack_require__(1770);
+var X3DBoundedObject = __webpack_require__(6089);
 // EXTERNAL MODULE: ./src/x_ite/Base/X3DCast.js
-var X3DCast = __webpack_require__(2535);
+var X3DCast = __webpack_require__(3555);
 // EXTERNAL MODULE: ./src/x_ite/Rendering/TraverseType.js
-var TraverseType = __webpack_require__(6009);
+var TraverseType = __webpack_require__(3786);
 // EXTERNAL MODULE: ./src/x_ite/Browser/Shape/AlphaMode.js
-var AlphaMode = __webpack_require__(2247);
+var AlphaMode = __webpack_require__(995);
 // EXTERNAL MODULE: ./src/x_ite/Rendering/RenderPass.js
-var RenderPass = __webpack_require__(9617);
+var RenderPass = __webpack_require__(8981);
 // EXTERNAL MODULE: ./src/standard/Math/Geometry/Box3.js
-var Box3 = __webpack_require__(49);
+var Box3 = __webpack_require__(9381);
 ;// ./src/x_ite/Components/Shape/X3DShapeNode.js
 
 
@@ -69307,13 +69481,13 @@ const Shape_default_ = Shape;
 
 /* harmony default export */ const Shape_Shape = (Namespace/* default */.A .add ("Shape", Shape_default_));
 // EXTERNAL MODULE: ./src/x_ite/Rendering/VertexArray.js
-var VertexArray = __webpack_require__(3925);
+var VertexArray = __webpack_require__(9553);
 // EXTERNAL MODULE: ./src/standard/Math/Geometry/ViewVolume.js
-var ViewVolume = __webpack_require__(7560);
+var ViewVolume = __webpack_require__(7724);
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Vector4.js
-var Vector4 = __webpack_require__(4898);
+var Vector4 = __webpack_require__(1542);
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Matrix4.js
-var Numbers_Matrix4 = __webpack_require__(4972);
+var Numbers_Matrix4 = __webpack_require__(7232);
 ;// ./src/x_ite/Components/Rendering/X3DLineGeometryNode.js
 
 
@@ -70567,7 +70741,7 @@ const X3DGroupingContext_default_ = X3DGroupingContext;
 
 /* harmony default export */ const Grouping_X3DGroupingContext = (Namespace/* default */.A .add ("X3DGroupingContext", X3DGroupingContext_default_));
 // EXTERNAL MODULE: ./src/x_ite/Components/Grouping/X3DGroupingNode.js
-var X3DGroupingNode = __webpack_require__(2964);
+var X3DGroupingNode = __webpack_require__(3544);
 ;// ./src/x_ite/Components/Layering/X3DViewportNode.js
 
 
@@ -70741,9 +70915,9 @@ const X3DLayeringContext_default_ = X3DLayeringContext;
 
 /* harmony default export */ const Layering_X3DLayeringContext = (Namespace/* default */.A .add ("X3DLayeringContext", X3DLayeringContext_default_));
 // EXTERNAL MODULE: ./src/x_ite/Rendering/TextureBuffer.js
-var TextureBuffer = __webpack_require__(5111);
+var TextureBuffer = __webpack_require__(9275);
 // EXTERNAL MODULE: ./src/x_ite/Components/Texturing/ImageTexture.js
-var ImageTexture = __webpack_require__(7045);
+var ImageTexture = __webpack_require__(9569);
 ;// ./src/assets/shaders/webgl2/pbr/ToneMapping2.glsl.js
 const ToneMapping2_glsl_default_ = () => /* glsl */ `
 const float GAMMA=2.2;const float INV_GAMMA=1./GAMMA;vec3 linearToSRGB(const in vec3 color){return pow(color,vec3(INV_GAMMA));}vec4 linearToSRGB(const in vec4 color){return vec4(linearToSRGB(color.rgb),color.a);}vec3 sRGBToLinear(const in vec3 color){return pow(color,vec3(GAMMA));}vec4 sRGBToLinear(const in vec4 color){return vec4(sRGBToLinear(color.rgb),color.a);}
@@ -71005,11 +71179,11 @@ const X3DLightingContext_default_ = X3DLightingContext;
 
 /* harmony default export */ const Lighting_X3DLightingContext = (Namespace/* default */.A .add ("X3DLightingContext", X3DLightingContext_default_));
 // EXTERNAL MODULE: ./src/x_ite/Components/Navigation/X3DViewpointNode.js
-var X3DViewpointNode = __webpack_require__(5901);
+var X3DViewpointNode = __webpack_require__(3017);
 // EXTERNAL MODULE: ./src/x_ite/Components/Interpolation/ScalarInterpolator.js
-var ScalarInterpolator = __webpack_require__(2454);
+var ScalarInterpolator = __webpack_require__(2130);
 // EXTERNAL MODULE: ./src/standard/Math/Geometry/Camera.js
-var Camera = __webpack_require__(8332);
+var Camera = __webpack_require__(6680);
 ;// ./src/x_ite/Components/Navigation/OrthoViewpoint.js
 
 
@@ -71873,7 +72047,7 @@ const PositionChaser_default_ = PositionChaser;
 
 /* harmony default export */ const Followers_PositionChaser = (Namespace/* default */.A .add ("PositionChaser", PositionChaser_default_));
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Rotation4.js
-var Rotation4 = __webpack_require__(4689);
+var Rotation4 = __webpack_require__(7213);
 ;// ./src/x_ite/Components/Followers/OrientationChaser.js
 
 
@@ -71950,10 +72124,10 @@ const OrientationChaser_default_ = OrientationChaser;
 
 /* harmony default export */ const Followers_OrientationChaser = (Namespace/* default */.A .add ("OrientationChaser", OrientationChaser_default_));
 // EXTERNAL MODULE: ./src/x_ite/Components/Time/TimeSensor.js
-var TimeSensor = __webpack_require__(1719);
+var TimeSensor = __webpack_require__(9187);
 ;// ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(417);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(7678)["default"];
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(7181);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(5758)["default"];
 
 
 
@@ -72833,11 +73007,11 @@ const ExamineViewer_default_ = ExamineViewer;
 
 /* harmony default export */ const Navigation_ExamineViewer = (Namespace/* default */.A .add ("ExamineViewer", ExamineViewer_default_));
 // EXTERNAL MODULE: ./src/x_ite/Browser/Rendering/GeometryContext.js
-var GeometryContext = __webpack_require__(2570);
+var GeometryContext = __webpack_require__(4318);
 // EXTERNAL MODULE: ./src/x_ite/Components/Layering/Layer.js
-var Layer = __webpack_require__(2613);
+var Layer = __webpack_require__(7249);
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Color3.js
-var Color3 = __webpack_require__(6355);
+var Color3 = __webpack_require__(5503);
 ;// ./src/x_ite/Browser/Rendering/ScreenLine.js
 
 
@@ -73034,8 +73208,8 @@ const ScreenLine_default_ = ScreenLine;
 
 /* harmony default export */ const Rendering_ScreenLine = (Namespace/* default */.A .add ("ScreenLine", ScreenLine_default_));
 ;// ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(417);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(7678)["default"];
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(7181);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(5758)["default"];
 
 
 
@@ -73772,8 +73946,8 @@ const FlyViewer_default_ = FlyViewer;
 
 /* harmony default export */ const Navigation_FlyViewer = (Namespace/* default */.A .add ("FlyViewer", FlyViewer_default_));
 ;// ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(417);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(7678)["default"];
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(7181);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(5758)["default"];
 
 
 
@@ -73986,8 +74160,8 @@ const NoneViewer_default_ = NoneViewer;
 
 /* harmony default export */ const Navigation_NoneViewer = (Namespace/* default */.A .add ("NoneViewer", NoneViewer_default_));
 ;// ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(417);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(7678)["default"];
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(7181);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(5758)["default"];
 
 
 
@@ -74642,9 +74816,9 @@ const X3DLightNode_default_ = X3DLightNode;
 
 /* harmony default export */ const Lighting_X3DLightNode = (Namespace/* default */.A .add ("X3DLightNode", X3DLightNode_default_));
 // EXTERNAL MODULE: ./src/standard/Math/Utility/MatrixStack.js
-var MatrixStack = __webpack_require__(6150);
+var MatrixStack = __webpack_require__(714);
 // EXTERNAL MODULE: ./src/standard/Utility/ObjectCache.js
-var ObjectCache = __webpack_require__(4019);
+var ObjectCache = __webpack_require__(447);
 ;// ./src/x_ite/Components/Lighting/DirectionalLight.js
 
 
@@ -75339,8 +75513,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 
 /* harmony default export */ const Picking_X3DPickingContext = (Namespace/* default */.A .add ("X3DPickingContext", X3DPickingContext_default_));
 ;// ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(417);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(7678)["default"];
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(7181);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(5758)["default"];
 
 
 
@@ -75705,7 +75879,7 @@ const PointingBuffer_default_ = PointingBuffer;
 
 /* harmony default export */ const Rendering_PointingBuffer = (Namespace/* default */.A .add ("PointingBuffer", PointingBuffer_default_));
 // EXTERNAL MODULE: ./src/standard/Math/Geometry/Line3.js
-var Line3 = __webpack_require__(2528);
+var Line3 = __webpack_require__(1148);
 ;// ./src/x_ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext.js
 
 
@@ -76596,7 +76770,7 @@ const Lock_default_ = Lock;
 
 /* harmony default export */ const Utility_Lock = (Namespace/* default */.A .add ("Lock", Lock_default_));
 ;// ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(7678)["default"];
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(5758)["default"];
 
 
 
@@ -78688,7 +78862,7 @@ const ShaderRegistry_default_ = ShaderRegistry;
 
 /* harmony default export */ const Shaders_ShaderRegistry = (Namespace/* default */.A .add ("ShaderRegistry", ShaderRegistry_default_));
 // EXTERNAL MODULE: ./src/x_ite/Components/Shape/X3DAppearanceChildNode.js
-var X3DAppearanceChildNode = __webpack_require__(8487);
+var X3DAppearanceChildNode = __webpack_require__(8763);
 ;// ./src/x_ite/Components/Shaders/X3DShaderNode.js
 
 
@@ -78740,9 +78914,9 @@ const X3DShaderNode_default_ = X3DShaderNode;
 
 /* harmony default export */ const Shaders_X3DShaderNode = (Namespace/* default */.A .add ("X3DShaderNode", X3DShaderNode_default_));
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Matrix3.js + 1 modules
-var Matrix3 = __webpack_require__(1883);
+var Matrix3 = __webpack_require__(9857);
 ;// ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(7678)["default"];
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(5758)["default"];
 
 
 
@@ -79995,7 +80169,7 @@ const X3DProgrammableShaderObject_default_ = X3DProgrammableShaderObject;
 
 /* harmony default export */ const Shaders_X3DProgrammableShaderObject = (Namespace/* default */.A .add ("X3DProgrammableShaderObject", X3DProgrammableShaderObject_default_));
 // EXTERNAL MODULE: ./src/x_ite/Components/Core/X3DSensorNode.js
-var X3DSensorNode = __webpack_require__(1957);
+var X3DSensorNode = __webpack_require__(6609);
 ;// ./src/x_ite/Components/Networking/X3DNetworkSensorNode.js
 
 
@@ -80735,11 +80909,11 @@ const ShaderCompiler_default_ = ShaderCompiler;
 
 /* harmony default export */ const Shaders_ShaderCompiler = (Namespace/* default */.A .add ("ShaderCompiler", ShaderCompiler_default_));
 // EXTERNAL MODULE: ./src/x_ite/Components/Networking/X3DUrlObject.js
-var X3DUrlObject = __webpack_require__(3382);
+var X3DUrlObject = __webpack_require__(8898);
 // EXTERNAL MODULE: ./src/x_ite/InputOutput/FileLoader.js + 12 modules
-var FileLoader = __webpack_require__(4326);
+var FileLoader = __webpack_require__(4408);
 ;// ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(7678)["default"];
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(5758)["default"];
 
 
 
@@ -80913,7 +81087,7 @@ const ShaderPart_default_ = ShaderPart;
 
 /* harmony default export */ const Shaders_ShaderPart = (Namespace/* default */.A .add ("ShaderPart", ShaderPart_default_));
 // EXTERNAL MODULE: ./src/x_ite/DEVELOPMENT.js
-var DEVELOPMENT = __webpack_require__(9368);
+var DEVELOPMENT = __webpack_require__(2972);
 ;// ./src/x_ite/Browser/Shaders/X3DShadersContext.js
 
 
@@ -81132,7 +81306,7 @@ const X3DAppearanceNode_default_ = X3DAppearanceNode;
 
 /* harmony default export */ const Shape_X3DAppearanceNode = (Namespace/* default */.A .add ("X3DAppearanceNode", X3DAppearanceNode_default_));
 // EXTERNAL MODULE: ./src/standard/Utility/BitSet.js
-var BitSet = __webpack_require__(5899);
+var BitSet = __webpack_require__(9975);
 ;// ./src/x_ite/Components/Shape/Appearance.js
 
 
@@ -82612,7 +82786,7 @@ const PeriodicWave_default_ = PeriodicWave;
 
 /* harmony default export */ const Sound_PeriodicWave = (Namespace/* default */.A .add ("PeriodicWave", PeriodicWave_default_));
 ;// ./src/x_ite/Browser/Sound/X3DSoundContext.js
-/* provided dependency */ var X3DSoundContext_$ = __webpack_require__(7678)["default"];
+/* provided dependency */ var X3DSoundContext_$ = __webpack_require__(5758)["default"];
 
 
 
@@ -82917,7 +83091,7 @@ const TextureTransform_default_ = TextureTransform;
 
 /* harmony default export */ const Texturing_TextureTransform = (Namespace/* default */.A .add ("TextureTransform", TextureTransform_default_));
 ;// ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(7678)["default"];
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(5758)["default"];
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -83476,7 +83650,7 @@ const X3DRoutingContext_default_ = X3DRoutingContext;
 
 /* harmony default export */ const Routing_X3DRoutingContext = (Namespace/* default */.A .add ("X3DRoutingContext", X3DRoutingContext_default_));
 // EXTERNAL MODULE: ./src/x_ite/Base/X3DInfoArray.js
-var X3DInfoArray = __webpack_require__(495);
+var X3DInfoArray = __webpack_require__(4163);
 ;// ./src/x_ite/Configuration/AbstractNodesArray.js
 
 
@@ -83520,7 +83694,7 @@ const AbstractNodes_default_ = new Configuration_AbstractNodesArray ();
 
 /* harmony default export */ const AbstractNodes = (Namespace/* default */.A .add ("AbstractNodes", AbstractNodes_default_));
 // EXTERNAL MODULE: ./src/x_ite/Parser/HTMLSupport.js
-var HTMLSupport = __webpack_require__(8257);
+var HTMLSupport = __webpack_require__(1165);
 ;// ./src/x_ite/Configuration/ConcreteNodesArray.js
 
 
@@ -83573,7 +83747,7 @@ const ConcreteNodes_default_ = new Configuration_ConcreteNodesArray ();
 
 /* harmony default export */ const ConcreteNodes = (Namespace/* default */.A .add ("ConcreteNodes", ConcreteNodes_default_));
 // EXTERNAL MODULE: ./src/x_ite/Execution/X3DWorld.js
-var X3DWorld = __webpack_require__(5123);
+var X3DWorld = __webpack_require__(1919);
 ;// ./src/x_ite/Browser/X3DBrowserContext.js
 
 
@@ -83954,11 +84128,11 @@ const X3DBrowserContext_default_ = X3DBrowserContext;
 
 /* harmony default export */ const Browser_X3DBrowserContext = (Namespace/* default */.A .add ("X3DBrowserContext", X3DBrowserContext_default_));
 // EXTERNAL MODULE: ./src/x_ite/Parser/XMLParser.js
-var XMLParser = __webpack_require__(707);
+var XMLParser = __webpack_require__(6295);
 // EXTERNAL MODULE: ./src/x_ite/Fields/SFNodeCache.js
-var SFNodeCache = __webpack_require__(5366);
+var SFNodeCache = __webpack_require__(2490);
 ;// ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(7678)["default"];
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(5758)["default"];
 /*******************************************************************************
  * MIT License
  *
@@ -84361,7 +84535,7 @@ const DOMIntegration_default_ = DOMIntegration;
 
 /* harmony default export */ const Browser_DOMIntegration = (Namespace/* default */.A .add ("DOMIntegration", DOMIntegration_default_));
 // EXTERNAL MODULE: ./src/x_ite/Base/X3DObject.js + 4 modules
-var X3DObject = __webpack_require__(6352);
+var X3DObject = __webpack_require__(1075);
 ;// ./src/x_ite/Configuration/ProfileInfo.js
 
 
@@ -84421,9 +84595,9 @@ const ProfileInfo_default_ = ProfileInfo;
 
 /* harmony default export */ const Configuration_ProfileInfo = (Namespace/* default */.A .add ("ProfileInfo", ProfileInfo_default_));
 // EXTERNAL MODULE: ./src/x_ite/Configuration/ComponentInfo.js
-var ComponentInfo = __webpack_require__(2819);
+var ComponentInfo = __webpack_require__(6063);
 // EXTERNAL MODULE: ./src/x_ite/Configuration/ComponentInfoArray.js
-var ComponentInfoArray = __webpack_require__(1218);
+var ComponentInfoArray = __webpack_require__(3814);
 ;// ./src/x_ite/Configuration/ProfileInfoArray.js
 
 
@@ -84978,7 +85152,7 @@ const FieldTypes_default_ = new Configuration_FieldTypesArray (Object .values (F
 
 /* harmony default export */ const FieldTypes = (Namespace/* default */.A .add ("FieldTypes", FieldTypes_default_));
 // EXTERNAL MODULE: ./src/x_ite/Parser/JSONParser.js
-var JSONParser = __webpack_require__(5252);
+var JSONParser = __webpack_require__(6992);
 ;// ./src/x_ite/Components/Core/X3DMetadataObject.js
 
 
@@ -85001,7 +85175,7 @@ const X3DMetadataObject_default_ = X3DMetadataObject;
 
 /* harmony default export */ const Core_X3DMetadataObject = (Namespace/* default */.A .add ("X3DMetadataObject", X3DMetadataObject_default_));
 // EXTERNAL MODULE: ./src/x_ite/LATEST_VERSION.js
-var LATEST_VERSION = __webpack_require__(6041);
+var LATEST_VERSION = __webpack_require__(7725);
 ;// ./src/x_ite/Components/Core/MetadataBoolean.js
 
 
@@ -85499,11 +85673,11 @@ const WorldInfo_default_ = WorldInfo;
 
 /* harmony default export */ const Core_WorldInfo = (Namespace/* default */.A .add ("WorldInfo", WorldInfo_default_));
 // EXTERNAL MODULE: ./src/x_ite/Components/Core/X3DBindableNode.js
-var X3DBindableNode = __webpack_require__(8312);
+var X3DBindableNode = __webpack_require__(1660);
 // EXTERNAL MODULE: ./src/x_ite/Components/Core/X3DImportedNodeProxy.js
-var X3DImportedNodeProxy = __webpack_require__(2327);
+var X3DImportedNodeProxy = __webpack_require__(4771);
 // EXTERNAL MODULE: ./src/x_ite/Components/Core/X3DPrototypeInstance.js
-var X3DPrototypeInstance = __webpack_require__(9498);
+var X3DPrototypeInstance = __webpack_require__(7806);
 ;// ./src/x_ite/Components/CoreComponent.js
 
 
@@ -85549,9 +85723,9 @@ const CoreComponent_default_ = {
 
 /* harmony default export */ const CoreComponent = (Namespace/* default */.A .add ("CoreComponent", CoreComponent_default_));
 // EXTERNAL MODULE: ./src/x_ite/Components/EnvironmentalEffects/Background.js
-var Background = __webpack_require__(6485);
+var Background = __webpack_require__(8697);
 // EXTERNAL MODULE: ./src/x_ite/Components/EnvironmentalEffects/Fog.js
-var Fog = __webpack_require__(8533);
+var Fog = __webpack_require__(6785);
 ;// ./src/x_ite/Components/EnvironmentalEffects/FogCoordinate.js
 
 
@@ -85640,7 +85814,7 @@ const FogCoordinate_default_ = FogCoordinate;
 
 /* harmony default export */ const EnvironmentalEffects_FogCoordinate = (Namespace/* default */.A .add ("FogCoordinate", FogCoordinate_default_));
 // EXTERNAL MODULE: ./src/x_ite/Components/EnvironmentalEffects/X3DFogObject.js
-var X3DFogObject = __webpack_require__(5623);
+var X3DFogObject = __webpack_require__(6971);
 ;// ./src/x_ite/Components/EnvironmentalEffects/LocalFog.js
 
 
@@ -85711,7 +85885,7 @@ const LocalFog_default_ = LocalFog;
 
 /* harmony default export */ const EnvironmentalEffects_LocalFog = (Namespace/* default */.A .add ("LocalFog", LocalFog_default_));
 // EXTERNAL MODULE: ./src/x_ite/Components/EnvironmentalEffects/X3DBackgroundNode.js
-var X3DBackgroundNode = __webpack_require__(4794);
+var X3DBackgroundNode = __webpack_require__(4046);
 ;// ./src/x_ite/Components/EnvironmentalEffects/TextureBackground.js
 
 
@@ -89050,7 +89224,7 @@ const Geometry3DComponent_default_ = {
 
 /* harmony default export */ const Geometry3DComponent = (Namespace/* default */.A .add ("Geometry3DComponent", Geometry3DComponent_default_));
 // EXTERNAL MODULE: ./src/x_ite/Components/Grouping/Group.js
-var Group = __webpack_require__(3029);
+var Group = __webpack_require__(5121);
 ;// ./src/x_ite/Components/Grouping/X3DTransformMatrix3DNode.js
 
 
@@ -90315,7 +90489,7 @@ const TextureCoordinateGenerator_default_ = TextureCoordinateGenerator;
 
 /* harmony default export */ const Texturing_TextureCoordinateGenerator = (Namespace/* default */.A .add ("TextureCoordinateGenerator", TextureCoordinateGenerator_default_));
 // EXTERNAL MODULE: ./src/standard/Math/Numbers/Color4.js
-var Color4 = __webpack_require__(8842);
+var Color4 = __webpack_require__(9550);
 ;// ./src/x_ite/Components/Grouping/StaticGroup.js
 
 
@@ -91260,7 +91434,7 @@ const GroupingComponent_default_ = {
 
 /* harmony default export */ const GroupingComponent = (Namespace/* default */.A .add ("GroupingComponent", GroupingComponent_default_));
 // EXTERNAL MODULE: ./src/x_ite/Components/Interpolation/X3DInterpolatorNode.js
-var X3DInterpolatorNode = __webpack_require__(6597);
+var X3DInterpolatorNode = __webpack_require__(7993);
 ;// ./src/x_ite/Components/Interpolation/ColorInterpolator.js
 
 
@@ -91486,7 +91660,7 @@ const CoordinateInterpolator2D_default_ = CoordinateInterpolator2D;
 
 /* harmony default export */ const Interpolation_CoordinateInterpolator2D = (Namespace/* default */.A .add ("CoordinateInterpolator2D", CoordinateInterpolator2D_default_));
 // EXTERNAL MODULE: ./src/x_ite/Components/Interpolation/EaseInEaseOut.js
-var EaseInEaseOut = __webpack_require__(1926);
+var EaseInEaseOut = __webpack_require__(4346);
 ;// ./src/x_ite/Components/Interpolation/NormalInterpolator.js
 
 
@@ -91583,9 +91757,9 @@ const NormalInterpolator_default_ = NormalInterpolator;
 
 /* harmony default export */ const Interpolation_NormalInterpolator = (Namespace/* default */.A .add ("NormalInterpolator", NormalInterpolator_default_));
 // EXTERNAL MODULE: ./src/x_ite/Components/Interpolation/OrientationInterpolator.js
-var OrientationInterpolator = __webpack_require__(6780);
+var OrientationInterpolator = __webpack_require__(5616);
 // EXTERNAL MODULE: ./src/x_ite/Components/Interpolation/PositionInterpolator.js
-var PositionInterpolator = __webpack_require__(6469);
+var PositionInterpolator = __webpack_require__(8889);
 ;// ./src/x_ite/Components/Interpolation/PositionInterpolator2D.js
 
 
@@ -92396,9 +92570,9 @@ const InterpolationComponent_default_ = {
 
 /* harmony default export */ const InterpolationComponent = (Namespace/* default */.A .add ("InterpolationComponent", InterpolationComponent_default_));
 // EXTERNAL MODULE: ./src/x_ite/Components/Layering/LayerSet.js
-var LayerSet = __webpack_require__(2189);
+var LayerSet = __webpack_require__(9745);
 // EXTERNAL MODULE: ./src/x_ite/Components/Layering/X3DLayerNode.js + 4 modules
-var X3DLayerNode = __webpack_require__(5325);
+var X3DLayerNode = __webpack_require__(3127);
 ;// ./src/x_ite/Components/LayeringComponent.js
 
 
@@ -92645,14 +92819,14 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, Lighting_X3
          if (browser .getBrowserOption ("Debug") && this .specularTexture .getSize () > 1)
             console .info ("Generating diffuse texture for EnvironmentLight.");
 
-         return this .cachedDiffuseTexture = browser .filterEnvironmentTexture ({
+         return browser .filterEnvironmentTexture ({
             name: "GeneratedDiffuseTexture",
             texture: this .specularTexture,
             distribution: Lighting_Distribution .LAMBERTIAN,
             sampleCount: 2048,
             roughness: [0],
             flipX: !this .traverseSpecular,
-            cachedNode: this .cachedDiffuseTexture,
+            cachedNode: this .generatedDiffuseTexture,
          });
       })();
 
@@ -92672,18 +92846,18 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, Lighting_X3
             levels    = this .specularTexture .getLevels (),
             roughness = Array .from ({ length: levels + 1 }, (_, i) => i / (levels || 1));
 
-         return this .cachedSpecularTexture = browser .filterEnvironmentTexture ({
+         return browser .filterEnvironmentTexture ({
             name: "GeneratedSpecularTexture",
             texture: this .specularTexture,
             distribution: Lighting_Distribution .GGX,
             sampleCount: 1024,
             roughness,
             flipX: !this .traverseSpecular,
-            cachedNode: this .cachedSpecularTexture,
+            cachedNode: this .generatedSpecularTexture,
          });
       })();
 
-      this .generatedSpecularTexture = (() =>
+      this .generatedSheenTexture = (() =>
       {
          if (!this .specularTexture)
             return;
@@ -92693,20 +92867,20 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, Lighting_X3
          const browser = this .getBrowser ();
 
          if (browser .getBrowserOption ("Debug") && this .specularTexture .getSize () > 1)
-            console .info ("Generating specular texture for EnvironmentLight.");
+            console .info ("Generating sheen texture for EnvironmentLight.");
 
          const
             levels    = this .specularTexture .getLevels (),
-            roughness = Array .from ({ length: levels + 1 }, (_, i) => i / (levels || 1));
+            roughness = Array .from ({ length: levels + 1 }, (_, i) => Math .max (i / (levels || 1), 2, 0.000001));
 
-         return this .cachedSpecularTexture = browser .filterEnvironmentTexture ({
-            name: "GeneratedSpecularTexture",
+         return browser .filterEnvironmentTexture ({
+            name: "GeneratedSheenTexture",
             texture: this .specularTexture,
-            distribution: Lighting_Distribution .GGX,
-            sampleCount: 1024,
-            roughness,
+            distribution: Lighting_Distribution .CHARLIE,
+            sampleCount: 64,
+            roughness: roughness,
             flipX: !this .traverseSpecular,
-            cachedNode: this .cachedSpecularTexture,
+            cachedNode: this .generatedSheenTexture,
          });
       })();
 
@@ -93860,9 +94034,9 @@ const LOD_default_ = LOD;
 
 /* harmony default export */ const Navigation_LOD = (Namespace/* default */.A .add ("LOD", LOD_default_));
 // EXTERNAL MODULE: ./src/x_ite/Components/Navigation/NavigationInfo.js
-var NavigationInfo = __webpack_require__(1975);
+var NavigationInfo = __webpack_require__(5075);
 // EXTERNAL MODULE: ./src/x_ite/Components/Navigation/Viewpoint.js
-var Viewpoint = __webpack_require__(4548);
+var Viewpoint = __webpack_require__(8544);
 ;// ./src/x_ite/Components/Navigation/ViewpointGroup.js
 
 
@@ -94765,7 +94939,7 @@ const X3DDragSensorNode_default_ = X3DDragSensorNode;
 
 /* harmony default export */ const PointingDeviceSensor_X3DDragSensorNode = (Namespace/* default */.A .add ("X3DDragSensorNode", X3DDragSensorNode_default_));
 // EXTERNAL MODULE: ./src/standard/Math/Geometry/Plane3.js
-var Plane3 = __webpack_require__(3088);
+var Plane3 = __webpack_require__(9716);
 ;// ./src/standard/Math/Geometry/Cylinder3.js
 
 
@@ -98107,7 +98281,7 @@ const ShapeComponent_default_ = {
 
 /* harmony default export */ const ShapeComponent = (Namespace/* default */.A .add ("ShapeComponent", ShapeComponent_default_));
 // EXTERNAL MODULE: ./src/x_ite/Components/Time/X3DTimeDependentNode.js
-var X3DTimeDependentNode = __webpack_require__(2897);
+var X3DTimeDependentNode = __webpack_require__(493);
 ;// ./src/x_ite/Components/Sound/X3DSoundProcessingNode.js
 
 
@@ -101643,7 +101817,7 @@ const SoundComponent_default_ = {
 
 /* harmony default export */ const SoundComponent = (Namespace/* default */.A .add ("SoundComponent", SoundComponent_default_));
 // EXTERNAL MODULE: ./src/x_ite/Components/Texturing/X3DTexture2DNode.js
-var X3DTexture2DNode = __webpack_require__(8273);
+var X3DTexture2DNode = __webpack_require__(8389);
 ;// ./src/x_ite/Browser/Texturing/GifMedia.js
 function GifMedia (gif, movieTexture)
 {
@@ -101827,9 +102001,9 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (Namespace/* default */.A .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(7678)["default"];
-/* provided dependency */ var SuperGif = __webpack_require__(5408);
-/* provided dependency */ var APNG = __webpack_require__(2538);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(5758)["default"];
+/* provided dependency */ var SuperGif = __webpack_require__(5212);
+/* provided dependency */ var APNG = __webpack_require__(8550);
 
 
 
@@ -102130,7 +102304,7 @@ const MovieTexture_default_ = MovieTexture;
 
 /* harmony default export */ const Texturing_MovieTexture = (Namespace/* default */.A .add ("MovieTexture", MovieTexture_default_));
 // EXTERNAL MODULE: ./src/x_ite/Components/Texturing/X3DTextureNode.js
-var X3DTextureNode = __webpack_require__(4687);
+var X3DTextureNode = __webpack_require__(3899);
 ;// ./src/x_ite/Components/Texturing/MultiTexture.js
 
 
@@ -102671,7 +102845,7 @@ const PixelTexture_default_ = PixelTexture;
 
 /* harmony default export */ const Texturing_PixelTexture = (Namespace/* default */.A .add ("PixelTexture", PixelTexture_default_));
 // EXTERNAL MODULE: ./src/x_ite/Components/Texturing/X3DSingleTextureNode.js
-var X3DSingleTextureNode = __webpack_require__(9723);
+var X3DSingleTextureNode = __webpack_require__(5655);
 ;// ./src/x_ite/Components/TexturingComponent.js
 
 
@@ -102795,7 +102969,7 @@ const Components_default_ = Components;
 
 /* harmony default export */ const x_ite_Components = (Namespace/* default */.A .add ("Components", Components_default_));
 ;// ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(7678)["default"];
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(5758)["default"];
 
 
 
@@ -103918,35 +104092,35 @@ const X3DBrowser_default_ = X3DBrowser;
 
 /* harmony default export */ const Browser_X3DBrowser = (Namespace/* default */.A .add ("X3DBrowser", X3DBrowser_default_));
 // EXTERNAL MODULE: ./src/x_ite/Configuration/UnitInfo.js
-var UnitInfo = __webpack_require__(928);
+var UnitInfo = __webpack_require__(1044);
 // EXTERNAL MODULE: ./src/x_ite/Configuration/UnitInfoArray.js
-var UnitInfoArray = __webpack_require__(1559);
+var UnitInfoArray = __webpack_require__(819);
 // EXTERNAL MODULE: ./src/x_ite/Execution/X3DExecutionContext.js
-var X3DExecutionContext = __webpack_require__(2258);
+var X3DExecutionContext = __webpack_require__(6686);
 // EXTERNAL MODULE: ./src/x_ite/Execution/NamedNodesArray.js
-var NamedNodesArray = __webpack_require__(1015);
+var NamedNodesArray = __webpack_require__(7795);
 // EXTERNAL MODULE: ./src/x_ite/Execution/ImportedNodesArray.js
-var ImportedNodesArray = __webpack_require__(6960);
+var ImportedNodesArray = __webpack_require__(7580);
 // EXTERNAL MODULE: ./src/x_ite/Execution/X3DImportedNode.js
-var X3DImportedNode = __webpack_require__(3367);
+var X3DImportedNode = __webpack_require__(7411);
 // EXTERNAL MODULE: ./src/x_ite/Execution/ExportedNodesArray.js
-var ExportedNodesArray = __webpack_require__(6235);
+var ExportedNodesArray = __webpack_require__(5383);
 // EXTERNAL MODULE: ./src/x_ite/Execution/X3DExportedNode.js
-var X3DExportedNode = __webpack_require__(3020);
+var X3DExportedNode = __webpack_require__(9448);
 // EXTERNAL MODULE: ./src/x_ite/Prototype/ExternProtoDeclarationArray.js
-var ExternProtoDeclarationArray = __webpack_require__(9393);
+var ExternProtoDeclarationArray = __webpack_require__(9661);
 // EXTERNAL MODULE: ./src/x_ite/Prototype/ProtoDeclarationArray.js
-var ProtoDeclarationArray = __webpack_require__(3675);
+var ProtoDeclarationArray = __webpack_require__(1031);
 // EXTERNAL MODULE: ./src/x_ite/Prototype/X3DExternProtoDeclaration.js
-var X3DExternProtoDeclaration = __webpack_require__(2763);
+var X3DExternProtoDeclaration = __webpack_require__(1327);
 // EXTERNAL MODULE: ./src/x_ite/Prototype/X3DProtoDeclaration.js
-var X3DProtoDeclaration = __webpack_require__(8361);
+var X3DProtoDeclaration = __webpack_require__(2493);
 // EXTERNAL MODULE: ./src/x_ite/Prototype/X3DProtoDeclarationNode.js
-var X3DProtoDeclarationNode = __webpack_require__(6221);
+var X3DProtoDeclarationNode = __webpack_require__(2977);
 // EXTERNAL MODULE: ./src/x_ite/Routing/RouteArray.js
-var RouteArray = __webpack_require__(3296);
+var RouteArray = __webpack_require__(7548);
 // EXTERNAL MODULE: ./src/x_ite/Routing/X3DRoute.js
-var X3DRoute = __webpack_require__(8178);
+var X3DRoute = __webpack_require__(6886);
 ;// ./src/x_ite/SUPPORTED_VERSIONS.js
 // All supported X3D specification version:
 
@@ -103963,7 +104137,7 @@ const SUPPORTED_VERSIONS_default_ = [
 
 /* harmony default export */ const SUPPORTED_VERSIONS = (Namespace/* default */.A .add ("SUPPORTED_VERSIONS", SUPPORTED_VERSIONS_default_));
 ;// ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(7678)["default"];
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(5758)["default"];
 
 
 class X3DCanvasElement extends HTMLElement
@@ -104127,8 +104301,8 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (Namespace/* default */.A .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(7678)["default"];
-/* provided dependency */ var pako = __webpack_require__(5797);
+/* provided dependency */ var jquery_$ = __webpack_require__(5758)["default"];
+/* provided dependency */ var pako = __webpack_require__(257);
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -104192,13 +104366,13 @@ const jquery_default_ = jquery_$;
 
 /* harmony default export */ const jquery = (Namespace/* default */.A .add ("jquery", jquery_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess = __webpack_require__(1242);
+/* provided dependency */ var libtess = __webpack_require__(5254);
 const libtess_default_ = libtess;
 ;
 
 /* harmony default export */ const lib_libtess = (Namespace/* default */.A .add ("libtess", libtess_default_));
 ;// ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(7678)["default"];
+/* provided dependency */ var X3D_$ = __webpack_require__(5758)["default"];
 
 
 
@@ -104364,7 +104538,7 @@ Namespace/* default */.A, Namespace/* default */.A .Fields,
 
 // Assign X3D to global namespace.
 
-window [Symbol .for ("X_ITE.X3D-14.0.2")] = x_ite_X3D;
+window [Symbol .for ("X_ITE.X3D-14.0.3")] = x_ite_X3D;
 
 customElements .define ("x3d-canvas", x_ite_X3DCanvasElement);
 
