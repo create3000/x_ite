@@ -3,6 +3,8 @@ import X3DOptimizer from "./X3DOptimizer.js";
 import Fields       from "../Fields.js";
 import X3DConstants from "../Base/X3DConstants.js";
 import URLs         from "../Browser/Networking/URLs.js";
+import Layer        from "../Components/Layering/Layer.js";
+import TraverseType from "../Rendering/TraverseType.js";
 import Algorithm    from "../../standard/Math/Algorithm.js";
 import Vector2      from "../../standard/Math/Numbers/Vector2.js";
 import Vector3      from "../../standard/Math/Numbers/Vector3.js";
@@ -165,6 +167,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .skinsArray      (glTF .skins, glTF .nodes);
       this .nodesArray      (glTF .nodes);
       this .scenesArray     (glTF, glTF .scenes, glTF .scene);
+      this .skinsBBox       ();
       this .animationsArray (glTF .animations);
 
       this .viewpointsCenterOfRotation (scene);
@@ -2344,32 +2347,6 @@ function eventsProcessed ()
          humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
 
          humanoidNode ._skin .push (... shapeNodes);
-
-         // Create better bbox in case of mesh quantization is used.
-
-         if (!this .vectorValue (node .matrix, matrix))
-         {
-            this .vectorValue (node .translation, translation .set (0, 0, 0));
-            this .vectorValue (node .rotation, quaternion .set (0, 0, 0, 1));
-            rotation .setQuaternion (quaternion);
-            this .vectorValue (node .scale, scale .set (1, 1, 1));
-            matrix .set (translation, rotation, scale);
-         }
-
-         if (matrix .equals (Matrix4 .IDENTITY))
-            return;
-
-         const
-            points     = Array .from (humanoidNode ._skinCoord .point, point => matrix .multVecMatrix (point .getValue () .copy ())),
-            bbox       = Box3 .fromPoints (points),
-            bboxSize   = bbox .size,
-            bboxCenter = bbox .center;
-
-         for (const shapeNode of shapeNodes)
-         {
-            shapeNode ._bboxSize   = bboxSize;
-            shapeNode ._bboxCenter = bboxCenter;
-         }
       };
    })(),
    nodeExtensions (node)
@@ -2501,6 +2478,51 @@ function eventsProcessed ()
          matrices .push (new Matrix4 (... array .subarray (i, i + 16)));
 
       return matrices;
+   },
+   skinsBBox ()
+   {
+      this .skins .forEach (skin => this .skinBBox (skin .humanoidNode))
+   },
+   skinBBox (humanoidNode)
+   {
+      if (!humanoidNode ._skinCoord .getValue ())
+         return;
+
+      const
+         matrix    = new Matrix4 (),
+         layerNode = new Layer (this .getScene ());
+
+      layerNode .setup ();
+
+      humanoidNode .traverse (TraverseType .DISPLAY, layerNode);
+
+      const
+         skinCoord  = humanoidNode ._skinCoord,
+         points     = Array .from (skinCoord .point, p => p .getValue () .copy ()),
+         skinPoints = Array .from (points, p => p .copy ());
+
+      for (const [j, jointNode] of humanoidNode ._joints .entries ())
+      {
+         const skinCoordWeight = jointNode .skinCoordWeight;
+
+         matrix .set (humanoidNode ._jointBindingPositions [j] .getValue (), humanoidNode ._jointBindingRotations [j] .getValue (), humanoidNode ._jointBindingScales [j] .getValue ()) .multRight (jointNode .getValue () .getModelViewMatrix ());
+
+         for (const [c, index] of jointNode .skinCoordIndex .entries ())
+         {
+            skinPoints [index] ?.add (matrix .multVecMatrix (points [index] .copy ()) .subtract (points [index]) .multiply (skinCoordWeight [c]));
+         }
+      }
+
+      const
+         bbox       = Box3 .fromPoints (skinPoints),
+         bboxSize   = bbox .size,
+         bboxCenter = bbox .center;
+
+      for (const shapeNode of humanoidNode ._skin)
+      {
+         shapeNode .bboxSize   = bboxSize;
+         shapeNode .bboxCenter = bboxCenter;
+      }
    },
    scenesArray (glTF, scenes, sceneNumber = 0)
    {
