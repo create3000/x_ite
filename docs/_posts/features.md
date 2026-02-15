@@ -7,25 +7,20 @@ tags: [Features, glTF]
 ---
 ## Overview
 
-![JavaScript Logo](/assets/img/features/javascript.png){: .left .w-25 }
 X_ITE is a fast, small, and feature-rich JavaScript library and VRML viewer for displaying and executing X3D files, and other formats like VRML, glTF and [more](/x_ite/#supported-file-formats). It makes things like WebGL programming, document access and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers.
 
-X_ITE is freely downloadable for any usage and licensed under the MIT license. You can use them for commercial and noncommercial purposes.
-
-Runs completely standalone, ie. there are no other library dependencies. You just need to include *x_ite.js* into your HTML page.
-
-Competitive performance for most frequently used functions and nodes. All function within X_ITE are optimized to give your the best performance that JavaScript can offer.
-
-![Terser Logo](/assets/img/features/terser.png){: .left .w-25 }
-The X_ITE package is optimized in size with Terser to achieve the smallest size we can reach. **X_ITE core module has only {{ site.x_ite_compressed_size }}KB in size minified and compressed**, all other modules are loaded on demand.
-
-X_ITE is designed for optimal performance with event driven programming. The flow of the program is determined by events such as user actions (mouse clicks, key presses), sensor outputs, or messages from other scripts.
+- X_ITE is freely downloadable for any usage and licensed under the MIT license. You can use them for commercial and noncommercial purposes.
+- Runs completely standalone, ie. there are no other library dependencies. You just need to include *x_ite.js* into your HTML page.
+- Competitive performance for most frequently used functions and nodes. All function within X_ITE are optimized to give your the best performance that JavaScript can offer.
+- The X_ITE package is optimized in size with Terser to achieve the smallest size we can reach. **X_ITE core module has only {{ site.x_ite_compressed_size }}KB in size minified and compressed**, all other modules are loaded on demand.
+- X_ITE is designed for optimal performance with event driven programming. The flow of the program is determined by events such as user actions (mouse clicks, key presses), sensor outputs, or messages from other scripts.
 
 All code is held by [CREATE3000](https://github.com/create3000) and all contributors are selected and all contributions become verified.
 
 ## Core Features
 
-![WebGL Logo](/assets/img/features/webgl.png){: .left .w-25 }
+![WebGL Logo](/assets/img/features/webgl.png){: .normal }
+
 Although WebGL acts behind the scenes you do not need any special knowledge about that. There are many of ready to use [X3D nodes](/x_ite/supported-nodes/) that will make life easier. X_ITE provides comprehensive X3D support, which is complete and standard compliant.
 
 X_ITE comes with a high performance JavaScript rendering engine, ie. developers may be completely free of worry about performance optimizations in their code.
@@ -37,7 +32,6 @@ X3D comes with a fixed set of objects called *nodes* that will cover most of you
 >**Tip:** X_ITE works seamlessly with our editor [Sunrize](/sunrize/), because Sunrize is based on X_ITE. This means that everything you create in Sunrize will look exactly the same in X_ITE, including scripts and shaders.
 {: .prompt-tip }
 
-![X3D Logo](/assets/img/features/x3d.png){: .left .w-25 }
 There is excellent built-in support for Gouraud and Phong shading, as well as PBR shading. Gouraud and Phong shading is the most popular shading algorithm in use today. These methods were developed by Henri Gouraud and Phong Bui-Toung. If the built-in shading methods are not enough for you, there is support for [custom shaders](/x_ite/custom-shaders/). Don't worry about *uniform variables, shader compilation and texture loading* The [ComposedShader](/x_ite/components/shaders/composedshader/) node makes it easy to write your own shader even if you are a beginner, but there is also everything for professionals. There is a standardized shader API similar to GLSL that makes it easy to convert your existing shaders. The built-in shaders support eight simultaneous local lights for each [Shape](/x_ite/components/shape/shape/) node, color nodes attached to a geometry are supported. There is smooth texture mapping adjustable with [TextureProperties](/x_ite/components/texturing/textureproperties/) node and normals can be automatically generated depending on *creaseAngle* if you want smooth shading.
 
 Complex routing graphs can be created. X3D's event model allows the creation of connections between fields (routes), and events are propagated along these connections. The behavior graph collects all these field connections. It can be changed dynamically by rerouting, adding, or disconnecting connections. Events are injected into the system and propagated through the behavior graph in a well-defined order.
@@ -56,12 +50,13 @@ If this is not enough for you have a look at [Supported Nodes](/x_ite/supported-
 
 X_ITE provides meaningful error messages for syntax and scripting problems if you use a [Script](/x_ite/components/scripting/script/) node. The output goes to the developer console of your browser.
 
-![npm Logo](/assets/img/features/npm.png){: .left .w-25 }
 We use npm's package management now, npm is **the** package manager for JavaScript. That makes it easy for us to keep the code base up to date.
 
 We don't uses browser-sniffing. We keep the code consistent that makes our life easier.
 
 ## glTF Support
+
+![glTF Logo](/assets/img/features/glTF.png){: .normal }
 
 In the X_ITE X3D Browser, glTF support is very solid and integrated, allowing authors to load and render glTF 2.0 (including .gltf and .glb) assets alongside X3D and VRML content. Internally X_ITE converts imported glTF models into X3D scene graph nodes, so they become part of the interactive X3D scene and can be manipulated just like native X3D content. Recent versions have even expanded this support to include a wide range of glTF material extensions, automatically translating PBR material definitions and KHR_* extensions into corresponding X3D material extension nodes, which enhances visual fidelity and compatibility with modern glTF assets.
 
