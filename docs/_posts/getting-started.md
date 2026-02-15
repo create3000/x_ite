@@ -76,15 +76,6 @@ That's great! Sponsorship is neither expected nor required. Feel free to [share 
 
 That's wonderful! Your support is important to keep X_ITE maintained, independent, and open source under MIT License. Please consider a [Patreon sponsorship](https://patreon.com/X_ITE).
 
-### Special Thanks to All Active Supporters
-
-[![CRISE](/assets/sponsors/crise.png){: .normal }](https://vr-crisis.com){: title="CRISE" }
-[![John Carlson](/assets/sponsors/john-carlson.png){: .normal }](mailto:yottzumm@gmail.com){: title="John Carlson" }
-[![N Polys](/assets/sponsors/n-polys.png){: .normal }](mailto:nicholas.polys@gmail.com){: title="N Polys" }
-[![Sandy Ressler](/assets/sponsors/sandy-ressler.png){: .normal }](https://acm.org){: title="Sandy Ressler" }
-[![UND DREAM Lab](/assets/sponsors/und-dream-lab.png){: .normal }](https://dream.crc.und.edu){: title="UND DREAM Lab" }
-{: .sponsors }
-
 ## X3D Examples
 
 <script type="module" src="assets/js/examples.js"></script>
