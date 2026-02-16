@@ -2210,12 +2210,13 @@ function eventsProcessed ()
       {
          const
             scene         = this .getScene (),
-            transformNode = node .transformNode,
+            skin          = this .skins [node .skin],
+            transformNode = skin ?.childNode ?? node .transformNode,
             name          = this .sanitizeName (node .name);
 
          // Name
 
-         if (name)
+         if (name && !skin)
          {
             scene .addNamedNode (scene .getUniqueName (name), transformNode);
 
@@ -2225,32 +2226,34 @@ function eventsProcessed ()
 
          // Set transformation matrix.
 
-         if (this .vectorValue (node .matrix, matrix))
+         if (!skin)
          {
-            matrix .get (translation, rotation, scale, scaleOrientation);
+            if (this .vectorValue (node .matrix, matrix))
+            {
+               matrix .get (translation, rotation, scale, scaleOrientation);
 
-            transformNode ._translation      = translation;
-            transformNode ._rotation         = rotation;
-            transformNode ._scale            = scale;
-            transformNode ._scaleOrientation = scaleOrientation;
+               transformNode ._translation      = translation;
+               transformNode ._rotation         = rotation;
+               transformNode ._scale            = scale;
+               transformNode ._scaleOrientation = scaleOrientation;
+            }
+            else
+            {
+               if (this .vectorValue (node .translation, translation))
+                  transformNode ._translation = translation;
+
+               if (this .vectorValue (node .rotation, quaternion))
+                  transformNode ._rotation = rotation .setQuaternion (quaternion);
+
+               if (this .vectorValue (node .scale, scale))
+                  transformNode ._scale = scale;
+            }
          }
-         else
-         {
-            if (this .vectorValue (node .translation, translation))
-               transformNode ._translation = translation;
 
-            if (this .vectorValue (node .rotation, quaternion))
-               transformNode ._rotation = rotation .setQuaternion (quaternion);
-
-            if (this .vectorValue (node .scale, scale))
-               transformNode ._scale = scale;
-         }
-
-         // Add mesh.
+         // Get mesh.
 
          const
             EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing,
-            skin                    = this .skins [node .skin],
             shapeNodes              = this .meshObject (this .meshes [node .mesh], skin, EXT_mesh_gpu_instancing);
 
          // Add camera.
@@ -2275,7 +2278,7 @@ function eventsProcessed ()
             children = children .map (childNode =>
             {
                if (childNode ._children .length &&
-                   childNode ._children [0] .getNodeType () .at (-1) === X3DConstants .HAnimHumanoid)
+                  childNode ._children [0] .getNodeType () .at (-1) === X3DConstants .HAnimHumanoid)
                {
                   const segmentNode = scene .createNode ("HAnimSegment", false);
 
@@ -2294,29 +2297,29 @@ function eventsProcessed ()
 
          transformNode ._children .push (... children);
 
-         // Add Shape nodes.
+         if (skin)
+         {
+            skin .name ??= node .name;
 
-         if (shapeNodes && !skin)
-            transformNode ._children .push (... shapeNodes);
+            const humanoidNode = skin .humanoidNode;
 
-         transformNode .setup ();
+            if (!shapeNodes ?.length)
+               return;
 
-         // Skin
+            humanoidNode ._skinNormal = shapeNodes [0] ._geometry .normal;
+            humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
 
-         if (!skin)
-            return;
+            humanoidNode ._skin .push (... shapeNodes);
+         }
+         else
+         {
+            // Add Shape nodes.
 
-         skin .name ??= node .name;
+            if (shapeNodes)
+               transformNode ._children .push (... shapeNodes);
 
-         const humanoidNode = skin .humanoidNode;
-
-         if (!shapeNodes ?.length)
-            return;
-
-         humanoidNode ._skinNormal = shapeNodes [0] ._geometry .normal;
-         humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
-
-         humanoidNode ._skin .push (... shapeNodes);
+            transformNode .setup ();
+         }
       };
    })(),
    nodeExtensions (node)
