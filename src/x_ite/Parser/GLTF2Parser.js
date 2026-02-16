@@ -2381,7 +2381,7 @@ function eventsProcessed ()
          }
       }
    },
-   nodeChildrenArrayO (children)
+   nodeChildrenArray (children)
    {
       if (!(children instanceof Array))
          return [ ];
