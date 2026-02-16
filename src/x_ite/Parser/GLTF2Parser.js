@@ -173,7 +173,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .animationsArray (glTF .animations);
 
       this .viewpointsCenterOfRotation (scene);
-      // this .optimizeSceneGraph (scene .getRootNodes ());
+      this .optimizeSceneGraph (scene .getRootNodes ());
 
       this .exportGroup ("Viewpoints",        this .cameras);
       this .exportGroup ("EnvironmentLights", this .envLights);
@@ -2187,19 +2187,13 @@ function eventsProcessed ()
 
       const
          skeleton     = skin .skeleton .map (index => this .nodes [index]) .filter (node => node),
-         humanoidNode = skin .humanoidNode;
+         humanoidNode = skin .humanoidNode,
+         childNode    = skin .childNode;
 
       for (const node of skeleton)
       {
          node .humanoidNode = humanoidNode;
-         node .childNode    = humanoidNode;
-      }
-
-      // If a skeleton is used multiple times
-      if (skin .skeleton .some (index => this .skeletons .get (index) .uses > 1))
-      {
-         node .humanoidNode = humanoidNode;
-         node .childNode    = humanoidNode;
+         node .childNode    = childNode;
       }
    },
    nodeChildren: (() =>
@@ -2280,7 +2274,8 @@ function eventsProcessed ()
 
             children = children .map (childNode =>
             {
-               if (childNode .getType () .at (-1) === X3DConstants .HAnimHumanoid)
+               if (childNode ._children .length &&
+                   childNode ._children [0] .getNodeType () .at (-1) === X3DConstants .HAnimHumanoid)
                {
                   const segmentNode = scene .createNode ("HAnimSegment", false);
 
@@ -2363,6 +2358,7 @@ function eventsProcessed ()
 
       const nodes = Array .from (new Set (children
          .map (index => this .nodes [index])
+         .filter (node => node ?.skin === undefined)
          .map (node => node ?.childNode)
          .filter (node => node)
       ));
@@ -2405,22 +2401,29 @@ function eventsProcessed ()
 
       const coords = this .skeletons .getOrInsert (skin .skeleton [0], { });
 
-      coords .uses             = (coords .uses ??= 0) + 1;
+      coords .childNode      ??= scene .createNode ("Transform",  false);
       coords .normalNode     ??= scene .createNode ("Normal",     false);
       coords .coordinateNode ??= scene .createNode ("Coordinate", false);
 
+      skin .childNode                  = coords .childNode;
+      skin .normalNode                 = coords .normalNode;
+      skin .coordinateNode             = coords .coordinateNode;
       skin .humanoidNode               = scene .createNode ("HAnimHumanoid",          false);
       skin .textureCoordinateNode      = scene .createNode ("TextureCoordinate",      false);
       skin .multiTextureCoordinateNode = scene .createNode ("MultiTextureCoordinate", false);
-      skin .normalNode                 = coords .normalNode;
-      skin .coordinateNode             = coords .coordinateNode;
 
+      skin .childNode ._children .push (skin .humanoidNode);
       skin .textureCoordinateNode ._mapping = "TEXCOORD_0";
+
+      if (skin .childNode ._children .length === 1)
+      {
+         skin .childNode      .setup ();
+         skin .normalNode     .setup ();
+         skin .coordinateNode .setup ();
+      }
 
       skin .textureCoordinateNode      .setup ();
       skin .multiTextureCoordinateNode .setup ();
-      skin .normalNode                 .setup ();
-      skin .coordinateNode             .setup ();
    },
    jointsArray (joints, add)
    {
