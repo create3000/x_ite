@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.1//EN" "https://www.web3d.org/specifications/x3d-4.1.dtd">
+<X3D profile='Interchange' version='4.1' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.1.xsd'>
+  <head>
+    <component name='EnvironmentalSensor' level='3'/>
+    <component name='Geometry2D' level='2'/>
+    <component name='Layering' level='1'/>
+    <component name='Scripting' level='1'/>
+    <component name='Text' level='2'/>
+    <component name='X_ITE' level='1'/>
+    <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='created' content='Mon, 16 Feb 2026 21:47:35 GMT'/>
+    <meta name='modified' content='Mon, 16 Feb 2026 22:46:37 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V2.0.3, https://create3000.github.io/sunrize/'/>
+  </head>
+  <Scene>
+    <ProtoDeclare name='WaveDots'>
+      <ProtoInterface>
+        <field accessType='inputOutput' type='SFNode' name='appearance'/>
+      </ProtoInterface>
+      <ProtoBody>
+        <Group>
+          <InstancedShape DEF='_2'>
+            <IS>
+              <connect nodeField='appearance' protoField='appearance'/>
+            </IS>
+            <Rectangle2D
+                size='1 1'/>
+          </InstancedShape>
+          <ProximitySensor DEF='_3'
+              size='-1 -1 -1'/>
+        </Group>
+        <TimeSensor DEF='_4'
+            loop='true'/>
+        <Script DEF='DotsScript'>
+          <field accessType='inputOutput' type='SFTime' name='time' value='1771279968.488'/>
+          <field accessType='inputOutput' type='SFRotation' name='rotation' value='-0.122064293097597 -0.987011974025243 -0.104439798359519 81.8422039053151'/>
+          <field accessType='inputOutput' type='SFInt32' name='xDimension' value='50'/>
+          <field accessType='inputOutput' type='SFInt32' name='zDimension' value='50'/>
+          <field accessType='inputOutput' type='SFFloat' name='xSpacing' value='2'/>
+          <field accessType='inputOutput' type='SFFloat' name='zSpacing' value='2'/>
+          <field accessType='initializeOnly' type='SFNode' name='shape'>
+            <InstancedShape USE='_2'/>
+          </field>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+   eventsProcessed ();
+}
+
+function eventsProcessed ()
+{
+   shape .translations .length = 0;
+
+   for (let z = 0; z < zDimension; ++ z)
+   {
+      for (let x = 0; x < xDimension; ++ x)
+      {
+         const y = Math .sin (x / xDimension * Math .PI + time) * 10 + Math .cos (z / zDimension * Math .PI + time) * 10;
+
+         shape .translations .push (new SFVec3f (x * xSpacing, y, z * zSpacing));
+      }
+   }
+
+   shape .rotations [0] = rotation;
+}
+]]>
+        </Script>
+        <ROUTE fromNode='_3' fromField='orientation_changed' toNode='DotsScript' toField='set_rotation'/>
+        <ROUTE fromNode='_4' fromField='time' toNode='DotsScript' toField='set_time'/>
+      </ProtoBody>
+    </ProtoDeclare>
+    <ProtoDeclare name='SphereDots'>
+      <ProtoInterface>
+        <field accessType='inputOutput' type='SFNode' name='appearance'/>
+      </ProtoInterface>
+      <ProtoBody>
+        <Transform DEF='_5'>
+          <InstancedShape DEF='_2'>
+            <IS>
+              <connect nodeField='appearance' protoField='appearance'/>
+            </IS>
+            <Rectangle2D
+                size='10 10'/>
+          </InstancedShape>
+          <ProximitySensor DEF='_3'
+              size='-1 -1 -1'/>
+        </Transform>
+        <TimeSensor DEF='_4'
+            cycleInterval='50'
+            loop='true'/>
+        <OrientationInterpolator DEF='_1'
+            key='0, 0.25, 0.5, 0.75, 1'
+            keyValue='0 1 0 0, 0 1 0 90, 0 1 0 180, 0 1 0 270, 0 1 0 0'/>
+        <Script DEF='DotsScript'>
+          <field accessType='inputOutput' type='SFRotation' name='rotation' value='-0.122064293097597 -0.987011974025243 -0.104439798359519 81.8422039053151'/>
+          <field accessType='inputOutput' type='SFInt32' name='numPoints' value='100'/>
+          <field accessType='inputOutput' type='SFFloat' name='radius' value='100'/>
+          <field accessType='initializeOnly' type='SFNode' name='shape'>
+            <InstancedShape USE='_2'/>
+          </field>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+   shape .translations .length = 0;
+
+   for (let n = 0; n < numPoints; ++ n)
+   {
+      shape .translations .push (new SFVec3f (rand (), rand (), rand ()) .normalize () .multiply (radius));
+   }
+}
+
+function eventsProcessed ()
+{
+   shape .rotations [0] = rotation;
+}
+
+function rand ()
+{
+   return Math .random () * 2 - 1;
+}
+]]>
+        </Script>
+        <ROUTE fromNode='_3' fromField='orientation_changed' toNode='DotsScript' toField='set_rotation'/>
+        <ROUTE fromNode='_4' fromField='fraction_changed' toNode='_1' toField='set_fraction'/>
+        <ROUTE fromNode='_1' fromField='value_changed' toNode='_5' toField='set_rotation'/>
+      </ProtoBody>
+    </ProtoDeclare>
+    <WorldInfo>
+      <MetadataSet DEF='Sunrize' containerField='metadata'
+          name='Sunrize'
+          reference='https://create3000.github.io/sunrize/'>
+        <MetadataSet DEF='GridTool'
+            name='GridTool'
+            reference='https://create3000.github.io/sunrize/'>
+          <MetadataBoolean DEF='visible'
+              name='visible'
+              reference='https://create3000.github.io/sunrize/'
+              value='true'/>
+        </MetadataSet>
+        <MetadataSet DEF='BrowserFrame'
+            name='BrowserFrame'
+            reference='https://create3000.github.io/sunrize/'>
+          <MetadataBoolean DEF='fixedSize'
+              name='fixedSize'
+              reference='https://create3000.github.io/sunrize/'
+              value='true'/>
+          <MetadataDouble DEF='aspectRatio'
+              name='aspectRatio'
+              reference='https://create3000.github.io/sunrize/'
+              value='16, 5'/>
+          <MetadataString DEF='backgroundColor'
+              name='backgroundColor'
+              reference='https://create3000.github.io/sunrize/'
+              value='""'/>
+        </MetadataSet>
+      </MetadataSet>
+    </WorldInfo>
+    <LayerSet
+        activeLayer='-1'
+        order='1, 2, 3'>
+      <Layer DEF='Background'>
+        <Background DEF='Dark_3'/>
+      </Layer>
+      <Layer DEF='Dots'>
+        <Viewpoint
+            description='Initial View'
+            position='14.79146 -7.528232 -5.746468'
+            orientation='0.0166324608058983 -0.998177702773089 0.0580054733122635 148.055974954014'
+            centerOfRotation='49 0 49'/>
+        <ProtoInstance name='WaveDots'>
+          <fieldValue name='appearance'>
+            <Appearance DEF='_2'>
+              <UnlitMaterial
+                  emissiveColor='0.9019608 0.5686275 0.2196078'>
+                <ImageTexture containerField='emissiveTexture'
+                    url='"dot.png"'/>
+              </UnlitMaterial>
+              <BlendMode
+                  destinationColorFactor='ONE'/>
+            </Appearance>
+          </fieldValue>
+        </ProtoInstance>
+        <Transform
+            translation='50.06304 -0.008614063 51.14143'>
+          <ProtoInstance name='SphereDots'>
+            <fieldValue name='appearance'>
+              <Appearance USE='_2'/>
+            </fieldValue>
+          </ProtoInstance>
+        </Transform>
+      </Layer>
+      <Layer DEF='Text'>
+        <FontLibrary DEF='Neuropol'
+            family='Neuropol'
+            url='"Neuropol.otf"'/>
+        <Transform DEF='Rectangle2D_1'
+            translation='0 0.04948798 0'
+            scale='32 1.2 1'>
+          <Shape DEF='Light_3'>
+            <Appearance>
+              <UnlitMaterial
+                  transparency='0.7960313'/>
+            </Appearance>
+            <Rectangle2D/>
+          </Shape>
+        </Transform>
+        <Transform DEF='Text_1'
+            translation='-9 0 3'
+            scale='0.8288495 0.8288495 0.8288495'
+            center='5.160146 0 0'>
+          <Shape>
+            <Appearance>
+              <UnlitMaterial/>
+            </Appearance>
+            <Text DEF='_5'
+                string='"X_ITE v14.0.3"'
+                solid='true'>
+              <FontStyle
+                  family='"Neuropol", "SANS"'
+                  size='1.4'
+                  justify='"BEGIN", "MIDDLE"'/>
+            </Text>
+          </Shape>
+          <Script DEF='X_ITE'>
+            <field accessType='outputOnly' type='MFString' name='string_changed'/>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+   string_changed = new MFString (Browser .name + " v" + Browser .version);
+}
+]]>
+          </Script>
+        </Transform>
+      </Layer>
+    </LayerSet>
+    <ROUTE fromNode='X_ITE' fromField='string_changed' toNode='_5' toField='set_string'/>
+  </Scene>
+</X3D>
