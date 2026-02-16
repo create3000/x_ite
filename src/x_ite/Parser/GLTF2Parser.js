@@ -2226,32 +2226,6 @@ function eventsProcessed ()
                transformNode ._name = node .name;
          }
 
-         // Set transformation matrix.
-
-         if (!skin)
-         {
-            if (this .vectorValue (node .matrix, matrix))
-            {
-               matrix .get (translation, rotation, scale, scaleOrientation);
-
-               transformNode ._translation      = translation;
-               transformNode ._rotation         = rotation;
-               transformNode ._scale            = scale;
-               transformNode ._scaleOrientation = scaleOrientation;
-            }
-            else
-            {
-               if (this .vectorValue (node .translation, translation))
-                  transformNode ._translation = translation;
-
-               if (this .vectorValue (node .rotation, quaternion))
-                  transformNode ._rotation = rotation .setQuaternion (quaternion);
-
-               if (this .vectorValue (node .scale, scale))
-                  transformNode ._scale = scale;
-            }
-         }
-
          // Get mesh.
 
          const
@@ -2315,6 +2289,29 @@ function eventsProcessed ()
          }
          else
          {
+            // Set transformation matrix.
+
+            if (this .vectorValue (node .matrix, matrix))
+            {
+               matrix .get (translation, rotation, scale, scaleOrientation);
+
+               transformNode ._translation      = translation;
+               transformNode ._rotation         = rotation;
+               transformNode ._scale            = scale;
+               transformNode ._scaleOrientation = scaleOrientation;
+            }
+            else
+            {
+               if (this .vectorValue (node .translation, translation))
+                  transformNode ._translation = translation;
+
+               if (this .vectorValue (node .rotation, quaternion))
+                  transformNode ._rotation = rotation .setQuaternion (quaternion);
+
+               if (this .vectorValue (node .scale, scale))
+                  transformNode ._scale = scale;
+            }
+
             // Add Shape nodes.
 
             if (shapeNodes)
