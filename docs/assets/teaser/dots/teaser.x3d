@@ -11,7 +11,7 @@
     <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='created' content='Mon, 16 Feb 2026 21:47:35 GMT'/>
-    <meta name='modified' content='Mon, 16 Feb 2026 22:46:37 GMT'/>
+    <meta name='modified' content='Mon, 16 Feb 2026 22:56:58 GMT'/>
     <meta name='generator' content='Sunrize X3D Editor V2.0.3, https://create3000.github.io/sunrize/'/>
   </head>
   <Scene>
@@ -129,7 +129,8 @@ function rand ()
         <ROUTE fromNode='_1' fromField='value_changed' toNode='_5' toField='set_rotation'/>
       </ProtoBody>
     </ProtoDeclare>
-    <WorldInfo>
+    <WorldInfo DEF='_1'
+        title='Dots'>
       <MetadataSet DEF='Sunrize' containerField='metadata'
           name='Sunrize'
           reference='https://create3000.github.io/sunrize/'>
@@ -238,6 +239,24 @@ function initialize ()
         </Transform>
       </Layer>
     </LayerSet>
+    <Script DEF='CreditsScript'>
+      <field accessType='initializeOnly' type='SFNode' name='worldInfo'>
+        <WorldInfo USE='_1'/>
+      </field>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+   if (typeof $ === "undefined")
+      return;
+
+   const html = worldInfo .info .join ("\n")
+      .replace (/\[(.*?)\]\((.*?)\)/g, `<a href="\$2" target="_blank">\$1</a>`);
+
+   $("#teaser-credits") .html (html);
+}
+]]>
+    </Script>
     <ROUTE fromNode='X_ITE' fromField='string_changed' toNode='_5' toField='set_string'/>
   </Scene>
 </X3D>
