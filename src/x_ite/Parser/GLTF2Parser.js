@@ -2190,6 +2190,8 @@ function eventsProcessed ()
          humanoidNode = skin .humanoidNode,
          childNode    = skin .childNode;
 
+      node .transformNode = childNode;
+
       for (const skeleton of skeletons)
       {
          skeleton .humanoidNode = humanoidNode;
@@ -2211,7 +2213,7 @@ function eventsProcessed ()
          const
             scene         = this .getScene (),
             skin          = this .skins [node .skin],
-            transformNode = skin ?.childNode ?? node .transformNode,
+            transformNode = node .transformNode,
             name          = this .sanitizeName (node .name);
 
          // Name
