@@ -6,12 +6,13 @@
     <component name='Geometry2D' level='2'/>
     <component name='Layering' level='1'/>
     <component name='Scripting' level='1'/>
+    <component name='Shaders' level='1'/>
     <component name='Text' level='2'/>
     <component name='X_ITE' level='1'/>
     <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='created' content='Mon, 16 Feb 2026 21:47:35 GMT'/>
-    <meta name='modified' content='Mon, 16 Feb 2026 23:22:10 GMT'/>
+    <meta name='modified' content='Mon, 16 Feb 2026 23:53:25 GMT'/>
     <meta name='generator' content='Sunrize X3D Editor V2.0.3, https://create3000.github.io/sunrize/'/>
   </head>
   <Scene>
@@ -31,8 +32,6 @@
           <ProximitySensor DEF='_3'
               size='-1 -1 -1'/>
         </Group>
-        <TimeSensor DEF='_4'
-            loop='true'/>
         <Script DEF='DotsScript'>
           <field accessType='inputOutput' type='SFTime' name='time' value='1771279968.488'/>
           <field accessType='inputOutput' type='SFRotation' name='rotation' value='-0.122064293097597 -0.987011974025243 -0.104439798359519 81.8422039053151'/>
@@ -60,12 +59,10 @@ function eventsProcessed ()
    {
       for (let x = 0; x < xDimension; ++ x, ++ t)
       {
-         const y = Math .sin (x / xDimension * Math .PI + time) * 10 + Math .cos (z / zDimension * Math .PI + time) * 10;
-
          const translation = translations [t];
 
          translation .x = x * xSpacing;
-         translation .y = y;
+         translation .y = 0;
          translation .z = z * zSpacing;
       }
    }
@@ -75,7 +72,6 @@ function eventsProcessed ()
 ]]>
         </Script>
         <ROUTE fromNode='_3' fromField='orientation_changed' toNode='DotsScript' toField='set_rotation'/>
-        <ROUTE fromNode='_4' fromField='time' toNode='DotsScript' toField='set_time'/>
       </ProtoBody>
     </ProtoDeclare>
     <ProtoDeclare name='SphereDots'>
@@ -179,15 +175,78 @@ function rand ()
             position='14.79146 -7.528232 -5.746468'
             orientation='0.0166324608058983 -0.998177702773089 0.0580054733122635 148.055974954014'
             centerOfRotation='49 0 49'/>
+        <TimeSensor DEF='_4'
+            loop='true'/>
         <ProtoInstance name='WaveDots'>
           <fieldValue name='appearance'>
             <Appearance DEF='_2'>
-              <UnlitMaterial
+              <UnlitMaterial DEF='_5'
                   emissiveColor='0.9019608 0.5686275 0.2196078'>
-                <ImageTexture containerField='emissiveTexture'
+                <ImageTexture DEF='_6' containerField='emissiveTexture'
                     url='"dot.png"'/>
               </UnlitMaterial>
-              <BlendMode
+              <ComposedShader DEF='NewShader'
+                  language='GLSL'>
+                <field accessType='inputOutput' type='SFTime' name='time' value='1343.15599989891'/>
+                <field accessType='inputOutput' type='SFColor' name='color' value='0.9019608 0.5686275 0.2196078'/>
+                <field accessType='inputOutput' type='SFNode' name='dot'>
+                  <ImageTexture USE='_6'/>
+                </field>
+                <ShaderPart DEF='WaveVertexShader'>
+<![CDATA[data:x-shader/x-vertex,#version 300 es
+
+precision highp float;
+precision highp int;
+
+uniform mat4 x3d_ProjectionMatrix;
+uniform mat4 x3d_ModelViewMatrix;
+uniform float time;
+
+in mat4 x3d_ParticleMatrix;
+in vec4 x3d_Vertex;
+in vec4 x3d_TexCoord0;
+
+out vec4 texCoord;
+
+const float PI = 3.14159;
+
+void
+main ()
+{
+   texCoord = x3d_TexCoord0;
+
+   float x = float (gl_InstanceID %25 50);
+   float z = float (gl_InstanceID / 50);
+
+   float y = sin (x / 50.0 * PI + time) * 10.0 + cos (z / 50.0 * PI + time) * 10.0;
+
+   gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * x3d_ParticleMatrix * vec4 (x3d_Vertex .x, x3d_Vertex .y + y, x3d_Vertex .zw);
+}
+]]>
+                </ShaderPart>
+                <ShaderPart DEF='WaveFragmentShader'
+                    type='FRAGMENT'>
+<![CDATA[data:x-shader/x-fragment,#version 300 es
+
+precision highp float;
+precision highp int;
+
+uniform vec3 color;
+uniform sampler2D dot;
+
+in vec4 texCoord;
+
+out vec4 x3d_FragColor;
+
+void
+main ()
+{
+   x3d_FragColor = texture (dot, texCoord .xy) * vec4 (color, 1.0);
+}
+]]>
+                </ShaderPart>
+              </ComposedShader>
+              <BlendMode DEF='_7'
                   destinationColorFactor='ONE'/>
             </Appearance>
           </fieldValue>
@@ -196,7 +255,10 @@ function rand ()
             translation='50.06304 -0.008614063 51.14143'>
           <ProtoInstance name='SphereDots'>
             <fieldValue name='appearance'>
-              <Appearance USE='_2'/>
+              <Appearance DEF='_8'>
+                <UnlitMaterial USE='_5'/>
+                <BlendMode USE='_7'/>
+              </Appearance>
             </fieldValue>
           </ProtoInstance>
         </Transform>
@@ -224,7 +286,7 @@ function rand ()
             <Appearance>
               <UnlitMaterial/>
             </Appearance>
-            <Text DEF='_5'
+            <Text DEF='_9'
                 string='"X_ITE v14.0.3"'
                 solid='true'>
               <FontStyle
@@ -264,6 +326,7 @@ function initialize ()
 }
 ]]>
     </Script>
-    <ROUTE fromNode='X_ITE' fromField='string_changed' toNode='_5' toField='set_string'/>
+    <ROUTE fromNode='X_ITE' fromField='string_changed' toNode='_9' toField='set_string'/>
+    <ROUTE fromNode='_4' fromField='elapsedTime' toNode='NewShader' toField='set_time'/>
   </Scene>
 </X3D>

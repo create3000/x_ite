@@ -9,7 +9,7 @@
     <meta name='created' content='Sat, 14 Dec 2024 18:52:06 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V2.0.3, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Mon, 16 Feb 2026 23:17:34 GMT'/>
+    <meta name='modified' content='Mon, 16 Feb 2026 23:40:44 GMT'/>
   </head>
   <Scene>
     <WorldInfo>
@@ -98,7 +98,7 @@ getXZRotation (in float a)
 void
 main ()
 {
-  float e = x3d_Particle [2] / x3d_Particle [1];
+    float e = x3d_Particle [2] / x3d_Particle [1];
 	float s = 1.0 - e;
 	mat4  r = getXZRotation (e * 2.0 * PI / 2.0);
 	vec4  p = x3d_ParticleMatrix [3] * vec4 (pow (s, 0.3), 1.0, pow (s, 0.3), 1.0);
