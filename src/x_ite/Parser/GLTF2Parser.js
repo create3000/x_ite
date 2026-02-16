@@ -173,7 +173,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .animationsArray (glTF .animations);
 
       this .viewpointsCenterOfRotation (scene);
-      this .optimizeSceneGraph (scene .getRootNodes ());
+      // this .optimizeSceneGraph (scene .getRootNodes ());
 
       this .exportGroup ("Viewpoints",        this .cameras);
       this .exportGroup ("EnvironmentLights", this .envLights);
@@ -2170,12 +2170,10 @@ function eventsProcessed ()
       const
          scene         = this .getScene (),
          typeName      = this .joints .has (index) ? "HAnimJoint" : "Transform",
-         transformNode = scene .createNode (typeName, false),
-         skin          = this .skins [node .skin];
+         transformNode = scene .createNode (typeName, false);
 
       node .transformNode = transformNode;
-      node .humanoidNode  = skin ?.humanoidNode;
-      node .childNode     = node .humanoidNode ?? node .transformNode;
+      node .childNode     = node .transformNode;
       node .pointers      = [node .childNode];
 
       return node;
@@ -2192,6 +2190,13 @@ function eventsProcessed ()
          humanoidNode = skin .humanoidNode;
 
       for (const node of skeleton)
+      {
+         node .humanoidNode = humanoidNode;
+         node .childNode    = humanoidNode;
+      }
+
+      // If a skeleton is used multiple times
+      if (skin .skeleton .some (index => this .skeletons .get (index) .uses > 1))
       {
          node .humanoidNode = humanoidNode;
          node .childNode    = humanoidNode;
@@ -2360,7 +2365,6 @@ function eventsProcessed ()
          .map (index => this .nodes [index])
          .map (node => node ?.childNode)
          .filter (node => node)
-         .filter (node => !node .getCloneCount ())
       ));
 
       return nodes;
@@ -2401,6 +2405,7 @@ function eventsProcessed ()
 
       const coords = this .skeletons .getOrInsert (skin .skeleton [0], { });
 
+      coords .uses             = (coords .uses ??= 0) + 1;
       coords .normalNode     ??= scene .createNode ("Normal",     false);
       coords .coordinateNode ??= scene .createNode ("Coordinate", false);
 
