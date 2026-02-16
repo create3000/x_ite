@@ -2519,8 +2519,8 @@ function eventsProcessed ()
          return;
 
       const
-         matrix    = new Matrix4 (),
-         layerNode = new Layer (this .getScene ());
+         jointMatrix = new Matrix4 (),
+         layerNode   = new Layer (this .getScene ());
 
       // Generate joint model matrices.
 
@@ -2540,7 +2540,7 @@ function eventsProcessed ()
       {
          const skinCoordWeight = jointNode .skinCoordWeight;
 
-         matrix .set (humanoidNode ._jointBindingPositions [j] .getValue (), humanoidNode ._jointBindingRotations [j] .getValue (), humanoidNode ._jointBindingScales [j] .getValue ()) .multRight (jointNode .getValue () .getModelViewMatrix ());
+         jointMatrix .set (humanoidNode ._jointBindingPositions [j] .getValue (), humanoidNode ._jointBindingRotations [j] .getValue (), humanoidNode ._jointBindingScales [j] .getValue ()) .multRight (jointNode .getValue () .getModelViewMatrix ());
 
          for (const [c, index] of jointNode .skinCoordIndex .entries ())
          {
@@ -2548,7 +2548,7 @@ function eventsProcessed ()
 
             skinPoints [index] ??= point .copy ();
 
-            skinPoints [index] ?.add (matrix .multVecMatrix (point .copy ()) .subtract (point) .multiply (skinCoordWeight [c]));
+            skinPoints [index] ?.add (jointMatrix .multVecMatrix (point .copy ()) .subtract (point) .multiply (skinCoordWeight [c]));
          }
       }
 
