@@ -2381,13 +2381,14 @@ function eventsProcessed ()
          }
       }
    },
-   nodeChildrenArray (children)
+   nodeChildrenArrayO (children)
    {
       if (!(children instanceof Array))
          return [ ];
 
       const nodes = Array .from (new Set (children
          .map (index => this .nodes [index])
+         .filter (node => node ?.skin === undefined)
          .map (node => node ?.childNode)
          .filter (node => node)
       ));
