@@ -2186,14 +2186,14 @@ function eventsProcessed ()
          return;
 
       const
-         skeleton     = skin .skeleton .map (index => this .nodes [index]) .filter (node => node),
+         skeletons    = skin .skeleton .map (index => this .nodes [index]) .filter (node => node),
          humanoidNode = skin .humanoidNode,
          childNode    = skin .childNode;
 
-      for (const node of skeleton)
+      for (const skeleton of skeletons)
       {
-         node .humanoidNode = humanoidNode;
-         node .childNode    = childNode;
+         skeleton .humanoidNode = humanoidNode;
+         skeleton .childNode    = childNode;
       }
    },
    nodeChildren: (() =>
