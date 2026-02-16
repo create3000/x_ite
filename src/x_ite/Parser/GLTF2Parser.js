@@ -49,6 +49,7 @@ function GLTF2Parser (scene)
    this .cameras               = [ ];
    this .nodes                 = [ ];
    this .skins                 = [ ];
+   this .skeletons             = new Map ();
    this .joints                = new Set ();
    this .pointerAliases        = new Map ();
    this .animationScripts      = [ ];
@@ -167,6 +168,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .skinsArray      (glTF .skins, glTF .nodes);
       this .nodesArray      (glTF .nodes);
       this .scenesArray     (glTF, glTF .scenes, glTF .scene);
+      this .nodesChildren   ();
       this .skinsBBox       ();
       this .animationsArray (glTF .animations);
 
@@ -2148,12 +2150,6 @@ function eventsProcessed ()
          return;
 
       this .nodes = nodes .map ((node, index) => this .nodeObject (node, index));
-
-      // 1. Replace skeleton nodes with humanoid.
-      // 2. Add children.
-
-      this .nodes .forEach ((node, index) => this .nodeSkeleton (node, index));
-      this .nodes .forEach ((node, index) => this .nodeChildren (node, index));
    },
    nodeObject (node, index)
    {
@@ -2178,22 +2174,9 @@ function eventsProcessed ()
 
       return node;
    },
-   nodeSkeleton (node, index)
+   nodesChildren ()
    {
-      const skin = this .skins [node .skin];
-
-      if (!skin)
-         return;
-
-      const
-         skeleton     = skin .skeleton .map (index => this .nodes [index]) .filter (node => node),
-         humanoidNode = skin .humanoidNode;
-
-      for (const node of skeleton)
-      {
-         node .humanoidNode = humanoidNode;
-         node .childNode    = humanoidNode;
-      }
+      this .nodes .forEach ((node, index) => this .nodeChildren (node, index));
    },
    nodeChildren: (() =>
    {
@@ -2294,7 +2277,7 @@ function eventsProcessed ()
 
          // Add Shape nodes.
 
-         if (shapeNodes)
+         if (shapeNodes && !skin)
             transformNode ._children .push (... shapeNodes);
 
          transformNode .setup ();
@@ -2388,7 +2371,7 @@ function eventsProcessed ()
 
       const nodes = Array .from (new Set (children
          .map (index => this .nodes [index])
-         .filter (node => node ?.skin === undefined)
+         .filter (node => !this .skins [node ?.skin] ?.humanoidNode .getCloneCount ())
          .map (node => node ?.childNode)
          .filter (node => node)
       ));
@@ -2429,11 +2412,16 @@ function eventsProcessed ()
          skin .joints .push (skeleton);
       }
 
+      const coords = this .skeletons .getOrInsert (skin .skeleton [0], { });
+
+      coords .normalNode     ??= scene .createNode ("Normal",     false);
+      coords .coordinateNode ??= scene .createNode ("Coordinate", false);
+
       skin .humanoidNode               = scene .createNode ("HAnimHumanoid",          false);
       skin .textureCoordinateNode      = scene .createNode ("TextureCoordinate",      false);
       skin .multiTextureCoordinateNode = scene .createNode ("MultiTextureCoordinate", false);
-      skin .normalNode                 = scene .createNode ("Normal",                 false);
-      skin .coordinateNode             = scene .createNode ("Coordinate",             false);
+      skin .normalNode                 = coords .normalNode;
+      skin .coordinateNode             = coords .coordinateNode;
 
       skin .textureCoordinateNode ._mapping = "TEXCOORD_0";
 
@@ -2441,6 +2429,16 @@ function eventsProcessed ()
       skin .multiTextureCoordinateNode .setup ();
       skin .normalNode                 .setup ();
       skin .coordinateNode             .setup ();
+
+      const
+         skeletonNodes = skin .skeleton .map (index => this .nodes [index]) .filter (node => node),
+         humanoidNode  = skin .humanoidNode;
+
+      for (const skeletonNode of skeletonNodes)
+      {
+         skeletonNode .humanoidNode = humanoidNode;
+         skeletonNode .childNode    = humanoidNode;
+      }
    },
    jointsArray (joints, add)
    {
