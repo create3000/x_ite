@@ -2,11 +2,14 @@
 <!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.1//EN" "https://www.web3d.org/specifications/x3d-4.1.dtd">
 <X3D profile='Interchange' version='4.1' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.1.xsd'>
   <head>
+    <component name='ParticleSystems' level='3'/>
+    <component name='Shaders' level='1'/>
+    <component name='X_ITE' level='1'/>
     <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
     <meta name='created' content='Sat, 14 Dec 2024 18:52:06 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
-    <meta name='generator' content='Sunrize X3D Editor V2.0.0, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Fri, 23 Jan 2026 22:31:40 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V2.0.3, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Mon, 16 Feb 2026 23:17:34 GMT'/>
   </head>
   <Scene>
     <WorldInfo>
@@ -32,19 +35,108 @@
         headlight='false'/>
     <Background
         transparency='1'/>
-    <DirectionalLight
-        direction='0.5 0 -1'/>
-    <Transform DEF='Mascot_1'
-        translation='6.245774 -2.835049 1.865648'
-        rotation='0 -1 0 87.184210933567'
-        scale='7.402182 7.402182 7.402182'>
-      <Inline DEF='_1'
-          url='"sparrow.glb"'/>
-      <LoadSensor DEF='_2'>
-        <Inline USE='_1'/>
-      </LoadSensor>
+    <Transform
+        translation='6.708913 -3.360221 -0.2049047'
+        rotation='-0.0317701388922807 0.965459129567965 -0.258610377612024 158.618127176392'
+        scale='1.5 1.5 1.5'>
+      <ParticleSystem DEF='Fire_33'
+          geometryType='SPRITE'
+          maxParticles='151'
+          particleLifetime='8.31'
+          particleSize='0.64 0.64'
+          colorKey='0, 0.0778606, 0.202283, 1'>
+        <SurfaceEmitter
+            speed='0.64'>
+          <IndexedFaceSet containerField='surface'
+              coordIndex='0, 1, 2, 3, -1'>
+            <Coordinate
+                point='-0.850651 0.447214 -0.276393, -0.850651 -0.447214 0.276393, -0.525731 0.447214 0.723607, 0 1 2.77556e-17'/>
+          </IndexedFaceSet>
+        </SurfaceEmitter>
+        <ColorRGBA
+            color='0.684018 0.374525 0.19722 0, 0.684018 0.374525 0.19722 1, 0.684018 0.374525 0.19722 1, 0.684018 0.374525 0.19722 0'/>
+        <Appearance>
+          <ImageTexture
+              url='"https://create3000.github.io/media/examples/X_ITE/BlendMode/assets/glow.png"'
+              repeatS='false'
+              repeatT='false'/>
+          <ComposedShader DEF='ComposedShader'
+              language='GLSL'>
+            <ShaderPart DEF='VertexShader'>
+<![CDATA[data:x-shader/x-vertes,
+
+precision mediump float;
+
+uniform mat4 x3d_ProjectionMatrix;
+uniform mat4 x3d_ModelViewMatrix;
+uniform mat4 x3d_EyeMatrix;
+
+attribute vec4 x3d_Color;
+attribute vec4 x3d_TexCoord0;
+attribute vec4 x3d_Vertex;
+
+attribute vec4 x3d_Particle;
+attribute mat4 x3d_ParticleMatrix;
+
+varying vec4 color;
+varying vec4 texCoord;
+
+#define PI 3.1415
+
+mat4
+getXZRotation (in float a)
+{
+	float s = sin (a);
+	float c = cos (a);
+
+	return mat4 (  c, 0.0 ,  s, 0.0,
+	             0.0, 1.0, 0.0, 0.0,
+	              -s, 0.0,   c, 0.0,
+	             0.0, 0.0, 0.0, 1.0);
+}
+
+void
+main ()
+{
+  float e = x3d_Particle [2] / x3d_Particle [1];
+	float s = 1.0 - e;
+	mat4  r = getXZRotation (e * 2.0 * PI / 2.0);
+	vec4  p = x3d_ParticleMatrix [3] * vec4 (pow (s, 0.3), 1.0, pow (s, 0.3), 1.0);
+	vec4  v = vec4 (x3d_Vertex .xyz * s, 0.0) + r * p;
+
+	color    = x3d_Color;
+	texCoord = x3d_TexCoord0;
+
+	gl_Position = x3d_ProjectionMatrix * x3d_EyeMatrix * x3d_ModelViewMatrix * v;
+}
+]]>
+            </ShaderPart>
+            <ShaderPart DEF='FragmentShader'
+                type='FRAGMENT'>
+<![CDATA[data:x-shader/x-fragment,
+
+precision mediump float;
+
+uniform x3d_MaterialParameters x3d_Material;
+uniform sampler2D x3d_Texture2D [1];
+
+varying vec4 color;
+varying vec4 texCoord;
+
+void
+main ()
+{
+	vec4  t = texture2D (x3d_Texture2D [0], texCoord .st);
+	float a = 1.0 - x3d_Material .transparency;
+
+	gl_FragColor = vec4 (color .rgb * t .rgb, a * color .a * t .a);
+}]]>
+            </ShaderPart>
+          </ComposedShader>
+          <BlendMode
+              destinationColorFactor='ONE'/>
+        </Appearance>
+      </ParticleSystem>
     </Transform>
-    <IMPORT inlineDEF='_1' importedDEF='Timer18'/>
-    <ROUTE fromNode='_2' fromField='isLoaded' toNode='Timer18' toField='set_loop'/>
   </Scene>
 </X3D>

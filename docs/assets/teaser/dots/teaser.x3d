@@ -11,7 +11,7 @@
     <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='created' content='Mon, 16 Feb 2026 21:47:35 GMT'/>
-    <meta name='modified' content='Mon, 16 Feb 2026 22:56:58 GMT'/>
+    <meta name='modified' content='Mon, 16 Feb 2026 23:22:10 GMT'/>
     <meta name='generator' content='Sunrize X3D Editor V2.0.3, https://create3000.github.io/sunrize/'/>
   </head>
   <Scene>
@@ -52,15 +52,21 @@ function initialize ()
 
 function eventsProcessed ()
 {
-   shape .translations .length = 0;
+   const translations = shape .translations;
 
-   for (let z = 0; z < zDimension; ++ z)
+   translations .length = 0;
+
+   for (let z = 0, t = 0; z < zDimension; ++ z)
    {
-      for (let x = 0; x < xDimension; ++ x)
+      for (let x = 0; x < xDimension; ++ x, ++ t)
       {
          const y = Math .sin (x / xDimension * Math .PI + time) * 10 + Math .cos (z / zDimension * Math .PI + time) * 10;
 
-         shape .translations .push (new SFVec3f (x * xSpacing, y, z * zSpacing));
+         const translation = translations [t];
+
+         translation .x = x * xSpacing;
+         translation .y = y;
+         translation .z = z * zSpacing;
       }
    }
 
@@ -130,7 +136,8 @@ function rand ()
       </ProtoBody>
     </ProtoDeclare>
     <WorldInfo DEF='_1'
-        title='Dots'>
+        title='Dots'
+        info='"Dots"'>
       <MetadataSet DEF='Sunrize' containerField='metadata'
           name='Sunrize'
           reference='https://create3000.github.io/sunrize/'>
