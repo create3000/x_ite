@@ -2522,10 +2522,14 @@ function eventsProcessed ()
          matrix    = new Matrix4 (),
          layerNode = new Layer (this .getScene ());
 
+      // Generate joint model matrices.
+
       layerNode .setup ();
       layerNode .getViewport () .push (layerNode);
 
       humanoidNode .traverse (TraverseType .DISPLAY, layerNode);
+
+      // Determine points at binding position.
 
       const
          skinCoord  = humanoidNode ._skinCoord,
@@ -2543,6 +2547,8 @@ function eventsProcessed ()
             skinPoints [index] ?.add (matrix .multVecMatrix (points [index] .copy ()) .subtract (points [index]) .multiply (skinCoordWeight [c]));
          }
       }
+
+      // Set bbox for all Shape nodes.
 
       const
          bbox       = Box3 .fromPoints (skinPoints),
