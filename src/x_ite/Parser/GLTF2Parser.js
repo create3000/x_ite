@@ -2399,15 +2399,15 @@ function eventsProcessed ()
          skin .joints .push (skeleton);
       }
 
-      const coords = this .skeletons .getOrInsert (skin .skeleton [0], { });
+      const commons = this .skeletons .getOrInsert (skin .skeleton [0], { });
 
-      coords .childNode      ??= scene .createNode ("Transform",  false);
-      coords .normalNode     ??= scene .createNode ("Normal",     false);
-      coords .coordinateNode ??= scene .createNode ("Coordinate", false);
+      commons .childNode      ??= scene .createNode ("Transform",  false);
+      commons .normalNode     ??= scene .createNode ("Normal",     false);
+      commons .coordinateNode ??= scene .createNode ("Coordinate", false);
 
-      skin .childNode                  = coords .childNode;
-      skin .normalNode                 = coords .normalNode;
-      skin .coordinateNode             = coords .coordinateNode;
+      skin .childNode                  = commons .childNode;
+      skin .normalNode                 = commons .normalNode;
+      skin .coordinateNode             = commons .coordinateNode;
       skin .humanoidNode               = scene .createNode ("HAnimHumanoid",          false);
       skin .textureCoordinateNode      = scene .createNode ("TextureCoordinate",      false);
       skin .multiTextureCoordinateNode = scene .createNode ("MultiTextureCoordinate", false);
