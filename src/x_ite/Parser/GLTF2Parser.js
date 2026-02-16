@@ -2549,11 +2549,11 @@ function eventsProcessed ()
 
          for (const [c, index] of jointNode .skinCoordIndex .entries ())
          {
-            const point = points [index];
+            const
+               point = points [index],
+               skin  = skinPoints [index] ??= point .copy ();
 
-            skinPoints [index] ??= point .copy ();
-
-            skinPoints [index] ?.add (jointMatrix .multVecMatrix (point .copy ()) .subtract (point) .multiply (skinCoordWeight [c]));
+            skin ?.add (jointMatrix .multVecMatrix (point .copy ()) .subtract (point) .multiply (skinCoordWeight [c]));
          }
       }
 
