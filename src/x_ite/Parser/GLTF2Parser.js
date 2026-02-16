@@ -2534,7 +2534,7 @@ function eventsProcessed ()
       const
          skinCoord  = humanoidNode ._skinCoord,
          points     = Array .from (skinCoord .point, p => p .getValue () .copy ()),
-         skinPoints = Array .from (points, p => p .copy ());
+         skinPoints = [ ];
 
       for (const [j, jointNode] of humanoidNode ._joints .entries ())
       {
@@ -2544,14 +2544,18 @@ function eventsProcessed ()
 
          for (const [c, index] of jointNode .skinCoordIndex .entries ())
          {
-            skinPoints [index] ?.add (matrix .multVecMatrix (points [index] .copy ()) .subtract (points [index]) .multiply (skinCoordWeight [c]));
+            const point = points [index];
+
+            skinPoints [index] ??= point .copy ();
+
+            skinPoints [index] ?.add (matrix .multVecMatrix (point .copy ()) .subtract (point) .multiply (skinCoordWeight [c]));
          }
       }
 
       // Set bbox for all Shape nodes.
 
       const
-         bbox       = Box3 .fromPoints (skinPoints),
+         bbox       = Box3 .fromPoints (Object .values (skinPoints)),
          bboxSize   = bbox .size,
          bboxCenter = bbox .center;
 
