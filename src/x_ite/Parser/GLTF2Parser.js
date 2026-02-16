@@ -2203,7 +2203,7 @@ function eventsProcessed ()
       const
          translation      = new Vector3 (),
          rotation         = new Rotation4 (),
-         scale            = new Vector3 (1),
+         scale            = new Vector3 (),
          scaleOrientation = new Rotation4 (),
          quaternion       = new Quaternion (),
          matrix           = new Matrix4 ();
@@ -2476,7 +2476,7 @@ function eventsProcessed ()
       const
          translation = new Vector3 (),
          rotation    = new Rotation4 (),
-         scale       = new Vector3 (1);
+         scale       = new Vector3 ();
 
       return function (skin)
       {
