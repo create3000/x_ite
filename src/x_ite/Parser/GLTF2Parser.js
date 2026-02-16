@@ -2254,7 +2254,7 @@ function eventsProcessed ()
             children = children .map (childNode =>
             {
                if (childNode ._children .length &&
-                  childNode ._children [0] .getNodeType () .at (-1) === X3DConstants .HAnimHumanoid)
+                   childNode ._children [0] .getNodeType () .at (-1) === X3DConstants .HAnimHumanoid)
                {
                   const segmentNode = scene .createNode ("HAnimSegment", false);
 
