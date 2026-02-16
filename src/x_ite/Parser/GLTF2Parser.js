@@ -168,7 +168,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .skinsArray      (glTF .skins, glTF .nodes);
       this .nodesArray      (glTF .nodes);
       this .scenesArray     (glTF, glTF .scenes, glTF .scene);
-      this .nodesChildren   ();
+      this .skinsHumanoid   ();
       this .skinsBBox       ();
       this .animationsArray (glTF .animations);
 
@@ -2150,6 +2150,12 @@ function eventsProcessed ()
          return;
 
       this .nodes = nodes .map ((node, index) => this .nodeObject (node, index));
+
+      // 1. Replace skeleton nodes with humanoid.
+      // 2. Add children.
+
+      this .nodes .forEach ((node, index) => this .nodeSkeleton (node, index));
+      this .nodes .forEach ((node, index) => this .nodeChildren (node, index));
    },
    nodeObject (node, index)
    {
@@ -2174,9 +2180,22 @@ function eventsProcessed ()
 
       return node;
    },
-   nodesChildren ()
+   nodeSkeleton (node, index)
    {
-      this .nodes .forEach ((node, index) => this .nodeChildren (node, index));
+      const skin = this .skins [node .skin];
+
+      if (!skin)
+         return;
+
+      const
+         skeleton     = skin .skeleton .map (index => this .nodes [index]) .filter (node => node),
+         humanoidNode = skin .humanoidNode;
+
+      for (const node of skeleton)
+      {
+         node .humanoidNode = humanoidNode;
+         node .childNode    = humanoidNode;
+      }
    },
    nodeChildren: (() =>
    {
@@ -2287,41 +2306,9 @@ function eventsProcessed ()
          if (!skin)
             return;
 
+         skin .name ??= node .name;
+
          const humanoidNode = skin .humanoidNode;
-
-         if (!humanoidNode .isInitialized ())
-         {
-            const name = this .sanitizeName (skin .name) || transformNode .getName ();
-
-            if (name)
-               scene .addNamedNode (scene .getUniqueName (name), humanoidNode);
-
-            humanoidNode ._name                  = skin .name ?? node .name ?? "";
-            humanoidNode ._version               = "2.1";
-            humanoidNode ._skeletalConfiguration = "GLTF";
-
-            humanoidNode ._skeleton .push (... skin .skeleton
-               .map (index => this .nodes [index] ?.transformNode) .filter (node => node));
-
-            for (const [i, joint] of skin .joints .entries ())
-            {
-               const
-                  jointNode         = this .nodes [joint] ?.transformNode,
-                  inverseBindMatrix = skin .inverseBindMatrices [i] ?? Matrix4 .IDENTITY;
-
-               if (!jointNode)
-                  continue;
-
-               inverseBindMatrix .get (translation, rotation, scale);
-
-               humanoidNode ._joints                .push (jointNode);
-               humanoidNode ._jointBindingPositions .push (translation);
-               humanoidNode ._jointBindingRotations .push (rotation);
-               humanoidNode ._jointBindingScales    .push (scale);
-            }
-
-            humanoidNode .setup ();
-         }
 
          if (!shapeNodes ?.length)
             return;
@@ -2371,9 +2358,9 @@ function eventsProcessed ()
 
       const nodes = Array .from (new Set (children
          .map (index => this .nodes [index])
-         .filter (node => !this .skins [node ?.skin] ?.humanoidNode .getCloneCount ())
          .map (node => node ?.childNode)
          .filter (node => node)
+         .filter (node => !node .getCloneCount ())
       ));
 
       return nodes;
@@ -2429,16 +2416,6 @@ function eventsProcessed ()
       skin .multiTextureCoordinateNode .setup ();
       skin .normalNode                 .setup ();
       skin .coordinateNode             .setup ();
-
-      const
-         skeletonNodes = skin .skeleton .map (index => this .nodes [index]) .filter (node => node),
-         humanoidNode  = skin .humanoidNode;
-
-      for (const skeletonNode of skeletonNodes)
-      {
-         skeletonNode .humanoidNode = humanoidNode;
-         skeletonNode .childNode    = humanoidNode;
-      }
    },
    jointsArray (joints, add)
    {
@@ -2477,6 +2454,54 @@ function eventsProcessed ()
 
       return matrices;
    },
+   skinsHumanoid ()
+   {
+      this .skins .forEach (skin => this .skinHumanoid (skin))
+   },
+   skinHumanoid: (() =>
+   {
+      const
+         translation = new Vector3 (),
+         rotation    = new Rotation4 (),
+         scale       = new Vector3 (1);
+
+      return function (skin)
+      {
+         const
+            scene        = this .getScene (),
+            humanoidNode = skin .humanoidNode,
+            name         = this .sanitizeName (skin .name);
+
+         if (name)
+            scene .addNamedNode (scene .getUniqueName (name), humanoidNode);
+
+         humanoidNode ._name                  = skin .name ?? "";
+         humanoidNode ._version               = "2.1";
+         humanoidNode ._skeletalConfiguration = "GLTF";
+
+         humanoidNode ._skeleton .push (... skin .skeleton
+            .map (index => this .nodes [index] ?.transformNode) .filter (node => node));
+
+         for (const [i, joint] of skin .joints .entries ())
+         {
+            const
+               jointNode         = this .nodes [joint] ?.transformNode,
+               inverseBindMatrix = skin .inverseBindMatrices [i] ?? Matrix4 .IDENTITY;
+
+            if (!jointNode)
+               continue;
+
+            inverseBindMatrix .get (translation, rotation, scale);
+
+            humanoidNode ._joints                .push (jointNode);
+            humanoidNode ._jointBindingPositions .push (translation);
+            humanoidNode ._jointBindingRotations .push (rotation);
+            humanoidNode ._jointBindingScales    .push (scale);
+         }
+
+         humanoidNode .setup ();
+      };
+   })(),
    skinsBBox ()
    {
       this .skins .forEach (skin => this .skinBBox (skin .humanoidNode))
@@ -2491,6 +2516,7 @@ function eventsProcessed ()
          layerNode = new Layer (this .getScene ());
 
       layerNode .setup ();
+      layerNode .getViewport () .push (layerNode);
 
       humanoidNode .traverse (TraverseType .DISPLAY, layerNode);
 
