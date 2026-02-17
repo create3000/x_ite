@@ -20,6 +20,8 @@ In addition, the glTF parser can now handle [KHR_meshopt_compression](https://gi
 - [x] glTF parser can now handle [EXT_texture_avif](https://gltf-transform.dev/modules/extensions/classes/EXTTextureAVIF).
 - [x] glTF parser can now handle [EXT_texture_video](https://github.com/takahirox/EXT_texture_video/README.md).
 - [x] Improved Wavefront OBJ Parser to handle multi materials and color per vertex.
+- [x] Improved Wavefront STL Parser.
+- [x] Improved Wavefront PLY Parser.
 - [x] EnvironmentLight is now able to handle [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/) nodes.
 - [x] Selecting *Context Menu > World Info* will now also show all metadata.
 - [x] Fixed issue with glTF skins when the skeleton is used multiple times.
