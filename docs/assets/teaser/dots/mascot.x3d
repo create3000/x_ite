@@ -9,7 +9,7 @@
     <meta name='created' content='Sat, 14 Dec 2024 18:52:06 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V2.0.3, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Mon, 16 Feb 2026 23:40:44 GMT'/>
+    <meta name='modified' content='Tue, 17 Feb 2026 00:01:59 GMT'/>
   </head>
   <Scene>
     <WorldInfo>
@@ -57,7 +57,7 @@
             color='0.684018 0.374525 0.19722 0, 0.684018 0.374525 0.19722 1, 0.684018 0.374525 0.19722 1, 0.684018 0.374525 0.19722 0'/>
         <Appearance>
           <ImageTexture
-              url='"https://create3000.github.io/media/examples/X_ITE/BlendMode/assets/glow.png"'
+              url='"glow.png"'
               repeatS='false'
               repeatT='false'/>
           <ComposedShader DEF='ComposedShader'
