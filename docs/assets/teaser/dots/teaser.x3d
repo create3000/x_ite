@@ -12,7 +12,7 @@
     <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='created' content='Mon, 16 Feb 2026 21:47:35 GMT'/>
-    <meta name='modified' content='Mon, 16 Feb 2026 23:53:25 GMT'/>
+    <meta name='modified' content='Tue, 17 Feb 2026 00:07:49 GMT'/>
     <meta name='generator' content='Sunrize X3D Editor V2.0.3, https://create3000.github.io/sunrize/'/>
   </head>
   <Scene>
@@ -180,17 +180,13 @@ function rand ()
         <ProtoInstance name='WaveDots'>
           <fieldValue name='appearance'>
             <Appearance DEF='_2'>
-              <UnlitMaterial DEF='_5'
-                  emissiveColor='0.9019608 0.5686275 0.2196078'>
-                <ImageTexture DEF='_6' containerField='emissiveTexture'
-                    url='"dot.png"'/>
-              </UnlitMaterial>
               <ComposedShader DEF='NewShader'
                   language='GLSL'>
                 <field accessType='inputOutput' type='SFTime' name='time' value='1343.15599989891'/>
                 <field accessType='inputOutput' type='SFColor' name='color' value='0.9019608 0.5686275 0.2196078'/>
                 <field accessType='inputOutput' type='SFNode' name='dot'>
-                  <ImageTexture USE='_6'/>
+                  <ImageTexture DEF='_5'
+                      url='"dot.png"'/>
                 </field>
                 <ShaderPart DEF='WaveVertexShader'>
 <![CDATA[data:x-shader/x-vertex,#version 300 es
@@ -246,7 +242,7 @@ main ()
 ]]>
                 </ShaderPart>
               </ComposedShader>
-              <BlendMode DEF='_7'
+              <BlendMode DEF='_6'
                   destinationColorFactor='ONE'/>
             </Appearance>
           </fieldValue>
@@ -255,9 +251,12 @@ main ()
             translation='50.06304 -0.008614063 51.14143'>
           <ProtoInstance name='SphereDots'>
             <fieldValue name='appearance'>
-              <Appearance DEF='_8'>
-                <UnlitMaterial USE='_5'/>
-                <BlendMode USE='_7'/>
+              <Appearance DEF='_7'>
+                <UnlitMaterial
+                    emissiveColor='0.9019608 0.5686275 0.2196078'>
+                  <ImageTexture USE='_5' containerField='emissiveTexture'/>
+                </UnlitMaterial>
+                <BlendMode USE='_6'/>
               </Appearance>
             </fieldValue>
           </ProtoInstance>
@@ -286,7 +285,7 @@ main ()
             <Appearance>
               <UnlitMaterial/>
             </Appearance>
-            <Text DEF='_9'
+            <Text DEF='_8'
                 string='"X_ITE v14.0.3"'
                 solid='true'>
               <FontStyle
@@ -326,7 +325,7 @@ function initialize ()
 }
 ]]>
     </Script>
-    <ROUTE fromNode='X_ITE' fromField='string_changed' toNode='_9' toField='set_string'/>
+    <ROUTE fromNode='X_ITE' fromField='string_changed' toNode='_8' toField='set_string'/>
     <ROUTE fromNode='_4' fromField='elapsedTime' toNode='NewShader' toField='set_time'/>
   </Scene>
 </X3D>
