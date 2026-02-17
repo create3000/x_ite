@@ -10,7 +10,7 @@ tags: [Features, glTF]
 X_ITE is a fast, small, and feature-rich JavaScript library and VRML viewer for displaying and executing X3D files, and other formats like VRML, glTF and [more](/x_ite/#supported-file-formats). It makes things like WebGL programming, document access and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers.
 
 - X_ITE is freely downloadable for any usage and licensed under the MIT license. You can use them for commercial and noncommercial purposes.
-- Runs completely standalone, ie. there are no other library dependencies. You just need to include *x_ite.js* into your HTML page.
+- Runs completely standalone, i.e. there are no other library dependencies. You just need to include *x_ite.js* into your HTML page.
 - Competitive performance for most frequently used functions and nodes. All function within X_ITE are optimized to give your the best performance that JavaScript can offer.
 - The X_ITE package is optimized in size with Terser to achieve the smallest size we can reach. **X_ITE core module has only {{ site.x_ite_compressed_size }}KB in size minified and compressed**, all other modules are loaded on demand.
 - X_ITE is designed for optimal performance with event driven programming. The flow of the program is determined by events such as user actions (mouse clicks, key presses), sensor outputs, or messages from other scripts.
@@ -23,7 +23,7 @@ All code is held by [CREATE3000](https://github.com/create3000) and all contribu
 
 Although WebGL acts behind the scenes you do not need any special knowledge about that. There are many of ready to use [X3D nodes](/x_ite/supported-nodes/) that will make life easier. X_ITE provides comprehensive X3D support, which is complete and standard compliant.
 
-X_ITE comes with a high performance JavaScript rendering engine, ie. developers may be completely free of worry about performance optimizations in their code.
+X_ITE comes with a high performance JavaScript rendering engine, i.e. developers may be completely free of worry about performance optimizations in their code.
 
 We offer full [X3D ECMAScript](/x_ite/reference/ecmascript-object-and-function-definitions/) support to give you the best scripting tools you can get.
 

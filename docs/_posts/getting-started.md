@@ -465,7 +465,7 @@ src
 : A String value containing the URL to load on page load. If no *src* attribute is specified or the *src* attribute is empty, an empty scene will be displayed.
 
 textCompression
-: A string value that determines how [Text](/x_ite/components/text/text/).*length* and [Text](/x_ite/components/text/text/).*maxExtent* are handled, ie. either by adjusting char spacing or by scaling. The default value for the *textCompression* attribute is `CHAR_SPACING`. For a list of possible values see [browser options](/x_ite/reference/browser-services/#browser-options).
+: A string value that determines how [Text](/x_ite/components/text/text/).*length* and [Text](/x_ite/components/text/text/).*maxExtent* are handled, i.e. either by adjusting char spacing or by scaling. The default value for the *textCompression* attribute is `CHAR_SPACING`. For a list of possible values see [browser options](/x_ite/reference/browser-services/#browser-options).
 
 theme
 : A string value that determines what color theme should be used for the user interface (context menu, notifications, ...). The default value for the *theme* attribute is `auto`. Possible values are `light`, `dark` and `auto`.

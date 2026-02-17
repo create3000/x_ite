@@ -779,7 +779,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ## X_ITE v4.6.2 Released
 
-*Leipzig, 20th October 2019*: With this release we implement full support for VolumeRendering component and full support for Texturing3D component, ie. we switch to WebGL 2 with this release, if available.
+*Leipzig, 20th October 2019*: With this release we implement full support for VolumeRendering component and full support for Texturing3D component, i.e. we switch to WebGL 2 with this release, if available.
 
 ### New Features
 
@@ -1130,7 +1130,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 
 ## X_ITE v4.2.6 Released
 
-*Leipzig, 14th October 2018:* With this version, X_ITE includes a new polygon tessellator, ie. X_ITE can better render concave polygons witch also affects polygon font support, which is now even better.
+*Leipzig, 14th October 2018:* With this version, X_ITE includes a new polygon tessellator, i.e. X_ITE can better render concave polygons witch also affects polygon font support, which is now even better.
 
 ### New Features
 
@@ -1296,7 +1296,7 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 
 ## X_ITE v4.1.1 Released
 
-*Leipzig, 23rd November 2017:* We fixed a bug in load count handling of the splash screen, ie. if the *splashScreen* attribute of the X3DCanvas element is true, the scene is first displayed if all objects and textures are completely loaded. An examination of the source code has revealed this mistake in the networking nodes.
+*Leipzig, 23rd November 2017:* We fixed a bug in load count handling of the splash screen, i.e. if the *splashScreen* attribute of the X3DCanvas element is true, the scene is first displayed if all objects and textures are completely loaded. An examination of the source code has revealed this mistake in the networking nodes.
 
 ### New Features Bug Fixes
 
