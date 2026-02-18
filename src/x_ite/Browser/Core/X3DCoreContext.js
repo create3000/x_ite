@@ -169,7 +169,7 @@ Object .assign (X3DCoreContext .prototype,
       // Workaround for a bug in Chrome (v135) where attributeChangedCallback is not
       // initially called for attributes set in XHTML.
 
-      if (document .contentType === "application/xhtml+xml" && navigator .userAgent .match (/Chrome\/|Edg\//))
+      if (document .contentType === "application/xhtml+xml" && navigator .userAgent .match (/Chrome\//))
       {
          setTimeout (() =>
          {
