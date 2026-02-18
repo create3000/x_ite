@@ -287,7 +287,7 @@ Object .assign (X3DCoreContext .prototype,
          }
          case "contentscale":
          {
-            this .setBrowserOption ("ContentScale", newValue === "auto" ? -1 : parseFloat (newValue));
+            this .setBrowserOption ("ContentScale", newValue === "auto" ? -1 : newValue);
             break;
          }
          case "contextmenu":
@@ -322,9 +322,7 @@ Object .assign (X3DCoreContext .prototype,
          }
          case "multisampling":
          {
-            const samples = parseInt (newValue);
-
-            this .setBrowserOption ("Multisampling", isNaN (samples) ? 4 : samples);
+            this .setBrowserOption ("Multisampling", samples);
             break;
          }
          case "notifications":
