@@ -15,7 +15,7 @@ In addition, the glTF parser can now handle [KHR_meshopt_compression](https://gi
 
 ### Notable Changes
 
-- [x] Added experimental support for X3D4.1.
+- [x] Added experimental support for X3D4.1 standard.
 - [x] glTF parser can now handle [KHR_meshopt_compression](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Vendor/EXT_meshopt_compression/README.md).
 - [x] glTF parser can now handle [EXT_texture_avif](https://gltf-transform.dev/modules/extensions/classes/EXTTextureAVIF).
 - [x] glTF parser can now handle [EXT_texture_video](https://github.com/takahirox/EXT_texture_video/README.md).
