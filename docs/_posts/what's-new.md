@@ -19,7 +19,7 @@ In addition, the glTF parser can now handle [KHR_meshopt_compression](https://gi
 - [x] glTF parser can now handle [KHR_meshopt_compression](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Vendor/EXT_meshopt_compression/README.md).
 - [x] glTF parser can now handle [EXT_texture_avif](https://gltf-transform.dev/modules/extensions/classes/EXTTextureAVIF).
 - [x] glTF parser can now handle [EXT_texture_video](https://github.com/takahirox/EXT_texture_video/README.md).
-- [x] Improved Wavefront OBJ Parser to handle multi materials and color per vertex.
+- [x] Improved Wavefront OBJ parser to handle multi materials and color per vertex.
 - [x] Improved STL Parser to convert model to X3D coordinate system.
 - [x] Improved PLY Parser to convert model to X3D coordinate system in some cases.
 - [x] [EnvironmentLight](/x_ite/components/lighting/environmentlight/) is now able to handle [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/) nodes.
