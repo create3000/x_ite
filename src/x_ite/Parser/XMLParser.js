@@ -1193,7 +1193,7 @@ Object .assign (XMLParser .prototype,
 
       if (this .input)
       {
-         field .push (this .input);
+         field .setValue ([this .input]);
          return true;
       }
 
