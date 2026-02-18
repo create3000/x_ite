@@ -44,7 +44,8 @@ const Legacy =
       element .attr ("tabindex", element .attr ("tabindex") ?? 0);
 
       // Process initial attributes.
-      browser .connectedCallback ();
+      for (const { name, value } of element [0] .attributes)
+         browser .attributeChangedCallback (name, undefined, value);
    },
    error (elements, error)
    {
