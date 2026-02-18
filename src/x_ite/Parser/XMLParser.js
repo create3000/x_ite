@@ -1193,7 +1193,7 @@ Object .assign (XMLParser .prototype,
 
       if (this .input)
       {
-         console .warn (`XML Parser: (${field .getName ()}) MFString arrays can have multiple values, so separate each individual string by double quote marks!`);
+         console .warn (`XML Parser: Field '${field .getName ()}' is an MFString array and can have multiple values, so make sure to separate each individual string with double quotation marks!`);
 
          field .setValue ([this .input]);
          return true;
