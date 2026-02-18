@@ -1186,7 +1186,19 @@ Object .assign (XMLParser .prototype,
       return true;
    },
    [X3DConstants .MFRotation]:  VRMLParser .prototype .sfrotationValues,
-   [X3DConstants .MFString]:    VRMLParser .prototype .sfstringValues,
+   [X3DConstants .MFString] (field)
+   {
+      if (VRMLParser .prototype .sfstringValues .call (this, field))
+         return true;
+
+      if (this .input)
+      {
+         field .push (this .input);
+         return true;
+      }
+
+      return false;
+   },
    [X3DConstants .MFTime]:      VRMLParser .prototype .sfdoubleValues,
    [X3DConstants .MFVec2d]:     VRMLParser .prototype .sfvecValues,
    [X3DConstants .MFVec2f]:     VRMLParser .prototype .sfvecValues,
