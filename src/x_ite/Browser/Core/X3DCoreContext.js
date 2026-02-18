@@ -154,7 +154,7 @@ Object .assign (X3DCoreContext .prototype,
             },
             set: (value) =>
             {
-               element .attr ("url", [... value] .map (s => `"${s}"`) .join (", "));
+               element .attr ("url", [... value] .map (src => `"${src}"`) .join (", "));
             },
             enumerable: true,
          },
