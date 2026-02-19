@@ -171,15 +171,21 @@ Object .assign (X3DCoreContext .prototype,
 
       // Workaround for a bug in Chrome (v135) where attributeChangedCallback is not
       // initially called for attributes set in XHTML.
+v
+      if (element .prop ("nodeName") .toUpperCase () !== "X3D-CANVAS")
+         return;
 
-      if (document .contentType === "application/xhtml+xml" && navigator .userAgent .match (/Chrome\//))
+      if (document .contentType !== "application/xhtml+xml")
+         return;
+
+      if (!navigator .userAgent .match (/Chrome\//))
+         return;
+
+      setTimeout (() =>
       {
-         setTimeout (() =>
-         {
-            for (const { name, value } of element [0] .attributes)
-               this .attributeChangedCallback (name, undefined, value);
-         });
-      }
+         for (const { name, value } of element [0] .attributes)
+            this .attributeChangedCallback (name, undefined, value);
+      });
    },
    getInstanceId ()
    {
