@@ -20,9 +20,6 @@ const Legacy =
       {
          const set = property .set;
 
-         if (!set)
-            continue;
-
          property .set = function (value)
          {
             set (value);

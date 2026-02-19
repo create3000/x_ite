@@ -12,6 +12,7 @@ import X3DScene            from "../../Execution/X3DScene.js";
 import DataStorage         from "../../../standard/Utility/DataStorage.js";
 import Vector3             from "../../../standard/Math/Numbers/Vector3.js";
 import Features            from "../../Features.js";
+import Legacy              from "../Legacy.js";
 import _                   from "../../../locale/gettext.js";
 
 import "./Fonts.js";
@@ -133,30 +134,33 @@ Object .assign (X3DCoreContext .prototype,
             value: this,
             enumerable: true,
          },
-         src:
+         ... Legacy .properties (this,
          {
-            get: () =>
+            src:
             {
-               return element .attr ("src");
+               get: () =>
+               {
+                  return element .attr ("src");
+               },
+               set: (value) =>
+               {
+                  element .attr ("src", value);
+               },
+               enumerable: true,
             },
-            set: (value) =>
+            url:
             {
-               element .attr ("src", value);
+               get: () =>
+               {
+                  return this .parseUrlAttribute (element .attr ("url"));
+               },
+               set: (value) =>
+               {
+                  element .attr ("url", [... value] .map (src => `"${src}"`) .join (", "));
+               },
+               enumerable: true,
             },
-            enumerable: true,
-         },
-         url:
-         {
-            get: () =>
-            {
-               return this .parseUrlAttribute (element .attr ("url"));
-            },
-            set: (value) =>
-            {
-               element .attr ("url", [... value] .map (src => `"${src}"`) .join (", "));
-            },
-            enumerable: true,
-         },
+         }),
       });
 
       // Configure browser event handlers.
