@@ -12,7 +12,6 @@ import X3DScene            from "../../Execution/X3DScene.js";
 import DataStorage         from "../../../standard/Utility/DataStorage.js";
 import Vector3             from "../../../standard/Math/Numbers/Vector3.js";
 import Features            from "../../Features.js";
-import Legacy              from "../Legacy.js";
 import _                   from "../../../locale/gettext.js";
 
 import "./Fonts.js";
