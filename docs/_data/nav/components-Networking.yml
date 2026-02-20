@@ -4,5 +4,7 @@
       url: /components/networking/anchor/
     - title: "Inline"
       url: /components/networking/inline/
+    - title: "InlineGeometry"
+      url: /components/networking/inlinegeometry/
     - title: "LoadSensor"
       url: /components/networking/loadsensor/

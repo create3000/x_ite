@@ -1,9 +1,9 @@
 ---
-title: Inline
+title: InlineGeometry
 date: 2023-01-07
 nav: components-Networking
 categories: [components, Networking]
-tags: [InlineGeometry, Networking, VRML, glTF]
+tags: [InlineGeometry, Networking, glTF]
 ---
 <style>
 .post h3 {
@@ -15,7 +15,7 @@ tags: [InlineGeometry, Networking, VRML, glTF]
 
 InlineGeometry can load another X3D or VRML model into the current scene via url. InlineGeometry is an X3DGeometryNode node.
 
-The InlineGeometry node belongs to the [Networking](/x_ite/components/overview/#networking) component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The InlineGeometry node belongs to the [Networking](/x_ite/components/overview/#networking) component and requires at least support level **4,** its default container field is *geometry.* It is available from X3D version 4.1 or higher.
 
 ## Hierarchy
 

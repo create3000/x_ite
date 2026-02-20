@@ -331,6 +331,7 @@ Highest supported level: **4**
 
 - [Anchor](/x_ite/components/networking/anchor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/networking/anchor/#example)
 - [Inline](/x_ite/components/networking/inline/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/networking/inline/#example)
+- [InlineGeometry](/x_ite/components/networking/inlinegeometry/) <small class="blue">experimental</small>
 - [LoadSensor](/x_ite/components/networking/loadsensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/networking/loadsensor/#example)
 
 ### ParticleSystems
