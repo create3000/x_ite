@@ -56,7 +56,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
       }
       else
       {
-         this .setInternalScene (this .getBrowser () .getDefaultScene ());
+         this .setInternalScene (null);
          this .setLoadState (X3DConstants .FAILED_STATE);
       }
    },
