@@ -141,6 +141,16 @@ Address of X3D world to load [Inline](/x_ite/components/networking/inline/) with
 >**Tip:** All files can be compressed using GZip compression (usually denoted by a 'z' at the end of the filename suffix). This saves bandwidth and speeds up download time.
 {: .prompt-tip }
 
+## Example
+
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Networking/InlineGeometry/InlineGeometry.x3d" contentScale="auto" update="auto">
+  <img src="https://create3000.github.io/media/examples/Networking/InlineGeometry/screenshot.avif" alt="InlineGeometry"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/examples/Networking/InlineGeometry/InlineGeometry.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Networking/InlineGeometry/InlineGeometry.x3d)
+{: .example-links }
+
 ## See Also
 
 - [X3D Specification of InlineGeometry Node](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/networking.html#InlineGeometry)
