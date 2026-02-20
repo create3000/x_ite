@@ -13,7 +13,7 @@ tags: [InlineGeometry, Networking, VRML, glTF]
 
 ## Overview
 
-InlineGeometry can load another X3D or VRML model into the current scene via url. InlineGeometry is an X3DBoundedObject node that has bounding-box dimensions.
+InlineGeometry can load another X3D or VRML model into the current scene via url. InlineGeometry is an X3DGeometryNode node.
 
 The InlineGeometry node belongs to the [Networking](/x_ite/components/overview/#networking) component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
@@ -21,8 +21,8 @@ The InlineGeometry node belongs to the [Networking](/x_ite/components/overview/#
 
 ```
 + X3DNode
-  + X3DChildNode
-    + InlineGeometry (X3DBoundedObject, X3DUrlObject)*
+  + X3DGeometryNode
+    + InlineGeometry (X3DUrlObject)*
 ```
 
 \* Derived from multiple interfaces.
@@ -65,13 +65,29 @@ Author-provided prose that describes intended purpose of the url asset.
 
 #### Hints
 
-- Allows author to design when Inline loading occurs via user interaction, event chains or scripting.
+- Allows author to design when [Inline](/x_ite/components/networking/inline/) loading occurs via user interaction, event chains or scripting.
 - Use a separate [LoadSensor](/x_ite/components/networking/loadsensor/) node to detect when loading is complete.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 {: #fields-url }
 
-Address of X3D world to load Inline with current scene, retrieved either from local system or an online address. Browser support for X3D model support can include allowed file formats for XML .x3d, ClassicVRML .x3dv, X3D Binary .x3db, X3D JSON .json, and Virtual Reality Modeling Language (VRML97) .wrl.
+Address of X3D world to load [Inline](/x_ite/components/networking/inline/) with current scene, retrieved either from local system or an online address. Browser support for X3D model support can include allowed file formats for XML .x3d, ClassicVRML .x3dv, X3D Binary .x3db, X3D JSON .json, and Virtual Reality Modeling Language (VRML97) .wrl.
+
+#### Hints
+
+- [Support includes .gltf and .glb](https://www.khronos.org/gltf) https://en.wikipedia.org/wiki/glTF
+- [Future work planned for PLY form](https://en.wikipedia.org/wiki/PLY_(file_format))
+- [Future work planned for STL form](https://en.wikipedia.org/wiki/STL_(file_format))
+- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
+- Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
+- Can replace embedded blank(s) in *url* queries with %20 for each blank character.
+- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls)
+
+#### Warnings
+
+- [GlTF support requires X3D version='4.0' and `profile='Full'` or else `<component name='Networking' level='4'/>` `<component name='Shape' level='4'/>` `<component name='Lighting' level='4'/>`](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/networking.html#t-supportLevels)
+- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https *url* addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
+- Direct or indirect recursion by [Inline](/x_ite/components/networking/inline/) and/or ExternProtoDeclare *url* reloading is a security error.
 
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
 {: #fields-autoRefresh }

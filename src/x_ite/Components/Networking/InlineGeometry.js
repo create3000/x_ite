@@ -125,7 +125,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
 
 Object .defineProperties (InlineGeometry,
 {
-   ... X3DNode .getStaticProperties ("InlineGeometry", "Networking", 4, "children", "4.1"),
+   ... X3DNode .getStaticProperties ("InlineGeometry", "Networking", 4, "geometry", "4.1"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
