@@ -184,13 +184,13 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    {
       return Matrix4 .IDENTITY;
    },
-   setSolid (value)
-   {
-      this .solid = value;
-   },
    isSolid ()
    {
       return this .solid;
+   },
+   setSolid (value)
+   {
+      this .solid = value;
    },
    setCCW (value)
    {

@@ -208,16 +208,6 @@ You can then import these [TimeSensor](/x_ite/components/time/timesensor/) nodes
 
 Load the scene using `Browser.createX3DFromURL`, then access the [TimeSensor](/x_ite/components/time/timesensor/) nodes using [`scene.getExportedNode`](/x_ite/reference/scene-services/#getexportednode-exportedname-string-sfnode).
 
-#### Example
-
-<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Networking/Inline/Inline.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/Networking/Inline/screenshot.avif" alt="Inline"/>
-</x3d-canvas>
-
-- [Download ZIP Archive](https://create3000.github.io/media/examples/Networking/Inline/Inline.zip)
-- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Networking/Inline/Inline.x3d)
-{: .example-links }
-
 ## Advice
 
 ### Hints
