@@ -24,8 +24,8 @@ In addition, the glTF parser can now handle [KHR_meshopt_compression](https://gi
 - [x] Improved PLY parser to convert model to X3D coordinate system in some cases.
 - [x] [EnvironmentLight](/x_ite/components/lighting/environmentlight/) is now able to handle [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/) nodes.
 - [x] Selecting *Context Menu > World Info* will now also show all metadata.
-- [x] Fixed issue with glTF skins when the skeleton is used multiple times.
 - [x] XML MFString values now fall back to being parsed as SFString values, and a warning is reported.
+- [x] Fixed issue with glTF skins when the skeleton is used multiple times.
 
 ## X_ITE v12.2 Series
 
