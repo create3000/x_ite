@@ -66,14 +66,12 @@ SupportedComponents .add ("Geometry2D",
    title: "Geometry2D",
    level: 2,
    external: true,
-   dependencies: ["Geometry3D"],
 });
 
 SupportedComponents .add ("Geometry3D",
 {
    title: "Geometry3D",
    level: 4,
-   external: true,
 });
 
 SupportedComponents .add ("Geospatial",
@@ -148,7 +146,6 @@ SupportedComponents .add ("NURBS",
    title: "NURBS",
    level: 4,
    external: true,
-   dependencies: ["Geometry3D"],
 });
 
 SupportedComponents .add ("ParticleSystems",
@@ -251,7 +248,7 @@ SupportedComponents .add ("VolumeRendering",
    title: "Volume rendering",
    level: 4,
    external: true,
-   dependencies: ["CADGeometry", "Geometry3D", "Texturing3D"],
+   dependencies: ["CADGeometry", "Texturing3D"],
 });
 
 SupportedComponents .add ("WebXR",

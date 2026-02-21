@@ -3,6 +3,7 @@ import X3DConstants                   from "../Base/X3DConstants.js";
 import X3DBaseNode                    from "../Base/X3DBaseNode.js";
 import X3DCoreContext                 from "./Core/X3DCoreContext.js";
 import X3DEnvironmentalEffectsContext from "./EnvironmentalEffects/X3DEnvironmentalEffectsContext.js";
+import X3DGeometry3DContext           from "./Geometry3D/X3DGeometry3DContext.js";
 import X3DGroupingContext             from "./Grouping/X3DGroupingContext.js";
 import X3DLayeringContext             from "./Layering/X3DLayeringContext.js";
 import X3DLightingContext             from "./Lighting/X3DLightingContext.js";
@@ -51,6 +52,7 @@ const
       X3DRenderingContext,
       X3DShapeContext,
       X3DGroupingContext,
+      X3DGeometry3DContext,
       X3DPointingDeviceSensorContext,
       X3DNavigationContext,
       X3DLayeringContext,
