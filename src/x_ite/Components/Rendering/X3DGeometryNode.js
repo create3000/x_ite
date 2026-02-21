@@ -674,13 +674,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       {
          // Use default render functions.
 
-         delete this .displaySimple;
-         delete this .display;
-         delete this .displaySimpleInstanced;
-         delete this .displayInstanced;
-
-         if (this .base)
-            this .setBase (this .base);
+         this .setBase (this .base);
       }
       else
       {
@@ -715,8 +709,17 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       {
          this .base = base;
 
-         for (const fn of functions)
-            this [fn] = base [fn];
+         if (base)
+         {
+            for (const fn of functions)
+               this [fn] = base [fn];
+         }
+         else
+         {
+            // Use default render functions.
+            for (const fn of functions)
+               delete this [fn];
+         }
       };
    })(),
    displaySimple (gl, renderContext, shaderNode)
