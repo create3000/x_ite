@@ -23,8 +23,7 @@ Components .add ({
       TriangleSet2D,
    ],
    abstractNodes:
-   [
-   ],
+   [ ],
    browserContext: X3DGeometry2DContext,
 });
 
