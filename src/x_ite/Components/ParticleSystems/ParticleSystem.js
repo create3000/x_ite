@@ -953,7 +953,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          case GeometryType .QUAD:
          case GeometryType .TRIANGLE:
          {
-            const positiveScale = Matrix4 .prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
+            const positiveScale = Matrix4 .prototype .determinant3 .call (renderContext .modelViewMatrix) >= 0;
 
             gl .frontFace (positiveScale ? gl .CCW : gl .CW);
             gl .enable (gl .CULL_FACE);

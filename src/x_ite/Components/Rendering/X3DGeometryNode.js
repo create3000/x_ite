@@ -760,7 +760,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       // Handle negative scale.
 
-      const positiveScale = Matrix4 .prototype .determinant3 .call (modelViewMatrix) > 0;
+      const positiveScale = Matrix4 .prototype .determinant3 .call (modelViewMatrix) >= 0;
 
       gl .frontFace (positiveScale ? this .frontFace : this .backFace);
 
@@ -904,7 +904,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       // Handle negative scale.
 
-      const positiveScale = Matrix4 .prototype .determinant3 .call (modelViewMatrix) > 0;
+      const positiveScale = Matrix4 .prototype .determinant3 .call (modelViewMatrix) >= 0;
 
       gl .frontFace (positiveScale ? this .frontFace : this .backFace);
 
