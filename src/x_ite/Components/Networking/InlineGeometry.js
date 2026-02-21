@@ -137,6 +137,14 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
 
       this .setSolid (geometryNode .isSolid ());
       this .setCCW (geometryNode .getCCW ());
+
+      this .intersectsLine         = geometryNode .intersectsLine;
+      this .intersectsBox          = geometryNode .intersectsBox;
+      this .generateTexCoords      = geometryNode .generateTexCoords;
+      this .displaySimple          = geometryNode .displaySimple;
+      this .display                = geometryNode .display;
+      this .displaySimpleInstanced = geometryNode .displaySimpleInstanced;
+      this .displayInstanced       = geometryNode .displayInstanced;
    },
    dispose ()
    {
