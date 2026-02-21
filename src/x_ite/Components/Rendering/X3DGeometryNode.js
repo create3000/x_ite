@@ -678,6 +678,9 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          delete this .display;
          delete this .displaySimpleInstanced;
          delete this .displayInstanced;
+
+         if (this .base)
+            this .setBase (this .base);
       }
       else
       {
@@ -981,6 +984,24 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
          gl .drawArraysInstanced (primitiveMode, 0, this .vertexCount, shapeNode .getNumInstances ());
       }
+   },
+   setBase (base)
+   {
+      this .base = base;
+
+      this .intersectsLine              = base .intersectsLine;
+      this .intersectsBox               = base .intersectsBox;
+      this .updateVertexArrays          = base .updateVertexArrays;
+      this .updateLengthSoFar           = base .updateLengthSoFar;
+      this .generateTexCoords           = base .generateTexCoords;
+      this .displaySimple               = base .displaySimple;
+      this .displaySimpleThick          = base .displaySimpleThick;
+      this .displaySimpleInstanced      = base .displaySimpleInstanced;
+      this .displaySimpleInstancedThick = base .displaySimpleInstancedThick;
+      this .display                     = base .display;
+      this .displayThick                = base .displayThick;
+      this .displayInstanced            = base .displayInstanced;
+      this .displayInstancedThick       = base .displayInstancedThick;
    },
 },
 // Common functions for all X3DComposedGeometryNode types and some other nodes:

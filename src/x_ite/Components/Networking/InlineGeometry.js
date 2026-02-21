@@ -3,6 +3,7 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DGeometryNode      from "../Rendering/X3DGeometryNode.js";
+import X3DLineGeometryNode  from "../Rendering/X3DLineGeometryNode.js";
 import X3DUrlObject         from "./X3DUrlObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import X3DCast              from "../../Base/X3DCast.js";
@@ -14,8 +15,8 @@ import FileLoader           from "../../InputOutput/FileLoader.js";
 
 function InlineGeometry (executionContext)
 {
-   X3DGeometryNode .call (this, executionContext);
-   X3DUrlObject    .call (this, executionContext);
+   X3DLineGeometryNode .call (this, executionContext);
+   X3DUrlObject        .call (this, executionContext);
 
    this .addType (X3DConstants .InlineGeometry);
 }
@@ -135,16 +136,11 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
       this .getMin () .assign (geometryNode .getMin ());
       this .getMax () .assign (geometryNode .getMax ());
 
+      this .setGeometryType (geometryNode .getGeometryType ());
+      this .setTransparent (geometryNode .isTransparent ());
       this .setSolid (geometryNode .isSolid ());
       this .setCCW (geometryNode .getCCW ());
-
-      this .intersectsLine         = geometryNode .intersectsLine;
-      this .intersectsBox          = geometryNode .intersectsBox;
-      this .generateTexCoords      = geometryNode .generateTexCoords;
-      this .displaySimple          = geometryNode .displaySimple;
-      this .display                = geometryNode .display;
-      this .displaySimpleInstanced = geometryNode .displaySimpleInstanced;
-      this .displayInstanced       = geometryNode .displayInstanced;
+      this .setBase (geometryNode);
    },
    dispose ()
    {
