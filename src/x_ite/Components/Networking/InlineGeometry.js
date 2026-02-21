@@ -1,11 +1,11 @@
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DChildObject       from "../../Base/X3DChildObject.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DGeometryNode      from "../Rendering/X3DGeometryNode.js";
 import X3DUrlObject         from "./X3DUrlObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import X3DCast              from "../../Base/X3DCast.js";
 import FileLoader           from "../../InputOutput/FileLoader.js";
 
 /**
@@ -83,8 +83,10 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
       if (!node)
          return;
 
-      if (node .getType () .includes (X3DConstants .X3DGeometryNode))
-         return node;
+      const geometryNode = X3DCast (X3DConstants .X3DGeometryNode, node);
+
+      if (geometryNode)
+         return geometryNode;
 
       for (const field of node .getFields ())
       {
