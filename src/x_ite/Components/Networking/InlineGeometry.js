@@ -57,6 +57,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
    setInternalScene (scene)
    {
       this .geometryNode ?.removeInterest ("requestRebuild", this);
+      this .geometryNode ?._transparent .removeFieldInterest (this ._transparent);
 
       this .scene ?.dispose ();
 
@@ -66,6 +67,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
       this .geometryNode = scene ? this .getGeometryFromArray (scene .rootNodes) : null;
 
       this .geometryNode ?.addInterest ("requestRebuild", this);
+      this .geometryNode ?._transparent .addFieldInterest (this ._transparent);
 
       this .requestRebuild ();
    },
