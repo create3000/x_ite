@@ -56,6 +56,8 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
    },
    setInternalScene (scene)
    {
+      // Remove old scene.
+      
       this .geometryNode ?.removeInterest ("requestRebuild", this);
       this .geometryNode ?._transparent .removeFieldInterest (this ._transparent);
 
