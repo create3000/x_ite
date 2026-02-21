@@ -151,8 +151,7 @@ Object .assign (Object .setPrototypeOf (LoadSensor .prototype, X3DNetworkSensorN
 
       for (const node of this ._children)
       {
-         const urlObject = X3DCast (X3DConstants .X3DUrlObject, node) ??
-            X3DCast (X3DConstants .X3DUrlObject, node, false);
+         const urlObject = X3DCast (X3DConstants .X3DUrlObject, node);
 
          if (urlObject)
             urlObjects .push (urlObject);

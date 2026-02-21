@@ -192,6 +192,12 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    {
       this .solid = value;
    },
+   getCCW ()
+   {
+      const gl = this .getBrowser () .getContext ();
+
+      return this .frontFace ===  gl .CCW;
+   },
    setCCW (value)
    {
       const gl = this .getBrowser () .getContext ();

@@ -30,13 +30,6 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   getInnerNode ()
-   {
-      if (this .geometryNode)
-         return this .geometryNode;
-
-      throw new Error ("Root node not available.");
-   },
    unloadData ()
    {
       this .fileLoader ?.abort ();
@@ -62,6 +55,8 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
    },
    setInternalScene (scene)
    {
+      this .geometryNode ?.removeInterest ("requestRebuild", this);
+
       this .scene ?.dispose ();
 
       // Set new scene.
@@ -69,7 +64,9 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
       this .scene        = scene;
       this .geometryNode = scene ? this .getGeometryFromArray (scene .rootNodes) : null;
 
-      X3DChildObject .prototype .addEvent .call (this);
+      this .geometryNode ?.addInterest ("requestRebuild", this);
+
+      this .requestRebuild ();
    },
    getGeometryFromArray (nodes)
    {
@@ -115,7 +112,30 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
       }
    },
    build ()
-   { },
+   {
+      const { geometryNode } = this;
+
+      if (!geometryNode)
+         return;
+
+      this .setTextureCoordinate (geometryNode .getTextureCoordinate ());
+
+      this .getCoordIndices ()   .assign (geometryNode .getCoordIndices ());
+      this .getAttribs ()        .push (... geometryNode .getAttribs ());
+      this .getFogDepths ()      .assign (geometryNode .getFogDepths ());
+      this .getColors ()         .assign (geometryNode .getColors ());
+      this .getMultiTexCoords () .push (... geometryNode .getMultiTexCoords ());
+      this .getTexCoords ()      .assign (geometryNode .getTexCoords ());
+      this .getTangents ()       .assign (geometryNode .getTangents ());
+      this .getNormals ()        .assign (geometryNode .getNormals ());
+      this .getVertices ()       .assign (geometryNode .getVertices ());
+
+      this .getMin () .assign (geometryNode .getMin ());
+      this .getMax () .assign (geometryNode .getMax ());
+
+      this .setSolid (geometryNode .isSolid ());
+      this .setCCW (geometryNode .getCCW ());
+   },
    dispose ()
    {
       X3DUrlObject    .prototype .dispose .call (this);
