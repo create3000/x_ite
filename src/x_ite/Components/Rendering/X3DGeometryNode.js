@@ -694,8 +694,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    },
    setBase: (() =>
    {
-      // Actually all functions from X3DLineGeometry must be listed here.
-      
+      // Actually all functions that are overloaded must be listed here.
+
       const functions = [
          "intersectsLine",
          "updateVertexArrays",
