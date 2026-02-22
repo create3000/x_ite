@@ -24,7 +24,7 @@ description: >- # used by seo meta and the atom feed
 x3d_latest_version: 4.1 # x3d latest version
 
 # x_ite settings
-x_ite_teaser: dots
+x_ite_teaser: shader-dots
 x_ite_latest_version: 14.0.4 # x_ite latest version
 x_ite_compressed_size: 300 # size in kb
 x_ite_js_integrity: sha384-6DI3LbHPANZA0U8da8NU9b/fGA5goR4YDg3eGc5h6Rzuf/0siGXXAZvd5njd4Hhq

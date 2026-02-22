@@ -134,7 +134,7 @@ function rand ()
     </ProtoDeclare>
     <WorldInfo DEF='_1'
         title='Dots'
-        info='"See the Shader Dots [folder](https://github.com/create3000/x_ite/tree/main/docs/assets/teaser/dots)."'>
+        info='"See the Shader Dots [folder](https://github.com/create3000/x_ite/tree/main/docs/assets/teaser/shader-dots)."'>
       <MetadataSet DEF='Sunrize' containerField='metadata'
           name='Sunrize'
           reference='https://create3000.github.io/sunrize/'>
