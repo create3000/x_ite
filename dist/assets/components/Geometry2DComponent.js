@@ -1,5 +1,5 @@
-/* X_ITE v14.0.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.3")];
+/* X_ITE v14.0.4 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.4")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -895,7 +895,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, (external_X_ITE_X3D_X
             this .setGeometryType (0);
             this .setTransparent (true);
             this .setSolid (false);
-            this .setBase ((external_X_ITE_X3D_X3DPointGeometryNode_default()));
+            this .setBase ((external_X_ITE_X3D_X3DPointGeometryNode_default()).prototype);
             return;
          }
 
@@ -923,7 +923,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, (external_X_ITE_X3D_X
          this .setGeometryType (1);
          this .setTransparent (false);
          this .setSolid (false);
-         this .setBase ((external_X_ITE_X3D_X3DLineGeometryNode_default()));
+         this .setBase ((external_X_ITE_X3D_X3DLineGeometryNode_default()).prototype);
          return;
       }
 
@@ -952,7 +952,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, (external_X_ITE_X3D_X
          this .setGeometryType (2);
          this .setTransparent (false);
          this .setSolid (this ._solid .getValue ());
-         this .setBase ((external_X_ITE_X3D_X3DGeometryNode_default()));
+         this .setBase ((external_X_ITE_X3D_X3DGeometryNode_default()).prototype);
          return;
       }
 
@@ -996,17 +996,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, (external_X_ITE_X3D_X
       this .setGeometryType (2);
       this .setTransparent (false);
       this .setSolid (this ._solid .getValue ());
-      this .setBase ((external_X_ITE_X3D_X3DGeometryNode_default()));
-   },
-   setBase (base)
-   {
-      this .intersectsLine         = base .prototype .intersectsLine;
-      this .intersectsBox          = base .prototype .intersectsBox;
-      this .generateTexCoords      = base .prototype .generateTexCoords;
-      this .displaySimple          = base .prototype .displaySimple;
-      this .display                = base .prototype .display;
-      this .displaySimpleInstanced = base .prototype .displaySimpleInstanced;
-      this .displayInstanced       = base .prototype .displayInstanced;
+      this .setBase ((external_X_ITE_X3D_X3DGeometryNode_default()).prototype);
    },
    updateRenderFunctions ()
    { },
@@ -1335,8 +1325,7 @@ external_X_ITE_X3D_Components_default().add ({
       Geometry2D_TriangleSet2D,
    ],
    abstractNodes:
-   [
-   ],
+   [ ],
    browserContext: Geometry2D_X3DGeometry2DContext,
 });
 

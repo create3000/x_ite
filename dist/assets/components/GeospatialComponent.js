@@ -1,5 +1,5 @@
-/* X_ITE v14.0.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.3")];
+/* X_ITE v14.0.4 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.4")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1489,6 +1489,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, (external_X_ITE_X3D_X
 
       this .rootGroupNode ._children = this ._rootNode;
       this .rootGroupNode .setPrivate (true);
+      this .rootGroupNode .setup ();
 
       this .rootInlineNode ._loadState .addInterest ("set_rootLoadState__", this);
 

@@ -1,5 +1,5 @@
-/* X_ITE v14.0.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.3")];
+/* X_ITE v14.0.4 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.4")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -674,8 +674,7 @@ external_X_ITE_X3D_Components_default().add ({
       DIS_TransmitterPdu,
    ],
    abstractNodes:
-   [
-   ],
+   [ ],
 });
 
 const DISComponent_default_ = undefined;

@@ -1,5 +1,5 @@
-/* X_ITE v14.0.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.3")];
+/* X_ITE v14.0.4 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.4")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -953,11 +953,9 @@ const X3DWebXRContext_default_ = X3DWebXRContext;
 external_X_ITE_X3D_Components_default().add ({
    name: "WebXR",
    concreteNodes:
-   [
-   ],
+   [ ],
    abstractNodes:
-   [
-   ],
+   [ ],
    browserContext: WebXR_X3DWebXRContext,
 });
 

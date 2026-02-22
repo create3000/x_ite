@@ -1,5 +1,5 @@
-/* X_ITE v14.0.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.3")];
+/* X_ITE v14.0.4 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.4")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -2447,7 +2447,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
          case (external_X_ITE_X3D_GeometryType_default()).QUAD:
          case (external_X_ITE_X3D_GeometryType_default()).TRIANGLE:
          {
-            const positiveScale = external_X_ITE_X3D_Matrix4_default().prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
+            const positiveScale = external_X_ITE_X3D_Matrix4_default().prototype .determinant3 .call (renderContext .modelViewMatrix) >= 0;
 
             gl .frontFace (positiveScale ? gl .CCW : gl .CW);
             gl .enable (gl .CULL_FACE);
