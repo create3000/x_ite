@@ -13,7 +13,7 @@ tags: [InlineGeometry, Networking, glTF]
 
 ## Overview
 
-InlineGeometry can load another X3D or VRML model into the current scene via url. InlineGeometry is an X3DGeometryNode node.
+InlineGeometry loads geometry from an external file. The result provides a polygonal mesh, set of lines, point cloud, parametric surface, or other geometry. Supported formats are browser dependent and can include STL and PLY mesh files.
 
 The InlineGeometry node belongs to the [Networking](/x_ite/components/overview/#networking) component and requires at least support level **4,** its default container field is *geometry.* It is available from X3D version 4.1 or higher.
 
@@ -141,6 +141,14 @@ Address of X3D world to load [Inline](/x_ite/components/networking/inline/) with
 
 >**Tip:** All files can be compressed using GZip compression (usually denoted by a 'z' at the end of the filename suffix). This saves bandwidth and speeds up download time.
 {: .prompt-tip }
+
+## Advice
+
+### Hints
+
+- [Wikipedia, STL (Standard Triangle Language or Standard Tessellation Language)](https://en.wikipedia.org/wiki/STL_(file_format))
+- [Wikipedia, PLY (Polygon File Format or Stanford Triangle Format)](https://en.wikipedia.org/wiki/PLY_(file_format))
+- [Example](https://create3000.github.io/x_ite/playground/?url=https://create3000.github.io/media/examples/Networking/InlineGeometry/InlineGeometry.x3d)
 
 ## Example
 
