@@ -156,7 +156,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    },
    async loadDocumentAsync (url)
    {
-      if (url .length === 0)
+      if (!url .length)
          return this .loadDocumentError (new Error ("URL is empty."));
 
       // Script:
