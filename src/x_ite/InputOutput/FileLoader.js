@@ -237,6 +237,9 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
          if (promise)
          {
+            // Wait for events to be processed, e.g. LoadSensor events.
+            await this .browser .nextFrame ();
+
             const scene = await promise;
 
             scene .setWorldURL (this .URL .href);
