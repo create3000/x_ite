@@ -61,14 +61,14 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
    unloadData ()
    {
       this .fileLoader ?.abort ();
-      this .setInternalScene (this .getBrowser () .getDefaultScene ());
+      this .setInternalScene (this .getBrowser () .getDefaultScene (), true);
    },
    loadData ()
    {
       this .fileLoader ?.abort ();
       this .fileLoader = new FileLoader (this) .createX3DFromURL (this ._url, null, this .setInternalScene .bind (this));
    },
-   setInternalScene (scene)
+   setInternalScene (scene, unload)
    {
       if (this .scene !== this .getBrowser () .getDefaultScene ())
          this .scene .dispose ();
@@ -91,7 +91,7 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
       {
          this .groupNode ._children .length = 0;
 
-         this .setLoadState (X3DConstants .FAILED_STATE);
+         this .setLoadState (unload ? X3DConstants .NOT_STARTED_STATE : X3DConstants .FAILED_STATE);
       }
 
       this .getBrowser () .addBrowserEvent ();

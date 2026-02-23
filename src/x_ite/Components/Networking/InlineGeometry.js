@@ -34,7 +34,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
    unloadData ()
    {
       this .fileLoader ?.abort ();
-      this .setInternalScene (null);
+      this .setInternalScene (null, true);
    },
    loadData ()
    {
@@ -43,7 +43,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
       this .fileLoader ?.abort ();
       this .fileLoader = new FileLoader (this, cache) .createX3DFromURL (this ._url, null, this .setInternalScene .bind (this));
    },
-   setInternalScene (scene)
+   setInternalScene (scene, unload)
    {
       // Remove old scene.
 
@@ -83,7 +83,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
       {
          this .geometryNode = null;
 
-         this .setLoadState (X3DConstants .FAILED_STATE);
+         this .setLoadState (unload ? X3DConstants .NOT_STARTED_STATE : X3DConstants .FAILED_STATE);
       }
 
       this .requestRebuild ();
