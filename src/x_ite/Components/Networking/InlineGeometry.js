@@ -66,7 +66,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
             hash    = new URL (scene .getWorldURL ()) .hash .substring (1);
 
          this .geometryNode = hash
-            ? X3DCast (X3DConstants .X3DGeometryNode, scene .getExportedNode (hash))
+            ? X3DCast (X3DConstants .X3DGeometryNode, scene .getNamedNode (hash))
             : this .getGeometryFromArray (scene .rootNodes);
 
          if (!this .geometryNode)
