@@ -75,11 +75,14 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
             ? X3DCast (X3DConstants .X3DGeometryNode, scene .getExportedNode (hash))
             : this .getGeometryFromArray (scene .rootNodes);
 
+         if (!this .geometryNode)
+            throw new Error ("No X3DGeometryNode found");
+
          this .scene .setExecutionContext (this .getExecutionContext ());
          this .scene .setLive (true);
 
-         this .geometryNode ?.addInterest ("requestRebuild", this);
-         this .geometryNode ?._transparent .addFieldInterest (this ._transparent);
+         this .geometryNode .addInterest ("requestRebuild", this);
+         this .geometryNode ._transparent .addFieldInterest (this ._transparent);
       }
       else
       {
