@@ -107,7 +107,8 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
          await this .browser .nextFrame ();
 
-         scene .cache = this .sceneCache;
+         if (this .sceneCache)
+            scene .cache = true;
 
          this .resolve ?.(scene);
          resolve (scene);
