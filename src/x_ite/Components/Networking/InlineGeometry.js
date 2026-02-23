@@ -76,6 +76,12 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
             this .geometryNode = hash
                ? X3DCast (X3DConstants .X3DGeometryNode, scene .getExportedNode (hash))
                : this .getGeometryFromArray (scene .rootNodes);
+
+            this .scene .setExecutionContext (this .getExecutionContext ());
+            this .scene .setLive (true);
+
+            this .geometryNode ?.addInterest ("requestRebuild", this);
+            this .geometryNode ?._transparent .addFieldInterest (this ._transparent);
          }
          catch (error)
          {
@@ -83,12 +89,6 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
 
             this .geometryNode = null;
          }
-
-         this .scene .setExecutionContext (this .getExecutionContext ());
-         this .scene .setLive (true);
-
-         this .geometryNode ?.addInterest ("requestRebuild", this);
-         this .geometryNode ?._transparent .addFieldInterest (this ._transparent);
       }
       else
       {
