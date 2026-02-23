@@ -77,7 +77,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       const cache = this .getBrowser () .getBrowserOption ("Cache");
 
       this .fileLoader ?.abort ();
-      
+
       this .fileLoader = new FileLoader (this, cache)
          .createX3DFromURL (this ._url, null, this .setInternalScene .bind (this));
    },
@@ -102,14 +102,13 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       {
          const
             browser = this .getBrowser (),
-            cache   = browser .getBrowserOption ("Cache"),
             hash    = new URL (scene .getWorldURL ()) .hash .substring (1),
             proto   = hash ? scene .protos .get (hash) : scene .protos [0];
 
          if (!proto)
             throw new Error ("PROTO not found.");
 
-         scene .setExecutionContext (cache ? browser .getDefaultScene () : this .getExecutionContext ());
+         scene .setExecutionContext (scene .cache ? browser .getDefaultScene () : this .getExecutionContext ());
          scene .setLive (true);
 
          this .setLoadState (X3DConstants .COMPLETE_STATE);
