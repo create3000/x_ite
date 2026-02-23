@@ -46,7 +46,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
       if (scene)
       {
          this .setInternalScene (scene);
-         this .setLoadState (this .geometryNode ? X3DConstants .COMPLETE_STATE : X3DConstants .FAILED_STATE);
+         this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
       else
       {
@@ -72,7 +72,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
          const hash = new URL (scene .getWorldURL ()) .hash .substring (1);
 
          this .geometryNode = hash
-            ? $.try (() => X3DCast (X3DConstants .X3DGeometryNode, scene .getExportedNode (hash)), true)
+            ? X3DCast (X3DConstants .X3DGeometryNode, scene .getExportedNode (hash))
             : this .getGeometryFromArray (scene .rootNodes);
 
          this .scene .setExecutionContext (this .getExecutionContext ());
