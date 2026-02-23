@@ -41,7 +41,9 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
       const cache = this .getBrowser () .getBrowserOption ("Cache");
 
       this .fileLoader ?.abort ();
-      this .fileLoader = new FileLoader (this, cache) .createX3DFromURL (this ._url, null, this .setInternalScene .bind (this));
+
+      this .fileLoader = new FileLoader (this, cache)
+         .createX3DFromURL (this ._url, null, this .setInternalScene .bind (this));
    },
    setInternalScene (scene, unload)
    {
