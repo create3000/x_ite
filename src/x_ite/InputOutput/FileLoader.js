@@ -162,7 +162,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          return;
       }
 
-      // Script
+      // Script:
       {
          const result = url .match (/^\s*(?:ecmascript|javascript|vrmlscript)\:/s);
 
@@ -174,6 +174,58 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       }
 
       this .URL = new URL (url, this .getBaseURL ());
+
+      // Data URL:
+      {
+         const result = url .match (/^\s*data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s);
+
+         if (result && result [3] !== "base64")
+         {
+            // const mimeType = result [1] || "text/plain"";
+
+            let data = url .substring (result [0] .length);
+
+            data = $.try (() => decodeURIComponent (data)) ?? data; // Decode data.
+            data = data .replace (/^ï»¿/, "");                      // Remove BOM.
+
+            await this .callback (data);
+            return;
+         }
+      }
+
+      // Bind Viewpoint URLs:
+
+      if (this .URL .protocol !== "data:" && this .bindViewpoint)
+      {
+         const referer = new URL (this .getBaseURL ());
+
+         if (this .URL .protocol === referer .protocol &&
+             this .URL .hostname === referer .hostname &&
+             this .URL .port     === referer .port &&
+             this .URL .pathname === referer .pathname &&
+             this .URL .hash)
+         {
+            this .bindViewpoint (decodeURIComponent (this .URL .hash .substring (1)));
+            return;
+         }
+      }
+
+      // Foreign targets:
+
+      if (this .foreign)
+      {
+         // Handle target
+
+         if (this .target .length && this .target !== "_self")
+            return this .foreign (this .URL .href, this .target);
+
+         // Handle well known foreign content depending on extension or if path looks like directory.
+
+         if (this .URL .protocol !== "data:" && this .URL .href .match (/\.(?:html|htm|xhtml)$/))
+            return this .foreign (this .URL .href, this .target);
+      }
+
+      // Cached scenes:
 
       if (this .sceneCallback && this .cacheScene)
       {
@@ -200,53 +252,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          }
       }
 
-      // Data URL
-      {
-         const result = url .match (/^\s*data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s);
-
-         if (result && result [3] !== "base64")
-         {
-            // const mimeType = result [1] || "text/plain"";
-
-            let data = url .substring (result [0] .length);
-
-            data = $.try (() => decodeURIComponent (data)) ?? data; // Decode data.
-            data = data .replace (/^ï»¿/, "");                      // Remove BOM.
-
-            await this .callback (data);
-            return;
-         }
-      }
-
-      if (this .URL .protocol !== "data:" && this .bindViewpoint)
-      {
-         const referer = new URL (this .getBaseURL ());
-
-         if (this .URL .protocol === referer .protocol &&
-             this .URL .hostname === referer .hostname &&
-             this .URL .port     === referer .port &&
-             this .URL .pathname === referer .pathname &&
-             this .URL .hash)
-         {
-            this .bindViewpoint (decodeURIComponent (this .URL .hash .substring (1)));
-            return;
-         }
-      }
-
-      if (this .foreign)
-      {
-         // Handle target
-
-         if (this .target .length && this .target !== "_self")
-            return this .foreign (this .URL .href, this .target);
-
-         // Handle well known foreign content depending on extension or if path looks like directory.
-
-         if (this .URL .protocol !== "data:" && this .URL .href .match (/\.(?:html|htm|xhtml)$/))
-            return this .foreign (this .URL .href, this .target);
-      }
-
-      // Load URL async
+      // Load URL async:
 
       const
          options  = { cache: this .node .getCache () ? "default" : "reload", signal: this .controller .signal },
