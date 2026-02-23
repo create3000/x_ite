@@ -10,12 +10,12 @@ const foreignMimeType = new Set ([
    "application/xhtml+xml",
 ])
 
-function FileLoader (node, cache = false)
+function FileLoader (node, cacheScene = false)
 {
    X3DObject .call (this);
 
    this .node             = node;
-   this .cache            = cache;
+   this .cacheScene       = cacheScene;
    this .browser          = node .getBrowser ();
    this .executionContext = node .getExecutionContext ();
    this .target           = "";
@@ -182,7 +182,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
       this .URL = new URL (url, this .getBaseURL ());
 
-      if (this .sceneCallback && this .cache)
+      if (this .sceneCallback && this .cacheScene)
       {
          const cacheURL = new URL (this .URL);
 
