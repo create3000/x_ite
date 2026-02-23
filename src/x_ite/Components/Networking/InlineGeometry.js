@@ -65,19 +65,25 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
 
       // Set new scene.
 
-      const hash = new URL (scene .getWorldURL ()) .hash .substring (1);
+      this .scene = scene;
 
-      this .scene        = scene;
-      this .geometryNode = scene
-         ? $.try (() => X3DCast (X3DConstants .X3DGeometryNode, scene .getExportedNode (hash)))
-            ?? this .getGeometryFromArray (scene .rootNodes)
-         : null;
+      if (scene)
+      {
+         const hash = new URL (scene .getWorldURL ()) .hash .substring (1);
 
-      this .scene ?.setExecutionContext (this .getExecutionContext ());
-      this .scene ?.setLive (true);
+         this .geometryNode = $.try (() => X3DCast (X3DConstants .X3DGeometryNode, scene .getExportedNode (hash)))
+               ?? this .getGeometryFromArray (scene .rootNodes);
 
-      this .geometryNode ?.addInterest ("requestRebuild", this);
-      this .geometryNode ?._transparent .addFieldInterest (this ._transparent);
+         this .scene .setExecutionContext (this .getExecutionContext ());
+         this .scene .setLive (true);
+
+         this .geometryNode ?.addInterest ("requestRebuild", this);
+         this .geometryNode ?._transparent .addFieldInterest (this ._transparent);
+      }
+      else
+      {
+         this .geometryNode = null;
+      }
 
       this .requestRebuild ();
    },
