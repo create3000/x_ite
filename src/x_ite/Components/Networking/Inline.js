@@ -95,14 +95,13 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
          this .scene .setExecutionContext (this .getExecutionContext ());
          this .scene .setLive (true);
          this .scene .rootNodes .addFieldInterest (this .groupNode ._children);
+
          this .groupNode ._children = this .scene .rootNodes;
       }
       else
       {
          this .groupNode ._children .length = 0;
       }
-
-      this .getBrowser () .addBrowserEvent ();
    },
    getInternalScene ()
    {

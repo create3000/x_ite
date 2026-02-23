@@ -65,8 +65,13 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
 
       // Set new scene.
 
+      const hash = new URL (scene .getWorldURL ()) .hash .substring (1);
+
       this .scene        = scene;
-      this .geometryNode = scene ? this .getGeometryFromArray (scene .rootNodes) : null;
+      this .geometryNode = scene
+         ? $.try (() => X3DCast (X3DConstants .X3DGeometryNode, scene .getExportedNode (hash)))
+            ?? this .getGeometryFromArray (scene .rootNodes)
+         : null;
 
       this .scene ?.setExecutionContext (this .getExecutionContext ());
       this .scene ?.setLive (true);
