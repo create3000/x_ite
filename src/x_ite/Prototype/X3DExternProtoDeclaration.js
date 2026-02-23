@@ -4,6 +4,7 @@ import FieldDefinitionArray    from "../Base/FieldDefinitionArray.js";
 import X3DUrlObject            from "../Components/Networking/X3DUrlObject.js";
 import X3DProtoDeclarationNode from "./X3DProtoDeclarationNode.js";
 import X3DConstants            from "../Base/X3DConstants.js";
+import FileLoader              from "../InputOutput/FileLoader.js";
 
 const
    _proto = Symbol (),
@@ -21,8 +22,6 @@ function X3DExternProtoDeclaration (executionContext, url)
                           X3DConstants .inputOutput, "url",                  url .copy (), // Must be of type MFString.
                           X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime (0),
                           X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600));
-
-   this .getBrowser () [_cache] ??= new Map ();
 }
 
 Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3DProtoDeclarationNode .prototype),
@@ -75,54 +74,10 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    },
    async loadData ()
    {
-      const browser = this .getBrowser ();
+      const cache = this .getBrowser () .getBrowserOption ("Cache");
 
-      if (!this ._url .length)
-      {
-         this .setError (new Error ("No URL given."));
-         return;
-      }
-
-      const { default: FileLoader } = await import ("../InputOutput/FileLoader.js");
-
-      for (const url of this ._url)
-      {
-         try
-         {
-            const
-               fileURL  = new URL (url, this .getExecutionContext () .getBaseURL ()),
-               cacheURL = new URL (fileURL),
-               cache    = browser .getBrowserOption ("Cache");
-
-            cacheURL .hash = "";
-
-            const cachePromise = cache
-               ? browser [_cache] .get (cacheURL .href)
-               : null;
-
-            const promise = cachePromise ?? new Promise (resolve =>
-            {
-               new FileLoader (this) .createX3DFromURL ([cacheURL], null, resolve);
-            });
-
-            if (!cachePromise && !cacheURL .search)
-               browser [_cache] .set (cacheURL .href, promise);
-
-            const scene = await promise;
-
-            if (!scene)
-               continue;
-
-            this .setInternalScene (scene, fileURL, cache);
-            return;
-         }
-         catch (error)
-         {
-            console .warn (error .message);
-         }
-      }
-
-      this .setError (new Error ("File could not be loaded."));
+      this .fileLoader ?.abort ();
+      this .fileLoader = new FileLoader (this, cache) .createX3DFromURL (this ._url, null, this .setInternalScene .bind (this));
    },
    getInternalScene ()
    {
@@ -130,37 +85,41 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
 
       return this [_scene];
    },
-   setInternalScene (scene, fileURL, cache)
+   setInternalScene (scene)
    {
-      const browser = this .getBrowser ();
+      // Remove old scene.
 
-      if (this [_scene] !== browser .getDefaultScene () && !this [_cache])
+      if (!this [_scene] ?.[_cache])
          this [_scene] ?.dispose ();
 
+      // Set new scene.
+
       this [_scene] = scene;
-      this [_cache] = cache;
 
-      const
-         protoName = decodeURIComponent (fileURL .hash .substring (1)),
-         proto     = protoName ? this [_scene] .protos .get (protoName) : this [_scene] .protos [0];
+      if (scene)
+      {
+         const
+            browser = this .getBrowser (),
+            cache   = browser .getBrowserOption ("Cache"),
+            hash    = new URL (scene .getWorldURL ()) .hash .substring (1),
+            proto   = hash ? scene .protos .get (hash) : scene .protos [0];
 
-      if (!proto)
-         throw new Error ("PROTO not found.");
+         scene [_cache] = cache;
+         
+         if (!proto)
+            throw new Error ("PROTO not found.");
 
-      this [_scene] .setExecutionContext (this [_cache] ? browser .getDefaultScene () : this .getExecutionContext ());
-      this [_scene] .setLive (true);
+         scene .setExecutionContext (cache ? browser .getDefaultScene () : this .getExecutionContext ());
+         scene .setLive (true);
 
-      this .setLoadState (X3DConstants .COMPLETE_STATE);
-      this .setProtoDeclaration (proto);
-   },
-   setError (error)
-   {
-      console .error (`Error loading extern prototype '${this .getName ()}':`, error);
-
-      this [_scene] = this .getBrowser () .getDefaultScene ();
-
-      this .setLoadState (X3DConstants .FAILED_STATE);
-      this .setProtoDeclaration (null);
+         this .setLoadState (X3DConstants .COMPLETE_STATE);
+         this .setProtoDeclaration (proto);
+      }
+      else
+      {
+         this .setLoadState (X3DConstants .FAILED_STATE);
+         this .setProtoDeclaration (null);
+      }
    },
    toVRMLStream (generator)
    {

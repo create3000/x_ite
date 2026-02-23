@@ -13,6 +13,9 @@ import FileLoader           from "../../InputOutput/FileLoader.js";
  * THIS NODE IS STILL EXPERIMENTAL.
  */
 
+const
+   _cache = Symbol ();
+
 function InlineGeometry (executionContext)
 {
    X3DLineGeometryNode .call (this, executionContext);
@@ -38,21 +41,10 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
    },
    loadData ()
    {
+      const cache = this .getBrowser () .getBrowserOption ("Cache");
+
       this .fileLoader ?.abort ();
-      this .fileLoader = new FileLoader (this) .createX3DFromURL (this ._url, null, this .setInternalSceneAsync .bind (this));
-   },
-   setInternalSceneAsync (scene)
-   {
-      if (scene)
-      {
-         this .setInternalScene (scene);
-         this .setLoadState (X3DConstants .COMPLETE_STATE);
-      }
-      else
-      {
-         this .setInternalScene (null);
-         this .setLoadState (X3DConstants .FAILED_STATE);
-      }
+      this .fileLoader = new FileLoader (this, cache) .createX3DFromURL (this ._url, null, this .setInternalScene .bind (this));
    },
    setInternalScene (scene)
    {
@@ -61,7 +53,8 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
       this .geometryNode ?.removeInterest ("requestRebuild", this);
       this .geometryNode ?._transparent .removeFieldInterest (this ._transparent);
 
-      this .scene ?.dispose ();
+      if (!this .scene ?.[_cache])
+         this .scene ?.dispose ();
 
       // Set new scene.
 
@@ -69,7 +62,12 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
 
       if (scene)
       {
-         const hash = new URL (scene .getWorldURL ()) .hash .substring (1);
+         const
+            browser = this .getBrowser (),
+            cache   = browser .getBrowserOption ("Cache"),
+            hash    = new URL (scene .getWorldURL ()) .hash .substring (1);
+
+         scene [_cache] = cache;
 
          this .geometryNode = hash
             ? X3DCast (X3DConstants .X3DGeometryNode, scene .getExportedNode (hash))
@@ -78,15 +76,19 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
          if (!this .geometryNode)
             throw new Error ("No X3DGeometryNode found.");
 
-         this .scene .setExecutionContext (this .getExecutionContext ());
+         this .scene .setExecutionContext (cache ? browser .getDefaultScene () : this .getExecutionContext ());
          this .scene .setLive (true);
 
          this .geometryNode .addInterest ("requestRebuild", this);
          this .geometryNode ._transparent .addFieldInterest (this ._transparent);
+
+         this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
       else
       {
          this .geometryNode = null;
+
+         this .setLoadState (X3DConstants .FAILED_STATE);
       }
 
       this .requestRebuild ();

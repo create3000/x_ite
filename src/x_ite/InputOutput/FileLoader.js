@@ -10,11 +10,12 @@ const foreignMimeType = new Set ([
    "application/xhtml+xml",
 ])
 
-function FileLoader (node)
+function FileLoader (node, cache = false)
 {
    X3DObject .call (this);
 
    this .node             = node;
+   this .cache            = cache;
    this .browser          = node .getBrowser ();
    this .executionContext = node .getExecutionContext ();
    this .target           = "";
@@ -22,6 +23,11 @@ function FileLoader (node)
    this .URL              = new URL (this .getBaseURL ());
    this .controller       = new AbortController ();
 }
+
+Object .assign (FileLoader,
+{
+   sceneCache: new Map (),
+});
 
 Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .prototype),
 {
@@ -69,8 +75,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          scene .setWorldURL (new URL (worldURL, this .getBaseURL ()));
          scene .setup ();
 
-         if (resolve)
-            resolve = this .setScene .bind (this, scene, resolve, reject);
+         resolve &&= this .setScene .bind (this, scene, resolve, reject);
 
          new GoldenGate (scene) .parseIntoScene (string, resolve, reject);
 
@@ -79,9 +84,14 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       catch (error)
       {
          if (reject)
+         {
+            this .resolve ?.(error);
             reject (error);
+         }
          else
+         {
             throw error;
+         }
       }
    },
    setScene (scene, resolve, reject)
@@ -102,14 +112,20 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
          await this .browser .nextFrame ();
 
+         this .resolve ?.(scene);
          resolve (scene);
       }
       catch (error)
       {
          if (reject)
+         {
+            this .resolve ?.(error)
             reject (error);
+         }
          else
+         {
             throw error;
+         }
       }
 
       if (DEVELOPMENT)
@@ -120,6 +136,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    },
    createX3DFromURL (url, parameter, callback, bindViewpoint, foreign)
    {
+      this .sceneCallback = callback;
       this .bindViewpoint = bindViewpoint;
       this .foreign       = foreign;
       this .target        = this .getTarget (parameter || new Fields .MFString ());
@@ -164,6 +181,31 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       }
 
       this .URL = new URL (url, this .getBaseURL ());
+
+      if (this .sceneCallback && this .cache)
+      {
+         const cacheURL = new URL (this .URL);
+
+         cacheURL .hash = "";
+
+         const promise = FileLoader .sceneCache .get (cacheURL .href);
+
+         if (promise)
+         {
+            const scene = await promise;
+
+            scene .setWorldURL (this .URL .href);
+
+            return this .sceneCallback (scene);
+         }
+         else
+         {
+            FileLoader .sceneCache .set (cacheURL .href, new Promise (resolve =>
+            {
+               this .resolve = resolve;
+            }));
+         }
+      }
 
       // Data URL
       {
@@ -250,6 +292,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       }
       else
       {
+         this .resolve ?.(null);
          this .callback (null);
       }
    },
