@@ -76,7 +76,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
             : this .getGeometryFromArray (scene .rootNodes);
 
          if (!this .geometryNode)
-            throw new Error ("No X3DGeometryNode found");
+            throw new Error ("No X3DGeometryNode found.");
 
          this .scene .setExecutionContext (this .getExecutionContext ());
          this .scene .setLive (true);

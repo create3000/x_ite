@@ -145,7 +145,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
          proto     = protoName ? this [_scene] .protos .get (protoName) : this [_scene] .protos [0];
 
       if (!proto)
-         throw new Error ("PROTO not found");
+         throw new Error ("PROTO not found.");
 
       this [_scene] .setExecutionContext (this [_cache] ? browser .getDefaultScene () : this .getExecutionContext ());
       this [_scene] .setLive (true);
