@@ -219,7 +219,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
       // Cached scenes:
 
-      if (this .sceneCallback && this .cacheScene && !this .URL .searchParams .size)
+      if (this .sceneCallback && this .cacheScene && !this .URL .search .length)
       {
          const cacheURL = new URL (this .URL);
 
