@@ -157,20 +157,14 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    async loadDocumentAsync (url)
    {
       if (url .length === 0)
-      {
-         this .loadDocumentError (new Error ("URL is empty."));
-         return;
-      }
+         return this .loadDocumentError (new Error ("URL is empty."));
 
       // Script:
       {
          const result = url .match (/^\s*(?:ecmascript|javascript|vrmlscript)\:/s);
 
          if (result)
-         {
-            await this .callback (url .substring (result [0] .length));
-            return;
-         }
+            return await this .callback (url .substring (result [0] .length));
       }
 
       this .URL = new URL (url, this .getBaseURL ());
@@ -188,8 +182,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
             data = $.try (() => decodeURIComponent (data)) ?? data; // Decode data.
             data = data .replace (/^ï»¿/, "");                      // Remove BOM.
 
-            await this .callback (data);
-            return;
+            return await this .callback (data);
          }
       }
 
@@ -205,8 +198,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
              this .URL .pathname === referer .pathname &&
              this .URL .hash)
          {
-            this .bindViewpoint (decodeURIComponent (this .URL .hash .substring (1)));
-            return;
+            return this .bindViewpoint (decodeURIComponent (this .URL .hash .substring (1)));
          }
       }
 
