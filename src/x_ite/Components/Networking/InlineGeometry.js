@@ -13,9 +13,6 @@ import FileLoader           from "../../InputOutput/FileLoader.js";
  * THIS NODE IS STILL EXPERIMENTAL.
  */
 
-const
-   _cache = Symbol ();
-
 function InlineGeometry (executionContext)
 {
    X3DLineGeometryNode .call (this, executionContext);
@@ -53,7 +50,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
       this .geometryNode ?.removeInterest ("requestRebuild", this);
       this .geometryNode ?._transparent .removeFieldInterest (this ._transparent);
 
-      if (!this .scene ?.[_cache])
+      if (!this .scene ?.cache)
          this .scene ?.dispose ();
 
       // Set new scene.
@@ -66,8 +63,6 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
             browser = this .getBrowser (),
             cache   = browser .getBrowserOption ("Cache"),
             hash    = new URL (scene .getWorldURL ()) .hash .substring (1);
-
-         scene [_cache] = cache;
 
          this .geometryNode = hash
             ? X3DCast (X3DConstants .X3DGeometryNode, scene .getExportedNode (hash))

@@ -89,7 +89,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    {
       // Remove old scene.
 
-      if (!this [_scene] ?.[_cache])
+      if (!this [_scene] ?.cache)
          this [_scene] ?.dispose ();
 
       // Set new scene.
@@ -104,8 +104,6 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
             hash    = new URL (scene .getWorldURL ()) .hash .substring (1),
             proto   = hash ? scene .protos .get (hash) : scene .protos [0];
 
-         scene [_cache] = cache;
-         
          if (!proto)
             throw new Error ("PROTO not found.");
 
