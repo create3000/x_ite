@@ -245,10 +245,11 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          }
          else
          {
-            FileLoader .sceneCache .set (cacheURL .href, new Promise (resolve =>
-            {
-               this .resolve = resolve;
-            }));
+            const { promise, resolve } = Promise .withResolvers ();
+
+            this .resolve = resolve;
+
+            FileLoader .sceneCache .set (cacheURL .href, promise);
          }
       }
 
