@@ -84,14 +84,9 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       catch (error)
       {
          if (reject)
-         {
-            this .resolve ?.(error);
             reject (error);
-         }
          else
-         {
             throw error;
-         }
       }
    },
    setScene (scene, resolve, reject)
@@ -118,14 +113,9 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       catch (error)
       {
          if (reject)
-         {
-            this .resolve ?.(error)
             reject (error);
-         }
          else
-         {
             throw error;
-         }
       }
 
       if (DEVELOPMENT)
