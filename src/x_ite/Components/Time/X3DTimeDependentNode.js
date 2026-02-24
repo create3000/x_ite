@@ -75,7 +75,7 @@ Object .assign (Object .setPrototypeOf (X3DTimeDependentNode .prototype, X3DChil
       {
          if (!this .disabled && this ._isActive .getValue () && !this ._isPaused .getValue ())
          {
-            // Only disable if needed, ie. if running!
+            // Only disable if needed, i.e. if running!
             this .disabled = true;
             this .real_pause ();
          }
