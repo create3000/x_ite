@@ -9,9 +9,9 @@ tags: [Script]
 
 Many actions are too complex for animation nodes:
 
-- Computed animation paths (eg. gravity)
-- Algorithmic shapes (eg. fractals)
-- Collaborative environments (eg. games)
+- Computed animation paths (e.g. gravity)
+- Algorithmic shapes (e.g. fractals)
+- Collaborative environments (e.g. games)
 
 You can create new sensors, interpolators, etc., using program scripts written in:
 
