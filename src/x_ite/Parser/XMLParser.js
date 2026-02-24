@@ -1106,7 +1106,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       }
       catch (error)
       {
-         // console .error (error);
+         console .warn (error .message);
 
          if (node ?.getType () .includes (X3DConstants .X3DMetadataObject))
          {
