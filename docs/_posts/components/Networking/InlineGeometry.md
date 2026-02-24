@@ -1,6 +1,6 @@
 ---
 title: InlineGeometry
-date: 2023-01-07
+date: 2026-02-22
 nav: components-Networking
 categories: [components, Networking]
 tags: [InlineGeometry, Networking, glTF]
