@@ -70,9 +70,9 @@ getMaterialColor (const in vec4 fragCoord)
       materialInfo = getDiffuseTransmissionInfo (materialInfo);
    #endif
 
-   #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
-      materialInfo = getVolumeScatterInfo (materialInfo);
+   materialInfo = getVolumeScatterInfo (materialInfo);
 
+   #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
       // The single scatter color defines the ratio of scattering. 1 - singleScatter is the ratio of absorption.
       vec3 singleScatter = multiToSingleScatter (materialInfo .multiscatterColor);
    #endif
@@ -164,7 +164,7 @@ getMaterialColor (const in vec4 fragCoord)
             l_diffuse *= materialInfo .diffuseTransmissionFactor;
 
             #if defined (X3D_VOLUME_MATERIAL_EXT)
-               l_diffuse  = 1.0 - applyVolumeAttenuation (l_diffuse, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
+               l_diffuse  = vec3 (1.0) - applyVolumeAttenuation (l_diffuse, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
                l_diffuse *= singleScatter;
             #endif
 
@@ -181,6 +181,6 @@ getMaterialColor (const in vec4 fragCoord)
    }
    #endif
 
-   return vec4 (frontColor, x3d_ScatterMaterialIdEXT);
+   return vec4 (frontColor * materialInfo .multiscatterColor, x3d_ScatterMaterialIdEXT);
 }
 `;
