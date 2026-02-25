@@ -3,7 +3,7 @@ title: Creating New Node Types
 date: 2022-11-28
 nav: tutorials-scripts-and-prototypes
 categories: [Tutorials]
-tags: [Creating, Node, Types]
+tags: [Prototype]
 ---
 ## Motivation
 

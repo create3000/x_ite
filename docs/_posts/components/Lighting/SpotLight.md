@@ -3,7 +3,7 @@ title: SpotLight
 date: 2023-01-07
 nav: components-Lighting
 categories: [components, Lighting]
-tags: [SpotLight, Lighting]
+tags: [SpotLight, Lighting, VRML]
 ---
 <style>
 .post h3 {

@@ -3,7 +3,7 @@ title: CylinderSensor
 date: 2023-01-07
 nav: components-PointingDeviceSensor
 categories: [components, PointingDeviceSensor]
-tags: [CylinderSensor, PointingDeviceSensor]
+tags: [CylinderSensor, PointingDeviceSensor, VRML]
 ---
 <style>
 .post h3 {

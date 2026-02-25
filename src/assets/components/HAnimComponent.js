@@ -20,8 +20,7 @@ Components .add ({
       HAnimSite,
    ],
    abstractNodes:
-   [
-   ],
+   [ ],
 });
 
 export default undefined;

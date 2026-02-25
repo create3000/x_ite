@@ -3,7 +3,7 @@ title: Transforming Shapes
 date: 2022-11-28
 nav: tutorials-shapes-geometry-and-appearance
 categories: [Tutorials]
-tags: [Transforming, Shapes]
+tags: [Transform, Shape]
 ---
 ## Motivation
 

@@ -280,7 +280,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
 
          this ._frameIndex = 0;
          this ._startFrame = 0;
-         this ._endFrame   = frameCount - 1;
+         this ._endFrame   = Math .max (frameCount - 1, 0);
          this ._frameCount = frameCount;
 
          this .set_frameDuration__ ();

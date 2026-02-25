@@ -3,7 +3,7 @@ title: NormalInterpolator
 date: 2023-01-07
 nav: components-Interpolation
 categories: [components, Interpolation]
-tags: [NormalInterpolator, Interpolation]
+tags: [NormalInterpolator, Interpolation, VRML]
 ---
 <style>
 .post h3 {

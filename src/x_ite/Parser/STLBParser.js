@@ -67,9 +67,27 @@ Object .assign (Object .setPrototypeOf (STLBParser .prototype, X3DParser .protot
 
       // Parse scene.
 
+      this .header ();
       this .shape ();
 
       return this .getScene ();
+   },
+   header ()
+   {
+      const header = $.decodeText (this .arrayBuffer .slice (0, 80)) .trim ();
+
+      if (!header)
+         return;
+
+      const
+         scene     = this .getScene (),
+         worldInfo = scene .createNode ("WorldInfo"),
+         url       = new URL (scene .worldURL);
+
+      worldInfo .title = url .protocol === "data:" ? "STL Model" : decodeURIComponent (url .pathname .split ('/') .at (-1));
+      worldInfo .info  = [header];
+
+      scene .rootNodes .push (worldInfo);
    },
    shape ()
    {
@@ -77,29 +95,38 @@ Object .assign (Object .setPrototypeOf (STLBParser .prototype, X3DParser .protot
          scene      = this .getExecutionContext (),
          shape      = scene .createNode ("Shape"),
          geometry   = scene .createNode ("TriangleSet"),
-         normal     = scene .createNode ("Normal"),
          coordinate = scene .createNode ("Coordinate"),
          dataView   = this .dataView,
          byteLength = this .dataView .byteLength,
-         vector     = [ ],
-         point      = [ ];
+         normals    = [ ],
+         points     = [ ];
 
       for (let i = 84; i < byteLength; i += 50)
       {
          for (let f = 0; f < 3; ++ f)
-            vector .push (dataView .getFloat32 (i + f * 4, true));
+            normals .push (dataView .getFloat32 (i + f * 4, true));
 
          for (let f = 3; f < 12; ++ f)
-            point .push (dataView .getFloat32 (i + f * 4, true));
+            points .push (dataView .getFloat32 (i + f * 4, true));
       }
+
+      this .rotateAxes (points);
 
       shape .appearance         = this .appearance;
       shape .geometry           = geometry;
+      coordinate .point         = points;
       geometry .normalPerVertex = false;
-      geometry .normal          = normal;
       geometry .coord           = coordinate;
-      normal .vector            = vector;
-      coordinate .point         = point;
+
+      if (normals .some (v => v !== 0))
+      {
+         const normal = scene .createNode ("Normal");
+
+         this .rotateAxes (normals);
+
+         normal .vector   = normals;
+         geometry .normal = normal;
+      }
 
       scene .getRootNodes () .push (shape);
    },

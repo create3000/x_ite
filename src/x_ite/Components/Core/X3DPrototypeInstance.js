@@ -197,7 +197,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
          oldField .setAccessType (newField .getAccessType ());
          oldField .setName (newField .getName ());
 
-         // Replace field, ie. reuse old field.
+         // Replace field, i.e. reuse old field.
          this .getPredefinedFields () .update (newField .getName (), newField .getName (), oldField);
 
          const references = Array .from (oldField .getReferences ());

@@ -3,7 +3,7 @@ title: TimeSensor
 date: 2023-01-07
 nav: components-Time
 categories: [components, Time]
-tags: [TimeSensor, Time]
+tags: [TimeSensor, Time, VRML]
 ---
 <style>
 .post h3 {

@@ -49,7 +49,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prot
             this .setGeometryType (0);
             this .setTransparent (true);
             this .setSolid (false);
-            this .setBase (X3DPointGeometryNode);
+            this .setBase (X3DPointGeometryNode .prototype);
             return;
          }
 
@@ -77,7 +77,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prot
          this .setGeometryType (1);
          this .setTransparent (false);
          this .setSolid (false);
-         this .setBase (X3DLineGeometryNode);
+         this .setBase (X3DLineGeometryNode .prototype);
          return;
       }
 
@@ -106,7 +106,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prot
          this .setGeometryType (2);
          this .setTransparent (false);
          this .setSolid (this ._solid .getValue ());
-         this .setBase (X3DGeometryNode);
+         this .setBase (X3DGeometryNode .prototype);
          return;
       }
 
@@ -150,17 +150,7 @@ Object .assign (Object .setPrototypeOf (Disk2D .prototype, X3DGeometryNode .prot
       this .setGeometryType (2);
       this .setTransparent (false);
       this .setSolid (this ._solid .getValue ());
-      this .setBase (X3DGeometryNode);
-   },
-   setBase (base)
-   {
-      this .intersectsLine         = base .prototype .intersectsLine;
-      this .intersectsBox          = base .prototype .intersectsBox;
-      this .generateTexCoords      = base .prototype .generateTexCoords;
-      this .displaySimple          = base .prototype .displaySimple;
-      this .display                = base .prototype .display;
-      this .displaySimpleInstanced = base .prototype .displaySimpleInstanced;
-      this .displayInstanced       = base .prototype .displayInstanced;
+      this .setBase (X3DGeometryNode .prototype);
    },
    updateRenderFunctions ()
    { },
