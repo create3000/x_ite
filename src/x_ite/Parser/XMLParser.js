@@ -1009,7 +1009,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       }
       catch (error)
       {
-         //console .error (error);
+         // console .error (error);
       }
    },
    fieldValue (field, value)
