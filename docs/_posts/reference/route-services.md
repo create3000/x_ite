@@ -3,7 +3,7 @@ title: Route Services
 date: 2022-11-28
 nav: reference
 categories: [Reference]
-tags: [Route, Services, Authoring, Interface]
+tags: [X3DRoute, ECMAScript, Javascript]
 ---
 ## X3DRoute
 

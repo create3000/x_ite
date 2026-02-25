@@ -184,13 +184,19 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    {
       return Matrix4 .IDENTITY;
    },
+   isSolid ()
+   {
+      return this .solid;
+   },
    setSolid (value)
    {
       this .solid = value;
    },
-   isSolid ()
+   getCCW ()
    {
-      return this .solid;
+      const gl = this .getBrowser () .getContext ();
+
+      return this .frontFace ===  gl .CCW;
    },
    setCCW (value)
    {
@@ -668,10 +674,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       {
          // Use default render functions.
 
-         delete this .displaySimple;
-         delete this .display;
-         delete this .displaySimpleInstanced;
-         delete this .displayInstanced;
+         this .setBase (this .base);
       }
       else
       {
@@ -683,6 +686,42 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          this .displayInstanced       = Function .prototype;
       }
    },
+   setBase: (() =>
+   {
+      // Actually all functions that are overloaded must be listed here.
+
+      const functions = [
+         "intersectsLine",
+         "updateVertexArrays",
+         "updateLengthSoFar",
+         "generateTexCoords",
+         "displaySimple",
+         "displaySimpleThick",
+         "displaySimpleInstanced",
+         "displaySimpleInstancedThick",
+         "display",
+         "displayThick",
+         "displayInstanced",
+         "displayInstancedThick",
+      ];
+
+      return function (base)
+      {
+         this .base = base;
+
+         if (base)
+         {
+            for (const fn of functions)
+               this [fn] = base [fn];
+         }
+         else
+         {
+            // Use default render functions.
+            for (const fn of functions)
+               delete this [fn];
+         }
+      };
+   })(),
    displaySimple (gl, renderContext, shaderNode)
    {
       if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
@@ -721,7 +760,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       // Handle negative scale.
 
-      const positiveScale = Matrix4 .prototype .determinant3 .call (modelViewMatrix) > 0;
+      const positiveScale = Matrix4 .prototype .determinant3 .call (modelViewMatrix) >= 0;
 
       if (shaderNode .transmissionBackfacesPass)
          gl .frontFace (positiveScale ? this .backFace : this .frontFace);
@@ -868,7 +907,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       // Handle negative scale.
 
-      const positiveScale = Matrix4 .prototype .determinant3 .call (modelViewMatrix) > 0;
+      const positiveScale = Matrix4 .prototype .determinant3 .call (modelViewMatrix) >= 0;
 
       if (shaderNode .transmissionBackfacesPass)
          gl .frontFace (positiveScale ? this .backFace : this .frontFace);

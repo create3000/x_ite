@@ -3,7 +3,7 @@ title: TextureCoordinate
 date: 2023-01-07
 nav: components-Texturing
 categories: [components, Texturing]
-tags: [TextureCoordinate, Texturing]
+tags: [TextureCoordinate, Texturing, VRML]
 ---
 <style>
 .post h3 {

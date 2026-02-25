@@ -3,7 +3,7 @@ title: Getting Started
 date: 2022-11-28
 nav: main
 categories: []
-tags: [Getting Started]
+tags: [Getting Started, X3D, VRML, glTF, Viewer]
 permalink: /
 ---
 
@@ -55,27 +55,26 @@ X_ITE is a comprehensive 3D library entirely written in JavaScript and uses WebG
 
 X3D is an ISO-ratified, royalty-free open standards file format and run-time architecture to represent and communicate 3D scenes and objects specified by the [Web3D® Consortium](https://www.web3d.org). X3D has evolved from its beginnings as the Virtual Reality Modeling Language (VRML) to the considerably more mature and refined ISO X3D standard. X3D provides a system for the storage, retrieval and playback of real time 3D scene in multiple applications, all within an open architecture to support a wide array of domains and user scenarios.
 
-glTF (GL Transmission Format) is an open standard file format designed for efficient transmission and loading of 3D models in real-time applications, such as web and mobile platforms. It optimizes the storage and rendering of 3D assets, including geometry, textures, materials, and animations, while minimizing file sizes and loading times.
+glTF (GL Transmission Format) is an open standard file format by the [Khronos® Group](https://www.khronos.org), designed for efficient transmission and loading of 3D models in real-time applications, such as web and mobile platforms. It optimizes the storage and rendering of 3D assets, including geometry, textures, materials, and animations, while minimizing file sizes and loading times.
 
 >**Tip:** If you ever run into trouble, please [report a bug or just ask a question](/x_ite/report-a-bug/).
 {: .prompt-tip }
 
-### Become a Patreon of X_ITE
+## Become a Patreon of X_ITE
 
 Yeah, tell me!
 
-X_ITE needs your support, with a small contribution you can make a big difference, or simply subscribe to receive the latest news.
+X_ITE needs your support, with a small contribution you can make a big difference, or simply [subscribe on Patreon](https://patreon.com/X_ITE) to receive the latest news.
 
 [<i class="fa-solid fa-heart"></i> Support us on Patreon](https://patreon.com/X_ITE){: .patreon }
 
-#### Special Thanks to All Active Supporters
+### Using X_ITE for a Personal Project?
 
-[![CRISE](/assets/sponsors/crise.png){: .normal }](https://vr-crisis.com){: title="CRISE" }
-[![John Carlson](/assets/sponsors/john-carlson.png){: .normal }](mailto:yottzumm@gmail.com){: title="John Carlson" }
-[![N Polys](/assets/sponsors/n-polys.png){: .normal }](mailto:nicholas.polys@gmail.com){: title="N Polys" }
-[![Sandy Ressler](/assets/sponsors/sandy-ressler.png){: .normal }](https://acm.org){: title="Sandy Ressler" }
-[![UND DREAM Lab](/assets/sponsors/und-dream-lab.png){: .normal }](https://dream.crc.und.edu){: title="UND DREAM Lab" }
-{: .sponsors }
+That's great! Sponsorship is neither expected nor required. Feel free to [share screenshots](https://github.com/create3000/x_ite/discussions/categories/show-and-tell) if you've made something you're excited about — I enjoy seeing those!
+
+### Using X_ITE in For-Profit Work?
+
+That's wonderful! Your support is important to keep X_ITE maintained, independent, and open source under MIT License. Please consider a [Patreon sponsorship](https://patreon.com/X_ITE).
 
 ## X3D Examples
 
@@ -183,6 +182,7 @@ X_ITE needs your support, with a small contribution you can make a big differenc
 [![Viewpoint](https://create3000.github.io/media/examples/Navigation/Viewpoint/screenshot-small.png){: width="110" height="62" }](https://create3000.github.io/media/examples/Navigation/Viewpoint/Viewpoint.x3d){: title="Navigation » Viewpoint" componentName="Navigation" typeName="Viewpoint" doc="true" buttonsPosition="br" }
 [![Anchor](https://create3000.github.io/media/examples/Networking/Anchor/screenshot-small.png){: width="110" height="62" }](https://create3000.github.io/media/examples/Networking/Anchor/Anchor.x3d){: title="Networking » Anchor" componentName="Networking" typeName="Anchor" doc="true" buttonsPosition="br" }
 [![Inline](https://create3000.github.io/media/examples/Networking/Inline/screenshot-small.png){: width="110" height="62" }](https://create3000.github.io/media/examples/Networking/Inline/Inline.x3d){: title="Networking » Inline" componentName="Networking" typeName="Inline" doc="true" buttonsPosition="br" }
+[![InlineGeometry](https://create3000.github.io/media/examples/Networking/InlineGeometry/screenshot-small.png){: width="110" height="62" }](https://create3000.github.io/media/examples/Networking/InlineGeometry/InlineGeometry.x3d){: title="Networking » InlineGeometry" componentName="Networking" typeName="InlineGeometry" doc="true" buttonsPosition="br" }
 [![LoadSensor](https://create3000.github.io/media/examples/Networking/LoadSensor/screenshot-small.png){: width="110" height="62" }](https://create3000.github.io/media/examples/Networking/LoadSensor/LoadSensor.x3d){: title="Networking » LoadSensor" componentName="Networking" typeName="LoadSensor" doc="true" buttonsPosition="br" }
 [![BoundedPhysicsModel](https://create3000.github.io/media/examples/ParticleSystems/BoundedPhysicsModel/screenshot-small.png){: width="110" height="62" }](https://create3000.github.io/media/examples/ParticleSystems/BoundedPhysicsModel/BoundedPhysicsModel.x3d){: title="ParticleSystems » BoundedPhysicsModel" componentName="ParticleSystems" typeName="BoundedPhysicsModel" doc="true" buttonsPosition="br" }
 [![ConeEmitter](https://create3000.github.io/media/examples/ParticleSystems/ConeEmitter/screenshot-small.png){: width="110" height="62" }](https://create3000.github.io/media/examples/ParticleSystems/ConeEmitter/ConeEmitter.x3d){: title="ParticleSystems » ConeEmitter" componentName="ParticleSystems" typeName="ConeEmitter" doc="true" buttonsPosition="br" }
@@ -252,7 +252,7 @@ X_ITE needs your support, with a small contribution you can make a big differenc
 <!-- EXAMPLES END -->
 
 >**Tip:** If you still haven't had enough and would like to see even more models, then take a look at the [glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/). There are a lot of models from simple to advanced.
-><br><br>[![Teaser1](/assets/laboratory/gltf-sample-viewer/teaser/light-image1.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ChronographWatch/glTF/ChronographWatch.gltf){: .light .img-link .w-25 }[![Teaser2](/assets/laboratory/gltf-sample-viewer/teaser/light-image2.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/BoomBox/glTF/BoomBox.gltf){: .light .img-link .w-25 }[![Teaser3](/assets/laboratory/gltf-sample-viewer/teaser/light-image3.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/SunglassesKhronos/glTF/SunglassesKhronos.gltf){: .light .img-link .w-25 }[![Teaser4](/assets/laboratory/gltf-sample-viewer/teaser/light-image4.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/IridescentDishWithOlives/glTF/IridescentDishWithOlives.gltf){: .light .img-link .w-25 }[![Teaser5](/assets/laboratory/gltf-sample-viewer/teaser/light-image5.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/SheenWoodLeatherSofa/glTF/SheenWoodLeatherSofa.gltf){: .light .img-link .w-25 }[![Teaser6](/assets/laboratory/gltf-sample-viewer/teaser/light-image6.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/DiffuseTransmissionTeacup/glTF/DiffuseTransmissionTeacup.gltf){: .light .img-link .w-25 }[![Teaser7](/assets/laboratory/gltf-sample-viewer/teaser/light-image7.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/CommercialRefrigerator/glTF/CommercialRefrigerator.gltf){: .light .img-link .w-25 }[![Teaser8](/assets/laboratory/gltf-sample-viewer/teaser/light-image8.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/CarConcept/glTF/CarConcept.gltf){: .light .img-link .w-25 }[![Teaser1](/assets/laboratory/gltf-sample-viewer/teaser/dark-image1.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ChronographWatch/glTF/ChronographWatch.gltf){: .dark .img-link .w-25 }[![Teaser2](/assets/laboratory/gltf-sample-viewer/teaser/dark-image2.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/BoomBox/glTF/BoomBox.gltf){: .dark .img-link .w-25 }[![Teaser3](/assets/laboratory/gltf-sample-viewer/teaser/dark-image3.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/SunglassesKhronos/glTF/SunglassesKhronos.gltf){: .dark .img-link .w-25 }[![Teaser4](/assets/laboratory/gltf-sample-viewer/teaser/dark-image4.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/IridescentDishWithOlives/glTF/IridescentDishWithOlives.gltf){: .dark .img-link .w-25 }[![Teaser5](/assets/laboratory/gltf-sample-viewer/teaser/dark-image5.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/SheenWoodLeatherSofa/glTF/SheenWoodLeatherSofa.gltf){: .dark .img-link .w-25 }[![Teaser6](/assets/laboratory/gltf-sample-viewer/teaser/dark-image6.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/DiffuseTransmissionTeacup/glTF/DiffuseTransmissionTeacup.gltf){: .dark .img-link .w-25 }[![Teaser7](/assets/laboratory/gltf-sample-viewer/teaser/dark-image7.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/CommercialRefrigerator/glTF/CommercialRefrigerator.gltf){: .dark .img-link .w-25 }[![Teaser8](/assets/laboratory/gltf-sample-viewer/teaser/dark-image8.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/CarConcept/glTF/CarConcept.gltf){: .dark .img-link .w-25 }
+><br><br>[![Teaser1](/assets/laboratory/gltf-sample-viewer/teaser/light-image1.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ChronographWatch/glTF/ChronographWatch.gltf){: .light .img-link .w-25 width="400" height="240" }[![Teaser2](/assets/laboratory/gltf-sample-viewer/teaser/light-image2.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/BoomBox/glTF/BoomBox.gltf){: .light .img-link .w-25 width="400" height="240" }[![Teaser3](/assets/laboratory/gltf-sample-viewer/teaser/light-image3.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/SunglassesKhronos/glTF/SunglassesKhronos.gltf){: .light .img-link .w-25 width="400" height="240" }[![Teaser4](/assets/laboratory/gltf-sample-viewer/teaser/light-image4.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/IridescentDishWithOlives/glTF/IridescentDishWithOlives.gltf){: .light .img-link .w-25 width="400" height="240" }[![Teaser5](/assets/laboratory/gltf-sample-viewer/teaser/light-image5.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/SheenWoodLeatherSofa/glTF/SheenWoodLeatherSofa.gltf){: .light .img-link .w-25 width="400" height="240" }[![Teaser6](/assets/laboratory/gltf-sample-viewer/teaser/light-image6.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/DiffuseTransmissionTeacup/glTF/DiffuseTransmissionTeacup.gltf){: .light .img-link .w-25 width="400" height="240" }[![Teaser7](/assets/laboratory/gltf-sample-viewer/teaser/light-image7.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/CommercialRefrigerator/glTF/CommercialRefrigerator.gltf){: .light .img-link .w-25 width="400" height="240" }[![Teaser8](/assets/laboratory/gltf-sample-viewer/teaser/light-image8.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/CarConcept/glTF/CarConcept.gltf){: .light .img-link .w-25 width="400" height="240" }[![Teaser1](/assets/laboratory/gltf-sample-viewer/teaser/dark-image1.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/ChronographWatch/glTF/ChronographWatch.gltf){: .dark .img-link .w-25 width="400" height="240" }[![Teaser2](/assets/laboratory/gltf-sample-viewer/teaser/dark-image2.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/BoomBox/glTF/BoomBox.gltf){: .dark .img-link .w-25 width="400" height="240" }[![Teaser3](/assets/laboratory/gltf-sample-viewer/teaser/dark-image3.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/SunglassesKhronos/glTF/SunglassesKhronos.gltf){: .dark .img-link .w-25 width="400" height="240" }[![Teaser4](/assets/laboratory/gltf-sample-viewer/teaser/dark-image4.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/IridescentDishWithOlives/glTF/IridescentDishWithOlives.gltf){: .dark .img-link .w-25 width="400" height="240" }[![Teaser5](/assets/laboratory/gltf-sample-viewer/teaser/dark-image5.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/SheenWoodLeatherSofa/glTF/SheenWoodLeatherSofa.gltf){: .dark .img-link .w-25 width="400" height="240" }[![Teaser6](/assets/laboratory/gltf-sample-viewer/teaser/dark-image6.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/DiffuseTransmissionTeacup/glTF/DiffuseTransmissionTeacup.gltf){: .dark .img-link .w-25 width="400" height="240" }[![Teaser7](/assets/laboratory/gltf-sample-viewer/teaser/dark-image7.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/CommercialRefrigerator/glTF/CommercialRefrigerator.gltf){: .dark .img-link .w-25 width="400" height="240" }[![Teaser8](/assets/laboratory/gltf-sample-viewer/teaser/dark-image8.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/CarConcept/glTF/CarConcept.gltf){: .dark .img-link .w-25 width="400" height="240" }
 {: .prompt-tip }
 
 ## Download X_ITE v{{ site.x_ite_latest_version }}
@@ -352,22 +352,23 @@ To get X_ITE working you need to include the JavaScript file »x_ite.min.js«. O
 
 X_ITE can load several file formats, either directly as the source of the \<x3d-canvas\> element or as the source of an Inline node, as well as using API methods of the [Browser object](/x_ite/reference/browser-services/). Foreign formats such as glTF are converted internally to X3D and then made available to the scene graph.
 
-| Encoding         | File Extension | MIME Type       | Comment                                       |
-|------------------|----------------|-----------------|-----------------------------------------------|
-| X3D XML          | .x3d, .x3dz    | model/x3d+xml   | [X3D Encoding: XML][1]                        |
-| X3D JSON         | .x3dj, .x3djz  | model/x3d+json  | [X3D Encoding: JSON][2]                       |
-| X3D Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml  | [X3D Encoding: Classic VRML][3]               |
-| VRML 2.0         | .wrl, .wrz     | model/vrml      | [VRML Specification][4]                       |
-| glTF             | .gltf, .glb    | model/gltf+json | [glTF Support](/x_ite/features/#gltf-support) |
-| Wavefront OBJ    | .obj           | model/obj       |                                               |
-| STL              | .stl           | model/stl       | ASCII & Binary                                |
-| PLY              | .ply           | model/ply       | ASCII & Binary                                |
-| SVG Document     | .svg, .svgz    | image/svg+xml   |                                               |
+| Encoding         | File Extension | MIME Type       | Comment                         |
+|------------------|----------------|-----------------|---------------------------------|
+| X3D XML          | .x3d, .x3dz    | model/x3d+xml   | [X3D Encoding: XML][1]          |
+| X3D JSON         | .x3dj, .x3djz  | model/x3d+json  | [X3D Encoding: JSON][2]         |
+| X3D Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml  | [X3D Encoding: Classic VRML][3] |
+| VRML 2.0         | .wrl, .wrz     | model/vrml      | [VRML Specification][4]         |
+| glTF             | .gltf, .glb    | model/gltf+json | [glTF Support][5]               |
+| Wavefront OBJ    | .obj           | model/obj       |                                 |
+| STL              | .stl           | model/stl       | ASCII & Binary                  |
+| PLY              | .ply           | model/ply       | ASCII & Binary                  |
+| SVG Document     | .svg, .svgz    | image/svg+xml   |                                 |
 
   [1]: https://www.web3d.org/documents/specifications/19776-1/V3.3/index.html
   [2]: https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19776-5v4.0-WD1/Part05/X3D_JSON.html
   [3]: https://www.web3d.org/documents/specifications/19776-2/V3.3/index.html
   [4]: https://www.web3d.org/documents/specifications/14772/V2.0/
+  [5]: /x_ite/features/#gltf-support
 
 All files can be compressed using GZip compression (usually denoted by a 'z' at the end of the filename suffix). This saves bandwidth and speeds up download time.
 
@@ -466,7 +467,7 @@ src
 : A String value containing the URL to load on page load. If no *src* attribute is specified or the *src* attribute is empty, an empty scene will be displayed.
 
 textCompression
-: A string value that determines how [Text](/x_ite/components/text/text/).*length* and [Text](/x_ite/components/text/text/).*maxExtent* are handled, ie. either by adjusting char spacing or by scaling. The default value for the *textCompression* attribute is `CHAR_SPACING`. For a list of possible values see [browser options](/x_ite/reference/browser-services/#browser-options).
+: A string value that determines how [Text](/x_ite/components/text/text/).*length* and [Text](/x_ite/components/text/text/).*maxExtent* are handled, i.e. either by adjusting char spacing or by scaling. The default value for the *textCompression* attribute is `CHAR_SPACING`. For a list of possible values see [browser options](/x_ite/reference/browser-services/#browser-options).
 
 theme
 : A string value that determines what color theme should be used for the user interface (context menu, notifications, ...). The default value for the *theme* attribute is `auto`. Possible values are `light`, `dark` and `auto`.

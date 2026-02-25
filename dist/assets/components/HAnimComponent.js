@@ -1,5 +1,5 @@
-/* X_ITE v14.0.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.2")];
+/* X_ITE v14.0.4 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.4")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -224,6 +224,7 @@ function HAnimHumanoid (executionContext)
    external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
    external_X_ITE_X3D_X3DBoundedObject_default().call (this, executionContext);
 
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DTransformMatrix3DNode);
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).HAnimHumanoid);
 
    this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "jointName",                  new (external_X_ITE_X3D_Fields_default()).SFTime (),
@@ -1362,7 +1363,7 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, (external_X_ITE_
 
          this ._frameIndex = 0;
          this ._startFrame = 0;
-         this ._endFrame   = frameCount - 1;
+         this ._endFrame   = Math .max (frameCount - 1, 0);
          this ._frameCount = frameCount;
 
          this .set_frameDuration__ ();
@@ -2076,8 +2077,7 @@ external_X_ITE_X3D_Components_default().add ({
       HAnim_HAnimSite,
    ],
    abstractNodes:
-   [
-   ],
+   [ ],
 });
 
 const HAnimComponent_default_ = undefined;

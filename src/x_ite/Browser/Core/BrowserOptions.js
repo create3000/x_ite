@@ -342,8 +342,9 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    set_Multisampling__ (multisampling)
    {
       const
-         browser = this .getBrowser (),
-         samples = Algorithm .clamp (multisampling .getValue (), 0, browser .getMaxSamples ());
+         browser    = this .getBrowser (),
+         maxSamples = browser .getMaxSamples (),
+         samples    = Algorithm .clamp (isNaN (multisampling .getValue ()) ? 4 : multisampling .getValue (), 0, maxSamples);
 
       browser .getRenderingProperties () ._Multisampling = this ._Antialiased .getValue () ? samples : 0;
       browser .getRenderingProperties () ._Antialiased   = samples > 0;

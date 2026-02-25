@@ -3,7 +3,7 @@ title: Fog
 date: 2023-01-07
 nav: components-EnvironmentalEffects
 categories: [components, EnvironmentalEffects]
-tags: [Fog, EnvironmentalEffects]
+tags: [Fog, EnvironmentalEffects, VRML]
 ---
 <style>
 .post h3 {

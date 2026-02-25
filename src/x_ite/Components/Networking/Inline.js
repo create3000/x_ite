@@ -60,43 +60,13 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
    },
    unloadData ()
    {
-      this .abortLoading ();
+      this .fileLoader ?.abort ();
       this .setInternalScene (this .getBrowser () .getDefaultScene ());
    },
    loadData ()
    {
-      this .abortLoading ();
-      this .fileLoader = new FileLoader (this) .createX3DFromURL (this ._url, null, this .setInternalSceneAsync .bind (this));
-   },
-   abortLoading ()
-   {
-      this .scene ._loadCount .removeInterest ("checkLoadCount", this);
-
-      if (this .fileLoader)
-         this .fileLoader .abort ();
-   },
-   setInternalSceneAsync (scene)
-   {
-      if (scene)
-      {
-         scene ._loadCount .addInterest ("checkLoadCount", this);
-         this .setInternalScene (scene);
-         this .checkLoadCount (scene ._loadCount);
-      }
-      else
-      {
-         this .setInternalScene (this .getBrowser () .getDefaultScene ());
-         this .setLoadState (X3DConstants .FAILED_STATE);
-      }
-   },
-   checkLoadCount (loadCount)
-   {
-      if (loadCount .getValue ())
-         return;
-
-      loadCount .removeInterest ("checkLoadCount", this);
-
-      this .setLoadState (X3DConstants .COMPLETE_STATE);
+      this .fileLoader ?.abort ();
+      this .fileLoader = new FileLoader (this) .createX3DFromURL (this ._url, null, this .setInternalScene .bind (this));
    },
    setInternalScene (scene)
    {
@@ -105,18 +75,23 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
 
       // Set new scene.
 
-      this .scene = scene;
+      this .scene = scene ?? this .getBrowser () .getDefaultScene ();
 
-      if (this .scene !== this .getBrowser () .getDefaultScene ())
+      if (scene)
       {
          this .scene .setExecutionContext (this .getExecutionContext ());
          this .scene .setLive (true);
          this .scene .rootNodes .addFieldInterest (this .groupNode ._children);
-         this .groupNode ._children = this .scene .rootNodes;
+
+         this .groupNode ._children = scene .rootNodes;
+
+         this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
       else
       {
          this .groupNode ._children .length = 0;
+
+         this .setLoadState (X3DConstants .NOT_STARTED_STATE);
       }
 
       this .getBrowser () .addBrowserEvent ();

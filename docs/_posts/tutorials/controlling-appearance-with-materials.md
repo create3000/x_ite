@@ -3,7 +3,7 @@ title: Controlling Appearance with Materials
 date: 2022-11-28
 nav: tutorials-shapes-geometry-and-appearance
 categories: [Tutorials]
-tags: [Controlling, Appearance, Materials]
+tags: [Appearance, Material]
 ---
 ## Motivation
 
