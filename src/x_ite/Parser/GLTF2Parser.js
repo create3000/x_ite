@@ -2372,6 +2372,11 @@ function eventsProcessed ()
 
             if (this .vectorValue (node .scale, scale))
                transformNode ._scale = scale;
+
+            matrix .set (transformNode ._translation .getValue (),
+                         transformNode ._rotation .getValue (),
+                         transformNode ._scale .getValue (),
+                         transformNode ._scaleOrientation .getValue ());
          }
 
          node .matrix       = matrix;
