@@ -1114,7 +1114,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          }
          else
          {
-            console .warn (`Container field for node ${node ?.getTypeName () ?? node} not found. ${error .message}`);
+            console .warn (`XML Parser: Container field for node ${node ?.getTypeName () ?? node} not found. ${error .message}`);
          }
       }
    },
