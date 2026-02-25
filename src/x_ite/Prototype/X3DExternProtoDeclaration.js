@@ -7,9 +7,9 @@ import X3DConstants            from "../Base/X3DConstants.js";
 import FileLoader              from "../InputOutput/FileLoader.js";
 
 const
-   _proto = Symbol (),
-   _scene = Symbol (),
-   _cache = Symbol ();
+   _proto      = Symbol (),
+   _scene      = Symbol (),
+   _fileLoader = Symbol ();
 
 function X3DExternProtoDeclaration (executionContext, url)
 {
@@ -76,9 +76,9 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    {
       const cache = this .getBrowser () .getBrowserOption ("Cache");
 
-      this .fileLoader ?.abort ();
+      this [_fileLoader] ?.abort ();
 
-      this .fileLoader = new FileLoader (this, cache)
+      this [_fileLoader] = new FileLoader (this, cache)
          .createX3DFromURL (this ._url, null, this .setInternalScene .bind (this));
    },
    getInternalScene ()
