@@ -709,7 +709,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          {
             if (field .getType () === X3DConstants .MFNode)
             {
-               field .length = 0
+               field .length = 0;
             }
 
             this .fieldValue (field, xmlElement .getAttribute ("value"));
