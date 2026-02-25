@@ -592,6 +592,108 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          scene .addMetaData (k, v);
       }
    },
+   khrImplicitShapes ({ shapes })
+   {
+      if (!(shapes instanceof Array))
+         return;
+
+      const scene = this .getScene ();
+
+      for (const [i, shape] of shapes .entries ())
+      {
+         const shapeNode = scene .createNode ("Shape", false);
+
+         switch (shape ?.type)
+         {
+            case "box":
+            {
+               const
+                  geometryNode = scene .createNode ("Box", false),
+                  size         = new Vector3 (1);
+
+               this .vectorValue (shape .box ?.size, size);
+
+               geometryNode ._size  = size;
+               shapeNode ._geometry = geometryNode;
+
+               geometryNode .setup ();
+               break;
+            }
+            case "capsule":
+            {
+               // TODO: create Capsule.
+
+               const geometryNode = scene .createNode ("Cylinder", false);
+
+               geometryNode ._height = this .numberValue (shape .capsule ?.height, 0.5);
+               geometryNode ._radius = Math .max (this .numberValue (shape .capsule ?.radiusBottom, 0.25),
+                  this .numberValue (shape .capsule ?.radiusTop, 0.25));
+
+               shapeNode ._geometry = geometryNode;
+
+               geometryNode .setup ();
+               break;
+            }
+            case "cylinder":
+            {
+               const geometryNode = scene .createNode ("Cylinder", false);
+
+               geometryNode ._height = this .numberValue (shape .cylinder ?.height, 0.5);
+               geometryNode ._radius = Math .max (this .numberValue (shape .cylinder ?.radiusBottom, 0.25),
+                  this .numberValue (shape .cylinder ?.radiusTop, 0.25));
+
+               shapeNode ._geometry = geometryNode;
+
+               geometryNode .setup ();
+               break;
+            }
+            case "plane":
+            {
+               const
+                  geometryNode   = scene .createNode ("IndexedTriangleSet", false),
+                  coordinateNode = scene .createNode ("Coordinate", false);
+
+               const
+                  x = this .numberValue (shape .sphere ?.sizeX, 1) / 2,
+                  z = this .numberValue (shape .sphere ?.sizeZ, 1) / 2;
+
+               /* 3---2
+                * | / |
+                * 0---1
+                */
+
+               coordinateNode ._point = [
+                  -x, 0,  z,
+                   x, 0,  z,
+                   x, 0, -z,
+                  -x, 0, -z,
+               ];
+
+               geometryNode ._index = [0, 1, 2, 0, 2, 3];
+               geometryNode ._coord = coordinateNode;
+               shapeNode ._geometry = geometryNode;
+
+               coordinateNode .setup ();
+               geometryNode .setup ();
+               break;
+            }
+            case "sphere":
+            {
+               const geometryNode = scene .createNode ("Sphere", false);
+
+               geometryNode ._radius = this .numberValue (shape .sphere ?.radius, 0.5);
+               shapeNode ._geometry  = geometryNode;
+
+               geometryNode .setup ();
+               break;
+            }
+         }
+
+         shapeNode .setup ();
+
+         this .implicitShapes [i] = shapeNode;
+      }
+   },
    async buffersArray (buffers)
    {
       if (!(buffers instanceof Array))
@@ -2222,7 +2324,8 @@ function eventsProcessed ()
          rotation         = new Rotation4 (),
          scale            = new Vector3 (),
          scaleOrientation = new Rotation4 (),
-         quaternion       = new Quaternion ();
+         quaternion       = new Quaternion (),
+         matrix           = new Matrix4 ();
 
       return function (node, index, modelMatrix, physicsParent)
       {
@@ -2248,6 +2351,33 @@ function eventsProcessed ()
                transformNode ._name = node .name;
          }
 
+         // Set transformation matrix.
+
+         if (this .vectorValue (node .matrix, matrix))
+         {
+            matrix .get (translation, rotation, scale, scaleOrientation);
+
+            transformNode ._translation      = translation;
+            transformNode ._rotation         = rotation;
+            transformNode ._scale            = scale;
+            transformNode ._scaleOrientation = scaleOrientation;
+         }
+         else
+         {
+            if (this .vectorValue (node .translation, translation))
+               transformNode ._translation = translation;
+
+            if (this .vectorValue (node .rotation, quaternion))
+               transformNode ._rotation = rotation .setQuaternion (quaternion);
+
+            if (this .vectorValue (node .scale, scale))
+               transformNode ._scale = scale;
+         }
+
+         node .matrix       = matrix;
+         node .modelMatrix  = matrix .copy () .multRight (modelMatrix);
+         node .parentMatrix = modelMatrix .copy ();
+
          // Get mesh.
 
          const
@@ -2260,10 +2390,6 @@ function eventsProcessed ()
 
          if (viewpointNode)
             transformNode ._children .push (viewpointNode);
-
-         // Handle extensions.
-
-         this .nodeExtensions (node, physicsParent);
 
          // Add children.
 
@@ -2313,29 +2439,6 @@ function eventsProcessed ()
          }
          else
          {
-            // Set transformation matrix.
-
-            if (this .vectorValue (node .matrix, matrix))
-            {
-               matrix .get (translation, rotation, scale, scaleOrientation);
-
-               transformNode ._translation      = translation;
-               transformNode ._rotation         = rotation;
-               transformNode ._scale            = scale;
-               transformNode ._scaleOrientation = scaleOrientation;
-            }
-            else
-            {
-               if (this .vectorValue (node .translation, translation))
-                  transformNode ._translation = translation;
-
-               if (this .vectorValue (node .rotation, quaternion))
-                  transformNode ._rotation = rotation .setQuaternion (quaternion);
-
-               if (this .vectorValue (node .scale, scale))
-                  transformNode ._scale = scale;
-            }
-
             // Add Shape nodes.
 
             if (shapeNodes)
@@ -2343,6 +2446,10 @@ function eventsProcessed ()
 
             transformNode .setup ();
          }
+
+         // Handle extensions.
+
+         this .nodeExtensions (node, physicsParent);
       };
    })(),
    nodeExtensions: (() =>
