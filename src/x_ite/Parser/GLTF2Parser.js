@@ -2391,6 +2391,10 @@ function eventsProcessed ()
          if (viewpointNode)
             transformNode ._children .push (viewpointNode);
 
+         // Handle extensions.
+
+         this .nodeExtensions (node, physicsParent);
+
          // Add children.
 
          let children = this .nodeChildrenArray (node .children, node .modelMatrix, node .rigidBodyNode ? node : null);
@@ -2446,10 +2450,6 @@ function eventsProcessed ()
 
             transformNode .setup ();
          }
-
-         // Handle extensions.
-
-         this .nodeExtensions (node, physicsParent);
       };
    })(),
    nodeExtensions: (() =>
