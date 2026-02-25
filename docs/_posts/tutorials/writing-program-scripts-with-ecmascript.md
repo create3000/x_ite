@@ -3,7 +3,7 @@ title: Writing Program Scripts with ECMAScript
 date: 2022-11-28
 nav: tutorials-scripts-and-prototypes
 categories: [Tutorials]
-tags: [Program, Scripts, ECMAScript, Javascript]
+tags: [Script, ECMAScript, Javascript]
 ---
 ## Motivation
 

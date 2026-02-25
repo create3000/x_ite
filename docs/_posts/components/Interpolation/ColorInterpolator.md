@@ -3,7 +3,7 @@ title: ColorInterpolator
 date: 2023-01-07
 nav: components-Interpolation
 categories: [components, Interpolation]
-tags: [ColorInterpolator, Interpolation]
+tags: [ColorInterpolator, Interpolation, VRML]
 ---
 <style>
 .post h3 {

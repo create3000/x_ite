@@ -10,11 +10,12 @@ const foreignMimeType = new Set ([
    "application/xhtml+xml",
 ])
 
-function FileLoader (node)
+function FileLoader (node, cacheScene = false)
 {
    X3DObject .call (this);
 
    this .node             = node;
+   this .cacheScene       = cacheScene;
    this .browser          = node .getBrowser ();
    this .executionContext = node .getExecutionContext ();
    this .target           = "";
@@ -22,6 +23,11 @@ function FileLoader (node)
    this .URL              = new URL (this .getBaseURL ());
    this .controller       = new AbortController ();
 }
+
+Object .assign (FileLoader,
+{
+   sceneCache: new Map (),
+});
 
 Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .prototype),
 {
@@ -69,8 +75,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          scene .setWorldURL (new URL (worldURL, this .getBaseURL ()));
          scene .setup ();
 
-         if (resolve)
-            resolve = this .setScene .bind (this, scene, resolve, reject);
+         resolve &&= this .setScene .bind (this, scene, resolve, reject);
 
          new GoldenGate (scene) .parseIntoScene (string, resolve, reject);
 
@@ -102,6 +107,10 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
          await this .browser .nextFrame ();
 
+         if (this .cacheScene)
+            scene .cache = true;
+
+         this .resolve ?.(scene);
          resolve (scene);
       }
       catch (error)
@@ -120,6 +129,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    },
    createX3DFromURL (url, parameter, callback, bindViewpoint, foreign)
    {
+      this .sceneCallback = callback;
       this .bindViewpoint = bindViewpoint;
       this .foreign       = foreign;
       this .target        = this .getTarget (parameter || new Fields .MFString ());
@@ -146,26 +156,20 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    },
    async loadDocumentAsync (url)
    {
-      if (url .length === 0)
-      {
-         this .loadDocumentError (new Error ("URL is empty."));
-         return;
-      }
+      if (!url .length)
+         return this .loadDocumentError (new Error ("URL is empty."));
 
-      // Script
+      // Script:
       {
          const result = url .match (/^\s*(?:ecmascript|javascript|vrmlscript)\:/s);
 
          if (result)
-         {
-            await this .callback (url .substring (result [0] .length));
-            return;
-         }
+            return await this .callback (url .substring (result [0] .length));
       }
 
       this .URL = new URL (url, this .getBaseURL ());
 
-      // Data URL
+      // Data URL:
       {
          const result = url .match (/^\s*data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s);
 
@@ -178,10 +182,11 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
             data = $.try (() => decodeURIComponent (data)) ?? data; // Decode data.
             data = data .replace (/^ï»¿/, "");                      // Remove BOM.
 
-            await this .callback (data);
-            return;
+            return await this .callback (data);
          }
       }
+
+      // Bind Viewpoint URLs:
 
       if (this .URL .protocol !== "data:" && this .bindViewpoint)
       {
@@ -193,10 +198,11 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
              this .URL .pathname === referer .pathname &&
              this .URL .hash)
          {
-            this .bindViewpoint (decodeURIComponent (this .URL .hash .substring (1)));
-            return;
+            return this .bindViewpoint (decodeURIComponent (this .URL .hash .substring (1)));
          }
       }
+
+      // Foreign targets:
 
       if (this .foreign)
       {
@@ -211,7 +217,35 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
             return this .foreign (this .URL .href, this .target);
       }
 
-      // Load URL async
+      // Cached scenes:
+
+      if (this .sceneCallback && this .cacheScene && !this .URL .search .length)
+      {
+         const cacheURL = new URL (this .URL);
+
+         cacheURL .hash = "";
+
+         const promise = FileLoader .sceneCache .get (cacheURL .href);
+
+         if (promise)
+         {
+            const scene = await promise;
+
+            scene .setWorldURL (this .URL .href);
+
+            return this .sceneCallback (scene);
+         }
+         else
+         {
+            const { promise, resolve } = Promise .withResolvers ();
+
+            this .resolve = resolve;
+
+            FileLoader .sceneCache .set (cacheURL .href, promise);
+         }
+      }
+
+      // Load URL async:
 
       const
          options  = { cache: this .node .getCache () ? "default" : "reload", signal: this .controller .signal },
@@ -250,6 +284,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       }
       else
       {
+         this .resolve ?.(null);
          this .callback (null);
       }
    },

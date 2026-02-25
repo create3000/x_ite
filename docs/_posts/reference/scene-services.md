@@ -3,7 +3,7 @@ title: Scene Services
 date: 2022-11-28
 nav: reference
 categories: [Reference]
-tags: [Scene, Services, Authoring, Interface]
+tags: [X3DScene, ECMAScript, Javascript]
 ---
 
 ## Hierarchy
