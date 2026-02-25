@@ -104,8 +104,10 @@ getMaterialColor (const in vec4 fragCoord)
          f_diffuse *= materialInfo .diffuseTransmissionFactor;
 
          #if defined (X3D_VOLUME_MATERIAL_EXT)
-            f_diffuse =  1.0 - applyVolumeAttenuation (f_diffuse, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
+            f_diffuse = 1.0 - applyVolumeAttenuation (f_diffuse, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
          #endif
+
+         f_diffuse *= singleScatter;
       #endif
 
       #if defined (X3D_SHEEN_MATERIAL_EXT)
@@ -162,7 +164,8 @@ getMaterialColor (const in vec4 fragCoord)
             l_diffuse *= materialInfo .diffuseTransmissionFactor;
 
             #if defined (X3D_VOLUME_MATERIAL_EXT)
-               l_diffuse = 1.0 - applyVolumeAttenuation (l_diffuse, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
+               l_diffuse  = 1.0 - applyVolumeAttenuation (l_diffuse, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
+               l_diffuse *= singleScatter;
             #endif
 
          #endif // X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT
