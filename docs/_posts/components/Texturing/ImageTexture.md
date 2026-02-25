@@ -3,7 +3,7 @@ title: ImageTexture
 date: 2023-01-07
 nav: components-Texturing
 categories: [components, Texturing]
-tags: [ImageTexture, Texturing]
+tags: [ImageTexture, Texturing, VRML]
 ---
 <style>
 .post h3 {

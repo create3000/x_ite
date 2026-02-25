@@ -3,15 +3,15 @@ title: Introducing Script Use
 date: 2022-11-28
 nav: tutorials-scripts-and-prototypes
 categories: [Tutorials]
-tags: [Introducing, Script]
+tags: [Script]
 ---
 ## Motivation
 
 Many actions are too complex for animation nodes:
 
-- Computed animation paths (eg. gravity)
-- Algorithmic shapes (eg. fractals)
-- Collaborative environments (eg. games)
+- Computed animation paths (e.g. gravity)
+- Algorithmic shapes (e.g. fractals)
+- Collaborative environments (e.g. games)
 
 You can create new sensors, interpolators, etc., using program scripts written in:
 

@@ -18,8 +18,7 @@ Components .add ({
       TransmitterPdu,
    ],
    abstractNodes:
-   [
-   ],
+   [ ],
 });
 
 export default undefined;

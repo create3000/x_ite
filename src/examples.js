@@ -67,6 +67,7 @@ const X_ITE_EXAMPLES = [
    { component: "Navigation", test: "Viewpoint" },
    { component: "Networking", test: "Anchor" },
    { component: "Networking", test: "Inline" },
+   { component: "Networking", test: "InlineGeometry" },
    { component: "Networking", test: "LoadSensor" },
    { component: "NURBS", test: "NurbsCurve" },
    { component: "NURBS", test: "NurbsPatchSurface" },

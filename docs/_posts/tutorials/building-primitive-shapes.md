@@ -3,7 +3,7 @@ title: Building Primitive Shapes
 date: 2022-11-28
 nav: tutorials-shapes-geometry-and-appearance
 categories: [Tutorials]
-tags: [Building, Primitive, Shapes]
+tags: [Box, Cone, Cylinder, Sphere, Text, Shape]
 ---
 ## Motivation
 

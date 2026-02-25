@@ -339,22 +339,22 @@ uniform float x3d_IridescenceThicknessMaximumEXT;
 MaterialInfo
 getIridescenceInfo (in MaterialInfo info)
 {
-    info .iridescenceFactor    = x3d_IridescenceEXT;
-    info .iridescenceIor       = x3d_IridescenceIndexOfRefractionEXT;
-    info .iridescenceThickness = x3d_IridescenceThicknessMaximumEXT;
+   info .iridescenceFactor    = x3d_IridescenceEXT;
+   info .iridescenceIor       = x3d_IridescenceIndexOfRefractionEXT;
+   info .iridescenceThickness = x3d_IridescenceThicknessMaximumEXT;
 
-    #if defined (X3D_IRIDESCENCE_TEXTURE_EXT)
-        info .iridescenceFactor *= getIridescenceTextureEXT ();
-    #endif
+   #if defined (X3D_IRIDESCENCE_TEXTURE_EXT)
+      info .iridescenceFactor *= getIridescenceTextureEXT ();
+   #endif
 
-    #if defined (X3D_IRIDESCENCE_THICKNESS_TEXTURE_EXT)
-        float thicknessSampled = getIridescenceThicknessTextureEXT ();
-        float thickness        = mix (x3d_IridescenceThicknessMinimumEXT, x3d_IridescenceThicknessMaximumEXT, thicknessSampled);
+   #if defined (X3D_IRIDESCENCE_THICKNESS_TEXTURE_EXT)
+      float thicknessSampled = getIridescenceThicknessTextureEXT ();
+      float thickness        = mix (x3d_IridescenceThicknessMinimumEXT, x3d_IridescenceThicknessMaximumEXT, thicknessSampled);
 
-        info .iridescenceThickness = thickness;
-    #endif
+      info .iridescenceThickness = thickness;
+   #endif
 
-    return info;
+   return info;
 }
 #endif
 

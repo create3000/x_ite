@@ -3,7 +3,7 @@ title: IndexedFaceSet
 date: 2023-01-07
 nav: components-Geometry3D
 categories: [components, Geometry3D]
-tags: [IndexedFaceSet, Geometry3D]
+tags: [IndexedFaceSet, Geometry3D, VRML]
 ---
 <style>
 .post h3 {

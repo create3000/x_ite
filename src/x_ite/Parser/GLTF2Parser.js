@@ -3,6 +3,8 @@ import X3DOptimizer from "./X3DOptimizer.js";
 import Fields       from "../Fields.js";
 import X3DConstants from "../Base/X3DConstants.js";
 import URLs         from "../Browser/Networking/URLs.js";
+import Layer        from "../Components/Layering/Layer.js";
+import TraverseType from "../Rendering/TraverseType.js";
 import Algorithm    from "../../standard/Math/Algorithm.js";
 import Vector2      from "../../standard/Math/Numbers/Vector2.js";
 import Vector3      from "../../standard/Math/Numbers/Vector3.js";
@@ -50,6 +52,7 @@ function GLTF2Parser (scene)
    this .cameras               = [ ];
    this .nodes                 = [ ];
    this .skins                 = [ ];
+   this .skeletons             = new Map ();
    this .joints                = new Set ();
    this .pointerAliases        = new Map ();
    this .animationScripts      = [ ];
@@ -172,6 +175,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .skinsArray      (glTF .skins, glTF .nodes);
       this .nodesArray      (glTF .nodes);
       this .scenesArray     (glTF, glTF .scenes, glTF .scene);
+      this .skinsHumanoid   ();
+      this .skinsBBox       ();
       this .animationsArray (glTF .animations);
 
       this .physicsNodes ();
@@ -194,10 +199,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(asset instanceof Object))
          return;
 
-      const
-         scene         = this .getScene (),
-         worldURL      = scene .getWorldURL (),
-         worldInfoNode = scene .createNode ("WorldInfo", false);
+      const scene = this .getScene ();
 
       for (const [key, value] of Object .entries (asset))
       {
@@ -207,7 +209,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          if (key === "version")
             continue;
 
-         worldInfoNode ._info .push (`${key}: ${value}`);
+         scene .addMetaData (key, value);
       }
 
       if (asset .extras instanceof Object)
@@ -217,34 +219,16 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             if (typeof value !== "string")
                continue;
 
-            if (key === "title")
-               worldInfoNode ._title = value;
-            else
-               worldInfoNode ._info .push (`${key}: ${value}`);
+            scene .addMetaData (key, value);
          }
-      }
-
-      if (!worldInfoNode ._title .getValue ())
-      {
-         const url = new URL (worldURL);
-
-         if (url .protocol === "data:")
-            worldInfoNode ._title = "glTF Model";
-         else
-            worldInfoNode ._title = decodeURIComponent (url .pathname .split ("/") .at (-1) || worldURL);
       }
 
       if (asset .extensions ?.KHR_xmp_json_ld instanceof Object)
       {
          const packet = asset .extensions .KHR_xmp_json_ld .packet;
 
-         this .khrXmpJsonLdObject (packet, extensions ?.KHR_xmp_json_ld, worldInfoNode);
+         this .khrXmpJsonLdObject (packet, extensions ?.KHR_xmp_json_ld);
       }
-
-      worldInfoNode ._info .sort ();
-      worldInfoNode .setup ();
-
-      scene .getRootNodes () .push (worldInfoNode);
    },
    async extensionsArray (extensions, set)
    {
@@ -561,12 +545,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .materialVariants = variants;
    },
-   khrXmpJsonLdObject (index, KHR_xmp_json_ld, worldInfoNode)
+   khrXmpJsonLdObject (index, KHR_xmp_json_ld)
    {
       if (!(KHR_xmp_json_ld instanceof Object))
          return;
 
-      const packet = KHR_xmp_json_ld .packets [index];
+      const
+         scene  = this .getScene (),
+         packet = KHR_xmp_json_ld .packets [index];
 
       for (const [key, value] of Object .entries (packet))
       {
@@ -575,19 +561,25 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          if (!match)
             continue;
 
+         const k = match [1];
+
          if (value instanceof Object)
          {
             const array = value ["@set"] ?? value ["@list"];
 
             if (array instanceof Array)
             {
-               worldInfoNode ._info .push (`${match [1]}: ${array .map (v => v .toString ()) .join (", ")}`);
+               const v = array .map (v => v .toString ()) .join (", ");
+
+               scene .addMetaData (k, v);
                continue;
             }
 
             if (value ["rdf:_1"] ?.["@value"])
             {
-               worldInfoNode ._info .push (`${match [1]}: ${JSON .stringify (value ["rdf:_1"] ["@value"])}`);
+               const v = value ["rdf:_1"] ["@value"];
+
+               scene .addMetaData (k, v);
                continue;
             }
          };
@@ -595,109 +587,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          if (typeof value !== "string")
             continue;
 
-         worldInfoNode ._info .push (`${match [1]}: ${value}`);
-      }
-   },
-   khrImplicitShapes ({ shapes })
-   {
-      if (!(shapes instanceof Array))
-         return;
+         const v = value;
 
-      const scene = this .getScene ();
-
-      for (const [i, shape] of shapes .entries ())
-      {
-         const shapeNode = scene .createNode ("Shape", false);
-
-         switch (shape ?.type)
-         {
-            case "box":
-            {
-               const
-                  geometryNode = scene .createNode ("Box", false),
-                  size         = new Vector3 (1);
-
-               this .vectorValue (shape .box ?.size, size);
-
-               geometryNode ._size  = size;
-               shapeNode ._geometry = geometryNode;
-
-               geometryNode .setup ();
-               break;
-            }
-            case "capsule":
-            {
-               // TODO: create Capsule.
-
-               const geometryNode = scene .createNode ("Cylinder", false);
-
-               geometryNode ._height = this .numberValue (shape .capsule ?.height, 0.5);
-               geometryNode ._radius = Math .max (this .numberValue (shape .capsule ?.radiusBottom, 0.25),
-                  this .numberValue (shape .capsule ?.radiusTop, 0.25));
-
-               shapeNode ._geometry = geometryNode;
-
-               geometryNode .setup ();
-               break;
-            }
-            case "cylinder":
-            {
-               const geometryNode = scene .createNode ("Cylinder", false);
-
-               geometryNode ._height = this .numberValue (shape .cylinder ?.height, 0.5);
-               geometryNode ._radius = Math .max (this .numberValue (shape .cylinder ?.radiusBottom, 0.25),
-                  this .numberValue (shape .cylinder ?.radiusTop, 0.25));
-
-               shapeNode ._geometry = geometryNode;
-
-               geometryNode .setup ();
-               break;
-            }
-            case "plane":
-            {
-               const
-                  geometryNode   = scene .createNode ("IndexedTriangleSet", false),
-                  coordinateNode = scene .createNode ("Coordinate", false);
-
-               const
-                  x = this .numberValue (shape .sphere ?.sizeX, 1) / 2,
-                  z = this .numberValue (shape .sphere ?.sizeZ, 1) / 2;
-
-               /* 3---2
-                * | / |
-                * 0---1
-                */
-
-               coordinateNode ._point = [
-                  -x, 0,  z,
-                   x, 0,  z,
-                   x, 0, -z,
-                  -x, 0, -z,
-               ];
-
-               geometryNode ._index = [0, 1, 2, 0, 2, 3];
-               geometryNode ._coord = coordinateNode;
-               shapeNode ._geometry = geometryNode;
-
-               coordinateNode .setup ();
-               geometryNode .setup ();
-               break;
-            }
-            case "sphere":
-            {
-               const geometryNode = scene .createNode ("Sphere", false);
-
-               geometryNode ._radius = this .numberValue (shape .sphere ?.radius, 0.5);
-               shapeNode ._geometry  = geometryNode;
-
-               geometryNode .setup ();
-               break;
-            }
-         }
-
-         shapeNode .setup ();
-
-         this .implicitShapes [i] = shapeNode;
+         scene .addMetaData (k, v);
       }
    },
    async buffersArray (buffers)
@@ -1165,11 +1057,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (this .extensions .has ("KHR_texture_basisu"))
          images .push (this .images [texture .extensions ?.KHR_texture_basisu ?.source]);
 
-      if (this .extensions .has ("EXT_texture_webp"))
-         images .push (this .images [texture .extensions ?.EXT_texture_webp ?.source]);
-
       if (this .extensions .has ("EXT_texture_avif"))
          images .push (this .images [texture .extensions ?.EXT_texture_avif ?.source]);
+
+      if (this .extensions .has ("EXT_texture_webp"))
+         images .push (this .images [texture .extensions ?.EXT_texture_webp ?.source]);
 
       images .push (this .images [texture .source]);
 
@@ -1834,7 +1726,7 @@ function eventsProcessed ()
       if (!(mesh instanceof Object))
          return [ ];
 
-      if (mesh .shapeNodes)
+      if (mesh .shapeNodes && !EXT_mesh_gpu_instancing)
       {
          const primitives = mesh .primitives;
 
@@ -2295,12 +2187,10 @@ function eventsProcessed ()
       const
          scene         = this .getScene (),
          typeName      = this .joints .has (index) ? "HAnimJoint" : "Transform",
-         transformNode = scene .createNode (typeName, false),
-         skin          = this .skins [node .skin];
+         transformNode = scene .createNode (typeName, false);
 
       node .transformNode = transformNode;
-      node .humanoidNode  = skin ?.humanoidNode;
-      node .childNode     = node .humanoidNode ?? node .transformNode;
+      node .childNode     = node .transformNode;
       node .pointers      = [node .childNode];
 
       return node;
@@ -2313,13 +2203,16 @@ function eventsProcessed ()
          return;
 
       const
-         skeleton     = skin .skeleton .map (index => this .nodes [index]) .filter (node => node),
-         humanoidNode = skin .humanoidNode;
+         skeletons    = skin .skeleton .map (index => this .nodes [index]) .filter (node => node),
+         humanoidNode = skin .humanoidNode,
+         childNode    = skin .childNode;
 
-      for (const node of skeleton)
+      node .transformNode = childNode;
+
+      for (const skeleton of skeletons)
       {
-         node .humanoidNode = humanoidNode;
-         node .childNode    = humanoidNode;
+         skeleton .humanoidNode = humanoidNode;
+         skeleton .childNode    = childNode;
       }
    },
    nodeChildren: (() =>
@@ -2327,7 +2220,7 @@ function eventsProcessed ()
       const
          translation      = new Vector3 (),
          rotation         = new Rotation4 (),
-         scale            = new Vector3 (1),
+         scale            = new Vector3 (),
          scaleOrientation = new Rotation4 (),
          quaternion       = new Quaternion ();
 
@@ -2341,12 +2234,13 @@ function eventsProcessed ()
 
          const
             scene         = this .getScene (),
+            skin          = this .skins [node .skin],
             transformNode = node .transformNode,
             name          = this .sanitizeName (node .name);
 
          // Name
 
-         if (name)
+         if (name && !skin)
          {
             scene .addNamedNode (scene .getUniqueName (name), transformNode);
 
@@ -2354,45 +2248,10 @@ function eventsProcessed ()
                transformNode ._name = node .name;
          }
 
-         // Set transformation matrix.
-
-         const matrix = new Matrix4 ();
-
-         if (this .vectorValue (node .matrix, matrix))
-         {
-            matrix .get (translation, rotation, scale, scaleOrientation);
-
-            transformNode ._translation      = translation;
-            transformNode ._rotation         = rotation;
-            transformNode ._scale            = scale;
-            transformNode ._scaleOrientation = scaleOrientation;
-         }
-         else
-         {
-            if (this .vectorValue (node .translation, translation))
-               transformNode ._translation = translation;
-
-            if (this .vectorValue (node .rotation, quaternion))
-               transformNode ._rotation = rotation .setQuaternion (quaternion);
-
-            if (this .vectorValue (node .scale, scale))
-               transformNode ._scale = scale;
-
-            matrix .set (transformNode ._translation .getValue (),
-                        transformNode ._rotation .getValue (),
-                        transformNode ._scale .getValue (),
-                        transformNode ._scaleOrientation .getValue ());
-         }
-
-         node .matrix       = matrix;
-         node .modelMatrix  = matrix .copy () .multRight (modelMatrix);
-         node .parentMatrix = modelMatrix .copy ();
-
-         // Add mesh.
+         // Get mesh.
 
          const
             EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing,
-            skin                    = this .skins [node .skin],
             shapeNodes              = this .meshObject (this .meshes [node .mesh], skin, EXT_mesh_gpu_instancing);
 
          // Add camera.
@@ -2418,7 +2277,8 @@ function eventsProcessed ()
 
             children = children .map (childNode =>
             {
-               if (childNode .getType () .at (-1) === X3DConstants .HAnimHumanoid)
+               if (childNode ._children .length &&
+                   childNode ._children [0] .getNodeType () .at (-1) === X3DConstants .HAnimHumanoid)
                {
                   const segmentNode = scene .createNode ("HAnimSegment", false);
 
@@ -2437,84 +2297,51 @@ function eventsProcessed ()
 
          // Add children and shape nodes.
 
-         transformNode ._children .push (... children);
-         transformNode ._children .push (... shapeNodes);
-
-         transformNode .setup ();
-
-         // Skin
-
-         if (!skin)
-            return;
-
-         const humanoidNode = skin .humanoidNode;
-
-         if (!humanoidNode .isInitialized ())
+         if (skin)
          {
-            const name = this .sanitizeName (skin .name) || transformNode .getName ();
+            skin .name ??= node .name;
 
-            if (name)
-               scene .addNamedNode (scene .getUniqueName (name), humanoidNode);
+            const humanoidNode = skin .humanoidNode;
 
-            humanoidNode ._name                  = skin .name ?? node .name ?? "";
-            humanoidNode ._version               = "2.1";
-            humanoidNode ._skeletalConfiguration = "GLTF";
+            if (!shapeNodes ?.length)
+               return;
 
-            humanoidNode ._skeleton .push (... skin .skeleton
-               .map (index => this .nodes [index] ?.transformNode) .filter (node => node));
+            humanoidNode ._skinNormal = shapeNodes [0] ._geometry .normal;
+            humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
 
-            for (const [i, joint] of skin .joints .entries ())
+            humanoidNode ._skin .push (... shapeNodes);
+         }
+         else
+         {
+            // Set transformation matrix.
+
+            if (this .vectorValue (node .matrix, matrix))
             {
-               const
-                  jointNode         = this .nodes [joint] ?.transformNode,
-                  inverseBindMatrix = skin .inverseBindMatrices [i] ?? Matrix4 .IDENTITY;
+               matrix .get (translation, rotation, scale, scaleOrientation);
 
-               if (!jointNode)
-                  continue;
+               transformNode ._translation      = translation;
+               transformNode ._rotation         = rotation;
+               transformNode ._scale            = scale;
+               transformNode ._scaleOrientation = scaleOrientation;
+            }
+            else
+            {
+               if (this .vectorValue (node .translation, translation))
+                  transformNode ._translation = translation;
 
-               inverseBindMatrix .get (translation, rotation, scale);
+               if (this .vectorValue (node .rotation, quaternion))
+                  transformNode ._rotation = rotation .setQuaternion (quaternion);
 
-               humanoidNode ._joints                .push (jointNode);
-               humanoidNode ._jointBindingPositions .push (translation);
-               humanoidNode ._jointBindingRotations .push (rotation);
-               humanoidNode ._jointBindingScales    .push (scale);
+               if (this .vectorValue (node .scale, scale))
+                  transformNode ._scale = scale;
             }
 
-            humanoidNode .setup ();
-         }
+            // Add Shape nodes.
 
-         if (!shapeNodes ?.length)
-            return;
+            if (shapeNodes)
+               transformNode ._children .push (... shapeNodes);
 
-         humanoidNode ._skinNormal = shapeNodes [0] ._geometry .normal;
-         humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
-
-         humanoidNode ._skin .push (... shapeNodes);
-
-         // Create better bbox in case of mesh quantization is used.
-
-         if (!this .vectorValue (node .matrix, matrix))
-         {
-            this .vectorValue (node .translation, translation .set (0, 0, 0));
-            this .vectorValue (node .rotation, quaternion .set (0, 0, 0, 1));
-            rotation .setQuaternion (quaternion);
-            this .vectorValue (node .scale, scale .set (1, 1, 1));
-            matrix .set (translation, rotation, scale);
-         }
-
-         if (matrix .equals (Matrix4 .IDENTITY))
-            return;
-
-         const
-            points     = Array .from (humanoidNode ._skinCoord .point, point => matrix .multVecMatrix (point .getValue () .copy ())),
-            bbox       = Box3 .fromPoints (points),
-            bboxSize   = bbox .size,
-            bboxCenter = bbox .center;
-
-         for (const shapeNode of shapeNodes)
-         {
-            shapeNode ._bboxSize   = bboxSize;
-            shapeNode ._bboxCenter = bboxCenter;
+            transformNode .setup ();
          }
       };
    })(),
@@ -2794,18 +2621,31 @@ function eventsProcessed ()
          skin .joints .push (skeleton);
       }
 
+      const commons = this .skeletons .getOrInsert (skin .skeleton [0], { });
+
+      commons .childNode      ??= scene .createNode ("Transform",  false);
+      commons .normalNode     ??= scene .createNode ("Normal",     false);
+      commons .coordinateNode ??= scene .createNode ("Coordinate", false);
+
+      skin .childNode                  = commons .childNode;
+      skin .normalNode                 = commons .normalNode;
+      skin .coordinateNode             = commons .coordinateNode;
       skin .humanoidNode               = scene .createNode ("HAnimHumanoid",          false);
       skin .textureCoordinateNode      = scene .createNode ("TextureCoordinate",      false);
       skin .multiTextureCoordinateNode = scene .createNode ("MultiTextureCoordinate", false);
-      skin .normalNode                 = scene .createNode ("Normal",                 false);
-      skin .coordinateNode             = scene .createNode ("Coordinate",             false);
 
+      skin .childNode ._children .push (skin .humanoidNode);
       skin .textureCoordinateNode ._mapping = "TEXCOORD_0";
+
+      if (skin .childNode ._children .length === 1)
+      {
+         skin .childNode      .setup ();
+         skin .normalNode     .setup ();
+         skin .coordinateNode .setup ();
+      }
 
       skin .textureCoordinateNode      .setup ();
       skin .multiTextureCoordinateNode .setup ();
-      skin .normalNode                 .setup ();
-      skin .coordinateNode             .setup ();
    },
    jointsArray (joints, add)
    {
@@ -2843,6 +2683,109 @@ function eventsProcessed ()
          matrices .push (new Matrix4 (... array .subarray (i, i + 16)));
 
       return matrices;
+   },
+   skinsHumanoid ()
+   {
+      this .skins .forEach (skin => this .skinHumanoid (skin))
+   },
+   skinHumanoid: (() =>
+   {
+      const
+         translation = new Vector3 (),
+         rotation    = new Rotation4 (),
+         scale       = new Vector3 ();
+
+      return function (skin)
+      {
+         const
+            scene        = this .getScene (),
+            humanoidNode = skin .humanoidNode,
+            name         = this .sanitizeName (skin .name);
+
+         if (name)
+            scene .addNamedNode (scene .getUniqueName (name), humanoidNode);
+
+         humanoidNode ._name                  = skin .name ?? "";
+         humanoidNode ._skeletalConfiguration = "GLTF";
+
+         humanoidNode ._skeleton .push (... skin .skeleton
+            .map (index => this .nodes [index] ?.transformNode) .filter (node => node));
+
+         for (const [i, joint] of skin .joints .entries ())
+         {
+            const
+               jointNode         = this .nodes [joint] ?.transformNode,
+               inverseBindMatrix = skin .inverseBindMatrices [i] ?? Matrix4 .IDENTITY;
+
+            if (!jointNode)
+               continue;
+
+            inverseBindMatrix .get (translation, rotation, scale);
+
+            humanoidNode ._joints                .push (jointNode);
+            humanoidNode ._jointBindingPositions .push (translation);
+            humanoidNode ._jointBindingRotations .push (rotation);
+            humanoidNode ._jointBindingScales    .push (scale);
+         }
+
+         humanoidNode .setup ();
+      };
+   })(),
+   skinsBBox ()
+   {
+      this .skins .forEach (skin => this .skinBBox (skin .humanoidNode))
+   },
+   skinBBox (humanoidNode)
+   {
+      if (!humanoidNode ._skinCoord .getValue ())
+         return;
+
+      const
+         jointMatrix = new Matrix4 (),
+         layerNode   = new Layer (this .getScene ());
+
+      // Generate joint model matrices.
+
+      layerNode .setup ();
+      layerNode .getViewport () .push (layerNode);
+
+      humanoidNode .traverse (TraverseType .DISPLAY, layerNode);
+
+      // Determine points at binding position.
+
+      const
+         skinCoord  = humanoidNode ._skinCoord,
+         points     = Array .from (skinCoord .point, p => p .getValue () .copy ()),
+         skinPoints = [ ];
+
+      for (const [j, jointNode] of humanoidNode ._joints .entries ())
+      {
+         const skinCoordWeight = jointNode .skinCoordWeight;
+
+         jointMatrix .set (humanoidNode ._jointBindingPositions [j] .getValue (), humanoidNode ._jointBindingRotations [j] .getValue (), humanoidNode ._jointBindingScales [j] .getValue ()) .multRight (jointNode .getValue () .getModelViewMatrix ());
+
+         for (const [c, index] of jointNode .skinCoordIndex .entries ())
+         {
+            const
+               point = points [index],
+               skin  = skinPoints [index] ??= point .copy ();
+
+            skin ?.add (jointMatrix .multVecMatrix (point .copy ()) .subtract (point) .multiply (skinCoordWeight [c]));
+         }
+      }
+
+      // Set bbox for all Shape nodes.
+
+      const
+         bbox       = Box3 .fromPoints (Object .values (skinPoints)),
+         bboxSize   = bbox .size,
+         bboxCenter = bbox .center;
+
+      for (const shapeNode of humanoidNode ._skin)
+      {
+         shapeNode .bboxSize   = bboxSize;
+         shapeNode .bboxCenter = bboxCenter;
+      }
    },
    scenesArray (glTF, scenes, sceneNumber = 0)
    {
@@ -3127,13 +3070,14 @@ function eventsProcessed ()
    createShape (primitive, weights, skin, EXT_mesh_gpu_instancing)
    {
       const
-         scene          = this .getScene (),
-         shapeNode      = this .meshInstancing (EXT_mesh_gpu_instancing) ?? scene .createNode ("Shape", false),
-         appearanceNode = this .materialObject (primitive),
-         geometryNode   = this .createGeometry (primitive, weights, skin);
+         scene     = this .getScene (),
+         shapeNode = this .meshInstancing (EXT_mesh_gpu_instancing) ?? scene .createNode ("Shape", false);
 
-      shapeNode ._appearance = appearanceNode;
-      shapeNode ._geometry   = geometryNode;
+      primitive .appearanceNode ??= this .materialObject (primitive);
+      primitive .geometryNode   ??= this .createGeometry (primitive, weights, skin);
+
+      shapeNode ._appearance = primitive .appearanceNode;
+      shapeNode ._geometry   = primitive .geometryNode;
 
       shapeNode .setup ();
 

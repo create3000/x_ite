@@ -3,7 +3,7 @@ title: Lighting Your World
 date: 2022-11-28
 nav: tutorials-textures-lights-and-environment
 categories: [Tutorials]
-tags: [Lighting, World]
+tags: [Lighting, DirectionalLight, SpotLight, PointLight]
 ---
 ## Motivation
 
