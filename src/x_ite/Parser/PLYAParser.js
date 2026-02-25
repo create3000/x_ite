@@ -37,7 +37,8 @@ function PLYAParser (scene)
 {
    X3DParser .call (this, scene);
 
-   this .comments = [ ];
+   this .triangles = true;
+   this .comments  = [ ];
 
    this .typeMapping = new Map ([
       ["char",    this .int32],
@@ -115,65 +116,16 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    {
       if (Grammar .comment .parse (this) && Grammar .untilEndOfLine .parse (this))
       {
-         this .comments .push (this .result [0] .trim ());
-         return true;
-      }
+         const value = this .result [0] .trim ();
 
-      return false;
-   },
-   double ()
-   {
-      this .whitespacesNoLineTerminator ();
+         this .comments .push (value);
 
-      if (Grammar .double .parse (this))
-      {
-         this .value = parseFloat (this .result [0]);
+         this .mustRotateAxes ||= !! value .match (/Blender|Artec/i);
 
          return true;
       }
 
       return false;
-   },
-   int32 ()
-   {
-      this .whitespacesNoLineTerminator ();
-
-      if (Grammar .int32 .parse (this))
-      {
-         this .value = parseInt (this .result [0]);
-
-         return true;
-      }
-
-      return false;
-   },
-   convertColor (value, type)
-   {
-      switch (type)
-      {
-         case "uchar":
-         case "uint8":
-            return value / 0xff;
-         case "ushort":
-         case "uint16":
-            return value / 0xfffff;
-         case "uint":
-         case "uint32":
-            return value / 0xffffffff;
-         case "float":
-         case "float32":
-         case "double":
-         case "float64":
-            return value;
-      }
-   },
-   convertFDC (f_dc)
-   {
-      // https://github.com/graphdeco-inria/gaussian-splatting/issues/485
-
-      const C0 = 0.28209479177387814;
-
-      return 0.5 + C0 * f_dc;
    },
    header (elements)
    {
@@ -188,7 +140,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          worldInfo = scene .createNode ("WorldInfo"),
          url       = new URL (scene .worldURL);
 
-      worldInfo .title = url .protocol === "data:" ? "PLY Model" : url .pathname .split ('/') .at (-1);
+      worldInfo .title = url .protocol === "data:" ? "PLY Model" : decodeURIComponent (url .pathname .split ('/') .at (-1));
       worldInfo .info  = this .comments;
 
       scene .rootNodes .push (worldInfo);
@@ -322,14 +274,17 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       {
          const
             hasNormals = this .normals ?.some (v => v !== 0),
+            triangles  = this .triangles && !this .texCoordIndex ?.length,
             shape      = scene .createNode ("Shape"),
             appearance = scene .createNode ("Appearance"),
             material   = scene .createNode ("Material"),
-            geometry   = scene .createNode ("IndexedFaceSet"),
+            geometry   = scene .createNode (triangles ? "IndexedTriangleSet" : "IndexedFaceSet"),
             coordinate = scene .createNode ("Coordinate");
 
-         geometry .solid      = false;
-         geometry .coordIndex = this .coordIndex;
+         if (triangles)
+            geometry .index = this .coordIndex .filter (v => v !== -1);
+         else
+            geometry .coordIndex = this .coordIndex;
 
          if (this .colors ?.length)
          {
@@ -369,9 +324,15 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          {
             const normal = scene .createNode ("Normal");
 
+            if (this .mustRotateAxes)
+               this .rotateAxes (this .normals);
+
             normal .vector   = this .normals;
             geometry .normal = normal;
          }
+
+         if (this .mustRotateAxes)
+            this .rotateAxes (this .points);
 
          coordinate .point = this .points;
          geometry .coord   = coordinate;
@@ -380,7 +341,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          shape .appearance    = appearance;
          shape .geometry      = geometry;
 
-         scene .rootNodes .push (shape);
+         scene .getRootNodes () .push (shape);
       }
       else // PointSet
       {
@@ -406,9 +367,15 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          {
             const normal = scene .createNode ("Normal");
 
+            if (this .mustRotateAxes)
+               this .rotateAxes (this .normals);
+
             normal .vector   = this .normals;
             geometry .normal = normal;
          }
+
+         if (this .mustRotateAxes)
+            this .rotateAxes (this .points);
 
          coordinate .point = this .points;
          geometry .coord   = coordinate;
@@ -417,7 +384,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          shape .appearance    = appearance;
          shape .geometry      = geometry;
 
-         scene .rootNodes .push (shape);
+         scene .getRootNodes () .push (shape);
       }
    },
    processElement (element)
@@ -517,10 +484,20 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
          for (const { count, value, name } of properties)
          {
+            if (!count)
+            {
+               if (!value .call (this))
+                  throw new Error (`Couldn't parse a property value for ${name}.`);
+
+               continue;
+            }
+
             if (!count .call (this))
                throw new Error (`Couldn't parse property count for ${name}.`);
 
             const length = this .value;
+
+            this .triangles &&= length === 3;
 
             for (let i = 0; i < length; ++ i)
             {
@@ -602,6 +579,60 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       for (let i = 0; i < count; ++ i)
          Grammar .line .parse (this);
+   },
+   double ()
+   {
+      this .whitespacesNoLineTerminator ();
+
+      if (Grammar .double .parse (this))
+      {
+         this .value = parseFloat (this .result [0]);
+
+         return true;
+      }
+
+      return false;
+   },
+   int32 ()
+   {
+      this .whitespacesNoLineTerminator ();
+
+      if (Grammar .int32 .parse (this))
+      {
+         this .value = parseInt (this .result [0]);
+
+         return true;
+      }
+
+      return false;
+   },
+   convertColor (value, type)
+   {
+      switch (type)
+      {
+         case "uchar":
+         case "uint8":
+            return value / 0xff;
+         case "ushort":
+         case "uint16":
+            return value / 0xfffff;
+         case "uint":
+         case "uint32":
+            return value / 0xffffffff;
+         case "float":
+         case "float32":
+         case "double":
+         case "float64":
+            return value;
+      }
+   },
+   convertFDC (f_dc)
+   {
+      // https://github.com/graphdeco-inria/gaussian-splatting/issues/485
+
+      const C0 = 0.28209479177387814;
+
+      return 0.5 + C0 * f_dc;
    },
 });
 

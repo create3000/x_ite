@@ -3,7 +3,7 @@ title: ScalarInterpolator
 date: 2023-01-07
 nav: components-Interpolation
 categories: [components, Interpolation]
-tags: [ScalarInterpolator, Interpolation]
+tags: [ScalarInterpolator, Interpolation, VRML]
 ---
 <style>
 .post h3 {

@@ -521,7 +521,7 @@ class Playground
          {
             log .apply (console, args);
 
-            this .addConsoleMessage (command, args .join (" "));
+            this .addConsoleMessage (command, args .map (String) .join (" "));
          };
       }
 

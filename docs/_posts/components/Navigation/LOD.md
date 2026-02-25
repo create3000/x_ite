@@ -3,7 +3,7 @@ title: LOD
 date: 2023-01-07
 nav: components-Navigation
 categories: [components, Navigation]
-tags: [LOD, Navigation]
+tags: [LOD, Navigation, VRML]
 ---
 <style>
 .post h3 {

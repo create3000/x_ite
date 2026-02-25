@@ -3,7 +3,7 @@ title: Color
 date: 2023-01-07
 nav: components-Rendering
 categories: [components, Rendering]
-tags: [Color, Rendering]
+tags: [Color, Rendering, VRML]
 ---
 <style>
 .post h3 {

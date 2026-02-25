@@ -3,7 +3,7 @@ title: Grouping Nodes
 date: 2022-11-28
 nav: tutorials-shapes-geometry-and-appearance
 categories: [Tutorials]
-tags: [Grouping, Nodes]
+tags: [Grouping, Group, Switch, Transform, Billboard, Anchor, Inline]
 ---
 ## Motivation
 

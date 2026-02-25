@@ -3,7 +3,7 @@ title: Appearance
 date: 2023-01-07
 nav: components-Shape
 categories: [components, Shape]
-tags: [Appearance, Shape]
+tags: [Appearance, Shape, VRML]
 ---
 <style>
 .post h3 {

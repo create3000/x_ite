@@ -931,7 +931,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    print (... args)
    {
-      const string = args .map (arg => String (arg)) .join (" ");
+      const string = args .map (String) .join (" ");
 
       console .log (string);
 
@@ -940,7 +940,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    println (... args)
    {
-      const string = args .map (arg => String (arg)) .join (" ");
+      const string = args .map (String) .join (" ");
 
       console .log (string);
 

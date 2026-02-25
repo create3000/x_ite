@@ -28,6 +28,7 @@ function HAnimHumanoid (executionContext)
    X3DChildNode     .call (this, executionContext);
    X3DBoundedObject .call (this, executionContext);
 
+   this .addType (X3DConstants .X3DTransformMatrix3DNode);
    this .addType (X3DConstants .HAnimHumanoid);
 
    this .addChildObjects (X3DConstants .outputOnly, "jointName",                  new Fields .SFTime (),
