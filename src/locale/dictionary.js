@@ -296,7 +296,7 @@ export default [
    },
    {
       en: "Stop WebXR session.",
-      de: "Stoppe die WebXR Session.",
+      de: "Beende die WebXR Session.",
       fr: "Terminez la session WebXR.",
    },
    {
