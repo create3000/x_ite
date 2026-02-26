@@ -295,6 +295,11 @@ export default [
       fr: "Démarrez une session WebXR.",
    },
    {
+      en: "Stop WebXR session.",
+      de: "Stoppe die WebXR Session.",
+      fr: "Terminez la session WebXR.",
+   },
+   {
       en: "Activate sound.",
       de: "Activiere den Ton.",
       fr: "Activez le son.",
