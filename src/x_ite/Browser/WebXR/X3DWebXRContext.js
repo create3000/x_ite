@@ -106,6 +106,8 @@ Object .assign (X3DWebXRContext .prototype,
 
          this .getRenderingProperties () ._XRSession = true;
 
+         // Button
+
          this [_xrButton] .attr ("title", _("Stop WebXR session."));
 
          // session .addEventListener ("select", event =>
@@ -153,6 +155,8 @@ Object .assign (X3DWebXRContext .prototype,
          this .getRenderingProperties () ._ContentScale .removeInterest ("xrContentScale", this);
 
          this .getRenderingProperties () ._XRSession = false;
+
+         // Button
 
          this [_xrButton] .attr ("title", _("Start WebXR session."));
       });
