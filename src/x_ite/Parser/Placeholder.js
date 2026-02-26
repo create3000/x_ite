@@ -5,8 +5,6 @@ import X3DImportedNode from "../Execution/X3DImportedNode.js";
 class Placeholder extends X3DNode
 {
    #parser;
-   #lastIndex;
-   #lineNumber;
    #name;
    #namedNodes;
    #importedNodes;
@@ -18,8 +16,6 @@ class Placeholder extends X3DNode
       super (parser .getExecutionContext ());
 
       this .#parser        = parser;
-      this .#lastIndex     = parser .lastIndex,
-      this .#lineNumber    = parser .lineNumber;
       this .#namedNodes    = parser .getNamedNodes ();
       this .#importedNodes = parser .getImportedNodes ();
 
@@ -68,9 +64,6 @@ class Placeholder extends X3DNode
       else
       {
          console .warn (`X3DParser error: Named or imported node '${name}' not found.`);
-
-         this .#parser .lastIndex  = this .#lastIndex;
-         this .#parser .lineNumber = this .#lineNumber;
 
          this .dispose ();
       }
