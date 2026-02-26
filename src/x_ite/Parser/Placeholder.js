@@ -56,21 +56,23 @@ class Placeholder extends X3DNode
       if (node)
       {
          this .#parser .checkNodeType (node, this .#name, this .#type, this .#typeName);
+
+         for (const parent of Array .from (this .getParents ()))
+         {
+            if (!(parent instanceof Fields .SFNode))
+               continue;
+
+            parent .setValue (node);
+         }
       }
       else
       {
+         console .warn (`X3DParser error: Named or imported node '${name}' not found.`);
+
          this .#parser .lastIndex  = this .#lastIndex;
          this .#parser .lineNumber = this .#lineNumber;
 
-         console .warn (`X3DParser error: Named or imported node '${name}' not found.`);
-      }
-
-      for (const parent of Array .from (this .getParents ()))
-      {
-         if (!(parent instanceof Fields .SFNode))
-            continue;
-
-         parent .setValue (node);
+         this .dispose ();
       }
    }
 }
