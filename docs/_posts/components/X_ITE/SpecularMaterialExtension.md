@@ -66,7 +66,7 @@ Input/Output field *specularTextureMapping*.
 
  texture that defines the strength of the specular reflection, stored in the alpha (A) channel. This will be multiplied by specularFactor.
 
-### SFColor [in, out] **specularColor** 1 1 1 <small>[0,∞)</small>
+### SFColor [in, out] **specularColor** 1 1 1 <small>[0,1]</small>
 {: #fields-specularColor }
 
 The F0 color of the specular reflection (linear RGB).
