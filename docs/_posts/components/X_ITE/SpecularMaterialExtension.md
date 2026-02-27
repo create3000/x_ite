@@ -37,6 +37,7 @@ The SpecularMaterialExtension node belongs to the [X_ITE](/x_ite/components/over
 | SFString | [in, out] | [specularTextureMapping](#fields-specularTextureMapping) | "" |
 | SFNode | [in, out] | [specularTexture](#fields-specularTexture) | NULL  |
 | SFColor | [in, out] | [specularColor](#fields-specularColor) | 1 1 1  |
+| SFFloat | [in, out] | [specularStrength](#fields-specularStrength) | 1  |
 | SFString | [in, out] | [specularColorTextureMapping](#fields-specularColorTextureMapping) | "" |
 | SFNode | [in, out] | [specularColorTexture](#fields-specularColorTexture) | NULL  |
 {: .fields }
@@ -71,7 +72,7 @@ Input/Output field *specularTextureMapping*.
 The F0 color of the specular reflection (linear RGB).
 
 ### SFFloat [in, out] **specularStrength** 1 <small>[0,∞)</small>
-{: #fields-specular }
+{: #fields-specularStrength }
 
 The strength adjustment to be multiplied with the material's specularColor value.
 
