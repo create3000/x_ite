@@ -1486,9 +1486,11 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       if (this .vectorValue (KHR_materials_specular .specularColorFactor, specularColorFactor))
       {
-         const specularStrength = Math .max (... specularColorFactor);
+         const
+            specularStrength = Math .max (... specularColorFactor),
+            specularColor    = [... specularColorFactor] .map (c => c / specularStrength);
 
-         extension ._specularColor    = new Color3 (... [... specularColorFactor] .map (c => c / specularStrength));
+         extension ._specularColor    = new Color3 (... (specularStrength ? specularColor : [0]));
          extension ._specularStrength = specularStrength;
       }
 
