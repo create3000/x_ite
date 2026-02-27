@@ -1482,10 +1482,15 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       extension ._specularTexture        = this .textureInfo (KHR_materials_specular .specularTexture);
       extension ._specularTextureMapping = this .textureMapping (KHR_materials_specular .specularTexture);
 
-      const specularColorFactor = new Color3 ();
+      const specularColorFactor = new Vector3 ();
 
       if (this .vectorValue (KHR_materials_specular .specularColorFactor, specularColorFactor))
-         extension ._specularColor = specularColorFactor;
+      {
+         const specularStrength = Math .max (... specularColorFactor);
+
+         extension ._specularColor    = new Color3 (... [... specularColorFactor] .map (c => c / specularStrength));
+         extension ._specularStrength = specularStrength;
+      }
 
       extension ._specularColorTexture        = this .textureInfo (KHR_materials_specular .specularColorTexture);
       extension ._specularColorTextureMapping = this .textureMapping (KHR_materials_specular .specularColorTexture);

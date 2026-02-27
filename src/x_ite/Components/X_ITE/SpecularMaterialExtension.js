@@ -40,6 +40,7 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
       this ._specular             .addInterest ("set_specular__",             this);
       this ._specularTexture      .addInterest ("set_specularTexture__",      this);
       this ._specularColor        .addInterest ("set_specularColor__",        this);
+      this ._specularStrength     .addInterest ("set_specularColor__",        this);
       this ._specularColorTexture .addInterest ("set_specularColorTexture__", this);
 
       this .set_specular__ ();
@@ -59,7 +60,12 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
    },
    set_specularColor__ ()
    {
+      const specularStrength = Math .max (this ._specularStrength .getValue (), 0);
+
       this .specularColorArray .set (this ._specularColor .getValue ());
+
+      for (let i = 0; i < 3; ++ i)
+         this .specularColorArray [i] *= specularStrength;
    },
    set_specularColorTexture__ ()
    {
@@ -121,6 +127,7 @@ Object .defineProperties (SpecularMaterialExtension,
          new X3DFieldDefinition (X3DConstants .inputOutput, "specularTextureMapping",      new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "specularTexture",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "specularColor",               new Fields .SFColor (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "specularStrength",            new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "specularColorTextureMapping", new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "specularColorTexture",        new Fields .SFNode ()),
       ]),

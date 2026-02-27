@@ -628,7 +628,7 @@
           accessType="inputOutput"
           default="1"
           minInclusive="0"
-          description="The strength adjustment to be multiplied with the material's emissive value."
+          description="The strength adjustment to be multiplied with the material's emissiveColor value."
         />
         <containerField default="extensions" type="xs:NMTOKEN" />
       </InterfaceDefinition>
@@ -1084,6 +1084,13 @@
           default="1 1 1"
           minInclusive="0"
           description="The F0 color of the specular reflection (linear RGB)."
+        />
+        <field name="specularStrength"
+          type="SFFloat"
+          accessType="inputOutput"
+          default="1"
+          minInclusive="0"
+          description="The strength adjustment to be multiplied with the material's specularColor value."
         />
         <field name="specularColorTextureMapping"
           type="SFString"
