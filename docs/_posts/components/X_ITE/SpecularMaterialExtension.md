@@ -74,7 +74,7 @@ The F0 color of the specular reflection (linear RGB).
 ### SFFloat [in, out] **specularStrength** 1 <small>[0,∞)</small>
 {: #fields-specularStrength }
 
-The strength adjustment to be multiplied with the material's specularColor value.
+The strength adjustment to be multiplied with the material's *specularColor* value.
 
 ### SFString [in, out] **specularColorTextureMapping** ""
 {: #fields-specularColorTextureMapping }
