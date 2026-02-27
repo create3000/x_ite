@@ -286,6 +286,7 @@ uniform float x3d_SpecularStrengthEXT;
 MaterialInfo
 getSpecularInfo (in MaterialInfo info)
 {
+   vec3 specularColor   = x3d_SpecularStrengthEXT * x3d_SpecularColorEXT;
    vec4 specularTexture = vec4 (1.0);
 
    #if defined (X3D_SPECULAR_TEXTURE_EXT)
@@ -295,8 +296,6 @@ getSpecularInfo (in MaterialInfo info)
    #if defined (X3D_SPECULAR_COLOR_TEXTURE_EXT)
       specularTexture .rgb = getSpecularColorTextureEXT ();
    #endif
-
-   vec3 specularColor = x3d_SpecularStrengthEXT * x3d_SpecularColorEXT;
 
    info .f0_dielectric  = min (info .f0_dielectric * specularColor * specularTexture .rgb, vec3 (1.0));
    info .specularWeight = x3d_SpecularEXT * specularTexture .a;
