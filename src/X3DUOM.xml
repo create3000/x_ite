@@ -1232,7 +1232,7 @@
           default="0"
           minInclusive="-1"
           maxInclusive="1"
-          description="The anisotropy of scatter events. Range is (-1, 1)."
+          description="The anisotropy of scatter events. Range is [-1, 1]."
         />
         <containerField default="extensions" type="xs:NMTOKEN" />
       </InterfaceDefinition>

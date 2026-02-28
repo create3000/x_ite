@@ -51,10 +51,10 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 The multi-scatter albedo.
 
-### SFFloat [in, out] **scatterAnisotropy** 0 <small>(-1,1)</small>
+### SFFloat [in, out] **scatterAnisotropy** 0 <small>[-1,1]</small>
 {: #fields-scatterAnisotropy }
 
-The anisotropy of scatter events. Range is (-1, 1).
+The anisotropy of scatter events. Range is [-1, 1].
 
 ## Example
 
