@@ -33,9 +33,7 @@ Object .assign (Object .setPrototypeOf (IORMaterialExtension .prototype, X3DMate
    },
    set_indexOfRefraction__ ()
    {
-      const indexOfRefraction = this ._indexOfRefraction .getValue ();
-
-      this .indexOfRefraction = indexOfRefraction ? Math .max (indexOfRefraction, 1) : 0;
+      this .indexOfRefraction = Math .max (this ._indexOfRefraction .getValue (), 1);
    },
    getExtensionKey ()
    {

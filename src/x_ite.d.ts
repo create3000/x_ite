@@ -20764,7 +20764,7 @@ declare namespace X3D
        */
       multiscatterColor: SFColor;
       /**
-       * The anisotropy of scatter events. Range is (-1, 1).
+       * The anisotropy of scatter events. Range is [-1, 1].
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
