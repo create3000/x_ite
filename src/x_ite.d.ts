@@ -17548,7 +17548,7 @@ declare namespace X3D
        */
       specularStrength: number;
       /**
-       * texture that defines the strength of the specular reflection, stored in the alpha (A) channel. This will be multiplied by specularFactor.
+       * Texture that defines the strength of the specular reflection, stored in the alpha (A) channel. This will be multiplied by specularFactor.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */

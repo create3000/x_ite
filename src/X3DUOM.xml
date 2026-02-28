@@ -1063,6 +1063,7 @@
           accessType="inputOutput"
           default="1"
           minInclusive="0"
+          maxInclusive="1"
           description="The strength of the specular reflection."
         />
         <field name="specularTextureMapping"
@@ -1076,7 +1077,7 @@
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DSingleTextureNode"
-          description=" texture that defines the strength of the specular reflection, stored in the alpha (A) channel. This will be multiplied by specularFactor."
+          description="Texture that defines the strength of the specular reflection, stored in the alpha (A) channel. This will be multiplied by specularFactor."
         />
         <field name="specularColor"
           type="SFColor"

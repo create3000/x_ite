@@ -51,7 +51,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
-### SFFloat [in, out] **specular** 1 <small>[0,∞)</small>
+### SFFloat [in, out] **specular** 1 <small>[0,1]</small>
 {: #fields-specular }
 
 The strength of the specular reflection.
@@ -64,7 +64,7 @@ Input/Output field *specularTextureMapping*.
 ### SFNode [in, out] **specularTexture** NULL <small>[X3DSingleTextureNode]</small>
 {: #fields-specularTexture }
 
- texture that defines the strength of the specular reflection, stored in the alpha (A) channel. This will be multiplied by specularFactor.
+Texture that defines the strength of the specular reflection, stored in the alpha (A) channel. This will be multiplied by specularFactor.
 
 ### SFColor [in, out] **specularColor** 1 1 1 <small>[0,1]</small>
 {: #fields-specularColor }
