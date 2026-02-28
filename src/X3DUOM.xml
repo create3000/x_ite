@@ -285,6 +285,7 @@
           accessType="inputOutput"
           default="0"
           minInclusive="0"
+          maxInclusive="1"
           description="The anisotropy strength. When the anisotropy texture is present, this value is multiplied by the texture's blue channel."
         />
         <field name="anisotropyRotation"
@@ -477,6 +478,7 @@
           accessType="inputOutput"
           default="0"
           minInclusive="0"
+          maxInclusive="1"
           description="The clearcoat layer intensity."
         />
         <field name="clearcoatTextureMapping"
@@ -497,6 +499,7 @@
           accessType="inputOutput"
           default="0"
           minInclusive="0"
+          maxInclusive="1"
           description="The clearcoat layer roughness."
         />
         <field name="clearcoatRoughnessTextureMapping"
@@ -791,6 +794,7 @@
           accessType="inputOutput"
           default="0"
           minInclusive="0"
+          maxInclusive="1"
           description="The iridescence intensity factor."
         />
         <field name="iridescenceTextureMapping"
@@ -883,6 +887,7 @@
           accessType="inputOutput"
           default="0"
           minInclusive="0"
+          maxInclusive="1"
           description="The sheen roughness."
         />
         <field name="sheenRoughnessTextureMapping"
@@ -1185,7 +1190,7 @@
           type="SFFloat"
           accessType="inputOutput"
           default="1000000"
-          minInclusive="0"
+          minExclusive="0"
           description="Density of the medium given as the average distance that light travels in the medium before interacting with a particle. The value is given in world space."
         />
         <field name="attenuationColor"

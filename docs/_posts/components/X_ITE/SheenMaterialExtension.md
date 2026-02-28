@@ -65,7 +65,7 @@ Input/Output field *sheenColorTextureMapping*.
 
 The sheen color (RGB). The sheen color is in sRGB transfer function.
 
-### SFFloat [in, out] **sheenRoughness** 0 <small>[0,∞)</small>
+### SFFloat [in, out] **sheenRoughness** 0 <small>[0,1]</small>
 {: #fields-sheenRoughness }
 
 The sheen roughness.
