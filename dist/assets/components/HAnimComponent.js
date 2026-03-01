@@ -1,5 +1,5 @@
-/* X_ITE v14.0.4 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.4")];
+/* X_ITE v14.0.5 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.5")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -360,12 +360,15 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
       this ._segments .addInterest ("set_depreciated__", this);
       this ._sites    .addInterest ("set_depreciated__", this);
 
-      this .set_depreciated__ (this ._segments);
-      this .set_depreciated__ (this ._sites);
+      this .set_depreciated__ (this ._segments, "4.1");
+      this .set_depreciated__ (this ._sites,    "4.1");
    },
-   set_depreciated__ (field)
+   set_depreciated__ (field, version)
    {
       if (!field .length)
+         return;
+
+      if (this .getExecutionContext () .getSpecificationVersion () < version)
          return;
 
       console .warn (`Use of field ${this .getTypeName ()}.${field .getName ()} is deprecated. This field may be removed in future versions of X3D.`);

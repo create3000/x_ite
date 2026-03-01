@@ -1,5 +1,5 @@
-/* X_ITE v14.0.4 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.4")];
+/* X_ITE v14.0.5 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.5")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -434,6 +434,7 @@ Object .assign ((external_X_ITE_X3D_X3DViewer_default()).prototype,
 
 
 const
+   _xrButton       = Symbol (),
    _sessionLock    = Symbol (),
    _referenceSpace = Symbol (),
    _baseLayer      = Symbol (),
@@ -458,7 +459,7 @@ Object .assign (X3DWebXRContext .prototype,
    },
    xrAddButton ()
    {
-      $("<div></div>")
+      this [_xrButton] = $("<div></div>")
          .attr ("title", external_X_ITE_X3D_gettext_default()("Start WebXR session."))
          .addClass (["x_ite-private-xr-button", "x_ite-private-button"])
          .on ("mousedown touchstart", false)
@@ -526,6 +527,10 @@ Object .assign (X3DWebXRContext .prototype,
 
          this .getRenderingProperties () ._XRSession = true;
 
+         // Button
+
+         this [_xrButton] .attr ("title", external_X_ITE_X3D_gettext_default()("Stop WebXR session."));
+
          // session .addEventListener ("select", event =>
          // {
          //    const { inputSource, frame } = event;
@@ -571,6 +576,10 @@ Object .assign (X3DWebXRContext .prototype,
          this .getRenderingProperties () ._ContentScale .removeInterest ("xrContentScale", this);
 
          this .getRenderingProperties () ._XRSession = false;
+
+         // Button
+
+         this [_xrButton] .attr ("title", external_X_ITE_X3D_gettext_default()("Start WebXR session."));
       });
    },
    xrContentScale ()

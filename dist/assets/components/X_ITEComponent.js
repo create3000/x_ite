@@ -1,5 +1,5 @@
-/* X_ITE v14.0.4 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.4")];
+/* X_ITE v14.0.5 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.5")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -159,10 +159,14 @@ const ExtensionKeys_default_ = ExtensionKeys;
 ;
 
 /* harmony default export */ const X_ITE_ExtensionKeys = (external_X_ITE_X3D_Namespace_default().add ("ExtensionKeys", ExtensionKeys_default_));
+;// external "__X_ITE_X3D__ .Algorithm"
+const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
+var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Algorithm_namespaceObject);
 ;// external "__X_ITE_X3D__ .MaterialTextures"
 const external_X_ITE_X3D_MaterialTextures_namespaceObject = __X_ITE_X3D__ .MaterialTextures;
 var external_X_ITE_X3D_MaterialTextures_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_MaterialTextures_namespaceObject);
 ;// ./src/x_ite/Components/X_ITE/AnisotropyMaterialExtension.js
+
 
 
 
@@ -217,7 +221,7 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
    },
    set_anisotropyStrength__ ()
    {
-      this .anisotropyArray [2] = Math .max (this ._anisotropyStrength .getValue (), 0);
+      this .anisotropyArray [2] = external_X_ITE_X3D_Algorithm_default().clamp (this ._anisotropyStrength .getValue (), 0, 1);
    },
    set_anisotropyRotation__ ()
    {
@@ -422,9 +426,6 @@ const BlendMode_default_ = BlendMode;
 ;
 
 /* harmony default export */ const X_ITE_BlendMode = (external_X_ITE_X3D_Namespace_default().add ("BlendMode", BlendMode_default_));
-;// external "__X_ITE_X3D__ .Algorithm"
-const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
-var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Algorithm_namespaceObject);
 ;// ./src/x_ite/Components/X_ITE/ClearcoatMaterialExtension.js
 
 
@@ -479,7 +480,7 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
    },
    set_clearcoat__ ()
    {
-      this .clearcoat = Math .max (this ._clearcoat .getValue (), 0);
+      this .clearcoat = external_X_ITE_X3D_Algorithm_default().clamp (this ._clearcoat .getValue (), 0, 1);
    },
    set_clearcoatTexture__ ()
    {
@@ -1262,6 +1263,7 @@ const mat3 XYZ_TO_REC709=mat3(3.2404542,-.9692660,.0556434,-1.5371385,1.8760108,
 
 
 
+
 // Register key.
 
 X_ITE_ExtensionKeys .add ("IRIDESCENCE_MATERIAL_EXTENSION");
@@ -1313,7 +1315,7 @@ Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype,
    },
    set_iridescence__ ()
    {
-      this .iridescence = Math .max (this ._iridescence .getValue (), 0);
+      this .iridescence = external_X_ITE_X3D_Algorithm_default().clamp (this ._iridescence .getValue (), 0, 1);
    },
    set_iridescenceTexture__ ()
    {
@@ -1885,6 +1887,7 @@ const SpecularGlossinessMaterial_default_ = SpecularGlossinessMaterial;
 
 
 
+
 // Register key.
 
 X_ITE_ExtensionKeys .add ("SPECULAR_MATERIAL_EXTENSION");
@@ -1918,16 +1921,18 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X_
       this ._specular             .addInterest ("set_specular__",             this);
       this ._specularTexture      .addInterest ("set_specularTexture__",      this);
       this ._specularColor        .addInterest ("set_specularColor__",        this);
+      this ._specularStrength     .addInterest ("set_specularStrength__",     this);
       this ._specularColorTexture .addInterest ("set_specularColorTexture__", this);
 
       this .set_specular__ ();
       this .set_specularTexture__ ();
       this .set_specularColor__ ();
+      this .set_specularStrength__ ();
       this .set_specularColorTexture__ ();
    },
    set_specular__ ()
    {
-      this .specular = Math .max (this ._specular .getValue (), 0);
+      this .specular = external_X_ITE_X3D_Algorithm_default().clamp (this ._specular .getValue (), 0, 1);
    },
    set_specularTexture__ ()
    {
@@ -1938,6 +1943,10 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X_
    set_specularColor__ ()
    {
       this .specularColorArray .set (this ._specularColor .getValue ());
+   },
+   set_specularStrength__ ()
+   {
+      this .specularStrength = Math .max (this ._specularStrength .getValue (), 0);
    },
    set_specularColorTexture__ ()
    {
@@ -1965,11 +1974,13 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X_
    {
       uniforms .push ("x3d_SpecularEXT");
       uniforms .push ("x3d_SpecularColorEXT");
+      uniforms .push ("x3d_SpecularStrengthEXT");
    },
    setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
-      gl .uniform1f  (shaderObject .x3d_SpecularEXT,      this .specular);
-      gl .uniform3fv (shaderObject .x3d_SpecularColorEXT, this .specularColorArray);
+      gl .uniform1f  (shaderObject .x3d_SpecularEXT,         this .specular);
+      gl .uniform3fv (shaderObject .x3d_SpecularColorEXT,    this .specularColorArray);
+      gl .uniform1f  (shaderObject .x3d_SpecularStrengthEXT, this .specularStrength);
 
       if (!+this .getTextureBits ())
          return;
@@ -1999,6 +2010,7 @@ Object .defineProperties (SpecularMaterialExtension,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "specularTextureMapping",      new (external_X_ITE_X3D_Fields_default()).SFString ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "specularTexture",             new (external_X_ITE_X3D_Fields_default()).SFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "specularColor",               new (external_X_ITE_X3D_Fields_default()).SFColor (1, 1, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "specularStrength",            new (external_X_ITE_X3D_Fields_default()).SFFloat (1)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "specularColorTextureMapping", new (external_X_ITE_X3D_Fields_default()).SFString ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "specularColorTexture",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
@@ -2198,7 +2210,9 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X_IT
    },
    set_attenuationDistance__ ()
    {
-      this .attenuationDistance = Math .max (this ._attenuationDistance .getValue (), 0);
+      const attenuationDistance = this ._attenuationDistance .getValue ();
+
+      this .attenuationDistance = attenuationDistance ? Math .max (attenuationDistance, 0) : 1_000_000;
    },
    set_attenuationColor__ ()
    {
