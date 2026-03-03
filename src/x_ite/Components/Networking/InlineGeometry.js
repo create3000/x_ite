@@ -89,17 +89,28 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
 
       this .requestRebuild ();
    },
+   getInternalScene ()
+   {
+      ///  Returns the internal X3DScene of this inline, that is loaded from the url given.
+      ///  If the load field was false, null is returned.
+
+      return this .scene;
+   },
+   getGeometry ()
+   {
+      return this .geometryNode;
+   },
    getGeometryFromArray (nodes)
    {
       for (const node of nodes)
       {
-         const geometryNode = this .getGeometry (node ?.getValue ())
+         const geometryNode = this .getGeometryFromNode (node ?.getValue ())
 
          if (geometryNode)
             return geometryNode;
       }
    },
-   getGeometry (node)
+   getGeometryFromNode (node)
    {
       if (!node)
          return;
@@ -115,7 +126,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
          {
             case X3DConstants .SFNode:
             {
-               const geometryNode = this .getGeometry (field .getValue ());
+               const geometryNode = this .getGeometryFromNode (field .getValue ());
 
                if (geometryNode)
                   return geometryNode;
