@@ -23,7 +23,7 @@ const AccessType =
 
 function XMLParser (scene)
 {
-   X3DParser .call (this, scene);
+   X3DParser .call (this, scene, "XML Parser");
 
    this .protoDeclarations = [ ];
    this .parents           = [ ];

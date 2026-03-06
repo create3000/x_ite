@@ -63,7 +63,7 @@ class Placeholder extends X3DNode
       }
       else
       {
-         console .warn (`X3DParser error: Named or imported node '${name}' not found.`);
+         console .warn (`${this .#parser .getName ()}: Named or imported node '${name}' not found.`);
 
          this .dispose ();
       }
