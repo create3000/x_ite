@@ -25,13 +25,13 @@ x3d_latest_version: 4.1 # x3d latest version
 
 # x_ite settings
 x_ite_teaser: shader-dots
-x_ite_latest_version: 14.0.7 # x_ite latest version
+x_ite_latest_version: 14.0.8 # x_ite latest version
 x_ite_compressed_size: 296 # size in kb
-x_ite_js_integrity: sha384-rKY5r6bRypLTgitYBgTfzCuhrt6HoUOk7z151OFstWrJ27H/FJD/+p5WOMqI7dyW
-x_ite_min_js_integrity: sha384-UZeZ04eZqtmgTuI4mFYTTPy1lJi0OJgndK97kWSPYLTVPPwX9GYryti52ykdpyR6
-x_ite_mjs_integrity: sha384-7gdO7zK3fea+b4ttP6M5F5g7ZTjhhCyEDTia/kQUj0+xIoZZDERHvJsTMMIqjBuS
-x_ite_min_mjs_integrity: sha384-ayjR+YtE6V1DdqpI5egr7sJt8cGquYElyyffl/sM2sSmYRngoPLsZUxjzbZNcKwI
-x_ite_css_integrity: sha384-P/eUaBJ7fm71DGIJF2JMBhvgcT+GoQprkNr8m4cNJCbNR1GY93neI/K6h22pHGX7
+x_ite_js_integrity: sha384-yQZodJTwOFg8Y46w7CKG+rpnY5264rXAso7BvVRsWCkqV9nLqDLDoAvvBQ9JT1Dj
+x_ite_min_js_integrity: sha384-/kW7xc3lr3wQP0LXBTZa+v74YgAdC4/W6tKjisao4VrxPtGfrCAsBFEhL4TAXpia
+x_ite_mjs_integrity: sha384-arOIHcggookeGyzHuwC9ftxeG1fZ0LPUryP7nre0USGQ34yKXYPcFGzXzejB6bNi
+x_ite_min_mjs_integrity: sha384-jNDfcA+TVyDZ6uqxLdFLu2jjQkc2/vgo0NLyee8hIH6BafIgz7osJwJ/vEkNNxmc
+x_ite_css_integrity: sha384-4UqLOxOPD0GkePfEZq5M7+b7zsN5ishlXRgr+K1wmvkr05gGpHNqhiy7J8waOYFo
 
 # Fill in the protocol & hostname for your site.
 # e.g. 'https://username.github.io', note that it does not end with a '/'.
