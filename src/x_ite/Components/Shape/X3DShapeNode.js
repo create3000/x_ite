@@ -261,8 +261,13 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    },
    traverse (type, renderObject)
    {
+      const geometryNode = this .geometryNode;
+
+      if (!geometryNode)
+         return;
+
       // Needed for geometry primitives, Text with ScreenFontStyle and tools.
-      this .geometryNode ?.traverseBefore ?.(type, renderObject);
+      geometryNode .traverseBefore ?.(type, renderObject);
 
       switch (type)
       {
@@ -298,7 +303,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
       }
 
       // Needed for geometry primitives, Text with ScreenFontStyle and tools.
-      this .geometryNode ?.traverseAfter ?.(type, renderObject);
+      geometryNode .traverseAfter ?.(type, renderObject);
    },
    picking (renderObject)
    {
