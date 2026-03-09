@@ -530,7 +530,10 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
       const time = Date .now () / 1000;
 
       if (this [_executionContext])
+      {
          this [_executionContext] ._sceneGraph_changed = time;
+         this [_executionContext] ._bbox_changed       = time;
+      }
 
       this ._parents_changed = time;
    },
