@@ -65,6 +65,16 @@ $ npm install x_ite-node
 
 This script initializes an X3D canvas within an HTML page, configuring it to contain a scene, a camera and a geometric cube with default material properties. It then animates the rotation of the cube within the scene, ensuring that the camera captures the dynamic action.
 
+### External File
+
+```html
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@14.0.8/dist/x_ite.min.js"></script>
+<x3d-canvas
+    src="box.x3d"
+    contentScale="auto"
+    update="auto"></x3d-canvas>
+```
+
 ### Declarative Syntax
 
 ```html
@@ -197,7 +207,7 @@ X_ITE is free software and licensed under the [MIT License](LICENSE.md).
 
 ## See Also
 
-* [x_ite-node](https://www.npmjs.com/package/x_ite-node) — Pure Node.js version of X_ITE
-* [x3d-tidy](https://www.npmjs.com/package/x3d-tidy) — X3D converter, beautifier and minimizer
-* [x3d-image](https://www.npmjs.com/package/x3d-image) — render image files from X3D
-* [sunrize](https://www.npmjs.com/package/sunrize) — a multi-platform X3D editor
+* [x_ite-node](https://www.npmjs.com/package/x_ite-node) — Pure Node.js Version of X_ITE
+* [x3d-tidy](https://www.npmjs.com/package/x3d-tidy) — X3D Converter, Beautifier and Minimizer
+* [x3d-image](https://www.npmjs.com/package/x3d-image) — Render Image Files from X3D
+* [sunrize](https://www.npmjs.com/package/sunrize) — A Multi-Platform X3D Editor
