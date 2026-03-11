@@ -7,7 +7,7 @@
     <meta name='created' content='Sat, 14 Dec 2024 18:52:06 GMT'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='generator' content='Sunrize X3D Editor V2.0.7, https://create3000.github.io/sunrize/'/>
-    <meta name='modified' content='Tue, 10 Mar 2026 11:54:56 GMT'/>
+    <meta name='modified' content='Wed, 11 Mar 2026 01:58:27 GMT'/>
   </head>
   <Scene>
     <WorldInfo>
@@ -42,7 +42,7 @@
         rotation='0 -1 0 66.2242198950879'
         center='0.06475878 11.61841 -0.2880176'>
       <Inline DEF='_1'
-          url='"stars_dance_in_galaxy.gltf"'/>
+          url='"stars_dance_in_galaxy.glb"'/>
       <LoadSensor DEF='_2'>
         <Inline USE='_1'/>
       </LoadSensor>
