@@ -37,7 +37,7 @@
           type="SFBool"
           accessType="inputOutput"
           default="TRUE"
-          description="pointerEvents defines whether this Shape becomes target for pointer events."
+          description="pointerEvents defines whether this shape becomes target for pointer events."
         />
       </InterfaceDefinition>
     </AbstractNodeType>
@@ -48,7 +48,7 @@
           type="SFBool"
           accessType="inputOutput"
           default="TRUE"
-          description="pointerEvents defines whether this Shape becomes target for pointer events."
+          description="pointerEvents defines whether this layer becomes target for pointer events."
         />
       </InterfaceDefinition>
     </AbstractNodeType>
