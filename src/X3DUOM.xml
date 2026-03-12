@@ -42,6 +42,17 @@
       </InterfaceDefinition>
     </AbstractNodeType>
 
+    <AbstractNodeType name="X3DLayerNode">
+      <InterfaceDefinition>
+        <field name="pointerEvents"
+          type="SFBool"
+          accessType="inputOutput"
+          default="TRUE"
+          description="pointerEvents defines whether this Shape becomes target for pointer events."
+        />
+      </InterfaceDefinition>
+    </AbstractNodeType>
+
     <AbstractNodeType name="X3DFogObject">
       <InterfaceDefinition>
         <field name="visibilityStart"

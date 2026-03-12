@@ -21420,6 +21420,12 @@ declare namespace X3D
        */
       pickable: boolean;
       /**
+       * pointerEvents defines whether this Shape becomes target for pointer events.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      pointerEvents: boolean;
+      /**
        * This field is of access type 'inputOutput' and type SFNode.
        */
       viewport: X3DViewportNodeProxy | null;
