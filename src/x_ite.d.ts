@@ -11369,7 +11369,7 @@ declare namespace X3D
        */
       pickable: boolean;
       /**
-       * pointerEvents defines whether this layer becomes target for pointer events.
+       * pointerEvents defines whether this Layer becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -11567,7 +11567,7 @@ declare namespace X3D
        */
       pickable: boolean;
       /**
-       * pointerEvents defines whether this layer becomes target for pointer events.
+       * pointerEvents defines whether this LayoutLayer becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
