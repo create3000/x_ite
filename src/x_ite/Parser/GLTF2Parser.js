@@ -2573,24 +2573,23 @@ function eventsProcessed ()
                         {
                            const collisionCollectionNode = this .physicsMaterialObject (value .physicsMaterial);
 
-                           let children;
+                           let shapeNodes;
 
                            if (value .geometry ?.mesh !== undefined)
                            {
                               const
                                  mesh                    = this .meshes [value .geometry .mesh],
                                  skin                    = this .skins [node .skin],
-                                 EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing,
-                                 shapeNodes              = this .meshObject (mesh, skin, EXT_mesh_gpu_instancing);
+                                 EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing;
 
-                              children = shapeNodes;
+                              shapeNodes = this .meshObject (mesh, skin, EXT_mesh_gpu_instancing);
                            }
                            else if (value .geometry ?.shape !== undefined)
                            {
-                              children = [this .implicitShapes [value .geometry .shape]];
+                              shapeNodes = [this .implicitShapes [value .geometry .shape]];
                            }
 
-                           for (const shapeNode of children ?? [ ])
+                           for (const shapeNode of shapeNodes ?? [ ])
                            {
                               const collidableShapeNode = scene .createNode ("CollidableShape", false);
 
