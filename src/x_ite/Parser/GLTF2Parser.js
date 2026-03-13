@@ -81,7 +81,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    {
       const keys = new Set ([
          "asset",
-         "extra",
+         "extras",
          "extensions",
          "extensionsRequired",
          "extensionsUsed",
