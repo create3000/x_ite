@@ -2630,9 +2630,6 @@ function eventsProcessed ()
                               }
 
                               collidableShapeNode .setup ();
-
-                              // DEBUG
-                              // node .transformNode ._children .push (collidableShapeNode);
                            }
 
                            break;
@@ -2668,42 +2665,55 @@ function eventsProcessed ()
                                  rigidBodyNode ._forces = [0, GRAVITY * gravityFactor * mass, 0];
                            }
 
-                           // Script
+                           // Routes
 
-                           const scriptNode = scene .createNode ("Script", false);
+                           const invParentMatrix = node .parentMatrix .copy () .inverse ();
 
-                           scriptNode .addUserDefinedField (X3DConstants .inputOutput, "invParentMatrix", new Fields .SFMatrix4f (... node .parentMatrix .copy () .inverse ()));
+                           if (invParentMatrix .equals (Matrix4 .IDENTITY))
+                           {
+                              scene .addRoute (rigidBodyNode, "position",    node .childNode, "translation");
+                              scene .addRoute (rigidBodyNode, "orientation", node .childNode, "rotation");
+                           }
+                           else
+                           {
+                              // Script
 
-                           scriptNode .addUserDefinedField (X3DConstants .inputOutput, "position",    new Fields .SFVec3f ());
-                           scriptNode .addUserDefinedField (X3DConstants .inputOutput, "orientation", new Fields .SFRotation ());
+                              const scriptNode = scene .createNode ("Script", false);
 
-                           scriptNode .addUserDefinedField (X3DConstants .outputOnly, "translation_changed", new Fields .SFVec3f ());
-                           scriptNode .addUserDefinedField (X3DConstants .outputOnly, "rotation_changed",    new Fields .SFRotation ());
+                              scriptNode .addUserDefinedField (X3DConstants .inputOutput, "invParentMatrix", new Fields .SFMatrix4f (... invParentMatrix));
 
-                           scriptNode ._url = [/* js */ `ecmascript:
+                              scriptNode .addUserDefinedField (X3DConstants .inputOutput, "position",    new Fields .SFVec3f ());
+                              scriptNode .addUserDefinedField (X3DConstants .inputOutput, "orientation", new Fields .SFRotation ());
+
+                              scriptNode .addUserDefinedField (X3DConstants .outputOnly, "translation_changed", new Fields .SFVec3f ());
+                              scriptNode .addUserDefinedField (X3DConstants .outputOnly, "rotation_changed",    new Fields .SFRotation ());
+
+                              scriptNode ._url = [/* js */ `ecmascript:
 const modelMatrix = new SFMatrix4f ();
 
 function eventsProcessed ()
 {
    modelMatrix .setTransform (position, orientation);
 
-   const matrix = modelMatrix .multRight (invParentMatrix);
-
-   matrix .getTransform (translation_changed, rotation_changed);
+   modelMatrix
+      .multRight (invParentMatrix)
+      .getTransform (translation_changed, rotation_changed);
 }
-   `];
+`];
 
-                           scriptNode .setup ();
+                              scriptNode .setup ();
 
-                           scene .addNamedNode (scene .getUniqueName ("MotionScript"), scriptNode);
+                              scene .addNamedNode (scene .getUniqueName ("MotionScript"), scriptNode);
 
-                           scene .addRoute (rigidBodyNode, "position",    scriptNode, "position");
-                           scene .addRoute (rigidBodyNode, "orientation", scriptNode, "orientation");
+                              scene .addRoute (rigidBodyNode, "position",    scriptNode, "position");
+                              scene .addRoute (rigidBodyNode, "orientation", scriptNode, "orientation");
 
-                           scene .addRoute (scriptNode, "translation_changed", node .childNode, "translation");
-                           scene .addRoute (scriptNode, "rotation_changed",    node .childNode, "rotation");
+                              scene .addRoute (scriptNode, "translation_changed", node .childNode, "translation");
+                              scene .addRoute (scriptNode, "rotation_changed",    node .childNode, "rotation");
 
-                           this .motionScripts .push (scriptNode);
+                              this .motionScripts .push (scriptNode);
+                           }
+
                            break;
                         }
                         case "joint":
