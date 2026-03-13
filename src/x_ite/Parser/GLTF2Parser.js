@@ -2575,7 +2575,11 @@ function eventsProcessed ()
 
                            let shapeNodes;
 
-                           if (value .geometry ?.mesh !== undefined)
+                           if (value .geometry ?.shape !== undefined)
+                           {
+                              shapeNodes = [this .implicitShapes [value .geometry .shape]];
+                           }
+                           else if (value .geometry ?.mesh !== undefined)
                            {
                               const
                                  mesh                    = this .meshes [value .geometry .mesh],
@@ -2583,10 +2587,6 @@ function eventsProcessed ()
                                  EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing;
 
                               shapeNodes = this .meshObject (mesh, skin, EXT_mesh_gpu_instancing);
-                           }
-                           else if (value .geometry ?.shape !== undefined)
-                           {
-                              shapeNodes = [this .implicitShapes [value .geometry .shape]];
                            }
                            else if (value .geometry ?.node !== undefined) // Handle legacy property.
                            {
