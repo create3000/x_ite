@@ -119,10 +119,6 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          && this ._linearVelocity .getValue () .equals (Vector3 .ZERO)
          && this ._angularVelocity .getValue () .equals (Vector3 .ZERO);
 
-      this .set_kinematic__ ();
-   },
-   set_kinematic__ ()
-   {
       const { actor, fixed } = this;
 
       if (!actor)
@@ -427,7 +423,6 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       // Setup actor properties.
 
-      this .set_kinematic__ ();
       this .set_position__ ();
       this .set_orientation__ ();
       this .set_transform__ ();
