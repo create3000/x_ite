@@ -2581,7 +2581,7 @@ function eventsProcessed ()
 
       const
          scene    = this .getScene (),
-         children = scenes .map (scene => this .sceneObject (scene)) .filter (node => node);
+         children = scenes .map ((scene, index) => this .sceneObject (scene, index)) .filter (node => node);
 
       switch (children .length)
       {
