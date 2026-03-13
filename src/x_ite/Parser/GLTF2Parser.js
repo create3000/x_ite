@@ -3029,10 +3029,12 @@ function eventsProcessed ()
          }
          case 1:
          {
-            const node = nodes [0];
+            const
+               scene = this .getScene (),
+               node  = nodes [0];
 
             if (!node .getName ())
-               scene .addNamedNode (scene .getUniqueName (`Scene${index}`), groupNode);
+               scene .addNamedNode (scene .getUniqueName (`Scene${index}`), node);
 
             return node;
          }
