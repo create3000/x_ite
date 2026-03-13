@@ -2590,13 +2590,13 @@ function eventsProcessed ()
                            }
                            else if (value .geometry ?.node !== undefined) // Handle legacy property.
                            {
-                              const child = this .nodes [value .geometry .node];
+                              const
+                                 node                    = this .nodes [value .geometry .node],
+                                 mesh                    = this .meshes [node .mesh],
+                                 skin                    = this .skins [node .skin],
+                                 EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing;
 
-                              this .nodeChildren (child, 0, node .modelMatrix);
-
-                              shapeNodes = Array .from (child ?.childNode ?._children)
-                                 .map (node => node .getValue ())
-                                 .filter (node => node .getType () .includes (X3DConstants .X3DShapeNode));
+                              shapeNodes = this .meshObject (mesh, skin, EXT_mesh_gpu_instancing);
                            }
 
                            for (const shapeNode of shapeNodes ?? [ ])
