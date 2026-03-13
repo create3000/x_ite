@@ -2631,9 +2631,8 @@ function eventsProcessed ()
                         {
                            const mass = this .numberValue (value .mass, 1);
 
-                           rigidBodyNode ._fixed     = false;
-                           rigidBodyNode ._kinematic = value .isKinematic;
-                           rigidBodyNode ._mass      = mass;
+                           rigidBodyNode ._fixed = value .isKinematic;
+                           rigidBodyNode ._mass  = mass;
 
                            if (this .vectorValue (value .centerOfMass, vector3))
                               rigidBodyNode ._centerOfMass = vector3;

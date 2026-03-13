@@ -67,7 +67,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       this ._transform            .addInterest ("set_transform__",          this);
       this ._fixed                .addInterest ("set_fixed__",              this);
       this ._fixed                .addInterest ("set_geometry__",           this);
-      this ._kinematic            .addInterest ("set_kinematic__",          this);
+      this ._fixed                .addInterest ("set_kinematic__",          this);
       this ._linearVelocity       .addInterest ("set_linearVelocity__",     this);
       this ._angularVelocity      .addInterest ("set_angularVelocity__",    this);
       this ._useFiniteRotation    .addInterest ("set_finiteRotationAxis__", this);
@@ -116,7 +116,9 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    },
    set_fixed__ ()
    {
-      this .fixed = this ._fixed .getValue ();
+      this .fixed = this ._fixed .getValue ()
+         && this ._linearVelocity .getValue () .equals (Vector3 .ZERO)
+         && this ._angularVelocity .getValue () .equals (Vector3 .ZERO);
    },
    set_kinematic__ ()
    {
@@ -128,7 +130,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       if (fixed)
          return;
 
-      this .kinematic = this ._kinematic .getValue ();
+      this .kinematic = this ._fixed .getValue ();
 
       actor .setRigidBodyFlag (this .PhysX .PxRigidBodyFlagEnum .eKINEMATIC, this .kinematic);
    },
@@ -178,6 +180,8 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    })(),
    set_linearVelocity__ ()
    {
+      this .set_fixed__ ();
+
       const { actor, fixed } = this;
 
       if (!actor)
@@ -198,6 +202,8 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    },
    set_angularVelocity__ ()
    {
+      this .set_fixed__ ();
+
       const { actor, fixed } = this;
 
       if (!actor)
@@ -478,7 +484,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       return function (deltaTime)
       {
-         const { actor, fixed } = this;
+         const { actor, fixed, kinematic } = this;
 
          if (!actor)
             return;
@@ -486,7 +492,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          if (fixed)
             return;
 
-         if (this .kinematic)
+         if (kinematic)
          {
             position
                .assign (this ._linearVelocity .getValue ())
@@ -552,7 +558,6 @@ Object .defineProperties (RigidBody,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",              new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "fixed",                new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "kinematic",            new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "position",             new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "orientation",          new Fields .SFRotation ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "linearVelocity",       new Fields .SFVec3f ()),
