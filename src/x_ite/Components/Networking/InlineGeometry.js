@@ -34,7 +34,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
    unloadData ()
    {
       this .fileLoader ?.abort ();
-      this .setInternalScene (null, true);
+      this .setInternalScene (null);
    },
    loadData ()
    {
@@ -45,7 +45,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
       this .fileLoader = new FileLoader (this, cache)
          .createX3DFromURL (this ._url, null, this .setInternalScene .bind (this));
    },
-   setInternalScene (scene, unload)
+   setInternalScene (scene)
    {
       // Remove old scene.
 
@@ -84,22 +84,33 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
       {
          this .geometryNode = null;
 
-         this .setLoadState (unload ? X3DConstants .NOT_STARTED_STATE : X3DConstants .FAILED_STATE);
+         this .setLoadState (X3DConstants .FAILED_STATE);
       }
 
       this .requestRebuild ();
+   },
+   getInternalScene ()
+   {
+      ///  Returns the internal X3DScene of this inline, that is loaded from the url given.
+      ///  If the load field was false, null is returned.
+
+      return this .scene;
+   },
+   getGeometry ()
+   {
+      return this .geometryNode;
    },
    getGeometryFromArray (nodes)
    {
       for (const node of nodes)
       {
-         const geometryNode = this .getGeometry (node ?.getValue ())
+         const geometryNode = this .getGeometryFromNode (node ?.getValue ())
 
          if (geometryNode)
             return geometryNode;
       }
    },
-   getGeometry (node)
+   getGeometryFromNode (node)
    {
       if (!node)
          return;
@@ -115,7 +126,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
          {
             case X3DConstants .SFNode:
             {
-               const geometryNode = this .getGeometry (field .getValue ());
+               const geometryNode = this .getGeometryFromNode (field .getValue ());
 
                if (geometryNode)
                   return geometryNode;

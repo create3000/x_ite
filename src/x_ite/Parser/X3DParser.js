@@ -1,7 +1,8 @@
 import X3DProtoDeclaration from "../Prototype/X3DProtoDeclaration.js";
 
-function X3DParser (scene)
+function X3DParser (scene, name = "Parser")
 {
+   this .name              = name;
    this .scene             = scene;
    this .executionContexts = [ scene ];
    this .prototypes        = [ ];
@@ -13,6 +14,10 @@ function X3DParser (scene)
 
 Object .assign (X3DParser .prototype,
 {
+   getName ()
+   {
+      return this .name;
+   },
    getBrowser ()
    {
       return this .scene .getBrowser ();

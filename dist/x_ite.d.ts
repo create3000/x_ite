@@ -7338,7 +7338,7 @@ declare namespace X3D
    interface EmissiveStrengthMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
    {
       /**
-       * The strength adjustment to be multiplied with the material's emissive value.
+       * The strength adjustment to be multiplied with the material's emissiveColor value.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -17542,7 +17542,13 @@ declare namespace X3D
        */
       specularColorTextureMapping: string;
       /**
-       * texture that defines the strength of the specular reflection, stored in the alpha (A) channel. This will be multiplied by specularFactor.
+       * The strength adjustment to be multiplied with the material's specularColor value.
+       *
+       * This field is of access type 'inputOutput' and type SFFloat.
+       */
+      specularStrength: number;
+      /**
+       * Texture that defines the strength of the specular reflection, stored in the alpha (A) channel. This will be multiplied by specularFactor.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -20758,7 +20764,7 @@ declare namespace X3D
        */
       multiscatterColor: SFColor;
       /**
-       * The anisotropy of scatter events. Range is (-1, 1).
+       * The anisotropy of scatter events. Range is [-1, 1].
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
