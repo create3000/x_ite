@@ -446,12 +446,12 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
    },
    applyForces ()
    {
-      const { actor, force, torque } = this;
+      const { actor, fixed, force, torque } = this;
 
       if (!actor)
          return;
 
-      if (this .fixed)
+      if (fixed)
          return;
 
       for (const value of this ._forces)
