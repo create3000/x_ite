@@ -285,6 +285,7 @@
           accessType="inputOutput"
           default="0"
           minInclusive="0"
+          maxInclusive="1"
           description="The anisotropy strength. When the anisotropy texture is present, this value is multiplied by the texture's blue channel."
         />
         <field name="anisotropyRotation"
@@ -477,6 +478,7 @@
           accessType="inputOutput"
           default="0"
           minInclusive="0"
+          maxInclusive="1"
           description="The clearcoat layer intensity."
         />
         <field name="clearcoatTextureMapping"
@@ -497,6 +499,7 @@
           accessType="inputOutput"
           default="0"
           minInclusive="0"
+          maxInclusive="1"
           description="The clearcoat layer roughness."
         />
         <field name="clearcoatRoughnessTextureMapping"
@@ -628,7 +631,7 @@
           accessType="inputOutput"
           default="1"
           minInclusive="0"
-          description="The strength adjustment to be multiplied with the material's emissive value."
+          description="The strength adjustment to be multiplied with the material's emissiveColor value."
         />
         <containerField default="extensions" type="xs:NMTOKEN" />
       </InterfaceDefinition>
@@ -791,6 +794,7 @@
           accessType="inputOutput"
           default="0"
           minInclusive="0"
+          maxInclusive="1"
           description="The iridescence intensity factor."
         />
         <field name="iridescenceTextureMapping"
@@ -883,6 +887,7 @@
           accessType="inputOutput"
           default="0"
           minInclusive="0"
+          maxInclusive="1"
           description="The sheen roughness."
         />
         <field name="sheenRoughnessTextureMapping"
@@ -1063,6 +1068,7 @@
           accessType="inputOutput"
           default="1"
           minInclusive="0"
+          maxInclusive="1"
           description="The strength of the specular reflection."
         />
         <field name="specularTextureMapping"
@@ -1076,7 +1082,7 @@
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DSingleTextureNode"
-          description=" texture that defines the strength of the specular reflection, stored in the alpha (A) channel. This will be multiplied by specularFactor."
+          description="Texture that defines the strength of the specular reflection, stored in the alpha (A) channel. This will be multiplied by specularFactor."
         />
         <field name="specularColor"
           type="SFColor"
@@ -1084,6 +1090,13 @@
           default="1 1 1"
           minInclusive="0"
           description="The F0 color of the specular reflection (linear RGB)."
+        />
+        <field name="specularStrength"
+          type="SFFloat"
+          accessType="inputOutput"
+          default="1"
+          minInclusive="0"
+          description="The strength adjustment to be multiplied with the material's specularColor value."
         />
         <field name="specularColorTextureMapping"
           type="SFString"
@@ -1177,7 +1190,7 @@
           type="SFFloat"
           accessType="inputOutput"
           default="1000000"
-          minInclusive="0"
+          minExclusive="0"
           description="Density of the medium given as the average distance that light travels in the medium before interacting with a particle. The value is given in world space."
         />
         <field name="attenuationColor"
@@ -1219,7 +1232,7 @@
           default="0"
           minInclusive="-1"
           maxInclusive="1"
-          description="The anisotropy of scatter events. Range is (-1, 1)."
+          description="The anisotropy of scatter events. Range is [-1, 1]."
         />
         <containerField default="extensions" type="xs:NMTOKEN" />
       </InterfaceDefinition>

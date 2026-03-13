@@ -1,7 +1,7 @@
 {
   "name": "x_ite",
-  "version": "14.0.4",
-  "description": "X_ITE X3D Browser, view and manipulate X3D, VRML, glTF and other 3D sources in HTML.",
+  "version": "14.0.8",
+  "description": "X_ITE X3D Browser — View and Manipulate X3D, VRML, glTF and Other 3D Sources in HTML",
   "main": "dist/x_ite.js",
   "module": "dist/x_ite.mjs",
   "exports": {
@@ -115,7 +115,7 @@
     "apng-js": "^1.1.5",
     "CharLS.js": "^2.0.1",
     "dicom-parser": "^1.8.21",
-    "fast-xml-parser": "^5.3.7",
+    "fast-xml-parser": "^5.5.3",
     "jpeg-js": "^0.4.4",
     "jpeg-lossless-decoder-js": "2.1.2",
     "jquery": "^4.0.0",
@@ -131,7 +131,7 @@
     "shell-tools": "^1.1.9",
     "string-replace-webpack-plugin": "^0.1.3",
     "terser": "^5.46.0",
-    "webpack": "^5.105.2",
+    "webpack": "^5.105.4",
     "webpack-cli": "^6.0.1",
     "webpack-shell-plugin-next": "^2.3.3",
     "woff2-encoder": "^2.0.0",

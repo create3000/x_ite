@@ -88,6 +88,7 @@ Object .assign (Bookmarks .prototype,
    onload ()
    {
       const
+         data  = this .browser .getWorldURL () .startsWith ("data:"),
          base  = this .browser .getWorldURL () .replace (/(?:\.O)?\.[^\.]+$/, ""),
          local = base .replace (/https:\/\/create3000.github.io\/(.*?)\//, `https://${location.hostname}/$1/docs/`);
 
@@ -99,7 +100,7 @@ Object .assign (Bookmarks .prototype,
 
       const gamma = this .browser .currentScene .encoding === "GLTF" ? 2.2 : 1;
 
-      $("#file") .text (this .browser .getWorldURL ())
+      $("#file") .text (data ? "data:" : this .browser .getWorldURL ())
          .append ($("<a/>")
          .attr ('href', base + ".x3d")
          .on ("click", () => prevent (this .loadURL (base + ".x3d")))

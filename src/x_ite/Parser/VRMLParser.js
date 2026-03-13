@@ -91,7 +91,7 @@ const Grammar = Expressions ({
 
 function VRMLParser (scene)
 {
-   X3DParser .call (this, scene);
+   X3DParser .call (this, scene, "Parser");
 
    this .Grammar =
    {

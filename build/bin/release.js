@@ -250,7 +250,7 @@ function release ()
 
 	// Purge camo image cache for SVG banners.
 
-	systemSync (`npm run purge-camo`);
+	// systemSync (`npm run purge-camo`);
 
 	// publish x3d-tidy and sunrize
 

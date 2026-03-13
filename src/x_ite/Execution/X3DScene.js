@@ -778,7 +778,14 @@ Object .defineProperties (X3DScene .prototype,
    },
    sceneGraph_changed:
    {
+      // Fires when nodes are added or removed.
       get () { return this ._sceneGraph_changed; },
+      enumerable: false,
+   },
+   bbox_changed:
+   {
+      // Fires when somewhere in this scene a node changes its bbox.
+      get () { return this ._bbox_changed; },
       enumerable: false,
    },
 });

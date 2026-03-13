@@ -64,7 +64,7 @@ Input/Output field *thicknessTextureMapping*.
 
 A texture that defines the thickness, stored in the green (G) channel. This will be multiplied by thicknessFactor.
 
-### SFFloat [in, out] **attenuationDistance** 1000000 <small>[0,∞)</small>
+### SFFloat [in, out] **attenuationDistance** 1000000 <small>(0,∞)</small>
 {: #fields-attenuationDistance }
 
 Density of the medium given as the average distance that light travels in the medium before interacting with a particle. The value is given in world space.

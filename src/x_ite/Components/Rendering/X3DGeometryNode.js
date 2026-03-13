@@ -169,6 +169,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       this .planes .forEach ((plane, i) => plane .set (i % 2 ? min : max, boxNormals [i]));
 
       this ._bbox_changed .addEvent ();
+
+      this .getExecutionContext () ._bbox_changed = Date .now () / 1000;
    },
    getMin ()
    {
@@ -571,6 +573,8 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
             this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
 
          this ._bbox_changed .addEvent ();
+
+         this .getExecutionContext () ._bbox_changed = Date .now () / 1000;
       };
    })(),
    transfer ()
