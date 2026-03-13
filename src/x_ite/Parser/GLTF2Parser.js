@@ -80,25 +80,25 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    isValid: (() =>
    {
       const keys = new Set ([
+         "accessors",
+         "animations",
          "asset",
-         "extras",
+         "buffers",
+         "bufferViews",
+         "cameras",
          "extensions",
          "extensionsRequired",
          "extensionsUsed",
-         "buffers",
-         "bufferViews",
-         "accessors",
-         "samplers",
+         "extras",
          "images",
-         "textures",
          "materials",
          "meshes",
-         "cameras",
-         "skins",
          "nodes",
-         "scenes",
+         "samplers",
          "scene",
-         "animations",
+         "scenes",
+         "skins",
+         "textures",
       ]);
 
       return function ()
