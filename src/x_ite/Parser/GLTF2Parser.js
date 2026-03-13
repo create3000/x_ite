@@ -2588,6 +2588,16 @@ function eventsProcessed ()
                            {
                               shapeNodes = [this .implicitShapes [value .geometry .shape]];
                            }
+                           else if (value .geometry ?.node !== undefined) // Handle legacy property.
+                           {
+                              const child = this .nodes [value .geometry .node];
+
+                              this .nodeChildren (child, 0, node .modelMatrix);
+
+                              shapeNodes = Array .from (child ?.childNode ?._children)
+                                 .map (node => node .getValue ())
+                                 .filter (node => node .getType () .includes (X3DConstants .X3DShapeNode));
+                           }
 
                            for (const shapeNode of shapeNodes ?? [ ])
                            {
