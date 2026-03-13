@@ -2432,6 +2432,8 @@ function eventsProcessed ()
 
          // Add children and shape nodes.
 
+         transformNode ._children .push (... children);
+
          if (skin)
          {
             skin .name ??= node .name;
