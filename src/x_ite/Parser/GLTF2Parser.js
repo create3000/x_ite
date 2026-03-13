@@ -2650,10 +2650,10 @@ function eventsProcessed ()
                            // TODO: inertiaOrientation
 
                            if (this .vectorValue (value .linearVelocity, vector3))
-                              rigidBodyNode ._linearVelocity = node .modelMatrix .multDirMatrix (vector3) .negate ();
+                              rigidBodyNode ._linearVelocity = node .modelMatrix .multDirMatrix (vector3);
 
                            if (this .vectorValue (value .angularVelocity, vector3))
-                              rigidBodyNode ._angularVelocity = node .modelMatrix .multDirMatrix (vector3) .negate ();
+                              rigidBodyNode ._angularVelocity = node .modelMatrix .multDirMatrix (vector3);
 
                            const gravityFactor = this .numberValue (value .gravityFactor, 1);
 
