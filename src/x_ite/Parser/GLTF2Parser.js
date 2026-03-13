@@ -2575,13 +2575,15 @@ function eventsProcessed ()
 
                            let children;
 
-                           if (value .geometry ?.node !== undefined)
+                           if (value .geometry ?.mesh !== undefined)
                            {
-                              const child = this .nodes [value .geometry .node];
+                              const
+                                 mesh                    = this .meshes [value .geometry .mesh],
+                                 skin                    = this .skins [node .skin],
+                                 EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing,
+                                 shapeNodes              = this .meshObject (mesh, skin, EXT_mesh_gpu_instancing);
 
-                              this .nodeChildren (child, 0, node .modelMatrix);
-
-                              children = child ?.childNode ?._children;
+                              children = shapeNodes;
                            }
                            else if (value .geometry ?.shape !== undefined)
                            {
