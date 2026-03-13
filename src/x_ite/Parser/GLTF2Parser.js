@@ -184,9 +184,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .viewpointsCenterOfRotation (scene);
       this .optimizeSceneGraph (scene .getRootNodes ());
 
-      this .exportGroup ("Viewpoints",        this .cameras);
       this .exportGroup ("EnvironmentLights", this .envLights);
       this .exportGroup ("Lights",            this .lights);
+      this .exportGroup ("Viewpoints",        this .cameras);
       this .exportGroup ("Physics",           this .physics);
       this .exportGroup ("Animations",        glTF .animations);
 
