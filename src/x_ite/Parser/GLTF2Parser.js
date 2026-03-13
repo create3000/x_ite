@@ -2624,7 +2624,7 @@ function eventsProcessed ()
          }
       }
    },
-   sceneObject (scene)
+   sceneObject (scene, index)
    {
       if (!(scene instanceof Object))
          return null;
@@ -2644,17 +2644,23 @@ function eventsProcessed ()
          }
          case 1:
          {
-            return nodes [0];
+            const
+               scene = this .getScene (),
+               node  = nodes [0];
+
+            if (!node .getName ())
+               scene .addNamedNode (scene .getUniqueName (`Scene${index}`), node);
+
+            return node;
          }
          default:
          {
             const
                scene     = this .getScene (),
                groupNode = scene .createNode ("Group", false),
-               name      = this .sanitizeName (scene .name);
+               name      = this .sanitizeName (scene .name) || `Scene${index}`;
 
-            if (name)
-               scene .addNamedNode (scene .getUniqueName (name), groupNode);
+            scene .addNamedNode (scene .getUniqueName (name), groupNode);
 
             groupNode ._children = nodes;
 
