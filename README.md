@@ -67,6 +67,8 @@ This script initializes an X3D canvas within an HTML page, configuring it to con
 
 ### External File
 
+You can include an external file:
+
 ```html
 <script defer src="https://cdn.jsdelivr.net/npm/x_ite@14.0.8/dist/x_ite.min.js"></script>
 <x3d-canvas
@@ -76,6 +78,8 @@ This script initializes an X3D canvas within an HTML page, configuring it to con
 ```
 
 ### Declarative Syntax
+
+However, you can also include and manipulate the XML directly:
 
 ```html
 <script defer src="https://cdn.jsdelivr.net/npm/x_ite@14.0.8/dist/x_ite.min.js"></script>
