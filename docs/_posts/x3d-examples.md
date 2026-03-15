@@ -58,6 +58,12 @@ In X3D, scrolling text effects can be achieved by animating the position of text
 
 ## Shaders
 
+[![Galaxy](https://create3000.github.io/media/x_ite/examples/galaxy/screenshot.png)](/x_ite/playground/?url=https://create3000.github.io/media/x_ite/examples/galaxy/galaxy.x3d){: .left .w-25 }
+
+**Galaxy**
+
+An X3D galaxy animation can be efficiently implemented using InstancedShape together with a ComposedShader to render thousands of stars with minimal geometry overhead. In this approach, a single star mesh (for example a small quad or point sprite) is reused through InstancedShape, where per-instance attributes such as position, color, brightness, and orbital radius are passed to the GPU. The ComposedShader then computes the dynamic motion of each star in the vertex shader, typically applying a spiral rotation around the galactic center using time-based uniforms and mathematical functions to produce swirling arms. Because the animation is performed directly on the GPU, the galaxy can contain many thousands of animated stars while maintaining interactive performance in the X3D viewer.
+
 [![Waves](https://create3000.github.io/media/x_ite/examples/waves/screenshot.png)](/x_ite/playground/?url=https://create3000.github.io/media/x_ite/examples/waves/waves.x3d){: .left .w-25 }
 
 **Waves**
