@@ -11000,7 +11000,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * pointerEvents defines whether this Shape becomes target for pointer events.
+       * pointerEvents defines whether this InstancedShape becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -11369,6 +11369,12 @@ declare namespace X3D
        */
       pickable: boolean;
       /**
+       * pointerEvents defines whether this Layer becomes target for pointer events.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      pointerEvents: boolean;
+      /**
        * This field is of access type 'inputOnly' and type MFNode.
        */
       removeChildren: MFNode <X3DChildNodeProxy>;
@@ -11560,6 +11566,12 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type SFBool.
        */
       pickable: boolean;
+      /**
+       * pointerEvents defines whether this LayoutLayer becomes target for pointer events.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      pointerEvents: boolean;
       /**
        * This field is of access type 'inputOnly' and type MFNode.
        */
@@ -14185,7 +14197,7 @@ declare namespace X3D
        */
       physics: MFNode <X3DParticlePhysicsModelNodeProxy>;
       /**
-       * pointerEvents defines whether this Shape becomes target for pointer events.
+       * pointerEvents defines whether this ParticleSystem becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -21420,6 +21432,12 @@ declare namespace X3D
        */
       pickable: boolean;
       /**
+       * pointerEvents defines whether this layer becomes target for pointer events.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      pointerEvents: boolean;
+      /**
        * This field is of access type 'inputOutput' and type SFNode.
        */
       viewport: X3DViewportNodeProxy | null;
@@ -22023,7 +22041,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * pointerEvents defines whether this Shape becomes target for pointer events.
+       * pointerEvents defines whether this shape becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
