@@ -3,8 +3,8 @@ export default () => /* glsl */ `
 // Original source code from:
 // https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/pbr.frag
 
-#pragma X3D include "../common/Fragment.glsl"
-#pragma X3D include "../common/Shadow.glsl"
+#include <Fragment>
+#include <Shadow>
 
 #if defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
    uniform ivec4 x3d_Viewport;
@@ -33,14 +33,14 @@ eye (const in mat4 modelViewMatrix)
 
 uniform x3d_PhysicalMaterialParameters x3d_Material;
 
-#pragma X3D include "BRDF.glsl"
-#pragma X3D include "MaterialInfo.glsl"
-#pragma X3D include "Punctual.glsl"
-#pragma X3D include "IBL.glsl"
-#pragma X3D include "Iridescence.glsl"
+#include <BRDF>
+#include <MaterialInfo>
+#include <Punctual>
+#include <IBL>
+#include <Iridescence>
 
 #if defined (X3D_VOLUME_SCATTER_PASS)
-#pragma X3D include "Scatter.glsl"
+#include <Scatter>
 #else
 vec4
 getMaterialColor (const in vec4 fragCoord)

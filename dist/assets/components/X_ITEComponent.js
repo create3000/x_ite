@@ -1569,16 +1569,16 @@ var external_X_ITE_X3D_X3DOneSidedMaterialNode_default = /*#__PURE__*/__webpack_
 
 
 const SpecularGlossiness2_glsl_default_ = () => /* glsl */ `
-#pragma X3D include "../common/Fragment.glsl"
-#pragma X3D include "../common/Shadow.glsl"
+#include<Fragment>
+#include<Shadow>
 #if defined(X3D_LIGHTING)
 uniform x3d_LightSourceParameters x3d_LightSource[X3D_NUM_LIGHTS];
 #endif
 uniform x3d_PhysicalMaterialParameters x3d_Material;
-#pragma X3D include "pbr/BRDF.glsl"
-#pragma X3D include "pbr/MaterialInfo.glsl"
-#pragma X3D include "pbr/Punctual.glsl"
-#pragma X3D include "pbr/IBL.glsl"
+#include<BRDF>
+#include<MaterialInfo>
+#include<Punctual>
+#include<IBL>
 ${external_X_ITE_X3D_MaterialTextures_default().texture ("x3d_DiffuseTexture", "rgba", "linear")}
 vec4 getBaseColor(){float alpha=1.-x3d_Material.transparency;vec4 baseColor=vec4(x3d_Material.diffuseColor,alpha);
 #if defined(X3D_COLOR_MATERIAL)
@@ -1632,7 +1632,7 @@ return vec4(color,baseColor.a);}`
 ;// ./src/assets/shaders/webgl2/SpecularGlossiness2.fs.js
 const SpecularGlossiness2_fs_default_ = () => /* glsl */ `#version 300 es
 precision highp float;precision highp int;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
-#pragma X3D include "pbr/SpecularGlossiness.glsl"
+#include<SpecularGlossiness>
 `
 ;
 
