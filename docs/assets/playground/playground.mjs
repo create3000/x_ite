@@ -543,7 +543,7 @@ class Playground
          return;
 
       const
-         console = $(".console") .show (),
+         console = $(".console"),
          text    = $("<p></p>") .addClass (level) .text (message);
 
       if (performance .now () - this .#messageTime > 1000)
