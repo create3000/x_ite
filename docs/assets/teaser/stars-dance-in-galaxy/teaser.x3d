@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.1//EN" "https://www.web3d.org/specifications/x3d-4.1.dtd">
+<X3D profile='Interchange' version='4.1' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.1.xsd'>
+  <head>
+    <component name='Core' level='2'/>
+    <component name='EnvironmentalSensor' level='1'/>
+    <component name='Geometry2D' level='1'/>
+    <component name='Layering' level='1'/>
+    <component name='Scripting' level='1'/>
+    <component name='Shaders' level='1'/>
+    <component name='Text' level='1'/>
+    <component name='X_ITE' level='1'/>
+    <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
+    <meta name='creator' content='Holger Seelig'/>
+    <meta name='created' content='Mon, 16 Feb 2026 21:47:35 GMT'/>
+    <meta name='modified' content='Sun, 15 Mar 2026 22:41:44 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V2.0.9, https://create3000.github.io/sunrize/'/>
+  </head>
+  <Scene>
+    <ProtoDeclare name='Galaxy'>
+      <ProtoInterface>
+        <field accessType='inputOutput' type='SFBool' name='enabled' value='true'/>
+        <field accessType='inputOutput' type='SFInt32' name='numStars'/>
+        <field accessType='inputOutput' type='SFColor' name='colorInside' value='1 0.6470588 0.4588235'/>
+        <field accessType='inputOutput' type='SFColor' name='colorOutside' value='0.1921569 0.08235294 0.6'/>
+      </ProtoInterface>
+      <ProtoBody>
+        <Group>
+          <ProximitySensor DEF='_2'
+              size='-1 -1 -1'/>
+          <InstancedShape DEF='_3'
+              bboxSize='10 2 10'>
+            <Appearance
+                alphaMode='BLEND'>
+              <ComposedShader DEF='GalaxyShader'
+                  language='GLSL'>
+                <field accessType='inputOutput' type='SFTime' name='time' value='0'/>
+                <field accessType='inputOutput' type='SFRotation' name='rotation'/>
+                <field accessType='inputOutput' type='SFColor' name='colorInside'/>
+                <field accessType='inputOutput' type='SFColor' name='colorOutside'/>
+                <IS>
+                  <connect nodeField='colorInside' protoField='colorInside'/>
+                  <connect nodeField='colorOutside' protoField='colorOutside'/>
+                </IS>
+                <ShaderPart DEF='GalaxyVertexShader'>
+<![CDATA[data:x-shader/x-vertex,#version 300 es
+
+precision highp float;
+precision highp int;
+
+uniform mat4 x3d_ProjectionMatrix;
+uniform mat4 x3d_ModelViewMatrix;
+
+in vec4 x3d_Vertex;
+in vec4 x3d_TexCoord0;
+
+out vec3  vertex;
+out vec2  texCoord;
+out float radiusRatio;
+
+uniform float time;
+uniform mat3  rotation;
+
+const float PI2 = 6.283185307179586;
+
+// Random number generation
+
+int seed = 1;
+
+void
+srand (in int value)
+{
+   seed = value;
+}
+
+// Return a uniform distributed random floating point number in the interval [0, 1].
+float
+random ()
+{
+   const int RAND_MAX = int (0x7fffffff);
+   const int RAND_MIN = int (0x80000000);
+
+   return float (seed = seed * 1103515245 + 12345) / float (RAND_MAX) / 2.0 + 0.5;
+}
+
+// Star scale and position animation
+
+float
+getScale ()
+{
+   return random ();
+}
+
+vec3
+getPosition ()
+{
+   radiusRatio = random ();
+   float radius = pow (radiusRatio, 1.5) * 5.0;
+
+   float branches    = 3.0;
+   float branchAngle = floor (random () * branches) * (PI2 / branches);
+   float angle       = branchAngle + (time * (1.0 - radiusRatio));
+
+   vec3 position = vec3 (cos (angle), 0, sin (angle)) * radius; 
+
+   vec3 randomOffset = pow (vec3 (random () * 2.0 - 1.0, random () * 2.0 - 1.0, random () * 2.0 - 1.0), vec3 (3.0)) * radiusRatio;
+
+   return position + randomOffset;
+}
+
+// Main
+
+void
+main ()
+{
+   srand (gl_InstanceID);
+
+   vertex   = rotation * (getScale () * x3d_Vertex .xyz) + getPosition ();
+   texCoord = x3d_TexCoord0 .xy;
+
+   gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * vec4 (vertex, 1.0);
+}
+]]>
+                </ShaderPart>
+                <ShaderPart DEF='GalaxyFragmentShader'
+                    type='FRAGMENT'>
+<![CDATA[data:x-shader/x-fragment,#version 300 es
+
+precision highp float;
+precision highp int;
+
+out vec4 x3d_FragColor;
+
+in vec3  vertex;
+in vec2  texCoord;
+in float radiusRatio;
+
+uniform vec3 colorInside;
+uniform vec3 colorOutside;
+
+void
+main ()
+{
+   vec3  colorFinal = mix (colorInside, colorOutside, pow (radiusRatio, 2.0));
+   float alpha      = 0.1 / length (texCoord - 0.5) - 0.2; 
+
+   x3d_FragColor = vec4 (colorFinal, alpha);
+}
+]]>
+                </ShaderPart>
+              </ComposedShader>
+              <BlendMode DEF='AdditiveBlending'
+                  destinationColorFactor='ONE'/>
+            </Appearance>
+            <Rectangle2D
+                size='0.08 0.08'/>
+          </InstancedShape>
+        </Group>
+        <TimeSensor DEF='_4'>
+          <IS>
+            <connect nodeField='loop' protoField='enabled'/>
+          </IS>
+        </TimeSensor>
+        <Script DEF='GalaxyScript'>
+          <field accessType='inputOutput' type='SFInt32' name='numStars'/>
+          <field accessType='initializeOnly' type='SFNode' name='shape'>
+            <InstancedShape USE='_3'/>
+          </field>
+          <IS>
+            <connect nodeField='numStars' protoField='numStars'/>
+          </IS>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+   set_numStars ();
+}
+
+function set_numStars ()
+{
+   shape .translations .length = numStars;
+}]]>
+        </Script>
+        <ROUTE fromNode='_2' fromField='orientation_changed' toNode='GalaxyShader' toField='set_rotation'/>
+        <ROUTE fromNode='_4' fromField='elapsedTime' toNode='GalaxyShader' toField='set_time'/>
+      </ProtoBody>
+    </ProtoDeclare>
+    <WorldInfo DEF='_3'
+        title='Dots'
+        info='"Credits: [Kyyy_24](https://sketchfab.com/luckyardrianto27) (dancer)"'>
+      <MetadataSet DEF='Sunrize' containerField='metadata'
+          name='Sunrize'
+          reference='https://create3000.github.io/sunrize/'>
+        <MetadataSet DEF='GridTool'
+            name='GridTool'
+            reference='https://create3000.github.io/sunrize/'>
+          <MetadataBoolean DEF='visible'
+              name='visible'
+              reference='https://create3000.github.io/sunrize/'
+              value='true'/>
+        </MetadataSet>
+        <MetadataSet DEF='BrowserFrame'
+            name='BrowserFrame'
+            reference='https://create3000.github.io/sunrize/'>
+          <MetadataBoolean DEF='fixedSize'
+              name='fixedSize'
+              reference='https://create3000.github.io/sunrize/'
+              value='true'/>
+          <MetadataDouble DEF='aspectRatio'
+              name='aspectRatio'
+              reference='https://create3000.github.io/sunrize/'
+              value='16, 5'/>
+          <MetadataString DEF='backgroundColor'
+              name='backgroundColor'
+              reference='https://create3000.github.io/sunrize/'
+              value='""'/>
+        </MetadataSet>
+      </MetadataSet>
+    </WorldInfo>
+    <LayerSet
+        activeLayer='-1'
+        order='1, 2, 3'>
+      <Layer DEF='Background'>
+        <Background DEF='Dark_3'/>
+      </Layer>
+      <Layer DEF='Dots'>
+        <Viewpoint
+            description='Initial View'
+            position='-0.04542277 0.9217958 4.095983'
+            orientation='0.999446679239076 -0.0325497852990455 -0.00684447477609283 336.237224973383'/>
+        <ProtoInstance name='Galaxy'>
+          <fieldValue name='numStars' value='20000'/>
+        </ProtoInstance>
+      </Layer>
+      <Layer DEF='Text'>
+        <FontLibrary DEF='Neuropol'
+            family='Neuropol'
+            url='"Neuropol.otf"'/>
+        <Transform DEF='Rectangle2D_1'
+            translation='0 0.04948798 0'
+            scale='32 1.2 1'>
+          <Shape DEF='Light_3'>
+            <Appearance>
+              <UnlitMaterial
+                  transparency='0.7960313'/>
+            </Appearance>
+            <Rectangle2D/>
+          </Shape>
+        </Transform>
+        <Transform DEF='Text_1'
+            translation='-9 0 3'
+            scale='0.8288495 0.8288495 0.8288495'
+            center='5.160146 0 0'>
+          <Shape>
+            <Appearance>
+              <UnlitMaterial/>
+            </Appearance>
+            <Text DEF='_8'
+                string='"X_ITE v14.0.9"'
+                solid='true'>
+              <FontStyle
+                  family='"Neuropol", "SANS"'
+                  size='1.4'
+                  justify='"BEGIN", "MIDDLE"'/>
+            </Text>
+          </Shape>
+          <Script DEF='X_ITE'>
+            <field accessType='outputOnly' type='MFString' name='string_changed'/>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+   string_changed = new MFString (Browser .name + " v" + Browser .version);
+}
+]]>
+          </Script>
+        </Transform>
+      </Layer>
+    </LayerSet>
+    <Script DEF='CreditsScript'>
+      <field accessType='initializeOnly' type='SFNode' name='worldInfo'>
+        <WorldInfo USE='_3'/>
+      </field>
+<![CDATA[ecmascript:
+
+function initialize ()
+{
+   if (typeof $ === "undefined")
+      return;
+
+   const html = worldInfo .info .join ("\n")
+      .replace (/\[(.*?)\]\((.*?)\)/g, `<a href="\$2" target="_blank">\$1</a>`);
+
+   $("#teaser-credits") .html (html);
+}
+]]>
+    </Script>
+    <ROUTE fromNode='X_ITE' fromField='string_changed' toNode='_8' toField='set_string'/>
+  </Scene>
+</X3D>
