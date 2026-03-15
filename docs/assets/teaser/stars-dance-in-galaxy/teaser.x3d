@@ -13,7 +13,7 @@
     <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='created' content='Mon, 16 Feb 2026 21:47:35 GMT'/>
-    <meta name='modified' content='Sun, 15 Mar 2026 23:12:47 GMT'/>
+    <meta name='modified' content='Sun, 15 Mar 2026 23:25:19 GMT'/>
     <meta name='generator' content='Sunrize X3D Editor V2.0.9, https://create3000.github.io/sunrize/'/>
     <meta name='reference' content='https://threejs-journey.com/lessons/animated-galaxy'/>
   </head>
@@ -66,22 +66,23 @@ const float PI2 = 6.283185307179586;
 
 // Random number generation
 
-int seed = 1;
+uint seed = 1u;
 
 void
 srand (in int value)
 {
-   seed = value;
+   seed = uint (value);
 }
 
 // Return a uniform distributed random floating point number in the interval [0, 1].
 float
 random ()
 {
-   const int RAND_MAX = int (0x7fffffff);
-   const int RAND_MIN = int (0x80000000);
+   const float RAND_MAX = float (uint (0xffffffff));
 
-   return float (seed = seed * 1103515245 + 12345) / float (RAND_MAX) / 2.0 + 0.5;
+   seed = seed * 1103515245u + 12345u;
+
+   return float (seed) / RAND_MAX;
 }
 
 // Star scale and position animation
