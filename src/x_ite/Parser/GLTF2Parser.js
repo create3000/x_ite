@@ -2511,14 +2511,9 @@ function eventsProcessed ()
          humanoidNode ._name = skin .name ?? "";
 
          if (this .input .extensions ?.VRM)
-         {
             humanoidNode ._skeletalConfiguration = "VRM";
-            humanoidNode ._loa                   = 4;
-         }
          else
-         {
             humanoidNode ._skeletalConfiguration = "GLTF";
-         }
 
          humanoidNode ._skeleton .push (... skin .skeleton
             .map (index => this .nodes [index] ?.transformNode) .filter (node => node));
