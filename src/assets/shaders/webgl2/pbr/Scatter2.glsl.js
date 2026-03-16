@@ -66,14 +66,14 @@ getMaterialColor (const in vec4 fragCoord)
       materialInfo = getVolumeInfo (materialInfo);
    #endif
 
+   #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
+      materialInfo = getDiffuseTransmissionInfo (materialInfo);
+   #endif
+
    #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
       materialInfo = getVolumeScatterInfo (materialInfo);
 
       vec3 singleScatter = multiToSingleScatter (materialInfo .multiscatterColor);
-   #endif
-
-   #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
-      materialInfo = getDiffuseTransmissionInfo (materialInfo);
    #endif
 
    materialInfo .perceptualRoughness = clamp (materialInfo .perceptualRoughness, 0.0, 1.0);
