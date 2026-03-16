@@ -24,14 +24,14 @@ description: >- # used by seo meta and the atom feed
 x3d_latest_version: 4.1 # x3d latest version
 
 # x_ite settings
-x_ite_teaser: shader-dots
-x_ite_latest_version: 14.0.4 # x_ite latest version
-x_ite_compressed_size: 300 # size in kb
-x_ite_js_integrity: sha384-6DI3LbHPANZA0U8da8NU9b/fGA5goR4YDg3eGc5h6Rzuf/0siGXXAZvd5njd4Hhq
-x_ite_min_js_integrity: sha384-IW2NuS3wgOj+GTGAfhLYf0spFh0xbDtCMVfdht0ruNbLBz1APOqprAIRsSimKWla
-x_ite_mjs_integrity: sha384-JhLor/KXJnQ0B2jH5HVuyW+jmrsG61F1GEGmtBMlfy396FlBAPrphTOKzHl/oxQt
-x_ite_min_mjs_integrity: sha384-oxMTaCyAjJLFFnEYM7Om6lFJmTnTeL8LxdxVO3wC2I3S9ZNsUmiuiOcxvGbN/W36
-x_ite_css_integrity: sha384-nEBISS5orPn5ZEe4rZ9pg3JFzerB+yZljGyCE+QlvRcqeYc8IG6nY5REg51zAuHc
+x_ite_teaser: stars-dance-in-galaxy
+x_ite_latest_version: 14.0.9 # x_ite latest version
+x_ite_compressed_size: 296 # size in kb
+x_ite_js_integrity: sha384-kedjV4YOGZ1hshVDY+rBfD6MZCtdDqqeOPT5+CyfU48OgBTydmvosE0MqJkH3Jr1
+x_ite_min_js_integrity: sha384-bVJMM4Zj0cE5F8/y2DsDmEKXVIEYxHjOyLehyWT+NOFegwsKUUhRCEGMOpswTdpD
+x_ite_mjs_integrity: sha384-S+e1J1OaeutpoLp/4zVARUuNrqTqsvwHU/sEsDpZDyTvjYn9waDgnMMoYMvUmVks
+x_ite_min_mjs_integrity: sha384-IlXQPdQU2bsmkpz+fxB6SyO2U8PMkK+578A2rj6VL6YOyi4D+5FTIEyAC2slm7/W
+x_ite_css_integrity: sha384-LZPKuk6uLqXBHHIxJbZ2Mht9Uy9sd/IF4jE+UJ+Galz2hFpCU4n6qstAuIOO3c7W
 
 # Fill in the protocol & hostname for your site.
 # e.g. 'https://username.github.io', note that it does not end with a '/'.

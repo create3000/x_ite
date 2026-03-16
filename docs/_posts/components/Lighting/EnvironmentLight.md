@@ -88,6 +88,10 @@ Enables/disables this light source.
 
 Brightness of direct emission from the light.
 
+#### Warning
+
+- Values greater than 1.0 require X3D version='4.0' or greater.
+
 ### SFFloat [in, out] **ambientIntensity** 0 <small>[0,1]</small>
 {: #fields-ambientIntensity }
 

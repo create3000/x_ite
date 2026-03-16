@@ -23,7 +23,7 @@ const AccessType =
 
 function XMLParser (scene)
 {
-   X3DParser .call (this, scene);
+   X3DParser .call (this, scene, "XML Parser");
 
    this .protoDeclarations = [ ];
    this .parents           = [ ];
@@ -709,7 +709,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          {
             if (field .getType () === X3DConstants .MFNode)
             {
-               field .length = 0
+               field .length = 0;
             }
 
             this .fieldValue (field, xmlElement .getAttribute ("value"));
@@ -1009,7 +1009,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       }
       catch (error)
       {
-         //console .error (error);
+         // console .error (error);
       }
    },
    fieldValue (field, value)
@@ -1106,16 +1106,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       }
       catch (error)
       {
-         if (node ?.getType () .includes (X3DConstants .X3DMetadataObject))
-         {
-            xmlElement .setAttribute ("containerField", "metadata");
-
-            this .addNode (xmlElement, node);
-         }
-         else
-         {
-            console .warn (`XML Parser: Container field for node ${node ?.getTypeName () ?? node} not found. ${error .message}`);
-         }
+         console .warn (`XML Parser: Container field for node ${node ?.getTypeName () ?? node} not found. ${error .message}`);
       }
    },
    // Overloaded by HTMLParser.

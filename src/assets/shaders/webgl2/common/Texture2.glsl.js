@@ -3,7 +3,7 @@ import { maxTexCoords, maxTextures } from "../../../../x_ite/Browser/Texturing/T
 export default () => /* glsl */ `
 #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
 
-#pragma X3D include "Perlin.glsl"
+#include <Perlin>
 
 vec4 texCoords [X3D_NUM_TEXTURE_COORDINATES];
 

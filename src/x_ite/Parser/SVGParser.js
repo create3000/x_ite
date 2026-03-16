@@ -280,12 +280,12 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       viewpoint .position         = new Vector3 (x, y, 10);
       viewpoint .centerOfRotation = new Vector3 (x, y, 0);
 
-      viewpoint .fieldOfView = [
+      viewpoint .fieldOfView = new Vector4 (
          -width  / 2 * PIXEL,
          -height / 2 * PIXEL,
           width  / 2 * PIXEL,
           height / 2 * PIXEL,
-      ];
+      );
 
       scene .getRootNodes () .push (viewpoint);
 

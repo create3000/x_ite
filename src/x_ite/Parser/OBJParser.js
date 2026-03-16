@@ -117,7 +117,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
       // Init nodes.
 
-      this .object   = scene .createNode ("Transform");
+      this .object   = scene .createNode ("Group");
       this .group    = scene .createNode ("Group");
       this .material = this .createDefaultMaterial ();
       this .color    = scene .createNode ("Color");
@@ -334,7 +334,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
             if (this .group .children .length)
             {
-               this .object = scene .createNode("Transform");
+               this .object = scene .createNode ("Group");
                this .group  = scene .createNode ("Group");
 
                this .object .children .push (this .group);

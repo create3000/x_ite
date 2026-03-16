@@ -16,7 +16,21 @@ If you want combine DOM access with X3D access in your JavaScript functions then
 
 This script initializes an X3D canvas within an HTML page, configuring it to contain a scene, a camera and a geometric cube with default material properties. It then animates the rotation of the cube within the scene, ensuring that the camera captures the dynamic action.
 
+### External File
+
+You can include an external file:
+
+```html
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@14.0.8/dist/x_ite.min.js"></script>
+<x3d-canvas
+    src="box.x3d"
+    contentScale="auto"
+    update="auto"></x3d-canvas>
+```
+
 ### Declarative Syntax
+
+However, you can also include and manipulate the XML directly:
 
 ```html
 <script defer src="https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.js"></script>

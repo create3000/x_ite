@@ -1,4 +1,7 @@
-import Color3 from "./Color3.js";
+import Color3    from "./Color3.js";
+import Algorithm from "../Algorithm.js";
+
+const { clamp } = Algorithm;
 
 const
    _r = Symbol .for ("X_ITE.Color3.r"),
@@ -12,10 +15,10 @@ const
 
 function Color4 (r = 0, g = r, b = g, a = b)
 {
-   this [_r] = r;
-   this [_g] = g;
-   this [_b] = b;
-   this [_a] = a;
+   this [_r] = clamp (r, 0, 1);
+   this [_g] = clamp (g, 0, 1);
+   this [_b] = clamp (b, 0, 1);
+   this [_a] = clamp (a, 0, 1);
 }
 
 Object .assign (Color4 .prototype,
@@ -46,10 +49,10 @@ Object .assign (Color4 .prototype,
    },
    set (r = 0, g = r, b = g, a = b)
    {
-      this [_r] = r;
-      this [_g] = g;
-      this [_b] = b;
-      this [_a] = a;
+      this [_r] = clamp (r, 0, 1);
+      this [_g] = clamp (g, 0, 1);
+      this [_b] = clamp (b, 0, 1);
+      this [_a] = clamp (a, 0, 1);
       return this;
    },
    equals (color)
@@ -105,22 +108,22 @@ for (const key of Object .keys (Color4 .prototype))
 
 const r = {
    get () { return this [_r]; },
-   set (value) { this [_r] = value; },
+   set (value) { this [_r] = clamp (value, 0, 1); },
 };
 
 const g = {
    get () { return this [_g]; },
-   set (value) { this [_g] = value; },
+   set (value) { this [_g] = clamp (value, 0, 1); },
 };
 
 const b = {
    get () { return this [_b]; },
-   set (value) { this [_b] = value; },
+   set (value) { this [_b] = clamp (value, 0, 1); },
 };
 
 const a = {
    get () { return this [_a]; },
-   set (value) { this [_a] = value; },
+   set (value) { this [_a] = clamp (value, 0, 1); },
 };
 
 Object .defineProperties (Color4 .prototype,

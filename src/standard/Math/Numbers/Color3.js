@@ -1,6 +1,6 @@
 import Algorithm from "../Algorithm.js";
 
-const { interval, degrees } = Algorithm;
+const { interval, degrees, clamp } = Algorithm;
 
 const
    _r = Symbol .for ("X_ITE.Color3.r"),
@@ -13,9 +13,9 @@ const
 
 function Color3 (r = 0, g = r, b = g)
 {
-   this [_r] = r;
-   this [_g] = g;
-   this [_b] = b;
+   this [_r] = clamp (r, 0, 1);
+   this [_g] = clamp (g, 0, 1);
+   this [_b] = clamp (b, 0, 1);
 }
 
 Object .assign (Color3 .prototype,
@@ -43,9 +43,9 @@ Object .assign (Color3 .prototype,
    },
    set (r = 0, g = r, b = g)
    {
-      this [_r] = r;
-      this [_g] = g;
-      this [_b] = b;
+      this [_r] = clamp (r, 0, 1);
+      this [_g] = clamp (g, 0, 1);
+      this [_b] = clamp (b, 0, 1);
       return this;
    },
    equals (color)
@@ -163,17 +163,17 @@ for (const key of Object .keys (Color3 .prototype))
 
 const r = {
    get () { return this [_r]; },
-   set (value) { this [_r] = value; },
+   set (value) { this [_r] = clamp (value, 0, 1); },
 };
 
 const g = {
    get () { return this [_g]; },
-   set (value) { this [_g] = value; },
+   set (value) { this [_g] = clamp (value, 0, 1); },
 };
 
 const b = {
    get () { return this [_b]; },
-   set (value) { this [_b] = value; },
+   set (value) { this [_b] = clamp (value, 0, 1); },
 };
 
 Object .defineProperties (Color3 .prototype,

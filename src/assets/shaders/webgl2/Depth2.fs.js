@@ -22,8 +22,8 @@ layout(location = 0) out vec4 x3d_FragData0;
    layout(location = 1) out vec4 x3d_FragData1;
 #endif
 
-#pragma X3D include "common/ClipPlanes.glsl"
-#pragma X3D include "common/Point.glsl"
+#include <ClipPlanes>
+#include <Point>
 
 void
 main ()

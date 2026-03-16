@@ -3,18 +3,18 @@
 <X3D profile='Interchange' version='4.1' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.1.xsd'>
   <head>
     <component name='Core' level='2'/>
-    <component name='EnvironmentalSensor' level='3'/>
-    <component name='Geometry2D' level='2'/>
+    <component name='EnvironmentalSensor' level='1'/>
+    <component name='Geometry2D' level='1'/>
     <component name='Layering' level='1'/>
     <component name='Scripting' level='1'/>
     <component name='Shaders' level='1'/>
-    <component name='Text' level='2'/>
+    <component name='Text' level='1'/>
     <component name='X_ITE' level='1'/>
     <unit category='angle' name='degree' conversionFactor='0.017453292519943295'/>
     <meta name='creator' content='Holger Seelig'/>
     <meta name='created' content='Mon, 16 Feb 2026 21:47:35 GMT'/>
-    <meta name='modified' content='Sun, 22 Feb 2026 12:39:19 GMT'/>
-    <meta name='generator' content='Sunrize X3D Editor V2.0.4, https://create3000.github.io/sunrize/'/>
+    <meta name='modified' content='Tue, 10 Mar 2026 11:54:32 GMT'/>
+    <meta name='generator' content='Sunrize X3D Editor V2.0.7, https://create3000.github.io/sunrize/'/>
   </head>
   <Scene>
     <ProtoDeclare name='WaveDots'>
@@ -134,7 +134,7 @@ function rand ()
     </ProtoDeclare>
     <WorldInfo DEF='_1'
         title='Dots'
-        info='"See the Shader Dots [folder](https://github.com/create3000/x_ite/tree/main/docs/assets/teaser/shader-dots)."'>
+        info='"Credits: [Kyyy_24](https://sketchfab.com/luckyardrianto27) (dancer)"'>
       <MetadataSet DEF='Sunrize' containerField='metadata'
           name='Sunrize'
           reference='https://create3000.github.io/sunrize/'>
@@ -183,7 +183,7 @@ function rand ()
             <Appearance DEF='_2'>
               <ComposedShader DEF='NewShader'
                   language='GLSL'>
-                <field accessType='inputOutput' type='SFTime' name='time' value='0'/>
+                <field accessType='inputOutput' type='SFTime' name='time' value='142.217000007629'/>
                 <field accessType='inputOutput' type='SFColor' name='color' value='0.9019608 0.5686275 0.2196078'/>
                 <field accessType='inputOutput' type='SFNode' name='dot'>
                   <ImageTexture DEF='_5'
@@ -287,7 +287,7 @@ main ()
               <UnlitMaterial/>
             </Appearance>
             <Text DEF='_8'
-                string='"X_ITE v14.0.4"'
+                string='"X_ITE v14.0.8"'
                 solid='true'>
               <FontStyle
                   family='"Neuropol", "SANS"'

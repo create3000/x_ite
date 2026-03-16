@@ -6,6 +6,7 @@ import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
+import Algorithm                from "../../../standard/Math/Algorithm.js";
 
 // Register key.
 
@@ -40,16 +41,18 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
       this ._specular             .addInterest ("set_specular__",             this);
       this ._specularTexture      .addInterest ("set_specularTexture__",      this);
       this ._specularColor        .addInterest ("set_specularColor__",        this);
+      this ._specularStrength     .addInterest ("set_specularStrength__",     this);
       this ._specularColorTexture .addInterest ("set_specularColorTexture__", this);
 
       this .set_specular__ ();
       this .set_specularTexture__ ();
       this .set_specularColor__ ();
+      this .set_specularStrength__ ();
       this .set_specularColorTexture__ ();
    },
    set_specular__ ()
    {
-      this .specular = Math .max (this ._specular .getValue (), 0);
+      this .specular = Algorithm .clamp (this ._specular .getValue (), 0, 1);
    },
    set_specularTexture__ ()
    {
@@ -60,6 +63,10 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
    set_specularColor__ ()
    {
       this .specularColorArray .set (this ._specularColor .getValue ());
+   },
+   set_specularStrength__ ()
+   {
+      this .specularStrength = Math .max (this ._specularStrength .getValue (), 0);
    },
    set_specularColorTexture__ ()
    {
@@ -87,11 +94,13 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
    {
       uniforms .push ("x3d_SpecularEXT");
       uniforms .push ("x3d_SpecularColorEXT");
+      uniforms .push ("x3d_SpecularStrengthEXT");
    },
    setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
-      gl .uniform1f  (shaderObject .x3d_SpecularEXT,      this .specular);
-      gl .uniform3fv (shaderObject .x3d_SpecularColorEXT, this .specularColorArray);
+      gl .uniform1f  (shaderObject .x3d_SpecularEXT,         this .specular);
+      gl .uniform3fv (shaderObject .x3d_SpecularColorEXT,    this .specularColorArray);
+      gl .uniform1f  (shaderObject .x3d_SpecularStrengthEXT, this .specularStrength);
 
       if (!+this .getTextureBits ())
          return;
@@ -121,6 +130,7 @@ Object .defineProperties (SpecularMaterialExtension,
          new X3DFieldDefinition (X3DConstants .inputOutput, "specularTextureMapping",      new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "specularTexture",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "specularColor",               new Fields .SFColor (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "specularStrength",            new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "specularColorTextureMapping", new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "specularColorTexture",        new Fields .SFNode ()),
       ]),

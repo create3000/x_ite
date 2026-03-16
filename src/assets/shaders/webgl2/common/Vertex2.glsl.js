@@ -96,10 +96,10 @@ out vec3 vertex;
 
 // Main
 
-#pragma X3D include "Utils.glsl"
-#pragma X3D include "Skin.glsl"
-#pragma X3D include "Instancing.glsl"
-#pragma X3D include "PointSize.glsl"
+#include <Utils>
+#include <Skin>
+#include <Instancing>
+#include <PointSize>
 
 void
 main ()
