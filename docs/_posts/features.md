@@ -66,7 +66,8 @@ X_ITE supports most [Khronos extensions](https://github.com/KhronosGroup/glTF/tr
 
 #### Ratified Khronos Extensions
 
-- [x] KHR_accessor_float64
+- [x] [KHR_accessor_float16](https://github.com/KhronosGroup/glTF/blob/8611bc8933493865380e68fadf555dbbc2cf1180/extensions/2.0/Khronos/KHR_accessor_float16/README.md)
+- [x] [KHR_accessor_float64](https://github.com/KhronosGroup/glTF/blob/8611bc8933493865380e68fadf555dbbc2cf1180/extensions/2.0/Khronos/KHR_accessor_float64/README.md)
 - [x] [KHR_animation_pointer](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_animation_pointer/README.md) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/PotOfCoalsAnimationPointer/glTF/PotOfCoalsAnimationPointer.gltf)
 - [x] [KHR_draco_mesh_compression](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_draco_mesh_compression/README.md) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/CarConcept/glTF-KTX-BasisU-Draco/CarConcept.gltf)
 - [x] [KHR_lights_punctual](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_lights_punctual/README.md) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/laboratory/gltf-sample-viewer/?url=https://raw.githubusercontent.com/KhronosGroup/glTF-Sample-Assets/master/Models/LightsPunctualLamp/glTF/LightsPunctualLamp.gltf)
