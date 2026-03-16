@@ -828,7 +828,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             return Float32Array .from (array, v => Math .max (v / 2147483647, -1));
          case 5125: // Uint32Array
             return Float32Array .from (array, v => v / 4294967295);
-         case 5131:
+         case 5131: // Float16Array
          case 5126: // Float32Array
          case 5130: // Float64Array
             return array; // Their normalized property MUST NOT be set to true;
