@@ -76,13 +76,6 @@ getMaterialColor (const in vec4 fragCoord)
       materialInfo = getDiffuseTransmissionInfo (materialInfo);
    #endif
 
-   materialInfo = getVolumeScatterInfo (materialInfo);
-
-   #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
-      // The single scatter color defines the ratio of scattering. 1 - singleScatter is the ratio of absorption.
-      vec3 singleScatter = multiToSingleScatter (materialInfo .multiscatterColor);
-   #endif
-
    materialInfo .perceptualRoughness = clamp (materialInfo .perceptualRoughness, 0.0, 1.0);
 
    // Roughness is authored as perceptual roughness; as is convention,
