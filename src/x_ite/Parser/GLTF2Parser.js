@@ -220,6 +220,17 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
          this .khrXmpJsonLdObject (packet, extensions ?.KHR_xmp_json_ld);
       }
+
+      if (extensions ?.VRM ?.meta instanceof Object)
+      {
+         for (const [key, value] of Object .entries (extensions .VRM .meta))
+         {
+            if (typeof value !== "string")
+               continue;
+
+            scene .addMetaData (key, value);
+         }
+      }
    },
    async extensionsArray (extensions, set)
    {
