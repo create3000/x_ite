@@ -108,10 +108,8 @@ async function convert (encoding, files)
          browser .setBrowserOption ("Mute",             true);
          browser .endUpdate ();
 
-         await browser .loadURL (new X3D .MFString (url));
-
          const
-            scene     = browser .currentScene,
+            scene     = await browser .createX3DFromURL (new X3D .MFString (url)),
             generator = scene .getMetaData ("generator") ?.filter (value => !value .startsWith (browser .name)) ?? [ ];
 
          generator .push (`${browser .name} V${browser .version}, ${browser .providerURL}`);
