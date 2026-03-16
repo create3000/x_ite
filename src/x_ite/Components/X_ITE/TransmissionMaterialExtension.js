@@ -87,9 +87,6 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
       gl .bindTexture (gl .TEXTURE_2D, transmissionBufferTexture);
       gl .uniform1i (shaderObject .x3d_TransmissionSamplerEXT, transmissionUnit);
 
-      if (!+this .getTextureBits ())
-         return;
-
       this .transmissionTextureNode ?.setNamedShaderUniforms (gl,
          shaderObject .x3d_TransmissionTextureEXT,
          this ._transmissionTextureMapping .getValue (),

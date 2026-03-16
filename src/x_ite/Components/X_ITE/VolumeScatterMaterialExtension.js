@@ -101,14 +101,11 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
    {
       const browser = this .getBrowser ();
 
-      if (+this .getTextureBits ())
-      {
-         this .multiscatterColorTextureNode ?.setNamedShaderUniforms (gl,
-            shaderObject .x3d_MultiscatterColorTextureEXT,
-            this ._multiscatterColorTextureMapping .getValue (),
-            textureTransformMapping,
-            textureCoordinateMapping);
-      }
+      this .multiscatterColorTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject .x3d_MultiscatterColorTextureEXT,
+         this ._multiscatterColorTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
 
       if (shaderObject .volumeScatterPass)
       {

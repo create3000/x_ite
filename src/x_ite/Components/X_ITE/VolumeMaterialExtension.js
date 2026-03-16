@@ -100,9 +100,6 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X3DM
       gl .uniform1f  (shaderObject .x3d_AttenuationDistanceEXT, this .attenuationDistance);
       gl .uniform3fv (shaderObject .x3d_AttenuationColorEXT,    this .attenuationColorArray);
 
-      if (!+this .getTextureBits ())
-         return;
-
       this .thicknessTextureNode ?.setNamedShaderUniforms (gl,
          shaderObject .x3d_ThicknessTextureEXT,
          this ._thicknessTextureMapping .getValue (),
