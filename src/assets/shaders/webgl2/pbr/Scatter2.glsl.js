@@ -13,8 +13,7 @@ uniform float x3d_ScatterMaterialIdEXT;
 vec4
 getMaterialColor (const in vec4 fragCoord)
 {
-   vec3 singleScatter = multiToSingleScatter ();
-   vec4 baseColor     = getBaseColor ();
+   vec4 baseColor = getBaseColor ();
 
    #if defined (X3D_TEXTURE_PROJECTION)
       baseColor .rgb *= getTextureProjectorColor ();
@@ -65,6 +64,12 @@ getMaterialColor (const in vec4 fragCoord)
 
    #if defined (X3D_VOLUME_MATERIAL_EXT)
       materialInfo = getVolumeInfo (materialInfo);
+   #endif
+
+   #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+      materialInfo = getVolumeScatterInfo (materialInfo);
+
+      vec3 singleScatter = multiToSingleScatter (materialInfo .multiscatterColor);
    #endif
 
    #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
