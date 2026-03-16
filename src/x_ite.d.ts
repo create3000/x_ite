@@ -20776,6 +20776,18 @@ declare namespace X3D
        */
       multiscatterColor: SFColor;
       /**
+       * A surface texture that defines the multi-scatter albedo at the volume's entry point. Stored in the RGB channels and encoded in sRGB. This will be multiplied by the multiscatterColorFactor.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      multiscatterColorTexture: X3DSingleTextureNodeProxy | null;
+      /**
+       * Input/Output field multiscatterColorTextureMapping.
+       *
+       * This field is of access type 'inputOutput' and type SFString.
+       */
+      multiscatterColorTextureMapping: string;
+      /**
        * The anisotropy of scatter events. Range is [-1, 1].
        *
        * This field is of access type 'inputOutput' and type SFFloat.

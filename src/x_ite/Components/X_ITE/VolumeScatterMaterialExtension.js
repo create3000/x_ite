@@ -101,6 +101,15 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
    {
       const browser = this .getBrowser ();
 
+      if (+this .getTextureBits ())
+      {
+         this .multiscatterColorTextureNode ?.setNamedShaderUniforms (gl,
+            shaderObject .x3d_MultiscatterColorTextureEXT,
+            this ._multiscatterColorTextureMapping .getValue (),
+            textureTransformMapping,
+            textureCoordinateMapping);
+      }
+
       if (shaderObject .volumeScatterPass)
       {
          gl .uniform1f  (shaderObject .x3d_ScatterMaterialIdEXT, browser .getShapeId ());
@@ -129,15 +138,6 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
       gl .activeTexture (gl .TEXTURE0 + scatterDepthSampleUnit);
       gl .bindTexture (gl .TEXTURE_2D, scatterDepthSampleTexture);
       gl .uniform1i (shaderObject .x3d_ScatterDepthSamplerEXT, scatterDepthSampleUnit);
-
-      if (!+this .getTextureBits ())
-         return;
-
-      this .multiscatterColorTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject .x3d_MultiscatterColorTextureEXT,
-         this ._multiscatterColorTextureMapping .getValue (),
-         textureTransformMapping,
-         textureCoordinateMapping);
    },
 });
 

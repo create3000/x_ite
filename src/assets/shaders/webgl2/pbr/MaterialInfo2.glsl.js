@@ -232,7 +232,8 @@ ${MaterialTextures .texture ("x3d_MultiscatterColorTextureEXT", "rgb", "linear")
 
 uniform vec3 x3d_MultiscatterColorEXT;
 
-MaterialInfo getVolumeScatterInfo (in MaterialInfo info)
+MaterialInfo
+getVolumeScatterInfo (in MaterialInfo info)
 {
    info .multiscatterColor = x3d_MultiscatterColorEXT;
 
