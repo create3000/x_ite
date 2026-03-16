@@ -53,6 +53,8 @@ Object .assign (Object .setPrototypeOf (X3DTransformMatrix3DNode .prototype, X3D
          delete this .getBBox;
          delete this .traverse;
       }
+
+      this .getExecutionContext () ._bbox_changed = Date .now () / 1000;
    },
    setTransform (t, r, s, so, c)
    {
@@ -74,6 +76,8 @@ Object .assign (Object .setPrototypeOf (X3DTransformMatrix3DNode .prototype, X3D
          delete this .getBBox;
          delete this .traverse;
       }
+
+      this .getExecutionContext () ._bbox_changed = Date .now () / 1000;
    },
    traverse (type, renderObject)
    {

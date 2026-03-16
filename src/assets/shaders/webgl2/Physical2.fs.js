@@ -6,5 +6,5 @@ precision highp sampler2D;
 precision highp sampler3D;
 precision highp samplerCube;
 
-#pragma X3D include "pbr/PBR.glsl"
+#include <PBR>
 `;

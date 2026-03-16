@@ -7338,7 +7338,7 @@ declare namespace X3D
    interface EmissiveStrengthMaterialExtensionProxy extends X3DMaterialExtensionNodeProxy
    {
       /**
-       * The strength adjustment to be multiplied with the material's emissive value.
+       * The strength adjustment to be multiplied with the material's emissiveColor value.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -11000,7 +11000,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * pointerEvents defines whether this Shape becomes target for pointer events.
+       * pointerEvents defines whether this InstancedShape becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -11369,6 +11369,12 @@ declare namespace X3D
        */
       pickable: boolean;
       /**
+       * pointerEvents defines whether this Layer becomes target for pointer events.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      pointerEvents: boolean;
+      /**
        * This field is of access type 'inputOnly' and type MFNode.
        */
       removeChildren: MFNode <X3DChildNodeProxy>;
@@ -11560,6 +11566,12 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type SFBool.
        */
       pickable: boolean;
+      /**
+       * pointerEvents defines whether this LayoutLayer becomes target for pointer events.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      pointerEvents: boolean;
       /**
        * This field is of access type 'inputOnly' and type MFNode.
        */
@@ -14185,7 +14197,7 @@ declare namespace X3D
        */
       physics: MFNode <X3DParticlePhysicsModelNodeProxy>;
       /**
-       * pointerEvents defines whether this Shape becomes target for pointer events.
+       * pointerEvents defines whether this ParticleSystem becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -17542,7 +17554,13 @@ declare namespace X3D
        */
       specularColorTextureMapping: string;
       /**
-       * texture that defines the strength of the specular reflection, stored in the alpha (A) channel. This will be multiplied by specularFactor.
+       * The strength adjustment to be multiplied with the material's specularColor value.
+       *
+       * This field is of access type 'inputOutput' and type SFFloat.
+       */
+      specularStrength: number;
+      /**
+       * Texture that defines the strength of the specular reflection, stored in the alpha (A) channel. This will be multiplied by specularFactor.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -20758,7 +20776,7 @@ declare namespace X3D
        */
       multiscatterColor: SFColor;
       /**
-       * The anisotropy of scatter events. Range is (-1, 1).
+       * The anisotropy of scatter events. Range is [-1, 1].
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -21414,6 +21432,12 @@ declare namespace X3D
        */
       pickable: boolean;
       /**
+       * pointerEvents defines whether this layer becomes target for pointer events.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      pointerEvents: boolean;
+      /**
        * This field is of access type 'inputOutput' and type SFNode.
        */
       viewport: X3DViewportNodeProxy | null;
@@ -22017,7 +22041,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * pointerEvents defines whether this Shape becomes target for pointer events.
+       * pointerEvents defines whether this shape becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */

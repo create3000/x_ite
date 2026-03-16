@@ -75,14 +75,14 @@ in vec3 vertex;
 // but assigning it to a global variable in a top level function fixes this issue.
 bool frontFacing;
 
-#pragma X3D include "../pbr/ToneMapping.glsl"
-#pragma X3D include "Texture.glsl"
-#pragma X3D include "Normal.glsl"
-#pragma X3D include "ClipPlanes.glsl"
-#pragma X3D include "Point.glsl"
-#pragma X3D include "Stipple.glsl"
-#pragma X3D include "Hatch.glsl"
-#pragma X3D include "Fog.glsl"
+#include <ToneMapping>
+#include <Texture>
+#include <Normal>
+#include <ClipPlanes>
+#include <Point>
+#include <Stipple>
+#include <Hatch>
+#include <Fog>
 
 vec4
 getMaterialColor (const in vec4 fragCoord);

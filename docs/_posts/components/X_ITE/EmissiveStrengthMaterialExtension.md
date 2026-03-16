@@ -48,8 +48,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### SFFloat [in, out] **emissiveStrength** 1 <small>[0,∞)</small>
 {: #fields-emissiveStrength }
 
-The strength adjustment to be multiplied with the material's emissive value.
- strength of the dispersion effect, specified as 20/Abbe number.
+The strength adjustment to be multiplied with the material's *emissiveColor* value.
 
 ## Example
 

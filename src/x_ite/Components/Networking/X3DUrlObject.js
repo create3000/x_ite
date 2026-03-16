@@ -175,8 +175,8 @@ Object .assign (X3DUrlObject .prototype,
       if (loadState === X3DConstants .NOT_STARTED_STATE || loadState === X3DConstants .FAILED_STATE)
          return;
 
-      this .setLoadState (X3DConstants .NOT_STARTED_STATE);
       this .unloadData ();
+      this .setLoadState (X3DConstants .NOT_STARTED_STATE);
    },
    unloadNow ()
    {

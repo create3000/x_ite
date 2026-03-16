@@ -61,12 +61,12 @@ Input/Output field *multiscatterColorTextureMapping*.
 ### SFNode [in, out] **multiscatterColorTexture** NULL <small>[X3DSingleTextureNode]</small>
 {: #fields-multiscatterColorTexture }
 
-A texture that defines the multiscatter color, stored in the RGB channels and encoded in sRGB. This texture will be multiplied by *multiscatterColor*.
+A surface texture that defines the multi-scatter albedo at the volume's entry point. Stored in the RGB channels and encoded in sRGB. This will be multiplied by the multiscatterColorFactor.
 
-### SFFloat [in, out] **scatterAnisotropy** 0 <small>(-1,1)</small>
+### SFFloat [in, out] **scatterAnisotropy** 0 <small>[-1,1]</small>
 {: #fields-scatterAnisotropy }
 
-The anisotropy of scatter events. Range is (-1, 1).
+The anisotropy of scatter events. Range is [-1, 1].
 
 ## Example
 

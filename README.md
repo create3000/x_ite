@@ -36,10 +36,10 @@ If you are going to use X_ITE in a production environment, you should use a fixe
 jsDelivr is an open-source content delivery network (CDN) renowned for its no-cost access, swift performance, and reliable service.
 
 ```html
-<script defer src="https://cdn.jsdelivr.net/npm/x_ite@14.0.4/dist/x_ite.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@14.0.9/dist/x_ite.min.js"></script>
 <!-- or as ES module for use in scripts -->
 <script type="module">
-import X3D from "https://cdn.jsdelivr.net/npm/x_ite@14.0.4/dist/x_ite.min.mjs";
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite@14.0.9/dist/x_ite.min.mjs";
 </script>
 ```
 
@@ -65,10 +65,24 @@ $ npm install x_ite-node
 
 This script initializes an X3D canvas within an HTML page, configuring it to contain a scene, a camera and a geometric cube with default material properties. It then animates the rotation of the cube within the scene, ensuring that the camera captures the dynamic action.
 
-### Declarative Syntax
+### External File
+
+You can include an external file:
 
 ```html
-<script defer src="https://cdn.jsdelivr.net/npm/x_ite@14.0.4/dist/x_ite.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@14.0.9/dist/x_ite.min.js"></script>
+<x3d-canvas
+    src="box.x3d"
+    contentScale="auto"
+    update="auto"></x3d-canvas>
+```
+
+### Declarative Syntax
+
+However, you can also include and manipulate the XML directly:
+
+```html
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@14.0.9/dist/x_ite.min.js"></script>
 <x3d-canvas contentScale="auto" update="auto">
   <X3D profile='Interchange' version='4.1'>
     <head>
@@ -107,7 +121,7 @@ The same scene can also be created using pure JavaScript:
 
 ```html
 <script type="module">
-import X3D from "https://cdn.jsdelivr.net/npm/x_ite@14.0.4/dist/x_ite.min.mjs";
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite@14.0.9/dist/x_ite.min.mjs";
 
 const
   canvas  = document .createElement ("x3d-canvas"), // Or get an already inserted <x3d-canvas> element.
@@ -197,7 +211,7 @@ X_ITE is free software and licensed under the [MIT License](LICENSE.md).
 
 ## See Also
 
-* [x_ite-node](https://www.npmjs.com/package/x_ite-node) — Pure Node.js version of X_ITE
-* [x3d-tidy](https://www.npmjs.com/package/x3d-tidy) — X3D converter, beautifier and minimizer
-* [x3d-image](https://www.npmjs.com/package/x3d-image) — render image files from X3D
-* [sunrize](https://www.npmjs.com/package/sunrize) — a multi-platform X3D editor
+* [x_ite-node](https://www.npmjs.com/package/x_ite-node) — Pure Node.js Version of X_ITE
+* [x3d-tidy](https://www.npmjs.com/package/x3d-tidy) — X3D Converter, Beautifier and Minimizer
+* [x3d-image](https://www.npmjs.com/package/x3d-image) — Render Image Files from X3D
+* [sunrize](https://www.npmjs.com/package/sunrize) — A Multi-Platform X3D Editor

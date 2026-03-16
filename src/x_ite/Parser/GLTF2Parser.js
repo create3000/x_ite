@@ -80,25 +80,25 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    isValid: (() =>
    {
       const keys = new Set ([
+         "accessors",
+         "animations",
          "asset",
-         "extra",
+         "buffers",
+         "bufferViews",
+         "cameras",
          "extensions",
          "extensionsRequired",
          "extensionsUsed",
-         "buffers",
-         "bufferViews",
-         "accessors",
-         "samplers",
+         "extras",
          "images",
-         "textures",
          "materials",
          "meshes",
-         "cameras",
-         "skins",
          "nodes",
-         "scenes",
+         "samplers",
          "scene",
-         "animations",
+         "scenes",
+         "skins",
+         "textures",
       ]);
 
       return function ()
@@ -175,9 +175,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .viewpointsCenterOfRotation (scene);
       this .optimizeSceneGraph (scene .getRootNodes ());
 
-      this .exportGroup ("Viewpoints",        this .cameras);
       this .exportGroup ("EnvironmentLights", this .envLights);
       this .exportGroup ("Lights",            this .lights);
+      this .exportGroup ("Viewpoints",        this .cameras);
       this .exportGroup ("Animations",        glTF .animations);
 
       this .cleanupAnimationScripts ();
@@ -616,6 +616,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          [5123, 2], // Uint16Array
          [5124, 4], // Int32Array
          [5125, 4], // Uint32Array
+         [5131, 2], // Float16Array
          [5126, 4], // Float32Array
          [5130, 8], // Float64Array
       ]);
@@ -697,6 +698,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          [5123, Uint16Array],
          [5124, Int32Array],
          [5125, Uint32Array],
+         [5131, Float16Array],
          [5126, Float32Array],
          [5130, Float64Array],
       ]);
@@ -826,6 +828,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             return Float32Array .from (array, v => Math .max (v / 2147483647, -1));
          case 5125: // Uint32Array
             return Float32Array .from (array, v => v / 4294967295);
+         case 5131: // Float16Array
          case 5126: // Float32Array
          case 5130: // Float64Array
             return array; // Their normalized property MUST NOT be set to true;
@@ -1482,10 +1485,17 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       extension ._specularTexture        = this .textureInfo (KHR_materials_specular .specularTexture);
       extension ._specularTextureMapping = this .textureMapping (KHR_materials_specular .specularTexture);
 
-      const specularColorFactor = new Color3 ();
+      const specularColorFactor = new Vector3 ();
 
       if (this .vectorValue (KHR_materials_specular .specularColorFactor, specularColorFactor))
-         extension ._specularColor = specularColorFactor;
+      {
+         const
+            specularStrength = Math .max (... specularColorFactor),
+            specularColor    = [... specularColorFactor] .map (c => c / specularStrength);
+
+         extension ._specularColor    = new Color3 (... (specularStrength ? specularColor : [0]));
+         extension ._specularStrength = specularStrength;
+      }
 
       extension ._specularColorTexture        = this .textureInfo (KHR_materials_specular .specularColorTexture);
       extension ._specularColorTextureMapping = this .textureMapping (KHR_materials_specular .specularColorTexture);
@@ -2576,7 +2586,7 @@ function eventsProcessed ()
 
       const
          scene    = this .getScene (),
-         children = scenes .map (scene => this .sceneObject (scene)) .filter (node => node);
+         children = scenes .map ((scene, index) => this .sceneObject (scene, index)) .filter (node => node);
 
       switch (children .length)
       {
@@ -2619,7 +2629,7 @@ function eventsProcessed ()
          }
       }
    },
-   sceneObject (scene)
+   sceneObject (scene, index)
    {
       if (!(scene instanceof Object))
          return null;
@@ -2639,17 +2649,23 @@ function eventsProcessed ()
          }
          case 1:
          {
-            return nodes [0];
+            const
+               scene = this .getScene (),
+               node  = nodes [0];
+
+            if (!node .getName ())
+               scene .addNamedNode (scene .getUniqueName (`Scene${index}`), node);
+
+            return node;
          }
          default:
          {
             const
                scene     = this .getScene (),
                groupNode = scene .createNode ("Group", false),
-               name      = this .sanitizeName (scene .name);
+               name      = this .sanitizeName (scene .name) || `Scene${index}`;
 
-            if (name)
-               scene .addNamedNode (scene .getUniqueName (name), groupNode);
+            scene .addNamedNode (scene .getUniqueName (name), groupNode);
 
             groupNode ._children = nodes;
 

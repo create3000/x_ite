@@ -466,9 +466,9 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       }
 
       float
-      getRandomValue (const in float min, const in float max)
+      getRandomValue (const in float min_, const in float max_)
       {
-         return min + random () * (max - min);
+         return min_ + random () * (max_ - min_);
       }
 
       float

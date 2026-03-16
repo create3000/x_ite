@@ -37,6 +37,7 @@ The SpecularMaterialExtension node belongs to the [X_ITE](/x_ite/components/over
 | SFString | [in, out] | [specularTextureMapping](#fields-specularTextureMapping) | "" |
 | SFNode | [in, out] | [specularTexture](#fields-specularTexture) | NULL  |
 | SFColor | [in, out] | [specularColor](#fields-specularColor) | 1 1 1  |
+| SFFloat | [in, out] | [specularStrength](#fields-specularStrength) | 1  |
 | SFString | [in, out] | [specularColorTextureMapping](#fields-specularColorTextureMapping) | "" |
 | SFNode | [in, out] | [specularColorTexture](#fields-specularColorTexture) | NULL  |
 {: .fields }
@@ -50,7 +51,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
-### SFFloat [in, out] **specular** 1 <small>[0,∞)</small>
+### SFFloat [in, out] **specular** 1 <small>[0,1]</small>
 {: #fields-specular }
 
 The strength of the specular reflection.
@@ -63,12 +64,17 @@ Input/Output field *specularTextureMapping*.
 ### SFNode [in, out] **specularTexture** NULL <small>[X3DSingleTextureNode]</small>
 {: #fields-specularTexture }
 
- texture that defines the strength of the specular reflection, stored in the alpha (A) channel. This will be multiplied by specularFactor.
+Texture that defines the strength of the specular reflection, stored in the alpha (A) channel. This will be multiplied by specularFactor.
 
-### SFColor [in, out] **specularColor** 1 1 1 <small>[0,∞)</small>
+### SFColor [in, out] **specularColor** 1 1 1 <small>[0,1]</small>
 {: #fields-specularColor }
 
 The F0 color of the specular reflection (linear RGB).
+
+### SFFloat [in, out] **specularStrength** 1 <small>[0,∞)</small>
+{: #fields-specularStrength }
+
+The strength adjustment to be multiplied with the material's *specularColor* value.
 
 ### SFString [in, out] **specularColorTextureMapping** ""
 {: #fields-specularColorTextureMapping }

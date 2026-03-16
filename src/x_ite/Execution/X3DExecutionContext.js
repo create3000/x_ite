@@ -33,7 +33,8 @@ function X3DExecutionContext (executionContext, outerNode = null, browser = exec
    this .addChildObjects (X3DConstants .initializeOnly, "rootNodes",          new Fields .MFNode (),
                           X3DConstants .inputOutput,    "countPrimitives",    new Fields .SFBool (true),
                           X3DConstants .outputOnly,     "worldInfos",         new Fields .MFNode (),
-                          X3DConstants .outputOnly,     "sceneGraph_changed", new Fields .SFTime ())
+                          X3DConstants .outputOnly,     "sceneGraph_changed", new Fields .SFTime (),
+                          X3DConstants .outputOnly,     "bbox_changed",       new Fields .SFTime ())
 
    this ._rootNodes .setPrivate (false);
    this ._rootNodes .collectCloneCount = () => 1;
@@ -42,6 +43,7 @@ function X3DExecutionContext (executionContext, outerNode = null, browser = exec
    {
       this ._countPrimitives .addReference (executionContext ._countPrimitives);
       this ._sceneGraph_changed .addFieldInterest (executionContext ._sceneGraph_changed);
+      this ._bbox_changed       .addFieldInterest (executionContext ._bbox_changed);
    }
 
    this [_outerNode]       = outerNode;
@@ -70,6 +72,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       {
          this ._countPrimitives .removeReference (this .getExecutionContext () ._countPrimitives);
          this ._sceneGraph_changed .removeFieldInterest (this .getExecutionContext () ._sceneGraph_changed);
+         this ._bbox_changed       .removeFieldInterest (this .getExecutionContext () ._bbox_changed);
       }
 
       X3DBaseNode .prototype .setExecutionContext .call (this, executionContext);
@@ -78,6 +81,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       {
          this ._countPrimitives .addReference (executionContext ._countPrimitives);
          this ._sceneGraph_changed .addFieldInterest (executionContext ._sceneGraph_changed);
+         this ._bbox_changed       .addFieldInterest (executionContext ._bbox_changed);
       }
    },
    getOuterNode ()

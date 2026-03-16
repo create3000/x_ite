@@ -13,6 +13,7 @@ import "./xrX3DFlyViewer.js";
 import "./xrX3DViewer.js";
 
 const
+   _xrButton       = Symbol (),
    _sessionLock    = Symbol (),
    _referenceSpace = Symbol (),
    _baseLayer      = Symbol (),
@@ -37,7 +38,7 @@ Object .assign (X3DWebXRContext .prototype,
    },
    xrAddButton ()
    {
-      $("<div></div>")
+      this [_xrButton] = $("<div></div>")
          .attr ("title", _("Start WebXR session."))
          .addClass (["x_ite-private-xr-button", "x_ite-private-button"])
          .on ("mousedown touchstart", false)
@@ -105,6 +106,10 @@ Object .assign (X3DWebXRContext .prototype,
 
          this .getRenderingProperties () ._XRSession = true;
 
+         // Button
+
+         this [_xrButton] .attr ("title", _("Stop WebXR session."));
+
          // session .addEventListener ("select", event =>
          // {
          //    const { inputSource, frame } = event;
@@ -150,6 +155,10 @@ Object .assign (X3DWebXRContext .prototype,
          this .getRenderingProperties () ._ContentScale .removeInterest ("xrContentScale", this);
 
          this .getRenderingProperties () ._XRSession = false;
+
+         // Button
+
+         this [_xrButton] .attr ("title", _("Start WebXR session."));
       });
    },
    xrContentScale ()

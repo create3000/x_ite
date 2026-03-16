@@ -1,6 +1,6 @@
 import ShaderRegistry from "./ShaderRegistry.js";
 
-const include = /^\s*#pragma\s+X3D\s+include\s+".*?([^\/]+)\.glsl"\s*$/;
+const include = /^\s*#include\s*<([^\/]+)>\s*$/;
 
 function ShaderCompiler (gl)
 {
