@@ -51,6 +51,16 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 The multi-scatter albedo.
 
+### SFString [in, out] **multiscatterColorTextureMapping** ""
+{: #fields-thicknessTextureMapping }
+
+Input/Output field *multiscatterColorTextureMapping*.
+
+### SFNode [in, out] **multiscatterColorTexture** NULL <small>[X3DSingleTextureNode]</small>
+{: #fields-multiscatterColorTexture }
+
+A surface texture that defines the multi-scatter albedo at the volume's entry point. Stored in the RGB channels and encoded in sRGB. This will be multiplied by the multiscatterColorFactor.
+
 ### SFFloat [in, out] **scatterAnisotropy** 0 <small>[-1,1]</small>
 {: #fields-scatterAnisotropy }
 

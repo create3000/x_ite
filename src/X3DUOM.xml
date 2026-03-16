@@ -1259,6 +1259,19 @@
           maxInclusive="1"
           description="The multi-scatter albedo."
         />
+        <field name="multiscatterColorTextureMapping"
+          type="SFString"
+          accessType="inputOutput"
+          default=""
+          description="Input/Output field multiscatterColorTextureMapping."
+        />
+        <field name="multiscatterColorTexture"
+          type="SFNode"
+          accessType="inputOutput"
+          default="NULL"
+          acceptableNodeTypes="X3DSingleTextureNode"
+          description="A surface texture that defines the multi-scatter albedo at the volume's entry point. Stored in the RGB channels and encoded in sRGB. This will be multiplied by the multiscatterColorFactor."
+        />
         <field name="scatterAnisotropy"
           type="SFFloat"
           accessType="inputOutput"
