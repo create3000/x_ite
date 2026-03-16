@@ -118,6 +118,10 @@ getMaterialColor (const in vec4 fragCoord)
       materialInfo = getVolumeScatterInfo (materialInfo);
    #endif
 
+   #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+      materialInfo = getVolumeScatterInfo (materialInfo);
+   #endif
+
    #if defined (X3D_ANISOTROPY_MATERIAL_EXT)
       materialInfo = getAnisotropyInfo (materialInfo, normalInfo);
    #endif
@@ -167,6 +171,7 @@ getMaterialColor (const in vec4 fragCoord)
 
    #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
       // Used for weighting absorption and scattering.
+      vec3 singleScatter = multiToSingleScatter (materialInfo .multiscatterColor);
       vec3 singleScatter = multiToSingleScatter (materialInfo .multiscatterColor);
    #endif
 
