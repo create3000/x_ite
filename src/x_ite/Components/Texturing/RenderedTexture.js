@@ -106,8 +106,9 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
             gl                 = browser .getContext (),
             dependentRenderer  = this .dependentRenderers .get (renderObject),
             layer              = renderObject .getLayer (),
+            viewport           = this .viewport,
             viewpointNode      = dependentRenderer .getViewpoint (),
-            projectionMatrix   = viewpointNode .getProjectionMatrix (renderObject, this .viewport),
+            projectionMatrix   = viewpointNode .getProjectionMatrix (dependentRenderer, viewport),
             width              = this .getWidth (),
             height             = this .getHeight ();
 
@@ -115,7 +116,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
 
          // Render layer's children.
 
-         dependentRenderer .getViewVolumes () .push (viewVolume .set (projectionMatrix, this .viewport, this .viewport));
+         dependentRenderer .getViewVolumes () .push (viewVolume .set (projectionMatrix, viewport, viewport));
          dependentRenderer .getProjectionMatrix () .push (projectionMatrix);
 
          dependentRenderer .getCameraSpaceMatrix () .push (viewpointNode .getCameraSpaceMatrix ());
@@ -140,7 +141,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
 
          this .updateTextureParameters ();
 
-         if (this ._update .getValue () === "NEXT_FRAME_ONLY")
+         if (this ._update .equals ("NEXT_FRAME_ONLY"))
             this ._update = "NONE";
       };
    })(),
