@@ -15826,7 +15826,7 @@ declare namespace X3D
    interface RenderedTextureProxy extends X3DTexture2DNodeProxy
    {
       /**
-       * Allows you to explicitly specify background node, which to use during render to texture. If the value is NULL the currently bound background in the scene is used.
+       * Allows you to specify a background node explicitly, which will then be used during the render-to-texture process. If the value is NULL the currently bound background in the scene is used.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -15850,7 +15850,7 @@ declare namespace X3D
        */
       dimensions: MFInt32;
       /**
-       * Allows you to explicitly specify fog node, which to use during render to texture. If the value is NULL the currently bound fog in the scene is used.
+       * Allows you to specify a fog node explicitly, which will then be used during the render-to-texture process. If the value is NULL the currently bound fog in the scene is used.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -15886,7 +15886,7 @@ declare namespace X3D
        */
       update: "NONE" | "NEXT_FRAME_ONLY" | "ALWAYS";
       /**
-       * Allows you to explicitly specify viewpoint node from which to render to texture. If the value is NULL the currently bound viewpoint in the scene is used.
+       * Allows you to explicitly specify a viewpoint node from which to render to texture. If the value is NULL the currently bound viewpoint in the scene is used.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */

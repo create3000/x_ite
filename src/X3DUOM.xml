@@ -1657,19 +1657,19 @@
                    type="SFNode"
                    accessType="inputOutput"
                    default="NULL"
-                   description="Allows you to explicitly specify background node, which to use during render to texture. If the value is NULL the currently bound background in the scene is used."
+                   description="Allows you to specify a background node explicitly, which will then be used during the render-to-texture process. If the value is NULL the currently bound background in the scene is used."
                    acceptableNodeTypes="X3DBackgroundNode"/>
           <field name="fog"
                    type="SFNode"
                    accessType="inputOutput"
                    default="NULL"
-                   description="Allows you to explicitly specify fog node, which to use during render to texture. If the value is NULL the currently bound fog in the scene is used."
+                   description="Allows you to specify a fog node explicitly, which will then be used during the render-to-texture process. If the value is NULL the currently bound fog in the scene is used."
                    acceptableNodeTypes="X3DFogObject"/>
           <field name="viewpoint"
                    type="SFNode"
                    accessType="inputOutput"
                    default="NULL"
-                   description="Allows you to explicitly specify viewpoint node from which to render to texture. If the value is NULL the currently bound viewpoint in the scene is used."
+                   description="Allows you to explicitly specify a viewpoint node from which to render to texture. If the value is NULL the currently bound viewpoint in the scene is used."
                    acceptableNodeTypes="X3DViewpointNode"/>
           <containerField default="texture" type="containerFieldChoicesX3DTexture2DNode"/>
           <ContentModel>
