@@ -107,7 +107,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
             dependentRenderer  = this .dependentRenderers .get (renderObject),
             layer              = renderObject .getLayer (),
             viewpointNode      = dependentRenderer .getViewpoint (),
-            projectionMatrix   = viewpointNode .getProjectionMatrix (renderObject),
+            projectionMatrix   = viewpointNode .getProjectionMatrix (renderObject, this .viewport),
             width              = this .getWidth (),
             height             = this .getHeight ();
 
