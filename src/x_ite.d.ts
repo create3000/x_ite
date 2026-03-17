@@ -15874,6 +15874,8 @@ declare namespace X3D
        */
       update: "NONE" | "NEXT_FRAME_ONLY" | "ALWAYS";
       /**
+       * Allows you to explicitly specify viewpoint node from which to render to texture. If the value is NULL the currently bound viewpoint in the scene is used.
+       *
        * This field is of access type 'inputOutput' and type SFNode.
        */
       viewpoint: X3DViewpointNodeProxy | null;
