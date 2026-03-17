@@ -145,6 +145,8 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
          dependentRenderer .setFog (this .fogNode);
          dependentRenderer .setFramebuffer (this .frameBuffer);
 
+         this .setTransparent (dependentRenderer .getBackground () .isTransparent ());
+
          // Render layer's children.
 
          this .frameBuffer .bind ();
