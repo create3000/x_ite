@@ -43,6 +43,7 @@ The RenderedTexture node belongs to the [Texturing](/x_ite/components/overview/#
 | SFNode | [in, out] | [background](#fields-background) | NULL  |
 | SFNode | [in, out] | [fog](#fields-fog) | NULL  |
 | SFNode | [in, out] | [viewpoint](#fields-viewpoint) | NULL  |
+| SFNode | [in, out] | [scene](#fields-scene) | NULL  |
 | SFBool | [ ] | [repeatS](#fields-repeatS) | TRUE |
 | SFBool | [ ] | [repeatT](#fields-repeatT) | TRUE |
 | SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL  |
@@ -120,6 +121,16 @@ Whether to repeat texture along T axis vertically from top to bottom.
 {: #fields-textureProperties }
 
 Optional single contained [TextureProperties](/x_ite/components/texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
+
+## Example
+
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Texturing/RenderedTexture/RenderedTexture.x3d" contentScale="auto" update="auto">
+  <img src="https://create3000.github.io/media/examples/Texturing/RenderedTexture/screenshot.avif" alt="RenderedTexture"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/examples/Texturing/RenderedTexture/RenderedTexture.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Texturing/RenderedTexture/RenderedTexture.x3d)
+{: .example-links }
 
 ## See Also
 
