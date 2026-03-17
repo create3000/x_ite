@@ -40,6 +40,8 @@ The RenderedTexture node belongs to the [Texturing](/x_ite/components/overview/#
 | SFString | [in, out] | [update](#fields-update) | "NONE"  |
 | MFInt32 | [in, out] | [dimensions](#fields-dimensions) | [128, 128, 4, 1, 1] |
 | SFBool | [in, out] | [depthMap](#fields-depthMap) | FALSE |
+| SFNode | [in, out] | [background](#fields-background) | NULL  |
+| SFNode | [in, out] | [fog](#fields-fog) | NULL  |
 | SFNode | [in, out] | [viewpoint](#fields-viewpoint) | NULL  |
 | SFBool | [ ] | [repeatS](#fields-repeatS) | TRUE |
 | SFBool | [ ] | [repeatT](#fields-repeatT) | TRUE |
@@ -85,7 +87,7 @@ Sets the width, height, color components (and number of MRTs).
 The generated texture will contain the depth buffer of the image (instead of the color buffer as usual).
 
 ### SFNode [in, out] **background** NULL <small>[X3DBackgroundNode]</small>
-{: #background-fog }
+{: #fields-background }
 
 Allows you to explicitly specify background node, which to use during render to texture. If the value is NULL the currently bound background in the scene is used.
 
