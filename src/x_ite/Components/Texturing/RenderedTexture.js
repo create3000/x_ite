@@ -88,13 +88,10 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
    },
    renderTexture: (() =>
    {
-      const
-         viewVolume = new ViewVolume ();
+      const viewVolume = new ViewVolume ();
 
       return function (renderObject)
       {
-         this .textureRenderingPass = true;
-
          if (!this .dependentRenderers .has (renderObject))
          {
             const dependentRenderer = new DependentRenderer (this .getExecutionContext (), renderObject);
@@ -145,17 +142,8 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
 
          if (this ._update .getValue () === "NEXT_FRAME_ONLY")
             this ._update = "NONE";
-
-         this .textureRenderingPass = false;
       };
    })(),
-   setShaderUniforms (gl, channel)
-   {
-      X3DTexture2DNode .prototype .setShaderUniforms .call (this, gl, channel);
-
-      if (this .textureRenderingPass)
-         gl .viewport (0, 0, 0, 0); // Hide object by making viewport zero size.
-   },
 });
 
 Object .defineProperties (RenderedTexture,
