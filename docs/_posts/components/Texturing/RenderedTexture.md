@@ -101,6 +101,11 @@ Allows you to specify a fog node explicitly, which will then be used during the 
 
 Allows you to explicitly specify a viewpoint node from which to render to texture. If the value is NULL the currently bound viewpoint in the scene is used.
 
+### SFNode [in, out] **scene** NULL <small>[X3DChildNode]</small>
+{: #fields-scene }
+
+Sets a separate, potentially independent, sub-scene. If the value is NULL the current scene is used.
+
 ### SFBool [ ] **repeatS** TRUE
 {: #fields-repeatS }
 

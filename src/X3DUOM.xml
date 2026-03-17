@@ -1671,6 +1671,12 @@
                    default="NULL"
                    description="Allows you to explicitly specify a viewpoint node from which to render to texture. If the value is NULL the currently bound viewpoint in the scene is used."
                    acceptableNodeTypes="X3DViewpointNode"/>
+          <field name="scene"
+                   type="SFNode"
+                   accessType="inputOutput"
+                   default="NULL"
+                   description="Sets a separate, potentially independent, subscene. If the value is NULL the current scene is used."
+                   acceptableNodeTypes="X3DChildNode"/>
           <containerField default="texture" type="containerFieldChoicesX3DTexture2DNode"/>
           <ContentModel>
               <GroupContentModel name="ChildContentModelCore" minOccurs="0"/>

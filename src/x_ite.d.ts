@@ -15874,6 +15874,12 @@ declare namespace X3D
        */
       repeatT: boolean;
       /**
+       * Sets a separate, potentially independent, subscene. If the value is NULL the current scene is used.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      scene: X3DChildNodeProxy | null;
+      /**
        * Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
        *
        * This field is of access type 'initializeOnly' and type SFNode.

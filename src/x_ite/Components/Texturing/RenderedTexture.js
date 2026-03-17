@@ -38,11 +38,13 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
       this ._background .addInterest ("set_background__", this);
       this ._fog        .addInterest ("set_fog__",        this);
       this ._viewpoint  .addInterest ("set_viewpoint__",  this);
+      this ._scene      .addInterest ("set_scene__",      this);
 
       this .set_dimensions__ ();
       this .set_background__ ();
       this .set_fog__ ();
       this .set_viewpoint__ ();
+      this .set_scene__ ();
    },
    getTextureType ()
    {
@@ -94,6 +96,10 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
    {
       this .viewpointNode = X3DCast (X3DConstants .X3DViewpointNode, this ._viewpoint);
    },
+   set_scene__ ()
+   {
+      this .scene = X3DCast (X3DConstants .X3DChildNode, this ._scene);
+   },
    traverse (type, renderObject)
    {
       // TraverseType .DISPLAY
@@ -136,8 +142,11 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
             dependentRenderer  = this .dependentRenderers .get (renderObject),
             layer              = renderObject .getLayer (),
             viewport           = this .viewport,
+            navigationInfoNode = dependentRenderer .getNavigationInfo (),
             viewpointNode      = this .viewpointNode ?? dependentRenderer .getViewpoint (),
             projectionMatrix   = viewpointNode .getProjectionMatrix (dependentRenderer, viewport),
+            headlight          = navigationInfoNode ._headlight .getValue (),
+            headlightContainer = browser .getHeadlight (),
             width              = this .getWidth (),
             height             = this .getHeight ();
 
@@ -163,7 +172,24 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
          dependentRenderer .getViewMatrix () .push (viewpointNode .getViewMatrix ());
          dependentRenderer .getModelViewMatrix () .push (viewpointNode .getViewMatrix ());
 
-         layer .traverse (TraverseType .DISPLAY, dependentRenderer);
+         if (headlight)
+         {
+            headlightContainer .modelViewMatrix .push (viewpointNode .getViewMatrix ());
+
+            if (this .scene)
+            {
+               dependentRenderer .getGlobalLights ()     .push (headlightContainer);
+               dependentRenderer .getGlobalLightsKeys () .push (headlightContainer .lightNode .getLightKey ());
+            }
+         }
+
+         if (this .scene)
+            dependentRenderer .render (TraverseType .DISPLAY, this .scene .traverse, this .scene);
+         else
+            layer .traverse (TraverseType .DISPLAY, dependentRenderer);
+
+         if (headlight)
+            headlightContainer .modelViewMatrix .pop ();
 
          dependentRenderer .getModelViewMatrix () .pop ();
          dependentRenderer .getViewMatrix () .pop ();
@@ -201,6 +227,7 @@ Object .defineProperties (RenderedTexture,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "background",        new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "fog",               new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "viewpoint",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "scene",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
