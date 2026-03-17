@@ -4,6 +4,7 @@ import MultiTexture                   from "./Texturing/MultiTexture.js";
 import MultiTextureCoordinate         from "./Texturing/MultiTextureCoordinate.js";
 import MultiTextureTransform          from "./Texturing/MultiTextureTransform.js";
 import PixelTexture                   from "./Texturing/PixelTexture.js";
+import RenderedTexture                from "./Texturing/RenderedTexture.js";
 import TextureCoordinate              from "./Texturing/TextureCoordinate.js";
 import TextureCoordinateGenerator     from "./Texturing/TextureCoordinateGenerator.js";
 import TextureProperties              from "./Texturing/TextureProperties.js";
@@ -26,6 +27,7 @@ export default {
       MultiTextureCoordinate,
       MultiTextureTransform,
       PixelTexture,
+      RenderedTexture,
       TextureCoordinate,
       TextureCoordinateGenerator,
       TextureProperties,
