@@ -5,6 +5,7 @@ import X3DNode              from "../Core/X3DNode.js";
 import X3DTexture2DNode     from "./X3DTexture2DNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import TraverseType         from "../../Rendering/TraverseType.js";
+import X3DCast              from "../../Base/X3DCast.js";
 import DependentRenderer    from "../../Rendering/DependentRenderer.js";
 import TextureBuffer        from "../../Rendering/TextureBuffer.js";
 import ViewVolume           from "../../../standard/Math/Geometry/ViewVolume.js";
@@ -30,8 +31,10 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
       X3DTexture2DNode .prototype .initialize .call (this);
 
       this ._dimensions .addInterest ("set_dimensions__", this);
+      this ._viewpoint  .addInterest ("set_viewpoint__",  this);
 
       this .set_dimensions__ ();
+      this .set_viewpoint__ ();
    },
    getTextureType ()
    {
@@ -71,6 +74,10 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
          this .setHeight (0);
       }
    },
+   set_viewpoint__ ()
+   {
+      this .viewpointNode = X3DCast (X3DConstants .X3DViewpointNode, this ._viewpoint);
+   },
    traverse (type, renderObject)
    {
       // TraverseType .DISPLAY
@@ -101,13 +108,15 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
             this .dependentRenderers .set (renderObject, dependentRenderer);
          }
 
+         this .viewpointNode ?.update ();
+
          const
             browser            = this .getBrowser (),
             gl                 = browser .getContext (),
             dependentRenderer  = this .dependentRenderers .get (renderObject),
             layer              = renderObject .getLayer (),
             viewport           = this .viewport,
-            viewpointNode      = dependentRenderer .getViewpoint (),
+            viewpointNode      = this .viewpointNode ?? dependentRenderer .getViewpoint (),
             projectionMatrix   = viewpointNode .getProjectionMatrix (dependentRenderer, viewport),
             width              = this .getWidth (),
             height             = this .getHeight ();
