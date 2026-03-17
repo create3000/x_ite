@@ -109,9 +109,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          if (!Object .keys (this .input) .every (key => keys .has (key)))
             return false;
 
-         const asset = this .input .asset;
-
-         if (!(asset instanceof Object && asset .version === "2.0"))
+         if (this .input .asset ?.version !== "2.0")
             return false;
 
          return true;
