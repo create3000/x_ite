@@ -12,6 +12,8 @@
       url: /components/texturing/multitexturetransform/
     - title: "PixelTexture"
       url: /components/texturing/pixeltexture/
+    - title: "RenderedTexture"
+      url: /components/texturing/renderedtexture/
     - title: "TextureCoordinate"
       url: /components/texturing/texturecoordinate/
     - title: "TextureCoordinateGenerator"

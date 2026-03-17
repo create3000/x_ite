@@ -11,6 +11,10 @@ import TextureBuffer        from "../../Rendering/TextureBuffer.js";
 import ViewVolume           from "../../../standard/Math/Geometry/ViewVolume.js";
 import Vector4              from "../../../standard/Math/Numbers/Vector4.js";
 
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
 function RenderedTexture (executionContext)
 {
    X3DTexture2DNode .call (this, executionContext);

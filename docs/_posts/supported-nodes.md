@@ -510,6 +510,7 @@ Highest supported level: **4**
 - [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/)
 - [MultiTextureTransform](/x_ite/components/texturing/multitexturetransform/)
 - [PixelTexture](/x_ite/components/texturing/pixeltexture/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/texturing/pixeltexture/#example)
+- [RenderedTexture](/x_ite/components/texturing/renderedtexture/) <small class="blue">experimental</small>
 - [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/)
 - [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/)
 - [TextureProperties](/x_ite/components/texturing/textureproperties/)

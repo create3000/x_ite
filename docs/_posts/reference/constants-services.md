@@ -290,6 +290,7 @@ All concrete node types from *AcousticProperties, Analyser, …* to *WorldInfo.*
 - QuadSet
 - ReceiverPdu
 - Rectangle2D
+- RenderedTexture
 - RigidBody
 - RigidBodyCollection
 - ScalarChaser
