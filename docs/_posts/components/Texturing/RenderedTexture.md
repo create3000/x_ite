@@ -34,7 +34,10 @@ The RenderedTexture node belongs to the [Texturing](/x_ite/components/overview/#
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
 | SFString | [in, out] | [description](#fields-description) | "" |
-| SFImage | [in, out] | [image](#fields-image) | 0 0 0 |
+| SFString | [in, out] | [update](#fields-update) |  |
+| MFInt32 | [in, out] | [dimensions](#fields-dimensions) |  |
+| SFBool | [in, out] | [depthMap](#fields-depthMap) |  |
+| SFNode | [in, out] | [viewpoint](#fields-viewpoint) |  |
 | SFBool | [ ] | [repeatS](#fields-repeatS) | TRUE |
 | SFBool | [ ] | [repeatT](#fields-repeatT) | TRUE |
 | SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL  |
@@ -58,6 +61,31 @@ Author-provided prose that describes intended purpose of the url asset.
 
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
+### SFString [in, out] **update** "NONE" <small>["NONE"|"NEXT_FRAME_ONLY"|"ALWAYS"]</small>
+{: #fields-update }
+
+*update* controls regeneration of the texture.
+
+#### Warnings
+
+- An object trying to render itself in the scene graph can cause infinite loops.
+- Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
+
+### MFInt32 [in, out] **dimensions** [128, 128, 4, 1, 1] <small>[0,∞)</small>
+{: #fields-dimensions }
+
+Sets the width, height, color components (and number of MRTs).
+
+### SFBool [in, out] **depthMap** FALSE
+{: #fields-depthMap }
+
+The generated texture will contain the depth buffer of the image (instead of the color buffer as usual).
+
+### SFNode [in, out] **viewpoint** NULL <small>[X3DViewpointNode]</small>
+{: #fields-viewpoint }
+
+Allows you to explicitly specify viewpoint node from which to render to texture. If the value is NULL the currently bound viewpoint in the scene is used.
+
 ### SFBool [ ] **repeatS** TRUE
 {: #fields-repeatS }
 
@@ -72,35 +100,6 @@ Whether to repeat texture along T axis vertically from top to bottom.
 {: #fields-textureProperties }
 
 Optional single contained [TextureProperties](/x_ite/components/texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
-
-## Advice
-
-### Hints
-
-- This is a good way to bundle image(s) into a single scene file, avoiding multiple downloads.
-- [X3D-Edit includes RenderedTexture image-conversion import capabilities.](https://www.web3d.org/x3d/tools/X3D-Edit/images/PixelTextureImportImage.png)
-- Can contain a single [TextureProperties](/x_ite/components/texturing/textureproperties/) node.
-- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
-- [X3D Scene Authoring Hints, Images and Videos](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Images)
-- If a texture is opaque, omitting values in the alpha channel can help avoid rendering artifacts related to transparency.
-- Texture coordinates are reapplied (or else recomputed if textureTransform field initially NULL) whenever the corresponding vertex-based geometry changes.
-- [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
-- [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/lighting.html#Lightingmodel)
-
-### Warnings
-
-- Aggregate file size can grow dramatically.
-- See [ComposedCubeMapTexture](/x_ite/components/cubemaptexturing/composedcubemaptexture/) and [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/) for special containerField values.
-
-## Example
-
-<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Texturing/RenderedTexture/RenderedTexture.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/Texturing/RenderedTexture/screenshot.avif" alt="RenderedTexture"/>
-</x3d-canvas>
-
-- [Download ZIP Archive](https://create3000.github.io/media/examples/Texturing/RenderedTexture/RenderedTexture.zip)
-- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Texturing/RenderedTexture/RenderedTexture.x3d)
-{: .example-links }
 
 ## See Also
 
