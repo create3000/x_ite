@@ -1561,5 +1561,112 @@
       </InterfaceDefinition>
     </ConcreteNode>
 
+    <ConcreteNode name="RenderedTexture">
+        <InterfaceDefinition specificationUrl="https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texturing.html#RenderedTexture"
+                            appinfo="A RenderedTexture is a texture node that renders a separate scene or viewpoint into an offscreen buffer, producing an image that can be applied to geometry in real time.">
+          <componentInfo name="Texturing" level="4"/>
+          <Inheritance baseType="X3DTexture2DNode"/>
+          <field name="description"
+                  type="SFString"
+                  accessType="inputOutput"
+                  inheritedFrom="X3DTextureNode"
+                  description="Author-provided prose that describes intended purpose of the url asset."/>
+          <field name="IS"
+                  type="SFNode"
+                  accessType="inputOutput"
+                  default="NULL"
+                  acceptableNodeTypes="IS"
+                  inheritedFrom="X3DNode"/>
+          <field name="metadata"
+                  type="SFNode"
+                  accessType="inputOutput"
+                  default="NULL"
+                  acceptableNodeTypes="X3DMetadataObject"
+                  inheritedFrom="X3DNode"
+                  description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."/>
+          <field name="repeatS"
+                  type="SFBool"
+                  accessType="initializeOnly"
+                  default="true"
+                  inheritedFrom="X3DTexture2DNode"
+                  description="Whether to repeat texture along S axis horizontally from left to right."/>
+          <field name="repeatT"
+                  type="SFBool"
+                  accessType="initializeOnly"
+                  default="true"
+                  inheritedFrom="X3DTexture2DNode"
+                  description="Whether to repeat texture along T axis vertically from top to bottom."/>
+          <field name="textureProperties"
+                  type="SFNode"
+                  accessType="initializeOnly"
+                  default="NULL"
+                  acceptableNodeTypes="TextureProperties"
+                  inheritedFrom="X3DTexture2DNode"
+                  description="Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."/>
+          <field name="DEF"
+                  type="SFString"
+                  accessType="inputOutput"
+                  inheritedFrom="X3DNode"
+                  baseType="xs:ID"
+                  description="DEF defines a unique ID name for this node, referenceable by other nodes."/>
+          <field name="USE"
+                  type="SFString"
+                  accessType="inputOutput"
+                  inheritedFrom="X3DNode"
+                  baseType="xs:IDREF"
+                  description="USE means reuse an already DEF-ed node ID, excluding all child nodes and all other attributes (except for containerField, which can have a different value)."/>
+          <field name="class"
+                  type="SFString"
+                  accessType="inputOutput"
+                  inheritedFrom="X3DNode"
+                  baseType="xs:NMTOKENS"
+                  description="The class attribute on each X3D node and statement is a space-separated list of classes, reserved for use by Cascading Style Sheets (CSS) and XML stylesheets."/>
+          <field name="id"
+                  type="SFString"
+                  accessType="inputOutput"
+                  inheritedFrom="X3DNode"
+                  baseType="xs:NMTOKEN"
+                  description="The id attribute on each X3D node and statement is considered a unique identifier when used as part of an encompassing HTML/DOM context."/>
+          <field name="style"
+                  type="SFString"
+                  accessType="inputOutput"
+                  inheritedFrom="X3DNode"
+                  description="The style attribute on each X3D node and statement provides an inline block of CSS source for element styling, reserved for use by Cascading Style Sheets (CSS) and XML stylesheets."/>
+          <field name="update"
+                  type="SFString"
+                  accessType="inputOutput"
+                  default="NONE"
+                  additionalEnumerationValuesAllowed="false"
+                  simpleType="generatedCubeMapTextureUpdateChoices"
+                  baseType="xs:NMTOKEN"
+                  description="update controls regeneration of the texture.">
+              <enumeration value="NONE" appinfo="no further texture updates are rendered."/>
+              <enumeration value="NEXT_FRAME_ONLY" appinfo="render texture once at end of frame."/>
+              <enumeration value="ALWAYS" appinfo="texture to be rendered every frame."/>
+          </field>
+          <field name="dimensions"
+                  type="MFInt32"
+                  accessType="inputOutput"
+                  description="Sets the width, height, color components (and number of MRTs)."/>
+          <field name="depthMap"
+                  type="SFBool"
+                  accessType="initializeOnly"
+                  default="false"
+                  description="The generated texture will contain the depth buffer of the image (instead of the color buffer as usual)."/>
+          <field name="viewpoint"
+                   type="SFNode"
+                   accessType="inputOutput"
+                   default="NULL"
+                   description="Allows you to explicitly specify viewpoint node from which to render to texture. If the value is NULL the currently bound viewpoint in the scene is used."
+                   acceptableNodeTypes="X3DViewpointNode"/>
+          <containerField default="texture" type="containerFieldChoicesX3DTexture2DNode"/>
+          <ContentModel>
+              <GroupContentModel name="ChildContentModelCore" minOccurs="0"/>
+              <NodeContentModel name="TextureProperties"/>
+              <NodeContentModel name="ProtoInstance"/>
+          </ContentModel>
+        </InterfaceDefinition>
+    </ConcreteNode>
+
   </ConcreteNodes>
 </X3dUnifiedObjectModel>

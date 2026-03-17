@@ -1384,6 +1384,7 @@ declare namespace X3D
       readonly QuadSet: number;
       readonly ReceiverPdu: number;
       readonly Rectangle2D: number;
+      readonly RenderedTexture: number;
       readonly RigidBody: number;
       readonly RigidBodyCollection: number;
       readonly ScalarChaser: number;
@@ -15821,6 +15822,63 @@ declare namespace X3D
       solid: boolean;
    }
 
+   /** A RenderedTexture is a texture node that renders a separate scene or viewpoint into an offscreen buffer, producing an image that can be applied to geometry in real time. */
+   interface RenderedTextureProxy extends X3DTexture2DNodeProxy
+   {
+      /**
+       * The generated texture will contain the depth buffer of the image (instead of the color buffer as usual).
+       *
+       * This field is of access type 'initializeOnly' and type SFBool.
+       */
+      depthMap: boolean;
+      /**
+       * Author-provided prose that describes intended purpose of the url asset.
+       *
+       * This field is of access type 'inputOutput' and type SFString.
+       */
+      description: string;
+      /**
+       * Sets the width, height, color components (and number of MRTs).
+       *
+       * This field is of access type 'inputOutput' and type MFInt32.
+       */
+      dimensions: MFInt32;
+      /**
+       * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      metadata: X3DMetadataObjectProxy | null;
+      /**
+       * Whether to repeat texture along S axis horizontally from left to right.
+       *
+       * This field is of access type 'initializeOnly' and type SFBool.
+       */
+      repeatS: boolean;
+      /**
+       * Whether to repeat texture along T axis vertically from top to bottom.
+       *
+       * This field is of access type 'initializeOnly' and type SFBool.
+       */
+      repeatT: boolean;
+      /**
+       * Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
+       *
+       * This field is of access type 'initializeOnly' and type SFNode.
+       */
+      textureProperties: TexturePropertiesProxy | null;
+      /**
+       * update controls regeneration of the texture.
+       *
+       * This field is of access type 'inputOutput' and type SFString.
+       */
+      update: "NONE" | "NEXT_FRAME_ONLY" | "ALWAYS";
+      /**
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      viewpoint: X3DViewpointNodeProxy | null;
+   }
+
    /** RigidBody describes a collection of shapes with a mass distribution that is affected by the physics model. */
    interface RigidBodyProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    {
@@ -22919,6 +22977,7 @@ declare namespace X3D
       QuadSet: QuadSetProxy,
       ReceiverPdu: ReceiverPduProxy,
       Rectangle2D: Rectangle2DProxy,
+      RenderedTexture: RenderedTextureProxy,
       RigidBody: RigidBodyProxy,
       RigidBodyCollection: RigidBodyCollectionProxy,
       ScalarChaser: ScalarChaserProxy,
