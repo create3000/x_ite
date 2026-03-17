@@ -115,6 +115,8 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
 
       return function (renderObject)
       {
+         // Make dependent renderer.
+
          if (!this .dependentRenderers .has (renderObject))
          {
             const dependentRenderer = new DependentRenderer (this .getExecutionContext (), renderObject);
@@ -123,6 +125,8 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
 
             this .dependentRenderers .set (renderObject, dependentRenderer);
          }
+
+         // Prepare.
 
          this .viewpointNode ?.update ();
 
