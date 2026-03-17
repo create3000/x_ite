@@ -104,7 +104,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
       if (!this .frameBuffer)
          return;
 
-      renderObject .getGeneratedCubeMapTextures () .add (this);
+      renderObject .getRenderedTextures () .add (this);
 
       this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ())
          .multRight (renderObject .getCameraSpaceMatrix () .get ());

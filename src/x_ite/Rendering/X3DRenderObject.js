@@ -49,7 +49,7 @@ function X3DRenderObject (executionContext)
    this .layouts                  = [ ];
    this .hAnimNode                = [ null ];
    this .invHumanoidMatrix        = new MatrixStack (Matrix4);
-   this .generatedCubeMapTextures = new Set ();
+   this .renderedTextures         = new Set ();
    this .collisions               = [ ];
    this .collisionTime            = new StopWatch ();
    this .numPointingShapes        = 0;
@@ -317,9 +317,9 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .invHumanoidMatrix;
    },
-   getGeneratedCubeMapTextures ()
+   getRenderedTextures ()
    {
-      return this .generatedCubeMapTextures;
+      return this .renderedTextures;
    },
    getCollisions ()
    {
@@ -1144,7 +1144,7 @@ Object .assign (X3DRenderObject .prototype,
          globalLightsKeys         = this .globalLightsKeys,
          globalLightsKey          = globalLightsKeys .join (""),
          globalLights             = this .globalLights,
-         generatedCubeMapTextures = this .generatedCubeMapTextures,
+         renderedTextures         = this .renderedTextures,
          globalShadows            = this .globalShadows,
          headlight                = this .getNavigationInfo () ._headlight .getValue ();
 
@@ -1163,10 +1163,10 @@ Object .assign (X3DRenderObject .prototype,
          for (const light of lights)
             light .renderShadowMap (this);
 
-         // Render GeneratedCubeMapTexture nodes.
+         // Render GeneratedCubeMapTexture and RenderedTexture nodes.
 
-         for (const generatedCubeMapTexture of generatedCubeMapTextures)
-            generatedCubeMapTexture .renderTexture (this);
+         for (const renderedTexture of renderedTextures)
+            renderedTexture .renderTexture (this);
       }
 
       this .globalShadow = globalShadows .at (-1);
@@ -1286,7 +1286,7 @@ Object .assign (X3DRenderObject .prototype,
       lights           .length = 0;
       globalShadows    .length = 1;
 
-      generatedCubeMapTextures .clear ();
+      renderedTextures .clear ();
    },
    drawShapes (renderPass, gl, frameBuffer, clearBits, viewport)
    {

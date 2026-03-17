@@ -34,6 +34,11 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
    {
       return 2;
    },
+   getTexture ()
+   {
+      return this .frameBuffer ?.getColorTexture (0) ??
+         X3DTexture2DNode .prototype .getTexture .call (this);
+   },
    checkLoadState ()
    {
       return this ._loadState .getValue ();
@@ -82,7 +87,11 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
       if (!this .frameBuffer)
          return;
 
-      renderObject .getGeneratedCubeMapTextures () .add (this);
+      renderObject .getRenderedTextures () .add (this);
+   },
+   renderTexture (renderObject)
+   {
+
    },
 });
 
