@@ -177,8 +177,13 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
 
          gl .bindTexture (this .getTarget (), this .getTexture ());
 
+         this .frameBuffer .bind ();
+
          for (let i = 0; i < 6; ++ i)
          {
+            gl .viewport (... this .viewport);
+            gl .scissor (... this .viewport);
+            gl .clearColor (0, 0, 0, 0);
             gl .clear (gl .COLOR_BUFFER_BIT); // Always clear, X3DBackground could be transparent!
 
             // Setup inverse texture space matrix.
