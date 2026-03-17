@@ -21,6 +21,8 @@ function GeneratedCubeMapTexture (executionContext)
 
    this .addType (X3DConstants .GeneratedCubeMapTexture);
 
+   // Private properties
+
    this .dependentRenderers = new WeakMap ();
    this .projectionMatrix   = new Matrix4 ();
    this .modelMatrix        = new Matrix4 ();
@@ -78,7 +80,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
          // Properties
 
          this .viewport    = new Vector4 (0, 0, size, size);
-         this .frameBuffer = new TextureBuffer ({ browser: this .getBrowser (), width: size, height: size });
+         this .frameBuffer = new TextureBuffer ({ browser, width: size, height: size });
 
          this .setSize (size);
       }

@@ -4,6 +4,8 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DTexture2DNode     from "./X3DTexture2DNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import TextureBuffer        from "../../Rendering/TextureBuffer.js";
+import Vector4              from "../../../standard/Math/Numbers/Vector4.js";
 
 function RenderedTexture (executionContext)
 {
@@ -12,6 +14,10 @@ function RenderedTexture (executionContext)
    this .addType (X3DConstants .RenderedTexture);
 
    this .addChildObjects (X3DConstants .outputOnly, "loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
+
+   // Private properties
+
+   this .dependentRenderers = new WeakMap ();
 }
 
 Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2DNode .prototype),
@@ -19,6 +25,10 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
    initialize ()
    {
       X3DTexture2DNode .prototype .initialize .call (this);
+
+      this ._dimensions .addInterest ("set_dimensions__", this);
+
+      this .set_dimensions__ ();
    },
    getTextureType ()
    {
@@ -27,6 +37,52 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
    checkLoadState ()
    {
       return this ._loadState .getValue ();
+   },
+   set_dimensions__ ()
+   {
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
+
+      // Transfer 6 textures of size x size pixels.
+
+      const
+         width      = this ._dimensions .length > 0 ? this ._dimensions [0] : 128,
+         height     = this ._dimensions .length > 1 ? this ._dimensions [1] : 128,
+         components = this ._dimensions .length > 2 ? this ._dimensions [2] : 4;
+
+      if (width > 0 && height > 0)
+      {
+         // Properties
+
+         this .viewport    = new Vector4 (0, 0, width, height);
+         this .frameBuffer = new TextureBuffer ({ browser, width, height });
+
+         this .setWidth (width);
+         this .setHeight (height);
+      }
+      else
+      {
+         this .frameBuffer = null;
+
+         this .setWidth (0);
+         this .setHeight (0);
+      }
+   },
+   traverse (type, renderObject)
+   {
+      // TraverseType .DISPLAY
+
+      if (this ._update .getValue () === "NONE")
+         return;
+
+      if (!renderObject .isIndependent ())
+         return;
+
+      if (!this .frameBuffer)
+         return;
+
+      renderObject .getGeneratedCubeMapTextures () .add (this);
    },
 });
 
