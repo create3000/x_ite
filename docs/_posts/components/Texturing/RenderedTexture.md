@@ -34,10 +34,10 @@ The RenderedTexture node belongs to the [Texturing](/x_ite/components/overview/#
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
 | SFString | [in, out] | [description](#fields-description) | "" |
-| SFString | [in, out] | [update](#fields-update) |  |
-| MFInt32 | [in, out] | [dimensions](#fields-dimensions) |  |
-| SFBool | [in, out] | [depthMap](#fields-depthMap) |  |
-| SFNode | [in, out] | [viewpoint](#fields-viewpoint) |  |
+| SFString | [in, out] | [update](#fields-update) | "NONE"  |
+| MFInt32 | [in, out] | [dimensions](#fields-dimensions) | [128, 128, 4, 1, 1] |
+| SFBool | [in, out] | [depthMap](#fields-depthMap) | FALSE |
+| SFNode | [in, out] | [viewpoint](#fields-viewpoint) | NULL  |
 | SFBool | [ ] | [repeatS](#fields-repeatS) | TRUE |
 | SFBool | [ ] | [repeatT](#fields-repeatT) | TRUE |
 | SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL  |
