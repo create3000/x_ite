@@ -15826,6 +15826,12 @@ declare namespace X3D
    interface RenderedTextureProxy extends X3DTexture2DNodeProxy
    {
       /**
+       * Allows you to explicitly specify background node, which to use during render to texture. If the value is NULL the currently bound background in the scene is used.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      background: X3DBackgroundNodeProxy | null;
+      /**
        * The generated texture will contain the depth buffer of the image (instead of the color buffer as usual).
        *
        * This field is of access type 'initializeOnly' and type SFBool.
@@ -15843,6 +15849,12 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type MFInt32.
        */
       dimensions: MFInt32;
+      /**
+       * Allows you to explicitly specify fog node, which to use during render to texture. If the value is NULL the currently bound fog in the scene is used.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      fog: X3DFogObjectProxy | null;
       /**
        * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
        *

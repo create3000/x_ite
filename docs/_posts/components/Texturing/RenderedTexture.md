@@ -84,6 +84,16 @@ Sets the width, height, color components (and number of MRTs).
 
 The generated texture will contain the depth buffer of the image (instead of the color buffer as usual).
 
+### SFNode [in, out] **background** NULL <small>[X3DBackgroundNode]</small>
+{: #background-fog }
+
+Allows you to explicitly specify background node, which to use during render to texture. If the value is NULL the currently bound background in the scene is used.
+
+### SFNode [in, out] **fog** NULL <small>[X3DFogObject]</small>
+{: #fields-fog }
+
+Allows you to explicitly specify fog node, which to use during render to texture. If the value is NULL the currently bound fog in the scene is used.
+
 ### SFNode [in, out] **viewpoint** NULL <small>[X3DViewpointNode]</small>
 {: #fields-viewpoint }
 

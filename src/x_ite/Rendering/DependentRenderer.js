@@ -29,11 +29,19 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNod
    },
    getBackground ()
    {
-      return this .renderObject .getBackground ();
+      return this .backgroundNode ?? this .renderObject .getBackground ();
+   },
+   setBackground (backgroundNode)
+   {
+      this .backgroundNode = backgroundNode;
    },
    getFog ()
    {
-      return this .renderObject .getFog ();
+      return this .fogNode ?? this .renderObject .getFog ();
+   },
+   setFog (fogNode)
+   {
+      this .fogNode = fogNode;
    },
    getNavigationInfo ()
    {

@@ -35,9 +35,13 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
       X3DTexture2DNode .prototype .initialize .call (this);
 
       this ._dimensions .addInterest ("set_dimensions__", this);
+      this ._background .addInterest ("set_background__", this);
+      this ._fog        .addInterest ("set_fog__",        this);
       this ._viewpoint  .addInterest ("set_viewpoint__",  this);
 
       this .set_dimensions__ ();
+      this .set_background__ ();
+      this .set_fog__ ();
       this .set_viewpoint__ ();
    },
    getTextureType ()
@@ -77,6 +81,14 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
          this .setWidth (0);
          this .setHeight (0);
       }
+   },
+   set_background__ ()
+   {
+      this .backgroundNode = X3DCast (X3DConstants .X3DBackgroundNode, this ._background);
+   },
+   set_fog__ ()
+   {
+      this .fogNode = X3DCast (X3DConstants .X3DFogObject, this ._fog);
    },
    set_viewpoint__ ()
    {
@@ -125,6 +137,8 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
             width              = this .getWidth (),
             height             = this .getHeight ();
 
+         dependentRenderer .setBackground (this .backgroundNode);
+         dependentRenderer .setFog (this .fogNode);
          dependentRenderer .setFramebuffer (this .frameBuffer);
 
          // Render layer's children.
@@ -171,6 +185,8 @@ Object .defineProperties (RenderedTexture,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "update",            new Fields .SFString ("NONE")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "dimensions",        new Fields .MFInt32 (128, 128, 4, 1, 1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "depthMap",          new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "background",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "fog",               new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "viewpoint",         new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool (true)),
