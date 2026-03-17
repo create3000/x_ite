@@ -26,7 +26,6 @@ function GeneratedCubeMapTexture (executionContext)
    this .dependentRenderers = new WeakMap ();
    this .projectionMatrix   = new Matrix4 ();
    this .modelMatrix        = new Matrix4 ();
-   this .viewVolume         = new ViewVolume ();
    this .updateCallbacks    = new Map ();
 }
 
@@ -133,7 +132,9 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
          new Vector3 ( 1,  1,  1), // bottom
       ];
 
-      const invCameraSpaceMatrix = new Matrix4 ();
+      const
+         invCameraSpaceMatrix = new Matrix4 (),
+         viewVolume           = new ViewVolume ();
 
       return function (renderObject)
       {
@@ -167,7 +168,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
          this .setTransparent (background .isTransparent ());
 
          dependentRenderer .setFramebuffer (this .frameBuffer);
-         dependentRenderer .getViewVolumes () .push (this .viewVolume .set (projectionMatrix, this .viewport, this .viewport));
+         dependentRenderer .getViewVolumes () .push (viewVolume .set (projectionMatrix, this .viewport, this .viewport));
          dependentRenderer .getProjectionMatrix () .push (projectionMatrix);
 
          gl .bindTexture (this .getTarget (), this .getTexture ());

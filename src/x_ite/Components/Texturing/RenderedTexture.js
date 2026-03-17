@@ -4,7 +4,10 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DTexture2DNode     from "./X3DTexture2DNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import TraverseType         from "../../Rendering/TraverseType.js";
+import DependentRenderer    from "../../Rendering/DependentRenderer.js";
 import TextureBuffer        from "../../Rendering/TextureBuffer.js";
+import ViewVolume           from "../../../standard/Math/Geometry/ViewVolume.js";
 import Vector4              from "../../../standard/Math/Numbers/Vector4.js";
 
 function RenderedTexture (executionContext)
@@ -34,11 +37,6 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
    {
       return 2;
    },
-   getTexture ()
-   {
-      return this .frameBuffer ?.getColorTexture (0) ??
-         X3DTexture2DNode .prototype .getTexture .call (this);
-   },
    checkLoadState ()
    {
       return this ._loadState .getValue ();
@@ -63,8 +61,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
          this .viewport    = new Vector4 (0, 0, width, height);
          this .frameBuffer = new TextureBuffer ({ browser, width, height });
 
-         this .setWidth (width);
-         this .setHeight (height);
+         this .setTextureData (width, height, false, true, null);
       }
       else
       {
@@ -89,9 +86,75 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
 
       renderObject .getRenderedTextures () .add (this);
    },
-   renderTexture (renderObject)
+   renderTexture: (() =>
    {
+      const
+         viewVolume = new ViewVolume ();
 
+      return function (renderObject)
+      {
+         this .textureRenderingPass = true;
+
+         if (!this .dependentRenderers .has (renderObject))
+         {
+            const dependentRenderer = new DependentRenderer (this .getExecutionContext (), renderObject);
+
+            dependentRenderer .setup ();
+
+            this .dependentRenderers .set (renderObject, dependentRenderer);
+         }
+
+         const
+            browser            = this .getBrowser (),
+            gl                 = browser .getContext (),
+            dependentRenderer  = this .dependentRenderers .get (renderObject),
+            layer              = renderObject .getLayer (),
+            viewpointNode      = dependentRenderer .getViewpoint (),
+            projectionMatrix   = viewpointNode .getProjectionMatrix (renderObject),
+            width              = this .getWidth (),
+            height             = this .getHeight ();
+
+         dependentRenderer .setFramebuffer (this .frameBuffer);
+
+         // Render layer's children.
+
+         dependentRenderer .getViewVolumes () .push (viewVolume .set (projectionMatrix, this .viewport, this .viewport));
+         dependentRenderer .getProjectionMatrix () .push (projectionMatrix);
+
+         dependentRenderer .getCameraSpaceMatrix () .push (viewpointNode .getCameraSpaceMatrix ());
+         dependentRenderer .getViewMatrix () .push (viewpointNode .getViewMatrix ());
+         dependentRenderer .getModelViewMatrix () .push (viewpointNode .getViewMatrix ());
+
+         layer .traverse (TraverseType .DISPLAY, dependentRenderer);
+
+         dependentRenderer .getModelViewMatrix () .pop ();
+         dependentRenderer .getViewMatrix () .pop ();
+         dependentRenderer .getCameraSpaceMatrix () .pop ();
+
+         dependentRenderer .getProjectionMatrix () .pop ();
+         dependentRenderer .getViewVolumes () .pop ();
+
+         // Transfer image.
+
+         gl .bindTexture (this .getTarget (), this .getTexture ());
+         gl .copyTexSubImage2D (this .getTarget (), 0, 0, 0, 0, 0, width, height);
+
+         // Finish.
+
+         this .updateTextureParameters ();
+
+         if (this ._update .getValue () === "NEXT_FRAME_ONLY")
+            this ._update = "NONE";
+
+         this .textureRenderingPass = false;
+      };
+   })(),
+   setShaderUniforms (gl, channel)
+   {
+      X3DTexture2DNode .prototype .setShaderUniforms .call (this, gl, channel);
+
+      if (this .textureRenderingPass)
+         gl .viewport (0, 0, 0, 0); // Hide object by making viewport zero size.
    },
 });
 
