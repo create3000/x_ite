@@ -32,7 +32,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
 
 Object .defineProperties (RenderedTexture,
 {
-   ... X3DNode .getStaticProperties ("RenderedTexture", "Texturing", 1, "texture", "2.0"),
+   ... X3DNode .getStaticProperties ("RenderedTexture", "Texturing", 4, "texture", "4.1"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
