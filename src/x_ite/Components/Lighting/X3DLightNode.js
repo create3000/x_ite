@@ -112,7 +112,7 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
    })(),
    push (renderObject, groupNode)
    {
-      const path = renderObject .getPath () .toString () + this .getId ();
+      const path = `${renderObject .getPath () .toString ()},${this .getId ()}`;
 
       let lightContainer;
 
