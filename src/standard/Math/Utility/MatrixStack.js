@@ -1,6 +1,6 @@
 class MatrixStack extends Array
 {
-   #top = 0;
+   #top = -1;
 
    constructor (Type)
    {
