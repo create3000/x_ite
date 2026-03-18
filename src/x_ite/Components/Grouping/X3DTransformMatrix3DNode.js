@@ -81,14 +81,18 @@ Object .assign (Object .setPrototypeOf (X3DTransformMatrix3DNode .prototype, X3D
    },
    traverse (type, renderObject)
    {
-      const modelViewMatrix = renderObject .getModelViewMatrix ();
+      const
+         path            = renderObject .getPath (),
+         modelViewMatrix = renderObject .getModelViewMatrix ();
 
+      path .push (this .getId ());
       modelViewMatrix .push ();
       modelViewMatrix .multLeft (this .matrix);
 
       X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 
       modelViewMatrix .pop ();
+      path .pop ();
    },
    groupTraverse: X3DGroupingNode .prototype .traverse,
 });

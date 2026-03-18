@@ -165,12 +165,12 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
          gl .clearColor (0, 0, 0, 0);
          gl .clear (gl .COLOR_BUFFER_BIT);
 
-         dependentRenderer .getViewVolumes () .push (viewVolume .set (projectionMatrix, viewport, viewport));
+         dependentRenderer .getViewVolumes ()      .push (viewVolume .set (projectionMatrix, viewport, viewport));
          dependentRenderer .getProjectionMatrix () .push (projectionMatrix);
 
          dependentRenderer .getCameraSpaceMatrix () .push (viewpointNode .getCameraSpaceMatrix ());
-         dependentRenderer .getViewMatrix () .push (viewpointNode .getViewMatrix ());
-         dependentRenderer .getModelViewMatrix () .push (viewpointNode .getViewMatrix ());
+         dependentRenderer .getViewMatrix ()        .push (viewpointNode .getViewMatrix ());
+         dependentRenderer .getModelViewMatrix ()   .push (viewpointNode .getViewMatrix ());
 
          if (headlight)
          {
@@ -192,12 +192,12 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
          if (headlight)
             headlightContainer .modelViewMatrix .pop ();
 
-         dependentRenderer .getModelViewMatrix () .pop ();
-         dependentRenderer .getViewMatrix () .pop ();
+         dependentRenderer .getModelViewMatrix ()   .pop ();
+         dependentRenderer .getViewMatrix ()        .pop ();
          dependentRenderer .getCameraSpaceMatrix () .pop ();
 
          dependentRenderer .getProjectionMatrix () .pop ();
-         dependentRenderer .getViewVolumes () .pop ();
+         dependentRenderer .getViewVolumes ()      .pop ();
 
          // Transfer image.
 

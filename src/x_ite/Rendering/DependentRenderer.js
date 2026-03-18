@@ -55,9 +55,9 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNod
    {
       return this .renderObject .getViewpointStack ();
    },
-   getLightContainer ()
+   getLightContainer (path)
    {
-      return this .renderObject .getLights () [this .lightIndex ++];
+      return this .renderObject .getLights () .get (path);
    },
    getFramebuffers ()
    {
@@ -83,11 +83,9 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNod
          }
          case TraverseType .DISPLAY:
          {
-            this .lightIndex = 0;
-
             X3DRenderObject .prototype .render .call (this, type, callback, group);
 
-            for (const light of this .renderObject .getLights ())
+            for (const light of this .renderObject .getLights () .values ())
                light .modelViewMatrix .pop ();
 
             break;

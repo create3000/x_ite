@@ -35,9 +35,10 @@ function X3DRenderObject (executionContext)
    this .viewMatrixArray          = new Float32Array (16);
    this .cameraSpaceMatrixArray   = new Float32Array (16);
    this .hitRay                   = new Line3 ();
+   this .path                     = [ ];
    this .sensors                  = [[ ]];
    this .viewpointGroups          = [ ];
-   this .lights                   = [ ];
+   this .lights                   = new Map ();
    this .globalLightsKeys         = [ ];
    this .globalLights             = [ ];
    this .localObjectsKeys         = [ ];
@@ -227,6 +228,10 @@ Object .assign (X3DRenderObject .prototype,
    getHitRay ()
    {
       return this .hitRay;
+   },
+   getPath ()
+   {
+      return this .path;
    },
    getSensors ()
    {
@@ -1160,7 +1165,7 @@ Object .assign (X3DRenderObject .prototype,
       {
          // Render shadow maps and prepare texture projectors.
 
-         for (const light of lights)
+         for (const light of lights .values ())
             light .renderShadowMap (this);
 
          // Render GeneratedCubeMapTexture and RenderedTexture nodes.
@@ -1208,7 +1213,7 @@ Object .assign (X3DRenderObject .prototype,
          if (headlight)
             browser .getHeadlight () .setGlobalVariables (this);
 
-         for (const light of lights)
+         for (const light of lights .values ())
             light .setGlobalVariables (this);
 
          // Render transmission texture and volume scatter texture.
@@ -1283,9 +1288,9 @@ Object .assign (X3DRenderObject .prototype,
 
       globalLightsKeys .length = 0;
       globalLights     .length = 0;
-      lights           .length = 0;
       globalShadows    .length = 1;
 
+      lights           .clear ();
       renderedTextures .clear ();
    },
    drawShapes (renderPass, gl, frameBuffer, clearBits, viewport)

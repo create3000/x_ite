@@ -112,57 +112,51 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
    })(),
    push (renderObject, groupNode)
    {
-      if (renderObject .isIndependent ())
+      const path = renderObject .getPath () .toString () + this .getId ();
+
+      let lightContainer;
+
+      if (!renderObject .isIndependent ())
       {
-         const lightContainer = this .getLights () .pop ();
+         lightContainer = renderObject .getLightContainer (path);
+
+         lightContainer ?.modelViewMatrix .push (renderObject .getModelViewMatrix () .get ());
+      }
+
+      if (!lightContainer)
+         lightContainer = renderObject .getLights () .get (path);
+
+      if (!lightContainer)
+      {
+         lightContainer = this .getLights () .pop ();
 
          if (this ._global .getValue ())
          {
             lightContainer .set (this,
                                  renderObject .getLayer () .getGroups (),
                                  renderObject .getModelViewMatrix () .get ());
-
-            renderObject .getGlobalLights () .push (lightContainer);
-            renderObject .getLights ()       .push (lightContainer);
-
-            renderObject .pushGlobalShadows (!! this .getShadowIntensity ());
-            renderObject .getGlobalLightsKeys () .push (this .getLightKey ());
          }
          else
          {
             lightContainer .set (this,
                                  groupNode,
                                  renderObject .getModelViewMatrix () .get ());
-
-            renderObject .getLocalObjects () .push (lightContainer);
-            renderObject .getLights ()       .push (lightContainer);
-
-            renderObject .pushLocalShadows (!! this .getShadowIntensity ());
-            renderObject .getLocalObjectsKeys () .push (this .getLightKey ());
          }
+      }
+
+      renderObject .getLights () .set (path, lightContainer);
+
+      if (this ._global .getValue ())
+      {
+         renderObject .getGlobalLights () .push (lightContainer);
+         renderObject .pushGlobalShadows (!! this .getShadowIntensity ());
+         renderObject .getGlobalLightsKeys () .push (this .getLightKey ());
       }
       else
       {
-         const lightContainer = renderObject .getLightContainer ();
-
-         lightContainer .modelViewMatrix .push (renderObject .getModelViewMatrix () .get ());
-
-         if (this ._global .getValue ())
-         {
-            renderObject .getGlobalLights () .push (lightContainer);
-            renderObject .getLights ()       .push (lightContainer);
-
-            renderObject .pushGlobalShadows (!! this .getShadowIntensity ());
-            renderObject .getGlobalLightsKeys () .push (this .getLightKey ());
-         }
-         else
-         {
-            renderObject .getLocalObjects () .push (lightContainer);
-            renderObject .getLights ()       .push (lightContainer);
-
-            renderObject .pushLocalShadows (!! this .getShadowIntensity ());
-            renderObject .getLocalObjectsKeys () .push (this .getLightKey ());
-         }
+         renderObject .getLocalObjects () .push (lightContainer);
+         renderObject .pushLocalShadows (!! this .getShadowIntensity ());
+         renderObject .getLocalObjectsKeys () .push (this .getLightKey ());
       }
    },
    pop (renderObject)
