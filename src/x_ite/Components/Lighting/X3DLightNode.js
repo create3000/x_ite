@@ -11,7 +11,7 @@ function X3DLightNode (executionContext)
    this .addType (X3DConstants .X3DLightNode);
 
    // Private properties
-   
+
    this .enabled = true;
 }
 

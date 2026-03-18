@@ -174,7 +174,8 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
 
          if (headlight)
          {
-            headlightContainer .modelViewMatrix .push (viewpointNode .getViewMatrix ());
+            headlightContainer .modelViewMatrix .push (renderObject .getViewMatrix () .get ());
+            headlightContainer .modelViewMatrix .multLeft (viewpointNode .getCameraSpaceMatrix ());
 
             if (this .scene)
             {

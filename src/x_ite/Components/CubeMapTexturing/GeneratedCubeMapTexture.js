@@ -192,7 +192,9 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
             dependentRenderer .getCameraSpaceMatrix () .rotate (rotations [i]);
             dependentRenderer .getCameraSpaceMatrix () .scale (scales [i]);
 
-            dependentRenderer .getViewMatrix () .push (invCameraSpaceMatrix .assign (dependentRenderer .getCameraSpaceMatrix () .get ()) .inverse ());
+            invCameraSpaceMatrix .assign (dependentRenderer .getCameraSpaceMatrix () .get ()) .inverse ();
+
+            dependentRenderer .getViewMatrix ()      .push (invCameraSpaceMatrix);
             dependentRenderer .getModelViewMatrix () .push (invCameraSpaceMatrix);
 
             // Setup headlight if enabled.
