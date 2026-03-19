@@ -423,6 +423,12 @@ The `[@@iterator]()` method of SFMatrix3d/f instances implements the iterable pr
 const copy = new SFMatrix3d (... matrix); // Copy using spread syntax.
 ```
 
+### Static Properties
+
+#### **IDENTITY**: SFMatrix3d/f
+
+Returns the identity matrix.
+
 ### Properties
 
 Individual elements of the object can be referenced using the standard C-style dereferencing operator (e.g. `sfMatrix3d/fObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<9).
@@ -546,6 +552,12 @@ The `[@@iterator]()` method of SFMatrix4d/f instances implements the iterable pr
 ```js
 const copy = new SFMatrix4d (... matrix); // Copy using spread syntax.
 ```
+
+### Static Properties
+
+#### **IDENTITY**: SFMatrix4d/f
+
+Returns the identity matrix.
 
 ### Properties
 
@@ -771,6 +783,12 @@ The `[@@iterator]()` method of SFRotation instances implements the iterable prot
 const copy = new SFRotation (... rotation); // Copy using spread syntax.
 ```
 
+### Static Properties
+
+#### **IDENTITY**: SFRotation
+
+Returns the identity rotation.
+
 ### Properties
 
 Each component of the rotation can be accessed using the `x`, `y`, `z` and `angle` properties or using the standard C-style dereferencing operator (e.g. `sfRotationObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<4).
@@ -876,6 +894,16 @@ The `[@@iterator]()` method of SFVec2d/f instances implements the iterable proto
 ```js
 const copy = new SFVec2d (... vector); // Copy using spread syntax.
 ```
+
+### Static Properties
+
+#### **X_AXIS**: SFVec2d/f
+
+Returns the x-axis vector.
+
+#### **Y_AXIS**: SFVec2d/f
+
+Returns the y-axis vector.
 
 ### Properties
 
@@ -996,6 +1024,20 @@ The `[@@iterator]()` method of SFVec3d/f instances implements the iterable proto
 ```js
 const copy = new SFVec3d (... vector); // Copy using spread syntax.
 ```
+
+### Static Properties
+
+#### **X_AXIS**: SFVec3d/f
+
+Returns the x-axis vector.
+
+#### **Y_AXIS**: SFVec3d/f
+
+Returns the y-axis vector.
+
+#### **Z_AXIS**: SFVec3d/f
+
+Returns the z-axis vector.
 
 ### Properties
 
@@ -1125,6 +1167,20 @@ The `[@@iterator]()` method of SFVec4d/f instances implements the iterable proto
 ```js
 const copy = new SFVec4d (... vector); // Copy using spread syntax.
 ```
+
+### Static Properties
+
+#### **X_AXIS**: SFVec4d/f
+
+Returns the x-axis vector.
+
+#### **Y_AXIS**: SFVec4d/f
+
+Returns the y-axis vector.
+
+#### **Z_AXIS**: SFVec4d/f
+
+Returns the z-axis vector.
 
 ### Properties
 

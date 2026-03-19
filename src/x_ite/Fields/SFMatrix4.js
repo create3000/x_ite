@@ -48,6 +48,15 @@ function SFMatrix4Template (TypeName, double)
       }
    }
 
+   Object .defineProperties (SFMatrix4,
+   {
+      IDENTITY:
+      {
+         value: new SFMatrix4 (),
+         enumerable: true,
+      },
+   });
+
    return SFMatrixPrototypeTemplate (SFMatrix4, TypeName, Matrix4, double);
 }
 

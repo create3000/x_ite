@@ -25,6 +25,25 @@ function SFVec3Template (TypeName, double)
       }
    }
 
+   Object .defineProperties (SFVec3,
+   {
+      X_AXIS:
+      {
+         value: new SFVec3 (1, 0, 0),
+         enumerable: true,
+      },
+      Y_AXIS:
+      {
+         value: new SFVec3 (0, 1, 0),
+         enumerable: true,
+      },
+      Z_AXIS:
+      {
+         value: new SFVec3 (0, 0, 1),
+         enumerable: true,
+      },
+   });
+
    return SFVecPrototypeTemplate (SFVec3, TypeName, Vector3, double,
    {
       cross (vector)

@@ -1872,8 +1872,8 @@ declare namespace X3D
        * A new matrix initialized with the values in *f11* through *f44* is created and returned.
        */
       constructor (f11: number, f12: number, f13: number,
-                  f21: number, f22: number, f23: number,
-                  f31: number, f32: number, f33: number);
+                   f21: number, f22: number, f23: number,
+                   f31: number, f32: number, f33: number);
 
       [Symbol .iterator](): IterableIterator <number>;
       [index: number]: number;
@@ -1965,6 +1965,8 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "SFMatrix3d";
+
+      static readonly IDENTITY: SFMatrix3d;
    }
 
    /**
@@ -1974,6 +1976,8 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "SFMatrix3f";
+
+      static readonly IDENTITY: SFMatrix3f;
    }
 
    /**
@@ -1993,9 +1997,9 @@ declare namespace X3D
        * A new matrix initialized with the values in *f11* through *f44* is created and returned.
        */
       constructor (f11: number, f12: number, f13: number, f14: number,
-                  f21: number, f22: number, f23: number, f24: number,
-                  f31: number, f32: number, f33: number, f34: number,
-                  f41: number, f42: number, f43: number, f44: number);
+                   f21: number, f22: number, f23: number, f24: number,
+                   f31: number, f32: number, f33: number, f34: number,
+                   f41: number, f42: number, f43: number, f44: number);
 
       [Symbol .iterator](): IterableIterator <number>;
       [index: number]: number;
@@ -2079,6 +2083,8 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "SFMatrix4d";
+
+      static readonly IDENTITY: SFMatrix4d;
    }
 
    /**
@@ -2088,6 +2094,8 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "SFMatrix4f";
+
+      static readonly IDENTITY: SFMatrix4f;
    }
 
    /**
@@ -2192,6 +2200,7 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "SFRotation";
+      static readonly IDENTITY: SFRotation;
 
       /**
        * A new rotation initialized with the identity rotation is created and returned.
@@ -2407,6 +2416,9 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "SFVec2d";
+
+      static readonly X_AXIS: SFVec2d;
+      static readonly Y_AXIS: SFVec2d;
    }
 
    /**
@@ -2416,6 +2428,9 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "SFVec2f";
+
+      static readonly X_AXIS: SFVec2f;
+      static readonly Y_AXIS: SFVec2f;
    }
 
    /**
@@ -2529,6 +2544,10 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "SFVec3d";
+
+      static readonly X_AXIS: SFVec3d;
+      static readonly Y_AXIS: SFVec3d;
+      static readonly Z_AXIS: SFVec3d;
    }
 
    /**
@@ -2538,6 +2557,10 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "SFVec3f";
+
+      static readonly X_AXIS: SFVec3f;
+      static readonly Y_AXIS: SFVec3f;
+      static readonly Z_AXIS: SFVec3f;
    }
 
    /**
@@ -2651,6 +2674,11 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "SFVec4d";
+
+      static readonly X_AXIS: SFVec4d;
+      static readonly Y_AXIS: SFVec4d;
+      static readonly Z_AXIS: SFVec4d;
+      static readonly W_AXIS: SFVec4d;
    }
 
    /**
@@ -2660,6 +2688,11 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "SFVec4f";
+
+      static readonly X_AXIS: SFVec4f;
+      static readonly Y_AXIS: SFVec4f;
+      static readonly Z_AXIS: SFVec4f;
+      static readonly W_AXIS: SFVec4f;
    }
 
    /**

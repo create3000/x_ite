@@ -44,6 +44,15 @@ function SFMatrix3Template (TypeName, double)
       }
    }
 
+   Object .defineProperties (SFMatrix3,
+   {
+      IDENTITY:
+      {
+         value: new SFMatrix3 (),
+         enumerable: true,
+      },
+   });
+
    return SFMatrixPrototypeTemplate (SFMatrix3, TypeName, Matrix3, double,
    {
       setTransform: (() =>

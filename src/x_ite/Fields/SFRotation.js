@@ -253,6 +253,11 @@ Object .defineProperties (SFRotation,
       value: "SFRotation",
       enumerable: true,
    },
+   IDENTITY:
+   {
+      value: new SFRotation (),
+      enumerable: true,
+   },
 });
 
 export default SFRotation;
