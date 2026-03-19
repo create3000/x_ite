@@ -54,8 +54,6 @@ Object .assign (SpotLightContainer .prototype,
       this .global         = lightNode .getGlobal ();
       this .shadowRendered = false;
 
-      this .matrixArray .set (modelViewMatrix .submatrix .inverse ());
-
       this .modelViewMatrix .push (modelViewMatrix);
 
       // Get shadow buffer from browser.
@@ -124,6 +122,8 @@ Object .assign (SpotLightContainer .prototype,
       const
          lightNode       = this .lightNode,
          modelViewMatrix = this .modelViewMatrix .get ();
+
+      this .matrixArray .set (modelViewMatrix .submatrix .inverse ());
 
       modelViewMatrix .multVecMatrix (this .location  .assign (lightNode ._location  .getValue ()));
       modelViewMatrix .multDirMatrix (this .direction .assign (lightNode ._direction .getValue ())) .normalize ();
