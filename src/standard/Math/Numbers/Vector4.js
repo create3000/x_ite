@@ -218,14 +218,14 @@ Object .assign (Vector4 .prototype,
       this .w = Algorithm .clamp (this .w, minW, maxW);
       return this;
    },
-   reflect ({ x, y, z , w})
+   reflect (normal)
    {
       const d = 2 * normal .dot (this);
 
-      this .x -= x * d;
-      this .y -= y * d;
-      this .z -= z * d;
-      this .w -= w * d;
+      this .x -= normal .x * d;
+      this .y -= normal .y * d;
+      this .z -= normal .z * d;
+      this .w -= normal .w * d;
 
       return this;
    },
