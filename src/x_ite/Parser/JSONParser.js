@@ -30,7 +30,13 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
    },
    isValid ()
    {
-      return this .input instanceof Object;
+      if (!(this .input instanceof Object))
+         return false;
+
+      if (!Object .keys (this .input) .every (key => key === "X3D"))
+         return false;
+
+      return true;
    },
    parseIntoScene (resolve, reject)
    {

@@ -25,6 +25,20 @@ function SFVec2Template (TypeName, double)
       }
    }
 
+   Object .defineProperties (SFVec2,
+   {
+      X_AXIS:
+      {
+         value: new SFVec2 (1, 0),
+         enumerable: true,
+      },
+      Y_AXIS:
+      {
+         value: new SFVec2 (0, 1),
+         enumerable: true,
+      },
+   });
+
    return SFVecPrototypeTemplate (SFVec2, TypeName, Vector2, double);
 }
 

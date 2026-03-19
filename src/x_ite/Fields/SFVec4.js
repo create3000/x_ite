@@ -25,6 +25,30 @@ function SFVec4Template (TypeName, double)
       }
    }
 
+   Object .defineProperties (SFVec4,
+   {
+      X_AXIS:
+      {
+         value: new SFVec4 (1, 0, 0, 0),
+         enumerable: true,
+      },
+      Y_AXIS:
+      {
+         value: new SFVec4 (0, 1, 0, 0),
+         enumerable: true,
+      },
+      Z_AXIS:
+      {
+         value: new SFVec4 (0, 0, 1, 0),
+         enumerable: true,
+      },
+      W_AXIS:
+      {
+         value: new SFVec4 (0, 0, 0, 1),
+         enumerable: true,
+      },
+   });
+
    return SFVecPrototypeTemplate (SFVec4, TypeName, Vector4, double,
    {
       isDefaultValue ()
