@@ -212,17 +212,13 @@ Object .assign (Vector3 .prototype,
       this .z = Algorithm .clamp (this .z, minZ, maxZ);
       return this;
    },
-   reflect (normal)
+   reflect ({ x, y, z , w})
    {
-      const
-         d = 2 * normal .dot (this),
-         x = normal .x * d,
-         y = normal .y * d,
-         z = normal .z * d;
+      const d = 2 * normal .dot (this);
 
-      this .x -= x;
-      this .y -= y;
-      this .z -= z;
+      this .x -= x * d;
+      this .y -= y * d;
+      this .z -= z * d;
 
       return this;
    },
