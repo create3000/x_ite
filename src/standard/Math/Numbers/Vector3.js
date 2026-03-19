@@ -43,18 +43,13 @@ Object .assign (Vector3 .prototype,
              this .y === y &&
              this .z === z;
    },
-   negate ()
+   abs ()
    {
-      this .x = -this .x;
-      this .y = -this .y;
-      this .z = -this .z;
-      return this;
-   },
-   inverse ()
-   {
-      this .x = 1 / this .x;
-      this .y = 1 / this .y;
-      this .z = 1 / this .z;
+      const { x, y, z } = this;
+
+      this .x = Math .abs (x);
+      this .y = Math .abs (y);
+      this .z = Math .abs (z);
       return this;
    },
    add ({ x, y, z })
@@ -64,26 +59,28 @@ Object .assign (Vector3 .prototype,
       this .z += z;
       return this;
    },
-   subtract ({ x, y, z })
+   clamp ({ x: minX, y: minY, z: minZ }, { x: maxX, y: maxY, z: maxZ })
    {
-      this .x -= x;
-      this .y -= y;
-      this .z -= z;
+      this .x = Algorithm .clamp (this .x, minX, maxX);
+      this .y = Algorithm .clamp (this .y, minY, maxY);
+      this .z = Algorithm .clamp (this .z, minZ, maxZ);
       return this;
    },
-   multiply (value)
+   cross ({ x: bx, y: by, z: bz })
    {
-      this .x *= value;
-      this .y *= value;
-      this .z *= value;
+      const { x: ax, y: ay, z: az } = this;
+
+      this .x = ay * bz - az * by;
+      this .y = az * bx - ax * bz;
+      this .z = ax * by - ay * bx;
+
       return this;
    },
-   multVec ({ x, y, z })
+   distance ({ x, y, z })
    {
-      this .x *= x;
-      this .y *= y;
-      this .z *= z;
-      return this;
+      return Math .hypot (this .x - x,
+                          this .y - y,
+                          this .z - z);
    },
    divide (value)
    {
@@ -99,52 +96,18 @@ Object .assign (Vector3 .prototype,
       this .z /= z;
       return this;
    },
-   cross ({ x: bx, y: by, z: bz })
-   {
-      const { x: ax, y: ay, z: az } = this;
-
-      this .x = ay * bz - az * by;
-      this .y = az * bx - ax * bz;
-      this .z = ax * by - ay * bx;
-
-      return this;
-   },
-   normalize ()
-   {
-      const length = Math .hypot (this .x, this .y, this .z);
-
-      if (length)
-      {
-         this .x /= length;
-         this .y /= length;
-         this .z /= length;
-      }
-
-      return this;
-   },
    dot ({ x, y, z })
    {
       return this .x * x +
              this .y * y +
              this .z * z;
    },
-   squaredNorm ()
+   inverse ()
    {
-      const { x, y, z } = this;
-
-      return x * x +
-             y * y +
-             z * z;
-   },
-   norm ()
-   {
-      return Math .hypot (this .x, this .y, this .z);
-   },
-   distance ({ x, y, z })
-   {
-      return Math .hypot (this .x - x,
-                          this .y - y,
-                          this .z - z);
+      this .x = 1 / this .x;
+      this .y = 1 / this .y;
+      this .z = 1 / this .z;
+      return this;
    },
    lerp ({ x: dX, y: dY, z: dZ }, t)
    {
@@ -153,40 +116,6 @@ Object .assign (Vector3 .prototype,
       this .x = x + t * (dX - x);
       this .y = y + t * (dY - y);
       this .z = z + t * (dZ - z);
-      return this;
-   },
-   slerp: (() =>
-   {
-      const tmp = new Vector3 ();
-
-      return function (destination, t)
-      {
-         return Algorithm .simpleSlerp (this, tmp .assign (destination), t);
-      };
-   })(),
-   abs ()
-   {
-      const { x, y, z } = this;
-
-      this .x = Math .abs (x);
-      this .y = Math .abs (y);
-      this .z = Math .abs (z);
-      return this;
-   },
-   min (vector)
-   {
-      let { x, y, z } = this;
-
-      for (const { x: minX, y: minY, z: minZ } of arguments)
-      {
-         x = Math .min (x, minX);
-         y = Math .min (y, minY);
-         z = Math .min (z, minZ);
-      }
-
-      this .x = x;
-      this .y = y;
-      this .z = z;
       return this;
    },
    max (vector)
@@ -205,11 +134,58 @@ Object .assign (Vector3 .prototype,
       this .z = z;
       return this;
    },
-   clamp ({ x: minX, y: minY, z: minZ }, { x: maxX, y: maxY, z: maxZ })
+   min (vector)
    {
-      this .x = Algorithm .clamp (this .x, minX, maxX);
-      this .y = Algorithm .clamp (this .y, minY, maxY);
-      this .z = Algorithm .clamp (this .z, minZ, maxZ);
+      let { x, y, z } = this;
+
+      for (const { x: minX, y: minY, z: minZ } of arguments)
+      {
+         x = Math .min (x, minX);
+         y = Math .min (y, minY);
+         z = Math .min (z, minZ);
+      }
+
+      this .x = x;
+      this .y = y;
+      this .z = z;
+      return this;
+   },
+   multiply (value)
+   {
+      this .x *= value;
+      this .y *= value;
+      this .z *= value;
+      return this;
+   },
+   multVec ({ x, y, z })
+   {
+      this .x *= x;
+      this .y *= y;
+      this .z *= z;
+      return this;
+   },
+   negate ()
+   {
+      this .x = -this .x;
+      this .y = -this .y;
+      this .z = -this .z;
+      return this;
+   },
+   norm ()
+   {
+      return Math .hypot (this .x, this .y, this .z);
+   },
+   normalize ()
+   {
+      const length = Math .hypot (this .x, this .y, this .z);
+
+      if (length)
+      {
+         this .x /= length;
+         this .y /= length;
+         this .z /= length;
+      }
+
       return this;
    },
    reflect (normal)
@@ -220,6 +196,30 @@ Object .assign (Vector3 .prototype,
       this .y -= normal .y * d;
       this .z -= normal .z * d;
 
+      return this;
+   },
+   slerp: (() =>
+   {
+      const tmp = new Vector3 ();
+
+      return function (destination, t)
+      {
+         return Algorithm .simpleSlerp (this, tmp .assign (destination), t);
+      };
+   })(),
+   squaredNorm ()
+   {
+      const { x, y, z } = this;
+
+      return x * x +
+             y * y +
+             z * z;
+   },
+   subtract ({ x, y, z })
+   {
+      this .x -= x;
+      this .y -= y;
+      this .z -= z;
       return this;
    },
    toString ()
