@@ -33,15 +33,21 @@ Object .assign (TextureProjectorContainer .prototype,
 {
    set (lightNode, groupNode, modelViewMatrix)
    {
-      this .browser   = lightNode .getBrowser ();
-      this .lightNode = lightNode;
-      this .global    = lightNode .getGlobal ();
+      this .browser        = lightNode .getBrowser ();
+      this .lightNode      = lightNode;
+      this .global         = lightNode .getGlobal ();
+      this .shadowRendered = false;
 
       this .modelViewMatrix .push (modelViewMatrix);
       this .textureMatrix .assign (lightNode .getTexture () .getMatrix ());
    },
    renderShadowMap (renderObject)
    {
+      if (this .shadowRendered)
+         return;
+
+      this .shadowRendered = true;
+
       const
          lightNode             = this .lightNode,
          cameraSpaceMatrix     = renderObject .getCameraSpaceMatrixArray (),

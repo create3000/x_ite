@@ -42,10 +42,11 @@ Object .assign (DirectionalLightContainer .prototype,
    {
       const shadowMapSize = lightNode .getShadowMapSize ();
 
-      this .browser   = lightNode .getBrowser ();
-      this .lightNode = lightNode;
-      this .groupNode = groupNode;
-      this .global    = lightNode .getGlobal ();
+      this .browser        = lightNode .getBrowser ();
+      this .lightNode      = lightNode;
+      this .groupNode      = groupNode;
+      this .global         = lightNode .getGlobal ();
+      this .shadowRendered = false;
 
       this .modelViewMatrix .push (modelViewMatrix);
 
@@ -63,6 +64,11 @@ Object .assign (DirectionalLightContainer .prototype,
    {
       if (!this .shadowBuffer)
          return;
+
+      if (this .shadowRendered)
+         return;
+
+      this .shadowRendered = true;
 
       const
          lightNode            = this .lightNode,

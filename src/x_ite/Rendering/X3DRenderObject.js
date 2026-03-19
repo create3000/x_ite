@@ -1138,7 +1138,6 @@ Object .assign (X3DRenderObject .prototype,
    draw ()
    {
       const
-         independent              = this .isIndependent (),
          browser                  = this .getBrowser (),
          gl                       = browser .getContext (),
          pose                     = browser .getPose (),
@@ -1161,18 +1160,16 @@ Object .assign (X3DRenderObject .prototype,
       this .viewMatrixArray        .set (this .getViewMatrix () .get ());
       this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
 
-      if (independent)
-      {
-         // Render shadow maps and prepare texture projectors.
+      // Render shadow maps and prepare texture projectors.
+      // This must be done before rendered textures are updated.
 
-         for (const light of lights .values ())
-            light .renderShadowMap (this);
+      for (const light of lights .values ())
+         light .renderShadowMap (this);
 
-         // Render GeneratedCubeMapTexture and RenderedTexture nodes.
+      // Render GeneratedCubeMapTexture and RenderedTexture nodes.
 
-         for (const renderedTexture of renderedTextures)
-            renderedTexture .renderTexture (this);
-      }
+      for (const renderedTexture of renderedTextures)
+         renderedTexture .renderTexture (this);
 
       this .globalShadow = globalShadows .at (-1);
 
@@ -1265,7 +1262,7 @@ Object .assign (X3DRenderObject .prototype,
 
       // POST DRAW
 
-      if (independent)
+      if (this .isIndependent ())
       {
          // Recycle clip planes, local fogs, local lights, and local projective textures.
 

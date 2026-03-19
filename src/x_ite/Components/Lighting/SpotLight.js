@@ -48,10 +48,11 @@ Object .assign (SpotLightContainer .prototype,
    {
       const shadowMapSize = lightNode .getShadowMapSize ();
 
-      this .browser   = lightNode .getBrowser ();
-      this .lightNode = lightNode;
-      this .groupNode = groupNode;
-      this .global    = lightNode .getGlobal ();
+      this .browser        = lightNode .getBrowser ();
+      this .lightNode      = lightNode;
+      this .groupNode      = groupNode;
+      this .global         = lightNode .getGlobal ();
+      this .shadowRendered = false;
 
       this .matrixArray .set (modelViewMatrix .submatrix .inverse ());
 
@@ -71,6 +72,11 @@ Object .assign (SpotLightContainer .prototype,
    {
       if (!this .shadowBuffer)
          return;
+
+      if (this .shadowRendered)
+         return;
+
+      this .shadowRendered = true;
 
       const
          lightNode            = this .lightNode,

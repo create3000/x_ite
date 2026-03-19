@@ -113,6 +113,8 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
       if (!this .frameBuffer)
          return;
 
+      this .textureRendered = false;
+
       renderObject .getRenderedTextures () .add (this);
    },
    renderTexture: (() =>
@@ -121,6 +123,11 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
 
       return function (renderObject)
       {
+         if (this .textureRendered)
+            return;
+
+         this .textureRendered = true;
+
          // Make dependent renderer.
 
          if (!this .dependentRenderers .has (renderObject))

@@ -73,11 +73,15 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNod
       {
          case TraverseType .DISPLAY:
          {
-            X3DRenderObject .prototype .render .call (this, type, callback, group);
+            const render = (type, renderObject) =>
+            {
+               callback .call (group, type, renderObject);
 
-            for (const light of this .renderObject .getLights () .values ())
-               light .modelViewMatrix .pop ();
+               for (const light of this .getLights () .values ())
+                  light .modelViewMatrix .pop ();
+            };
 
+            X3DRenderObject .prototype .render .call (this, type, render, group);
             break;
          }
          default:
