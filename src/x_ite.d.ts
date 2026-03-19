@@ -2400,9 +2400,13 @@ declare namespace X3D
        */
       negate (): this;
       /**
-       * Returns an SFVec2d/f of object converted to unit length.
+       * Returns an SFVec2d/f object converted to unit length.
        */
       normalize (): this;
+      /**
+       * Returns an SFVec2d/f object reflected at normal.
+       */
+      reflect (normal: this): this;
       /**
        * Returns an SFVec2d/f whose value is the passed SFVec2d/f subtracted, componentwise, from the object.
        */
@@ -2528,9 +2532,13 @@ declare namespace X3D
        */
       negate (): this;
       /**
-       * Returns an SFVec3d/f of object converted to unit length.
+       * Returns an SFVec3d/f object converted to unit length.
        */
       normalize (): this;
+      /**
+       * Returns an SFVec3d/f object reflected at normal.
+       */
+      reflect (normal: this): this;
       /**
        * Returns an SFVec3d/f whose value is the passed SFVec3d/f subtracted, componentwise, from the object.
        */
@@ -2658,9 +2666,13 @@ declare namespace X3D
        */
       negate (): this;
       /**
-       * Returns an SFVec4d/f of object converted to unit length.
+       * Returns an SFVec4d/f object converted to unit length.
        */
       normalize (): this;
+      /**
+       * Returns an SFVec4d/f object reflected at normal.
+       */
+      reflect (normal: this): this;
       /**
        * Returns an SFVec4d/f whose value is the passed SFVec4d/f subtracted, componentwise, from the object.
        */

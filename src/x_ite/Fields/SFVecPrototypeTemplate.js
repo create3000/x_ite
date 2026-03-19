@@ -101,9 +101,13 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double, properti
       {
          return new (this .constructor) (this .getValue () .copy () .negate ());
       },
-      normalize (vector)
+      normalize ()
       {
          return new (this .constructor) (this .getValue () .copy () .normalize ());
+      },
+      reflect (normal)
+      {
+         return new (this .constructor) (this .getValue () .copy () .reflect (normal));
       },
       subtract (vector)
       {

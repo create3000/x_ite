@@ -168,6 +168,18 @@ Object .assign (Vector2 .prototype,
       this .y = Algorithm .clamp (this .y, minY, maxY);
       return this;
    },
+   reflect (normal)
+   {
+      const
+         d = 2.0 * normal .dot (i),
+         x = normal .x * d,
+         y = normal .y * d;
+
+      this .x -= x;
+      this .y -= y;
+
+      return this;
+   },
    toString ()
    {
       return this .x + " " +

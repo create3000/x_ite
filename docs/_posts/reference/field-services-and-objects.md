@@ -997,7 +997,11 @@ Returns an SFVec2d/f whose value is the componentwise negation of the object.
 
 #### **normalize** (): SFVec2d/f
 
-Returns an SFVec2d/f of object converted to unit length.
+Returns an SFVec2d/f object converted to unit length.
+
+#### **reflect** (*normal: : SFVec2d/f*): SFVec2d/f
+
+Returns an SFVec2d/f object reflected at normal.
 
 #### **subtract** (*other: SFVec2d/f*): SFVec2d/f
 
@@ -1140,7 +1144,11 @@ Returns an SFVec3d/f whose value is the componentwise negation of the object.
 
 #### **normalize** (): SFVec3d/f
 
-Returns an SFVec3d/f of object converted to unit length
+Returns an SFVec3d/f object converted to unit length
+
+#### **reflect** (*normal: : SFVec3d/f*): SFVec3d/f
+
+Returns an SFVec3d/f object reflected at normal.
 
 #### **subtract** (*other: SFVec3d/f*): SFVec3d/f
 
@@ -1284,7 +1292,11 @@ Returns an SFVec4d/f whose value is the componentwise negation of the object.
 
 #### **normalize** (): SFVec4d/f
 
-Returns an SFVec4d/f of object converted to unit length.
+Returns an SFVec4d/f object converted to unit length.
+
+#### **reflect** (*normal: : SFVec4d/f*): SFVec4d/f
+
+Returns an SFVec4d/f object reflected at normal.
 
 #### **subtract** (*other: SFVec4d/f*): SFVec4d/f
 
