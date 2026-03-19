@@ -171,7 +171,7 @@ Object .assign (Vector2 .prototype,
    reflect (normal)
    {
       const
-         d = 2 * normal .dot (i),
+         d = 2 * normal .dot (this),
          x = normal .x * d,
          y = normal .y * d;
 
