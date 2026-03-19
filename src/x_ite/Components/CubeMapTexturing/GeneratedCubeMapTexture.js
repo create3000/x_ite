@@ -103,8 +103,6 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
       if (!this .frameBuffer)
          return;
 
-      this .textureRendered = false;
-
       renderObject .getRenderedTextures () .add (this);
 
       this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ())
@@ -140,11 +138,6 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
 
       return function (renderObject)
       {
-         if (this .textureRendered)
-            return;
-
-         this .textureRendered = true;
-
          this .textureRenderingPass = true;
 
          // Make dependent renderer.
