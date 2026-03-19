@@ -71,16 +71,6 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNod
    {
       switch (type)
       {
-         case TraverseType .COLLISION:
-         {
-            X3DRenderObject .prototype .render .call (this, type, callback, group);
-            break;
-         }
-         case TraverseType .SHADOW:
-         {
-            X3DRenderObject .prototype .render .call (this, type, callback, group);
-            break;
-         }
          case TraverseType .DISPLAY:
          {
             X3DRenderObject .prototype .render .call (this, type, callback, group);
@@ -88,6 +78,11 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNod
             for (const light of this .renderObject .getLights () .values ())
                light .modelViewMatrix .pop ();
 
+            break;
+         }
+         default:
+         {
+            X3DRenderObject .prototype .render .call (this, type, callback, group);
             break;
          }
       }

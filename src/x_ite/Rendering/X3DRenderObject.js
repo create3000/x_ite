@@ -1274,7 +1274,7 @@ Object .assign (X3DRenderObject .prototype,
          for (const localObject of localObjects)
             localObject .dispose ();
 
-         localObjects .length = 0;
+         localObjects .clear ();
 
          // Recycle global lights and global projective textures.
 

@@ -25,7 +25,7 @@ function X3DRenderingContext ()
    this [_framebuffers]   = [ ];
    this [_textureBuffers] = [ ];
    this [_depthShaders]   = new Map ();
-   this [_localObjects]   = [ ]; // shader objects dumpster
+   this [_localObjects]   = new Set (); // shader objects dumpster
 
    // WebXR support
 

@@ -112,7 +112,9 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
    })(),
    push (renderObject, groupNode)
    {
-      const path = `${renderObject .getPath ()},${this .getId ()}`;
+      const
+         path   = `${renderObject .getPath ()},${this .getId ()}`,
+         global = this ._global .getValue ();
 
       let lightContainer;
 
@@ -120,17 +122,19 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
       {
          lightContainer = renderObject .getLightContainer (path);
 
-         lightContainer ?.modelViewMatrix .push (renderObject .getModelViewMatrix () .get ());
+         if (lightContainer)
+            lightContainer .modelViewMatrix .push (renderObject .getModelViewMatrix () .get ());
+         else if (global)
+            return; // Independent global lights in RenderedTexture scene are not supported.
       }
 
-      if (!lightContainer)
-         lightContainer = renderObject .getLights () .get (path);
+      lightContainer ??= renderObject .getLights () .get (path);
 
       if (!lightContainer)
       {
          lightContainer = this .getLights () .pop ();
 
-         if (this ._global .getValue ())
+         if (global)
          {
             lightContainer .set (this,
                                  renderObject .getLayer () .getGroups (),
@@ -146,7 +150,7 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
 
       renderObject .getLights () .set (path, lightContainer);
 
-      if (this ._global .getValue ())
+      if (global)
       {
          renderObject .getGlobalLights () .push (lightContainer);
          renderObject .pushGlobalShadows (!! this .getShadowIntensity ());
@@ -166,8 +170,7 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
 
       const lightContainer = renderObject .getLocalObjects () .pop ();
 
-      if (renderObject .isIndependent ())
-         this .getBrowser () .getLocalObjects () .push (lightContainer);
+      this .getBrowser () .getLocalObjects () .add (lightContainer);
 
       renderObject .popLocalShadows ();
       renderObject .getLocalObjectsKeys () .pop ();

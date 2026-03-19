@@ -154,7 +154,7 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
                      const browser = this .getBrowser ();
 
                      for (let i = 0; i < numLocalObjects; ++ i)
-                        browser .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
+                        browser .getLocalObjects () .add (renderObject .getLocalObjects () .pop ());
                   }
                   else
                   {

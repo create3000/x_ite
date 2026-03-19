@@ -91,11 +91,11 @@ Object .assign (Object .setPrototypeOf (ClipPlane .prototype, X3DChildNode .prot
    },
    pop (renderObject)
    {
-      if (this .enabled)
-      {
-         this .getBrowser () .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
-         renderObject .getLocalObjectsKeys () .pop ();
-      }
+      if (!this .enabled)
+         return;
+
+      this .getBrowser () .getLocalObjects () .add (renderObject .getLocalObjects () .pop ());
+      renderObject .getLocalObjectsKeys () .pop ();
    },
 });
 
