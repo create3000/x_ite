@@ -72,8 +72,6 @@ Object .assign (PointLightContainer .prototype,
       this .groupNode = groupNode;
       this .global    = lightNode .getGlobal ();
 
-      this .matrixArray .set (modelViewMatrix .submatrix .inverse ());
-
       this .modelViewMatrix .push (modelViewMatrix);
 
       // Get shadow buffer from browser.
@@ -130,7 +128,11 @@ Object .assign (PointLightContainer .prototype,
    },
    setGlobalVariables (renderObject)
    {
-      this .modelViewMatrix .get () .multVecMatrix (this .location .assign (this .lightNode ._location .getValue ()));
+      const modelViewMatrix = this .modelViewMatrix .get ();
+
+      this .matrixArray .set (modelViewMatrix .submatrix .inverse ());
+
+      modelViewMatrix .multVecMatrix (this .location .assign (this .lightNode ._location .getValue ()));
 
       if (!this .shadowBuffer)
          return;
