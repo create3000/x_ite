@@ -1655,6 +1655,9 @@ declare namespace X3D
       static readonly type: number;
       static readonly typeName: "SFColor";
 
+      static readonly BLACK: SFColor;
+      static readonly WHITE: SFColor;
+
       /**
        * A new color initialized with zero values is created and returned.
        */
@@ -1711,6 +1714,10 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "SFColorRGBA";
+
+      static readonly BLACK: SFColor;
+      static readonly TRANSPARENT: SFColor;
+      static readonly WHITE: SFColor;
 
       /**
        * A new color initialized with zero values is created and returned.
