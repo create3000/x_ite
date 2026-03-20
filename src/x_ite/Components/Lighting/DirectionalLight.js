@@ -42,33 +42,28 @@ Object .assign (DirectionalLightContainer .prototype,
    {
       const shadowMapSize = lightNode .getShadowMapSize ();
 
-      this .browser        = lightNode .getBrowser ();
-      this .lightNode      = lightNode;
-      this .groupNode      = groupNode;
-      this .global         = lightNode .getGlobal ();
-      this .shadowRendered = false;
+      this .browser           = lightNode .getBrowser ();
+      this .lightNode         = lightNode;
+      this .groupNode         = groupNode;
+      this .global            = lightNode .getGlobal ();
+      this .shadowMapRendered = false;
 
       this .modelViewMatrix .push (modelViewMatrix);
 
       // Get shadow buffer from browser.
 
-      if (lightNode .getShadowIntensity () > 0 && shadowMapSize > 0)
-      {
+      if (lightNode .getShadowIntensity () && shadowMapSize)
          this .shadowBuffer = this .browser .popShadowBuffer (shadowMapSize);
-
-         if (!this .shadowBuffer)
-            console .warn ("Couldn't create shadow buffer.");
-      }
    },
    renderShadowMap (renderObject)
    {
       if (!this .shadowBuffer)
          return;
 
-      if (this .shadowRendered)
+      if (this .shadowMapRendered)
          return;
 
-      this .shadowRendered = true;
+      this .shadowMapRendered = true;
 
       const
          lightNode            = this .lightNode,

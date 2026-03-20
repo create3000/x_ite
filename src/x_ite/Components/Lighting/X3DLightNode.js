@@ -95,7 +95,7 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
    },
    getShadowMapSize ()
    {
-      return Math .min (this ._shadowMapSize .getValue (), this .getBrowser () .getMaxTextureSize ());
+      return Algorithm .clamp (this ._shadowMapSize .getValue (), 0, this .getBrowser () .getMaxTextureSize ());
    },
    getBiasMatrix: (() =>
    {
