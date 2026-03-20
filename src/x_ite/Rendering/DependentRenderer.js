@@ -67,30 +67,6 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNod
    {
       this .framebuffers [0] = frameBuffer;
    },
-   render (type, callback, group)
-   {
-      switch (type)
-      {
-         case TraverseType .DISPLAY:
-         {
-            const render = (type, renderObject) =>
-            {
-               callback .call (group, type, renderObject);
-
-               for (const light of this .getLights () .values ())
-                  light .modelViewMatrix .pop ();
-            };
-
-            X3DRenderObject .prototype .render .call (this, type, render, group);
-            break;
-         }
-         default:
-         {
-            X3DRenderObject .prototype .render .call (this, type, callback, group);
-            break;
-         }
-      }
-   },
 });
 
 for (const key of Object .keys (DependentRenderer .prototype))

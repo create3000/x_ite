@@ -1280,6 +1280,11 @@ Object .assign (X3DRenderObject .prototype,
 
          browser .resetGlobalTextureUnits ();
       }
+      else
+      {
+         for (const light of lights .values ())
+            light .modelViewMatrix .pop ();
+      }
 
       // Reset containers.
 
