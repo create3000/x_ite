@@ -193,6 +193,16 @@ Object .defineProperties (SFColor,
       value: "SFColor",
       enumerable: true,
    },
+   BLACK:
+   {
+      value: new SFColor (),
+      enumerable: true,
+   },
+   WHITE:
+   {
+      value: new SFColor (1, 1, 1),
+      enumerable: true,
+   },
 });
 
 export default SFColor;

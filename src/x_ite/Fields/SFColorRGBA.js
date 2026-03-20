@@ -160,6 +160,21 @@ Object .defineProperties (SFColorRGBA,
       value: "SFColorRGBA",
       enumerable: true,
    },
+   BLACK:
+   {
+      value: new SFColorRGBA (0, 0, 0, 1),
+      enumerable: true,
+   },
+   TRANSPARENT:
+   {
+      value: new SFColorRGBA (),
+      enumerable: true,
+   },
+   WHITE:
+   {
+      value: new SFColorRGBA (1, 1, 1, 1),
+      enumerable: true,
+   },
 });
 
 export default SFColorRGBA;

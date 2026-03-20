@@ -187,6 +187,16 @@ The `[@@iterator]()` method of SFColor instances implements the iterable protoco
 const copy = new SFColor (... color); // Copy using spread syntax.
 ```
 
+### Static Properties
+
+#### **BLACK**: SFColor
+
+Returns a black color.
+
+#### **WHITE**: SFColor
+
+Returns a white color.
+
 ### Properties
 
 Each component of the color can be accessed using the `r`, `g` and `b` properties or using the standard C-style dereferencing operator (e.g. `sfColorObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<3).
@@ -262,6 +272,20 @@ The `[@@iterator]()` method of SFColorRGBA instances implements the iterable pro
 ```js
 const copy = new SFColorRGBA (... color); // Copy using spread syntax.
 ```
+
+### Static Properties
+
+#### **BLACK**: SFColorRGBA
+
+Returns a black color.
+
+#### **TRANSPARENT**: SFColorRGBA
+
+Returns a fully transparent color.
+
+#### **WHITE**: SFColorRGBA
+
+Returns a white color.
 
 ### Properties
 
