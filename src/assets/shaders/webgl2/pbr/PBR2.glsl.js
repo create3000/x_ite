@@ -247,13 +247,12 @@ getMaterialColor (const in vec4 fragCoord)
       color = mix (f_dielectric_brdf_ibl, f_metal_brdf_ibl, materialInfo .metallic);
       color = f_sheen + color * albedoSheenScaling;
       color = mix (color, clearcoat_brdf, clearcoatFactor * clearcoatFresnel);
-   #endif
 
-   // Holger: moved occlusion out of IBL.
-   #if defined (X3D_OCCLUSION_TEXTURE)
-      float ao = getOcclusionFactor ();
+      #if defined (X3D_OCCLUSION_TEXTURE)
+         float ao = getOcclusionFactor ();
 
-      color *= 1.0 + x3d_Material .occlusionStrength * (ao - 1.0);
+         color *= 1.0 + x3d_Material .occlusionStrength * (ao - 1.0);
+      #endif
    #endif
 
    f_diffuse             = vec3 (0.0);
