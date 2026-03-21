@@ -35,12 +35,14 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
       X3DTexture2DNode .prototype .initialize .call (this);
 
       this ._dimensions .addInterest ("set_dimensions__", this);
+      this ._depthMap   .addInterest ("set_depthMap__",   this);
       this ._background .addInterest ("set_background__", this);
       this ._fog        .addInterest ("set_fog__",        this);
       this ._viewpoint  .addInterest ("set_viewpoint__",  this);
       this ._scene      .addInterest ("set_scene__",      this);
 
       this .set_dimensions__ ();
+      this .set_depthMap__ ();
       this .set_background__ ();
       this .set_fog__ ();
       this .set_viewpoint__ ();
@@ -87,6 +89,10 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
          this .setWidth (0);
          this .setHeight (0);
       }
+   },
+   set_depthMap__ ()
+   {
+      this .type = this ._depthMap .getValue () ? TraverseType .SHADOW : TraverseType .DISPLAY;
    },
    set_background__ ()
    {
@@ -187,12 +193,10 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
             }
          }
 
-         const type = this ._depthMap .getValue () ? TraverseType .SHADOW : TraverseType .DISPLAY;
-
          if (this .scene)
-            dependentRenderer .render (type, this .scene .traverse, this .scene);
+            dependentRenderer .render (this .type, this .scene .traverse, this .scene);
          else
-            layer .traverse (type, dependentRenderer);
+            layer .traverse (this .type, dependentRenderer);
 
          if (headlight)
             headlightContainer .modelViewMatrix .pop ();
