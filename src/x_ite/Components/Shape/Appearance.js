@@ -245,6 +245,9 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
       {
          this .textureNode               .removeInterest ("updateTextureBits", this);
          this .textureNode ._transparent .removeInterest ("set_transparent__", this);
+
+         // MultiTexture
+         this .textureNode ._renderedTextures ?.removeInterest ("set_renderedTextures__", this);
       }
 
       this .textureNode = X3DCast (X3DConstants .X3DTextureNode, this ._texture);
@@ -253,6 +256,9 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
       {
          this .textureNode               .addInterest ("updateTextureBits", this);
          this .textureNode ._transparent .addInterest ("set_transparent__", this);
+
+         // MultiTexture
+         this .textureNode ._renderedTextures ?.addInterest ("set_renderedTextures__", this);
 
          this .updateTextureBits ();
       }
@@ -374,6 +380,9 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
 
       if (this .textureNode ?.isRenderedTexture ())
          this .renderedTextures .add (this .textureNode);
+
+      for (const renderedTexture of this .textureNode ?.getRenderedTextures ?.() ?? [ ])
+         this .renderedTextures .add (renderedTexture);
 
       for (const renderedTexture of this .materialNode .getRenderedTextures ())
          this .renderedTextures .add (renderedTexture);
