@@ -99,10 +99,12 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
    {
       const index = this .getTextureIndices () .DIFFUSE_TEXTURE;
 
+      this .removeTexture (this .diffuseTextureNode);
+
       if (this .diffuseTextureNode)
       {
          this .diffuseTextureNode ._transparent .removeInterest ("set_transparent__", this);
-         this .diffuseTextureNode ._linear      .removeInterest ("setTexture",        this);
+         this .diffuseTextureNode ._linear      .removeInterest ("addTexture",        this);
       }
 
       this .diffuseTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._diffuseTexture);
@@ -110,10 +112,10 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
       if (this .diffuseTextureNode)
       {
          this .diffuseTextureNode ._transparent .addInterest ("set_transparent__", this);
-         this .diffuseTextureNode ._linear      .addInterest ("setTexture",        this, index, this .diffuseTextureNode);
+         this .diffuseTextureNode ._linear      .addInterest ("addTexture",        this, index, this .diffuseTextureNode);
       }
 
-      this .setTexture (index, this .diffuseTextureNode);
+      this .addTexture (index, this .diffuseTextureNode);
    },
    set_specularColor__ ()
    {
@@ -125,9 +127,11 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
    },
    set_specularGlossinessTexture__ ()
    {
+      this .removeTexture (this .specularGlossinessTextureNode);
+
       this .specularGlossinessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._specularGlossinessTexture);
 
-      this .setTexture (this .getTextureIndices () .SPECULAR_GLOSSINESS_TEXTURE, this .specularGlossinessTextureNode);
+      this .addTexture (this .getTextureIndices () .SPECULAR_GLOSSINESS_TEXTURE, this .specularGlossinessTextureNode);
    },
    set_occlusionStrength__ ()
    {
@@ -135,9 +139,11 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
    },
    set_occlusionTexture__ ()
    {
+      this .removeTexture (this .occlusionTextureNode);
+
       this .occlusionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._occlusionTexture);
 
-      this .setTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
+      this .addTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
    },
    createShader (key, geometryContext, renderContext)
    {

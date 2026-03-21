@@ -47,9 +47,11 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
    },
    set_transmissionTexture__ ()
    {
+      this .removeTexture (this .transmissionTextureNode);
+
       this .transmissionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._transmissionTexture);
 
-      this .setTexture (0, this .transmissionTextureNode);
+      this .addTexture (0, this .transmissionTextureNode);
    },
    getExtensionKey ()
    {

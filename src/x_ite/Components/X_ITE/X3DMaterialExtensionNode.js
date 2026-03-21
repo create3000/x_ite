@@ -8,21 +8,39 @@ function X3DMaterialExtensionNode (executionContext)
 
    this .addType (X3DConstants .X3DMaterialExtensionNode);
 
-   this .textureBits = new BitSet ();
+   this .addChildObjects (X3DConstants .outputOnly, "renderedTextures", new Fields .SFTime ());
+
+   // Private properties
+
+   this .textureBits      = new BitSet ();
+   this .renderedTextures = new Set ();
 }
 
 Object .assign (Object .setPrototypeOf (X3DMaterialExtensionNode .prototype, X3DNode .prototype),
 {
-   setTexture (index, textureNode)
+   addTexture (index, textureNode)
    {
       index *= 4;
 
       this .textureBits .remove (index, 0xf);
       this .textureBits .add (index, textureNode ?.getTextureBits () ?? 0);
+
+      if (textureNode ?.isRenderedTexture ())
+         this .renderedTextures .add (textureNode);
+
+      this ._renderedTextures = this .getBrowser () .getCurrentTime ();
+   },
+   removeTexture (textureNode)
+   {
+      this .renderedTextures .delete (textureNode);
    },
    getTextureBits ()
    {
       return this .textureBits;
+   },
+   getRenderedTextures ()
+   {
+      return this .renderedTextures;
    },
 });
 

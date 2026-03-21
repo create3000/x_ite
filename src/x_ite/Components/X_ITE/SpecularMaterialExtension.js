@@ -56,9 +56,11 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
    },
    set_specularTexture__ ()
    {
+      this .removeTexture (this .specularTextureNode);
+
       this .specularTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._specularTexture);
 
-      this .setTexture (0, this .specularTextureNode);
+      this .addTexture (0, this .specularTextureNode);
    },
    set_specularColor__ ()
    {
@@ -70,9 +72,11 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X3
    },
    set_specularColorTexture__ ()
    {
+      this .removeTexture (this .specularColorTextureNode);
+
       this .specularColorTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._specularColorTexture);
 
-      this .setTexture (1, this .specularColorTextureNode);
+      this .addTexture (1, this .specularColorTextureNode);
    },
    getExtensionKey ()
    {

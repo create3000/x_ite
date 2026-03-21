@@ -14,9 +14,12 @@ function Appearance (executionContext)
 
    this .addType (X3DConstants .Appearance);
 
+   // Private properties
+
    this .stylePropertiesNode     = [ ];
    this .textureTransformMapping = new Map ();
    this .textureBits             = new BitSet ();
+   this .renderedTextures        = new Set ();
    this .shaderNodes             = [ ];
    this .renderModeNodes         = [ ];
 }
@@ -50,6 +53,9 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
       this ._texture        .addInterest ("set_transparent__", this);
       this ._blendMode      .addInterest ("set_transparent__", this);
 
+      this ._material     .addInterest ("set_renderedTextures__", this);
+      this ._backMaterial .addInterest ("set_renderedTextures__", this);
+
       this .set_alphaMode__ ();
       this .set_pointProperties__ ();
       this .set_lineProperties__ ();
@@ -61,6 +67,7 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
       this .set_shaders__ ();
       this .set_renderModes__ ();
       this .set_transparent__ ();
+      this .set_renderedTextures__ ();
    },
    getAlphaMode ()
    {
@@ -186,17 +193,19 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    {
       if (this .materialNode)
       {
-         this .materialNode ._transparent   .removeInterest ("set_transparent__",   this);
-         this .materialNode ._transmission  .removeInterest ("set_transmission__",  this);
-         this .materialNode ._volumeScatter .removeInterest ("set_volumeScatter__", this);
+         this .materialNode ._transparent      .removeInterest ("set_transparent__",      this);
+         this .materialNode ._transmission     .removeInterest ("set_transmission__",     this);
+         this .materialNode ._volumeScatter    .removeInterest ("set_volumeScatter__",    this);
+         this .materialNode ._renderedTextures .removeInterest ("set_renderedTextures__", this);
       }
 
       this .materialNode = X3DCast (X3DConstants .X3DMaterialNode, this ._material)
          ?? this .getBrowser () .getDefaultMaterial ();
 
-      this .materialNode ._transparent   .addInterest ("set_transparent__",   this);
-      this .materialNode ._transmission  .addInterest ("set_transmission__",  this);
-      this .materialNode ._volumeScatter .addInterest ("set_volumeScatter__", this);
+      this .materialNode ._transparent      .addInterest ("set_transparent__",      this);
+      this .materialNode ._transmission     .addInterest ("set_transmission__",     this);
+      this .materialNode ._volumeScatter    .addInterest ("set_volumeScatter__",    this);
+      this .materialNode ._renderedTextures .addInterest ("set_renderedTextures__", this);
 
       this .set_transmission__ ();
       this .set_volumeScatter__ ();
@@ -210,11 +219,19 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    },
    set_backMaterial__ ()
    {
-      this .backMaterialNode ?._transparent .removeInterest ("set_transparent__", this);
+      if (this .backMaterialNode)
+      {
+         this .backMaterialNode ._transparent      .removeInterest ("set_transparent__",      this);
+         this .backMaterialNode ._renderedTextures .removeInterest ("set_renderedTextures__", this);
+      }
 
       this .backMaterialNode = X3DCast (X3DConstants .X3DOneSidedMaterialNode, this ._backMaterial);
 
-      this .backMaterialNode ?._transparent .addInterest ("set_transparent__", this);
+      if (this .backMaterialNode)
+      {
+         this .backMaterialNode ._transparent      .addInterest ("set_transparent__",      this);
+         this .backMaterialNode ._renderedTextures .addInterest ("set_renderedTextures__", this);
+      }
 
       // Depreciated TwoSidedMaterial handling.
 
@@ -350,9 +367,17 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
       this .setVolumeScatter (this .materialNode ?.isVolumeScatter () ||
                               this .backMaterialNode ?.isVolumeScatter ());
    },
+   set_renderedTextures__ ()
+   {
+      this .renderedTextures .clear ();
+
+      for (const renderedTexture of this .materialNode .getRenderedTextures ())
+         this .renderedTextures .add (renderedTexture);
+   },
    traverse (type, renderObject)
    {
-      this .textureNode ?.traverse (type, renderObject);
+      for (const renderedTexture of this .renderedTextures)
+         renderedTexture .traverse (type, renderObject);
    },
 });
 

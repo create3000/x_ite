@@ -40,13 +40,15 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
    {
       const index = this .getTextureIndices () .EMISSIVE_TEXTURE;
 
-      this .emissiveTextureNode ?._linear .removeInterest ("setTexture", this);
+      this .removeTexture (this .emissiveTextureNode);
+
+      this .emissiveTextureNode ?._linear .removeInterest ("addTexture", this);
 
       this .emissiveTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._emissiveTexture);
 
-      this .emissiveTextureNode ?._linear .addInterest ("setTexture", this, index, this .emissiveTextureNode);
+      this .emissiveTextureNode ?._linear .addInterest ("addTexture", this, index, this .emissiveTextureNode);
 
-      this .setTexture (index, this .emissiveTextureNode);
+      this .addTexture (index, this .emissiveTextureNode);
    },
    set_normalScale__ ()
    {
@@ -54,9 +56,11 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
    },
    set_normalTexture__ ()
    {
+      this .removeTexture (this .normalTextureNode);
+
       this .normalTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._normalTexture);
 
-      this .setTexture (this .getTextureIndices () .NORMAL_TEXTURE, this .normalTextureNode);
+      this .addTexture (this .getTextureIndices () .NORMAL_TEXTURE, this .normalTextureNode);
    },
    set_transparency__ ()
    {

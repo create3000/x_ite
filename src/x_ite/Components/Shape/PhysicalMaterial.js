@@ -13,8 +13,11 @@ function PhysicalMaterial (executionContext)
 
    this .addType (X3DConstants .PhysicalMaterial);
 
-   this .baseColorArray = new Float32Array (3);
-   this .extensionNodes = [ ];
+   // Private properties
+
+   this .baseColorArray             = new Float32Array (3);
+   this .extensionNodes             = [ ];
+   this .extensionsRenderedTextures = new Set ();
 }
 
 Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSidedMaterialNode .prototype),
@@ -80,10 +83,12 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
    {
       const index = this .getTextureIndices () .BASE_TEXTURE;
 
+      this .removeTexture (this .baseTextureNode);
+
       if (this .baseTextureNode)
       {
          this .baseTextureNode ._transparent .removeInterest ("set_transparent__", this);
-         this .baseTextureNode ._linear      .removeInterest ("setTexture",        this);
+         this .baseTextureNode ._linear      .removeInterest ("addTexture",        this);
       }
 
       this .baseTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._baseTexture);
@@ -91,10 +96,10 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
       if (this .baseTextureNode)
       {
          this .baseTextureNode ._transparent .addInterest ("set_transparent__", this);
-         this .baseTextureNode ._linear      .addInterest ("setTexture",        this, index, this .baseTextureNode);
+         this .baseTextureNode ._linear      .addInterest ("addTexture",        this, index, this .baseTextureNode);
       }
 
-      this .setTexture (index, this .baseTextureNode);
+      this .addTexture (index, this .baseTextureNode);
    },
    set_metallic__ ()
    {
@@ -106,9 +111,11 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
    },
    set_metallicRoughnessTexture__ ()
    {
+      this .removeTexture (this .metallicRoughnessTextureNode);
+
       this .metallicRoughnessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._metallicRoughnessTexture);
 
-      this .setTexture (this .getTextureIndices () .METALLIC_ROUGHNESS_TEXTURE, this .metallicRoughnessTextureNode);
+      this .addTexture (this .getTextureIndices () .METALLIC_ROUGHNESS_TEXTURE, this .metallicRoughnessTextureNode);
    },
    set_occlusionStrength__ ()
    {
@@ -116,16 +123,21 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
    },
    set_occlusionTexture__ ()
    {
+      this .removeTexture (this .occlusionTextureNode);
+
       this .occlusionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._occlusionTexture);
 
-      this .setTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
+      this .addTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
    },
    set_extensions__ ()
    {
       const extensionNodes = this .extensionNodes;
 
       for (const extensionNode of extensionNodes)
-         extensionNode .removeInterest ("set_extensionsKey__", this);
+      {
+         extensionNode .removeInterest ("set_extensionsKey__",    this);
+         extensionNode .removeInterest ("set_renderedTextures__", this);
+      }
 
       extensionNodes .length = 0;
 
@@ -140,13 +152,17 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
       extensionNodes .sort ((a, b) => a .getExtensionKey () - b .getExtensionKey ());
 
       for (const extensionNode of extensionNodes)
-         extensionNode .addInterest ("set_extensionsKey__", this);
+      {
+         extensionNode .addInterest ("set_extensionsKey__",    this);
+         extensionNode .addInterest ("set_renderedTextures__", this);
+      }
 
       this .setTransmission (extensionNodes .some (extensionNode => extensionNode .getType () .includes (X3DConstants .TransmissionMaterialExtension)));
 
       this .setVolumeScatter (extensionNodes .some (extensionNode => extensionNode .getType () .includes (X3DConstants .VolumeScatterMaterialExtension)) && extensionNodes .some (extensionNode => extensionNode .getType () .includes (X3DConstants .VolumeMaterialExtension)));
 
       this .set_extensionsKey__ ();
+      this .set_renderedTextures__ ();
    },
    set_extensionsKey__ ()
    {
@@ -157,6 +173,24 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
          .join ("");
 
       this .materialKey = `[3.${extensionsKey}]`;
+   },
+   set_renderedTextures__ ()
+   {
+      for (const renderedTexture of this .extensionsRenderedTextures)
+         this .getRenderedTextures () .delete (renderedTexture);
+
+      this .extensionsRenderedTextures .clear ();
+
+      for (const extensionNode of this .extensionNodes)
+      {
+         for (const renderedTexture of extensionNode .getRenderedTextures ())
+            this .extensionsRenderedTextures .add (renderedTexture);
+      }
+
+      for (const renderedTexture of this .extensionsRenderedTextures)
+         this .getRenderedTextures () .add (renderedTexture);
+
+      this ._renderedTextures = this .getBrowser () .getCurrentTime ();
    },
    createShader (key, geometryContext, renderContext)
    {
