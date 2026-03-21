@@ -28,7 +28,7 @@ function MultiTexture (executionContext)
    this .sources          = [ ];
    this .functions        = [ ];
    this .textureNodes     = [ ];
-   this .renderedTextures = new Set ();
+   this .renderedTextures = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode .prototype),
@@ -206,9 +206,8 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
       for (const textureNode of this .textureNodes)
          textureNode ._linear .removeInterest ("addNodeEvent", this);
 
-      this .textureNodes .length = 0;
-
-      this .renderedTextures .clear ();
+      this .textureNodes     .length = 0;
+      this .renderedTextures .length = 0;
 
       for (const node of this ._texture)
       {
@@ -223,7 +222,7 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
          textureNode ._linear .addInterest ("addNodeEvent", this);
 
          if (textureNode .isRenderedTexture ())
-            this .renderedTextures .add (textureNode);
+            this .renderedTextures .push (textureNode);
       }
 
       this ._renderedTextures = this .getBrowser () .getCurrentTime ();
