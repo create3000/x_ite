@@ -21,7 +21,7 @@ function RenderedTexture (executionContext)
 
    this .addType (X3DConstants .RenderedTexture);
 
-   this .addChildObjects (X3DConstants .outputOnly, "loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
+   this .addChildObjects (X3DConstants .outputOnly, "loadState", new Fields .SFInt32 (X3DConstants .COMPLETE_STATE));
 
    // Private properties
 
