@@ -55,13 +55,13 @@ function X3DRenderObject (executionContext)
    this .collisionTime            = new StopWatch ();
    this .numPointingShapes        = 0;
    this .numCollisionShapes       = 0;
-   this .numShadowShapes          = 0;
+   this .numDepthShapes          = 0;
    this .numOpaqueShapes          = 0;
    this .numTransparentShapes     = 0;
    this .pointingShapes           = [ ];
    this .collisionShapes          = [ ];
    this .activeCollisions         = [ ];
-   this .shadowShapes             = [ ];
+   this .depthShapes             = [ ];
    this .opaqueShapes             = [ ];
    this .transparentShapes        = [ ];
    this .transparencySorter       = new MergeSort (this .transparentShapes, (a, b) => a .distance < b .distance);
@@ -335,30 +335,6 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .collisionTime;
    },
-   getNumPointingShapes ()
-   {
-      return this .numPointingShapes;
-   },
-   getPointingShapes ()
-   {
-      return this .pointingShapes;
-   },
-   getNumCollisionShapes ()
-   {
-      return this .numCollisionShapes;
-   },
-   getCollisionShapes ()
-   {
-      return this .collisionShapes;
-   },
-   getNumShadowShapes ()
-   {
-      return this .numShadowShapes;
-   },
-   getShadowShapes ()
-   {
-      return this .shadowShapes;
-   },
    getNumOpaqueShapes ()
    {
       return this .numOpaqueShapes;
@@ -586,10 +562,10 @@ Object .assign (X3DRenderObject .prototype,
          }
          case TraverseType .DEPTH:
          {
-            this .numShadowShapes = 0;
+            this .numDepthShapes = 0;
 
             callback .call (group, type, this);
-            this .depth (this .shadowShapes, this .numShadowShapes, false);
+            this .depth (this .depthShapes, this .numDepthShapes, false);
             break;
          }
          case TraverseType .DISPLAY:
@@ -711,7 +687,7 @@ Object .assign (X3DRenderObject .prototype,
          return true;
       };
    })(),
-   addShadowShape: (() =>
+   addDepthShape: (() =>
    {
       const
          bboxSize   = new Vector3 (),
@@ -731,9 +707,9 @@ Object .assign (X3DRenderObject .prototype,
          if (!viewVolume .intersectsSphere (radius, bboxCenter))
             return false;
 
-         const num = this .numShadowShapes ++;
+         const num = this .numDepthShapes ++;
 
-         if (num === this .shadowShapes .length)
+         if (num === this .depthShapes .length)
          {
             const renderContext = {
                renderObject: this,
@@ -743,10 +719,10 @@ Object .assign (X3DRenderObject .prototype,
                get renderContext () { return this; },
             };
 
-            this .shadowShapes .push (renderContext);
+            this .depthShapes .push (renderContext);
          }
 
-         const renderContext = this .shadowShapes [num];
+         const renderContext = this .depthShapes [num];
 
          renderContext .modelViewMatrix .set (modelViewMatrix);
          renderContext .viewport .assign (viewVolume .getViewport ());

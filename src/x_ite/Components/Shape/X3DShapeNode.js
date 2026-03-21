@@ -288,7 +288,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
          }
          case TraverseType .DEPTH:
          {
-            renderObject .addShadowShape (this);
+            renderObject .addDepthShape (this);
             break;
          }
          case TraverseType .DISPLAY:
