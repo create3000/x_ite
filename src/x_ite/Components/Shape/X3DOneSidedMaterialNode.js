@@ -54,11 +54,9 @@ Object .assign (Object .setPrototypeOf (X3DOneSidedMaterialNode .prototype, X3DM
    },
    set_normalTexture__ ()
    {
-      const index = this .getTextureIndices () .NORMAL_TEXTURE;
-
       this .normalTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._normalTexture);
 
-      this .addTexture (index, this .normalTextureNode);
+      this .addTexture (this .getTextureIndices () .NORMAL_TEXTURE, this .normalTextureNode);
    },
    set_transparency__ ()
    {

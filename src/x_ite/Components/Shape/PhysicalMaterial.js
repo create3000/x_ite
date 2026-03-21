@@ -109,11 +109,9 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
    },
    set_metallicRoughnessTexture__ ()
    {
-      const index = this .getTextureIndices () .METALLIC_ROUGHNESS_TEXTURE;
-
       this .metallicRoughnessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._metallicRoughnessTexture);
 
-      this .addTexture (index, this .metallicRoughnessTextureNode);
+      this .addTexture (this .getTextureIndices () .METALLIC_ROUGHNESS_TEXTURE, this .metallicRoughnessTextureNode);
    },
    set_occlusionStrength__ ()
    {
@@ -121,11 +119,9 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
    },
    set_occlusionTexture__ ()
    {
-      const index = this .getTextureIndices () .OCCLUSION_TEXTURE;
-
       this .occlusionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._occlusionTexture);
 
-      this .addTexture (index, this .occlusionTextureNode);
+      this .addTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
    },
    set_extensions__ ()
    {
