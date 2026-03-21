@@ -20,7 +20,7 @@ function X3DProgrammableShaderObject (executionContext)
    this .lightNodes             = [ ];
    this .textureProjectorNodes  = [ ];
    this .textures               = new Set ();
-   this .renderedTextures       = new Set ();
+   this .renderedTextures       = [ ];
 
    this .x3d_ClipPlane                  = [ ];
    this .x3d_EnvironmentLight           = [ ];
@@ -599,8 +599,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             }
             case X3DConstants .SFNode:
             {
-               this .removeTexture (location .textureNode);
-
                const textureNode = X3DCast (X3DConstants .X3DTextureNode, field);
 
                if (textureNode)
@@ -609,13 +607,13 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                   location .textureNode = textureNode;
 
                   this .textures .add (location);
-                  this .addTexture (textureNode);
                }
                else
                {
                   this .textures .delete (location);
                }
 
+               this ._renderedTextures = this .getBrowser () .getCurrentTime ();
                return;
             }
             case X3DConstants .SFRotation:
@@ -706,9 +704,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                   locations   = location .locations,
                   fieldLength = field .length;
 
-               for (const { textureNode } of locations)
-                  this .removeTexture (textureNode);
-
                for (let i = 0; i < fieldLength; ++ i)
                {
                   const textureNode = X3DCast (X3DConstants .X3DTextureNode, field [i]);
@@ -719,7 +714,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                      locations [i] .textureNode = textureNode;
 
                      this .textures .add (locations [i]);
-                     this .addTexture (textureNode);
                   }
                   else
                   {
@@ -727,6 +721,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                   }
                }
 
+               this ._renderedTextures = this .getBrowser () .getCurrentTime ();
                return;
             }
             case X3DConstants .MFRotation:
@@ -804,20 +799,17 @@ Object .assign (X3DProgrammableShaderObject .prototype,
    },
    getRenderedTextures ()
    {
-      return this .renderedTextures;
-   },
-   addTexture (textureNode)
-   {
-      if (textureNode .isRenderedTexture ())
-         this .renderedTextures .add (textureNode);
+      const { renderedTextures } = this;
 
-      this ._renderedTextures = this .getBrowser () .getCurrentTime ();
-   },
-   removeTexture (textureNode)
-   {
-      this .renderedTextures .delete (textureNode);
+      renderedTextures .length = 0;
 
-      this ._renderedTextures = this .getBrowser () .getCurrentTime ();
+      for (const { textureNode } of this .textures)
+      {
+         if (textureNode .isRenderedTexture ())
+            renderedTextures .push (textureNode);
+      }
+
+      return renderedTextures;
    },
    hasFog (fogNode)
    {
