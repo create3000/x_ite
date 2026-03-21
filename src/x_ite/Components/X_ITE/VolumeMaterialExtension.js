@@ -59,8 +59,6 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X3DM
    },
    set_thicknessTexture__ ()
    {
-      this .removeTexture (this .thicknessTextureNode);
-
       this .thicknessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._thicknessTexture);
 
       this .addTexture (0, this .thicknessTextureNode);

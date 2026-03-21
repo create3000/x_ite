@@ -90,8 +90,6 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    {
       const index = this .getTextureIndices () .AMBIENT_TEXTURE;
 
-      this .removeTexture (this .ambientTextureNode);
-
       this .ambientTextureNode ?._linear .removeInterest ("addTexture", this);
 
       this .ambientTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._ambientTexture);
@@ -107,8 +105,6 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    set_diffuseTexture__ ()
    {
       const index = this .getTextureIndices () .DIFFUSE_TEXTURE;
-
-      this .removeTexture (this .diffuseTextureNode);
 
       if (this .diffuseTextureNode)
       {
@@ -134,8 +130,6 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    {
       const index = this .getTextureIndices () .SPECULAR_TEXTURE;
 
-      this .removeTexture (this .specularTextureNode);
-
       this .specularTextureNode ?._linear .removeInterest ("addTexture", this);
 
       this .specularTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._specularTexture);
@@ -150,8 +144,6 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    },
    set_shininessTexture__ ()
    {
-      this .removeTexture (this .shininessTextureNode);
-
       this .shininessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._shininessTexture);
 
       this .addTexture (this .getTextureIndices () .SHININESS_TEXTURE, this .shininessTextureNode);
@@ -162,8 +154,6 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    },
    set_occlusionTexture__ ()
    {
-      this .removeTexture (this .occlusionTextureNode);
-
       this .occlusionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._occlusionTexture);
 
       this .addTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);

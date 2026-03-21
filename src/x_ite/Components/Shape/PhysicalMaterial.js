@@ -15,9 +15,8 @@ function PhysicalMaterial (executionContext)
 
    // Private properties
 
-   this .baseColorArray             = new Float32Array (3);
-   this .extensionNodes             = [ ];
-   this .extensionsRenderedTextures = new Set ();
+   this .baseColorArray = new Float32Array (3);
+   this .extensionNodes = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSidedMaterialNode .prototype),
@@ -64,6 +63,7 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
          METALLIC_ROUGHNESS_TEXTURE: i ++,
          OCCLUSION_TEXTURE: i ++,
          NORMAL_TEXTURE: i ++,
+         LENGTH: i,
       };
 
       return function ()
@@ -82,8 +82,6 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
    set_baseTexture__ ()
    {
       const index = this .getTextureIndices () .BASE_TEXTURE;
-
-      this .removeTexture (this .baseTextureNode);
 
       if (this .baseTextureNode)
       {
@@ -111,11 +109,11 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
    },
    set_metallicRoughnessTexture__ ()
    {
-      this .removeTexture (this .metallicRoughnessTextureNode);
+      const index = this .getTextureIndices () .METALLIC_ROUGHNESS_TEXTURE;
 
       this .metallicRoughnessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._metallicRoughnessTexture);
 
-      this .addTexture (this .getTextureIndices () .METALLIC_ROUGHNESS_TEXTURE, this .metallicRoughnessTextureNode);
+      this .addTexture (index, this .metallicRoughnessTextureNode);
    },
    set_occlusionStrength__ ()
    {
@@ -123,11 +121,11 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
    },
    set_occlusionTexture__ ()
    {
-      this .removeTexture (this .occlusionTextureNode);
+      const index = this .getTextureIndices () .OCCLUSION_TEXTURE;
 
       this .occlusionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._occlusionTexture);
 
-      this .addTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
+      this .addTexture (index, this .occlusionTextureNode);
    },
    set_extensions__ ()
    {
@@ -176,19 +174,13 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
    },
    set_renderedTextures__ ()
    {
-      for (const renderedTexture of this .extensionsRenderedTextures)
-         this .getRenderedTextures () .delete (renderedTexture);
-
-      this .extensionsRenderedTextures .clear ();
+      this .getRenderedTextures () .length = this .getTextureIndices () .LENGTH;
 
       for (const extensionNode of this .extensionNodes)
       {
          for (const renderedTexture of extensionNode .getRenderedTextures ())
-            this .extensionsRenderedTextures .add (renderedTexture);
+            this .getRenderedTextures () .push (renderedTexture);
       }
-
-      for (const renderedTexture of this .extensionsRenderedTextures)
-         this .getRenderedTextures () .add (renderedTexture);
 
       this ._renderedTextures = this .getBrowser () .getCurrentTime ();
    },

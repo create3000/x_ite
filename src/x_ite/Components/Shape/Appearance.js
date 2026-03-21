@@ -386,20 +386,31 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
    },
    set_renderedTextures__ ()
    {
-      this .renderedTextures .clear ();
+      const { renderedTextures } = this;
+
+      renderedTextures .clear ();
 
       if (this .textureNode ?.isRenderedTexture ())
-         this .renderedTextures .add (this .textureNode);
+         renderedTextures .add (this .textureNode);
 
       // MultiTexture
       for (const renderedTexture of this .textureNode ?.getRenderedTextures ?.() ?? [ ])
-         this .renderedTextures .add (renderedTexture);
+      {
+         if (renderedTexture)
+            renderedTextures .add (renderedTexture);
+      }
 
       for (const renderedTexture of this .materialNode .getRenderedTextures ())
-         this .renderedTextures .add (renderedTexture);
+      {
+         if (renderedTexture)
+            renderedTextures .add (renderedTexture);
+      }
 
       for (const renderedTexture of this .shaderNode ?.getRenderedTextures () ?? [ ])
-         this .renderedTextures .add (renderedTexture);
+      {
+         if (renderedTexture)
+            renderedTextures .add (renderedTexture);
+      }
    },
    traverse (type, renderObject)
    {

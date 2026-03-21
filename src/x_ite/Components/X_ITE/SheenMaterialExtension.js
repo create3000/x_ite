@@ -58,8 +58,6 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X3DMa
    },
    set_sheenColorTexture__ ()
    {
-      this .removeTexture (this .sheenColorTextureNode);
-
       this .sheenColorTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._sheenColorTexture);
 
       this .addTexture (0, this .sheenColorTextureNode);
@@ -70,8 +68,6 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X3DMa
    },
    set_sheenRoughnessTexture__ ()
    {
-      this .removeTexture (this .sheenRoughnessTextureNode);
-
       this .sheenRoughnessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._sheenRoughnessTexture);
 
       this .addTexture (1, this .sheenRoughnessTextureNode);

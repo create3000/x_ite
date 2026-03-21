@@ -63,8 +63,6 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
    },
    set_multiscatterColorTexture__ ()
    {
-      this .removeTexture (this .multiscatterColorTextureNode);
-
       this .multiscatterColorTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._multiscatterColorTexture);
 
       this .addTexture (0, this .multiscatterColorTextureNode);

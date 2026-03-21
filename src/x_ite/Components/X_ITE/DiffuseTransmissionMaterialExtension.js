@@ -54,8 +54,6 @@ Object .assign (Object .setPrototypeOf (DiffuseTransmissionMaterialExtension .pr
    },
    set_diffuseTransmissionTexture__ ()
    {
-      this .removeTexture (this .diffuseTransmissionTextureNode);
-
       this .diffuseTransmissionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._diffuseTransmissionTexture);
 
       this .addTexture (0, this .diffuseTransmissionTextureNode);
@@ -66,8 +64,6 @@ Object .assign (Object .setPrototypeOf (DiffuseTransmissionMaterialExtension .pr
    },
    set_diffuseTransmissionColorTexture__ ()
    {
-      this .removeTexture (this .diffuseTransmissionColorTextureNode);
-
       this .diffuseTransmissionColorTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._diffuseTransmissionColorTexture);
 
       this .addTexture (1, this .diffuseTransmissionColorTextureNode);

@@ -20,7 +20,7 @@ function X3DMaterialNode (executionContext)
    // Private properties
 
    this .textureBits      = new BitSet ();
-   this .renderedTextures = new Set ();
+   this .renderedTextures = [ ];
    this .shaderNodes      = this .getBrowser () .getShaders ();
 }
 
@@ -64,14 +64,9 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       this .textureBits .remove (index, 0xf);
       this .textureBits .add (index, textureNode ?.getTextureBits () ?? 0);
 
-      if (textureNode ?.isRenderedTexture ())
-         this .renderedTextures .add (textureNode);
+      this .renderedTextures [index] = textureNode ?.isRenderedTexture () ? textureNode : null;
 
       this ._renderedTextures = this .getBrowser () .getCurrentTime ();
-   },
-   removeTexture (textureNode)
-   {
-      this .renderedTextures .delete (textureNode);
    },
    getTextureBits ()
    {

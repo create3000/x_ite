@@ -99,8 +99,6 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
    {
       const index = this .getTextureIndices () .DIFFUSE_TEXTURE;
 
-      this .removeTexture (this .diffuseTextureNode);
-
       if (this .diffuseTextureNode)
       {
          this .diffuseTextureNode ._transparent .removeInterest ("set_transparent__", this);
@@ -127,11 +125,11 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
    },
    set_specularGlossinessTexture__ ()
    {
-      this .removeTexture (this .specularGlossinessTextureNode);
+      const index = this .getTextureIndices () .SPECULAR_GLOSSINESS_TEXTURE;
 
       this .specularGlossinessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._specularGlossinessTexture);
 
-      this .addTexture (this .getTextureIndices () .SPECULAR_GLOSSINESS_TEXTURE, this .specularGlossinessTextureNode);
+      this .addTexture (index, this .specularGlossinessTextureNode);
    },
    set_occlusionStrength__ ()
    {
@@ -139,11 +137,11 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
    },
    set_occlusionTexture__ ()
    {
-      this .removeTexture (this .occlusionTextureNode);
+      const index = this .getTextureIndices () .OCCLUSION_TEXTURE;
 
       this .occlusionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._occlusionTexture);
 
-      this .addTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
+      this .addTexture (index, this .occlusionTextureNode);
    },
    createShader (key, geometryContext, renderContext)
    {
