@@ -1,3 +1,4 @@
+import Fields           from "../../Fields.js";
 import X3DNode          from "../Core/X3DNode.js";
 import X3DConstants     from "../../Base/X3DConstants.js";
 import X3DCast          from "../../Base/X3DCast.js";
@@ -10,12 +11,16 @@ function X3DProgrammableShaderObject (executionContext)
 {
    this .addType (X3DConstants .X3DProgrammableShaderObject);
 
-   this .uniformNames = [ ];
+   this .addChildObjects (X3DConstants .outputOnly, "renderedTextures", new Fields .SFTime ());
 
+   // Private properties
+
+   this .uniformNames           = [ ];
    this .environmentLightNodes  = [ ];
    this .lightNodes             = [ ];
    this .textureProjectorNodes  = [ ];
    this .textures               = new Set ();
+   this .renderedTextures       = new Set ();
 
    this .x3d_ClipPlane                  = [ ];
    this .x3d_EnvironmentLight           = [ ];
@@ -398,7 +403,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             }
             case X3DConstants .SFImage:
             {
-               location .array  = new Int32Array (3 + field .array .length);
+               location .array   = new Int32Array (3 + field .array .length);
                location .uniform = gl .uniform1iv;
                break;
             }
@@ -594,14 +599,17 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             }
             case X3DConstants .SFNode:
             {
-               const texture = X3DCast (X3DConstants .X3DTextureNode, field);
+               this .removeTexture (location .textureNode);
 
-               if (texture)
+               const textureNode = X3DCast (X3DConstants .X3DTextureNode, field);
+
+               if (textureNode)
                {
-                  location .name    = field .getName ();
-                  location .texture = texture;
+                  location .name        = field .getName ();
+                  location .textureNode = textureNode;
 
                   this .textures .add (location);
+                  this .addTexture (textureNode);
                }
                else
                {
@@ -698,16 +706,20 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                   locations   = location .locations,
                   fieldLength = field .length;
 
+               for (const { textureNode } of locations)
+                  this .removeTexture (textureNode);
+
                for (let i = 0; i < fieldLength; ++ i)
                {
-                  const texture = X3DCast (X3DConstants .X3DTextureNode, field [i]);
+                  const textureNode = X3DCast (X3DConstants .X3DTextureNode, field [i]);
 
-                  if (texture)
+                  if (textureNode)
                   {
-                     locations [i] .name    = field .getName ();
-                     locations [i] .texture = texture;
+                     locations [i] .name        = field .getName ();
+                     locations [i] .textureNode = textureNode;
 
                      this .textures .add (locations [i]);
+                     this .addTexture (textureNode);
                   }
                   else
                   {
@@ -789,6 +801,23 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          if (!location)
             return i;
       }
+   },
+   getRenderedTextures ()
+   {
+      return this .renderedTextures;
+   },
+   addTexture (textureNode)
+   {
+      if (textureNode .isRenderedTexture ())
+         this .renderedTextures .add (textureNode);
+
+      this ._renderedTextures = this .getBrowser () .getCurrentTime ();
+   },
+   removeTexture (textureNode)
+   {
+      this .renderedTextures .delete (textureNode);
+
+      this ._renderedTextures = this .getBrowser () .getCurrentTime ();
    },
    hasFog (fogNode)
    {
@@ -959,7 +988,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       for (const location of this .textures)
       {
          const
-            texture     = location .texture,
+            texture     = location .textureNode,
             textureUnit = this .getBrowser () .popTextureUnit ();
 
          if (textureUnit === undefined)

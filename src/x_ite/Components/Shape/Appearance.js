@@ -56,6 +56,7 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
       this ._material     .addInterest ("set_renderedTextures__", this);
       this ._backMaterial .addInterest ("set_renderedTextures__", this);
       this ._texture      .addInterest ("set_renderedTextures__", this);
+      this ._shaders      .addInterest ("set_renderedTextures__", this);
 
       this .set_alphaMode__ ();
       this .set_pointProperties__ ();
@@ -321,7 +322,11 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
          const shaderNodes = this .shaderNodes;
 
          if (this .shaderNode)
+         {
             this .shaderNode .deselect ();
+
+            this .shaderNode .removeInterest ("set_renderedTextures__", this);
+         }
 
          this .shaderNode = null;
 
@@ -337,6 +342,8 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
          if (this .shaderNode)
          {
             this .shaderNode .select ();
+
+            this .shaderNode .addInterest ("set_renderedTextures__", this);
 
             this .getShader     = getShader;
             this .getBackShader = getShader;
@@ -389,6 +396,9 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
          this .renderedTextures .add (renderedTexture);
 
       for (const renderedTexture of this .materialNode .getRenderedTextures ())
+         this .renderedTextures .add (renderedTexture);
+
+      for (const renderedTexture of this .shaderNode ?.getRenderedTextures () ?? [ ])
          this .renderedTextures .add (renderedTexture);
    },
    traverse (type, renderObject)
