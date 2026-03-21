@@ -223,6 +223,8 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
       if (this .backMaterialNode)
       {
          this .backMaterialNode ._transparent      .removeInterest ("set_transparent__",      this);
+         this .backMaterialNode ._transmission     .removeInterest ("set_transmission__",     this);
+         this .backMaterialNode ._volumeScatter    .removeInterest ("set_volumeScatter__",    this);
          this .backMaterialNode ._renderedTextures .removeInterest ("set_renderedTextures__", this);
       }
 
@@ -231,6 +233,8 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
       if (this .backMaterialNode)
       {
          this .backMaterialNode ._transparent      .addInterest ("set_transparent__",      this);
+         this .backMaterialNode ._transmission     .addInterest ("set_transmission__",     this);
+         this .backMaterialNode ._volumeScatter    .addInterest ("set_volumeScatter__",    this);
          this .backMaterialNode ._renderedTextures .addInterest ("set_renderedTextures__", this);
       }
 
@@ -381,6 +385,7 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
       if (this .textureNode ?.isRenderedTexture ())
          this .renderedTextures .add (this .textureNode);
 
+      // MultiTexture
       for (const renderedTexture of this .textureNode ?.getRenderedTextures ?.() ?? [ ])
          this .renderedTextures .add (renderedTexture);
 
