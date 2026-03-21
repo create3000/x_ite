@@ -584,7 +584,7 @@ Object .assign (X3DRenderObject .prototype,
             this .gravitate ();
             break;
          }
-         case TraverseType .SHADOW:
+         case TraverseType .DEPTH:
          {
             this .numShadowShapes = 0;
 

@@ -92,7 +92,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
    },
    set_depthMap__ ()
    {
-      this .type = this ._depthMap .getValue () ? TraverseType .SHADOW : TraverseType .DISPLAY;
+      this .type = this ._depthMap .getValue () ? TraverseType .DEPTH : TraverseType .DISPLAY;
    },
    set_background__ ()
    {

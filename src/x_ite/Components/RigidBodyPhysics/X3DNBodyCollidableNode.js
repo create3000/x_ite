@@ -297,7 +297,7 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
             this .collisionObject ?.traverse (type, renderObject);
             break;
          }
-         case TraverseType .SHADOW:
+         case TraverseType .DEPTH:
          {
             this .shadowObject ?.traverse (type, renderObject);
             break;

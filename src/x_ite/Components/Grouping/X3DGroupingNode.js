@@ -489,7 +489,7 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
             return;
          }
-         case TraverseType .SHADOW:
+         case TraverseType .DEPTH:
          {
             // Nodes that are not visible do not cast shadows.
 

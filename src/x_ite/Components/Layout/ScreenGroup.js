@@ -41,7 +41,7 @@ Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, X3DGroupingNode 
       {
          case TraverseType .CAMERA:
          case TraverseType .PICKING:
-         case TraverseType .SHADOW: // ???
+         case TraverseType .DEPTH: // ???
             // No clone support for shadows, generated cube map texture and bbox
             break;
          default:
