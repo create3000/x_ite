@@ -85,6 +85,12 @@ Some words about optimizing a scene
 ## There are also Books for Further Reading
 
 - [X3D: Extensible 3D Graphics for Web Authors](https://www.amazon.com/gp/product/012088500X?ie=UTF8&tag=x3dext3dgrafo-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=012088500X) by Don Brutzman and Leonard Daly
+- [Networked Graphics: Building Networked Games and Virtual Environments](https://www.networkedgraphics.org/) by Anthony Steed and Manuel Fradinho Oliveira, Elsevier
+- [Interactive 3D Multimedia Content: Models for Creation, Management, Search and Presentation](https://www.springer.com/us/book/9781447124962), edited by Wojciech Cellary and Krzysztof Walczak
+- [Digital Simulations for Improving Education: Learning Through Artificial Teaching Environments](https://www.igi-global.com/book/digital-simulations-improving-education/275), edited by David Gibson (University of Vermont, USA) and Young Kyun Baek (Korea National University of Education, Korea)
+- [Core Web3D](https://dl.acm.org/doi/book/10.5555/352236) by Aaron E. Walsh and Mikaël Bourges-Sévenier
+- [VRML & X3D for virtual reality](https://www.yes24.com/product/goods/2134569) by KyungBae Park, KyungIn Kang and SeungWook Kwak
+- [X3D, Who are you? Focus on examples for Web 3D design](https://www.yes24.com/product/goods/2796093) by KyungBae Park and SeungWook Kwak
 
 ## Want to See More X3D Examples?
 
