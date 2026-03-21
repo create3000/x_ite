@@ -187,7 +187,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
             }
          }
 
-         const type = this ._depthMap .getValue () || 1 ? TraverseType .SHADOW : TraverseType .DISPLAY;
+         const type = this ._depthMap .getValue () ? TraverseType .SHADOW : TraverseType .DISPLAY;
 
          if (this .scene)
             dependentRenderer .render (type, this .scene .traverse, this .scene);
