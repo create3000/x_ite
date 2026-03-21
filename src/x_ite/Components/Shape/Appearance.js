@@ -240,8 +240,7 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
 
       // Depreciated TwoSidedMaterial handling.
 
-      if (X3DCast (X3DConstants .TwoSidedMaterial, this .materialNode))
-         this .backMaterialNode ??= this .materialNode;
+      this .backMaterialNode ??= X3DCast (X3DConstants .TwoSidedMaterial, this .materialNode);
    },
    set_texture__ ()
    {
