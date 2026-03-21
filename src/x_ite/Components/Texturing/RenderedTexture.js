@@ -128,13 +128,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
          // Make dependent renderer.
 
          if (!this .dependentRenderers .has (renderObject))
-         {
-            const dependentRenderer = new DependentRenderer (this .getExecutionContext (), renderObject);
-
-            dependentRenderer .setup ();
-
-            this .dependentRenderers .set (renderObject, dependentRenderer);
-         }
+            this .dependentRenderers .set (renderObject, new DependentRenderer (this .getExecutionContext (), renderObject));
 
          // Prepare.
 

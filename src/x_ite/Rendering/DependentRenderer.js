@@ -7,8 +7,12 @@ function DependentRenderer (executionContext, renderObject)
    X3DBaseNode     .call (this, executionContext);
    X3DRenderObject .call (this, executionContext);
 
+   // Private properties
+
    this .renderObject = renderObject;
    this .framebuffers = [ ];
+
+   this .setup ();
 }
 
 Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNode .prototype),

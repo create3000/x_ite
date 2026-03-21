@@ -147,13 +147,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
          // Make dependent renderer.
 
          if (!this .dependentRenderers .has (renderObject))
-         {
-            const dependentRenderer = new DependentRenderer (this .getExecutionContext (), renderObject);
-
-            dependentRenderer .setup ();
-
-            this .dependentRenderers .set (renderObject, dependentRenderer);
-         }
+            this .dependentRenderers .set (renderObject, new DependentRenderer (this .getExecutionContext (), renderObject));
 
          // Prepare.
 
