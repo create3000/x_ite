@@ -46,13 +46,13 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
       this .set_viewpoint__ ();
       this .set_scene__ ();
    },
-   isRenderedTexture ()
-   {
-      return true;
-   },
    getTextureType ()
    {
       return 2;
+   },
+   isRenderedTexture ()
+   {
+      return true;
    },
    checkLoadState ()
    {
