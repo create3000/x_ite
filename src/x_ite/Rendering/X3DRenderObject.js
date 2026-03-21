@@ -67,6 +67,7 @@ function X3DRenderObject (executionContext)
    this .transparencySorter       = new MergeSort (this .transparentShapes, (a, b) => a .distance < b .distance);
    this .renderPasses             = 0;
    this .renderPass               = RenderPass .NONE;
+   this .depthClearColor          = new Vector4 (1, -1, -1, -1); // '1' for infinity, '-1' for no hit.
    this .speed                    = 0;
    this .depthBuffer              = new TextureBuffer ({ browser, width: DEPTH_BUFFER_SIZE, height: DEPTH_BUFFER_SIZE, float: true, colorTextures: 2 });
 }
@@ -377,6 +378,10 @@ Object .assign (X3DRenderObject .prototype,
    getRenderPass ()
    {
       return this .renderPass;
+   },
+   setDepthClearColor (... args)
+   {
+      this .depthClearColor .set (... args);
    },
    constrainTranslation: (() =>
    {
@@ -1100,7 +1105,7 @@ Object .assign (X3DRenderObject .prototype,
          gl .viewport (... viewport);
          gl .scissor (... viewport);
 
-         gl .clearColor (1, -1, -1, -1); // '1' for infinity, '-1' for no hit.
+         gl .clearColor (... this .depthClearColor);
          gl .clear (gl .COLOR_BUFFER_BIT | gl .DEPTH_BUFFER_BIT);
 
          // Render all objects

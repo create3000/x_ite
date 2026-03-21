@@ -128,7 +128,12 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
          // Make dependent renderer.
 
          if (!this .dependentRenderers .has (renderObject))
-            this .dependentRenderers .set (renderObject, new DependentRenderer (this .getExecutionContext (), renderObject));
+         {
+            const dependentRenderer = new DependentRenderer (this .getExecutionContext (), renderObject);
+
+            this .dependentRenderers .set (renderObject, dependentRenderer);
+            dependentRenderer .setDepthClearColor (0, 0, 0, 0);
+         }
 
          // Prepare.
 
@@ -182,10 +187,12 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
             }
          }
 
+         const type = this ._depthMap .getValue () || 1 ? TraverseType .SHADOW : TraverseType .DISPLAY;
+
          if (this .scene)
-            dependentRenderer .render (TraverseType .DISPLAY, this .scene .traverse, this .scene);
+            dependentRenderer .render (type, this .scene .traverse, this .scene);
          else
-            layer .traverse (TraverseType .DISPLAY, dependentRenderer);
+            layer .traverse (type, dependentRenderer);
 
          if (headlight)
             headlightContainer .modelViewMatrix .pop ();

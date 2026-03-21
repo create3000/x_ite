@@ -43,7 +43,7 @@ main ()
       x3d_FragData0 = vec4 (gl_FragCoord .z, vec3 (x3d_Id)); // depth, id
       x3d_FragData1 = vec4 (normal, float (gl_FrontFacing)); // local normal, front face
    #else
-      x3d_FragData0 = vec4 (gl_FragCoord .z); // depth
+      x3d_FragData0 = vec4 (vec3 (gl_FragCoord .z), 1.0); // depth
    #endif
 }
 `;
