@@ -64,7 +64,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       this .textureBits .remove (index, 0xf);
       this .textureBits .add (index, textureNode ?.getTextureBits () ?? 0);
 
-      this .renderedTextures [index] = textureNode ?.isRenderedTexture () ? textureNode : null;
+      this .renderedTextures [index] = textureNode ?.isRenderedTexture () ? textureNode : undefined;
 
       this ._renderedTextures = this .getBrowser () .getCurrentTime ();
    },
