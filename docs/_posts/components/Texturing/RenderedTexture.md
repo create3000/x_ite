@@ -77,7 +77,7 @@ Author-provided prose that describes intended purpose of the url asset.
 - An object trying to render itself in the scene graph can cause infinite loops.
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
-### MFInt32 [in, out] **dimensions** [128, 128, 4, 1, 1] <small>[0,∞)</small>
+### MFInt32 [in, out] **dimensions** [ 128, 128, 4, 1, 1 ] <small>[0,∞)</small>
 {: #fields-dimensions }
 
 Sets the width, height, color components (and number of MRTs).
