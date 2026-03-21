@@ -87,7 +87,7 @@ Object .assign (DirectionalLightContainer .prototype,
       renderObject .getProjectionMatrix () .push (projectionMatrix);
       renderObject .getModelViewMatrix  () .push (invLightSpaceMatrix);
 
-      renderObject .render (TraverseType .DEPTH, X3DGroupingNode .prototype .traverse, this .groupNode);
+      renderObject .render (TraverseType .SHADOW, X3DGroupingNode .prototype .traverse, this .groupNode);
 
       renderObject .getModelViewMatrix  () .pop ();
       renderObject .getProjectionMatrix () .pop ();

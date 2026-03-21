@@ -239,6 +239,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
             return;
          }
          case TraverseType .DEPTH:
+         case TraverseType .SHADOW:
          {
             this .shadowObject ?.traverse (type, renderObject);
             return;

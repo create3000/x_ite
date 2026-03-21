@@ -123,7 +123,7 @@ Object .assign (Object .setPrototypeOf (X3DChildNode .prototype, X3DNode .protot
          this .setCollisionObject (childNode .isCollisionObject ());
       }
 
-      if (!excludes ?.includes (TraverseType .DEPTH))
+      if (!excludes ?.includes (TraverseType .SHADOW))
       {
          childNode ._isShadowObject .addFieldInterest (this ._isShadowObject);
          this .setShadowObject (childNode .isShadowObject ());

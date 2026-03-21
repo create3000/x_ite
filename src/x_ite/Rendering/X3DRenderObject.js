@@ -561,6 +561,7 @@ Object .assign (X3DRenderObject .prototype,
             break;
          }
          case TraverseType .DEPTH:
+         case TraverseType .SHADOW:
          {
             this .numDepthShapes = 0;
 

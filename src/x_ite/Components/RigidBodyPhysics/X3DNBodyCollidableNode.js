@@ -299,6 +299,13 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
          }
          case TraverseType .DEPTH:
          {
+            for (const visibleObject of this .visibleObjects)
+               visibleObject .traverse (type, renderObject);
+
+            break;
+         }
+         case TraverseType .SHADOW:
+         {
             this .shadowObject ?.traverse (type, renderObject);
             break;
          }

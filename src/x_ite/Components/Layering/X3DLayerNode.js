@@ -349,6 +349,7 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
                this .collision (type, renderObject);
                break;
             case TraverseType .DEPTH:
+            case TraverseType .SHADOW:
             case TraverseType .DISPLAY:
                this .display (type, renderObject);
                break;

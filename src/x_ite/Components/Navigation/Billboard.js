@@ -91,6 +91,7 @@ Object .assign (Object .setPrototypeOf (Billboard .prototype, X3DGroupingNode .p
          case TraverseType .CAMERA:
          case TraverseType .PICKING:
          case TraverseType .DEPTH:
+         case TraverseType .SHADOW:
             // No clone support for shadows, generated cube map texture, and bbox
             modelViewMatrix .multLeft (this .matrix);
             break;
