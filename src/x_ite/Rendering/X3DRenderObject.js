@@ -355,9 +355,9 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .renderPass;
    },
-   setDepthClearColor (... args)
+   setDepthClearColor (r, g, b, a)
    {
-      this .depthClearColor .set (... args);
+      this .depthClearColor .set (r, g, b, a);
    },
    constrainTranslation: (() =>
    {
