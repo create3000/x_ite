@@ -45,6 +45,10 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
 
       this .set_size__ ();
    },
+   isRenderedTexture ()
+   {
+      return true;
+   },
    addUpdateCallback (key, callback)
    {
       this .updateCallbacks .set (key, callback);

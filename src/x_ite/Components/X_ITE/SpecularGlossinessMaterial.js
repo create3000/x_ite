@@ -101,16 +101,16 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
 
       if (this .diffuseTextureNode)
       {
-         this .diffuseTextureNode ._transparent .removeInterest ("set_transparent__",  this);
-         this .diffuseTextureNode ._linear      .removeInterest (`setTexture${index}`, this);
+         this .diffuseTextureNode ._transparent .removeInterest ("set_transparent__", this);
+         this .diffuseTextureNode ._linear      .removeInterest ("setTexture",        this);
       }
 
       this .diffuseTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._diffuseTexture);
 
       if (this .diffuseTextureNode)
       {
-         this .diffuseTextureNode ._transparent .addInterest ("set_transparent__",  this);
-         this .diffuseTextureNode ._linear      .addInterest (`setTexture${index}`, this, index, this .diffuseTextureNode);
+         this .diffuseTextureNode ._transparent .addInterest ("set_transparent__", this);
+         this .diffuseTextureNode ._linear      .addInterest ("setTexture",        this, index, this .diffuseTextureNode);
       }
 
       this .setTexture (index, this .diffuseTextureNode);
@@ -224,13 +224,5 @@ Object .defineProperties (SpecularGlossinessMaterial,
       enumerable: true,
    },
 });
-
-for (const index of Object .values (SpecularGlossinessMaterial .prototype .getTextureIndices ()))
-{
-   SpecularGlossinessMaterial .prototype [`setTexture${index}`] = function (index, textureNode)
-   {
-      this .setTexture (index, textureNode);
-   };
-}
 
 export default SpecularGlossinessMaterial;

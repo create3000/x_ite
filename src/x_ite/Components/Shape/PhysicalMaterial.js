@@ -82,16 +82,16 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
 
       if (this .baseTextureNode)
       {
-         this .baseTextureNode ._transparent .removeInterest ("set_transparent__",  this);
-         this .baseTextureNode ._linear      .removeInterest (`setTexture${index}`, this);
+         this .baseTextureNode ._transparent .removeInterest ("set_transparent__", this);
+         this .baseTextureNode ._linear      .removeInterest ("setTexture",        this);
       }
 
       this .baseTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._baseTexture);
 
       if (this .baseTextureNode)
       {
-         this .baseTextureNode ._transparent .addInterest ("set_transparent__",  this);
-         this .baseTextureNode ._linear      .addInterest (`setTexture${index}`, this, index, this .baseTextureNode);
+         this .baseTextureNode ._transparent .addInterest ("set_transparent__", this);
+         this .baseTextureNode ._linear      .addInterest ("setTexture",        this, index, this .baseTextureNode);
       }
 
       this .setTexture (index, this .baseTextureNode);
@@ -257,13 +257,5 @@ Object .defineProperties (PhysicalMaterial,
       enumerable: true,
    },
 });
-
-for (const index of Object .values (PhysicalMaterial .prototype .getTextureIndices ()))
-{
-   PhysicalMaterial .prototype [`setTexture${index}`] = function (index, textureNode)
-   {
-      this .setTexture (index, textureNode);
-   };
-}
 
 export default PhysicalMaterial;
