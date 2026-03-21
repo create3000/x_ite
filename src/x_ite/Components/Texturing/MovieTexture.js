@@ -18,6 +18,8 @@ function MovieTexture (executionContext)
 
    this .addType (X3DConstants .MovieTexture);
 
+   // Private properties
+
    const audioContext = this .getBrowser () .getAudioContext ();
 
    this .urlStack               = new Fields .MFString ();

@@ -14,6 +14,8 @@ function X3DSingleTextureNode (executionContext)
 
    this .addChildObjects (X3DConstants .outputOnly, "linear", new Fields .SFBool ())
 
+   // Private properties
+
    this .matrix = new Float32Array (Matrix4 .IDENTITY);
 }
 

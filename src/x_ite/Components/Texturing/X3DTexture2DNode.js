@@ -10,6 +10,8 @@ function X3DTexture2DNode (executionContext)
 
    this .addType (X3DConstants .X3DTexture2DNode);
 
+   // Private properties
+
    const gl = this .getBrowser () .getContext ();
 
    this .target = gl .TEXTURE_2D;

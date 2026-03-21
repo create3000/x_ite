@@ -14,6 +14,8 @@ function ImageTexture (executionContext)
 
    this .addType (X3DConstants .ImageTexture);
 
+   // Private properties
+
    this .image    = $("<img></img>");
    this .urlStack = new Fields .MFString ();
 
