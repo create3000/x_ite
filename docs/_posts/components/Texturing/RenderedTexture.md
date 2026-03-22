@@ -15,7 +15,7 @@ tags: [RenderedTexture, Texturing, VRML]
 
 A RenderedTexture is a texture node that renders a separate scene or viewpoint into an offscreen buffer, producing an image that can be applied to geometry in real time. It enables effects such as dynamic reflections, live video screens, shadows, or portals by continuously updating the texture based on the rendered content.
 
-The RenderedTexture node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **1,** its default container field is *texture.* It is available from X3D version 4.1 or higher.
+The RenderedTexture node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **4,** its default container field is *texture.* It is available from X3D version 4.1 or higher.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE. This node is available in X_ITE, Castle and X3DOM.
 {: .prompt-info }
