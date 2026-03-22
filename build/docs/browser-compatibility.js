@@ -39,7 +39,7 @@ function browserCompatibility (js)
       freewrl = undefined;
 
    const map = new Map ([
-      [undefined, `<i class="fa-solid fa-circle-question blue" title="Unknown Supported"></i>`],
+      [undefined, `<i class="fa-solid fa-circle-question blue" title="Unknown Support"></i>`],
       [true,      `<i class="fa-solid fa-circle-check green" title="Supported"></i>`],
       [false,     `<i class="fa-solid fa-circle-xmark red" title="Not Supported"></i>`],
    ]);

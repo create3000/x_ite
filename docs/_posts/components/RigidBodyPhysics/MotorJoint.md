@@ -292,7 +292,7 @@ The body1 and *body2* fields indicate the two [RigidBody](/x_ite/components/rigi
 
 | X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
 |-------|--------|-------|
-| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Supported"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Supported"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Supported"></i> |
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Support"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Support"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Support"></i> |
 {: .browser-compatibility }
 
 ## See Also

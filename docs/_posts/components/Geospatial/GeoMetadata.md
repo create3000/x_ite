@@ -145,7 +145,7 @@ The *summary* string array contains a set of keyword/value pairs, with each keyw
 
 | X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
 |-------|--------|-------|
-| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Supported"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Supported"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Supported"></i> |
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Support"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Support"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Support"></i> |
 {: .browser-compatibility }
 
 ## See Also

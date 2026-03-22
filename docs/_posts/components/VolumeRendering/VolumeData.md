@@ -133,7 +133,7 @@ Optional single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/component
 
 | X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
 |-------|--------|-------|
-| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Supported"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Supported"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Supported"></i> |
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Support"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Support"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Support"></i> |
 {: .browser-compatibility }
 
 ## See Also

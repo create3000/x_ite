@@ -792,7 +792,7 @@ Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Tr
 
 | X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
 |-------|--------|-------|
-| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Supported"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Supported"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Supported"></i> |
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Support"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Support"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Support"></i> |
 {: .browser-compatibility }
 
 ## See Also

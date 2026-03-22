@@ -190,7 +190,7 @@ Current elapsed time since [AudioClip](/x_ite/components/sound/audioclip/) activ
 
 | X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
 |-------|--------|-------|
-| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Supported"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Supported"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Supported"></i> |
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Support"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Support"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Support"></i> |
 {: .browser-compatibility }
 
 ## See Also
