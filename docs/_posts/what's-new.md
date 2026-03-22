@@ -7,6 +7,17 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
+## X_ITE v14.1 Series
+
+*Leipzig, 27th January 2026:* This series of X_ITE comes with the new [RenderedTexture](/x_ite/components/texturing/renderedtexture/) node and improved support for [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/). Both textures can now be used everywhere where a X3DSingleTextureNode is valid, for instance as material texture, as [Appearance](/x_ite/components/shape/appearance/) texture, in shaders and as a texture projector texture.
+
+### Notable Changes
+
+- [x] Added new node [RenderedTexture](/x_ite/components/texturing/renderedtexture/).
+- [x] [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/) works now as material texture as well as a shader texture.
+- [x] There is now basic support for VRM models.
+- [x] glTF parser can now handle [KHR_accessor_float16](https://github.com/KhronosGroup/glTF/tree/8611bc8933493865380e68fadf555dbbc2cf1180/extensions/2.0/Khronos/KHR_accessor_float16).
+
 ## X_ITE v14.0 Series
 
 *Leipzig, 27th January 2026:* This series of X_ITE comes with experimental support for X3D4.1, meaning that all the new features and nodes ([EnvironmentLight](/x_ite/components/lighting/environmentlight/), [HAnimPose](/x_ite/components/hanim/hanimpose/), [FontLibrary](/x_ite/components/text/fontlibrary/), [Tangent](/x_ite/components/rendering/tangent/)) are available and ready to be tested.
@@ -23,11 +34,7 @@ In addition, the glTF parser can now handle [KHR_meshopt_compression](https://gi
 - [x] Improved STL parser to convert model to X3D coordinate system.
 - [x] Improved PLY parser to convert model to X3D coordinate system in some cases.
 - [x] [EnvironmentLight](/x_ite/components/lighting/environmentlight/) is now able to handle [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/) nodes.
-- [x] [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/) works now as material texture as well as a shader texture.
-- [x] Added new node [RenderedTexture](/x_ite/components/texturing/renderedtexture/).
 - [x] Selecting *Context Menu > World Info* will now also show all metadata.
-- [x] There is now basic support for VRM models.
-- [x] glTF parser can now handle [KHR_accessor_float16](https://github.com/KhronosGroup/glTF/tree/8611bc8933493865380e68fadf555dbbc2cf1180/extensions/2.0/Khronos/KHR_accessor_float16).
 - [x] XML MFString values now fall back to being parsed as SFString values, and a warning is reported.
 - [x] Fixed issue with glTF skins when the skeleton is used multiple times.
 
