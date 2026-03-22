@@ -69,9 +69,9 @@ Pairs of 2D (s,t) texture coordinates, either in range [0,1] or higher if repeat
 
 ## Browser Compatibility
 
-| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
 |-------|--------|-------|
-| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Support"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Support"></i> | <i class="fa-solid fa-circle-question blue" title="Unknown Support"></i> |
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
 {: .browser-compatibility }
 
 ## See Also

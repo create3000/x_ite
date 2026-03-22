@@ -37,16 +37,17 @@ function browserCompatibility (js)
    ]);
 
    const
-      x_ite   = map .get (js_f .match (/THIS NODE IS NOT SUPPORTED/) ? false : true),
-      castle  = map .get (json [typeName] ?.["castle"]),
-      x3dom   = map .get (json [typeName] ?.["x3dom"]),
-      freewrl = map .get (json [typeName] ?.["freewrl"]);
+      x_ite    = map .get (js_f .match (/THIS NODE IS NOT SUPPORTED/) ? false : true),
+      x3d_edit = map .get (json [typeName] ?.["x3d-edit"]),
+      castle   = map .get (json [typeName] ?.["castle"]),
+      x3dom    = map .get (json [typeName] ?.["x3dom"]),
+      freewrl  = map .get (json [typeName] ?.["freewrl"]);
 
    const replacement = `## Browser Compatibility
 
-| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
 |-------|--------|-------|
-| ${x_ite} | ${castle} | ${x3dom} | ${freewrl} |
+| ${castle} | ${freewrl} | ${x_ite} | ${x3d_edit} | ${x3dom} |
 {: .browser-compatibility }
 
 ## `;
@@ -57,3 +58,9 @@ function browserCompatibility (js)
 
    fs .writeFileSync (md, md_f);
 }
+
+/*
+Warp prompt:
+
+Please make a json file from comparison.csv with the following objects "{ "node name": { "x3d-edit", true/false, castle": true/false, "x3dom": true/false, "freewrl": true/false }, "next node name": ... }"
+*/
