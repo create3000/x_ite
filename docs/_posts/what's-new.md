@@ -9,7 +9,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 ## X_ITE v14.1 Series
 
-*Leipzig, 27th January 2026:* This series of X_ITE comes with the new [RenderedTexture](/x_ite/components/texturing/renderedtexture/) node and improved support for [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/). Both textures can now be used everywhere where a X3DSingleTextureNode is valid, for instance as material texture, as [Appearance](/x_ite/components/shape/appearance/) texture, in shaders and as a texture projector texture.
+*Leipzig, 27th January 2026:* This series of X_ITE comes with the new [RenderedTexture](/x_ite/components/texturing/renderedtexture/) node and improved support for [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/). Both textures can now be used everywhere where a X3DSingleTextureNode is valid, for instance as material texture, as [Appearance](/x_ite/components/shape/appearance/) texture, in custom shaders and as a texture projector texture.
 
 ### Notable Changes
 
