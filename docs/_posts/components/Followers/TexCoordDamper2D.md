@@ -119,6 +119,13 @@ Computed output value that approaches within tolerance of destination value, as 
 
 - ROUTE value_changed output events to a \<[TextureTransform](/x_ite/components/texturing/texturetransform/)\> node's translation field, for example.
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of TexCoordDamper2D Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/followers.html#TexCoordDamper2D)

@@ -122,6 +122,13 @@ Specifies the alpha blend equation, how the alpha component of the source and de
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/X_ITE/BlendMode/BlendMode.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Visual Blend Mode Online Editor](/x_ite/laboratory/x3d-visual-blend-mode-editor/)

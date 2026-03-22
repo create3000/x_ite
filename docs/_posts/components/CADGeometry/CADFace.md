@@ -127,6 +127,13 @@ Contained [Shape](/x_ite/components/shape/shape/) for this [CADPart](/x_ite/comp
 - Only zero or one [Shape](/x_ite/components/shape/shape/) child is allowed to be active at one time.
 - Requires X3D `profile='Full'` or else include `<component name='CADGeometry' level='2'/>`
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of CADFace Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/CADGeometry.html#CADFace)

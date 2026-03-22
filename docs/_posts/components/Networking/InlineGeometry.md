@@ -162,6 +162,13 @@ Address of X3D world to load [Inline](/x_ite/components/networking/inline/) with
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Networking/InlineGeometry/InlineGeometry.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of InlineGeometry Node](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/networking.html#InlineGeometry)

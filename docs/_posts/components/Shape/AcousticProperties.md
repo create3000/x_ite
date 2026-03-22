@@ -93,6 +93,13 @@ Specifies the sound *absorption* coefficient of a surface, meaning the ratio of 
 - Proxy geometry for acoustic response can be far simpler than geometry needed for visual rendering.
 - [X3D Architecture Figure 16.2 Sound Propagation Phenomena](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#f-SoundPropagationPhenomena)
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of AcousticProperties Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#AcousticProperties)

@@ -220,6 +220,13 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 
 - [View »Spec Gloss Vs Metal Rough« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=SpecGlossVsMetalRough)
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [Khronos glTF Specification of the KHR_materials_pbrSpecularGlossiness Material](https://kcoley.github.io/glTF/extensions/2.0/Khronos/KHR_materials_pbrSpecularGlossiness/#:~:text=The%20PBR%20specular%2Dglossiness%20extension,materials%20compared%20to%20metallic%2Droughness.)

@@ -172,6 +172,13 @@ Grouping nodes contain an ordered list of *children* nodes.
 - Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
 - Avoid having GeoLocation or [GeoTransform](/x_ite/components/geospatial/geotransform/) as a parent or ancestor node of each other, since multiple geospatial transformations then occur with unpredictable results.
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of GeoLocation Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geospatial.html#GeoLocation)

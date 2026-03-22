@@ -206,6 +206,13 @@ Grouping nodes contain an ordered list of *children* nodes.
 - For X3D3 HAnim1, previous spelling of component name was 'H-Anim' (including hyphen).
 - The number of contained \<HAnimSegment USE='*' `containerField='segments'/>` nodes at top level of [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) needs to match the number of corresponding [HAnimJoint](/x_ite/components/hanim/hanimjoint/) node instances found within the preceding skeleton hierarchy.
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of HAnimSegment Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/hanim.html#HAnimSegment)

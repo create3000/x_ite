@@ -172,6 +172,13 @@ Grouping nodes contain an ordered list of *children* nodes.
 - Contained nodes must have type X3DChildNode, such as [Group](/x_ite/components/grouping/group/) or [Transform](/x_ite/components/grouping/transform/) or [Shape](/x_ite/components/shape/shape/).
 - LOD is not allowed as a direct parent of [Appearance](/x_ite/components/shape/appearance/), [Material](/x_ite/components/shape/material/), [Color](/x_ite/components/rendering/color/), [Coordinate](/x_ite/components/rendering/coordinate/), [Normal](/x_ite/components/rendering/normal/) or Texture nodes, instead ensure that a [Shape](/x_ite/components/shape/shape/) is present.
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of LOD Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#LOD)

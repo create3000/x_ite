@@ -231,6 +231,13 @@ Send *previous* output value in values array, using/updating various frame value
 - [HAnim Specification, clause 6.2 Introduction to Motion objects](https://www.web3d.org/documents/specifications/19774/V2.0/MotionDataAnimation/MotionNodes.html#IntroductionToMotionNodes)
 - [HAnim Specification part 2, clause 6.6 Example Usage of Motion object](https://www.web3d.org/documents/specifications/19774/V2.0/MotionDataAnimation/MotionNodes.html#MotionObjectExample)
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of HAnimMotion Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/hanim.html#HAnimMotion)

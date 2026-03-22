@@ -54,6 +54,13 @@ The strength adjustment to be multiplied with the material's *emissiveColor* val
 
 - [View »Emissive Strength Test« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=EmissiveStrengthTest)
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [Khronos glTF Specification of the KHR_materials_emissive_strength Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_emissive_strength)

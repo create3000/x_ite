@@ -84,6 +84,13 @@ A texture that defines the color of the transmitted light, stored in the RGB cha
 
 - [View »Diffuse Transmission Plant in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=DiffuseTransmissionPlant)
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [Khronos glTF Specification of the KHR_materials_diffuse_transmission Extension](https://github.com/DassaultSystemes-Technology/glTF/blob/KHR_materials_translucency/extensions/2.0/Khronos/KHR_materials_diffuse_transmission/README.md)

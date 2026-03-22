@@ -107,6 +107,13 @@ ViewpointGroup contains [Viewpoint](/x_ite/components/navigation/viewpoint/), [O
 - ViewpointGroup and [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) require Navigation component level 3, which is higher than CADInterchange profile.
 - [Viewpoint](/x_ite/components/navigation/viewpoint/) and ViewpointGroup descriptions together build simple menu/submenu lists for simple user navigation. ViewpointGroup is not an X3DGroupingNode, and can only contain a Metadata* node, [Viewpoint](/x_ite/components/navigation/viewpoint/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) and other ViewpointGroup nodes.
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of ViewpointGroup Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#ViewpointGroup)

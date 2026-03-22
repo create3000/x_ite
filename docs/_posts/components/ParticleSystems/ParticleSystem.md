@@ -326,6 +326,13 @@ Optional single contained *geometry* node provides *geometry* used for each part
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/ParticleSystems/ParticleSystem/ParticleSystem.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of ParticleSystem Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/particleSystems.html#ParticleSystem)

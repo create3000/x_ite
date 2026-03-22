@@ -106,6 +106,13 @@ Sets whether writing into the depth buffer is enabled or disabled.
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/X_ITE/DepthMode/DepthMode.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 * [Z-buffering](https://en.wikipedia.org/wiki/Z-buffering)

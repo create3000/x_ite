@@ -78,6 +78,13 @@ The color that white light turns into due to absorption when reaching the attenu
 
 - [View »Dragon Attenuation« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=DragonAttenuation)
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [Khronos glTF Specification of the KHR_materials_volume Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_volume)

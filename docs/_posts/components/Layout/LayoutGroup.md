@@ -140,6 +140,13 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 - A LayoutGroup can only be a child of a [LayoutLayer](/x_ite/components/layout/layoutlayer/) node or another LayoutGroup node.
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of LayoutGroup Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layout.html#LayoutGroup)

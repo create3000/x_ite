@@ -133,6 +133,13 @@ The *outputs* field is a set of output nodes receiving the split channels, and m
 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#ChannelSplitterNode)
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of ChannelSplitter Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/sound.html#ChannelSplitter)

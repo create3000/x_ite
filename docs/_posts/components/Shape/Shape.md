@@ -131,6 +131,13 @@ Optional single contained *geometry* node that is rendered according to correspo
 - [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/lighting.html#Lightingmodel)
 - Apply `containerField='shape'` if parent node is [CADFace](/x_ite/components/cadgeometry/cadface/).
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of Shape Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Shape)

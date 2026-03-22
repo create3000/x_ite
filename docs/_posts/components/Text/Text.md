@@ -147,6 +147,13 @@ The *fontStyle* field can contain a [FontStyle](/x_ite/components/text/fontstyle
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Text/Text/Text.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of Text Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/text.html#Text)

@@ -136,6 +136,13 @@ It is possible to specify in the *url* field one or more URLs of a custom font f
 - [Wikipedia](https://en.wikipedia.org/wiki/Typeface)
 - [Open-source font libraries](https://fonts.google.com) and https://fontlibrary.org
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of FontLibrary Node](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/text.html#FontLibrary)

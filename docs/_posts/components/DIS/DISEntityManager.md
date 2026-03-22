@@ -113,6 +113,13 @@ Simulation/exercise *siteID* of the participating LAN or organization.
 - ['children' field originally named 'mapping' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 - Requires X3D `profile='Full'` or else include `<component name='DIS' level='2'/>`
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of DISEntityManager Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/dis.html#DISEntityManager)

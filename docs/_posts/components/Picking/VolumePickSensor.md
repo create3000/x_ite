@@ -153,6 +153,13 @@ Output event containing the node or nodes that have been found to intersect with
 - PickingGeometry volume is defined by the convex hull of the enclosing planes of the provided X3DGeometryNode. If the provided volume is not manifold, pick results are undefined.
 - Order of contained nodes is significant, single pickingGeometry node must precede pickTarget node array.
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of VolumePickSensor Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/picking.html#VolumePickSensor)

@@ -67,6 +67,13 @@ Pairs of 2D (s,t) texture coordinates, either in range [0,1] or higher if repeat
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
 - [X3D Texturing component Figure 18.1, Texture map coordinate system](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texturing.html#f-TextureMapCoordSystem)
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of TextureCoordinate Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#TextureCoordinate)

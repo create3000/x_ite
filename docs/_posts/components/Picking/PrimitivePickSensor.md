@@ -161,6 +161,13 @@ Output event containing the node or nodes that have been found to intersect with
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Picking/PrimitivePickSensor/PrimitivePickSensor.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of PrimitivePickSensor Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/picking.html#PrimitivePickSensor)

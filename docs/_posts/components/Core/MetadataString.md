@@ -91,6 +91,13 @@ The *value* attribute is a strictly typed data array providing relevant metadata
 - Default `containerField='metadata'` in X3D 3 changed to default `containerField='value'` in X3D 4.0, allowing construction of much terser [MetadataSet](/x_ite/components/core/metadataset/) vocabulary structures.
 - Metadata nodes can only contain other Metadata nodes.
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of MetadataString Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/core.html#MetadataString)

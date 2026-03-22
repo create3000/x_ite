@@ -88,6 +88,13 @@ The *value* field provides a list of X3DMetadataObject nodes whose meaning is de
 - Default `containerField='metadata'` in X3D 3 changed to default `containerField='value'` in X3D 4.0, allowing construction of much terser MetadataSet vocabulary structures.
 - Metadata nodes can only contain other Metadata nodes.
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of MetadataSet Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/core.html#MetadataSet)

@@ -62,6 +62,13 @@ Set of unit-length normal vectors, corresponding to indexed polygons or vertices
 - [Normal vectors perpendicular to 3D surface](https://en.wikipedia.org/wiki/Normal_(geometry))
 - [Tangent plane](https://en.wikipedia.org/wiki/Tangent)
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of Tangent Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#Tangent)

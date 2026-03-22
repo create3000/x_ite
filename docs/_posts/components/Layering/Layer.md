@@ -113,6 +113,13 @@ Nodes making up this layer.
 - No transformations are possible above each [LayerSet](/x_ite/components/layering/layerset/)/Layer combination in the scene graph hierarchy.
 - Each Layer node contains its own binding stacks and thus has its own viewpoints and navigation.
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of Layer Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/layering.html#Layer)

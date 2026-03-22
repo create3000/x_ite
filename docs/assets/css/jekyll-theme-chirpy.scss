@@ -319,6 +319,11 @@ span[data-label-text="VRML" i] {
   white-space: initial;
 }
 
+.table-wrapper > table.browser-compatibility {
+  width: 100%;
+  table-layout: fixed;
+}
+
 .badge-link {
   cursor: pointer;
 }

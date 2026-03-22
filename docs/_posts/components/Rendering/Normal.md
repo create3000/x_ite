@@ -66,6 +66,13 @@ Set of unit-length normal vectors, corresponding to indexed polygons or vertices
 
 - Adding normal values to a model might significantly increase file size. Testing can help determine proper tradeoffs between file size, network transmission delays and initial rendering speed.
 
+## Browser Compatibility
+
+| X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
+|-------|--------|-------|
+| <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> | <i class="fa-solid fa-circle-check green"> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of Normal Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#Normal)
