@@ -62,16 +62,15 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
    },
    set_dimensions__ ()
    {
-      const
-         browser = this .getBrowser (),
-         gl      = browser .getContext ();
+      const browser = this .getBrowser ();
 
       // Transfer 6 textures of size x size pixels.
 
       const
-         width      = this ._dimensions .length > 0 ? this ._dimensions [0] : 128,
-         height     = this ._dimensions .length > 1 ? this ._dimensions [1] : 128,
-         components = this ._dimensions .length > 2 ? this ._dimensions [2] : 4;
+         width  = this ._dimensions .length > 0 ? this ._dimensions [0] : 128,
+         height = this ._dimensions .length > 1 ? this ._dimensions [1] : 128;
+
+      // const components = this ._dimensions .length > 2 ? this ._dimensions [2] : 4;
 
       if (width > 0 && height > 0)
       {

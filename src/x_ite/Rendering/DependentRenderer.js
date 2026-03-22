@@ -1,6 +1,5 @@
 import X3DBaseNode     from "../Base/X3DBaseNode.js";
 import X3DRenderObject from "./X3DRenderObject.js";
-import TraverseType    from "./TraverseType.js";
 
 function DependentRenderer (executionContext, renderObject)
 {
