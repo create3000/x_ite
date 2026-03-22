@@ -42,7 +42,7 @@ function browserCompatibility (js)
       x3dom   = map .get (json [typeName] ?.["x3dom"]),
       freewrl = map .get (json [typeName] ?.["freewrl"]);
 
-   const replacement = () => `## Browser Compatibility
+   const replacement = `## Browser Compatibility
 
 | X_ITE X3D Browser | Castle Game Engine | X3DOM | FreeWRL |
 |-------|--------|-------|
