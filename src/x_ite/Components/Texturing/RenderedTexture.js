@@ -64,7 +64,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
    {
       const browser = this .getBrowser ();
 
-      // Transfer 6 textures of size x size pixels.
+      // Create framebuffer.
 
       const
          width  = this ._dimensions .length > 0 ? this ._dimensions [0] : 128,
