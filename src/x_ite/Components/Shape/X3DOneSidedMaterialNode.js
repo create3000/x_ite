@@ -10,6 +10,8 @@ function X3DOneSidedMaterialNode (executionContext)
 
    this .addType (X3DConstants .X3DOneSidedMaterialNode);
 
+   // Private properties
+
    this .emissiveColorArray = new Float32Array (3);
 }
 

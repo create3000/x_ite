@@ -27,6 +27,11 @@ Object .assign (Object .setPrototypeOf (X3DTextureNode .prototype, X3DAppearance
    {
       return false;
    },
+   getRenderedTextures (renderedTextures)
+   {
+      if (this .isRenderedTexture ())
+         renderedTextures .add (this);
+   },
 });
 
 Object .defineProperties (X3DTextureNode, X3DNode .getStaticProperties ("X3DTextureNode", "Texturing", 1));

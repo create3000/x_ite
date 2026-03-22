@@ -21,14 +21,13 @@ function MultiTexture (executionContext)
 
    const browser = this .getBrowser ();
 
-   this .maxTextures      = browser .getMaxTextures ()
-   this .color            = new Float32Array (4);
-   this .modes            = [ ];
-   this .alphaModes       = [ ];
-   this .sources          = [ ];
-   this .functions        = [ ];
-   this .textureNodes     = [ ];
-   this .renderedTextures = [ ];
+   this .maxTextures  = browser .getMaxTextures ()
+   this .color        = new Float32Array (4);
+   this .modes        = [ ];
+   this .alphaModes   = [ ];
+   this .sources      = [ ];
+   this .functions    = [ ];
+   this .textureNodes = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode .prototype),
@@ -206,8 +205,7 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
       for (const textureNode of this .textureNodes)
          textureNode ._linear .removeInterest ("addNodeEvent", this);
 
-      this .textureNodes     .length = 0;
-      this .renderedTextures .length = 0;
+      this .textureNodes .length = 0;
 
       for (const node of this ._texture)
       {
@@ -218,12 +216,7 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
       }
 
       for (const textureNode of this .textureNodes)
-      {
          textureNode ._linear .addInterest ("addNodeEvent", this);
-
-         if (textureNode .isRenderedTexture ())
-            this .renderedTextures .push (textureNode);
-      }
 
       this ._renderedTextures = this .getBrowser () .getCurrentTime ();
    },
@@ -239,9 +232,13 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
 
       textureBits .set (maxTextures * 2, 1);
    },
-   getRenderedTextures ()
+   getRenderedTextures (renderedTextures)
    {
-      return this .renderedTextures;
+      for (const textureNode of this .textureNodes)
+      {
+         if (textureNode .isRenderedTexture ())
+            renderedTextures .add (textureNode);
+      }
    },
    getShaderOptions (options)
    {

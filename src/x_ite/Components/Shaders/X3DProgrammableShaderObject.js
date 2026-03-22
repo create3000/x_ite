@@ -20,7 +20,6 @@ function X3DProgrammableShaderObject (executionContext)
    this .lightNodes             = [ ];
    this .textureProjectorNodes  = [ ];
    this .textures               = new Set ();
-   this .renderedTextures       = [ ];
 
    this .x3d_ClipPlane                  = [ ];
    this .x3d_EnvironmentLight           = [ ];
@@ -797,19 +796,13 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             return i;
       }
    },
-   getRenderedTextures ()
+   getRenderedTextures (renderedTextures)
    {
-      const { renderedTextures } = this;
-
-      renderedTextures .length = 0;
-
       for (const { textureNode } of this .textures)
       {
          if (textureNode .isRenderedTexture ())
-            renderedTextures .push (textureNode);
+            renderedTextures .add (textureNode);
       }
-
-      return renderedTextures;
    },
    hasFog (fogNode)
    {

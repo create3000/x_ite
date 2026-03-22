@@ -12,6 +12,8 @@ function PointProperties (executionContext)
 
    this .addType (X3DConstants .PointProperties);
 
+   // Private properties
+
    this .attenuation = new Float32Array (3);
 }
 

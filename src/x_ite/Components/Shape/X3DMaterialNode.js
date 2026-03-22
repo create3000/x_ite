@@ -271,15 +271,20 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          {
             if (+appearanceNode .getTextureBits () && !this .getBaseTexture ())
             {
-               const textureNode = appearanceNode .getTexture ();
+               const
+                  textureNode  = appearanceNode .getTexture (),
+                  textureCount = textureNode .getCount ();
 
-               options .push ("X3D_TEXTURE");
-               options .push (`X3D_NUM_TEXTURES ${textureNode .getCount ()}`);
+               if (textureCount)
+               {
+                  options .push ("X3D_TEXTURE");
+                  options .push (`X3D_NUM_TEXTURES ${textureCount}`);
 
-               if (textureNode .getType () .includes (X3DConstants .MultiTexture))
-                  options .push ("X3D_MULTI_TEXTURING");
+                  if (textureNode .getType () .includes (X3DConstants .MultiTexture))
+                     options .push ("X3D_MULTI_TEXTURING");
 
-               textureNode .getShaderOptions (options);
+                  textureNode .getShaderOptions (options);
+               }
             }
 
             options .push (`X3D_NUM_TEXTURE_TRANSFORMS ${appearanceNode .getTextureTransformMapping () .size || 1}`);
