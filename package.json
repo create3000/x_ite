@@ -34,6 +34,7 @@
     "docs-update": "cd docs && bundle update --all",
     "docs-components": "node build/docs/components.js",
     "docs-nodes": "perl build/docs/nodes.pl",
+    "docs-browser-compatibility": "node build/docs/browser-compatibility.js",
     "docs-reference": "node build/docs/reference.js",
     "docs-table": "node build/docs/table.js",
     "glTF-samples": "perl build/docs/glTF-samples.pl",
