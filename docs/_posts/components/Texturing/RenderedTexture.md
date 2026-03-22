@@ -80,7 +80,7 @@ Author-provided prose that describes intended purpose of the url asset.
 ### MFInt32 [in, out] **dimensions** [ 128, 128, 4, 1, 1 ] <small>[0,∞)</small>
 {: #fields-dimensions }
 
-Sets the width, height, color components (and number of MRTs).
+Sets the width, height, color components and number of multiple render targets (MRT).
 
 ### SFBool [in, out] **depthMap** FALSE
 {: #fields-depthMap }
