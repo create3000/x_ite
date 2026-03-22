@@ -253,7 +253,6 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       if (media)
          this .updateTextureData (media .currentFrame);
    },
-   traverse: X3DTexture2DNode .prototype .traverse,
    dispose ()
    {
       X3DUrlObject       .prototype .dispose .call (this);

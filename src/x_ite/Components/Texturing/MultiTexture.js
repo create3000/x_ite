@@ -252,11 +252,6 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
       for (let i = 0; i < channels; ++ i)
          textureNodes [i] .getShaderOptions (options, i);
    },
-   traverse (type, renderObject)
-   {
-      for (const textureNode of this .textureNodes)
-         textureNode .traverse (type, renderObject);
-   },
    setShaderUniforms (gl, uniformStruct, shaderObject)
    {
       const
