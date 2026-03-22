@@ -1,5 +1,5 @@
-/* X_ITE v14.0.9 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.9")];
+/* X_ITE v14.1.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.1.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -202,13 +202,9 @@ Object .assign (Object .setPrototypeOf (OpacityMapVolumeStyle .prototype, Volume
    },
    set_transferFunction__ ()
    {
-      this .transferFunctionNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture2DNode, this ._transferFunction);
-
-      if (! this .transferFunctionNode)
-         this .transferFunctionNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture3DNode, this ._transferFunction);
-
-      if (! this .transferFunctionNode)
-         this .transferFunctionNode = this .getBrowser () .getDefaultTransferFunction ();
+      this .transferFunctionNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture2DNode, this ._transferFunction)
+         ?? external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture3DNode, this ._transferFunction)
+         ?? this .getBrowser () .getDefaultTransferFunction ();
    },
    addShaderFields (shaderNode)
    {

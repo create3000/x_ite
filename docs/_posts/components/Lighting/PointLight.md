@@ -58,7 +58,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### SFBool [in, out] **global** TRUE
 {: #fields-global }
 
-Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
+*global* field affects the scope of lighting effects produced by the [EnvironmentLight](/x_ite/components/lighting/environmentlight/) node, and has no effect on the computation of environment textures. Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
 
 #### Warning
 
@@ -91,6 +91,10 @@ Brightness of direct emission from the light.
 {: #fields-ambientIntensity }
 
 Brightness of ambient (nondirectional background) emission from the light.
+
+#### Hint
+
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### SFVec3f [in, out] **attenuation** 1 0 0 <small>[0,∞)</small>
 {: #fields-attenuation }

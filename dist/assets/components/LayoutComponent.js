@@ -1,5 +1,5 @@
-/* X_ITE v14.0.9 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.9")];
+/* X_ITE v14.1.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.1.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1464,7 +1464,8 @@ Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, (external_X_ITE_
       {
          case (external_X_ITE_X3D_TraverseType_default()).CAMERA:
          case (external_X_ITE_X3D_TraverseType_default()).PICKING:
-         case (external_X_ITE_X3D_TraverseType_default()).SHADOW: // ???
+         case (external_X_ITE_X3D_TraverseType_default()).DEPTH:
+         case (external_X_ITE_X3D_TraverseType_default()).SHADOW:
             // No clone support for shadows, generated cube map texture and bbox
             break;
          default:

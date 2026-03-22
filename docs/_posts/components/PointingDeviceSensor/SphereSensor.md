@@ -94,7 +94,7 @@ Sends event and remembers last value sensed.
 ### SFRotation [out] **rotation_changed**
 {: #fields-rotation_changed }
 
-*rotation_changed* events equal sum of relative bearing changes plus offset value.
+*rotation_changed* events equal sum of relative bearing changes plus offset value about Y-axis in local coordinate system.
 
 #### Warning
 

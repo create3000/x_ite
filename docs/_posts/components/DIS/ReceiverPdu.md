@@ -138,7 +138,7 @@ Enables/disables the sensor node.
 ### SFBool [out] **isActive**
 {: #fields-isActive }
 
-Confirm whether there has been a recent network update.
+Have we received a network update recently?
 
 #### Warning
 
@@ -152,22 +152,22 @@ Multicast network *address*, or else 'localhost'; Example: 224.2.181.145.
 ### SFInt32 [in, out] **applicationID** 0 <small>[0,65535]</small>
 {: #fields-applicationID }
 
-Each simulation application that can respond to simulation management PDUs needs to have a unique *applicationID*.
+Simulation/exercise *applicationID* is unique for application at that site. Each simulation application that can respond to simulation management PDUs needs to have a unique *applicationID*.
 
 ### SFInt32 [in, out] **entityID** 0 <small>[0,65535]</small>
 {: #fields-entityID }
 
-EntityID unique ID for entity within that application.
+Simulation/exercise *entityID* is a unique ID for a single entity within that application.
 
 ### SFString [in, out] **multicastRelayHost** ""
 {: #fields-multicastRelayHost }
 
-Fallback server address if multicast not available locally. For example: track.nps.edu.
+Fallback server address if multicast not available locally. Example: track.nps.edu.
 
 ### SFInt32 [in, out] **multicastRelayPort** 0 <small>[0,65535]</small>
 {: #fields-multicastRelayPort }
 
-Fallback server port if multicast not available locally. For example: 8010.
+Fallback server port if multicast not available locally. Example: 8010.
 
 ### SFString [in, out] **networkMode** "standAlone" <small>["standAlone"|"networkReader"|"networkWriter"]</small>
 {: #fields-networkMode }
@@ -182,7 +182,7 @@ Whether this entity is ignoring the network, sending DIS packets to the network,
 ### SFInt32 [in, out] **port** 0 <small>[0,65535]</small>
 {: #fields-port }
 
-Multicast network *port*, for example: 3000.
+Network connection *port* number (EXAMPLE 3000) for sending or receiving DIS messages. Example: 3000.
 
 ### SFInt32 [in, out] **radioID** 0 <small>[0,65535]</small>
 {: #fields-radioID }
@@ -291,7 +291,7 @@ Whether networkMode='local' (ignore network but still respond to local events).
 ### SFTime [out] **timestamp**
 {: #fields-timestamp }
 
-DIS *timestamp* in X3D units (value 0.0 matches 1 January 1970) in seconds.
+DIS *timestamp* received from latest PDU update, converted to X3D SFTime units.
 
 #### Warning
 

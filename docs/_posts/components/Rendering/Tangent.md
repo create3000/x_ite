@@ -49,15 +49,11 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### MFVec4f [in, out] **vector** [ ] <small>[-1,1]</small>
 {: #fields-vector }
 
-Set of x-y-z-w orthogonal *vector* values for a surface, applied either per-vertex or per-face to a mesh. This is an advanced technique for surface shading.
-
-#### Hint
-
-- Values for w are handedness of the tangent base, either +1 or -1. All vertexes of the same triangle must have the same w value for their tangent vectors.
+Set of unit-length normal vectors, corresponding to indexed polygons or vertices.
 
 #### Warning
 
-- Unit length means a magnitude of 1.0, so x-y-z normal values of (0,0,0) are invalid.
+- Unit length means a magnitude of 1.0, so normal values of (0,0,0) are invalid.
 
 ## Advice
 

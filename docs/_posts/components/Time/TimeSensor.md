@@ -62,7 +62,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### SFString [in, out] **description** ""
 {: #fields-description }
 
-Author-provided prose that describes intended purpose of this node.
+Author-provided prose that describes intended purpose of the url asset.
 
 #### Hint
 

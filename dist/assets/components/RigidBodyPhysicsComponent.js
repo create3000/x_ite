@@ -1,5 +1,5 @@
-/* X_ITE v14.0.9 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.9")];
+/* X_ITE v14.1.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.1.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -786,6 +786,13 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
          case (external_X_ITE_X3D_TraverseType_default()).COLLISION:
          {
             this .collisionObject ?.traverse (type, renderObject);
+            break;
+         }
+         case (external_X_ITE_X3D_TraverseType_default()).DEPTH:
+         {
+            for (const visibleObject of this .visibleObjects)
+               visibleObject .traverse (type, renderObject);
+
             break;
          }
          case (external_X_ITE_X3D_TraverseType_default()).SHADOW:

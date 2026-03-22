@@ -1384,6 +1384,7 @@ declare namespace X3D
       readonly QuadSet: number;
       readonly ReceiverPdu: number;
       readonly Rectangle2D: number;
+      readonly RenderedTexture: number;
       readonly RigidBody: number;
       readonly RigidBodyCollection: number;
       readonly ScalarChaser: number;
@@ -1655,6 +1656,9 @@ declare namespace X3D
       static readonly type: number;
       static readonly typeName: "SFColor";
 
+      static readonly BLACK: SFColor;
+      static readonly WHITE: SFColor;
+
       /**
        * A new color initialized with zero values is created and returned.
        */
@@ -1711,6 +1715,10 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "SFColorRGBA";
+
+      static readonly BLACK: SFColor;
+      static readonly TRANSPARENT: SFColor;
+      static readonly WHITE: SFColor;
 
       /**
        * A new color initialized with zero values is created and returned.
@@ -1872,8 +1880,8 @@ declare namespace X3D
        * A new matrix initialized with the values in *f11* through *f44* is created and returned.
        */
       constructor (f11: number, f12: number, f13: number,
-                  f21: number, f22: number, f23: number,
-                  f31: number, f32: number, f33: number);
+                   f21: number, f22: number, f23: number,
+                   f31: number, f32: number, f33: number);
 
       [Symbol .iterator](): IterableIterator <number>;
       [index: number]: number;
@@ -1965,6 +1973,8 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "SFMatrix3d";
+
+      static readonly IDENTITY: SFMatrix3d;
    }
 
    /**
@@ -1974,6 +1984,8 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "SFMatrix3f";
+
+      static readonly IDENTITY: SFMatrix3f;
    }
 
    /**
@@ -1993,9 +2005,9 @@ declare namespace X3D
        * A new matrix initialized with the values in *f11* through *f44* is created and returned.
        */
       constructor (f11: number, f12: number, f13: number, f14: number,
-                  f21: number, f22: number, f23: number, f24: number,
-                  f31: number, f32: number, f33: number, f34: number,
-                  f41: number, f42: number, f43: number, f44: number);
+                   f21: number, f22: number, f23: number, f24: number,
+                   f31: number, f32: number, f33: number, f34: number,
+                   f41: number, f42: number, f43: number, f44: number);
 
       [Symbol .iterator](): IterableIterator <number>;
       [index: number]: number;
@@ -2079,6 +2091,8 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "SFMatrix4d";
+
+      static readonly IDENTITY: SFMatrix4d;
    }
 
    /**
@@ -2088,6 +2102,8 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "SFMatrix4f";
+
+      static readonly IDENTITY: SFMatrix4f;
    }
 
    /**
@@ -2192,6 +2208,7 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "SFRotation";
+      static readonly IDENTITY: SFRotation;
 
       /**
        * A new rotation initialized with the identity rotation is created and returned.
@@ -2391,9 +2408,13 @@ declare namespace X3D
        */
       negate (): this;
       /**
-       * Returns an SFVec2d/f of object converted to unit length.
+       * Returns an SFVec2d/f object converted to unit length.
        */
       normalize (): this;
+      /**
+       * Returns an SFVec2d/f object reflected at normal.
+       */
+      reflect (normal: this): this;
       /**
        * Returns an SFVec2d/f whose value is the passed SFVec2d/f subtracted, componentwise, from the object.
        */
@@ -2407,6 +2428,9 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "SFVec2d";
+
+      static readonly X_AXIS: SFVec2d;
+      static readonly Y_AXIS: SFVec2d;
    }
 
    /**
@@ -2416,6 +2440,9 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "SFVec2f";
+
+      static readonly X_AXIS: SFVec2f;
+      static readonly Y_AXIS: SFVec2f;
    }
 
    /**
@@ -2513,9 +2540,13 @@ declare namespace X3D
        */
       negate (): this;
       /**
-       * Returns an SFVec3d/f of object converted to unit length.
+       * Returns an SFVec3d/f object converted to unit length.
        */
       normalize (): this;
+      /**
+       * Returns an SFVec3d/f object reflected at normal.
+       */
+      reflect (normal: this): this;
       /**
        * Returns an SFVec3d/f whose value is the passed SFVec3d/f subtracted, componentwise, from the object.
        */
@@ -2529,6 +2560,10 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "SFVec3d";
+
+      static readonly X_AXIS: SFVec3d;
+      static readonly Y_AXIS: SFVec3d;
+      static readonly Z_AXIS: SFVec3d;
    }
 
    /**
@@ -2538,6 +2573,10 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "SFVec3f";
+
+      static readonly X_AXIS: SFVec3f;
+      static readonly Y_AXIS: SFVec3f;
+      static readonly Z_AXIS: SFVec3f;
    }
 
    /**
@@ -2635,9 +2674,13 @@ declare namespace X3D
        */
       negate (): this;
       /**
-       * Returns an SFVec4d/f of object converted to unit length.
+       * Returns an SFVec4d/f object converted to unit length.
        */
       normalize (): this;
+      /**
+       * Returns an SFVec4d/f object reflected at normal.
+       */
+      reflect (normal: this): this;
       /**
        * Returns an SFVec4d/f whose value is the passed SFVec4d/f subtracted, componentwise, from the object.
        */
@@ -2651,6 +2694,11 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "SFVec4d";
+
+      static readonly X_AXIS: SFVec4d;
+      static readonly Y_AXIS: SFVec4d;
+      static readonly Z_AXIS: SFVec4d;
+      static readonly W_AXIS: SFVec4d;
    }
 
    /**
@@ -2660,6 +2708,11 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "SFVec4f";
+
+      static readonly X_AXIS: SFVec4f;
+      static readonly Y_AXIS: SFVec4f;
+      static readonly Z_AXIS: SFVec4f;
+      static readonly W_AXIS: SFVec4f;
    }
 
    /**
@@ -15821,6 +15874,83 @@ declare namespace X3D
       solid: boolean;
    }
 
+   /** A RenderedTexture is a texture node that renders a separate scene or viewpoint into an offscreen buffer, producing an image that can be applied to geometry in real time. */
+   interface RenderedTextureProxy extends X3DTexture2DNodeProxy
+   {
+      /**
+       * Allows you to specify a background node explicitly, which will then be used during the render-to-texture process. If the value is NULL the currently bound background in the scene is used.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      background: X3DBackgroundNodeProxy | null;
+      /**
+       * The generated texture will contain the depth buffer of the image (instead of the color buffer as usual).
+       *
+       * This field is of access type 'initializeOnly' and type SFBool.
+       */
+      depthMap: boolean;
+      /**
+       * Author-provided prose that describes intended purpose of the url asset.
+       *
+       * This field is of access type 'inputOutput' and type SFString.
+       */
+      description: string;
+      /**
+       * Sets the width, height, color components (and number of MRTs).
+       *
+       * This field is of access type 'inputOutput' and type MFInt32.
+       */
+      dimensions: MFInt32;
+      /**
+       * Allows you to specify a fog node explicitly, which will then be used during the render-to-texture process. If the value is NULL the currently bound fog in the scene is used.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      fog: X3DFogObjectProxy | null;
+      /**
+       * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      metadata: X3DMetadataObjectProxy | null;
+      /**
+       * Whether to repeat texture along S axis horizontally from left to right.
+       *
+       * This field is of access type 'initializeOnly' and type SFBool.
+       */
+      repeatS: boolean;
+      /**
+       * Whether to repeat texture along T axis vertically from top to bottom.
+       *
+       * This field is of access type 'initializeOnly' and type SFBool.
+       */
+      repeatT: boolean;
+      /**
+       * Sets a separate, potentially independent, subscene. If the value is NULL the current scene is used.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      scene: X3DChildNodeProxy | null;
+      /**
+       * Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
+       *
+       * This field is of access type 'initializeOnly' and type SFNode.
+       */
+      textureProperties: TexturePropertiesProxy | null;
+      /**
+       * update controls regeneration of the texture.
+       *
+       * This field is of access type 'inputOutput' and type SFString.
+       */
+      update: "NONE" | "NEXT_FRAME_ONLY" | "ALWAYS";
+      /**
+       * Allows you to explicitly specify a viewpoint node from which to render to texture. If the value is NULL the currently bound viewpoint in the scene is used.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      viewpoint: X3DViewpointNodeProxy | null;
+   }
+
    /** RigidBody describes a collection of shapes with a mass distribution that is affected by the physics model. */
    interface RigidBodyProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    {
@@ -20776,6 +20906,18 @@ declare namespace X3D
        */
       multiscatterColor: SFColor;
       /**
+       * A surface texture that defines the multi-scatter albedo at the volume's entry point. Stored in the RGB channels and encoded in sRGB. This will be multiplied by the multiscatterColorFactor.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      multiscatterColorTexture: X3DSingleTextureNodeProxy | null;
+      /**
+       * Input/Output field multiscatterColorTextureMapping.
+       *
+       * This field is of access type 'inputOutput' and type SFString.
+       */
+      multiscatterColorTextureMapping: string;
+      /**
        * The anisotropy of scatter events. Range is [-1, 1].
        *
        * This field is of access type 'inputOutput' and type SFFloat.
@@ -22907,6 +23049,7 @@ declare namespace X3D
       QuadSet: QuadSetProxy,
       ReceiverPdu: ReceiverPduProxy,
       Rectangle2D: Rectangle2DProxy,
+      RenderedTexture: RenderedTextureProxy,
       RigidBody: RigidBodyProxy,
       RigidBodyCollection: RigidBodyCollectionProxy,
       ScalarChaser: ScalarChaserProxy,

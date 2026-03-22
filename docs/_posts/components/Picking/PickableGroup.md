@@ -13,7 +13,7 @@ tags: [PickableGroup, Picking]
 
 ## Overview
 
-PickableGroup is a Grouping node that can contain most nodes. PickableGroup contains children that are marked as having a given classification of picking types, and can also enable or disable picking of the children.
+PickableGroup ...
 
 The PickableGroup node belongs to the [Picking](/x_ite/components/overview/#picking) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
@@ -150,13 +150,6 @@ Grouping nodes contain an ordered list of *children* nodes.
 - InputOnly MFNode addChildren field can append new X3DChildNode nodes via a ROUTE connection, duplicate input nodes (i.e. matching DEF, USE values) are ignored.
 - InputOnly MFNode removeChildren field can remove nodes from the *children* list, unrecognized input nodes (i.e. nonmatching DEF, USE values) are ignored.
 - [X3D Architecture 10.2.1 Grouping and *children* node types](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#GroupingAndChildrenNodes)
-
-## Advice
-
-### Hints
-
-- Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
-- Content must be visible to be collidable and to be pickable.
 
 ## See Also
 

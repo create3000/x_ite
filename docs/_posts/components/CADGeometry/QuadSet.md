@@ -93,7 +93,7 @@ Whether [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/compon
 
 #### Warnings
 
-- The provided value of QuadSet *colorPerVertex* field is ignored and always treated as true.
+- The provided value of [IndexedQuadSet](/x_ite/components/cadgeometry/indexedquadset/) *colorPerVertex* field is ignored and always treated as true.
 - If child [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) node is not provided, then geometry is rendered using corresponding [Appearance](/x_ite/components/shape/appearance/) and material/texture values.
 
 ### SFBool [ ] **normalPerVertex** TRUE

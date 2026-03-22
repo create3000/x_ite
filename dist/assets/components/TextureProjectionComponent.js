@@ -1,5 +1,5 @@
-/* X_ITE v14.0.9 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.9")];
+/* X_ITE v14.1.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.1.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -63,6 +63,9 @@ var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n
 ;// external "__X_ITE_X3D__ .X3DCast"
 const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
 var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
+;// external "__X_ITE_X3D__ .TraverseType"
+const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
+var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
 ;// external "__X_ITE_X3D__ .Matrix4"
 const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
 var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
@@ -70,6 +73,7 @@ var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(exte
 const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
 ;// ./src/x_ite/Components/TextureProjection/X3DTextureProjectorNode.js
+
 
 
 
@@ -193,6 +197,12 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, (ext
       else
          this ._aspectRatio = 1;
    },
+   push (renderObject, groupNode)
+   {
+      external_X_ITE_X3D_X3DLightNode_default().prototype .push .call (this, renderObject, groupNode);
+
+      this .textureNode ?.traverse ((external_X_ITE_X3D_TraverseType_default()).DISPLAY, renderObject);
+   },
 });
 
 Object .defineProperties (X3DTextureProjectorNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DTextureProjectorNode", "TextureProjection", 4));
@@ -252,15 +262,21 @@ Object .assign (TextureProjectorContainer .prototype,
 {
    set (lightNode, groupNode, modelViewMatrix)
    {
-      this .browser   = lightNode .getBrowser ();
-      this .lightNode = lightNode;
-      this .global    = lightNode .getGlobal ();
+      this .browser           = lightNode .getBrowser ();
+      this .lightNode         = lightNode;
+      this .global            = lightNode .getGlobal ();
+      this .shadowMapRendered = false;
 
       this .modelViewMatrix .push (modelViewMatrix);
       this .textureMatrix .assign (lightNode .getTexture () .getMatrix ());
    },
    renderShadowMap (renderObject)
    {
+      if (this .shadowMapRendered)
+         return;
+
+      this .shadowMapRendered = true;
+
       const
          lightNode             = this .lightNode,
          cameraSpaceMatrix     = renderObject .getCameraSpaceMatrixArray (),
@@ -455,15 +471,21 @@ Object .assign (TextureProjectorParallelContainer .prototype,
 {
    set (lightNode, groupNode, modelViewMatrix)
    {
-      this .browser   = lightNode .getBrowser ();
-      this .lightNode = lightNode;
-      this .global    = lightNode .getGlobal ();
+      this .browser           = lightNode .getBrowser ();
+      this .lightNode         = lightNode;
+      this .global            = lightNode .getGlobal ();
+      this .shadowMapRendered = false;
 
       this .modelViewMatrix .push (modelViewMatrix);
       this .textureMatrix .assign (lightNode .getTexture () .getMatrix ());
    },
    renderShadowMap (renderObject)
    {
+      if (this .shadowMapRendered)
+         return;
+
+      this .shadowMapRendered = true;
+
       const
          lightNode             = this .lightNode,
          cameraSpaceMatrix     = renderObject .getCameraSpaceMatrixArray (),
