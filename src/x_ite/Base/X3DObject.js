@@ -4,6 +4,7 @@ import JSONGenerator from "../InputOutput/JSONGenerator.js";
 import Features      from "../Features.js";
 
 const
+   _id            = Symbol (),
    _name          = Symbol (),
    _interests     = Symbol (),
    _registry      = Symbol (),
@@ -16,13 +17,14 @@ function X3DObject () { }
 
 Object .assign (X3DObject .prototype,
 {
+   [_id]: undefined,
    [_name]: "",
    [_interests]: null,
    [_registry]: null,
    [_userData]: null,
    getId ()
    {
-      return X3DObject .getId (this);
+      return this [_id] ??= X3DObject .getId (this);
    },
    getTypeName ()
    {
