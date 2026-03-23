@@ -9,7 +9,7 @@
       "x3d-edit": false,
       "castle": false,
       "x3dom": false,
-      "freewrl": false
+      "freewrl": true
    },
    "Anchor": {
       "x3d-edit": true,
@@ -51,7 +51,7 @@
       "x3d-edit": false,
       "castle": false,
       "x3dom": false,
-      "freewrl": false
+      "freewrl": true
    },
    "Background": {
       "x3d-edit": true,
@@ -75,7 +75,7 @@
       "x3d-edit": false,
       "castle": false,
       "x3dom": false,
-      "freewrl": false
+      "freewrl": true
    },
    "BlendedVolumeStyle": {
       "x3d-edit": true,
@@ -92,25 +92,25 @@
    "BooleanFilter": {
       "x3d-edit": true,
       "castle": true,
-      "x3dom": false,
+      "x3dom": true,
       "freewrl": true
    },
    "BooleanSequencer": {
       "x3d-edit": true,
       "castle": true,
-      "x3dom": false,
+      "x3dom": true,
       "freewrl": true
    },
    "BooleanToggle": {
       "x3d-edit": true,
       "castle": true,
-      "x3dom": false,
+      "x3dom": true,
       "freewrl": true
    },
    "BooleanTrigger": {
       "x3d-edit": true,
       "castle": true,
-      "x3dom": false,
+      "x3dom": true,
       "freewrl": true
    },
    "BoundaryEnhancementVolumeStyle": {
@@ -135,7 +135,7 @@
       "x3d-edit": false,
       "castle": false,
       "x3dom": false,
-      "freewrl": false
+      "freewrl": true
    },
    "CADAssembly": {
       "x3d-edit": true,
@@ -171,19 +171,19 @@
       "x3d-edit": false,
       "castle": false,
       "x3dom": false,
-      "freewrl": false
+      "freewrl": true
    },
    "ChannelSelector": {
       "x3d-edit": false,
       "castle": false,
       "x3dom": false,
-      "freewrl": false
+      "freewrl": true
    },
    "ChannelSplitter": {
       "x3d-edit": false,
       "castle": false,
       "x3dom": false,
-      "freewrl": false
+      "freewrl": true
    },
    "Circle2D": {
       "x3d-edit": true,
@@ -314,20 +314,20 @@
    "Contour2D": {
       "x3d-edit": true,
       "castle": false,
-      "x3dom": false,
+      "x3dom": true,
       "freewrl": true
    },
    "ContourPolyline2D": {
       "x3d-edit": true,
       "castle": false,
-      "x3dom": false,
+      "x3dom": true,
       "freewrl": true
    },
    "Convolver": {
       "x3d-edit": false,
       "castle": false,
       "x3dom": false,
-      "freewrl": false
+      "freewrl": true
    },
    "Coordinate": {
       "x3d-edit": true,
@@ -381,7 +381,7 @@
       "x3d-edit": false,
       "castle": false,
       "x3dom": false,
-      "freewrl": false
+      "freewrl": true
    },
    "DepthMode": {
       "x3d-edit": false,
@@ -405,13 +405,13 @@
       "x3d-edit": true,
       "castle": false,
       "x3dom": false,
-      "freewrl": false
+      "freewrl": true
    },
    "DISEntityTypeMapping": {
       "x3d-edit": true,
       "castle": false,
       "x3dom": false,
-      "freewrl": false
+      "freewrl": true
    },
    "Disk2D": {
       "x3d-edit": true,
@@ -435,7 +435,7 @@
       "x3d-edit": false,
       "castle": false,
       "x3dom": false,
-      "freewrl": false
+      "freewrl": true
    },
    "EaseInEaseOut": {
       "x3d-edit": false,
@@ -471,23 +471,11 @@
       "x3d-edit": true,
       "castle": false,
       "x3dom": false,
-      "freewrl": false
+      "freewrl": true
    },
    "ExplosionEmitter": {
       "x3d-edit": true,
       "castle": false,
-      "x3dom": false,
-      "freewrl": true
-   },
-   "EXPORT": {
-      "x3d-edit": true,
-      "castle": true,
-      "x3dom": false,
-      "freewrl": true
-   },
-   "ExternProtoDeclare": {
-      "x3d-edit": true,
-      "castle": true,
       "x3dom": false,
       "freewrl": true
    },
@@ -524,7 +512,7 @@
    "FontLibrary": {
       "x3d-edit": false,
       "castle": false,
-      "x3dom": false,
+      "x3dom": true,
       "freewrl": false
    },
    "FontStyle": {
@@ -543,7 +531,7 @@
       "x3d-edit": false,
       "castle": false,
       "x3dom": false,
-      "freewrl": false
+      "freewrl": true
    },
    "GeneratedCubeMapTexture": {
       "x3d-edit": false,
@@ -746,13 +734,13 @@
    "IntegerSequencer": {
       "x3d-edit": true,
       "castle": true,
-      "x3dom": false,
+      "x3dom": true,
       "freewrl": true
    },
    "IntegerTrigger": {
       "x3d-edit": true,
       "castle": true,
-      "x3dom": false,
+      "x3dom": true,
       "freewrl": true
    },
    "IORMaterialExtension": {
@@ -831,7 +819,7 @@
       "x3d-edit": false,
       "castle": false,
       "x3dom": false,
-      "freewrl": false
+      "freewrl": true
    },
    "LoadSensor": {
       "x3d-edit": true,
@@ -909,7 +897,7 @@
       "x3d-edit": false,
       "castle": false,
       "x3dom": false,
-      "freewrl": false
+      "freewrl": true
    },
    "MotorJoint": {
       "x3d-edit": true,
@@ -962,19 +950,19 @@
    "NurbsCurve": {
       "x3d-edit": true,
       "castle": true,
-      "x3dom": false,
+      "x3dom": true,
       "freewrl": true
    },
    "NurbsCurve2D": {
       "x3d-edit": true,
       "castle": false,
-      "x3dom": false,
+      "x3dom": true,
       "freewrl": true
    },
    "NurbsOrientationInterpolator": {
       "x3d-edit": true,
       "castle": true,
-      "x3dom": false,
+      "x3dom": true,
       "freewrl": true
    },
    "NurbsPatchSurface": {
@@ -986,7 +974,7 @@
    "NurbsPositionInterpolator": {
       "x3d-edit": true,
       "castle": true,
-      "x3dom": false,
+      "x3dom": true,
       "freewrl": true
    },
    "NurbsSet": {
@@ -998,7 +986,7 @@
    "NurbsSurfaceInterpolator": {
       "x3d-edit": true,
       "castle": true,
-      "x3dom": false,
+      "x3dom": true,
       "freewrl": true
    },
    "NurbsSweptSurface": {
@@ -1022,7 +1010,7 @@
    "NurbsTrimmedSurface": {
       "x3d-edit": true,
       "castle": true,
-      "x3dom": false,
+      "x3dom": true,
       "freewrl": true
    },
    "OpacityMapVolumeStyle": {
@@ -1059,7 +1047,7 @@
       "x3d-edit": false,
       "castle": false,
       "x3dom": false,
-      "freewrl": false
+      "freewrl": true
    },
    "PackagedShader": {
       "x3d-edit": true,
@@ -1077,12 +1065,12 @@
       "x3d-edit": false,
       "castle": false,
       "x3dom": false,
-      "freewrl": false
+      "freewrl": true
    },
    "PhysicalMaterial": {
       "x3d-edit": false,
       "castle": false,
-      "x3dom": true,
+      "x3dom": false,
       "freewrl": true
    },
    "PickableGroup": {
@@ -1130,7 +1118,7 @@
    "PointProperties": {
       "x3d-edit": false,
       "castle": false,
-      "x3dom": true,
+      "x3dom": false,
       "freewrl": true
    },
    "PointSet": {
@@ -1211,30 +1199,6 @@
       "x3dom": true,
       "freewrl": true
    },
-   "ProtoBody": {
-      "x3d-edit": true,
-      "castle": true,
-      "x3dom": false,
-      "freewrl": true
-   },
-   "ProtoDeclare": {
-      "x3d-edit": true,
-      "castle": true,
-      "x3dom": false,
-      "freewrl": true
-   },
-   "ProtoInstance": {
-      "x3d-edit": true,
-      "castle": true,
-      "x3dom": false,
-      "freewrl": true
-   },
-   "ProtoInterface": {
-      "x3d-edit": true,
-      "castle": true,
-      "x3dom": false,
-      "freewrl": true
-   },
    "ProximitySensor": {
       "x3d-edit": true,
       "castle": true,
@@ -1280,7 +1244,7 @@
    "ROUTE": {
       "x3d-edit": true,
       "castle": true,
-      "x3dom": false,
+      "x3dom": true,
       "freewrl": true
    },
    "ScalarChaser": {
@@ -1296,12 +1260,6 @@
       "freewrl": true
    },
    "ScalarInterpolator": {
-      "x3d-edit": true,
-      "castle": true,
-      "x3dom": true,
-      "freewrl": true
-   },
-   "Scene": {
       "x3d-edit": true,
       "castle": true,
       "x3dom": true,
@@ -1461,13 +1419,13 @@
       "x3d-edit": false,
       "castle": false,
       "x3dom": false,
-      "freewrl": false
+      "freewrl": true
    },
    "StreamAudioSource": {
       "x3d-edit": false,
       "castle": false,
       "x3dom": false,
-      "freewrl": false
+      "freewrl": true
    },
    "StringSensor": {
       "x3d-edit": true,
@@ -1586,7 +1544,7 @@
    "TimeTrigger": {
       "x3d-edit": true,
       "castle": true,
-      "x3dom": false,
+      "x3dom": true,
       "freewrl": true
    },
    "ToneMappedVolumeStyle": {
