@@ -62,3 +62,13 @@ Warp prompt:
 
 Please make a json file from comparison.csv with the following objects "{ "node name": { "x3d-edit", true/false, castle": true/false, "x3dom": true/false, "freewrl": true/false }, "next node name": ... }"
 */
+
+
+// const t = ``;
+
+// for (const key in json)
+// {
+//    json [key] .castle = t .includes (`T${key}Node`);
+// }
+
+// fs .writeFileSync ("build/docs/browser-compatibility.json", JSON .stringify (json))
