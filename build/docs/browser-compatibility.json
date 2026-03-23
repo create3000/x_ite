@@ -512,7 +512,7 @@
    "FontLibrary": {
       "x3d-edit": false,
       "castle": false,
-      "x3dom": true,
+      "x3dom": false,
       "freewrl": false
    },
    "FontStyle": {
