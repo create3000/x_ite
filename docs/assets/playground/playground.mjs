@@ -12,7 +12,8 @@ class Playground
 
    constructor ()
    {
-      // Also change version in playground.md!
+      $("title") .text ("Playground | X_ITE X3D Browser");
+
       require .config ({ paths: { "vs": `https://cdn.jsdelivr.net/npm/monaco-editor${MONACO_VERSION}/min/vs` }});
       require (["vs/editor/editor.main"], () => this .setup ());
    }
