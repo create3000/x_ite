@@ -55,6 +55,16 @@ class Playground
          fullSize: false,
       });
 
+      const
+         searchParams = new URL (location) .searchParams,
+         url          = searchParams .get ("url") ?? "/x_ite/assets/playground/playground.x3d";
+
+      if (searchParams .get ("play") === "false")
+         browser .endUpdate ();
+
+      if (searchParams .has ("fullSize"))
+         this .localStorage .fullSize = searchParams .get ("fullSize") === "true";
+
       this .addVRMLEncoding ();
       this .updateToolbar ();
 
@@ -63,9 +73,6 @@ class Playground
       await browser .loadComponents (browser .getProfile ("Full"), browser .getComponent ("X_ITE"));
 
       // Handle url parameter.
-
-      const url = new URL (location) .searchParams .get ("url")
-         ?? "/x_ite/assets/playground/playground.x3d";
 
       browser .baseURL = url;
 
