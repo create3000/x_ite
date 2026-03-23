@@ -88,6 +88,9 @@ const Features =
          unregister () { }
       };
    }
+
+   if (typeof Float16Array === "undefined")
+      window .Float16Array = Uint16Array;
 })();
 
 (() =>
