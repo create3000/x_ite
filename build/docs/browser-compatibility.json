@@ -1,1748 +1,1706 @@
 {
-  "AcousticProperties": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "Analyser": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "Anchor": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "AnisotropyMaterialExtension": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "Appearance": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "Arc2D": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ArcClose2D": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "AudioClip": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "AudioDestination": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "Background": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "BallJoint": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "Billboard": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "BiquadFilter": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "BlendedVolumeStyle": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "BlendMode": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": false
-  },
-  "BooleanFilter": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "BooleanSequencer": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "BooleanToggle": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "BooleanTrigger": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "BoundaryEnhancementVolumeStyle": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "BoundedPhysicsModel": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "Box": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "BufferAudioSource": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "CADAssembly": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "CADFace": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "CADLayer": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "CADPart": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "CartoonVolumeStyle": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ChannelMerger": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "ChannelSelector": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "ChannelSplitter": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "Circle2D": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ClearcoatMaterialExtension": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "ClipPlane": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "CollidableOffset": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "CollidableShape": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "Collision": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "CollisionCollection": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "CollisionSensor": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "CollisionSpace": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "Color": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ColorChaser": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ColorDamper": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ColorInterpolator": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ColorRGBA": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ComposedCubeMapTexture": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ComposedShader": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ComposedTexture3D": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ComposedVolumeStyle": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "Cone": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ConeEmitter": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "Contact": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "Contour2D": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ContourPolyline2D": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "Convolver": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "Coordinate": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "CoordinateChaser": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "CoordinateDamper": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "CoordinateDouble": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "CoordinateInterpolator": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "CoordinateInterpolator2D": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "Cylinder": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "CylinderSensor": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "Delay": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "DepthMode": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": false
-  },
-  "DiffuseTransmissionMaterialExtension": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "DirectionalLight": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "DISEntityManager": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "DISEntityTypeMapping": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "Disk2D": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "DispersionMaterialExtension": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "DoubleAxisHingeJoint": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "DynamicsCompressor": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "EaseInEaseOut": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "EdgeEnhancementVolumeStyle": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ElevationGrid": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "EmissiveStrengthMaterialExtension": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "EnvironmentLight": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "EspduTransform": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "ExplosionEmitter": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "EXPORT": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "ExternProtoDeclare": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "Extrusion": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "FillProperties": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "FloatVertexAttribute": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "Fog": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "FogCoordinate": {
-    "x3d-edit": false,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "FontLibrary": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": false
-  },
-  "FontStyle": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ForcePhysicsModel": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "Gain": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "GeneratedCubeMapTexture": {
-    "x3d-edit": false,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "GeoCoordinate": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "GeoElevationGrid": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "GeoLocation": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "GeoLOD": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "GeoMetadata": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "GeoOrigin": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "GeoPositionInterpolator": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "GeoProximitySensor": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "GeoTouchSensor": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "GeoTransform": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "GeoViewpoint": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "Group": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "HAnimDisplacer": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "HAnimHumanoid": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "HAnimJoint": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "HAnimMotion": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "HAnimPose": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "HAnimSegment": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "HAnimSite": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ImageCubeMapTexture": {
-    "x3d-edit": false,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "ImageTexture": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ImageTexture3D": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ImageTextureAtlas": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": false
-  },
-  "IndexedFaceSet": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "IndexedLineSet": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "IndexedQuadSet": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "IndexedTriangleFanSet": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "IndexedTriangleSet": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "IndexedTriangleStripSet": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "Inline": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "InlineGeometry": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "InstancedShape": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "IntegerSequencer": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "IntegerTrigger": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "IORMaterialExtension": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "IridescenceMaterialExtension": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "IsoSurfaceVolumeData": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "KeySensor": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "Layer": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "LayerSet": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "Layout": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "LayoutGroup": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "LayoutLayer": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "LinePickSensor": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "LineProperties": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "LineSet": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ListenerPointSource": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "LoadSensor": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "LocalFog": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "LOD": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "Material": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "Matrix3VertexAttribute": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "Matrix4VertexAttribute": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "MetadataBoolean": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "MetadataDouble": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "MetadataFloat": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "MetadataInteger": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "MetadataSet": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "MetadataString": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "MicrophoneSource": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "MotorJoint": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "MovieTexture": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "MultiTexture": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "MultiTextureCoordinate": {
-    "x3d-edit": false,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "MultiTextureTransform": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "NavigationInfo": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "Normal": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "NormalInterpolator": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "NurbsCurve": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "NurbsCurve2D": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "NurbsOrientationInterpolator": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "NurbsPatchSurface": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "NurbsPositionInterpolator": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "NurbsSet": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "NurbsSurfaceInterpolator": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "NurbsSweptSurface": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "NurbsSwungSurface": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "NurbsTextureCoordinate": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "NurbsTrimmedSurface": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "OpacityMapVolumeStyle": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "OrientationChaser": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "OrientationDamper": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "OrientationInterpolator": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "OrthoViewpoint": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "OscillatorSource": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "PackagedShader": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "ParticleSystem": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "PeriodicWave": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "PhysicalMaterial": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "PickableGroup": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "PixelTexture": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "PixelTexture3D": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "PlaneSensor": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "PointEmitter": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "PointLight": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "PointPickSensor": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "PointProperties": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "PointSet": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "Polyline2D": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "PolylineEmitter": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "Polypoint2D": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "PositionChaser": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "PositionChaser2D": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "PositionDamper": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "PositionDamper2D": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "PositionInterpolator": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "PositionInterpolator2D": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "PrimitivePickSensor": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "ProgramShader": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "ProjectionVolumeStyle": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ProtoBody": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "ProtoDeclare": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "ProtoInstance": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "ProtoInterface": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "ProximitySensor": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "QuadSet": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ReceiverPdu": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "Rectangle2D": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "RenderedTexture": {
-    "x3d-edit": false,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": false
-  },
-  "RigidBody": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "RigidBodyCollection": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ROUTE": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ScalarChaser": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ScalarDamper": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ScalarInterpolator": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "Scene": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ScreenFontStyle": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "ScreenGroup": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "Script": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "SegmentedVolumeData": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ShadedVolumeStyle": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ShaderPart": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ShaderProgram": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "Shape": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "SheenMaterialExtension": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "SignalPdu": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "SilhouetteEnhancementVolumeStyle": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "SingleAxisHingeJoint": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "SliderJoint": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "Sound": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "SpatialSound": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "SpecularGlossinessMaterial": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "SpecularMaterialExtension": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "Sphere": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "SphereSensor": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "SplinePositionInterpolator": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "SplinePositionInterpolator2D": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "SplineScalarInterpolator": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "SpotLight": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "SquadOrientationInterpolator": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "StaticGroup": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "StreamAudioDestination": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "StreamAudioSource": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "StringSensor": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "SurfaceEmitter": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "Switch": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "Tangent": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "TexCoordChaser2D": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "TexCoordDamper2D": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "Text": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "TextureBackground": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "TextureCoordinate": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "TextureCoordinate3D": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "TextureCoordinate4D": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "TextureCoordinateGenerator": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "TextureProjector": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "TextureProjectorParallel": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "TextureProperties": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "TextureTransform": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "TextureTransform3D": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "TextureTransformMatrix3D": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "TimeSensor": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "TimeTrigger": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ToneMappedVolumeStyle": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "TouchSensor": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "Transform": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "TransformSensor": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "TransmissionMaterialExtension": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "TransmitterPdu": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "TriangleFanSet": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "TriangleSet": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "TriangleSet2D": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "TriangleStripSet": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "TwoSidedMaterial": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "UNIT": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "UniversalJoint": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "UnlitMaterial": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "Viewpoint": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "ViewpointGroup": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "Viewport": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "VisibilitySensor": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "VolumeData": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "VolumeEmitter": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "VolumeMaterialExtension": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "VolumePickSensor": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "VolumeScatterMaterialExtension": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": false
-  },
-  "WaveShaper": {
-    "x3d-edit": true,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "WindPhysicsModel": {
-    "x3d-edit": false,
-    "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "WorldInfo": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  }
+   "AcousticProperties": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": false
+   },
+   "Analyser": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "Anchor": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "AnisotropyMaterialExtension": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": false
+   },
+   "Appearance": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "Arc2D": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ArcClose2D": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "AudioClip": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "AudioDestination": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "Background": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "BallJoint": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "Billboard": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "BiquadFilter": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "BlendedVolumeStyle": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "BlendMode": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": false
+   },
+   "BooleanFilter": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "BooleanSequencer": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "BooleanToggle": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "BooleanTrigger": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "BoundaryEnhancementVolumeStyle": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "BoundedPhysicsModel": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "Box": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "BufferAudioSource": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "CADAssembly": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "CADFace": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "CADLayer": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "CADPart": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "CartoonVolumeStyle": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ChannelMerger": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "ChannelSelector": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "ChannelSplitter": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "Circle2D": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ClearcoatMaterialExtension": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": false
+   },
+   "ClipPlane": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "CollidableOffset": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "CollidableShape": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "Collision": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "CollisionCollection": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "CollisionSensor": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "CollisionSpace": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "Color": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ColorChaser": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ColorDamper": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ColorInterpolator": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ColorRGBA": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ComposedCubeMapTexture": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ComposedShader": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ComposedTexture3D": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ComposedVolumeStyle": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "Cone": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ConeEmitter": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "Contact": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "Contour2D": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ContourPolyline2D": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "Convolver": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "Coordinate": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "CoordinateChaser": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "CoordinateDamper": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "CoordinateDouble": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "CoordinateInterpolator": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "CoordinateInterpolator2D": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "Cylinder": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "CylinderSensor": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "Delay": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "DepthMode": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": false
+   },
+   "DiffuseTransmissionMaterialExtension": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": false
+   },
+   "DirectionalLight": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "DISEntityManager": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "DISEntityTypeMapping": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "Disk2D": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "DispersionMaterialExtension": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": false
+   },
+   "DoubleAxisHingeJoint": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "DynamicsCompressor": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "EaseInEaseOut": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "EdgeEnhancementVolumeStyle": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ElevationGrid": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "EmissiveStrengthMaterialExtension": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": false
+   },
+   "EnvironmentLight": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "EspduTransform": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "ExplosionEmitter": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "Extrusion": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "FillProperties": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "FloatVertexAttribute": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "Fog": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "FogCoordinate": {
+      "x3d-edit": false,
+      "castle": true,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "FontLibrary": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": false
+   },
+   "FontStyle": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ForcePhysicsModel": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "Gain": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "GeneratedCubeMapTexture": {
+      "x3d-edit": false,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "GeoCoordinate": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "GeoElevationGrid": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "GeoLocation": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "GeoLOD": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "GeoMetadata": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "GeoOrigin": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "GeoPositionInterpolator": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "GeoProximitySensor": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "GeoTouchSensor": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "GeoTransform": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "GeoViewpoint": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "Group": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "HAnimDisplacer": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "HAnimHumanoid": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "HAnimJoint": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "HAnimMotion": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "HAnimPose": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": false
+   },
+   "HAnimSegment": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "HAnimSite": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ImageCubeMapTexture": {
+      "x3d-edit": false,
+      "castle": true,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "ImageTexture": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ImageTexture3D": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ImageTextureAtlas": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": false
+   },
+   "IndexedFaceSet": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "IndexedLineSet": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "IndexedQuadSet": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "IndexedTriangleFanSet": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "IndexedTriangleSet": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "IndexedTriangleStripSet": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "Inline": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "InlineGeometry": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": false
+   },
+   "InstancedShape": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": false
+   },
+   "IntegerSequencer": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "IntegerTrigger": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "IORMaterialExtension": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": false
+   },
+   "IridescenceMaterialExtension": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": false
+   },
+   "IsoSurfaceVolumeData": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "KeySensor": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "Layer": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "LayerSet": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "Layout": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "LayoutGroup": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "LayoutLayer": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "LinePickSensor": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "LineProperties": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "LineSet": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ListenerPointSource": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "LoadSensor": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "LocalFog": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "LOD": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "Material": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "Matrix3VertexAttribute": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "Matrix4VertexAttribute": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "MetadataBoolean": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "MetadataDouble": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "MetadataFloat": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "MetadataInteger": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "MetadataSet": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "MetadataString": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "MicrophoneSource": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "MotorJoint": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "MovieTexture": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "MultiTexture": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "MultiTextureCoordinate": {
+      "x3d-edit": false,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "MultiTextureTransform": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "NavigationInfo": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "Normal": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "NormalInterpolator": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "NurbsCurve": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "NurbsCurve2D": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "NurbsOrientationInterpolator": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "NurbsPatchSurface": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "NurbsPositionInterpolator": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "NurbsSet": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "NurbsSurfaceInterpolator": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "NurbsSweptSurface": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "NurbsSwungSurface": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "NurbsTextureCoordinate": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "NurbsTrimmedSurface": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "OpacityMapVolumeStyle": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "OrientationChaser": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "OrientationDamper": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "OrientationInterpolator": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "OrthoViewpoint": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "OscillatorSource": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "PackagedShader": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "ParticleSystem": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "PeriodicWave": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "PhysicalMaterial": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "PickableGroup": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "PixelTexture": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "PixelTexture3D": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "PlaneSensor": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "PointEmitter": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "PointLight": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "PointPickSensor": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "PointProperties": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "PointSet": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "Polyline2D": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "PolylineEmitter": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "Polypoint2D": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "PositionChaser": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "PositionChaser2D": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "PositionDamper": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "PositionDamper2D": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "PositionInterpolator": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "PositionInterpolator2D": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "PrimitivePickSensor": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "ProgramShader": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "ProjectionVolumeStyle": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ProximitySensor": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "QuadSet": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ReceiverPdu": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "Rectangle2D": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "RenderedTexture": {
+      "x3d-edit": false,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": false
+   },
+   "RigidBody": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "RigidBodyCollection": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ROUTE": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ScalarChaser": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ScalarDamper": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ScalarInterpolator": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ScreenFontStyle": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "ScreenGroup": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "Script": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "SegmentedVolumeData": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ShadedVolumeStyle": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ShaderPart": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ShaderProgram": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "Shape": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "SheenMaterialExtension": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": false
+   },
+   "SignalPdu": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "SilhouetteEnhancementVolumeStyle": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "SingleAxisHingeJoint": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "SliderJoint": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "Sound": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "SpatialSound": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "SpecularGlossinessMaterial": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": false
+   },
+   "SpecularMaterialExtension": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": false
+   },
+   "Sphere": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "SphereSensor": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "SplinePositionInterpolator": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "SplinePositionInterpolator2D": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "SplineScalarInterpolator": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "SpotLight": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "SquadOrientationInterpolator": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "StaticGroup": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "StreamAudioDestination": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "StreamAudioSource": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "StringSensor": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "SurfaceEmitter": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "Switch": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "Tangent": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": false,
+      "freewrl": false
+   },
+   "TexCoordChaser2D": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "TexCoordDamper2D": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "Text": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "TextureBackground": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "TextureCoordinate": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "TextureCoordinate3D": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "TextureCoordinate4D": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "TextureCoordinateGenerator": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "TextureProjector": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "TextureProjectorParallel": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "TextureProperties": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "TextureTransform": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "TextureTransform3D": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "TextureTransformMatrix3D": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "TimeSensor": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "TimeTrigger": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ToneMappedVolumeStyle": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "TouchSensor": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "Transform": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "TransformSensor": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "TransmissionMaterialExtension": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": false
+   },
+   "TransmitterPdu": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "TriangleFanSet": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "TriangleSet": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "TriangleSet2D": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "TriangleStripSet": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "TwoSidedMaterial": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "UNIT": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "UniversalJoint": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "UnlitMaterial": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "Viewpoint": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "ViewpointGroup": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "Viewport": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "VisibilitySensor": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "VolumeData": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": true,
+      "freewrl": true
+   },
+   "VolumeEmitter": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "VolumeMaterialExtension": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": false
+   },
+   "VolumePickSensor": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "VolumeScatterMaterialExtension": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": false
+   },
+   "WaveShaper": {
+      "x3d-edit": true,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "WindPhysicsModel": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": true
+   },
+   "WorldInfo": {
+      "x3d-edit": true,
+      "castle": true,
+      "x3dom": true,
+      "freewrl": true
+   }
 }

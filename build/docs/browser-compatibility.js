@@ -41,9 +41,8 @@ function browserCompatibility (js)
       x3d_edit = map .get (json [typeName] ?.["x3d-edit"]),
       x3dom    = map .get (json [typeName] ?.["x3dom"]);
 
-
-   if (castle .includes ("blue") || freewrl .includes ("blue") || x3d_edit .includes ("blue") || x3dom .includes ("blue"))
-      console .log (component, typeName)
+   if (typeName === "")
+      console .log (component, typeName, freewrl);
 
    const replacement = `## Browser Compatibility
 
