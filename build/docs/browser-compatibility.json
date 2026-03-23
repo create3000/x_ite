@@ -465,7 +465,7 @@
       "x3d-edit": true,
       "castle": true,
       "x3dom": false,
-      "freewrl": true
+      "freewrl": false
    },
    "EspduTransform": {
       "x3d-edit": true,
@@ -819,7 +819,7 @@
       "x3d-edit": false,
       "castle": false,
       "x3dom": false,
-      "freewrl": true
+      "freewrl": false
    },
    "LoadSensor": {
       "x3d-edit": true,
@@ -1053,7 +1053,7 @@
       "x3d-edit": true,
       "castle": false,
       "x3dom": false,
-      "freewrl": true
+      "freewrl": false
    },
    "ParticleSystem": {
       "x3d-edit": false,
@@ -1419,13 +1419,13 @@
       "x3d-edit": false,
       "castle": false,
       "x3dom": false,
-      "freewrl": true
+      "freewrl": false
    },
    "StreamAudioSource": {
       "x3d-edit": false,
       "castle": false,
       "x3dom": false,
-      "freewrl": true
+      "freewrl": false
    },
    "StringSensor": {
       "x3d-edit": true,
