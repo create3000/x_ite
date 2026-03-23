@@ -80,11 +80,19 @@ Author-provided prose that describes intended purpose of the url asset.
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 {: #fields-url }
 
-*url* points to a shader source-code file that may contain a number of shaders and combined effects.
+Location and filename of shader. Multiple locations are more reliable, and including a Web address lets e-mail attachments work.
 
-#### Hint
+#### Hints
 
+- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
+- Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
+- Can replace embedded blank(s) in *url* queries with %20 for each blank character.
 - [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls)
+- Embedded ecmascript: source can also be contained in the sourceCode pseudo-field without escape characters, equivalent to last entry in the *url* list, when using other API codebases and file encodings.
+
+#### Warning
+
+- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https *url* addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
 
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
 {: #fields-autoRefresh }

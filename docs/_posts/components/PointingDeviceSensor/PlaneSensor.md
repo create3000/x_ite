@@ -87,7 +87,7 @@ Sends event and remembers last value sensed.
 
 #### Warning
 
-- ROUTE connecting rotation_changed to set_offset creates a self-reinforcing positive feedback loop and results in unmanageable response.
+- ROUTE connecting translation_changed to set_offset creates a self-reinforcing positive feedback loop and results in unmanageable response.
 
 ### SFVec2f [in, out] **minPosition** 0 0 <small>(-∞,∞)</small>
 {: #fields-minPosition }

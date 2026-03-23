@@ -85,7 +85,7 @@ Sending event *set_bind*=true makes this node active. Sending event *set_bind*=f
 
 #### Warning
 
-- Without *description*, this [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) is unlikely to appear on browser Viewpoint menus.
+- Without *description*, this Viewpoint is unlikely to appear on browser Viewpoint menus.
 
 ### SFVec3f [in, out] **position** 0 0 10 <small>(-∞,∞)</small>
 {: #fields-position }
@@ -114,18 +114,17 @@ Rotation (axis, angle in radians) of Viewpoint, relative to default -Z axis dire
 ### SFFloat [in, out] **fieldOfView** π/4 <small>(0,π)</small>
 {: #fields-fieldOfView }
 
-Minimum and maximum extents of view in units of local coordinate system. Small field of view roughly corresponds to a telephoto lens, large field of view roughly corresponds to a wide-angle lens.
+Preferred minimum viewing angle from this viewpoint in radians, providing minimum height or minimum width (whichever is smaller). Small field of view roughly corresponds to a telephoto lens, large field of view roughly corresponds to a wide-angle lens.
 
 #### Hints
 
-- Rectangular display width/height = (maxX-minX) / (maxY-minY)
-- [See Mantis 1398](https://mantis.web3d.org/view.php?id=1398)
+- Modifying Viewpoint distance to object may be better for zooming.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 #### Warnings
 
-- Minimum corner values must remain less than maximum corner values.
-- If provided, [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) *fieldOfView* has exactly four numeric values, otherwise results are undefined.
-- [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) *fieldOfView* has type MFFloat for backwards compatibility (even though SFVec4f is stricter and more correct to prevent modeling errors)
+- *fieldOfView* may not be correct for different window sizes and aspect ratios.
+- For VR/AR/MR/XR users wearing a head-mounted display (HMD), animating this field may induce motion sickness.
 
 ### SFFloat [in, out] **nearDistance** -1 <small>-1 or (0,∞)</small>
 {: #fields-nearDistance }

@@ -47,7 +47,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### SFBool [in] **set_boolean**
 {: #fields-set_boolean }
 
-If input event *set_boolean* is true, trigger output of integer value.
+If input event *set_boolean* is true, send output triggerTime event.
 
 #### Hint
 
