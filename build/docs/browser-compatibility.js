@@ -41,9 +41,6 @@ function browserCompatibility (js)
       x3d_edit = map .get (json [typeName] ?.["x3d-edit"]),
       x3dom    = map .get (json [typeName] ?.["x3dom"]);
 
-   if (typeName === "")
-      console .log (component, typeName, freewrl);
-
    const replacement = `## Browser Compatibility
 
 | Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
