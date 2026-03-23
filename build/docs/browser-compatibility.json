@@ -1069,7 +1069,7 @@
    },
    "PhysicalMaterial": {
       "x3d-edit": false,
-      "castle": false,
+      "castle": true,
       "x3dom": false,
       "freewrl": true
    },
@@ -1129,7 +1129,7 @@
    },
    "Polyline2D": {
       "x3d-edit": true,
-      "castle": false,
+      "castle": true,
       "x3dom": true,
       "freewrl": true
    },
@@ -1141,7 +1141,7 @@
    },
    "Polypoint2D": {
       "x3d-edit": true,
-      "castle": false,
+      "castle": true,
       "x3dom": true,
       "freewrl": true
    },
@@ -1597,7 +1597,7 @@
    },
    "TriangleSet2D": {
       "x3d-edit": true,
-      "castle": false,
+      "castle": true,
       "x3dom": true,
       "freewrl": true
    },
@@ -1609,7 +1609,7 @@
    },
    "TwoSidedMaterial": {
       "x3d-edit": true,
-      "castle": false,
+      "castle": true,
       "x3dom": true,
       "freewrl": true
    },
@@ -1627,7 +1627,7 @@
    },
    "UnlitMaterial": {
       "x3d-edit": false,
-      "castle": false,
+      "castle": true,
       "x3dom": false,
       "freewrl": true
    },
