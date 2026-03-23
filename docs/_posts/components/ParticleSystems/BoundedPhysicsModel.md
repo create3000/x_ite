@@ -86,7 +86,7 @@ Optional single contained *geometry* node provides the *geometry* used for each 
 ## Browser Compatibility
 
 | Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
-|-------|--------|-------|
+|--------------------|---------|-------------------|----------|-------|
 | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
 {: .browser-compatibility }
 

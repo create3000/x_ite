@@ -103,7 +103,7 @@ Optional single contained [TextureProperties](/x_ite/components/texturing/textur
 ## Browser Compatibility
 
 | Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
-|-------|--------|-------|
+|--------------------|---------|-------------------|----------|-------|
 | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
 {: .browser-compatibility }
 

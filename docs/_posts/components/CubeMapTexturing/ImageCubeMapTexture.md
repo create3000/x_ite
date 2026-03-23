@@ -157,7 +157,7 @@ Skybox images must have an exact aspect ratio of 4:3 of width to height.
 ## Browser Compatibility
 
 | Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
-|-------|--------|-------|
+|--------------------|---------|-------------------|----------|-------|
 | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
 {: .browser-compatibility }
 

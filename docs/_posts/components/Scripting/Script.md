@@ -158,7 +158,7 @@ If *mustEvaluate* false, then the X3D player may delay sending input events to S
 ## Browser Compatibility
 
 | Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
-|-------|--------|-------|
+|--------------------|---------|-------------------|----------|-------|
 | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
 {: .browser-compatibility }
 

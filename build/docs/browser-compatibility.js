@@ -44,7 +44,7 @@ function browserCompatibility (js)
    const replacement = `## Browser Compatibility
 
 | Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
-|-------|--------|-------|
+|--------------------|---------|-------------------|----------|-------|
 | ${castle} | ${freewrl} | ${x_ite} | ${x3d_edit} | ${x3dom} |
 {: .browser-compatibility }
 
