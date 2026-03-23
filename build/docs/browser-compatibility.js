@@ -3,6 +3,10 @@ const
    { sh } = require ("shell-tools"),
    fs     = require ("fs");
 
+// https://castle-engine.io/apidoc/html/AllClasses.html
+// https://freewrl.sourceforge.io/conformance.html
+// https://doc.x3dom.org/author/nodes.html
+
 main ();
 
 function main ()
