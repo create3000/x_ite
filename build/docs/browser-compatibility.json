@@ -17,6 +17,12 @@
     "x3dom": true,
     "freewrl": true
   },
+  "AnisotropyMaterialExtension": {
+    "x3d-edit": false,
+    "castle": false,
+    "x3dom": false,
+    "freewrl": false
+  },
   "Appearance": {
     "x3d-edit": true,
     "castle": true,
@@ -76,6 +82,12 @@
     "castle": false,
     "x3dom": true,
     "freewrl": true
+  },
+  "BlendMode": {
+    "x3d-edit": false,
+    "castle": false,
+    "x3dom": true,
+    "freewrl": false
   },
   "BooleanFilter": {
     "x3d-edit": true,
@@ -179,6 +191,12 @@
     "x3dom": true,
     "freewrl": true
   },
+  "ClearcoatMaterialExtension": {
+    "x3d-edit": false,
+    "castle": false,
+    "x3dom": false,
+    "freewrl": false
+  },
   "ClipPlane": {
     "x3d-edit": true,
     "castle": true,
@@ -251,12 +269,6 @@
     "x3dom": true,
     "freewrl": true
   },
-  "component": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
   "ComposedCubeMapTexture": {
     "x3d-edit": true,
     "castle": true,
@@ -290,12 +302,6 @@
   "ConeEmitter": {
     "x3d-edit": false,
     "castle": false,
-    "x3dom": false,
-    "freewrl": true
-  },
-  "connect": {
-    "x3d-edit": true,
-    "castle": true,
     "x3dom": false,
     "freewrl": true
   },
@@ -377,6 +383,18 @@
     "x3dom": false,
     "freewrl": false
   },
+  "DepthMode": {
+    "x3d-edit": false,
+    "castle": false,
+    "x3dom": true,
+    "freewrl": false
+  },
+  "DiffuseTransmissionMaterialExtension": {
+    "x3d-edit": false,
+    "castle": false,
+    "x3dom": false,
+    "freewrl": false
+  },
   "DirectionalLight": {
     "x3d-edit": true,
     "castle": true,
@@ -400,6 +418,12 @@
     "castle": false,
     "x3dom": true,
     "freewrl": true
+  },
+  "DispersionMaterialExtension": {
+    "x3d-edit": false,
+    "castle": false,
+    "x3dom": false,
+    "freewrl": false
   },
   "DoubleAxisHingeJoint": {
     "x3d-edit": true,
@@ -429,6 +453,18 @@
     "x3d-edit": true,
     "castle": true,
     "x3dom": true,
+    "freewrl": true
+  },
+  "EmissiveStrengthMaterialExtension": {
+    "x3d-edit": false,
+    "castle": false,
+    "x3dom": false,
+    "freewrl": false
+  },
+  "EnvironmentLight": {
+    "x3d-edit": true,
+    "castle": true,
+    "x3dom": false,
     "freewrl": true
   },
   "EspduTransform": {
@@ -461,18 +497,6 @@
     "x3dom": true,
     "freewrl": true
   },
-  "field": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "fieldValue": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
-  },
   "FillProperties": {
     "x3d-edit": true,
     "castle": false,
@@ -496,6 +520,12 @@
     "castle": true,
     "x3dom": false,
     "freewrl": true
+  },
+  "FontLibrary": {
+    "x3d-edit": false,
+    "castle": false,
+    "x3dom": true,
+    "freewrl": false
   },
   "FontStyle": {
     "x3d-edit": true,
@@ -617,6 +647,12 @@
     "x3dom": false,
     "freewrl": true
   },
+  "HAnimPose": {
+    "x3d-edit": true,
+    "castle": false,
+    "x3dom": false,
+    "freewrl": false
+  },
   "HAnimSegment": {
     "x3d-edit": true,
     "castle": true,
@@ -624,12 +660,6 @@
     "freewrl": true
   },
   "HAnimSite": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "head": {
     "x3d-edit": true,
     "castle": true,
     "x3dom": true,
@@ -653,11 +683,11 @@
     "x3dom": true,
     "freewrl": true
   },
-  "IMPORT": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": false,
-    "freewrl": true
+  "ImageTextureAtlas": {
+    "x3d-edit": false,
+    "castle": false,
+    "x3dom": true,
+    "freewrl": false
   },
   "IndexedFaceSet": {
     "x3d-edit": true,
@@ -701,6 +731,18 @@
     "x3dom": true,
     "freewrl": true
   },
+  "InlineGeometry": {
+    "x3d-edit": false,
+    "castle": false,
+    "x3dom": false,
+    "freewrl": false
+  },
+  "InstancedShape": {
+    "x3d-edit": false,
+    "castle": false,
+    "x3dom": false,
+    "freewrl": false
+  },
   "IntegerSequencer": {
     "x3d-edit": true,
     "castle": true,
@@ -713,11 +755,17 @@
     "x3dom": true,
     "freewrl": true
   },
-  "IS": {
-    "x3d-edit": true,
-    "castle": true,
+  "IORMaterialExtension": {
+    "x3d-edit": false,
+    "castle": false,
     "x3dom": false,
-    "freewrl": true
+    "freewrl": false
+  },
+  "IridescenceMaterialExtension": {
+    "x3d-edit": false,
+    "castle": false,
+    "x3dom": false,
+    "freewrl": false
   },
   "IsoSurfaceVolumeData": {
     "x3d-edit": true,
@@ -819,12 +867,6 @@
     "x3d-edit": true,
     "castle": true,
     "x3dom": false,
-    "freewrl": true
-  },
-  "meta": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
     "freewrl": true
   },
   "MetadataBoolean": {
@@ -1217,6 +1259,12 @@
     "x3dom": true,
     "freewrl": true
   },
+  "RenderedTexture": {
+    "x3d-edit": false,
+    "castle": true,
+    "x3dom": true,
+    "freewrl": false
+  },
   "RigidBody": {
     "x3d-edit": true,
     "castle": false,
@@ -1307,6 +1355,12 @@
     "x3dom": true,
     "freewrl": true
   },
+  "SheenMaterialExtension": {
+    "x3d-edit": false,
+    "castle": false,
+    "x3dom": false,
+    "freewrl": false
+  },
   "SignalPdu": {
     "x3d-edit": true,
     "castle": false,
@@ -1342,6 +1396,18 @@
     "castle": false,
     "x3dom": false,
     "freewrl": true
+  },
+  "SpecularGlossinessMaterial": {
+    "x3d-edit": false,
+    "castle": false,
+    "x3dom": false,
+    "freewrl": false
+  },
+  "SpecularMaterialExtension": {
+    "x3d-edit": false,
+    "castle": false,
+    "x3dom": false,
+    "freewrl": false
   },
   "Sphere": {
     "x3d-edit": true,
@@ -1420,6 +1486,12 @@
     "castle": true,
     "x3dom": true,
     "freewrl": true
+  },
+  "Tangent": {
+    "x3d-edit": true,
+    "castle": true,
+    "x3dom": false,
+    "freewrl": false
   },
   "TexCoordChaser2D": {
     "x3d-edit": true,
@@ -1541,6 +1613,12 @@
     "x3dom": false,
     "freewrl": true
   },
+  "TransmissionMaterialExtension": {
+    "x3d-edit": false,
+    "castle": false,
+    "x3dom": false,
+    "freewrl": false
+  },
   "TransmitterPdu": {
     "x3d-edit": true,
     "castle": false,
@@ -1631,8 +1709,26 @@
     "x3dom": false,
     "freewrl": true
   },
+  "VolumeMaterialExtension": {
+    "x3d-edit": false,
+    "castle": false,
+    "x3dom": false,
+    "freewrl": false
+  },
   "VolumePickSensor": {
     "x3d-edit": false,
+    "castle": false,
+    "x3dom": false,
+    "freewrl": true
+  },
+  "VolumeScatterMaterialExtension": {
+    "x3d-edit": false,
+    "castle": false,
+    "x3dom": false,
+    "freewrl": false
+  },
+  "WaveShaper": {
+    "x3d-edit": true,
     "castle": false,
     "x3dom": false,
     "freewrl": true
@@ -1644,12 +1740,6 @@
     "freewrl": true
   },
   "WorldInfo": {
-    "x3d-edit": true,
-    "castle": true,
-    "x3dom": true,
-    "freewrl": true
-  },
-  "X3D": {
     "x3d-edit": true,
     "castle": true,
     "x3dom": true,

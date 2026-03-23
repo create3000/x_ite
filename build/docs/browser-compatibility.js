@@ -21,8 +21,6 @@ function browserCompatibility (js)
    if (typeName .startsWith ("X3D"))
       return;
 
-   console .log (component, typeName);
-
    if (component .includes ("Annotation"))
       return;
 
@@ -38,10 +36,14 @@ function browserCompatibility (js)
 
    const
       x_ite    = map .get (js_f .match (/THIS NODE IS NOT SUPPORTED/) ? false : true),
-      x3d_edit = map .get (json [typeName] ?.["x3d-edit"]),
       castle   = map .get (json [typeName] ?.["castle"]),
-      x3dom    = map .get (json [typeName] ?.["x3dom"]),
-      freewrl  = map .get (json [typeName] ?.["freewrl"]);
+      freewrl  = map .get (json [typeName] ?.["freewrl"]),
+      x3d_edit = map .get (json [typeName] ?.["x3d-edit"]),
+      x3dom    = map .get (json [typeName] ?.["x3dom"]);
+
+
+   if (castle .includes ("blue") || freewrl .includes ("blue") || x3d_edit .includes ("blue") || x3dom .includes ("blue"))
+      console .log (component, typeName)
 
    const replacement = `## Browser Compatibility
 
