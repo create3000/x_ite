@@ -6,6 +6,7 @@ icon: fas fa-rocket
 order: 4
 monaco: true
 ---
+<script>$("title") .text ("Playground | X_ITE X3D Browser");</script>
 <style>
 @import url(https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block);
 @import url(https://cdn.jsdelivr.net/npm/material-icons@1.13.14/iconfont/material-icons.min.css);
