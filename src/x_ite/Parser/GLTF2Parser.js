@@ -1048,18 +1048,32 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    {
       const images = [ ];
 
-      if (this .extensions .has ("KHR_texture_basisu"))
-         images .push (this .images [texture .extensions ?.KHR_texture_basisu ?.source]);
-
-      if (this .extensions .has ("EXT_texture_avif"))
-         images .push (this .images [texture .extensions ?.EXT_texture_avif ?.source]);
-
-      if (this .extensions .has ("EXT_texture_webp"))
-         images .push (this .images [texture .extensions ?.EXT_texture_webp ?.source]);
+      this .textureImageExtensionsObject (texture .extensions, images)
 
       images .push (this .images [texture .source]);
 
       return images .filter (image => image);
+   },
+   textureImageExtensionsObject (extensions, images)
+   {
+      if (!(extensions instanceof Object))
+         return;
+
+      for (const [key, extension] of Object .entries (extensions))
+      {
+         switch (key)
+         {
+            case "KHR_texture_basisu":
+            case "EXT_texture_avif":
+            case "EXT_texture_webp":
+            {
+               if (this .extensions .has (key))
+                  images .push (this .images [extension ?.source]);
+
+               break;
+            }
+         }
+      }
    },
    materialsArray (materials)
    {
