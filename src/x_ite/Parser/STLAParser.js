@@ -63,7 +63,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
       if (typeof this .input !== "string")
          return false;
 
-      return !! this .input .match (/^(?:[\x20\n\t\r]+|;.*?[\r\n])*\bsolid\b.*?\bendsolid\b/s);
+      return !! this .input .match (/^(?:[\x20\n\t\r]|;.*?[\r\n])*\bsolid\b.*?\bendsolid\b/s);
    },
    parseIntoScene (resolve, reject)
    {
