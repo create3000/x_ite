@@ -25,8 +25,8 @@ import DEVELOPMENT               from "../DEVELOPMENT.js";
 const Grammar = Expressions ({
    // General
    Whitespaces: /[\x20\n,\t\r]+/gy,
-   Comment:     /#\/\*[\s\S]*?\*\/#|#.*?(?=[\n\r]|$)/gy,
-   Comment3_2:  /#.*?(?=[\n\r]|$)/gy,
+   Comment:     /#\/\*[\s\S]*?\*\/#|#[^\r\n]*(?=[\n\r]|$)/gy,
+   Comment3_2:  /#[^\r\n]*(?=[\n\r]|$)/gy,
    Break:       /\r?\n/g,
 
    // Header
