@@ -28,6 +28,9 @@ function xml (string)
    const parser = new XMLParser ({
       ignoreAttributes: false,
       attributeNamePrefix: "",
+      processEntities: {
+         maxTotalExpansions: 10_000,
+      },
    });
 
    return parser .parse (string);
