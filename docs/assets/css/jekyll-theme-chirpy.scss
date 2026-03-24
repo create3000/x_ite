@@ -165,6 +165,10 @@ html {
   text-transform: uppercase;
 }
 
+li.nav-item:has(> a[href="/x_ite/tags/"]) {
+  display: none;
+}
+
 .nav-wrapper {
   margin-top: 4rem;
   border-left: 1px solid var(--nav-border-color);
