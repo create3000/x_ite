@@ -30,6 +30,8 @@ Object .assign (Object .setPrototypeOf (LayoutLayer .prototype, X3DLayerNode .pr
       this ._removeChildren .addFieldInterest (groupNode ._removeChildren);
       this ._children       .addFieldInterest (groupNode ._children);
 
+      groupNode ._children .addFieldInterest (this ._children);
+      
       groupNode ._layout   = this ._layout;
       groupNode ._children = this ._children;
 

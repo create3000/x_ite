@@ -29,6 +29,8 @@ Object .assign (Object .setPrototypeOf (Layer .prototype, X3DLayerNode .prototyp
       this ._removeChildren .addFieldInterest (groupNode ._removeChildren);
       this ._children       .addFieldInterest (groupNode ._children);
 
+      groupNode ._children .addFieldInterest (this ._children);
+
       groupNode ._children = this ._children;
 
       groupNode .setPrivate (true);
