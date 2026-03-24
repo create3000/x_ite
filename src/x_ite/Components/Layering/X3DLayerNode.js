@@ -56,6 +56,7 @@ function X3DLayerNode (executionContext, defaultViewpoint, groupNode)
    this .active     = false;
    this .layer0     = false;
    this .groupNodes = groupNodes;
+   this .groupNode  = groupNode;
 
    this .defaultNavigationInfo = new NavigationInfo (executionContext);
    this .defaultViewpoint      = defaultViewpoint;
@@ -85,6 +86,19 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
       X3DNode         .prototype .initialize .call (this);
       X3DRenderObject .prototype .initialize .call (this);
 
+      this ._hidden         .addInterest ("set_visible_and_hidden__", this);
+      this ._visible        .addInterest ("set_visible_and_hidden__", this);
+      this ._viewport       .addInterest ("set_viewport__",           this);
+      this ._addChildren    .addInterest ("set_addChildren__",        this);
+      this ._removeChildren .addInterest ("set_removeChildren__",     this);
+
+      this ._children .addFieldInterest (this .groupNode ._children);
+      this .groupNode ._children .addFieldInterest (this ._children);
+
+      this .groupNode ._children = this ._children;
+
+      this .groupNode .setPrivate (true);
+
       this .defaultNavigationInfo .setup ();
       this .defaultViewpoint      .setup ();
       this .defaultBackground     .setup ();
@@ -99,10 +113,6 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
       this .viewpoints      .setup ();
       this .backgrounds     .setup ();
       this .fogs            .setup ();
-
-      this ._hidden   .addInterest ("set_visible_and_hidden__", this);
-      this ._visible  .addInterest ("set_visible_and_hidden__", this);
-      this ._viewport .addInterest ("set_viewport__",           this);
 
       this .set_visible_and_hidden__ ();
       this .set_viewport__ ();
@@ -138,6 +148,10 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    getGroups ()
    {
       return this .groupNodes;
+   },
+   getGroup ()
+   {
+      return this .groupNode;
    },
    getViewport ()
    {
@@ -230,6 +244,24 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
    {
       this .viewportNode = X3DCast (X3DConstants .X3DViewportNode, this ._viewport)
          ?? this .getBrowser () .getDefaultViewport ();
+   },
+   set_addChildren__ ()
+   {
+      this ._addChildren .setTainted (true);
+
+      this .groupNode ._addChildren = this ._addChildren;
+      this ._addChildren .length    = 0;
+
+      this ._addChildren .setTainted (false);
+   },
+   set_removeChildren__ ()
+   {
+      this ._removeChildren .setTainted (true);
+
+      this .groupNode ._removeChildren = this ._removeChildren;
+      this ._removeChildren .length    = 0;
+
+      this ._removeChildren .setTainted (false);
    },
    bindBindables (viewpointName)
    {
