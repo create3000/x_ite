@@ -28,6 +28,7 @@ $("#open-files a") .on ("click", event =>
       ".vrml",
       ".gltf",
       ".glb",
+      ".vrm",
       ".obj",
       ".stl",
       ".ply",
