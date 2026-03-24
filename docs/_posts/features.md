@@ -7,7 +7,7 @@ tags: [Features, glTF]
 ---
 ## Overview
 
-![X3D Logo](/assets/img/features/x3d.png){: .normal width="985" height="200" }
+![X3D Logo](/assets/img/features/x3d.avif){: .normal width="985" height="200" }
 
 X_ITE is a fast, small, and feature-rich JavaScript library and VRML viewer for displaying and executing X3D files, and other formats like VRML, glTF and [more](/x_ite/#supported-file-formats). It makes things like WebGL programming, document access and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers.
 
@@ -21,7 +21,7 @@ All code is held by [CREATE3000](https://github.com/create3000) and all contribu
 
 ## Core Features
 
-![WebGL Logo](/assets/img/features/webgl.png){: .normal width="985" height="200" }
+![WebGL Logo](/assets/img/features/webgl.avif){: .normal width="985" height="200" }
 
 Although WebGL acts behind the scenes you do not need any special knowledge about that. There are many of ready to use [X3D nodes](/x_ite/supported-nodes/) that will make life easier. X_ITE provides comprehensive X3D support, which is complete and standard compliant.
 
@@ -58,7 +58,7 @@ We don't uses browser-sniffing. We keep the code consistent that makes our life 
 
 ## glTF Support
 
-![glTF Logo](/assets/img/features/glTF.png){: .normal width="985" height="200" }
+![glTF Logo](/assets/img/features/glTF.avif){: .normal width="985" height="200" }
 
 In the X_ITE X3D Browser, glTF support is very solid and integrated, allowing authors to load and render glTF 2.0 (including .gltf and .glb) assets alongside X3D and VRML content. Internally X_ITE converts imported glTF models into X3D scene graph nodes, so they become part of the interactive X3D scene and can be manipulated just like native X3D content. Recent versions have even expanded this support to include a wide range of glTF material extensions, automatically translating PBR material definitions and KHR_* extensions into corresponding X3D material extension nodes, which enhances visual fidelity and compatibility with modern glTF assets.
 
@@ -113,5 +113,7 @@ Overall, glTF support in the X_ITE X3D Browser enables modern, high-quality 3D a
 The tools [gltf-transform](https://gltf-transform.dev) and [gltfpack](https://www.npmjs.com/package/gltfpack) are widely used to optimize and transform glTF assets for efficient real-time rendering. gltf-transform provides a flexible, scriptable pipeline for inspecting, editing, and converting glTF files, supporting operations like texture compression, deduplication, and format conversion, while gltfpack focuses on aggressive size and performance optimization by applying mesh compression, quantization, and simplification techniques using meshoptimizer. Together, they form a powerful toolchain for preparing high-quality 3D models for the web, reducing file size and improving GPU performance without significantly sacrificing visual fidelity.
 
 ## VRML Viewer
+
+![VRML Logo](/assets/img/features/vrml.avif){: .normal width="985" height="200" }
 
 X_ITE can also be used effectively as a VRML viewer, providing support for classic VRML97 content alongside modern X3D features. Because X3D is a direct successor to VRML, X_ITE is capable of loading and rendering `.wrl` files, allowing users to view, interact with, and even integrate legacy VRML scenes into web-based applications without conversion. This makes X_ITE a practical and lightweight solution for visualizing older VRML assets within contemporary web environments using WebGL.
