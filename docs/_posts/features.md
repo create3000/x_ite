@@ -120,4 +120,4 @@ X_ITE can also be used effectively as a VRML viewer, providing support for class
 
 ### See Also
 
-*[VRML Specification](https://www.web3d.org/documents/specifications/14772/V2.0/)
+* [VRML Specification](https://www.web3d.org/documents/specifications/14772/V2.0/)
