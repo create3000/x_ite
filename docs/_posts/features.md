@@ -105,3 +105,7 @@ X_ITE supports most [Khronos extensions](https://github.com/KhronosGroup/glTF/tr
 - [x] [EXT_texture_webp](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Vendor/EXT_texture_webp) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/laboratory/gltf-sample-viewer/?url=https://create3000.github.io/media/glTF/WebP/WebP.gltf)
 
 Overall, glTF support in the X_ITE X3D Browser enables modern, high-quality 3D assets to be used natively within X3D workflows, bridging contemporary glTF pipelines with standards-based, interactive web 3D.
+
+### glTF Tools
+
+The tools [gltf-transform](https://gltf-transform.dev) and [gltfpack](https://www.npmjs.com/package/gltfpack) are widely used to optimize and transform glTF assets for efficient real-time rendering. gltf-transform provides a flexible, scriptable pipeline for inspecting, editing, and converting glTF files, supporting operations like texture compression, deduplication, and format conversion, while gltfpack focuses on aggressive size and performance optimization by applying mesh compression, quantization, and simplification techniques using meshoptimizer. Together, they form a powerful toolchain for preparing high-quality 3D models for the web, reducing file size and improving GPU performance without significantly sacrificing visual fidelity.
