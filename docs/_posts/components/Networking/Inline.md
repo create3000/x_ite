@@ -179,7 +179,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 | X3D XML          | .x3d, .x3dz    | model/x3d+xml     | [X3D Encoding: XML][1]          |
 | X3D JSON         | .x3dj, .x3djz  | model/x3d+json    | [X3D Encoding: JSON][2]         |
 | X3D Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml    | [X3D Encoding: Classic VRML][3] |
-| VRML 2.0         | .wrl, .wrz     | model/vrml        | [VRML Specification][4]         |
+| VRML 2.0         | .wrl, .wrz     | model/vrml        | [VRML Viewer][4]                |
 | glTF             | .gltf, .glb    | model/gltf+json   | [glTF Support][5]               |
 | VRM              | .vrm           | model/vrm         | [About VRM][6]                  |
 | Wavefront OBJ    | .obj           | model/obj         |                                 |
@@ -190,7 +190,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
   [1]: https://www.web3d.org/documents/specifications/19776-1/V3.3/index.html
   [2]: https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19776-5v4.0-WD1/Part05/X3D_JSON.html
   [3]: https://www.web3d.org/documents/specifications/19776-2/V3.3/index.html
-  [4]: https://www.web3d.org/documents/specifications/14772/V2.0/
+  [4]: /x_ite/features/#vrml-viewer
   [5]: /x_ite/features/#gltf-support
   [6]: https://vrm.dev/en/vrm/vrm_about/
 
