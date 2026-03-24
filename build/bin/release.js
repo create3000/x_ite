@@ -147,7 +147,7 @@ function legacy_message (folder)
 
 	for (const path of paths)
 	{
-		systemSync (`echo '\n;console .warn ("Use of https://create3000.github.io/code/ is discouraged. Please use files from jsDelivr, see https://create3000.github.io/x_ite/#jsdelivr-cdn");' >> ${path}`);
+		systemSync (`echo '\n;console .warn ("Use of https://create3000.github.io/code/ is discouraged. Please use X_ITE from jsDelivr, see https://create3000.github.io/x_ite/#jsdelivr-cdn");' >> ${path}`);
 	}
 }
 
