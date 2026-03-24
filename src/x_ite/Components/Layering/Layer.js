@@ -17,20 +17,7 @@ function Layer (executionContext)
    this .addType (X3DConstants .Layer);
 }
 
-Object .assign (Object .setPrototypeOf (Layer .prototype, X3DLayerNode .prototype),
-{
-   initialize ()
-   {
-      X3DLayerNode .prototype .initialize .call (this);
-
-      const
-         groupNodes = this .getGroups (),
-         groupNode  = this .getGroup ();
-
-      groupNode  .setup ();
-      groupNodes .setup ();
-   },
-});
+Object .setPrototypeOf (Layer .prototype, X3DLayerNode .prototype);
 
 Object .defineProperties (Layer,
 {

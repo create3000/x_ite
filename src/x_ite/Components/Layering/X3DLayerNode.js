@@ -98,6 +98,8 @@ Object .assign (Object .setPrototypeOf (X3DLayerNode .prototype, X3DNode .protot
       this .groupNode ._children = this ._children;
 
       this .groupNode .setPrivate (true);
+      this .groupNode .setup ();
+      this .groupNodes .setup ();
 
       this .defaultNavigationInfo .setup ();
       this .defaultViewpoint      .setup ();
