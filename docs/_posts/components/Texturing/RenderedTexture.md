@@ -3,7 +3,7 @@ title: RenderedTexture
 date: 2023-01-07
 nav: components-Texturing
 categories: [components, Texturing]
-tags: [RenderedTexture, Texturing, VRML]
+tags: [RenderedTexture, Texturing]
 ---
 <style>
 .post h3 {

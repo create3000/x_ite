@@ -242,3 +242,4 @@ Load the scene using `Browser.createX3DFromURL`, then access the [TimeSensor](/x
 ## See Also
 
 - [X3D Specification of Inline Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#Inline)
+- [VRML Viewer](/x_ite/features/#vrml-viewer)

@@ -333,3 +333,4 @@ Optional single contained [Coordinate](/x_ite/components/rendering/coordinate/) 
 ## See Also
 
 - [X3D Specification of IndexedFaceSet Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#IndexedFaceSet)
+- [VRML Viewer](/x_ite/features/#vrml-viewer)
