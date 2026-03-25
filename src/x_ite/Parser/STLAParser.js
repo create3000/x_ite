@@ -14,7 +14,7 @@ const Grammar = Expressions ({
    // General
    whitespaces: /[\x20\n\t\r,]+/gy,
    whitespacesNoLineTerminator: /[\x20\t]+/gy,
-   comment: /;[^\r\n]*(?=[\n\r]|$)/gy,
+   comment: /;[^\r\n]*(?=[\r\n]|$)/gy,
    untilEndOfLine: /[^\r\n]+/gy,
 
    // Keywords

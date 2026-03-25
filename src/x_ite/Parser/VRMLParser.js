@@ -25,12 +25,12 @@ import DEVELOPMENT               from "../DEVELOPMENT.js";
 const Grammar = Expressions ({
    // General
    Whitespaces: /[\x20\n,\t\r]+/gy,
-   Comment:     /#\/\*[\s\S]*?\*\/#|#[^\r\n]*(?=[\n\r]|$)/gy,
-   Comment3_2:  /#[^\r\n]*(?=[\n\r]|$)/gy,
+   Comment:     /#\/\*[\s\S]*?\*\/#|#[^\r\n]*(?=[\r\n]|$)/gy,
+   Comment3_2:  /#[^\r\n]*(?=[\r\n]|$)/gy,
    Break:       /\r?\n/g,
 
    // Header
-   Header:      /^#(VRML|X3D) V(.*?) (utf8)(?:[ \t]+(.*?))?[ \t]*[\n\r]/gy,
+   Header:      /^#(VRML|X3D) V(.*?) (utf8)(?:[ \t]+(.*?))?[ \t]*[\r\n]/gy,
 
    // Keywords
    AS:          /AS/gy,
