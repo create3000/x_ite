@@ -248,10 +248,6 @@ function release ()
 	systemSync (`git merge main`);
 	systemSync (`git push origin`);
 
-	// Purge camo image cache for SVG banners.
-
-	// systemSync (`npm run purge-camo`);
-
 	// publish x3d-tidy and sunrize
 
 	if (!version .endsWith ("a"))
