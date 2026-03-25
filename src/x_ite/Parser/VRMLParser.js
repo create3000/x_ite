@@ -82,7 +82,7 @@ const Grammar = Expressions ({
    noDoubleQuotes: /[^"]+/gy,
 
    CONSTANTS: /([+-]?)\b(NAN|INFINITY|INF|PI|PI2|PI1_4|PI2_4|PI3_4|PI4_4|PI5_4|PI6_4|PI7_4|PI8_4|PI1_2|PI2_2|PI3_2|PI4_2|PI1_3|PI2_3|PI3_3|PI4_3|PI5_3|PI6_3|SQRT1_2|SQRT2)\b/igy,
-   HTMLColor: /[a-zA-Z]+|0[xX][\da-fA-F]+|rgba?\(.*?\)/gy,
+   HTMLColor: /[a-zA-Z]+|0[xX][\da-fA-F]+|rgba?\([^\)]*\)/gy,
 });
 
 /*
@@ -168,7 +168,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       if (this .input .match (/^#VRML V1.0/))
          return false;
 
-      return !! this .input .match (/^(?:#X3D|#VRML|(?:[\x20\n,\t\r]|#[^\r\n]*[\r\n])*(PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]|#.*?[\r\n])*\{|$))/);
+      return !! this .input .match (/^(?:#X3D|#VRML|(?:[\x20\n,\t\r]|#[^\r\n]*[\r\n])*(PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]|#[^\r\n]*[\r\n])*\{|$))/);
    },
    parseIntoScene (resolve, reject)
    {
