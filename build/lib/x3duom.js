@@ -55,7 +55,7 @@ function uniqueMerge (value, index, array)
 
 function merge (target = { }, source = { })
 {
-   for (const key of Object .keys (source))
+   for (const key of Object .getOwnPropertyNames (source))
    {
       if (Array .isArray (target [key]))
          target [key] .push (... (Array .isArray (source [key]) ? source [key] : [source [key]]));
