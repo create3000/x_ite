@@ -263,4 +263,4 @@ Grid array of *height* vertices with upward direction along +Y axis, with xDimen
 ## See Also
 
 - [X3D Specification of ElevationGrid Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#ElevationGrid)
-- [VRML Viewer](/x_ite/features/#vrml-viewer)
+- X_ITE [VRML Viewer](/x_ite/features/#vrml-viewer)

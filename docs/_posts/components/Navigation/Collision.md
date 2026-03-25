@@ -206,4 +206,4 @@ Grouping nodes contain an ordered list of *children* nodes.
 ## See Also
 
 - [X3D Specification of Collision Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#Collision)
-- [VRML Viewer](/x_ite/features/#vrml-viewer)
+- X_ITE [VRML Viewer](/x_ite/features/#vrml-viewer)

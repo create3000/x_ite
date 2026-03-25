@@ -166,4 +166,4 @@ If *mustEvaluate* false, then the X3D player may delay sending input events to S
 
 - [X3D Specification of Script Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/scripting.html#Script)
 - [Script Node Authoring Interface](/x_ite/reference/script-node-authoring-interface/)
-- [VRML Viewer](/x_ite/features/#vrml-viewer)
+- X_ITE [VRML Viewer](/x_ite/features/#vrml-viewer)

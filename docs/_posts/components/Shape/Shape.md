@@ -141,4 +141,4 @@ Optional single contained *geometry* node that is rendered according to correspo
 ## See Also
 
 - [X3D Specification of Shape Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Shape)
-- [VRML Viewer](/x_ite/features/#vrml-viewer)
+- X_ITE [VRML Viewer](/x_ite/features/#vrml-viewer)

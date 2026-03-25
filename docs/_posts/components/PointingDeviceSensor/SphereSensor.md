@@ -138,4 +138,4 @@ Select geometry by activating the pointing device (for example, clicking the mou
 ## See Also
 
 - [X3D Specification of SphereSensor Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/pointingDeviceSensor.html#SphereSensor)
-- [VRML Viewer](/x_ite/features/#vrml-viewer)
+- X_ITE [VRML Viewer](/x_ite/features/#vrml-viewer)
