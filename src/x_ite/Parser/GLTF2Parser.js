@@ -1799,7 +1799,7 @@ function eventsProcessed ()
 
       const
          shapeNode    = this .createShape (primitive, weights, skin, EXT_mesh_gpu_instancing),
-         variantsNode = this .khrMaterialsVariantsExtension (primitive .extensions, shapeNode);
+         variantsNode = this .khrMaterialsVariantsExtension (primitive .extensions ?.KHR_materials_variants, shapeNode);
 
       shapeNodes .push (primitive .shapeNode = variantsNode ?? shapeNode);
    },
@@ -1963,14 +1963,7 @@ function eventsProcessed ()
          draco .destroy (buffer);
       }
    },
-   khrMaterialsVariantsExtension (extensions, shapeNode)
-   {
-      if (!(extensions instanceof Object))
-         return;
-
-      return this .khrMaterialsVariantsObjectMappings (extensions .KHR_materials_variants, shapeNode);
-   },
-   khrMaterialsVariantsObjectMappings (KHR_materials_variants, shapeNode)
+   khrMaterialsVariantsExtension (KHR_materials_variants, shapeNode)
    {
       if (!(KHR_materials_variants instanceof Object))
          return;
