@@ -21,9 +21,14 @@ function copy_files ()
 
 function html ()
 {
+	const jquery = `<script
+		src="https://code.jquery.com/jquery-4.0.0.min.js"
+		integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao="
+		crossorigin="anonymous"></script>`;
+
    systemSync (`cp src/x_ite.html x_ite.min.html`);
 	systemSync (`perl -p0i -e 's|\\s*<!-- X_ITE START.*?X_ITE END -->|\\n|sg'  x_ite.min.html`);
-	systemSync (`perl -p0i -e 's|<!-- JQUERY -->|<script src="https://code.jquery.com/jquery-latest.js"></script>|sg' x_ite.min.html`);
+	systemSync (`perl -p0i -e 's|<!-- JQUERY -->|${jquery}|sg'                 x_ite.min.html`);
 	systemSync (`perl -p0i -e 's|"./x_ite.js"|"./dist/x_ite.min.mjs"|sg'       x_ite.min.html`);
 	systemSync (`perl -p0i -e 's|"x_ite.js"|"dist/x_ite.min.js"|sg'            x_ite.min.html`);
 	systemSync (`perl -p0i -e 's|\\.\\./x_ite.min.html|src/x_ite.html|sg'      x_ite.min.html`);
