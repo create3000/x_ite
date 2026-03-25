@@ -101,11 +101,15 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
       if (scene)
       {
          const
-            hash  = new URL (scene .getWorldURL ()) .hash .substring (1),
-            proto = hash ? scene .protos .get (hash) : scene .protos [0];
+            browser = this .getBrowser (),
+            hash    = new URL (scene .getWorldURL ()) .hash .substring (1),
+            proto   = hash ? scene .protos .get (hash) : scene .protos [0];
 
          if (!proto)
             throw new Error ("PROTO not found.");
+
+         scene .setExecutionContext (scene .cache ? browser .getDefaultScene () : this .getExecutionContext ());
+         scene .setLive (true);
 
          this .setLoadState (X3DConstants .COMPLETE_STATE);
          this .setProtoDeclaration (proto);

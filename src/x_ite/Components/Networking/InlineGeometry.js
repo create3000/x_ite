@@ -61,7 +61,9 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
 
       if (scene)
       {
-         const hash = new URL (scene .getWorldURL ()) .hash .substring (1);
+         const
+            browser = this .getBrowser (),
+            hash    = new URL (scene .getWorldURL ()) .hash .substring (1);
 
          this .geometryNode = hash
             ? X3DCast (X3DConstants .X3DGeometryNode, scene .getNamedNode (hash))
@@ -69,6 +71,9 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
 
          if (!this .geometryNode)
             throw new Error ("No X3DGeometryNode found.");
+
+         this .scene .setExecutionContext (scene .cache ? browser .getDefaultScene () : this .getExecutionContext ());
+         this .scene .setLive (true);
 
          this .geometryNode .addInterest ("requestRebuild", this);
          this .geometryNode ._transparent .addFieldInterest (this ._transparent);
