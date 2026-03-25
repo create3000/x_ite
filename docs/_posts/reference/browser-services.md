@@ -3,7 +3,7 @@ title: Browser Services
 date: 2022-11-28
 nav: reference
 categories: [Reference]
-tags: [Browser, X3DBrowser, ECMAScript, Javascript]
+tags: [Browser, X3DBrowser, ECMAScript, Javascript, gltF, VRML]
 ---
 ## Browser Object
 
