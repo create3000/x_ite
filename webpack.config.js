@@ -4,14 +4,14 @@ const
    path     = require ("path"),
    fs       = require ("fs"),
    os       = require ("os"),
-   { exec } = require ("child_process"),
+   { exec, execFile } = require ("child_process"),
    { sh }   = require ("shell-tools");
 
 for (const filename of fs .readdirSync ("./src/assets/lib/") .filter (filename => filename .match (/\.js$/)))
 {
    console .log (`Compressing ${filename} ...`);
 
-   exec (`terser -c -m -p bare_returns -o ./dist/assets/lib/${filename} ./src/assets/lib/${filename}`);
+   execFile (`terser`, [`-c`, `-m`, `-p`, `bare_returns`, `-o`, `./dist/assets/lib/${filename}`, `./src/assets/lib/${filename}`]);
 }
 
 const
