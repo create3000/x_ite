@@ -80,7 +80,7 @@ const Grammar = Expressions ({
    doubleQuotes: /"/y,
    noDoubleQuotes: /[^"]+/y,
 
-   CONSTANTS: /([+-]?)\b(NAN|INFINITY|INF|PI|PI2|PI1_4|PI2_4|PI3_4|PI4_4|PI5_4|PI6_4|PI7_4|PI8_4|PI1_2|PI2_2|PI3_2|PI4_2|PI1_3|PI2_3|PI3_3|PI4_3|PI5_3|PI6_3|SQRT1_2|SQRT2)\b/iy,
+   CONSTANTS: /([+-]?)\b(NAN|INFINITY|INF|PI(?:2|1_4|2_4|3_4|4_4|5_4|6_4|7_4|8_4|1_2|2_2|3_2|4_2|1_3|2_3|3_3|4_3|5_3|6_3)?|SQRT(?:1_2|2))\b/iy,
    HTMLColor: /[a-zA-Z]+|0[xX][\da-fA-F]+|rgba?\([^\)]*\)/y,
 });
 
