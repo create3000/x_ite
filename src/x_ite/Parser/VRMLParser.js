@@ -25,7 +25,7 @@ import DEVELOPMENT               from "../DEVELOPMENT.js";
 const Grammar = Expressions ({
    // General
    Whitespaces: /[\x20\n,\t\r]+/gy,
-   Comment:     /#\/\*[\s\S]*?\*\/#|#[^\r\n]*(?=[\r\n]|$)/gy,
+   Comment:     /#\/\*[^]*?\*\/#|#[^\r\n]*(?=[\r\n]|$)/gy,
    LineFeed:    /\n/g,
 
    // Header
@@ -162,7 +162,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       if (this .input .match (/^#VRML V1.0/))
          return false;
 
-      return !! this .input .match (/^(?:#X3D|#VRML|(?:[\x20\n,\t\r]|#\/\*[\s\S]*?\*\/#|#[^\r\n]*[\r\n])*(?:PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]|#\/\*[\s\S]*?\*\/#|#[^\r\n]*[\r\n])*\{|$))/);
+      return !! this .input .match (/^(?:#X3D|#VRML|(?:[\x20\n,\t\r]|#\/\*[^]*?\*\/#|#[^\r\n]*[\r\n])*(?:PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]|#\/\*[^]*?\*\/#|#[^\r\n]*[\r\n])*\{|$))/);
    },
    parseIntoScene (resolve, reject)
    {
