@@ -22,28 +22,28 @@ import MatrixStack  from "../../standard/Math/Utility/MatrixStack.js";
 // Lexical elements
 const Grammar = Expressions ({
    // General
-   whitespaces: /[\x20\n\t\r]+/gy,
-   comma: /,/gy,
-   openParenthesis: /\(/gy,
-   closeParenthesis: /\)/gy,
+   whitespaces: /[\x20\n\t\r]+/y,
+   comma: /,/y,
+   openParenthesis: /\(/y,
+   closeParenthesis: /\)/y,
 
    // Units
-   length: /em|ex|px|in|cm|mm|pt|pc|%/gy,
-   percent: /%/gy,
+   length: /em|ex|px|in|cm|mm|pt|pc|%/y,
+   percent: /%/y,
 
    // Values
-   int32: /(?:0[xX][\da-fA-F]+)|(?:[+-]?\d+)/gy,
-   double: /[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/gy,
-   constants: /([+-])((?:NAN|INF|INFINITY))/igy,
-   matrix: /matrix/gy,
-   translate: /translate/gy,
-   rotate: /rotate/gy,
-   scale: /scale/gy,
-   skewX: /skewX/gy,
-   skewY: /skewY/gy,
-   color: /[a-zA-Z]+|#[\da-fA-F]+|rgba?\([^\)]*\)/gy,
-   url: /url\("?(.*?)"?\)/gy,
-   path: /[mMlLhHvVqQtTcCsSaAzZ]/gy,
+   int32: /(?:0[xX][\da-fA-F]+)|(?:[+-]?\d+)/y,
+   double: /[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/y,
+   constants: /([+-])((?:NAN|INF|INFINITY))/iy,
+   matrix: /matrix/y,
+   translate: /translate/y,
+   rotate: /rotate/y,
+   scale: /scale/y,
+   skewX: /skewX/y,
+   skewY: /skewY/y,
+   color: /[a-zA-Z]+|#[\da-fA-F]+|rgba?\([^\)]*\)/y,
+   url: /url\("?(.*?)"?\)/y,
+   path: /[mMlLhHvVqQtTcCsSaAzZ]/y,
 });
 
 /*

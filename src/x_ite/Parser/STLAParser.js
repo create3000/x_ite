@@ -12,26 +12,26 @@ import Color3      from "../../standard/Math/Numbers/Color3.js";
 // Lexical elements
 const Grammar = Expressions ({
    // General
-   whitespaces: /[\x20\n\t\r,]+/gy,
-   whitespacesNoLineTerminator: /[\x20\t]+/gy,
-   comment: /;[^\r\n]*(?=[\r\n]|$)/gy,
-   untilEndOfLine: /[^\r\n]+/gy,
+   whitespaces: /[\x20\n\t\r,]+/y,
+   whitespacesNoLineTerminator: /[\x20\t]+/y,
+   comment: /;[^\r\n]*(?=[\r\n]|$)/y,
+   untilEndOfLine: /[^\r\n]+/y,
 
    // Keywords
-   solid: /\bsolid\b/gy,
-   facet: /\bfacet\b/gy,
-   normal: /\bnormal\b/gy,
-   outer: /\bouter\b/gy,
-   loop: /\bloop\b/gy,
-   vertex: /\bvertex\b/gy,
-   endloop: /\bendloop\b/gy,
-   endfacet: /\bendfacet\b/gy,
-   endsolid: /\bendsolid\b/gy,
+   solid: /\bsolid\b/y,
+   facet: /\bfacet\b/y,
+   normal: /\bnormal\b/y,
+   outer: /\bouter\b/y,
+   loop: /\bloop\b/y,
+   vertex: /\bvertex\b/y,
+   endloop: /\bendloop\b/y,
+   endfacet: /\bendfacet\b/y,
+   endsolid: /\bendsolid\b/y,
 
    // Values
-   name: /\w+/gy,
-   double: /[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/gy,
-   constants: /([+-])((?:NAN|INF|INFINITY))/igy,
+   name: /\w+/y,
+   double: /[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/y,
+   constants: /([+-])((?:NAN|INF|INFINITY))/iy,
 });
 
 /*
