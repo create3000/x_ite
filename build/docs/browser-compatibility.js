@@ -52,11 +52,11 @@ function browserCompatibility (js)
 | ${castle} | ${freewrl} | ${x_ite} | ${x3d_edit} | ${x3dom} |
 {: .browser-compatibility }
 
-## `;
+`;
 
    let md_f = sh ("cat", md);
 
-   md_f = md_f .replace (/## Browser Compatibility.*?##\s/s, replacement);
+   md_f = md_f .replace (/## Browser Compatibility.*?(?=##\s)/s, replacement);
 
    fs .writeFileSync (md, md_f);
 }
