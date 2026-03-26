@@ -29,7 +29,7 @@ const Grammar = Expressions ({
    LineFeed:    /\n/g,
 
    // Header
-   Header:      /^#(VRML|X3D) V(.*?) (utf8)(?:[ \t]+(.*?))?[ \t]*[\r\n]/y,
+   Header:      /^#(VRML|X3D) V(.*?) (utf8)(.*?)?[\r\n]/y,
 
    // Keywords
    AS:          /AS/y,
