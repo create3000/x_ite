@@ -76,4 +76,4 @@ Set of unit-length normal vectors, corresponding to indexed polygons or vertices
 ## See Also
 
 - [X3D Specification of Normal Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#Normal)
-- X_ITE [VRML Viewer](/x_ite/features/#vrml-viewer)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

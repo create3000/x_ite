@@ -259,4 +259,4 @@ The *navigationInfo* field defines a dedicated [NavigationInfo](/x_ite/component
 ## See Also
 
 - [X3D Specification of Viewpoint Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#Viewpoint)
-- X_ITE [VRML Viewer](/x_ite/features/#vrml-viewer)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

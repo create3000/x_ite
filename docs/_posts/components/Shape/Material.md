@@ -333,4 +333,4 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 ## See Also
 
 - [X3D Specification of Material Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Material)
-- X_ITE [VRML Viewer](/x_ite/features/#vrml-viewer)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)
