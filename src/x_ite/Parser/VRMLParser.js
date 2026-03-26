@@ -25,7 +25,7 @@ import DEVELOPMENT               from "../DEVELOPMENT.js";
 const Grammar = Expressions ({
    // General
    Whitespaces: /[\x20\n,\t\r]+/gy,
-   Comment:     /#\/\*[^]*?\*\/#|#[^\r\n]*(?=[\r\n]|$)/gy,
+   Comment:     /#\/\*.*?\*\/#|#[^\r\n]*(?=[\r\n]|$)/sgy,
    LineFeed:    /\n/g,
 
    // Header
