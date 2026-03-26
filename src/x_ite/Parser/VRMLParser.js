@@ -72,7 +72,7 @@ const Grammar = Expressions ({
    eventOut:     /eventOut/y,
    exposedField: /exposedField/y,
 
-   FieldType: /[SM]F(?:Bool|ColorRGBA|Color|Double|Float|Image|Int32|Matrix3d|Matrix3f|Matrix4d|Matrix4f|Node|Rotation|String|Time|Vec2d|Vec2f|Vec3d|Vec3f|Vec4d|Vec4f)/y,
+   FieldType: /[SM]F(?:Bool|Color(?:RGBA)?|Double|Float|Image|Int32|Matrix[34][df]|Node|Rotation|String|Time|Vec[234][df])/y,
 
    // Values
    int32: /(?:0[xX][\da-fA-F]+)|(?:[+-]?\d+)/y,
