@@ -35,7 +35,7 @@ Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, X3DPickS
       this .pickingGeometryNode = null;
 
       const
-         node = this ._pickingGeometry .getValue () .getInnerNode (),
+         node = this ._pickingGeometry .getValue () ?.getInnerNode (),
          type = node ?.getType () ?? [ ];
 
       for (let t = type .length - 1; t >= 0; -- t)

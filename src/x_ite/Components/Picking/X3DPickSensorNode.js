@@ -271,7 +271,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
       for (const node of this ._pickTarget)
       {
          const
-            innerNode = node .getValue () .getInnerNode (),
+            innerNode = node ?.getValue () .getInnerNode (),
             type      = innerNode ?.getType () ?? [ ];
 
          for (let t = type .length - 1; t >= 0; -- t)
