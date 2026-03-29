@@ -53,6 +53,8 @@ Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, X3DPickS
             default:
                continue;
          }
+
+         break;
       }
    },
    process: (() =>

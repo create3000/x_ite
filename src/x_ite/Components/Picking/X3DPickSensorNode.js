@@ -288,6 +288,8 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
                default:
                   continue;
             }
+
+            break;
          }
       }
    },
