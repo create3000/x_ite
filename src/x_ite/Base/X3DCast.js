@@ -1,5 +1,5 @@
-import Fields      from "../Fields.js";
-import X3DBaseNode from "./X3DBaseNode.js";
+import Fields  from "../Fields.js";
+import X3DNode from "../Components/Core/X3DNode.js";
 
 function X3DCast (type, node, innerNode = true)
 {
@@ -10,7 +10,7 @@ function X3DCast (type, node, innerNode = true)
 
       node = innerNode ? node ?.getInnerNode () : node ?.valueOf ();
 
-      if (node instanceof X3DBaseNode)
+      if (node instanceof X3DNode)
       {
          if (node .getType () .includes (type))
             return node;
