@@ -98,7 +98,7 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
    },
    getInternalScene ()
    {
-      ///  Returns the internal X3DScene of this inline, that is loaded from the url given.
+      ///  Returns the internal X3DScene of this Inline node, that is loaded from the url given.
       ///  If the load field was false an empty scene is returned.  This empty scene is the same for all Inline
       ///  nodes (due to performance reasons).
 

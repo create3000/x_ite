@@ -1,6 +1,7 @@
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DChildObject       from "../../Base/X3DChildObject.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DGeometryNode      from "../Rendering/X3DGeometryNode.js";
 import X3DLineGeometryNode  from "../Rendering/X3DLineGeometryNode.js";
@@ -49,9 +50,6 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
    {
       // Remove old scene.
 
-      this .geometryNode ?.removeInterest ("requestRebuild", this);
-      this .geometryNode ?._transparent .removeFieldInterest (this ._transparent);
-
       if (!this .scene ?.cache)
          this .scene ?.dispose ();
 
@@ -75,9 +73,6 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
          this .scene .setExecutionContext (scene .cache ? browser .getDefaultScene () : this .getExecutionContext ());
          this .scene .setLive (true);
 
-         this .geometryNode .addInterest ("requestRebuild", this);
-         this .geometryNode ._transparent .addFieldInterest (this ._transparent);
-
          this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
       else
@@ -87,18 +82,21 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
          this .setLoadState (X3DConstants .FAILED_STATE);
       }
 
-      this .requestRebuild ();
+      X3DChildObject .prototype .addEvent .call (this);
    },
    getInternalScene ()
    {
-      ///  Returns the internal X3DScene of this inline, that is loaded from the url given.
+      ///  Returns the internal X3DScene of this InlineGeometry node, that is loaded from the url given.
       ///  If the load field was false, null is returned.
 
       return this .scene;
    },
-   getGeometry ()
+   getInnerNode ()
    {
-      return this .geometryNode;
+      if (this .geometryNode)
+         return this .geometryNode;
+
+      throw new Error ("Geometry node not available.");
    },
    getGeometryFromArray (nodes)
    {
@@ -146,33 +144,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
       }
    },
    build ()
-   {
-      const { geometryNode } = this;
-
-      if (!geometryNode)
-         return;
-
-      this .setTextureCoordinate (geometryNode .getTextureCoordinate ());
-
-      this .getCoordIndices ()   .assign (geometryNode .getCoordIndices ());
-      this .getAttribs ()        .push (... geometryNode .getAttribs ());
-      this .getFogDepths ()      .assign (geometryNode .getFogDepths ());
-      this .getColors ()         .assign (geometryNode .getColors ());
-      this .getMultiTexCoords () .push (... geometryNode .getMultiTexCoords ());
-      this .getTexCoords ()      .assign (geometryNode .getTexCoords ());
-      this .getTangents ()       .assign (geometryNode .getTangents ());
-      this .getNormals ()        .assign (geometryNode .getNormals ());
-      this .getVertices ()       .assign (geometryNode .getVertices ());
-
-      this .getMin () .assign (geometryNode .getMin ());
-      this .getMax () .assign (geometryNode .getMax ());
-
-      this .setGeometryType (geometryNode .getGeometryType ());
-      this .setTransparent (geometryNode .isTransparent ());
-      this .setSolid (geometryNode .isSolid ());
-      this .setCCW (geometryNode .getCCW ());
-      this .setBase (geometryNode);
-   },
+   { },
    dispose ()
    {
       X3DUrlObject    .prototype .dispose .call (this);
