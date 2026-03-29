@@ -4,7 +4,7 @@ const
    path     = require ("path"),
    fs       = require ("fs"),
    os       = require ("os"),
-   { exec, execFile } = require ("child_process"),
+   { execFile } = require ("child_process"),
    { sh }   = require ("shell-tools");
 
 for (const filename of fs .readdirSync ("./src/assets/lib/") .filter (filename => filename .match (/\.js$/)))
