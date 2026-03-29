@@ -1,9 +1,9 @@
-/* X_ITE v14.1.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.1.1")];
+/* X_ITE v14.1.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.1.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 140
+/***/ 337
 (module, __unused_webpack_exports, __webpack_require__) {
 
 var __webpack_dirname__ = "/";
@@ -40,7 +40,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ },
 
-/***/ 518
+/***/ 59
 (module, __unused_webpack_exports, __webpack_require__) {
 
 var __webpack_dirname__ = "/";
@@ -77,7 +77,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ },
 
-/***/ 654
+/***/ 459
 (module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4035,7 +4035,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ },
 
-/***/ 30
+/***/ 163
 (module) {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5611,10 +5611,10 @@ var external_X_ITE_X3D_jquery_default = /*#__PURE__*/__webpack_require__.n(exter
 // Grammar
 
 const Grammar = external_X_ITE_X3D_Expressions_default() ({
-   NRRD: /^NRRD(\d+)\n/gy,
-   field: /([\w\s]+):\s*(.+?)\n/gy,
-   comment: /#[^\n]*\n/gy,
-   newLine: /\n/gy,
+   NRRD: /^NRRD(\d+)\n/y,
+   field: /([\w\s]+):\s*(.+?)\n/y,
+   comment: /#[^\n]*\n/y,
+   newLine: /\n/y,
 });
 
 // Parser
@@ -5773,7 +5773,7 @@ Object .assign (NRRDParser .prototype,
    getSizes (value)
    {
       const
-         num   = /\s*(\d+)/gy,
+         num   = /\s*(\d+)/y,
          sizes = [ ];
 
       let result;
@@ -7179,10 +7179,10 @@ var Decoder = class _Decoder {
 const external_X_ITE_X3D_DEVELOPMENT_namespaceObject = __X_ITE_X3D__ .DEVELOPMENT;
 var external_X_ITE_X3D_DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_DEVELOPMENT_namespaceObject);
 ;// ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(654);
-/* provided dependency */ var jpegDecode = __webpack_require__(30);
-/* provided dependency */ var CharLS = __webpack_require__(140);
-/* provided dependency */ var OpenJPEG = __webpack_require__(518);
+/* provided dependency */ var dicomParser = __webpack_require__(459);
+/* provided dependency */ var jpegDecode = __webpack_require__(163);
+/* provided dependency */ var CharLS = __webpack_require__(337);
+/* provided dependency */ var OpenJPEG = __webpack_require__(59);
 
 
 

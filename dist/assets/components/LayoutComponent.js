@@ -1,5 +1,5 @@
-/* X_ITE v14.1.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.1.1")];
+/* X_ITE v14.1.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.1.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -922,22 +922,14 @@ Object .assign (Object .setPrototypeOf (LayoutLayer .prototype, (external_X_ITE_
 {
    initialize ()
    {
+      const groupNode = this .getGroup ();
+
+      this ._layout .addFieldInterest (groupNode ._layout);
+
+      groupNode ._layout = this ._layout;
+
+      // Call super at end!
       external_X_ITE_X3D_X3DLayerNode_default().prototype .initialize .call (this);
-
-      const groupNode = this .getGroups () ._children [0] .getValue ();
-
-      this ._layout         .addFieldInterest (groupNode ._layout);
-      this ._addChildren    .addFieldInterest (groupNode ._addChildren);
-      this ._removeChildren .addFieldInterest (groupNode ._removeChildren);
-      this ._children       .addFieldInterest (groupNode ._children);
-
-      groupNode ._layout   = this ._layout;
-      groupNode ._children = this ._children;
-
-      groupNode .setPrivate (true);
-      groupNode .setup ();
-
-      this .getGroups () .setup ();
    },
 });
 
