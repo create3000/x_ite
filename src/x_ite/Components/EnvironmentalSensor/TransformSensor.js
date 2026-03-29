@@ -4,6 +4,7 @@ import FieldDefinitionArray       from "../../Base/FieldDefinitionArray.js";
 import X3DNode                    from "../Core/X3DNode.js";
 import X3DEnvironmentalSensorNode from "./X3DEnvironmentalSensorNode.js";
 import X3DConstants               from "../../Base/X3DConstants.js";
+import X3DCast                    from "../../Base/X3DCast.js";
 import Vector3                    from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4                  from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4                    from "../../../standard/Math/Numbers/Matrix4.js";
@@ -90,33 +91,8 @@ Object .assign (Object .setPrototypeOf (TransformSensor .prototype, X3DEnvironme
    },
    set_targetObject__ ()
    {
-      this .targetObjectNode = null;
-
-      try
-      {
-         const
-            node = this ._targetObject .getValue () .getInnerNode (),
-            type = node .getType ();
-
-         for (let t = type .length - 1; t >= 0; -- t)
-         {
-            switch (type [t])
-            {
-               case X3DConstants .X3DGroupingNode:
-               case X3DConstants .X3DShapeNode:
-               {
-                  this .targetObjectNode = node;
-                  break;
-               }
-               default:
-                  continue;
-            }
-
-            break;
-         }
-      }
-      catch
-      { }
+      this .targetObjectNode = X3DCast (X3DConstants .X3DGroupingNode, this ._targetObject)
+         ?? X3DCast (X3DConstants .X3DShapeNode, this ._targetObject);
 
       this .set_enabled__ ();
    },

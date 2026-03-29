@@ -93,10 +93,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
    },
    getInnerNode ()
    {
-      if (this .geometryNode)
-         return this .geometryNode;
-
-      throw new Error ("Geometry node not available.");
+      return this .geometryNode;
    },
    getGeometryFromArray (nodes)
    {

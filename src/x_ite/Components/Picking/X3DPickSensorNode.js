@@ -270,30 +270,25 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, X3DSensorN
 
       for (const node of this ._pickTarget)
       {
-         try
-         {
-            const
-               innerNode = node .getValue () .getInnerNode (),
-               type      = innerNode .getType ();
+         const
+            innerNode = node .getValue () .getInnerNode (),
+            type      = innerNode ?.getType () ?? [ ];
 
-            for (let t = type .length - 1; t >= 0; -- t)
+         for (let t = type .length - 1; t >= 0; -- t)
+         {
+            switch (type [t])
             {
-               switch (type [t])
+               case X3DConstants .Inline:
+               case X3DConstants .Shape:
+               case X3DConstants .X3DGroupingNode:
                {
-                  case X3DConstants .Inline:
-                  case X3DConstants .Shape:
-                  case X3DConstants .X3DGroupingNode:
-                  {
-                     this .pickTargetNodes .add (innerNode);
-                     break;
-                  }
-                  default:
-                     continue;
+                  this .pickTargetNodes .add (innerNode);
+                  break;
                }
+               default:
+                  continue;
             }
          }
-         catch
-         { }
       }
    },
    traverse (type, renderObject)

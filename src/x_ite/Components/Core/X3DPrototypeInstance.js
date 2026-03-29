@@ -302,7 +302,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
          }
       }
 
-      throw new Error ("Root node not available.");
+      return null;
    },
    isDefaultValue (field)
    {
