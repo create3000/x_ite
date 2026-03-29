@@ -445,31 +445,36 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
       for (const node of this ._physics)
       {
-         const
-            innerNode = node ?.getValue () .getInnerNode (),
-            type      = innerNode ?.getType () ?? [ ];
-
-         for (let t = type .length - 1; t >= 0; -- t)
+         try
          {
-            switch (type [t])
-            {
-               case X3DConstants .ForcePhysicsModel:
-               case X3DConstants .WindPhysicsModel:
-               {
-                  forcePhysicsModelNodes .push (innerNode);
-                  break;
-               }
-               case X3DConstants .BoundedPhysicsModel:
-               {
-                  boundedPhysicsModelNodes .push (innerNode);
-                  break;
-               }
-               default:
-                  continue;
-            }
+            const
+               innerNode = node .getValue () .getInnerNode (),
+               type      = innerNode .getType ();
 
-            break;
+            for (let t = type .length - 1; t >= 0; -- t)
+            {
+               switch (type [t])
+               {
+                  case X3DConstants .ForcePhysicsModel:
+                  case X3DConstants .WindPhysicsModel:
+                  {
+                     forcePhysicsModelNodes .push (innerNode);
+                     break;
+                  }
+                  case X3DConstants .BoundedPhysicsModel:
+                  {
+                     boundedPhysicsModelNodes .push (innerNode);
+                     break;
+                  }
+                  default:
+                     continue;
+               }
+
+               break;
+            }
          }
+         catch
+         { }
       }
 
       for (const boundedPhysicsModelNode of boundedPhysicsModelNodes)

@@ -34,28 +34,33 @@ Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, X3DPickS
    {
       this .pickingGeometryNode = null;
 
-      const
-         node = this ._pickingGeometry .getValue () ?.getInnerNode (),
-         type = node ?.getType () ?? [ ];
-
-      for (let t = type .length - 1; t >= 0; -- t)
+      try
       {
-         switch (type [t])
-         {
-            case X3DConstants .Box:
-            case X3DConstants .Cone:
-            case X3DConstants .Cylinder:
-            case X3DConstants .Sphere:
-            {
-               this .pickingGeometryNode = node;
-               break;
-            }
-            default:
-               continue;
-         }
+         const
+            node = this ._pickingGeometry .getValue () .getInnerNode (),
+            type = node .getType ();
 
-         break;
+         for (let t = type .length - 1; t >= 0; -- t)
+         {
+            switch (type [t])
+            {
+               case X3DConstants .Box:
+               case X3DConstants .Cone:
+               case X3DConstants .Cylinder:
+               case X3DConstants .Sphere:
+               {
+                  this .pickingGeometryNode = node;
+                  break;
+               }
+               default:
+                  continue;
+            }
+
+            break;
+         }
       }
+      catch
+      { }
    },
    process: (() =>
    {

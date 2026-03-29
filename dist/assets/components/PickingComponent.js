@@ -407,6 +407,8 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (external_
                   default:
                      continue;
                }
+
+               break;
             }
          }
          catch
@@ -470,6 +472,9 @@ const X3DPickSensorNode_default_ = X3DPickSensorNode;
 ;// external "__X_ITE_X3D__ .X3DGeometryNode"
 const external_X_ITE_X3D_X3DGeometryNode_namespaceObject = __X_ITE_X3D__ .X3DGeometryNode;
 var external_X_ITE_X3D_X3DGeometryNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DGeometryNode_namespaceObject);
+;// external "__X_ITE_X3D__ .X3DCast"
+const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
+var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
 ;// external "__X_ITE_X3D__ .Vector3"
 const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
 var external_X_ITE_X3D_Vector3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector3_namespaceObject);
@@ -483,6 +488,7 @@ var external_X_ITE_X3D_Box3_default = /*#__PURE__*/__webpack_require__.n(externa
 const external_X_ITE_X3D_Line3_namespaceObject = __X_ITE_X3D__ .Line3;
 var external_X_ITE_X3D_Line3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Line3_namespaceObject);
 ;// ./src/x_ite/Components/Picking/LinePickSensor.js
+
 
 
 
@@ -516,31 +522,8 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, Picking_X3DPi
    },
    set_pickingGeometry__ ()
    {
-      this .pickingGeometryNode = null;
-
-      try
-      {
-         const
-            node = this ._pickingGeometry .getValue () .getInnerNode (),
-            type = node .getType ();
-
-         for (let t = type .length - 1; t >= 0; -- t)
-         {
-            switch (type [t])
-            {
-               case (external_X_ITE_X3D_X3DConstants_default()).IndexedLineSet:
-               case (external_X_ITE_X3D_X3DConstants_default()).LineSet:
-               {
-                  this .pickingGeometryNode = node;
-                  break;
-               }
-               default:
-                  continue;
-            }
-         }
-      }
-      catch
-      { }
+      this .pickingGeometryNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).IndexedLineSet, this ._pickingGeometry)
+         ?? external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).LineSet, this ._pickingGeometry);
    },
    process: (() =>
    {
@@ -1086,9 +1069,6 @@ const PickableGroup_default_ = PickableGroup;
 ;
 
 /* harmony default export */ const Picking_PickableGroup = (external_X_ITE_X3D_Namespace_default().add ("PickableGroup", PickableGroup_default_));
-;// external "__X_ITE_X3D__ .X3DCast"
-const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
-var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
 ;// external "__X_ITE_X3D__ .Rotation4"
 const external_X_ITE_X3D_Rotation4_namespaceObject = __X_ITE_X3D__ .Rotation4;
 var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Rotation4_namespaceObject);
@@ -1551,6 +1531,8 @@ Object .assign (Object .setPrototypeOf (PrimitivePickSensor .prototype, Picking_
                default:
                   continue;
             }
+
+            break;
          }
       }
       catch

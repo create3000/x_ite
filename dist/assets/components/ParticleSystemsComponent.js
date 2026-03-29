@@ -1925,7 +1925,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
    set_physics__ ()
    {
       const
-         physics                  = this ._physics .getValue (),
          forcePhysicsModelNodes   = this .forcePhysicsModelNodes,
          boundedPhysicsModelNodes = this .boundedPhysicsModelNodes;
 
@@ -1938,12 +1937,12 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
       forcePhysicsModelNodes   .length = 0;
       boundedPhysicsModelNodes .length = 0;
 
-      for (let i = 0, length = physics .length; i < length; ++ i)
+      for (const node of this ._physics)
       {
          try
          {
             const
-               innerNode = physics [i] .getValue () .getInnerNode (),
+               innerNode = node .getValue () .getInnerNode (),
                type      = innerNode .getType ();
 
             for (let t = type .length - 1; t >= 0; -- t)
