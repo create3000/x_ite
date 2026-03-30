@@ -306,7 +306,7 @@ $ npm install x_ite
 
 Maybe you are curious now [how to use X_ITE with Electron](/x_ite/how-to-use-x-ite-with-electron/)?
 
-Also try [x_ite-node](https://www.npmjs.com/package/x_ite-node), a pure Node.js version, without any dependencies on Electron or any browser. Suitable for just reading 3D files, analyzing, processing and generating X3D.
+Also try [x_ite-node](https://www.npmjs.com/package/x_ite-node), a pure Node.js version, without any dependencies on Electron or any browser. Suitable for just reading 3D files, analyzing, processing and generating X3D with node.
 
 ```console
 $ npm install x_ite-node
@@ -314,7 +314,7 @@ $ npm install x_ite-node
 
 ### VS Code and Open VSX Extensions
 
-Discover the [X_ITE VS Code Extension](https://marketplace.visualstudio.com/items?itemName=create3000.x-ite-vscode) and [X_ITE VS Code Formatter](https://marketplace.visualstudio.com/items?itemName=create3000.x-ite-vscode-formatter) on the VS Code Marketplace, or have a look at the Open VSX Registry for [X_ITE VS Code Extension](https://open-vsx.org/extension/create3000/x-ite-vscode) and [X_ITE VS Code Formatter](https://open-vsx.org/extension/create3000/x-ite-vscode-formatter).
+Discover the [X_ITE VS Code Extension](https://marketplace.visualstudio.com/items?itemName=create3000.x-ite-vscode) and [X_ITE VS Code Formatter](https://marketplace.visualstudio.com/items?itemName=create3000.x-ite-vscode-formatter) on the **VS Code Marketplace**, or have a look at the **Open VSX Registry** for [X_ITE VS Code Extension](https://open-vsx.org/extension/create3000/x-ite-vscode) and [X_ITE VS Code Formatter](https://open-vsx.org/extension/create3000/x-ite-vscode-formatter).
 
 ## Embedding X_ITE within a Web Page
 
