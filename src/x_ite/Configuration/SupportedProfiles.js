@@ -206,4 +206,6 @@ SupportedProfiles .add ("MPEG4Interactive",
    ],
 });
 
+SupportedProfiles .alias ("MPEG-4", SupportedProfiles .get ("MPEG4Interactive"));
+
 export default SupportedProfiles;
