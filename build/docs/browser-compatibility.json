@@ -721,7 +721,7 @@
    },
    "InlineGeometry": {
       "x3d-edit": false,
-      "castle": false,
+      "castle": true,
       "x3dom": false,
       "freewrl": false
    },
