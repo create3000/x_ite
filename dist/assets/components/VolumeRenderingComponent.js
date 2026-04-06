@@ -1,5 +1,5 @@
-/* X_ITE v14.1.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.1.2")];
+/* X_ITE v14.1.3 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.1.3")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1183,8 +1183,8 @@ layout(location=0)out vec4 x3d_FragData0;layout(location=1)out vec4 x3d_FragData
 #else
 out vec4 x3d_FragColor;
 #endif
-#pragma X3D include "includes/ClipPlanes.glsl"
-#pragma X3D include "includes/Fog.glsl"
+#include<ClipPlanes>
+#include<Fog>
 __VOLUME_STYLES_DEFINES__
 #if defined(X3D_HSV)
 vec3 rgb2hsv(in vec3 color){float h=0.;float s=0.;float v=0.;float min=min(min(color.r,color.g),color.b);float max=max(max(color.r,color.g),color.b);v=max;float delta=max-min;if(max!=0.&&delta!=0.){s=delta/max;if(color.r==max)h=(color.g-color.b)/delta;else if(color.g==max)h=2.+(color.b-color.r)/delta;else h=4.+(color.r-color.g)/delta;h*=M_PI/3.;if(h<0.)h+=M_PI*2.;}else s=h=0.;return vec3(h,s,v);}vec3 hsv2rgb(in vec3 hsv){float h=hsv[0];float s=clamp(hsv[1],0.,1.);float v=clamp(hsv[2],0.,1.);if(s==0.){return vec3(v,v,v);}else{float w=(h*(180./M_PI))/60.;float i=floor(w);float f=w-i;float p=v*(1.-s);float q=v*(1.-s*f);float t=v*(1.-s*(1.-f));switch(int(i)% 6){case 0:return vec3(v,t,p);case 1:return vec3(q,v,p);case 2:return vec3(p,v,t);case 3:return vec3(p,q,v);case 4:return vec3(t,p,v);default:return vec3(v,p,q);}}return vec3(0);}vec3 mix_hsv(in vec3 a,in vec3 b,in float t){float ha=a[0];float sa=a[1];float va=a[2];float hb=b[0];float sb=b[1];float vb=b[2];if(sa==0.)ha=hb;if(sb==0.)hb=ha;float range=abs(hb-ha);if(range<=M_PI){float h=ha+t*(hb-ha);float s=sa+t*(sb-sa);float v=va+t*(vb-va);return vec3(h,s,v);}float PI2=M_PI*2.;float step=(PI2-range)*t;float h=ha<hb?ha-step:ha+step;if(h<0.)h+=PI2;else if(h>PI2)h-=PI2;float s=sa+t*(sb-sa);float v=va+t*(vb-va);return vec3(h,s,v);}
