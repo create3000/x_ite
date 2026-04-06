@@ -145,26 +145,6 @@ Interchange
 - [Texturing](/x_ite/components/overview/#texturing) : **2**
 - [Time](/x_ite/components/overview/#time) : **1**
 
-### MPEG4Interactive
-
-MPEG-4 interactive
-{: .small }
-
-- [Core](/x_ite/components/overview/#core) : **1**
-- [EnvironmentalEffects](/x_ite/components/overview/#environmentaleffects) : **1**
-- [EnvironmentalSensor](/x_ite/components/overview/#environmentalsensor) : **1**
-- [Geometry3D](/x_ite/components/overview/#geometry3d) : **2**
-- [Grouping](/x_ite/components/overview/#grouping) : **2**
-- [Interpolation](/x_ite/components/overview/#interpolation) : **2**
-- [Lighting](/x_ite/components/overview/#lighting) : **2**
-- [Navigation](/x_ite/components/overview/#navigation) : **1**
-- [Networking](/x_ite/components/overview/#networking) : **2**
-- [PointingDeviceSensor](/x_ite/components/overview/#pointingdevicesensor) : **1**
-- [Rendering](/x_ite/components/overview/#rendering) : **1**
-- [Shape](/x_ite/components/overview/#shape) : **1**
-- [Texturing](/x_ite/components/overview/#texturing) : **1**
-- [Time](/x_ite/components/overview/#time) : **1**
-
 ### MedicalInterchange
 
 Medical interchange
@@ -187,6 +167,26 @@ Medical interchange
 - [Texturing3D](/x_ite/components/overview/#texturing3d) : **2**
 - [Time](/x_ite/components/overview/#time) : **1**
 - [VolumeRendering](/x_ite/components/overview/#volumerendering) : **4**
+
+### MPEG4Interactive
+
+MPEG-4 interactive
+{: .small }
+
+- [Core](/x_ite/components/overview/#core) : **1**
+- [EnvironmentalEffects](/x_ite/components/overview/#environmentaleffects) : **1**
+- [EnvironmentalSensor](/x_ite/components/overview/#environmentalsensor) : **1**
+- [Geometry3D](/x_ite/components/overview/#geometry3d) : **2**
+- [Grouping](/x_ite/components/overview/#grouping) : **2**
+- [Interpolation](/x_ite/components/overview/#interpolation) : **2**
+- [Lighting](/x_ite/components/overview/#lighting) : **2**
+- [Navigation](/x_ite/components/overview/#navigation) : **1**
+- [Networking](/x_ite/components/overview/#networking) : **2**
+- [PointingDeviceSensor](/x_ite/components/overview/#pointingdevicesensor) : **1**
+- [Rendering](/x_ite/components/overview/#rendering) : **1**
+- [Shape](/x_ite/components/overview/#shape) : **1**
+- [Texturing](/x_ite/components/overview/#texturing) : **1**
+- [Time](/x_ite/components/overview/#time) : **1**
 
 <!-- PROFILES END -->
 

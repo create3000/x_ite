@@ -163,8 +163,8 @@ Highest supported level: **2**
 
 - [GeoCoordinate](/x_ite/components/geospatial/geocoordinate/)
 - [GeoElevationGrid](/x_ite/components/geospatial/geoelevationgrid/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/geospatial/geoelevationgrid/#example)
-- [GeoLOD](/x_ite/components/geospatial/geolod/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/geospatial/geolod/#example)
 - [GeoLocation](/x_ite/components/geospatial/geolocation/)
+- [GeoLOD](/x_ite/components/geospatial/geolod/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/geospatial/geolod/#example)
 - [GeoMetadata](/x_ite/components/geospatial/geometadata/)
 - [GeoOrigin](/x_ite/components/geospatial/geoorigin/)
 - [GeoPositionInterpolator](/x_ite/components/geospatial/geopositioninterpolator/)
@@ -260,26 +260,6 @@ Highest supported level: **3**
 - [PointLight](/x_ite/components/lighting/pointlight/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/lighting/pointlight/#example)
 - [SpotLight](/x_ite/components/lighting/spotlight/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/lighting/spotlight/#example)
 
-### NURBS
-
-NURBS<br>
-Highest supported level: **4**
-{: .small }
-
-- [Contour2D](/x_ite/components/nurbs/contour2d/)
-- [ContourPolyline2D](/x_ite/components/nurbs/contourpolyline2d/)
-- [NurbsCurve](/x_ite/components/nurbs/nurbscurve/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/nurbs/nurbscurve/#example)
-- [NurbsCurve2D](/x_ite/components/nurbs/nurbscurve2d/)
-- [NurbsOrientationInterpolator](/x_ite/components/nurbs/nurbsorientationinterpolator/)
-- [NurbsPatchSurface](/x_ite/components/nurbs/nurbspatchsurface/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/nurbs/nurbspatchsurface/#example)
-- [NurbsPositionInterpolator](/x_ite/components/nurbs/nurbspositioninterpolator/)
-- [NurbsSet](/x_ite/components/nurbs/nurbsset/)
-- [NurbsSurfaceInterpolator](/x_ite/components/nurbs/nurbssurfaceinterpolator/)
-- [NurbsSweptSurface](/x_ite/components/nurbs/nurbssweptsurface/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/nurbs/nurbssweptsurface/#example)
-- [NurbsSwungSurface](/x_ite/components/nurbs/nurbsswungsurface/)
-- [NurbsTextureCoordinate](/x_ite/components/nurbs/nurbstexturecoordinate/)
-- [NurbsTrimmedSurface](/x_ite/components/nurbs/nurbstrimmedsurface/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/nurbs/nurbstrimmedsurface/#example)
-
 ### Navigation
 
 Navigation<br>
@@ -304,6 +284,26 @@ Highest supported level: **4**
 - [Inline](/x_ite/components/networking/inline/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/networking/inline/#example)
 - [InlineGeometry](/x_ite/components/networking/inlinegeometry/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/networking/inlinegeometry/#example) <small class="blue">experimental</small>
 - [LoadSensor](/x_ite/components/networking/loadsensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/networking/loadsensor/#example)
+
+### NURBS
+
+NURBS<br>
+Highest supported level: **4**
+{: .small }
+
+- [Contour2D](/x_ite/components/nurbs/contour2d/)
+- [ContourPolyline2D](/x_ite/components/nurbs/contourpolyline2d/)
+- [NurbsCurve](/x_ite/components/nurbs/nurbscurve/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/nurbs/nurbscurve/#example)
+- [NurbsCurve2D](/x_ite/components/nurbs/nurbscurve2d/)
+- [NurbsOrientationInterpolator](/x_ite/components/nurbs/nurbsorientationinterpolator/)
+- [NurbsPatchSurface](/x_ite/components/nurbs/nurbspatchsurface/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/nurbs/nurbspatchsurface/#example)
+- [NurbsPositionInterpolator](/x_ite/components/nurbs/nurbspositioninterpolator/)
+- [NurbsSet](/x_ite/components/nurbs/nurbsset/)
+- [NurbsSurfaceInterpolator](/x_ite/components/nurbs/nurbssurfaceinterpolator/)
+- [NurbsSweptSurface](/x_ite/components/nurbs/nurbssweptsurface/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/nurbs/nurbssweptsurface/#example)
+- [NurbsSwungSurface](/x_ite/components/nurbs/nurbsswungsurface/)
+- [NurbsTextureCoordinate](/x_ite/components/nurbs/nurbstexturecoordinate/)
+- [NurbsTrimmedSurface](/x_ite/components/nurbs/nurbstrimmedsurface/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/nurbs/nurbstrimmedsurface/#example)
 
 ### ParticleSystems
 
@@ -550,8 +550,8 @@ Highest supported level: **1**
 - [DiffuseTransmissionMaterialExtension](/x_ite/components/x-ite/diffusetransmissionmaterialextension/) <small class="blue">experimental</small>
 - [DispersionMaterialExtension](/x_ite/components/x-ite/dispersionmaterialextension/) <small class="blue">experimental</small>
 - [EmissiveStrengthMaterialExtension](/x_ite/components/x-ite/emissivestrengthmaterialextension/) <small class="blue">experimental</small>
-- [IORMaterialExtension](/x_ite/components/x-ite/iormaterialextension/) <small class="blue">experimental</small>
 - [InstancedShape](/x_ite/components/x-ite/instancedshape/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/x-ite/instancedshape/#example) <small class="blue">experimental</small>
+- [IORMaterialExtension](/x_ite/components/x-ite/iormaterialextension/) <small class="blue">experimental</small>
 - [IridescenceMaterialExtension](/x_ite/components/x-ite/iridescencematerialextension/) <small class="blue">experimental</small>
 - [SheenMaterialExtension](/x_ite/components/x-ite/sheenmaterialextension/) <small class="blue">experimental</small>
 - [SpecularGlossinessMaterial](/x_ite/components/x-ite/specularglossinessmaterial/) <small class="yellow">deprecated</small>

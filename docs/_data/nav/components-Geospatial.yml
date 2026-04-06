@@ -4,10 +4,10 @@
       url: /components/geospatial/geocoordinate/
     - title: "GeoElevationGrid"
       url: /components/geospatial/geoelevationgrid/
-    - title: "GeoLOD"
-      url: /components/geospatial/geolod/
     - title: "GeoLocation"
       url: /components/geospatial/geolocation/
+    - title: "GeoLOD"
+      url: /components/geospatial/geolod/
     - title: "GeoMetadata"
       url: /components/geospatial/geometadata/
     - title: "GeoOrigin"
