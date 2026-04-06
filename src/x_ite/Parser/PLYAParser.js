@@ -120,7 +120,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
          this .comments .push (value);
 
-         this .mustRotateAxes ||= !! value .match (/Blender|Artec/i);
+         this .mustRotateAxes ||= !! value .match (/Blender|Artec|Polycam/i);
 
          return true;
       }
