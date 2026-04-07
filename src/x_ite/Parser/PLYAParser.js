@@ -630,7 +630,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    {
       // https://github.com/graphdeco-inria/gaussian-splatting/issues/485
 
-      const C0 = 1 / (2 * Math .sqrt (Math .PI)); // ≈ 0.28209479177387814
+      const C0 = 0.28209479177387814; // = 1 / (2 * Math .sqrt (Math .PI))
 
       return 0.5 + C0 * f_dc;
    },
