@@ -81,6 +81,12 @@ x3d-canvas {
   display: block;
 }
 
+@media (width <= 700px) or (height <= 450px) {
+  #options {
+    display: none;
+  }
+}
+
 #scenes,
 #animations {
   display: none;
