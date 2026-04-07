@@ -572,7 +572,7 @@ class Playground
          defaultToken: "invalid",
          tokenPostfix: ".vrml",
          keywords: [
-            "PROFILE", "COMPONENT", "UNIT", "META", "DEF", "USE", "EXTERNPROTO", "PROTO", "IS", "ROUTE", "TO", "IMPORT", "EXPORT", "AS",
+            "PROFILE", "COMPONENT", "UNIT", "META", "EXTERNPROTO", "PROTO", "IS", "DEF", "USE", "ROUTE", "TO", "IMPORT", "EXPORT", "AS", "DESCRIPTION",
          ],
          profiles: Array .from (browser .supportedProfiles, ({name}) => name),
          components: Array .from (browser .supportedComponents, ({name}) => name),
