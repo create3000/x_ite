@@ -41,7 +41,7 @@ The InlineGeometry node belongs to the [Networking](/x_ite/components/overview/#
 | MFString | [in, out] | [url](#fields-url) | [ ] |
 | SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0  |
 | SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600  |
-| SFFloat | [ ] | [creaseAngle](#fields-creaseAngle) | π  |
+| SFFloat | [in, out] | [creaseAngle](#fields-creaseAngle) | π  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
