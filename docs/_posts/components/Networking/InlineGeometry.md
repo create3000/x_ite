@@ -119,6 +119,17 @@ Address of X3D world to load [Inline](/x_ite/components/networking/inline/) with
 
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
+### SFFloat [ ] **creaseAngle** π <small>[0,∞)</small>
+{: #fields-creaseAngle }
+
+*creaseAngle* defines angle (in radians) for determining whether adjacent polygons are drawn with sharp edges or smooth shading. If angle between normals of two adjacent polygons is less than *creaseAngle*, smooth shading is rendered across the shared line segment.
+
+#### Hints
+
+- In Interchange profile only 0 and π radians supported.
+- *creaseAngle*=0 means render all edges sharply, *creaseAngle*=3.14159 means render all edges smoothly.
+- [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
+
 ## Supported File Formats
 
 | Encoding         | File Extension | MIME Type         | Comment                         |

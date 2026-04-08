@@ -20,6 +20,10 @@ function InlineGeometry (executionContext)
    X3DUrlObject        .call (this, executionContext);
 
    this .addType (X3DConstants .InlineGeometry);
+
+   // Units
+
+   this ._creaseAngle .setUnit ("angle");
 }
 
 Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNode .prototype),
@@ -30,7 +34,19 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
       X3DGeometryNode .prototype .initialize .call (this);
       X3DUrlObject    .prototype .initialize .call (this);
 
+      this ._creaseAngle .addInterest ("set_creaseAngle__", this);
+
       this .requestImmediateLoad () .catch (Function .prototype);
+   },
+   set_creaseAngle__ ()
+   {
+      if (!this .geometryNode ._creaseAngle)
+         return;
+
+      if (this .geometryNode ._creaseAngle .equals (this ._creaseAngle))
+         return;
+
+      this .geometryNode ._creaseAngle = this ._creaseAngle;
    },
    unloadData ()
    {
@@ -72,6 +88,8 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
 
          this .scene .setExecutionContext (scene .cache ? browser .getDefaultScene () : this .getExecutionContext ());
          this .scene .setLive (true);
+
+         this .set_creaseAngle__ ();
 
          this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
@@ -164,6 +182,7 @@ Object .defineProperties (InlineGeometry,
          new X3DFieldDefinition (X3DConstants .inputOutput, "url",                  new Fields .MFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime (0)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "creaseAngle",          new Fields .SFFloat (3.141592653)),
       ]),
       enumerable: true,
    },
