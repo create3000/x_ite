@@ -608,6 +608,7 @@ class Playground
                      "@default": "attribute.name", // field names
                   },
                }],
+               [/#\/\*/,  { token: "comment", bracket: "@open", next: "@blockComment" } ],
                [/#.*/, "comment"],
                [/[{}\[\]]/, "@brackets"],
                [/[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/, "number.float"],
@@ -620,6 +621,11 @@ class Playground
             ],
             name: [
                [/@id/, "type.identifier", "@pop"],
+            ],
+            blockComment: [
+               [/[^#\/*]+/, 'comment'],
+               [/\*\/#/, 'comment', '@pop'],
+               [/[#\/*]/, 'comment']
             ],
             string: [
                [/[^\\"]+/,  "string"],
@@ -639,6 +645,10 @@ class Playground
 
       monaco .languages .setLanguageConfiguration ("vrml",
       {
+         comments: {
+            lineComment: "#",
+            blockComment: ["#/*", "*/#"]
+         },
          brackets: [["{", "}"], ["[", "]"], ["(", ")"]],
          autoClosingPairs: [
          { open: "{", close: "}" },
