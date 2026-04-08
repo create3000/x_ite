@@ -55,13 +55,12 @@ Object .assign (X3DUrlObject .prototype,
 
       switch (value)
       {
-         case X3DConstants .NOT_STARTED_STATE:
-            break;
          case X3DConstants .IN_PROGRESS_STATE:
          {
             this .getScene () .addLoadingObject (this);
             break;
          }
+         case X3DConstants .NOT_STARTED_STATE:
          case X3DConstants .COMPLETE_STATE:
          case X3DConstants .FAILED_STATE:
          {

@@ -91,7 +91,7 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
       {
          this .groupNode ._children .length = 0;
 
-         this .setLoadState (X3DConstants .NOT_STARTED_STATE);
+         this .setLoadState (X3DConstants .FAILED_STATE);
       }
 
       this .getBrowser () .addBrowserEvent ();
