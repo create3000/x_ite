@@ -40,13 +40,20 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
    },
    set_creaseAngle__ ()
    {
-      if (!this .geometryNode ._creaseAngle)
-         return;
+      if (this .geometryNode ._creaseAngle)
+      {
+         if (this .geometryNode ._creaseAngle .equals (this ._creaseAngle))
+            return;
 
-      if (this .geometryNode ._creaseAngle .equals (this ._creaseAngle))
-         return;
+         this .geometryNode ._creaseAngle = this ._creaseAngle;
+      }
+      else if (this .geometryNode ._normal && !this .geometryNode ._normal .getValue ())
+      {
+         if (this .geometryNode ._normalPerVertex .equals (this ._creaseAngle .getValue () > 0))
+            return;
 
-      this .geometryNode ._creaseAngle = this ._creaseAngle;
+         this .geometryNode ._normalPerVertex = this ._creaseAngle .getValue () > 0;
+      }
    },
    unloadData ()
    {

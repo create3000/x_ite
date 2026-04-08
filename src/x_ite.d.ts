@@ -1301,6 +1301,7 @@ declare namespace X3D
       readonly IndexedTriangleSet: number;
       readonly IndexedTriangleStripSet: number;
       readonly Inline: number;
+      readonly InlineGeometry: number;
       readonly InstancedShape: number;
       readonly IntegerSequencer: number;
       readonly IntegerTrigger: number;
@@ -10999,6 +11000,17 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type SFBool.
        */
       visible: boolean;
+   }
+
+   /** undefined */
+   interface InlineGeometryProxy extends SFNode
+   {
+      /**
+       * creaseAngle defines angle (in radians) for determining whether adjacent polygons are drawn with sharp edges or smooth shading.
+       *
+       * This field is of access type 'inputOutput' and type SFFloat.
+       */
+      creaseAngle: number;
    }
 
    /** InstancedShape can appear under any grouping node. InstancedShape can contain an Appearance node and a geometry node (for example one of the primitives Box Cone Cylinder Sphere Text, one of ElevationGrid Extrusion IndexedFaceSet IndexedLineSet LineSet PointSet, or one of the other geometry nodes) and this geometry node is instantiated as often as transformations are provided. */
@@ -22966,6 +22978,7 @@ declare namespace X3D
       IndexedTriangleSet: IndexedTriangleSetProxy,
       IndexedTriangleStripSet: IndexedTriangleStripSetProxy,
       Inline: InlineProxy,
+      InlineGeometry: InlineGeometryProxy,
       InstancedShape: InstancedShapeProxy,
       IntegerSequencer: IntegerSequencerProxy,
       IntegerTrigger: IntegerTriggerProxy,

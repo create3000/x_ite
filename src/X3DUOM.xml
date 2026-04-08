@@ -1686,5 +1686,16 @@
         </InterfaceDefinition>
     </ConcreteNode>
 
+    <ConcreteNode name="InlineGeometry">
+      <InterfaceDefinition>
+        <field name="creaseAngle"
+            type="SFFloat"
+            accessType="inputOutput"
+            default="3.141592653"
+            minInclusive="0"
+            description="creaseAngle defines angle (in radians) for determining whether adjacent polygons are drawn with sharp edges or smooth shading."/>
+      </InterfaceDefinition>
+    </ConcreteNode>
+
   </ConcreteNodes>
 </X3dUnifiedObjectModel>
