@@ -40,6 +40,12 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
    },
    set_creaseAngle__ ()
    {
+      if (!this .geometryNode)
+         return;
+
+      if (this .geometryNode .getGeometryType () < 2)
+         return;
+
       if (this .geometryNode ._creaseAngle)
       {
          if (this .geometryNode ._creaseAngle .equals (this ._creaseAngle))
