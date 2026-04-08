@@ -41,6 +41,7 @@ The InlineGeometry node belongs to the [Networking](/x_ite/components/overview/#
 | MFString | [in, out] | [url](#fields-url) | [ ] |
 | SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0  |
 | SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600  |
+| SFFloat | [ ] | [creaseAngle](#fields-creaseAngle) | π  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -119,7 +120,7 @@ Address of X3D world to load [Inline](/x_ite/components/networking/inline/) with
 
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
-### SFFloat [ ] **creaseAngle** π <small>[0,∞)</small>
+### SFFloat [in, out] **creaseAngle** π <small>[0,∞)</small>
 {: #fields-creaseAngle }
 
 *creaseAngle* defines angle (in radians) for determining whether adjacent polygons are drawn with sharp edges or smooth shading. If angle between normals of two adjacent polygons is less than *creaseAngle*, smooth shading is rendered across the shared line segment.
