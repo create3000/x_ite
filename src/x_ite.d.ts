@@ -11003,7 +11003,7 @@ declare namespace X3D
    }
 
    /** undefined */
-   interface InlineGeometryProxy extends SFNode
+   interface InlineGeometryProxy extends X3DGeometryNodeProxy, X3DUrlObjectProxy
    {
       /**
        * creaseAngle defines angle (in radians) for determining whether adjacent polygons are drawn with sharp edges or smooth shading.

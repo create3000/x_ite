@@ -1688,6 +1688,8 @@
 
     <ConcreteNode name="InlineGeometry">
       <InterfaceDefinition>
+        <Inheritance baseType="X3DGeometryNode"/>
+        <AdditionalInheritance baseType="X3DUrlObject"/>
         <field name="creaseAngle"
             type="SFFloat"
             accessType="inputOutput"
