@@ -59,10 +59,6 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
       this [_body] = new X3DExecutionContext (proto .getExecutionContext (), this);
 
-      this [_body] .rootNodes .addInterest ("set_rootNodes__", this);
-
-      this [_body] .setup ();
-
       // Copy proto.
 
       this .importExternProtos  (proto .getBody () .externprotos);
@@ -70,6 +66,14 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
       this .copyRootNodes       (proto .getBody () .rootNodes);
       this .importImportedNodes (proto .getBody () .importedNodes);
       this .copyRoutes          (proto .getBody () .routes);
+
+      // Propagate events.
+
+      this [_body] .rootNodes .addInterest ("set_rootNodes__", this);
+
+      this [_body] .setup ();
+
+      X3DChildObject .prototype .addEvent .call (this);
    },
    set_rootNodes__ ()
    {
