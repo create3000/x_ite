@@ -357,12 +357,11 @@ sub fields_list {
    {
       $name = $field -> [1];
 
-      if ($file =~ m/###\s*(\w+)\s+(\[.*?\])\s+\*\*$name\*\*[ ]*(\[.*?\]|[ a-zA-Z\-+\d\."\/π]*).*?\n/)
-      {
-         $text = "| $1 | $2 | [$name](#fields-$name) | " . trim ($3) . " |";
+      next unless $file =~ m/###\s*(\w+)\s+(\[.*?\])\s+\*\*$name\*\*[ ]*(\[.*?\]|[ a-zA-Z\-+\d\."\/π]*).*?\n/;
 
-         $fields -> {$name} = $text;
-      }
+      $text = "| $1 | $2 | [$name](#fields-$name) | " . trim ($3) . " |";
+
+      $fields -> {$name} = $text;
    }
 
    $string = "";
