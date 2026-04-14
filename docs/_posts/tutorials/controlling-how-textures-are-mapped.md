@@ -34,9 +34,9 @@ Texture images (the dough) are in a texture coordinate system:
 
 Texture coordinates and texture coordinate indexes specify a texture piece shape (the cookie cutter):
 
-|                        | Coordinates                     |
-|------------------------|---------------------------------|
-| ![Texture Mapping 1][] | 0.0 0.0 1.0 0.0 1.0 1.0 0.0 1.0 |
+|                        | Coordinates        |
+|------------------------|--------------------|
+| ![Texture Mapping 1][] | 0 0, 1 0, 1 1, 0 1 |
 
   [Texture Mapping 1]: https://create3000.github.io/media/tutorials/images/texture-mapping-1.avif
 
