@@ -42,7 +42,7 @@ The RenderedTexture node belongs to the [Texturing](/x_ite/components/overview/#
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE  |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [replaceImage](#fields-replaceImage) | TRUE  |
-| MFString | [in, out] | [url](#fields-url) | ""  |
+| MFString | [in, out] | [url](#fields-url) | [ ] |
 | SFString | [in, out] | [update](#fields-update) | "NONE"  |
 | MFInt32 | [in, out] | [dimensions](#fields-dimensions) | [ 128, 128, 4, 1, 1 ] |
 | SFBool | [in, out] | [depthMap](#fields-depthMap) | FALSE |
