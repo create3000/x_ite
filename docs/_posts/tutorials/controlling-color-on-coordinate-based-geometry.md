@@ -18,14 +18,14 @@ A [Color](/x_ite/components/rendering/color/) node contains a list of RGB values
 
 ```x3d
 <Color
-    color='1.0 0.0 0.0, ...'/>
+    color='1 0 0, ...'/>
 ```
 
 ### Classic VRML Encoding
 
 ```vrml
 Color {
-  color [ 1.0 0.0 0.0, ... ]
+  color [ 1 0 0, ... ]
 }
 ```
 

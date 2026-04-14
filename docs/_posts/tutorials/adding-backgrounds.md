@@ -45,9 +45,9 @@ A [Background](/x_ite/components/environmentaleffects/background/) node describe
 
 ```x3d
 <Background
-    skyColor='0.1 0.1 0.0, ...'
+    skyColor='0.1 0.1 0, ...'
     skyAngle='1.309, 1.571, ...'
-    groundColor='0.0 0.2 0.7, ...'
+    groundColor='0 0.2 0.7, ...'
     groundAngle='1.309, 1.571, ...'/>
 ```
 
@@ -55,9 +55,9 @@ A [Background](/x_ite/components/environmentaleffects/background/) node describe
 
 ```vrml
 Background {
-  skyColor    [ 0.1 0.1 0.0, ... ]
-  skyAngle    [ 1.309, 1.571, ... ]
-  groundColor [ 0.0 0.2 0.7, ... ]
+  skyColor [ 0.1 0.1 0, ... ]
+  skyAngle [ 1.309, 1.571, ... ]
+  groundColor [ 0 0.2 0.7, ... ]
   groundAngle [ 1.309, 1.571, ... ]
 }
 ```

@@ -206,9 +206,9 @@ A [TextureTransform](/x_ite/components/texturing/texturetransform/) node transfo
     <Material ... />
     <ImageTexture ... />
     <TextureTransform
-        translation='0.0 0.0'
-        rotation='0.0'
-        scale='1.0 1.0'/>
+        translation='0 0'
+        rotation='0'
+        scale='1 1'/>
   </Appearance>
   <!-- geometry ... -->
 </Shape>
@@ -222,9 +222,9 @@ Shape {
     material Material { ... }
     texture ImageTexture { ... }
     textureTransform TextureTransform {
-      translation 0.0 0.0
-      rotation 0.0
-      scale 1.0 1.0
+      translation 0 0
+      rotation 0
+      scale 1 1
     }
   }
   geometry ...
@@ -243,7 +243,7 @@ Scale, Rotate, and Translate a texture cookie cutter one after the other:
     <Material ... />
     <ImageTexture ... />
     <TextureTransform
-        translation='0.0 0.0'
+        translation='0 0'
         rotation='0.785'
         scale='8.5 8.5'/>
   </Appearance>
@@ -259,7 +259,7 @@ Shape {
     material Material { ... }
     texture ImageTexture { ... }
     textureTransform TextureTransform {
-      translation 0.0 0.0
+      translation 0 0
       rotation 0.785
       scale 8.5 8.5
     }

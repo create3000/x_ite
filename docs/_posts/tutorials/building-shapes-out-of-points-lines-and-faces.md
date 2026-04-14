@@ -35,7 +35,7 @@ A [Coordinate](/x_ite/components/rendering/coordinate/) node contains a list of 
 ```x3d
 <!-- X Y Z -->
 <Coordinate
-    point='2.0 1.0 3.0, 4.0 2.5 5.3, ...'/>
+    point='2 1 3, 4 2.5 5.3, ...'/>
 ```
 
 ### Classic VRML Encoding
@@ -44,8 +44,8 @@ A [Coordinate](/x_ite/components/rendering/coordinate/) node contains a list of 
 Coordinate {
   point [
    #X   Y   Z
-    2.0 1.0 3.0,
-    4.0 2.5 5.3,
+    2 1 3,
+    4 2.5 5.3,
     ...
   ]
 }
@@ -296,16 +296,16 @@ A [CoordinateInterpolator](/x_ite/components/interpolation/coordinateinterpolato
 
 ```x3d
 <CoordinateInterpolator
-    key='0.0, ...'
-    keyValue='0.0 1.0 0.0, ...'/>
+    key='0, ...'
+    keyValue='0 1 0, ...'/>
 ```
 
 ### Classic VRML Encoding
 
 ```vrml
 CoordinateInterpolator {
-  key [ 0.0, ... ]
-  keyValue [ 0.0 1.0 0.0, ... ]
+  key [ 0, ... ]
+  keyValue [ 0 1 0, ... ]
 }
 ```
 

@@ -34,10 +34,10 @@ Animation requires control over time:
 
 ## Using fractional time
 
-- Fractional time events give a number from 0.0 to 1.0
-  - When the sensor starts, it outputs a 0.0
-  - At the end of a cycle, it outputs a 1.0
-  - The number of seconds between 0.0 and 1.0 is controlled by the cycle interval
+- Fractional time events give a number from 0 to 1
+  - When the sensor starts, it outputs a 0
+  - At the end of a cycle, it outputs a 1
+  - The number of seconds between 0 and 1 is controlled by the cycle interval
 - The sensor can loop forever, or run through only one cycle and stop
 
 ## Syntax: TimeSensor
@@ -51,20 +51,20 @@ Animation requires control over time:
 
 ```x3d
 <TimeSensor
-    cycleInterval='1.0'
+    cycleInterval='1'
     loop='false'
-    startTime='0.0'
-    stopTime='0.0'/>
+    startTime='0'
+    stopTime='0'/>
 ```
 
 ### Classic VRML Encoding
 
 ```vrml
 TimeSensor {
-  cycleInterval 1.0
+  cycleInterval 1
   loop FALSE
-  startTime 0.0
-  stopTime 0.0
+  startTime 0
+  stopTime 0
 }
 ```
 
@@ -108,8 +108,8 @@ The time output event:
 
 The fraction\_changed output event:
 
-- Outputs values from 0.0 to 1.0 during a cycle
-- Resets to 0.0 at the start of each cycle
+- Outputs values from 0 to 1 during a cycle
+- Resets to 0 at the start of each cycle
 
 ## A sample time sensor
 
@@ -121,12 +121,12 @@ The fraction\_changed output event:
     <Material DEF='Monolith1Facade'
         diffuseColor='0.2 0.2 0.2'/>
   </Appearance>
-  <Box size='2.0 4.0 0.3'/>
+  <Box size='2 4 0.3'/>
 </Shape>
 <TimeSensor DEF='Monolith1Timer'
-    cycleInterval='4.0'
+    cycleInterval='4'
     loop='false'
-    startTime='0.0'
+    startTime='0'
     stopTime='0.1'/>
 
 <ROUTE fromNode='Monolith1Touch' fromField='touchTime' toNode='Monolith1Timer' toField='set_startTime'/>
@@ -142,13 +142,13 @@ Shape {
       diffuseColor 0.2 0.2 0.2
     }
   }
-  geometry Box { size 2.0 4.0 0.3 }
+  geometry Box { size 2 4 0.3 }
 }
 DEF Monolith1Timer TimeSensor {
-  cycleInterval 4.0
+  cycleInterval 4
   loop FALSE
-  startTime 0.0
-  stopTime  0.1
+  startTime 0
+  stopTime 0.1
 }
 
 ROUTE Monolith1Touch.touchTime TO Monolith1Timer.set_startTime
@@ -187,11 +187,11 @@ Interpolation fills in values between your key values:
 
 | Fractional Time | Position      |
 |-----------------|---------------|
-| 0.0             | 0.0 0.0 0.0   |
-| *0.1*           | *0.4 0.1 0.0* |
-| *0.2*           | *0.8 0.2 0.0* |
+| 0               | 0 0 0         |
+| *0.1*           | *0.4 0.1 0*   |
+| *0.2*           | *0.8 0.2 0*   |
 | *...*           | *...*         |
-| 0.5             | 4.0 1.0 0.0   |
+| 0.5             | 4 1 0         |
 | *...*           | *...*         |
 
 ## Syntax: PositionInterpolator
@@ -205,16 +205,16 @@ A [PositionInterpolator](/x_ite/components/interpolation/positioninterpolator/) 
 
 ```x3d
 <PositionInterpolator
-    key='0.0, ...'
-    keyValue='0.0 0.0 0.0, ...'/>
+    key='0, ...'
+    keyValue='0 0 0, ...'/>
 ```
 
 ### Classic VRML Encoding
 
 ```vrml
 PositionInterpolator {
-  key [ 0.0, ... ]
-  keyValue [ 0.0 0.0 0.0, ... ]
+  key [ 0, ... ]
+  keyValue [ 0 0 0, ... ]
 }
 ```
 
@@ -240,14 +240,14 @@ The *value\_changed* output:
 </Transform>
 
 <TimeSensor DEF='Timer1'
-    cycleInterval='12.0'
+    cycleInterval='12'
     loop='true'
-    startTime='0.0'
-    stopTime='-1.0'/>
+    startTime='0'
+    stopTime='-1'/>
 
 <PositionInterpolator DEF='Position1'
-    key='0.0, ...'
-    keyValue='0.0 0.0 0.0, ...'/>
+    key='0, ...'
+    keyValue='0 0 0, ...'/>
 
 <ROUTE fromNode='Timer1' fromField='fraction_changed' toNode='Position1' toField='set_fraction'/>
 <ROUTE fromNode='Position1' fromField='value_changed' toNode='Particle1' toField='set_translation'/>
@@ -263,15 +263,15 @@ DEF Particle1 Transform {
 }
 
 DEF Timer1 TimeSensor {
-  cycleInterval 12.0
+  cycleInterval 12
   loop TRUE
-  startTime 0.0
-  stopTime -1.0
+  startTime 0
+  stopTime -1
 }
 
 DEF Position1 PositionInterpolator {
-  key  [ 0.0, ... ]
-  keyValue [ 0.0 0.0 0.0, ... ]
+  key  [ 0, ... ]
+  keyValue [ 0 0 0, ... ]
 }
 
 ROUTE Timer1.fraction_changed TO Position1.set_fraction
@@ -314,16 +314,16 @@ A [OrientationInterpolator](/x_ite/components/interpolation/orientationinterpola
 
 ```x3d
 <OrientationInterpolator
-    key='0.0, ...'
-    keyValue='0.0 1.0 0.0 0.0, ...'/>
+    key='0, ...'
+    keyValue='0 1 0 0, ...'/>
 ```
 
 ### Classic VRML Encoding
 
 ```vrml
 OrientationInterpolator {
-  key [ 0.0, ... ]
-  keyValue [ 0.0 1.0 0.0 0.0, ... ]
+  key [ 0, ... ]
+  keyValue [ 0 1 0 0, ... ]
 }
 ```
 
@@ -340,16 +340,16 @@ Typically route into a [Transform](/x_ite/components/grouping/transform/) node's
 
 ```x3d
 <ColorInterpolator
-    key='0.0, ...'
-    keyValue='1.0 1.0 0.0, ...'/>
+    key='0, ...'
+    keyValue='1 1 0, ...'/>
 ```
 
 ### Classic VRML Encoding
 
 ```vrml
 ColorInterpolator {
-  key [ 0.0, ... ]
-  keyValue [ 1.0 1.0 0.0, ... ]
+  key [ 0, ... ]
+  keyValue [ 1 1 0, ... ]
 }
 ```
 
@@ -366,7 +366,7 @@ Typically route into a [Material](/x_ite/components/shape/material/) node's *set
 
 ```x3d
 <ScalarInterpolator
-    key='0.0, ...'
+    key='0, ...'
     keyValue='4.5, ...'/>
 ```
 
@@ -374,7 +374,7 @@ Typically route into a [Material](/x_ite/components/shape/material/) node's *set
 
 ```vrml
 ScalarInterpolator {
-  key [ 0.0, ... ]
+  key [ 0, ... ]
   keyValue [ 4.5, ... ]
 }
 ```

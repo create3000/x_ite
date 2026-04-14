@@ -46,7 +46,7 @@ An [LOD](/x_ite/components/navigation/lod/) grouping node creates a group of sha
 
 ```x3d
 <LOD
-    center='0.0 0.0 0.0'
+    center='0 0 0'
     range='...'>
   <!-- children ... -->
 </LOD>
@@ -56,7 +56,7 @@ An [LOD](/x_ite/components/navigation/lod/) grouping node creates a group of sha
 
 ```vrml
 LOD {
-  center 0.0 0.0 0.0
+  center 0 0 0
   range [ ... ]
   children [ ... ]
 }
@@ -69,7 +69,7 @@ Use a list of ranges for level switch points:
 - If you have 3 levels, you need 2 ranges
 - Ranges are hints to the browser
 
-**range \[ 5.0, 10.0 \]**
+**range \[ 5, 10 \]**
 
 ![lod-level](https://create3000.github.io/media/tutorials/images/lod-level.avif)
 
@@ -91,8 +91,8 @@ Lower detail levels should use simpler geometry, fewer textures, and no text.
 
 ```x3d
 <LOD
-    center='0.0 0.0 0.0'
-    range='7.0, 10.0'>
+    center='0 0 0'
+    range='7, 10'>
   <Inline
       url='"torch1.x3d"'/>
   <Inline
@@ -106,8 +106,8 @@ Lower detail levels should use simpler geometry, fewer textures, and no text.
 
 ```vrml
 LOD {
-  center 0.0 0.0 0.0
-  range [ 7.0, 10.0 ]
+  center 0 0 0
+  range [ 7, 10 ]
   children [
     Inline { url "torch1.x3dv" }
     Inline { url "torch2.x3dv" }

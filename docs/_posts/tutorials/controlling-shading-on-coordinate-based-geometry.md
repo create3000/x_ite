@@ -48,14 +48,14 @@ A Normal node contains a list of normal vectors that override use of a crease an
 
 ```x3d
 <Normal
-    vector='0.0 1.0 0.0, ...'/>
+    vector='0 1 0, ...'/>
 ```
 
 ### Classic VRML Encoding
 
 ```vrml
 Normal {
-  vector [ 0.0 1.0 0.0, ... ]
+  vector [ 0 1 0, ... ]
 }
 ```
 
@@ -169,16 +169,16 @@ A [NormalInterpolator](/x_ite/components/interpolation/normalinterpolator/) node
 
 ```x3d
 <NormalInterpolator
-    key='0.0, ...'
-    keyValue='0.0 1.0 1.0, ...'/>
+    key='0, ...'
+    keyValue='0 1 1, ...'/>
 ```
 
 ### Classic VRML Encoding
 
 ```vrml
 NormalInterpolator {
-  key [ 0.0, ... ]
-  keyValue [ 0.0 1.0 1.0, ... ]
+  key [ 0, ... ]
+  keyValue [ 0 1 1, ... ]
 }
 ```
 
