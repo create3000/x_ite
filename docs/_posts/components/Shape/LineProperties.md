@@ -29,10 +29,10 @@ The LineProperties node belongs to the [Shape](/x_ite/components/overview/#shape
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [applied](#fields-applied) | TRUE |
-| SFInt32 | [in, out] | [linetype](#fields-linetype) | 1  |
-| SFFloat | [in, out] | [linewidthScaleFactor](#fields-linewidthScaleFactor) | 0  |
+| SFInt32 | [in, out] | [linetype](#fields-linetype) | 1 |
+| SFFloat | [in, out] | [linewidthScaleFactor](#fields-linewidthScaleFactor) | 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

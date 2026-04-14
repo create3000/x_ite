@@ -28,11 +28,11 @@ The NurbsTextureCoordinate node belongs to the [NURBS](/x_ite/components/overvie
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFInt32 | [ ] | [uOrder](#fields-uOrder) | 3  |
-| SFInt32 | [ ] | [vOrder](#fields-vOrder) | 3  |
-| SFInt32 | [ ] | [uDimension](#fields-uDimension) | 0  |
-| SFInt32 | [ ] | [vDimension](#fields-vDimension) | 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFInt32 | [ ] | [uOrder](#fields-uOrder) | 3 |
+| SFInt32 | [ ] | [vOrder](#fields-vOrder) | 3 |
+| SFInt32 | [ ] | [uDimension](#fields-uDimension) | 0 |
+| SFInt32 | [ ] | [vDimension](#fields-vDimension) | 0 |
 | MFDouble | [ ] | [uKnot](#fields-uKnot) | [ ] |
 | MFDouble | [ ] | [vKnot](#fields-vKnot) | [ ] |
 | MFDouble | [in, out] | [weight](#fields-weight) | [ ] |

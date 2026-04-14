@@ -29,7 +29,7 @@ The ContourPolyline2D node belongs to the [NURBS](/x_ite/components/overview/#nu
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFVec2d | [in, out] | [controlPoint](#fields-controlPoint) | [ ] |
 {: .fields }
 

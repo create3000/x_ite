@@ -31,14 +31,14 @@ The ListenerPointSource node belongs to the [Sound](/x_ite/components/overview/#
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFBool | [in, out] | [trackCurrentView](#fields-trackCurrentView) | FALSE |
-| SFVec3f | [in, out] | [position](#fields-position) | 0 0 0  |
-| SFRotation | [in, out] | [orientation](#fields-orientation) | 0 0 1 0  |
-| SFFloat | [in, out] | [interauralDistance](#fields-interauralDistance) | 0  |
-| SFBool | [in, out] | [dopplerEnabled](#fields-dopplerEnabled) | FALSE  |
+| SFVec3f | [in, out] | [position](#fields-position) | 0 0 0 |
+| SFRotation | [in, out] | [orientation](#fields-orientation) | 0 0 1 0 |
+| SFFloat | [in, out] | [interauralDistance](#fields-interauralDistance) | 0 |
+| SFBool | [in, out] | [dopplerEnabled](#fields-dopplerEnabled) | FALSE |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

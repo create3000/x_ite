@@ -32,11 +32,11 @@ The VolumeScatterMaterialExtension node belongs to the [X_ITE](/x_ite/components
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFColor | [in, out] | [multiscatterColor](#fields-multiscatterColor) | 0 0 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFColor | [in, out] | [multiscatterColor](#fields-multiscatterColor) | 0 0 0 |
 | SFString | [in, out] | [multiscatterColorTextureMapping](#fields-multiscatterColorTextureMapping) | "" |
-| SFNode | [in, out] | [multiscatterColorTexture](#fields-multiscatterColorTexture) | NULL  |
-| SFFloat | [in, out] | [scatterAnisotropy](#fields-scatterAnisotropy) | 0  |
+| SFNode | [in, out] | [multiscatterColorTexture](#fields-multiscatterColorTexture) | NULL |
+| SFFloat | [in, out] | [scatterAnisotropy](#fields-scatterAnisotropy) | 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

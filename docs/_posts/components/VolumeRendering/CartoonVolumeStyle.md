@@ -30,12 +30,12 @@ The CartoonVolumeStyle node belongs to the [VolumeRendering](/x_ite/components/o
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFInt32 | [in, out] | [colorSteps](#fields-colorSteps) | 4  |
-| SFColorRGBA | [in, out] | [orthogonalColor](#fields-orthogonalColor) | 1 1 1 1  |
-| SFColorRGBA | [in, out] | [parallelColor](#fields-parallelColor) | 0 0 0 1  |
-| SFNode | [in, out] | [surfaceNormals](#fields-surfaceNormals) | NULL  |
+| SFInt32 | [in, out] | [colorSteps](#fields-colorSteps) | 4 |
+| SFColorRGBA | [in, out] | [orthogonalColor](#fields-orthogonalColor) | 1 1 1 1 |
+| SFColorRGBA | [in, out] | [parallelColor](#fields-parallelColor) | 0 0 0 1 |
+| SFNode | [in, out] | [surfaceNormals](#fields-surfaceNormals) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

@@ -29,9 +29,9 @@ The Disk2D node belongs to the [Geometry2D](/x_ite/components/overview/#geometry
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFFloat | [ ] | [innerRadius](#fields-innerRadius) | 0  |
-| SFFloat | [ ] | [outerRadius](#fields-outerRadius) | 1  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFFloat | [ ] | [innerRadius](#fields-innerRadius) | 0 |
+| SFFloat | [ ] | [outerRadius](#fields-outerRadius) | 1 |
 | SFBool | [ ] | [solid](#fields-solid) | FALSE |
 {: .fields }
 

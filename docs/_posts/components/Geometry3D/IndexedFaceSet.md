@@ -30,7 +30,7 @@ The IndexedFaceSet node belongs to the [Geometry3D](/x_ite/components/overview/#
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFInt32 | [in] | [set_colorIndex](#fields-set_colorIndex) |  |
 | MFInt32 | [in] | [set_texCoordIndex](#fields-set_texCoordIndex) |  |
 | MFInt32 | [in] | [set_normalIndex](#fields-set_normalIndex) |  |
@@ -38,7 +38,7 @@ The IndexedFaceSet node belongs to the [Geometry3D](/x_ite/components/overview/#
 | SFBool | [ ] | [solid](#fields-solid) | TRUE |
 | SFBool | [ ] | [ccw](#fields-ccw) | TRUE |
 | SFBool | [ ] | [convex](#fields-convex) | TRUE |
-| SFFloat | [ ] | [creaseAngle](#fields-creaseAngle) | 0  |
+| SFFloat | [ ] | [creaseAngle](#fields-creaseAngle) | 0 |
 | SFBool | [ ] | [colorPerVertex](#fields-colorPerVertex) | TRUE |
 | SFBool | [ ] | [normalPerVertex](#fields-normalPerVertex) | TRUE |
 | MFInt32 | [ ] | [colorIndex](#fields-colorIndex) | [ ] |
@@ -46,12 +46,12 @@ The IndexedFaceSet node belongs to the [Geometry3D](/x_ite/components/overview/#
 | MFInt32 | [ ] | [normalIndex](#fields-normalIndex) | [ ] |
 | MFInt32 | [ ] | [coordIndex](#fields-coordIndex) | [ ] |
 | MFNode | [in, out] | [attrib](#fields-attrib) | [ ] |
-| SFNode | [in, out] | [fogCoord](#fields-fogCoord) | NULL  |
-| SFNode | [in, out] | [color](#fields-color) | NULL  |
-| SFNode | [in, out] | [texCoord](#fields-texCoord) | NULL  |
-| SFNode | [in, out] | [tangent](#fields-tangent) | NULL  |
-| SFNode | [in, out] | [normal](#fields-normal) | NULL  |
-| SFNode | [in, out] | [coord](#fields-coord) | NULL  |
+| SFNode | [in, out] | [fogCoord](#fields-fogCoord) | NULL |
+| SFNode | [in, out] | [color](#fields-color) | NULL |
+| SFNode | [in, out] | [texCoord](#fields-texCoord) | NULL |
+| SFNode | [in, out] | [tangent](#fields-tangent) | NULL |
+| SFNode | [in, out] | [normal](#fields-normal) | NULL |
+| SFNode | [in, out] | [coord](#fields-coord) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

@@ -29,13 +29,13 @@ The SurfaceEmitter node belongs to the [ParticleSystems](/x_ite/components/overv
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [on](#fields-on) | TRUE |
-| SFFloat | [in, out] | [speed](#fields-speed) | 0  |
-| SFFloat | [in, out] | [variation](#fields-variation) | 0.25  |
-| SFFloat | [in, out] | [mass](#fields-mass) | 0  |
-| SFFloat | [in, out] | [surfaceArea](#fields-surfaceArea) | 0  |
-| SFNode | [ ] | [surface](#fields-surface) | NULL  |
+| SFFloat | [in, out] | [speed](#fields-speed) | 0 |
+| SFFloat | [in, out] | [variation](#fields-variation) | 0.25 |
+| SFFloat | [in, out] | [mass](#fields-mass) | 0 |
+| SFFloat | [in, out] | [surfaceArea](#fields-surfaceArea) | 0 |
+| SFNode | [ ] | [surface](#fields-surface) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

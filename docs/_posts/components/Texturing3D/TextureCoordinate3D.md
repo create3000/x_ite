@@ -31,7 +31,7 @@ The TextureCoordinate3D node belongs to the [Texturing3D](/x_ite/components/over
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [mapping](#fields-mapping) | "" |
 | MFVec3f | [in, out] | [point](#fields-point) | [ ] |
 {: .fields }

@@ -29,12 +29,12 @@ The NurbsOrientationInterpolator node belongs to the [NURBS](/x_ite/components/o
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFFloat | [in] | [set_fraction](#fields-set_fraction) |  |
-| SFInt32 | [in, out] | [order](#fields-order) | 3  |
+| SFInt32 | [in, out] | [order](#fields-order) | 3 |
 | MFDouble | [in, out] | [knot](#fields-knot) | [ ] |
 | MFDouble | [in, out] | [weight](#fields-weight) | [ ] |
-| SFNode | [in, out] | [controlPoint](#fields-controlPoint) | NULL  |
+| SFNode | [in, out] | [controlPoint](#fields-controlPoint) | NULL |
 | SFRotation | [out] | [value_changed](#fields-value_changed) |  |
 {: .fields }
 

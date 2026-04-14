@@ -29,16 +29,16 @@ The NurbsSurfaceInterpolator node belongs to the [NURBS](/x_ite/components/overv
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFVec2f | [in] | [set_fraction](#fields-set_fraction) |  |
-| SFInt32 | [ ] | [uOrder](#fields-uOrder) | 3  |
-| SFInt32 | [ ] | [vOrder](#fields-vOrder) | 3  |
-| SFInt32 | [ ] | [uDimension](#fields-uDimension) | 0  |
-| SFInt32 | [ ] | [vDimension](#fields-vDimension) | 0  |
+| SFInt32 | [ ] | [uOrder](#fields-uOrder) | 3 |
+| SFInt32 | [ ] | [vOrder](#fields-vOrder) | 3 |
+| SFInt32 | [ ] | [uDimension](#fields-uDimension) | 0 |
+| SFInt32 | [ ] | [vDimension](#fields-vDimension) | 0 |
 | MFDouble | [ ] | [uKnot](#fields-uKnot) | [ ] |
 | MFDouble | [ ] | [vKnot](#fields-vKnot) | [ ] |
 | MFDouble | [in, out] | [weight](#fields-weight) | [ ] |
-| SFNode | [in, out] | [controlPoint](#fields-controlPoint) | NULL  |
+| SFNode | [in, out] | [controlPoint](#fields-controlPoint) | NULL |
 | SFVec3f | [out] | [normal_changed](#fields-normal_changed) |  |
 | SFVec3f | [out] | [position_changed](#fields-position_changed) |  |
 {: .fields }

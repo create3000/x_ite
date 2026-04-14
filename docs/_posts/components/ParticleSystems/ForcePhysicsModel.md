@@ -29,9 +29,9 @@ The ForcePhysicsModel node belongs to the [ParticleSystems](/x_ite/components/ov
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFVec3f | [in, out] | [force](#fields-force) | 0 -9.8 0  |
+| SFVec3f | [in, out] | [force](#fields-force) | 0 -9.8 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

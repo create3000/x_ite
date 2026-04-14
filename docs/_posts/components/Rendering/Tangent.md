@@ -33,7 +33,7 @@ The Tangent node belongs to the [Rendering](/x_ite/components/overview/#renderin
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFVec4f | [in, out] | [vector](#fields-vector) | [ ] |
 {: .fields }
 

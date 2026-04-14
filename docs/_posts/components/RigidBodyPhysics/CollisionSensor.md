@@ -30,13 +30,13 @@ The CollisionSensor node belongs to the [RigidBodyPhysics](/x_ite/components/ove
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | MFNode | [out] | [intersections](#fields-intersections) |  |
 | MFNode | [out] | [contacts](#fields-contacts) |  |
-| SFNode | [in, out] | [collider](#fields-collider) | NULL  |
+| SFNode | [in, out] | [collider](#fields-collider) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

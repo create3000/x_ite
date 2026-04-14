@@ -30,7 +30,7 @@ The NormalInterpolator node belongs to the [Interpolation](/x_ite/components/ove
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFFloat | [in] | [set_fraction](#fields-set_fraction) |  |
 | MFFloat | [in, out] | [key](#fields-key) | [ ] |
 | MFVec3f | [in, out] | [keyValue](#fields-keyValue) | [ ] |

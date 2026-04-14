@@ -29,18 +29,18 @@ The SliderJoint node belongs to the [RigidBodyPhysics](/x_ite/components/overvie
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| MFString | [in, out] | [forceOutput](#fields-forceOutput) | "NONE"  |
-| SFVec3f | [in, out] | [axis](#fields-axis) | 0 1 0  |
-| SFFloat | [in, out] | [minSeparation](#fields-minSeparation) | 0  |
-| SFFloat | [in, out] | [maxSeparation](#fields-maxSeparation) | 1  |
-| SFFloat | [in, out] | [sliderForce](#fields-sliderForce) | 0  |
-| SFFloat | [in, out] | [stopBounce](#fields-stopBounce) | 0  |
-| SFFloat | [in, out] | [stopErrorCorrection](#fields-stopErrorCorrection) | 1  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| MFString | [in, out] | [forceOutput](#fields-forceOutput) | "NONE" |
+| SFVec3f | [in, out] | [axis](#fields-axis) | 0 1 0 |
+| SFFloat | [in, out] | [minSeparation](#fields-minSeparation) | 0 |
+| SFFloat | [in, out] | [maxSeparation](#fields-maxSeparation) | 1 |
+| SFFloat | [in, out] | [sliderForce](#fields-sliderForce) | 0 |
+| SFFloat | [in, out] | [stopBounce](#fields-stopBounce) | 0 |
+| SFFloat | [in, out] | [stopErrorCorrection](#fields-stopErrorCorrection) | 1 |
 | SFFloat | [out] | [separation](#fields-separation) |  |
 | SFFloat | [out] | [separationRate](#fields-separationRate) |  |
-| SFNode | [in, out] | [body1](#fields-body1) | NULL  |
-| SFNode | [in, out] | [body2](#fields-body2) | NULL  |
+| SFNode | [in, out] | [body1](#fields-body1) | NULL |
+| SFNode | [in, out] | [body2](#fields-body2) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

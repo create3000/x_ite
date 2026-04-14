@@ -31,20 +31,20 @@ The Delay node belongs to the [Sound](/x_ite/components/overview/#sound) compone
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFFloat | [in, out] | [gain](#fields-gain) | 1  |
-| SFTime | [in, out] | [tailTime](#fields-tailTime) | 0  |
-| SFTime | [in, out] | [maxDelayTime](#fields-maxDelayTime) | 1  |
-| SFTime | [in, out] | [delayTime](#fields-delayTime) | 0  |
+| SFFloat | [in, out] | [gain](#fields-gain) | 1 |
+| SFTime | [in, out] | [tailTime](#fields-tailTime) | 0 |
+| SFTime | [in, out] | [maxDelayTime](#fields-maxDelayTime) | 1 |
+| SFTime | [in, out] | [delayTime](#fields-delayTime) | 0 |
 | SFInt32 | [in, out] | [channelCount](#fields-channelCount) |  |
-| SFString | [in, out] | [channelCountMode](#fields-channelCountMode) | "MAX"  |
-| SFString | [in, out] | [channelInterpretation](#fields-channelInterpretation) | "SPEAKERS"  |
-| SFTime | [in, out] | [startTime](#fields-startTime) | 0  |
-| SFTime | [in, out] | [resumeTime](#fields-resumeTime) | 0  |
-| SFTime | [in, out] | [pauseTime](#fields-pauseTime) | 0  |
-| SFTime | [in, out] | [stopTime](#fields-stopTime) | 0  |
+| SFString | [in, out] | [channelCountMode](#fields-channelCountMode) | "MAX" |
+| SFString | [in, out] | [channelInterpretation](#fields-channelInterpretation) | "SPEAKERS" |
+| SFTime | [in, out] | [startTime](#fields-startTime) | 0 |
+| SFTime | [in, out] | [resumeTime](#fields-resumeTime) | 0 |
+| SFTime | [in, out] | [pauseTime](#fields-pauseTime) | 0 |
+| SFTime | [in, out] | [stopTime](#fields-stopTime) | 0 |
 | SFBool | [out] | [isPaused](#fields-isPaused) |  |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFTime | [out] | [elapsedTime](#fields-elapsedTime) |  |

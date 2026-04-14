@@ -29,15 +29,15 @@ The Text node belongs to the [Text](/x_ite/components/overview/#text) component 
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFString | [in, out] | [string](#fields-string) | [ ] |
 | MFFloat | [in, out] | [length](#fields-length) | [ ] |
-| SFFloat | [in, out] | [maxExtent](#fields-maxExtent) | 0  |
+| SFFloat | [in, out] | [maxExtent](#fields-maxExtent) | 0 |
 | SFBool | [ ] | [solid](#fields-solid) | FALSE |
 | SFVec3f | [out] | [origin](#fields-origin) |  |
 | SFVec2f | [out] | [textBounds](#fields-textBounds) |  |
 | MFVec2f | [out] | [lineBounds](#fields-lineBounds) |  |
-| SFNode | [in, out] | [fontStyle](#fields-fontStyle) | NULL  |
+| SFNode | [in, out] | [fontStyle](#fields-fontStyle) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

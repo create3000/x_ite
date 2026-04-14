@@ -32,14 +32,14 @@ The PlaneSensor node belongs to the [PointingDeviceSensor](/x_ite/components/ove
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFRotation | [in, out] | [axisRotation](#fields-axisRotation) | 0 0 1 0  |
+| SFRotation | [in, out] | [axisRotation](#fields-axisRotation) | 0 0 1 0 |
 | SFBool | [in, out] | [autoOffset](#fields-autoOffset) | TRUE |
-| SFVec3f | [in, out] | [offset](#fields-offset) | 0 0 0  |
-| SFVec2f | [in, out] | [minPosition](#fields-minPosition) | 0 0  |
-| SFVec2f | [in, out] | [maxPosition](#fields-maxPosition) | -1 -1  |
+| SFVec3f | [in, out] | [offset](#fields-offset) | 0 0 0 |
+| SFVec2f | [in, out] | [minPosition](#fields-minPosition) | 0 0 |
+| SFVec2f | [in, out] | [maxPosition](#fields-maxPosition) | -1 -1 |
 | SFVec3f | [out] | [trackPoint_changed](#fields-trackPoint_changed) |  |
 | SFVec3f | [out] | [translation_changed](#fields-translation_changed) |  |
 | SFBool | [out] | [isOver](#fields-isOver) |  |

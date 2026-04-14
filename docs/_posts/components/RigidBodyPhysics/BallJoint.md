@@ -29,13 +29,13 @@ The BallJoint node belongs to the [RigidBodyPhysics](/x_ite/components/overview/
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| MFString | [in, out] | [forceOutput](#fields-forceOutput) | "NONE"  |
-| SFVec3f | [in, out] | [anchorPoint](#fields-anchorPoint) | 0 0 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| MFString | [in, out] | [forceOutput](#fields-forceOutput) | "NONE" |
+| SFVec3f | [in, out] | [anchorPoint](#fields-anchorPoint) | 0 0 0 |
 | SFVec3f | [out] | [body1AnchorPoint](#fields-body1AnchorPoint) |  |
 | SFVec3f | [out] | [body2AnchorPoint](#fields-body2AnchorPoint) |  |
-| SFNode | [in, out] | [body1](#fields-body1) | NULL  |
-| SFNode | [in, out] | [body2](#fields-body2) | NULL  |
+| SFNode | [in, out] | [body1](#fields-body1) | NULL |
+| SFNode | [in, out] | [body2](#fields-body2) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

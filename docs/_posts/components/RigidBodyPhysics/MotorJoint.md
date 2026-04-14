@@ -29,33 +29,33 @@ The MotorJoint node belongs to the [RigidBodyPhysics](/x_ite/components/overview
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [ ] | [autoCalc](#fields-autoCalc) | FALSE |
-| MFString | [in, out] | [forceOutput](#fields-forceOutput) | "NONE"  |
-| SFFloat | [in, out] | [axis1Angle](#fields-axis1Angle) | 0  |
-| SFFloat | [in, out] | [axis2Angle](#fields-axis2Angle) | 0  |
-| SFFloat | [in, out] | [axis3Angle](#fields-axis3Angle) | 0  |
-| SFFloat | [in, out] | [axis1Torque](#fields-axis1Torque) | 0  |
-| SFFloat | [in, out] | [axis2Torque](#fields-axis2Torque) | 0  |
-| SFFloat | [in, out] | [axis3Torque](#fields-axis3Torque) | 0  |
-| SFInt32 | [in, out] | [enabledAxes](#fields-enabledAxes) | 1  |
-| SFVec3f | [in, out] | [motor1Axis](#fields-motor1Axis) | 1 0 0  |
-| SFVec3f | [in, out] | [motor2Axis](#fields-motor2Axis) | 0 1 0  |
-| SFVec3f | [in, out] | [motor3Axis](#fields-motor3Axis) | 0 0 1  |
-| SFFloat | [in, out] | [stop1Bounce](#fields-stop1Bounce) | 0  |
-| SFFloat | [in, out] | [stop2Bounce](#fields-stop2Bounce) | 0  |
-| SFFloat | [in, out] | [stop3Bounce](#fields-stop3Bounce) | 0  |
-| SFFloat | [in, out] | [stop1ErrorCorrection](#fields-stop1ErrorCorrection) | 0.8  |
-| SFFloat | [in, out] | [stop2ErrorCorrection](#fields-stop2ErrorCorrection) | 0.8  |
-| SFFloat | [in, out] | [stop3ErrorCorrection](#fields-stop3ErrorCorrection) | 0.8  |
+| MFString | [in, out] | [forceOutput](#fields-forceOutput) | "NONE" |
+| SFFloat | [in, out] | [axis1Angle](#fields-axis1Angle) | 0 |
+| SFFloat | [in, out] | [axis2Angle](#fields-axis2Angle) | 0 |
+| SFFloat | [in, out] | [axis3Angle](#fields-axis3Angle) | 0 |
+| SFFloat | [in, out] | [axis1Torque](#fields-axis1Torque) | 0 |
+| SFFloat | [in, out] | [axis2Torque](#fields-axis2Torque) | 0 |
+| SFFloat | [in, out] | [axis3Torque](#fields-axis3Torque) | 0 |
+| SFInt32 | [in, out] | [enabledAxes](#fields-enabledAxes) | 1 |
+| SFVec3f | [in, out] | [motor1Axis](#fields-motor1Axis) | 1 0 0 |
+| SFVec3f | [in, out] | [motor2Axis](#fields-motor2Axis) | 0 1 0 |
+| SFVec3f | [in, out] | [motor3Axis](#fields-motor3Axis) | 0 0 1 |
+| SFFloat | [in, out] | [stop1Bounce](#fields-stop1Bounce) | 0 |
+| SFFloat | [in, out] | [stop2Bounce](#fields-stop2Bounce) | 0 |
+| SFFloat | [in, out] | [stop3Bounce](#fields-stop3Bounce) | 0 |
+| SFFloat | [in, out] | [stop1ErrorCorrection](#fields-stop1ErrorCorrection) | 0.8 |
+| SFFloat | [in, out] | [stop2ErrorCorrection](#fields-stop2ErrorCorrection) | 0.8 |
+| SFFloat | [in, out] | [stop3ErrorCorrection](#fields-stop3ErrorCorrection) | 0.8 |
 | SFFloat | [out] | [motor1Angle](#fields-motor1Angle) |  |
 | SFFloat | [out] | [motor2Angle](#fields-motor2Angle) |  |
 | SFFloat | [out] | [motor3Angle](#fields-motor3Angle) |  |
 | SFFloat | [out] | [motor1AngleRate](#fields-motor1AngleRate) |  |
 | SFFloat | [out] | [motor2AngleRate](#fields-motor2AngleRate) |  |
 | SFFloat | [out] | [motor3AngleRate](#fields-motor3AngleRate) |  |
-| SFNode | [in, out] | [body1](#fields-body1) | NULL  |
-| SFNode | [in, out] | [body2](#fields-body2) | NULL  |
+| SFNode | [in, out] | [body1](#fields-body1) | NULL |
+| SFNode | [in, out] | [body2](#fields-body2) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

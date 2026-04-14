@@ -33,11 +33,11 @@ The ComposedShader node belongs to the [Shaders](/x_ite/components/overview/#sha
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in] | [activate](#fields-activate) |  |
 | SFBool | [out] | [isSelected](#fields-isSelected) |  |
 | SFBool | [out] | [isValid](#fields-isValid) |  |
-| SFString | [ ] | [language](#fields-language) | ""  |
+| SFString | [ ] | [language](#fields-language) | "" |
 | MFNode | [in, out] | [parts](#fields-parts) | [ ] |
 {: .fields }
 

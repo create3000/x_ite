@@ -29,7 +29,7 @@ The BooleanFilter node belongs to the [EventUtilities](/x_ite/components/overvie
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in] | [set_boolean](#fields-set_boolean) |  |
 | SFBool | [out] | [inputTrue](#fields-inputTrue) |  |
 | SFBool | [out] | [inputFalse](#fields-inputFalse) |  |

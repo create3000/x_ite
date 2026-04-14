@@ -33,15 +33,15 @@ The LOD node belongs to the [Navigation](/x_ite/components/overview/#navigation)
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [ ] | [forceTransitions](#fields-forceTransitions) | FALSE |
-| SFVec3f | [ ] | [center](#fields-center) | 0 0 0  |
+| SFVec3f | [ ] | [center](#fields-center) | 0 0 0 |
 | MFFloat | [ ] | [range](#fields-range) | [ ] |
 | SFInt32 | [out] | [level_changed](#fields-level_changed) |  |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
 | MFNode | [in] | [addChildren](#fields-addChildren) |  |
 | MFNode | [in] | [removeChildren](#fields-removeChildren) |  |
 | MFNode | [in, out] | [children](#fields-children) | [ ] |

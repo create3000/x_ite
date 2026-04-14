@@ -31,24 +31,24 @@ The PhysicalMaterial node belongs to the [Shape](/x_ite/components/overview/#sha
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFColor | [in, out] | [baseColor](#fields-baseColor) | 1 1 1  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFColor | [in, out] | [baseColor](#fields-baseColor) | 1 1 1 |
 | SFString | [in, out] | [baseTextureMapping](#fields-baseTextureMapping) | "" |
-| SFNode | [in, out] | [baseTexture](#fields-baseTexture) | NULL  |
-| SFColor | [in, out] | [emissiveColor](#fields-emissiveColor) | 0 0 0  |
+| SFNode | [in, out] | [baseTexture](#fields-baseTexture) | NULL |
+| SFColor | [in, out] | [emissiveColor](#fields-emissiveColor) | 0 0 0 |
 | SFString | [in, out] | [emissiveTextureMapping](#fields-emissiveTextureMapping) | "" |
-| SFNode | [in, out] | [emissiveTexture](#fields-emissiveTexture) | NULL  |
-| SFFloat | [in, out] | [metallic](#fields-metallic) | 1  |
-| SFFloat | [in, out] | [roughness](#fields-roughness) | 1  |
+| SFNode | [in, out] | [emissiveTexture](#fields-emissiveTexture) | NULL |
+| SFFloat | [in, out] | [metallic](#fields-metallic) | 1 |
+| SFFloat | [in, out] | [roughness](#fields-roughness) | 1 |
 | SFString | [in, out] | [metallicRoughnessTextureMapping](#fields-metallicRoughnessTextureMapping) | "" |
-| SFNode | [in, out] | [metallicRoughnessTexture](#fields-metallicRoughnessTexture) | NULL  |
-| SFFloat | [in, out] | [occlusionStrength](#fields-occlusionStrength) | 1  |
+| SFNode | [in, out] | [metallicRoughnessTexture](#fields-metallicRoughnessTexture) | NULL |
+| SFFloat | [in, out] | [occlusionStrength](#fields-occlusionStrength) | 1 |
 | SFString | [in, out] | [occlusionTextureMapping](#fields-occlusionTextureMapping) | "" |
-| SFNode | [in, out] | [occlusionTexture](#fields-occlusionTexture) | NULL  |
-| SFFloat | [in, out] | [normalScale](#fields-normalScale) | 1  |
+| SFNode | [in, out] | [occlusionTexture](#fields-occlusionTexture) | NULL |
+| SFFloat | [in, out] | [normalScale](#fields-normalScale) | 1 |
 | SFString | [in, out] | [normalTextureMapping](#fields-normalTextureMapping) | "" |
-| SFNode | [in, out] | [normalTexture](#fields-normalTexture) | NULL  |
-| SFFloat | [in, out] | [transparency](#fields-transparency) | 0  |
+| SFNode | [in, out] | [normalTexture](#fields-normalTexture) | NULL |
+| SFFloat | [in, out] | [transparency](#fields-transparency) | 0 |
 | MFNode | [in, out] | [extensions](#fields-extensions) | [ ] |
 {: .fields }
 

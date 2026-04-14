@@ -29,17 +29,17 @@ The VolumeEmitter node belongs to the [ParticleSystems](/x_ite/components/overvi
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFInt32 | [in] | [set_coordIndex](#fields-set_coordIndex) |  |
 | SFBool | [in, out] | [on](#fields-on) | TRUE |
 | SFBool | [ ] | [internal](#fields-internal) | TRUE |
-| SFVec3f | [in, out] | [direction](#fields-direction) | 0 1 0  |
-| SFFloat | [in, out] | [speed](#fields-speed) | 0  |
-| SFFloat | [in, out] | [variation](#fields-variation) | 0.25  |
-| SFFloat | [in, out] | [mass](#fields-mass) | 0  |
-| SFFloat | [in, out] | [surfaceArea](#fields-surfaceArea) | 0  |
-| MFInt32 | [ ] | [coordIndex](#fields-coordIndex) | -1  |
-| SFNode | [in, out] | [coord](#fields-coord) | NULL  |
+| SFVec3f | [in, out] | [direction](#fields-direction) | 0 1 0 |
+| SFFloat | [in, out] | [speed](#fields-speed) | 0 |
+| SFFloat | [in, out] | [variation](#fields-variation) | 0.25 |
+| SFFloat | [in, out] | [mass](#fields-mass) | 0 |
+| SFFloat | [in, out] | [surfaceArea](#fields-surfaceArea) | 0 |
+| MFInt32 | [ ] | [coordIndex](#fields-coordIndex) | -1 |
+| SFNode | [in, out] | [coord](#fields-coord) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

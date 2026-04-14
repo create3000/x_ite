@@ -31,12 +31,12 @@ The OrientationChaser node belongs to the [Followers](/x_ite/components/overview
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFRotation | [in] | [set_value](#fields-set_value) |  |
 | SFRotation | [in] | [set_destination](#fields-set_destination) |  |
-| SFRotation | [ ] | [initialValue](#fields-initialValue) | 0 1 0 0  |
-| SFRotation | [ ] | [initialDestination](#fields-initialDestination) | 0 1 0 0  |
-| SFTime | [ ] | [duration](#fields-duration) | 1  |
+| SFRotation | [ ] | [initialValue](#fields-initialValue) | 0 1 0 0 |
+| SFRotation | [ ] | [initialDestination](#fields-initialDestination) | 0 1 0 0 |
+| SFTime | [ ] | [duration](#fields-duration) | 1 |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFRotation | [out] | [value_changed](#fields-value_changed) |  |
 {: .fields }

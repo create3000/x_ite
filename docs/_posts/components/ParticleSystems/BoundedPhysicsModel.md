@@ -29,10 +29,10 @@ The BoundedPhysicsModel node belongs to the [ParticleSystems](/x_ite/components/
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFFloat | [in, out] | [damping](#fields-damping) | 1  |
-| SFNode | [in, out] | [geometry](#fields-geometry) | NULL  |
+| SFFloat | [in, out] | [damping](#fields-damping) | 1 |
+| SFNode | [in, out] | [geometry](#fields-geometry) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

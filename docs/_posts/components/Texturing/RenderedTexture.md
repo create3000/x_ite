@@ -38,18 +38,18 @@ The RenderedTexture node belongs to the [Texturing](/x_ite/components/overview/#
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFString | [in, out] | [description](#fields-description) | "" |
-| SFBool | [in, out] | [replaceImage](#fields-replaceImage) | TRUE  |
+| SFBool | [in, out] | [replaceImage](#fields-replaceImage) | TRUE |
 | MFString | [in, out] | [url](#fields-url) | [ ] |
-| SFString | [in, out] | [update](#fields-update) | "NONE"  |
+| SFString | [in, out] | [update](#fields-update) | "NONE" |
 | MFInt32 | [in, out] | [dimensions](#fields-dimensions) | [ 128, 128, 4, 1, 1 ] |
 | SFBool | [in, out] | [depthMap](#fields-depthMap) | FALSE |
 | SFBool | [ ] | [repeatS](#fields-repeatS) | TRUE |
 | SFBool | [ ] | [repeatT](#fields-repeatT) | TRUE |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
-| SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL  |
+| SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL |
 | MFNode | [in, out] | [children](#fields-children) | [ ] |
 {: .fields }
 

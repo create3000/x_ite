@@ -32,12 +32,12 @@ The VolumeMaterialExtension node belongs to the [X_ITE](/x_ite/components/overvi
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFFloat | [in, out] | [thickness](#fields-thickness) | 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFFloat | [in, out] | [thickness](#fields-thickness) | 0 |
 | SFString | [in, out] | [thicknessTextureMapping](#fields-thicknessTextureMapping) | "" |
-| SFNode | [in, out] | [thicknessTexture](#fields-thicknessTexture) | NULL  |
-| SFFloat | [in, out] | [attenuationDistance](#fields-attenuationDistance) | 1000000  |
-| SFColor | [in, out] | [attenuationColor](#fields-attenuationColor) | 1 1 1  |
+| SFNode | [in, out] | [thicknessTexture](#fields-thicknessTexture) | NULL |
+| SFFloat | [in, out] | [attenuationDistance](#fields-attenuationDistance) | 1000000 |
+| SFColor | [in, out] | [attenuationColor](#fields-attenuationColor) | 1 1 1 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

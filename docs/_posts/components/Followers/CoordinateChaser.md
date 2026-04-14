@@ -31,12 +31,12 @@ The CoordinateChaser node belongs to the [Followers](/x_ite/components/overview/
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFVec3f | [in] | [set_value](#fields-set_value) |  |
 | MFVec3f | [in] | [set_destination](#fields-set_destination) |  |
-| MFVec3f | [ ] | [initialValue](#fields-initialValue) | 0 0 0  |
-| MFVec3f | [ ] | [initialDestination](#fields-initialDestination) | 0 0 0  |
-| SFTime | [ ] | [duration](#fields-duration) | 1  |
+| MFVec3f | [ ] | [initialValue](#fields-initialValue) | 0 0 0 |
+| MFVec3f | [ ] | [initialDestination](#fields-initialDestination) | 0 0 0 |
+| SFTime | [ ] | [duration](#fields-duration) | 1 |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | MFVec3f | [out] | [value_changed](#fields-value_changed) |  |
 {: .fields }

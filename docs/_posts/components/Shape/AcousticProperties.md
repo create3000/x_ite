@@ -29,13 +29,13 @@ The AcousticProperties node belongs to the [Shape](/x_ite/components/overview/#s
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFFloat | [in, out] | [diffuse](#fields-diffuse) | 0  |
-| SFFloat | [in, out] | [specular](#fields-specular) | 0  |
-| SFFloat | [in, out] | [refraction](#fields-refraction) | 0  |
-| SFFloat | [in, out] | [absorption](#fields-absorption) | 0  |
+| SFFloat | [in, out] | [diffuse](#fields-diffuse) | 0 |
+| SFFloat | [in, out] | [specular](#fields-specular) | 0 |
+| SFFloat | [in, out] | [refraction](#fields-refraction) | 0 |
+| SFFloat | [in, out] | [absorption](#fields-absorption) | 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

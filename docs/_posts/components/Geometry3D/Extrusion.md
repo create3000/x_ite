@@ -29,7 +29,7 @@ The Extrusion node belongs to the [Geometry3D](/x_ite/components/overview/#geome
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFVec2f | [in] | [set_crossSection](#fields-set_crossSection) |  |
 | MFRotation | [in] | [set_orientation](#fields-set_orientation) |  |
 | MFVec2f | [in] | [set_scale](#fields-set_scale) |  |
@@ -39,10 +39,10 @@ The Extrusion node belongs to the [Geometry3D](/x_ite/components/overview/#geome
 | SFBool | [ ] | [solid](#fields-solid) | TRUE |
 | SFBool | [ ] | [ccw](#fields-ccw) | TRUE |
 | SFBool | [ ] | [convex](#fields-convex) | TRUE |
-| SFFloat | [ ] | [creaseAngle](#fields-creaseAngle) | 0  |
+| SFFloat | [ ] | [creaseAngle](#fields-creaseAngle) | 0 |
 | MFVec2f | [ ] | [crossSection](#fields-crossSection) | [ 1 1, 1 -1, -1 -1, -1 1, 1 1 ] |
-| MFRotation | [ ] | [orientation](#fields-orientation) | 0 0 1 0  |
-| MFVec2f | [ ] | [scale](#fields-scale) | 1 1  |
+| MFRotation | [ ] | [orientation](#fields-orientation) | 0 0 1 0 |
+| MFVec2f | [ ] | [scale](#fields-scale) | 1 1 |
 | MFVec3f | [ ] | [spine](#fields-spine) | [ 0 0 0, 0 1 0 ] |
 {: .fields }
 

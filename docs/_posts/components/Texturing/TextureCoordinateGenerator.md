@@ -31,9 +31,9 @@ The TextureCoordinateGenerator node belongs to the [Texturing](/x_ite/components
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [mapping](#fields-mapping) | "" |
-| SFString | [in, out] | [mode](#fields-mode) | "SPHERE"  |
+| SFString | [in, out] | [mode](#fields-mode) | "SPHERE" |
 | MFFloat | [in, out] | [parameter](#fields-parameter) | [ ] |
 {: .fields }
 

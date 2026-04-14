@@ -30,7 +30,7 @@ The BooleanSequencer node belongs to the [EventUtilities](/x_ite/components/over
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFFloat | [in] | [set_fraction](#fields-set_fraction) |  |
 | SFBool | [in] | [previous](#fields-previous) |  |
 | SFBool | [in] | [next](#fields-next) |  |

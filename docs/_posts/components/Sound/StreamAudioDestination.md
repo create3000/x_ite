@@ -31,15 +31,15 @@ The StreamAudioDestination node belongs to the [Sound](/x_ite/components/overvie
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFFloat | [in, out] | [gain](#fields-gain) | 1  |
+| SFFloat | [in, out] | [gain](#fields-gain) | 1 |
 | SFString | [in, out] | [mediaDeviceID](#fields-mediaDeviceID) |  |
 | MFString | [in, out] | [streamIdentifier](#fields-streamIdentifier) | [ ] |
 | SFInt32 | [in, out] | [channelCount](#fields-channelCount) |  |
-| SFString | [in, out] | [channelCountMode](#fields-channelCountMode) | "MAX"  |
-| SFString | [in, out] | [channelInterpretation](#fields-channelInterpretation) | "SPEAKERS"  |
+| SFString | [in, out] | [channelCountMode](#fields-channelCountMode) | "MAX" |
+| SFString | [in, out] | [channelInterpretation](#fields-channelInterpretation) | "SPEAKERS" |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | MFNode | [in, out] | [children](#fields-children) | [ ] |
 {: .fields }

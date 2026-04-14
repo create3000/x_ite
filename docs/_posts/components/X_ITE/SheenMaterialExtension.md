@@ -32,13 +32,13 @@ The SheenMaterialExtension node belongs to the [X_ITE](/x_ite/components/overvie
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFColor | [in, out] | [sheenColor](#fields-sheenColor) | 0 0 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFColor | [in, out] | [sheenColor](#fields-sheenColor) | 0 0 0 |
 | SFString | [in, out] | [sheenColorTextureMapping](#fields-sheenColorTextureMapping) | "" |
-| SFNode | [in, out] | [sheenColorTexture](#fields-sheenColorTexture) | NULL  |
-| SFFloat | [in, out] | [sheenRoughness](#fields-sheenRoughness) | 0  |
+| SFNode | [in, out] | [sheenColorTexture](#fields-sheenColorTexture) | NULL |
+| SFFloat | [in, out] | [sheenRoughness](#fields-sheenRoughness) | 0 |
 | SFString | [in, out] | [sheenRoughnessTextureMapping](#fields-sheenRoughnessTextureMapping) | "" |
-| SFNode | [in, out] | [sheenRoughnessTexture](#fields-sheenRoughnessTexture) | NULL  |
+| SFNode | [in, out] | [sheenRoughnessTexture](#fields-sheenRoughnessTexture) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

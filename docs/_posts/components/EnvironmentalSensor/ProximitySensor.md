@@ -31,11 +31,11 @@ The ProximitySensor node belongs to the [EnvironmentalSensor](/x_ite/components/
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFVec3f | [in, out] | [size](#fields-size) | 0 0 0  |
-| SFVec3f | [in, out] | [center](#fields-center) | 0 0 0  |
+| SFVec3f | [in, out] | [size](#fields-size) | 0 0 0 |
+| SFVec3f | [in, out] | [center](#fields-center) | 0 0 0 |
 | SFTime | [out] | [enterTime](#fields-enterTime) |  |
 | SFTime | [out] | [exitTime](#fields-exitTime) |  |
 | SFBool | [out] | [isActive](#fields-isActive) |  |

@@ -32,11 +32,11 @@ The AnisotropyMaterialExtension node belongs to the [X_ITE](/x_ite/components/ov
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFFloat | [in, out] | [anisotropyStrength](#fields-anisotropyStrength) | 0  |
-| SFFloat | [in, out] | [anisotropyRotation](#fields-anisotropyRotation) | 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFFloat | [in, out] | [anisotropyStrength](#fields-anisotropyStrength) | 0 |
+| SFFloat | [in, out] | [anisotropyRotation](#fields-anisotropyRotation) | 0 |
 | SFString | [in, out] | [anisotropyTextureMapping](#fields-anisotropyTextureMapping) | "" |
-| SFNode | [in, out] | [anisotropyTexture](#fields-anisotropyTexture) | NULL  |
+| SFNode | [in, out] | [anisotropyTexture](#fields-anisotropyTexture) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

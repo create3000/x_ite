@@ -30,7 +30,7 @@ The BooleanTrigger node belongs to the [EventUtilities](/x_ite/components/overvi
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFTime | [in] | [set_triggerTime](#fields-set_triggerTime) |  |
 | SFBool | [out] | [triggerTrue](#fields-triggerTrue) |  |
 {: .fields }

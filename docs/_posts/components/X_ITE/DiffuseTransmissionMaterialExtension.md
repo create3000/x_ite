@@ -32,13 +32,13 @@ The DiffuseTransmissionMaterialExtension node belongs to the [X_ITE](/x_ite/comp
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFFloat | [in, out] | [diffuseTransmission](#fields-diffuseTransmission) | 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFFloat | [in, out] | [diffuseTransmission](#fields-diffuseTransmission) | 0 |
 | SFString | [in, out] | [diffuseTransmissionTextureMapping](#fields-diffuseTransmissionTextureMapping) | "" |
-| SFNode | [in, out] | [diffuseTransmissionTexture](#fields-diffuseTransmissionTexture) | NULL  |
-| SFColor | [in, out] | [diffuseTransmissionColor](#fields-diffuseTransmissionColor) | 1 1 1  |
+| SFNode | [in, out] | [diffuseTransmissionTexture](#fields-diffuseTransmissionTexture) | NULL |
+| SFColor | [in, out] | [diffuseTransmissionColor](#fields-diffuseTransmissionColor) | 1 1 1 |
 | SFString | [in, out] | [diffuseTransmissionColorTextureMapping](#fields-diffuseTransmissionColorTextureMapping) | "" |
-| SFNode | [in, out] | [diffuseTransmissionColorTexture](#fields-diffuseTransmissionColorTexture) | NULL  |
+| SFNode | [in, out] | [diffuseTransmissionColorTexture](#fields-diffuseTransmissionColorTexture) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

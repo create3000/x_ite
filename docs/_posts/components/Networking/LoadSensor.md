@@ -31,10 +31,10 @@ The LoadSensor node belongs to the [Networking](/x_ite/components/overview/#netw
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFTime | [in, out] | [timeOut](#fields-timeOut) | 0  |
+| SFTime | [in, out] | [timeOut](#fields-timeOut) | 0 |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFBool | [out] | [isLoaded](#fields-isLoaded) |  |
 | SFFloat | [out] | [progress](#fields-progress) |  |

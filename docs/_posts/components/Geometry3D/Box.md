@@ -29,8 +29,8 @@ The Box node belongs to the [Geometry3D](/x_ite/components/overview/#geometry3d)
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFVec3f | [ ] | [size](#fields-size) | 2 2 2  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFVec3f | [ ] | [size](#fields-size) | 2 2 2 |
 | SFBool | [ ] | [solid](#fields-solid) | TRUE |
 {: .fields }
 

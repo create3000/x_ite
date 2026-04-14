@@ -29,13 +29,13 @@ The LayoutLayer node belongs to the [Layout](/x_ite/components/overview/#layout)
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [pickable](#fields-pickable) | TRUE |
-| MFString | [in, out] | [objectType](#fields-objectType) | "ALL"  |
-| SFBool | [in, out] | [pointerEvents](#fields-pointerEvents) | TRUE  |
+| MFString | [in, out] | [objectType](#fields-objectType) | "ALL" |
+| SFBool | [in, out] | [pointerEvents](#fields-pointerEvents) | TRUE |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
-| SFNode | [in, out] | [layout](#fields-layout) | NULL  |
-| SFNode | [in, out] | [viewport](#fields-viewport) | NULL  |
+| SFNode | [in, out] | [layout](#fields-layout) | NULL |
+| SFNode | [in, out] | [viewport](#fields-viewport) | NULL |
 | MFNode | [in] | [addChildren](#fields-addChildren) |  |
 | MFNode | [in] | [removeChildren](#fields-removeChildren) |  |
 | MFNode | [in, out] | [children](#fields-children) | [ ] |

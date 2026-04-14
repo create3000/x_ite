@@ -30,7 +30,7 @@ The MultiTextureCoordinate node belongs to the [Texturing](/x_ite/components/ove
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFNode | [in, out] | [texCoord](#fields-texCoord) | [ ] |
 {: .fields }
 

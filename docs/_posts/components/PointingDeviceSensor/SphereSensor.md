@@ -32,11 +32,11 @@ The SphereSensor node belongs to the [PointingDeviceSensor](/x_ite/components/ov
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFBool | [in, out] | [autoOffset](#fields-autoOffset) | TRUE |
-| SFRotation | [in, out] | [offset](#fields-offset) | 0 1 0 0  |
+| SFRotation | [in, out] | [offset](#fields-offset) | 0 1 0 0 |
 | SFVec3f | [out] | [trackPoint_changed](#fields-trackPoint_changed) |  |
 | SFRotation | [out] | [rotation_changed](#fields-rotation_changed) |  |
 | SFBool | [out] | [isOver](#fields-isOver) |  |

@@ -30,7 +30,7 @@ The WorldInfo node belongs to the [Core](/x_ite/components/overview/#core) compo
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [title](#fields-title) | "" |
 | MFString | [in, out] | [info](#fields-info) | [ ] |
 {: .fields }

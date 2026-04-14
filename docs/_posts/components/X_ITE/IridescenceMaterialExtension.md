@@ -32,15 +32,15 @@ The IridescenceMaterialExtension node belongs to the [X_ITE](/x_ite/components/o
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFFloat | [in, out] | [iridescence](#fields-iridescence) | 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFFloat | [in, out] | [iridescence](#fields-iridescence) | 0 |
 | SFString | [in, out] | [iridescenceTextureMapping](#fields-iridescenceTextureMapping) | "" |
-| SFNode | [in, out] | [iridescenceTexture](#fields-iridescenceTexture) | NULL  |
-| SFFloat | [in, out] | [iridescenceIndexOfRefraction](#fields-iridescenceIndexOfRefraction) | 1.3  |
-| SFFloat | [in, out] | [iridescenceThicknessMinimum](#fields-iridescenceThicknessMinimum) | 100  |
-| SFFloat | [in, out] | [iridescenceThicknessMaximum](#fields-iridescenceThicknessMaximum) | 400  |
+| SFNode | [in, out] | [iridescenceTexture](#fields-iridescenceTexture) | NULL |
+| SFFloat | [in, out] | [iridescenceIndexOfRefraction](#fields-iridescenceIndexOfRefraction) | 1.3 |
+| SFFloat | [in, out] | [iridescenceThicknessMinimum](#fields-iridescenceThicknessMinimum) | 100 |
+| SFFloat | [in, out] | [iridescenceThicknessMaximum](#fields-iridescenceThicknessMaximum) | 400 |
 | SFString | [in, out] | [iridescenceThicknessTextureMapping](#fields-iridescenceThicknessTextureMapping) | "" |
-| SFNode | [in, out] | [iridescenceThicknessTexture](#fields-iridescenceThicknessTexture) | NULL  |
+| SFNode | [in, out] | [iridescenceThicknessTexture](#fields-iridescenceThicknessTexture) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

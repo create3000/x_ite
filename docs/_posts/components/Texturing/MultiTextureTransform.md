@@ -30,7 +30,7 @@ The MultiTextureTransform node belongs to the [Texturing](/x_ite/components/over
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFNode | [in, out] | [textureTransform](#fields-textureTransform) | [ ] |
 {: .fields }
 

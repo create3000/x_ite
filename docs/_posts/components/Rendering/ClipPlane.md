@@ -29,9 +29,9 @@ The ClipPlane node belongs to the [Rendering](/x_ite/components/overview/#render
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFVec4f | [in, out] | [plane](#fields-plane) | 0 1 0 0  |
+| SFVec4f | [in, out] | [plane](#fields-plane) | 0 1 0 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

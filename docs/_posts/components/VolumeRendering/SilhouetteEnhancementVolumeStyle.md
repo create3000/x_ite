@@ -30,12 +30,12 @@ The SilhouetteEnhancementVolumeStyle node belongs to the [VolumeRendering](/x_it
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFFloat | [in, out] | [silhouetteRetainedOpacity](#fields-silhouetteRetainedOpacity) | 1  |
-| SFFloat | [in, out] | [silhouetteBoundaryOpacity](#fields-silhouetteBoundaryOpacity) | 0  |
-| SFFloat | [in, out] | [silhouetteSharpness](#fields-silhouetteSharpness) | 0.5  |
-| SFNode | [in, out] | [surfaceNormals](#fields-surfaceNormals) | NULL  |
+| SFFloat | [in, out] | [silhouetteRetainedOpacity](#fields-silhouetteRetainedOpacity) | 1 |
+| SFFloat | [in, out] | [silhouetteBoundaryOpacity](#fields-silhouetteBoundaryOpacity) | 0 |
+| SFFloat | [in, out] | [silhouetteSharpness](#fields-silhouetteSharpness) | 0.5 |
+| SFNode | [in, out] | [surfaceNormals](#fields-surfaceNormals) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

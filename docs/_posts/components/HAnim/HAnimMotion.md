@@ -29,10 +29,10 @@ The HAnimMotion node belongs to the [HAnim](/x_ite/components/overview/#hanim) c
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFString | [in, out] | [name](#fields-name) | "" |
-| SFInt32 | [in, out] | [loa](#fields-loa) | -1  |
+| SFInt32 | [in, out] | [loa](#fields-loa) | -1 |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFString | [in, out] | [joints](#fields-joints) | "" |
 | MFBool | [in, out] | [channelsEnabled](#fields-channelsEnabled) | [ ] |
@@ -41,11 +41,11 @@ The HAnimMotion node belongs to the [HAnim](/x_ite/components/overview/#hanim) c
 | SFBool | [in, out] | [loop](#fields-loop) | FALSE |
 | SFBool | [in] | [next](#fields-next) |  |
 | SFBool | [in] | [previous](#fields-previous) |  |
-| SFInt32 | [in, out] | [frameIndex](#fields-frameIndex) | 0  |
-| SFTime | [in, out] | [frameDuration](#fields-frameDuration) | 0.1  |
-| SFInt32 | [in, out] | [frameIncrement](#fields-frameIncrement) | 1  |
-| SFInt32 | [in, out] | [startFrame](#fields-startFrame) | 0  |
-| SFInt32 | [in, out] | [endFrame](#fields-endFrame) | 0  |
+| SFInt32 | [in, out] | [frameIndex](#fields-frameIndex) | 0 |
+| SFTime | [in, out] | [frameDuration](#fields-frameDuration) | 0.1 |
+| SFInt32 | [in, out] | [frameIncrement](#fields-frameIncrement) | 1 |
+| SFInt32 | [in, out] | [startFrame](#fields-startFrame) | 0 |
+| SFInt32 | [in, out] | [endFrame](#fields-endFrame) | 0 |
 | SFTime | [out] | [cycleTime](#fields-cycleTime) |  |
 | SFTime | [out] | [elapsedTime](#fields-elapsedTime) |  |
 | SFInt32 | [out] | [frameCount](#fields-frameCount) |  |

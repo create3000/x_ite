@@ -29,11 +29,11 @@ The ArcClose2D node belongs to the [Geometry2D](/x_ite/components/overview/#geom
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFString | [ ] | [closureType](#fields-closureType) | "PIE"  |
-| SFFloat | [ ] | [startAngle](#fields-startAngle) | 0  |
-| SFFloat | [ ] | [endAngle](#fields-endAngle) | π/2  |
-| SFFloat | [ ] | [radius](#fields-radius) | 1  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFString | [ ] | [closureType](#fields-closureType) | "PIE" |
+| SFFloat | [ ] | [startAngle](#fields-startAngle) | 0 |
+| SFFloat | [ ] | [endAngle](#fields-endAngle) | π/2 |
+| SFFloat | [ ] | [radius](#fields-radius) | 1 |
 | SFBool | [ ] | [solid](#fields-solid) | FALSE |
 {: .fields }
 

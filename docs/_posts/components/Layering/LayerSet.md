@@ -28,8 +28,8 @@ The LayerSet node belongs to the [Layering](/x_ite/components/overview/#layering
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFInt32 | [in, out] | [activeLayer](#fields-activeLayer) | 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFInt32 | [in, out] | [activeLayer](#fields-activeLayer) | 0 |
 | MFInt32 | [in, out] | [order](#fields-order) | [ 0 ] |
 | MFNode | [in, out] | [layers](#fields-layers) | [ ] |
 {: .fields }

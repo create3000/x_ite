@@ -33,20 +33,20 @@ The TwoSidedMaterial node belongs to the [Shape](/x_ite/components/overview/#sha
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [separateBackColor](#fields-separateBackColor) | FALSE |
-| SFFloat | [in, out] | [ambientIntensity](#fields-ambientIntensity) | 0.2  |
-| SFColor | [in, out] | [diffuseColor](#fields-diffuseColor) | 0.8 0.8 0.8  |
-| SFColor | [in, out] | [specularColor](#fields-specularColor) | 0 0 0  |
-| SFColor | [in, out] | [emissiveColor](#fields-emissiveColor) | 0 0 0  |
-| SFFloat | [in, out] | [shininess](#fields-shininess) | 0.2  |
-| SFFloat | [in, out] | [transparency](#fields-transparency) | 0  |
-| SFFloat | [in, out] | [backAmbientIntensity](#fields-backAmbientIntensity) | 0.2  |
-| SFColor | [in, out] | [backDiffuseColor](#fields-backDiffuseColor) | 0.8 0.8 0.8  |
-| SFColor | [in, out] | [backSpecularColor](#fields-backSpecularColor) | 0 0 0  |
-| SFColor | [in, out] | [backEmissiveColor](#fields-backEmissiveColor) | 0 0 0  |
-| SFFloat | [in, out] | [backShininess](#fields-backShininess) | 0.2  |
-| SFFloat | [in, out] | [backTransparency](#fields-backTransparency) | 0  |
+| SFFloat | [in, out] | [ambientIntensity](#fields-ambientIntensity) | 0.2 |
+| SFColor | [in, out] | [diffuseColor](#fields-diffuseColor) | 0.8 0.8 0.8 |
+| SFColor | [in, out] | [specularColor](#fields-specularColor) | 0 0 0 |
+| SFColor | [in, out] | [emissiveColor](#fields-emissiveColor) | 0 0 0 |
+| SFFloat | [in, out] | [shininess](#fields-shininess) | 0.2 |
+| SFFloat | [in, out] | [transparency](#fields-transparency) | 0 |
+| SFFloat | [in, out] | [backAmbientIntensity](#fields-backAmbientIntensity) | 0.2 |
+| SFColor | [in, out] | [backDiffuseColor](#fields-backDiffuseColor) | 0.8 0.8 0.8 |
+| SFColor | [in, out] | [backSpecularColor](#fields-backSpecularColor) | 0 0 0 |
+| SFColor | [in, out] | [backEmissiveColor](#fields-backEmissiveColor) | 0 0 0 |
+| SFFloat | [in, out] | [backShininess](#fields-backShininess) | 0.2 |
+| SFFloat | [in, out] | [backTransparency](#fields-backTransparency) | 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

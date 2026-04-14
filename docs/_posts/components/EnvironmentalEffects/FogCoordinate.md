@@ -29,7 +29,7 @@ The FogCoordinate node belongs to the [EnvironmentalEffects](/x_ite/components/o
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFFloat | [in, out] | [depth](#fields-depth) | [ ] |
 {: .fields }
 

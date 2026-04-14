@@ -32,10 +32,10 @@ The TransmissionMaterialExtension node belongs to the [X_ITE](/x_ite/components/
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFFloat | [in, out] | [transmission](#fields-transmission) | 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFFloat | [in, out] | [transmission](#fields-transmission) | 0 |
 | SFString | [in, out] | [transmissionTextureMapping](#fields-transmissionTextureMapping) | "" |
-| SFNode | [in, out] | [transmissionTexture](#fields-transmissionTexture) | NULL  |
+| SFNode | [in, out] | [transmissionTexture](#fields-transmissionTexture) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

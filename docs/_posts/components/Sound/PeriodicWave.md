@@ -30,10 +30,10 @@ The PeriodicWave node belongs to the [Sound](/x_ite/components/overview/#sound) 
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFString | [in, out] | [type](#fields-type) | "SQUARE"  |
+| SFString | [in, out] | [type](#fields-type) | "SQUARE" |
 | MFFloat | [in, out] | [optionsReal](#fields-optionsReal) | [ ] |
 | MFFloat | [in, out] | [optionsImag](#fields-optionsImag) | [ ] |
 {: .fields }

@@ -29,10 +29,10 @@ The ProjectionVolumeStyle node belongs to the [VolumeRendering](/x_ite/component
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFString | [in, out] | [type](#fields-type) | "MAX"  |
-| SFFloat | [in, out] | [intensityThreshold](#fields-intensityThreshold) | 0  |
+| SFString | [in, out] | [type](#fields-type) | "MAX" |
+| SFFloat | [in, out] | [intensityThreshold](#fields-intensityThreshold) | 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

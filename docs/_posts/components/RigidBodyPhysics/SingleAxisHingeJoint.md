@@ -29,20 +29,20 @@ The SingleAxisHingeJoint node belongs to the [RigidBodyPhysics](/x_ite/component
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| MFString | [in, out] | [forceOutput](#fields-forceOutput) | "NONE"  |
-| SFVec3f | [in, out] | [anchorPoint](#fields-anchorPoint) | 0 0 0  |
-| SFVec3f | [in, out] | [axis](#fields-axis) | 0 1 0  |
-| SFFloat | [in, out] | [minAngle](#fields-minAngle) | -π  |
-| SFFloat | [in, out] | [maxAngle](#fields-maxAngle) | π  |
-| SFFloat | [in, out] | [stopBounce](#fields-stopBounce) | 0  |
-| SFFloat | [in, out] | [stopErrorCorrection](#fields-stopErrorCorrection) | 0.8  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| MFString | [in, out] | [forceOutput](#fields-forceOutput) | "NONE" |
+| SFVec3f | [in, out] | [anchorPoint](#fields-anchorPoint) | 0 0 0 |
+| SFVec3f | [in, out] | [axis](#fields-axis) | 0 1 0 |
+| SFFloat | [in, out] | [minAngle](#fields-minAngle) | -π |
+| SFFloat | [in, out] | [maxAngle](#fields-maxAngle) | π |
+| SFFloat | [in, out] | [stopBounce](#fields-stopBounce) | 0 |
+| SFFloat | [in, out] | [stopErrorCorrection](#fields-stopErrorCorrection) | 0.8 |
 | SFVec3f | [out] | [body1AnchorPoint](#fields-body1AnchorPoint) |  |
 | SFVec3f | [out] | [body2AnchorPoint](#fields-body2AnchorPoint) |  |
 | SFFloat | [out] | [angle](#fields-angle) |  |
 | SFFloat | [out] | [angleRate](#fields-angleRate) |  |
-| SFNode | [in, out] | [body1](#fields-body1) | NULL  |
-| SFNode | [in, out] | [body2](#fields-body2) | NULL  |
+| SFNode | [in, out] | [body1](#fields-body1) | NULL |
+| SFNode | [in, out] | [body2](#fields-body2) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

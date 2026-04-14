@@ -31,12 +31,12 @@ The TextureTransform node belongs to the [Texturing](/x_ite/components/overview/
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [mapping](#fields-mapping) | "" |
-| SFVec2f | [in, out] | [translation](#fields-translation) | 0 0  |
-| SFFloat | [in, out] | [rotation](#fields-rotation) | 0  |
-| SFVec2f | [in, out] | [scale](#fields-scale) | 1 1  |
-| SFVec2f | [in, out] | [center](#fields-center) | 0 0  |
+| SFVec2f | [in, out] | [translation](#fields-translation) | 0 0 |
+| SFFloat | [in, out] | [rotation](#fields-rotation) | 0 |
+| SFVec2f | [in, out] | [scale](#fields-scale) | 1 1 |
+| SFVec2f | [in, out] | [center](#fields-center) | 0 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

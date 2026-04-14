@@ -29,12 +29,12 @@ The Cylinder node belongs to the [Geometry3D](/x_ite/components/overview/#geomet
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [top](#fields-top) | TRUE |
 | SFBool | [in, out] | [side](#fields-side) | TRUE |
 | SFBool | [in, out] | [bottom](#fields-bottom) | TRUE |
-| SFFloat | [ ] | [height](#fields-height) | 2  |
-| SFFloat | [ ] | [radius](#fields-radius) | 1  |
+| SFFloat | [ ] | [height](#fields-height) | 2 |
+| SFFloat | [ ] | [radius](#fields-radius) | 1 |
 | SFBool | [ ] | [solid](#fields-solid) | TRUE |
 {: .fields }
 

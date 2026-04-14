@@ -30,12 +30,12 @@ The SquadOrientationInterpolator node belongs to the [Interpolation](/x_ite/comp
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFFloat | [in] | [set_fraction](#fields-set_fraction) |  |
 | SFBool | [in, out] | [closed](#fields-closed) | FALSE |
 | MFFloat | [in, out] | [key](#fields-key) | [ ] |
 | MFRotation | [in, out] | [keyValue](#fields-keyValue) | [ ] |
-| SFBool | [in, out] | [normalizeVelocity](#fields-normalizeVelocity) | FALSE  |
+| SFBool | [in, out] | [normalizeVelocity](#fields-normalizeVelocity) | FALSE |
 | SFRotation | [out] | [value_changed](#fields-value_changed) |  |
 {: .fields }
 

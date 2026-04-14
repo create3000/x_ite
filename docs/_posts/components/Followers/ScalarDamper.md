@@ -31,14 +31,14 @@ The ScalarDamper node belongs to the [Followers](/x_ite/components/overview/#fol
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFFloat | [in] | [set_value](#fields-set_value) |  |
 | SFFloat | [in] | [set_destination](#fields-set_destination) |  |
-| SFFloat | [ ] | [initialValue](#fields-initialValue) | 0  |
-| SFFloat | [ ] | [initialDestination](#fields-initialDestination) | 0  |
-| SFInt32 | [ ] | [order](#fields-order) | 3  |
-| SFTime | [in, out] | [tau](#fields-tau) | 0.3  |
-| SFFloat | [in, out] | [tolerance](#fields-tolerance) | -1  |
+| SFFloat | [ ] | [initialValue](#fields-initialValue) | 0 |
+| SFFloat | [ ] | [initialDestination](#fields-initialDestination) | 0 |
+| SFInt32 | [ ] | [order](#fields-order) | 3 |
+| SFTime | [in, out] | [tau](#fields-tau) | 0.3 |
+| SFFloat | [in, out] | [tolerance](#fields-tolerance) | -1 |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFFloat | [out] | [value_changed](#fields-value_changed) |  |
 {: .fields }

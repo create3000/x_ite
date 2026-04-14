@@ -30,11 +30,11 @@ The BoundaryEnhancementVolumeStyle node belongs to the [VolumeRendering](/x_ite/
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFFloat | [in, out] | [retainedOpacity](#fields-retainedOpacity) | 0.2  |
-| SFFloat | [in, out] | [boundaryOpacity](#fields-boundaryOpacity) | 0.9  |
-| SFFloat | [in, out] | [opacityFactor](#fields-opacityFactor) | 2  |
+| SFFloat | [in, out] | [retainedOpacity](#fields-retainedOpacity) | 0.2 |
+| SFFloat | [in, out] | [boundaryOpacity](#fields-boundaryOpacity) | 0.9 |
+| SFFloat | [in, out] | [opacityFactor](#fields-opacityFactor) | 2 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

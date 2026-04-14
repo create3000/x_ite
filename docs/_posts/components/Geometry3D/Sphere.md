@@ -29,8 +29,8 @@ The Sphere node belongs to the [Geometry3D](/x_ite/components/overview/#geometry
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFFloat | [ ] | [radius](#fields-radius) | 1  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFFloat | [ ] | [radius](#fields-radius) | 1 |
 | SFBool | [ ] | [solid](#fields-solid) | TRUE |
 {: .fields }
 

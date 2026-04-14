@@ -30,9 +30,9 @@ The IntegerTrigger node belongs to the [EventUtilities](/x_ite/components/overvi
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in] | [set_boolean](#fields-set_boolean) |  |
-| SFInt32 | [in, out] | [integerKey](#fields-integerKey) | -1  |
+| SFInt32 | [in, out] | [integerKey](#fields-integerKey) | -1 |
 | SFInt32 | [out] | [triggerValue](#fields-triggerValue) |  |
 {: .fields }
 

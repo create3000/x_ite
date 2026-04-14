@@ -30,8 +30,8 @@ The GeoPositionInterpolator node belongs to the [Geospatial](/x_ite/components/o
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFNode | [ ] | [geoOrigin](#fields-geoOrigin) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFNode | [ ] | [geoOrigin](#fields-geoOrigin) | NULL |
 | MFString | [ ] | [geoSystem](#fields-geoSystem) | [ "GD", "WE" ] |
 | SFFloat | [in] | [set_fraction](#fields-set_fraction) |  |
 | MFFloat | [in, out] | [key](#fields-key) | [ ] |

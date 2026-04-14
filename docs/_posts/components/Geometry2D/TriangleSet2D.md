@@ -29,7 +29,7 @@ The TriangleSet2D node belongs to the [Geometry2D](/x_ite/components/overview/#g
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFVec2f | [in, out] | [vertices](#fields-vertices) | [ ] |
 | SFBool | [ ] | [solid](#fields-solid) | FALSE |
 {: .fields }

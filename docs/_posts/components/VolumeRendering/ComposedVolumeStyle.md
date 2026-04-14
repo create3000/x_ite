@@ -30,7 +30,7 @@ The ComposedVolumeStyle node belongs to the [VolumeRendering](/x_ite/components/
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | MFNode | [in, out] | [renderStyle](#fields-renderStyle) | [ ] |
 {: .fields }

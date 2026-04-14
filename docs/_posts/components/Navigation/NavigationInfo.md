@@ -30,15 +30,15 @@ The NavigationInfo node belongs to the [Navigation](/x_ite/components/overview/#
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in] | [set_bind](#fields-set_bind) |  |
 | MFString | [in, out] | [type](#fields-type) | [ "EXAMINE", "ANY" ] |
 | MFFloat | [in, out] | [avatarSize](#fields-avatarSize) | [ 0.25, 1.6, 0.75 ] |
-| SFFloat | [in, out] | [speed](#fields-speed) | 1  |
+| SFFloat | [in, out] | [speed](#fields-speed) | 1 |
 | SFBool | [in, out] | [headlight](#fields-headlight) | TRUE |
-| SFFloat | [in, out] | [visibilityLimit](#fields-visibilityLimit) | 0  |
-| MFString | [in, out] | [transitionType](#fields-transitionType) | "LINEAR"  |
-| SFTime | [in, out] | [transitionTime](#fields-transitionTime) | 1  |
+| SFFloat | [in, out] | [visibilityLimit](#fields-visibilityLimit) | 0 |
+| MFString | [in, out] | [transitionType](#fields-transitionType) | "LINEAR" |
+| SFTime | [in, out] | [transitionTime](#fields-transitionTime) | 1 |
 | SFBool | [out] | [transitionComplete](#fields-transitionComplete) |  |
 | SFBool | [out] | [isBound](#fields-isBound) |  |
 | SFTime | [out] | [bindTime](#fields-bindTime) |  |

@@ -30,13 +30,13 @@ The ShadedVolumeStyle node belongs to the [VolumeRendering](/x_ite/components/ov
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFBool | [in, out] | [lighting](#fields-lighting) | FALSE |
 | SFBool | [in, out] | [shadows](#fields-shadows) | FALSE |
-| SFString | [ ] | [phaseFunction](#fields-phaseFunction) | "Henyey-Greenstein"  |
-| SFNode | [in, out] | [material](#fields-material) | NULL  |
-| SFNode | [in, out] | [surfaceNormals](#fields-surfaceNormals) | NULL  |
+| SFString | [ ] | [phaseFunction](#fields-phaseFunction) | "Henyey-Greenstein" |
+| SFNode | [in, out] | [material](#fields-material) | NULL |
+| SFNode | [in, out] | [surfaceNormals](#fields-surfaceNormals) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

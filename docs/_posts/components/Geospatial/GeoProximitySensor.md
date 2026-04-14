@@ -31,14 +31,14 @@ The GeoProximitySensor node belongs to the [Geospatial](/x_ite/components/overvi
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
-| SFNode | [ ] | [geoOrigin](#fields-geoOrigin) | NULL  |
+| SFNode | [ ] | [geoOrigin](#fields-geoOrigin) | NULL |
 | MFString | [ ] | [geoSystem](#fields-geoSystem) | [ "GD", "WE" ] |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFVec3f | [in, out] | [size](#fields-size) | 0 0 0  |
-| SFVec3d | [in, out] | [center](#fields-center) | 0 0 0  |
-| SFVec3d | [in, out] | [geoCenter](#fields-geoCenter) | 0 0 0  |
+| SFVec3f | [in, out] | [size](#fields-size) | 0 0 0 |
+| SFVec3d | [in, out] | [center](#fields-center) | 0 0 0 |
+| SFVec3d | [in, out] | [geoCenter](#fields-geoCenter) | 0 0 0 |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFTime | [out] | [enterTime](#fields-enterTime) |  |
 | SFTime | [out] | [exitTime](#fields-exitTime) |  |

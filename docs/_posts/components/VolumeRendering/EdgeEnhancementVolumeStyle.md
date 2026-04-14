@@ -30,11 +30,11 @@ The EdgeEnhancementVolumeStyle node belongs to the [VolumeRendering](/x_ite/comp
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFColorRGBA | [in, out] | [edgeColor](#fields-edgeColor) | 0 0 0 1  |
-| SFFloat | [in, out] | [gradientThreshold](#fields-gradientThreshold) | 0.4  |
-| SFNode | [in, out] | [surfaceNormals](#fields-surfaceNormals) | NULL  |
+| SFColorRGBA | [in, out] | [edgeColor](#fields-edgeColor) | 0 0 0 1 |
+| SFFloat | [in, out] | [gradientThreshold](#fields-gradientThreshold) | 0.4 |
+| SFNode | [in, out] | [surfaceNormals](#fields-surfaceNormals) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

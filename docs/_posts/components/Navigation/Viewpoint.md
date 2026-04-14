@@ -31,21 +31,21 @@ The Viewpoint node belongs to the [Navigation](/x_ite/components/overview/#navig
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in] | [set_bind](#fields-set_bind) |  |
 | SFString | [in, out] | [description](#fields-description) | "" |
-| SFVec3f | [in, out] | [position](#fields-position) | 0 0 10  |
-| SFRotation | [in, out] | [orientation](#fields-orientation) | 0 0 1 0  |
-| SFVec3f | [in, out] | [centerOfRotation](#fields-centerOfRotation) | 0 0 0  |
-| SFFloat | [in, out] | [fieldOfView](#fields-fieldOfView) | π/4  |
-| SFFloat | [in, out] | [nearDistance](#fields-nearDistance) | -1  |
-| SFFloat | [in, out] | [farDistance](#fields-farDistance) | -1  |
+| SFVec3f | [in, out] | [position](#fields-position) | 0 0 10 |
+| SFRotation | [in, out] | [orientation](#fields-orientation) | 0 0 1 0 |
+| SFVec3f | [in, out] | [centerOfRotation](#fields-centerOfRotation) | 0 0 0 |
+| SFFloat | [in, out] | [fieldOfView](#fields-fieldOfView) | π/4 |
+| SFFloat | [in, out] | [nearDistance](#fields-nearDistance) | -1 |
+| SFFloat | [in, out] | [farDistance](#fields-farDistance) | -1 |
 | SFBool | [in, out] | [viewAll](#fields-viewAll) | FALSE |
 | SFBool | [in, out] | [jump](#fields-jump) | TRUE |
 | SFBool | [in, out] | [retainUserOffsets](#fields-retainUserOffsets) | FALSE |
 | SFBool | [out] | [isBound](#fields-isBound) |  |
 | SFTime | [out] | [bindTime](#fields-bindTime) |  |
-| SFNode | [in, out] | [navigationInfo](#fields-navigationInfo) | NULL  |
+| SFNode | [in, out] | [navigationInfo](#fields-navigationInfo) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

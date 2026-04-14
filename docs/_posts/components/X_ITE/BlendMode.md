@@ -33,8 +33,8 @@ The BlendMode node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) com
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFColorRGBA | [in, out] | [blendColor](#fields-blendColor) | 0 0 0 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFColorRGBA | [in, out] | [blendColor](#fields-blendColor) | 0 0 0 0 |
 | SFString | [in, out] | [sourceColorFactor](#fields-sourceColorFactor) | "SRC |
 | SFString | [in, out] | [sourceAlphaFactor](#fields-sourceAlphaFactor) | "ONE" |
 | SFString | [in, out] | [destinationColorFactor](#fields-destinationColorFactor) | "ONE |

@@ -30,24 +30,24 @@ The SpatialSound node belongs to the [Sound](/x_ite/components/overview/#sound) 
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFBool | [ ] | [spatialize](#fields-spatialize) | TRUE |
-| SFFloat | [in, out] | [intensity](#fields-intensity) | 1  |
-| SFVec3f | [in, out] | [location](#fields-location) | 0 0 0  |
-| SFVec3f | [in, out] | [direction](#fields-direction) | 0 0 1  |
-| SFFloat | [in, out] | [gain](#fields-gain) | 1  |
-| SFFloat | [in, out] | [coneOuterGain](#fields-coneOuterGain) | 0  |
-| SFFloat | [in, out] | [coneInnerAngle](#fields-coneInnerAngle) | 6.2832  |
-| SFFloat | [in, out] | [coneOuterAngle](#fields-coneOuterAngle) | 6.2832  |
-| SFString | [in, out] | [distanceModel](#fields-distanceModel) | "INVERSE"  |
-| SFFloat | [in, out] | [maxDistance](#fields-maxDistance) | 10000  |
-| SFFloat | [in, out] | [referenceDistance](#fields-referenceDistance) | 1  |
-| SFFloat | [in, out] | [rolloffFactor](#fields-rolloffFactor) | 1  |
+| SFFloat | [in, out] | [intensity](#fields-intensity) | 1 |
+| SFVec3f | [in, out] | [location](#fields-location) | 0 0 0 |
+| SFVec3f | [in, out] | [direction](#fields-direction) | 0 0 1 |
+| SFFloat | [in, out] | [gain](#fields-gain) | 1 |
+| SFFloat | [in, out] | [coneOuterGain](#fields-coneOuterGain) | 0 |
+| SFFloat | [in, out] | [coneInnerAngle](#fields-coneInnerAngle) | 6.2832 |
+| SFFloat | [in, out] | [coneOuterAngle](#fields-coneOuterAngle) | 6.2832 |
+| SFString | [in, out] | [distanceModel](#fields-distanceModel) | "INVERSE" |
+| SFFloat | [in, out] | [maxDistance](#fields-maxDistance) | 10000 |
+| SFFloat | [in, out] | [referenceDistance](#fields-referenceDistance) | 1 |
+| SFFloat | [in, out] | [rolloffFactor](#fields-rolloffFactor) | 1 |
 | SFBool | [in, out] | [enableHRTF](#fields-enableHRTF) | FALSE |
-| SFBool | [in, out] | [dopplerEnabled](#fields-dopplerEnabled) | FALSE  |
-| SFFloat | [in, out] | [priority](#fields-priority) | 0  |
+| SFBool | [in, out] | [dopplerEnabled](#fields-dopplerEnabled) | FALSE |
+| SFFloat | [in, out] | [priority](#fields-priority) | 0 |
 | MFNode | [in, out] | [children](#fields-children) | [ ] |
 {: .fields }
 

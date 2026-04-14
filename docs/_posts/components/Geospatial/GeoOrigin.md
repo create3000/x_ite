@@ -28,9 +28,9 @@ The GeoOrigin node belongs to the [Geospatial](/x_ite/components/overview/#geosp
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFString | [ ] | [geoSystem](#fields-geoSystem) | [ "GD", "WE" ] |
-| SFVec3d | [in, out] | [geoCoords](#fields-geoCoords) | 0 0 0  |
+| SFVec3d | [in, out] | [geoCoords](#fields-geoCoords) | 0 0 0 |
 | SFBool | [ ] | [rotateYUp](#fields-rotateYUp) | FALSE |
 {: .fields }
 

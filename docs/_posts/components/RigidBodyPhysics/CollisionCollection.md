@@ -32,21 +32,21 @@ The CollisionCollection node belongs to the [RigidBodyPhysics](/x_ite/components
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | MFString | [in, out] | [appliedParameters](#fields-appliedParameters) | "BOUNCE" |
-| SFFloat | [in, out] | [bounce](#fields-bounce) | 0  |
-| SFFloat | [in, out] | [minBounceSpeed](#fields-minBounceSpeed) | 0.1  |
-| SFVec2f | [in, out] | [frictionCoefficients](#fields-frictionCoefficients) | 0 0  |
-| SFVec2f | [in, out] | [surfaceSpeed](#fields-surfaceSpeed) | 0 0  |
-| SFVec2f | [in, out] | [slipFactors](#fields-slipFactors) | 0 0  |
-| SFFloat | [in, out] | [softnessConstantForceMix](#fields-softnessConstantForceMix) | 0.0001  |
-| SFFloat | [in, out] | [softnessErrorCorrection](#fields-softnessErrorCorrection) | 0.8  |
+| SFFloat | [in, out] | [bounce](#fields-bounce) | 0 |
+| SFFloat | [in, out] | [minBounceSpeed](#fields-minBounceSpeed) | 0.1 |
+| SFVec2f | [in, out] | [frictionCoefficients](#fields-frictionCoefficients) | 0 0 |
+| SFVec2f | [in, out] | [surfaceSpeed](#fields-surfaceSpeed) | 0 0 |
+| SFVec2f | [in, out] | [slipFactors](#fields-slipFactors) | 0 0 |
+| SFFloat | [in, out] | [softnessConstantForceMix](#fields-softnessConstantForceMix) | 0.0001 |
+| SFFloat | [in, out] | [softnessErrorCorrection](#fields-softnessErrorCorrection) | 0.8 |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
 | MFNode | [in, out] | [collidables](#fields-collidables) | [ ] |
 {: .fields }
 

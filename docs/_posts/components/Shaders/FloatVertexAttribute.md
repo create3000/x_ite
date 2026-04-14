@@ -30,9 +30,9 @@ The FloatVertexAttribute node belongs to the [Shaders](/x_ite/components/overvie
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [ ] | [name](#fields-name) | "" |
-| SFInt32 | [ ] | [numComponents](#fields-numComponents) | 4  |
+| SFInt32 | [ ] | [numComponents](#fields-numComponents) | 4 |
 | MFFloat | [in, out] | [value](#fields-value) | [ ] |
 {: .fields }
 

@@ -31,9 +31,9 @@ The TextureTransformMatrix3D node belongs to the [Texturing3D](/x_ite/components
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [mapping](#fields-mapping) | "" |
-| SFMatrix4f | [in, out] | [matrix](#fields-matrix) | 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1  |
+| SFMatrix4f | [in, out] | [matrix](#fields-matrix) | 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

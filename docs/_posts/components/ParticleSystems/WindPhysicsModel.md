@@ -29,12 +29,12 @@ The WindPhysicsModel node belongs to the [ParticleSystems](/x_ite/components/ove
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFVec3f | [in, out] | [direction](#fields-direction) | 1 0 0  |
-| SFFloat | [in, out] | [speed](#fields-speed) | 0.1  |
-| SFFloat | [in, out] | [gustiness](#fields-gustiness) | 0.1  |
-| SFFloat | [in, out] | [turbulence](#fields-turbulence) | 0  |
+| SFVec3f | [in, out] | [direction](#fields-direction) | 1 0 0 |
+| SFFloat | [in, out] | [speed](#fields-speed) | 0.1 |
+| SFFloat | [in, out] | [gustiness](#fields-gustiness) | 0.1 |
+| SFFloat | [in, out] | [turbulence](#fields-turbulence) | 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

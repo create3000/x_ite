@@ -32,15 +32,15 @@ The ClearcoatMaterialExtension node belongs to the [X_ITE](/x_ite/components/ove
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFFloat | [in, out] | [clearcoat](#fields-clearcoat) | 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFFloat | [in, out] | [clearcoat](#fields-clearcoat) | 0 |
 | SFString | [in, out] | [clearcoatTextureMapping](#fields-clearcoatTextureMapping) | "" |
-| SFNode | [in, out] | [clearcoatTexture](#fields-clearcoatTexture) | NULL  |
-| SFFloat | [in, out] | [clearcoatRoughness](#fields-clearcoatRoughness) | 0  |
+| SFNode | [in, out] | [clearcoatTexture](#fields-clearcoatTexture) | NULL |
+| SFFloat | [in, out] | [clearcoatRoughness](#fields-clearcoatRoughness) | 0 |
 | SFString | [in, out] | [clearcoatRoughnessTextureMapping](#fields-clearcoatRoughnessTextureMapping) | "" |
-| SFNode | [in, out] | [clearcoatRoughnessTexture](#fields-clearcoatRoughnessTexture) | NULL  |
+| SFNode | [in, out] | [clearcoatRoughnessTexture](#fields-clearcoatRoughnessTexture) | NULL |
 | SFString | [in, out] | [clearcoatNormalTextureMapping](#fields-clearcoatNormalTextureMapping) | "" |
-| SFNode | [in, out] | [clearcoatNormalTexture](#fields-clearcoatNormalTexture) | NULL  |
+| SFNode | [in, out] | [clearcoatNormalTexture](#fields-clearcoatNormalTexture) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

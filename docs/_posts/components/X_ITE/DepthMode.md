@@ -33,9 +33,9 @@ The DepthMode node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) com
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFVec2f | [in, out] | [polygonOffset](#fields-polygonOffset) | 0 0  |
-| SFVec2f | [in, out] | [depthRange](#fields-depthRange) | 0 1  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFVec2f | [in, out] | [polygonOffset](#fields-polygonOffset) | 0 0 |
+| SFVec2f | [in, out] | [depthRange](#fields-depthRange) | 0 1 |
 | SFBool | [in, out] | [depthTest](#fields-depthTest) | TRUE |
 | SFString | [in, out] | [depthFunction](#fields-depthFunction) | "LESS |
 | SFBool | [in, out] | [depthMask](#fields-depthMask) | TRUE |

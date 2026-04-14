@@ -30,10 +30,10 @@ The MultiTexture node belongs to the [Texturing](/x_ite/components/overview/#tex
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
-| SFColor | [in, out] | [color](#fields-color) | 1 1 1  |
-| SFFloat | [in, out] | [alpha](#fields-alpha) | 1  |
+| SFColor | [in, out] | [color](#fields-color) | 1 1 1 |
+| SFFloat | [in, out] | [alpha](#fields-alpha) | 1 |
 | MFString | [in, out] | [mode](#fields-mode) | [ ] |
 | MFString | [in, out] | [source](#fields-source) | [ ] |
 | MFString | [in, out] | [function](#fields-function) | [ ] |

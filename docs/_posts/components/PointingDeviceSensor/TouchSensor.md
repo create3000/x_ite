@@ -32,7 +32,7 @@ The TouchSensor node belongs to the [PointingDeviceSensor](/x_ite/components/ove
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFVec2f | [out] | [hitTexCoord_changed](#fields-hitTexCoord_changed) |  |

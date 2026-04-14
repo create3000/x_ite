@@ -30,7 +30,7 @@ The Layout node belongs to the [Layout](/x_ite/components/overview/#layout) comp
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFString | [in, out] | [align](#fields-align) | [ "CENTER", "CENTER" ] |
 | MFString | [in, out] | [offsetUnits](#fields-offsetUnits) | [ "WORLD", "WORLD" ] |
 | MFFloat | [in, out] | [offset](#fields-offset) | [ 0, 0 ] |

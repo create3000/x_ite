@@ -31,14 +31,14 @@ The PrimitivePickSensor node belongs to the [Picking](/x_ite/components/overview
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| MFString | [in, out] | [objectType](#fields-objectType) | "ALL"  |
+| MFString | [in, out] | [objectType](#fields-objectType) | "ALL" |
 | SFString | [in, out] | [matchCriterion](#fields-matchCriterion) | "MATCH |
-| SFString | [ ] | [intersectionType](#fields-intersectionType) | "BOUNDS"  |
-| SFString | [ ] | [sortOrder](#fields-sortOrder) | "CLOSEST"  |
-| SFNode | [in, out] | [pickingGeometry](#fields-pickingGeometry) | NULL  |
+| SFString | [ ] | [intersectionType](#fields-intersectionType) | "BOUNDS" |
+| SFString | [ ] | [sortOrder](#fields-sortOrder) | "CLOSEST" |
+| SFNode | [in, out] | [pickingGeometry](#fields-pickingGeometry) | NULL |
 | MFNode | [in, out] | [pickTarget](#fields-pickTarget) | [ ] |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | MFNode | [out] | [pickedGeometry](#fields-pickedGeometry) |  |

@@ -34,31 +34,31 @@ The BufferAudioSource node belongs to the [Sound](/x_ite/components/overview/#so
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFBool | [in, out] | [load](#fields-load) | TRUE |
 | MFString | [in, out] | [url](#fields-url) | [ ] |
-| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0  |
-| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600  |
-| SFInt32 | [in, out] | [numberOfChannels](#fields-numberOfChannels) | 0  |
-| SFFloat | [in, out] | [sampleRate](#fields-sampleRate) | 0  |
+| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0 |
+| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600 |
+| SFInt32 | [in, out] | [numberOfChannels](#fields-numberOfChannels) | 0 |
+| SFFloat | [in, out] | [sampleRate](#fields-sampleRate) | 0 |
 | SFInt32 | [in, out] | [bufferLength](#fields-bufferLength) |  |
 | MFFloat | [in, out] | [buffer](#fields-buffer) | [ ] |
-| SFTime | [out] | [bufferDuration](#fields-bufferDuration) | 0  |
-| SFFloat | [in, out] | [gain](#fields-gain) | 1  |
-| SFFloat | [in, out] | [detune](#fields-detune) | 0  |
-| SFFloat | [in, out] | [playbackRate](#fields-playbackRate) | 1  |
-| SFTime | [in, out] | [loopStart](#fields-loopStart) | 0  |
-| SFTime | [in, out] | [loopEnd](#fields-loopEnd) | 0  |
+| SFTime | [out] | [bufferDuration](#fields-bufferDuration) | 0 |
+| SFFloat | [in, out] | [gain](#fields-gain) | 1 |
+| SFFloat | [in, out] | [detune](#fields-detune) | 0 |
+| SFFloat | [in, out] | [playbackRate](#fields-playbackRate) | 1 |
+| SFTime | [in, out] | [loopStart](#fields-loopStart) | 0 |
+| SFTime | [in, out] | [loopEnd](#fields-loopEnd) | 0 |
 | SFInt32 | [in, out] | [channelCount](#fields-channelCount) |  |
-| SFString | [in, out] | [channelCountMode](#fields-channelCountMode) | "MAX"  |
-| SFString | [in, out] | [channelInterpretation](#fields-channelInterpretation) | "SPEAKERS"  |
+| SFString | [in, out] | [channelCountMode](#fields-channelCountMode) | "MAX" |
+| SFString | [in, out] | [channelInterpretation](#fields-channelInterpretation) | "SPEAKERS" |
 | SFBool | [in, out] | [loop](#fields-loop) | FALSE |
-| SFTime | [in, out] | [startTime](#fields-startTime) | 0  |
-| SFTime | [in, out] | [resumeTime](#fields-resumeTime) | 0  |
-| SFTime | [in, out] | [pauseTime](#fields-pauseTime) | 0  |
-| SFTime | [in, out] | [stopTime](#fields-stopTime) | 0  |
+| SFTime | [in, out] | [startTime](#fields-startTime) | 0 |
+| SFTime | [in, out] | [resumeTime](#fields-resumeTime) | 0 |
+| SFTime | [in, out] | [pauseTime](#fields-pauseTime) | 0 |
+| SFTime | [in, out] | [stopTime](#fields-stopTime) | 0 |
 | SFBool | [out] | [isPaused](#fields-isPaused) |  |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFTime | [out] | [elapsedTime](#fields-elapsedTime) |  |

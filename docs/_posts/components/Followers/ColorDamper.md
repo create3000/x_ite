@@ -31,14 +31,14 @@ The ColorDamper node belongs to the [Followers](/x_ite/components/overview/#foll
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFColor | [in] | [set_value](#fields-set_value) |  |
 | SFColor | [in] | [set_destination](#fields-set_destination) |  |
-| SFColor | [ ] | [initialValue](#fields-initialValue) | 0.8 0.8 0.8  |
-| SFColor | [ ] | [initialDestination](#fields-initialDestination) | 0.8 0.8 0.8  |
-| SFInt32 | [ ] | [order](#fields-order) | 3  |
-| SFTime | [in, out] | [tau](#fields-tau) | 0.3  |
-| SFFloat | [in, out] | [tolerance](#fields-tolerance) | -1  |
+| SFColor | [ ] | [initialValue](#fields-initialValue) | 0.8 0.8 0.8 |
+| SFColor | [ ] | [initialDestination](#fields-initialDestination) | 0.8 0.8 0.8 |
+| SFInt32 | [ ] | [order](#fields-order) | 3 |
+| SFTime | [in, out] | [tau](#fields-tau) | 0.3 |
+| SFFloat | [in, out] | [tolerance](#fields-tolerance) | -1 |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFColor | [out] | [value_changed](#fields-value_changed) |  |
 {: .fields }

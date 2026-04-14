@@ -30,7 +30,7 @@ The ColorRGBA node belongs to the [Rendering](/x_ite/components/overview/#render
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFColorRGBA | [in, out] | [color](#fields-color) | [ ] |
 {: .fields }
 

@@ -31,15 +31,15 @@ The ComposedCubeMapTexture node belongs to the [CubeMapTexturing](/x_ite/compone
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
-| SFNode | [in, out] | [frontTexture](#fields-frontTexture) | NULL  |
-| SFNode | [in, out] | [backTexture](#fields-backTexture) | NULL  |
-| SFNode | [in, out] | [leftTexture](#fields-leftTexture) | NULL  |
-| SFNode | [in, out] | [rightTexture](#fields-rightTexture) | NULL  |
-| SFNode | [in, out] | [topTexture](#fields-topTexture) | NULL  |
-| SFNode | [in, out] | [bottomTexture](#fields-bottomTexture) | NULL  |
-| SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL  |
+| SFNode | [in, out] | [frontTexture](#fields-frontTexture) | NULL |
+| SFNode | [in, out] | [backTexture](#fields-backTexture) | NULL |
+| SFNode | [in, out] | [leftTexture](#fields-leftTexture) | NULL |
+| SFNode | [in, out] | [rightTexture](#fields-rightTexture) | NULL |
+| SFNode | [in, out] | [topTexture](#fields-topTexture) | NULL |
+| SFNode | [in, out] | [bottomTexture](#fields-bottomTexture) | NULL |
+| SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

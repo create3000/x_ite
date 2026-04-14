@@ -31,7 +31,7 @@ The MetadataSet node belongs to the [Core](/x_ite/components/overview/#core) com
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [name](#fields-name) | "" |
 | SFString | [in, out] | [reference](#fields-reference) | "" |
 | MFNode | [in, out] | [value](#fields-value) | [ ] |

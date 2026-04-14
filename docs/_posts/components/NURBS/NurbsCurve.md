@@ -30,13 +30,13 @@ The NurbsCurve node belongs to the [NURBS](/x_ite/components/overview/#nurbs) co
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFInt32 | [in, out] | [tessellation](#fields-tessellation) | 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFInt32 | [in, out] | [tessellation](#fields-tessellation) | 0 |
 | SFBool | [ ] | [closed](#fields-closed) | FALSE |
-| SFInt32 | [ ] | [order](#fields-order) | 3  |
+| SFInt32 | [ ] | [order](#fields-order) | 3 |
 | MFDouble | [ ] | [knot](#fields-knot) | [ ] |
 | MFDouble | [in, out] | [weight](#fields-weight) | [ ] |
-| SFNode | [in, out] | [controlPoint](#fields-controlPoint) | NULL  |
+| SFNode | [in, out] | [controlPoint](#fields-controlPoint) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

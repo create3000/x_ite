@@ -29,23 +29,23 @@ The ElevationGrid node belongs to the [Geometry3D](/x_ite/components/overview/#g
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFFloat | [in] | [set_height](#fields-set_height) |  |
-| SFInt32 | [ ] | [xDimension](#fields-xDimension) | 0  |
-| SFInt32 | [ ] | [zDimension](#fields-zDimension) | 0  |
-| SFFloat | [ ] | [xSpacing](#fields-xSpacing) | 1  |
-| SFFloat | [ ] | [zSpacing](#fields-zSpacing) | 1  |
+| SFInt32 | [ ] | [xDimension](#fields-xDimension) | 0 |
+| SFInt32 | [ ] | [zDimension](#fields-zDimension) | 0 |
+| SFFloat | [ ] | [xSpacing](#fields-xSpacing) | 1 |
+| SFFloat | [ ] | [zSpacing](#fields-zSpacing) | 1 |
 | SFBool | [ ] | [solid](#fields-solid) | TRUE |
 | SFBool | [ ] | [ccw](#fields-ccw) | TRUE |
-| SFFloat | [ ] | [creaseAngle](#fields-creaseAngle) | 0  |
+| SFFloat | [ ] | [creaseAngle](#fields-creaseAngle) | 0 |
 | SFBool | [ ] | [colorPerVertex](#fields-colorPerVertex) | TRUE |
 | SFBool | [ ] | [normalPerVertex](#fields-normalPerVertex) | TRUE |
 | MFNode | [in, out] | [attrib](#fields-attrib) | [ ] |
-| SFNode | [in, out] | [fogCoord](#fields-fogCoord) | NULL  |
-| SFNode | [in, out] | [color](#fields-color) | NULL  |
-| SFNode | [in, out] | [texCoord](#fields-texCoord) | NULL  |
-| SFNode | [in, out] | [tangent](#fields-tangent) | NULL  |
-| SFNode | [in, out] | [normal](#fields-normal) | NULL  |
+| SFNode | [in, out] | [fogCoord](#fields-fogCoord) | NULL |
+| SFNode | [in, out] | [color](#fields-color) | NULL |
+| SFNode | [in, out] | [texCoord](#fields-texCoord) | NULL |
+| SFNode | [in, out] | [tangent](#fields-tangent) | NULL |
+| SFNode | [in, out] | [normal](#fields-normal) | NULL |
 | MFFloat | [ ] | [height](#fields-height) | [ ] |
 {: .fields }
 

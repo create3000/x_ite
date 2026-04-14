@@ -31,7 +31,7 @@ The Background node belongs to the [EnvironmentalEffects](/x_ite/components/over
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in] | [set_bind](#fields-set_bind) |  |
 | MFString | [in, out] | [frontUrl](#fields-frontUrl) | [ ] |
 | MFString | [in, out] | [backUrl](#fields-backUrl) | [ ] |
@@ -40,10 +40,10 @@ The Background node belongs to the [EnvironmentalEffects](/x_ite/components/over
 | MFString | [in, out] | [topUrl](#fields-topUrl) | [ ] |
 | MFString | [in, out] | [bottomUrl](#fields-bottomUrl) | [ ] |
 | MFFloat | [in, out] | [skyAngle](#fields-skyAngle) | [ ] |
-| MFColor | [in, out] | [skyColor](#fields-skyColor) | 0 0 0  |
+| MFColor | [in, out] | [skyColor](#fields-skyColor) | 0 0 0 |
 | MFFloat | [in, out] | [groundAngle](#fields-groundAngle) | [ ] |
 | MFColor | [in, out] | [groundColor](#fields-groundColor) | [ ] |
-| SFFloat | [in, out] | [transparency](#fields-transparency) | 0  |
+| SFFloat | [in, out] | [transparency](#fields-transparency) | 0 |
 | SFBool | [out] | [isBound](#fields-isBound) |  |
 | SFTime | [out] | [bindTime](#fields-bindTime) |  |
 {: .fields }

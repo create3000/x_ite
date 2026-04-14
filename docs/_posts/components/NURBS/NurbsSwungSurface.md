@@ -30,11 +30,11 @@ The NurbsSwungSurface node belongs to the [NURBS](/x_ite/components/overview/#nu
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [ ] | [solid](#fields-solid) | TRUE |
 | SFBool | [ ] | [ccw](#fields-ccw) | TRUE |
-| SFNode | [in, out] | [profileCurve](#fields-profileCurve) | NULL  |
-| SFNode | [in, out] | [trajectoryCurve](#fields-trajectoryCurve) | NULL  |
+| SFNode | [in, out] | [profileCurve](#fields-profileCurve) | NULL |
+| SFNode | [in, out] | [trajectoryCurve](#fields-trajectoryCurve) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

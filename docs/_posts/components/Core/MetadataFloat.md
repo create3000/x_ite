@@ -31,7 +31,7 @@ The MetadataFloat node belongs to the [Core](/x_ite/components/overview/#core) c
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [name](#fields-name) | "" |
 | SFString | [in, out] | [reference](#fields-reference) | "" |
 | MFFloat | [in, out] | [value](#fields-value) | [ ] |

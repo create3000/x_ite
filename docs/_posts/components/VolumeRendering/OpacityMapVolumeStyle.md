@@ -31,8 +31,8 @@ The OpacityMapVolumeStyle node belongs to the [VolumeRendering](/x_ite/component
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFNode | [in, out] | [transferFunction](#fields-transferFunction) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFNode | [in, out] | [transferFunction](#fields-transferFunction) | NULL |
 {: .fields }
 
 ### SFBool [in, out] **enabled** TRUE

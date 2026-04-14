@@ -30,11 +30,11 @@ The ToneMappedVolumeStyle node belongs to the [VolumeRendering](/x_ite/component
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFColorRGBA | [in, out] | [coolColor](#fields-coolColor) | 0 0 1 0  |
-| SFColorRGBA | [in, out] | [warmColor](#fields-warmColor) | 1 1 0 0  |
-| SFNode | [in, out] | [surfaceNormals](#fields-surfaceNormals) | NULL  |
+| SFColorRGBA | [in, out] | [coolColor](#fields-coolColor) | 0 0 1 0 |
+| SFColorRGBA | [in, out] | [warmColor](#fields-warmColor) | 1 1 0 0 |
+| SFNode | [in, out] | [surfaceNormals](#fields-surfaceNormals) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

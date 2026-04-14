@@ -29,16 +29,16 @@ The FontStyle node belongs to the [Text](/x_ite/components/overview/#text) compo
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [language](#fields-language) | "" |
-| MFString | [in, out] | [family](#fields-family) | "SERIF"  |
-| SFString | [in, out] | [style](#fields-style) | "PLAIN"  |
-| SFFloat | [in, out] | [size](#fields-size) | 1  |
-| SFFloat | [in, out] | [spacing](#fields-spacing) | 1  |
+| MFString | [in, out] | [family](#fields-family) | "SERIF" |
+| SFString | [in, out] | [style](#fields-style) | "PLAIN" |
+| SFFloat | [in, out] | [size](#fields-size) | 1 |
+| SFFloat | [in, out] | [spacing](#fields-spacing) | 1 |
 | SFBool | [in, out] | [horizontal](#fields-horizontal) | TRUE |
 | SFBool | [in, out] | [leftToRight](#fields-leftToRight) | TRUE |
 | SFBool | [in, out] | [topToBottom](#fields-topToBottom) | TRUE |
-| MFString | [in, out] | [justify](#fields-justify) | "BEGIN"  |
+| MFString | [in, out] | [justify](#fields-justify) | "BEGIN" |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

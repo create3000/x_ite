@@ -29,12 +29,12 @@ The DISEntityManager node belongs to the [DIS](/x_ite/components/overview/#dis) 
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [address](#fields-address) | "localhost" |
-| SFInt32 | [in, out] | [applicationID](#fields-applicationID) | 0  |
+| SFInt32 | [in, out] | [applicationID](#fields-applicationID) | 0 |
 | MFNode | [in, out] | [children](#fields-children) | [ ] |
-| SFInt32 | [in, out] | [port](#fields-port) | 0  |
-| SFInt32 | [in, out] | [siteID](#fields-siteID) | 0  |
+| SFInt32 | [in, out] | [port](#fields-port) | 0 |
+| SFInt32 | [in, out] | [siteID](#fields-siteID) | 0 |
 | MFNode | [out] | [addedEntities](#fields-addedEntities) |  |
 | MFNode | [out] | [removedEntities](#fields-removedEntities) |  |
 {: .fields }

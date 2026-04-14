@@ -33,12 +33,12 @@ The Fog node belongs to the [EnvironmentalEffects](/x_ite/components/overview/#e
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in] | [set_bind](#fields-set_bind) |  |
-| SFString | [in, out] | [fogType](#fields-fogType) | "LINEAR"  |
-| SFColor | [in, out] | [color](#fields-color) | 1 1 1  |
-| SFFloat | [in, out] | [visibilityStart](#fields-visibilityStart) | 0  |
-| SFFloat | [in, out] | [visibilityRange](#fields-visibilityRange) | 0  |
+| SFString | [in, out] | [fogType](#fields-fogType) | "LINEAR" |
+| SFColor | [in, out] | [color](#fields-color) | 1 1 1 |
+| SFFloat | [in, out] | [visibilityStart](#fields-visibilityStart) | 0 |
+| SFFloat | [in, out] | [visibilityRange](#fields-visibilityRange) | 0 |
 | SFBool | [out] | [isBound](#fields-isBound) |  |
 | SFTime | [out] | [bindTime](#fields-bindTime) |  |
 {: .fields }

@@ -31,12 +31,12 @@ The ColorChaser node belongs to the [Followers](/x_ite/components/overview/#foll
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFColor | [in] | [set_value](#fields-set_value) |  |
 | SFColor | [in] | [set_destination](#fields-set_destination) |  |
-| SFColor | [ ] | [initialValue](#fields-initialValue) | 0.8 0.8 0.8  |
-| SFColor | [ ] | [initialDestination](#fields-initialDestination) | 0.8 0.8 0.8  |
-| SFTime | [ ] | [duration](#fields-duration) | 1  |
+| SFColor | [ ] | [initialValue](#fields-initialValue) | 0.8 0.8 0.8 |
+| SFColor | [ ] | [initialDestination](#fields-initialDestination) | 0.8 0.8 0.8 |
+| SFTime | [ ] | [duration](#fields-duration) | 1 |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFColor | [out] | [value_changed](#fields-value_changed) |  |
 {: .fields }

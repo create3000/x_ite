@@ -32,12 +32,12 @@ The LocalFog node belongs to the [EnvironmentalEffects](/x_ite/components/overvi
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFString | [in, out] | [fogType](#fields-fogType) | "LINEAR"  |
-| SFColor | [in, out] | [color](#fields-color) | 1 1 1  |
-| SFFloat | [in, out] | [visibilityStart](#fields-visibilityStart) | 0  |
-| SFFloat | [in, out] | [visibilityRange](#fields-visibilityRange) | 0  |
+| SFString | [in, out] | [fogType](#fields-fogType) | "LINEAR" |
+| SFColor | [in, out] | [color](#fields-color) | 1 1 1 |
+| SFFloat | [in, out] | [visibilityStart](#fields-visibilityStart) | 0 |
+| SFFloat | [in, out] | [visibilityRange](#fields-visibilityRange) | 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

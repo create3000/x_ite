@@ -30,7 +30,7 @@ The Matrix3VertexAttribute node belongs to the [Shaders](/x_ite/components/overv
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [ ] | [name](#fields-name) | "" |
 | MFMatrix3f | [in, out] | [value](#fields-value) | [ ] |
 {: .fields }

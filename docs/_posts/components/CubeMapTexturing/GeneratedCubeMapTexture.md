@@ -31,11 +31,11 @@ The GeneratedCubeMapTexture node belongs to the [CubeMapTexturing](/x_ite/compon
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
-| SFString | [in, out] | [update](#fields-update) | "NONE"  |
-| SFInt32 | [ ] | [size](#fields-size) | 128  |
-| SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL  |
+| SFString | [in, out] | [update](#fields-update) | "NONE" |
+| SFInt32 | [ ] | [size](#fields-size) | 128 |
+| SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

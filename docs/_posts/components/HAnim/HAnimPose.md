@@ -32,12 +32,12 @@ The HAnimPose node belongs to the [HAnim](/x_ite/components/overview/#hanim) com
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFString | [in, out] | [name](#fields-name) | "" |
-| SFInt32 | [in, out] | [loa](#fields-loa) | -1  |
+| SFInt32 | [in, out] | [loa](#fields-loa) | -1 |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFFloat | [in, out] | [transitionDuration](#fields-transitionDuration) | 0  |
+| SFFloat | [in, out] | [transitionDuration](#fields-transitionDuration) | 0 |
 | SFBool | [in] | [resetAllJoints](#fields-resetAllJoints) |  |
 | SFBool | [in] | [commencePose](#fields-commencePose) |  |
 | SFTime | [in] | [set_startTime](#fields-set_startTime) |  |

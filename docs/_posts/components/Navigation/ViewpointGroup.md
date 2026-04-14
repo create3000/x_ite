@@ -29,12 +29,12 @@ The ViewpointGroup node belongs to the [Navigation](/x_ite/components/overview/#
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [displayed](#fields-displayed) | TRUE |
 | SFBool | [in, out] | [retainUserOffsets](#fields-retainUserOffsets) | FALSE |
-| SFVec3f | [in, out] | [size](#fields-size) | 0 0 0  |
-| SFVec3f | [in, out] | [center](#fields-center) | 0 0 0  |
+| SFVec3f | [in, out] | [size](#fields-size) | 0 0 0 |
+| SFVec3f | [in, out] | [center](#fields-center) | 0 0 0 |
 | MFNode | [in, out] | [children](#fields-children) | [ ] |
 {: .fields }
 

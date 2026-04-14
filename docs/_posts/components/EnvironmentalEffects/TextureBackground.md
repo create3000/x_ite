@@ -31,21 +31,21 @@ The TextureBackground node belongs to the [EnvironmentalEffects](/x_ite/componen
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in] | [set_bind](#fields-set_bind) |  |
 | MFFloat | [in, out] | [skyAngle](#fields-skyAngle) | [ ] |
-| MFColor | [in, out] | [skyColor](#fields-skyColor) | 0 0 0  |
+| MFColor | [in, out] | [skyColor](#fields-skyColor) | 0 0 0 |
 | MFFloat | [in, out] | [groundAngle](#fields-groundAngle) | [ ] |
 | MFColor | [in, out] | [groundColor](#fields-groundColor) | [ ] |
-| SFFloat | [in, out] | [transparency](#fields-transparency) | 0  |
+| SFFloat | [in, out] | [transparency](#fields-transparency) | 0 |
 | SFBool | [out] | [isBound](#fields-isBound) |  |
 | SFTime | [out] | [bindTime](#fields-bindTime) |  |
-| SFNode | [in, out] | [frontTexture](#fields-frontTexture) | NULL  |
-| SFNode | [in, out] | [backTexture](#fields-backTexture) | NULL  |
-| SFNode | [in, out] | [leftTexture](#fields-leftTexture) | NULL  |
-| SFNode | [in, out] | [rightTexture](#fields-rightTexture) | NULL  |
-| SFNode | [in, out] | [topTexture](#fields-topTexture) | NULL  |
-| SFNode | [in, out] | [bottomTexture](#fields-bottomTexture) | NULL  |
+| SFNode | [in, out] | [frontTexture](#fields-frontTexture) | NULL |
+| SFNode | [in, out] | [backTexture](#fields-backTexture) | NULL |
+| SFNode | [in, out] | [leftTexture](#fields-leftTexture) | NULL |
+| SFNode | [in, out] | [rightTexture](#fields-rightTexture) | NULL |
+| SFNode | [in, out] | [topTexture](#fields-topTexture) | NULL |
+| SFNode | [in, out] | [bottomTexture](#fields-bottomTexture) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

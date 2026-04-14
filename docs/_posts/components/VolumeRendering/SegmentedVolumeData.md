@@ -33,16 +33,16 @@ The SegmentedVolumeData node belongs to the [VolumeRendering](/x_ite/components/
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFVec3f | [in, out] | [dimensions](#fields-dimensions) | 1 1 1  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFVec3f | [in, out] | [dimensions](#fields-dimensions) | 1 1 1 |
 | MFBool | [in, out] | [segmentEnabled](#fields-segmentEnabled) | [ ] |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
-| SFNode | [in, out] | [segmentIdentifiers](#fields-segmentIdentifiers) | NULL  |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
+| SFNode | [in, out] | [segmentIdentifiers](#fields-segmentIdentifiers) | NULL |
 | MFNode | [in, out] | [renderStyle](#fields-renderStyle) | [ ] |
-| SFNode | [in, out] | [voxels](#fields-voxels) | NULL  |
+| SFNode | [in, out] | [voxels](#fields-voxels) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

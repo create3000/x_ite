@@ -30,7 +30,7 @@ The CoordinateDouble node belongs to the [Rendering](/x_ite/components/overview/
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFVec3d | [in, out] | [point](#fields-point) | [ ] |
 {: .fields }
 

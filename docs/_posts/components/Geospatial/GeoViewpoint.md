@@ -31,24 +31,24 @@ The GeoViewpoint node belongs to the [Geospatial](/x_ite/components/overview/#ge
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFNode | [ ] | [geoOrigin](#fields-geoOrigin) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFNode | [ ] | [geoOrigin](#fields-geoOrigin) | NULL |
 | MFString | [ ] | [geoSystem](#fields-geoSystem) | [ "GD", "WE" ] |
 | SFBool | [in] | [set_bind](#fields-set_bind) |  |
 | SFString | [in, out] | [description](#fields-description) | "" |
-| SFVec3d | [in, out] | [position](#fields-position) | 0 0 100000  |
-| SFRotation | [in, out] | [orientation](#fields-orientation) | 0 0 1 0  |
-| SFVec3d | [in, out] | [centerOfRotation](#fields-centerOfRotation) | 0 0 0  |
-| SFFloat | [in, out] | [fieldOfView](#fields-fieldOfView) | π/4  |
-| SFFloat | [in, out] | [nearDistance](#fields-nearDistance) | -1  |
-| SFFloat | [in, out] | [farDistance](#fields-farDistance) | -1  |
+| SFVec3d | [in, out] | [position](#fields-position) | 0 0 100000 |
+| SFRotation | [in, out] | [orientation](#fields-orientation) | 0 0 1 0 |
+| SFVec3d | [in, out] | [centerOfRotation](#fields-centerOfRotation) | 0 0 0 |
+| SFFloat | [in, out] | [fieldOfView](#fields-fieldOfView) | π/4 |
+| SFFloat | [in, out] | [nearDistance](#fields-nearDistance) | -1 |
+| SFFloat | [in, out] | [farDistance](#fields-farDistance) | -1 |
 | SFBool | [in, out] | [viewAll](#fields-viewAll) | FALSE |
 | SFBool | [in, out] | [jump](#fields-jump) | TRUE |
 | SFBool | [in, out] | [retainUserOffsets](#fields-retainUserOffsets) | FALSE |
-| SFFloat | [ ] | [speedFactor](#fields-speedFactor) | 1  |
+| SFFloat | [ ] | [speedFactor](#fields-speedFactor) | 1 |
 | SFBool | [out] | [isBound](#fields-isBound) |  |
 | SFTime | [out] | [bindTime](#fields-bindTime) |  |
-| SFNode | [in, out] | [navigationInfo](#fields-navigationInfo) | NULL  |
+| SFNode | [in, out] | [navigationInfo](#fields-navigationInfo) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

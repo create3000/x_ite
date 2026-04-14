@@ -29,10 +29,10 @@ The NurbsCurve2D node belongs to the [NURBS](/x_ite/components/overview/#nurbs) 
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFInt32 | [in, out] | [tessellation](#fields-tessellation) | 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFInt32 | [in, out] | [tessellation](#fields-tessellation) | 0 |
 | SFBool | [ ] | [closed](#fields-closed) | FALSE |
-| SFInt32 | [ ] | [order](#fields-order) | 3  |
+| SFInt32 | [ ] | [order](#fields-order) | 3 |
 | MFDouble | [ ] | [knot](#fields-knot) | [ ] |
 | MFDouble | [in, out] | [weight](#fields-weight) | [ ] |
 | MFVec2d | [in, out] | [controlPoint](#fields-controlPoint) | [ ] |

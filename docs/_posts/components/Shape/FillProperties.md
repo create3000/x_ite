@@ -29,11 +29,11 @@ The FillProperties node belongs to the [Shape](/x_ite/components/overview/#shape
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [filled](#fields-filled) | TRUE |
 | SFBool | [in, out] | [hatched](#fields-hatched) | TRUE |
-| SFInt32 | [in, out] | [hatchStyle](#fields-hatchStyle) | 1  |
-| SFColor | [in, out] | [hatchColor](#fields-hatchColor) | 1 1 1  |
+| SFInt32 | [in, out] | [hatchStyle](#fields-hatchStyle) | 1 |
+| SFColor | [in, out] | [hatchColor](#fields-hatchColor) | 1 1 1 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

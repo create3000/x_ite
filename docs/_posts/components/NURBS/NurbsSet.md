@@ -32,12 +32,12 @@ The NurbsSet node belongs to the [NURBS](/x_ite/components/overview/#nurbs) comp
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFFloat | [in, out] | [tessellationScale](#fields-tessellationScale) | 1  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFFloat | [in, out] | [tessellationScale](#fields-tessellationScale) | 1 |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
 | MFNode | [in] | [addGeometry](#fields-addGeometry) |  |
 | MFNode | [in] | [removeGeometry](#fields-removeGeometry) |  |
 | MFNode | [in, out] | [geometry](#fields-geometry) | [ ] |

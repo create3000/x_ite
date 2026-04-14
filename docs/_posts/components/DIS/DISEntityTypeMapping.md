@@ -33,19 +33,19 @@ The DISEntityTypeMapping node belongs to the [DIS](/x_ite/components/overview/#d
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [load](#fields-load) | TRUE |
 | MFString | [in, out] | [url](#fields-url) | [ ] |
-| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0  |
-| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600  |
-| SFInt32 | [ ] | [category](#fields-category) | 0  |
-| SFInt32 | [ ] | [country](#fields-country) | 0  |
-| SFInt32 | [ ] | [domain](#fields-domain) | 0  |
-| SFInt32 | [ ] | [extra](#fields-extra) | 0  |
-| SFInt32 | [ ] | [kind](#fields-kind) | 0  |
-| SFInt32 | [ ] | [specific](#fields-specific) | 0  |
-| SFInt32 | [ ] | [subcategory](#fields-subcategory) | 0  |
+| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0 |
+| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600 |
+| SFInt32 | [ ] | [category](#fields-category) | 0 |
+| SFInt32 | [ ] | [country](#fields-country) | 0 |
+| SFInt32 | [ ] | [domain](#fields-domain) | 0 |
+| SFInt32 | [ ] | [extra](#fields-extra) | 0 |
+| SFInt32 | [ ] | [kind](#fields-kind) | 0 |
+| SFInt32 | [ ] | [specific](#fields-specific) | 0 |
+| SFInt32 | [ ] | [subcategory](#fields-subcategory) | 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

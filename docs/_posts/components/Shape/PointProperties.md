@@ -29,11 +29,11 @@ The PointProperties node belongs to the [Shape](/x_ite/components/overview/#shap
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFFloat | [in, out] | [pointSizeScaleFactor](#fields-pointSizeScaleFactor) | 1  |
-| SFFloat | [in, out] | [pointSizeMinValue](#fields-pointSizeMinValue) | 1  |
-| SFFloat | [in, out] | [pointSizeMaxValue](#fields-pointSizeMaxValue) | 1  |
-| SFVec3f | [in, out] | [attenuation](#fields-attenuation) | 1 0 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFFloat | [in, out] | [pointSizeScaleFactor](#fields-pointSizeScaleFactor) | 1 |
+| SFFloat | [in, out] | [pointSizeMinValue](#fields-pointSizeMinValue) | 1 |
+| SFFloat | [in, out] | [pointSizeMaxValue](#fields-pointSizeMaxValue) | 1 |
+| SFVec3f | [in, out] | [attenuation](#fields-attenuation) | 1 0 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

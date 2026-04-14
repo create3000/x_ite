@@ -31,14 +31,14 @@ The TexCoordDamper2D node belongs to the [Followers](/x_ite/components/overview/
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFVec2f | [in] | [set_value](#fields-set_value) |  |
 | MFVec2f | [in] | [set_destination](#fields-set_destination) |  |
 | MFVec2f | [ ] | [initialValue](#fields-initialValue) | [ ] |
 | MFVec2f | [ ] | [initialDestination](#fields-initialDestination) | [ ] |
-| SFInt32 | [ ] | [order](#fields-order) | 3  |
-| SFTime | [in, out] | [tau](#fields-tau) | 0.3  |
-| SFFloat | [in, out] | [tolerance](#fields-tolerance) | -1  |
+| SFInt32 | [ ] | [order](#fields-order) | 3 |
+| SFTime | [in, out] | [tau](#fields-tau) | 0.3 |
+| SFFloat | [in, out] | [tolerance](#fields-tolerance) | -1 |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | MFVec2f | [out] | [value_changed](#fields-value_changed) |  |
 {: .fields }

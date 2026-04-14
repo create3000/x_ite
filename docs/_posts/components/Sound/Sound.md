@@ -30,19 +30,19 @@ The Sound node belongs to the [Sound](/x_ite/components/overview/#sound) compone
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFBool | [ ] | [spatialize](#fields-spatialize) | TRUE |
-| SFFloat | [in, out] | [intensity](#fields-intensity) | 1  |
-| SFVec3f | [in, out] | [location](#fields-location) | 0 0 0  |
-| SFVec3f | [in, out] | [direction](#fields-direction) | 0 0 1  |
-| SFFloat | [in, out] | [minBack](#fields-minBack) | 1  |
-| SFFloat | [in, out] | [minFront](#fields-minFront) | 1  |
-| SFFloat | [in, out] | [maxBack](#fields-maxBack) | 10  |
-| SFFloat | [in, out] | [maxFront](#fields-maxFront) | 10  |
-| SFFloat | [in, out] | [priority](#fields-priority) | 0  |
-| SFNode | [in, out] | [source](#fields-source) | NULL  |
+| SFFloat | [in, out] | [intensity](#fields-intensity) | 1 |
+| SFVec3f | [in, out] | [location](#fields-location) | 0 0 0 |
+| SFVec3f | [in, out] | [direction](#fields-direction) | 0 0 1 |
+| SFFloat | [in, out] | [minBack](#fields-minBack) | 1 |
+| SFFloat | [in, out] | [minFront](#fields-minFront) | 1 |
+| SFFloat | [in, out] | [maxBack](#fields-maxBack) | 10 |
+| SFFloat | [in, out] | [maxFront](#fields-maxFront) | 10 |
+| SFFloat | [in, out] | [priority](#fields-priority) | 0 |
+| SFNode | [in, out] | [source](#fields-source) | NULL |
 | MFNode | [in, out] | [children](#fields-children) | [ ] |
 {: .fields }
 

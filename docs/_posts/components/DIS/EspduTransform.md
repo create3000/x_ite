@@ -33,13 +33,13 @@ The EspduTransform node belongs to the [DIS](/x_ite/components/overview/#dis) co
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
 | MFNode | [in] | [addChildren](#fields-addChildren) |  |
 | MFNode | [in] | [removeChildren](#fields-removeChildren) |  |
 | MFNode | [in, out] | [children](#fields-children) | [ ] |
@@ -53,59 +53,59 @@ The EspduTransform node belongs to the [DIS](/x_ite/components/overview/#dis) co
 | SFFloat | [in] | [set_articulationParameterValue6](#fields-set_articulationParameterValue6) |  |
 | SFFloat | [in] | [set_articulationParameterValue7](#fields-set_articulationParameterValue7) |  |
 | SFString | [in, out] | [address](#fields-address) | "localhost" |
-| SFInt32 | [in, out] | [applicationID](#fields-applicationID) | 0  |
-| SFInt32 | [in, out] | [articulationParameterCount](#fields-articulationParameterCount) | 0  |
+| SFInt32 | [in, out] | [applicationID](#fields-applicationID) | 0 |
+| SFInt32 | [in, out] | [articulationParameterCount](#fields-articulationParameterCount) | 0 |
 | MFInt32 | [in, out] | [articulationParameterDesignatorArray](#fields-articulationParameterDesignatorArray) | [ ] |
 | MFInt32 | [in, out] | [articulationParameterChangeIndicatorArray](#fields-articulationParameterChangeIndicatorArray) | [ ] |
 | MFInt32 | [in, out] | [articulationParameterIdPartAttachedToArray](#fields-articulationParameterIdPartAttachedToArray) | [ ] |
 | MFInt32 | [in, out] | [articulationParameterTypeArray](#fields-articulationParameterTypeArray) | [ ] |
 | MFFloat | [in, out] | [articulationParameterArray](#fields-articulationParameterArray) | [ ] |
-| SFVec3f | [in, out] | [center](#fields-center) | 0 0 0  |
-| SFInt32 | [in, out] | [collisionType](#fields-collisionType) | 0  |
-| SFInt32 | [in, out] | [deadReckoning](#fields-deadReckoning) | 0  |
-| SFVec3f | [in, out] | [detonationLocation](#fields-detonationLocation) | 0 0 0  |
-| SFVec3f | [in, out] | [detonationRelativeLocation](#fields-detonationRelativeLocation) | 0 0 0  |
-| SFInt32 | [in, out] | [detonationResult](#fields-detonationResult) | 0  |
-| SFInt32 | [in, out] | [entityCategory](#fields-entityCategory) | 0  |
-| SFInt32 | [in, out] | [entityCountry](#fields-entityCountry) | 0  |
-| SFInt32 | [in, out] | [entityDomain](#fields-entityDomain) | 0  |
-| SFInt32 | [in, out] | [entityExtra](#fields-entityExtra) | 0  |
-| SFInt32 | [in, out] | [entityID](#fields-entityID) | 0  |
-| SFInt32 | [in, out] | [entityKind](#fields-entityKind) | 0  |
-| SFInt32 | [in, out] | [entitySpecific](#fields-entitySpecific) | 0  |
-| SFInt32 | [in, out] | [entitySubcategory](#fields-entitySubcategory) | 0  |
-| SFInt32 | [in, out] | [eventApplicationID](#fields-eventApplicationID) | 0  |
-| SFInt32 | [in, out] | [eventEntityID](#fields-eventEntityID) | 0  |
-| SFInt32 | [in, out] | [eventNumber](#fields-eventNumber) | 0  |
-| SFInt32 | [in, out] | [eventSiteID](#fields-eventSiteID) | 0  |
+| SFVec3f | [in, out] | [center](#fields-center) | 0 0 0 |
+| SFInt32 | [in, out] | [collisionType](#fields-collisionType) | 0 |
+| SFInt32 | [in, out] | [deadReckoning](#fields-deadReckoning) | 0 |
+| SFVec3f | [in, out] | [detonationLocation](#fields-detonationLocation) | 0 0 0 |
+| SFVec3f | [in, out] | [detonationRelativeLocation](#fields-detonationRelativeLocation) | 0 0 0 |
+| SFInt32 | [in, out] | [detonationResult](#fields-detonationResult) | 0 |
+| SFInt32 | [in, out] | [entityCategory](#fields-entityCategory) | 0 |
+| SFInt32 | [in, out] | [entityCountry](#fields-entityCountry) | 0 |
+| SFInt32 | [in, out] | [entityDomain](#fields-entityDomain) | 0 |
+| SFInt32 | [in, out] | [entityExtra](#fields-entityExtra) | 0 |
+| SFInt32 | [in, out] | [entityID](#fields-entityID) | 0 |
+| SFInt32 | [in, out] | [entityKind](#fields-entityKind) | 0 |
+| SFInt32 | [in, out] | [entitySpecific](#fields-entitySpecific) | 0 |
+| SFInt32 | [in, out] | [entitySubcategory](#fields-entitySubcategory) | 0 |
+| SFInt32 | [in, out] | [eventApplicationID](#fields-eventApplicationID) | 0 |
+| SFInt32 | [in, out] | [eventEntityID](#fields-eventEntityID) | 0 |
+| SFInt32 | [in, out] | [eventNumber](#fields-eventNumber) | 0 |
+| SFInt32 | [in, out] | [eventSiteID](#fields-eventSiteID) | 0 |
 | SFBool | [in, out] | [fired1](#fields-fired1) | FALSE |
 | SFBool | [in, out] | [fired2](#fields-fired2) | FALSE |
-| SFInt32 | [in, out] | [fireMissionIndex](#fields-fireMissionIndex) | 0  |
-| SFFloat | [in, out] | [firingRange](#fields-firingRange) | 0  |
-| SFInt32 | [in, out] | [firingRate](#fields-firingRate) | 0  |
-| SFInt32 | [in, out] | [forceID](#fields-forceID) | 0  |
-| SFInt32 | [in, out] | [fuse](#fields-fuse) | 0  |
-| SFVec3f | [in, out] | [linearVelocity](#fields-linearVelocity) | 0 0 0  |
-| SFVec3f | [in, out] | [linearAcceleration](#fields-linearAcceleration) | 0 0 0  |
+| SFInt32 | [in, out] | [fireMissionIndex](#fields-fireMissionIndex) | 0 |
+| SFFloat | [in, out] | [firingRange](#fields-firingRange) | 0 |
+| SFInt32 | [in, out] | [firingRate](#fields-firingRate) | 0 |
+| SFInt32 | [in, out] | [forceID](#fields-forceID) | 0 |
+| SFInt32 | [in, out] | [fuse](#fields-fuse) | 0 |
+| SFVec3f | [in, out] | [linearVelocity](#fields-linearVelocity) | 0 0 0 |
+| SFVec3f | [in, out] | [linearAcceleration](#fields-linearAcceleration) | 0 0 0 |
 | SFString | [in, out] | [marking](#fields-marking) | "" |
 | SFString | [in, out] | [multicastRelayHost](#fields-multicastRelayHost) | "" |
-| SFInt32 | [in, out] | [multicastRelayPort](#fields-multicastRelayPort) | 0  |
-| SFInt32 | [in, out] | [munitionApplicationID](#fields-munitionApplicationID) | 0  |
-| SFVec3f | [in, out] | [munitionEndPoint](#fields-munitionEndPoint) | 0 0 0  |
-| SFInt32 | [in, out] | [munitionEntityID](#fields-munitionEntityID) | 0  |
-| SFInt32 | [in, out] | [munitionQuantity](#fields-munitionQuantity) | 0  |
-| SFInt32 | [in, out] | [munitionSiteID](#fields-munitionSiteID) | 0  |
-| SFVec3f | [in, out] | [munitionStartPoint](#fields-munitionStartPoint) | 0 0 0  |
-| SFString | [in, out] | [networkMode](#fields-networkMode) | "standAlone"  |
-| SFInt32 | [in, out] | [port](#fields-port) | 0  |
-| SFTime | [in, out] | [readInterval](#fields-readInterval) | 0.1  |
-| SFRotation | [in, out] | [rotation](#fields-rotation) | 0 0 1 0  |
-| SFVec3f | [in, out] | [scale](#fields-scale) | 1 1 1  |
-| SFRotation | [in, out] | [scaleOrientation](#fields-scaleOrientation) | 0 0 1 0  |
-| SFInt32 | [in, out] | [siteID](#fields-siteID) | 0  |
-| SFVec3f | [in, out] | [translation](#fields-translation) | 0 0 0  |
-| SFInt32 | [in, out] | [warhead](#fields-warhead) | 0  |
-| SFTime | [in, out] | [writeInterval](#fields-writeInterval) | 1  |
+| SFInt32 | [in, out] | [multicastRelayPort](#fields-multicastRelayPort) | 0 |
+| SFInt32 | [in, out] | [munitionApplicationID](#fields-munitionApplicationID) | 0 |
+| SFVec3f | [in, out] | [munitionEndPoint](#fields-munitionEndPoint) | 0 0 0 |
+| SFInt32 | [in, out] | [munitionEntityID](#fields-munitionEntityID) | 0 |
+| SFInt32 | [in, out] | [munitionQuantity](#fields-munitionQuantity) | 0 |
+| SFInt32 | [in, out] | [munitionSiteID](#fields-munitionSiteID) | 0 |
+| SFVec3f | [in, out] | [munitionStartPoint](#fields-munitionStartPoint) | 0 0 0 |
+| SFString | [in, out] | [networkMode](#fields-networkMode) | "standAlone" |
+| SFInt32 | [in, out] | [port](#fields-port) | 0 |
+| SFTime | [in, out] | [readInterval](#fields-readInterval) | 0.1 |
+| SFRotation | [in, out] | [rotation](#fields-rotation) | 0 0 1 0 |
+| SFVec3f | [in, out] | [scale](#fields-scale) | 1 1 1 |
+| SFRotation | [in, out] | [scaleOrientation](#fields-scaleOrientation) | 0 0 1 0 |
+| SFInt32 | [in, out] | [siteID](#fields-siteID) | 0 |
+| SFVec3f | [in, out] | [translation](#fields-translation) | 0 0 0 |
+| SFInt32 | [in, out] | [warhead](#fields-warhead) | 0 |
+| SFTime | [in, out] | [writeInterval](#fields-writeInterval) | 1 |
 | SFFloat | [out] | [articulationParameterValue0_changed](#fields-articulationParameterValue0_changed) |  |
 | SFFloat | [out] | [articulationParameterValue1_changed](#fields-articulationParameterValue1_changed) |  |
 | SFFloat | [out] | [articulationParameterValue2_changed](#fields-articulationParameterValue2_changed) |  |
@@ -125,7 +125,7 @@ The EspduTransform node belongs to the [DIS](/x_ite/components/overview/#dis) co
 | SFBool | [out] | [isStandAlone](#fields-isStandAlone) |  |
 | SFTime | [out] | [timestamp](#fields-timestamp) |  |
 | SFBool | [in, out] | [rtpHeaderExpected](#fields-rtpHeaderExpected) | FALSE |
-| SFVec3d | [in, out] | [geoCoords](#fields-geoCoords) | 0 0 0  |
+| SFVec3d | [in, out] | [geoCoords](#fields-geoCoords) | 0 0 0 |
 | MFString | [ ] | [geoSystem](#fields-geoSystem) | [ "GD", "WE" ] |
 {: .fields }
 

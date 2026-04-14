@@ -32,22 +32,22 @@ The HAnimHumanoid node belongs to the [HAnim](/x_ite/components/overview/#hanim)
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFString | [in, out] | [name](#fields-name) | "" |
 | MFString | [in, out] | [info](#fields-info) | [ ] |
 | SFString | [in, out] | [version](#fields-version) | "2.1" |
 | SFString | [in, out] | [skeletalConfiguration](#fields-skeletalConfiguration) | "BASIC" |
-| SFInt32 | [in, out] | [loa](#fields-loa) | -1  |
-| SFVec3f | [in, out] | [translation](#fields-translation) | 0 0 0  |
-| SFRotation | [in, out] | [rotation](#fields-rotation) | 0 0 1 0  |
-| SFVec3f | [in, out] | [scale](#fields-scale) | 1 1 1  |
-| SFRotation | [in, out] | [scaleOrientation](#fields-scaleOrientation) | 0 0 1 0  |
-| SFVec3f | [in, out] | [center](#fields-center) | 0 0 0  |
+| SFInt32 | [in, out] | [loa](#fields-loa) | -1 |
+| SFVec3f | [in, out] | [translation](#fields-translation) | 0 0 0 |
+| SFRotation | [in, out] | [rotation](#fields-rotation) | 0 0 1 0 |
+| SFVec3f | [in, out] | [scale](#fields-scale) | 1 1 1 |
+| SFRotation | [in, out] | [scaleOrientation](#fields-scaleOrientation) | 0 0 1 0 |
+| SFVec3f | [in, out] | [center](#fields-center) | 0 0 0 |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
 | MFNode | [in, out] | [skeleton](#fields-skeleton) | [ ] |
 | MFVec3f | [in, out] | [jointBindingPositions](#fields-jointBindingPositions) | [ ] |
 | MFRotation | [in, out] | [jointBindingRotations](#fields-jointBindingRotations) | [ ] |
@@ -59,10 +59,10 @@ The HAnimHumanoid node belongs to the [HAnim](/x_ite/components/overview/#hanim)
 | MFNode | [in, out] | [children](#fields-children) | [ ] |
 | MFBool | [in, out] | [motionsEnabled](#fields-motionsEnabled) | [ ] |
 | MFNode | [in, out] | [motions](#fields-motions) | [ ] |
-| SFNode | [in, out] | [skinBindingNormals](#fields-skinBindingNormals) | NULL  |
-| SFNode | [in, out] | [skinBindingCoords](#fields-skinBindingCoords) | NULL  |
-| SFNode | [in, out] | [skinNormal](#fields-skinNormal) | NULL  |
-| SFNode | [in, out] | [skinCoord](#fields-skinCoord) | NULL  |
+| SFNode | [in, out] | [skinBindingNormals](#fields-skinBindingNormals) | NULL |
+| SFNode | [in, out] | [skinBindingCoords](#fields-skinBindingCoords) | NULL |
+| SFNode | [in, out] | [skinNormal](#fields-skinNormal) | NULL |
+| SFNode | [in, out] | [skinCoord](#fields-skinCoord) | NULL |
 | MFNode | [in, out] | [skin](#fields-skin) | [ ] |
 {: .fields }
 

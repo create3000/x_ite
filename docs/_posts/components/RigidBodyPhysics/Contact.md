@@ -28,23 +28,23 @@ The Contact node belongs to the [RigidBodyPhysics](/x_ite/components/overview/#r
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFVec3f | [in, out] | [position](#fields-position) | 0 0 0  |
-| SFVec3f | [in, out] | [contactNormal](#fields-contactNormal) | 0 1 0  |
-| SFFloat | [in, out] | [depth](#fields-depth) | 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFVec3f | [in, out] | [position](#fields-position) | 0 0 0 |
+| SFVec3f | [in, out] | [contactNormal](#fields-contactNormal) | 0 1 0 |
+| SFFloat | [in, out] | [depth](#fields-depth) | 0 |
 | MFString | [in, out] | [appliedParameters](#fields-appliedParameters) | "BOUNCE" |
-| SFFloat | [in, out] | [bounce](#fields-bounce) | 0  |
+| SFFloat | [in, out] | [bounce](#fields-bounce) | 0 |
 | SFFloat | [in, out] | [minBounceSpeed](#fields-minBounceSpeed) |  |
-| SFVec3f | [in, out] | [frictionDirection](#fields-frictionDirection) | 0 1 0  |
-| SFVec2f | [in, out] | [frictionCoefficients](#fields-frictionCoefficients) | 0 0  |
-| SFVec2f | [in, out] | [surfaceSpeed](#fields-surfaceSpeed) | 0 0  |
-| SFVec2f | [in, out] | [slipCoefficients](#fields-slipCoefficients) | 0 0  |
-| SFFloat | [in, out] | [softnessConstantForceMix](#fields-softnessConstantForceMix) | 0.0001  |
-| SFFloat | [in, out] | [softnessErrorCorrection](#fields-softnessErrorCorrection) | 0.8  |
-| SFNode | [in, out] | [geometry1](#fields-geometry1) | NULL  |
-| SFNode | [in, out] | [geometry2](#fields-geometry2) | NULL  |
-| SFNode | [in, out] | [body1](#fields-body1) | NULL  |
-| SFNode | [in, out] | [body2](#fields-body2) | NULL  |
+| SFVec3f | [in, out] | [frictionDirection](#fields-frictionDirection) | 0 1 0 |
+| SFVec2f | [in, out] | [frictionCoefficients](#fields-frictionCoefficients) | 0 0 |
+| SFVec2f | [in, out] | [surfaceSpeed](#fields-surfaceSpeed) | 0 0 |
+| SFVec2f | [in, out] | [slipCoefficients](#fields-slipCoefficients) | 0 0 |
+| SFFloat | [in, out] | [softnessConstantForceMix](#fields-softnessConstantForceMix) | 0.0001 |
+| SFFloat | [in, out] | [softnessErrorCorrection](#fields-softnessErrorCorrection) | 0.8 |
+| SFNode | [in, out] | [geometry1](#fields-geometry1) | NULL |
+| SFNode | [in, out] | [geometry2](#fields-geometry2) | NULL |
+| SFNode | [in, out] | [body1](#fields-body1) | NULL |
+| SFNode | [in, out] | [body2](#fields-body2) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

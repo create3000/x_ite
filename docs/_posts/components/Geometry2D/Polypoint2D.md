@@ -29,7 +29,7 @@ The Polypoint2D node belongs to the [Geometry2D](/x_ite/components/overview/#geo
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFVec2f | [in, out] | [point](#fields-point) | [ ] |
 {: .fields }
 

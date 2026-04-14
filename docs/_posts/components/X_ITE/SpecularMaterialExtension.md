@@ -32,14 +32,14 @@ The SpecularMaterialExtension node belongs to the [X_ITE](/x_ite/components/over
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFFloat | [in, out] | [specular](#fields-specular) | 1  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFFloat | [in, out] | [specular](#fields-specular) | 1 |
 | SFString | [in, out] | [specularTextureMapping](#fields-specularTextureMapping) | "" |
-| SFNode | [in, out] | [specularTexture](#fields-specularTexture) | NULL  |
-| SFColor | [in, out] | [specularColor](#fields-specularColor) | 1 1 1  |
-| SFFloat | [in, out] | [specularStrength](#fields-specularStrength) | 1  |
+| SFNode | [in, out] | [specularTexture](#fields-specularTexture) | NULL |
+| SFColor | [in, out] | [specularColor](#fields-specularColor) | 1 1 1 |
+| SFFloat | [in, out] | [specularStrength](#fields-specularStrength) | 1 |
 | SFString | [in, out] | [specularColorTextureMapping](#fields-specularColorTextureMapping) | "" |
-| SFNode | [in, out] | [specularColorTexture](#fields-specularColorTexture) | NULL  |
+| SFNode | [in, out] | [specularColorTexture](#fields-specularColorTexture) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>

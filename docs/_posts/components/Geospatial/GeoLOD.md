@@ -32,21 +32,21 @@ The GeoLOD node belongs to the [Geospatial](/x_ite/components/overview/#geospati
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFNode | [ ] | [geoOrigin](#fields-geoOrigin) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFNode | [ ] | [geoOrigin](#fields-geoOrigin) | NULL |
 | MFString | [ ] | [geoSystem](#fields-geoSystem) | [ "GD", "WE" ] |
 | MFString | [ ] | [rootUrl](#fields-rootUrl) | [ ] |
 | MFString | [ ] | [child1Url](#fields-child1Url) | [ ] |
 | MFString | [ ] | [child2Url](#fields-child2Url) | [ ] |
 | MFString | [ ] | [child3Url](#fields-child3Url) | [ ] |
 | MFString | [ ] | [child4Url](#fields-child4Url) | [ ] |
-| SFVec3d | [ ] | [center](#fields-center) | 0 0 0  |
-| SFFloat | [ ] | [range](#fields-range) | 10  |
+| SFVec3d | [ ] | [center](#fields-center) | 0 0 0 |
+| SFFloat | [ ] | [range](#fields-range) | 10 |
 | SFInt32 | [out] | [level_changed](#fields-level_changed) |  |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
 | MFNode | [ ] | [rootNode](#fields-rootNode) | [ ] |
 | MFNode | [out] | [children](#fields-children) |  |
 {: .fields }

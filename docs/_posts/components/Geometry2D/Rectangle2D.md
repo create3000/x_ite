@@ -29,8 +29,8 @@ The Rectangle2D node belongs to the [Geometry2D](/x_ite/components/overview/#geo
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFVec2f | [ ] | [size](#fields-size) | 2 2  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFVec2f | [ ] | [size](#fields-size) | 2 2 |
 | SFBool | [ ] | [solid](#fields-solid) | FALSE |
 {: .fields }
 

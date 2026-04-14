@@ -29,10 +29,10 @@ The HAnimDisplacer node belongs to the [HAnim](/x_ite/components/overview/#hanim
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFString | [in, out] | [name](#fields-name) | "" |
-| SFFloat | [in, out] | [weight](#fields-weight) | 0  |
+| SFFloat | [in, out] | [weight](#fields-weight) | 0 |
 | MFInt32 | [in, out] | [coordIndex](#fields-coordIndex) | [ ] |
 | MFVec3f | [in, out] | [displacements](#fields-displacements) | [ ] |
 {: .fields }

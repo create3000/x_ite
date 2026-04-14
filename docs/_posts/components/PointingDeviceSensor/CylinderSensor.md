@@ -32,14 +32,14 @@ The CylinderSensor node belongs to the [PointingDeviceSensor](/x_ite/components/
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFRotation | [in, out] | [axisRotation](#fields-axisRotation) | 0 0 1 0  |
-| SFFloat | [in, out] | [diskAngle](#fields-diskAngle) | 0.26179167  |
-| SFFloat | [in, out] | [minAngle](#fields-minAngle) | 0  |
-| SFFloat | [in, out] | [maxAngle](#fields-maxAngle) | -1  |
-| SFFloat | [in, out] | [offset](#fields-offset) | 0  |
+| SFRotation | [in, out] | [axisRotation](#fields-axisRotation) | 0 0 1 0 |
+| SFFloat | [in, out] | [diskAngle](#fields-diskAngle) | 0.26179167 |
+| SFFloat | [in, out] | [minAngle](#fields-minAngle) | 0 |
+| SFFloat | [in, out] | [maxAngle](#fields-maxAngle) | -1 |
+| SFFloat | [in, out] | [offset](#fields-offset) | 0 |
 | SFBool | [in, out] | [autoOffset](#fields-autoOffset) | TRUE |
 | SFVec3f | [out] | [trackPoint_changed](#fields-trackPoint_changed) |  |
 | SFRotation | [out] | [rotation_changed](#fields-rotation_changed) |  |
