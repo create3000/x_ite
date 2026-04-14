@@ -115,7 +115,7 @@ Object .assign (PointLightContainer .prototype,
          renderObject .getModelViewMatrix  () .push (orientationMatrices [i]);
          renderObject .getModelViewMatrix  () .multLeft (invLightSpaceMatrix);
 
-         renderObject .render (TraverseType .SHADOW, X3DGroupingNode .prototype .traverse, this .groupNode);
+         renderObject .render (TraverseType .SHADOW, this .groupNode .traverse, this .groupNode);
 
          renderObject .getModelViewMatrix  () .pop ();
          renderObject .getProjectionMatrix () .pop ();

@@ -15890,11 +15890,11 @@ declare namespace X3D
    interface RenderedTextureProxy extends X3DTexture2DNodeProxy
    {
       /**
-       * Allows you to specify a background node explicitly, which will then be used during the render-to-texture process. If the value is NULL the currently bound background in the scene is used.
+       * Sets a separate, potentially independent, subscene. If the value is NULL the current scene is used.
        *
-       * This field is of access type 'inputOutput' and type SFNode.
+       * This field is of access type 'inputOutput' and type MFNode.
        */
-      background: X3DBackgroundNodeProxy | null;
+      children: MFNode <X3DChildNodeProxy>;
       /**
        * The generated texture will contain the depth buffer of the image (instead of the color buffer as usual).
        *
@@ -15914,12 +15914,6 @@ declare namespace X3D
        */
       dimensions: MFInt32;
       /**
-       * Allows you to specify a fog node explicitly, which will then be used during the render-to-texture process. If the value is NULL the currently bound fog in the scene is used.
-       *
-       * This field is of access type 'inputOutput' and type SFNode.
-       */
-      fog: X3DFogObjectProxy | null;
-      /**
        * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
@@ -15938,12 +15932,6 @@ declare namespace X3D
        */
       repeatT: boolean;
       /**
-       * Sets a separate, potentially independent, subscene. If the value is NULL the current scene is used.
-       *
-       * This field is of access type 'inputOutput' and type SFNode.
-       */
-      scene: X3DChildNodeProxy | null;
-      /**
        * Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
        *
        * This field is of access type 'initializeOnly' and type SFNode.
@@ -15955,12 +15943,6 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type SFString.
        */
       update: "NONE" | "NEXT_FRAME_ONLY" | "ALWAYS";
-      /**
-       * Allows you to explicitly specify a viewpoint node from which to render to texture. If the value is NULL the currently bound viewpoint in the scene is used.
-       *
-       * This field is of access type 'inputOutput' and type SFNode.
-       */
-      viewpoint: X3DViewpointNodeProxy | null;
    }
 
    /** RigidBody describes a collection of shapes with a mass distribution that is affected by the physics model. */

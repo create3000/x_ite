@@ -3,6 +3,8 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DTexture2DNode     from "./X3DTexture2DNode.js";
+import X3DUrlOutputObject   from "../Networking/X3DUrlOutputObject.js";
+import Group                from "../Grouping/Group.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DCast              from "../../Base/X3DCast.js";
@@ -17,7 +19,8 @@ import Vector4              from "../../../standard/Math/Numbers/Vector4.js";
 
 function RenderedTexture (executionContext)
 {
-   X3DTexture2DNode .call (this, executionContext);
+   X3DTexture2DNode   .call (this, executionContext);
+   X3DUrlOutputObject .call (this, executionContext);
 
    this .addType (X3DConstants .RenderedTexture);
 
@@ -25,6 +28,7 @@ function RenderedTexture (executionContext)
 
    // Private properties
 
+   this .groupNode          = new Group (executionContext);
    this .dependentRenderers = new WeakMap ();
 }
 
@@ -32,21 +36,18 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
 {
    initialize ()
    {
-      X3DTexture2DNode .prototype .initialize .call (this);
+      X3DTexture2DNode   .prototype .initialize .call (this);
+      X3DUrlOutputObject .prototype .initialize .call (this);
 
       this ._dimensions .addInterest ("set_dimensions__", this);
       this ._depthMap   .addInterest ("set_depthMap__",   this);
-      this ._background .addInterest ("set_background__", this);
-      this ._fog        .addInterest ("set_fog__",        this);
-      this ._viewpoint  .addInterest ("set_viewpoint__",  this);
-      this ._scene      .addInterest ("set_scene__",      this);
+      this ._children   .addInterest ("set_children__",   this);
 
       this .set_dimensions__ ();
       this .set_depthMap__ ();
-      this .set_background__ ();
-      this .set_fog__ ();
-      this .set_viewpoint__ ();
-      this .set_scene__ ();
+      this .set_children__ ();
+
+      this .groupNode .setup ();
    },
    getTextureType ()
    {
@@ -93,21 +94,52 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
    {
       this .type = this ._depthMap .getValue () ? TraverseType .DEPTH : TraverseType .DISPLAY;
    },
-   set_background__ ()
+   set_children__ ()
    {
-      this .backgroundNode = X3DCast (X3DConstants .X3DBackgroundNode, this ._background);
+      this .groupNode ._children .length = 0;
+
+      for (const child of this ._children)
+         this .setChild (child);
    },
-   set_fog__ ()
+   setChild (child)
    {
-      this .fogNode = X3DCast (X3DConstants .X3DFogObject, this ._fog);
-   },
-   set_viewpoint__ ()
-   {
-      this .viewpointNode = X3DCast (X3DConstants .X3DViewpointNode, this ._viewpoint);
-   },
-   set_scene__ ()
-   {
-      this .scene = X3DCast (X3DConstants .X3DChildNode, this ._scene);
+      const childNode = X3DCast (X3DConstants .X3DChildNode, child);
+
+      if (!childNode)
+         return;
+
+      const type = childNode .getType ();
+
+      for (let t = type .length - 1; t >= 0; -- t)
+      {
+         switch (type [t])
+         {
+            case X3DConstants .X3DBackgroundNode:
+            {
+               this .backgroundNode = childNode;
+               break;
+            }
+            case X3DConstants .Fog:
+            {
+               this .fogNode = childNode;
+               break;
+            }
+            case X3DConstants .X3DViewpointNode:
+            {
+               this .viewpointNode = childNode;
+               break;
+            }
+            case X3DConstants .X3DChildNode:
+            {
+               this .groupNode ._children .push (childNode);
+               break;
+            }
+            default:
+               continue;
+         }
+
+         break;
+      }
    },
    traverse (type, renderObject)
    {
@@ -185,15 +217,15 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
             headlightContainer .modelViewMatrix .push (renderObject .getViewMatrix () .get ());
             headlightContainer .modelViewMatrix .multLeft (viewpointNode .getCameraSpaceMatrix ());
 
-            if (this .scene)
+            if (this .groupNode ._children .length)
             {
                dependentRenderer .getGlobalLights ()     .push (headlightContainer);
                dependentRenderer .getGlobalLightsKeys () .push (headlightContainer .lightNode .getLightKey ());
             }
          }
 
-         if (this .scene)
-            dependentRenderer .render (this .type, this .scene .traverse, this .scene);
+         if (this .groupNode ._children .length)
+            dependentRenderer .render (this .type, this .groupNode .traverse, this .groupNode);
          else
             layer .traverse (this .type, dependentRenderer);
 
@@ -220,6 +252,11 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
             this ._update = "NONE";
       };
    })(),
+   dispose ()
+   {
+      X3DUrlOutputObject .prototype .dispose .call (this);
+      X3DTexture2DNode   .prototype .dispose .call (this);
+   },
 });
 
 Object .defineProperties (RenderedTexture,
@@ -229,17 +266,18 @@ Object .defineProperties (RenderedTexture,
    {
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",           new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "replaceImage",      new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",               new Fields .MFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "update",            new Fields .SFString ("NONE")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "dimensions",        new Fields .MFInt32 (128, 128, 4, 1, 1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "depthMap",          new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "background",        new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "fog",               new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "viewpoint",         new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "scene",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",          new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",          new Fields .MFNode ()),
       ]),
       enumerable: true,
    },

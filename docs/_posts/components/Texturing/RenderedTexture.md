@@ -40,10 +40,6 @@ The RenderedTexture node belongs to the [Texturing](/x_ite/components/overview/#
 | SFString | [in, out] | [update](#fields-update) | "NONE"  |
 | MFInt32 | [in, out] | [dimensions](#fields-dimensions) | [ 128, 128, 4, 1, 1 ] |
 | SFBool | [in, out] | [depthMap](#fields-depthMap) | FALSE |
-| SFNode | [in, out] | [background](#fields-background) | NULL  |
-| SFNode | [in, out] | [fog](#fields-fog) | NULL  |
-| SFNode | [in, out] | [viewpoint](#fields-viewpoint) | NULL  |
-| SFNode | [in, out] | [scene](#fields-scene) | NULL  |
 | SFBool | [ ] | [repeatS](#fields-repeatS) | TRUE |
 | SFBool | [ ] | [repeatT](#fields-repeatT) | TRUE |
 | SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL  |
@@ -87,25 +83,12 @@ Sets the width, height, color components and number of multiple render targets (
 
 The generated texture will contain the depth buffer of the image (instead of the color buffer as usual).
 
-### SFNode [in, out] **background** NULL <small>[X3DBackgroundNode]</small>
-{: #fields-background }
+### SFNode [in, out] **children** NULL <small>[X3DChildNode|X3DBackgroundNode|Fog|X3DViewpointNode]</small>
+{: #fields-children }
 
-Allows you to specify a background node explicitly, which will then be used during the render-to-texture process. If the value is NULL the currently bound background in the scene is used.
+Sets a separate, potentially independent, sub-scene. If there are no child nodes, the current scene is used.
 
-### SFNode [in, out] **fog** NULL <small>[X3DFogObject]</small>
-{: #fields-fog }
-
-Allows you to specify a fog node explicitly, which will then be used during the render-to-texture process. If the value is NULL the currently bound fog in the scene is used.
-
-### SFNode [in, out] **viewpoint** NULL <small>[X3DViewpointNode]</small>
-{: #fields-viewpoint }
-
-Allows you to explicitly specify a viewpoint node from which to render to texture. If the value is NULL the currently bound viewpoint in the scene is used.
-
-### SFNode [in, out] **scene** NULL <small>[X3DChildNode]</small>
-{: #fields-scene }
-
-Sets a separate, potentially independent, sub-scene. If the value is NULL the current scene is used.
+Allows you to explicitly specify a background, fog and viewpoint node which is used during render to texture. If there is no such node as root node, the currently bound background, fog and viewpoint node in the scene is used.
 
 ### SFBool [ ] **repeatS** TRUE
 {: #fields-repeatS }

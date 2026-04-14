@@ -232,7 +232,8 @@ Object .assign (X3DUrlObject .prototype,
 
       this .setAutoRefreshTimer (autoRefreshInterval);
    },
-   dispose () { },
+   dispose ()
+   { },
 });
 
 Object .defineProperties (X3DUrlObject, X3DNode .getStaticProperties ("X3DUrlObject", "Networking", 1));
