@@ -36,13 +36,18 @@ The RenderedTexture node belongs to the [Texturing](/x_ite/components/overview/#
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFBool | [in, out] | [enabled](#fields-enabled) |  |
 | SFString | [in, out] | [description](#fields-description) | "" |
+| SFBool | [in, out] | [replaceImage](#fields-replaceImage) |  |
+| MFString | [in, out] | [url](#fields-url) |  |
 | SFString | [in, out] | [update](#fields-update) | "NONE"  |
 | MFInt32 | [in, out] | [dimensions](#fields-dimensions) | [ 128, 128, 4, 1, 1 ] |
 | SFBool | [in, out] | [depthMap](#fields-depthMap) | FALSE |
 | SFBool | [ ] | [repeatS](#fields-repeatS) | TRUE |
 | SFBool | [ ] | [repeatT](#fields-repeatT) | TRUE |
+| SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL  |
+| SFNode | [in, out] | [children](#fields-children) | NULL  |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -54,6 +59,11 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
+### SFBool [in, out] **enabled** TRUE <small class="red">not supported</small>
+{: #fields-enabled }
+
+Input/Output field *enabled*.
+
 ### SFString [in, out] **description** ""
 {: #fields-description }
 
@@ -62,6 +72,16 @@ Author-provided prose that describes intended purpose of the url asset.
 #### Hint
 
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
+
+### SFBool [in, out] **replaceImage** TRUE <small class="red">not supported</small>
+{: #fields-replaceImage }
+
+Input/Output field *replaceImage*.
+
+### MFString [in, out] **url** "" <small class="red">not supported</small>
+{: #fields-url }
+
+Input/Output field *url*.
 
 ### SFString [in, out] **update** "NONE" <small>["NONE"|"NEXT_FRAME_ONLY"|"ALWAYS"]</small>
 {: #fields-update }
@@ -83,13 +103,6 @@ Sets the width, height, color components and number of multiple render targets (
 
 The generated texture will contain the depth buffer of the image (instead of the color buffer as usual).
 
-### SFNode [in, out] **children** NULL <small>[X3DChildNode|X3DBackgroundNode|Fog|X3DViewpointNode]</small>
-{: #fields-children }
-
-Sets a separate, potentially independent, sub-scene. If there are no child nodes, the current scene is used.
-
-Allows you to explicitly specify a background, fog and viewpoint node which is used during render to texture. If there is no such node as root node, the currently bound background, fog and viewpoint node in the scene is used.
-
 ### SFBool [ ] **repeatS** TRUE
 {: #fields-repeatS }
 
@@ -100,10 +113,22 @@ Whether to repeat texture along S axis horizontally from left to right.
 
 Whether to repeat texture along T axis vertically from top to bottom.
 
+### SFBool [out] **isActive** <small class="red">not supported</small>
+{: #fields-isActive }
+
+Output field *isActive*.
+
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
 {: #fields-textureProperties }
 
 Optional single contained [TextureProperties](/x_ite/components/texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
+
+### MFNode [in, out] **children** [ ] <small>[X3DChildNode|X3DBackgroundNode|Fog|X3DViewpointNode]</small>
+{: #fields-children }
+
+Sets a separate, potentially independent, sub-scene. If there are no child nodes, the current scene is used.
+
+Allows you to explicitly specify a background, fog and viewpoint node which is used during render to texture. If there is no such node as root node, the currently bound background, fog and viewpoint node in the scene is used.
 
 ## Example
 
