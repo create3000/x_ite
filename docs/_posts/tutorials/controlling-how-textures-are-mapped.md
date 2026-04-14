@@ -223,8 +223,8 @@ Shape {
     texture ImageTexture { ... }
     textureTransform TextureTransform {
       translation 0.0 0.0
-      rotation    0.0
-      scale       1.0 1.0
+      rotation 0.0
+      scale 1.0 1.0
     }
   }
   geometry ...
@@ -260,8 +260,8 @@ Shape {
     texture ImageTexture { ... }
     textureTransform TextureTransform {
       translation 0.0 0.0
-      rotation    0.785
-      scale       8.5 8.5
+      rotation 0.785
+      scale 8.5 8.5
     }
   }
   geometry ...
