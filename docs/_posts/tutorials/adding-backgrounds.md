@@ -185,8 +185,8 @@ Background {
 | ![][1]                          | ![][2]                                 |
 | Color portion of clouds texture | Transparency portion of clouds texture |
 
-  [1]: https://create3000.github.io/media/tutorials/images/background-cloud1-color.png
-  [2]: https://create3000.github.io/media/tutorials/images/background-cloud1-alpha.png
+  [1]: https://create3000.github.io/media/tutorials/images/background-cloud1-color.avif
+  [2]: https://create3000.github.io/media/tutorials/images/background-cloud1-alpha.avif
 
 ## A sample background
 

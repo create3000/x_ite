@@ -38,7 +38,7 @@ Texture coordinates and texture coordinate indexes specify a texture piece shape
 |------------------------|---------------------------------|
 | ![Texture Mapping 1][] | 0.0 0.0 1.0 0.0 1.0 1.0 0.0 1.0 |
 
-  [Texture Mapping 1]: https://create3000.github.io/media/tutorials/images/texture-mapping-1.png
+  [Texture Mapping 1]: https://create3000.github.io/media/tutorials/images/texture-mapping-1.avif
 
 ## Applying texture transforms
 
@@ -48,8 +48,8 @@ Texture transforms translate, rotate, and scale the texture coordinates (placing
 |------------------------|------------------------|
 | ![Texture Mapping 2][] | ![Texture Mapping 3][] |
 
-  [Texture Mapping 2]: https://create3000.github.io/media/tutorials/images/texture-mapping-2.png
-  [Texture Mapping 3]: https://create3000.github.io/media/tutorials/images/texture-mapping-3.png
+  [Texture Mapping 2]: https://create3000.github.io/media/tutorials/images/texture-mapping-2.avif
+  [Texture Mapping 3]: https://create3000.github.io/media/tutorials/images/texture-mapping-3.avif
 
 ## Texturing a face
 
@@ -59,8 +59,8 @@ Bind the texture to a face (stretch the cookie and stick it):
 |---------------|---------------|
 | ![Cookie 1][] | ![Cookie 2][] |
 
-  [Cookie 1]: https://create3000.github.io/media/tutorials/images/cookie-1.png
-  [Cookie 2]: https://create3000.github.io/media/tutorials/images/cookie-2.png
+  [Cookie 1]: https://create3000.github.io/media/tutorials/images/cookie-1.avif
+  [Cookie 2]: https://create3000.github.io/media/tutorials/images/cookie-2.avif
 
 ## Working through the texturing process
 

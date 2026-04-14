@@ -71,7 +71,7 @@ Use a list of ranges for level switch points:
 
 **range \[ 5.0, 10.0 \]**
 
-![lod-level](https://create3000.github.io/media/tutorials/images/lod-level.png)
+![lod-level](https://create3000.github.io/media/tutorials/images/lod-level.avif)
 
 ## Optimizing a shape
 
