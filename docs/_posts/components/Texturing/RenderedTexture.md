@@ -81,7 +81,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 Input/Output field *replaceImage*.
 
-### MFString [in, out] **url** "" <small class="red">not supported</small>
+### MFString [in, out] **url** [ ] <small class="red">not supported</small>
 {: #fields-url }
 
 Input/Output field *url*.
