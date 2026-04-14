@@ -84,8 +84,11 @@ const Features =
 
       window .FinalizationRegistry = class FinalizationRegistry
       {
-         register () { }
-         unregister () { }
+         register ()
+         { }
+         
+         unregister ()
+         { }
       };
    }
 
