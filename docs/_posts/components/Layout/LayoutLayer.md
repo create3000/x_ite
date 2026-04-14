@@ -68,7 +68,7 @@ The *objectType* field specifies a set of labels used in the picking process. Ea
 ### SFBool [in, out] **pointerEvents** TRUE <small class="blue">non-standard</small>
 {: #fields-pointerEvents }
 
-*pointerEvents* defines whether this LayoutLayer becomes target for pointer events.
+The *pointerEvents* field defines whether this LayoutLayer becomes target for pointer events.
 
 ### SFBool [in, out] **visible** TRUE
 {: #fields-visible }

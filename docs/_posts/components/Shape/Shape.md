@@ -56,7 +56,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### SFBool [in, out] **pointerEvents** TRUE <small class="blue">non-standard</small>
 {: #fields-pointerEvents }
 
-*pointerEvents* defines whether this Shape becomes target for pointer events. A value of `FALSE` makes this Shape node invisible during pointer picking.
+The *pointerEvents* field defines whether this Shape becomes target for pointer events. A value of `FALSE` makes this Shape node invisible during pointer picking.
 
 ### SFBool [in, out] **castShadow** TRUE
 {: #fields-castShadow }

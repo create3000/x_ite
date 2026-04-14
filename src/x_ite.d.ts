@@ -1543,6 +1543,7 @@ declare namespace X3D
       readonly X3DTouchSensorNode: number;
       readonly X3DTriggerNode: number;
       readonly X3DUrlObject: number;
+      readonly X3DUrlOutputObject: number;
       readonly X3DVertexAttributeNode: number;
       readonly X3DViewpointNode: number;
       readonly X3DViewportNode: number;
@@ -11065,7 +11066,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * pointerEvents defines whether this InstancedShape becomes target for pointer events.
+       * The pointerEvents field defines whether this InstancedShape becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -11434,7 +11435,7 @@ declare namespace X3D
        */
       pickable: boolean;
       /**
-       * pointerEvents defines whether this Layer becomes target for pointer events.
+       * The pointerEvents field defines whether this Layer becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -11632,7 +11633,7 @@ declare namespace X3D
        */
       pickable: boolean;
       /**
-       * pointerEvents defines whether this LayoutLayer becomes target for pointer events.
+       * The pointerEvents field defines whether this LayoutLayer becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -14262,7 +14263,7 @@ declare namespace X3D
        */
       physics: MFNode <X3DParticlePhysicsModelNodeProxy>;
       /**
-       * pointerEvents defines whether this ParticleSystem becomes target for pointer events.
+       * The pointerEvents field defines whether this ParticleSystem becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -15887,7 +15888,7 @@ declare namespace X3D
    }
 
    /** A RenderedTexture is a texture node that renders a separate scene or viewpoint into an offscreen buffer, producing an image that can be applied to geometry in real time. */
-   interface RenderedTextureProxy extends X3DTexture2DNodeProxy
+   interface RenderedTextureProxy extends X3DTexture2DNodeProxy, X3DUrlOutputObjectProxy
    {
       /**
        * Sets a separate, potentially independent, subscene. If the value is NULL the current scene is used.
@@ -15931,6 +15932,12 @@ declare namespace X3D
        * This field is of access type 'initializeOnly' and type SFBool.
        */
       repeatT: boolean;
+      /**
+       * The *replaceImage* field defines whether only a single updated image file or multiple image files can be saved.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      replaceImage: boolean;
       /**
        * Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
        *
@@ -16851,7 +16858,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * pointerEvents defines whether this Shape becomes target for pointer events.
+       * The pointerEvents field defines whether this Shape becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -21568,7 +21575,7 @@ declare namespace X3D
        */
       pickable: boolean;
       /**
-       * pointerEvents defines whether this layer becomes target for pointer events.
+       * The pointerEvents field defines whether this layer becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -22177,7 +22184,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * pointerEvents defines whether this shape becomes target for pointer events.
+       * The pointerEvents field defines whether this shape becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -22691,6 +22698,35 @@ declare namespace X3D
        */
       load: boolean;
       /**
+       * This field is of access type 'inputOutput' and type MFString.
+       */
+      url: MFString;
+   }
+
+   /** undefined */
+   interface X3DUrlOutputObjectProxy extends SFNode
+   {
+      /**
+       * Author-provided prose that describes intended purpose of the url asset.
+       *
+       * This field is of access type 'inputOutput' and type SFString.
+       */
+      description: string;
+      /**
+       * The enabled field either enables or disables data output processing by the node.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      enabled: boolean;
+      /**
+       * The isActive field provides a TRUE event when node data output becomes active, and a FALSE event when node data output is stopped.
+       *
+       * This field is of access type 'outputOnly' and type SFBool.
+       */
+      readonly isActive: boolean;
+      /**
+       * Values in the url field typically defines a relative address to a file name that can be used for storing one or more rendered textures.
+       *
        * This field is of access type 'inputOutput' and type MFString.
        */
       url: MFString;
