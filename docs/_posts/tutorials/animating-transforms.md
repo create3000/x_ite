@@ -270,7 +270,7 @@ DEF Timer1 TimeSensor {
 }
 
 DEF Position1 PositionInterpolator {
-  key  [ 0, ... ]
+  key [ 0, ... ]
   keyValue [ 0 0 0, ... ]
 }
 

@@ -126,7 +126,7 @@ An [IndexedLineSet](/x_ite/components/rendering/indexedlineset/) geometry node c
 ```vrml
 Shape {
   appearance Appearance { ... }
-  geometry  IndexedLineSet {
+  geometry IndexedLineSet {
     coordIndex [ ... ]
     coord Coordinate {
       point [ ... ]

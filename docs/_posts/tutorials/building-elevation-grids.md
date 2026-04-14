@@ -143,8 +143,8 @@ Shape {
   geometry ElevationGrid {
     xDimension 9
     zDimension 9
-    xSpacing   1
-    zSpacing   1
+    xSpacing 1
+    zSpacing 1
     solid FALSE
     height [
       0, 0, 0.5, 1, 0.5, 0, 0, 0, 0,

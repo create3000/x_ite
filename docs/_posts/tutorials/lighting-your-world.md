@@ -162,7 +162,7 @@ SpotLight {
 SpotLight {
   ...
   cutOffAngle 0.785
-  beamWidth   0.52
+  beamWidth 0.52
 }
 ```
 
