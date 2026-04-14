@@ -15915,6 +15915,18 @@ declare namespace X3D
        */
       dimensions: MFInt32;
       /**
+       * The enabled field either enables or disables data output processing by the node.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      enabled: boolean;
+      /**
+       * The isActive field provides a TRUE event when node data output becomes active, and a FALSE event when node data output is stopped.
+       *
+       * This field is of access type 'outputOnly' and type SFBool.
+       */
+      readonly isActive: boolean;
+      /**
        * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
@@ -15933,7 +15945,7 @@ declare namespace X3D
        */
       repeatT: boolean;
       /**
-       * The *replaceImage* field defines whether only a single updated image file or multiple image files can be saved.
+       * The replaceImage field defines whether only a single updated image file or multiple image files can be saved.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -15950,6 +15962,12 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type SFString.
        */
       update: "NONE" | "NEXT_FRAME_ONLY" | "ALWAYS";
+      /**
+       * Values in the url field typically defines a relative address to a file name that can be used for storing one or more rendered textures.
+       *
+       * This field is of access type 'inputOutput' and type MFString.
+       */
+      url: MFString;
    }
 
    /** RigidBody describes a collection of shapes with a mass distribution that is affected by the physics model. */

@@ -270,8 +270,8 @@ Object .defineProperties (RenderedTexture,
    {
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",           new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",           new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "replaceImage",      new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "url",               new Fields .MFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "update",            new Fields .SFString ("NONE")),

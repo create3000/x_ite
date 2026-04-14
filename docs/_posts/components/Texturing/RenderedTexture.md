@@ -39,8 +39,8 @@ The RenderedTexture node belongs to the [Texturing](/x_ite/components/overview/#
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
-| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFString | [in, out] | [description](#fields-description) | "" |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFBool | [in, out] | [replaceImage](#fields-replaceImage) | TRUE |
 | MFString | [in, out] | [url](#fields-url) | [ ] |
 | SFString | [in, out] | [update](#fields-update) | "NONE" |
@@ -62,11 +62,6 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
-### SFBool [in, out] **enabled** TRUE <small class="red">not supported</small>
-{: #fields-enabled }
-
-The *enabled* field either enables or disables data output processing by the node.
-
 ### SFString [in, out] **description** ""
 {: #fields-description }
 
@@ -75,6 +70,11 @@ Author-provided prose that describes intended purpose of the url asset.
 #### Hint
 
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
+
+### SFBool [in, out] **enabled** TRUE <small class="red">not supported</small>
+{: #fields-enabled }
+
+The *enabled* field either enables or disables data output processing by the node.
 
 ### SFBool [in, out] **replaceImage** TRUE <small class="red">not supported</small>
 {: #fields-replaceImage }

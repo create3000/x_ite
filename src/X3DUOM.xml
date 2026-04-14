@@ -1456,6 +1456,21 @@
           accessType="inputOutput"
           inheritedFrom="X3DTextureNode"
           description="Author-provided prose that describes intended purpose of the url asset."/>
+          <field name="enabled"
+          type="SFBool"
+          accessType="inputOutput"
+          default="true"
+          description="The enabled field either enables or disables data output processing by the node."/>
+        <field name="url"
+          type="MFString"
+          accessType="inputOutput"
+          inheritedFrom="X3DUrlObject"
+          description="Values in the url field typically defines a relative address to a file name that can be used for storing one or more rendered textures."/>
+        <field name="isActive"
+          type="SFBool"
+          accessType="outputOnly"
+          inheritedFrom="X3DTimeDependentNode"
+          description="The isActive field provides a TRUE event when node data output becomes active, and a FALSE event when node data output is stopped."/>
         <field name="IS"
           type="SFNode"
           accessType="inputOutput"
@@ -1548,7 +1563,7 @@
           type="SFBool"
           accessType="inputOutput"
           default="TRUE"
-          description="The *replaceImage* field defines whether only a single updated image file or multiple image files can be saved."/>
+          description="The replaceImage field defines whether only a single updated image file or multiple image files can be saved."/>
         <containerField default="texture" type="containerFieldChoicesX3DTexture2DNode"/>
         <ContentModel>
             <GroupContentModel name="ChildContentModelCore" minOccurs="0"/>
