@@ -28,8 +28,11 @@ The RenderedTexture node belongs to the [Texturing](/x_ite/components/overview/#
     + X3DTextureNode
       + X3DSingleTextureNode
         + X3DTexture2DNode
-          + RenderedTexture
+          + RenderedTexture (X3DUrlOutputObject)*
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
