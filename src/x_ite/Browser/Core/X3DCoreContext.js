@@ -510,6 +510,8 @@ Object .assign (X3DCoreContext .prototype,
    },
    [_keydown] (event)
    {
+      // console .log (event .keyCode);
+
       switch (event .keyCode)
       {
          case 16: // Shift
