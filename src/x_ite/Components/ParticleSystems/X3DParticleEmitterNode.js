@@ -894,7 +894,8 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       precision highp float;
 
       void
-      main () { }
+      main ()
+      { }
       `;
 
       // Vertex shader

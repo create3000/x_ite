@@ -119,7 +119,8 @@ Object .assign (X3DBoundedObject .prototype,
    {
       this .getExecutionContext () ._bbox_changed = Date .now () / 1000;
    },
-   dispose () { },
+   dispose ()
+   { },
 });
 
 Object .defineProperties (X3DBoundedObject, X3DNode .getStaticProperties ("X3DBoundedObject", "Grouping", 1));
