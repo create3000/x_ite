@@ -65,7 +65,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### SFBool [in, out] **enabled** TRUE <small class="red">not supported</small>
 {: #fields-enabled }
 
-Input/Output field *enabled*.
+The *enabled* field either enables or disables data output processing by the node.
 
 ### SFString [in, out] **description** ""
 {: #fields-description }
@@ -79,12 +79,12 @@ Author-provided prose that describes intended purpose of the url asset.
 ### SFBool [in, out] **replaceImage** TRUE <small class="red">not supported</small>
 {: #fields-replaceImage }
 
-Input/Output field *replaceImage*.
+The *replaceImage* field defines whether only a single updated image file or multiple image files can be saved.
 
 ### MFString [in, out] **url** [ ] <small class="red">not supported</small>
 {: #fields-url }
 
-Input/Output field *url*.
+Values in the *url* field typically defines a relative address to a file name that can be used for storing one or more rendered textures.
 
 ### SFString [in, out] **update** "NONE" <small>["NONE"|"NEXT_FRAME_ONLY"|"ALWAYS"]</small>
 {: #fields-update }
@@ -119,7 +119,7 @@ Whether to repeat texture along T axis vertically from top to bottom.
 ### SFBool [out] **isActive** <small class="red">not supported</small>
 {: #fields-isActive }
 
-Output field *isActive*.
+The *isActive* field provides a TRUE event when node data output becomes active, and a FALSE event when node data output is stopped.
 
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
 {: #fields-textureProperties }
