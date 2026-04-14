@@ -36,10 +36,10 @@ The RenderedTexture node belongs to the [Texturing](/x_ite/components/overview/#
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFBool | [in, out] | [enabled](#fields-enabled) |  |
+| SFBool | [in, out] | [enabled](#fields-enabled) | TRUE  |
 | SFString | [in, out] | [description](#fields-description) | "" |
-| SFBool | [in, out] | [replaceImage](#fields-replaceImage) |  |
-| MFString | [in, out] | [url](#fields-url) |  |
+| SFBool | [in, out] | [replaceImage](#fields-replaceImage) | TRUE  |
+| MFString | [in, out] | [url](#fields-url) | ""  |
 | SFString | [in, out] | [update](#fields-update) | "NONE"  |
 | MFInt32 | [in, out] | [dimensions](#fields-dimensions) | [ 128, 128, 4, 1, 1 ] |
 | SFBool | [in, out] | [depthMap](#fields-depthMap) | FALSE |
@@ -47,7 +47,7 @@ The RenderedTexture node belongs to the [Texturing](/x_ite/components/overview/#
 | SFBool | [ ] | [repeatT](#fields-repeatT) | TRUE |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL  |
-| SFNode | [in, out] | [children](#fields-children) | NULL  |
+| MFNode | [in, out] | [children](#fields-children) | [ ] |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
