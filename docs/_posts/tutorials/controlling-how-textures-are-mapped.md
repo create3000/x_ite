@@ -32,7 +32,7 @@ Texture images (the dough) are in a texture coordinate system:
 
 ## Specifying texture coordinates
 
-Texture coordinates and texture coordinate indexes specify a texture piece shape (the cookie cutter):
+Texture coordinates and texture coordinate indices specify a texture piece shape (the cookie cutter):
 
 |                        | Coordinates        |
 |------------------------|--------------------|
@@ -64,7 +64,7 @@ Bind the texture to a face (stretch the cookie and stick it):
 
 ## Working through the texturing process
 
-- Select piece with texture coordinates and indexes
+- Select piece with texture coordinates and indices
   - Create a cookie cutter
 - Transform the texture coordinates
   - Position and orient the cookie cutter
@@ -132,7 +132,7 @@ Shape {
 An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) geometry node creates terrains:
 
 - *texCoord* - specify texture pieces
-- Automatically generated texture coordinate indexes
+- Automatically generated texture coordinate indices
 
 ### XML Encoding
 
@@ -277,6 +277,6 @@ Read texture transform operations top-down:
 ## Summary
 
 - Texture images are in a texture coordinate system
-- Texture coordinates and indexes describe a texture cookie cutter
+- Texture coordinates and indices describe a texture cookie cutter
 - Texture transforms translate, rotate, and scale place the cookie cutter
-- Texture indexes bind the cut-out cookie texture to a face on a shape
+- Texture indices bind the cut-out cookie texture to a face on a shape
