@@ -34,7 +34,7 @@ Texture images (the dough) are in a texture coordinate system:
 
 Texture coordinates and texture coordinate indices specify a texture piece shape (the cookie cutter):
 
-|                        | Coordinates        |
+| Texture Space          | Coordinates        |
 |------------------------|--------------------|
 | ![Texture Mapping 1][] | 0 0, 1 0, 1 1, 0 1 |
 
@@ -44,7 +44,7 @@ Texture coordinates and texture coordinate indices specify a texture piece shape
 
 Texture transforms translate, rotate, and scale the texture coordinates (placing the cookie cutter):
 
-|                        |                        |
+| Translation            | Rotation               |
 |------------------------|------------------------|
 | ![Texture Mapping 2][] | ![Texture Mapping 3][] |
 
