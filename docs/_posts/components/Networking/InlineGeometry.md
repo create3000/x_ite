@@ -41,7 +41,8 @@ The InlineGeometry node belongs to the [Networking](/x_ite/components/overview/#
 | MFString | [in, out] | [url](#fields-url) | [ ] |
 | SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0 |
 | SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600 |
-| SFFloat | [in, out] | [creaseAngle](#fields-creaseAngle) | π |
+| SFBool | [in, out] | [solid](#fields-solid) | FALSE |
+| SFBool | [in, out] | [smooth](#fields-smooth) | TRUE |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -121,12 +122,12 @@ Address of X3D world to load [Inline](/x_ite/components/networking/inline/) with
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
 ### SFBool [in, out] **solid** FALSE
-{: #fields-creaseAngle }
+{: #fields-solid }
 
 For InlineGeometry, the default value of *solid* is FALSE since most usages of retrieved meshes need two-sided rendering. Authors have the option to change this value for single-sided rendering.
 
 ### SFBool [in, out] **smooth** TRUE
-{: #fields-creaseAngle }
+{: #fields-smooth }
 
 The *smooth* field provides a hint to the browser whether smooth rendering is preferred for a retrieved polygonal mesh.
 
