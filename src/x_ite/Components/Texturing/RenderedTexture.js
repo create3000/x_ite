@@ -150,6 +150,12 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
    {
       // TraverseType .DISPLAY
 
+      if (!renderObject .isIndependent ())
+         return;
+
+      if (!this .frameBuffer)
+         return;
+
       if (!this ._enabled .getValue ())
          return;
 
@@ -157,12 +163,6 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
          return;
 
       if (Date .now () - this .lastUpdate < this ._updateInterval .getValue () * 1000)
-         return;
-
-      if (!renderObject .isIndependent ())
-         return;
-
-      if (!this .frameBuffer)
          return;
 
       this .lastUpdate = Date .now ();

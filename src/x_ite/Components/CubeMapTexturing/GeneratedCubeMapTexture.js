@@ -98,13 +98,13 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
    {
       // TraverseType .DISPLAY
 
-      if (this ._update .getValue () === "NONE")
-         return;
-
       if (!renderObject .isIndependent ())
          return;
 
       if (!this .frameBuffer)
+         return;
+
+      if (this ._update .getValue () === "NONE")
          return;
 
       renderObject .getRenderedTextures () .add (this);
