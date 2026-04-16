@@ -156,8 +156,8 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
       if (!this .frameBuffer)
          return;
 
-      if (!this ._enabled .getValue ())
-         return;
+      // if (!this ._enabled .getValue ())
+      //    return;
 
       if (this ._update .getValue () === "NONE")
          return;
