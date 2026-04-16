@@ -1577,12 +1577,16 @@
       <InterfaceDefinition>
         <Inheritance baseType="X3DGeometryNode"/>
         <AdditionalInheritance baseType="X3DUrlObject"/>
-        <field name="creaseAngle"
-          type="SFFloat"
+        <field name="solid"
+          type="SFBool"
           accessType="inputOutput"
-          default="3.141592653"
-          minInclusive="0"
-          description="creaseAngle defines angle (in radians) for determining whether adjacent polygons are drawn with sharp edges or smooth shading."/>
+          default="FALSE"
+          description="For InlineGeometry, the default value of solid is FALSE since most usages of retrieved meshes need two-sided rendering. Authors have the option to change this value for single-sided rendering."/>
+        <field name="smooth"
+          type="SFBool"
+          accessType="inputOutput"
+          default="TRUE"
+          description="The smooth field provides a hint to the browser whether smooth rendering is preferred for a retrieved polygonal mesh."/>
       </InterfaceDefinition>
     </ConcreteNode>
 

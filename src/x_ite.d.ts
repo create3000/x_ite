@@ -11007,11 +11007,17 @@ declare namespace X3D
    interface InlineGeometryProxy extends X3DGeometryNodeProxy, X3DUrlObjectProxy
    {
       /**
-       * creaseAngle defines angle (in radians) for determining whether adjacent polygons are drawn with sharp edges or smooth shading.
+       * The smooth field provides a hint to the browser whether smooth rendering is preferred for a retrieved polygonal mesh.
        *
-       * This field is of access type 'inputOutput' and type SFFloat.
+       * This field is of access type 'inputOutput' and type SFBool.
        */
-      creaseAngle: number;
+      smooth: boolean;
+      /**
+       * For InlineGeometry, the default value of solid is FALSE since most usages of retrieved meshes need two-sided rendering. Authors have the option to change this value for single-sided rendering.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      solid: boolean;
    }
 
    /** InstancedShape can appear under any grouping node. InstancedShape can contain an Appearance node and a geometry node (for example one of the primitives Box Cone Cylinder Sphere Text, one of ElevationGrid Extrusion IndexedFaceSet IndexedLineSet LineSet PointSet, or one of the other geometry nodes) and this geometry node is instantiated as often as transformations are provided. */
