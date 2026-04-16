@@ -29,7 +29,7 @@ function RenderedTexture (executionContext)
    // Private properties
 
    this .groupNode          = new Group (executionContext);
-   this .lastUpdate         = 0;
+   this .lastUpdate         = -1;
    this .dependentRenderers = new WeakMap ();
 }
 
