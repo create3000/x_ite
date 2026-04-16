@@ -105,7 +105,7 @@ The *updateInterval* field indicates time intervals between render captures when
 ### MFInt32 [in, out] **dimensions** [ 128, 128, 4 ] <small>[0,∞)</small>
 {: #fields-dimensions }
 
-Sets the width, height, color components and number of multiple render targets (MRT).
+Sets the width, height and color components.
 
 ### SFBool [in, out] **depthMap** FALSE
 {: #fields-depthMap }
