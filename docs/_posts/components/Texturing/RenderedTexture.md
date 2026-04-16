@@ -44,7 +44,8 @@ The RenderedTexture node belongs to the [Texturing](/x_ite/components/overview/#
 | SFBool | [in, out] | [replaceImage](#fields-replaceImage) | TRUE |
 | MFString | [in, out] | [url](#fields-url) | [ ] |
 | SFString | [in, out] | [update](#fields-update) | "NONE" |
-| MFInt32 | [in, out] | [dimensions](#fields-dimensions) | [ 128, 128, 4, 1, 1 ] |
+| SFTime | [in, out] | [updateInterval](#fields-updateInterval) | 0.1 |
+| MFInt32 | [in, out] | [dimensions](#fields-dimensions) | [ 128, 128, 4 ] |
 | SFBool | [in, out] | [depthMap](#fields-depthMap) | FALSE |
 | SFBool | [ ] | [repeatS](#fields-repeatS) | TRUE |
 | SFBool | [ ] | [repeatT](#fields-repeatT) | TRUE |
@@ -97,7 +98,7 @@ Values in the *url* field typically defines a relative address to a file name th
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
 ### SFTime [in, out] **updateInterval** 0.1 <small>[0,∞)</small>
-{: #fields-update }
+{: #fields-updateInterval }
 
 The *updateInterval* field indicates time intervals between render captures when update is "ALWAYS". A value of 0 indicates full frame rate.
 
