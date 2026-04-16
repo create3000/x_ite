@@ -20,10 +20,6 @@ function InlineGeometry (executionContext)
    X3DUrlObject        .call (this, executionContext);
 
    this .addType (X3DConstants .InlineGeometry);
-
-   // Units
-
-   this ._creaseAngle .setUnit ("angle");
 }
 
 Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNode .prototype),
@@ -34,11 +30,12 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
       X3DGeometryNode .prototype .initialize .call (this);
       X3DUrlObject    .prototype .initialize .call (this);
 
-      this ._creaseAngle .addInterest ("set_creaseAngle__", this);
+      this ._solid  .addInterest ("set_solid__",  this);
+      this ._smooth .addInterest ("set_smooth__", this);
 
       this .requestImmediateLoad () .catch (Function .prototype);
    },
-   set_creaseAngle__ ()
+   set_solid__ ()
    {
       if (!this .geometryNode)
          return;
@@ -46,19 +43,33 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
       if (this .geometryNode .getGeometryType () < 2)
          return;
 
+      this .geometryNode ._solid = this ._solid;
+   },
+   set_smooth__ ()
+   {
+      if (!this .geometryNode)
+         return;
+
+      if (this .geometryNode .getGeometryType () < 2)
+         return;
+
+      const smooth = this ._smooth .getValue ();
+
       if (this .geometryNode ._creaseAngle)
       {
-         if (this .geometryNode ._creaseAngle .equals (this ._creaseAngle))
+         const creaseAngle = smooth ? Math .PI : 0;
+
+         if (this .geometryNode ._creaseAngle .equals (creaseAngle))
             return;
 
-         this .geometryNode ._creaseAngle = this ._creaseAngle;
+         this .geometryNode ._creaseAngle = creaseAngle;
       }
       else if (this .geometryNode ._normal && !this .geometryNode ._normal .getValue ())
       {
-         if (this .geometryNode ._normalPerVertex .equals (this ._creaseAngle .getValue () > 0))
+         if (this .geometryNode ._normalPerVertex .equals (smooth))
             return;
 
-         this .geometryNode ._normalPerVertex = this ._creaseAngle .getValue () > 0;
+         this .geometryNode ._normalPerVertex = smooth;
       }
    },
    unloadData ()
@@ -102,7 +113,8 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
          this .scene .setExecutionContext (scene .cache ? browser .getDefaultScene () : this .getExecutionContext ());
          this .scene .setLive (true);
 
-         this .set_creaseAngle__ ();
+         this .set_solid__ ();
+         this .set_smooth__ ();
 
          this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
@@ -195,7 +207,8 @@ Object .defineProperties (InlineGeometry,
          new X3DFieldDefinition (X3DConstants .inputOutput, "url",                  new Fields .MFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime (0)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "creaseAngle",          new Fields .SFFloat (3.141592653)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "solid",                new Fields .SFBool (false)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "smooth",               new Fields .SFBool (true)),
       ]),
       enumerable: true,
    },
