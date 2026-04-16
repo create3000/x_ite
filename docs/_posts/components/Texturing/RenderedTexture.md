@@ -71,7 +71,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
 
-### SFBool [in, out] **enabled** TRUE <small class="red">not supported</small>
+### SFBool [in, out] **enabled** TRUE
 {: #fields-enabled }
 
 The *enabled* field either enables or disables data output processing by the node.
@@ -96,7 +96,12 @@ Values in the *url* field typically defines a relative address to a file name th
 - An object trying to render itself in the scene graph can cause infinite loops.
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 
-### MFInt32 [in, out] **dimensions** [ 128, 128, 4, 1, 1 ] <small>[0,∞)</small>
+### SFTime [in, out] **updateInterval** 0.1 <small>[0,∞)</small>
+{: #fields-update }
+
+The *updateInterval* field indicates time intervals between render captures when update is "ALWAYS". A value of 0 indicates full frame rate.
+
+### MFInt32 [in, out] **dimensions** [ 128, 128, 4 ] <small>[0,∞)</small>
 {: #fields-dimensions }
 
 Sets the width, height, color components and number of multiple render targets (MRT).

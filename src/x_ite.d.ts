@@ -15969,6 +15969,12 @@ declare namespace X3D
        */
       update: "NONE" | "NEXT_FRAME_ONLY" | "ALWAYS";
       /**
+       * The updateInterval field indicates time intervals between render captures when update is "ALWAYS". A value of 0 indicates full frame rate.
+       *
+       * This field is of access type 'inputOutput' and type SFTime.
+       */
+      updateInterval: number;
+      /**
        * Values in the url field typically defines a relative address to a file name that can be used for storing one or more rendered textures.
        *
        * This field is of access type 'inputOutput' and type MFString.

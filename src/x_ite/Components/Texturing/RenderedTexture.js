@@ -29,6 +29,7 @@ function RenderedTexture (executionContext)
    // Private properties
 
    this .groupNode          = new Group (executionContext);
+   this .lastUpdate         = 0;
    this .dependentRenderers = new WeakMap ();
 }
 
@@ -149,7 +150,13 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
    {
       // TraverseType .DISPLAY
 
+      if (!this ._enabled .getValue ())
+         return;
+
       if (this ._update .getValue () === "NONE")
+         return;
+
+      if (Date .now () - this .lastUpdate < this ._updateInterval .getValue () * 1000)
          return;
 
       if (!renderObject .isIndependent ())
@@ -157,6 +164,8 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
 
       if (!this .frameBuffer)
          return;
+
+      this .lastUpdate = Date .now ();
 
       renderObject .getRenderedTextures () .add (this);
    },
@@ -275,7 +284,8 @@ Object .defineProperties (RenderedTexture,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "replaceImage",      new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "url",               new Fields .MFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "update",            new Fields .SFString ("NONE")),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "dimensions",        new Fields .MFInt32 (128, 128, 4, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "updateInterval",    new Fields .SFTime (0.1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "dimensions",        new Fields .MFInt32 (128, 128, 4)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "depthMap",          new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool (true)),

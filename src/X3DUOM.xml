@@ -1544,6 +1544,12 @@
             <enumeration value="NEXT_FRAME_ONLY" appinfo="render texture once at end of frame."/>
             <enumeration value="ALWAYS" appinfo="texture to be rendered every frame."/>
         </field>
+        <field name="updateInterval"
+          type="SFTime"
+          accessType="inputOutput"
+          default="0.1"
+          minInclusive="0"
+          description="The updateInterval field indicates time intervals between render captures when update is &quot;ALWAYS&quot;. A value of 0 indicates full frame rate."/>
         <field name="dimensions"
           type="MFInt32"
           accessType="inputOutput"
