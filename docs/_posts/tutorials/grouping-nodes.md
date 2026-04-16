@@ -230,7 +230,7 @@ An [Inline](/x_ite/components/networking/inline/) node creates a special group f
 
 ```x3d
 <Inline
-  url='"table.wrl"'/>
+    url='"table.wrl"'/>
 ```
 
 ### Classic VRML Encoding
