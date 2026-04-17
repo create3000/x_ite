@@ -17,7 +17,6 @@
 ## Draco
 
 * https://github.com/google/draco/blob/main/javascript/draco_decoder_gltf.js
-* https://www.gstatic.com/draco/v1/decoders/draco_decoder_gltf.js
 
 ## meshoptimizer
 
