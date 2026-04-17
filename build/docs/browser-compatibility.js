@@ -3,6 +3,7 @@ const
    { sh } = require ("shell-tools"),
    fs     = require ("fs");
 
+// https://www.web3d.org/specifications/X3dNodeInventoryComparison.xlsx
 // https://castle-engine.io/apidoc/html/AllClasses.html
 // https://freewrl.sourceforge.io/conformance.html
 // https://doc.x3dom.org/author/nodes.html
