@@ -141,8 +141,6 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
       const time = Date .now ();
 
-      await $.sleep (0);
-
       // Add default font to family array.
 
       const
@@ -152,6 +150,12 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
          fontStyle        = this ._style .getValue ();
 
       family .push ("SERIF");
+
+      // Wait for FontLibrary nodes to be setuped or changed.
+
+      await $.sleep (0);
+
+      // Get font.
 
       let font = null;
 
@@ -192,7 +196,8 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
          }
          else
          {
-            console .warn (`Couldn't find font family '${fontFamily}' with style '${fontStyle}'.`);
+            if (time > this .loadTime)
+               console .warn (`Couldn't find font family '${fontFamily}' with style '${fontStyle}'.`);
          }
       }
 
