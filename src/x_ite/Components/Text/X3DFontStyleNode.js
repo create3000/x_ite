@@ -49,8 +49,9 @@ function X3DFontStyleNode (executionContext)
 
    // Private properties
 
-   this .alignments = [ ];
-   this .loadTime   = -1;
+   this .alignments  = [ ];
+   this .loadCounter = 0;
+   this .loadCount   = -1;
 }
 
 Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .prototype),
@@ -139,7 +140,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
    {
       // Wait for FontLibrary nodes to be setuped or changed.
 
-      const time = Date .now ();
+      const count = ++ this .loadCounter;
 
       // Add default font to family array.
 
@@ -196,16 +197,16 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
          }
          else
          {
-            if (time > this .loadTime)
+            if (count > this .loadCount)
                console .warn (`Couldn't find font family '${fontFamily}' with style '${fontStyle}'.`);
          }
       }
 
-      if (time < this .loadTime)
+      if (count < this .loadCount)
          return;
 
-      this .loadTime = time;
-      this .font     = font;
+      this .loadCount = count;
+      this .font      = font;
 
       this .setLoadState (font ? X3DConstants .COMPLETE_STATE : X3DConstants .FAILED_STATE);
       this .addNodeEvent ();
