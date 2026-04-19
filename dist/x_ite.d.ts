@@ -1301,6 +1301,7 @@ declare namespace X3D
       readonly IndexedTriangleSet: number;
       readonly IndexedTriangleStripSet: number;
       readonly Inline: number;
+      readonly InlineGeometry: number;
       readonly InstancedShape: number;
       readonly IntegerSequencer: number;
       readonly IntegerTrigger: number;
@@ -1542,6 +1543,7 @@ declare namespace X3D
       readonly X3DTouchSensorNode: number;
       readonly X3DTriggerNode: number;
       readonly X3DUrlObject: number;
+      readonly X3DUrlOutputObject: number;
       readonly X3DVertexAttributeNode: number;
       readonly X3DViewpointNode: number;
       readonly X3DViewportNode: number;
@@ -3285,7 +3287,7 @@ declare namespace X3D
        */
       acousticProperties: AcousticPropertiesProxy | null;
       /**
-       * Threshold value used for pixel rendering either transparent or opaque, used when alphaMode="MASK".
+       * Threshold value used for pixel rendering either transparent or opaque, used when alphaMode=&#34;MASK&#34;.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -3706,7 +3708,7 @@ declare namespace X3D
        */
       topUrl: MFString;
       /**
-       * how "clear" the background is, allows underlying page to show through: 1.
+       * how &#34;clear&#34; the background is, allows underlying page to show through: 1.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -3751,7 +3753,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      forceOutput: MFString <"ALL" | "NONE">;
+      forceOutput: MFString <"&#34;ALL&#34;" | "&#34;NONE&#34;">;
       /**
        * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
        *
@@ -3992,13 +3994,13 @@ declare namespace X3D
        */
       weightFunction2: "CONSTANT" | "ALPHA1" | "ALPHA2" | "ONE_MINUS_ALPHA1" | "ONE_MINUS_ALPHA2" | "TABLE";
       /**
-       * The weightTransferFunction1 and weightTransferFunction2 fields specify two-dimensional textures that are used to determine the weight values when the weight function is set to "TABLE".
+       * The weightTransferFunction1 and weightTransferFunction2 fields specify two-dimensional textures that are used to determine the weight values when the weight function is set to &#34;TABLE&#34;.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
       weightTransferFunction1: X3DTexture2DNodeProxy | null;
       /**
-       * The weightTransferFunction1 and weightTransferFunction2 fields specify two-dimensional textures that are used to determine the weight values when the weight function is set to "TABLE".
+       * The weightTransferFunction1 and weightTransferFunction2 fields specify two-dimensional textures that are used to determine the weight values when the weight function is set to &#34;TABLE&#34;.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -5206,7 +5208,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      appliedParameters: MFString <"BOUNCE" | "USER_FRICTION" | "FRICTION_COEFFICIENT-2" | "ERROR_REDUCTION" | "CONSTANT_FORCE" | "SPEED-1" | "SPEED-2" | "SLIP-1" | "SLIP-2">;
+      appliedParameters: MFString <"&#34;BOUNCE&#34;" | "&#34;USER_FRICTION&#34;" | "&#34;FRICTION_COEFFICIENT-2&#34;" | "&#34;ERROR_REDUCTION&#34;" | "&#34;CONSTANT_FORCE&#34;" | "&#34;SPEED-1&#34;" | "&#34;SPEED-2&#34;" | "&#34;SLIP-1&#34;" | "&#34;SLIP-2&#34;">;
       /**
        * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
        *
@@ -5866,7 +5868,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      appliedParameters: MFString <"BOUNCE" | "USER_FRICTION" | "FRICTION_COEFFICIENT-2" | "ERROR_REDUCTION" | "CONSTANT_FORCE" | "SPEED-1" | "SPEED-2" | "SLIP-1" | "SLIP-2">;
+      appliedParameters: MFString <"&#34;BOUNCE&#34;" | "&#34;USER_FRICTION&#34;" | "&#34;FRICTION_COEFFICIENT-2&#34;" | "&#34;ERROR_REDUCTION&#34;" | "&#34;CONSTANT_FORCE&#34;" | "&#34;SPEED-1&#34;" | "&#34;SPEED-2&#34;" | "&#34;SLIP-1&#34;" | "&#34;SLIP-2&#34;">;
       /**
        * The body1 and body2 fields specify two top-level nodes that should be evaluated in the physics model as a single set of interactions with respect to each other.
        *
@@ -6861,7 +6863,7 @@ declare namespace X3D
        */
       subcategory: number;
       /**
-       * Local and/or online addresses of X3D model of interest, for example: "ExtrusionExampleShip.
+       * Local and/or online addresses of X3D model of interest, for example: &#34;ExtrusionExampleShip.
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
@@ -6988,7 +6990,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      forceOutput: MFString <"ALL" | "NONE">;
+      forceOutput: MFString <"&#34;ALL&#34;" | "&#34;NONE&#34;">;
       /**
        * This field is of access type 'outputOnly' and type SFFloat.
        */
@@ -8330,7 +8332,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      family: MFString <"SANS" | "SERIF" | "TYPEWRITER">;
+      family: MFString <"&#34;SANS&#34;" | "&#34;SERIF&#34;" | "&#34;TYPEWRITER&#34;">;
       /**
        * Whether text direction is horizontal (true) or vertical (false).
        *
@@ -8342,7 +8344,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      justify: MFString <"MIDDLE" | "BEGIN" | "END" | "FIRST">;
+      justify: MFString <"&#34;MIDDLE&#34;" | "&#34;BEGIN&#34;" | "&#34;END&#34;" | "&#34;FIRST&#34;">;
       /**
        * Language codes consist of a primary code and a (possibly empty) series of subcodes.
        *
@@ -8568,7 +8570,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * point contains a set of actual 3D geographic coordinates, provided in geoSystem format can split strings if desired: "x1 y1 z1 x2 y2 z2" or "x1 y1 z1", "x2 y2 z2".
+       * point contains a set of actual 3D geographic coordinates, provided in geoSystem format can split strings if desired: &#34;x1 y1 z1 x2 y2 z2&#34; or &#34;x1 y1 z1&#34;, &#34;x2 y2 z2&#34;.
        *
        * This field is of access type 'inputOutput' and type MFVec3d.
        */
@@ -10015,7 +10017,7 @@ declare namespace X3D
       visible: boolean;
    }
 
-   /** An HAnimSite node serves three purposes: (a) define an "end effector" location which can be used by an inverse kinematics system, (b) define an attachment point for accessories such as jewelry and clothing, and (c) define a location for a Viewpoint virtual camera in the reference frame of an HAnimSegment (such as a view "through the eyes" of the humanoid for use in multi-user worlds). */
+   /** An HAnimSite node serves three purposes: (a) define an &#34;end effector&#34; location which can be used by an inverse kinematics system, (b) define an attachment point for accessories such as jewelry and clothing, and (c) define a location for a Viewpoint virtual camera in the reference frame of an HAnimSegment (such as a view &#34;through the eyes&#34; of the humanoid for use in multi-user worlds). */
    interface HAnimSiteProxy extends X3DGroupingNodeProxy
    {
       /**
@@ -11001,6 +11003,23 @@ declare namespace X3D
       visible: boolean;
    }
 
+   /** undefined */
+   interface InlineGeometryProxy extends X3DGeometryNodeProxy, X3DUrlObjectProxy
+   {
+      /**
+       * The smooth field provides a hint to the browser whether smooth rendering is preferred for a retrieved polygonal mesh.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      smooth: boolean;
+      /**
+       * For InlineGeometry, the default value of solid is FALSE since most usages of retrieved meshes need two-sided rendering. Authors have the option to change this value for single-sided rendering.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      solid: boolean;
+   }
+
    /** InstancedShape can appear under any grouping node. InstancedShape can contain an Appearance node and a geometry node (for example one of the primitives Box Cone Cylinder Sphere Text, one of ElevationGrid Extrusion IndexedFaceSet IndexedLineSet LineSet PointSet, or one of the other geometry nodes) and this geometry node is instantiated as often as transformations are provided. */
    interface InstancedShapeProxy extends X3DShapeNodeProxy
    {
@@ -11053,7 +11072,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * pointerEvents defines whether this InstancedShape becomes target for pointer events.
+       * The pointerEvents field defines whether this InstancedShape becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -11414,7 +11433,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      objectType: MFString <"ALL" | "NONE" | "TERRAIN">;
+      objectType: MFString <"&#34;ALL&#34;" | "&#34;NONE&#34;" | "&#34;TERRAIN&#34;">;
       /**
        * pickable determines whether pick traversal is performed for this layer.
        *
@@ -11422,7 +11441,7 @@ declare namespace X3D
        */
       pickable: boolean;
       /**
-       * pointerEvents defines whether this Layer becomes target for pointer events.
+       * The pointerEvents field defines whether this Layer becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -11482,7 +11501,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      align: MFString <"LEFT" | "BOTTOM" | "CENTER" | "TOP" | "RIGHT">;
+      align: MFString <"&#34;LEFT&#34;" | "&#34;BOTTOM&#34;" | "&#34;CENTER&#34;" | "&#34;TOP&#34;" | "&#34;RIGHT&#34;">;
       /**
        * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
        *
@@ -11500,13 +11519,13 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      offsetUnits: MFString <"WORLD" | "FRACTION" | "PIXEL">;
+      offsetUnits: MFString <"&#34;WORLD&#34;" | "&#34;FRACTION&#34;" | "&#34;PIXEL&#34;">;
       /**
        * The scaleMode field specifies how the scale of the parent is modified.
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      scaleMode: MFString <"NONE" | "FRACTION" | "STRETCH" | "PIXEL">;
+      scaleMode: MFString <"&#34;NONE&#34;" | "&#34;FRACTION&#34;" | "&#34;STRETCH&#34;" | "&#34;PIXEL&#34;">;
       /**
        * The two values in the size field define the width and height of the layout rectangle.
        *
@@ -11518,7 +11537,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      sizeUnits: MFString <"WORLD" | "FRACTION" | "PIXEL">;
+      sizeUnits: MFString <"&#34;WORLD&#34;" | "&#34;FRACTION&#34;" | "&#34;PIXEL&#34;">;
    }
 
    /** LayoutGroup is a Grouping node that can contain most nodes, whose children are related by a common layout within a parent layout. */
@@ -11612,7 +11631,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      objectType: MFString <"ALL" | "NONE" | "TERRAIN">;
+      objectType: MFString <"&#34;ALL&#34;" | "&#34;NONE&#34;" | "&#34;TERRAIN&#34;">;
       /**
        * pickable determines whether pick traversal is performed for this layer.
        *
@@ -11620,7 +11639,7 @@ declare namespace X3D
        */
       pickable: boolean;
       /**
-       * pointerEvents defines whether this LayoutLayer becomes target for pointer events.
+       * The pointerEvents field defines whether this LayoutLayer becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -11687,7 +11706,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      objectType: MFString <"ALL" | "NONE" | "TERRAIN">;
+      objectType: MFString <"&#34;ALL&#34;" | "&#34;NONE&#34;" | "&#34;TERRAIN&#34;">;
       /**
        * Output event containing the node or nodes that have been found to intersect with the picking geometry from the last time this node performed a picking operation, given in the local coordinate system.
        *
@@ -12224,7 +12243,7 @@ declare namespace X3D
        */
       specularTextureMapping: string;
       /**
-       * how "clear" an object is: 1.
+       * how &#34;clear&#34; an object is: 1.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -12596,7 +12615,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      forceOutput: MFString <"ALL" | "NONE">;
+      forceOutput: MFString <"&#34;ALL&#34;" | "&#34;NONE&#34;">;
       /**
        * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
        *
@@ -12858,7 +12877,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      function: MFString <"COMPLEMENT" | "ALPHAREPLICATE" | "">;
+      function: MFString <"&#34;COMPLEMENT&#34;" | "&#34;ALPHAREPLICATE&#34;" | "&#34;&#34;">;
       /**
        * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
        *
@@ -12870,13 +12889,13 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      mode: MFString <"ADD" | "ADDSIGNED" | "ADDSIGNED2X" | "ADDSMOOTH" | "BLENDCURRENTALPHA" | "BLENDDIFFUSEALPHA" | "BLENDFACTORALPHA" | "BLENDTEXTUREALPHA" | "DOTPRODUCT3" | "MODULATE" | "MODULATE2X" | "MODULATE4X" | "MODULATEALPHA_ADDCOLOR" | "MODULATEINVALPHA_ADDCOLOR" | "MODULATEINVCOLOR_ADDALPHA" | "OFF" | "REPLACE" | "SELECTARG1" | "SELECTARG2" | "SUBTRACT">;
+      mode: MFString <"&#34;ADD&#34;" | "&#34;ADDSIGNED&#34;" | "&#34;ADDSIGNED2X&#34;" | "&#34;ADDSMOOTH&#34;" | "&#34;BLENDCURRENTALPHA&#34;" | "&#34;BLENDDIFFUSEALPHA&#34;" | "&#34;BLENDFACTORALPHA&#34;" | "&#34;BLENDTEXTUREALPHA&#34;" | "&#34;DOTPRODUCT3&#34;" | "&#34;MODULATE&#34;" | "&#34;MODULATE2X&#34;" | "&#34;MODULATE4X&#34;" | "&#34;MODULATEALPHA_ADDCOLOR&#34;" | "&#34;MODULATEINVALPHA_ADDCOLOR&#34;" | "&#34;MODULATEINVCOLOR_ADDALPHA&#34;" | "&#34;OFF&#34;" | "&#34;REPLACE&#34;" | "&#34;SELECTARG1&#34;" | "&#34;SELECTARG2&#34;" | "&#34;SUBTRACT&#34;">;
       /**
        * source field determines whether each image source is treated as DIFFUSE, SPECULAR or a multiplicative FACTOR.
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      source: MFString <"DIFFUSE" | "FACTOR" | "SPECULAR" | "">;
+      source: MFString <"&#34;DIFFUSE&#34;" | "&#34;FACTOR&#34;" | "&#34;SPECULAR&#34;" | "&#34;&#34;">;
       /**
        * Contained texture nodes (ImageTexture, MovieTexture, PixelTexture) that map image(s) to surface geometry, defining each of the different texture channels.
        *
@@ -12981,13 +13000,13 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      transitionType: MFString <"TELEPORT" | "LINEAR" | "ANIMATE">;
+      transitionType: MFString <"&#34;TELEPORT&#34;" | "&#34;LINEAR&#34;" | "&#34;ANIMATE&#34;">;
       /**
-       * Enter one or more quoted SFString values: "EXAMINE" "WALK" "FLY" "LOOKAT" "EXPLORE" "ANY" "NONE".
+       * Enter one or more quoted SFString values: &#34;EXAMINE&#34; &#34;WALK&#34; &#34;FLY&#34; &#34;LOOKAT&#34; &#34;EXPLORE&#34; &#34;ANY&#34; &#34;NONE&#34;.
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      type: MFString <"ANY" | "WALK" | "EXAMINE" | "FLY" | "LOOKAT" | "NONE" | "EXPLORE">;
+      type: MFString <"&#34;ANY&#34;" | "&#34;WALK&#34;" | "&#34;EXAMINE&#34;" | "&#34;FLY&#34;" | "&#34;LOOKAT&#34;" | "&#34;NONE&#34;" | "&#34;EXPLORE&#34;">;
       /**
        * Geometry beyond the visibilityLimit may not be rendered (far clipping plane of the view frustrum).
        *
@@ -14250,7 +14269,7 @@ declare namespace X3D
        */
       physics: MFNode <X3DParticlePhysicsModelNodeProxy>;
       /**
-       * pointerEvents defines whether this ParticleSystem becomes target for pointer events.
+       * The pointerEvents field defines whether this ParticleSystem becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -14428,7 +14447,7 @@ declare namespace X3D
        */
       roughness: number;
       /**
-       * how "clear" an object is: 1.
+       * how &#34;clear&#34; an object is: 1.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -14483,7 +14502,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      objectType: MFString <"ALL" | "NONE" | "TERRAIN">;
+      objectType: MFString <"&#34;ALL&#34;" | "&#34;NONE&#34;" | "&#34;TERRAIN&#34;">;
       /**
        * The pickable field determines whether pick traversal is performed on this node or its children.
        *
@@ -14835,7 +14854,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      objectType: MFString <"ALL" | "NONE" | "TERRAIN">;
+      objectType: MFString <"&#34;ALL&#34;" | "&#34;NONE&#34;" | "&#34;TERRAIN&#34;">;
       /**
        * Output event containing the node or nodes that have been found to intersect with the picking geometry from the last time this node performed a picking operation, given in the local coordinate system.
        *
@@ -15397,7 +15416,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      objectType: MFString <"ALL" | "NONE" | "TERRAIN">;
+      objectType: MFString <"&#34;ALL&#34;" | "&#34;NONE&#34;" | "&#34;TERRAIN&#34;">;
       /**
        * Output event containing the node or nodes that have been found to intersect with the picking geometry from the last time this node performed a picking operation, given in the local coordinate system.
        *
@@ -15875,14 +15894,14 @@ declare namespace X3D
    }
 
    /** A RenderedTexture is a texture node that renders a separate scene or viewpoint into an offscreen buffer, producing an image that can be applied to geometry in real time. */
-   interface RenderedTextureProxy extends X3DTexture2DNodeProxy
+   interface RenderedTextureProxy extends X3DTexture2DNodeProxy, X3DUrlOutputObjectProxy
    {
       /**
-       * Allows you to specify a background node explicitly, which will then be used during the render-to-texture process. If the value is NULL the currently bound background in the scene is used.
+       * Sets a separate, potentially independent, subscene. If the value is NULL the current scene is used.
        *
-       * This field is of access type 'inputOutput' and type SFNode.
+       * This field is of access type 'inputOutput' and type MFNode.
        */
-      background: X3DBackgroundNodeProxy | null;
+      children: MFNode <X3DChildNodeProxy>;
       /**
        * The generated texture will contain the depth buffer of the image (instead of the color buffer as usual).
        *
@@ -15902,11 +15921,17 @@ declare namespace X3D
        */
       dimensions: MFInt32;
       /**
-       * Allows you to specify a fog node explicitly, which will then be used during the render-to-texture process. If the value is NULL the currently bound fog in the scene is used.
+       * The enabled field either enables or disables data output processing by the node.
        *
-       * This field is of access type 'inputOutput' and type SFNode.
+       * This field is of access type 'inputOutput' and type SFBool.
        */
-      fog: X3DFogObjectProxy | null;
+      enabled: boolean;
+      /**
+       * The isActive field provides a TRUE event when node data output becomes active, and a FALSE event when node data output is stopped.
+       *
+       * This field is of access type 'outputOnly' and type SFBool.
+       */
+      readonly isActive: boolean;
       /**
        * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
        *
@@ -15926,11 +15951,11 @@ declare namespace X3D
        */
       repeatT: boolean;
       /**
-       * Sets a separate, potentially independent, subscene. If the value is NULL the current scene is used.
+       * The replaceImage field defines whether only a single updated image file or multiple image files can be saved.
        *
-       * This field is of access type 'inputOutput' and type SFNode.
+       * This field is of access type 'inputOutput' and type SFBool.
        */
-      scene: X3DChildNodeProxy | null;
+      replaceImage: boolean;
       /**
        * Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
        *
@@ -15944,11 +15969,17 @@ declare namespace X3D
        */
       update: "NONE" | "NEXT_FRAME_ONLY" | "ALWAYS";
       /**
-       * Allows you to explicitly specify a viewpoint node from which to render to texture. If the value is NULL the currently bound viewpoint in the scene is used.
+       * The updateInterval field indicates time intervals between render captures when update is "ALWAYS". A value of 0 indicates full frame rate.
        *
-       * This field is of access type 'inputOutput' and type SFNode.
+       * This field is of access type 'inputOutput' and type SFTime.
        */
-      viewpoint: X3DViewpointNodeProxy | null;
+      updateInterval: number;
+      /**
+       * Values in the url field typically defines a relative address to a file name that can be used for storing one or more rendered textures.
+       *
+       * This field is of access type 'inputOutput' and type MFString.
+       */
+      url: MFString;
    }
 
    /** RigidBody describes a collection of shapes with a mass distribution that is affected by the physics model. */
@@ -16416,7 +16447,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      family: MFString <"SANS" | "SERIF" | "TYPEWRITER">;
+      family: MFString <"&#34;SANS&#34;" | "&#34;SERIF&#34;" | "&#34;TYPEWRITER&#34;">;
       /**
        * Whether text direction is horizontal (true) or vertical (false).
        *
@@ -16428,7 +16459,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      justify: MFString <"MIDDLE" | "BEGIN" | "END" | "FIRST">;
+      justify: MFString <"&#34;MIDDLE&#34;" | "&#34;BEGIN&#34;" | "&#34;END&#34;" | "&#34;FIRST&#34;">;
       /**
        * Language codes consist of a primary code and a (possibly empty) series of subcodes.
        *
@@ -16857,7 +16888,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * pointerEvents defines whether this Shape becomes target for pointer events.
+       * The pointerEvents field defines whether this Shape becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -17219,7 +17250,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      forceOutput: MFString <"ALL" | "NONE">;
+      forceOutput: MFString <"&#34;ALL&#34;" | "&#34;NONE&#34;">;
       /**
        * maxAngle is maximum rotation angle for hinge.
        *
@@ -17278,7 +17309,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      forceOutput: MFString <"ALL" | "NONE">;
+      forceOutput: MFString <"&#34;ALL&#34;" | "&#34;NONE&#34;">;
       /**
        * maxSeparation is maximum separation distance between the two bodies.
        *
@@ -20209,7 +20240,7 @@ declare namespace X3D
        */
       backSpecularColor: SFColor;
       /**
-       * how "clear" an object is: 1.
+       * how &#34;clear&#34; an object is: 1.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -20251,7 +20282,7 @@ declare namespace X3D
        */
       specularColor: SFColor;
       /**
-       * how "clear" an object is: 1.
+       * how &#34;clear&#34; an object is: 1.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -20320,7 +20351,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      forceOutput: MFString <"ALL" | "NONE">;
+      forceOutput: MFString <"&#34;ALL&#34;" | "&#34;NONE&#34;">;
       /**
        * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
        *
@@ -20399,7 +20430,7 @@ declare namespace X3D
        */
       normalTextureMapping: string;
       /**
-       * how "clear" an object is: 1.
+       * how &#34;clear&#34; an object is: 1.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -20863,7 +20894,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      objectType: MFString <"ALL" | "NONE" | "TERRAIN">;
+      objectType: MFString <"&#34;ALL&#34;" | "&#34;NONE&#34;" | "&#34;TERRAIN&#34;">;
       /**
        * Output event containing the node or nodes that have been found to intersect with the picking geometry from the last time this node performed a picking operation, given in the local coordinate system.
        *
@@ -21568,13 +21599,13 @@ declare namespace X3D
       /**
        * This field is of access type 'inputOutput' and type MFString.
        */
-      objectType: MFString <"ALL" | "NONE" | "TERRAIN">;
+      objectType: MFString <"&#34;ALL&#34;" | "&#34;NONE&#34;" | "&#34;TERRAIN&#34;">;
       /**
        * This field is of access type 'inputOutput' and type SFBool.
        */
       pickable: boolean;
       /**
-       * pointerEvents defines whether this layer becomes target for pointer events.
+       * The pointerEvents field defines whether this layer becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -21958,7 +21989,7 @@ declare namespace X3D
       /**
        * This field is of access type 'inputOutput' and type MFString.
        */
-      objectType: MFString <"ALL" | "NONE" | "TERRAIN">;
+      objectType: MFString <"&#34;ALL&#34;" | "&#34;NONE&#34;" | "&#34;TERRAIN&#34;">;
       /**
        * This field is of access type 'outputOnly' and type MFNode.
        */
@@ -22044,7 +22075,7 @@ declare namespace X3D
       /**
        * This field is of access type 'inputOutput' and type MFString.
        */
-      forceOutput: MFString <"ALL" | "NONE">;
+      forceOutput: MFString <"&#34;ALL&#34;" | "&#34;NONE&#34;">;
       /**
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -22183,7 +22214,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * pointerEvents defines whether this shape becomes target for pointer events.
+       * The pointerEvents field defines whether this shape becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -22702,6 +22733,35 @@ declare namespace X3D
       url: MFString;
    }
 
+   /** undefined */
+   interface X3DUrlOutputObjectProxy extends SFNode
+   {
+      /**
+       * Author-provided prose that describes intended purpose of the url asset.
+       *
+       * This field is of access type 'inputOutput' and type SFString.
+       */
+      description: string;
+      /**
+       * The enabled field either enables or disables data output processing by the node.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      enabled: boolean;
+      /**
+       * The isActive field provides a TRUE event when node data output becomes active, and a FALSE event when node data output is stopped.
+       *
+       * This field is of access type 'outputOnly' and type SFBool.
+       */
+      readonly isActive: boolean;
+      /**
+       * Values in the url field typically defines a relative address to a file name that can be used for storing one or more rendered textures.
+       *
+       * This field is of access type 'inputOutput' and type MFString.
+       */
+      url: MFString;
+   }
+
    /** Base type for all nodes that specify per-vertex attribute information to the shader. */
    interface X3DVertexAttributeNodeProxy extends X3DGeometricPropertyNodeProxy
    {
@@ -22966,6 +23026,7 @@ declare namespace X3D
       IndexedTriangleSet: IndexedTriangleSetProxy,
       IndexedTriangleStripSet: IndexedTriangleStripSetProxy,
       Inline: InlineProxy,
+      InlineGeometry: InlineGeometryProxy,
       InstancedShape: InstancedShapeProxy,
       IntegerSequencer: IntegerSequencerProxy,
       IntegerTrigger: IntegerTriggerProxy,

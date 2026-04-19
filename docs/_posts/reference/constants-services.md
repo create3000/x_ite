@@ -207,6 +207,7 @@ All concrete node types from *AcousticProperties, Analyser, …* to *WorldInfo.*
 - IndexedTriangleSet
 - IndexedTriangleStripSet
 - Inline
+- InlineGeometry
 - InstancedShape
 - IntegerSequencer
 - IntegerTrigger
@@ -450,6 +451,7 @@ All abstract node types from *X3DAppearanceChildNode, X3DAppearanceNode,* … to
 - X3DTouchSensorNode
 - X3DTriggerNode
 - X3DUrlObject
+- X3DUrlOutputObject
 - X3DVertexAttributeNode
 - X3DViewpointNode
 - X3DViewportNode

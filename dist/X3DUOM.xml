@@ -13,8 +13,7 @@
           type="SFNode"
           accessType="inputOutput"
           acceptableNodeTypes="Tangent"
-          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
-        />
+          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."/>
       </InterfaceDefinition>
     </AbstractNodeType>
 
@@ -37,8 +36,7 @@
           type="SFBool"
           accessType="inputOutput"
           default="TRUE"
-          description="pointerEvents defines whether this shape becomes target for pointer events."
-        />
+          description="The pointerEvents field defines whether this shape becomes target for pointer events."/>
       </InterfaceDefinition>
     </AbstractNodeType>
 
@@ -48,8 +46,7 @@
           type="SFBool"
           accessType="inputOutput"
           default="TRUE"
-          description="pointerEvents defines whether this layer becomes target for pointer events."
-        />
+          description="The pointerEvents field defines whether this layer becomes target for pointer events."/>
       </InterfaceDefinition>
     </AbstractNodeType>
 
@@ -60,8 +57,32 @@
           accessType="inputOutput"
           default="1"
           minInclusive="0"
-          description="Distance in meters where objects starts to be obscured by the fog, using local coordinate system."
-        />
+          description="Distance in meters where objects starts to be obscured by the fog, using local coordinate system."/>
+      </InterfaceDefinition>
+    </AbstractNodeType>
+
+    <AbstractNodeType name="X3DUrlOutputObject">
+      <InterfaceDefinition>
+        <field name="description"
+          type="SFString"
+          accessType="inputOutput"
+          default=""
+          description="Author-provided prose that describes intended purpose of the url asset."/>
+        <field name="enabled"
+          type="SFBool"
+          accessType="inputOutput"
+          default="true"
+          description="The enabled field either enables or disables data output processing by the node."/>
+        <field name="url"
+          type="MFString"
+          accessType="inputOutput"
+          inheritedFrom="X3DUrlObject"
+          description="Values in the url field typically defines a relative address to a file name that can be used for storing one or more rendered textures."/>
+        <field name="isActive"
+          type="SFBool"
+          accessType="outputOnly"
+          inheritedFrom="X3DTimeDependentNode"
+          description="The isActive field provides a TRUE event when node data output becomes active, and a FALSE event when node data output is stopped."/>
       </InterfaceDefinition>
     </AbstractNodeType>
 
@@ -171,8 +192,7 @@
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DMetadataObject"
-          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
-        />
+          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."/>
         <field name="vector"
           type="MFVec4f"
           accessType="inputOutput"
@@ -195,85 +215,72 @@
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DMetadataObject"
-          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
-        />
+          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."/>
         <field name="description"
           type="SFString"
           accessType="inputOutput"
           default=""
-          description="Author-provided prose that describes intended purpose of the url asset."
-        />
+          description="Author-provided prose that describes intended purpose of the url asset."/>
         <field name="load"
           type="SFBool"
           accessType="inputOutput"
           default="TRUE"
-          description="load=true means load immediately, load=false means defer loading or else unload a previously loaded scene."
-        />
+          description="load=true means load immediately, load=false means defer loading or else unload a previously loaded scene."/>
         <field name="url"
           type="MFString"
           accessType="inputOutput"
-          description="Location and filename of image. Multiple locations are more reliable, and including a Web address lets e-mail attachments work."
-        />
+          description="Location and filename of image. Multiple locations are more reliable, and including a Web address lets e-mail attachments work."/>
         <field name="autoRefresh"
           type="SFTime"
           accessType="inputOutput"
           default="0"
           minInclusive="0"
-          description="autoRefresh defines interval in seconds before automatic reload of current url asset is performed."
-        />
+          description="autoRefresh defines interval in seconds before automatic reload of current url asset is performed."/>
         <field name="autoRefreshTimeLimit"
           type="SFTime"
           accessType="inputOutput"
           default="3600"
           minInclusive="0"
-          description="autoRefreshTimeLimit defines maximum duration that automatic refresh activity can occur."
-        />
+          description="autoRefreshTimeLimit defines maximum duration that automatic refresh activity can occur."/>
         <field name="slicesOverX"
           type="SFInt32"
           accessType="inputOutput"
           default="0"
           minInclusive="0"
-          description="Number of images in x direction."
-        />
+          description="Number of images in x direction."/>
         <field name="slicesOverY"
           type="SFInt32"
           accessType="inputOutput"
           default="0"
           minInclusive="0"
-          description="Number of images in y direction."
-        />
+          description="Number of images in y direction."/>
         <field name="numberOfSlices"
           type="SFInt32"
           accessType="inputOutput"
           default="0"
           minInclusive="0"
-          description="Total number of images."
-        />
+          description="Total number of images."/>
         <field name="repeatS"
           type="SFBool"
           accessType="initializeOnly"
           default="FALSE"
-          description="Whether to repeat texture along S axis horizontally from left to right."
-        />
+          description="Whether to repeat texture along S axis horizontally from left to right."/>
         <field name="repeatT"
           type="SFBool"
           accessType="initializeOnly"
           default="FALSE"
-          description="Whether to repeat texture along T axis vertically from top to bottom."
-        />
+          description="Whether to repeat texture along T axis vertically from top to bottom."/>
         <field name="repeatR"
           type="SFBool"
           accessType="initializeOnly"
           default="FALSE"
-          description="Whether to repeat texture along R axis from front to back."
-        />
+          description="Whether to repeat texture along R axis from front to back."/>
         <field name="textureProperties"
           type="SFNode"
           accessType="initializeOnly"
           default="NULL"
           acceptableNodeTypes="TextureProperties"
-          description="Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."
-        />
+          description="Single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."/>
         <containerField default="texture" type="xs:NMTOKEN" />
       </InterfaceDefinition>
     </ConcreteNode>
@@ -289,35 +296,30 @@
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DMetadataObject"
-          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
-        />
+          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."/>
         <field name="anisotropyStrength"
           type="SFFloat"
           accessType="inputOutput"
           default="0"
           minInclusive="0"
           maxInclusive="1"
-          description="The anisotropy strength. When the anisotropy texture is present, this value is multiplied by the texture's blue channel."
-        />
+          description="The anisotropy strength. When the anisotropy texture is present, this value is multiplied by the texture's blue channel."/>
         <field name="anisotropyRotation"
           type="SFFloat"
           accessType="inputOutput"
           default="0"
-          description="The rotation of the anisotropy in tangent, bitangent space, measured in radians counter-clockwise from the tangent. When the anisotropy texture is present, this value provides additional rotation to the vectors in the texture."
-        />
+          description="The rotation of the anisotropy in tangent, bitangent space, measured in radians counter-clockwise from the tangent. When the anisotropy texture is present, this value provides additional rotation to the vectors in the texture."/>
         <field name="anisotropyTextureMapping"
           type="SFString"
           accessType="inputOutput"
           default=""
-          description="Input/Output field anisotropyTextureMapping."
-        />
+          description="Input/Output field anisotropyTextureMapping."/>
         <field name="anisotropyTexture"
           type="SFNode"
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DSingleTextureNode"
-          description="The anisotropy texture. Red and green channels represent the anisotropy direction in tangent, bitangent space to be rotated by the anisotropy rotation. The blue channel contains strength as to be multiplied by the anisotropy strength."
-        />
+          description="The anisotropy texture. Red and green channels represent the anisotropy direction in tangent, bitangent space to be rotated by the anisotropy rotation. The blue channel contains strength as to be multiplied by the anisotropy strength."/>
         <containerField default="blendMode" type="xs:NMTOKEN" />
       </InterfaceDefinition>
     </ConcreteNode>
@@ -333,16 +335,14 @@
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DMetadataObject"
-          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
-        />
+          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."/>
         <field name="blendColor"
           type="SFColorRGBA"
           accessType="inputOutput"
           default="0 0 0 0"
           minInclusive="0"
           maxInclusive="1"
-          description="The blendColor may be used to calculate the source and destination blending factors."
-        />
+          description="The blendColor may be used to calculate the source and destination blending factors."/>
         <field name="sourceColorFactor"
           type="SFString"
           accessType="inputOutput"
@@ -482,63 +482,54 @@
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DMetadataObject"
-          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
-        />
+          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."/>
         <field name="clearcoat"
           type="SFFloat"
           accessType="inputOutput"
           default="0"
           minInclusive="0"
           maxInclusive="1"
-          description="The clearcoat layer intensity."
-        />
+          description="The clearcoat layer intensity."/>
         <field name="clearcoatTextureMapping"
           type="SFString"
           accessType="inputOutput"
           default=""
-          description="Input/Output field clearcoatTextureMapping."
-        />
+          description="Input/Output field clearcoatTextureMapping."/>
         <field name="clearcoatTexture"
           type="SFNode"
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DSingleTextureNode"
-          description="The clearcoat layer intensity texture."
-        />
+          description="The clearcoat layer intensity texture."/>
         <field name="clearcoatRoughness"
           type="SFFloat"
           accessType="inputOutput"
           default="0"
           minInclusive="0"
           maxInclusive="1"
-          description="The clearcoat layer roughness."
-        />
+          description="The clearcoat layer roughness."/>
         <field name="clearcoatRoughnessTextureMapping"
           type="SFString"
           accessType="inputOutput"
           default=""
-          description="Input/Output field clearcoatRoughnessTextureMapping."
-        />
+          description="Input/Output field clearcoatRoughnessTextureMapping."/>
         <field name="clearcoatRoughnessTexture"
           type="SFNode"
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DSingleTextureNode"
-          description="The clearcoat layer roughness texture."
-        />
+          description="The clearcoat layer roughness texture."/>
         <field name="clearcoatNormalTextureMapping"
           type="SFString"
           accessType="inputOutput"
           default=""
-          description="Input/Output field clearcoatNormalTextureMapping."
-        />
+          description="Input/Output field clearcoatNormalTextureMapping."/>
         <field name="clearcoatNormalTexture"
           type="SFNode"
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DSingleTextureNode"
-          description="The clearcoat normal map texture."
-        />
+          description="The clearcoat normal map texture."/>
         <containerField default="depthMode" type="xs:NMTOKEN" />
       </InterfaceDefinition>
     </ConcreteNode>
@@ -554,28 +545,24 @@
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DMetadataObject"
-          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
-        />
+          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."/>
         <field name="polygonOffset"
           type="SFVec2f"
           accessType="inputOutput"
           default="0 0"
-          description="Specifies the scale factors and units to calculate depth values. The offset is added before the depth test is performed and before the value is written into the depth buffer. The first value is factor, a GLfloat which sets the scale factor for the variable depth offset for each polygon. The default value is 0. The second value is units, a GLfloat which sets the multiplier by which an implementation-specific value is multiplied with to create a constant depth offset. The default value is 0."
-        />
+          description="Specifies the scale factors and units to calculate depth values. The offset is added before the depth test is performed and before the value is written into the depth buffer. The first value is factor, a GLfloat which sets the scale factor for the variable depth offset for each polygon. The default value is 0. The second value is units, a GLfloat which sets the multiplier by which an implementation-specific value is multiplied with to create a constant depth offset. The default value is 0."/>
         <field name="depthRange"
           type="SFVec2f"
           accessType="inputOutput"
           default="0 1"
           minInclusive="0"
           maxInclusive="1"
-          description="Specifies the depth range mapping from normalized device coordinates to window or viewport coordinates. The first value is zNear, a GLclampf specifying the mapping of the near clipping plane to window or viewport coordinates. Clamped to the range 0 to 1 and must be less than or equal to zFar. The default value is 0. The second value is zFar, a GLclampf specifying the mapping of the far clipping plane to window or viewport coordinates. Clamped to the range 0 to 1. The default value is 1."
-        />
+          description="Specifies the depth range mapping from normalized device coordinates to window or viewport coordinates. The first value is zNear, a GLclampf specifying the mapping of the near clipping plane to window or viewport coordinates. Clamped to the range 0 to 1 and must be less than or equal to zFar. The default value is 0. The second value is zFar, a GLclampf specifying the mapping of the far clipping plane to window or viewport coordinates. Clamped to the range 0 to 1. The default value is 1."/>
         <field name="depthTest"
           type="SFBool"
           accessType="inputOutput"
           default="TRUE"
-          description="Activates depth comparisons and updates to the depth buffer."
-        />
+          description="Activates depth comparisons and updates to the depth buffer."/>
         <field name="depthFunction"
           type="SFString"
           accessType="inputOutput"
@@ -594,8 +581,7 @@
           type="SFBool"
           accessType="inputOutput"
           default="TRUE"
-          description="Sets whether writing into the depth buffer is enabled or disabled."
-        />
+          description="Sets whether writing into the depth buffer is enabled or disabled."/>
         <containerField default="depthMode" type="xs:NMTOKEN" />
       </InterfaceDefinition>
     </ConcreteNode>
@@ -611,15 +597,13 @@
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DMetadataObject"
-          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
-        />
+          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."/>
         <field name="dispersion"
           type="SFFloat"
           accessType="inputOutput"
           default="0"
           minInclusive="0"
-          description="The strength of the dispersion effect, specified as 20/Abbe number."
-        />
+          description="The strength of the dispersion effect, specified as 20/Abbe number."/>
         <containerField default="extensions" type="xs:NMTOKEN" />
       </InterfaceDefinition>
     </ConcreteNode>
@@ -635,15 +619,13 @@
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DMetadataObject"
-          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
-        />
+          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."/>
         <field name="emissiveStrength"
           type="SFFloat"
           accessType="inputOutput"
           default="1"
           minInclusive="0"
-          description="The strength adjustment to be multiplied with the material's emissiveColor value."
-        />
+          description="The strength adjustment to be multiplied with the material's emissiveColor value."/>
         <containerField default="extensions" type="xs:NMTOKEN" />
       </InterfaceDefinition>
     </ConcreteNode>
@@ -659,15 +641,13 @@
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DMetadataObject"
-          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
-        />
+          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."/>
         <field name="indexOfRefraction"
           type="SFFloat"
           accessType="inputOutput"
           default="1.5"
           minInclusive="1"
-          description="The index of refraction."
-        />
+          description="The index of refraction."/>
         <containerField default="children" type="xs:NMTOKEN" />
       </InterfaceDefinition>
     </ConcreteNode>
@@ -678,8 +658,7 @@
           type="SFBool"
           accessType="inputOutput"
           default="TRUE"
-          description="pointerEvents defines whether this Shape becomes target for pointer events."
-        />
+          description="The pointerEvents field defines whether this Shape becomes target for pointer events."/>
       </InterfaceDefinition>
     </ConcreteNode>
 
@@ -689,8 +668,7 @@
           type="SFBool"
           accessType="inputOutput"
           default="TRUE"
-          description="pointerEvents defines whether this ParticleSystem becomes target for pointer events."
-        />
+          description="The pointerEvents field defines whether this ParticleSystem becomes target for pointer events."/>
       </InterfaceDefinition>
     </ConcreteNode>
 
@@ -705,84 +683,70 @@
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DMetadataObject"
-          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
-        />
+          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."/>
         <field name="translations"
           type="MFVec3f"
           accessType="inputOutput"
-          description="Input/Output field translations."
-        />
+          description="Input/Output field translations."/>
         <field name="rotations"
           type="MFRotation"
           accessType="inputOutput"
-          description="Input/Output field rotations."
-        />
+          description="Input/Output field rotations."/>
         <field name="scales"
           type="MFVec3f"
           accessType="inputOutput"
-          description="Input/Output field scales."
-        />
+          description="Input/Output field scales."/>
         <field name="scaleOrientations"
           type="MFRotation"
           accessType="inputOutput"
-          description="Input/Output field scaleOrientations."
-        />
+          description="Input/Output field scaleOrientations."/>
         <field name="centers"
           type="MFVec3f"
           accessType="inputOutput"
-          description="Input/Output field centers."
-        />
+          description="Input/Output field centers."/>
         <field name="pointerEvents"
           type="SFBool"
           accessType="inputOutput"
           default="TRUE"
-          description="pointerEvents defines whether this InstancedShape becomes target for pointer events."
-        />
+          description="The pointerEvents field defines whether this InstancedShape becomes target for pointer events."/>
         <field name="castShadow"
           type="SFBool"
           accessType="inputOutput"
           default="TRUE"
-          description="Input/Output field castShadow."
-        />
+          description="Input/Output field castShadow."/>
         <field name="visible"
           type="SFBool"
           accessType="inputOutput"
           default="TRUE"
-          description="Whether or not renderable content within this node is visually displayed."
-        />
+          description="Whether or not renderable content within this node is visually displayed."/>
         <field name="bboxDisplay"
           type="SFBool"
           accessType="inputOutput"
           default="FALSE"
-          description="Whether to display bounding box for associated geometry, aligned with world coordinates."
-        />
+          description="Whether to display bounding box for associated geometry, aligned with world coordinates."/>
         <field name="bboxSize"
           type="SFVec3f"
           accessType="initializeOnly"
           default="-1 -1 -1"
           minInclusive="0"
-          description="Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint."
-        />
+          description="Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint."/>
         <field name="bboxCenter"
           type="SFVec3f"
           accessType="initializeOnly"
           default="0 0 0"
-          description="Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system."
-        />
+          description="Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system."/>
         <field name="appearance"
           type="SFNode"
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DAppearanceNode"
-          description="Input/Output field appearance."
-        />
+          description="Input/Output field appearance."/>
         <field name="geometry"
           type="SFNode"
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DGeometryNode"
-          description="Input/Output field geometry."
-        />
+          description="Input/Output field geometry."/>
         <containerField default="extensions" type="xs:NMTOKEN" />
       </InterfaceDefinition>
     </ConcreteNode>
@@ -793,8 +757,7 @@
           type="SFBool"
           accessType="inputOutput"
           default="TRUE"
-          description="pointerEvents defines whether this Layer becomes target for pointer events."
-        />
+          description="The pointerEvents field defines whether this Layer becomes target for pointer events."/>
       </InterfaceDefinition>
     </ConcreteNode>
 
@@ -804,8 +767,7 @@
           type="SFBool"
           accessType="inputOutput"
           default="TRUE"
-          description="pointerEvents defines whether this LayoutLayer becomes target for pointer events."
-        />
+          description="The pointerEvents field defines whether this LayoutLayer becomes target for pointer events."/>
       </InterfaceDefinition>
     </ConcreteNode>
 
@@ -820,63 +782,54 @@
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DMetadataObject"
-          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
-        />
+          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."/>
         <field name="iridescence"
           type="SFFloat"
           accessType="inputOutput"
           default="0"
           minInclusive="0"
           maxInclusive="1"
-          description="The iridescence intensity factor."
-        />
+          description="The iridescence intensity factor."/>
         <field name="iridescenceTextureMapping"
           type="SFString"
           accessType="inputOutput"
           default=""
-          description="Input/Output field iridescenceTextureMapping."
-        />
+          description="Input/Output field iridescenceTextureMapping."/>
         <field name="iridescenceTexture"
           type="SFNode"
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DSingleTextureNode"
-          description="The iridescence intensity texture."
-        />
+          description="The iridescence intensity texture."/>
         <field name="iridescenceIndexOfRefraction"
           type="SFFloat"
           accessType="inputOutput"
           default="1.3"
           minInclusive="1"
-          description="The index of refraction of the dielectric thin-film layer."
-        />
+          description="The index of refraction of the dielectric thin-film layer."/>
         <field name="iridescenceThicknessMinimum"
           type="SFFloat"
           accessType="inputOutput"
           default="100"
           minInclusive="0"
-          description="The minimum thickness of the thin-film layer given in nanometers."
-        />
+          description="The minimum thickness of the thin-film layer given in nanometers."/>
         <field name="iridescenceThicknessMaximum"
           type="SFFloat"
           accessType="inputOutput"
           default="400"
           minInclusive="0"
-          description="The maximum thickness of the thin-film layer given in nanometers."
-        />
+          description="The maximum thickness of the thin-film layer given in nanometers."/>
         <field name="iridescenceThicknessTextureMapping"
           type="SFString"
           accessType="inputOutput"
           default=""
-          description="Input/Output field iridescenceThicknessTextureMapping."
-        />
+          description="Input/Output field iridescenceThicknessTextureMapping."/>
         <field name="iridescenceThicknessTexture"
           type="SFNode"
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DSingleTextureNode"
-          description="The thickness texture of the thin-film layer."
-        />
+          description="The thickness texture of the thin-film layer."/>
         <containerField default="extensions" type="xs:NMTOKEN" />
       </InterfaceDefinition>
     </ConcreteNode>
@@ -892,50 +845,43 @@
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DMetadataObject"
-          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
-        />
+          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."/>
         <field name="sheenColor"
           type="SFColor"
           accessType="inputOutput"
           default="0 0 0"
           minInclusive="0"
           maxInclusive="1"
-          description="The sheen color in linear space."
-        />
+          description="The sheen color in linear space."/>
         <field name="sheenColorTextureMapping"
           type="SFString"
           accessType="inputOutput"
           default=""
-          description="Input/Output field sheenColorTextureMapping."
-        />
+          description="Input/Output field sheenColorTextureMapping."/>
         <field name="sheenColorTexture"
           type="SFNode"
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DSingleTextureNode"
-          description="The sheen color (RGB). The sheen color is in sRGB transfer function."
-        />
+          description="The sheen color (RGB). The sheen color is in sRGB transfer function."/>
         <field name="sheenRoughness"
           type="SFFloat"
           accessType="inputOutput"
           default="0"
           minInclusive="0"
           maxInclusive="1"
-          description="The sheen roughness."
-        />
+          description="The sheen roughness."/>
         <field name="sheenRoughnessTextureMapping"
           type="SFString"
           accessType="inputOutput"
           default=""
-          description="Input/Output field sheenRoughnessTextureMapping."
-        />
+          description="Input/Output field sheenRoughnessTextureMapping."/>
         <field name="sheenRoughnessTexture"
           type="SFNode"
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DSingleTextureNode"
-          description="The sheen roughness (Alpha) texture."
-        />
+          description="The sheen roughness (Alpha) texture."/>
         <containerField default="material" type="xs:NMTOKEN" />
       </InterfaceDefinition>
     </ConcreteNode>
@@ -951,134 +897,115 @@
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DMetadataObject"
-          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
-        />
+          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."/>
         <field name="diffuseColor"
           type="SFColor"
           accessType="inputOutput"
           default="1 1 1"
           minInclusive="0"
           maxInclusive="1"
-          description="The reflected diffuse factor of the material."
-        />
+          description="The reflected diffuse factor of the material."/>
         <field name="diffuseTextureMapping"
           type="SFString"
           accessType="inputOutput"
           default=""
-          description="Input/Output field diffuseTextureMapping."
-        />
+          description="Input/Output field diffuseTextureMapping."/>
         <field name="diffuseTexture"
           type="SFNode"
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DSingleTextureNode"
-          description="The diffuse texture."
-        />
+          description="The diffuse texture."/>
         <field name="specularColor"
           type="SFColor"
           accessType="inputOutput"
           default="1 1 1"
           minInclusive="0"
           maxInclusive="1"
-          description="The specular RGB color of the material."
-        />
+          description="The specular RGB color of the material."/>
         <field name="glossiness"
           type="SFFloat"
           accessType="inputOutput"
           default="1"
           minInclusive="0"
           maxInclusive="1"
-          description="The glossiness or smoothness of the material."
-        />
+          description="The glossiness or smoothness of the material."/>
         <field name="specularGlossinessTextureMapping"
           type="SFString"
           accessType="inputOutput"
           default=""
-          description="Input/Output field specularGlossinessTextureMapping."
-        />
+          description="Input/Output field specularGlossinessTextureMapping."/>
         <field name="specularGlossinessTexture"
           type="SFNode"
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DSingleTextureNode"
-          description="The specular-glossiness texture."
-        />
+          description="The specular-glossiness texture."/>
         <field name="emissiveColor"
           type="SFColor"
           accessType="inputOutput"
           default="0 0 0"
           minInclusive="0"
           maxInclusive="1"
-          description="How much glowing light is emitted from this object."
-        />
+          description="How much glowing light is emitted from this object."/>
         <field name="emissiveTextureMapping"
           type="SFString"
           accessType="inputOutput"
           default=""
-          description="The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material."
-        />
+          description="The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material."/>
         <field name="emissiveTexture"
           type="SFNode"
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DSingleTextureNode"
-          description="When applying emissiveColor for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel."
-        />
+          description="When applying emissiveColor for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel."/>
         <field name="occlusionStrength"
           type="SFFloat"
           accessType="inputOutput"
           default="1"
           minInclusive="0"
           maxInclusive="1"
-          description="occlusionStrength indicates areas of indirect lighting, typically called ambient occlusion. Higher values indicate areas that should receive full indirect lighting and lower values indicate no indirect lighting."
-        />
+          description="occlusionStrength indicates areas of indirect lighting, typically called ambient occlusion. Higher values indicate areas that should receive full indirect lighting and lower values indicate no indirect lighting."/>
         <field name="occlusionTextureMapping"
           type="SFString"
           accessType="inputOutput"
           default=""
-          description="The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material."
-        />
+          description="The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material."/>
         <field name="occlusionTexture"
           type="SFNode"
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DSingleTextureNode"
-          description="When applying occlusionStrength for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel."
-        />
+          description="When applying occlusionStrength for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel."/>
         <field name="normalScale"
           type="SFFloat"
           accessType="inputOutput"
           default="1"
           minInclusive="0"
-          description="normalScale controls the degree to which normalTexture RGB values apply XYZ-normal bump mapping to pixels in the parent material."
-        />
+          description="normalScale controls the degree to which normalTexture RGB values apply XYZ-normal bump mapping to pixels in the parent material."/>
         <field name="normalTextureMapping"
           type="SFString"
           accessType="inputOutput"
           default=""
-          description="The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material."
-        />
+          description="The mapping label identifies which texture coordinates and transformations are used to compute texture effects from corresponding geometry on a given material."/>
         <field name="normalTexture"
           type="SFNode"
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DSingleTextureNode"
-          description="When applying normalScale for this material node, the contained texture modulates the texture across the surface."
-        />
+          description="When applying normalScale for this material node, the contained texture modulates the texture across the surface."/>
         <field name="transparency"
           type="SFFloat"
           accessType="inputOutput"
           default="0"
           minInclusive="0"
           maxInclusive="1"
-          description="How 'clear' an object is: 1.0 is completely transparent, 0.0 is completely opaque."
-        />
+          description="How 'clear' an object is: 1.0 is completely transparent, 0.0 is completely opaque."/>
         <field name="extensions"
           type="MFNode"
           accessType="inputOutput"
           acceptableNodeTypes="X3DMaterialExtensionNode"
-          description="Input/Output field extensions."
-        />
+          description="Input/Output field extensions."/>
         <containerField default="extensions" type="xs:NMTOKEN" />
       </InterfaceDefinition>
     </ConcreteNode>
@@ -1094,56 +1021,48 @@
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DMetadataObject"
-          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
-        />
+          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."/>
         <field name="specular"
           type="SFFloat"
           accessType="inputOutput"
           default="1"
           minInclusive="0"
           maxInclusive="1"
-          description="The strength of the specular reflection."
-        />
+          description="The strength of the specular reflection."/>
         <field name="specularTextureMapping"
           type="SFString"
           accessType="inputOutput"
           default=""
-          description="Input/Output field specularTextureMapping."
-        />
+          description="Input/Output field specularTextureMapping."/>
         <field name="specularTexture"
           type="SFNode"
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DSingleTextureNode"
-          description="Texture that defines the strength of the specular reflection, stored in the alpha (A) channel. This will be multiplied by specularFactor."
-        />
+          description="Texture that defines the strength of the specular reflection, stored in the alpha (A) channel. This will be multiplied by specularFactor."/>
         <field name="specularColor"
           type="SFColor"
           accessType="inputOutput"
           default="1 1 1"
           minInclusive="0"
-          description="The F0 color of the specular reflection (linear RGB)."
-        />
+          description="The F0 color of the specular reflection (linear RGB)."/>
         <field name="specularStrength"
           type="SFFloat"
           accessType="inputOutput"
           default="1"
           minInclusive="0"
-          description="The strength adjustment to be multiplied with the material's specularColor value."
-        />
+          description="The strength adjustment to be multiplied with the material's specularColor value."/>
         <field name="specularColorTextureMapping"
           type="SFString"
           accessType="inputOutput"
           default=""
-          description="Input/Output field specularColorTextureMapping."
-        />
+          description="Input/Output field specularColorTextureMapping."/>
         <field name="specularColorTexture"
           type="SFNode"
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DSingleTextureNode"
-          description="A texture that defines the F0 color of the specular reflection, stored in the RGB channels and encoded in sRGB. This texture will be multiplied by specularColorFactor."
-        />
+          description="A texture that defines the F0 color of the specular reflection, stored in the RGB channels and encoded in sRGB. This texture will be multiplied by specularColorFactor."/>
         <containerField default="extensions" type="xs:NMTOKEN" />
       </InterfaceDefinition>
     </ConcreteNode>
@@ -1159,29 +1078,25 @@
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DMetadataObject"
-          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
-        />
+          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."/>
         <field name="transmission"
           type="SFFloat"
           accessType="inputOutput"
           default="0"
           minInclusive="0"
           maxInclusive="1"
-          description="The base percentage of light that is transmitted through the surface."
-        />
+          description="The base percentage of light that is transmitted through the surface."/>
         <field name="transmissionTextureMapping"
           type="SFString"
           accessType="inputOutput"
           default=""
-          description="Input/Output field transmissionTextureMapping."
-        />
+          description="Input/Output field transmissionTextureMapping."/>
         <field name="transmissionTexture"
           type="SFNode"
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DSingleTextureNode"
-          description="A texture that defines the transmission percentage of the surface, stored in the R channel. This will be multiplied by transmissionFactor."
-        />
+          description="A texture that defines the transmission percentage of the surface, stored in the R channel. This will be multiplied by transmissionFactor."/>
         <containerField default="extensions" type="xs:NMTOKEN" />
       </InterfaceDefinition>
     </ConcreteNode>
@@ -1197,43 +1112,37 @@
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DMetadataObject"
-          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
-        />
+          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."/>
         <field name="thickness"
           type="SFFloat"
           accessType="inputOutput"
           default="0"
           minInclusive="0"
-          description="The thickness of the volume beneath the surface. The value is given in the coordinate space of the mesh. If the value is 0 the material is thin-walled. Otherwise the material is a volume boundary. The doubleSided property has no effect on volume boundaries."
-        />
+          description="The thickness of the volume beneath the surface. The value is given in the coordinate space of the mesh. If the value is 0 the material is thin-walled. Otherwise the material is a volume boundary. The doubleSided property has no effect on volume boundaries."/>
         <field name="thicknessTextureMapping"
           type="SFString"
           accessType="inputOutput"
           default=""
-          description="Input/Output field thicknessTextureMapping."
-        />
+          description="Input/Output field thicknessTextureMapping."/>
         <field name="thicknessTexture"
           type="SFNode"
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DSingleTextureNode"
-          description="A texture that defines the thickness, stored in the G channel. This will be multiplied by thicknessFactor."
-        />
+          description="A texture that defines the thickness, stored in the G channel. This will be multiplied by thicknessFactor."/>
         <field name="attenuationDistance"
           type="SFFloat"
           accessType="inputOutput"
           default="1000000"
           minExclusive="0"
-          description="Density of the medium given as the average distance that light travels in the medium before interacting with a particle. The value is given in world space."
-        />
+          description="Density of the medium given as the average distance that light travels in the medium before interacting with a particle. The value is given in world space."/>
         <field name="attenuationColor"
           type="SFColor"
           accessType="inputOutput"
           default="1 1 1"
           minInclusive="0"
           maxInclusive="1"
-          description="The color that white light turns into due to absorption when reaching the attenuation distance."
-        />
+          description="The color that white light turns into due to absorption when reaching the attenuation distance."/>
         <containerField default="extensions" type="xs:NMTOKEN" />
       </InterfaceDefinition>
     </ConcreteNode>
@@ -1249,37 +1158,32 @@
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DMetadataObject"
-          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
-        />
+          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."/>
         <field name="multiscatterColor"
           type="SFColor"
           accessType="inputOutput"
           default="0 0 0"
           minInclusive="0"
           maxInclusive="1"
-          description="The multi-scatter albedo."
-        />
+          description="The multi-scatter albedo."/>
         <field name="multiscatterColorTextureMapping"
           type="SFString"
           accessType="inputOutput"
           default=""
-          description="Input/Output field multiscatterColorTextureMapping."
-        />
+          description="Input/Output field multiscatterColorTextureMapping."/>
         <field name="multiscatterColorTexture"
           type="SFNode"
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DSingleTextureNode"
-          description="A surface texture that defines the multi-scatter albedo at the volume's entry point. Stored in the RGB channels and encoded in sRGB. This will be multiplied by the multiscatterColorFactor."
-        />
+          description="A surface texture that defines the multi-scatter albedo at the volume's entry point. Stored in the RGB channels and encoded in sRGB. This will be multiplied by the multiscatterColorFactor."/>
         <field name="scatterAnisotropy"
           type="SFFloat"
           accessType="inputOutput"
           default="0"
           minInclusive="-1"
           maxInclusive="1"
-          description="The anisotropy of scatter events. Range is [-1, 1]."
-        />
+          description="The anisotropy of scatter events. Range is [-1, 1]."/>
         <containerField default="extensions" type="xs:NMTOKEN" />
       </InterfaceDefinition>
     </ConcreteNode>
@@ -1349,8 +1253,7 @@
           type="MFNode"
           accessType="inputOutput"
           acceptableNodeTypes="X3DMaterialExtensionNode"
-          description="Input/Output field extensions."
-        />
+          description="Input/Output field extensions."/>
       </InterfaceDefinition>
     </ConcreteNode>
 
@@ -1360,14 +1263,12 @@
           type="SFNode"
           accessType="inputOutput"
           acceptableNodeTypes="BlendMode"
-          description="Input/Output field blendMode."
-        />
+          description="Input/Output field blendMode."/>
         <field name="depthMode"
           type="SFNode"
           accessType="inputOutput"
           acceptableNodeTypes="DepthMode"
-          description="Input/Output field depthMode."
-        />
+          description="Input/Output field depthMode."/>
       </InterfaceDefinition>
     </ConcreteNode>
 
@@ -1377,8 +1278,7 @@
           type="SFNode"
           accessType="inputOutput"
           acceptableNodeTypes="Tangent"
-          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
-        />
+          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."/>
       </InterfaceDefinition>
     </ConcreteNode>
 
@@ -1388,8 +1288,7 @@
           type="SFNode"
           accessType="inputOutput"
           acceptableNodeTypes="Tangent"
-          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
-        />
+          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."/>
       </InterfaceDefinition>
     </ConcreteNode>
 
@@ -1399,8 +1298,7 @@
           type="SFNode"
           accessType="inputOutput"
           acceptableNodeTypes="Tangent"
-          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
-        />
+          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."/>
       </InterfaceDefinition>
     </ConcreteNode>
 
@@ -1410,8 +1308,7 @@
           type="SFNode"
           accessType="inputOutput"
           acceptableNodeTypes="Tangent"
-          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
-        />
+          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."/>
       </InterfaceDefinition>
     </ConcreteNode>
 
@@ -1421,8 +1318,7 @@
           type="SFNode"
           accessType="inputOutput"
           acceptableNodeTypes="Tangent"
-          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
-        />
+          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."/>
       </InterfaceDefinition>
     </ConcreteNode>
 
@@ -1432,8 +1328,7 @@
           type="SFNode"
           accessType="inputOutput"
           acceptableNodeTypes="Tangent"
-          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
-        />
+          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."/>
       </InterfaceDefinition>
     </ConcreteNode>
 
@@ -1443,8 +1338,7 @@
           type="SFNode"
           accessType="inputOutput"
           acceptableNodeTypes="Tangent"
-          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
-        />
+          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."/>
       </InterfaceDefinition>
     </ConcreteNode>
 
@@ -1454,8 +1348,7 @@
           type="SFNode"
           accessType="inputOutput"
           acceptableNodeTypes="Tangent"
-          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
-        />
+          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."/>
       </InterfaceDefinition>
     </ConcreteNode>
 
@@ -1465,8 +1358,7 @@
           type="SFNode"
           accessType="inputOutput"
           acceptableNodeTypes="Tangent"
-          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
-        />
+          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."/>
       </InterfaceDefinition>
     </ConcreteNode>
 
@@ -1476,8 +1368,7 @@
           type="SFNode"
           accessType="inputOutput"
           acceptableNodeTypes="Tangent"
-          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
-        />
+          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."/>
       </InterfaceDefinition>
     </ConcreteNode>
 
@@ -1487,8 +1378,7 @@
           type="SFNode"
           accessType="inputOutput"
           acceptableNodeTypes="Tangent"
-          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
-        />
+          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."/>
       </InterfaceDefinition>
     </ConcreteNode>
 
@@ -1498,8 +1388,7 @@
           type="SFNode"
           accessType="inputOutput"
           acceptableNodeTypes="Tangent"
-          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
-        />
+          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."/>
       </InterfaceDefinition>
     </ConcreteNode>
 
@@ -1509,8 +1398,7 @@
           type="SFNode"
           accessType="inputOutput"
           acceptableNodeTypes="Tangent"
-          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
-        />
+          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."/>
       </InterfaceDefinition>
     </ConcreteNode>
 
@@ -1520,8 +1408,7 @@
           type="SFNode"
           accessType="inputOutput"
           acceptableNodeTypes="Tangent"
-          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."
-        />
+          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."/>
       </InterfaceDefinition>
     </ConcreteNode>
 
@@ -1532,8 +1419,7 @@
           accessType="inputOutput"
           default="1"
           minInclusive="0"
-          description="Damping that particles experience in the event of a collision."
-        />
+          description="Damping that particles experience in the event of a collision."/>
       </InterfaceDefinition>
     </ConcreteNode>
 
@@ -1544,8 +1430,7 @@
           accessType="inputOutput"
           default="1"
           minInclusive="0"
-          description="Distance in meters where objects starts to be obscured by the fog, using local coordinate system."
-        />
+          description="Distance in meters where objects starts to be obscured by the fog, using local coordinate system."/>
       </InterfaceDefinition>
     </ConcreteNode>
 
@@ -1556,134 +1441,159 @@
           accessType="inputOutput"
           default="1"
           minInclusive="0"
-          description="Distance in meters where objects starts to be obscured by the fog, using local coordinate system."
-        />
+          description="Distance in meters where objects starts to be obscured by the fog, using local coordinate system."/>
       </InterfaceDefinition>
     </ConcreteNode>
 
     <ConcreteNode name="RenderedTexture">
-        <InterfaceDefinition specificationUrl="https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texturing.html#RenderedTexture"
-                            appinfo="A RenderedTexture is a texture node that renders a separate scene or viewpoint into an offscreen buffer, producing an image that can be applied to geometry in real time.">
-          <componentInfo name="Texturing" level="4"/>
-          <Inheritance baseType="X3DTexture2DNode"/>
-          <field name="description"
-                  type="SFString"
-                  accessType="inputOutput"
-                  inheritedFrom="X3DTextureNode"
-                  description="Author-provided prose that describes intended purpose of the url asset."/>
-          <field name="IS"
-                  type="SFNode"
-                  accessType="inputOutput"
-                  default="NULL"
-                  acceptableNodeTypes="IS"
-                  inheritedFrom="X3DNode"/>
-          <field name="metadata"
-                  type="SFNode"
-                  accessType="inputOutput"
-                  default="NULL"
-                  acceptableNodeTypes="X3DMetadataObject"
-                  inheritedFrom="X3DNode"
-                  description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."/>
-          <field name="repeatS"
-                  type="SFBool"
-                  accessType="initializeOnly"
-                  default="true"
-                  inheritedFrom="X3DTexture2DNode"
-                  description="Whether to repeat texture along S axis horizontally from left to right."/>
-          <field name="repeatT"
-                  type="SFBool"
-                  accessType="initializeOnly"
-                  default="true"
-                  inheritedFrom="X3DTexture2DNode"
-                  description="Whether to repeat texture along T axis vertically from top to bottom."/>
-          <field name="textureProperties"
-                  type="SFNode"
-                  accessType="initializeOnly"
-                  default="NULL"
-                  acceptableNodeTypes="TextureProperties"
-                  inheritedFrom="X3DTexture2DNode"
-                  description="Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."/>
-          <field name="DEF"
-                  type="SFString"
-                  accessType="inputOutput"
-                  inheritedFrom="X3DNode"
-                  baseType="xs:ID"
-                  description="DEF defines a unique ID name for this node, referenceable by other nodes."/>
-          <field name="USE"
-                  type="SFString"
-                  accessType="inputOutput"
-                  inheritedFrom="X3DNode"
-                  baseType="xs:IDREF"
-                  description="USE means reuse an already DEF-ed node ID, excluding all child nodes and all other attributes (except for containerField, which can have a different value)."/>
-          <field name="class"
-                  type="SFString"
-                  accessType="inputOutput"
-                  inheritedFrom="X3DNode"
-                  baseType="xs:NMTOKENS"
-                  description="The class attribute on each X3D node and statement is a space-separated list of classes, reserved for use by Cascading Style Sheets (CSS) and XML stylesheets."/>
-          <field name="id"
-                  type="SFString"
-                  accessType="inputOutput"
-                  inheritedFrom="X3DNode"
-                  baseType="xs:NMTOKEN"
-                  description="The id attribute on each X3D node and statement is considered a unique identifier when used as part of an encompassing HTML/DOM context."/>
-          <field name="style"
-                  type="SFString"
-                  accessType="inputOutput"
-                  inheritedFrom="X3DNode"
-                  description="The style attribute on each X3D node and statement provides an inline block of CSS source for element styling, reserved for use by Cascading Style Sheets (CSS) and XML stylesheets."/>
-          <field name="update"
-                  type="SFString"
-                  accessType="inputOutput"
-                  default="NONE"
-                  additionalEnumerationValuesAllowed="false"
-                  simpleType="generatedCubeMapTextureUpdateChoices"
-                  baseType="xs:NMTOKEN"
-                  description="update controls regeneration of the texture.">
-              <enumeration value="NONE" appinfo="no further texture updates are rendered."/>
-              <enumeration value="NEXT_FRAME_ONLY" appinfo="render texture once at end of frame."/>
-              <enumeration value="ALWAYS" appinfo="texture to be rendered every frame."/>
-          </field>
-          <field name="dimensions"
-                  type="MFInt32"
-                  accessType="inputOutput"
-                  description="Sets the width, height, color components (and number of MRTs)."/>
-          <field name="depthMap"
-                  type="SFBool"
-                  accessType="initializeOnly"
-                  default="false"
-                  description="The generated texture will contain the depth buffer of the image (instead of the color buffer as usual)."/>
-          <field name="background"
-                   type="SFNode"
-                   accessType="inputOutput"
-                   default="NULL"
-                   description="Allows you to specify a background node explicitly, which will then be used during the render-to-texture process. If the value is NULL the currently bound background in the scene is used."
-                   acceptableNodeTypes="X3DBackgroundNode"/>
-          <field name="fog"
-                   type="SFNode"
-                   accessType="inputOutput"
-                   default="NULL"
-                   description="Allows you to specify a fog node explicitly, which will then be used during the render-to-texture process. If the value is NULL the currently bound fog in the scene is used."
-                   acceptableNodeTypes="X3DFogObject"/>
-          <field name="viewpoint"
-                   type="SFNode"
-                   accessType="inputOutput"
-                   default="NULL"
-                   description="Allows you to explicitly specify a viewpoint node from which to render to texture. If the value is NULL the currently bound viewpoint in the scene is used."
-                   acceptableNodeTypes="X3DViewpointNode"/>
-          <field name="scene"
-                   type="SFNode"
-                   accessType="inputOutput"
-                   default="NULL"
-                   description="Sets a separate, potentially independent, subscene. If the value is NULL the current scene is used."
-                   acceptableNodeTypes="X3DChildNode"/>
-          <containerField default="texture" type="containerFieldChoicesX3DTexture2DNode"/>
-          <ContentModel>
-              <GroupContentModel name="ChildContentModelCore" minOccurs="0"/>
-              <NodeContentModel name="TextureProperties"/>
-              <NodeContentModel name="ProtoInstance"/>
-          </ContentModel>
-        </InterfaceDefinition>
+      <InterfaceDefinition specificationUrl="https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texturing.html#RenderedTexture"
+        appinfo="A RenderedTexture is a texture node that renders a separate scene or viewpoint into an offscreen buffer, producing an image that can be applied to geometry in real time.">
+        <componentInfo name="Texturing" level="4"/>
+        <Inheritance baseType="X3DTexture2DNode"/>
+        <AdditionalInheritance baseType="X3DUrlOutputObject"/>
+        <field name="description"
+          type="SFString"
+          accessType="inputOutput"
+          inheritedFrom="X3DTextureNode"
+          description="Author-provided prose that describes intended purpose of the url asset."/>
+          <field name="enabled"
+          type="SFBool"
+          accessType="inputOutput"
+          default="true"
+          description="The enabled field either enables or disables data output processing by the node."/>
+        <field name="url"
+          type="MFString"
+          accessType="inputOutput"
+          inheritedFrom="X3DUrlObject"
+          description="Values in the url field typically defines a relative address to a file name that can be used for storing one or more rendered textures."/>
+        <field name="isActive"
+          type="SFBool"
+          accessType="outputOnly"
+          inheritedFrom="X3DTimeDependentNode"
+          description="The isActive field provides a TRUE event when node data output becomes active, and a FALSE event when node data output is stopped."/>
+        <field name="IS"
+          type="SFNode"
+          accessType="inputOutput"
+          default="NULL"
+          acceptableNodeTypes="IS"
+          inheritedFrom="X3DNode"/>
+        <field name="metadata"
+          type="SFNode"
+          accessType="inputOutput"
+          default="NULL"
+          acceptableNodeTypes="X3DMetadataObject"
+          inheritedFrom="X3DNode"
+          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."/>
+        <field name="repeatS"
+          type="SFBool"
+          accessType="initializeOnly"
+          default="true"
+          inheritedFrom="X3DTexture2DNode"
+          description="Whether to repeat texture along S axis horizontally from left to right."/>
+        <field name="repeatT"
+          type="SFBool"
+          accessType="initializeOnly"
+          default="true"
+          inheritedFrom="X3DTexture2DNode"
+          description="Whether to repeat texture along T axis vertically from top to bottom."/>
+        <field name="textureProperties"
+          type="SFNode"
+          accessType="initializeOnly"
+          default="NULL"
+          acceptableNodeTypes="TextureProperties"
+          inheritedFrom="X3DTexture2DNode"
+          description="Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."/>
+        <field name="DEF"
+          type="SFString"
+          accessType="inputOutput"
+          inheritedFrom="X3DNode"
+          baseType="xs:ID"
+          description="DEF defines a unique ID name for this node, referenceable by other nodes."/>
+        <field name="USE"
+          type="SFString"
+          accessType="inputOutput"
+          inheritedFrom="X3DNode"
+          baseType="xs:IDREF"
+          description="USE means reuse an already DEF-ed node ID, excluding all child nodes and all other attributes (except for containerField, which can have a different value)."/>
+        <field name="class"
+          type="SFString"
+          accessType="inputOutput"
+          inheritedFrom="X3DNode"
+          baseType="xs:NMTOKENS"
+          description="The class attribute on each X3D node and statement is a space-separated list of classes, reserved for use by Cascading Style Sheets (CSS) and XML stylesheets."/>
+        <field name="id"
+          type="SFString"
+          accessType="inputOutput"
+          inheritedFrom="X3DNode"
+          baseType="xs:NMTOKEN"
+          description="The id attribute on each X3D node and statement is considered a unique identifier when used as part of an encompassing HTML/DOM context."/>
+        <field name="style"
+          type="SFString"
+          accessType="inputOutput"
+          inheritedFrom="X3DNode"
+          description="The style attribute on each X3D node and statement provides an inline block of CSS source for element styling, reserved for use by Cascading Style Sheets (CSS) and XML stylesheets."/>
+        <field name="update"
+          type="SFString"
+          accessType="inputOutput"
+          default="NONE"
+          additionalEnumerationValuesAllowed="false"
+          simpleType="generatedCubeMapTextureUpdateChoices"
+          baseType="xs:NMTOKEN"
+          description="update controls regeneration of the texture.">
+            <enumeration value="NONE" appinfo="no further texture updates are rendered."/>
+            <enumeration value="NEXT_FRAME_ONLY" appinfo="render texture once at end of frame."/>
+            <enumeration value="ALWAYS" appinfo="texture to be rendered every frame."/>
+        </field>
+        <field name="updateInterval"
+          type="SFTime"
+          accessType="inputOutput"
+          default="0.1"
+          minInclusive="0"
+          description="The updateInterval field indicates time intervals between render captures when update is &quot;ALWAYS&quot;. A value of 0 indicates full frame rate."/>
+        <field name="dimensions"
+          type="MFInt32"
+          accessType="inputOutput"
+          description="Sets the width, height, color components (and number of MRTs)."/>
+        <field name="depthMap"
+          type="SFBool"
+          accessType="initializeOnly"
+          default="false"
+          description="The generated texture will contain the depth buffer of the image (instead of the color buffer as usual)."/>
+        <field name="children"
+          type="MFNode"
+          accessType="inputOutput"
+          default="NULL"
+          description="Sets a separate, potentially independent, subscene. If the value is NULL the current scene is used."
+          acceptableNodeTypes="X3DChildNode"/>
+        <field name="replaceImage"
+          type="SFBool"
+          accessType="inputOutput"
+          default="TRUE"
+          description="The replaceImage field defines whether only a single updated image file or multiple image files can be saved."/>
+        <containerField default="texture" type="containerFieldChoicesX3DTexture2DNode"/>
+        <ContentModel>
+            <GroupContentModel name="ChildContentModelCore" minOccurs="0"/>
+            <NodeContentModel name="TextureProperties"/>
+            <NodeContentModel name="ProtoInstance"/>
+        </ContentModel>
+      </InterfaceDefinition>
+    </ConcreteNode>
+
+    <ConcreteNode name="InlineGeometry">
+      <InterfaceDefinition>
+        <Inheritance baseType="X3DGeometryNode"/>
+        <AdditionalInheritance baseType="X3DUrlObject"/>
+        <field name="solid"
+          type="SFBool"
+          accessType="inputOutput"
+          default="FALSE"
+          description="For InlineGeometry, the default value of solid is FALSE since most usages of retrieved meshes need two-sided rendering. Authors have the option to change this value for single-sided rendering."/>
+        <field name="smooth"
+          type="SFBool"
+          accessType="inputOutput"
+          default="TRUE"
+          description="The smooth field provides a hint to the browser whether smooth rendering is preferred for a retrieved polygonal mesh."/>
+      </InterfaceDefinition>
     </ConcreteNode>
 
   </ConcreteNodes>

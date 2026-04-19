@@ -1,5 +1,5 @@
-/* X_ITE v14.1.3 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.1.3")];
+/* X_ITE v14.1.4 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.1.4")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -561,13 +561,13 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
    {
       // TraverseType .DISPLAY
 
-      if (this ._update .getValue () === "NONE")
-         return;
-
       if (!renderObject .isIndependent ())
          return;
 
       if (!this .frameBuffer)
+         return;
+
+      if (this ._update .getValue () === "NONE")
          return;
 
       renderObject .getRenderedTextures () .add (this);
