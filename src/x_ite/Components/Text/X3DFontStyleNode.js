@@ -50,6 +50,7 @@ function X3DFontStyleNode (executionContext)
    // Private properties
 
    this .alignments = [ ];
+   this .loadTime   = -1;
 }
 
 Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .prototype),
@@ -138,6 +139,8 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
    {
       // Wait for FontLibrary nodes to be setuped or changed.
 
+      const time = Date .now ();
+
       await $.sleep (0);
 
       // Add default font to family array.
@@ -150,7 +153,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
       family .push ("SERIF");
 
-      this .font = null;
+      let font = null;
 
       for (const fontFamily of family)
       {
@@ -160,24 +163,18 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
          if (defaultFont)
          {
-            const font = await browser .loadFont (new URL (defaultFont), true);
+            font = await browser .loadFont (new URL (defaultFont), true);
 
             if (font)
-            {
-               this .font = font;
                break;
-            }
          }
 
          // Try to get font from family names.
 
-         const font = await browser .getFont (executionContext, fontFamily);
+         font = await browser .getFont (executionContext, fontFamily);
 
          if (font)
-         {
-            this .font = font;
             break;
-         }
 
          // DEPRECIATED: Try to get font by URL.
 
@@ -188,13 +185,10 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
             if (executionContext .getSpecificationVersion () >= 4.1)
                console .warn (`Loading a font file via family field is deprecated, please use new FontLibrary node instead.`);
 
-            const font = await browser .loadFont (fileURL, this .getCache ());
+            font = await browser .loadFont (fileURL, this .getCache ());
 
             if (font)
-            {
-               this .font = font;
                break;
-            }
          }
          else
          {
@@ -202,7 +196,13 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
          }
       }
 
-      this .setLoadState (this .font ? X3DConstants .COMPLETE_STATE : X3DConstants .FAILED_STATE);
+      if (time < this .loadTime)
+         return;
+
+      this .loadTime = time;
+      this .font     = font;
+
+      this .setLoadState (font ? X3DConstants .COMPLETE_STATE : X3DConstants .FAILED_STATE);
       this .addNodeEvent ();
    },
    dispose ()
