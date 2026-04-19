@@ -138,7 +138,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
    },
    async loadData ()
    {
-      // Wait for FontLibrary nodes to be setuped or changed.
+      // Handle double calls of this function.
 
       const count = ++ this .loadCounter;
 
