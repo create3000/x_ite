@@ -138,7 +138,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
    },
    async loadData ()
    {
-      // Handle double calls of this function.
+      // Handle multiple calls of this function at the same time.
 
       const count = ++ this .loadCounter;
 
