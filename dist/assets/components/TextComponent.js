@@ -1,5 +1,5 @@
-/* X_ITE v14.1.4 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.1.4")];
+/* X_ITE v14.1.5 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.1.5")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -166,7 +166,9 @@ function X3DFontStyleNode (executionContext)
 
    // Private properties
 
-   this .alignments = [ ];
+   this .alignments  = [ ];
+   this .loadCounter = 0;
+   this .loadCount   = -1;
 }
 
 Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X_ITE_X3D_X3DNode_default()).prototype),
@@ -253,9 +255,9 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
    },
    async loadData ()
    {
-      // Wait for FontLibrary nodes to be setuped or changed.
+      // Prevent race condition when this function is called multiple times.
 
-      await $.sleep (0);
+      const count = ++ this .loadCounter;
 
       // Add default font to family array.
 
@@ -267,7 +269,13 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
 
       family .push ("SERIF");
 
-      this .font = null;
+      // Wait for FontLibrary nodes to be setuped or changed.
+
+      await $.sleep (0);
+
+      // Get font.
+
+      let font = null;
 
       for (const fontFamily of family)
       {
@@ -277,24 +285,18 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
 
          if (defaultFont)
          {
-            const font = await browser .loadFont (new URL (defaultFont), true);
+            font = await browser .loadFont (new URL (defaultFont), true);
 
             if (font)
-            {
-               this .font = font;
                break;
-            }
          }
 
          // Try to get font from family names.
 
-         const font = await browser .getFont (executionContext, fontFamily);
+         font = await browser .getFont (executionContext, fontFamily);
 
          if (font)
-         {
-            this .font = font;
             break;
-         }
 
          // DEPRECIATED: Try to get font by URL.
 
@@ -305,21 +307,25 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
             if (executionContext .getSpecificationVersion () >= 4.1)
                console .warn (`Loading a font file via family field is deprecated, please use new FontLibrary node instead.`);
 
-            const font = await browser .loadFont (fileURL, this .getCache ());
+            font = await browser .loadFont (fileURL, this .getCache ());
 
             if (font)
-            {
-               this .font = font;
                break;
-            }
          }
          else
          {
-            console .warn (`Couldn't find font family '${fontFamily}' with style '${fontStyle}'.`);
+            if (count > this .loadCount)
+               console .warn (`Couldn't find font family '${fontFamily}' with style '${fontStyle}'.`);
          }
       }
 
-      this .setLoadState (this .font ? (external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE : (external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE);
+      if (count < this .loadCount)
+         return;
+
+      this .loadCount = count;
+      this .font      = font;
+
+      this .setLoadState (font ? (external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE : (external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE);
       this .addNodeEvent ();
    },
    dispose ()
@@ -1409,6 +1415,11 @@ function FontLibrary (executionContext)
    external_X_ITE_X3D_X3DUrlObject_default().call (this, executionContext);
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).FontLibrary);
+
+   // Private properties
+
+   this .loadCounter = 0;
+   this .loadCount   = -1;
 }
 
 Object .assign (Object .setPrototypeOf (FontLibrary .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype),
@@ -1437,27 +1448,35 @@ Object .assign (Object .setPrototypeOf (FontLibrary .prototype, (external_X_ITE_
    },
    async loadData ()
    {
+      // Prevent race condition when this function is called multiple times.
+
+      const count = ++ this .loadCounter;
+
+      // Load font.
+
       const
          browser          = this .getBrowser (),
          executionContext = this .getExecutionContext (),
          fileURLs         = Array .from (this ._url) .map (fileURL => new URL (fileURL, executionContext .getBaseURL ()));
 
-      this .font = null;
+      let font;
 
       for (const fileURL of fileURLs)
       {
-         this .font = await browser .loadFont (fileURL, this .getCache ());
+         font = await browser .loadFont (fileURL, this .getCache ());
 
-         if (!this .font)
-            continue;
-
-         this .set_family__ ();
-
-         this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
-         return;
+         if (font)
+            break;
       }
 
-      this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE);
+      if (count < this .loadCount)
+         return;
+
+      this .loadCount = count;
+      this .font      = font;
+
+      this .set_family__ ();
+      this .setLoadState (font ? (external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE : (external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE);
    },
    dispose ()
    {
