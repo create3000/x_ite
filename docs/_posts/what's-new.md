@@ -17,6 +17,8 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 - [x] [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/) works now as material texture as well as a shader texture.
 - [x] There is now basic support for VRM models.
 - [x] glTF parser can now handle [KHR_accessor_float16](https://github.com/KhronosGroup/glTF/tree/8611bc8933493865380e68fadf555dbbc2cf1180/extensions/2.0/Khronos/KHR_accessor_float16).
+- [x] Fixed fatal bug when there is only an [EnvironmentLight](/x_ite/components/lighting/environmentlight/) with shadows enabled.
+- [x] Fixed race condition in [FontLibrary](/x_ite/components/text/fontlibrary/) and X3DFontstyleNode when an URL is loaded.
 
 ## X_ITE v14.0 Series
 
