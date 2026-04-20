@@ -175,9 +175,6 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
          this .addRenderOptions (options, renderObject, shapeNode .getAlphaMode ());
 
-         if (renderContext .shadows || renderObject .getGlobalShadows () .at (-1))
-            options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
-
          switch (fogNode ?.getFogType ())
          {
             case 1:
@@ -209,6 +206,9 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          {
             options .push ("X3D_LIGHTING")
             options .push (`X3D_NUM_LIGHTS ${Math .min (numLights, browser .getMaxLights ())}`);
+
+            if (renderContext .shadows || renderObject .getGlobalShadows () .at (-1))
+               options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
          }
 
          if (numEnvironmentLights && geometryContext .hasNormals)
