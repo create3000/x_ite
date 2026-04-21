@@ -3851,7 +3851,7 @@ declare namespace X3D
        */
       description: string;
       /**
-       * The detune field forms a compound field together with playbackRate that together determine a computedPlaybackRate value.
+       * The detune field, measured in cents, modulates the speed at which the the audio stream is rendered.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -4331,7 +4331,7 @@ declare namespace X3D
        */
       description: string;
       /**
-       * The detune field forms a compound field together with playbackRate that together determine a computedPlaybackRate value.
+       * The detune field, measured in cents, modulates the speed at which the the audio stream is rendered.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -8190,7 +8190,7 @@ declare namespace X3D
       spine: MFVec3f;
    }
 
-   /** FillProperties indicates whether appearance is filled or hatched for associated geometry nodes inside the same Shape. */
+   /** FillProperties indicates whether appearance is filled or hatched for associated geometry inside the same Shape. */
    interface FillPropertiesProxy extends X3DAppearanceChildNodeProxy
    {
       /**
@@ -9964,7 +9964,7 @@ declare namespace X3D
        */
       children: MFNode <X3DChildNodeProxy>;
       /**
-       * the coord field is used for HAnimSegment objects that have deformable meshes and shall contain coordinates referenced from the IndexedFaceSet for the paarent HAnimSegment object.
+       * the coord field is used for HAnimSegment objects that have deformable meshes and shall contain coordinates referenced from the IndexedFaceSet for the parent HAnimSegment object.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -11751,7 +11751,7 @@ declare namespace X3D
       sortOrder: "ANY" | "CLOSEST" | "ALL" | "ALL_SORTED";
    }
 
-   /** LineProperties allows precise fine-grained control over the rendering style of lines and edges for associated geometry nodes inside the same Shape. */
+   /** LineProperties allows precise fine-grained control over the rendering style of lines and edges for associated geometry inside the same Shape. */
    interface LinePropertiesProxy extends X3DAppearanceChildNodeProxy
    {
       /**
@@ -12107,7 +12107,7 @@ declare namespace X3D
       visible: boolean;
    }
 
-   /** Material specifies surface rendering properties for associated geometry nodes. */
+   /** Material specifies surface rendering properties for associated geometry. */
    interface MaterialProxy extends X3DOneSidedMaterialNodeProxy
    {
       /**
@@ -14001,7 +14001,7 @@ declare namespace X3D
        */
       description: string;
       /**
-       * The detune ffield is an a-rate AudioParam representing detuning of oscillation in cents (though the AudioParam returned is read-only, the value it represents is not).
+       * The detune field, measured in cents, modulates the speed at which the the audio stream is rendered.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -14335,7 +14335,7 @@ declare namespace X3D
       type: "SINE" | "SQUARE" | "SAWTOOTH" | "TRIANGLE" | "CUSTOM";
    }
 
-   /** PhysicalMaterial specifies surface rendering properties for associated geometry nodes. */
+   /** PhysicalMaterial specifies Physically Based Rendering (PBR) properties for associated geometry. */
    interface PhysicalMaterialProxy extends X3DOneSidedMaterialNodeProxy
    {
       /**
@@ -15932,6 +15932,12 @@ declare namespace X3D
        * This field is of access type 'outputOnly' and type SFBool.
        */
       readonly isActive: boolean;
+      /**
+       * The maximumNumberFrames field indicates the maximum number of frames that can be saved for a single series of image captures. A value of 0 indicates no limit.
+       *
+       * This field is of access type 'inputOutput' and type SFInt32.
+       */
+      maximumNumberFrames: number;
       /**
        * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
        *
@@ -18306,7 +18312,7 @@ declare namespace X3D
       streamIdentifier: MFString;
    }
 
-   /** StringSensor generates events as the user presses keys on the keyboard. */
+   /** StringSensor generates events as the user enters strings on the keyboard. */
    interface StringSensorProxy extends X3DKeyDeviceSensorNodeProxy
    {
       /**
@@ -18852,7 +18858,7 @@ declare namespace X3D
        */
       ambientIntensity: number;
       /**
-       * aspectRatio is the ratio of width and height that is projected.
+       * aspectRatio is the ratio of width and height that is projected, reported as output event when contained image is loaded.
        *
        * This field is of access type 'outputOnly' and type SFFloat.
        */
@@ -18876,7 +18882,7 @@ declare namespace X3D
        */
       direction: SFVec3f;
       /**
-       * maximum distance necessary for texture display.
+       * maximum distance necessary for texture display, -1 if unconstrained.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -18912,7 +18918,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * minimum distance necessary for texture display.
+       * minimum distance necessary for texture display, -1 if unconstrained.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -18942,7 +18948,7 @@ declare namespace X3D
        */
       texture: X3DTexture2DNodeProxy | null;
       /**
-       * upVector describes the roll of the camera by defining which direction is up for camera orientation.
+       * upVector describes camera orientation by defining which direction is up.
        *
        * This field is of access type 'inputOutput' and type SFVec3f.
        */
@@ -18959,7 +18965,7 @@ declare namespace X3D
        */
       ambientIntensity: number;
       /**
-       * aspectRatio is the ratio of width and height that is projected.
+       * aspectRatio is the ratio of width and height that is projected, reported as output event when contained image is loaded.
        *
        * This field is of access type 'outputOnly' and type SFFloat.
        */
@@ -18983,7 +18989,7 @@ declare namespace X3D
        */
       direction: SFVec3f;
       /**
-       * maximum distance necessary for texture display.
+       * maximum distance necessary for texture display, -1 if unconstrained.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -19019,7 +19025,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * minimum distance necessary for texture display.
+       * minimum distance necessary for texture display, -1 if unconstrained.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -19049,7 +19055,7 @@ declare namespace X3D
        */
       texture: X3DTexture2DNodeProxy | null;
       /**
-       * upVector describes the roll of the camera by defining which direction is up for camera orientation.
+       * upVector describes camera orientation by defining which direction is up.
        *
        * This field is of access type 'inputOutput' and type SFVec3f.
        */
@@ -19155,7 +19161,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * single rotation angle of texture about center (opposite effect appears on geometry).
+       * Single rotation angle of texture about center (opposite effect appears on geometry).
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -20200,7 +20206,7 @@ declare namespace X3D
       texCoord: X3DSingleTextureCoordinateNodeProxy | MultiTextureCoordinateProxy | null;
    }
 
-   /** TwoSidedMaterial specifies surface rendering properties for associated geometry nodes, for outer (front) and inner (back) sides of polygons. */
+   /** TwoSidedMaterial specifies surface rendering properties for associated geometry, for outer (front) and inner (back) sides of polygons. */
    interface TwoSidedMaterialProxy extends X3DMaterialNodeProxy
    {
       /**
@@ -20384,7 +20390,7 @@ declare namespace X3D
       stop2ErrorCorrection: number;
    }
 
-   /** UnlitMaterial specifies surface rendering properties for associated geometry nodes. */
+   /** UnlitMaterial specifies surface rendering properties for associated geometry that is unaffected by scene lighting. */
    interface UnlitMaterialProxy extends X3DOneSidedMaterialNodeProxy
    {
       /**
