@@ -88,7 +88,7 @@ Non-uniform planar scaling of texture about center (opposite effect appears on g
 - Order of operations is translation, rotation about center, non-uniform scale about center.
 - Image flip horizontal \<TextureTransform DEF='FlipHorizontal' scale='-1 1' translation='-1 0'/\>
 - Image flip vertical \<TextureTransform DEF='FlipVertical' scale='1 -1' translation='0 -1'/\>
-- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding TextureTransform.
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding TextureTransform.
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
 
 ### Warning

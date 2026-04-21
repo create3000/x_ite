@@ -157,7 +157,7 @@ Any image file format supported by the web browser, but at least:
 ### Hints
 
 - Can contain a single [TextureProperties](/x_ite/components/texturing/textureproperties/) node.
-- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
 - Authors can provide multiple image formats for the same image, with each source address listed separately in the url field.
 - Player support is required for .png and .jpg formats, support is suggested for .gif format. Other image formats are optionally supported.
 - [X3D Scene Authoring Hints, Images](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Images)

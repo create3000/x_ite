@@ -95,7 +95,7 @@ Optional single contained [TextureProperties](/x_ite/components/texturing/textur
 - This is a good way to bundle image(s) into a single scene file, avoiding multiple downloads.
 - [X3D-Edit includes PixelTexture image-conversion import capabilities.](https://www.web3d.org/x3d/tools/X3D-Edit/images/PixelTextureImportImage.png)
 - Can contain a single [TextureProperties](/x_ite/components/texturing/textureproperties/) node.
-- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
 - [X3D Scene Authoring Hints, Images and Videos](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Images)
 - If a texture is opaque, omitting values in the alpha channel can help avoid rendering artifacts related to transparency.
 - Texture coordinates are reapplied (or else recomputed if textureTransform field initially NULL) whenever the corresponding vertex-based geometry changes.

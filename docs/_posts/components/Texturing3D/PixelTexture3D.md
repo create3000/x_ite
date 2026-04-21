@@ -93,7 +93,7 @@ Optional single contained [TextureProperties](/x_ite/components/texturing/textur
 ### Hints
 
 - Can contain a single [TextureProperties](/x_ite/components/texturing/textureproperties/) node.
-- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
 - [X3D Architecture 33.2.2 3D texturing concepts](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texture3D.html#3DTextureconcepts)
 
 ### Warning

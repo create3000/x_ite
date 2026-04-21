@@ -124,12 +124,24 @@ Address of X3D world to load [Inline](/x_ite/components/networking/inline/) with
 ### SFBool [in, out] **solid** FALSE
 {: #fields-solid }
 
-For InlineGeometry, the default value of *solid* is FALSE since most usages of retrieved meshes need two-sided rendering. Authors have the option to change this value for single-sided rendering.
+Setting *solid* true means draw only one side of polygons (backface culling on), setting *solid* false means draw both sides of polygons (backface culling off).
+
+#### Hints
+
+- Mnemonic "this geometry is *solid* like a brick" (you don't render the inside of a brick).
+- If in doubt, use *solid*='false' for maximum visibility.
+- AccessType relaxed to inputOutput in order to support animation and visualization.
+- For InlineGeometry, the default value of *solid* is FALSE since most usages of retrieved meshes need two-sided rendering.
+
+#### Warnings
+
+- Default value true can completely hide geometry if viewed from wrong side!
+- *solid* false not supported in VRML97.
 
 ### SFBool [in, out] **smooth** TRUE
 {: #fields-smooth }
 
-The *smooth* field provides a hint to the browser whether smooth rendering is preferred for a retrieved polygonal mesh.
+The *smooth* field provides a hint to the browser whether *smooth* rendering is preferred for a retrieved polygonal mesh.
 
 ## Supported File Formats
 

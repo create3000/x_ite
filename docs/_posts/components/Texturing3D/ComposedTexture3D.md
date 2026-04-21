@@ -90,7 +90,7 @@ Collection of 2D *texture* sources.
 
 - Insert 2^n [ImageTexture](/x_ite/components/texturing/imagetexture/), [PixelTexture](/x_ite/components/texturing/pixeltexture/) or [MovieTexture](/x_ite/components/texturing/movietexture/) child nodes. The first image is at depth 0 and each following image is at an increasing depth value in the R direction.
 - Can contain a single [TextureProperties](/x_ite/components/texturing/textureproperties/) node.
-- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
 - [X3D Architecture 33.2.2 3D texturing concepts](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texture3D.html#3DTextureconcepts)
 
 ### Warning

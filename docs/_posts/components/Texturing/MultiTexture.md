@@ -126,7 +126,7 @@ Contained *texture* nodes ([ImageTexture](/x_ite/components/texturing/imagetextu
 
 ### Hints
 
-- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
 - Multitexturing is accomplished using MultiTexture, [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) and [MultiTextureTransform](/x_ite/components/texturing/multitexturetransform/) nodes.
 - Texture coordinates are reapplied (or else recomputed if textureTransform field initially NULL) whenever the corresponding vertex-based geometry changes.

@@ -156,7 +156,7 @@ Optional single contained [TextureProperties](/x_ite/components/texturing/textur
 - [Volume data format (VOL)](https://paulbourke.net/dataformats/volumetric)
 - [X3D Scene Authoring Hints, Volume Tools and Volumes Visualization](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Volumes)
 - Can contain a single [TextureProperties](/x_ite/components/texturing/textureproperties/) node.
-- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
 - [X3D Architecture 33.2.2 3D texturing concepts](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texture3D.html#3DTextureconcepts)
 - [When parent node is LoadSensor, apply `containerField='children'` (X3Dv4) or `containerField='watchList'` (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 

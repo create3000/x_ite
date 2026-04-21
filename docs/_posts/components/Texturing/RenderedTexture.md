@@ -13,11 +13,11 @@ tags: [RenderedTexture, Texturing]
 
 ## Overview
 
-A RenderedTexture is a texture node that renders a separate scene or viewpoint into an offscreen buffer, producing an image that can be applied to geometry in real time. It enables effects such as dynamic reflections, live video screens, shadows, or portals by continuously updating the texture based on the rendered content.
+RenderedTexture is a texture node that renders the view from a local viewpoint or separate scene into an offscreen buffer, producing an image or depth map that can be rendered from model geometry in real time. The output renderings can optionally be saved via the url field as a local file or a stream source. RenderedTexture enables effects such as dynamic reflections, live video screens, or portal views by continuously updating the texture based on the rendered content. RenderedTexture creates a 2D-image texture map using a numeric array of pixel values. Texture maps have a 2D coordinate system (s, t) horizontal and vertical, with (s, t) texture-coordinate values in range [0.0, 1.0] for opposite corners of the image.
 
 The RenderedTexture node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **4,** its default container field is *texture.* It is available from X3D version 4.1 or higher.
 
->**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE. This node is available in X_ITE, Castle and X3DOM.
+>**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
 
 ## Hierarchy
@@ -42,6 +42,7 @@ The RenderedTexture node belongs to the [Texturing](/x_ite/components/overview/#
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFBool | [in, out] | [replaceImage](#fields-replaceImage) | TRUE |
+| SFInt32 | [in, out] | [maximumNumberFrames](#fields-maximumNumberFrames) | 1000 |
 | MFString | [in, out] | [url](#fields-url) | [ ] |
 | SFString | [in, out] | [update](#fields-update) | "NONE" |
 | SFTime | [in, out] | [updateInterval](#fields-updateInterval) | 0.1 |
@@ -75,22 +76,39 @@ Author-provided prose that describes intended purpose of the url asset.
 ### SFBool [in, out] **enabled** TRUE
 {: #fields-enabled }
 
-The *enabled* field either enables or disables data output processing by the node.
+Enables/disables node operation.
 
 ### SFBool [in, out] **replaceImage** TRUE <small class="red">not supported</small>
 {: #fields-replaceImage }
 
-The *replaceImage* field defines whether only a single updated image file or multiple image files can be saved.
+Whether only a single updated image file or multiple image files can be saved.
+
+### SFInt32 [in, out] **maximumNumberFrames** 1000 <small>[0,∞)</small>
+{: #fields-maximumNumberFrames }
+
+Indicates the maximum number of independent frame files (or movie frames) that can be saved for a single series of image captures. A value of 0 indicates no limit.
 
 ### MFString [in, out] **url** [ ] <small class="red">not supported</small>
 {: #fields-url }
 
-Values in the *url* field typically defines a relative address to a file name that can be used for storing one or more rendered textures.
+The *url* field typically defines a relative address to a file name that can be used for storing one or more rendered textures, and can also provide a destination for output of successive image files as a video file or video stream.
+
+#### Hints
+
+- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
+- Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
+- Can replace embedded blank(s) in *url* queries with %20 for each blank character.
+- [X3D Scene Authoring Hints, urls](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#urls)
+
+#### Warnings
+
+- Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https *url* addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
+- Direct or indirect recursion by [Inline](/x_ite/components/networking/inline/) and/or ExternProtoDeclare *url* reloading is a security error.
 
 ### SFString [in, out] **update** "NONE" <small>["NONE"|"NEXT_FRAME_ONLY"|"ALWAYS"]</small>
 {: #fields-update }
 
-*update* controls regeneration of the texture.
+*update* controls when the next texture is captured.
 
 #### Warnings
 
@@ -100,21 +118,17 @@ Values in the *url* field typically defines a relative address to a file name th
 ### SFTime [in, out] **updateInterval** 0.1 <small>[0,∞)</small>
 {: #fields-updateInterval }
 
-The *updateInterval* field indicates time intervals between render captures when update is "ALWAYS". A value of 0 indicates full frame rate.
-
-### SFInt32 [in, out] **maximumNumberFrames** 1000 <small>[0,∞)</small>
-
-The *maximumNumberFrames* field indicates the maximum number of frames that can be saved for a single series of image captures. A value of 0 indicates no limit.
+Indicates time intervals between render captures when the update field is "ALWAYS". A value of 0 indicates full frame rate for render captures.
 
 ### MFInt32 [in, out] **dimensions** [ 128, 128, 4 ] <small>[0,∞)</small>
 {: #fields-dimensions }
 
-Sets the width, height and color components.
+Sets values for width, height, and number of color components [1..4] for the rendered texture.
 
 ### SFBool [in, out] **depthMap** FALSE
 {: #fields-depthMap }
 
-The generated texture will contain the depth buffer of the image (instead of the color buffer as usual).
+Indicates that a generated texture contains a depth buffer for the image, instead of a color buffer. Depth maps have a single component in each pixel of the output image.
 
 ### SFBool [ ] **repeatS** TRUE
 {: #fields-repeatS }
@@ -129,7 +143,7 @@ Whether to repeat texture along T axis vertically from top to bottom.
 ### SFBool [out] **isActive** <small class="red">not supported</small>
 {: #fields-isActive }
 
-The *isActive* field provides a TRUE event when node data output becomes active, and a FALSE event when node data output is stopped.
+Provides a TRUE event when the data output process becomes active, and a FALSE event when the data output process is stopped.
 
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
 {: #fields-textureProperties }
@@ -139,9 +153,25 @@ Optional single contained [TextureProperties](/x_ite/components/texturing/textur
 ### MFNode [in, out] **children** [ ] <small>[X3DChildNode|X3DBackgroundNode|Fog|X3DViewpointNode]</small>
 {: #fields-children }
 
-Sets a separate, potentially independent, sub-scene. If there are no child nodes, the current scene is used.
+The *children* field can include a single specific viewpoint from which to render to texture. If no [Viewpoint](/x_ite/components/navigation/viewpoint/) or [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) is a child node, then the currently bound viewpoint in the scene is used as the perspective point. RenderedTexture can contain a single [Background](/x_ite/components/environmentaleffects/background/) or [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/) node, a single [Fog](/x_ite/components/environmentaleffects/fog/) or [LocalFog](/x_ite/components/environmentaleffects/localfog/) node, a single [Viewpoint](/x_ite/components/navigation/viewpoint/) or [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) node, and a single grouping node for the portion of the scene graph to render.
 
-Allows you to explicitly specify a background, fog and viewpoint node which is used during render to texture. If there is no such node as root node, the currently bound background, fog and viewpoint node in the scene is used.
+## Advice
+
+### Hints
+
+- If no [Viewpoint](/x_ite/components/navigation/viewpoint/) or [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) is a child node, then the currently bound viewpoint in the scene is used as the perspective point.
+- Can contain a single [TextureProperties](/x_ite/components/texturing/textureproperties/) node.
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
+- [X3D Scene Authoring Hints, Images and Videos](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Images)
+- If a texture is opaque, omitting values in the alpha channel can help avoid rendering artifacts related to transparency.
+- Texture coordinates are reapplied (or else recomputed if textureTransform field initially NULL) whenever the corresponding vertex-based geometry changes.
+- [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
+- [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/lighting.html#Lightingmodel)
+
+### Warnings
+
+- Aggregate file size can grow dramatically.
+- See [ComposedCubeMapTexture](/x_ite/components/cubemaptexturing/composedcubemaptexture/) and [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/) for special containerField values.
 
 ## Example
 

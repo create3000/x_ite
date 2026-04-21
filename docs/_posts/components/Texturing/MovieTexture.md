@@ -304,7 +304,7 @@ Any video file format supported by the web browser, but at least:
 ### Hints
 
 - Can contain a single [TextureProperties](/x_ite/components/texturing/textureproperties/) node.
-- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
 - Provide a [Viewpoint](/x_ite/components/navigation/viewpoint/) that allows a clear view of the MovieTexture so that users can easily see all details.
 - Utilize DEF/USE references for multiple copies of a single MovieTexture video file in order to avoid multiple-download delays, reduce memory requirements, and maintain synchronization.
 - Authors can provide multiple video formats for the same video track, with each source address listed separately in the url field.

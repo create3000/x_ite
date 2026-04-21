@@ -142,7 +142,11 @@ The *gain* value only affects analysis, not output signal. The *gain* field is a
 ### SFTime [in, out] **tailTime** 0 <small>[0,∞)</small>
 {: #fields-tailTime }
 
-]
+*tailTime* is duration of time that a node continues to provide output signal after the input signal becomes silent.
+
+#### Hint
+
+- *tailTime* always has a value of zero for Analyser.
 
 ### SFInt32 [in, out] **channelCount**
 {: #fields-channelCount }
