@@ -7,6 +7,7 @@ const X_ITE_TESTS = [
    { path: "CADGeometry/setco.x3dz" },
    { component: "Core" },
    { path: "Core/base64-with-bom.x3dv" },
+   { path: "Core/Colors.x3d" },
    { path: "Core/Comment.x3d" },
    { path: "Core/DataURL.x3d" },
    { path: "Core/EXPORT.wrl" },
