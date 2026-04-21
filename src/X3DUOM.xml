@@ -1550,6 +1550,12 @@
           default="0.1"
           minInclusive="0"
           description="The updateInterval field indicates time intervals between render captures when update is &quot;ALWAYS&quot;. A value of 0 indicates full frame rate."/>
+        <field name="maximumNumberFrames"
+          type="SFInt32"
+          accessType="inputOutput"
+          default="1000"
+          minInclusive="0"
+          description="The maximumNumberFrames field indicates the maximum number of frames that can be saved for a single series of image captures. A value of 0 indicates no limit."/>
         <field name="dimensions"
           type="MFInt32"
           accessType="inputOutput"

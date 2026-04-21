@@ -102,6 +102,10 @@ Values in the *url* field typically defines a relative address to a file name th
 
 The *updateInterval* field indicates time intervals between render captures when update is "ALWAYS". A value of 0 indicates full frame rate.
 
+### SFInt32 [in, out] **maximumNumberFrames** 1000 <small>[0,∞)</small>
+
+The *maximumNumberFrames* field indicates the maximum number of frames that can be saved for a single series of image captures. A value of 0 indicates no limit.
+
 ### MFInt32 [in, out] **dimensions** [ 128, 128, 4 ] <small>[0,∞)</small>
 {: #fields-dimensions }
 
