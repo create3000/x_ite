@@ -22,8 +22,8 @@ function copy_files ()
 function html ()
 {
 	const jquery = `<script
-		src="https://code.jquery.com/jquery-4.0.0.min.js"
-		integrity="sha256-OaVG6prZf4v69dPg6PhVattBXkcOWQB62pdZ3ORyrao="
+		src="https://cdn.jsdelivr.net/npm/jquery@4.0.0/dist/jquery.slim.min.js"
+		integrity="sha384-tcspKDb5tWvyRCOWzevlAeQgHeEzYdUHJpcgnIhcP9w4CnfD7DLAcS+k9QzLbRJO"
 		crossorigin="anonymous"></script>`;
 
    systemSync (`cp src/x_ite.html x_ite.min.html`);
