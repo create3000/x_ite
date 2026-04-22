@@ -7,6 +7,15 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
+## X_ITE v14.2 Series
+
+*Leipzig, 26th April 2026:* This series introduces a breaking change where `X3DConstants.CONNECTION_ERROR` has been renamed to `X3DConstants.BROWSER_URL_ERROR`, so existing code should be updated accordingly to avoid runtime issues. In addition, touch device handling has been improved when the NONE viewer is active, resulting in more consistent and reliable interaction behavior on mobile and touch-enabled devices.
+
+### Notable Changes
+
+- [x] Breaking change: X3DConstants.CONNECTION_ERROR is now X3DConstants.BROWSER_URL_ERROR.
+- [x] Better handling of touch devices when NONE viewer is active.
+
 ## X_ITE v14.1 Series
 
 *Leipzig, 22th March 2026:* This series of X_ITE comes with the new [RenderedTexture](/x_ite/components/texturing/renderedtexture/) node and improved support for [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/). Both textures can now be used everywhere where a X3DSingleTextureNode is valid, for instance as material texture, as [Appearance](/x_ite/components/shape/appearance/) texture, in custom shaders and as a texture projector texture.

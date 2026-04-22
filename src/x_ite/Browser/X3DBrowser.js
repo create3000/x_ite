@@ -64,6 +64,7 @@ function X3DBrowser (element)
       [X3DConstants .INITIALIZED_EVENT, new Map ()],
       [X3DConstants .SHUTDOWN_EVENT,    new Map ()],
       [X3DConstants .INITIALIZED_ERROR, new Map ()],
+      [X3DConstants .BROWSER_URL_ERROR, new Map ()],
    ]);
 
    this .setup ();
@@ -74,6 +75,11 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    initialize ()
    {
       X3DBrowserContext .prototype .initialize .call (this);
+
+      this .getCanvas () .on ("webglcontextlost", event =>
+      {
+         this .callBrowserCallbacks (X3DConstants .CONNECTION_ERROR);
+      });
 
       const scene = new X3DScene (this);
 
@@ -616,7 +622,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
                }
                else
                {
-                  this .callBrowserCallbacks (X3DConstants .CONNECTION_ERROR);
+                  this .callBrowserCallbacks (X3DConstants .BROWSER_URL_ERROR);
                   this .callBrowserEventHandler ("error");
 
                   setTimeout (() =>

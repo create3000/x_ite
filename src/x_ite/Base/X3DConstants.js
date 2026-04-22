@@ -43,6 +43,7 @@ Object .entries ({
    "INITIALIZED_EVENT",
    "SHUTDOWN_EVENT",
    "INITIALIZED_ERROR",
+   "BROWSER_URL_ERROR",
 
    // Load states
 

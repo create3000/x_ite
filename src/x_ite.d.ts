@@ -215,6 +215,7 @@ declare namespace X3D
        * - X3DConstants .INITIALIZED_EVENT
        * - X3DConstants .SHUTDOWN_EVENT
        * - X3DConstants .INITIALIZED_ERROR
+       * - X3DConstants .BROWSER_URL_ERROR
        */
       addBrowserCallback (key: any, event: number, callback: (event: number) => void): void;
       addBrowserCallback (key: any, callback: (event: number) => void): void;
@@ -1117,6 +1118,7 @@ declare namespace X3D
       readonly INITIALIZED_EVENT: number;
       readonly SHUTDOWN_EVENT: number;
       readonly INITIALIZED_ERROR: number;
+      readonly BROWSER_URL_ERROR: number;
 
       // Load State Constants
 
