@@ -91,6 +91,13 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       browser .buttonReleaseEvent ();
       browser .setCursor (this .over ? "POINTER" : "DEFAULT");
       this .onverifymotion (x, y);
+
+      if (!this .over)
+         return;
+
+      // Stop event propagation.
+
+      event .preventDefault ();
    },
    dblclick (event)
    {
