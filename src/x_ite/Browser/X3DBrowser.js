@@ -64,7 +64,6 @@ function X3DBrowser (element)
       [X3DConstants .INITIALIZED_EVENT, new Map ()],
       [X3DConstants .SHUTDOWN_EVENT,    new Map ()],
       [X3DConstants .INITIALIZED_ERROR, new Map ()],
-      [X3DConstants .BROWSER_URL_ERROR, new Map ()],
    ]);
 
    this .setup ();
@@ -622,7 +621,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
                }
                else
                {
-                  this .callBrowserCallbacks (X3DConstants .BROWSER_URL_ERROR);
+                  this .callBrowserCallbacks (X3DConstants .INITIALIZED_ERROR);
                   this .callBrowserEventHandler ("error");
 
                   setTimeout (() =>

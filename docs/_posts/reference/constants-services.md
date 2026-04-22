@@ -22,7 +22,6 @@ The object consists solely of read-only properties. It does not define any addit
 - SHUTDOWN_EVENT
 - CONNECTION_ERROR
 - INITIALIZED_ERROR
-- BROWSER_URL_ERROR
 
 #### Load State Constants
 

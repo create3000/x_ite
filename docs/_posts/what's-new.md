@@ -9,11 +9,11 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 ## X_ITE v14.2 Series
 
-*Leipzig, 26th April 2026:* This series introduces a breaking change where `X3DConstants.CONNECTION_ERROR` has been renamed to `X3DConstants.BROWSER_URL_ERROR`, so existing code should be updated accordingly to avoid runtime issues. In addition, touch device handling has been improved when the NONE viewer is active, resulting in more consistent and reliable interaction behavior on mobile and touch-enabled devices.
+*Leipzig, 26th April 2026:* This series introduces a breaking change where `X3DConstants.CONNECTION_ERROR` has been renamed to `X3DConstants.INITIALIZED_ERROR`, so existing code should be updated accordingly to avoid runtime issues. In addition, touch device handling has been improved when the NONE viewer is active, resulting in more consistent and reliable interaction behavior on mobile and touch-enabled devices.
 
 ### Notable Changes
 
-- [x] Breaking change: X3DConstants.CONNECTION_ERROR is now X3DConstants.BROWSER_URL_ERROR.
+- [x] Breaking change: `X3DConstants.CONNECTION_ERROR` is now `X3DConstants.INITIALIZED_ERROR`. `X3DConstants.CONNECTION_ERROR` is now fired when a WebGL Context Lost event occurs.
 - [x] Better handling of touch devices when NONE viewer is active.
 
 ## X_ITE v14.1 Series

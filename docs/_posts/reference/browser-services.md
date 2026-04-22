@@ -617,8 +617,7 @@ Adds a browser *callback* function associated with *key,* where *key* can be of 
 | X3DConstants .BROWSER_EVENT     | not used                              |
 | X3DConstants .INITIALIZED_EVENT | Fired after scene is loaded.          |
 | X3DConstants .SHUTDOWN_EVENT    | Fired before scene is unloaded.       |
-| X3DConstants .INITIALIZED_ERROR | not used                              |
-| X3DConstants .BROWSER_URL_ERROR | Fired when scene could not be loaded. |
+| X3DConstants .INITIALIZED_ERROR | Fired when scene could not be loaded. |
 
 #### **removeBrowserCallback** (*key: any, event?: number*): void
 
