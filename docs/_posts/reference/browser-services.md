@@ -619,14 +619,17 @@ Adds a browser *callback* function associated with *key,* where *key* can be of 
 | X3DConstants .SHUTDOWN_EVENT    | Fired before scene is unloaded.       |
 | X3DConstants .INITIALIZED_ERROR | Fired when scene could not be loaded. |
 
-<x3d-script-area name="X3D ECMAScript Example: X3DBrowser addBrowserCallback" style="height: 500px">
+<x3d-script-area name="X3D ECMAScript Example: X3DBrowser addBrowserCallback" style="height: 550px">
 <pre>
-Browser .addBrowserCallback ("check", X3DConstants .INITIALIZED_EVENT, () =>
+const canvas  = X3D .createBrowser ();
+const browser = canvas .browser;
+
+browser .addBrowserCallback ("check", X3DConstants .INITIALIZED_EVENT, () =>
 {
-  print ("Scene is loaded.");
+  console .log ("Scene is loaded.");
 });
 
-await Browser .loadURL (new MFString (`data:model/x3d+vrml,
+await browser .loadURL (new MFString (`data:model/x3d+vrml,
 #X3D V{{ site.x3d_latest_version }} utf8
 
 PROFILE Interchange
