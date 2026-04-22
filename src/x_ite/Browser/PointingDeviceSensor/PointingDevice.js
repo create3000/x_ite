@@ -75,10 +75,6 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       if (event .button !== 0)
          return;
 
-      // Stop event propagation.
-
-      event .preventDefault ();
-
       // Handle button release.
 
       const
@@ -95,6 +91,13 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       browser .buttonReleaseEvent ();
       browser .setCursor (this .over ? "POINTER" : "DEFAULT");
       this .onverifymotion (x, y);
+
+      if (!this .over)
+         return;
+
+      // Stop event propagation.
+
+      event .preventDefault ();
    },
    dblclick (event)
    {
@@ -113,10 +116,6 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
    },
    mousemove (event)
    {
-      // Stop event propagation.
-
-      event .preventDefault ();
-
       // Motion.
 
       const browser = this .getBrowser ();
@@ -124,6 +123,13 @@ Object .assign (Object .setPrototypeOf (PointingDevice .prototype, X3DBaseNode .
       const { x, y } = browser .getPointerFromEvent (event);
 
       this .onmotion (x, y, true);
+
+      if (!this .over)
+         return;
+
+      // Stop event propagation.
+
+      event .preventDefault ();
    },
    touchstart (event)
    {
