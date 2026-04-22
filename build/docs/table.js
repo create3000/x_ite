@@ -4,19 +4,19 @@
 const
    path   = require ("path"),
    fs     = require ("fs"),
-	{ sh } = require ("shell-tools");
+   { sh } = require ("shell-tools");
 
 const
-	cwd      = process .cwd (),
-	examples = `${cwd}/../media/docs/examples`,
-	docs     = `${cwd}/docs/_posts/components`;
+   cwd      = process .cwd (),
+   examples = `${cwd}/../media/docs/examples`,
+   docs     = `${cwd}/docs/_posts/components`;
 
 const
-	X3D    = sh (`find '${examples}/X3D' -type f -name 'example.html'`) .trim () .split (/[\r\n]+/) .sort (),
-	other  = sh (`find '${examples}' -type f -name 'example.html' -not -path '*/X3D/*'`) .trim () .split (/[\r\n]+/) .sort (),
-	html   = [... X3D, ... other],
-	config = require (`${examples}/config.json`),
-	tree   = config .reduce ((p, c) => [p, Object .assign (p [c .component] ??= { }, { [c .name]: c })] [0], { });
+   X3D    = sh (`find '${examples}/X3D' -type f -name 'example.html'`) .trim () .split (/[\r\n]+/) .sort (),
+   other  = sh (`find '${examples}' -type f -name 'example.html' -not -path '*/X3D/*'`) .trim () .split (/[\r\n]+/) .sort (),
+   html   = [... X3D, ... other],
+   config = require (`${examples}/config.json`),
+   tree   = config .reduce ((p, c) => [p, Object .assign (p [c .component] ??= { }, { [c .name]: c })] [0], { });
 
 let output = "";
 
@@ -24,22 +24,22 @@ output += `<!-- EXAMPLES -->\n\n`;
 
 for (const example of html)
 {
-	let
-		folder    = path .dirname (example),
-		basename  = path .basename (folder),
-		component = path .basename (path .dirname (folder)),
-		doc       = fs .existsSync (`${docs}/${component}/${basename}.md`),
-		size      = sh (`identify -format "%w %h" "${examples}/${component}/${basename}/screenshot-small.avif"`) .trim () .split (" ");
+   let
+      folder    = path .dirname (example),
+      basename  = path .basename (folder),
+      component = path .basename (path .dirname (folder)),
+      doc       = fs .existsSync (`${docs}/${component}/${basename}.md`),
+      size      = sh (`identify -format "%w %h" "${examples}/${component}/${basename}/screenshot-small.avif"`) .trim () .split (" ");
 
-	const buttonsPosition  = tree [component] [basename] ?.["buttonsPosition"] ?? "br";
+   const buttonsPosition  = tree [component] [basename] ?.["buttonsPosition"] ?? "br";
 
-	folder = folder .replace (/^.*\/media\/docs\//, "");
+   folder = folder .replace (/^.*\/media\/docs\//, "");
 
-	const image = `![${basename}](https://create3000.github.io/media/${folder}/screenshot-small.avif){: width="${size [0]}" height="${size [1]}" }`;
+   const image = `![${basename}](https://create3000.github.io/media/${folder}/screenshot-small.avif){: width="${size [0]}" height="${size [1]}" }`;
 
-	const link = `[${image}](https://create3000.github.io/media/${folder}/${basename}.x3d){: title="${component} » ${basename}" componentName="${component}" typeName="${basename}" doc="${doc}" buttonsPosition="${buttonsPosition}" }`;
+   const link = `[${image}](https://create3000.github.io/media/${folder}/${basename}.x3d){: title="${component} » ${basename}" componentName="${component}" typeName="${basename}" doc="${doc}" buttonsPosition="${buttonsPosition}" }`;
 
-	output += `${link}\n`;
+   output += `${link}\n`;
 }
 
 output += `{: .examples }\n`;
