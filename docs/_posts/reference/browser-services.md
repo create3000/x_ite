@@ -624,12 +624,12 @@ Adds a browser *callback* function associated with *key,* where *key* can be of 
 const canvas  = X3D .createBrowser ();
 const browser = canvas .browser;
 
-browser .addBrowserCallback ("check", X3DConstants .INITIALIZED_EVENT, () =>
+browser .addBrowserCallback ("check", X3D .X3DConstants .INITIALIZED_EVENT, () =>
 {
   console .log ("Scene is loaded.");
 });
 
-await browser .loadURL (new MFString (`data:model/x3d+vrml,
+await browser .loadURL (new X3D .MFString (`data:model/x3d+vrml,
 #X3D V{{ site.x3d_latest_version }} utf8
 
 PROFILE Interchange
