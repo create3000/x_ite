@@ -619,7 +619,7 @@ Adds a browser *callback* function associated with *key,* where *key* can be of 
 | X3DConstants .SHUTDOWN_EVENT    | Fired before scene is unloaded.       |
 | X3DConstants .INITIALIZED_ERROR | Fired when scene could not be loaded. |
 
-<x3d-script-area name="X3D ECMAScript Example: X3DBrowser addBrowserCallback" style="height: 550px">
+<x3d-script-area name="X3D ECMAScript Example: X3DBrowser addBrowserCallback" style="height: 600px">
 <pre>
 const canvas  = X3D .createBrowser ();
 const browser = canvas .browser;
@@ -641,7 +641,10 @@ Shape {
   geometry Box { }
 }`));
 
+console .log ("The scene is loaded here as well.");
+
 // Expected output: Scene is loaded.
+// Expected output: The scene is loaded here as well.
 </pre>
 </x3d-script-area>
 
