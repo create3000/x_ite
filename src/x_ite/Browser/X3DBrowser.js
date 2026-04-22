@@ -65,7 +65,7 @@ function X3DBrowser (element)
       [X3DConstants .SHUTDOWN_EVENT,    new Map ()],
       [X3DConstants .INITIALIZED_ERROR, new Map ()],
    ]);
-
+   
    this .setup ();
 };
 
