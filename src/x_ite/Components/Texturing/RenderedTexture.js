@@ -179,7 +179,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
             const dependentRenderer = new DependentRenderer (this .getExecutionContext (), renderObject);
 
             this .dependentRenderers .set (renderObject, dependentRenderer);
-            dependentRenderer .setDepthClearColor (1, 1, 1, 1);
+            dependentRenderer .setDepthClearColor (1, 1, 1, 0);
          }
 
          // Prepare.
