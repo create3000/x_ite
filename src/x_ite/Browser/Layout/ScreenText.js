@@ -160,8 +160,6 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
          canvas .width  = width  * contentScale;
          canvas .height = height * contentScale;
 
-         console .log (contentScale)
-
          const
             w = width  / canvas .width,
             h = height / canvas .height,
