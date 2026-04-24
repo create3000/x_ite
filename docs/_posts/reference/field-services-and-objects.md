@@ -209,6 +209,18 @@ The saturation and value component must be in the range [0,1], and the hue compo
 
 Creates a SFColor object from string. *value* can be any valid X3D or CSS color value. Hex values must start with `0x`.
 
+<x3d-script-area name="X3D ECMAScript Example: SFColor fromString">
+<pre>
+const red  = SFColor .fromString ("crimson");
+const blue = SFColor .fromString ("rgb(47, 129, 247)");
+
+print (red);
+print (blue);
+// Expected output: 0.8627451 0.07843137 0.2352941
+// Expected output: 0.1843137 0.5058824 0.9686275
+</pre>
+</x3d-script-area>
+
 ### Properties
 
 Each component of the color can be accessed using the `r`, `g` and `b` properties or using the standard C-style dereferencing operator (e.g. `sfColorObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<3).
@@ -301,7 +313,7 @@ Returns a white color.
 
 ### Static Methods
 
-#### **fromHSV** (*h: number, s: number, v: number*): SFColorRGBA
+#### **fromHSVA** (*h: number, s: number, v: number, a: number*): SFColorRGBA
 
 Creates a SFColorRGBA object from a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and *a* is the alpha component of the HSVA color.
 
