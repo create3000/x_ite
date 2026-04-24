@@ -1268,14 +1268,4 @@ const HTMLParser =
    },
 };
 
-X3DField .prototype .fromXMLString = function (string, scene)
-{
-   const parser = new XMLParser (scene);
-
-   if (!parser .fieldValue (this, string))
-      throw new Error (`Couldn't read value for field '${this .getName ()}'.`);
-
-   parser .setupNodes ();
-};
-
 export default XMLParser;

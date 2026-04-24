@@ -451,7 +451,7 @@ Object .assign (X3DCoreContext .prototype,
          const url = new Fields .MFString ();
 
          url .setName ("url");
-         url .fromXMLString (urlCharacters, this .getExecutionContext ());
+         url .fromString (urlCharacters, this .getExecutionContext ());
 
          return url;
       }
