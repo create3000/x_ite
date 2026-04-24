@@ -203,6 +203,28 @@ Object .defineProperties (SFColor,
       value: new SFColor (1, 1, 1),
       enumerable: true,
    },
+   fromHSV:
+   {
+      value (h, s, v)
+      {
+         const color = new SFColor ();
+
+         color .setHSV (h, s, v);
+
+         return color;
+      },
+   },
+   fromString:
+   {
+      value (string)
+      {
+         const color = new SFColor ();
+
+         color .fromString (string);
+
+         return color;
+      },
+   },
 });
 
 export default SFColor;

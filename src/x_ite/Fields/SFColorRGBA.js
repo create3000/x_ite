@@ -175,6 +175,28 @@ Object .defineProperties (SFColorRGBA,
       value: new SFColorRGBA (1, 1, 1, 1),
       enumerable: true,
    },
+   fromHSV:
+   {
+      value (h, s, v, a)
+      {
+         const color = new SFColorRGBA ();
+
+         color .setHSVA (h, s, v, a);
+
+         return color;
+      },
+   },
+   fromString:
+   {
+      value (string)
+      {
+         const color = new SFColorRGBA ();
+
+         color .fromString (string);
+
+         return color;
+      },
+   },
 });
 
 export default SFColorRGBA;
