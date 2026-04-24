@@ -197,6 +197,18 @@ Returns a black color.
 
 Returns a white color.
 
+### Static Methods
+
+#### **fromHSV** (*h: number, s: number, v: number*): SFColor
+
+Creates a SFColor object from a HSV color value; *h* is the hue, *s* is the saturation and *v* is the value component of the HSV color.
+
+The saturation and value component must be in the range [0,1], and the hue component must be in the range [0,2π].
+
+#### **fromString** (*value: string*): SFColor
+
+Creates a SFColor object from string. *value* can be any valid X3D or CSS color value. Hex values must start with `0x`.
+
 ### Properties
 
 Each component of the color can be accessed using the `r`, `g` and `b` properties or using the standard C-style dereferencing operator (e.g. `sfColorObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<3).
@@ -286,6 +298,18 @@ Returns a fully transparent color.
 #### **WHITE**: SFColorRGBA
 
 Returns a white color.
+
+### Static Methods
+
+#### **fromHSV** (*h: number, s: number, v: number*): SFColorRGBA
+
+Creates a SFColorRGBA object from a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and *a* is the alpha component of the HSVA color.
+
+The saturation and value component must be in the range [0,1], and the hue component must be in the range [0,2π].
+
+#### **fromString** (*value: string*): SFColorRGBA
+
+Creates a SFColorRGBA object from string. *value* can be any valid X3D or CSS color value. Hex values must start with `0x`.
 
 ### Properties
 
