@@ -103,7 +103,7 @@ getPosition ()
    float branchAngle = floor (random () * branches) * (PI2 / branches);
    float angle       = branchAngle + (time * (1.0 - radiusRatio));
 
-   vec3 position = vec3 (cos (angle), 0, sin (angle)) * radius; 
+   vec3 position = vec3 (cos (angle), 0, sin (angle)) * radius;
 
    vec3 randomOffset = pow (vec3 (random () * 2.0 - 1.0, random () * 2.0 - 1.0, random () * 2.0 - 1.0), vec3 (3.0)) * radiusRatio;
 
@@ -144,7 +144,7 @@ void
 main ()
 {
    vec3  colorFinal = mix (colorInside, colorOutside, pow (radiusRatio, 2.0));
-   float alpha      = 0.1 / length (texCoord - 0.5) - 0.1; 
+   float alpha      = 0.1 / length (texCoord - 0.5) - 0.1;
 
    x3d_FragColor = vec4 (colorFinal, alpha);
 }
@@ -290,10 +290,14 @@ function initialize ()
    if (typeof $ === "undefined")
       return;
 
-   const html = worldInfo .info .join ("\n")
+   const credits = worldInfo .info .join ("\n")
       .replace (/\[(.*?)\]\((.*?)\)/g, `<a href="\$2" target="_blank">\$1</a>`);
 
-   $("#teaser-credits") .html (html);
+   const worldURL = Browser .currentScene .worldURL;
+
+   const playground = `<a href="/x_ite/playground/?url=${worldURL}" title="Show scene in Playground."><i class="fas fa-rocket"></i></a>`;
+
+   $("#teaser-credits") .html (`${credits} · ${playground}`);
 }
 ]]>
     </Script>
