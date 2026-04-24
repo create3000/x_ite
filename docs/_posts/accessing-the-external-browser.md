@@ -92,57 +92,57 @@ browser .setBrowserOption ("ContentScale", -1);   // Increase resolution for HiD
 
 // Create Viewpoint:
 
-const viewpointNode = scene .createNode ("Viewpoint");
+const viewpoint = scene .createNode ("Viewpoint");
 
-viewpointNode .set_bind    = true;           // Bind the viewpoint.
-viewpointNode .description = "Initial View"; // Appears now in the context menu.
-viewpointNode .position    = new X3D .SFVec3f (2.869677, 3.854335, 8.769781);
-viewpointNode .orientation = new X3D .SFRotation (-0.7765887, 0.6177187, 0.1238285, 0.5052317);
+viewpoint .set_bind    = true;           // Bind the viewpoint.
+viewpoint .description = "Initial View"; // Appears now in the context menu.
+viewpoint .position    = new X3D .SFVec3f (2.869677, 3.854335, 8.769781);
+viewpoint .orientation = new X3D .SFRotation (-0.7765887, 0.6177187, 0.1238285, 0.5052317);
 
-scene .rootNodes .push (viewpointNode);
+scene .rootNodes .push (viewpoint);
 
 // Create Box:
 
 const
-  transformNode  = scene .createNode ("Transform"),
-  shapeNode      = scene .createNode ("Shape"),
-  appearanceNode = scene .createNode ("Appearance"),
-  materialNode   = scene .createNode ("Material"),
-  boxNode        = scene .createNode ("Box");
+  transform  = scene .createNode ("Transform"),
+  shape      = scene .createNode ("Shape"),
+  appearance = scene .createNode ("Appearance"),
+  material   = scene .createNode ("Material"),
+  box        = scene .createNode ("Box");
 
-appearanceNode .material = materialNode;
+appearance .material = material;
 
-shapeNode .appearance = appearanceNode;
-shapeNode .geometry   = boxNode;
+shape .appearance = appearance;
+shape .geometry   = box;
 
-transformNode .children .push (shapeNode);
+transform .children .push (shape);
 
-scene .rootNodes .push (transformNode);
+scene .rootNodes .push (transform);
 
 // Give the node a name if you like.
-scene .addNamedNode ("Box", transformNode);
+scene .addNamedNode ("Box", transform);
 
 // Create animation:
 
 const
-  timeSensorNode   = scene .createNode ("TimeSensor"),
-  interpolatorNode = scene .createNode ("OrientationInterpolator");
+  timeSensor   = scene .createNode ("TimeSensor"),
+  interpolator = scene .createNode ("OrientationInterpolator");
 
-timeSensorNode .cycleInterval = 10;
-timeSensorNode .loop          = true;
+timeSensor .cycleInterval = 10;
+timeSensor .loop          = true;
 
 for (let i = 0; i < 5; ++ i)
 {
-  interpolatorNode .key [i]      = i / 4;
-  interpolatorNode .keyValue [i] = new X3D .SFRotation (0, 1, 0, Math .PI / 2 * i);
+  interpolator .key [i]      = i / 4;
+  interpolator .keyValue [i] = new X3D .SFRotation (0, 1, 0, Math .PI / 2 * i);
 }
 
-scene .rootNodes .push (timeSensorNode, interpolatorNode);
+scene .rootNodes .push (timeSensor, interpolator);
 
 // Add routes:
 
-scene .addRoute (timeSensorNode,   "fraction_changed", interpolatorNode, "set_fraction");
-scene .addRoute (interpolatorNode, "value_changed",    transformNode,    "set_rotation");
+scene .addRoute (timeSensor,   "fraction_changed", interpolator, "set_fraction");
+scene .addRoute (interpolator, "value_changed",    transform,    "set_rotation");
 
 // Show scene.
 
@@ -199,10 +199,10 @@ touchSensorNode .addFieldCallback ("on", "touchTime", value =>
   console .log (`touchTime: ${value}`);
 
   // Pause or resume the animation.
-  if (timeSensorNode .isPaused)
-    timeSensorNode .resumeTime = value;
+  if (timeSensor .isPaused)
+    timeSensor .resumeTime = value;
   else
-    timeSensorNode .pauseTime = value;
+    timeSensor .pauseTime = value;
 });
 ```
 
@@ -212,9 +212,9 @@ If you have given a (DEF) name to a node, you can access this node later using `
 
 ```js
 // Get Transform node named "Box".
-const transformNode = scene .getNamedNode ("Box");
+const transform = scene .getNamedNode ("Box");
 
-transformNode .translation = new X3D .SFVec3f (1, 2, 3);
+transform .translation = new X3D .SFVec3f (1, 2, 3);
 ```
 
 ### Documentation
