@@ -18,6 +18,8 @@ function ScreenText (text, fontStyle)
 
    this .textureNode ._textureProperties = fontStyle .getBrowser () .getScreenTextureProperties ();
    this .textureNode .setup ();
+
+   this .getBrowser () .getRenderingProperties () ._ContentScale .addInterest ("build", this);
 }
 
 Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .prototype),
@@ -109,6 +111,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
             return;
 
          const
+            browser        = this .getBrowser (),
             text           = this .getText (),
             glyphs         = this .getGlyphs (),
             minorAlignment = this .getMinorAlignment (),
@@ -120,6 +123,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
             texCoordArray  = text .getTexCoords (),
             normalArray    = text .getNormals (),
             vertexArray    = text .getVertices (),
+            contentScale   = browser .getRenderingProperty ("ContentScale"),
             canvas         = this .context .canvas,
             cx             = this .context;
 
@@ -153,8 +157,10 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
 
          // Scale canvas.
 
-         canvas .width  = Algorithm .nextPowerOfTwo (width),
-         canvas .height = Algorithm .nextPowerOfTwo (height);
+         canvas .width  = width  * contentScale;
+         canvas .height = height * contentScale;
+
+         console .log (contentScale)
 
          const
             w = width  / canvas .width,
