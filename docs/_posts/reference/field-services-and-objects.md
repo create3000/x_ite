@@ -147,7 +147,7 @@ Returns a copy of this X3DField.
 
 #### **equals** (*field: X3DField*): boolean
 
-Returns true if the passed SF* or MF* *field* of the same type is equals to this object, otherwise false.
+Returns `true` if the passed SF* or MF* *field* of the same type is equals to this object, otherwise `false`.
 
 <!--
 #### **addFieldCallback** (*key: any, callback: (value: any) => void*): void
@@ -1430,7 +1430,7 @@ An integer containing the number of elements in the array. Assigning an integer 
 
 #### **equals** (*array: X3DArrayField*): boolean
 
-Returns true if the passed MF* *array* of the same type is equals to this object, otherwise false.
+Returns `true` if the passed MF* *array* of the same type is equals to this object, otherwise `false`.
 
 #### Other Array functions
 

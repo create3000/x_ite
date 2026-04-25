@@ -585,7 +585,7 @@ print (Browser .getRenderingProperty ("ContentScale"));
      <tr>
        <td>XRSession</td>
        <td>Boolean</td>
-       <td>True if a WebXR session is active, otherwise false. <small class="blue">non-standard</small></td>
+       <td>`true` if a WebXR session is active, otherwise `false`. <small class="blue">non-standard</small></td>
      </tr>
   </tbody>
 </table>
