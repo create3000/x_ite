@@ -211,12 +211,15 @@ Creates a SFColor object from string. *value* can be any valid X3D or CSS color 
 
 <x3d-script-area name="X3D ECMAScript Example: SFColor fromString">
 <pre>
-const red  = SFColor .fromString ("crimson");
-const blue = SFColor .fromString ("rgb(47, 129, 247)");
+const red   = SFColor .fromString ("crimson");
+const green = SFColor .fromString ("hsl(117, 44%, 38%)");
+const blue  = SFColor .fromString ("rgb(47, 129, 247)");
 
 print (red);
+print (green);
 print (blue);
 // Expected output: 0.8627451 0.07843137 0.2352941
+// Expected output: 0.2313725 0.5490196 0.2117647
 // Expected output: 0.1843137 0.5058824 0.9686275
 </pre>
 </x3d-script-area>
