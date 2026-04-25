@@ -1268,11 +1268,11 @@ const HTMLParser =
    },
 };
 
-X3DField .prototype .fromXMLString = function (string, scene)
+X3DField .prototype .fromXMLString = function (value, scene)
 {
    const parser = new XMLParser (scene);
 
-   if (!parser .fieldValue (this, string))
+   if (!parser .fieldValue (this, value))
       throw new Error (`Couldn't read value for field '${this .getName ()}'.`);
 
    parser .setupNodes ();

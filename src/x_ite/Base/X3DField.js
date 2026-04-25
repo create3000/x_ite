@@ -333,21 +333,21 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    {
       return this [_documentation];
    },
-   fromString (string, scene)
+   fromString (value, scene)
    {
-      this .fromVRMLString (string, scene);
+      this .fromVRMLString (value, scene);
    },
-   fromVRMLString (string, scene)
+   fromVRMLString (value, scene)
    {
       // Function will be overridden in VRMLParser.
    },
-   fromXMLString (string, scene)
+   fromXMLString (value, scene)
    {
       // Function will be overridden in XMLParser.
    },
-   fromJSONString (string, scene)
+   fromJSONString (value, scene)
    {
-      this .fromVRMLString (string, scene);
+      this .fromVRMLString (value, scene);
    },
    dispose ()
    {
@@ -394,44 +394,44 @@ Object .defineProperties (X3DField,
             },
             fromString:
             {
-               value (string, scene)
+               value (value, scene)
                {
                   const field = new this ();
 
-                  field .fromString (string, scene);
+                  field .fromString (value, scene);
 
                   return field;
                },
             },
             fromVRMLString:
             {
-               value (string, scene)
+               value (value, scene)
                {
                   const field = new this ();
 
-                  field .fromVRMLString (string, scene);
+                  field .fromVRMLString (value, scene);
 
                   return field;
                },
             },
             fromXMLString:
             {
-               value (string, scene)
+               value (value, scene)
                {
                   const field = new this ();
 
-                  field .fromXMLString (string, scene);
+                  field .fromXMLString (value, scene);
 
                   return field;
                },
             },
             fromJSONString:
             {
-               value (string, scene)
+               value (value, scene)
                {
                   const field = new this ();
 
-                  field .fromJSONString (string, scene);
+                  field .fromJSONString (value, scene);
 
                   return field;
                },

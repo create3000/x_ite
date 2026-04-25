@@ -2672,12 +2672,12 @@ Object .assign (VRMLParser .prototype,
    [X3DConstants .MFVec4f]:     VRMLParser .prototype .mfvec4Value,
 });
 
-X3DField .prototype .fromVRMLString = function (string, scene)
+X3DField .prototype .fromVRMLString = function (value, scene)
 {
    const parser = new VRMLParser (scene);
 
    parser .setUnits (!!scene);
-   parser .setInput (string);
+   parser .setInput (value);
 
    if (!parser .fieldValue (this))
       throw new Error (`Couldn't read value for field '${this .getName ()}'.`);
