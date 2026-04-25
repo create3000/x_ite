@@ -51,7 +51,7 @@ Object .assign (Object .setPrototypeOf (SFColor .prototype, X3DField .prototype)
    },
    setHSV (h, s, v)
    {
-      this .getValue () .setHSV (h, s, v);
+      this .getValue () .setHSV (+h, +s, +v);
       this .addEvent ();
    },
    linearToSRGB ()
