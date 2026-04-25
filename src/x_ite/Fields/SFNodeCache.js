@@ -31,11 +31,6 @@ const SFNodeCache =
    },
    set (baseNode, node)
    {
-      const disable = {
-         value: undefined,
-         configurable: true,
-      };
-
       Object .defineProperties (node,
       {
          fromString: disable,
@@ -58,6 +53,11 @@ const SFNodeCache =
    {
       cache .delete (baseNode);
    },
+};
+
+const disable = {
+   value: undefined,
+   configurable: true,
 };
 
 function dispose ()
