@@ -155,16 +155,7 @@ function SFScalarPrototypeTemplate (Constructor, TypeName, properties = { })
 {
    Object .defineProperties (Constructor,
    {
-      type:
-      {
-         value: X3DConstants [TypeName],
-         enumerable: true,
-      },
-      typeName:
-      {
-         value: TypeName,
-         enumerable: true,
-      },
+      ... X3DField .getStaticProperties (TypeName),
    });
 
    Object .assign (Object .setPrototypeOf (Constructor .prototype, X3DField .prototype),

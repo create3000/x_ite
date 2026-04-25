@@ -183,16 +183,7 @@ Object .defineProperties (SFColor .prototype,
 
 Object .defineProperties (SFColor,
 {
-   type:
-   {
-      value: X3DConstants .SFColor,
-      enumerable: true,
-   },
-   typeName:
-   {
-      value: "SFColor",
-      enumerable: true,
-   },
+   ... X3DField .getStaticProperties ("SFColor"),
    BLACK:
    {
       value: new SFColor (),
@@ -207,20 +198,9 @@ Object .defineProperties (SFColor,
    {
       value (h, s, v)
       {
-         const color = new SFColor ();
+         const color = new this ();
 
          color .setHSV (h, s, v);
-
-         return color;
-      },
-   },
-   fromString:
-   {
-      value (string)
-      {
-         const color = new SFColor ();
-
-         color .fromString (string);
 
          return color;
       },

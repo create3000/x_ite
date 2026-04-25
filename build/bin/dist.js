@@ -22,7 +22,7 @@ function copy_files ()
 function html ()
 {
    const jquery = `<script
-      src="https://cdn.jsdelivr.net/npm/jquery@4.0.0/dist/jquery.slim.min.js"
+      src="https://cdn.jsdelivr.net/npm/jquery\\@4.0.0/dist/jquery.slim.min.js"
       integrity="sha384-tcspKDb5tWvyRCOWzevlAeQgHeEzYdUHJpcgnIhcP9w4CnfD7DLAcS+k9QzLbRJO"
       crossorigin="anonymous"></script>`;
 

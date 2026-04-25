@@ -9,6 +9,7 @@ import SFRotation          from "./SFRotation.js";
 import SFVec2              from "./SFVec2.js";
 import SFVec3              from "./SFVec3.js";
 import SFVec4              from "./SFVec4.js";
+import X3DField            from "../Base/X3DField.js";
 import X3DObjectArrayField from "../Base/X3DObjectArrayField.js";
 import X3DTypedArrayField  from "../Base/X3DTypedArrayField.js";
 import X3DConstants        from "../Base/X3DConstants.js";
@@ -246,16 +247,7 @@ for (const key of Object .keys (MFNode .prototype))
 
 Object .defineProperties (MFNode,
 {
-   type:
-   {
-      value: X3DConstants .MFNode,
-      enumerable: true,
-   },
-   typeName:
-   {
-      value: "MFNode",
-      enumerable: true,
-   },
+   ... X3DField .getStaticProperties ("MFNode"),
 });
 
 function MFString (... args)
@@ -300,16 +292,7 @@ for (const key of Object .keys (MFString .prototype))
 
 Object .defineProperties (MFString,
 {
-   type:
-   {
-      value: X3DConstants .MFString,
-      enumerable: true,
-   },
-   typeName:
-   {
-      value: "MFString",
-      enumerable: true,
-   },
+   ... X3DField .getStaticProperties ("MFString"),
 });
 
 /**
@@ -334,16 +317,7 @@ for (const key of Object .keys (MFImage .prototype))
 
 Object .defineProperties (MFImage,
 {
-   type:
-   {
-      value: X3DConstants .MFImage,
-      enumerable: true,
-   },
-   typeName:
-   {
-      value: "MFImage",
-      enumerable: true,
-   },
+   ... X3DField .getStaticProperties ("MFImage"),
 });
 
 function TypedArrayTemplate (TypeName, SingleType, ValueType, ArrayType, Components, singleValue)
@@ -382,16 +356,7 @@ function TypedArrayTemplate (TypeName, SingleType, ValueType, ArrayType, Compone
 
    Object .defineProperties (ArrayField,
    {
-      type:
-      {
-         value: X3DConstants [TypeName],
-         enumerable: true,
-      },
-      typeName:
-      {
-         value: TypeName,
-         enumerable: true,
-      },
+      ... X3DField .getStaticProperties (TypeName),
    });
 
    return ArrayField;

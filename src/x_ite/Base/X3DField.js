@@ -375,4 +375,70 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
 for (const key of Object .keys (X3DField .prototype))
    Object .defineProperty (X3DField .prototype, key, { enumerable: false });
 
+Object .defineProperties (X3DField,
+{
+   getStaticProperties:
+   {
+      value (typeName)
+      {
+         return {
+            type:
+            {
+               value: X3DConstants [typeName],
+               enumerable: true,
+            },
+            typeName:
+            {
+               value: typeName,
+               enumerable: true,
+            },
+            fromString:
+            {
+               value (string, scene)
+               {
+                  const field = new this ();
+
+                  field .fromString (string, scene);
+
+                  return field;
+               },
+            },
+            fromVRMLString:
+            {
+               value (string, scene)
+               {
+                  const field = new this ();
+
+                  field .fromVRMLString (string, scene);
+
+                  return field;
+               },
+            },
+            fromXMLString:
+            {
+               value (string, scene)
+               {
+                  const field = new this ();
+
+                  field .fromXMLString (string, scene);
+
+                  return field;
+               },
+            },
+            fromJSONString:
+            {
+               value (string, scene)
+               {
+                  const field = new this ();
+
+                  field .fromJSONString (string, scene);
+
+                  return field;
+               },
+            },
+         };
+      },
+   },
+})
+
 export default X3DField;

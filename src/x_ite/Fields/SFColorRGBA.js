@@ -150,16 +150,7 @@ Object .defineProperties (SFColorRGBA .prototype,
 
 Object .defineProperties (SFColorRGBA,
 {
-   type:
-   {
-      value: X3DConstants .SFColorRGBA,
-      enumerable: true,
-   },
-   typeName:
-   {
-      value: "SFColorRGBA",
-      enumerable: true,
-   },
+   ... X3DField .getStaticProperties ("SFColorRGBA"),
    BLACK:
    {
       value: new SFColorRGBA (0, 0, 0, 1),
@@ -179,20 +170,9 @@ Object .defineProperties (SFColorRGBA,
    {
       value (h, s, v, a)
       {
-         const color = new SFColorRGBA ();
+         const color = new this ();
 
          color .setHSVA (h, s, v, a);
-
-         return color;
-      },
-   },
-   fromString:
-   {
-      value (string)
-      {
-         const color = new SFColorRGBA ();
-
-         color .fromString (string);
 
          return color;
       },

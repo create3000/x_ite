@@ -243,16 +243,7 @@ Object .defineProperties (SFRotation .prototype,
 
 Object .defineProperties (SFRotation,
 {
-   type:
-   {
-      value: X3DConstants .SFRotation,
-      enumerable: true,
-   },
-   typeName:
-   {
-      value: "SFRotation",
-      enumerable: true,
-   },
+   ... X3DField .getStaticProperties ("SFRotation"),
    IDENTITY:
    {
       value: new SFRotation (),

@@ -319,16 +319,7 @@ Object .defineProperties (SFImage .prototype,
 
 Object .defineProperties (SFImage,
 {
-   type:
-   {
-      value: X3DConstants .SFImage,
-      enumerable: true,
-   },
-   typeName:
-   {
-      value: "SFImage",
-      enumerable: true,
-   },
+   ... X3DField .getStaticProperties ("SFImage"),
 });
 
 export default SFImage;
