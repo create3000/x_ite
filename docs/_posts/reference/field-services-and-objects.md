@@ -322,6 +322,21 @@ Creates a SFColorRGBA object from a HSV color value; *h* is the hue, *s* is the 
 
 The saturation and value component must be in the range [0,1], and the hue component must be in the range [0,2π].
 
+<x3d-script-area name="X3D ECMAScript Example: SFColorRGBA fromHSVA">
+<pre>
+const red   = SFColorRGBA .fromHSVA (6.073745, 0.9090909, 0.8627450, 1);
+const green = SFColorRGBA .fromHSVA (2.033511, 0.6142857, 0.5490196, 1);
+const blue  = SFColorRGBA .fromHSVA (3.759439, 0.8097165, 0.9686274, 1);
+
+print (red);
+print (green);
+print (blue);
+// Expected output: 0.862745 0.07843137 0.2352947 1
+// Expected output: 0.2313727 0.5490196 0.2117647 1
+// Expected output: 0.1843138 0.5058825 0.9686274 1
+</pre>
+</x3d-script-area>
+
 #### **fromString** (*value: string*): SFColorRGBA
 
 Creates a SFColorRGBA object from string. *value* can be any valid X3D or CSS color value. Hex values must start with `0x`.

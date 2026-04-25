@@ -166,7 +166,7 @@ Object .defineProperties (SFColorRGBA,
       value: new SFColorRGBA (1, 1, 1, 1),
       enumerable: true,
    },
-   fromHSV:
+   fromHSVA:
    {
       value (h, s, v, a)
       {
