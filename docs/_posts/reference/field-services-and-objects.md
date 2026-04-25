@@ -161,6 +161,22 @@ The callback has a signature of `function (value)`, where value is the current v
 Removes a field callback function associated with *key*.
 -->
 
+#### **fromString** (*value: string, scene?: X3DScene*): void
+
+Set value from string.
+
+#### **fromVRMLString** (*value: string, scene?: X3DScene*): void
+
+Set value from VRML string.
+
+#### **fromXMLString** (*value: string, scene?: X3DScene*): void
+
+Set value from XML string.
+
+#### **fromJSONString** (*value: string, scene?: X3DScene*): void
+
+Set value from JSON string.
+
 #### **dispose** (): void
 
 Disposes this X3DField. The object can then no longer be used.

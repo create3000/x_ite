@@ -1634,6 +1634,22 @@ declare namespace X3D
       addRouteCallback (key: any, callback: () => void): void;
       removeRouteCallback (key: any): void;
       getRouteCallbacks (): Map <any, () => void>;
+      /**
+       * Set value from string.
+       */
+      fromString (value: string, scene?: X3DScene): void;
+      /**
+       * Set value from VRML string.
+       */
+      fromVRMLString (value: string, scene?: X3DScene): void;
+      /**
+       * Set value from XML string.
+       */
+      fromXMLString (value: string, scene?: X3DScene): void;
+      /**
+       * Set value from JSON string.
+       */
+      fromJSONString (value: string, scene?: X3DScene): void;
    }
 
    /**
