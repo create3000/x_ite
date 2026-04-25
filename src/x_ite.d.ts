@@ -1682,11 +1682,11 @@ declare namespace X3D
        *
        * The saturation, and value component must be in the range 0–1, and the hue component must be in the range 0–2π.
        */
-      fromHSV (h: number, s: number, v: number): SFColor;
+      static fromHSV (h: number, s: number, v: number): SFColor;
       /**
        * Creates a SFColor object from string. *value* can be any valid X3D or CSS color value. Hex values must start with `0x`.
        */
-      fromString (value: string): SFColor;
+      static fromString (value: string): SFColor;
 
       /**
        * A new color initialized with zero values is created and returned.
@@ -1754,11 +1754,11 @@ declare namespace X3D
        *
        * The saturation, and value component must be in the range 0–1, and the hue component must be in the range 0–2π.
        */
-      fromHSVA (h: number, s: number, v: number, a: number): SFColorRGBA;
+      static fromHSVA (h: number, s: number, v: number, a: number): SFColorRGBA;
       /**
        * Creates a SFColorRGBA object from string. *value* can be any valid X3D or CSS color value. Hex values must start with `0x`.
        */
-      fromString (value: string): SFColorRGBA;
+      static fromString (value: string): SFColorRGBA;
 
       /**
        * A new color initialized with zero values is created and returned.
