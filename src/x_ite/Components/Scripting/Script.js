@@ -158,7 +158,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
          node .fromString (vrmlSyntax, getScriptNode () .getExecutionContext ());
 
          if (node .getValue ())
-            return node;
+            return SFNodeCache .get (node .getValue ());
 
          throw new Error ("SFNode.new: invalid argument.");
       }
