@@ -1662,6 +1662,17 @@ declare namespace X3D
       static readonly WHITE: SFColor;
 
       /**
+       * Creates a SFColor object from a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and a is the alpha component of the HSV color.
+       *
+       * The saturation, and value component must be in the range 0–1, and the hue component must be in the range 0–2π.
+       */
+      fromHSV (h: number, s: number, v: number): SFColor;
+      /**
+       * Creates a SFColor object from string. *value* can be any valid X3D or CSS color value. Hex values must start with `0x`.
+       */
+      fromString (value: string): SFColor;
+
+      /**
        * A new color initialized with zero values is created and returned.
        */
       constructor ();
@@ -1721,6 +1732,17 @@ declare namespace X3D
       static readonly BLACK: SFColor;
       static readonly TRANSPARENT: SFColor;
       static readonly WHITE: SFColor;
+
+      /**
+       * Creates a SFColorRGBA object from a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and *a* is the alpha component of the HSVA color.
+       *
+       * The saturation, and value component must be in the range 0–1, and the hue component must be in the range 0–2π.
+       */
+      fromHSVA (h: number, s: number, v: number, a: number): SFColorRGBA;
+      /**
+       * Creates a SFColorRGBA object from string. *value* can be any valid X3D or CSS color value. Hex values must start with `0x`.
+       */
+      fromString (value: string): SFColorRGBA;
 
       /**
        * A new color initialized with zero values is created and returned.
