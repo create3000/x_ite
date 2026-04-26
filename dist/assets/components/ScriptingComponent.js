@@ -404,7 +404,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
          node .fromString (vrmlSyntax, getScriptNode () .getExecutionContext ());
 
          if (node .getValue ())
-            return node;
+            return external_X_ITE_X3D_SFNodeCache_default().get (node .getValue ());
 
          throw new Error ("SFNode.new: invalid argument.");
       }

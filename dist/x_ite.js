@@ -1,4 +1,3 @@
-/* X_ITE v14.2.0 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -12,7 +11,7 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 768
+/***/ 124
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46,7 +45,7 @@ Object .defineProperty (Namespace, "add",
 
 /***/ },
 
-/***/ 116
+/***/ 868
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1051,7 +1050,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 958
+/***/ 494
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2047,7 +2046,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 973
+/***/ 717
 (module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -2061,7 +2060,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
     if ( true ) {
 
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(440) ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(484) ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -7071,7 +7070,7 @@ if (true) {
 
 /***/ },
 
-/***/ 113
+/***/ 177
 (__unused_webpack_module, exports) {
 
 
@@ -10316,20 +10315,20 @@ if (true) {
 
 /***/ },
 
-/***/ 440
+/***/ 484
 (module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
 
 // Bundlers are able to synchronously require an ESM module from a CommonJS one.
-const { jQuery } = __webpack_require__( 336 );
+const { jQuery } = __webpack_require__( 308 );
 module.exports = jQuery;
 
 
 /***/ },
 
-/***/ 336
+/***/ 308
 (__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10338,7 +10337,7 @@ module.exports = jQuery;
 /* harmony export */   jQuery: () => (/* binding */ jQuery)
 /* harmony export */ });
 /* unused harmony export $ */
-/* harmony import */ var _src_x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(768);
+/* harmony import */ var _src_x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(124);
 /*!
  * jQuery JavaScript Library v4.0.0+slim
  * https://jquery.com/
@@ -17261,7 +17260,7 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/x_ite/Namespace.js
-var Namespace = __webpack_require__(768);
+var Namespace = __webpack_require__(124);
 ;// ./src/x_ite/Base/X3DConstants.js
 const X3DConstants =
 {
@@ -18467,7 +18466,7 @@ const Features_default_ = Features;
 
 /* harmony default export */ const x_ite_Features = (Namespace/* default */.A .add ("Features", Features_default_));
 ;// ./src/x_ite/Base/X3DObject.js
-/* provided dependency */ var $ = __webpack_require__(336)["A"];
+/* provided dependency */ var $ = __webpack_require__(308)["A"];
 
 
 
@@ -19788,17 +19787,21 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, Base_X3DChildObject
    {
       return this [_documentation];
    },
-   fromString (string, scene)
+   fromString (value, scene)
    {
-      this .fromVRMLString (string, scene);
+      this .fromVRMLString (value, scene);
    },
-   fromVRMLString (string, scene)
+   fromVRMLString (value, scene)
    {
       // Function will be overridden in VRMLParser.
    },
-   fromXMLString (string, scene)
+   fromXMLString (value, scene)
    {
       // Function will be overridden in XMLParser.
+   },
+   fromJSONString (value, scene)
+   {
+      this .fromVRMLString (value, scene);
    },
    dispose ()
    {
@@ -19825,6 +19828,72 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, Base_X3DChildObject
 
 for (const key of Object .keys (X3DField .prototype))
    Object .defineProperty (X3DField .prototype, key, { enumerable: false });
+
+Object .defineProperties (X3DField,
+{
+   getStaticProperties:
+   {
+      value (typeName)
+      {
+         return {
+            type:
+            {
+               value: Base_X3DConstants [typeName],
+               enumerable: true,
+            },
+            typeName:
+            {
+               value: typeName,
+               enumerable: true,
+            },
+            fromString:
+            {
+               value (value, scene)
+               {
+                  const field = new this ();
+
+                  field .fromString (value, scene);
+
+                  return field;
+               },
+            },
+            fromVRMLString:
+            {
+               value (value, scene)
+               {
+                  const field = new this ();
+
+                  field .fromVRMLString (value, scene);
+
+                  return field;
+               },
+            },
+            fromXMLString:
+            {
+               value (value, scene)
+               {
+                  const field = new this ();
+
+                  field .fromXMLString (value, scene);
+
+                  return field;
+               },
+            },
+            fromJSONString:
+            {
+               value (value, scene)
+               {
+                  const field = new this ();
+
+                  field .fromJSONString (value, scene);
+
+                  return field;
+               },
+            },
+         };
+      },
+   },
+})
 
 const X3DField_default_ = X3DField;
 ;
@@ -20015,16 +20084,7 @@ function SFScalarPrototypeTemplate (Constructor, TypeName, properties = { })
 {
    Object .defineProperties (Constructor,
    {
-      type:
-      {
-         value: Base_X3DConstants [TypeName],
-         enumerable: true,
-      },
-      typeName:
-      {
-         value: TypeName,
-         enumerable: true,
-      },
+      ... Base_X3DField .getStaticProperties (TypeName),
    });
 
    Object .assign (Object .setPrototypeOf (Constructor .prototype, Base_X3DField .prototype),
@@ -20378,7 +20438,7 @@ Object .assign (Object .setPrototypeOf (SFColor .prototype, Base_X3DField .proto
    },
    setHSV (h, s, v)
    {
-      this .getValue () .setHSV (h, s, v);
+      this .getValue () .setHSV (+h, +s, +v);
       this .addEvent ();
    },
    linearToSRGB ()
@@ -20510,16 +20570,7 @@ Object .defineProperties (SFColor .prototype,
 
 Object .defineProperties (SFColor,
 {
-   type:
-   {
-      value: Base_X3DConstants .SFColor,
-      enumerable: true,
-   },
-   typeName:
-   {
-      value: "SFColor",
-      enumerable: true,
-   },
+   ... Base_X3DField .getStaticProperties ("SFColor"),
    BLACK:
    {
       value: new SFColor (),
@@ -20529,6 +20580,17 @@ Object .defineProperties (SFColor,
    {
       value: new SFColor (1, 1, 1),
       enumerable: true,
+   },
+   fromHSV:
+   {
+      value (h, s, v)
+      {
+         const color = new this ();
+
+         color .setHSV (h, s, v);
+
+         return color;
+      },
    },
 });
 
@@ -20753,7 +20815,7 @@ Object .assign (Object .setPrototypeOf (SFColorRGBA .prototype, Base_X3DField .p
    },
    setHSVA (h, s, v, a)
    {
-      this .getValue () .setHSVA (h, s, v, a);
+      this .getValue () .setHSVA (+h, +s, +v, +a);
       this .addEvent ();
    },
    linearToSRGB ()
@@ -20857,16 +20919,7 @@ Object .defineProperties (SFColorRGBA .prototype,
 
 Object .defineProperties (SFColorRGBA,
 {
-   type:
-   {
-      value: Base_X3DConstants .SFColorRGBA,
-      enumerable: true,
-   },
-   typeName:
-   {
-      value: "SFColorRGBA",
-      enumerable: true,
-   },
+   ... Base_X3DField .getStaticProperties ("SFColorRGBA"),
    BLACK:
    {
       value: new SFColorRGBA (0, 0, 0, 1),
@@ -20881,6 +20934,17 @@ Object .defineProperties (SFColorRGBA,
    {
       value: new SFColorRGBA (1, 1, 1, 1),
       enumerable: true,
+   },
+   fromHSVA:
+   {
+      value (h, s, v, a)
+      {
+         const color = new this ();
+
+         color .setHSVA (h, s, v, a);
+
+         return color;
+      },
    },
 });
 
@@ -20898,16 +20962,7 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
 
    Object .defineProperties (Constructor,
    {
-      type:
-      {
-         value: Base_X3DConstants [TypeName],
-         enumerable: true,
-      },
-      typeName:
-      {
-         value: TypeName,
-         enumerable: true,
-      },
+      ... Base_X3DField .getStaticProperties (TypeName),
    });
 
    Object .assign (Object .setPrototypeOf (Constructor .prototype, Base_X3DField .prototype),
@@ -24977,26 +25032,13 @@ const SFNodeCache =
 
          this .set (baseNode, node);
 
-         // i += 2;
-         // console .warn (`baseNode ${i} ${baseNode .getTypeName ()}`);
-         // r .register (baseNode, `baseNode ${baseNode .getTypeName ()}`);
-         // r .register (node, `node ${baseNode .getTypeName ()}`);
-
          return node;
       }
    },
    set (baseNode, node)
    {
-      Object .defineProperty (node, "dispose",
-      {
-         value: dispose,
-         writable: true,
-         configurable: true,
-      });
+      Object .defineProperties (node, properties);
 
-      // WeakMap allows associating data to objects in a way that doesn't prevent
-      // the key objects from being collected, even if the values reference the keys.
-      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap
       cache .set (baseNode, node);
    },
    delete (baseNode)
@@ -25005,12 +25047,29 @@ const SFNodeCache =
    },
 };
 
-function dispose ()
+const disable =
 {
-   this .getValue () ?.dispose ();
+   value: undefined,
+   configurable: true,
+};
 
-   Fields_SFNode .prototype .dispose .call (this);
-}
+const properties =
+{
+   fromString: disable,
+   fromVRMLString: disable,
+   fromXMLString: disable,
+   fromJSONString: disable,
+   dispose:
+   {
+      value ()
+      {
+         this .getValue () ?.dispose ();
+
+         Fields_SFNode .prototype .dispose .call (this);
+      },
+      configurable: true,
+   },
+};
 
 const SFNodeCache_default_ = SFNodeCache;
 ;
@@ -25434,16 +25493,7 @@ for (const key of Object .keys (SFNode .prototype))
 
 Object .defineProperties (SFNode,
 {
-   type:
-   {
-      value: Base_X3DConstants .SFNode,
-      enumerable: true,
-   },
-   typeName:
-   {
-      value: "SFNode",
-      enumerable: true,
-   },
+   ... Base_X3DField .getStaticProperties ("SFNode"),
 });
 
 const SFNode_default_ = SFNode;
@@ -25460,16 +25510,7 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double, properti
 
    Object .defineProperties (Constructor,
    {
-      type:
-      {
-         value: Base_X3DConstants [TypeName],
-         enumerable: true,
-      },
-      typeName:
-      {
-         value: TypeName,
-         enumerable: true,
-      },
+      ... Base_X3DField .getStaticProperties (TypeName),
    });
 
    Object .assign (Object .setPrototypeOf (Constructor .prototype, Base_X3DField .prototype),
@@ -26006,16 +26047,7 @@ Object .defineProperties (SFRotation .prototype,
 
 Object .defineProperties (SFRotation,
 {
-   type:
-   {
-      value: Base_X3DConstants .SFRotation,
-      enumerable: true,
-   },
-   typeName:
-   {
-      value: "SFRotation",
-      enumerable: true,
-   },
+   ... Base_X3DField .getStaticProperties ("SFRotation"),
    IDENTITY:
    {
       value: new SFRotation (),
@@ -27882,6 +27914,7 @@ const X3DTypedArrayField_default_ = X3DTypedArrayField;
 
 
 
+
 const
    { SFBool, SFDouble, SFFloat, SFInt32, SFString, SFTime } = Fields_SFScalar,
    { SFMatrix3d: ArrayFields_SFMatrix3d, SFMatrix3f: ArrayFields_SFMatrix3f } = Fields_SFMatrix3,
@@ -28111,16 +28144,7 @@ for (const key of Object .keys (MFNode .prototype))
 
 Object .defineProperties (MFNode,
 {
-   type:
-   {
-      value: Base_X3DConstants .MFNode,
-      enumerable: true,
-   },
-   typeName:
-   {
-      value: "MFNode",
-      enumerable: true,
-   },
+   ... Base_X3DField .getStaticProperties ("MFNode"),
 });
 
 function MFString (... args)
@@ -28165,16 +28189,7 @@ for (const key of Object .keys (MFString .prototype))
 
 Object .defineProperties (MFString,
 {
-   type:
-   {
-      value: Base_X3DConstants .MFString,
-      enumerable: true,
-   },
-   typeName:
-   {
-      value: "MFString",
-      enumerable: true,
-   },
+   ... Base_X3DField .getStaticProperties ("MFString"),
 });
 
 /**
@@ -28199,16 +28214,7 @@ for (const key of Object .keys (MFImage .prototype))
 
 Object .defineProperties (MFImage,
 {
-   type:
-   {
-      value: Base_X3DConstants .MFImage,
-      enumerable: true,
-   },
-   typeName:
-   {
-      value: "MFImage",
-      enumerable: true,
-   },
+   ... Base_X3DField .getStaticProperties ("MFImage"),
 });
 
 function TypedArrayTemplate (TypeName, SingleType, ValueType, ArrayType, Components, singleValue)
@@ -28247,16 +28253,7 @@ function TypedArrayTemplate (TypeName, SingleType, ValueType, ArrayType, Compone
 
    Object .defineProperties (ArrayField,
    {
-      type:
-      {
-         value: Base_X3DConstants [TypeName],
-         enumerable: true,
-      },
-      typeName:
-      {
-         value: TypeName,
-         enumerable: true,
-      },
+      ... Base_X3DField .getStaticProperties (TypeName),
    });
 
    return ArrayField;
@@ -28615,16 +28612,7 @@ Object .defineProperties (SFImage .prototype,
 
 Object .defineProperties (SFImage,
 {
-   type:
-   {
-      value: Base_X3DConstants .SFImage,
-      enumerable: true,
-   },
-   typeName:
-   {
-      value: "SFImage",
-      enumerable: true,
-   },
+   ... Base_X3DField .getStaticProperties ("SFImage"),
 });
 
 const SFImage_default_ = SFImage;
@@ -29334,7 +29322,7 @@ const X3DBaseNode_default_ = X3DBaseNode;
 
 /* harmony default export */ const Base_X3DBaseNode = (Namespace/* default */.A .add ("X3DBaseNode", X3DBaseNode_default_));
 ;// ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var Legacy_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var Legacy_$ = __webpack_require__(308)["A"];
 const Legacy =
 {
    elements (elements, X3DBrowser)
@@ -29983,7 +29971,7 @@ const gettext_default_ = (string) => locale .get (string) || string;
 
 /* harmony default export */ const gettext = (Namespace/* default */.A .add ("gettext", gettext_default_));
 ;// ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(308)["A"];
 
 
 
@@ -30434,7 +30422,7 @@ const TextCompression_default_ = TextCompression;
 
 /* harmony default export */ const Core_TextCompression = (Namespace/* default */.A .add ("TextCompression", TextCompression_default_));
 ;// ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(308)["A"];
 
 
 
@@ -30913,7 +30901,7 @@ const BrowserProperties_default_ = BrowserProperties;
 
 /* harmony default export */ const Core_BrowserProperties = (Namespace/* default */.A .add ("BrowserProperties", BrowserProperties_default_));
 ;// ./src/x_ite/Browser/Core/RenderingProperties.js
-/* provided dependency */ var RenderingProperties_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var RenderingProperties_$ = __webpack_require__(308)["A"];
 
 
 
@@ -30997,7 +30985,7 @@ const RenderingProperties_default_ = RenderingProperties;
 
 /* harmony default export */ const Core_RenderingProperties = (Namespace/* default */.A .add ("RenderingProperties", RenderingProperties_default_));
 ;// ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var Notification_$ = __webpack_require__(308)["A"];
 
 
 
@@ -31083,7 +31071,7 @@ const Notification_default_ = Notification;
 
 /* harmony default export */ const Core_Notification = (Namespace/* default */.A .add ("Notification", Notification_default_));
 ;// ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(308)["A"];
 
 
 
@@ -34521,7 +34509,7 @@ const NamedNodesArray_default_ = NamedNodesArray;
 
 /* harmony default export */ const Execution_NamedNodesArray = (Namespace/* default */.A .add ("NamedNodesArray", NamedNodesArray_default_));
 ;// ./src/x_ite/Components/Core/X3DImportedNodeProxy.js
-/* provided dependency */ var X3DImportedNodeProxy_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var X3DImportedNodeProxy_$ = __webpack_require__(308)["A"];
 
 
 
@@ -36470,7 +36458,7 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (Namespace/* default */.A .add ("X3DProtoDeclaration", X3DProtoDeclaration_default_));
 ;// ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var X3DParser_$ = __webpack_require__(308)["A"];
 
 
 function X3DParser (scene, name = "Parser")
@@ -36539,13 +36527,18 @@ Object .assign (X3DParser .prototype,
    },
    convertColor (value, defaultColor = "white")
    {
+      this .body ??= X3DParser_$("body");
+      this .wrap ??= X3DParser_$("<div></div>") .hide ();
+      this .div  ??= X3DParser_$("<div></div>") .appendTo (this .wrap);
+
+      this .wrap .css ("color", defaultColor) .appendTo (this .body);
+      this .div  .css ("color", value);
+
       const
-         wrap   = X3DParser_$("<div></div>") .hide () .css ("color", defaultColor) .appendTo (X3DParser_$("body")),
-         div    = X3DParser_$("<div></div>") .css ("color", value) .appendTo (wrap),
-         rgb    = window .getComputedStyle (div [0]) .color,
+         rgb    = window .getComputedStyle (this .div [0]) .color,
          values = rgb .replace (/^rgba?\(|\)$/g, "") .split (/[\s,]+/) .map (s => parseFloat (s));
 
-      wrap .remove ();
+      this .wrap .detach ();
 
       values [0] /= 255;
       values [1] /= 255;
@@ -36788,7 +36781,7 @@ const Placeholder_default_ = Placeholder;
 
 /* harmony default export */ const Parser_Placeholder = (Namespace/* default */.A .add ("Placeholder", Placeholder_default_));
 ;// ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(308)["A"];
 
 
 
@@ -36872,7 +36865,7 @@ const Grammar = Parser_Expressions ({
    noDoubleQuotes: /[^"]+/y,
 
    CONSTANTS: /([+-]?)\b(NAN|INFINITY|INF|PI(?:2|1_4|2_4|3_4|4_4|5_4|6_4|7_4|8_4|1_2|2_2|3_2|4_2|1_3|2_3|3_3|4_3|5_3|6_3)?|SQRT(?:1_2|2))\b/iy,
-   HTMLColor: /[a-zA-Z]+|0[xX][\da-fA-F]+|rgba?\([^\)]*\)/y,
+   HTMLColor: /0[xX][\da-fA-F]+|[a-zA-Z]+\([^\)]*\)|[a-zA-Z]+/y,
 });
 
 /*
@@ -39463,12 +39456,12 @@ Object .assign (VRMLParser .prototype,
    [Base_X3DConstants .MFVec4f]:     VRMLParser .prototype .mfvec4Value,
 });
 
-Base_X3DField .prototype .fromVRMLString = function (string, scene)
+Base_X3DField .prototype .fromVRMLString = function (value, scene)
 {
    const parser = new VRMLParser (scene);
 
    parser .setUnits (!!scene);
-   parser .setInput (string);
+   parser .setInput (value);
 
    if (!parser .fieldValue (this))
       throw new Error (`Couldn't read value for field '${this .getName ()}'.`);
@@ -39481,7 +39474,7 @@ const VRMLParser_default_ = VRMLParser;
 
 /* harmony default export */ const Parser_VRMLParser = (Namespace/* default */.A .add ("VRMLParser", VRMLParser_default_));
 ;// ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var XMLParser_$ = __webpack_require__(308)["A"];
 
 
 
@@ -40752,11 +40745,11 @@ const HTMLParser =
    },
 };
 
-Base_X3DField .prototype .fromXMLString = function (string, scene)
+Base_X3DField .prototype .fromXMLString = function (value, scene)
 {
    const parser = new XMLParser (scene);
 
-   if (!parser .fieldValue (this, string))
+   if (!parser .fieldValue (this, value))
       throw new Error (`Couldn't read value for field '${this .getName ()}'.`);
 
    parser .setupNodes ();
@@ -40767,7 +40760,7 @@ const XMLParser_default_ = XMLParser;
 
 /* harmony default export */ const Parser_XMLParser = (Namespace/* default */.A .add ("XMLParser", XMLParser_default_));
 ;// ./src/x_ite/Parser/JSONParser.js
-/* provided dependency */ var JSONParser_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var JSONParser_$ = __webpack_require__(308)["A"];
 
 
 
@@ -48381,7 +48374,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 
 /* harmony default export */ const Texturing_X3DTexture2DNode = (Namespace/* default */.A .add ("X3DTexture2DNode", X3DTexture2DNode_default_));
 ;// ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(308)["A"];
 
 
 
@@ -50897,7 +50890,7 @@ const Layer_default_ = Layer;
 
 /* harmony default export */ const Layering_Layer = (Namespace/* default */.A .add ("Layer", Layer_default_));
 ;// ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(308)["A"];
 
 
 
@@ -55252,7 +55245,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 
 /* harmony default export */ const Parser_GLTF2Parser = (Namespace/* default */.A .add ("GLTF2Parser", GLTF2Parser_default_));
 ;// ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(308)["A"];
 
 
 
@@ -55358,7 +55351,7 @@ const GLB2Parser_default_ = GLB2Parser;
 
 /* harmony default export */ const Parser_GLB2Parser = (Namespace/* default */.A .add ("GLB2Parser", GLB2Parser_default_));
 ;// ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var OBJParser_$ = __webpack_require__(308)["A"];
 
 
 
@@ -56812,7 +56805,7 @@ const STLAParser_default_ = STLAParser;
 
 /* harmony default export */ const Parser_STLAParser = (Namespace/* default */.A .add ("STLAParser", STLAParser_default_));
 ;// ./src/x_ite/Parser/STLBParser.js
-/* provided dependency */ var STLBParser_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var STLBParser_$ = __webpack_require__(308)["A"];
 
 
 
@@ -58182,7 +58175,7 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (Namespace/* default */.A .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var SVGParser_$ = __webpack_require__(308)["A"];
 /* provided dependency */ var SVGParser_libtess = __webpack_require__(46);
 
 
@@ -58227,7 +58220,7 @@ const SVGParser_Grammar = Parser_Expressions ({
    scale: /scale/y,
    skewX: /skewX/y,
    skewY: /skewY/y,
-   color: /[a-zA-Z]+|#[\da-fA-F]+|rgba?\([^\)]*\)/y,
+   color: /#[\da-fA-F]+|[a-zA-Z]+\([^\)]*\)|[a-zA-Z]+/y,
    url: /url\("?(.*?)"?\)/y,
    path: /[mMlLhHvVqQtTcCsSaAzZ]/y,
 });
@@ -60917,7 +60910,7 @@ const SVGParser_default_ = SVGParser;
 
 /* harmony default export */ const Parser_SVGParser = (Namespace/* default */.A .add ("SVGParser", SVGParser_default_));
 ;// ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(308)["A"];
 
 
 
@@ -61333,7 +61326,7 @@ const X3DWorld_default_ = X3DWorld;
 
 /* harmony default export */ const Execution_X3DWorld = (Namespace/* default */.A .add ("X3DWorld", X3DWorld_default_));
 ;// ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var FileLoader_$ = __webpack_require__(308)["A"];
 
 
 
@@ -62040,7 +62033,7 @@ const ProtoDeclarationArray_default_ = ProtoDeclarationArray;
 
 /* harmony default export */ const Prototype_ProtoDeclarationArray = (Namespace/* default */.A .add ("ProtoDeclarationArray", ProtoDeclarationArray_default_));
 ;// ./src/x_ite/Routing/X3DRoute.js
-/* provided dependency */ var X3DRoute_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var X3DRoute_$ = __webpack_require__(308)["A"];
 
 
 
@@ -64697,7 +64690,7 @@ add ("PT_Sans/PTSans-Italic.woff2",     false, true);
 // add ("PT_Sans/PTSans-BoldItalic.woff2", true,  true);
 
 ;// ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(308)["A"];
 
 
 
@@ -70810,8 +70803,8 @@ const OrientationChaser_default_ = OrientationChaser;
 
 /* harmony default export */ const Followers_OrientationChaser = (Namespace/* default */.A .add ("OrientationChaser", OrientationChaser_default_));
 ;// ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(973);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(717);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(308)["A"];
 
 
 
@@ -71886,8 +71879,8 @@ const ScreenLine_default_ = ScreenLine;
 
 /* harmony default export */ const Rendering_ScreenLine = (Namespace/* default */.A .add ("ScreenLine", ScreenLine_default_));
 ;// ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(973);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(717);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(308)["A"];
 
 
 
@@ -72624,8 +72617,8 @@ const FlyViewer_default_ = FlyViewer;
 
 /* harmony default export */ const Navigation_FlyViewer = (Namespace/* default */.A .add ("FlyViewer", FlyViewer_default_));
 ;// ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(973);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(717);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(308)["A"];
 
 
 
@@ -72838,8 +72831,8 @@ const NoneViewer_default_ = NoneViewer;
 
 /* harmony default export */ const Navigation_NoneViewer = (Namespace/* default */.A .add ("NoneViewer", NoneViewer_default_));
 ;// ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(973);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(717);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(308)["A"];
 
 
 
@@ -74185,8 +74178,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 
 /* harmony default export */ const Picking_X3DPickingContext = (Namespace/* default */.A .add ("X3DPickingContext", X3DPickingContext_default_));
 ;// ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(973);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(717);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(308)["A"];
 
 
 
@@ -75446,7 +75439,7 @@ const Lock_default_ = Lock;
 
 /* harmony default export */ const Utility_Lock = (Namespace/* default */.A .add ("Lock", Lock_default_));
 ;// ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(308)["A"];
 
 
 
@@ -77601,7 +77594,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 
 /* harmony default export */ const Shaders_X3DShaderNode = (Namespace/* default */.A .add ("X3DShaderNode", X3DShaderNode_default_));
 ;// ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(308)["A"];
 
 
 
@@ -79600,7 +79593,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 
 /* harmony default export */ const Shaders_ShaderCompiler = (Namespace/* default */.A .add ("ShaderCompiler", ShaderCompiler_default_));
 ;// ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(308)["A"];
 
 
 
@@ -81532,7 +81525,7 @@ const PeriodicWave_default_ = PeriodicWave;
 
 /* harmony default export */ const Sound_PeriodicWave = (Namespace/* default */.A .add ("PeriodicWave", PeriodicWave_default_));
 ;// ./src/x_ite/Browser/Sound/X3DSoundContext.js
-/* provided dependency */ var X3DSoundContext_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var X3DSoundContext_$ = __webpack_require__(308)["A"];
 
 
 
@@ -81839,7 +81832,7 @@ const TextureTransform_default_ = TextureTransform;
 
 /* harmony default export */ const Texturing_TextureTransform = (Namespace/* default */.A .add ("TextureTransform", TextureTransform_default_));
 ;// ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(308)["A"];
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -82709,7 +82702,6 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, Base_X3DBa
 
       // Prepare and Time Events
 
-      this .callBrowserCallbacks (Base_X3DConstants .BROWSER_EVENT);
       this .addTaintedField (this ._prepareEvents);
       this [X3DBrowserContext_processEvents] ();
 
@@ -82873,7 +82865,7 @@ const X3DBrowserContext_default_ = X3DBrowserContext;
 
 /* harmony default export */ const Browser_X3DBrowserContext = (Namespace/* default */.A .add ("X3DBrowserContext", X3DBrowserContext_default_));
 ;// ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(308)["A"];
 /*******************************************************************************
  * MIT License
  *
@@ -93772,7 +93764,7 @@ Object .defineProperties (InlineGeometry,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "url",                  new x_ite_Fields .MFString ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "autoRefresh",          new x_ite_Fields .SFTime (0)),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "autoRefreshTimeLimit", new x_ite_Fields .SFTime (3600)),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "solid",                new x_ite_Fields .SFBool (false)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "solid",                new x_ite_Fields .SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput, "smooth",               new x_ite_Fields .SFBool (true)),
       ]),
       enumerable: true,
@@ -100925,9 +100917,9 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (Namespace/* default */.A .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(336)["A"];
-/* provided dependency */ var SuperGif = __webpack_require__(116);
-/* provided dependency */ var APNG = __webpack_require__(958);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(308)["A"];
+/* provided dependency */ var SuperGif = __webpack_require__(868);
+/* provided dependency */ var APNG = __webpack_require__(494);
 
 
 
@@ -102042,7 +102034,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, Texturing_X3
             const dependentRenderer = new Rendering_DependentRenderer (this .getExecutionContext (), renderObject);
 
             this .dependentRenderers .set (renderObject, dependentRenderer);
-            dependentRenderer .setDepthClearColor (0, 0, 0, 0);
+            dependentRenderer .setDepthClearColor (1, 1, 1, 1);
          }
 
          // Prepare.
@@ -102287,7 +102279,7 @@ const Components_default_ = Components;
 
 /* harmony default export */ const x_ite_Components = (Namespace/* default */.A .add ("Components", Components_default_));
 ;// ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(308)["A"];
 
 
 
@@ -102355,7 +102347,7 @@ function X3DBrowser (element)
       [Base_X3DConstants .SHUTDOWN_EVENT,    new Map ()],
       [Base_X3DConstants .INITIALIZED_ERROR, new Map ()],
    ]);
-   
+
    this .setup ();
 };
 
@@ -103254,6 +103246,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
    {
       this .currentScene .toJSONStream (generator);
    },
+   loseContext ()
+   {
+      this .getContext () .getExtension ("WEBGL_lose_context") .loseContext ();
+   },
    dispose ()
    {
       this [_DOMIntegration] .dispose ();
@@ -103430,7 +103426,7 @@ const SUPPORTED_VERSIONS_default_ = [
 
 /* harmony default export */ const SUPPORTED_VERSIONS = (Namespace/* default */.A .add ("SUPPORTED_VERSIONS", SUPPORTED_VERSIONS_default_));
 ;// ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(308)["A"];
 
 
 class X3DCanvasElement extends HTMLElement
@@ -103594,8 +103590,8 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (Namespace/* default */.A .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(336)["A"];
-/* provided dependency */ var pako = __webpack_require__(113);
+/* provided dependency */ var jquery_$ = __webpack_require__(308)["A"];
+/* provided dependency */ var pako = __webpack_require__(177);
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -103665,7 +103661,7 @@ const libtess_default_ = libtess_libtess;
 
 /* harmony default export */ const lib_libtess = (Namespace/* default */.A .add ("libtess", libtess_default_));
 ;// ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(336)["A"];
+/* provided dependency */ var X3D_$ = __webpack_require__(308)["A"];
 
 
 

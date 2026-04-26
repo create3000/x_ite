@@ -247,6 +247,7 @@ declare namespace X3D
        */
       changeViewpoint (layer: X3DLayerNodeProxy, name: string): void;
       changeViewpoint (name: string): void;
+
       /**
        * Changes the default cursor images to the ones specified in *cursorTypes*. You can omit properties if you want to use the default cursor image for this action. The values can be any valid CSS cursor.
        */
@@ -263,6 +264,11 @@ declare namespace X3D
        */
       getClosestObject (layer: X3DLayerNodeProxy, direction: SFVec3d | SFVec3f): ClosestObject;
       getClosestObject (direction: SFVec3d | SFVec3f): ClosestObject;
+      /**
+       * Loses the WebGL context.
+       */
+      loseContext (): void;
+
       /**
        * Start processing events.
        */
@@ -1634,6 +1640,22 @@ declare namespace X3D
       addRouteCallback (key: any, callback: () => void): void;
       removeRouteCallback (key: any): void;
       getRouteCallbacks (): Map <any, () => void>;
+      /**
+       * Set value from string.
+       */
+      fromString (value: string, scene?: X3DScene): void;
+      /**
+       * Set value from VRML string.
+       */
+      fromVRMLString (value: string, scene?: X3DScene): void;
+      /**
+       * Set value from XML string.
+       */
+      fromXMLString (value: string, scene?: X3DScene): void;
+      /**
+       * Set value from JSON string.
+       */
+      fromJSONString (value: string, scene?: X3DScene): void;
    }
 
    /**
@@ -1660,6 +1682,17 @@ declare namespace X3D
 
       static readonly BLACK: SFColor;
       static readonly WHITE: SFColor;
+
+      /**
+       * Creates a SFColor object from a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and a is the alpha component of the HSV color.
+       *
+       * The saturation, and value component must be in the range 0–1, and the hue component must be in the range 0–2π.
+       */
+      static fromHSV (h: number, s: number, v: number): SFColor;
+      /**
+       * Creates a SFColor object from string. *value* can be any valid X3D or CSS color value. Hex values must start with `0x`.
+       */
+      static fromString (value: string): SFColor;
 
       /**
        * A new color initialized with zero values is created and returned.
@@ -1721,6 +1754,17 @@ declare namespace X3D
       static readonly BLACK: SFColor;
       static readonly TRANSPARENT: SFColor;
       static readonly WHITE: SFColor;
+
+      /**
+       * Creates a SFColorRGBA object from a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and *a* is the alpha component of the HSVA color.
+       *
+       * The saturation, and value component must be in the range 0–1, and the hue component must be in the range 0–2π.
+       */
+      static fromHSVA (h: number, s: number, v: number, a: number): SFColorRGBA;
+      /**
+       * Creates a SFColorRGBA object from string. *value* can be any valid X3D or CSS color value. Hex values must start with `0x`.
+       */
+      static fromString (value: string): SFColorRGBA;
 
       /**
        * A new color initialized with zero values is created and returned.

@@ -975,7 +975,6 @@ const external_X_ITE_X3D_Box3_namespaceObject = __X_ITE_X3D__ .Box3;
 var external_X_ITE_X3D_Box3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Box3_namespaceObject);
 ;// external "__X_ITE_X3D__ .Algorithm"
 const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
-var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Algorithm_namespaceObject);
 ;// ./src/x_ite/Browser/Layout/ScreenText.js
 
 
@@ -997,6 +996,8 @@ function ScreenText (text, fontStyle)
 
    this .textureNode ._textureProperties = fontStyle .getBrowser () .getScreenTextureProperties ();
    this .textureNode .setup ();
+
+   this .getBrowser () .getRenderingProperties () ._ContentScale .addInterest ("build", this);
 }
 
 Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X3D_X3DTextGeometry_default()).prototype),
@@ -1088,6 +1089,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
             return;
 
          const
+            browser        = this .getBrowser (),
             text           = this .getText (),
             glyphs         = this .getGlyphs (),
             minorAlignment = this .getMinorAlignment (),
@@ -1099,6 +1101,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
             texCoordArray  = text .getTexCoords (),
             normalArray    = text .getNormals (),
             vertexArray    = text .getVertices (),
+            contentScale   = browser .getRenderingProperty ("ContentScale"),
             canvas         = this .context .canvas,
             cx             = this .context;
 
@@ -1132,8 +1135,8 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
 
          // Scale canvas.
 
-         canvas .width  = external_X_ITE_X3D_Algorithm_default().nextPowerOfTwo (width),
-         canvas .height = external_X_ITE_X3D_Algorithm_default().nextPowerOfTwo (height);
+         canvas .width  = width  * contentScale;
+         canvas .height = height * contentScale;
 
          const
             w = width  / canvas .width,
