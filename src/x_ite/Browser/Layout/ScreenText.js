@@ -356,6 +356,9 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
 
          bbox .assign (this .getBBox ()) .multRight (this .matrix);
 
+         if (this .getText () .getBBox () .equals (bbox))
+            return;
+
          this .getText () .setBBox (bbox);
 
          // Immediately update X3DShapeNode bbox.
