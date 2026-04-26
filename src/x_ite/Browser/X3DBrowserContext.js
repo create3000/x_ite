@@ -214,7 +214,6 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
 
       // Prepare and Time Events
 
-      this .callBrowserCallbacks (X3DConstants .BROWSER_EVENT);
       this .addTaintedField (this ._prepareEvents);
       this [_processEvents] ();
 
