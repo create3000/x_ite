@@ -15,6 +15,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 - [x] Breaking change: `X3DConstants.CONNECTION_ERROR` is now `X3DConstants.INITIALIZED_ERROR`. `X3DConstants.CONNECTION_ERROR` is now fired when a WebGL context lost event occurs.
 - [x] Better handling of touch devices when NONE viewer is active.
+- [x] [ScreenFontStyle](/x_ite/components/layout/screenfontstyle/) now uses content scale value to determine texture size.
 
 ## X_ITE v14.1 Series
 
