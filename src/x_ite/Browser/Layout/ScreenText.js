@@ -43,8 +43,8 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
          const
             fontStyle    = this .getFontStyle (),
             text         = this .getText (),
-            offset       = 1, // For antialiasing border on bottom and right side
-            contentScale = this .getBrowser () .getRenderingProperty ("ContentScale");
+            contentScale = this .getBrowser () .getRenderingProperty ("ContentScale"),
+            offset       = 1; // For antialiasing border on bottom and right side
 
          text ._textBounds .x = Math .ceil (text ._textBounds .x) + offset;
          text ._textBounds .y = Math .ceil (text ._textBounds .y) + offset;
