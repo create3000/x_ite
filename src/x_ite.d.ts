@@ -247,6 +247,7 @@ declare namespace X3D
        */
       changeViewpoint (layer: X3DLayerNodeProxy, name: string): void;
       changeViewpoint (name: string): void;
+
       /**
        * Changes the default cursor images to the ones specified in *cursorTypes*. You can omit properties if you want to use the default cursor image for this action. The values can be any valid CSS cursor.
        */
@@ -263,6 +264,11 @@ declare namespace X3D
        */
       getClosestObject (layer: X3DLayerNodeProxy, direction: SFVec3d | SFVec3f): ClosestObject;
       getClosestObject (direction: SFVec3d | SFVec3f): ClosestObject;
+      /**
+       * Loses the WebGL context.
+       */
+      loseContext (): void;
+
       /**
        * Start processing events.
        */
@@ -295,11 +301,6 @@ declare namespace X3D
        * For *options* see `X3DScene.toVRMLString`.
        */
       toJSONString (options?: ToStringOptions): string;
-
-      /**
-       * Loses the WebGL context.
-       */
-      loseContext (): void;
 
       // VRML methods
 

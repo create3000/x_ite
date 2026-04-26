@@ -652,7 +652,7 @@ console .log ("The scene is loaded here as well.");
 
 Removes a browser callback function associated with *key* and *event*. If *event* is omitted, all callbacks associated with key will be removed.
 
-#### **viewAll** (*[layer?: X3DLayerNode,] transitionTime?: number = 1*): void <small><span class="blue">non-standard</span></small>
+#### **viewAll** (*[layer?: X3DLayerNode,] transitionTime?: number = 1*): void <small class="blue">non-standard</small>
 
 Modifies the current view to show the entire visible scene within *transitionTime* seconds. If *layer* is omitted, the active layer is used.
 
@@ -676,7 +676,7 @@ Changes the bound viewpoint node to the last viewpoint in the list of user viewp
 
 Changes the bound viewpoint node to the viewpoint named *name*. The viewpoint must be available in *layer*. If *layer* is omitted, the active layer is used.
 
-#### **setCursors** (*cursorTypes: CursorTypes*): void <small><span class="blue">non-standard</span></small>
+#### **setCursors** (*cursorTypes: CursorTypes*): void <small class="blue">non-standard</small>
 
 Changes the default cursor images to the ones specified in *cursorTypes*. You can omit properties if you want to use the default cursor image for this action. The values can be any valid CSS cursor.
 
@@ -696,7 +696,7 @@ type CursorTypes = {
 
 * [CSS cursor](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/cursor)
 
-#### **constrainTranslation** (*[layer: X3DLayerNode,] translation: SFVec3d | SFVec3f*): SFVec3f <small><span class="blue">non-standard</span></small>
+#### **constrainTranslation** (*[layer: X3DLayerNode,] translation: SFVec3d | SFVec3f*): SFVec3f <small class="blue">non-standard</small>
 
 Constrains a *translation*, which should be added to the position of the active viewpoint, to a possible value that avatar can move to. If the avatar reaches or intersects with an obstacle the translation is either constrained to slide along the wall or to stop. If *layer* is omitted, the active layer is used.
 
@@ -706,7 +706,7 @@ const constrained = Browser .constrainTranslation (translation);
 viewpoint .position = viewpoint .position .add (constrained);
 ```
 
-#### **getClosestObject** (*[layer: X3DLayerNode,] direction: SFVec3d | SFVec3f*): ClosestObject <small><span class="blue">non-standard</span></small>
+#### **getClosestObject** (*[layer: X3DLayerNode,] direction: SFVec3d | SFVec3f*): ClosestObject <small class="blue">non-standard</small>
 
 Returns the closest collidable object when looked in *direction*, measured from the active viewpoint position. The maximum detection radius is `2 * avatarHeight` (where *avatarHeight* is the second value of [NavigationInfo](/x_ite/components/navigation/navigationinfo/) *avatarSize*). Compare *distance* with *collisionRadius* (first value of [NavigationInfo](/x_ite/components/navigation/navigationinfo/) *avatarSize*) to detect if a collision with an object occurs. If *layer* is omitted, the active layer is used.
 
@@ -719,6 +719,10 @@ type ClosestObject = {
    normal: SFVec3f | null,
 };
 ```
+
+#### **loseContext** (): void <small class="blue">non-standard</small>
+
+Loses the WebGL context.
 
 #### **beginUpdate** (): void
 
@@ -747,10 +751,6 @@ Browser .println (new SFVec3f (1, 2, 3));
 // Expected output: 1 2 3
 </pre>
 </x3d-script-area>
-
-#### **loseContext** (): void
-
-Loses the WebGL context.
 
 #### **dispose** (): void
 

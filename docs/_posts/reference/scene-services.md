@@ -305,7 +305,7 @@ Creates or updates the exported node *exportedName.*
 
 Removes the exported node *exportedName.*
 
-#### **toVRMLString** (options?: Options): string <small><span class="blue">non-standard</span></small>
+#### **toVRMLString** (options?: Options): string <small class="blue">non-standard</small>
 
 Returns the X3D VRML-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, will produce this scene.
 
@@ -336,13 +336,13 @@ print (scene .toVRMLString ());
 </pre>
 </x3d-script-area>
 
-#### **toXMLString** (options?: Options): string <small><span class="blue">non-standard</span></small>
+#### **toXMLString** (options?: Options): string <small class="blue">non-standard</small>
 
 Returns the X3D XML-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, will produce this scene.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
-#### **toJSONString** (options?: Options): string <small><span class="blue">non-standard</span></small>
+#### **toJSONString** (options?: Options): string <small class="blue">non-standard</small>
 
 Returns the X3D JSON-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, will produce this scene.
 
