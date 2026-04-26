@@ -123,7 +123,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
             texCoordArray  = text .getTexCoords (),
             normalArray    = text .getNormals (),
             vertexArray    = text .getVertices (),
-            contentScale   = browser .getRenderingProperty ("ContentScale"),
+            contentScale   = Math .max (browser .getRenderingProperty ("ContentScale"), 1),
             canvas         = this .context .canvas,
             cx             = this .context;
 
