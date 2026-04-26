@@ -132,7 +132,7 @@ Combining objects of different types in a single expression or assignment statem
 
 | Type< | Rules |
 |-------|-------|
-|**String** | Combining a String with any number or boolean type produces a String. Use `parseInt()` or `parseFloat()` to convert a String to a number. |
+| **String** | Combining a String with any number or boolean type produces a String. Use `parseInt()` or `parseFloat()` to convert a String to a number. |
 | **Number and boolean types** | Assigning a number or boolean expression to a fixed variable (`initializeOnly` field `outputOnly` fields, or `inputOutput` fields) of scalar type (SFBool, SFDouble, SFFloat, SFInt32, SFTime converts to the type of the fixed variable.) |
 | **Vector types** <br> SFColor <br> SFColorRGBA <br> SFMatrix3d <br> SFMatrix3f <br> SFMatrix4d <br> SFMatrix4f <br> SFRotation <br> SFVec2d <br> SFVec2f <br> SFVec3d <br> SFVec3f <br> SFVec3d <br> SFVec4f | Only combine with like types. <br>  Dereference (myVector[1]) produces a value of number type. |
 | SFImage | Assignment ('=') and selection ('.') are the only allowed operations. <br>  Can only assign SFImage type. |
