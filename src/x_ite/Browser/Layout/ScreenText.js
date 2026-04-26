@@ -12,15 +12,14 @@ function ScreenText (text, fontStyle)
 
    text .setTransparent (true);
 
+   // Private properties
+
    this .textureNode = new PixelTexture (text .getExecutionContext ());
    this .context     = document .createElement ("canvas") .getContext ("2d", { willReadFrequently: true });
    this .matrix      = new Matrix4 ();
 
    this .textureNode ._textureProperties = fontStyle .getBrowser () .getScreenTextureProperties ();
    this .textureNode .setup ();
-
-   this .getBrowser () .getRenderingProperties () ._ContentScale .addInterest ("update", this);
-   this .getBrowser () .getRenderingProperties () ._ContentScale .addInterest ("build",  this);
 }
 
 Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .prototype),
