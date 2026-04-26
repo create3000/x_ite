@@ -341,7 +341,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
    {
       const bbox = new Box3 ();
 
-      return function (type, renderObject)
+      return function (type, renderObject, shapeNode)
       {
          this .getBrowser () .getScreenScaleMatrix (renderObject, this .matrix, 1, true);
 
@@ -355,6 +355,10 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
          bbox .assign (this .getBBox ()) .multRight (this .matrix);
 
          this .getText () .setBBox (bbox);
+
+         // Update X3DShapeNode bbox.
+
+         shapeNode .set_bbox__ ();
       };
    })(),
    traverseAfter (type, renderObject)
