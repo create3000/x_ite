@@ -356,7 +356,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
 
          this .getText () .setBBox (bbox);
 
-         // Update X3DShapeNode bbox.
+         // Immediately update X3DShapeNode bbox.
 
          shapeNode .set_bbox__ ();
       };
