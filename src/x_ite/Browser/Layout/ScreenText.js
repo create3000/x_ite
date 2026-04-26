@@ -18,6 +18,9 @@ function ScreenText (text, fontStyle)
 
    this .textureNode ._textureProperties = fontStyle .getBrowser () .getScreenTextureProperties ();
    this .textureNode .setup ();
+
+   this .getBrowser () .getRenderingProperties () ._ContentScale .addInterest ("update", this);
+   this .getBrowser () .getRenderingProperties () ._ContentScale .addInterest ("build",  this);
 }
 
 Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .prototype),
@@ -30,7 +33,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
    {
       return this .textureNode;
    },
-   update: (() =>
+   configure: (() =>
    {
       const
          min = new Vector3 (),
@@ -38,7 +41,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
 
       return function ()
       {
-         X3DTextGeometry .prototype .update .call (this);
+         X3DTextGeometry .prototype .configure .call (this);
 
          const
             fontStyle    = this .getFontStyle (),

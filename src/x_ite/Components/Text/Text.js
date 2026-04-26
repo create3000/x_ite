@@ -75,7 +75,6 @@ Object .assign (Object .setPrototypeOf (Text .prototype, X3DGeometryNode .protot
    build ()
    {
       this .textGeometry .update ();
-      this .textGeometry .build ();
 
       this .setSolid (this ._solid .getValue ());
    },

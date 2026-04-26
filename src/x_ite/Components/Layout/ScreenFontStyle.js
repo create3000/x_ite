@@ -15,12 +15,6 @@ function ScreenFontStyle (executionContext)
 
 Object .assign (Object .setPrototypeOf (ScreenFontStyle .prototype, X3DFontStyleNode .prototype),
 {
-   initialize ()
-   {
-      X3DFontStyleNode .prototype .initialize .call (this);
-
-      this .getBrowser () .getRenderingProperties () ._ContentScale .addInterest ("addNodeEvent", this);
-   },
    createTextGeometry (text)
    {
       return new ScreenText (text, this);

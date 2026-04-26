@@ -85,6 +85,11 @@ Object .assign (X3DTextGeometry .prototype,
    },
    update ()
    {
+      this .configure ();
+      this .build ();
+   },
+   configure ()
+   {
       const
          text      = this .text,
          fontStyle = this .fontStyle,
