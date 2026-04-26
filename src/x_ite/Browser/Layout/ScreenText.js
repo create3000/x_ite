@@ -341,23 +341,27 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
    },
    traverseBefore: (() =>
    {
-      const bbox = new Box3 ();
+      const
+         bbox   = new Box3 (),
+         matrix = new Matrix4 ();
 
       return function (type, renderObject, shapeNode)
       {
-         this .getBrowser () .getScreenScaleMatrix (renderObject, this .matrix, 1, true);
+         this .getBrowser () .getScreenScaleMatrix (renderObject, matrix, 1, true);
 
          const modelViewMatrix = renderObject .getModelViewMatrix ();
 
          modelViewMatrix .push ();
-         modelViewMatrix .multLeft (this .matrix);
+         modelViewMatrix .multLeft (matrix);
+
+         if (matrix .equals (this .matrix))
+            return;
+
+         this .matrix .assign (matrix);
 
          // Update Text bbox.
 
          bbox .assign (this .getBBox ()) .multRight (this .matrix);
-
-         if (this .getText () .getBBox () .equals (bbox))
-            return;
 
          this .getText () .setBBox (bbox);
 
