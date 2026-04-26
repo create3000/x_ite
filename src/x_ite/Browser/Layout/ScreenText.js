@@ -289,10 +289,8 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
 
       cx .beginPath ();
 
-      for (let i = 0, cl = commands .length; i < cl; ++ i)
+      for (const command of commands)
       {
-         const command = commands [i];
-
          switch (command .type)
          {
             case "M": // Start
