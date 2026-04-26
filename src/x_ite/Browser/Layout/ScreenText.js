@@ -181,23 +181,26 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
 
          cx .save ();
          cx .translate (0, canvas .height);
-         cx .scale (textureContentScale, -textureContentScale);
+         cx .scale (canvas .width / width, -canvas .height / height);
 
          // Draw glyphs.
 
          if (fontStyle ._horizontal .getValue ())
          {
-            for (let l = 0, length = glyphs .length; l < length; ++ l)
+            const numLines = glyphs .length;
+
+            for (let l = 0; l < numLines; ++ l)
             {
                const
                   line        = glyphs [l],
                   translation = translations [l],
                   charSpacing = charSpacings [l],
-                  scale       = scales [l];
+                  scale       = scales [l],
+                  numGlyphs   = line .length;
 
                let advanceWidth = 0;
 
-               for (let g = 0, gl = line .length; g < gl; ++ g)
+               for (let g = 0; g < numGlyphs; ++ g)
                {
                   const
                      glyph = line [g],
