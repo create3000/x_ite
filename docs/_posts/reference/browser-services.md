@@ -739,10 +739,12 @@ Prints *objects* to the browser's console, inserting a newline character after t
 <x3d-script-area name="X3D ECMAScript Example: X3DBrowser println">
 <pre>
 Browser .println ("Debug output ...");
-Browser .println ("comes here.");
+Browser .println ("comes here:");
+Browser .println (new SFVec3f (1, 2, 3));
 
 // Expected output: Debug output ...
-// Expected output: comes here.
+// Expected output: comes here:
+// Expected output: 1 2 3
 </pre>
 </x3d-script-area>
 
