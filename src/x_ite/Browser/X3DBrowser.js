@@ -964,6 +964,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       this .currentScene .toJSONStream (generator);
    },
+   loseContext ()
+   {
+      this .getContext () .getExtension ("WEBGL_lose_context") .loseContext ();
+   },
    dispose ()
    {
       this [_DOMIntegration] .dispose ();

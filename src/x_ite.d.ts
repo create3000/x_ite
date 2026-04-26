@@ -296,6 +296,11 @@ declare namespace X3D
        */
       toJSONString (options?: ToStringOptions): string;
 
+      /**
+       * Loses the WebGL context.
+       */
+      loseContext (): void;
+
       // VRML methods
 
       /**

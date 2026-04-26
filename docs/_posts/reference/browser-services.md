@@ -746,6 +746,10 @@ Browser .println ("comes here.");
 </pre>
 </x3d-script-area>
 
+#### **loseContext** (): void
+
+Loses the WebGL context.
+
 #### **dispose** (): void
 
 Disposes this X3DBrowser. The object can then no longer be used.
