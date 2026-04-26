@@ -232,7 +232,7 @@ print (Browser .getBrowserOption ("TextCompression"));
 
 ##### Browser Options
 
-| Name | Description | Type / valid range | Default |
+| Name | Description | Type / Valid Range | Default |
 |------|-------------|--------------------|---------|
 | Antialiased | Render using hardware antialiasing if available. | Boolean | false |
 | Dashboard | Display browser navigation user interface. | Boolean | true |
