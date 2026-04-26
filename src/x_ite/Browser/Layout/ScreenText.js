@@ -18,8 +18,6 @@ function ScreenText (text, fontStyle)
 
    this .textureNode ._textureProperties = fontStyle .getBrowser () .getScreenTextureProperties ();
    this .textureNode .setup ();
-
-   this .getBrowser () .getRenderingProperties () ._ContentScale .addInterest ("build", this);
 }
 
 Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .prototype),
@@ -43,9 +41,10 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
          X3DTextGeometry .prototype .update .call (this);
 
          const
-            fontStyle = this .getFontStyle (),
-            text      = this .getText (),
-            offset    = 1; // For antialiasing border on bottom and right side
+            fontStyle    = this .getFontStyle (),
+            text         = this .getText (),
+            offset       = 1, // For antialiasing border on bottom and right side
+            contentScale = this .getBrowser () .getRenderingProperty ("ContentScale");
 
          text ._textBounds .x = Math .ceil (text ._textBounds .x) + offset;
          text ._textBounds .y = Math .ceil (text ._textBounds .y) + offset;
@@ -92,6 +91,9 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
          text ._origin .x = min .x;
          text ._origin .y = max .y;
 
+         min .multiply (contentScale);
+         max .multiply (contentScale);
+
          this .getBBox () .setExtents (min, max);
       };
    })(),
@@ -111,21 +113,22 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
             return;
 
          const
-            browser        = this .getBrowser (),
-            text           = this .getText (),
-            glyphs         = this .getGlyphs (),
-            minorAlignment = this .getMinorAlignment (),
-            translations   = this .getTranslations (),
-            charSpacings   = this .getCharSpacings (),
-            scales         = this .getScales (),
-            size           = fontStyle .getScale (), // in pixel
-            sizeUnitsPerEm = size / font .unitsPerEm,
-            texCoordArray  = text .getTexCoords (),
-            normalArray    = text .getNormals (),
-            vertexArray    = text .getVertices (),
-            contentScale   = Math .max (browser .getRenderingProperty ("ContentScale"), 1),
-            canvas         = this .context .canvas,
-            cx             = this .context;
+            browser             = this .getBrowser (),
+            text                = this .getText (),
+            glyphs              = this .getGlyphs (),
+            minorAlignment      = this .getMinorAlignment (),
+            translations        = this .getTranslations (),
+            charSpacings        = this .getCharSpacings (),
+            scales              = this .getScales (),
+            size                = fontStyle .getScale (), // in pixel
+            sizeUnitsPerEm      = size / font .unitsPerEm,
+            texCoordArray       = text .getTexCoords (),
+            normalArray         = text .getNormals (),
+            vertexArray         = text .getVertices (),
+            contentScale        = browser .getRenderingProperty ("ContentScale"),
+            textureContentScale = Math .max (contentScale, 1),
+            canvas              = this .context .canvas,
+            cx                  = this .context;
 
          // Set texCoord.
 
@@ -134,6 +137,13 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
          // Triangle one and two.
 
          this .getBBox () .getExtents (min, max);
+
+         texCoordArray .push (0, 0, 0, 1,
+                              1, 0, 0, 1,
+                              1, 1, 0, 1,
+                              0, 0, 0, 1,
+                              1, 1, 0, 1,
+                              0, 1, 0, 1);
 
          normalArray .push (0, 0, 1,
                             0, 0, 1,
@@ -149,28 +159,17 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
                             max .x, max .y, 0, 1,
                             min .x, max .y, 0, 1);
 
+         min .divide (contentScale);
+         max .divide (contentScale);
+
          // Generate texture.
 
-         const
-            width  = text ._textBounds .x,
-            height = text ._textBounds .y;
+         const [width, height] = text ._textBounds;
 
          // Scale canvas.
 
-         canvas .width  = width  * contentScale;
-         canvas .height = height * contentScale;
-
-         const
-            w = width  / canvas .width,
-            h = height / canvas .height,
-            y = 1 - h;
-
-         texCoordArray .push (0, y, 0, 1,
-                              w, y, 0, 1,
-                              w, 1, 0, 1,
-                              0, y, 0, 1,
-                              w, 1, 0, 1,
-                              0, 1, 0, 1);
+         canvas .width  = width  * textureContentScale;
+         canvas .height = height * textureContentScale;
 
          // Setup canvas.
 
@@ -180,7 +179,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
 
          cx .save ();
          cx .translate (0, canvas .height);
-         cx .scale (1, -1);
+         cx .scale (textureContentScale, -textureContentScale);
 
          // Draw glyphs.
 

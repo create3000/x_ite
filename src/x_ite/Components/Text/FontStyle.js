@@ -27,10 +27,6 @@ Object .assign (Object .setPrototypeOf (FontStyle .prototype, X3DFontStyleNode .
    {
       return this ._size .getValue ();
    },
-   getContentScale ()
-   {
-      return 1;
-   },
 });
 
 Object .defineProperties (FontStyle,
