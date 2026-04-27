@@ -106,19 +106,19 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
       },
       multVecMatrix (vector)
       {
-         return new (vector .constructor) (this .getValue () .multVecMatrix (vector .getValue () .copy ()));
+         return vector .constructor .fromValue (this .getValue () .multVecMatrix (vector .getValue () .copy ()));
       },
       multMatrixVec (vector)
       {
-         return new (vector .constructor) (this .getValue () .multMatrixVec (vector .getValue () .copy ()));
+         return vector .constructor .fromValue (this .getValue () .multMatrixVec (vector .getValue () .copy ()));
       },
       multDirMatrix (vector)
       {
-         return new (vector .constructor) (this .getValue () .multDirMatrix (vector .getValue () .copy ()));
+         return vector .constructor .fromValue (this .getValue () .multDirMatrix (vector .getValue () .copy ()));
       },
       multMatrixDir (vector)
       {
-         return new (vector .constructor) (this .getValue () .multMatrixDir (vector .getValue () .copy ()));
+         return vector .constructor .fromValue (this .getValue () .multMatrixDir (vector .getValue () .copy ()));
       },
       translate (translation)
       {
