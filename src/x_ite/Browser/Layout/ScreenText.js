@@ -177,8 +177,6 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
          canvas .width  = width  * contentScale;
          canvas .height = height * contentScale;
 
-         console .log (canvas .width, canvas .height);
-
          // Setup canvas.
 
          cx .fillStyle = "rgba(255,255,255,0)";
