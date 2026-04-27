@@ -41,15 +41,13 @@ Object .assign (Matrix3 .prototype,
    },
    equals (matrix)
    {
-      return this [0] === matrix [0] &&
-             this [1] === matrix [1] &&
-             this [2] === matrix [2] &&
-             this [3] === matrix [3] &&
-             this [4] === matrix [4] &&
-             this [5] === matrix [5] &&
-             this [6] === matrix [6] &&
-             this [7] === matrix [7] &&
-             this [8] === matrix [8];
+      for (let i = 0; i < 9; ++ i)
+      {
+         if (this [i] !== matrix [i])
+            return false;
+      }
+
+      return true;
    },
    set1 (r, c, value)
    {

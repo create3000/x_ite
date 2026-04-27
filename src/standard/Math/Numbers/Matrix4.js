@@ -43,22 +43,13 @@ Object .assign (Matrix4 .prototype,
    },
    equals (matrix)
    {
-      return this [ 0] === matrix [ 0] &&
-             this [ 1] === matrix [ 1] &&
-             this [ 2] === matrix [ 2] &&
-             this [ 3] === matrix [ 3] &&
-             this [ 4] === matrix [ 4] &&
-             this [ 5] === matrix [ 5] &&
-             this [ 6] === matrix [ 6] &&
-             this [ 7] === matrix [ 7] &&
-             this [ 8] === matrix [ 8] &&
-             this [ 9] === matrix [ 9] &&
-             this [10] === matrix [10] &&
-             this [11] === matrix [11] &&
-             this [12] === matrix [12] &&
-             this [13] === matrix [13] &&
-             this [14] === matrix [14] &&
-             this [15] === matrix [15];
+      for (let i = 0; i < 16; ++ i)
+      {
+         if (this [i] !== matrix [i])
+            return false;
+      }
+
+      return true;
    },
    set1 (r, c, value)
    {
