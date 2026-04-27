@@ -147,10 +147,10 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
             copy .setup ();
          }
 
-         return SFNode .fromValue (copy);
+         return new SFNode (copy);
       }
 
-      return SFNode .fromValue (value);
+      return new SFNode (value);
    },
    equals (node)
    {

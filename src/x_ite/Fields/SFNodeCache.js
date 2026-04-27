@@ -44,6 +44,7 @@ const disable =
 
 const properties =
 {
+   fromValue: disable,
    fromString: disable,
    fromVRMLString: disable,
    fromXMLString: disable,
