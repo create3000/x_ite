@@ -92,6 +92,11 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
 
          this .getBBox () .setExtents (min, max);
 
+         this .matrix .set (0, 0, 0, 0,
+                            0, 0, 0, 0,
+                            0, 0, 0, 0,
+                            0, 0, 0, 0);
+
          // Scale text geometry and origin by contentScale.
 
          text ._origin .x = min .x / contentScale;
