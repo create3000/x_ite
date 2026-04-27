@@ -150,6 +150,7 @@ Object .assign (X3DTextGeometry .prototype,
          maxExtent       = Math .max (0, text ._maxExtent .getValue ()),
          topToBottom     = fontStyle ._topToBottom .getValue (),
          scale           = fontStyle .getScale (),
+         contentScale    = fontStyle .getContentScale (),
          spacing         = fontStyle ._spacing .getValue (),
          textCompression = this .getBrowser () .getBrowserOptions () .getTextCompression ();
 
@@ -175,7 +176,7 @@ Object .assign (X3DTextGeometry .prototype,
          // Calculate charSpacing and lineBounds.
 
          const
-            length = text .getLength (l),
+            length = text .getLength (l) * contentScale,
             w      = size .x * scale;
 
          let charSpacing = 0;
@@ -228,7 +229,7 @@ Object .assign (X3DTextGeometry .prototype,
 
          if (extent > maxExtent)
          {
-            const s = maxExtent / extent;
+            const s = (maxExtent * contentScale) / extent;
 
             switch (textCompression)
             {
@@ -315,6 +316,7 @@ Object .assign (X3DTextGeometry .prototype,
          leftToRight      = fontStyle ._leftToRight .getValue (),
          topToBottom      = fontStyle ._topToBottom .getValue (),
          scale            = fontStyle .getScale (),
+         contentScale     = fontStyle .getContentScale (),
          spacing          = fontStyle ._spacing .getValue (),
          primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality (),
          textCompression  = this .getBrowser () .getBrowserOptions () .getTextCompression ();
@@ -384,7 +386,7 @@ Object .assign (X3DTextGeometry .prototype,
          const
             lineNumber = leftToRight ? l : numLines - l - 1,
             padding    = (spacing - size .x) / 2,
-            length     = text .getLength (l);
+            length     = text .getLength (l) * contentScale;
 
          let charSpacing = 0;
 
@@ -460,7 +462,7 @@ Object .assign (X3DTextGeometry .prototype,
 
          if (extent > maxExtent)
          {
-            const s = maxExtent / extent;
+            const s = (maxExtent * contentScale) / extent;
 
             switch (textCompression)
             {

@@ -28,7 +28,11 @@ Object .assign (Object .setPrototypeOf (ScreenFontStyle .prototype, X3DFontStyle
    },
    getScale ()
    {
-      return this ._pointSize .getValue () * this .getBrowser () .getRenderingProperty ("PixelsPerPoint");
+      return this ._pointSize .getValue () * this .getBrowser () .getRenderingProperty ("PixelsPerPoint") * this .getContentScale ();
+   },
+   getContentScale ()
+   {
+      return this .getBrowser () .getRenderingProperty ("ContentScale");
    },
 });
 
