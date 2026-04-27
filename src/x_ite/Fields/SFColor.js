@@ -186,12 +186,12 @@ Object .defineProperties (SFColor,
    ... X3DField .getStaticProperties ("SFColor"),
    BLACK:
    {
-      value: new SFColor (),
+      value: new SFColor (Color3),
       enumerable: true,
    },
    WHITE:
    {
-      value: new SFColor (1, 1, 1),
+      value: new SFColor (Color3 .WHITE),
       enumerable: true,
    },
    fromHSV:

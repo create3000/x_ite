@@ -29,12 +29,12 @@ function SFVec2Template (TypeName, double)
    {
       X_AXIS:
       {
-         value: new SFVec2 (1, 0),
+         value: new SFVec2 (Vector2 .X_AXIS),
          enumerable: true,
       },
       Y_AXIS:
       {
-         value: new SFVec2 (0, 1),
+         value: new SFVec2 (Vector2 .Y_AXIS),
          enumerable: true,
       },
    });

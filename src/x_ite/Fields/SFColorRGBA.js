@@ -153,17 +153,17 @@ Object .defineProperties (SFColorRGBA,
    ... X3DField .getStaticProperties ("SFColorRGBA"),
    BLACK:
    {
-      value: new SFColorRGBA (0, 0, 0, 1),
+      value: new SFColorRGBA (Color4 .BLACK),
       enumerable: true,
    },
    TRANSPARENT:
    {
-      value: new SFColorRGBA (),
+      value: new SFColorRGBA (Color4 .TRANSPARENT),
       enumerable: true,
    },
    WHITE:
    {
-      value: new SFColorRGBA (1, 1, 1, 1),
+      value: new SFColorRGBA (Color4 .WHITE),
       enumerable: true,
    },
    fromHSVA:

@@ -50,9 +50,14 @@ function SFMatrix4Template (TypeName, double)
 
    Object .defineProperties (SFMatrix4,
    {
+      ZERO:
+      {
+         value: new SFMatrix4 (Matrix4 .ZERO),
+         enumerable: true,
+      },
       IDENTITY:
       {
-         value: new SFMatrix4 (),
+         value: new SFMatrix4 (Matrix4 .IDENTITY),
          enumerable: true,
       },
    });

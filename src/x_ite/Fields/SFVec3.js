@@ -29,17 +29,17 @@ function SFVec3Template (TypeName, double)
    {
       X_AXIS:
       {
-         value: new SFVec3 (1, 0, 0),
+         value: new SFVec3 (Vector3 .X_AXIS),
          enumerable: true,
       },
       Y_AXIS:
       {
-         value: new SFVec3 (0, 1, 0),
+         value: new SFVec3 (Vector3 .Y_AXIS),
          enumerable: true,
       },
       Z_AXIS:
       {
-         value: new SFVec3 (0, 0, 1),
+         value: new SFVec3 (Vector3 .Z_AXIS),
          enumerable: true,
       },
    });

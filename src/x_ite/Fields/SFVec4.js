@@ -29,22 +29,22 @@ function SFVec4Template (TypeName, double)
    {
       X_AXIS:
       {
-         value: new SFVec4 (1, 0, 0, 0),
+         value: new SFVec4 (Vector4 .X_AXIS),
          enumerable: true,
       },
       Y_AXIS:
       {
-         value: new SFVec4 (0, 1, 0, 0),
+         value: new SFVec4 (Vector4 .Y_AXIS),
          enumerable: true,
       },
       Z_AXIS:
       {
-         value: new SFVec4 (0, 0, 1, 0),
+         value: new SFVec4 (Vector4 .Z_AXIS),
          enumerable: true,
       },
       W_AXIS:
       {
-         value: new SFVec4 (0, 0, 0, 1),
+         value: new SFVec4 (Vector4 .W_AXIS),
          enumerable: true,
       },
    });

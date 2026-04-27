@@ -234,6 +234,7 @@ Object .defineProperties (Matrix2 .prototype,
 
 Object .assign (Matrix2,
 {
+   ZERO: Object .freeze (new Matrix2 (0, 0, 0, 0)),
    IDENTITY: Object .freeze (new Matrix2 ()),
 });
 

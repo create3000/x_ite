@@ -246,7 +246,7 @@ Object .defineProperties (SFRotation,
    ... X3DField .getStaticProperties ("SFRotation"),
    IDENTITY:
    {
-      value: new SFRotation (),
+      value: new SFRotation (Rotation4 .IDENTITY),
       enumerable: true,
    },
 });

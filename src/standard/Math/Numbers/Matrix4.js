@@ -708,6 +708,7 @@ Object .defineProperties (Matrix4 .prototype,
 
 Object .assign (Matrix4,
 {
+   ZERO: Object .freeze (new Matrix4 (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)),
    IDENTITY: Object .freeze (new Matrix4 ()),
    fromRotation (rotation)
    {

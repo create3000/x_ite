@@ -519,6 +519,10 @@ const copy = new SFMatrix3d (... matrix); // Copy using spread syntax.
 
 ### Static Properties
 
+#### **ZERO**: SFMatrix3d/f
+
+Returns the zero matrix.
+
 #### **IDENTITY**: SFMatrix3d/f
 
 Returns the identity matrix.
@@ -648,6 +652,10 @@ const copy = new SFMatrix4d (... matrix); // Copy using spread syntax.
 ```
 
 ### Static Properties
+
+#### **ZERO**: SFMatrix4d/f
+
+Returns the zero matrix.
 
 #### **IDENTITY**: SFMatrix4d/f
 

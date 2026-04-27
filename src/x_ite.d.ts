@@ -2020,6 +2020,7 @@ declare namespace X3D
       static readonly type: number;
       static readonly typeName: "SFMatrix3d";
 
+      static readonly ZERO: SFMatrix3d;
       static readonly IDENTITY: SFMatrix3d;
    }
 
@@ -2031,6 +2032,7 @@ declare namespace X3D
       static readonly type: number;
       static readonly typeName: "SFMatrix3f";
 
+      static readonly ZERO: SFMatrix3f;
       static readonly IDENTITY: SFMatrix3f;
    }
 
@@ -2138,6 +2140,7 @@ declare namespace X3D
       static readonly type: number;
       static readonly typeName: "SFMatrix4d";
 
+      static readonly ZERO: SFMatrix4d;
       static readonly IDENTITY: SFMatrix4d;
    }
 
@@ -2149,6 +2152,7 @@ declare namespace X3D
       static readonly type: number;
       static readonly typeName: "SFMatrix4f";
 
+      static readonly ZERO: SFMatrix4f;
       static readonly IDENTITY: SFMatrix4f;
    }
 

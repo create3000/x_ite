@@ -34,9 +34,7 @@ Object .assign (Box2 .prototype,
       {
          case 0:
          {
-            this .matrix .set (0, 0, 0,
-                               0, 0, 0,
-                               0, 0, 0);
+            this .matrix .assign (Matrix3 .ZERO);
 
             return this;
          }
