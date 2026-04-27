@@ -36,7 +36,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
    {
       const
          min = new Vector3 (),
-         max = new Vector3 (1, 1, 0);
+         max = new Vector3 ();
 
       return function ()
       {
@@ -116,7 +116,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
    {
       const
          min = new Vector3 (),
-         max = new Vector3 (1, 1, 0);
+         max = new Vector3 ();
 
       return function ()
       {
