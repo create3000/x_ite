@@ -97,13 +97,13 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
          text ._origin .x = min .x / contentScale;
          text ._origin .y = max .y / contentScale;
 
-         text ._textBounds .x = text ._textBounds .x / contentScale;
-         text ._textBounds .y = text ._textBounds .y / contentScale;
+         text ._textBounds .x /= contentScale;
+         text ._textBounds .y /= contentScale;
 
          for (const lineBound of text ._lineBounds)
          {
-            lineBound .x = lineBound .x / contentScale;
-            lineBound .y = lineBound .y / contentScale;
+            lineBound .x /= contentScale;
+            lineBound .y /= contentScale;
          }
       };
    })(),
