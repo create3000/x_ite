@@ -1575,7 +1575,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const multiscatterColor = new Color3 ();
 
-      if (this .vectorValue (KHR_materials_volume_scatter .multiscatterColor, multiscatterColor))
+      if (this .vectorValue (KHR_materials_volume_scatter .multiscatterColorFactor, multiscatterColor))
          extension ._multiscatterColor = multiscatterColor;
 
       extension ._multiscatterColorTexture        = this .textureInfo (KHR_materials_volume_scatter .multiscatterColorTexture);
