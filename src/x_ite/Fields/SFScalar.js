@@ -153,10 +153,7 @@ function SFStringTemplate (TypeName)
 
 function SFScalarPrototypeTemplate (Constructor, TypeName, properties = { })
 {
-   Object .defineProperties (Constructor,
-   {
-      ... X3DField .getStaticProperties (TypeName),
-   });
+   X3DField .addStaticProperties (Constructor, TypeName);
 
    Object .assign (Object .setPrototypeOf (Constructor .prototype, X3DField .prototype),
    {

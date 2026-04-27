@@ -32,7 +32,7 @@ Object .assign (Object .setPrototypeOf (SFColorRGBA .prototype, X3DField .protot
    },
    copy ()
    {
-      return new SFColorRGBA (this .getValue () .copy ());
+      return SFColorRGBA .fromValue (this .getValue () .copy ());
    },
    equals: SFColor .prototype .equals,
    isDefaultValue ()
@@ -51,11 +51,11 @@ Object .assign (Object .setPrototypeOf (SFColorRGBA .prototype, X3DField .protot
    },
    linearToSRGB ()
    {
-      return new SFColorRGBA (this .getValue () .linearToSRGB ());
+      return SFColorRGBA .fromValue (this .getValue () .linearToSRGB ());
    },
    sRGBToLinear ()
    {
-      return new SFColorRGBA (this .getValue () .sRGBToLinear ());
+      return SFColorRGBA .fromValue (this .getValue () .sRGBToLinear ());
    },
    lerp: (() =>
    {
@@ -148,22 +148,23 @@ Object .defineProperties (SFColorRGBA .prototype,
    a: Object .assign ({ enumerable: true }, a),
 });
 
+X3DField .addStaticProperties (SFColorRGBA, "SFColorRGBA");
+
 Object .defineProperties (SFColorRGBA,
 {
-   ... X3DField .getStaticProperties ("SFColorRGBA"),
    BLACK:
    {
-      value: new SFColorRGBA (Color4 .BLACK),
+      value: SFColorRGBA .fromValue (Color4 .BLACK),
       enumerable: true,
    },
    TRANSPARENT:
    {
-      value: new SFColorRGBA (Color4 .TRANSPARENT),
+      value: SFColorRGBA .fromValue (Color4 .TRANSPARENT),
       enumerable: true,
    },
    WHITE:
    {
-      value: new SFColorRGBA (Color4 .WHITE),
+      value: SFColorRGBA .fromValue (Color4 .WHITE),
       enumerable: true,
    },
    fromHSVA:

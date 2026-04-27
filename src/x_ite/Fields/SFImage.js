@@ -132,7 +132,7 @@ Object .assign (Object .setPrototypeOf (SFImage .prototype, X3DField .prototype)
    },
    copy ()
    {
-      return new SFImage (this .getValue () .copy ());
+      return SFImage .fromValue (this .getValue () .copy ());
    },
    equals (image)
    {
@@ -317,9 +317,6 @@ Object .defineProperties (SFImage .prototype,
    array:  Object .assign ({ enumerable: true }, array),
 });
 
-Object .defineProperties (SFImage,
-{
-   ... X3DField .getStaticProperties ("SFImage"),
-});
+X3DField .addStaticProperties (SFImage, "SFImage");
 
 export default SFImage;

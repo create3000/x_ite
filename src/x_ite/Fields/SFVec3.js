@@ -25,32 +25,34 @@ function SFVec3Template (TypeName, double)
       }
    }
 
+   SFVecPrototypeTemplate (SFVec3, TypeName, Vector3, double,
+   {
+      cross (vector)
+      {
+         return SFVec3 .fromValue (this .getValue () .copy () .cross (vector .getValue ()));
+      },
+   });
+
    Object .defineProperties (SFVec3,
    {
       X_AXIS:
       {
-         value: new SFVec3 (Vector3 .X_AXIS),
+         value: SFVec3 .fromValue (Vector3 .X_AXIS),
          enumerable: true,
       },
       Y_AXIS:
       {
-         value: new SFVec3 (Vector3 .Y_AXIS),
+         value: SFVec3 .fromValue (Vector3 .Y_AXIS),
          enumerable: true,
       },
       Z_AXIS:
       {
-         value: new SFVec3 (Vector3 .Z_AXIS),
+         value: SFVec3 .fromValue (Vector3 .Z_AXIS),
          enumerable: true,
       },
    });
 
-   return SFVecPrototypeTemplate (SFVec3, TypeName, Vector3, double,
-   {
-      cross (vector)
-      {
-         return new (this .constructor) (this .getValue () .copy () .cross (vector .getValue ()));
-      },
-   });
+   return SFVec3;
 }
 
 const SFVec3 = {

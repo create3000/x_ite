@@ -60,7 +60,7 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
    },
    copy ()
    {
-      return new SFRotation (this .getValue () .copy ());
+      return SFRotation .fromValue (this .getValue () .copy ());
    },
    equals (rotation)
    {
@@ -81,7 +81,7 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
    },
    getAxis ()
    {
-      return new SFVec3f (this .getValue () .getAxis ());
+      return SFVec3f .fromValue (this .getValue () .getAxis ());
    },
    setMatrix (matrix)
    {
@@ -90,7 +90,7 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
    },
    getMatrix ()
    {
-      return new SFMatrix3f (this .getValue () .getMatrix ());
+      return SFMatrix3f .fromValue (this .getValue () .getMatrix ());
    },
    setQuaternion: (() =>
    {
@@ -113,23 +113,23 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
    })(),
    inverse ()
    {
-      return new SFRotation (this .getValue () .copy () .inverse ());
+      return SFRotation .fromValue (this .getValue () .copy () .inverse ());
    },
    multiply (rotation)
    {
-      return new SFRotation (this .getValue () .copy () .multRight (rotation .getValue ()));
+      return SFRotation .fromValue (this .getValue () .copy () .multRight (rotation .getValue ()));
    },
    multVec (vector)
    {
-      return new (vector .constructor) (this .getValue () .multVecRot (vector .getValue () .copy ()));
+      return vector .constructor .fromValue (this .getValue () .multVecRot (vector .getValue () .copy ()));
    },
    slerp (rotation, t)
    {
-      return new SFRotation (this .getValue () .copy () .slerp (rotation .getValue (), t));
+      return SFRotation .fromValue (this .getValue () .copy () .slerp (rotation .getValue (), t));
    },
    straighten (upVector)
    {
-      return new SFRotation (this .getValue () .copy () .straighten (upVector ?.getValue ()));
+      return SFRotation .fromValue (this .getValue () .copy () .straighten (upVector ?.getValue ()));
    },
    toStream (generator)
    {
@@ -241,12 +241,13 @@ Object .defineProperties (SFRotation .prototype,
    angle: Object .assign ({ enumerable: true }, angle),
 });
 
+X3DField .addStaticProperties (SFRotation, "SFRotation");
+
 Object .defineProperties (SFRotation,
 {
-   ... X3DField .getStaticProperties ("SFRotation"),
    IDENTITY:
    {
-      value: new SFRotation (Rotation4 .IDENTITY),
+      value: SFRotation .fromValue (Rotation4 .IDENTITY),
       enumerable: true,
    },
 });

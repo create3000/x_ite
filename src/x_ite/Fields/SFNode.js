@@ -147,10 +147,10 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
             copy .setup ();
          }
 
-         return new SFNode (copy);
+         return SFNode .fromValue (copy);
       }
 
-      return new SFNode (value);
+      return SFNode .fromValue (value);
    },
    equals (node)
    {
@@ -413,9 +413,6 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
 for (const key of Object .keys (SFNode .prototype))
    Object .defineProperty (SFNode .prototype, key, { enumerable: false });
 
-Object .defineProperties (SFNode,
-{
-   ... X3DField .getStaticProperties ("SFNode"),
-});
+X3DField .addStaticProperties (SFNode, "SFNode");
 
 export default SFNode;

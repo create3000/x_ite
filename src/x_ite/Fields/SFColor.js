@@ -31,7 +31,7 @@ Object .assign (Object .setPrototypeOf (SFColor .prototype, X3DField .prototype)
    },
    copy ()
    {
-      return new SFColor (this .getValue () .copy ());
+      return SFColor .fromValue (this .getValue () .copy ());
    },
    equals (color)
    {
@@ -56,11 +56,11 @@ Object .assign (Object .setPrototypeOf (SFColor .prototype, X3DField .prototype)
    },
    linearToSRGB ()
    {
-      return new SFColor (this .getValue () .linearToSRGB ());
+      return SFColor .fromValue (this .getValue () .linearToSRGB ());
    },
    sRGBToLinear ()
    {
-      return new SFColor (this .getValue () .sRGBToLinear ());
+      return SFColor .fromValue (this .getValue () .sRGBToLinear ());
    },
    lerp: (() =>
    {
@@ -181,17 +181,18 @@ Object .defineProperties (SFColor .prototype,
    b: Object .assign ({ enumerable: true }, b),
 });
 
+X3DField .addStaticProperties (SFColor, "SFColor");
+
 Object .defineProperties (SFColor,
 {
-   ... X3DField .getStaticProperties ("SFColor"),
    BLACK:
    {
-      value: new SFColor (Color3),
+      value: SFColor .fromValue (Color3 .BLACK),
       enumerable: true,
    },
    WHITE:
    {
-      value: new SFColor (Color3 .WHITE),
+      value: SFColor .fromValue (Color3 .WHITE),
       enumerable: true,
    },
    fromHSV:

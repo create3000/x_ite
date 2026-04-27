@@ -245,10 +245,7 @@ Object .assign (Object .setPrototypeOf (MFNode .prototype, X3DObjectArrayField .
 for (const key of Object .keys (MFNode .prototype))
    Object .defineProperty (MFNode .prototype, key, { enumerable: false });
 
-Object .defineProperties (MFNode,
-{
-   ... X3DField .getStaticProperties ("MFNode"),
-});
+X3DField .addStaticProperties (MFNode, "MFNode");
 
 function MFString (... args)
 {
@@ -290,10 +287,7 @@ Object .assign (Object .setPrototypeOf (MFString .prototype, X3DObjectArrayField
 for (const key of Object .keys (MFString .prototype))
    Object .defineProperty (MFString .prototype, key, { enumerable: false });
 
-Object .defineProperties (MFString,
-{
-   ... X3DField .getStaticProperties ("MFString"),
-});
+X3DField .addStaticProperties (MFString, "MFString");
 
 /**
  * MFImage
@@ -315,10 +309,7 @@ Object .assign (Object .setPrototypeOf (MFImage .prototype, X3DObjectArrayField 
 for (const key of Object .keys (MFImage .prototype))
    Object .defineProperty (MFImage .prototype, key, { enumerable: false });
 
-Object .defineProperties (MFImage,
-{
-   ... X3DField .getStaticProperties ("MFImage"),
-});
+X3DField .addStaticProperties (MFImage, "MFImage");
 
 function TypedArrayTemplate (TypeName, SingleType, ValueType, ArrayType, Components, singleValue)
 {
@@ -354,10 +345,7 @@ function TypedArrayTemplate (TypeName, SingleType, ValueType, ArrayType, Compone
    for (const key of Object .keys (ArrayField .prototype))
       Object .defineProperty (ArrayField .prototype, key, { enumerable: false });
 
-   Object .defineProperties (ArrayField,
-   {
-      ... X3DField .getStaticProperties (TypeName),
-   });
+   X3DField .addStaticProperties (ArrayField, TypeName);
 
    return ArrayField;
 }

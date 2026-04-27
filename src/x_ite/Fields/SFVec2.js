@@ -25,21 +25,23 @@ function SFVec2Template (TypeName, double)
       }
    }
 
+   SFVecPrototypeTemplate (SFVec2, TypeName, Vector2, double)
+
    Object .defineProperties (SFVec2,
    {
       X_AXIS:
       {
-         value: new SFVec2 (Vector2 .X_AXIS),
+         value: SFVec2 .fromValue (Vector2 .X_AXIS),
          enumerable: true,
       },
       Y_AXIS:
       {
-         value: new SFVec2 (Vector2 .Y_AXIS),
+         value: SFVec2 .fromValue (Vector2 .Y_AXIS),
          enumerable: true,
       },
    });
 
-   return SFVecPrototypeTemplate (SFVec2, TypeName, Vector2, double);
+   return SFVec2;
 }
 
 const SFVec2 = {

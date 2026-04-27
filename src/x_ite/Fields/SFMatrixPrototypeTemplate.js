@@ -5,10 +5,7 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
 {
    const _formatter = double ? "DoubleFormat" : "FloatFormat";
 
-   Object .defineProperties (Constructor,
-   {
-      ... X3DField .getStaticProperties (TypeName),
-   });
+   X3DField .addStaticProperties (Constructor, TypeName);
 
    Object .assign (Object .setPrototypeOf (Constructor .prototype, X3DField .prototype),
    {
@@ -18,7 +15,7 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
       },
       copy ()
       {
-         return new (this .constructor) (this .getValue () .copy ());
+         return Constructor .fromValue (this .getValue () .copy ());
       },
       equals (matrix)
       {
@@ -93,19 +90,19 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
       },
       transpose ()
       {
-         return new (this .constructor) (this .getValue () .copy () .transpose ());
+         return Constructor .fromValue (this .getValue () .copy () .transpose ());
       },
       inverse ()
       {
-         return new (this .constructor) (this .getValue () .copy () .inverse ());
+         return Constructor .fromValue (this .getValue () .copy () .inverse ());
       },
       multLeft (matrix)
       {
-         return new (this .constructor) (this .getValue () .copy () .multLeft (matrix .getValue ()));
+         return Constructor .fromValue (this .getValue () .copy () .multLeft (matrix .getValue ()));
       },
       multRight (matrix)
       {
-         return new (this .constructor) (this .getValue () .copy () .multRight (matrix .getValue ()));
+         return Constructor .fromValue (this .getValue () .copy () .multRight (matrix .getValue ()));
       },
       multVecMatrix (vector)
       {
@@ -125,15 +122,15 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
       },
       translate (translation)
       {
-         return new (this .constructor) (this .getValue () .copy () .translate (translation .getValue ()));
+         return Constructor .fromValue (this .getValue () .copy () .translate (translation .getValue ()));
       },
       rotate (rotation)
       {
-         return new (this .constructor) (this .getValue () .copy () .rotate (rotation .getValue ()));
+         return Constructor .fromValue (this .getValue () .copy () .rotate (rotation .getValue ()));
       },
       scale (scale)
       {
-         return new (this .constructor) (this .getValue () .copy () .scale (scale .getValue ()));
+         return Constructor .fromValue (this .getValue () .copy () .scale (scale .getValue ()));
       },
       toStream (generator)
       {
@@ -212,12 +209,12 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
    {
       ZERO:
       {
-         value: new Constructor (Matrix .ZERO),
+         value: Constructor .fromValue (Matrix .ZERO),
          enumerable: true,
       },
       IDENTITY:
       {
-         value: new Constructor (Matrix .IDENTITY),
+         value: Constructor .fromValue (Matrix .IDENTITY),
          enumerable: true,
       },
    });

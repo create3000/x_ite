@@ -25,37 +25,39 @@ function SFVec4Template (TypeName, double)
       }
    }
 
-   Object .defineProperties (SFVec4,
-   {
-      X_AXIS:
-      {
-         value: new SFVec4 (Vector4 .X_AXIS),
-         enumerable: true,
-      },
-      Y_AXIS:
-      {
-         value: new SFVec4 (Vector4 .Y_AXIS),
-         enumerable: true,
-      },
-      Z_AXIS:
-      {
-         value: new SFVec4 (Vector4 .Z_AXIS),
-         enumerable: true,
-      },
-      W_AXIS:
-      {
-         value: new SFVec4 (Vector4 .W_AXIS),
-         enumerable: true,
-      },
-   });
-
-   return SFVecPrototypeTemplate (SFVec4, TypeName, Vector4, double,
+   SFVecPrototypeTemplate (SFVec4, TypeName, Vector4, double,
    {
       isDefaultValue ()
       {
          return this .getValue () .equals (Vector4 .W_AXIS);
       },
    });
+
+   Object .defineProperties (SFVec4,
+   {
+      X_AXIS:
+      {
+         value: SFVec4 .fromValue (Vector4 .X_AXIS),
+         enumerable: true,
+      },
+      Y_AXIS:
+      {
+         value: SFVec4 .fromValue (Vector4 .Y_AXIS),
+         enumerable: true,
+      },
+      Z_AXIS:
+      {
+         value: SFVec4 .fromValue (Vector4 .Z_AXIS),
+         enumerable: true,
+      },
+      W_AXIS:
+      {
+         value: SFVec4 .fromValue (Vector4 .W_AXIS),
+         enumerable: true,
+      },
+   });
+
+   return SFVec4;
 }
 
 const SFVec4 = {

@@ -377,11 +377,12 @@ for (const key of Object .keys (X3DField .prototype))
 
 Object .defineProperties (X3DField,
 {
-   getStaticProperties:
+   addStaticProperties:
    {
-      value (typeName)
+      value (constructor, typeName)
       {
-         return {
+         Object .defineProperties (constructor,
+         {
             type:
             {
                value: X3DConstants [typeName],
@@ -391,6 +392,17 @@ Object .defineProperties (X3DField,
             {
                value: typeName,
                enumerable: true,
+            },
+            fromValue:
+            {
+               value (value)
+               {
+                  const field = Object .create (this .prototype);
+
+                  X3DField .call (field, value);
+
+                  return field;
+               },
             },
             fromString:
             {
@@ -436,7 +448,7 @@ Object .defineProperties (X3DField,
                   return field;
                },
             },
-         };
+         });
       },
    },
 })
