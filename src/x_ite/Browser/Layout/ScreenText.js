@@ -97,7 +97,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
                             0, 0, 0, 0,
                             0, 0, 0, 0);
 
-         // Scale text geometry and origin by contentScale.
+         // Scale origin, text and line bounds by contentScale.
 
          text ._origin .x = min .x / contentScale;
          text ._origin .y = max .y / contentScale;
