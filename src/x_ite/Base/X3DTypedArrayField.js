@@ -27,15 +27,13 @@ const handler =
 
          if (Number .isInteger (index))
          {
+            if (index >= target [_length])
+               return undefined;
+
             const
                components = target .getComponents (),
-               valueType  = target .getValueType ();
-
-            // For historical reasons this behavior is intended (resize), there are
-            // enough X3D/VRML worlds in the Internet who rely on this behavior.
-            const array = index < target [_length]
-               ? target .getValue ()
-               : target .resize (index + 1, target .getSingleValue ());
+               valueType  = target .getValueType (),
+               array      = target .getValue ();
 
             if (components === 1)
             {
