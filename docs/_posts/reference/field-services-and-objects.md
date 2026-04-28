@@ -501,10 +501,6 @@ The SFMatrix3d/f object provides many useful methods for performing manipulation
 
 A new matrix initialized with the identity matrix is created and returned.
 
-#### *sfMatrix3d/fObjectName* = new **SFMatrix3d/f** (*r1: SFVec3d/f, r2: SFVec3d/f, r3: SFVec3d/f*)
-
-A new matrix initialized with the vectors in *r1* through *r3* of type SFVec3d/f is created and returned.
-
 #### *sfMatrix3d/fObjectName* = new **SFMatrix3d/f** (*f11: number, f12: number, f13: number, f21: number, f22: number, f23: number, f31: number, f32: number, f33: number*)
 
 A new matrix initialized with the values in *f11* through *f44* is created and returned.
@@ -634,10 +630,6 @@ The SFMatrix4d/f object provides many useful methods for performing manipulation
 #### *sfMatrix4d/fObjectName* = new **SFMatrix4d/f** ()
 
 A new matrix initialized with the identity matrix is created and returned.
-
-#### *sfMatrix4d/fObjectName* = new **SFMatrix4d/f** (*r1: SFVec4d/f, r2: SFVec4d/f, r3: SFVec4d/f, r4: SFVec4d/f*)
-
-A new matrix initialized with the vectors in *r1* through *r4* of type SFVec4d/f is created and returned.
 
 #### *sfMatrix4d/fObjectName* = new **SFMatrix4d/f** (*f11: number, f12: number, f13: number, f14: number, f21: number, f22: number, f23: number, f24: number, f31: number, f32: number, f33: number, f34: number, f41: number, f42: number, f43: number, f44: number*)
 
@@ -873,10 +865,6 @@ print (rotation);
 </pre>
 </x3d-script-area>
 
-#### *sfRotationObjectName* = new **SFRotation** (*matrix: SFMatrix3d/f*)
-
-*matrix* is an SFMatrix3d/f rotation matrix object whose value is converted into an SFRotation object.
-
 ### Iterator
 
 The `[@@iterator]()` method of SFRotation instances implements the iterable protocol and allows SFRotation objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
@@ -890,6 +878,12 @@ const copy = new SFRotation (... rotation); // Copy using spread syntax.
 #### **IDENTITY**: SFRotation
 
 Returns the identity rotation.
+
+### Static Methods
+
+#### **fromMatrix** (*matrix: SFMatrix3d/f*): SFRotation
+
+*matrix* is an SFMatrix3d/f rotation matrix object whose value is converted into an SFRotation object.
 
 ### Properties
 

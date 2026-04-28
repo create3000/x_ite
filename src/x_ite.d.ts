@@ -1919,10 +1919,6 @@ declare namespace X3D
        */
       constructor ();
       /**
-       * A new matrix initialized with the vectors in *r1* through *r3* of type SFVec3d/f is created and returned.
-       */
-      constructor (r1: SFVec3, r2: SFVec3, r3: SFVec3);
-      /**
        * A new matrix initialized with the values in *f11* through *f44* is created and returned.
        */
       constructor (f11: number, f12: number, f13: number,
@@ -2045,10 +2041,6 @@ declare namespace X3D
        * A new matrix initialized with the identity matrix is created and returned.
        */
       constructor ();
-      /**
-       * A new matrix initialized with the vectors in *r1* through *r4* of type SFVec4d/f is created and returned.
-       */
-      constructor (r1: SFVec4, r2: SFVec4, r3: SFVec4, r4: SFVec4);
       /**
        * A new matrix initialized with the values in *f11* through *f44* is created and returned.
        */
@@ -2261,6 +2253,11 @@ declare namespace X3D
       static readonly IDENTITY: SFRotation;
 
       /**
+       * *matrix* is an SFMatrix3d/f rotation matrix object whose value is converted into an SFRotation object.
+       */
+      static fromMatrix (matrix: SFMatrix3d | SFMatrix3f): SFRotation;
+
+      /**
        * A new rotation initialized with the identity rotation is created and returned.
        */
       constructor ();
@@ -2278,10 +2275,6 @@ declare namespace X3D
        * *fromVector* and *toVector* are SFVec3d/f valued objects. These vectors are normalized and the rotation value that would rotate from the *fromVector* to the *toVector* is stored in the object.
        */
       constructor (fromVector: SFVec3d | SFVec3f, toVector: SFVec3);
-      /**
-       * *matrix* is an SFMatrix3d/f rotation matrix object whose value is converted into an SFRotation object.
-       */
-      constructor (matrix: SFMatrix3d | SFMatrix3f);
 
       /**
        * Returns the first value of the axis vector.
