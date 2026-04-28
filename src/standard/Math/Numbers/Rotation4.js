@@ -102,32 +102,9 @@ Object .assign (Rotation4 .prototype,
 
       return this;
    },
-   set (x = 0, y = 0, z = 1, angle = 0)
+   equals (rotation)
    {
-      this [_x]     = x;
-      this [_y]     = y;
-      this [_z]     = z;
-      this [_angle] = angle;
-
-      const scale = Math .hypot (x, y, z);
-
-      if (scale === 0)
-      {
-         this [_quaternion] .set (0, 0, 0, 1);
-         return this;
-      }
-
-      // Calculate quaternion
-
-      const
-         halfTheta = Algorithm .interval (angle / 2, 0, Math .PI),
-         ascale    = Math .sin (halfTheta) / scale;
-
-      this [_quaternion] .set (x * ascale,
-                               y * ascale,
-                               z * ascale,
-                               Math .cos (halfTheta));
-      return this;
+      return this [_quaternion] .equals (rotation [_quaternion]);
    },
    get: (() =>
    {
@@ -163,6 +140,33 @@ Object .assign (Rotation4 .prototype,
          }
       };
    })(),
+   set (x = 0, y = 0, z = 1, angle = 0)
+   {
+      this [_x]     = x;
+      this [_y]     = y;
+      this [_z]     = z;
+      this [_angle] = angle;
+
+      const scale = Math .hypot (x, y, z);
+
+      if (scale === 0)
+      {
+         this [_quaternion] .set (0, 0, 0, 1);
+         return this;
+      }
+
+      // Calculate quaternion
+
+      const
+         halfTheta = Algorithm .interval (angle / 2, 0, Math .PI),
+         ascale    = Math .sin (halfTheta) / scale;
+
+      this [_quaternion] .set (x * ascale,
+                               y * ascale,
+                               z * ascale,
+                               Math .cos (halfTheta));
+      return this;
+   },
    setAxisAngle (axis, angle)
    {
       return this .set (axis .x, axis .y, axis .z, angle);
@@ -228,23 +232,17 @@ Object .assign (Rotation4 .prototype,
          return this;
       };
    })(),
-   setAxis (vector)
-   {
-      this .set (vector .x, vector .y, vector .z, this [_angle]);
-   },
    getAxis (axis = new Vector3 ())
    {
       return axis .set (this [_x], this [_y], this [_z]);
    },
-   setQuaternion (quaternion)
+   setAxis (vector)
    {
-      this [_quaternion] .assign (quaternion) .normalize ();
-      this .update ();
-      return this;
+      this .set (vector .x, vector .y, vector .z, this [_angle]);
    },
-   getQuaternion (quaternion = new Quaternion ())
+   getMatrix (matrix = new Matrix3 ())
    {
-      return quaternion .assign (this [_quaternion]);
+      return this [_quaternion] .getMatrix (matrix);
    },
    setMatrix (matrix)
    {
@@ -252,14 +250,13 @@ Object .assign (Rotation4 .prototype,
       this .update ();
       return this;
    },
-   getMatrix (matrix = new Matrix3 ())
+   getQuaternion (quaternion = new Quaternion ())
    {
-      return this [_quaternion] .getMatrix (matrix);
+      return quaternion .assign (this [_quaternion]);
    },
-   setEuler (x, y, z, order = "XYZ")
+   setQuaternion (quaternion)
    {
-      // Quaternion is then already normalized.
-      this [_quaternion] .setEuler (x, y, z, order);
+      this [_quaternion] .assign (quaternion) .normalize ();
       this .update ();
       return this;
    },
@@ -267,9 +264,12 @@ Object .assign (Rotation4 .prototype,
    {
       return this [_quaternion] .getEuler (euler, order);
    },
-   equals (rotation)
+   setEuler (x, y, z, order = "XYZ")
    {
-      return this [_quaternion] .equals (rotation [_quaternion]);
+      // Quaternion is then already normalized.
+      this [_quaternion] .setEuler (x, y, z, order);
+      this .update ();
+      return this;
    },
    inverse ()
    {
