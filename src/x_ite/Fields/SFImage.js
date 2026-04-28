@@ -3,7 +3,7 @@ import ArrayFields  from "./ArrayFields.js";
 import X3DConstants from "../Base/X3DConstants.js";
 import Algorithm    from "../../standard/Math/Algorithm.js";
 
-const MFInt32 = ArrayFields .MFInt32;
+const { MFInt32 } = ArrayFields;
 
 /*
  *  Image
