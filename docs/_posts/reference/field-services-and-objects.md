@@ -887,7 +887,7 @@ Returns the identity rotation.
 
 #### **fromQuaternion** (*x: number, y: number, z: number, w:number *): SFRotation
 
-*x, y, z, w* is a quaternion whose value is converted into an SFRotation object.
+`x`, `y`, `z`, `w` is a quaternion whose value is converted into an SFRotation object.
 
 ### Properties
 

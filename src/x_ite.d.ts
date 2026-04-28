@@ -2257,7 +2257,7 @@ declare namespace X3D
        */
       static fromMatrix (matrix: SFMatrix3d | SFMatrix3f): SFRotation;
       /**
-       * *x, y, z, w* is a quaternion whose value is converted into an SFRotation object.
+       * `x`, `y`, `z`, `w` is a quaternion whose value is converted into an SFRotation object.
        */
       static fromQuaternion (x: number, y: number, z: number, w: number): SFRotation;
 
