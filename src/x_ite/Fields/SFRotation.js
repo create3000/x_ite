@@ -6,49 +6,27 @@ import X3DConstants from "../Base/X3DConstants.js";
 import Quaternion   from "../../standard/Math/Numbers/Quaternion.js";
 
 const
-   SFVec3d    = SFVec3 .SFVec3d,
-   SFVec3f    = SFVec3 .SFVec3f,
-   SFMatrix3d = SFMatrix3 .SFMatrix3d,
-   SFMatrix3f = SFMatrix3 .SFMatrix3f;
+   { SFVec3d, SFVec3f }       = SFVec3,
+   { SFMatrix3d, SFMatrix3f } = SFMatrix3;
 
-function SFRotation (x, y, z, angle)
+function SFRotation (x = 0, y = 0, z = 1, angle = 0)
 {
-   switch (arguments .length)
+   if ((x instanceof SFVec3f) || (x instanceof SFVec3d))
    {
-      case 0:
+      if ((y instanceof SFVec3f) || (y instanceof SFVec3d))
       {
-         X3DField .call (this, new Rotation4 ());
-         break;
+         // new SFRotation (fromVector: SFVec3d | SFVec3f, toVector: SFVec3d | SFVec3f)
+         X3DField .call (this, new Rotation4 (x .getValue (), y .getValue ()));
       }
-      case 1:
+      else
       {
-         if ((arguments [0] instanceof SFMatrix3d) || (arguments [0] instanceof SFMatrix3f))
-         {
-            X3DField .call (this, new Rotation4 () .setMatrix (arguments [0] .getValue ()));
-            break;
-         }
-
-         X3DField .call (this, arguments [0]);
-         break;
+         // new SFRotation (axis: SFVec3d | SFVec3f, angle: number)
+         X3DField .call (this, new Rotation4 (x .getValue (), +y));
       }
-      case 2:
-      {
-         if ((arguments [1] instanceof SFVec3d) || (arguments [1] instanceof SFVec3f))
-         {
-            X3DField .call (this, new Rotation4 (arguments [0] .getValue (), arguments [1] .getValue ()));
-            break;
-         }
-
-         X3DField .call (this, new Rotation4 (arguments [0] .getValue (), +arguments [1]));
-         break;
-      }
-      case 4:
-      {
-         X3DField .call (this, new Rotation4 (+x, +y, +z, +angle));
-         break;
-      }
-      default:
-         throw new Error ("Invalid arguments.");
+   }
+   else
+   {
+      X3DField .call (this, new Rotation4 (+x, +y, +z, +angle));
    }
 }
 
@@ -249,6 +227,17 @@ Object .defineProperties (SFRotation,
    {
       value: SFRotation .fromValue (Rotation4 .IDENTITY),
       enumerable: true,
+   },
+   fromMatrix:
+   {
+      value (matrix)
+      {
+         const rotation = new SFRotation ();
+
+         rotation .setMatrix (matrix);
+
+         return rotation;
+      },
    },
 });
 

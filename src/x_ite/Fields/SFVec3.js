@@ -4,25 +4,9 @@ import Vector3                from "../../standard/Math/Numbers/Vector3.js";
 
 function SFVec3Template (TypeName, double)
 {
-   function SFVec3 (x, y, z)
+   function SFVec3 (x = 0, y = 0, z = 0)
    {
-      switch (arguments .length)
-      {
-         case 0:
-            X3DField .call (this, new Vector3 ());
-            break;
-
-         case 1:
-            X3DField .call (this, arguments [0]);
-            break;
-
-         case 3:
-            X3DField .call (this, new Vector3 (+x, +y, +z));
-            break;
-
-         default:
-            throw new Error ("Invalid arguments.");
-      }
+      X3DField .call (this, new Vector3 (+x, +y, +z));
    }
 
    SFVecPrototypeTemplate (SFVec3, TypeName, Vector3, double,

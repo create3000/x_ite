@@ -1,47 +1,19 @@
 import X3DField                  from "../Base/X3DField.js";
 import SFMatrixPrototypeTemplate from "./SFMatrixPrototypeTemplate.js";
 import Matrix3                   from "../../standard/Math/Numbers/Matrix3.js";
+import SFVec3                    from "./SFVec3.js";
+
+const { SFVec3d, SFVec3f } = SFVec3;
 
 function SFMatrix3Template (TypeName, double)
 {
-   function SFMatrix3 (m00, m01, m02,
-                       m10, m11, m12,
-                       m20, m21, m22)
+   function SFMatrix3 (m00 = 1, m01 = 0, m02 = 0,
+                       m10 = 0, m11 = 1, m12 = 0,
+                       m20 = 0, m21 = 0, m22 = 1)
    {
-      switch (arguments .length)
-      {
-         case 0:
-            X3DField .call (this, new Matrix3 ());
-            break;
-
-         case 1:
-            X3DField .call (this, arguments [0]);
-            break;
-
-         case 3:
-         {
-            const
-               r0 = arguments [0],
-               r1 = arguments [1],
-               r2 = arguments [2];
-
-            X3DField .call (this, new Matrix3 (r0 .x, r0 .y, r0 .z,
-                                               r1 .x, r1 .y, r1 .z,
-                                               r2 .x, r2 .y, r2 .z));
-
-            break;
-         }
-         case 9:
-         {
-            X3DField .call (this, new Matrix3 (+m00, +m01, +m02,
-                                               +m10, +m11, +m12,
-                                               +m20, +m21, +m22));
-
-            break;
-         }
-         default:
-            throw new Error ("Invalid arguments.");
-      }
+      X3DField .call (this, new Matrix3 (+m00, +m01, +m02,
+                                         +m10, +m11, +m12,
+                                         +m20, +m21, +m22));
    }
 
    return SFMatrixPrototypeTemplate (SFMatrix3, TypeName, Matrix3, double,

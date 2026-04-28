@@ -3,25 +3,9 @@ import SFColor      from "./SFColor.js";
 import X3DConstants from "../Base/X3DConstants.js";
 import Color4       from "../../standard/Math/Numbers/Color4.js";
 
-function SFColorRGBA (r, g, b, a)
+function SFColorRGBA (r = 0, g = 0, b = 0, a = 0)
 {
-   switch (arguments .length)
-   {
-      case 0:
-         X3DField .call (this, new Color4 ());
-         break;
-
-      case 1:
-         X3DField .call (this, arguments [0]);
-         break;
-
-      case 4:
-         X3DField .call (this, new Color4 (+r, +g, +b, +a));
-         break
-
-      default:
-         throw new Error ("Invalid arguments.");
-   }
+   X3DField .call (this, new Color4 (+r, +g, +b, +a));
 }
 
 Object .assign (Object .setPrototypeOf (SFColorRGBA .prototype, X3DField .prototype),

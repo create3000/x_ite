@@ -89,29 +89,9 @@ Object .assign (Image .prototype,
 
 const _set_size = Symbol ();
 
-function SFImage (width, height, comp, array)
+function SFImage (width = 0, height = 0, comp = 0, array = new MFInt32 ())
 {
-   switch (arguments .length)
-   {
-      case 0:
-         X3DField .call (this, new Image (0, 0, 0, new MFInt32 ()));
-         break;
-
-      case 1:
-         X3DField .call (this, arguments [0]);
-         break;
-
-      case 3:
-         X3DField .call (this, new Image (width, height, comp, new MFInt32 ()));
-         break;
-
-      case 4:
-         X3DField .call (this, new Image (width, height, comp, array));
-         break;
-
-      default:
-         throw new Error ("Invalid arguments.");
-   }
+   X3DField .call (this, new Image (width, height, comp, array));
 
    this .getValue () .getArray () .addParent (this);
    this .addInterest (_set_size, this);
