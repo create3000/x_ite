@@ -46,40 +46,40 @@ Object .assign (Image .prototype,
       this .comp   = comp|0;
       this .array .assign (array);
    },
-   setWidth (value)
-   {
-      this .width = Math .max (value|0, 0);
-      this .array .length = this .width * this .height;
-   },
    getWidth ()
    {
       return this .width;
    },
-   setHeight (value)
+   setWidth (value)
    {
-      this .height = Math .max (value|0, 0);
+      this .width = Math .max (value|0, 0);
       this .array .length = this .width * this .height;
    },
    getHeight ()
    {
       return this .height;
    },
-   setComp (value)
+   setHeight (value)
    {
-      this .comp = Algorithm .clamp (value|0, 0, 4);
+      this .height = Math .max (value|0, 0);
+      this .array .length = this .width * this .height;
    },
    getComp ()
    {
       return this .comp;
    },
-   setArray (value)
+   setComp (value)
    {
-      this .array .setValue (value);
-      this .array .length = this .width * this .height;
+      this .comp = Algorithm .clamp (value|0, 0, 4);
    },
    getArray ()
    {
       return this .array;
+   },
+   setArray (value)
+   {
+      this .array .setValue (value);
+      this .array .length = this .width * this .height;
    },
 });
 
@@ -112,7 +112,7 @@ Object .assign (Object .setPrototypeOf (SFImage .prototype, X3DField .prototype)
    },
    copy ()
    {
-      return SFImage .fromValue (this .getValue () .copy ());
+      return new SFImage (this .width, this .height, this .comp, this .array);
    },
    equals (image)
    {
