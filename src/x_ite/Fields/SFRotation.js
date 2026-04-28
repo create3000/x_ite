@@ -228,17 +228,6 @@ Object .defineProperties (SFRotation,
       value: SFRotation .fromValue (Rotation4 .IDENTITY),
       enumerable: true,
    },
-   fromQuaternion:
-   {
-      value (x, y, z, w)
-      {
-         const rotation = new SFRotation ();
-
-         rotation .setQuaternion (q .set (+x, +y, +z, +w));
-
-         return rotation;
-      },
-   },
    fromMatrix:
    {
       value (matrix)
@@ -246,6 +235,17 @@ Object .defineProperties (SFRotation,
          const rotation = new SFRotation ();
 
          rotation .setMatrix (matrix);
+
+         return rotation;
+      },
+   },
+   fromQuaternion:
+   {
+      value (x, y, z, w)
+      {
+         const rotation = new SFRotation ();
+
+         rotation .setQuaternion (q .set (+x, +y, +z, +w));
 
          return rotation;
       },
