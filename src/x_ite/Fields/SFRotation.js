@@ -232,7 +232,7 @@ Object .defineProperties (SFRotation,
    {
       value (matrix)
       {
-         const rotation = new SFRotation ();
+         const rotation = new this ();
 
          rotation .setMatrix (matrix);
 
@@ -243,7 +243,7 @@ Object .defineProperties (SFRotation,
    {
       value (x, y, z, w)
       {
-         const rotation = new SFRotation ();
+         const rotation = new this ();
 
          rotation .setQuaternion (+x, +y, +z, +w);
 
