@@ -22,26 +22,29 @@ The HAnimSegment node belongs to the [HAnim](/x_ite/components/overview/#hanim) 
 ```
 + X3DNode
   + X3DChildNode
-    + X3DGroupingNode
+    + X3DGroupingNode (X3DBoundedObject)*
       + HAnimSegment
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFString | [in, out] | [name](#fields-name) | "" |
-| SFFloat | [in, out] | [mass](#fields-mass) | 0  |
-| SFVec3f | [in, out] | [centerOfMass](#fields-centerOfMass) | 0 0 0  |
+| SFFloat | [in, out] | [mass](#fields-mass) | 0 |
+| SFVec3f | [in, out] | [centerOfMass](#fields-centerOfMass) | 0 0 0 |
 | MFFloat | [in, out] | [momentsOfInertia](#fields-momentsOfInertia) | [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] |
 | MFNode | [in, out] | [displacers](#fields-displacers) | [ ] |
-| SFNode | [in, out] | [coord](#fields-coord) | NULL  |
+| SFNode | [in, out] | [coord](#fields-coord) | NULL |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
 | MFNode | [in] | [addChildren](#fields-addChildren) |  |
 | MFNode | [in] | [removeChildren](#fields-removeChildren) |  |
 | MFNode | [in, out] | [children](#fields-children) | [ ] |
@@ -116,7 +119,7 @@ The *displacers* field stores [HAnimDisplacer](/x_ite/components/hanim/hanimdisp
 ### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
 {: #fields-coord }
 
-The *coord* field is used for HAnimSegment objects that have deformable meshes and shall contain coordinates referenced from the [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) for the paarent HAnimSegment object. The coordinates are given the same name as the HAnim Segment object, but with "_coords" appended to the name (for example, "skull_coords").
+The *coord* field is used for HAnimSegment objects that have deformable meshes and shall contain coordinates referenced from the [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) for the parent HAnimSegment object. The coordinates are given the same name as the HAnim Segment object, but with "_coords" appended to the name (for example, "skull_coords").
 
 #### Warning
 
@@ -191,7 +194,8 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ### Hints
 
-- HAnimSegment displays geometry between parent [HAnimJoint](/x_ite/components/hanim/hanimjoint/) and sibling [HAnimJoint](/x_ite/components/hanim/hanimjoint/) nodes.
+- HAnimSegment can contain [Shape](/x_ite/components/shape/shape/) geometry and [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes for a parent [HAnimJoint](/x_ite/components/hanim/hanimjoint/) node.
+- [HAnim Architecture draft version 2.1](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-1/ISO-IEC19774-1v2.1/ISO-IEC19774-1v2.1-WD/Architecture/ObjectInterfaces.html#Segment)
 - [HAnim Specification](https://www.web3d.org/documents/specifications/19774/V2.0)
 - [HAnim Specification part 1, Segment](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/ObjectInterfaces.html#Segment)
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/HumanoidAnimation.pdf)
@@ -201,6 +205,13 @@ Grouping nodes contain an ordered list of *children* nodes.
 - Requires X3D `profile='Full'` or else include `<component name='HAnim' level='1'/>`
 - For X3D3 HAnim1, previous spelling of component name was 'H-Anim' (including hyphen).
 - The number of contained \<HAnimSegment USE='*' `containerField='segments'/>` nodes at top level of [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) needs to match the number of corresponding [HAnimJoint](/x_ite/components/hanim/hanimjoint/) node instances found within the preceding skeleton hierarchy.
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

@@ -49,7 +49,7 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
    {
       this .transmissionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._transmissionTexture);
 
-      this .setTexture (0, this .transmissionTextureNode);
+      this .addTexture (0, this .transmissionTextureNode);
    },
    getExtensionKey ()
    {
@@ -71,54 +71,28 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
       uniforms .push ("x3d_TransmissionEXT");
       uniforms .push ("x3d_TransmissionSamplerEXT");
    },
-   setShaderUniforms: (() =>
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
-      const zeros = new Float32Array (16);
+      // These shapes must not be rendered during transmission pass!
 
-      return function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
-      {
-         const browser = this .getBrowser ();
+      const
+         browser                   = this .getBrowser (),
+         transmissionBuffer        = browser .getTransmissionBuffer (),
+         transmissionUnit          = browser .popTextureUnit (),
+         transmissionBufferTexture = transmissionBuffer .getColorTexture ();
 
-         gl .uniform1f (shaderObject .x3d_TransmissionEXT, this .transmission);
+      gl .uniform1f (shaderObject .x3d_TransmissionEXT, this .transmission);
 
-         // Transmission framebuffer texture
+      gl .activeTexture (gl .TEXTURE0 + transmissionUnit);
+      gl .bindTexture (gl .TEXTURE_2D, transmissionBufferTexture);
+      gl .uniform1i (shaderObject .x3d_TransmissionSamplerEXT, transmissionUnit);
 
-         let
-            transmissionBuffer,
-            transmissionUnit,
-            transmissionBufferTexture;
-
-         if (renderObject .isTransmission ())
-         {
-            transmissionUnit          = browser .getTextureUnit ();
-            transmissionBufferTexture = browser .getDefaultTexture2D ();
-
-            // Hide object by using a model view matrix with zeros.
-            gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, zeros);
-         }
-         else
-         {
-            transmissionBuffer        = browser .getTransmissionBuffer ();
-            transmissionUnit          = browser .getTextureUnit ();
-            transmissionBufferTexture = transmissionBuffer .getColorTexture ();
-         }
-
-         gl .activeTexture (gl .TEXTURE0 + transmissionUnit);
-         gl .bindTexture (gl .TEXTURE_2D, transmissionBufferTexture);
-         gl .uniform1i (shaderObject .x3d_TransmissionSamplerEXT, transmissionUnit);
-
-         if (!+this .getTextureBits ())
-            return;
-
-         this .transmissionTextureNode ?.setNamedShaderUniforms (gl,
-            shaderObject,
-            renderObject,
-            shaderObject .x3d_TransmissionTextureEXT,
-            this ._transmissionTextureMapping .getValue (),
-            textureTransformMapping,
-            textureCoordinateMapping);
-      };
-   })(),
+      this .transmissionTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject .x3d_TransmissionTextureEXT,
+         this ._transmissionTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
+   },
 });
 
 Object .defineProperties (TransmissionMaterialExtension,

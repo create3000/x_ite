@@ -67,8 +67,16 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
       this .importImportedNodes (proto .getBody () .importedNodes);
       this .copyRoutes          (proto .getBody () .routes);
 
+      // Propagate events.
+
+      this [_body] .rootNodes .addInterest ("set_rootNodes__", this);
+
       this [_body] .setup ();
 
+      X3DChildObject .prototype .addEvent .call (this);
+   },
+   set_rootNodes__ ()
+   {
       X3DChildObject .prototype .addEvent .call (this);
    },
    construct ()
@@ -197,7 +205,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
          oldField .setAccessType (newField .getAccessType ());
          oldField .setName (newField .getName ());
 
-         // Replace field, ie. reuse old field.
+         // Replace field, i.e. reuse old field.
          this .getPredefinedFields () .update (newField .getName (), newField .getName (), oldField);
 
          const references = Array .from (oldField .getReferences ());
@@ -331,7 +339,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
    {
       const rootNodes2 = this [_body] .getRootNodes ();
 
-      for (const node of rootNodes1)
+      for (const node of rootNodes1 .getValue ())
          rootNodes2 .push (node .copy (this));
    },
    importImportedNodes (importedNodes)
@@ -376,86 +384,41 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
    {
       const sharedNode = generator .IsSharedNode (this);
 
-      generator .EnterScope ();
-
       const name = generator .Name (this);
 
       if (name .length)
       {
          if (generator .ExistsNode (this))
          {
-            generator .string += generator .Indent ();
-            generator .string += "<ProtoInstance";
-            generator .string += generator .Space ();
-            generator .string += "name='";
-            generator .string += generator .XMLEncode (this .getTypeName ());
-            generator .string += "'";
-            generator .string += generator .Space ();
-            generator .string += "USE='";
-            generator .string += generator .XMLEncode (name);
-            generator .string += "'";
-
-            const containerField = generator .ContainerField ();
-
-            if (containerField)
-            {
-               if (containerField .getName () !== this .getContainerField ())
-               {
-                  generator .string += generator .Space ();
-                  generator .string += "containerField='";
-                  generator .string += generator .XMLEncode (containerField .getName ());
-                  generator .string += "'";
-               }
-            }
-
-            generator .string += generator .closingTags ? "></ProtoInstance>" : "/>";
-
-            generator .LeaveScope ();
+            generator .openTag ("ProtoInstance");
+            generator .attribute ("name", this .getTypeName ());
+            generator .attribute ("USE",  name);
+            generator .containerField (this .getContainerField ());
+            generator .closeTag ("ProtoInstance");
             return;
          }
       }
 
-      generator .string += generator .Indent ();
-      generator .string += "<ProtoInstance";
-      generator .string += generator .Space ();
-      generator .string += "name='";
-      generator .string += generator .XMLEncode (this .getTypeName ());
-      generator .string += "'";
+      generator .openTag ("ProtoInstance");
+      generator .attribute ("name", this .getTypeName ());
 
       if (name .length)
       {
          generator .AddNode (this);
-
-         generator .string += generator .Space ();
-         generator .string += "DEF='";
-         generator .string += generator .XMLEncode (name);
-         generator .string += "'";
+         generator .attribute ("DEF", name);
       }
 
-      const containerField = generator .ContainerField ();
-
-      if (containerField)
-      {
-         if (containerField .getName () !== this .getContainerField ())
-         {
-            generator .string += generator .Space ();
-            generator .string += "containerField='";
-            generator .string += generator .XMLEncode (containerField .getName ());
-            generator .string += "'";
-         }
-      }
+      generator .containerField (this .getContainerField ());
 
       const fields = this .getChangedFields ();
 
       if (fields .length === 0)
       {
-         generator .string += generator .closingTags ? "></ProtoInstance>" : "/>";
+         generator .closeTag ("ProtoInstance");
       }
       else
       {
-         generator .string += ">";
-         generator .string += generator .TidyBreak ();
-
+         generator .endTag ();
          generator .IncIndent ();
 
          const references = [ ];
@@ -488,37 +451,26 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                {
                   case X3DConstants .MFNode:
                   {
-                     generator .string += generator .Indent ();
-                     generator .string += "<fieldValue";
-                     generator .string += generator .Space ();
-                     generator .string += "name='";
-                     generator .string += generator .XMLEncode (field .getName ());
-                     generator .string += "'";
+                     generator .openTag ("fieldValue");
+                     generator .attribute ("name", field .getName ());
 
                      if (field .length === 0)
                      {
-                        generator .string += generator .closingTags ? "></fieldValue>" : "/>";
-                        generator .string += generator .TidyBreak ();
+                        generator .closeTag ("fieldValue");
+                        generator .TidyBreak ();
                      }
                      else
                      {
-                        generator .PushContainerField (null);
-
-                        generator .string += ">";
-                        generator .string += generator .TidyBreak ();
-
+                        generator .endTag ();
                         generator .IncIndent ();
+                        generator .PushContainerField (null);
 
                         field .toXMLStream (generator);
 
-                        generator .string += generator .TidyBreak ();
-
+                        generator .TidyBreak ();
                         generator .DecIndent ();
-
-                        generator .string += generator .Indent ();
-                        generator .string += "</fieldValue>";
-                        generator .string += generator .TidyBreak ();
-
+                        generator .closingTag ("fieldValue");
+                        generator .TidyBreak ();
                         generator .PopContainerField ();
                      }
 
@@ -526,38 +478,27 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                   }
                   case X3DConstants .SFNode:
                   {
-                     generator .PushContainerField (null);
-
-                     generator .string += generator .Indent ();
-                     generator .string += "<fieldValue";
-                     generator .string += generator .Space ();
-                     generator .string += "name='";
-                     generator .string += generator .XMLEncode (field .getName ());
-                     generator .string += "'";
+                     generator .openTag ("fieldValue");
+                     generator .attribute ("name", field .getName ());
 
                      if (field .getValue () === null)
                      {
-                        generator .string += generator .Space ();
-                        generator .string += "value='null'";
-                        generator .string += generator .closingTags ? "></fieldValue>" : "/>";
-                        generator .string += generator .TidyBreak ();
+                        generator .attribute ("value", "null");
+                        generator .closeTag ("fieldValue");
+                        generator .TidyBreak ();
                      }
                      else
                      {
-                        generator .string += ">";
-                        generator .string += generator .TidyBreak ();
-
+                        generator .endTag ();
                         generator .IncIndent ();
+                        generator .PushContainerField (null);
 
                         field .toXMLStream (generator);
 
-                        generator .string += generator .TidyBreak ();
-
+                        generator .TidyBreak ();
                         generator .DecIndent ();
-
-                        generator .string += generator .Indent ();
-                        generator .string += "</fieldValue>";
-                        generator .string += generator .TidyBreak ();
+                        generator .closingTag ("fieldValue");
+                        generator .TidyBreak ();
                      }
 
                      generator .PopContainerField ();
@@ -565,20 +506,17 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
                   }
                   default:
                   {
-                     generator .string += generator .Indent ();
-                     generator .string += "<fieldValue";
-                     generator .string += generator .Space ();
-                     generator .string += "name='";
-                     generator .string += generator .XMLEncode (field .getName ());
-                     generator .string += "'";
-                     generator .string += generator .Space ();
+                     generator .openTag ("fieldValue");
+                     generator .attribute ("name", field .getName ());
+
+                     generator .Space ();
                      generator .string += "value='";
 
                      field .toXMLStream (generator);
 
                      generator .string += "'";
-                     generator .string += generator .closingTags ? "></fieldValue>" : "/>";
-                     generator .string += generator .TidyBreak ();
+                     generator .closeTag ("fieldValue");
+                     generator .TidyBreak ();
                      break;
                   }
                }
@@ -591,10 +529,8 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
          if (references .length && !sharedNode)
          {
-            generator .string += generator .Indent ();
-            generator .string += "<IS>";
-            generator .string += generator .TidyBreak ();
-
+            generator .openingTag ("IS");
+            generator .TidyBreak ();
             generator .IncIndent ();
 
             for (const field of references)
@@ -603,41 +539,30 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
                for (const protoField of protoFields)
                {
-                  generator .string += generator .Indent ();
-                  generator .string += "<connect";
-                  generator .string += generator .Space ();
-                  generator .string += "nodeField='";
-                  generator .string += generator .XMLEncode (field .getName ());
-                  generator .string += "'";
-                  generator .string += generator .Space ();
-                  generator .string += "protoField='";
-                  generator .string += generator .XMLEncode (protoField .getName ());
-                  generator .string += "'";
-                  generator .string += generator .closingTags ? "></connect>" : "/>";
-                  generator .string += generator .TidyBreak ();
+                  generator .openTag ("connect");
+                  generator .attribute ("nodeField",  field .getName ());
+                  generator .attribute ("protoField", protoField .getName ());
+                  generator .closeTag ("connect");
+                  generator .TidyBreak ();
                }
             }
 
             generator .DecIndent ();
-
-            generator .string += generator .Indent ();
-            generator .string += "</IS>";
-            generator .string += generator .TidyBreak ();
+            generator .closingTag ("IS");
+            generator .TidyBreak ();
          }
 
          generator .DecIndent ();
-
-         generator .string += generator .Indent ();
-         generator .string += "</ProtoInstance>";
+         generator .closingTag ("ProtoInstance");
       }
-
-      generator .LeaveScope ();
    },
    toJSONStream (generator)
    {
       const sharedNode = generator .IsSharedNode (this);
 
-      generator .EnterScope ();
+      // Type name
+
+      generator .beginObject ("ProtoInstance", false, true);
 
       const name = generator .Name (this);
 
@@ -645,105 +570,25 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
       {
          if (generator .ExistsNode (this))
          {
-            generator .string += '{';
-            generator .string += generator .TidySpace ();
-            generator .string += '"';
-            generator .string += "ProtoInstance";
-            generator .string += '"';
-            generator .string += ':';
-            generator .string += generator .TidyBreak ();
-            generator .string += generator .IncIndent ();
-            generator .string += generator .Indent ();
-            generator .string += '{';
-            generator .string += generator .TidyBreak ();
-            generator .string += generator .IncIndent ();
-
-            generator .string += generator .Indent ();
-            generator .string += '"';
-            generator .string += "@name";
-            generator .string += '"';
-            generator .string += ':';
-            generator .string += generator .TidySpace ();
-            generator .string += '"';
-            generator .string += generator .JSONEncode (this .getTypeName ());
-            generator .string += '"';
-            generator .string += ',';
-            generator .string += generator .TidyBreak ();
-
-            generator .string += generator .Indent ();
-            generator .string += '"';
-            generator .string += "@USE";
-            generator .string += '"';
-            generator .string += ':';
-            generator .string += generator .TidySpace ();
-            generator .string += '"';
-            generator .string += generator .JSONEncode (name);
-            generator .string += '"';
-            generator .string += generator .TidyBreak ();
-
-            generator .string += generator .DecIndent ();
-            generator .string += generator .Indent ();
-            generator .string += '}';
-            generator .string += generator .TidyBreak ();
-            generator .string += generator .DecIndent ();
-            generator .string += generator .Indent ();
-            generator .string += '}';
-
-            generator .LeaveScope ();
+            generator .stringProperty ("@name", this .getTypeName (), false);
+            generator .stringProperty ("@USE", name);
+            generator .endObject ();
+            generator .endObject ();
             return;
          }
       }
-
-      // Type name
-
-      generator .string += '{';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += "ProtoInstance";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .IncIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '{';
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .IncIndent ();
-
 
       // DEF name
 
       if (name .length)
       {
          generator .AddNode (this);
-
-         generator .string += generator .Indent ();
-         generator .string += '"';
-         generator .string += "@DEF";
-         generator .string += '"';
-         generator .string += ':';
-         generator .string += generator .TidySpace ();
-         generator .string += '"';
-         generator .string += generator .JSONEncode (name);
-         generator .string += '"';
-         generator .string += ',';
-         generator .string += generator .TidyBreak ();
+         generator .stringProperty ("@DEF", name, false);
       }
-
 
       // Type name
 
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@name";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += generator .JSONEncode (this .getTypeName ());
-      generator .string += '"';
-      generator .string += ',';
-      generator .string += generator .TidyBreak ();
-
+      generator .stringProperty ("@name", this .getTypeName (), name .length);
 
       // Fields
 
@@ -753,15 +598,7 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
 
       if (fields .length)
       {
-         generator .string += generator .Indent ();
-         generator .string += '"';
-         generator .string += "fieldValue";
-         generator .string += '"';
-         generator .string += ':';
-         generator .string += generator .TidySpace ();
-         generator .string += '[';
-         generator .string += generator .TidyBreak ();
-         generator .string += generator .IncIndent ();
+         generator .beginArray ("fieldValue");
 
          const outputFields = [ ];
 
@@ -803,221 +640,75 @@ Object .assign (Object .setPrototypeOf (X3DPrototypeInstance .prototype, X3DNode
             {
                case X3DConstants .SFNode:
                {
-                  generator .string += generator .Indent ();
-                  generator .string += '{';
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .IncIndent ();
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "@name";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
-                  generator .string += '"';
-                  generator .string += generator .JSONEncode (field .getName ());
-                  generator .string += '"';
-                  generator .string += ',';
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "-children";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
-                  generator .string += '[';
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .IncIndent ();
-                  generator .string += generator .Indent ();
+                  generator .beginObject ("", field !== outputFields [0]);
+                  generator .stringProperty ("@name", field .getName (), false);
+                  generator .beginArray ("-children");
+
+                  generator .TidyBreak ();
+                  generator .Indent ();
 
                   field .toJSONStream (generator);
 
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .DecIndent ();
-                  generator .string += generator .Indent ();
-                  generator .string += ']';
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .DecIndent ();
-                  generator .string += generator .Indent ();
-                  generator .string += '}';
+                  generator .endArray ();
+                  generator .endObject ();
                   break;
                }
                case X3DConstants .MFNode:
                {
-                  generator .string += generator .Indent ();
-                  generator .string += '{';
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .IncIndent ();
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "@name";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
-                  generator .string += '"';
-                  generator .string += generator .JSONEncode (field .getName ());
-                  generator .string += '"';
-                  generator .string += ',';
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "-children";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
+                  generator .beginObject ("", field !== outputFields [0]);
+                  generator .stringProperty ("@name", field .getName (), false);
+                  generator .beginValue ("-children");
 
                   field .toJSONStream (generator);
 
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .DecIndent ();
-                  generator .string += generator .Indent ();
-                  generator .string += '}';
+                  generator .endObject ();
                   break;
                }
                default:
                {
-                  generator .string += generator .Indent ();
-                  generator .string += '{';
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .IncIndent ();
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "@name";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
-                  generator .string += '"';
-                  generator .string += generator .JSONEncode (field .getName ());
-                  generator .string += '"';
-                  generator .string += ',';
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "@value";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
+                  generator .beginObject ("", field !== outputFields [0]);
+                  generator .stringProperty ("@name", field .getName (), false);
+                  generator .beginValue ("@value");
 
                   field .toJSONStream (generator);
 
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .DecIndent ();
-                  generator .string += generator .Indent ();
-                  generator .string += '}';
+                  generator .endObject ();
                   break;
                }
             }
-
-            if (field !== outputFields .at (-1))
-               generator .string += ',';
-
-            generator .string += generator .TidyBreak ();
          }
 
-         generator .string += generator .DecIndent ();
-         generator .string += generator .Indent ();
-         generator .string += ']';
-         generator .string += ',';
-         generator .string += generator .TidyBreak ();
-
+         generator .endArray ();
 
          // IS references
 
          if (references .length && !sharedNode)
          {
-            generator .string += generator .Indent ();
-            generator .string += '"';
-            generator .string += "IS";
-            generator .string += '"';
-            generator .string += ':';
-            generator .string += generator .TidySpace ();
-            generator .string += '{';
-            generator .string += generator .TidyBreak ();
-            generator .string += generator .IncIndent ();
-            generator .string += generator .Indent ();
-            generator .string += '"';
-            generator .string += "connect";
-            generator .string += '"';
-            generator .string += ':';
-            generator .string += generator .TidySpace ();
-            generator .string += '[';
-            generator .string += generator .TidyBreak ();
-            generator .string += generator .IncIndent ();
+            generator .beginObject ("IS");
+            generator .beginArray ("connect", false);
 
             for (const field of references)
             {
-               const protoFields = [... field .getReferences ()];
+               const protoFields = Array .from (field .getReferences ());
 
                for (const protoField of protoFields)
                {
-                  generator .string += generator .Indent ();
-                  generator .string += '{';
-                  generator .string += generator .TidyBreak ();
-                  generator .string += generator .IncIndent ();
-
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "@nodeField";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
-                  generator .string += '"';
-                  generator .string += generator .JSONEncode (field .getName ());
-                  generator .string += '"';
-                  generator .string += ',';
-                  generator .string += generator .TidyBreak ();
-
-                  generator .string += generator .Indent ();
-                  generator .string += '"';
-                  generator .string += "@protoField";
-                  generator .string += '"';
-                  generator .string += ':';
-                  generator .string += generator .TidySpace ();
-                  generator .string += '"';
-                  generator .string += generator .JSONEncode (protoField .getName ());
-                  generator .string += '"';
-                  generator .string += generator .TidyBreak ();
-
-                  generator .string += generator .DecIndent ();
-                  generator .string += generator .Indent ();
-                  generator .string += '}';
-
-                  if (field === references .at (-1) && protoField === protoFields .at (-1))
-                     ;
-                  else
-                  {
-                     generator .string += ',';
-                  }
-
-                  generator .string += generator .TidyBreak ();
+                  generator .beginObject ("", field !== references [0] || protoField !== protoFields [0]);
+                  generator .stringProperty ("@nodeField",  field .getName (), false);
+                  generator .stringProperty ("@protoField", protoField .getName ());
+                  generator .endObject ();
                }
             }
 
-            generator .string += generator .DecIndent ();
-            generator .string += generator .Indent ();
-            generator .string += ']';
-            generator .string += generator .TidyBreak ();
-            generator .string += generator .DecIndent ();
-            generator .string += generator .Indent ();
-            generator .string += '}';
-            generator .string += ',';
-            generator .string += generator .TidyBreak ();
+            generator .endArray ();
+            generator .endObject ();
          }
       }
 
-      generator .JSONRemoveComma ();
-
-
       // End
 
-      generator .string += generator .DecIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '}';
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .DecIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '}';
-
-      generator .LeaveScope ();
+      generator .endObject ();
+      generator .endObject ();
    },
    dispose ()
    {

@@ -21,10 +21,12 @@ function GeneratedCubeMapTexture (executionContext)
 
    this .addType (X3DConstants .GeneratedCubeMapTexture);
 
+   // Private properties
+
    this .dependentRenderers = new WeakMap ();
    this .projectionMatrix   = new Matrix4 ();
    this .modelMatrix        = new Matrix4 ();
-   this .viewVolume         = new ViewVolume ();
+   this .updateCallbacks    = new Map ();
 }
 
 Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DEnvironmentTextureNode .prototype),
@@ -42,6 +44,18 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
       this ._size .addInterest ("set_size__", this);
 
       this .set_size__ ();
+   },
+   isRenderedTexture ()
+   {
+      return true;
+   },
+   addUpdateCallback (key, callback)
+   {
+      this .updateCallbacks .set (key, callback);
+   },
+   removeUpdateCallback (key)
+   {
+      this .updateCallbacks .delete (key);
    },
    set_size__ ()
    {
@@ -69,7 +83,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
          // Properties
 
          this .viewport    = new Vector4 (0, 0, size, size);
-         this .frameBuffer = new TextureBuffer ({ browser: this .getBrowser (), width: size, height: size });
+         this .frameBuffer = new TextureBuffer ({ browser, width: size, height: size });
 
          this .setSize (size);
       }
@@ -84,18 +98,19 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
    {
       // TraverseType .DISPLAY
 
-      if (this ._update .getValue () === "NONE")
-         return;
-
       if (!renderObject .isIndependent ())
          return;
 
       if (!this .frameBuffer)
          return;
 
-      renderObject .getGeneratedCubeMapTextures () .push (this);
+      if (this ._update .getValue () === "NONE")
+         return;
 
-      this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ()) .multRight (renderObject .getCameraSpaceMatrix () .get ());
+      renderObject .getRenderedTextures () .add (this);
+
+      this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ())
+         .multRight (renderObject .getCameraSpaceMatrix () .get ());
    },
    renderTexture: (() =>
    {
@@ -121,18 +136,20 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
          new Vector3 ( 1,  1,  1), // bottom
       ];
 
-      const invCameraSpaceMatrix = new Matrix4 ();
+      const
+         invCameraSpaceMatrix = new Matrix4 (),
+         viewVolume           = new ViewVolume ();
 
       return function (renderObject)
       {
+         this .textureRenderingPass = true;
+
+         // Make dependent renderer.
+
          if (!this .dependentRenderers .has (renderObject))
-         {
-            const dependentRenderer = new DependentRenderer (this .getExecutionContext (), renderObject, this);
+            this .dependentRenderers .set (renderObject, new DependentRenderer (this .getExecutionContext (), renderObject));
 
-            dependentRenderer .setup ();
-
-            this .dependentRenderers .set (renderObject, dependentRenderer);
-         }
+         // Prepare.
 
          const
             dependentRenderer  = this .dependentRenderers .get (renderObject),
@@ -153,13 +170,18 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
          this .setTransparent (background .isTransparent ());
 
          dependentRenderer .setFramebuffer (this .frameBuffer);
-         dependentRenderer .getViewVolumes () .push (this .viewVolume .set (projectionMatrix, this .viewport, this .viewport));
+         dependentRenderer .getViewVolumes () .push (viewVolume .set (projectionMatrix, this .viewport, this .viewport));
          dependentRenderer .getProjectionMatrix () .push (projectionMatrix);
 
          gl .bindTexture (this .getTarget (), this .getTexture ());
 
+         this .frameBuffer .bind ();
+
          for (let i = 0; i < 6; ++ i)
          {
+            gl .viewport (... this .viewport);
+            gl .scissor (... this .viewport);
+            gl .clearColor (0, 0, 0, 0);
             gl .clear (gl .COLOR_BUFFER_BIT); // Always clear, X3DBackground could be transparent!
 
             // Setup inverse texture space matrix.
@@ -168,7 +190,9 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
             dependentRenderer .getCameraSpaceMatrix () .rotate (rotations [i]);
             dependentRenderer .getCameraSpaceMatrix () .scale (scales [i]);
 
-            dependentRenderer .getViewMatrix () .push (invCameraSpaceMatrix .assign (dependentRenderer .getCameraSpaceMatrix () .get ()) .inverse ());
+            invCameraSpaceMatrix .assign (dependentRenderer .getCameraSpaceMatrix () .get ()) .inverse ();
+
+            dependentRenderer .getViewMatrix ()      .push (invCameraSpaceMatrix);
             dependentRenderer .getModelViewMatrix () .push (invCameraSpaceMatrix);
 
             // Setup headlight if enabled.
@@ -203,22 +227,22 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
          dependentRenderer .getProjectionMatrix () .pop ();
          dependentRenderer .getViewVolumes      () .pop ();
 
-         if (this ._update .getValue () === "NEXT_FRAME_ONLY")
+         if (this ._update .equals ("NEXT_FRAME_ONLY"))
             this ._update = "NONE";
+
+         for (const callback of this .updateCallbacks .values ())
+            callback ();
+
+         this .textureRenderingPass = false;
       };
    })(),
-   setShaderUniforms: (() =>
+   setShaderUniforms (gl, channel)
    {
-      const zeros = new Float32Array (16); // Trick: zero model view matrix to hide object.
+      X3DEnvironmentTextureNode .prototype .setShaderUniforms .call (this, gl, channel);
 
-      return function (gl, shaderObject, renderObject, channel)
-      {
-         X3DEnvironmentTextureNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, channel);
-
-         if (renderObject .getNode () === this)
-            gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, zeros);
-      };
-   })(),
+      if (this .textureRenderingPass)
+         gl .viewport (0, 0, 0, 0); // Hide object by making viewport zero size.
+   },
 });
 
 Object .defineProperties (GeneratedCubeMapTexture,

@@ -32,11 +32,11 @@ The AnisotropyMaterialExtension node belongs to the [X_ITE](/x_ite/components/ov
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFFloat | [in, out] | [anisotropyStrength](#fields-anisotropyStrength) | 0  |
-| SFFloat | [in, out] | [anisotropyRotation](#fields-anisotropyRotation) | 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFFloat | [in, out] | [anisotropyStrength](#fields-anisotropyStrength) | 0 |
+| SFFloat | [in, out] | [anisotropyRotation](#fields-anisotropyRotation) | 0 |
 | SFString | [in, out] | [anisotropyTextureMapping](#fields-anisotropyTextureMapping) | "" |
-| SFNode | [in, out] | [anisotropyTexture](#fields-anisotropyTexture) | NULL  |
+| SFNode | [in, out] | [anisotropyTexture](#fields-anisotropyTexture) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -48,7 +48,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
-### SFFloat [in, out] **anisotropyStrength** 0 <small>[0,∞)</small>
+### SFFloat [in, out] **anisotropyStrength** 0 <small>[0,1]</small>
 {: #fields-anisotropyStrength }
 
 The anisotropy strength. When the anisotropy texture is present, this value is multiplied by the texture's blue channel.
@@ -71,6 +71,13 @@ The anisotropy texture. Red and green channels represent the anisotropy directio
 ## Example
 
 - [View »Anisotropy Barn Lamp« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=AnisotropyBarnLamp)
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

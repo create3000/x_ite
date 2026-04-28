@@ -1,6 +1,7 @@
-import X3DField    from "../Base/X3DField.js";
-import ArrayFields from "./ArrayFields.js";
-import Algorithm   from "../../standard/Math/Algorithm.js";
+import X3DField     from "../Base/X3DField.js";
+import ArrayFields  from "./ArrayFields.js";
+import X3DConstants from "../Base/X3DConstants.js";
+import Algorithm    from "../../standard/Math/Algorithm.js";
 
 const MFInt32 = ArrayFields .MFInt32;
 
@@ -88,29 +89,9 @@ Object .assign (Image .prototype,
 
 const _set_size = Symbol ();
 
-function SFImage (width, height, comp, array)
+function SFImage (width = 0, height = 0, comp = 0, array = new MFInt32 ())
 {
-   switch (arguments .length)
-   {
-      case 0:
-         X3DField .call (this, new Image (0, 0, 0, new MFInt32 ()));
-         break;
-
-      case 1:
-         X3DField .call (this, arguments [0]);
-         break;
-
-      case 3:
-         X3DField .call (this, new Image (width, height, comp, new MFInt32 ()));
-         break;
-
-      case 4:
-         X3DField .call (this, new Image (width, height, comp, array));
-         break;
-
-      default:
-         throw new Error ("Invalid arguments.");
-   }
+   X3DField .call (this, new Image (width, height, comp, array));
 
    this .getValue () .getArray () .addParent (this);
    this .addInterest (_set_size, this);
@@ -131,7 +112,7 @@ Object .assign (Object .setPrototypeOf (SFImage .prototype, X3DField .prototype)
    },
    copy ()
    {
-      return new SFImage (this .getValue () .copy ());
+      return SFImage .fromValue (this .getValue () .copy ());
    },
    equals (image)
    {
@@ -156,17 +137,17 @@ Object .assign (Object .setPrototypeOf (SFImage .prototype, X3DField .prototype)
          array  = new Uint32Array (this .array .getValue () .buffer);
 
       generator .string += width;
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += height;
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += this .comp;
-      generator .string += generator .AttribBreak ();
+      generator .AttribBreak ();
 
       generator .IncIndent ();
 
       for (let y = 0; y < height; ++ y)
       {
-         generator .string += generator .ListIndent ();
+         generator .ListIndent ();
 
          const s = y * width;
 
@@ -176,11 +157,11 @@ Object .assign (Object .setPrototypeOf (SFImage .prototype, X3DField .prototype)
             generator .string += array [x + s] .toString (16);
 
             if (x !== width - 1)
-               generator .string += generator .Space ();
+               generator .Space ();
          }
 
          if (y !== height - 1)
-            generator .string += generator .AttribBreak ();
+            generator .AttribBreak ();
       }
 
       generator .DecIndent ();
@@ -196,15 +177,15 @@ Object .assign (Object .setPrototypeOf (SFImage .prototype, X3DField .prototype)
    toJSONStream (generator)
    {
       generator .string += '[';
-      generator .string += generator .ListBreak ();
-      generator .string += generator .IncIndent ();
-      generator .string += generator .ListIndent ();
+      generator .ListBreak ();
+      generator .IncIndent ();
+      generator .ListIndent ();
 
       this .toJSONStreamValue (generator);
 
-      generator .string += generator .DecIndent ();
-      generator .string += generator .ListBreak ();
-      generator .string += generator .ListIndent ();
+      generator .DecIndent ();
+      generator .ListBreak ();
+      generator .ListIndent ();
       generator .string += ']';
    },
    toJSONStreamValue (generator)
@@ -217,21 +198,21 @@ Object .assign (Object .setPrototypeOf (SFImage .prototype, X3DField .prototype)
 
       generator .string += width;
       generator .string += ',';
-      generator .string += generator .TidySpace ();
+      generator .TidySpace ();
       generator .string += height;
       generator .string += ',';
-      generator .string += generator .TidySpace ();
+      generator .TidySpace ();
       generator .string += this .comp;
       generator .string += ',';
 
       if (width && height)
       {
-         generator .string += generator .ListBreak ();
-         generator .string += generator .IncIndent ();
+         generator .ListBreak ();
+         generator .IncIndent ();
 
          for (let y = 0; y < height; ++ y)
          {
-            generator .string += generator .ListIndent ();
+            generator .ListIndent ();
 
             const s = y * width;
 
@@ -243,14 +224,14 @@ Object .assign (Object .setPrototypeOf (SFImage .prototype, X3DField .prototype)
                   generator .string += ',';
 
                if (x !== width - 1)
-                  generator .string += generator .TidySpace ();
+                  generator .TidySpace ();
             }
 
             if (y !== height - 1)
-               generator .string += generator .ListBreak ();
+               generator .ListBreak ();
          }
 
-         generator .string += generator .DecIndent ();
+         generator .DecIndent ();
       }
    },
 });
@@ -316,13 +297,6 @@ Object .defineProperties (SFImage .prototype,
    array:  Object .assign ({ enumerable: true }, array),
 });
 
-Object .defineProperties (SFImage,
-{
-   typeName:
-   {
-      value: "SFImage",
-      enumerable: true,
-   },
-});
+X3DField .addStaticProperties (SFImage, "SFImage");
 
 export default SFImage;

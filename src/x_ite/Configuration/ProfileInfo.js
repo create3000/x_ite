@@ -16,9 +16,9 @@ Object .assign (Object .setPrototypeOf (ProfileInfo .prototype, X3DObject .proto
 {
    toVRMLStream (generator)
    {
-      generator .string += generator .Indent ();
+      generator .Indent ();
       generator .string += "PROFILE";
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += this .name;
    },
    toXMLStream (generator)

@@ -135,7 +135,7 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, X3DParticleE
       {
          const
             gl                = this .getBrowser () .getContext (),
-            vertices          = this .polylinesNode .getVertices () .getValue (),
+            vertices          = this .polylinesNode .getVertices (),
             numVertices       = vertices .length / 4,
             numLengthSoFar    = numVertices / 2 + 1,
             polylineArraySize = Math .ceil (Math .sqrt (numLengthSoFar + numVertices));

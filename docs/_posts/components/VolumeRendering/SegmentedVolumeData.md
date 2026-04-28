@@ -22,24 +22,27 @@ The SegmentedVolumeData node belongs to the [VolumeRendering](/x_ite/components/
 ```
 + X3DNode
   + X3DChildNode
-    + X3DVolumeDataNode
+    + X3DVolumeDataNode (X3DBoundedObject)*
       + SegmentedVolumeData
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFVec3f | [in, out] | [dimensions](#fields-dimensions) | 1 1 1  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFVec3f | [in, out] | [dimensions](#fields-dimensions) | 1 1 1 |
 | MFBool | [in, out] | [segmentEnabled](#fields-segmentEnabled) | [ ] |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
-| SFNode | [in, out] | [segmentIdentifiers](#fields-segmentIdentifiers) | NULL  |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
+| SFNode | [in, out] | [segmentIdentifiers](#fields-segmentIdentifiers) | NULL |
 | MFNode | [in, out] | [renderStyle](#fields-renderStyle) | [ ] |
-| SFNode | [in, out] | [voxels](#fields-voxels) | NULL  |
+| SFNode | [in, out] | [voxels](#fields-voxels) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -110,7 +113,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 ### SFNode [in, out] **segmentIdentifiers** NULL <small>[X3DTexture3DNode]</small>
 {: #fields-segmentIdentifiers }
 
-Single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/), [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/)) holds component texture that provides corresponding segment identifier.
+Optional single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/), [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/)) holds component texture that provides corresponding segment identifier.
 
 #### Hint
 
@@ -132,7 +135,7 @@ Multiple contained X3DVolumeRenderStyleNode nodes corresponding to each isosurfa
 ### SFNode [in, out] **voxels** NULL <small>[X3DTexture3DNode]</small>
 {: #fields-voxels }
 
-Single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/), [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/)) that provides raw voxel information utilized by corresponding rendering styles. Any number of color components (1-4) may be defined.
+Optional single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/), [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/)) that provides raw voxel information utilized by corresponding rendering styles. Any number of color components (1-4) may be defined.
 
 ## Advice
 
@@ -147,13 +150,20 @@ Single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components/texturi
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/VolumeRendering/SegmentedVolumeData/SegmentedVolumeData.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/VolumeRendering/SegmentedVolumeData/SegmentedVolumeData.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/VolumeRendering/SegmentedVolumeData/screenshot.avif" alt="SegmentedVolumeData"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/VolumeRendering/SegmentedVolumeData/SegmentedVolumeData.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/VolumeRendering/SegmentedVolumeData/SegmentedVolumeData.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

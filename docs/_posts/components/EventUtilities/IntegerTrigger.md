@@ -30,9 +30,9 @@ The IntegerTrigger node belongs to the [EventUtilities](/x_ite/components/overvi
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in] | [set_boolean](#fields-set_boolean) |  |
-| SFInt32 | [in, out] | [integerKey](#fields-integerKey) | -1  |
+| SFInt32 | [in, out] | [integerKey](#fields-integerKey) | -1 |
 | SFInt32 | [out] | [triggerValue](#fields-triggerValue) |  |
 {: .fields }
 
@@ -82,6 +82,13 @@ If input event *set_boolean* is true, trigger output of integer value.
 
 - [Example scenes and authoring assets](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter09-EventUtilitiesScripting)
 - [X3D Event-Utility Node Diagrams](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter09-EventUtilitiesScripting/X3dEventUtilityNodeEventDiagrams.pdf)
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

@@ -16,6 +16,8 @@ function Anchor (executionContext)
 
    this .addType (X3DConstants .Anchor);
 
+   // Private properties
+
    this .touchSensorNode = new TouchSensor (executionContext);
    this .anchorSensors   = [ ];
 }

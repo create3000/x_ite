@@ -3,7 +3,7 @@ title: Creating New Node Types
 date: 2022-11-28
 nav: tutorials-scripts-and-prototypes
 categories: [Tutorials]
-tags: [Creating, Node, Types]
+tags: [Prototype]
 ---
 ## Motivation
 
@@ -44,8 +44,8 @@ A PROTO statement declares a new node type (a prototype):
 
 ```vrml
 PROTO BouncingBall [
-  inputOutput    SFTime  cycleInterval 1.0
-  initializeOnly SFFloat bounceHeight  1.0
+  inputOutput    SFTime  cycleInterval 1
+  initializeOnly SFFloat bounceHeight 1
 ]
 {
   ...
@@ -123,8 +123,8 @@ Interface items connected by IS need not have the same name as an item in the bo
 
 ```vrml
 PROTO BouncingBall [
-  inputOutput    SFTime  cycleInterval 1.0
-  initializeOnly SFFloat bounceHeight  1.0
+  inputOutput    SFTime  cycleInterval 1
+  initializeOnly SFFloat bounceHeight 1
 ]
 {
   ...
@@ -169,8 +169,8 @@ The new node type can be used like any other type.
 
 ```vrml
 BouncingBall {
-  cycleInterval 2.0
-  bounceHeight  3.0
+  cycleInterval 2
+  bounceHeight 3
 }
 ```
 
@@ -251,8 +251,8 @@ Fields needed:
 
 ```vrml
 PROTO BouncingBall [
-  inputOutput    SFTime  cycleInterval 1.0
-  initializeOnly SFFloat bounceHeight 1.0
+  inputOutput    SFTime  cycleInterval 1
+  initializeOnly SFFloat bounceHeight 1
 ]
 {
   ...

@@ -17,6 +17,8 @@ function HAnimMotion (executionContext)
 
    this .addType (X3DConstants .HAnimMotion);
 
+   // Private properties
+
    this .timeSensor    = new TimeSensor (this .getExecutionContext ());
    this .interpolators = [ ];
 }
@@ -62,9 +64,9 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          joints          = this .joints,
          jointsIndex     = this .getJointsIndex (jointNodes);
 
-      // Connect interpolators.
+      // Connect interpolators to joint nodes.
 
-      for (const [j, { positionInterpolator, orientationInterpolator, scaleInterpolator }] of this .interpolators .entries ())
+      for (const [j, joint] of this .interpolators .entries ())
       {
          if (j < channelsEnabled .length && !channelsEnabled [j])
             continue;
@@ -74,29 +76,21 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
          if (!jointNode)
             continue;
 
-         positionInterpolator    ?._value_changed .addFieldInterest (jointNode ._translation);
-         orientationInterpolator ?._value_changed .addFieldInterest (jointNode ._rotation);
-         scaleInterpolator       ?._value_changed .addFieldInterest (jointNode ._scale);
+         for (const [name, interpolator] of Object .entries (joint))
+            interpolator ._value_changed .addFieldInterest (jointNode .getField (name));
       }
    },
-   disconnectJoints (jointNodes)
+   disconnectJoints ()
    {
-      const
-         joints      = this .joints,
-         jointsIndex = this .getJointsIndex (jointNodes);
+      // Disconnect interpolators from joint nodes.
 
-      // Disconnect joint nodes.
-
-      for (const [j, { positionInterpolator, orientationInterpolator, scaleInterpolator }] of this .interpolators .entries ())
+      for (const joint of this .interpolators)
       {
-         const jointNode = jointsIndex .get (joints [j]);
-
-         if (!jointNode)
-            continue;
-
-         positionInterpolator    ?._value_changed .removeFieldInterest (jointNode ._translation);
-         orientationInterpolator ?._value_changed .removeFieldInterest (jointNode ._rotation);
-         scaleInterpolator       ?._value_changed .removeFieldInterest (jointNode ._scale);
+         for (const interpolator of Object .values (joint))
+         {
+            Array .from (interpolator ._value_changed .getFieldInterests ())
+               .forEach (field => interpolator ._value_changed .removeFieldInterest (field));
+         }
       }
    },
    getJointsIndex (jointNodes)
@@ -119,121 +113,179 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
    {
       this .joints = this ._joints .getValue () .replace (/^[\s,]+|[\s,]+$/sg, "") .split (/[\s,]+/s);
 
-      // Disconnect all joint nodes.
-
-      for (const { positionInterpolator, orientationInterpolator, scaleInterpolator } of this .interpolators)
-      {
-         positionInterpolator ?._value_changed .getFieldInterests ()
-            .forEach (field => positionInterpolator ._value_changed .removeFieldInterest (field));
-
-         orientationInterpolator ?._value_changed .getFieldInterests ()
-            .forEach (field => orientationInterpolator ._value_changed .removeFieldInterest (field));
-
-         scaleInterpolator ?._value_changed .getFieldInterests ()
-            .forEach (field => scaleInterpolator ._value_changed .removeFieldInterest (field));
-      }
+      this .disconnectJoints ();
    },
-   set_interpolators__ ()
+   set_interpolators__: (() =>
    {
-      // Disconnect old interpolators.
+      const defaultOrder = ["X", "Y", "Z"];
 
-      const timeSensor = this .timeSensor;
-
-      timeSensor ._fraction_changed .getFieldInterests ()
-         .forEach (field => timeSensor ._fraction_changed .removeFieldInterest (field));
-
-      // Create interpolators.
-
-      const channels = this ._channels .getValue ()
-         .replace (/^[\s,\d]+|[\s,\d]+$/sg, "")
-         .split (/[\s,]+\d+[\s,]+/s)
-         .map (string => string .split (/[\s,]+/s));
-
-      const
-         values        = this ._values,
-         numChannels   = channels .reduce ((v, c) => v + c .length, 0),
-         frameCount    = Math .floor (numChannels ? values .length / numChannels : 0),
-         types         = new Map (),
-         interpolators = Array .from ({length: channels .length}, () => ({ }));
-
-      this .interpolators = interpolators;
-
-      for (let frame = 0, v = 0; frame < frameCount; ++ frame)
+      return function ()
       {
-         for (const [j, joint] of channels .entries ())
+         // Disconnect old interpolators.
+
+         const timeSensor = this .timeSensor;
+
+         Array .from (timeSensor ._fraction_changed .getFieldInterests ())
+            .forEach (field => timeSensor ._fraction_changed .removeFieldInterest (field));
+
+         // Create interpolators.
+
+         const channels = this ._channels .getValue ()
+            .replace (/^[\s,\d]+|[\s,\d]+$/sg, "")
+            .split (/[\s,]+\d+[\s,]+/s)
+            .map (string => string .split (/[\s,]+/s));
+
+         // console .time ("set_interpolators__");
+
+         const
+            values        = this ._values,
+            numChannels   = channels .reduce ((v, c) => v + c .length, 0),
+            frameCount    = Math .floor (numChannels ? values .length / numChannels : 0),
+            interpolators = Array .from ({ length: channels .length }, () => ({ })),
+            position      = new Vector3 (),
+            rotation      = new Rotation4 (),
+            scale         = new Vector3 ();
+
+         this .interpolators = interpolators;
+
+         for (let frame = 0, v = 0; frame < frameCount; ++ frame)
          {
-            types .clear ();
+            const key = frame / (frameCount - 1);
 
-            for (const channel of joint)
-               types .set (channel, values [v ++]);
-
-            if (types .has ("Xposition") || types .has ("Yposition") || types .has ("Zposition"))
+            for (const [j, joint] of channels .entries ())
             {
-               const interpolator = interpolators [j] .positionInterpolator
-                  ?? this .createPositionInterpolator (interpolators, j);
+               let
+                  Xposition = 0, Yposition = 0, Zposition = 0, positionChannels,
+                  Xrotation = 0, Yrotation = 0, Zrotation = 0, rotationOrder = "",
+                  Xscale    = 1, Yscale    = 1, Zscale    = 1, scaleChannels;
 
-               const
-                  key      = frame / (frameCount - 1),
-                  keyValue = new Vector3 (types .get ("Xposition") ?? 0,
-                                          types .get ("Yposition") ?? 0,
-                                          types .get ("Zposition") ?? 0);
+               for (const channel of joint)
+               {
+                  switch (channel)
+                  {
+                     case "Xposition":
+                        positionChannels = true;
+                        Xposition        = values [v ++];
+                        break;
+                     case "Yposition":
+                        positionChannels = true;
+                        Yposition        = values [v ++];
+                        break;
+                     case "Zposition":
+                        positionChannels = true;
+                        Zposition        = values [v ++];
+                        break;
+                     case "Xrotation":
+                        rotationOrder += "X";
+                        Xrotation      = Algorithm .radians (values [v ++]);
+                        break;
+                     case "Yrotation":
+                        rotationOrder += "Y";
+                        Yrotation      = Algorithm .radians (values [v ++]);
+                        break;
+                     case "Zrotation":
+                        rotationOrder += "Z";
+                        Zrotation      = Algorithm .radians (values [v ++]);
+                        break;
+                     case "Xscale":
+                        scaleChannels = true;
+                        Xscale        = values [v ++];
+                        break;
+                     case "Yscale":
+                        scaleChannels = true;
+                        Yscale        = values [v ++];
+                        break;
+                     case "Zscale":
+                        scaleChannels = true;
+                        Zscale        = values [v ++];
+                        break;
+                     default:
+                        v ++;
+                        break;
+                  }
+               }
 
-               interpolator ._key      .push (key);
-               interpolator ._keyValue .push (keyValue);
+               if (positionChannels)
+               {
+                  const interpolator = interpolators [j] .translation ??= (() =>
+                  {
+                     const interpolator = new PositionInterpolator (this .getExecutionContext ());
 
-               timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
-            }
+                     timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
 
-            if (types .has ("Xrotation") || types .has ("Yrotation") || types .has ("Zrotation"))
-            {
-               const interpolator = interpolators [j] .orientationInterpolator
-                  ?? this .createOrientationInterpolator (interpolators, j);
+                     return interpolator;
+                  })();
 
-               const
-                  key      = frame / (frameCount - 1),
-                  keyValue = Rotation4 .fromEuler (Algorithm .radians (types .get ("Xrotation") ?? 0),
-                                                   Algorithm .radians (types .get ("Yrotation") ?? 0),
-                                                   Algorithm .radians (types .get ("Zrotation") ?? 0));
+                  interpolator ._key      .push (key);
+                  interpolator ._keyValue .push (position .set (Xposition, Yposition, Zposition));
+               }
 
-               interpolator ._key      .push (key);
-               interpolator ._keyValue .push (keyValue);
+               if (rotationOrder .length)
+               {
+                  const interpolator = interpolators [j] .rotation ??= (() =>
+                  {
+                     const interpolator = new OrientationInterpolator (this .getExecutionContext ());
 
-               timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
-            }
+                     timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
 
-            if (types .has ("Xscale") || types .has ("Yscale") || types .has ("Zscale"))
-            {
-               const interpolator = interpolators [j] .scaleInterpolator
-                  ?? this .createScaleInterpolator (interpolators, j);
+                     return interpolator;
+                  })();
 
-               const
-                  key      = frame / (frameCount - 1),
-                  keyValue = new Vector3 (types .get ("Xscale") ?? 1,
-                                          types .get ("Yscale") ?? 1,
-                                          types .get ("Zscale") ?? 1);
+                  if (rotationOrder .length !== 3)
+                  {
+                     if (rotationOrder .length < 3)
+                     {
+                        for (const o of defaultOrder)
+                        {
+                           if (rotationOrder .includes (o))
+                              continue;
 
-               interpolator ._key      .push (key);
-               interpolator ._keyValue .push (keyValue);
+                           rotationOrder += o;
+                        }
+                     }
+                     else
+                     {
+                        rotationOrder = rotationOrder .slice (0, 3);
+                     }
+                  }
 
-               timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
+                  interpolator ._key      .push (key);
+                  interpolator ._keyValue .push (rotation .setEuler (Xrotation, Yrotation, Zrotation, rotationOrder));
+               }
+
+               if (scaleChannels)
+               {
+                  const interpolator = interpolators [j] .scale ??= (() =>
+                  {
+                     const interpolator = new PositionInterpolator (this .getExecutionContext ());
+
+                     timeSensor ._fraction_changed .addFieldInterest (interpolator ._set_fraction);
+
+                     return interpolator;
+                  })();
+
+                  interpolator ._key      .push (key);
+                  interpolator ._keyValue .push (scale .set (Xscale, Yscale, Zscale));
+               }
             }
          }
-      }
 
-      for (const { positionInterpolator, orientationInterpolator, scaleInterpolator } of interpolators)
-      {
-         positionInterpolator    ?.setup ();
-         orientationInterpolator ?.setup ();
-         scaleInterpolator       ?.setup ();
-      }
+         for (const joint of interpolators)
+         {
+            for (const interpolator of Object .values (joint))
+               interpolator .setup ();
+         }
 
-      this ._frameIndex = 0;
-      this ._startFrame = 0;
-      this ._endFrame   = frameCount - 1;
-      this ._frameCount = frameCount;
+         // console .timeEnd ("set_interpolators__");
 
-      this .set_frameDuration__ ();
-   },
+         this ._frameIndex = 0;
+         this ._startFrame = 0;
+         this ._endFrame   = Math .max (frameCount - 1, 0);
+         this ._frameCount = frameCount;
+
+         this .set_frameDuration__ ();
+      };
+   })(),
    set_next_or_previous__ (direction, field)
    {
       if (!field .getValue ())
@@ -303,18 +355,6 @@ Object .assign (Object .setPrototypeOf (HAnimMotion .prototype, X3DChildNode .pr
       this .timeSensor ._range [1] = frameCount > 1 ? this .startFrame / (frameCount - 1) : 0;
       this .timeSensor ._range [2] = frameCount > 1 ? this .endFrame   / (frameCount - 1) : 0;
    },
-   createPositionInterpolator (interpolators, j)
-   {
-      return interpolators [j] .positionInterpolator = new PositionInterpolator (this .getExecutionContext ());
-   },
-   createOrientationInterpolator (interpolators, j)
-   {
-      return interpolators [j] .orientationInterpolator = new OrientationInterpolator (this .getExecutionContext ());
-   },
-   createScaleInterpolator (interpolators, j)
-   {
-      return interpolators [j] .scaleInterpolator = new PositionInterpolator (this .getExecutionContext ());
-   },
    getFraction ()
    {
       for (const field of this .timeSensor ._fraction_changed .getFieldInterests ())
@@ -333,8 +373,8 @@ Object .defineProperties (HAnimMotion,
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "description",     new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "name",            new Fields .SFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "loa",             new Fields .SFInt32 (-1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "joints",          new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "channelsEnabled", new Fields .MFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "channels",        new Fields .SFString ()),

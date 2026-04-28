@@ -4,25 +4,24 @@ import FieldDefinitionArray    from "../Base/FieldDefinitionArray.js";
 import X3DUrlObject            from "../Components/Networking/X3DUrlObject.js";
 import X3DProtoDeclarationNode from "./X3DProtoDeclarationNode.js";
 import X3DConstants            from "../Base/X3DConstants.js";
+import FileLoader              from "../InputOutput/FileLoader.js";
 
 const
-   _proto = Symbol (),
-   _scene = Symbol (),
-   _cache = Symbol ();
+   _proto      = Symbol (),
+   _scene      = Symbol (),
+   _fileLoader = Symbol ();
 
 function X3DExternProtoDeclaration (executionContext, url)
 {
    X3DProtoDeclarationNode .call (this, executionContext);
    X3DUrlObject            .call (this, executionContext);
 
-   this .addType (X3DConstants .X3DExternProtoDeclaration)
+   this .addType (X3DConstants .X3DExternProtoDeclaration);
 
    this .addChildObjects (X3DConstants .inputOutput, "load",                 new Fields .SFBool (true),
                           X3DConstants .inputOutput, "url",                  url .copy (), // Must be of type MFString.
                           X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime (0),
                           X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600));
-
-   this .getBrowser () [_cache] ??= new Map ();
 }
 
 Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3DProtoDeclarationNode .prototype),
@@ -75,54 +74,12 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
    },
    async loadData ()
    {
-      const browser = this .getBrowser ();
+      const cache = this .getBrowser () .getBrowserOption ("Cache");
 
-      if (!this ._url .length)
-      {
-         this .setError (new Error ("No URL given."));
-         return;
-      }
+      this [_fileLoader] ?.abort ();
 
-      const { default: FileLoader } = await import ("../InputOutput/FileLoader.js");
-
-      for (const url of this ._url)
-      {
-         try
-         {
-            const
-               fileURL  = new URL (url, this .getExecutionContext () .getBaseURL ()),
-               cacheURL = new URL (fileURL),
-               cache    = browser .getBrowserOption ("Cache");
-
-            cacheURL .hash = "";
-
-            const cachePromise = cache
-               ? browser [_cache] .get (cacheURL .href)
-               : null;
-
-            const promise = cachePromise ?? new Promise (resolve =>
-            {
-               new FileLoader (this) .createX3DFromURL ([cacheURL], null, resolve);
-            });
-
-            if (!cachePromise && !cacheURL .search)
-               browser [_cache] .set (cacheURL .href, promise);
-
-            const scene = await promise;
-
-            if (!scene)
-               continue;
-
-            this .setInternalScene (scene, fileURL, cache);
-            return;
-         }
-         catch (error)
-         {
-            console .warn (error .message);
-         }
-      }
-
-      this .setError (new Error ("File could not be loaded."));
+      this [_fileLoader] = new FileLoader (this, cache)
+         .createX3DFromURL (this ._url, null, this .setInternalScene .bind (this));
    },
    getInternalScene ()
    {
@@ -130,52 +87,53 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
 
       return this [_scene];
    },
-   setInternalScene (scene, fileURL, cache)
+   setInternalScene (scene)
    {
-      const browser = this .getBrowser ();
+      // Remove old scene.
 
-      if (this [_scene] !== browser .getDefaultScene () && !this [_cache])
+      if (!this [_scene] ?.cache)
          this [_scene] ?.dispose ();
 
+      // Set new scene.
+
       this [_scene] = scene;
-      this [_cache] = cache;
 
-      const
-         protoName = decodeURIComponent (fileURL .hash .substring (1)),
-         proto     = protoName ? this [_scene] .protos .get (protoName) : this [_scene] .protos [0];
+      if (scene)
+      {
+         const
+            browser = this .getBrowser (),
+            hash    = new URL (scene .getWorldURL ()) .hash .substring (1),
+            proto   = hash ? scene .protos .get (hash) : scene .protos [0];
 
-      if (!proto)
-         throw new Error ("PROTO not found");
+         if (!proto)
+            throw new Error ("PROTO not found.");
 
-      this [_scene] .setExecutionContext (this [_cache] ? browser .getDefaultScene () : this .getExecutionContext ());
-      this [_scene] .setLive (true);
+         scene .setExecutionContext (scene .cache ? browser .getDefaultScene () : this .getExecutionContext ());
+         scene .setLive (true);
 
-      this .setLoadState (X3DConstants .COMPLETE_STATE);
-      this .setProtoDeclaration (proto);
-   },
-   setError (error)
-   {
-      console .error (`Error loading extern prototype '${this .getName ()}':`, error);
-
-      this [_scene] = this .getBrowser () .getDefaultScene ();
-
-      this .setLoadState (X3DConstants .FAILED_STATE);
-      this .setProtoDeclaration (null);
+         this .setLoadState (X3DConstants .COMPLETE_STATE);
+         this .setProtoDeclaration (proto);
+      }
+      else
+      {
+         this .setLoadState (X3DConstants .FAILED_STATE);
+         this .setProtoDeclaration (null);
+      }
    },
    toVRMLStream (generator)
    {
-      generator .string += generator .Indent ();
+      generator .Indent ();
       generator .string += "EXTERNPROTO";
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += this .getName ();
-      generator .string += generator .TidySpace ();
+      generator .TidySpace ();
       generator .string += "[";
 
       const userDefinedFields = this .getUserDefinedFields ();
 
       if (userDefinedFields .length === 0)
       {
-         generator .string += generator .TidySpace ();
+         generator .TidySpace ();
       }
       else
       {
@@ -189,7 +147,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
             accessTypeLength = Math .max (accessTypeLength, generator .AccessType (field .getAccessType ()) .length);
          }
 
-         generator .string += generator .TidyBreak ();
+         generator .TidyBreak ();
 
          generator .IncIndent ();
 
@@ -200,122 +158,94 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
             this .toVRMLStreamUserDefinedField (generator, field, fieldTypeLength, accessTypeLength);
 
             if (field === last)
-               generator .string += generator .TidyBreak ();
+               generator .TidyBreak ();
             else
-               generator .string += generator .Break ();
+               generator .Break ();
          }
 
          generator .DecIndent ();
 
-         generator .string += generator .Indent ();
+         generator .Indent ();
       }
 
       generator .string += "]";
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .Indent ();
+      generator .TidyBreak ();
+      generator .Indent ();
 
       this ._url .toVRMLStream (generator);
    },
    toVRMLStreamUserDefinedField (generator, field, fieldTypeLength, accessTypeLength)
    {
-      generator .string += generator .Indent ();
+      generator .Indent ();
       generator .string += generator .AccessType (field .getAccessType ()) .padEnd (accessTypeLength, generator .TidySpace ());
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += field .getTypeName () .padEnd (fieldTypeLength, generator .TidySpace ());
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += field .getName ();
    },
    toXMLStream (generator)
    {
-      generator .string += generator .Indent ();
-      generator .string += "<ExternProtoDeclare";
-      generator .string += generator .Space ();
-      generator .string += "name='";
-      generator .string += generator .XMLEncode (this .getName ());
-      generator .string += "'";
-      generator .string += generator .Space ();
+      generator .openTag ("ExternProtoDeclare");
+      generator .attribute ("name", this .getName ());
+
+      generator .Space ();
       generator .string += "url='";
 
       this ._url .toXMLStream (generator);
 
       generator .string += "'";
 
-      generator .XMLAppInfo (this);
-      generator .XMLDocumentation (this);
+      if (this .getAppInfo ())
+         generator .attribute ("appinfo", this .getAppInfo ());
+
+      if (this .getDocumentation ())
+         generator .attribute ("documentation", this .getDocumentation ());
 
       const userDefinedFields = this .getUserDefinedFields ();
 
       if (userDefinedFields .length)
       {
-         generator .string += ">";
-         generator .string += generator .TidyBreak ();
-
+         generator .endTag ();
          generator .IncIndent ();
 
          for (const field of userDefinedFields)
          {
-            generator .string += generator .Indent ();
-            generator .string += "<field";
-            generator .string += generator .Space ();
-            generator .string += "accessType='";
-            generator .string += generator .AccessType (field .getAccessType ());
-            generator .string += "'";
-            generator .string += generator .Space ();
-            generator .string += "type='";
-            generator .string += field .getTypeName ();
-            generator .string += "'";
-            generator .string += generator .Space ();
-            generator .string += "name='";
-            generator .string += generator .XMLEncode (field .getName ());
-            generator .string += "'";
+            generator .openTag ("field");
+            generator .attribute ("accessType", generator .AccessType (field .getAccessType ()));
+            generator .attribute ("type",       field .getTypeName ());
+            generator .attribute ("name",       field .getName ());
 
-            generator .XMLAppInfo (field);
-            generator .XMLDocumentation (field);
+            if (field .getAppInfo ())
+               generator .attribute ("appinfo", field .getAppInfo ());
 
-            generator .string += generator .closingTags ? "></field>" : "/>";
-            generator .string += generator .TidyBreak ();
+            if (field .getDocumentation ())
+               generator .attribute ("documentation", field .getDocumentation ());
+
+            generator .closeTag ("field");
+            generator .TidyBreak ();
          }
 
          generator .DecIndent ();
-
-         generator .string += generator .Indent ();
-         generator .string += "</ExternProtoDeclare>";
+         generator .closingTag ("ExternProtoDeclare");
       }
       else
       {
-         generator .string += generator .closingTags ? "></ExternProtoDeclare>" : "/>";
+         generator .closeTag ("ExternProtoDeclare");
       }
    },
    toJSONStream (generator)
    {
-      generator .string += generator .Indent ();
-      generator .string += '{';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += "ExternProtoDeclare";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .IncIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '{';
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .IncIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@name";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += '"';
-      generator .string += generator .JSONEncode (this .getName ());
-      generator .string += '"';
+      generator .TidyBreak ();
+      generator .Indent ();
 
-      generator .JSONAppInfo (this);
-      generator .JSONDocumentation (this);
+      generator .beginObject ("ExternProtoDeclare", false, true);
+      generator .stringProperty ("@name", this .getName (), false);
 
-      generator .string += ',';
-      generator .string += generator .TidyBreak ();
+      if (this .getAppInfo ())
+         generator .stringProperty ("@appinfo", this .getAppInfo ());
 
+      if (this .getDocumentation ())
+         generator .stringProperty ("@documentation", this .getDocumentation ());
 
       // Fields
 
@@ -323,102 +253,44 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
 
       if (userDefinedFields .length)
       {
-         generator .string += generator .Indent ();
-         generator .string += '"';
-         generator .string += "field";
-         generator .string += '"';
-         generator .string += ':';
-         generator .string += generator .TidySpace ();
-         generator .string += '[';
-         generator .string += generator .TidyBreak ();
-         generator .string += generator .IncIndent ();
+         generator .beginArray ("field");
 
          for (const field of userDefinedFields)
          {
-            generator .string += generator .Indent ();
-            generator .string += '{';
-            generator .string += generator .TidyBreak ();
-            generator .string += generator .IncIndent ();
+            generator .beginObject ("", field !== userDefinedFields [0]);
+            generator .stringProperty ("@accessType", generator .AccessType (field .getAccessType ()), false);
+            generator .stringProperty ("@type",       field .getTypeName ());
+            generator .stringProperty ("@name",       field .getName ());
 
-            generator .string += generator .Indent ();
-            generator .string += '"';
-            generator .string += "@accessType";
-            generator .string += '"';
-            generator .string += ':';
-            generator .string += generator .TidySpace ();
-            generator .string += '"';
-            generator .string += generator .AccessType (field .getAccessType ());
-            generator .string += '"';
-            generator .string += ',';
-            generator .string += generator .TidyBreak ();
+            if (field .getAppInfo ())
+               generator .stringProperty ("@appinfo", field .getAppInfo ());
 
-            generator .string += generator .Indent ();
-            generator .string += '"';
-            generator .string += "@type";
-            generator .string += '"';
-            generator .string += ':';
-            generator .string += generator .TidySpace ();
-            generator .string += '"';
-            generator .string += field .getTypeName ();
-            generator .string += '"';
-            generator .string += ',';
-            generator .string += generator .TidyBreak ();
+            if (field .getDocumentation ())
+               generator .stringProperty ("@documentation", field .getDocumentation ());
 
-            generator .string += generator .Indent ();
-            generator .string += '"';
-            generator .string += "@name";
-            generator .string += '"';
-            generator .string += ':';
-            generator .string += generator .TidySpace ();
-            generator .string += '"';
-            generator .string += generator .JSONEncode (field .getName ());
-            generator .string += '"';
-            generator .string += generator .TidyBreak ();
-
-            generator .JSONAppInfo (field);
-            generator .JSONDocumentation (field);
-
-            generator .string += generator .DecIndent ();
-            generator .string += generator .Indent ();
-            generator .string += '}';
-
-            if (field !== userDefinedFields .at (-1))
-               generator .string += ',';
-
-            generator .string += generator .TidyBreak ();
+            generator .endObject ();
          }
 
-         generator .string += generator .DecIndent ();
-         generator .string += generator .Indent ();
-         generator .string += ']';
-         generator .string += ',';
-         generator .string += generator .TidyBreak ();
+         generator .endArray ();
       }
-
 
       // URL
 
-      generator .string += generator .Indent ();
+      generator .string += ',';
+      generator .TidyBreak ();
+      generator .Indent ();
       generator .string += '"';
       generator .string += "@url";
       generator .string += '"';
       generator .string += ':';
-      generator .string += generator .TidySpace ();
+      generator .TidySpace ();
 
       this ._url .toJSONStream (generator);
 
-      generator .string += generator .TidyBreak ();
-
-
       // End
 
-      generator .string += generator .DecIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '}';
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .DecIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '}';
+      generator .endObject ();
+      generator .endObject ();
    },
 });
 

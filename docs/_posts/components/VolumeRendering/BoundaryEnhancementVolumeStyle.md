@@ -30,11 +30,11 @@ The BoundaryEnhancementVolumeStyle node belongs to the [VolumeRendering](/x_ite/
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFFloat | [in, out] | [retainedOpacity](#fields-retainedOpacity) | 0.2  |
-| SFFloat | [in, out] | [boundaryOpacity](#fields-boundaryOpacity) | 0.9  |
-| SFFloat | [in, out] | [opacityFactor](#fields-opacityFactor) | 2  |
+| SFFloat | [in, out] | [retainedOpacity](#fields-retainedOpacity) | 0.2 |
+| SFFloat | [in, out] | [boundaryOpacity](#fields-boundaryOpacity) | 0.9 |
+| SFFloat | [in, out] | [opacityFactor](#fields-opacityFactor) | 2 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -71,6 +71,13 @@ Enables/disables node operation.
 ### Warning
 
 - Requires X3D `profile='Full'` or else include `<component name='VolumeRendering' level='2'/>`
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

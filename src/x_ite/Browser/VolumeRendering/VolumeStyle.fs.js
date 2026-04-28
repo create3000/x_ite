@@ -28,8 +28,8 @@ const float M_SQRT1_2 = 0.7071067811865476;
    out vec4 x3d_FragColor;
 #endif
 
-#pragma X3D include "includes/ClipPlanes.glsl"
-#pragma X3D include "includes/Fog.glsl"
+#include <ClipPlanes>
+#include <Fog>
 
 __VOLUME_STYLES_DEFINES__
 

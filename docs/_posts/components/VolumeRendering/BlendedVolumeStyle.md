@@ -30,16 +30,16 @@ The BlendedVolumeStyle node belongs to the [VolumeRendering](/x_ite/components/o
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFFloat | [in, out] | [weightConstant1](#fields-weightConstant1) | 0.5  |
-| SFFloat | [in, out] | [weightConstant2](#fields-weightConstant2) | 0.5  |
-| SFString | [in, out] | [weightFunction1](#fields-weightFunction1) | "CONSTANT"  |
-| SFString | [in, out] | [weightFunction2](#fields-weightFunction2) | "CONSTANT"  |
-| SFNode | [in, out] | [weightTransferFunction1](#fields-weightTransferFunction1) | NULL  |
-| SFNode | [in, out] | [weightTransferFunction2](#fields-weightTransferFunction2) | NULL  |
-| SFNode | [in, out] | [renderStyle](#fields-renderStyle) | NULL  |
-| SFNode | [in, out] | [voxels](#fields-voxels) | NULL  |
+| SFFloat | [in, out] | [weightConstant1](#fields-weightConstant1) | 0.5 |
+| SFFloat | [in, out] | [weightConstant2](#fields-weightConstant2) | 0.5 |
+| SFString | [in, out] | [weightFunction1](#fields-weightFunction1) | "CONSTANT" |
+| SFString | [in, out] | [weightFunction2](#fields-weightFunction2) | "CONSTANT" |
+| SFNode | [in, out] | [weightTransferFunction1](#fields-weightTransferFunction1) | NULL |
+| SFNode | [in, out] | [weightTransferFunction2](#fields-weightTransferFunction2) | NULL |
+| SFNode | [in, out] | [renderStyle](#fields-renderStyle) | NULL |
+| SFNode | [in, out] | [voxels](#fields-voxels) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -115,12 +115,12 @@ The weightTransferFunction1 and *weightTransferFunction2* fields specify two-dim
 ### SFNode [in, out] **renderStyle** NULL <small>[X3DComposableVolumeRenderStyleNode]</small>
 {: #fields-renderStyle }
 
-Single contained X3DComposableVolumeRenderStyleNode node that defines specific rendering technique for data in the voxels field, and the result is blended with parent [VolumeData](/x_ite/components/volumerendering/volumedata/) or SegmentedVoliumeData node.
+Optional single contained X3DComposableVolumeRenderStyleNode node that defines specific rendering technique for data in the voxels field, and the result is blended with parent [VolumeData](/x_ite/components/volumerendering/volumedata/) or SegmentedVoliumeData node.
 
 ### SFNode [in, out] **voxels** NULL <small>[X3DTexture3DNode]</small>
 {: #fields-voxels }
 
-Single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/), [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/)) that provides second set of raw voxel information utilized by corresponding rendering styles. Any number of color components (1-4) may be defined.
+Optional single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/), [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/)) that provides second set of raw voxel information utilized by corresponding rendering styles. Any number of color components (1-4) may be defined.
 
 ## Advice
 
@@ -131,6 +131,13 @@ Single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/components/texturi
 ### Warning
 
 - Requires X3D `profile='Full'` or else include `<component name='VolumeRendering' level='3'/>`
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

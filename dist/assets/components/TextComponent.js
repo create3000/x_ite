@@ -1,15 +1,15 @@
-/* X_ITE v12.0.4 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.4")];
+/* X_ITE v14.2.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.2.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 254:
-/***/ ((module) => {
+/***/ 254
+(module) {
 
 module.exports = __X_ITE_X3D__ .jquery;
 
-/***/ })
+/***/ }
 
 /******/ 	});
 /************************************************************************/
@@ -155,6 +155,7 @@ function X3DFontStyleNode (executionContext)
    external_X_ITE_X3D_X3DNode_default().call (this, executionContext);
    external_X_ITE_X3D_X3DUrlObject_default().call (this, executionContext);
 
+   this .getType () .pop (); // Remove X3DUrlObject type.
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DFontStyleNode);
 
    this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "description",          new (external_X_ITE_X3D_Fields_default()).SFString (),
@@ -163,7 +164,11 @@ function X3DFontStyleNode (executionContext)
                           (external_X_ITE_X3D_X3DConstants_default()).inputOutput, "autoRefresh",          new (external_X_ITE_X3D_Fields_default()).SFTime (0),
                           (external_X_ITE_X3D_X3DConstants_default()).inputOutput, "autoRefreshTimeLimit", new (external_X_ITE_X3D_Fields_default()).SFTime (3600));
 
-   this .alignments = [ ];
+   // Private properties
+
+   this .alignments  = [ ];
+   this .loadCounter = 0;
+   this .loadCount   = -1;
 }
 
 Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X_ITE_X3D_X3DNode_default()).prototype),
@@ -250,9 +255,9 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
    },
    async loadData ()
    {
-      // Wait for FontLibrary nodes to be setuped or changed.
+      // Prevent race condition when this function is called multiple times.
 
-      await $.sleep (0);
+      const count = ++ this .loadCounter;
 
       // Add default font to family array.
 
@@ -264,7 +269,13 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
 
       family .push ("SERIF");
 
-      this .font = null;
+      // Wait for FontLibrary nodes to be setuped or changed.
+
+      await $.sleep (0);
+
+      // Get font.
+
+      let font = null;
 
       for (const fontFamily of family)
       {
@@ -274,24 +285,18 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
 
          if (defaultFont)
          {
-            const font = await browser .loadFont (new URL (defaultFont), true);
+            font = await browser .loadFont (new URL (defaultFont), true);
 
             if (font)
-            {
-               this .font = font;
                break;
-            }
          }
 
          // Try to get font from family names.
 
-         const font = await browser .getFont (executionContext, fontFamily, fontStyle);
+         font = await browser .getFont (executionContext, fontFamily);
 
          if (font)
-         {
-            this .font = font;
             break;
-         }
 
          // DEPRECIATED: Try to get font by URL.
 
@@ -300,23 +305,27 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
          if (fileURL .protocol === "data:" || fileURL .pathname .match (/\.(?:woff2|woff|otf|ttf)$/i))
          {
             if (executionContext .getSpecificationVersion () >= 4.1)
-               console .warn (`Loading a font file via family field is depreciated, please use new FontLibrary node instead.`);
+               console .warn (`Loading a font file via family field is deprecated, please use new FontLibrary node instead.`);
 
-            const font = await browser .loadFont (fileURL, this .getCache ());
+            font = await browser .loadFont (fileURL, this .getCache ());
 
             if (font)
-            {
-               this .font = font;
                break;
-            }
          }
          else
          {
-            console .warn (`Couldn't find font family '${fontFamily}' with style '${fontStyle}'.`);
+            if (count > this .loadCount)
+               console .warn (`Couldn't find font family '${fontFamily}' with style '${fontStyle}'.`);
          }
       }
 
-      this .setLoadState (this .font ? (external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE : (external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE);
+      if (count < this .loadCount)
+         return;
+
+      this .loadCount = count;
+      this .font      = font;
+
+      this .setLoadState (font ? (external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE : (external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE);
       this .addNodeEvent ();
    },
    dispose ()
@@ -747,8 +756,23 @@ Object .assign (X3DTextGeometry .prototype,
 
          if (length)
          {
-            if (textCompression === (external_X_ITE_X3D_TextCompression_default()).CHAR_SPACING && glyphs .length > 1)
-               charSpacing = (length - lineBound .y) / (glyphs .length - 1);
+            switch (textCompression)
+            {
+               case (external_X_ITE_X3D_TextCompression_default()).CHAR_SPACING:
+               {
+                  if (glyphs .length > 1)
+                     charSpacing = (length - lineBound .y) / (glyphs .length - 1);
+
+                  break;
+               }
+               case (external_X_ITE_X3D_TextCompression_default()).SCALING:
+               {
+                  if (fontStyle .getMajorAlignment () === Text_TextAlignment .MIDDLE)
+                     max .y += (length - lineBound .y) / 2;
+
+                  break;
+               }
+            }
 
             lineBound .y = length;
             size .y      = length / scale;
@@ -978,8 +1002,6 @@ Object .assign (X3DTextGeometry .prototype,
 
       return glyphs;
    },
-   traverse (type, renderObject)
-   { },
 });
 
 const X3DTextGeometry_default_ = X3DTextGeometry;
@@ -1017,6 +1039,10 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeom
    getMatrix ()
    {
       return (external_X_ITE_X3D_Matrix4_default()).IDENTITY;
+   },
+   getTextureNode ()
+   {
+      return null;
    },
    build: (() =>
    {
@@ -1128,8 +1154,9 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeom
                   for (const { x: glyphX, y: glyphY } of glyphVertices)
                   {
                      const
+                        glyphNumber = topToBottom ? g : numChars - g - 1,
                         x = glyphX * size + minorAlignment .x + translation .x,
-                        y = glyphY * size * scale + minorAlignment .y + translation .y * scale - g * charSpacing;
+                        y = glyphY * size * scale + minorAlignment .y + translation .y * scale - glyphNumber * charSpacing;
 
                      texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
                      normalArray   .push (0, 0, 1);
@@ -1299,14 +1326,6 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeom
          return triangles;
       };
    })(),
-   displaySimple (gl, renderContext)
-   { },
-   display (gl, renderContext)
-   { },
-   transformLine (line)
-   { },
-   transformMatrix (matrix)
-   { },
 });
 
 const PolygonText_default_ = PolygonText;
@@ -1335,7 +1354,7 @@ function FontStyle (executionContext)
 
 Object .assign (Object .setPrototypeOf (FontStyle .prototype, Text_X3DFontStyleNode .prototype),
 {
-   getTextGeometry (text)
+   createTextGeometry (text)
    {
       return new Text_PolygonText (text, this);
    },
@@ -1374,6 +1393,120 @@ const FontStyle_default_ = FontStyle;
 ;
 
 /* harmony default export */ const Text_FontStyle = (external_X_ITE_X3D_Namespace_default().add ("FontStyle", FontStyle_default_));
+;// external "__X_ITE_X3D__ .X3DChildNode"
+const external_X_ITE_X3D_X3DChildNode_namespaceObject = __X_ITE_X3D__ .X3DChildNode;
+var external_X_ITE_X3D_X3DChildNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DChildNode_namespaceObject);
+;// ./src/x_ite/Components/Text/FontLibrary.js
+
+
+
+
+
+
+
+
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
+function FontLibrary (executionContext)
+{
+   external_X_ITE_X3D_X3DChildNode_default().call (this, executionContext);
+   external_X_ITE_X3D_X3DUrlObject_default().call (this, executionContext);
+
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).FontLibrary);
+
+   // Private properties
+
+   this .loadCounter = 0;
+   this .loadCount   = -1;
+}
+
+Object .assign (Object .setPrototypeOf (FontLibrary .prototype, (external_X_ITE_X3D_X3DChildNode_default()).prototype),
+   (external_X_ITE_X3D_X3DUrlObject_default()).prototype,
+{
+   initialize ()
+   {
+      external_X_ITE_X3D_X3DChildNode_default().prototype .initialize .call (this);
+      external_X_ITE_X3D_X3DUrlObject_default().prototype .initialize .call (this);
+
+      this ._family .addInterest ("set_family__", this);
+
+      this .requestImmediateLoad () .catch (Function .prototype);
+   },
+   set_family__ ()
+   {
+      if (!this .font)
+         return;
+
+      const familyName = this ._family .getValue ();
+
+      if (!familyName)
+         return;
+
+      this .getBrowser () .registerFontLibrary (this .getExecutionContext (), familyName, this .font);
+   },
+   async loadData ()
+   {
+      // Prevent race condition when this function is called multiple times.
+
+      const count = ++ this .loadCounter;
+
+      // Load font.
+
+      const
+         browser          = this .getBrowser (),
+         executionContext = this .getExecutionContext (),
+         fileURLs         = Array .from (this ._url) .map (fileURL => new URL (fileURL, executionContext .getBaseURL ()));
+
+      let font;
+
+      for (const fileURL of fileURLs)
+      {
+         font = await browser .loadFont (fileURL, this .getCache ());
+
+         if (font)
+            break;
+      }
+
+      if (count < this .loadCount)
+         return;
+
+      this .loadCount = count;
+      this .font      = font;
+
+      this .set_family__ ();
+      this .setLoadState (font ? (external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE : (external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE);
+   },
+   dispose ()
+   {
+      external_X_ITE_X3D_X3DUrlObject_default().prototype .dispose .call (this);
+      external_X_ITE_X3D_X3DChildNode_default().prototype .dispose .call (this);
+   },
+});
+
+Object .defineProperties (FontLibrary,
+{
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("FontLibrary", "Text", 2, "children", "4.1"),
+   fieldDefinitions:
+   {
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",             new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "description",          new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "family",               new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "load",                 new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "url",                  new (external_X_ITE_X3D_Fields_default()).MFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "autoRefresh",          new (external_X_ITE_X3D_Fields_default()).SFTime (0)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "autoRefreshTimeLimit", new (external_X_ITE_X3D_Fields_default()).SFTime (3600)),
+      ]),
+      enumerable: true,
+   },
+});
+
+const FontLibrary_default_ = FontLibrary;
+;
+
+/* harmony default export */ const Text_FontLibrary = (external_X_ITE_X3D_Namespace_default().add ("FontLibrary", FontLibrary_default_));
 ;// ./src/lib/opentype/opentype.mjs
 // src/tiny-inflate@1.0.3.esm.mjs
 var TINF_OK = 0;
@@ -17641,19 +17774,16 @@ var external_X_ITE_X3D_DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(
 
 
 
+
 const
    _defaultFontStyle = Symbol (),
    _fontCache        = Symbol (),
-   _loadingFonts     = Symbol (),
-   _families         = Symbol (),
    _library          = Symbol (),
    _woff2Decoder     = Symbol ();
 
 function X3DTextContext ()
 {
-   this [_loadingFonts] = new Set ();
    this [_fontCache]    = new Map ();
-   this [_families]     = new WeakMap ();
    this [_library]      = new WeakMap ();
 }
 
@@ -17711,44 +17841,13 @@ Object .assign (X3DTextContext .prototype,
 
                resolve (null);
             }
-            finally
-            {
-               this [_loadingFonts] .delete (promise);
-            }
          });
-
-         this [_loadingFonts] .add (promise);
 
          if (!fileURL .search)
             this [_fontCache] .set (fileURL .href, promise);
       }
 
       return promise;
-   },
-   registerFont (executionContext, font)
-   {
-      const families = this [_families] .getOrInsertComputed (executionContext, () => new Map ());
-
-      // fontFamily - fontStyle
-
-      const fontFamilies = new Map (Object .values (font .names)
-         .flatMap (name => Object .values (name .fontFamily ?? { }) .map (fontFamily => [fontFamily, name])));
-
-      for (const [fontFamily, name] of fontFamilies)
-      {
-         const fontStyles = families .getOrInsertComputed (fontFamily .toUpperCase (), () => new Map ());
-
-         for (const fontStyle of new Set (Object .values (name .fontSubfamily ?? { })))
-         {
-            if (this .getBrowserOption ("Debug"))
-               console .info (`Registering font family ${fontFamily} - ${fontStyle}.`);
-
-            fontStyles .set (fontStyle .toUpperCase () .replaceAll (" ", ""), font);
-         }
-      }
-
-      // console .log (name .preferredFamily);
-      // console .log (name .preferredSubfamily);
    },
    registerFontLibrary (executionContext, fontFamily, font)
    {
@@ -17759,26 +17858,24 @@ Object .assign (X3DTextContext .prototype,
 
       library .set (fontFamily .toUpperCase (), font);
    },
-   async getFont (executionContext, fontFamily, fontStyle)
+   async getFont (executionContext, fontFamily)
    {
       try
       {
          fontFamily = fontFamily .toUpperCase ();
-         fontStyle  = fontStyle .toUpperCase () .replaceAll (" ", "");
 
          for (;;)
          {
-            const
-               library  = this [_library]  .get (executionContext),
-               families = this [_families] .get (executionContext);
-
-            const font = library ?.get (fontFamily)
-               ?? families ?.get (fontFamily) ?.get (fontStyle);
+            const font = this [_library] .get (executionContext) ?.get (fontFamily);
 
             if (font)
                return font;
 
-            await Promise .any (this [_loadingFonts]);
+            const fontLibraries = Array .from (this .getLoadingObjects ())
+               .filter (object => object instanceof Text_FontLibrary)
+               .map (object => object .loading ());
+
+            await Promise .any (fontLibraries);
          }
       }
       catch
@@ -17914,7 +18011,7 @@ Object .assign (Object .setPrototypeOf (Text .prototype, (external_X_ITE_X3D_X3D
 
       this .fontStyleNode .addInterest ("requestRebuild", this);
 
-      this .textGeometry = this .fontStyleNode .getTextGeometry (this);
+      this .textGeometry = this .fontStyleNode .createTextGeometry (this);
    },
    build ()
    {
@@ -17923,35 +18020,21 @@ Object .assign (Object .setPrototypeOf (Text .prototype, (external_X_ITE_X3D_X3D
 
       this .setSolid (this ._solid .getValue ());
    },
-   traverse (type, renderObject)
+   traverseBefore (type, renderObject)
    {
-      this .textGeometry .traverse (type, renderObject);
-
-      external_X_ITE_X3D_X3DGeometryNode_default().prototype .traverse .call (this, type, renderObject);
+      this .textGeometry .traverseBefore ?.(type, renderObject);
    },
-   displaySimple (gl, renderContext, shaderNode)
+   traverseAfter (type, renderObject)
    {
-      this .textGeometry .displaySimple (gl, renderContext, shaderNode);
-
-      external_X_ITE_X3D_X3DGeometryNode_default().prototype .displaySimple .call (this, gl, renderContext, shaderNode);
+      this .textGeometry .traverseAfter ?.(type, renderObject);
    },
    display (gl, renderContext)
    {
-      this .textGeometry .display (gl, renderContext);
+      renderContext .textureNode = this .textGeometry .getTextureNode ();
 
       external_X_ITE_X3D_X3DGeometryNode_default().prototype .display .call (this, gl, renderContext);
 
       renderContext .textureNode = null;
-   },
-   transformLine (line)
-   {
-      // Apply screen nodes transformation in place here.
-      return this .textGeometry .transformLine (line);
-   },
-   transformMatrix (matrix)
-   {
-      // Apply screen nodes transformation in place here.
-      return this .textGeometry .transformMatrix (matrix);
    },
 });
 
@@ -17986,10 +18069,12 @@ const Text_default_ = Text;
 
 
 
+
 external_X_ITE_X3D_Components_default().add ({
    name: "Text",
    concreteNodes:
    [
+      Text_FontLibrary,
       Text_FontStyle,
       Text_Text,
    ],

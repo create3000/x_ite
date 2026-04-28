@@ -9,8 +9,9 @@ import { maxTextureTransforms, maxTexCoords, maxTextures } from "./TexturingConf
 
 const
    _maxTextures              = Symbol (),
-   _combinedTextureUnits     = Symbol (),
-   _textureUnitIndex         = Symbol (),
+   _numCombinedTextureUnits  = Symbol (),
+   _globalTextureUnits       = Symbol (),
+   _textureUnits             = Symbol (),
    _defaultTexture2DUnit     = Symbol (),
    _defaultTexture3DUnit     = Symbol (),
    _defaultTextureCubeUnit   = Symbol (),
@@ -44,13 +45,12 @@ Object .assign (X3DTexturingContext .prototype,
 
       // Get texture Units
 
-      const maxCombinedTextureUnits = gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS);
+      let maxCombinedTextureUnits = gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS);
 
-      this [_combinedTextureUnits] = [... Array (maxCombinedTextureUnits) .keys ()];
-
-      this [_defaultTexture2DUnit]   = this [_combinedTextureUnits] .pop ();
-      this [_defaultTexture3DUnit]   = this [_combinedTextureUnits] .pop ();
-      this [_defaultTextureCubeUnit] = this [_combinedTextureUnits] .pop ();
+      this [_defaultTexture2DUnit]    = -- maxCombinedTextureUnits;
+      this [_defaultTexture3DUnit]    = -- maxCombinedTextureUnits;
+      this [_defaultTextureCubeUnit]  = -- maxCombinedTextureUnits;
+      this [_numCombinedTextureUnits] = maxCombinedTextureUnits;
 
       // Default Texture 2D Unit
 
@@ -76,18 +76,24 @@ Object .assign (X3DTexturingContext .prototype,
 
       gl .activeTexture (gl .TEXTURE0 + this [_defaultTextureCubeUnit]);
       gl .bindTexture (gl .TEXTURE_CUBE_MAP, this [_defaultTextureCube]);
-      gl .texImage2D (gl .TEXTURE_CUBE_MAP_POSITIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-      gl .texImage2D (gl .TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-      gl .texImage2D (gl .TEXTURE_CUBE_MAP_NEGATIVE_X, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-      gl .texImage2D (gl .TEXTURE_CUBE_MAP_POSITIVE_X, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-      gl .texImage2D (gl .TEXTURE_CUBE_MAP_POSITIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-      gl .texImage2D (gl .TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+
+      const targets = [
+         gl .TEXTURE_CUBE_MAP_POSITIVE_Z,
+         gl .TEXTURE_CUBE_MAP_NEGATIVE_Z,
+         gl .TEXTURE_CUBE_MAP_NEGATIVE_X,
+         gl .TEXTURE_CUBE_MAP_POSITIVE_X,
+         gl .TEXTURE_CUBE_MAP_POSITIVE_Y,
+         gl .TEXTURE_CUBE_MAP_NEGATIVE_Y,
+      ];
+
+      for (const target of targets)
+         gl .texImage2D (target, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
       // Reset texture units.
 
-      gl .activeTexture (gl .TEXTURE0 + this [_combinedTextureUnits] [0]);
+      gl .activeTexture (gl .TEXTURE0);
 
-      this .resetTextureUnits ();
+      this .resetGlobalTextureUnits ();
 
       // Set texture quality.
 
@@ -156,34 +162,21 @@ Object .assign (X3DTexturingContext .prototype,
 
       return gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS)
    },
+   popGlobalTextureUnit ()
+   {
+      return this [_textureUnits] = -- this [_globalTextureUnits];
+   },
+   resetGlobalTextureUnits ()
+   {
+      this [_textureUnits] = this [_globalTextureUnits] = this [_numCombinedTextureUnits];
+   },
    popTextureUnit ()
    {
-      if (this [_textureUnitIndex] === 0)
-         return;
-
-      -- this [_textureUnitIndex];
-
-      return this [_combinedTextureUnits] .pop ();
-   },
-   pushTextureUnit (textureUnit)
-   {
-      if (textureUnit === undefined)
-         return;
-
-      ++ this [_textureUnitIndex];
-
-      this [_combinedTextureUnits] .push (textureUnit);
-   },
-   getTextureUnit ()
-   {
-      if (this [_textureUnitIndex] === 0)
-         return;
-
-      return this [_combinedTextureUnits] [-- this [_textureUnitIndex]];
+      return -- this [_textureUnits];
    },
    resetTextureUnits ()
    {
-      this [_textureUnitIndex] = this [_combinedTextureUnits] .length;
+      this [_textureUnits] = this [_globalTextureUnits];
    },
    getDefaultTexture2DUnit ()
    {

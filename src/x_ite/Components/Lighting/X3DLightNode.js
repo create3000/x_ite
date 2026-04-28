@@ -11,7 +11,7 @@ function X3DLightNode (executionContext)
    this .addType (X3DConstants .X3DLightNode);
 
    // Private properties
-   
+
    this .enabled = true;
 }
 
@@ -95,7 +95,7 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
    },
    getShadowMapSize ()
    {
-      return Math .min (this ._shadowMapSize .getValue (), this .getBrowser () .getMaxTextureSize ());
+      return Algorithm .clamp (this ._shadowMapSize .getValue (), 0, this .getBrowser () .getMaxTextureSize ());
    },
    getBiasMatrix: (() =>
    {
@@ -112,57 +112,55 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
    })(),
    push (renderObject, groupNode)
    {
-      if (renderObject .isIndependent ())
-      {
-         const lightContainer = this .getLights () .pop ();
+      const
+         path   = `${renderObject .getPath ()},${this .getId ()}`,
+         global = this ._global .getValue ();
 
-         if (this ._global .getValue ())
+      let lightContainer;
+
+      if (!renderObject .isIndependent ())
+      {
+         lightContainer = renderObject .getLightContainer (path);
+
+         if (lightContainer)
+            lightContainer .modelViewMatrix .push (renderObject .getModelViewMatrix () .get ());
+         else if (global)
+            return; // Independent global lights in RenderedTexture scene are not supported.
+      }
+
+      lightContainer ??= renderObject .getLights () .get (path);
+
+      if (!lightContainer)
+      {
+         lightContainer = this .getLights () .pop ();
+
+         if (global)
          {
             lightContainer .set (this,
                                  renderObject .getLayer () .getGroups (),
                                  renderObject .getModelViewMatrix () .get ());
-
-            renderObject .getGlobalLights () .push (lightContainer);
-            renderObject .getLights ()       .push (lightContainer);
-
-            renderObject .pushGlobalShadows (!! this .getShadowIntensity ());
-            renderObject .getGlobalLightsKeys () .push (this .getLightKey ());
          }
          else
          {
             lightContainer .set (this,
                                  groupNode,
                                  renderObject .getModelViewMatrix () .get ());
-
-            renderObject .getLocalObjects () .push (lightContainer);
-            renderObject .getLights ()       .push (lightContainer);
-
-            renderObject .pushLocalShadows (!! this .getShadowIntensity ());
-            renderObject .getLocalObjectsKeys () .push (this .getLightKey ());
          }
+      }
+
+      renderObject .getLights () .set (path, lightContainer);
+
+      if (global)
+      {
+         renderObject .getGlobalLights () .push (lightContainer);
+         renderObject .pushGlobalShadows (!! this .getShadowIntensity ());
+         renderObject .getGlobalLightsKeys () .push (this .getLightKey ());
       }
       else
       {
-         const lightContainer = renderObject .getLightContainer ();
-
-         lightContainer .modelViewMatrix .push (renderObject .getModelViewMatrix () .get ());
-
-         if (this ._global .getValue ())
-         {
-            renderObject .getGlobalLights () .push (lightContainer);
-            renderObject .getLights ()       .push (lightContainer);
-
-            renderObject .pushGlobalShadows (!! this .getShadowIntensity ());
-            renderObject .getGlobalLightsKeys () .push (this .getLightKey ());
-         }
-         else
-         {
-            renderObject .getLocalObjects () .push (lightContainer);
-            renderObject .getLights ()       .push (lightContainer);
-
-            renderObject .pushLocalShadows (!! this .getShadowIntensity ());
-            renderObject .getLocalObjectsKeys () .push (this .getLightKey ());
-         }
+         renderObject .getLocalObjects () .push (lightContainer);
+         renderObject .pushLocalShadows (!! this .getShadowIntensity ());
+         renderObject .getLocalObjectsKeys () .push (this .getLightKey ());
       }
    },
    pop (renderObject)
@@ -172,8 +170,7 @@ Object .assign (Object .setPrototypeOf (X3DLightNode .prototype, X3DChildNode .p
 
       const lightContainer = renderObject .getLocalObjects () .pop ();
 
-      if (renderObject .isIndependent ())
-         this .getBrowser () .getLocalObjects () .push (lightContainer);
+      this .getBrowser () .getLocalObjects () .add (lightContainer);
 
       renderObject .popLocalShadows ();
       renderObject .getLocalObjectsKeys () .pop ();

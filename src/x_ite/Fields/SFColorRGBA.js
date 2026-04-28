@@ -1,26 +1,11 @@
-import X3DField from "../Base/X3DField.js";
-import SFColor  from "./SFColor.js";
-import Color4   from "../../standard/Math/Numbers/Color4.js";
+import X3DField     from "../Base/X3DField.js";
+import SFColor      from "./SFColor.js";
+import X3DConstants from "../Base/X3DConstants.js";
+import Color4       from "../../standard/Math/Numbers/Color4.js";
 
-function SFColorRGBA (r, g, b, a)
+function SFColorRGBA (r = 0, g = 0, b = 0, a = 0)
 {
-   switch (arguments .length)
-   {
-      case 0:
-         X3DField .call (this, new Color4 ());
-         break;
-
-      case 1:
-         X3DField .call (this, arguments [0]);
-         break;
-
-      case 4:
-         X3DField .call (this, new Color4 (+r, +g, +b, +a));
-         break
-
-      default:
-         throw new Error ("Invalid arguments.");
-   }
+   X3DField .call (this, new Color4 (+r, +g, +b, +a));
 }
 
 Object .assign (Object .setPrototypeOf (SFColorRGBA .prototype, X3DField .prototype),
@@ -31,7 +16,7 @@ Object .assign (Object .setPrototypeOf (SFColorRGBA .prototype, X3DField .protot
    },
    copy ()
    {
-      return new SFColorRGBA (this .getValue () .copy ());
+      return SFColorRGBA .fromValue (this .getValue () .copy ());
    },
    equals: SFColor .prototype .equals,
    isDefaultValue ()
@@ -45,16 +30,16 @@ Object .assign (Object .setPrototypeOf (SFColorRGBA .prototype, X3DField .protot
    },
    setHSVA (h, s, v, a)
    {
-      this .getValue () .setHSVA (h, s, v, a);
+      this .getValue () .setHSVA (+h, +s, +v, +a);
       this .addEvent ();
    },
    linearToSRGB ()
    {
-      return new SFColorRGBA (this .getValue () .linearToSRGB ());
+      return SFColorRGBA .fromValue (this .getValue () .linearToSRGB ());
    },
    sRGBToLinear ()
    {
-      return new SFColorRGBA (this .getValue () .sRGBToLinear ());
+      return SFColorRGBA .fromValue (this .getValue () .sRGBToLinear ());
    },
    lerp: (() =>
    {
@@ -147,12 +132,35 @@ Object .defineProperties (SFColorRGBA .prototype,
    a: Object .assign ({ enumerable: true }, a),
 });
 
+X3DField .addStaticProperties (SFColorRGBA, "SFColorRGBA");
+
 Object .defineProperties (SFColorRGBA,
 {
-   typeName:
+   BLACK:
    {
-      value: "SFColorRGBA",
+      value: SFColorRGBA .fromValue (Color4 .BLACK),
       enumerable: true,
+   },
+   TRANSPARENT:
+   {
+      value: SFColorRGBA .fromValue (Color4 .TRANSPARENT),
+      enumerable: true,
+   },
+   WHITE:
+   {
+      value: SFColorRGBA .fromValue (Color4 .WHITE),
+      enumerable: true,
+   },
+   fromHSVA:
+   {
+      value (h, s, v, a)
+      {
+         const color = new this ();
+
+         color .setHSVA (h, s, v, a);
+
+         return color;
+      },
    },
 });
 

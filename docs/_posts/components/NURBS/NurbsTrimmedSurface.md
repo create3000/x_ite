@@ -31,21 +31,21 @@ The NurbsTrimmedSurface node belongs to the [NURBS](/x_ite/components/overview/#
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFInt32 | [in, out] | [uTessellation](#fields-uTessellation) | 0  |
-| SFInt32 | [in, out] | [vTessellation](#fields-vTessellation) | 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFInt32 | [in, out] | [uTessellation](#fields-uTessellation) | 0 |
+| SFInt32 | [in, out] | [vTessellation](#fields-vTessellation) | 0 |
 | SFBool | [ ] | [solid](#fields-solid) | TRUE |
 | SFBool | [ ] | [uClosed](#fields-uClosed) | FALSE |
 | SFBool | [ ] | [vClosed](#fields-vClosed) | FALSE |
-| SFInt32 | [ ] | [uOrder](#fields-uOrder) | 3  |
-| SFInt32 | [ ] | [vOrder](#fields-vOrder) | 3  |
-| SFInt32 | [ ] | [uDimension](#fields-uDimension) | 0  |
-| SFInt32 | [ ] | [vDimension](#fields-vDimension) | 0  |
+| SFInt32 | [ ] | [uOrder](#fields-uOrder) | 3 |
+| SFInt32 | [ ] | [vOrder](#fields-vOrder) | 3 |
+| SFInt32 | [ ] | [uDimension](#fields-uDimension) | 0 |
+| SFInt32 | [ ] | [vDimension](#fields-vDimension) | 0 |
 | MFDouble | [ ] | [uKnot](#fields-uKnot) | [ ] |
 | MFDouble | [ ] | [vKnot](#fields-vKnot) | [ ] |
 | MFDouble | [in, out] | [weight](#fields-weight) | [ ] |
-| SFNode | [in, out] | [texCoord](#fields-texCoord) | NULL  |
-| SFNode | [in, out] | [controlPoint](#fields-controlPoint) | NULL  |
+| SFNode | [in, out] | [texCoord](#fields-texCoord) | NULL |
+| SFNode | [in, out] | [controlPoint](#fields-controlPoint) | NULL |
 | MFNode | [in] | [addTrimmingContour](#fields-addTrimmingContour) |  |
 | MFNode | [in] | [removeTrimmingContour](#fields-removeTrimmingContour) |  |
 | MFNode | [in, out] | [trimmingContour](#fields-trimmingContour) | [ ] |
@@ -133,12 +133,12 @@ Vector assigning relative *weight* value to each control point.
 ### SFNode [in, out] **texCoord** NULL <small>[X3DTextureCoordinateNode|NurbsTextureCoordinate]</small>
 {: #fields-texCoord }
 
-Single contained [NurbsTextureCoordinate](/x_ite/components/nurbs/nurbstexturecoordinate/), [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/), [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) or [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) node that can specify coordinates for texture mapping onto corresponding geometry.
+Optional single contained [NurbsTextureCoordinate](/x_ite/components/nurbs/nurbstexturecoordinate/), [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/), [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) or [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) node that can specify coordinates for texture mapping onto corresponding geometry.
 
 ### SFNode [in, out] **controlPoint** NULL <small>[X3DCoordinateNode]</small>
 {: #fields-controlPoint }
 
-Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node that can specify control points for NURBS geometry definitions.
+Optional single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node that can specify control points for NURBS geometry definitions.
 
 ### MFNode [in] **addTrimmingContour**
 {: #fields-addTrimmingContour }
@@ -161,13 +161,20 @@ A set of [Contour2D](/x_ite/components/nurbs/contour2d/) nodes are used as trimm
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/NURBS/NurbsTrimmedSurface/NurbsTrimmedSurface.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/NURBS/NurbsTrimmedSurface/NurbsTrimmedSurface.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/NURBS/NurbsTrimmedSurface/screenshot.avif" alt="NurbsTrimmedSurface"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/NURBS/NurbsTrimmedSurface/NurbsTrimmedSurface.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/NURBS/NurbsTrimmedSurface/NurbsTrimmedSurface.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

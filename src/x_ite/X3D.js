@@ -31,6 +31,7 @@ import RouteArray                  from "./Routing/RouteArray.js";
 import X3DRoute                    from "./Routing/X3DRoute.js";
 import X3DConstants                from "./Base/X3DConstants.js";
 
+import "./SUPPORTED_VERSIONS.js";
 import "./Features.js";
 import "./X3DCanvasElement.js";
 import "../standard/Math/Algorithms/QuickSort.js";
@@ -113,7 +114,7 @@ Namespace, Namespace .Fields,
    */
    require (path)
    {
-      return Namespace [path .match (/([^\/]+)$/) ?.[1]];
+      return Namespace [path .match (/([^\/]{1,256})$/) ?.[1]];
    },
    noConflict: (() =>
    {
@@ -147,6 +148,11 @@ Namespace, Namespace .Fields,
 
       return element;
    },
+   toString ()
+   {
+      return Object .prototype .toString .call (this);
+   },
+   [Symbol .toStringTag]: "X3D",
 });
 
 export default X3D;

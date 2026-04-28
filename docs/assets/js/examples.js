@@ -77,8 +77,8 @@ class Examples
       this .#browser .getBrowserOptions () .reset ();
 
       this .#canvas
-         .removeClass (["tr", "br", "bl", "tl"] .map (p => `xr-button-${p}`))
-         .addClass (`xr-button-${a .attr ("xrButtonPosition")}`)
+         .removeClass (["tr", "br", "bl", "tl"] .map (p => `buttons-${p}`))
+         .addClass (`buttons-${a .attr ("buttonsPosition")}`)
          .attr ("xrMovementControl", a .attr ("xrMovementControl"));
 
       this .#header .text (a .attr ("title"));

@@ -37,8 +37,8 @@ sub examples
       my $typeName  = $2;
       my $extra     = "";
 
-      $extra .= ", xrButtonPosition: \"$tree->{$component}->{$typeName}->{xrButtonPosition}\""
-         if $tree -> {$component} -> {$typeName} -> {"xrButtonPosition"};
+      $extra .= ", buttonsPosition: \"$tree->{$component}->{$typeName}->{buttonsPosition}\""
+         if $tree -> {$component} -> {$typeName} -> {"buttonsPosition"};
 
       say FILE "   { component: \"$component\", test: \"$typeName\"$extra },",
    }
@@ -87,7 +87,7 @@ EOT
 }
 
 sub menu {
-   my @files = sort `find -L src/tests -type f -name "*.x3d" -o -name "*.x3dz" -o -name "*.x3dv" -o -name "*.x3dvz" -o -name "*.x3dj" -o -name "*.x3djz" -o -name "*.gltf" -o -name "*.glb" -o -name "*.obj" -o -name "*.stl" -o -name "*.svg"`;
+   my @files = sort `find -L src/tests -type f -name "*.x3d" -o -name "*.x3dz" -o -name "*.x3dv" -o -name "*.x3dvz" -o -name "*.x3dj" -o -name "*.x3djz" -o -name "*.gltf" -o -name "*.glb" -o -name "*.obj" -o -name "*.stl" -o -name "*.ply" -o -name "*.svg"`;
 
    chomp @files;
 

@@ -8,25 +8,25 @@ import Expressions from "./Expressions.js";
 // Lexical elements
 const Grammar = Expressions ({
    // General
-   whitespaces: /[\x20\n\t\r,]+/gy,
-   whitespacesNoLineTerminator: /[\x20\t]+/gy,
-   untilEndOfLine: /[^\r\n]+/gy,
-   line: /.*?\r?\n/gy,
+   whitespaces: /[\x20\n\t\r,]+/y,
+   whitespacesNoLineTerminator: /[\x20\t]+/y,
+   untilEndOfLine: /[^\r\n]+/y,
+   line: /[^\r\n]*\r?\n/y,
 
    // Keywords
-   ply: /ply/gy,
-   format: /format ascii 1.0/gy,
-   comment: /\bcomment\b/gy,
-   element: /\belement\b/gy,
-   elementName: /\b\S+\b/gy,
-   property: /\bproperty\b/gy,
-   propertyList: /\blist\b/gy,
-   propertyType: /\b(?:char|uchar|short|ushort|int|uint|float|double|int8|uint8|int16|uint16|int32|uint32|float32|float64)\b/gy,
-   propertyName: /\b\S+\b/gy,
-   endHeader: /\bend_header\b/gy,
+   ply: /ply/y,
+   format: /format ascii 1.0/y,
+   comment: /\bcomment\b/y,
+   element: /\belement\b/y,
+   elementName: /\b\S+\b/y,
+   property: /\bproperty\b/y,
+   propertyList: /\blist\b/y,
+   propertyType: /\b(?:char|uchar|short|ushort|int|uint|float|double|int8|uint8|int16|uint16|int32|uint32|float32|float64)\b/y,
+   propertyName: /\b\S+\b/y,
+   endHeader: /\bend_header\b/y,
 
-   double: /[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/gy,
-   int32:  /(?:0[xX][\da-fA-F]+)|(?:[+-]?\d+)/gy,
+   double: /[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/y,
+   int32:  /(?:0[xX][\da-fA-F]+)|(?:[+-]?\d+)/y,
 });
 
 /*
@@ -37,8 +37,8 @@ function PLYAParser (scene)
 {
    X3DParser .call (this, scene);
 
-   this .comments = [ ];
-   this .attrib   = [ ];
+   this .triangles = true;
+   this .comments  = [ ];
 
    this .typeMapping = new Map ([
       ["char",    this .int32],
@@ -116,65 +116,16 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    {
       if (Grammar .comment .parse (this) && Grammar .untilEndOfLine .parse (this))
       {
-         this .comments .push (this .result [0] .trim ());
-         return true;
-      }
+         const value = this .result [0] .trim ();
 
-      return false;
-   },
-   double ()
-   {
-      this .whitespacesNoLineTerminator ();
+         this .comments .push (value);
 
-      if (Grammar .double .parse (this))
-      {
-         this .value = parseFloat (this .result [0]);
+         this .mustRotateAxes ||= !! value .match (/\b(?:Blender|Artec|Polycam)\b/i);
 
          return true;
       }
 
       return false;
-   },
-   int32 ()
-   {
-      this .whitespacesNoLineTerminator ();
-
-      if (Grammar .int32 .parse (this))
-      {
-         this .value = parseInt (this .result [0]);
-
-         return true;
-      }
-
-      return false;
-   },
-   convertColor (value, type)
-   {
-      switch (type)
-      {
-         case "uchar":
-         case "uint8":
-            return value / 0xff;
-         case "ushort":
-         case "uint16":
-            return value / 0xfffff;
-         case "uint":
-         case "uint32":
-            return value / 0xffffffff;
-         case "float":
-         case "float32":
-         case "double":
-         case "float64":
-            return value;
-      }
-   },
-   convertFDC (f_dc)
-   {
-      // https://github.com/graphdeco-inria/gaussian-splatting/issues/485
-
-      const C0 = 0.28209479177387814;
-
-      return 0.5 + C0 * f_dc;
    },
    header (elements)
    {
@@ -189,7 +140,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          worldInfo = scene .createNode ("WorldInfo"),
          url       = new URL (scene .worldURL);
 
-      worldInfo .title = url .protocol === "data:" ? "PLY Model" : url .pathname .split ('/') .at (-1);
+      worldInfo .title = url .protocol === "data:" ? "PLY Model" : decodeURIComponent (url .pathname .split ('/') .at (-1));
       worldInfo .info  = this .comments;
 
       scene .rootNodes .push (worldInfo);
@@ -314,43 +265,127 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       for (const element of elements)
          this .processElement (element);
 
-      if (!this .coord)
+      if (!this .points ?.length)
          return;
 
-      const
-         scene      = this .getScene (),
-         shape      = scene .createNode ("Shape"),
-         appearance = scene .createNode ("Appearance"),
-         material   = scene .createNode (this .geometry ? "Material" : "UnlitMaterial"),
-         geometry   = this .geometry ?? scene .createNode ("PointSet");
+      const scene = this .getScene ();
 
-      appearance .material = material;
-
-      if (this .texCoord)
+      if (this .coordIndex) // IndexedFaceSet
       {
-         const textureTransform = scene .createNode ("TextureTransform");
+         const
+            hasNormals = this .normals ?.some (v => v !== 0),
+            triangles  = this .triangles && !this .texCoordIndex ?.length,
+            shape      = scene .createNode ("Shape"),
+            appearance = scene .createNode ("Appearance"),
+            material   = scene .createNode ("Material"),
+            geometry   = scene .createNode (triangles ? "IndexedTriangleSet" : "IndexedFaceSet"),
+            coordinate = scene .createNode ("Coordinate");
 
-         textureTransform .translation .y = -1;
-         textureTransform .scale .y       = -1;
+         if (triangles)
+            geometry .index = this .coordIndex .filter (v => v !== -1);
+         else
+            geometry .coordIndex = this .coordIndex;
 
-         appearance .textureTransform = textureTransform;
+         if (this .colors ?.length)
+         {
+            const
+               alpha = this .alpha && this .colors .some ((v, i) => i % 4 === 3 && v < 1),
+               color = scene .createNode (alpha ? "ColorRGBA" : "Color");
+
+            color .color    = alpha || !this .alpha ? this .colors : this .colors .filter ((v, i) => i % 4 !== 3);
+            geometry .color = color;
+         }
+
+         if (this .texCoords ?.length)
+         {
+            // TextureTransform
+
+            const textureTransform = scene .createNode ("TextureTransform");
+
+            textureTransform .translation .y = -1;
+            textureTransform .scale .y       = -1;
+
+            appearance .textureTransform = textureTransform;
+
+            // TextureCoordinate
+
+            const texCoord = scene .createNode ("TextureCoordinate");
+
+            texCoord .point    = this .texCoords;
+            geometry .texCoord = texCoord;
+
+            // Index
+
+            if (this .texCoordIndex ?.length)
+               geometry .texCoordIndex = this .texCoordIndex;
+         }
+
+         if (hasNormals)
+         {
+            const normal = scene .createNode ("Normal");
+
+            if (this .mustRotateAxes)
+               this .rotateAxes (this .normals);
+
+            normal .vector   = this .normals;
+            geometry .normal = normal;
+         }
+
+         if (this .mustRotateAxes)
+            this .rotateAxes (this .points);
+
+         coordinate .point = this .points;
+         geometry .coord   = coordinate;
+
+         appearance .material = material;
+         shape .appearance    = appearance;
+         shape .geometry      = geometry;
+
+         scene .getRootNodes () .push (shape);
       }
-
-      if (geometry .getNodeTypeName () !== "PointSet")
+      else // PointSet
       {
-         geometry .solid    = false;
-         geometry .texCoord = this .texCoord;
+         const
+            hasNormals = this .normals ?.some (v => v !== 0),
+            shape      = scene .createNode ("Shape"),
+            appearance = scene .createNode ("Appearance"),
+            material   = scene .createNode (hasNormals ? "Material" : "UnlitMaterial"),
+            geometry   = scene .createNode ("PointSet"),
+            coordinate = scene .createNode ("Coordinate");
+
+         if (this .colors ?.length)
+         {
+            const
+               alpha = this .alpha && this .colors .some ((v, i) => i % 4 === 3 && v < 1),
+               color = scene .createNode (alpha ? "ColorRGBA" : "Color");
+
+            color .color    = alpha || !this .alpha ? this .colors : this .colors .filter ((v, i) => i % 4 !== 3);
+            geometry .color = color;
+         }
+
+         if (hasNormals)
+         {
+            const normal = scene .createNode ("Normal");
+
+            if (this .mustRotateAxes)
+               this .rotateAxes (this .normals);
+
+            normal .vector   = this .normals;
+            geometry .normal = normal;
+         }
+
+         if (this .mustRotateAxes)
+            this .rotateAxes (this .points);
+
+         coordinate .point = this .points;
+         geometry .coord   = coordinate;
+
+         appearance .material = material;
+         shape .appearance    = appearance;
+         shape .geometry      = geometry;
+
+         scene .getRootNodes () .push (shape);
       }
-
-      geometry .attrib = this .attrib;
-      geometry .color  = this .color;
-      geometry .normal = this .normal;
-      geometry .coord  = this .coord;
-
-      shape .appearance = appearance;
-      shape .geometry   = geometry;
-
-      scene .rootNodes .push (shape);
    },
    processElement (element)
    {
@@ -376,10 +411,8 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    parseVertices ({ count, properties })
    {
       const
-         scene     = this .getScene (),
-         texCoord  = scene .createNode ("TextureCoordinate"),
-         normal    = scene .createNode ("Normal"),
-         coord     = scene .createNode ("Coordinate"),
+         scales    = [ ],
+         rotations = [ ],
          colors    = [ ],
          texCoords = [ ],
          normals   = [ ],
@@ -398,7 +431,11 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
             switch (name)
             {
-               default:
+               case "scale_0": case "scale_1": case "scale_2":
+                  scales .push (this .value);
+                  break;
+               case "rot_0": case "rot_1": case "rot_2": case "rot_3":
+                  rotations .push (this .value);
                   break;
                case "red": case "green": case "blue": case "alpha":
                case "r": case "g": case "b": case "a":
@@ -429,27 +466,17 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       // Geometric properties
 
-      const
-         pAlpha = properties .some (p => p .name .match (/^(?:alpha|a|opacity)$/)),
-         alpha  = pAlpha && colors .some ((v, i) => i % 4 === 3 && v < 1),
-         color  = scene .createNode (alpha ? "ColorRGBA" : "Color");
-
-      color    .color  = alpha || !pAlpha ? colors : colors .filter ((v, i) => i % 4 !== 3);
-      texCoord .point  = texCoords;
-      normal   .vector = normals;
-      coord    .point  = points;
-
-      this .color    = colors    .length ? color    : null;
-      this .texCoord = texCoords .length ? texCoord : null;
-      this .normal   = normals   .length ? normal   : null;
-      this .coord    = coord;
+      this .rotations = rotations;
+      this .scales    = scales;
+      this .alpha     = properties .some (p => p .name .match (/^(?:alpha|a|opacity)$/));
+      this .colors    = colors;
+      this .texCoords = texCoords;
+      this .normals   = normals;
+      this .points    = points;
    },
    parseFaces ({ count, properties })
    {
-      const
-         scene      = this .getScene (),
-         geometry   = scene .createNode ("IndexedFaceSet"),
-         coordIndex = [ ];
+      const coordIndex = [ ];
 
       for (let i = 0; i < count; ++ i)
       {
@@ -457,10 +484,20 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
          for (const { count, value, name } of properties)
          {
+            if (!count)
+            {
+               if (!value .call (this))
+                  throw new Error (`Couldn't parse a property value for ${name}.`);
+
+               continue;
+            }
+
             if (!count .call (this))
                throw new Error (`Couldn't parse property count for ${name}.`);
 
             const length = this .value;
+
+            this .triangles &&= length === 3;
 
             for (let i = 0; i < length; ++ i)
             {
@@ -474,15 +511,11 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          }
       }
 
-      geometry .coordIndex = coordIndex;
-      this .geometry       = geometry;
+      this .coordIndex = coordIndex;
    },
    parseMultiTextureVertices ({ count, properties })
    {
-      const
-         scene     = this .getScene (),
-         texCoord  = scene .createNode ("TextureCoordinate"),
-         texCoords = [ ];
+      const texCoords = [ ];
 
       for (let i = 0; i < count; ++ i)
       {
@@ -503,9 +536,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          }
       }
 
-      texCoord .point = texCoords;
-
-      this .texCoord = texCoords .length ? texCoord : null;
+      this .texCoords = texCoords;
    },
    parseMultiTextureFaces ({ count, properties })
    {
@@ -540,8 +571,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          }
       }
 
-      if (this .geometry)
-         this .geometry .texCoordIndex = texCoordIndex;
+      this .texCoordIndex = texCoordIndex;
    },
    parseUnknown ({ count })
    {
@@ -549,6 +579,60 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       for (let i = 0; i < count; ++ i)
          Grammar .line .parse (this);
+   },
+   double ()
+   {
+      this .whitespacesNoLineTerminator ();
+
+      if (Grammar .double .parse (this))
+      {
+         this .value = parseFloat (this .result [0]);
+
+         return true;
+      }
+
+      return false;
+   },
+   int32 ()
+   {
+      this .whitespacesNoLineTerminator ();
+
+      if (Grammar .int32 .parse (this))
+      {
+         this .value = parseInt (this .result [0]);
+
+         return true;
+      }
+
+      return false;
+   },
+   convertColor (value, type)
+   {
+      switch (type)
+      {
+         case "uchar":
+         case "uint8":
+            return value / 0xff;
+         case "ushort":
+         case "uint16":
+            return value / 0xfffff;
+         case "uint":
+         case "uint32":
+            return value / 0xffffffff;
+         case "float":
+         case "float32":
+         case "double":
+         case "float64":
+            return value;
+      }
+   },
+   convertFDC (f_dc)
+   {
+      // https://github.com/graphdeco-inria/gaussian-splatting/issues/485
+
+      const C0 = 0.28209479177387814; // = 1 / (2 * Math .sqrt (Math .PI))
+
+      return 0.5 + C0 * f_dc;
    },
 });
 

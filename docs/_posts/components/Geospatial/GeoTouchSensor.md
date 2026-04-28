@@ -32,9 +32,9 @@ The GeoTouchSensor node belongs to the [Geospatial](/x_ite/components/overview/#
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
-| SFNode | [ ] | [geoOrigin](#fields-geoOrigin) | NULL  |
+| SFNode | [ ] | [geoOrigin](#fields-geoOrigin) | NULL |
 | MFString | [ ] | [geoSystem](#fields-geoSystem) | [ "GD", "WE" ] |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFVec2f | [out] | [hitTexCoord_changed](#fields-hitTexCoord_changed) |  |
@@ -68,7 +68,7 @@ Author-provided prose that describes intended purpose of this node.
 ### SFNode [ ] **geoOrigin** NULL <small>[GeoOrigin] (deprecated)</small>
 {: #fields-geoOrigin }
 
-Single contained [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node that can specify a local coordinate frame for extended precision.
+Optional single contained [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node that can specify a local coordinate frame for extended precision.
 
 #### Hint
 
@@ -175,6 +175,13 @@ Time event generated when touched.
 ### Warning
 
 - Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

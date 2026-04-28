@@ -22,21 +22,24 @@ The LayoutGroup node belongs to the [Layout](/x_ite/components/overview/#layout)
 ```
 + X3DNode
   + X3DChildNode
-    + X3DGroupingNode
+    + X3DGroupingNode (X3DBoundedObject)*
       + LayoutGroup
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFNode | [in, out] | [layout](#fields-layout) | NULL  |
-| SFNode | [in, out] | [viewport](#fields-viewport) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFNode | [in, out] | [layout](#fields-layout) | NULL |
+| SFNode | [in, out] | [viewport](#fields-viewport) | NULL |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
 | MFNode | [in] | [addChildren](#fields-addChildren) |  |
 | MFNode | [in] | [removeChildren](#fields-removeChildren) |  |
 | MFNode | [in, out] | [children](#fields-children) | [ ] |
@@ -136,6 +139,13 @@ Grouping nodes contain an ordered list of *children* nodes.
 ### Warning
 
 - A LayoutGroup can only be a child of a [LayoutLayer](/x_ite/components/layout/layoutlayer/) node or another LayoutGroup node.
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

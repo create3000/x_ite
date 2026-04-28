@@ -121,7 +121,7 @@ Object .assign (X3DOptimizer .prototype,
             return node;
       }
 
-      if (!node .children)
+      if (!node .getNodeType () .includes (X3DConstants .X3DGroupingNode))
          return node;
 
       const children = Array .from (node .children);
@@ -201,6 +201,9 @@ Object .assign (X3DOptimizer .prototype,
    combineSingleChild (node, removedNodes)
    {
       if (node .children .length !== 1)
+         return node;
+
+      if (!node .visible)
          return node;
 
       const child = node .children [0];

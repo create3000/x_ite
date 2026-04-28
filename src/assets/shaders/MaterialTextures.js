@@ -61,16 +61,6 @@ export default
                   textureColorComponents = linearToSRGB (textureColorComponents);
                #endif
             #endif
-         #elif defined (X3D_COLORSPACE_LINEAR_WHEN_PHYSICAL_MATERIAL)
-            #if defined (${define}${_EXT}_LINEAR)
-               #if ${colorSpace === "sRGB" ? 1 : 0}
-                  textureColorComponents = linearToSRGB (textureColorComponents);
-               #endif
-            #else
-               #if ${colorSpace === "linear" ? 1 : 0}
-                  textureColorComponents = sRGBToLinear (textureColorComponents);
-               #endif
-            #endif
          #elif defined (X3D_COLORSPACE_LINEAR)
             #if !defined (${define}${_EXT}_LINEAR)
                #if ${colorSpace === "sRGB" || colorSpace === "linear" ? 1 : 0}

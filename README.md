@@ -2,7 +2,7 @@
 
 [![npm Version](https://badgen.net/npm/v/x_ite)](https://www.npmjs.com/package/x_ite)
 [![Build Size](https://badgen.net/bundlephobia/minzip/x_ite)](https://bundlephobia.com/package/x_ite)
-[![jsDelivr Hits](https://data.jsdelivr.com/v1/package/npm/x_ite/badge?style=rounded)](https://www.jsdelivr.com/package/npm/x_ite)
+[![jsDelivr Hits](https://data.jsdelivr.com/v1/package/npm/x_ite/badge?style=rounded)](https://create3000.github.io/jsdelivr-download-stats/?username=create3000&repository=x_ite)
 [![npm Downloads](https://badgen.net/npm/dm/x_ite)](https://npmtrends.com/x_ite)
 [![DeepScan grade](https://deepscan.io/api/teams/23540/projects/26814/branches/855447/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=23540&pid=26814&bid=855447)
 
@@ -36,10 +36,10 @@ If you are going to use X_ITE in a production environment, you should use a fixe
 jsDelivr is an open-source content delivery network (CDN) renowned for its no-cost access, swift performance, and reliable service.
 
 ```html
-<script defer src="https://cdn.jsdelivr.net/npm/x_ite@12.0.4/dist/x_ite.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@14.2.0/dist/x_ite.min.js"></script>
 <!-- or as ES module for use in scripts -->
 <script type="module">
-import X3D from "https://cdn.jsdelivr.net/npm/x_ite@12.0.4/dist/x_ite.min.mjs";
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite@14.2.0/dist/x_ite.min.mjs";
 </script>
 ```
 
@@ -65,12 +65,26 @@ $ npm install x_ite-node
 
 This script initializes an X3D canvas within an HTML page, configuring it to contain a scene, a camera and a geometric cube with default material properties. It then animates the rotation of the cube within the scene, ensuring that the camera captures the dynamic action.
 
-### Declarative Syntax
+### External File
+
+You can include an external file:
 
 ```html
-<script defer src="https://cdn.jsdelivr.net/npm/x_ite@12.0.4/dist/x_ite.min.js"></script>
-<x3d-canvas update="auto" contentScale="auto">
-  <X3D profile='Interchange' version='4.0'>
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@14.2.0/dist/x_ite.min.js"></script>
+<x3d-canvas
+    src="box.x3d"
+    contentScale="auto"
+    update="auto"></x3d-canvas>
+```
+
+### Declarative Syntax
+
+However, you can also include and manipulate the XML directly:
+
+```html
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@14.2.0/dist/x_ite.min.js"></script>
+<x3d-canvas contentScale="auto" update="auto">
+  <X3D profile='Interchange' version='4.1'>
     <head>
       <unit category='angle' name='degree' conversionFactor='0.017453292519943295'></unit>
     </head>
@@ -107,7 +121,7 @@ The same scene can also be created using pure JavaScript:
 
 ```html
 <script type="module">
-import X3D from "https://cdn.jsdelivr.net/npm/x_ite@12.0.4/dist/x_ite.min.mjs";
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite@14.2.0/dist/x_ite.min.mjs";
 
 const
   canvas  = document .createElement ("x3d-canvas"), // Or get an already inserted <x3d-canvas> element.
@@ -125,57 +139,57 @@ browser .setBrowserOption ("ContentScale", -1);   // Increase resolution for HiD
 
 // Create Viewpoint:
 
-const viewpointNode = scene .createNode ("Viewpoint");
+const viewpoint = scene .createNode ("Viewpoint");
 
-viewpointNode .set_bind    = true;           // Bind the viewpoint.
-viewpointNode .description = "Initial View"; // Appears now in the context menu.
-viewpointNode .position    = new X3D .SFVec3f (2.869677, 3.854335, 8.769781);
-viewpointNode .orientation = new X3D .SFRotation (-0.7765887, 0.6177187, 0.1238285, 0.5052317);
+viewpoint .set_bind    = true;           // Bind the viewpoint.
+viewpoint .description = "Initial View"; // Appears now in the context menu.
+viewpoint .position    = new X3D .SFVec3f (2.869677, 3.854335, 8.769781);
+viewpoint .orientation = new X3D .SFRotation (-0.7765887, 0.6177187, 0.1238285, 0.5052317);
 
-scene .rootNodes .push (viewpointNode);
+scene .rootNodes .push (viewpoint);
 
 // Create Box:
 
 const
-  transformNode  = scene .createNode ("Transform"),
-  shapeNode      = scene .createNode ("Shape"),
-  appearanceNode = scene .createNode ("Appearance"),
-  materialNode   = scene .createNode ("Material"),
-  boxNode        = scene .createNode ("Box");
+  transform  = scene .createNode ("Transform"),
+  shape      = scene .createNode ("Shape"),
+  appearance = scene .createNode ("Appearance"),
+  material   = scene .createNode ("Material"),
+  box        = scene .createNode ("Box");
 
-appearanceNode .material = materialNode;
+appearance .material = material;
 
-shapeNode .appearance = appearanceNode;
-shapeNode .geometry   = boxNode;
+shape .appearance = appearance;
+shape .geometry   = box;
 
-transformNode .children .push (shapeNode);
+transform .children .push (shape);
 
-scene .rootNodes .push (transformNode);
+scene .rootNodes .push (transform);
 
 // Give the node a name if you like.
-scene .addNamedNode ("Box", transformNode);
+scene .addNamedNode ("Box", transform);
 
 // Create animation:
 
 const
-  timeSensorNode   = scene .createNode ("TimeSensor"),
-  interpolatorNode = scene .createNode ("OrientationInterpolator");
+  timeSensor   = scene .createNode ("TimeSensor"),
+  interpolator = scene .createNode ("OrientationInterpolator");
 
-timeSensorNode .cycleInterval = 10;
-timeSensorNode .loop          = true;
+timeSensor .cycleInterval = 10;
+timeSensor .loop          = true;
 
 for (let i = 0; i < 5; ++ i)
 {
-  interpolatorNode .key [i]      = i / 4;
-  interpolatorNode .keyValue [i] = new X3D .SFRotation (0, 1, 0, Math .PI / 2 * i);
+  interpolator .key [i]      = i / 4;
+  interpolator .keyValue [i] = new X3D .SFRotation (0, 1, 0, Math .PI / 2 * i);
 }
 
-scene .rootNodes .push (timeSensorNode, interpolatorNode);
+scene .rootNodes .push (timeSensor, interpolator);
 
 // Add routes:
 
-scene .addRoute (timeSensorNode,   "fraction_changed", interpolatorNode, "set_fraction");
-scene .addRoute (interpolatorNode, "value_changed",    transformNode,    "set_rotation");
+scene .addRoute (timeSensor,   "fraction_changed", interpolator, "set_fraction");
+scene .addRoute (interpolator, "value_changed",    transform,    "set_rotation");
 
 // Show scene.
 
@@ -197,7 +211,7 @@ X_ITE is free software and licensed under the [MIT License](LICENSE.md).
 
 ## See Also
 
-* [x_ite-node](https://www.npmjs.com/package/x_ite-node) — Pure Node.js version of X_ITE
-* [x3d-tidy](https://www.npmjs.com/package/x3d-tidy) — X3D converter, beautifier and minimizer
-* [x3d-image](https://www.npmjs.com/package/x3d-image) — render image files from X3D
-* [sunrize](https://www.npmjs.com/package/sunrize) — a multi-platform X3D editor
+* [x_ite-node](https://www.npmjs.com/package/x_ite-node) — Pure Node.js Version of X_ITE
+* [x3d-tidy](https://www.npmjs.com/package/x3d-tidy) — X3D Converter, Beautifier and Minimizer
+* [x3d-image](https://www.npmjs.com/package/x3d-image) — Render Image Files from X3D
+* [sunrize](https://www.npmjs.com/package/sunrize) — A Multi-Platform X3D Editor

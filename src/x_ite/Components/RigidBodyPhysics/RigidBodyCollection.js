@@ -114,19 +114,57 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
    },
    set_collider__ ()
    {
+      this .colliderNode ?.removeInterest ("set_colliderParameters__", this);
+
       this .colliderNode = X3DCast (X3DConstants .CollisionCollection, this ._collider);
+
+      this .colliderNode ?.addInterest ("set_colliderParameters__", this);
+
+      this .set_colliderParameters__ ();
+   },
+   set_colliderParameters__ ()
+   {
+      const colliderNode = this .colliderNode;
+
+      for (const bodyNode of this .bodyNodes)
+      {
+         const rigidBody = bodyNode .getRigidBody ();
+
+         rigidBody .setFriction (0.5);
+         rigidBody .setRollingFriction (0);
+      }
+
+      if (!colliderNode)
+         return;
+
+      for (const parameter of colliderNode .getAppliedParameters ())
+      {
+         switch (parameter)
+         {
+            case AppliedParametersType .FRICTION_COEFFICIENT_2:
+            {
+               for (const bodyNode of this .bodyNodes)
+               {
+                  const rigidBody = bodyNode .getRigidBody ();
+
+                  rigidBody .setFriction (colliderNode ._frictionCoefficients .x);
+                  rigidBody .setRollingFriction (colliderNode ._frictionCoefficients .y);
+               }
+
+               break;
+            }
+         }
+      }
    },
    set_bounce__ ()
    {
-      const
-         colliderNode = this .colliderNode,
-         bodyNodes    = this .bodyNodes;
+      const colliderNode = this .colliderNode;
 
-      if (colliderNode && colliderNode ._enabled .getValue ())
+      if (colliderNode ?._enabled .getValue ())
       {
          if (colliderNode .getAppliedParameters () .has (AppliedParametersType .BOUNCE))
          {
-            for (const bodyNode of bodyNodes)
+            for (const bodyNode of this .bodyNodes)
             {
                const rigidBody = bodyNode .getRigidBody ();
 
@@ -140,34 +178,8 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
          }
       }
 
-      for (const bodyNode of bodyNodes)
-         bodyNode .getRigidBody () .setRestitution (0);
-   },
-   set_frictionCoefficients__ ()
-   {
-      if (this .colliderNode && this .colliderNode ._enabled .getValue ())
-      {
-         if (this .colliderNode .getAppliedParameters () .has (AppliedParametersType .FRICTION_COEFFICIENT_2))
-         {
-            for (const bodyNode of this .bodyNodes)
-            {
-               const rigidBody = bodyNode .getRigidBody ();
-
-               rigidBody .setFriction (this .colliderNode ._frictionCoefficients .x);
-               rigidBody .setRollingFriction (this .colliderNode ._frictionCoefficients .y);
-            }
-
-            return;
-         }
-      }
-
       for (const bodyNode of this .bodyNodes)
-      {
-         const rigidBody = bodyNode .getRigidBody ();
-
-         rigidBody .setFriction (0.5);
-         rigidBody .setRollingFriction (0);
-      }
+         bodyNode .getRigidBody () .setRestitution (0);
    },
    set_bodies__ ()
    {
@@ -186,7 +198,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
       {
          const bodyNode = X3DCast (X3DConstants .RigidBody, node);
 
-         if (! bodyNode)
+         if (!bodyNode)
             continue;
 
          if (bodyNode .getCollection ())
@@ -204,6 +216,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
       for (const bodyNode of this .bodyNodes)
          bodyNode ._enabled .addInterest ("set_dynamicsWorld__", this);
 
+      this .set_colliderParameters__ ();
       this .set_contactSurfaceThickness__ ();
       this .set_dynamicsWorld__ ();
       this .set_joints__ ();
@@ -217,7 +230,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
 
       for (const bodyNode of this .bodyNodes)
       {
-         if (! bodyNode ._enabled .getValue ())
+         if (!bodyNode ._enabled .getValue ())
             continue;
 
          this .rigidBodies .push (bodyNode .getRigidBody ());
@@ -242,7 +255,7 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
       {
          const jointNode = X3DCast (X3DConstants .X3DRigidJointNode, node);
 
-         if (! jointNode)
+         if (!jointNode)
             continue;
 
          if (jointNode .getCollection ())
@@ -266,7 +279,6 @@ Object .assign (Object .setPrototypeOf (RigidBodyCollection .prototype, X3DChild
             gravity    = this ._gravity .getValue ();
 
          this .set_bounce__ ();
-         this .set_frictionCoefficients__ ();
 
          if (this ._preferAccuracy .getValue ())
          {
@@ -312,12 +324,12 @@ Object .defineProperties (RigidBodyCollection,
    {
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",                new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",                 new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_contacts",            new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "gravity",                 new Fields .SFVec3f (0, -9.8, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",                 new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "preferAccuracy",          new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "errorCorrection",         new Fields .SFFloat (0.8)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "iterations",              new Fields .SFInt32 (10)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "gravity",                 new Fields .SFVec3f (0, -9.8, 0)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "constantForceMix",        new Fields .SFFloat (0.0001)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "maxCorrectionSpeed",      new Fields .SFFloat (-1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "contactSurfaceThickness", new Fields .SFFloat ()),
@@ -325,13 +337,13 @@ Object .defineProperties (RigidBodyCollection,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "disableTime",             new Fields .SFTime (0)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "disableLinearSpeed",      new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "disableAngularSpeed",     new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "collider",                new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "bodies",                  new Fields .MFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "joints",                  new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",                 new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",             new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",                new Fields .SFVec3f (-1, -1, -1)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",              new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "collider",                new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bodies",                  new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "joints",                  new Fields .MFNode ()),
       ]),
       enumerable: true,
    },

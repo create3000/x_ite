@@ -47,7 +47,7 @@ npm install
 
 ## Pull Request Checklist
 
-* Clear, focused scope (one feature or fix per PR).
+* [x] Clear, focused scope (one feature or fix per PR).
 * [x] Runs without errors.
 * [x] Includes tests if applicable.
 * [x] You have signed off on your work (`git commit -s` is welcome but not required).

@@ -1,15 +1,17 @@
 import X3DBaseNode     from "../Base/X3DBaseNode.js";
 import X3DRenderObject from "./X3DRenderObject.js";
-import TraverseType    from "./TraverseType.js";
 
-function DependentRenderer (executionContext, renderObject, node)
+function DependentRenderer (executionContext, renderObject)
 {
    X3DBaseNode     .call (this, executionContext);
    X3DRenderObject .call (this, executionContext);
 
+   // Private properties
+
    this .renderObject = renderObject;
-   this .node         = node;
    this .framebuffers = [ ];
+
+   this .setup ();
 }
 
 Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNode .prototype),
@@ -24,21 +26,25 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNod
    {
       return false;
    },
-   getNode ()
-   {
-      return this .node;
-   },
    getLayer ()
    {
       return this .renderObject .getLayer ();
    },
    getBackground ()
    {
-      return this .renderObject .getBackground ();
+      return this .backgroundNode ?? this .renderObject .getBackground ();
+   },
+   setBackground (backgroundNode)
+   {
+      this .backgroundNode = backgroundNode;
    },
    getFog ()
    {
-      return this .renderObject .getFog ();
+      return this .fogNode ?? this .renderObject .getFog ();
+   },
+   setFog (fogNode)
+   {
+      this .fogNode = fogNode;
    },
    getNavigationInfo ()
    {
@@ -52,9 +58,9 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNod
    {
       return this .renderObject .getViewpointStack ();
    },
-   getLightContainer ()
+   getLightContainer (path)
    {
-      return this .renderObject .getLights () [this .lightIndex ++];
+      return this .renderObject .getLights () .get (path);
    },
    getFramebuffers ()
    {
@@ -63,33 +69,6 @@ Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, X3DBaseNod
    setFramebuffer (frameBuffer)
    {
       this .framebuffers [0] = frameBuffer;
-   },
-   render (type, callback, group)
-   {
-      switch (type)
-      {
-         case TraverseType .COLLISION:
-         {
-            X3DRenderObject .prototype .render .call (this, type, callback, group);
-            break;
-         }
-         case TraverseType .SHADOW:
-         {
-            X3DRenderObject .prototype .render .call (this, type, callback, group);
-            break;
-         }
-         case TraverseType .DISPLAY:
-         {
-            this .lightIndex = 0;
-
-            X3DRenderObject .prototype .render .call (this, type, callback, group);
-
-            for (const light of this .renderObject .getLights ())
-               light .modelViewMatrix .pop ();
-
-            break;
-         }
-      }
    },
 });
 

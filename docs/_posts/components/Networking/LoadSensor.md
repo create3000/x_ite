@@ -31,10 +31,10 @@ The LoadSensor node belongs to the [Networking](/x_ite/components/overview/#netw
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFTime | [in, out] | [timeOut](#fields-timeOut) | 0  |
+| SFTime | [in, out] | [timeOut](#fields-timeOut) | 0 |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFBool | [out] | [isLoaded](#fields-isLoaded) |  |
 | SFFloat | [out] | [progress](#fields-progress) |  |
@@ -134,8 +134,10 @@ The *children* field monitors one or more USE nodes that contain a valid url fie
 ### Hints
 
 - Use multiple LoadSensor nodes to track multiple loading nodes individually.
+- Eligible children nodes include [Anchor](/x_ite/components/networking/anchor/), [AudioClip](/x_ite/components/sound/audioclip/), [BufferAudioSource](/x_ite/components/sound/bufferaudiosource/), [DISEntityTypeMapping](/x_ite/components/dis/disentitytypemapping/), [FontLibrary](/x_ite/components/text/fontlibrary/), [GeoMetadata](/x_ite/components/geospatial/geometadata/), [ImageCubeMapTexture](/x_ite/components/cubemaptexturing/imagecubemaptexture/), [ImageTexture](/x_ite/components/texturing/imagetexture/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/), [Inline](/x_ite/components/networking/inline/), [InlineGeometry](/x_ite/components/networking/inlinegeometry/), [MovieTexture](/x_ite/components/texturing/movietexture/), [PackagedShader](/x_ite/components/shaders/packagedshader/), [Script](/x_ite/components/scripting/script/), [ShaderPart](/x_ite/components/shaders/shaderpart/), [ShaderProgram](/x_ite/components/shaders/shaderprogram/).
+- Load completion of an IMPORT reference can be determined by including a reference to the corresponding parent [Inline](/x_ite/components/networking/inline/) node in the LoadSensor children field.
 - [Background](/x_ite/components/environmentaleffects/background/) node is not sensed by LoadSensor due to node typing and multiple-image ambiguity, alternatively utilize [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/) node with multiple [ImageTexture](/x_ite/components/texturing/imagetexture/) nodes each referenced inside LoadSensor.
-- Use [Inline](/x_ite/components/networking/inline/) 'load' field to prompt or defer loading.
+- Use [Inline](/x_ite/components/networking/inline/) (or [InlineGeometry](/x_ite/components/networking/inlinegeometry/)) 'load' field to prompt or defer loading of external files.
 - [Example scenes and authoring assets](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter12EnvironmentSensorSound)
 
 ### Warnings
@@ -146,13 +148,20 @@ The *children* field monitors one or more USE nodes that contain a valid url fie
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Networking/LoadSensor/LoadSensor.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Networking/LoadSensor/LoadSensor.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Networking/LoadSensor/screenshot.avif" alt="LoadSensor"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Networking/LoadSensor/LoadSensor.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Networking/LoadSensor/LoadSensor.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

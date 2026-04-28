@@ -31,26 +31,26 @@ The TextureProjector node belongs to the [TextureProjection](/x_ite/components/o
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [global](#fields-global) | TRUE |
 | SFBool | [in, out] | [on](#fields-on) | TRUE |
-| SFColor | [in, out] | [color](#fields-color) | 1 1 1  |
-| SFFloat | [in, out] | [intensity](#fields-intensity) | 1  |
-| SFFloat | [in, out] | [ambientIntensity](#fields-ambientIntensity) | 0  |
-| SFVec3f | [in, out] | [location](#fields-location) | 0 0 0  |
-| SFVec3f | [in, out] | [direction](#fields-direction) | 0 0 1  |
-| SFVec3f | [in, out] | [upVector](#fields-upVector) | 0 0 1  |
-| SFFloat | [in, out] | [fieldOfView](#fields-fieldOfView) | π/4  |
-| SFFloat | [in, out] | [nearDistance](#fields-nearDistance) | -1  |
-| SFFloat | [in, out] | [farDistance](#fields-farDistance) | -1  |
+| SFColor | [in, out] | [color](#fields-color) | 1 1 1 |
+| SFFloat | [in, out] | [intensity](#fields-intensity) | 1 |
+| SFFloat | [in, out] | [ambientIntensity](#fields-ambientIntensity) | 0 |
+| SFVec3f | [in, out] | [location](#fields-location) | 0 0 0 |
+| SFVec3f | [in, out] | [direction](#fields-direction) | 0 0 1 |
+| SFVec3f | [in, out] | [upVector](#fields-upVector) | 0 1 0 |
+| SFFloat | [in, out] | [fieldOfView](#fields-fieldOfView) | π/4 |
+| SFFloat | [in, out] | [nearDistance](#fields-nearDistance) | -1 |
+| SFFloat | [in, out] | [farDistance](#fields-farDistance) | -1 |
 | SFFloat | [out] | [aspectRatio](#fields-aspectRatio) |  |
-| SFNode | [in, out] | [texture](#fields-texture) | NULL  |
+| SFNode | [in, out] | [texture](#fields-texture) | NULL |
 | SFBool | [in, out] | [shadows](#fields-shadows) | FALSE |
-| SFColor | [in, out] | [shadowColor](#fields-shadowColor) | 0 0 0  |
-| SFFloat | [in, out] | [shadowIntensity](#fields-shadowIntensity) | 1  |
-| SFFloat | [in, out] | [shadowBias](#fields-shadowBias) | 0.005  |
-| SFInt32 | [ ] | [shadowMapSize](#fields-shadowMapSize) | 1024  |
+| SFColor | [in, out] | [shadowColor](#fields-shadowColor) | 0 0 0 |
+| SFFloat | [in, out] | [shadowIntensity](#fields-shadowIntensity) | 1 |
+| SFFloat | [in, out] | [shadowBias](#fields-shadowBias) | 0.005 |
+| SFInt32 | [ ] | [shadowMapSize](#fields-shadowMapSize) | 1024 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -95,14 +95,18 @@ Enables/disables this texture projection source.
 
 Brightness of direct emission from the light.
 
+#### Warning
+
+- Values greater than 1.0 require X3D version='4.0' or greater.
+
 ### SFFloat [in, out] **ambientIntensity** 0 <small>[0,1]</small>
 {: #fields-ambientIntensity }
 
-Brightness of ambient (nondirectional background) emission from the light. Interchange profile
+Brightness of ambient (nondirectional background) emission from the light.
 
 #### Hint
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### SFVec3f [in, out] **location** 0 0 0 <small>(-∞,∞)</small>
 {: #fields-location }
@@ -114,10 +118,10 @@ Position of center of texture projection relative to local coordinate system.
 
 Direction for projection.
 
-### SFVec3f [in, out] **upVector** 0 0 1 <small>(-∞,∞)</small>
+### SFVec3f [in, out] **upVector** 0 1 0 <small>(-∞,∞)</small>
 {: #fields-upVector }
 
-*upVector* describes the roll of the camera by defining which direction is up for camera orientation.
+*upVector* describes camera orientation by defining which direction is up.
 
 ### SFFloat [in, out] **fieldOfView** π/4 <small>(0,π)</small>
 {: #fields-fieldOfView }
@@ -131,22 +135,22 @@ Preferred minimum viewing angle for this projection in radians, providing minimu
 ### SFFloat [in, out] **nearDistance** -1 <small>-1 or (0,∞)</small>
 {: #fields-nearDistance }
 
-Minimum distance necessary for texture display.
+Minimum distance necessary for texture display, -1 if unconstrained
 
 ### SFFloat [in, out] **farDistance** -1 <small>-1 or (0,∞)</small>
 {: #fields-farDistance }
 
-Maximum distance necessary for texture display.
+Maximum distance necessary for texture display, -1 if unconstrained
 
 ### SFFloat [out] **aspectRatio**
 {: #fields-aspectRatio }
 
-*aspectRatio* is the ratio of width and height that is projected.
+*aspectRatio* is the ratio of width and height that is projected, reported as output event when contained image is loaded.
 
 ### SFNode [in, out] **texture** NULL <small>[X3DTexture2DNode]</small>
 {: #fields-texture }
 
-Single contained *texture* node ([ImageTexture](/x_ite/components/texturing/imagetexture/), [MovieTexture](/x_ite/components/texturing/movietexture/), [PixelTexture](/x_ite/components/texturing/pixeltexture/), [MultiTexture](/x_ite/components/texturing/multitexture/)) that maps image(s) to surface geometry.
+Optional single contained *texture* node ([ImageTexture](/x_ite/components/texturing/imagetexture/), [MovieTexture](/x_ite/components/texturing/movietexture/), [PixelTexture](/x_ite/components/texturing/pixeltexture/), [MultiTexture](/x_ite/components/texturing/multitexture/)) that maps image(s) to surface geometry.
 
 #### Hints
 
@@ -196,13 +200,20 @@ Size of the shadow map in pixels, must be power of two.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/TextureProjection/TextureProjector/TextureProjector.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/TextureProjection/TextureProjector/TextureProjector.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/TextureProjection/TextureProjector/screenshot.avif" alt="TextureProjector"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/TextureProjection/TextureProjector/TextureProjector.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/TextureProjection/TextureProjector/TextureProjector.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

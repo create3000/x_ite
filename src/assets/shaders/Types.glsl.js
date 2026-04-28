@@ -113,17 +113,18 @@ struct x3d_LightSourceParameters {
    mediump float beamWidth;
    mediump float cutOffAngle;
    mediump mat3  matrix;
+
    #if defined (X3D_SHADOWS)
-   mediump vec3  shadowColor;
-   mediump float shadowIntensity;
-   mediump float shadowBias;
-   mediump mat4  shadowMatrix;
-   mediump int   shadowMapSize;
+      mediump vec3  shadowColor;
+      mediump float shadowIntensity;
+      mediump float shadowBias;
+      mediump mat4  shadowMatrix;
+      mediump int   shadowMapSize;
    #endif
 };
 #endif
 
-//uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
+//uniform x3d_LightSourceParameters x3d_LightSource [X3D_NUM_LIGHTS];
 
 #if defined (X3D_USE_IBL)
 struct x3d_EnvironmentLightSourceParameters {
@@ -137,13 +138,13 @@ struct x3d_EnvironmentLightSourceParameters {
    mediump samplerCube specularTexture;
    bool                specularTextureLinear;
    mediump int         specularTextureLevels;
-   mediump sampler2D   GGXLUTTexture;
+   mediump sampler2D   ggxLUTTexture;
 
    #if defined (X3D_SHEEN_MATERIAL_EXT)
       mediump samplerCube sheenTexture;
       bool                sheenTextureLinear;
       mediump int         sheenTextureLevels;
-      mediump sampler2D   CharlieLUTTexture;
+      mediump sampler2D   charlieLUTTexture;
    #endif
 };
 #endif
@@ -181,10 +182,11 @@ struct x3d_FillPropertiesParameters
    bool          filled;
    bool          hatched;
    mediump vec3  hatchColor;
-   #if defined (X3D_STYLE_PROPERTIES_TEXTURE)
-   sampler2D     texture;
-   #endif
    mediump float scale;
+
+   #if defined (X3D_STYLE_PROPERTIES_TEXTURE)
+      sampler2D texture;
+   #endif
 };
 #endif
 
@@ -229,6 +231,7 @@ struct x3d_PhysicalMaterialParameters
       mediump float metallic;
       mediump float roughness;
    #endif
+
    mediump vec3  emissiveColor;
    mediump float occlusionStrength;
    mediump float normalScale;
@@ -252,7 +255,7 @@ struct x3d_MultiTextureParameters
 };
 #endif
 
-//uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];
+//uniform x3d_MultiTextureParameters x3d_MultiTexture [X3D_NUM_TEXTURES];
 
 #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
 struct x3d_TextureCoordinateGeneratorParameters
@@ -262,5 +265,18 @@ struct x3d_TextureCoordinateGeneratorParameters
 };
 #endif
 
-//uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];
+//uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [X3D_NUM_TEXTURE_COORDINATES];
+
+#if defined (X3D_TEXTURE_PROJECTION)
+struct x3d_TextureProjectorParameters
+{
+   mediump vec3  color;
+   mediump float intensity;
+   mediump vec3  location;
+   mediump vec2  params; // near, far
+   mediump mat4  matrix;
+};
+#endif
+
+//uniform x3d_TextureProjectorParameters x3d_TextureProjector [X3D_NUM_TEXTURE_PROJECTORS];
 `;

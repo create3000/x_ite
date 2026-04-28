@@ -8,7 +8,7 @@ tags: [Accessing, External, Browser, Authoring, Interface]
 
 ## Overview
 
-X_ITE is designed to provide access to the internal X3D browser and its contained scene graph via JavaScript, either within an internal X3D Script node or an external HTML script.
+X_ITE is designed to provide access to the internal X3D browser and its contained scene graph via JavaScript, either within an internal X3D [Script](/x_ite/components/scripting/script/) node or an external HTML script.
 
 If you want combine DOM access with X3D access in your JavaScript functions then you probably want to access the external browser object if you want include an external JavaScript file in your HTML page and you don't want to do it directly in a [Script](/x_ite/components/scripting/script/) node.
 
@@ -16,11 +16,25 @@ If you want combine DOM access with X3D access in your JavaScript functions then
 
 This script initializes an X3D canvas within an HTML page, configuring it to contain a scene, a camera and a geometric cube with default material properties. It then animates the rotation of the cube within the scene, ensuring that the camera captures the dynamic action.
 
+### External File
+
+You can include an external file:
+
+```html
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@14.0.8/dist/x_ite.min.js"></script>
+<x3d-canvas
+    src="box.x3d"
+    contentScale="auto"
+    update="auto"></x3d-canvas>
+```
+
 ### Declarative Syntax
+
+However, you can also include and manipulate the XML directly:
 
 ```html
 <script defer src="https://cdn.jsdelivr.net/npm/x_ite@{{ site.x_ite_latest_version }}/dist/x_ite.min.js"></script>
-<x3d-canvas update="auto" contentScale="auto">
+<x3d-canvas contentScale="auto" update="auto">
   <X3D profile='Interchange' version='{{ site.x3d_latest_version }}'>
     <head>
       <unit category='angle' name='degree' conversionFactor='0.017453292519943295'></unit>
@@ -56,7 +70,7 @@ This script initializes an X3D canvas within an HTML page, configuring it to con
 
 The same scene can also be created using pure JavaScript.
 
-Outside of a [Script](/x_ite/components/scripting/script/) node context, you can access **all** objects through the X3D object, which can then be used as a namespace, eg. `new X3D .MFString ("foo")`. It is also possible to get a X3DBrowser reference with `X3D .getBrowser ()`, if there is already an \<x3d-canvas\> element on the page.
+Outside of a [Script](/x_ite/components/scripting/script/) node context, you can access **all** objects through the X3D object, which can then be used as a namespace, e.g. `new X3D .MFString ("foo")`. It is also possible to get a X3DBrowser reference with `X3D .getBrowser ()`, if there is already an \<x3d-canvas\> element on the page.
 
 ```html
 <script type="module">
@@ -78,57 +92,57 @@ browser .setBrowserOption ("ContentScale", -1);   // Increase resolution for HiD
 
 // Create Viewpoint:
 
-const viewpointNode = scene .createNode ("Viewpoint");
+const viewpoint = scene .createNode ("Viewpoint");
 
-viewpointNode .set_bind    = true;           // Bind the viewpoint.
-viewpointNode .description = "Initial View"; // Appears now in the context menu.
-viewpointNode .position    = new X3D .SFVec3f (2.869677, 3.854335, 8.769781);
-viewpointNode .orientation = new X3D .SFRotation (-0.7765887, 0.6177187, 0.1238285, 0.5052317);
+viewpoint .set_bind    = true;           // Bind the viewpoint.
+viewpoint .description = "Initial View"; // Appears now in the context menu.
+viewpoint .position    = new X3D .SFVec3f (2.869677, 3.854335, 8.769781);
+viewpoint .orientation = new X3D .SFRotation (-0.7765887, 0.6177187, 0.1238285, 0.5052317);
 
-scene .rootNodes .push (viewpointNode);
+scene .rootNodes .push (viewpoint);
 
 // Create Box:
 
 const
-  transformNode  = scene .createNode ("Transform"),
-  shapeNode      = scene .createNode ("Shape"),
-  appearanceNode = scene .createNode ("Appearance"),
-  materialNode   = scene .createNode ("Material"),
-  boxNode        = scene .createNode ("Box");
+  transform  = scene .createNode ("Transform"),
+  shape      = scene .createNode ("Shape"),
+  appearance = scene .createNode ("Appearance"),
+  material   = scene .createNode ("Material"),
+  box        = scene .createNode ("Box");
 
-appearanceNode .material = materialNode;
+appearance .material = material;
 
-shapeNode .appearance = appearanceNode;
-shapeNode .geometry   = boxNode;
+shape .appearance = appearance;
+shape .geometry   = box;
 
-transformNode .children .push (shapeNode);
+transform .children .push (shape);
 
-scene .rootNodes .push (transformNode);
+scene .rootNodes .push (transform);
 
 // Give the node a name if you like.
-scene .addNamedNode ("Box", transformNode);
+scene .addNamedNode ("Box", transform);
 
 // Create animation:
 
 const
-  timeSensorNode   = scene .createNode ("TimeSensor"),
-  interpolatorNode = scene .createNode ("OrientationInterpolator");
+  timeSensor   = scene .createNode ("TimeSensor"),
+  interpolator = scene .createNode ("OrientationInterpolator");
 
-timeSensorNode .cycleInterval = 10;
-timeSensorNode .loop          = true;
+timeSensor .cycleInterval = 10;
+timeSensor .loop          = true;
 
 for (let i = 0; i < 5; ++ i)
 {
-  interpolatorNode .key [i]      = i / 4;
-  interpolatorNode .keyValue [i] = new X3D .SFRotation (0, 1, 0, Math .PI / 2 * i);
+  interpolator .key [i]      = i / 4;
+  interpolator .keyValue [i] = new X3D .SFRotation (0, 1, 0, Math .PI / 2 * i);
 }
 
-scene .rootNodes .push (timeSensorNode, interpolatorNode);
+scene .rootNodes .push (timeSensor, interpolator);
 
 // Add routes:
 
-scene .addRoute (timeSensorNode,   "fraction_changed", interpolatorNode, "set_fraction");
-scene .addRoute (interpolatorNode, "value_changed",    transformNode,    "set_rotation");
+scene .addRoute (timeSensor,   "fraction_changed", interpolator, "set_fraction");
+scene .addRoute (interpolator, "value_changed",    transform,    "set_rotation");
 
 // Show scene.
 
@@ -185,10 +199,10 @@ touchSensorNode .addFieldCallback ("on", "touchTime", value =>
   console .log (`touchTime: ${value}`);
 
   // Pause or resume the animation.
-  if (timeSensorNode .isPaused)
-    timeSensorNode .resumeTime = value;
+  if (timeSensor .isPaused)
+    timeSensor .resumeTime = value;
   else
-    timeSensorNode .pauseTime = value;
+    timeSensor .pauseTime = value;
 });
 ```
 
@@ -198,9 +212,9 @@ If you have given a (DEF) name to a node, you can access this node later using `
 
 ```js
 // Get Transform node named "Box".
-const transformNode = scene .getNamedNode ("Box");
+const transform = scene .getNamedNode ("Box");
 
-transformNode .translation = new X3D .SFVec3f (1, 2, 3);
+transform .translation = new X3D .SFVec3f (1, 2, 3);
 ```
 
 ### Documentation

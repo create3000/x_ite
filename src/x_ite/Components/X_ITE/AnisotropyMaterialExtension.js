@@ -6,6 +6,7 @@ import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
+import Algorithm                from "../../../standard/Math/Algorithm.js";
 
 // Register key.
 
@@ -52,7 +53,7 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
    },
    set_anisotropyStrength__ ()
    {
-      this .anisotropyArray [2] = Math .max (this ._anisotropyStrength .getValue (), 0);
+      this .anisotropyArray [2] = Algorithm .clamp (this ._anisotropyStrength .getValue (), 0, 1);
    },
    set_anisotropyRotation__ ()
    {
@@ -65,7 +66,7 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
    {
       this .anisotropyTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._anisotropyTexture);
 
-      this .setTexture (0, this .anisotropyTextureNode);
+      this .addTexture (0, this .anisotropyTextureNode);
    },
    getExtensionKey ()
    {
@@ -86,13 +87,11 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
    {
       uniforms .push ("x3d_AnisotropyEXT");
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform3fv (shaderObject .x3d_AnisotropyEXT, this .anisotropyArray);
 
       this .anisotropyTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_AnisotropyTextureEXT,
          this ._anisotropyTextureMapping .getValue (),
          textureTransformMapping,

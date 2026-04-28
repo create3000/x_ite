@@ -1,5 +1,5 @@
-/* X_ITE v12.0.4 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.4")];
+/* X_ITE v14.2.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.2.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -63,6 +63,9 @@ var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n
 ;// external "__X_ITE_X3D__ .X3DCast"
 const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
 var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
+;// external "__X_ITE_X3D__ .TraverseType"
+const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
+var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
 ;// external "__X_ITE_X3D__ .Matrix4"
 const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
 var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
@@ -70,6 +73,7 @@ var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(exte
 const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
 var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
 ;// ./src/x_ite/Components/TextureProjection/X3DTextureProjectorNode.js
+
 
 
 
@@ -84,9 +88,10 @@ function X3DTextureProjectorNode (executionContext)
 
    // Units
 
-   this ._location    .setUnit ("length");
-   this ._farDistance .setUnit ("length");
-   this ._location    .setUnit ("length");
+   this ._location     .setUnit ("length");
+   this ._nearDistance .setUnit ("length");
+   this ._farDistance  .setUnit ("length");
+   this ._location     .setUnit ("length");
 }
 
 Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, (external_X_ITE_X3D_X3DLightNode_default()).prototype),
@@ -105,7 +110,7 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, (ext
    },
    getLightKey ()
    {
-      return 3;
+      return this .lightKey;
    },
    getGlobal ()
    {
@@ -172,23 +177,31 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, (ext
    },
    set_texture__ ()
    {
-      this .textureNode ?.removeInterest ("set_aspectRatio__", this);
+      this .textureNode ?.removeInterest ("set_textureNode__", this);
 
       this .textureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture2DNode, this ._texture);
 
-      this .textureNode ?.addInterest ("set_aspectRatio__", this);
+      this .textureNode ?.addInterest ("set_textureNode__", this);
 
       this .setEnabled (!!this .textureNode);
 
-      this .set_aspectRatio__ ();
+      this .set_textureNode__ ();
       this .set_on__ ();
    },
-   set_aspectRatio__ ()
+   set_textureNode__ ()
    {
+      this .lightKey = `[3.${this .textureNode ?.isLinear () ? 1 : 0}]`;
+
       if (this .textureNode)
          this ._aspectRatio = this .textureNode .getWidth () / this .textureNode .getHeight ();
       else
          this ._aspectRatio = 1;
+   },
+   push (renderObject, groupNode)
+   {
+      external_X_ITE_X3D_X3DLightNode_default().prototype .push .call (this, renderObject, groupNode);
+
+      this .textureNode ?.traverse ((external_X_ITE_X3D_TraverseType_default()).DISPLAY, renderObject);
    },
 });
 
@@ -249,15 +262,21 @@ Object .assign (TextureProjectorContainer .prototype,
 {
    set (lightNode, groupNode, modelViewMatrix)
    {
-      this .browser   = lightNode .getBrowser ();
-      this .lightNode = lightNode;
-      this .global    = lightNode .getGlobal ();
+      this .browser           = lightNode .getBrowser ();
+      this .lightNode         = lightNode;
+      this .global            = lightNode .getGlobal ();
+      this .shadowMapRendered = false;
 
       this .modelViewMatrix .push (modelViewMatrix);
       this .textureMatrix .assign (lightNode .getTexture () .getMatrix ());
    },
    renderShadowMap (renderObject)
    {
+      if (this .shadowMapRendered)
+         return;
+
+      this .shadowMapRendered = true;
+
       const
          lightNode             = this .lightNode,
          cameraSpaceMatrix     = renderObject .getCameraSpaceMatrixArray (),
@@ -303,18 +322,23 @@ Object .assign (TextureProjectorContainer .prototype,
    },
    setShaderUniforms (gl, shaderObject, renderObject)
    {
-      const i = shaderObject .numTextureProjectors ++;
+      const
+         i        = shaderObject .numTextureProjectors ++,
+         uniforms = shaderObject .x3d_TextureProjector [i];
+
+      if (!uniforms)
+         return;
 
       const
          lightNode   = this .lightNode,
          texture     = lightNode .getTexture (),
          textureUnit = this .global
-            ? (this .textureUnit = this .textureUnit ?? this .browser .popTextureUnit ())
-            : this .browser .getTextureUnit ();
+            ? this .textureUnit ??= this .browser .popGlobalTextureUnit ()
+            : this .browser .popTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
-      gl .uniform1i (shaderObject .x3d_TextureProjectorTexture [i], textureUnit);
+      gl .uniform1i (uniforms .texture, textureUnit);
 
       if (shaderObject .hasTextureProjector (i, this))
          return;
@@ -323,19 +347,18 @@ Object .assign (TextureProjectorContainer .prototype,
          nearParameter = lightNode .getNearParameter (),
          farParameter  = lightNode .getFarParameter ();
 
-      gl .uniform3f        (shaderObject .x3d_TextureProjectorColor [i],         ... lightNode .getColor ());
-      gl .uniform1f        (shaderObject .x3d_TextureProjectorIntensity [i],     lightNode .getIntensity ());
-      gl .uniform3fv       (shaderObject .x3d_TextureProjectorLocation [i],      this .locationArray);
-      gl .uniform3f        (shaderObject .x3d_TextureProjectorParams [i],        nearParameter, farParameter, texture .isLinear ());
-      gl .uniformMatrix4fv (shaderObject .x3d_TextureProjectorMatrix [i], false, this .matrixArray);
+      gl .uniform3f        (uniforms .color,         ... lightNode .getColor ());
+      gl .uniform1f        (uniforms .intensity,     lightNode .getIntensity ());
+      gl .uniform3fv       (uniforms .location,      this .locationArray);
+      gl .uniform2f        (uniforms .params,        nearParameter, farParameter);
+      gl .uniformMatrix4fv (uniforms .matrix, false, this .matrixArray);
    },
    dispose ()
    {
-      this .browser .pushTextureUnit (this .textureUnit);
+      if (this .global)
+         this .textureUnit = undefined;
 
       this .modelViewMatrix .clear ();
-
-      this .textureUnit = undefined;
 
       TextureProjectorCache .push (this);
    },
@@ -350,6 +373,11 @@ function TextureProjector (executionContext)
    // Units
 
    this ._fieldOfView .setUnit ("angle");
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 4.0)
+      this ._upVector = new (external_X_ITE_X3D_Vector3_default()) (0, 0, 1);
 }
 
 Object .assign (Object .setPrototypeOf (TextureProjector .prototype, TextureProjection_X3DTextureProjectorNode .prototype),
@@ -386,7 +414,7 @@ Object .defineProperties (TextureProjector,
 
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "location",         new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "direction",        new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 0, 1)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "upVector",         new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 0, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "upVector",         new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 1, 0)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "fieldOfView",      new (external_X_ITE_X3D_Fields_default()).SFFloat (0.785398)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "nearDistance",     new (external_X_ITE_X3D_Fields_default()).SFFloat (-1)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "farDistance",      new (external_X_ITE_X3D_Fields_default()).SFFloat (-1)),
@@ -443,15 +471,21 @@ Object .assign (TextureProjectorParallelContainer .prototype,
 {
    set (lightNode, groupNode, modelViewMatrix)
    {
-      this .browser   = lightNode .getBrowser ();
-      this .lightNode = lightNode;
-      this .global    = lightNode .getGlobal ();
+      this .browser           = lightNode .getBrowser ();
+      this .lightNode         = lightNode;
+      this .global            = lightNode .getGlobal ();
+      this .shadowMapRendered = false;
 
       this .modelViewMatrix .push (modelViewMatrix);
       this .textureMatrix .assign (lightNode .getTexture () .getMatrix ());
    },
    renderShadowMap (renderObject)
    {
+      if (this .shadowMapRendered)
+         return;
+
+      this .shadowMapRendered = true;
+
       const
          lightNode             = this .lightNode,
          cameraSpaceMatrix     = renderObject .getCameraSpaceMatrixArray (),
@@ -518,18 +552,23 @@ Object .assign (TextureProjectorParallelContainer .prototype,
    },
    setShaderUniforms (gl, shaderObject, renderObject)
    {
-      const i = shaderObject .numTextureProjectors ++;
+      const
+         i        = shaderObject .numTextureProjectors ++,
+         uniforms = shaderObject .x3d_TextureProjector [i];
+
+      if (!uniforms)
+         return;
 
       const
          lightNode   = this .lightNode,
          texture     = lightNode .getTexture (),
          textureUnit = this .global
-            ? (this .textureUnit = this .textureUnit ?? this .browser .popTextureUnit ())
-            : this .browser .getTextureUnit ();
+            ? this .textureUnit ??= this .browser .popGlobalTextureUnit ()
+            : this .browser .popTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
-      gl .uniform1i (shaderObject .x3d_TextureProjectorTexture [i], textureUnit);
+      gl .uniform1i (uniforms .texture, textureUnit);
 
       if (shaderObject .hasTextureProjector (i, this))
          return;
@@ -538,19 +577,18 @@ Object .assign (TextureProjectorParallelContainer .prototype,
          nearParameter = lightNode .getNearParameter (),
          farParameter  = lightNode .getFarParameter ();
 
-      gl .uniform3f        (shaderObject .x3d_TextureProjectorColor [i],         ... lightNode .getColor ());
-      gl .uniform1f        (shaderObject .x3d_TextureProjectorIntensity [i],     lightNode .getIntensity ());
-      gl .uniform3fv       (shaderObject .x3d_TextureProjectorLocation [i],      this .locationArray);
-      gl .uniform3f        (shaderObject .x3d_TextureProjectorParams [i],        nearParameter, farParameter, texture .isLinear ());
-      gl .uniformMatrix4fv (shaderObject .x3d_TextureProjectorMatrix [i], false, this .matrixArray);
+      gl .uniform3f        (uniforms .color,         ... lightNode .getColor ());
+      gl .uniform1f        (uniforms .intensity,     lightNode .getIntensity ());
+      gl .uniform3fv       (uniforms .location,      this .locationArray);
+      gl .uniform2f        (uniforms .params,        nearParameter, farParameter);
+      gl .uniformMatrix4fv (uniforms .matrix, false, this .matrixArray);
    },
    dispose ()
    {
-      this .browser .pushTextureUnit (this .textureUnit);
+      if (this .global)
+         this .textureUnit = undefined;
 
       this .modelViewMatrix .clear ();
-
-      this .textureUnit = undefined;
 
       TextureProjectorParallelCache .push (this);
    },
@@ -565,6 +603,11 @@ function TextureProjectorParallel (executionContext)
    // Units
 
    this ._fieldOfView .setUnit ("length");
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 4.0)
+      this ._upVector = new (external_X_ITE_X3D_Vector3_default()) (0, 0, 1);
 }
 
 Object .assign (Object .setPrototypeOf (TextureProjectorParallel .prototype, TextureProjection_X3DTextureProjectorNode .prototype),
@@ -633,7 +676,7 @@ Object .defineProperties (TextureProjectorParallel,
 
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "location",         new (external_X_ITE_X3D_Fields_default()).SFVec3f ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "direction",        new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 0, 1)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "upVector",         new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 0, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "upVector",         new (external_X_ITE_X3D_Fields_default()).SFVec3f (0, 1, 0)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "fieldOfView",      new (external_X_ITE_X3D_Fields_default()).SFVec4f (-1, -1, 1, 1)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "nearDistance",     new (external_X_ITE_X3D_Fields_default()).SFFloat (-1)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "farDistance",      new (external_X_ITE_X3D_Fields_default()).SFFloat (-1)),

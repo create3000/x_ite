@@ -12,7 +12,7 @@ const Features =
       if (MODULE)
          return "MODULE";
 
-      if ((typeof process === "object") && (process .release .name .search (/node|io.js/) !== -1))
+      if ((typeof process === "object") && (process ?.release ?.name ?.match ?.(/node|io.js/)))
          return "NODE";
 
       return "BROWSER";
@@ -84,10 +84,16 @@ const Features =
 
       window .FinalizationRegistry = class FinalizationRegistry
       {
-         register () { }
-         unregister () { }
+         register ()
+         { }
+         
+         unregister ()
+         { }
       };
    }
+
+   if (typeof Float16Array === "undefined")
+      window .Float16Array = Uint16Array;
 })();
 
 (() =>

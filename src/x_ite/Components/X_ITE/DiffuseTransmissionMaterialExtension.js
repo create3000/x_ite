@@ -56,7 +56,7 @@ Object .assign (Object .setPrototypeOf (DiffuseTransmissionMaterialExtension .pr
    {
       this .diffuseTransmissionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._diffuseTransmissionTexture);
 
-      this .setTexture (0, this .diffuseTransmissionTextureNode);
+      this .addTexture (0, this .diffuseTransmissionTextureNode);
    },
    set_diffuseTransmissionColor__ ()
    {
@@ -66,7 +66,7 @@ Object .assign (Object .setPrototypeOf (DiffuseTransmissionMaterialExtension .pr
    {
       this .diffuseTransmissionColorTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._diffuseTransmissionColorTexture);
 
-      this .setTexture (1, this .diffuseTransmissionColorTextureNode);
+      this .addTexture (1, this .diffuseTransmissionColorTextureNode);
    },
    getExtensionKey ()
    {
@@ -89,7 +89,7 @@ Object .assign (Object .setPrototypeOf (DiffuseTransmissionMaterialExtension .pr
       uniforms .push ("x3d_DiffuseTransmissionEXT");
       uniforms .push ("x3d_DiffuseTransmissionColorEXT");
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform1f  (shaderObject .x3d_DiffuseTransmissionEXT,      this .diffuseTransmission);
       gl .uniform3fv (shaderObject .x3d_DiffuseTransmissionColorEXT, this .diffuseTransmissionColorArray);
@@ -98,16 +98,12 @@ Object .assign (Object .setPrototypeOf (DiffuseTransmissionMaterialExtension .pr
          return;
 
       this .diffuseTransmissionTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_DiffuseTransmissionTextureEXT,
          this ._diffuseTransmissionTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .diffuseTransmissionColorTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_DiffuseTransmissionColorTextureEXT,
          this ._diffuseTransmissionColorTextureMapping .getValue (),
          textureTransformMapping,

@@ -3,7 +3,7 @@ title: Billboard
 date: 2023-01-07
 nav: components-Navigation
 categories: [components, Navigation]
-tags: [Billboard, Navigation]
+tags: [Billboard, Navigation, VRML]
 ---
 <style>
 .post h3 {
@@ -22,20 +22,23 @@ The Billboard node belongs to the [Navigation](/x_ite/components/overview/#navig
 ```
 + X3DNode
   + X3DChildNode
-    + X3DGroupingNode
+    + X3DGroupingNode (X3DBoundedObject)*
       + Billboard
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFVec3f | [in, out] | [axisOfRotation](#fields-axisOfRotation) | 0 1 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFVec3f | [in, out] | [axisOfRotation](#fields-axisOfRotation) | 0 1 0 |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
 | MFNode | [in] | [addChildren](#fields-addChildren) |  |
 | MFNode | [in] | [removeChildren](#fields-removeChildren) |  |
 | MFNode | [in, out] | [children](#fields-children) | [ ] |
@@ -136,7 +139,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Navigation/Billboard/Billboard.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Navigation/Billboard/Billboard.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Navigation/Billboard/screenshot.avif" alt="Billboard"/>
 </x3d-canvas>
 
@@ -144,6 +147,14 @@ Grouping nodes contain an ordered list of *children* nodes.
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Navigation/Billboard/Billboard.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of Billboard Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#Billboard)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

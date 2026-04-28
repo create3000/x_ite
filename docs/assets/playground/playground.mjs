@@ -1,3 +1,5 @@
+const MONACO_VERSION = $(`script[src*="monaco-editor"]`) .attr ("src") .match (/\/monaco-editor(@?.*?)\//) [1];
+
 class Playground
 {
    autoUpdate = true;
@@ -10,8 +12,7 @@ class Playground
 
    constructor ()
    {
-      // Also change version in playground.html!
-      require .config ({ paths: { "vs": "https://cdn.jsdelivr.net/npm/monaco-editor@0.52.0/min/vs" }});
+      require .config ({ paths: { "vs": `https://cdn.jsdelivr.net/npm/monaco-editor${MONACO_VERSION}/min/vs` }});
       require (["vs/editor/editor.main"], () => this .setup ());
    }
 
@@ -53,6 +54,16 @@ class Playground
          fullSize: false,
       });
 
+      const
+         searchParams = new URL (location) .searchParams,
+         url          = searchParams .get ("url") ?? "/x_ite/assets/playground/playground.x3d";
+
+      if (searchParams .get ("play") === "false")
+         browser .endUpdate ();
+
+      if (searchParams .has ("fullSize"))
+         this .localStorage .fullSize = searchParams .get ("fullSize") === "true";
+
       this .addVRMLEncoding ();
       this .updateToolbar ();
 
@@ -62,29 +73,26 @@ class Playground
 
       // Handle url parameter.
 
-      const url = new URL (location) .searchParams .get ("url")
-         ?? "/x_ite/assets/playground/playground.x3d";
-
       browser .baseURL = url;
-
-      browser .endUpdate ();
 
       await browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
 
       const encoding = { XML: "XML", JSON: "JSON", VRML: "VRML" } [browser .currentScene .encoding] ?? "XML";
-
-      monaco .editor .setModelLanguage (model, encoding .toLowerCase ());
 
       this .updateLanguage (encoding);
 
       model .setValue (browser .currentScene [`to${encoding}String`] ());
       model .onDidChangeContent (event => this .onDidChangeContent (event));
 
-      browser .beginUpdate ();
-
       // Keyboard shortcuts.
 
       $("#editor") .on ("keydown", event => this .onKeyDown (event));
+
+      // Console
+
+      this .redirectConsoleMessages ();
+
+      console .info (X3D .getBrowser () .getWelcomeMessage ());
    }
 
    changeColorScheme ()
@@ -138,7 +146,6 @@ class Playground
          await this .browser .loadURL (new X3D .MFString (fileReader .result)) .catch (Function .prototype);
 
          this .model .setValue (this .browser .currentScene .toXMLString ());
-         monaco .editor .setModelLanguage (this .model, "xml");
          this .updateLanguage ("XML");
       });
 
@@ -150,29 +157,25 @@ class Playground
       const
          browser         = this .browser,
          editor          = this .editor,
-         model           = this .model,
-         activeViewpoint = browser .activeViewpoint ?.getValue (),
+         activeViewpoint = browser .getActiveViewpoint (),
          text            = editor .getValue (),
          url             = encodeURI (`data:,${text}`);
 
       $("#refresh-button") .addClass ("selected");
 
-      if (activeViewpoint)
-      {
-         var
-            userPosition         = activeViewpoint .getUserPosition () .copy (),
-            userOrientation      = activeViewpoint .getUserOrientation () .copy (),
-            userCenterOfRotation = activeViewpoint .getUserCenterOfRotation () .copy (),
-            fieldOfViewScale     = activeViewpoint .getFieldOfViewScale (),
-            nearDistance         = activeViewpoint .getNearDistance (),
-            farDistance          = activeViewpoint .getFarDistance ();
-      }
+      const
+         userPosition         = activeViewpoint .getUserPosition () .copy (),
+         userOrientation      = activeViewpoint .getUserOrientation () .copy (),
+         userCenterOfRotation = activeViewpoint .getUserCenterOfRotation () .copy (),
+         fieldOfViewScale     = activeViewpoint .getFieldOfViewScale (),
+         nearDistance         = activeViewpoint .getNearDistance (),
+         farDistance          = activeViewpoint .getFarDistance ();
 
-      await browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
-
-      if (activeViewpoint && browser .activeViewpoint)
+      try
       {
-         const activeViewpoint = browser .activeViewpoint .getValue ();
+         await browser .loadURL (new X3D .MFString (url));
+
+         const activeViewpoint = browser .getActiveViewpoint ();
 
          activeViewpoint .setUserPosition (userPosition);
          activeViewpoint .setUserOrientation (userOrientation);
@@ -180,14 +183,17 @@ class Playground
          activeViewpoint .setFieldOfViewScale (fieldOfViewScale);
          activeViewpoint .setNearDistance (nearDistance);
          activeViewpoint .setFarDistance (farDistance);
+
+         this .changed = false;
+
+         this .updateLanguage (browser .currentScene .encoding);
+
+         $("#refresh-button") .removeClass ("selected");
       }
-
-      monaco .editor .setModelLanguage (model, browser .currentScene .encoding .toLowerCase ());
-
-      this .changed = false;
-
-      $("#refresh-button") .removeClass ("selected");
-      this .updateLanguage (browser .currentScene .encoding);
+      catch (error)
+      {
+         console .error (error);
+      }
    }
 
    updateToolbar ()
@@ -211,6 +217,7 @@ class Playground
          ".vrml",
          ".gltf",
          ".glb",
+         ".vrm",
          ".obj",
          ".stl",
          ".ply",
@@ -229,7 +236,7 @@ class Playground
          .appendTo (toolbar);
 
       $("<button></button>")
-         .attr ("title", "Open a file (X3D, VRML, glTF (GLB), OBJ, STL, PLY, SVG).")
+         .attr ("title", "Open a file (X3D, VRML, glTF (GLB), VRM, OBJ, STL, PLY, SVG).")
          .addClass ("material-symbols-outlined")
          .text ("file_open")
          .on ("click", () =>
@@ -339,7 +346,6 @@ class Playground
          .on ("click", () =>
          {
             model .setValue (browser .currentScene .toXMLString ());
-            monaco .editor .setModelLanguage (model, "xml");
             this .updateLanguage ("XML");
          })
          .appendTo (right);
@@ -354,7 +360,6 @@ class Playground
          .on ("click", () =>
          {
             model .setValue (browser .currentScene .toVRMLString ());
-            monaco .editor .setModelLanguage (model, "vrml");
             this .updateLanguage ("VRML");
          })
          .appendTo (right);
@@ -369,7 +374,6 @@ class Playground
          .on ("click", () =>
          {
             model .setValue (browser .currentScene .toJSONString ());
-            monaco .editor .setModelLanguage (model, "json");
             this .updateLanguage ("JSON");
          })
          .appendTo (right);
@@ -379,6 +383,8 @@ class Playground
    {
       $(".language") .removeClass ("selected");
       $(`.language.${encoding}`) .addClass ("selected");
+
+      monaco .editor .setModelLanguage (this .model, encoding .toLowerCase ());
    }
 
    setFullSize (fullSize)
@@ -419,30 +425,6 @@ class Playground
          canvas  = this .canvas;
 
       return {
-         "antialiased": {
-            name: "Antialiased",
-            type: "checkbox",
-            selected: browser .getBrowserOption ("Antialiased"),
-            events: {
-               click ()
-               {
-                  canvas .attr ("antialiased", !browser .getBrowserOption ("Antialiased"));
-               },
-            },
-         },
-         "pixelated": {
-            name: "Pixelated",
-            type: "checkbox",
-            selected: this .pixelated,
-            events: {
-               click: () =>
-               {
-                  this .pixelated = !this .pixelated;
-
-                  canvas .css ("image-rendering", this .pixelated ? "pixelated" : "unset");
-               },
-            },
-         },
          "content-scale": {
             name: "Content Scale",
             items: {
@@ -486,9 +468,33 @@ class Playground
                      click () { canvas .attr ("contentScale", "auto"); },
                   },
                },
+               "separator0": "--------",
+               "antialiased": {
+                  name: "Antialiased",
+                  type: "checkbox",
+                  selected: browser .getBrowserOption ("Antialiased"),
+                  events: {
+                     click ()
+                     {
+                        canvas .attr ("antialiased", String (!browser .getBrowserOption ("Antialiased")));
+                     },
+                  },
+               },
+               "pixelated": {
+                  name: "Pixelated",
+                  type: "checkbox",
+                  selected: this .pixelated,
+                  events: {
+                     click: () =>
+                     {
+                        this .pixelated = !this .pixelated;
+
+                        canvas .css ("image-rendering", this .pixelated ? "pixelated" : "unset");
+                     },
+                  },
+               },
             },
          },
-         "separator0": "--------",
          "oit": {
             name: "Order Independent Transparency",
             type: "checkbox",
@@ -496,7 +502,7 @@ class Playground
             events: {
                click ()
                {
-                  canvas .attr ("orderIndependentTransparency", !browser .getBrowserOption ("OrderIndependentTransparency"));
+                  canvas .attr ("orderIndependentTransparency", String (!browser .getBrowserOption ("OrderIndependentTransparency")));
                },
             },
          },
@@ -507,11 +513,54 @@ class Playground
             events: {
                click ()
                {
-                  canvas .attr ("logarithmicDepthBuffer", !browser .getBrowserOption ("LogarithmicDepthBuffer"));
+                  canvas .attr ("logarithmicDepthBuffer", String (!browser .getBrowserOption ("LogarithmicDepthBuffer")));
                },
             },
          },
       };
+   }
+
+   redirectConsoleMessages ()
+   {
+      const output = (log, command) =>
+      {
+         return (... args) =>
+         {
+            log .apply (console, args);
+
+            this .addConsoleMessage (command, args .map (String) .join (" "));
+         };
+      }
+
+      for (const command of ["debug", "log", "info", "warn", "error"])
+         console [command] = output (console [command], command);
+   }
+
+   CONSOLE_MAX = 1000;
+
+   excludes = [
+      /No suitable|of an UNKNOWN touch/,
+   ];
+
+   #messageTime = 0;
+
+   addConsoleMessage (level, message)
+   {
+      if (this .excludes .some (exclude => exclude .test (message)))
+         return;
+
+      const
+         console = $(".console"),
+         text    = $("<p></p>") .addClass (level) .text (message);
+
+      if (performance .now () - this .#messageTime > 1000)
+         console .append ($("<p></p>") .addClass ("splitter"));
+
+      this .#messageTime = performance .now ();
+
+      console .children (`:not(:nth-last-child(-n+${this .CONSOLE_MAX}))`) .remove ();
+      console .append (text);
+      console .scrollTop (console .prop ("scrollHeight"));
    }
 
    addVRMLEncoding ()
@@ -523,7 +572,7 @@ class Playground
          defaultToken: "invalid",
          tokenPostfix: ".vrml",
          keywords: [
-            "PROFILE", "COMPONENT", "UNIT", "META", "DEF", "USE", "EXTERNPROTO", "PROTO", "IS", "ROUTE", "TO", "IMPORT", "EXPORT", "AS",
+            "PROFILE", "COMPONENT", "UNIT", "META", "EXTERNPROTO", "PROTO", "IS", "DEF", "USE", "ROUTE", "TO", "IMPORT", "EXPORT", "AS", "DESCRIPTION",
          ],
          profiles: Array .from (browser .supportedProfiles, ({name}) => name),
          components: Array .from (browser .supportedComponents, ({name}) => name),
@@ -559,6 +608,7 @@ class Playground
                      "@default": "attribute.name", // field names
                   },
                }],
+               [/#\/\*/,  { token: "comment", bracket: "@open", next: "@blockComment" } ],
                [/#.*/, "comment"],
                [/[{}\[\]]/, "@brackets"],
                [/[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/, "number.float"],
@@ -571,6 +621,11 @@ class Playground
             ],
             name: [
                [/@id/, "type.identifier", "@pop"],
+            ],
+            blockComment: [
+               [/[^#\/*]+/, 'comment'],
+               [/\*\/#/, 'comment', '@pop'],
+               [/[#\/*]/, 'comment']
             ],
             string: [
                [/[^\\"]+/,  "string"],
@@ -590,6 +645,10 @@ class Playground
 
       monaco .languages .setLanguageConfiguration ("vrml",
       {
+         comments: {
+            lineComment: "#",
+            blockComment: ["#/*", "*/#"]
+         },
          brackets: [["{", "}"], ["[", "]"], ["(", ")"]],
          autoClosingPairs: [
          { open: "{", close: "}" },
@@ -603,38 +662,3 @@ class Playground
 }
 
 Playground .run ();
-
-(() =>
-{
-   function output (log, classes)
-   {
-      let c;
-
-      return function (... args)
-      {
-         const
-            text     = args .join (" ") + "\n",
-            element  = $("<span></span>") .addClass (classes) .text (text),
-            console  = c ??= $(".console"),
-            children = console .children ();
-
-         if (text .match (/No suitable|of an UNKNOWN touch/))
-            return;
-
-         log .apply (this, args);
-
-         children .slice (0, Math .max (children .length - 200, 0)) .remove ();
-
-         console .append (element);
-         console .scrollTop (console .prop ("scrollHeight"));
-      }
-   }
-
-   console .log   = output (console .log,   "log");
-   console .info  = output (console .info,  ["info", "blue"]);
-   console .warn  = output (console .warn,  ["warn", "yellow"]);
-   console .error = output (console .error, ["error", "red"]);
-   console .debug = output (console .debug, "debug");
-
-   console .info (X3D .getBrowser () .getWelcomeMessage ());
-})();

@@ -31,12 +31,12 @@ The TextureTransform3D node belongs to the [Texturing3D](/x_ite/components/overv
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [mapping](#fields-mapping) | "" |
-| SFVec3f | [in, out] | [translation](#fields-translation) | 0 0 0  |
-| SFRotation | [in, out] | [rotation](#fields-rotation) | 0 0 1 0  |
-| SFVec3f | [in, out] | [scale](#fields-scale) | 1 1 1  |
-| SFVec3f | [in, out] | [center](#fields-center) | 0 0 0  |
+| SFVec3f | [in, out] | [translation](#fields-translation) | 0 0 0 |
+| SFRotation | [in, out] | [rotation](#fields-rotation) | 0 0 1 0 |
+| SFVec3f | [in, out] | [scale](#fields-scale) | 1 1 1 |
+| SFVec3f | [in, out] | [center](#fields-center) | 0 0 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -82,12 +82,19 @@ Non-uniform planar scaling of texture about center (opposite effect appears on g
 ### Hints
 
 - Order of operations is translation, rotation about center, non-uniform scale about center.
-- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding TextureTransform3D.
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding TextureTransform3D.
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
 
 ### Warning
 
 - Resulting visible effects appear reversed because image changes occur before mapping to geometry.
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

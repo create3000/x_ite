@@ -3,7 +3,7 @@ title: TouchSensor
 date: 2023-01-07
 nav: components-PointingDeviceSensor
 categories: [components, PointingDeviceSensor]
-tags: [TouchSensor, PointingDeviceSensor]
+tags: [TouchSensor, PointingDeviceSensor, VRML]
 ---
 <style>
 .post h3 {
@@ -32,7 +32,7 @@ The TouchSensor node belongs to the [PointingDeviceSensor](/x_ite/components/ove
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFVec2f | [out] | [hitTexCoord_changed](#fields-hitTexCoord_changed) |  |
@@ -136,7 +136,7 @@ Time event generated when sensor is touched by pointing device, and then deselec
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/PointingDeviceSensor/TouchSensor/TouchSensor.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/PointingDeviceSensor/TouchSensor/TouchSensor.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/PointingDeviceSensor/TouchSensor/screenshot.avif" alt="TouchSensor"/>
 </x3d-canvas>
 
@@ -144,6 +144,14 @@ Time event generated when sensor is touched by pointing device, and then deselec
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/PointingDeviceSensor/TouchSensor/TouchSensor.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of TouchSensor Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/pointingDeviceSensor.html#TouchSensor)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

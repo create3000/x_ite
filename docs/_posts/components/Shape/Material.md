@@ -3,7 +3,7 @@ title: Material
 date: 2023-01-07
 nav: components-Shape
 categories: [components, Shape]
-tags: [Material, Shape]
+tags: [Material, Shape, VRML]
 ---
 <style>
 .post h3 {
@@ -13,7 +13,7 @@ tags: [Material, Shape]
 
 ## Overview
 
-Material specifies surface rendering properties for associated geometry nodes. Material attributes are used by the X3D lighting equations during rendering.
+Material specifies surface rendering properties for associated geometry. Material attributes are used by the X3D lighting equations during rendering.
 
 The Material node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **1,** its default container field is *material.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
@@ -31,29 +31,29 @@ The Material node belongs to the [Shape](/x_ite/components/overview/#shape) comp
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFFloat | [in, out] | [ambientIntensity](#fields-ambientIntensity) | 0.2  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFFloat | [in, out] | [ambientIntensity](#fields-ambientIntensity) | 0.2 |
 | SFString | [in, out] | [ambientTextureMapping](#fields-ambientTextureMapping) | "" |
-| SFNode | [in, out] | [ambientTexture](#fields-ambientTexture) | NULL  |
-| SFColor | [in, out] | [diffuseColor](#fields-diffuseColor) | 0.8 0.8 0.8  |
+| SFNode | [in, out] | [ambientTexture](#fields-ambientTexture) | NULL |
+| SFColor | [in, out] | [diffuseColor](#fields-diffuseColor) | 0.8 0.8 0.8 |
 | SFString | [in, out] | [diffuseTextureMapping](#fields-diffuseTextureMapping) | "" |
-| SFNode | [in, out] | [diffuseTexture](#fields-diffuseTexture) | NULL  |
-| SFColor | [in, out] | [specularColor](#fields-specularColor) | 0 0 0  |
+| SFNode | [in, out] | [diffuseTexture](#fields-diffuseTexture) | NULL |
+| SFColor | [in, out] | [specularColor](#fields-specularColor) | 0 0 0 |
 | SFString | [in, out] | [specularTextureMapping](#fields-specularTextureMapping) | "" |
-| SFNode | [in, out] | [specularTexture](#fields-specularTexture) | NULL  |
-| SFColor | [in, out] | [emissiveColor](#fields-emissiveColor) | 0 0 0  |
+| SFNode | [in, out] | [specularTexture](#fields-specularTexture) | NULL |
+| SFColor | [in, out] | [emissiveColor](#fields-emissiveColor) | 0 0 0 |
 | SFString | [in, out] | [emissiveTextureMapping](#fields-emissiveTextureMapping) | "" |
-| SFNode | [in, out] | [emissiveTexture](#fields-emissiveTexture) | NULL  |
-| SFFloat | [in, out] | [shininess](#fields-shininess) | 0.2  |
+| SFNode | [in, out] | [emissiveTexture](#fields-emissiveTexture) | NULL |
+| SFFloat | [in, out] | [shininess](#fields-shininess) | 0.2 |
 | SFString | [in, out] | [shininessTextureMapping](#fields-shininessTextureMapping) | "" |
-| SFNode | [in, out] | [shininessTexture](#fields-shininessTexture) | NULL  |
-| SFFloat | [in, out] | [occlusionStrength](#fields-occlusionStrength) | 1  |
+| SFNode | [in, out] | [shininessTexture](#fields-shininessTexture) | NULL |
+| SFFloat | [in, out] | [occlusionStrength](#fields-occlusionStrength) | 1 |
 | SFString | [in, out] | [occlusionTextureMapping](#fields-occlusionTextureMapping) | "" |
-| SFNode | [in, out] | [occlusionTexture](#fields-occlusionTexture) | NULL  |
-| SFFloat | [in, out] | [normalScale](#fields-normalScale) | 1  |
+| SFNode | [in, out] | [occlusionTexture](#fields-occlusionTexture) | NULL |
+| SFFloat | [in, out] | [normalScale](#fields-normalScale) | 1 |
 | SFString | [in, out] | [normalTextureMapping](#fields-normalTextureMapping) | "" |
-| SFNode | [in, out] | [normalTexture](#fields-normalTexture) | NULL  |
-| SFFloat | [in, out] | [transparency](#fields-transparency) | 0  |
+| SFNode | [in, out] | [normalTexture](#fields-normalTexture) | NULL |
+| SFFloat | [in, out] | [transparency](#fields-transparency) | 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -68,11 +68,11 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### SFFloat [in, out] **ambientIntensity** 0.2 <small>[0,1]</small>
 {: #fields-ambientIntensity }
 
-How much ambient omnidirectional light is reflected from all light sources. Interchange profile
+How much ambient omnidirectional light is reflected from all light sources.
 
 #### Hint
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### SFString [in, out] **ambientTextureMapping** ""
 {: #fields-ambientTextureMapping }
@@ -88,9 +88,12 @@ The mapping label identifies which texture coordinates and transformations are u
 
 When applying ambientIntensity for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
 
-#### Hints
+#### Hint
 
 - If texture node is NULL or unspecified, no effect is applied to material values.
+
+#### Warning
+
 - Contained texture node must include `containerField='ambientTexture'`
 
 ### SFColor [in, out] **diffuseColor** 0.8 0.8 0.8 <small>[0,1]</small>
@@ -116,19 +119,22 @@ The mapping label identifies which texture coordinates and transformations are u
 
 When applying diffuseColor for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
 
-#### Hints
+#### Hint
 
 - If texture node is NULL or unspecified, no effect is applied to material values.
+
+#### Warning
+
 - Contained texture node must include `containerField='diffuseTexture'`
 
 ### SFColor [in, out] **specularColor** 0 0 0 <small>[0,1]</small>
 {: #fields-specularColor }
 
-Specular highlights are brightness reflections (example: shiny spots on an apple). Interchange profile
+Specular highlights are brightness reflections (example: shiny spots on an apple).
 
 #### Hint
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### SFString [in, out] **specularTextureMapping** ""
 {: #fields-specularTextureMapping }
@@ -144,9 +150,12 @@ The mapping label identifies which texture coordinates and transformations are u
 
 When applying specularColor for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
 
-#### Hints
+#### Hint
 
 - If texture node is NULL or unspecified, no effect is applied to material values.
+
+#### Warning
+
 - Contained texture node must include `containerField='specularTexture'`
 
 ### SFColor [in, out] **emissiveColor** 0 0 0 <small>[0,1]</small>
@@ -178,19 +187,22 @@ The mapping label identifies which texture coordinates and transformations are u
 
 When applying emissiveColor for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
 
-#### Hints
+#### Hint
 
 - If texture node is NULL or unspecified, no effect is applied to material values.
+
+#### Warning
+
 - Contained texture node must include `containerField='emissiveTexture'`
 
 ### SFFloat [in, out] **shininess** 0.2 <small>[0,1]</small>
 {: #fields-shininess }
 
-Lower *shininess* values provide soft specular glows, while higher values result in sharper, smaller highlights. Interchange profile
+Lower *shininess* values provide soft specular glows, while higher values result in sharper, smaller highlights.
 
 #### Hint
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### SFString [in, out] **shininessTextureMapping** ""
 {: #fields-shininessTextureMapping }
@@ -206,9 +218,12 @@ The mapping label identifies which texture coordinates and transformations are u
 
 When applying shininess for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
 
-#### Hints
+#### Hint
 
 - If texture node is NULL or unspecified, no effect is applied to material values.
+
+#### Warning
+
 - Contained texture node must include `containerField='shininessTexture'`
 
 ### SFFloat [in, out] **occlusionStrength** 1 <small>[0,1]</small>
@@ -235,9 +250,12 @@ The mapping label identifies which texture coordinates and transformations are u
 
 When applying occlusionStrength for this material node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
 
-#### Hints
+#### Hint
 
 - If texture node is NULL or unspecified, no effect is applied to material values.
+
+#### Warning
+
 - Contained texture node must include `containerField='occlusionTexture'`
 
 ### SFFloat [in, out] **normalScale** 1 <small>[0,∞)</small>
@@ -268,22 +286,25 @@ When applying normalScale for this material node, the contained texture modulate
 
 - [*normalTexture* techniques apply Bump mapping](https://en.wikipedia.org/wiki/Bump_mapping)
 - If texture node is NULL or unspecified, no effect is applied to material values.
+
+#### Warning
+
 - Contained texture node must include `containerField='normalTexture'`
 
 ### SFFloat [in, out] **transparency** 0 <small>[0,1]</small>
 {: #fields-transparency }
 
-How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile
+How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque.
 
 #### Hint
 
-- *transparency* \< .5 opaque, *transparency* \> .5 transparent.
+- In Interchange profile *transparency* \< .5 opaque, *transparency* \> .5 transparent.
 
 ## Advice
 
 ### Hints
 
-- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding material.
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding material.
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 - [X3D Example Archives, Basic, Universal Media Materials](https://www.web3d.org/x3d/content/examples/Basic/UniversalMediaMaterials)
@@ -294,7 +315,7 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shape/Material/Material.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Shape/Material/Material.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Shape/Material/screenshot.avif" alt="Material"/>
 </x3d-canvas>
 
@@ -302,6 +323,14 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Shape/Material/Material.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of Material Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Material)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

@@ -29,13 +29,13 @@ The LayoutLayer node belongs to the [Layout](/x_ite/components/overview/#layout)
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [pickable](#fields-pickable) | TRUE |
-| MFString | [in, out] | [objectType](#fields-objectType) | "ALL"  |
-| SFBool | [in, out] | [pointerEvents](#fields-pointerEvents) | TRUE  |
+| MFString | [in, out] | [objectType](#fields-objectType) | "ALL" |
+| SFBool | [in, out] | [pointerEvents](#fields-pointerEvents) | TRUE |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
-| SFNode | [in, out] | [layout](#fields-layout) | NULL  |
-| SFNode | [in, out] | [viewport](#fields-viewport) | NULL  |
+| SFNode | [in, out] | [layout](#fields-layout) | NULL |
+| SFNode | [in, out] | [viewport](#fields-viewport) | NULL |
 | MFNode | [in] | [addChildren](#fields-addChildren) |  |
 | MFNode | [in] | [removeChildren](#fields-removeChildren) |  |
 | MFNode | [in, out] | [children](#fields-children) | [ ] |
@@ -68,7 +68,7 @@ The *objectType* field specifies a set of labels used in the picking process. Ea
 ### SFBool [in, out] **pointerEvents** TRUE <small class="blue">non-standard</small>
 {: #fields-pointerEvents }
 
-*pointerEvents* defines whether this LayoutLayer becomes target for pointer events.
+The *pointerEvents* field defines whether this LayoutLayer becomes target for pointer events.
 
 ### SFBool [in, out] **visible** TRUE
 {: #fields-visible }
@@ -121,6 +121,13 @@ Grouping nodes contain an ordered list of *children* nodes.
 ### Warning
 
 - Better functional description needed in X3D specification.
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

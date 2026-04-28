@@ -30,7 +30,13 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
    },
    isValid ()
    {
-      return this .input instanceof Object;
+      if (!(this .input instanceof Object))
+         return false;
+
+      if (!Object .keys (this .input) .every (key => key === "X3D"))
+         return false;
+
+      return true;
    },
    parseIntoScene (resolve, reject)
    {
@@ -205,7 +211,7 @@ Object .assign (Object .setPrototypeOf (JSONParser .prototype, X3DParser .protot
        * convert an SFString to XML.
        */
 
-      return str .replace (/([\\"])/g, "\\$1");
+      return String (str) .replace (/([\\"])/g, "\\$1");
    },
    JSONStringToXML (str)
    {

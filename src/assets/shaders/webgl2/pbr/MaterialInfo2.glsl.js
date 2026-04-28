@@ -2,7 +2,7 @@ import MaterialTextures from "../../MaterialTextures.js";
 
 export default () => /* glsl */ `
 
-// Originally from:
+// Original source code from:
 // https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/material_info.glsl
 
 struct MaterialInfo
@@ -54,6 +54,9 @@ struct MaterialInfo
 
    // KHR_materials_dispersion
    float dispersion;
+
+   // KHR_materials_volume_scatter
+   vec3 multiscatterColor;
 };
 
 #if defined (X3D_MATERIAL_METALLIC_ROUGHNESS)
@@ -223,6 +226,25 @@ getDiffuseTransmissionInfo (in MaterialInfo info)
 }
 #endif
 
+#if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+
+${MaterialTextures .texture ("x3d_MultiscatterColorTextureEXT", "rgb", "linear")}
+
+uniform vec3 x3d_MultiscatterColorEXT;
+
+MaterialInfo
+getVolumeScatterInfo (in MaterialInfo info)
+{
+   info .multiscatterColor = x3d_MultiscatterColorEXT;
+
+   #if defined (X3D_MULTISCATTER_COLOR_TEXTURE_EXT)
+      info .multiscatterColor *= getMultiscatterColorTextureEXT ();
+   #endif
+
+   return info;
+}
+#endif
+
 #if defined (X3D_CLEARCOAT_MATERIAL_EXT)
 
 ${MaterialTextures .texture ("x3d_ClearcoatTextureEXT",          "r")}
@@ -281,10 +303,12 @@ ${MaterialTextures .texture ("x3d_SpecularColorTextureEXT", "rgb", "linear")}
 
 uniform float x3d_SpecularEXT;
 uniform vec3  x3d_SpecularColorEXT;
+uniform float x3d_SpecularStrengthEXT;
 
 MaterialInfo
 getSpecularInfo (in MaterialInfo info)
 {
+   vec3 specularColor   = x3d_SpecularStrengthEXT * x3d_SpecularColorEXT;
    vec4 specularTexture = vec4 (1.0);
 
    #if defined (X3D_SPECULAR_TEXTURE_EXT)
@@ -295,7 +319,7 @@ getSpecularInfo (in MaterialInfo info)
       specularTexture .rgb = getSpecularColorTextureEXT ();
    #endif
 
-   info .f0_dielectric  = min (info .f0_dielectric * x3d_SpecularColorEXT * specularTexture .rgb, vec3 (1.0));
+   info .f0_dielectric  = min (info .f0_dielectric * specularColor * specularTexture .rgb, vec3 (1.0));
    info .specularWeight = x3d_SpecularEXT * specularTexture .a;
    info .f90_dielectric = vec3 (info .specularWeight);
 
@@ -339,22 +363,22 @@ uniform float x3d_IridescenceThicknessMaximumEXT;
 MaterialInfo
 getIridescenceInfo (in MaterialInfo info)
 {
-    info .iridescenceFactor    = x3d_IridescenceEXT;
-    info .iridescenceIor       = x3d_IridescenceIndexOfRefractionEXT;
-    info .iridescenceThickness = x3d_IridescenceThicknessMaximumEXT;
+   info .iridescenceFactor    = x3d_IridescenceEXT;
+   info .iridescenceIor       = x3d_IridescenceIndexOfRefractionEXT;
+   info .iridescenceThickness = x3d_IridescenceThicknessMaximumEXT;
 
-    #if defined (X3D_IRIDESCENCE_TEXTURE_EXT)
-        info .iridescenceFactor *= getIridescenceTextureEXT ();
-    #endif
+   #if defined (X3D_IRIDESCENCE_TEXTURE_EXT)
+      info .iridescenceFactor *= getIridescenceTextureEXT ();
+   #endif
 
-    #if defined (X3D_IRIDESCENCE_THICKNESS_TEXTURE_EXT)
-        float thicknessSampled = getIridescenceThicknessTextureEXT ();
-        float thickness        = mix (x3d_IridescenceThicknessMinimumEXT, x3d_IridescenceThicknessMaximumEXT, thicknessSampled);
+   #if defined (X3D_IRIDESCENCE_THICKNESS_TEXTURE_EXT)
+      float thicknessSampled = getIridescenceThicknessTextureEXT ();
+      float thickness        = mix (x3d_IridescenceThicknessMinimumEXT, x3d_IridescenceThicknessMaximumEXT, thicknessSampled);
 
-        info .iridescenceThickness = thickness;
-    #endif
+      info .iridescenceThickness = thickness;
+   #endif
 
-    return info;
+   return info;
 }
 #endif
 

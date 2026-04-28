@@ -25,10 +25,10 @@ function X3DRoute (executionContext, sourceNode, sourceFieldName, destinationNod
    this [_destinationFieldName] = destinationFieldName;
 
    if (sourceNode instanceof X3DImportedNode)
-      sourceNode .getInlineNode () .getLoadState () .addInterest ("reconnect", this);
+      sourceNode .getInlineNode () ._loadState .addInterest ("reconnect", this);
 
    if (destinationNode instanceof X3DImportedNode)
-      destinationNode .getInlineNode () .getLoadState () .addInterest ("reconnect", this);
+      destinationNode .getInlineNode () ._loadState .addInterest ("reconnect", this);
 
    this .reconnect ();
 }
@@ -46,6 +46,10 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    getSourceNode ()
    {
       ///  SAI
+
+      if (this [_sourceNode] instanceof X3DImportedNode)
+         return this [_sourceNode] .getExportedNode ();
+
       return this [_sourceNode];
    },
    getSourceField ()
@@ -67,6 +71,10 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
    getDestinationNode ()
    {
       ///  SAI
+
+      if (this [_destinationNode] instanceof X3DImportedNode)
+         return this [_destinationNode] .getExportedNode ();
+
       return this [_destinationNode];
    },
    getDestinationField ()
@@ -98,7 +106,7 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
              (this [_destinationNode] instanceof X3DNode ||
               this [_destinationNode] .getInlineNode () .checkLoadState () === X3DConstants .COMPLETE_STATE))
          {
-            console .warn (error .message);
+            console .warn (error);
          }
       }
    },
@@ -129,7 +137,6 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
             : this [_destinationNode] .getExportedNode ();
 
          this [_destinationField] = destinationNode .getField (this [_destinationFieldName]);
-
       }
       catch (error)
       {
@@ -183,15 +190,15 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
          ? generator .Name (this [_destinationNode])
          : generator .ImportedName (this [_destinationNode]);
 
-      generator .string += generator .Indent ();
+      generator .Indent ();
       generator .string += "ROUTE";
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += sourceNodeName;
       generator .string += ".";
       generator .string += this .getSourceField ();
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += "TO";
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += destinationNodeName;
       generator .string += ".";
       generator .string += this .getDestinationField ();
@@ -212,25 +219,12 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
          ? generator .Name (this [_destinationNode])
          : generator .ImportedName (this [_destinationNode]);
 
-      generator .string += generator .Indent ();
-      generator .string += "<ROUTE";
-      generator .string += generator .Space ();
-      generator .string += "fromNode='";
-      generator .string += generator .XMLEncode (sourceNodeName);
-      generator .string += "'";
-      generator .string += generator .Space ();
-      generator .string += "fromField='";
-      generator .string += generator .XMLEncode (this .getSourceField ());
-      generator .string += "'";
-      generator .string += generator .Space ();
-      generator .string += "toNode='";
-      generator .string += generator .XMLEncode (destinationNodeName);
-      generator .string += "'";
-      generator .string += generator .Space ();
-      generator .string += "toField='";
-      generator .string += generator .XMLEncode (this .getDestinationField ());
-      generator .string += "'";
-      generator .string += generator .closingTags ? "></ROUTE>" : "/>";
+      generator .openTag ("ROUTE");
+      generator .attribute ("fromNode",  sourceNodeName);
+      generator .attribute ("fromField", this .getSourceField ());
+      generator .attribute ("toNode",    destinationNodeName);
+      generator .attribute ("toField",   this .getDestinationField ());
+      generator .closeTag ("ROUTE");
    },
    toJSONStream (generator)
    {
@@ -248,74 +242,18 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
          ? generator .Name (this [_destinationNode])
          : generator .ImportedName (this [_destinationNode]);
 
-      generator .string += generator .Indent ();
-      generator .string += '{';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += "ROUTE";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .IncIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '{';
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .IncIndent ();
+      generator .TidyBreak ();
+      generator .Indent ();
 
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@fromNode";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += generator .JSONEncode (sourceNodeName);
-      generator .string += '"';
-      generator .string += ',';
-      generator .string += generator .TidyBreak ();
+      generator .beginObject ("ROUTE", false, true);
 
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@fromField";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += generator .JSONEncode (this .getSourceField ());
-      generator .string += '"';
-      generator .string += ',';
-      generator .string += generator .TidyBreak ();
+      generator .stringProperty ("@fromNode",  sourceNodeName, false);
+      generator .stringProperty ("@fromField", this .getSourceField ());
+      generator .stringProperty ("@toNode",    destinationNodeName);
+      generator .stringProperty ("@toField",   this .getDestinationField ());
 
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@toNode";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += generator .JSONEncode (destinationNodeName);
-      generator .string += '"';
-      generator .string += ',';
-      generator .string += generator .TidyBreak ();
-
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@toField";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += generator .JSONEncode (this .getDestinationField ());
-      generator .string += '"';
-      generator .string += generator .TidyBreak ();
-
-      generator .string += generator .DecIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '}';
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .DecIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '}';
+      generator .endObject ();
+      generator .endObject ();
    },
    dispose ()
    {
@@ -327,10 +265,10 @@ Object .assign (Object .setPrototypeOf (X3DRoute .prototype, X3DObject .prototyp
       this .disconnect ();
 
       if (this [_sourceNode] instanceof X3DImportedNode)
-         this [_sourceNode] .getInlineNode () .getLoadState () .removeInterest ("reconnect", this);
+         this [_sourceNode] .getInlineNode () ._loadState .removeInterest ("reconnect", this);
 
       if (this [_destinationNode] instanceof X3DImportedNode)
-         this [_destinationNode] .getInlineNode () .getLoadState () .removeInterest ("reconnect", this);
+         this [_destinationNode] .getInlineNode () ._loadState .removeInterest ("reconnect", this);
 
       this [_executionContext] .deleteRoute (this);
 
@@ -347,10 +285,7 @@ Object .defineProperties (X3DRoute .prototype,
    {
       get ()
       {
-         if (this [_sourceNode] instanceof X3DNode)
-            return SFNodeCache .get (this [_sourceNode]);
-
-         return this [_sourceNode];
+         return SFNodeCache .get (this .getSourceNode ());
       },
       enumerable: true,
    },
@@ -363,10 +298,7 @@ Object .defineProperties (X3DRoute .prototype,
    {
       get ()
       {
-         if (this [_destinationNode] instanceof X3DNode)
-            return SFNodeCache .get (this [_destinationNode]);
-
-         return this [_destinationNode];
+         return SFNodeCache .get (this .getDestinationNode ());
       },
       enumerable: true,
    },

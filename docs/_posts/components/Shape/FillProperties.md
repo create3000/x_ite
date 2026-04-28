@@ -13,7 +13,7 @@ tags: [FillProperties, Shape]
 
 ## Overview
 
-FillProperties indicates whether appearance is filled or hatched for associated geometry nodes inside the same Shape. Hatches are applied on top of the already rendered appearance of the node, and are not affected by lighting.
+FillProperties indicates whether appearance is filled or hatched for associated geometry inside the same Shape. Hatches are applied on top of the already rendered appearance of the node, and are not affected by lighting.
 
 The FillProperties node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **3,** its default container field is *fillProperties.* It is available from X3D version 3.0 or higher.
 
@@ -29,11 +29,11 @@ The FillProperties node belongs to the [Shape](/x_ite/components/overview/#shape
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [filled](#fields-filled) | TRUE |
 | SFBool | [in, out] | [hatched](#fields-hatched) | TRUE |
-| SFInt32 | [in, out] | [hatchStyle](#fields-hatchStyle) | 1  |
-| SFColor | [in, out] | [hatchColor](#fields-hatchColor) | 1 1 1  |
+| SFInt32 | [in, out] | [hatchStyle](#fields-hatchStyle) | 1 |
+| SFColor | [in, out] | [hatchColor](#fields-hatchColor) | 1 1 1 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -81,13 +81,20 @@ Whether or not associated geometry is *hatched*.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shape/FillProperties/FillProperties.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Shape/FillProperties/FillProperties.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Shape/FillProperties/screenshot.avif" alt="FillProperties"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Shape/FillProperties/FillProperties.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Shape/FillProperties/FillProperties.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

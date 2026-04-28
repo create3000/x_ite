@@ -1,4 +1,5 @@
 import Components                           from "../../x_ite/Components.js";
+import X3DX_ITEContext                      from "../../x_ite/Browser/X_ITE/X3DX_ITEContext.js";
 import AnisotropyMaterialExtension          from "../../x_ite/Components/X_ITE/AnisotropyMaterialExtension.js";
 import BlendMode                            from "../../x_ite/Components/X_ITE/BlendMode.js";
 import ClearcoatMaterialExtension           from "../../x_ite/Components/X_ITE/ClearcoatMaterialExtension.js";
@@ -14,6 +15,7 @@ import SpecularGlossinessMaterial           from "../../x_ite/Components/X_ITE/S
 import SpecularMaterialExtension            from "../../x_ite/Components/X_ITE/SpecularMaterialExtension.js";
 import TransmissionMaterialExtension        from "../../x_ite/Components/X_ITE/TransmissionMaterialExtension.js";
 import VolumeMaterialExtension              from "../../x_ite/Components/X_ITE/VolumeMaterialExtension.js";
+import VolumeScatterMaterialExtension       from "../../x_ite/Components/X_ITE/VolumeScatterMaterialExtension.js";
 import X3DMaterialExtensionNode             from "../../x_ite/Components/X_ITE/X3DMaterialExtensionNode.js";
 
 Components .add ({
@@ -35,11 +37,13 @@ Components .add ({
       SpecularMaterialExtension,
       TransmissionMaterialExtension,
       VolumeMaterialExtension,
+      VolumeScatterMaterialExtension,
    ],
    abstractNodes:
    [
       X3DMaterialExtensionNode,
    ],
+   browserContext: X3DX_ITEContext,
 });
 
 export default undefined;

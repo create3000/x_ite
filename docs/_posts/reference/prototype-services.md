@@ -3,7 +3,7 @@ title: Prototype Services
 date: 2022-11-28
 nav: reference
 categories: [Reference]
-tags: [Prototype, Services, Authoring, Interface]
+tags: [Prototype, ECMAScript, Javascript]
 ---
 ## X3DProtoDeclaration
 
@@ -17,23 +17,39 @@ None. This object cannot be instantiated by the user.
 
 #### **name**: string
 
-A string of the declared name of this prototype. This property is read only.
+A string of the declared name of this prototype. This property is read-only.
+
+<x3d-script-area name="X3D ECMAScript Example: X3DProtoDeclaration name">
+<pre>
+const scene = await Browser .createX3DFromString (`#X3D V{{ site.x3d_latest_version }} utf8
+PROFILE Interchange
+PROTO MyBox [ ]
+{
+  Shape { geometry Box { } }
+}
+`);
+
+print (scene .protos [0] .name);
+
+// Expected output: MyBox
+</pre>
+</x3d-script-area>
 
 #### **fields**: FieldDefinitionArray
 
-A reference to FieldDefinitionArray of all the fields defined for this prototype. This property is read only.
+A reference to FieldDefinitionArray of all the fields defined for this prototype. This property is read-only.
 
 #### **isExternProto**: boolean
 
-Always has the value of false. This property is read only.
+Always has the value of false. This property is read-only.
 
 #### **appInfo**: string
 
-Short description or purpose of the prototype. This property is read only.
+Short description or purpose of the prototype.
 
 #### **documentation**: string
 
-A string containing the documentation of this prototype. This property is read only.
+A string containing the documentation of this prototype.
 
 ### Methods
 
@@ -41,19 +57,35 @@ A string containing the documentation of this prototype. This property is read o
 
 Creates a new default instance of the prototype.
 
-#### **toVRMLString** (options?: Options): string <small><span class="blue">non-standard</span></small>
+<x3d-script-area name="X3D ECMAScript Example: X3DProtoDeclaration newInstance">
+<pre>
+const scene = await Browser .createX3DFromString (`#X3D V{{ site.x3d_latest_version }} utf8
+PROFILE Interchange
+PROTO MyBox [ ]
+{
+  Shape { geometry Box { } }
+}
+`);
+
+print (scene .protos [0] .newInstance ());
+
+// Expected output: MyBox { }
+</pre>
+</x3d-script-area>
+
+#### **toVRMLString** (options?: Options): string <small class="blue">non-standard</small>
 
 Returns the X3D VRML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, will produce this prototype.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
-#### **toXMLString** (options?: Options): string <small><span class="blue">non-standard</span></small>
+#### **toXMLString** (options?: Options): string <small class="blue">non-standard</small>
 
 Returns the X3D XML-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, will produce this prototype.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
-#### **toJSONString** (options?: Options): string <small><span class="blue">non-standard</span></small>
+#### **toJSONString** (options?: Options): string <small class="blue">non-standard</small>
 
 Returns the X3D JSON-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, will produce this prototype.
 
@@ -71,31 +103,45 @@ None. This object cannot be instantiated by the user.
 
 #### **name**: string
 
-A string of the declared name of this extern prototype. This property is read only.
+A string of the declared name of this extern prototype. This property is read-only.
 
 #### **fields**: FieldDefinitionArray
 
-A reference to FieldDefinitionArray of all the fields defined for this extern prototype. This property is read only.
+A reference to FieldDefinitionArray of all the fields defined for this extern prototype. This property is read-only.
 
 #### **urls**: MFString
 
-A MFString array of all the URI's defined for this extern prototype. This property is read only.
+A MFString array of all the URI's defined for this extern prototype. This property is read-only.
+
+<x3d-script-area name="X3D ECMAScript Example: X3DExternProtoDeclaration urls">
+<pre>
+const scene = await Browser .createX3DFromString (`#X3D V{{ site.x3d_latest_version }} utf8
+PROFILE Interchange
+EXTERNPROTO MyBox [ ]
+"https://example.com/my-proto.x3d"
+`);
+
+print (scene .externprotos [0] .urls);
+
+// Expected output: "https://example.com/my-proto.x3d"
+</pre>
+</x3d-script-area>
 
 #### **isExternProto**: boolean
 
-Always has the value of true. This property is read only.
+Always has the value of true. This property is read-only.
 
 #### **loadState**: number
 
-The value is one of the *_STATE* properties defined in the [X3DConstants](/x_ite/reference/constants-services/#load-state-constants) object. This property is read only.
+The value is one of the *_STATE* properties defined in the [X3DConstants](/x_ite/reference/constants-services/#load-state-constants) object. This property is read-only.
 
 #### **appInfo**: string
 
-Short description or purpose of the extern prototype. This property is read only.
+Short description or purpose of the extern prototype.
 
 #### **documentation**: string
 
-A string containing the documentation of this extern prototype. This property is read only.
+A string containing the documentation of this extern prototype.
 
 ### Methods
 
@@ -119,6 +165,18 @@ Returns the X3D XML-encoded string that, if parsed as the value of createX3DFrom
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
+<x3d-script-area name="X3D ECMAScript Example: X3DExternProtoDeclaration toXMLString">
+<pre>
+const scene = await Browser .createX3DFromString (`#X3D V{{ site.x3d_latest_version }} utf8
+PROFILE Interchange
+EXTERNPROTO MyBox [ ]
+"https://example.com/my-proto.x3d"
+`);
+
+print (scene .externprotos [0] .toXMLString ());
+</pre>
+</x3d-script-area>
+
 #### **toJSONString** (options?: Options): string
 
 Returns the X3D JSON-encoded string that, if parsed as the value of createX3DFromString () of X3DBrowser, will produce this extern prototype.
@@ -133,15 +191,19 @@ ProtoDeclarationArray is an object that represents an array of X3DProtoDeclarati
 
 None. This object cannot be instantiated by the user.
 
+### Iterator
+
+The `[@@iterator]()` method of ProtoDeclarationArray instances implements the iterable protocol and allows ProtoDeclarationArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
+
 ### Properties
 
 #### **length**: number
 
-An integer containing the number of elements in the array. This property is read only.
+An integer containing the number of elements in the array. This property is read-only.
 
 ### Methods
 
-None
+Almost all read-only functions known from JavaScript [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array).
 
 ## ExternProtoDeclarationArray
 
@@ -151,12 +213,16 @@ ExternProtoDeclarationArray is an object that represents an array of X3DExternPr
 
 None. This object cannot be instantiated by the user.
 
+### Iterator
+
+The `[@@iterator]()` method of ExternProtoDeclarationArray instances implements the iterable protocol and allows ExternProtoDeclarationArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
+
 ### Properties
 
 #### **length**: number
 
-An integer containing the number of elements in the array. This property is read only.
+An integer containing the number of elements in the array. This property is read-only.
 
 ### Methods
 
-None
+Almost all read-only functions known from JavaScript [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array).

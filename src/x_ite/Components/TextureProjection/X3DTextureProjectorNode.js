@@ -2,6 +2,7 @@ import X3DNode      from "../Core/X3DNode.js";
 import X3DLightNode from "../Lighting/X3DLightNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 import X3DCast      from "../../Base/X3DCast.js";
+import TraverseType from "../../Rendering/TraverseType.js";
 import Matrix4      from "../../../standard/Math/Numbers/Matrix4.js";
 
 function X3DTextureProjectorNode (executionContext)
@@ -12,9 +13,10 @@ function X3DTextureProjectorNode (executionContext)
 
    // Units
 
-   this ._location    .setUnit ("length");
-   this ._farDistance .setUnit ("length");
-   this ._location    .setUnit ("length");
+   this ._location     .setUnit ("length");
+   this ._nearDistance .setUnit ("length");
+   this ._farDistance  .setUnit ("length");
+   this ._location     .setUnit ("length");
 }
 
 Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, X3DLightNode .prototype),
@@ -33,7 +35,7 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, X3DL
    },
    getLightKey ()
    {
-      return 3;
+      return this .lightKey;
    },
    getGlobal ()
    {
@@ -100,23 +102,31 @@ Object .assign (Object .setPrototypeOf (X3DTextureProjectorNode .prototype, X3DL
    },
    set_texture__ ()
    {
-      this .textureNode ?.removeInterest ("set_aspectRatio__", this);
+      this .textureNode ?.removeInterest ("set_textureNode__", this);
 
       this .textureNode = X3DCast (X3DConstants .X3DTexture2DNode, this ._texture);
 
-      this .textureNode ?.addInterest ("set_aspectRatio__", this);
+      this .textureNode ?.addInterest ("set_textureNode__", this);
 
       this .setEnabled (!!this .textureNode);
 
-      this .set_aspectRatio__ ();
+      this .set_textureNode__ ();
       this .set_on__ ();
    },
-   set_aspectRatio__ ()
+   set_textureNode__ ()
    {
+      this .lightKey = `[3.${this .textureNode ?.isLinear () ? 1 : 0}]`;
+
       if (this .textureNode)
          this ._aspectRatio = this .textureNode .getWidth () / this .textureNode .getHeight ();
       else
          this ._aspectRatio = 1;
+   },
+   push (renderObject, groupNode)
+   {
+      X3DLightNode .prototype .push .call (this, renderObject, groupNode);
+
+      this .textureNode ?.traverse (TraverseType .DISPLAY, renderObject);
    },
 });
 

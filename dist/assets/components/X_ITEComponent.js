@@ -1,5 +1,5 @@
-/* X_ITE v12.0.4 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.4")];
+/* X_ITE v14.2.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.2.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -42,6 +42,52 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.4")];
 ;// external "__X_ITE_X3D__ .Components"
 const external_X_ITE_X3D_Components_namespaceObject = __X_ITE_X3D__ .Components;
 var external_X_ITE_X3D_Components_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Components_namespaceObject);
+;// external "__X_ITE_X3D__ .TextureBuffer"
+const external_X_ITE_X3D_TextureBuffer_namespaceObject = __X_ITE_X3D__ .TextureBuffer;
+var external_X_ITE_X3D_TextureBuffer_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TextureBuffer_namespaceObject);
+;// external "__X_ITE_X3D__ .Namespace"
+const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
+var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
+;// ./src/x_ite/Browser/X_ITE/X3DX_ITEContext.js
+
+
+const
+   _transmissionBuffer  = Symbol (),
+   _volumeScatterBuffer = Symbol ();
+
+function X3DX_ITEContext () { }
+
+Object .assign (X3DX_ITEContext .prototype,
+{
+   initialize ()
+   {
+      this .addTextureBuffer (_transmissionBuffer);
+      this .addTextureBuffer (_volumeScatterBuffer);
+   },
+   getTransmissionBuffer ()
+   {
+      return this [_transmissionBuffer] ??= new (external_X_ITE_X3D_TextureBuffer_default()) ({
+         browser: this,
+         width: this ._viewport [2],
+         height: this ._viewport [3],
+         mipMaps: true,
+      });
+   },
+   getVolumeScatterBuffer ()
+   {
+      return this [_volumeScatterBuffer] ??= new (external_X_ITE_X3D_TextureBuffer_default()) ({
+         browser: this,
+         width: this ._viewport [2],
+         height: this ._viewport [3],
+         float: true,
+      });
+   },
+});
+
+const __default__ = X3DX_ITEContext;
+;
+
+/* harmony default export */ const X_ITE_X3DX_ITEContext = (external_X_ITE_X3D_Namespace_default().add ("X3DX_ITEContext", __default__));
 ;// external "__X_ITE_X3D__ .Fields"
 const external_X_ITE_X3D_Fields_namespaceObject = __X_ITE_X3D__ .Fields;
 var external_X_ITE_X3D_Fields_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Fields_namespaceObject);
@@ -60,10 +106,8 @@ var external_X_ITE_X3D_X3DConstants_default = /*#__PURE__*/__webpack_require__.n
 ;// external "__X_ITE_X3D__ .BitSet"
 const external_X_ITE_X3D_BitSet_namespaceObject = __X_ITE_X3D__ .BitSet;
 var external_X_ITE_X3D_BitSet_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_BitSet_namespaceObject);
-;// external "__X_ITE_X3D__ .Namespace"
-const external_X_ITE_X3D_Namespace_namespaceObject = __X_ITE_X3D__ .Namespace;
-var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Namespace_namespaceObject);
 ;// ./src/x_ite/Components/X_ITE/X3DMaterialExtensionNode.js
+
 
 
 
@@ -74,30 +118,43 @@ function X3DMaterialExtensionNode (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).X3DMaterialExtensionNode);
 
-   this .textureBits = new (external_X_ITE_X3D_BitSet_default()) ();
+   this .addChildObjects ((external_X_ITE_X3D_X3DConstants_default()).outputOnly, "renderedTextures", new (external_X_ITE_X3D_Fields_default()).SFTime ());
+
+   // Private properties
+
+   this .textureBits      = new (external_X_ITE_X3D_BitSet_default()) ();
+   this .renderedTextures = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (X3DMaterialExtensionNode .prototype, (external_X_ITE_X3D_X3DNode_default()).prototype),
 {
-   setTexture (index, textureNode)
+   addTexture (index, textureNode)
    {
       index *= 4;
 
       this .textureBits .remove (index, 0xf);
       this .textureBits .add (index, textureNode ?.getTextureBits () ?? 0);
+
+      this .renderedTextures [index] = textureNode ?.isRenderedTexture () ? textureNode : undefined;
+
+      this ._renderedTextures = this .getBrowser () .getCurrentTime ();
    },
    getTextureBits ()
    {
       return this .textureBits;
    },
+   getRenderedTextures ()
+   {
+      return this .renderedTextures;
+   },
 });
 
 Object .defineProperties (X3DMaterialExtensionNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DMaterialExtensionNode", "X_ITE", 1));
 
-const __default__ = X3DMaterialExtensionNode;
+const X3DMaterialExtensionNode_default_ = X3DMaterialExtensionNode;
 ;
 
-/* harmony default export */ const X_ITE_X3DMaterialExtensionNode = (external_X_ITE_X3D_Namespace_default().add ("X3DMaterialExtensionNode", __default__));
+/* harmony default export */ const X_ITE_X3DMaterialExtensionNode = (external_X_ITE_X3D_Namespace_default().add ("X3DMaterialExtensionNode", X3DMaterialExtensionNode_default_));
 ;// external "__X_ITE_X3D__ .X3DCast"
 const external_X_ITE_X3D_X3DCast_namespaceObject = __X_ITE_X3D__ .X3DCast;
 var external_X_ITE_X3D_X3DCast_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DCast_namespaceObject);
@@ -116,10 +173,14 @@ const ExtensionKeys_default_ = ExtensionKeys;
 ;
 
 /* harmony default export */ const X_ITE_ExtensionKeys = (external_X_ITE_X3D_Namespace_default().add ("ExtensionKeys", ExtensionKeys_default_));
+;// external "__X_ITE_X3D__ .Algorithm"
+const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
+var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Algorithm_namespaceObject);
 ;// external "__X_ITE_X3D__ .MaterialTextures"
 const external_X_ITE_X3D_MaterialTextures_namespaceObject = __X_ITE_X3D__ .MaterialTextures;
 var external_X_ITE_X3D_MaterialTextures_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_MaterialTextures_namespaceObject);
 ;// ./src/x_ite/Components/X_ITE/AnisotropyMaterialExtension.js
+
 
 
 
@@ -174,7 +235,7 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
    },
    set_anisotropyStrength__ ()
    {
-      this .anisotropyArray [2] = Math .max (this ._anisotropyStrength .getValue (), 0);
+      this .anisotropyArray [2] = external_X_ITE_X3D_Algorithm_default().clamp (this ._anisotropyStrength .getValue (), 0, 1);
    },
    set_anisotropyRotation__ ()
    {
@@ -187,7 +248,7 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
    {
       this .anisotropyTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._anisotropyTexture);
 
-      this .setTexture (0, this .anisotropyTextureNode);
+      this .addTexture (0, this .anisotropyTextureNode);
    },
    getExtensionKey ()
    {
@@ -208,13 +269,11 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
    {
       uniforms .push ("x3d_AnisotropyEXT");
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform3fv (shaderObject .x3d_AnisotropyEXT, this .anisotropyArray);
 
       this .anisotropyTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_AnisotropyTextureEXT,
          this ._anisotropyTextureMapping .getValue (),
          textureTransformMapping,
@@ -381,9 +440,6 @@ const BlendMode_default_ = BlendMode;
 ;
 
 /* harmony default export */ const X_ITE_BlendMode = (external_X_ITE_X3D_Namespace_default().add ("BlendMode", BlendMode_default_));
-;// external "__X_ITE_X3D__ .Algorithm"
-const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
-var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Algorithm_namespaceObject);
 ;// ./src/x_ite/Components/X_ITE/ClearcoatMaterialExtension.js
 
 
@@ -438,13 +494,13 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
    },
    set_clearcoat__ ()
    {
-      this .clearcoat = Math .max (this ._clearcoat .getValue (), 0);
+      this .clearcoat = external_X_ITE_X3D_Algorithm_default().clamp (this ._clearcoat .getValue (), 0, 1);
    },
    set_clearcoatTexture__ ()
    {
       this .clearcoatTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._clearcoatTexture);
 
-      this .setTexture (0, this .clearcoatTextureNode);
+      this .addTexture (0, this .clearcoatTextureNode);
    },
    set_clearcoatRoughness__ ()
    {
@@ -454,13 +510,13 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
    {
       this .clearcoatRoughnessTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._clearcoatRoughnessTexture);
 
-      this .setTexture (1, this .clearcoatRoughnessTextureNode);
+      this .addTexture (1, this .clearcoatRoughnessTextureNode);
    },
    set_clearcoatNormalTexture__ ()
    {
       this .clearcoatNormalTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._clearcoatNormalTexture);
 
-      this .setTexture (2, this .clearcoatNormalTextureNode);
+      this .addTexture (2, this .clearcoatNormalTextureNode);
    },
    getExtensionKey ()
    {
@@ -484,7 +540,7 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
       uniforms .push ("x3d_ClearcoatEXT");
       uniforms .push ("x3d_ClearcoatRoughnessEXT");
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform1f (shaderObject .x3d_ClearcoatEXT,          this .clearcoat);
       gl .uniform1f (shaderObject .x3d_ClearcoatRoughnessEXT, this .clearcoatRoughness);
@@ -493,24 +549,18 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
          return;
 
       this .clearcoatTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_ClearcoatTextureEXT,
          this ._clearcoatTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .clearcoatRoughnessTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_ClearcoatRoughnessTextureEXT,
          this ._clearcoatRoughnessTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .clearcoatNormalTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_ClearcoatNormalTextureEXT,
          this ._clearcoatNormalTextureMapping .getValue (),
          textureTransformMapping,
@@ -705,7 +755,7 @@ Object .assign (Object .setPrototypeOf (DiffuseTransmissionMaterialExtension .pr
    {
       this .diffuseTransmissionTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._diffuseTransmissionTexture);
 
-      this .setTexture (0, this .diffuseTransmissionTextureNode);
+      this .addTexture (0, this .diffuseTransmissionTextureNode);
    },
    set_diffuseTransmissionColor__ ()
    {
@@ -715,7 +765,7 @@ Object .assign (Object .setPrototypeOf (DiffuseTransmissionMaterialExtension .pr
    {
       this .diffuseTransmissionColorTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._diffuseTransmissionColorTexture);
 
-      this .setTexture (1, this .diffuseTransmissionColorTextureNode);
+      this .addTexture (1, this .diffuseTransmissionColorTextureNode);
    },
    getExtensionKey ()
    {
@@ -738,7 +788,7 @@ Object .assign (Object .setPrototypeOf (DiffuseTransmissionMaterialExtension .pr
       uniforms .push ("x3d_DiffuseTransmissionEXT");
       uniforms .push ("x3d_DiffuseTransmissionColorEXT");
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform1f  (shaderObject .x3d_DiffuseTransmissionEXT,      this .diffuseTransmission);
       gl .uniform3fv (shaderObject .x3d_DiffuseTransmissionColorEXT, this .diffuseTransmissionColorArray);
@@ -747,16 +797,12 @@ Object .assign (Object .setPrototypeOf (DiffuseTransmissionMaterialExtension .pr
          return;
 
       this .diffuseTransmissionTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_DiffuseTransmissionTextureEXT,
          this ._diffuseTransmissionTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .diffuseTransmissionColorTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_DiffuseTransmissionColorTextureEXT,
          this ._diffuseTransmissionColorTextureMapping .getValue (),
          textureTransformMapping,
@@ -836,7 +882,7 @@ Object .assign (Object .setPrototypeOf (DispersionMaterialExtension .prototype, 
    {
       uniforms .push ("x3d_DispersionEXT");
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform1f (shaderObject .x3d_DispersionEXT, this .dispersion);
    },
@@ -909,7 +955,7 @@ Object .assign (Object .setPrototypeOf (EmissiveStrengthMaterialExtension .proto
    {
       uniforms .push ("x3d_EmissiveStrengthEXT");
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform1f (shaderObject .x3d_EmissiveStrengthEXT, this .emissiveStrength);
    },
@@ -1070,7 +1116,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (external_X_I
          numCenters           = centers .length,
          numInstances         = Math .max (numTranslations, numRotations, numScales, numScaleOrientations, numCenters),
          stride               = this .instancesStride / Float32Array .BYTES_PER_ELEMENT,
-         length               = this .instancesStride * numInstances,
+         length               = stride * numInstances,
          data                 = new Float32Array (length);
 
       this .numInstances = numInstances;
@@ -1186,7 +1232,7 @@ Object .assign (Object .setPrototypeOf (IORMaterialExtension .prototype, X_ITE_X
    {
       uniforms .push ("x3d_IorEXT");
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform1f (shaderObject .x3d_IorEXT, this .indexOfRefraction);
    },
@@ -1215,13 +1261,14 @@ var external_X_ITE_X3D_ShaderRegistry_default = /*#__PURE__*/__webpack_require__
 ;// ./src/assets/shaders/webgl2/pbr/Iridescence2.glsl.js
 const Iridescence2_glsl_default_ = () => /* glsl */ `
 #if defined(X3D_IRIDESCENCE_MATERIAL_EXT)
-const mat3 XYZ_TO_REC709=mat3(3.2404542,-.9692660,.0556434,-1.5371385,1.8760108,-.2040259,-.4985314,.0415560,1.0572252);float sq(const in float v){return v*v;}vec3 sq(const in vec3 v){return v*v;}vec3 Fresnel0ToIor(const in vec3 fresnel0){vec3 sqrtF0=sqrt(fresnel0);return(vec3(1)+sqrtF0)/(vec3(1)-sqrtF0);}vec3 IorToFresnel0(const in vec3 transmittedIor,const in float incidentIor){return sq((transmittedIor-vec3(incidentIor))/(transmittedIor+vec3(incidentIor)));}float IorToFresnel0(const in float transmittedIor,const in float incidentIor){return sq((transmittedIor-incidentIor)/(transmittedIor+incidentIor));}vec3 evalSensitivity(const in float OPD,const in vec3 shift){float phase=2.*M_PI*OPD*1.0e-9;vec3 val=vec3(5.4856e-13,4.4201e-13,5.2481e-13);vec3 pos=vec3(1.6810e+06,1.7953e+06,2.2084e+06);vec3 var=vec3(4.3278e+09,9.3046e+09,6.6121e+09);vec3 xyz=val*sqrt(2.*M_PI*var)*cos(pos*phase+shift)*exp(-sq(phase)*var);xyz.x+=9.7470e-14*sqrt(2.*M_PI*4.5282e+09)*cos(2.2399e+06*phase+shift[0])*exp(-4.5282e+09*sq(phase));xyz/=1.0685e-7;vec3 srgb=XYZ_TO_REC709*xyz;return srgb;}vec3 evalIridescence(const in float outsideIOR,const in float eta2,const in float cosTheta1,const in float thinFilmThickness,const in vec3 baseF0){vec3 I;float iridescenceIor=mix(outsideIOR,eta2,smoothstep(0.,.03,thinFilmThickness));float sinTheta2Sq=sq(outsideIOR/iridescenceIor)*(1.-sq(cosTheta1));float cosTheta2Sq=1.-sinTheta2Sq;if(cosTheta2Sq<0.)return vec3(1);float cosTheta2=sqrt(cosTheta2Sq);float R0=IorToFresnel0(iridescenceIor,outsideIOR);float R12=F_Schlick(R0,cosTheta1);float R21=R12;float T121=1.-R12;float phi12=0.;if(iridescenceIor<outsideIOR)phi12=M_PI;float phi21=M_PI-phi12;vec3 baseIOR=Fresnel0ToIor(clamp(baseF0,0.,.9999));vec3 R1=IorToFresnel0(baseIOR,iridescenceIor);vec3 R23=F_Schlick(R1,cosTheta2);vec3 phi23=vec3(0);if(baseIOR[0]<iridescenceIor)phi23[0]=M_PI;if(baseIOR[1]<iridescenceIor)phi23[1]=M_PI;if(baseIOR[2]<iridescenceIor)phi23[2]=M_PI;float OPD=2.*iridescenceIor*thinFilmThickness*cosTheta2;vec3 phi=vec3(phi21)+phi23;vec3 R123=clamp(R12*R23,1e-5,.9999);vec3 r123=sqrt(R123);vec3 Rs=sq(T121)*R23/(vec3(1)-R123);vec3 C0=R12+Rs;I=C0;vec3 Cm=Rs-T121;for(int m=1;m<=2;++m){Cm*=r123;vec3 Sm=2.*evalSensitivity(float(m)*OPD,float(m)*phi);I+=Cm*Sm;}return max(I,vec3(0));}
+const mat3 XYZ_TO_REC709=mat3(3.2404542,-.9692660,.0556434,-1.5371385,1.8760108,-.2040259,-.4985314,.0415560,1.0572252);float sq(const in float v){return v*v;}vec3 sq(const in vec3 v){return v*v;}vec3 Fresnel0ToIor(const in vec3 fresnel0){vec3 sqrtF0=sqrt(fresnel0);return(vec3(1)+sqrtF0)/(vec3(1)-sqrtF0);}vec3 IorToFresnel0(const in vec3 transmittedIor,const in float incidentIor){return sq((transmittedIor-vec3(incidentIor))/(transmittedIor+vec3(incidentIor)));}float IorToFresnel0(const in float transmittedIor,const in float incidentIor){return sq((transmittedIor-incidentIor)/(transmittedIor+incidentIor));}vec3 evalSensitivity(const in float OPD,const in vec3 shift){const vec3 val=vec3(5.4856e-13,4.4201e-13,5.2481e-13);const vec3 pos=vec3(1.6810e+06,1.7953e+06,2.2084e+06);const vec3 var=vec3(4.3278e+09,9.3046e+09,6.6121e+09);float phase=2.*M_PI*OPD*1.0e-9;vec3 xyz=val*sqrt(2.*M_PI*var)*cos(pos*phase+shift)*exp(-sq(phase)*var);xyz.x+=9.7470e-14*sqrt(2.*M_PI*4.5282e+09)*cos(2.2399e+06*phase+shift[0])*exp(-4.5282e+09*sq(phase));xyz/=1.0685e-7;vec3 srgb=XYZ_TO_REC709*xyz;return srgb;}vec3 evalIridescence(const in float outsideIOR,const in float eta2,const in float cosTheta1,const in float thinFilmThickness,const in vec3 baseF0){vec3 I;float iridescenceIor=mix(outsideIOR,eta2,smoothstep(0.,.03,thinFilmThickness));float sinTheta2Sq=sq(outsideIOR/iridescenceIor)*(1.-sq(cosTheta1));float cosTheta2Sq=1.-sinTheta2Sq;if(cosTheta2Sq<0.)return vec3(1);float cosTheta2=sqrt(cosTheta2Sq);float R0=IorToFresnel0(iridescenceIor,outsideIOR);float R12=F_Schlick(R0,cosTheta1);float R21=R12;float T121=1.-R12;float phi12=0.;if(iridescenceIor<outsideIOR)phi12=M_PI;float phi21=M_PI-phi12;vec3 baseIOR=Fresnel0ToIor(clamp(baseF0,0.,.9999));vec3 R1=IorToFresnel0(baseIOR,iridescenceIor);vec3 R23=F_Schlick(R1,cosTheta2);vec3 phi23=vec3(0);if(baseIOR[0]<iridescenceIor)phi23[0]=M_PI;if(baseIOR[1]<iridescenceIor)phi23[1]=M_PI;if(baseIOR[2]<iridescenceIor)phi23[2]=M_PI;float OPD=2.*iridescenceIor*thinFilmThickness*cosTheta2;vec3 phi=vec3(phi21)+phi23;vec3 R123=clamp(R12*R23,1e-5,.9999);vec3 r123=sqrt(R123);vec3 Rs=sq(T121)*R23/(vec3(1)-R123);vec3 C0=R12+Rs;I=C0;vec3 Cm=Rs-T121;for(int m=1;m<=2;++m){Cm*=r123;vec3 Sm=2.*evalSensitivity(float(m)*OPD,float(m)*phi);I+=Cm*Sm;}return max(I,vec3(0));}
 #endif
 `
 ;
 
 /* harmony default export */ const Iridescence2_glsl = (external_X_ITE_X3D_Namespace_default().add ("Iridescence2.glsl", Iridescence2_glsl_default_));
 ;// ./src/x_ite/Components/X_ITE/IridescenceMaterialExtension.js
+
 
 
 
@@ -1282,13 +1329,13 @@ Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype,
    },
    set_iridescence__ ()
    {
-      this .iridescence = Math .max (this ._iridescence .getValue (), 0);
+      this .iridescence = external_X_ITE_X3D_Algorithm_default().clamp (this ._iridescence .getValue (), 0, 1);
    },
    set_iridescenceTexture__ ()
    {
       this .iridescenceTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._iridescenceTexture);
 
-      this .setTexture (0, this .iridescenceTextureNode);
+      this .addTexture (0, this .iridescenceTextureNode);
    },
    set_iridescenceIndexOfRefraction__ ()
    {
@@ -1306,7 +1353,7 @@ Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype,
    {
       this .iridescenceThicknessTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._iridescenceThicknessTexture);
 
-      this .setTexture (1, this .iridescenceThicknessTextureNode);
+      this .addTexture (1, this .iridescenceThicknessTextureNode);
    },
    getExtensionKey ()
    {
@@ -1331,7 +1378,7 @@ Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype,
       uniforms .push ("x3d_IridescenceThicknessMinimumEXT");
       uniforms .push ("x3d_IridescenceThicknessMaximumEXT");
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform1f (shaderObject .x3d_IridescenceEXT,                  this .iridescence);
       gl .uniform1f (shaderObject .x3d_IridescenceIndexOfRefractionEXT, this .iridescenceIndexOfRefraction);
@@ -1342,16 +1389,12 @@ Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype,
          return;
 
       this .iridescenceTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_IridescenceTextureEXT,
          this ._iridescenceTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .iridescenceThicknessTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_IridescenceThicknessTextureEXT,
          this ._iridescenceThicknessTextureMapping .getValue (),
          textureTransformMapping,
@@ -1446,7 +1489,7 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X_ITE
    {
       this .sheenColorTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._sheenColorTexture);
 
-      this .setTexture (0, this .sheenColorTextureNode);
+      this .addTexture (0, this .sheenColorTextureNode);
    },
    set_sheenRoughness__ ()
    {
@@ -1456,7 +1499,7 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X_ITE
    {
       this .sheenRoughnessTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._sheenRoughnessTexture);
 
-      this .setTexture (1, this .sheenRoughnessTextureNode);
+      this .addTexture (1, this .sheenRoughnessTextureNode);
    },
    getExtensionKey ()
    {
@@ -1480,34 +1523,30 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X_ITE
       uniforms .push ("x3d_SheenRoughnessEXT");
       uniforms .push ("x3d_SheenELUTTextureEXT");
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform3fv (shaderObject .x3d_SheenColorEXT,     this .sheenColorArray);
       gl .uniform1f  (shaderObject .x3d_SheenRoughnessEXT, this .sheenRoughness);
 
       const
          browser              = this .getBrowser (),
-         SheenELUTTexture     = browser .getLibraryTexture ("lut_sheen_E.png"),
-         SheenELUTTextureUnit = browser .getTextureUnit ();
+         sheenELUTTexture     = browser .getLibraryTexture ("lut_sheen_E.png"),
+         sheenELUTTextureUnit = browser .popTextureUnit ();
 
-      gl .activeTexture (gl .TEXTURE0 + SheenELUTTextureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, SheenELUTTexture .getTexture ());
-      gl .uniform1i (shaderObject .x3d_SheenELUTTextureEXT, SheenELUTTextureUnit);
+      gl .activeTexture (gl .TEXTURE0 + sheenELUTTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, sheenELUTTexture .getTexture ());
+      gl .uniform1i (shaderObject .x3d_SheenELUTTextureEXT, sheenELUTTextureUnit);
 
       if (!+this .getTextureBits ())
          return;
 
       this .sheenColorTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_SheenColorTextureEXT,
          this ._sheenColorTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .sheenRoughnessTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_SheenRoughnessTextureEXT,
          this ._sheenRoughnessTextureMapping .getValue (),
          textureTransformMapping,
@@ -1544,16 +1583,16 @@ var external_X_ITE_X3D_X3DOneSidedMaterialNode_default = /*#__PURE__*/__webpack_
 
 
 const SpecularGlossiness2_glsl_default_ = () => /* glsl */ `
-#pragma X3D include "../common/Fragment.glsl"
-#pragma X3D include "../common/Shadow.glsl"
+#include<Fragment>
+#include<Shadow>
 #if defined(X3D_LIGHTING)
 uniform x3d_LightSourceParameters x3d_LightSource[X3D_NUM_LIGHTS];
 #endif
 uniform x3d_PhysicalMaterialParameters x3d_Material;
-#pragma X3D include "pbr/BRDF.glsl"
-#pragma X3D include "pbr/MaterialInfo.glsl"
-#pragma X3D include "pbr/Punctual.glsl"
-#pragma X3D include "pbr/IBL.glsl"
+#include<BRDF>
+#include<MaterialInfo>
+#include<Punctual>
+#include<IBL>
 ${external_X_ITE_X3D_MaterialTextures_default().texture ("x3d_DiffuseTexture", "rgba", "linear")}
 vec4 getBaseColor(){float alpha=1.-x3d_Material.transparency;vec4 baseColor=vec4(x3d_Material.diffuseColor,alpha);
 #if defined(X3D_COLOR_MATERIAL)
@@ -1570,7 +1609,7 @@ MaterialInfo getSpecularGlossinessInfo(in MaterialInfo info){vec3 specular=x3d_M
 #if defined(X3D_SPECULAR_GLOSSINESS_TEXTURE)
 vec4 sgSample=getSpecularGlossinessTexture();glossiness*=sgSample.a;specular*=sgSample.rgb;
 #endif
-info.perceptualRoughness=1.-glossiness;info.f0_dielectric=min(specular,vec3(1));return info;}vec4 getMaterialColor(){vec4 baseColor=getBaseColor();
+info.perceptualRoughness=1.-glossiness;info.f0_dielectric=min(specular,vec3(1));return info;}vec4 getMaterialColor(const in vec4 fragCoord){vec4 baseColor=getBaseColor();
 #if defined(X3D_TEXTURE_PROJECTION)
 baseColor.rgb*=getTextureProjectorColor();
 #endif
@@ -1607,7 +1646,7 @@ return vec4(color,baseColor.a);}`
 ;// ./src/assets/shaders/webgl2/SpecularGlossiness2.fs.js
 const SpecularGlossiness2_fs_default_ = () => /* glsl */ `#version 300 es
 precision highp float;precision highp int;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
-#pragma X3D include "pbr/SpecularGlossiness.glsl"
+#include<SpecularGlossiness>
 `
 ;
 
@@ -1643,7 +1682,7 @@ external_X_ITE_X3D_MaterialTextures_default().add ("x3d_SpecularGlossinessTextur
 
 function SpecularGlossinessMaterial (executionContext)
 {
-   console .warn ("SpecularGlossinessMaterial is depreciated, please use PhysicalMaterial instead.");
+   console .warn ("SpecularGlossinessMaterial is deprecated, please use PhysicalMaterial instead.");
 
    external_X_ITE_X3D_X3DOneSidedMaterialNode_default().call (this, executionContext);
 
@@ -1676,6 +1715,10 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, (
       this .set_occlusionStrength__ ();
       this .set_occlusionTexture__ ();
       this .set_transparent__ ();
+   },
+   isPhysical ()
+   {
+      return true;
    },
    getMaterialKey ()
    {
@@ -1712,19 +1755,19 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, (
 
       if (this .diffuseTextureNode)
       {
-         this .diffuseTextureNode ._transparent .removeInterest ("set_transparent__",  this);
-         this .diffuseTextureNode ._linear      .removeInterest (`setTexture${index}`, this);
+         this .diffuseTextureNode ._transparent .removeInterest ("set_transparent__", this);
+         this .diffuseTextureNode ._linear      .removeInterest ("addTexture",        this);
       }
 
       this .diffuseTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._diffuseTexture);
 
       if (this .diffuseTextureNode)
       {
-         this .diffuseTextureNode ._transparent .addInterest ("set_transparent__",  this);
-         this .diffuseTextureNode ._linear      .addInterest (`setTexture${index}`, this, index, this .diffuseTextureNode);
+         this .diffuseTextureNode ._transparent .addInterest ("set_transparent__", this);
+         this .diffuseTextureNode ._linear      .addInterest ("addTexture",        this, index, this .diffuseTextureNode);
       }
 
-      this .setTexture (index, this .diffuseTextureNode);
+      this .addTexture (index, this .diffuseTextureNode);
    },
    set_specularColor__ ()
    {
@@ -1738,7 +1781,7 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, (
    {
       this .specularGlossinessTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._specularGlossinessTexture);
 
-      this .setTexture (this .getTextureIndices () .SPECULAR_GLOSSINESS_TEXTURE, this .specularGlossinessTextureNode);
+      this .addTexture (this .getTextureIndices () .SPECULAR_GLOSSINESS_TEXTURE, this .specularGlossinessTextureNode);
    },
    set_occlusionStrength__ ()
    {
@@ -1748,7 +1791,7 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, (
    {
       this .occlusionTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._occlusionTexture);
 
-      this .setTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
+      this .addTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
    },
    createShader (key, geometryContext, renderContext)
    {
@@ -1771,9 +1814,9 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, (
 
       return shaderNode;
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
-      external_X_ITE_X3D_X3DOneSidedMaterialNode_default().prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
+      external_X_ITE_X3D_X3DOneSidedMaterialNode_default().prototype .setShaderUniforms .call (this, gl, shaderObject, textureTransformMapping, textureCoordinateMapping);
 
       gl .uniform3fv (shaderObject .x3d_DiffuseColor,  this .diffuseColorArray);
       gl .uniform3fv (shaderObject .x3d_SpecularColor, this .specularColorArray);
@@ -1783,16 +1826,12 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, (
          return;
 
       this .diffuseTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_DiffuseTexture,
          this ._diffuseTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .specularGlossinessTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_SpecularGlossinessTexture,
          this ._specularGlossinessTextureMapping .getValue (),
          textureTransformMapping,
@@ -1803,8 +1842,6 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, (
          gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
 
          this .occlusionTextureNode .setNamedShaderUniforms (gl,
-            shaderObject,
-            renderObject,
             shaderObject .x3d_OcclusionTexture,
             this ._occlusionTextureMapping .getValue (),
             textureTransformMapping,
@@ -1842,19 +1879,12 @@ Object .defineProperties (SpecularGlossinessMaterial,
    },
 });
 
-for (const index of Object .values (SpecularGlossinessMaterial .prototype .getTextureIndices ()))
-{
-   SpecularGlossinessMaterial .prototype [`setTexture${index}`] = function (index, textureNode)
-   {
-      this .setTexture (index, textureNode);
-   };
-}
-
 const SpecularGlossinessMaterial_default_ = SpecularGlossinessMaterial;
 ;
 
 /* harmony default export */ const X_ITE_SpecularGlossinessMaterial = (external_X_ITE_X3D_Namespace_default().add ("SpecularGlossinessMaterial", SpecularGlossinessMaterial_default_));
 ;// ./src/x_ite/Components/X_ITE/SpecularMaterialExtension.js
+
 
 
 
@@ -1897,32 +1927,38 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X_
       this ._specular             .addInterest ("set_specular__",             this);
       this ._specularTexture      .addInterest ("set_specularTexture__",      this);
       this ._specularColor        .addInterest ("set_specularColor__",        this);
+      this ._specularStrength     .addInterest ("set_specularStrength__",     this);
       this ._specularColorTexture .addInterest ("set_specularColorTexture__", this);
 
       this .set_specular__ ();
       this .set_specularTexture__ ();
       this .set_specularColor__ ();
+      this .set_specularStrength__ ();
       this .set_specularColorTexture__ ();
    },
    set_specular__ ()
    {
-      this .specular = Math .max (this ._specular .getValue (), 0);
+      this .specular = external_X_ITE_X3D_Algorithm_default().clamp (this ._specular .getValue (), 0, 1);
    },
    set_specularTexture__ ()
    {
       this .specularTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._specularTexture);
 
-      this .setTexture (0, this .specularTextureNode);
+      this .addTexture (0, this .specularTextureNode);
    },
    set_specularColor__ ()
    {
       this .specularColorArray .set (this ._specularColor .getValue ());
    },
+   set_specularStrength__ ()
+   {
+      this .specularStrength = Math .max (this ._specularStrength .getValue (), 0);
+   },
    set_specularColorTexture__ ()
    {
       this .specularColorTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._specularColorTexture);
 
-      this .setTexture (1, this .specularColorTextureNode);
+      this .addTexture (1, this .specularColorTextureNode);
    },
    getExtensionKey ()
    {
@@ -1944,26 +1980,24 @@ Object .assign (Object .setPrototypeOf (SpecularMaterialExtension .prototype, X_
    {
       uniforms .push ("x3d_SpecularEXT");
       uniforms .push ("x3d_SpecularColorEXT");
+      uniforms .push ("x3d_SpecularStrengthEXT");
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
-      gl .uniform1f  (shaderObject .x3d_SpecularEXT,      this .specular);
-      gl .uniform3fv (shaderObject .x3d_SpecularColorEXT, this .specularColorArray);
+      gl .uniform1f  (shaderObject .x3d_SpecularEXT,         this .specular);
+      gl .uniform3fv (shaderObject .x3d_SpecularColorEXT,    this .specularColorArray);
+      gl .uniform1f  (shaderObject .x3d_SpecularStrengthEXT, this .specularStrength);
 
       if (!+this .getTextureBits ())
          return;
 
       this .specularTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_SpecularTextureEXT,
          this ._specularTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .specularColorTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_SpecularColorTextureEXT,
          this ._specularColorTextureMapping .getValue (),
          textureTransformMapping,
@@ -1982,6 +2016,7 @@ Object .defineProperties (SpecularMaterialExtension,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "specularTextureMapping",      new (external_X_ITE_X3D_Fields_default()).SFString ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "specularTexture",             new (external_X_ITE_X3D_Fields_default()).SFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "specularColor",               new (external_X_ITE_X3D_Fields_default()).SFColor (1, 1, 1)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "specularStrength",            new (external_X_ITE_X3D_Fields_default()).SFFloat (1)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "specularColorTextureMapping", new (external_X_ITE_X3D_Fields_default()).SFString ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "specularColorTexture",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
       ]),
@@ -2045,7 +2080,7 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
    {
       this .transmissionTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._transmissionTexture);
 
-      this .setTexture (0, this .transmissionTextureNode);
+      this .addTexture (0, this .transmissionTextureNode);
    },
    getExtensionKey ()
    {
@@ -2067,54 +2102,28 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
       uniforms .push ("x3d_TransmissionEXT");
       uniforms .push ("x3d_TransmissionSamplerEXT");
    },
-   setShaderUniforms: (() =>
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
-      const zeros = new Float32Array (16);
+      // These shapes must not be rendered during transmission pass!
 
-      return function (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
-      {
-         const browser = this .getBrowser ();
+      const
+         browser                   = this .getBrowser (),
+         transmissionBuffer        = browser .getTransmissionBuffer (),
+         transmissionUnit          = browser .popTextureUnit (),
+         transmissionBufferTexture = transmissionBuffer .getColorTexture ();
 
-         gl .uniform1f (shaderObject .x3d_TransmissionEXT, this .transmission);
+      gl .uniform1f (shaderObject .x3d_TransmissionEXT, this .transmission);
 
-         // Transmission framebuffer texture
+      gl .activeTexture (gl .TEXTURE0 + transmissionUnit);
+      gl .bindTexture (gl .TEXTURE_2D, transmissionBufferTexture);
+      gl .uniform1i (shaderObject .x3d_TransmissionSamplerEXT, transmissionUnit);
 
-         let
-            transmissionBuffer,
-            transmissionUnit,
-            transmissionBufferTexture;
-
-         if (renderObject .isTransmission ())
-         {
-            transmissionUnit          = browser .getTextureUnit ();
-            transmissionBufferTexture = browser .getDefaultTexture2D ();
-
-            // Hide object by using a model view matrix with zeros.
-            gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, zeros);
-         }
-         else
-         {
-            transmissionBuffer        = browser .getTransmissionBuffer ();
-            transmissionUnit          = browser .getTextureUnit ();
-            transmissionBufferTexture = transmissionBuffer .getColorTexture ();
-         }
-
-         gl .activeTexture (gl .TEXTURE0 + transmissionUnit);
-         gl .bindTexture (gl .TEXTURE_2D, transmissionBufferTexture);
-         gl .uniform1i (shaderObject .x3d_TransmissionSamplerEXT, transmissionUnit);
-
-         if (!+this .getTextureBits ())
-            return;
-
-         this .transmissionTextureNode ?.setNamedShaderUniforms (gl,
-            shaderObject,
-            renderObject,
-            shaderObject .x3d_TransmissionTextureEXT,
-            this ._transmissionTextureMapping .getValue (),
-            textureTransformMapping,
-            textureCoordinateMapping);
-      };
-   })(),
+      this .transmissionTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject .x3d_TransmissionTextureEXT,
+         this ._transmissionTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
+   },
 });
 
 Object .defineProperties (TransmissionMaterialExtension,
@@ -2200,11 +2209,13 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X_IT
    {
       this .thicknessTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._thicknessTexture);
 
-      this .setTexture (0, this .thicknessTextureNode);
+      this .addTexture (0, this .thicknessTextureNode);
    },
    set_attenuationDistance__ ()
    {
-      this .attenuationDistance = Math .max (this ._attenuationDistance .getValue (), 0);
+      const attenuationDistance = this ._attenuationDistance .getValue ();
+
+      this .attenuationDistance = attenuationDistance ? Math .max (attenuationDistance, 0) : 1_000_000;
    },
    set_attenuationColor__ ()
    {
@@ -2231,18 +2242,13 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X_IT
       uniforms .push ("x3d_AttenuationDistanceEXT");
       uniforms .push ("x3d_AttenuationColorEXT");
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform1f  (shaderObject .x3d_ThicknessEXT,           this .thickness);
       gl .uniform1f  (shaderObject .x3d_AttenuationDistanceEXT, this .attenuationDistance);
       gl .uniform3fv (shaderObject .x3d_AttenuationColorEXT,    this .attenuationColorArray);
 
-      if (!+this .getTextureBits ())
-         return;
-
       this .thicknessTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_ThicknessTextureEXT,
          this ._thicknessTextureMapping .getValue (),
          textureTransformMapping,
@@ -2271,7 +2277,363 @@ const VolumeMaterialExtension_default_ = VolumeMaterialExtension;
 ;
 
 /* harmony default export */ const X_ITE_VolumeMaterialExtension = (external_X_ITE_X3D_Namespace_default().add ("VolumeMaterialExtension", VolumeMaterialExtension_default_));
+;// ./src/x_ite/Browser/X_ITE/ScatterSamples.js
+class ScatterSamples
+{
+   static SCATTER_SAMPLES_COUNT = 55; // Number of samples for the Burley diffusion profile.
+
+   static
+   {
+      const [scatterSamples, minRadius] = this .#computeScatterSamples ();
+
+      this .SCATTER_SAMPLES    = scatterSamples;
+      this .SCATTER_MIN_RADIUS = minRadius;
+   }
+
+   /**
+    * Using blender implementation of Burley diffusion profile.
+    */
+   static #computeScatterSamples ()
+   {
+      // Precompute sample position with white albedo.
+      const d = this .#burleySetup (1, 1);
+
+      const randU = 0.5; // Random value between 0 and 1, fixed here for determinism.
+      const randV = 0.5;
+
+      // Find minimum radius that we can represent because we are only sampling the largest radius.
+      let min_radius = 1;
+
+      const goldenAngle  = Math .PI * (3 - Math .sqrt (5));
+      const uniformArray = [ ];
+
+      for (let i = 0; i < this .SCATTER_SAMPLES_COUNT; ++ i)
+      {
+         const theta = goldenAngle * i + Math .PI * 2 * randU;
+         const x     = (randV + i) / this .SCATTER_SAMPLES_COUNT;
+         const r     = this .#burleySample (d, x);
+
+         min_radius = Math .min (min_radius, r);
+
+         uniformArray .push (theta, r, 1 / this .#burleyPdf (d, r));
+      }
+
+      // Avoid float imprecision.
+      min_radius = Math .max (min_radius, 0.00001);
+
+      return [new Float32Array (uniformArray), min_radius];
+   }
+
+   static #burleySample (d, xRand)
+   {
+      xRand *= 0.9963790093708328;
+
+      const tolerance         = 1e-6;
+      const maxIterationCount = 10;
+
+      let r;
+
+      if (xRand <= 0.9)
+         r = Math .exp (xRand * xRand * 2.4) - 1;
+      else
+         r = 15;
+
+      // Solve against scaled radius.
+      for (let i = 0; i < maxIterationCount; ++ i)
+      {
+         const exp_r_3 = Math .exp (-r / 3);
+         const exp_r   = exp_r_3 * exp_r_3 * exp_r_3;
+         const f       = 1 - 0.25 * exp_r - 0.75 * exp_r_3 - xRand;
+         const f_      = 0.25 * exp_r + 0.25 * exp_r_3;
+
+         if (Math .abs (f) < tolerance || f_ === 0)
+            break;
+
+         r = r - f / f_;
+         r = Math .max (r, 0);
+      }
+
+      return r * d;
+   }
+
+   static #burleyEval (d, r)
+   {
+      if (r >= 16 * d)
+         return 0;
+
+      const exp_r_3_d = Math .exp (-r / (3 * d));
+      const exp_r_d   = exp_r_3_d * exp_r_3_d * exp_r_3_d;
+
+      return (exp_r_d + exp_r_3_d) / (8 * Math .PI * d);
+   }
+
+   static #burleyPdf (d, r)
+   {
+      return this .#burleyEval (d, r) / 0.9963790093708328;
+   }
+
+   static #burleySetup (radius, albedo)
+   {
+      const m_1_pi = 0.318309886183790671538;
+      const s      = 1.9 - albedo + 3.5 * ((albedo - 0.8) * (albedo - 0.8));
+      const l      = 0.25 * m_1_pi * radius;
+
+      return l / s;
+   }
+}
+
+const ScatterSamples_default_ = ScatterSamples;
+;
+
+/* harmony default export */ const X_ITE_ScatterSamples = (external_X_ITE_X3D_Namespace_default().add ("ScatterSamples", ScatterSamples_default_));
+;// ./src/assets/shaders/webgl2/pbr/Scatter2.glsl.js
+const Scatter2_glsl_default_ = () => /* glsl */ `
+uniform float x3d_ScatterMaterialIdEXT;vec4 getMaterialColor(const in vec4 fragCoord){vec4 baseColor=getBaseColor();
+#if defined(X3D_TEXTURE_PROJECTION)
+baseColor.rgb*=getTextureProjectorColor();
+#endif
+vec3 frontColor=vec3(0);vec3 v=normalize(-vertex);
+#if defined(X3D_USE_IBL)||defined(X3D_LIGHTING)
+NormalInfo normalInfo=getNormalInfo(x3d_Material.normalScale);vec3 n=normalInfo.n;float NdotV=clamp(dot(n,v),0.,1.);
+#endif
+MaterialInfo materialInfo;materialInfo.baseColor=baseColor.rgb;materialInfo.ior=1.5;materialInfo.f0_dielectric=vec3(.04);materialInfo.specularWeight=1.;materialInfo.f90=vec3(1);materialInfo.f90_dielectric=materialInfo.f90;
+#if defined(X3D_IOR_MATERIAL_EXT)
+materialInfo=getIorInfo(materialInfo);
+#endif
+#if defined(X3D_MATERIAL_METALLIC_ROUGHNESS)
+materialInfo=getMetallicRoughnessInfo(materialInfo);
+#endif
+#if defined(X3D_SHEEN_MATERIAL_EXT)
+materialInfo=getSheenInfo(materialInfo);
+#endif
+#if defined(X3D_SPECULAR_MATERIAL_EXT)
+materialInfo=getSpecularInfo(materialInfo);
+#endif
+#if defined(X3D_TRANSMISSION_MATERIAL_EXT)
+materialInfo=getTransmissionInfo(materialInfo);
+#endif
+#if defined(X3D_VOLUME_MATERIAL_EXT)
+materialInfo=getVolumeInfo(materialInfo);
+#endif
+#if defined(X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
+materialInfo=getDiffuseTransmissionInfo(materialInfo);
+#endif
+#if defined(X3D_VOLUME_SCATTER_MATERIAL_EXT)
+materialInfo=getVolumeScatterInfo(materialInfo);vec3 singleScatter=multiToSingleScatter(materialInfo.multiscatterColor);
+#endif
+materialInfo.perceptualRoughness=clamp(materialInfo.perceptualRoughness,0.,1.);materialInfo.alphaRoughness=materialInfo.perceptualRoughness*materialInfo.perceptualRoughness;vec3 f_specular_dielectric=vec3(0);vec3 f_diffuse=vec3(0);vec3 f_dielectric_brdf_ibl=vec3(0);float albedoSheenScaling=1.;float diffuseTransmissionThickness=1.;
+#if defined(X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
+#if defined(X3D_VOLUME_MATERIAL_EXT)
+diffuseTransmissionThickness=materialInfo.thickness*(length(x3d_ModelViewMatrix[0].xyz)+length(x3d_ModelViewMatrix[1].xyz)+length(x3d_ModelViewMatrix[2].xyz))/3.;
+#endif
+#endif
+#if defined(X3D_USE_IBL)||defined(X3D_TRANSMISSION_MATERIAL_EXT)
+#if defined(X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
+f_diffuse=getDiffuseLight(n)*materialInfo.diffuseTransmissionColorFactor*singleScatter;vec3 diffuseTransmissionIBL=getDiffuseLight(-n)*materialInfo.diffuseTransmissionColorFactor;
+#if defined(X3D_VOLUME_MATERIAL_EXT)
+diffuseTransmissionIBL=applyVolumeAttenuation(diffuseTransmissionIBL,diffuseTransmissionThickness,materialInfo.attenuationColor,materialInfo.attenuationDistance);
+#endif
+f_diffuse+=diffuseTransmissionIBL*(1.-singleScatter)*singleScatter;f_diffuse*=materialInfo.diffuseTransmissionFactor;
+#endif
+#if defined(X3D_SHEEN_MATERIAL_EXT)
+albedoSheenScaling=1.-max3(materialInfo.sheenColorFactor)*albedoSheenScalingLUT(NdotV,materialInfo.sheenRoughnessFactor);
+#endif
+vec3 f_dielectric_fresnel_ibl=getIBLGGXFresnel(n,v,materialInfo.perceptualRoughness,materialInfo.f0_dielectric,materialInfo.specularWeight);frontColor+=mix(f_diffuse,f_specular_dielectric,f_dielectric_fresnel_ibl)*albedoSheenScaling;
+#endif
+#if defined(X3D_LIGHTING)
+for(int i=0;i<X3D_NUM_LIGHTS;++i){x3d_LightSourceParameters light=x3d_LightSource[i];vec3 pointToLight;float distanceToLight;if(light.type!=x3d_DirectionalLight){pointToLight=light.location-vertex;distanceToLight=length(light.matrix*pointToLight);}else{pointToLight=-light.direction;distanceToLight=-1.;}if(distanceToLight<=light.radius||light.radius<0.){vec3 l=normalize(pointToLight);vec3 h=normalize(l+v);float NdotL=clamp(dot(n,l),0.,1.);float VdotH=clamp(dot(v,h),0.,1.);vec3 dielectric_fresnel=F_Schlick(materialInfo.f0_dielectric*materialInfo.specularWeight,materialInfo.f90_dielectric,abs(VdotH));vec3 l_diffuse=vec3(0);vec3 l_specular_dielectric=vec3(0);vec3 l_dielectric_brdf=vec3(0);
+#if defined(X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
+vec3 lightIntensity=getLightIntensity(light,l,distanceToLight);l_diffuse=lightIntensity*NdotL*BRDF_lambertian(materialInfo.diffuseTransmissionColorFactor)*singleScatter;if(dot(n,l)<0.){float diffuseNdotL=clamp(dot(-n,l),0.,1.);vec3 diffuse_btdf=lightIntensity*diffuseNdotL*BRDF_lambertian(materialInfo.diffuseTransmissionColorFactor);vec3 l_mirror=normalize(reflect(l,n));float diffuseVdotH=clamp(dot(v,normalize(l_mirror+v)),0.,1.);dielectric_fresnel=F_Schlick(materialInfo.f0_dielectric*materialInfo.specularWeight,materialInfo.f90_dielectric,abs(diffuseVdotH));
+#if defined(X3D_VOLUME_MATERIAL_EXT)
+diffuse_btdf=applyVolumeAttenuation(diffuse_btdf,diffuseTransmissionThickness,materialInfo.attenuationColor,materialInfo.attenuationDistance);
+#endif
+l_diffuse+=diffuse_btdf*(1.-singleScatter)*singleScatter;}l_diffuse*=materialInfo.diffuseTransmissionFactor;
+#endif
+#if defined(X3D_SHEEN_MATERIAL_EXT)
+albedoSheenScaling=min(1.-max3(materialInfo.sheenColorFactor)*albedoSheenScalingLUT(NdotV,materialInfo.sheenRoughnessFactor),1.-max3(materialInfo.sheenColorFactor)*albedoSheenScalingLUT(NdotL,materialInfo.sheenRoughnessFactor));
+#endif
+l_dielectric_brdf=mix(l_diffuse,l_specular_dielectric,dielectric_fresnel);frontColor+=l_dielectric_brdf*albedoSheenScaling;}}
+#endif
+return vec4(frontColor,x3d_ScatterMaterialIdEXT);}`
+;
+
+/* harmony default export */ const Scatter2_glsl = (external_X_ITE_X3D_Namespace_default().add ("Scatter2.glsl", Scatter2_glsl_default_));
+;// ./src/assets/shaders/webgl2/pbr/SubsurfaceScattering2.glsl.js
+const SubsurfaceScattering2_glsl_default_ = () => /* glsl */ `
+#if defined(X3D_VOLUME_SCATTER_MATERIAL_EXT)
+vec3 multiToSingleScatter(const in vec3 multiscatterColor){vec3 s=4.09712+4.20863*multiscatterColor-sqrt(9.59217+(41.6808+17.7126*multiscatterColor)*multiscatterColor);return 1.-s*s;}
+#if!defined(X3D_VOLUME_SCATTER_PASS)
+uniform float x3d_ScatterAnisotropyEXT;uniform vec3 x3d_ScatterSamplesEXT[X3D_SCATTER_SAMPLES_COUNT_EXT];uniform float x3d_ScatterMinRadiusEXT;uniform sampler2D x3d_ScatterSamplerEXT;uniform sampler2D x3d_ScatterDepthSamplerEXT;const float M_1_PI=1./M_PI;vec3 burley_setup(const in vec3 radius,const in vec3 albedo){vec3 a=albedo-.8;vec3 s=1.9-albedo+3.5*(a*a);vec3 l=.25*M_1_PI*radius;return l/s;}vec3 burley_eval(const in vec3 d,const in float r){vec3 exp_r_3_d=exp(-r/(3.*d));vec3 exp_r_d=exp_r_3_d*exp_r_3_d*exp_r_3_d;return(exp_r_d+exp_r_3_d)/(4.*d);}vec3 getSubsurfaceScattering(const in vec3 vertex,const in mat4 projectionMatrix,const in float attenuationDistance,const in vec3 diffuseColor,const in vec3 multiscatterColor,const in vec4 fragCoord){vec3 scatterDistance=attenuationDistance*multiscatterColor;float maxColor=max3(scatterDistance);vec3 vMaxColor=max(vec3(maxColor),vec3(.00001));vec2 texelSize=1./vec2(x3d_Viewport.zw);mat4 invProjectionMatrix=inverse(projectionMatrix);vec2 uv=fragCoord.xy*texelSize;vec4 centerSample=textureLod(x3d_ScatterSamplerEXT,uv,0.);float centerDepth=textureLod(x3d_ScatterDepthSamplerEXT,uv,0.).r;centerDepth=centerDepth*2.-1.;vec2 clipUV=uv*2.-1.;vec4 clipSpacePosition=vec4(clipUV.xy,centerDepth,1.);vec4 upos=invProjectionMatrix*clipSpacePosition;vec3 fragViewPosition=upos.xyz/upos.w;upos=invProjectionMatrix*vec4(clipUV.x+texelSize.x,clipUV.y,centerDepth,1.);vec3 offsetViewPosition=upos.xyz/upos.w;float mPerPixel=distance(fragViewPosition,offsetViewPosition);float maxRadiusPixels=maxColor/mPerPixel;if(maxRadiusPixels<=1.)return centerSample.rgb;centerDepth=fragViewPosition.z;vec3 totalWeight=vec3(0);vec3 totalDiffuse=vec3(0);vec3 clampedScatterDistance=max(vec3(x3d_ScatterMinRadiusEXT),scatterDistance/maxColor)*maxColor;vec3 d=burley_setup(clampedScatterDistance,vec3(1));for(int i=0;i<X3D_SCATTER_SAMPLES_COUNT_EXT;++i){vec3 scatterSample=x3d_ScatterSamplesEXT[i];float fabAngle=scatterSample.x;float r=scatterSample.y*maxRadiusPixels*texelSize.x;float rcpPdf=scatterSample.z;vec2 sampleCoords=vec2(cos(fabAngle),sin(fabAngle))*r;vec2 sampleUV=uv+sampleCoords;vec4 textureSample=textureLod(x3d_ScatterSamplerEXT,sampleUV,0.);if(centerSample.w!=textureSample.w)continue;float sampleDepth=textureLod(x3d_ScatterDepthSamplerEXT,sampleUV,0.).r;sampleDepth=sampleDepth*2.-1.;vec2 sampleClipUV=sampleUV*2.-1.;vec4 sampleUpos=invProjectionMatrix*vec4(sampleClipUV.xy,sampleDepth,1.);vec3 sampleViewPosition=sampleUpos.xyz/sampleUpos.w;float sampleDistance=distance(sampleViewPosition,fragViewPosition);vec3 weight=burley_eval(d,sampleDistance)*rcpPdf;totalWeight+=weight;totalDiffuse+=weight*textureSample.rgb;}totalWeight=max(totalWeight,vec3(.0001));return totalDiffuse/totalWeight*diffuseColor;}
+#endif
+#endif
+`
+;
+
+/* harmony default export */ const SubsurfaceScattering2_glsl = (external_X_ITE_X3D_Namespace_default().add ("SubsurfaceScattering2.glsl", SubsurfaceScattering2_glsl_default_));
+;// ./src/x_ite/Components/X_ITE/VolumeScatterMaterialExtension.js
+
+
+
+
+
+
+
+
+
+
+
+// Register key.
+
+X_ITE_ExtensionKeys .add ("VOLUME_SCATTER_MATERIAL_EXTENSION");
+
+// Register textures.
+
+
+
+external_X_ITE_X3D_MaterialTextures_default().add ("x3d_MultiscatterColorTextureEXT");
+
+// Register shaders.
+
+
+
+
+
+external_X_ITE_X3D_ShaderRegistry_default().addInclude ("Scatter",              Scatter2_glsl);
+external_X_ITE_X3D_ShaderRegistry_default().addInclude ("SubsurfaceScattering", SubsurfaceScattering2_glsl);
+
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
+function VolumeScatterMaterialExtension (executionContext)
+{
+   X_ITE_X3DMaterialExtensionNode .call (this, executionContext);
+
+   this .addType ((external_X_ITE_X3D_X3DConstants_default()).VolumeScatterMaterialExtension);
+
+   // Private properties
+
+   this .multiscatterColorArray = new Float32Array (3);
+}
+
+Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototype, X_ITE_X3DMaterialExtensionNode .prototype),
+{
+   initialize ()
+   {
+      X_ITE_X3DMaterialExtensionNode .prototype .initialize .call (this);
+
+      this ._multiscatterColor        .addInterest ("set_multiscatterColor__",        this);
+      this ._multiscatterColorTexture .addInterest ("set_multiscatterColorTexture__", this);
+      this ._scatterAnisotropy        .addInterest ("set_scatterAnisotropy__",        this);
+
+      this .set_multiscatterColor__ ();
+      this .set_multiscatterColorTexture__ ();
+      this .set_scatterAnisotropy__ ();
+   },
+   set_multiscatterColor__ ()
+   {
+      this .multiscatterColorArray .set (this ._multiscatterColor .getValue ());
+   },
+   set_multiscatterColorTexture__ ()
+   {
+      this .multiscatterColorTextureNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DSingleTextureNode, this ._multiscatterColorTexture);
+
+      this .addTexture (0, this .multiscatterColorTextureNode);
+   },
+   set_scatterAnisotropy__ ()
+   {
+      this .scatterAnisotropy = external_X_ITE_X3D_Algorithm_default().clamp (this ._scatterAnisotropy .getValue (), -1, 1);
+   },
+   getExtensionKey ()
+   {
+      return X_ITE_ExtensionKeys .VOLUME_SCATTER_MATERIAL_EXTENSION;
+   },
+   getShaderOptions (options)
+   {
+      options .push ("X3D_VOLUME_SCATTER_MATERIAL_EXT");
+      options .push (`X3D_SCATTER_SAMPLES_COUNT_EXT ${X_ITE_ScatterSamples .SCATTER_SAMPLES_COUNT}`);
+
+      if (!+this .getTextureBits ())
+         return;
+
+      options .push ("X3D_MATERIAL_TEXTURES");
+
+      this .multiscatterColorTextureNode ?.getShaderOptions (options, "MULTISCATTER_COLOR", true);
+   },
+   getShaderUniforms (uniforms)
+   {
+      uniforms .push ("x3d_ScatterMaterialIdEXT");
+      uniforms .push ("x3d_MultiscatterColorEXT");
+      uniforms .push ("x3d_ScatterAnisotropyEXT");
+      uniforms .push ("x3d_ScatterSamplesEXT");
+      uniforms .push ("x3d_ScatterMinRadiusEXT");
+      uniforms .push ("x3d_ScatterSamplerEXT");
+      uniforms .push ("x3d_ScatterDepthSamplerEXT");
+   },
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
+   {
+      const browser = this .getBrowser ();
+
+      this .multiscatterColorTextureNode ?.setNamedShaderUniforms (gl,
+         shaderObject .x3d_MultiscatterColorTextureEXT,
+         this ._multiscatterColorTextureMapping .getValue (),
+         textureTransformMapping,
+         textureCoordinateMapping);
+
+      if (shaderObject .volumeScatterPass)
+      {
+         gl .uniform1f  (shaderObject .x3d_ScatterMaterialIdEXT, browser .getShapeId ());
+         gl .uniform3fv (shaderObject .x3d_MultiscatterColorEXT, this .multiscatterColorArray);
+         return;
+      }
+
+      gl .uniform3fv (shaderObject .x3d_MultiscatterColorEXT, this .multiscatterColorArray);
+      gl .uniform1f  (shaderObject .x3d_ScatterAnisotropyEXT, this .scatterAnisotropy);
+      gl .uniform3fv (shaderObject .x3d_ScatterSamplesEXT,    X_ITE_ScatterSamples .SCATTER_SAMPLES);
+      gl .uniform1f  (shaderObject .x3d_ScatterMinRadiusEXT,  X_ITE_ScatterSamples .SCATTER_MIN_RADIUS);
+
+      // Set scatter framebuffer textures.
+
+      const
+         scatterSampleBuffer       = browser .getVolumeScatterBuffer (),
+         scatterSampleUnit         = browser .popTextureUnit (),
+         scatterDepthSampleUnit    = browser .popTextureUnit (),
+         scatterSampleTexture      = scatterSampleBuffer .getColorTexture (),
+         scatterDepthSampleTexture = scatterSampleBuffer .getDepthTexture ();
+
+      gl .activeTexture (gl .TEXTURE0 + scatterSampleUnit);
+      gl .bindTexture (gl .TEXTURE_2D, scatterSampleTexture);
+      gl .uniform1i (shaderObject .x3d_ScatterSamplerEXT, scatterSampleUnit);
+
+      gl .activeTexture (gl .TEXTURE0 + scatterDepthSampleUnit);
+      gl .bindTexture (gl .TEXTURE_2D, scatterDepthSampleTexture);
+      gl .uniform1i (shaderObject .x3d_ScatterDepthSamplerEXT, scatterDepthSampleUnit);
+   },
+});
+
+Object .defineProperties (VolumeScatterMaterialExtension,
+{
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("VolumeScatterMaterialExtension", "X_ITE", 1, "extensions", "4.0"),
+   fieldDefinitions:
+   {
+      value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "metadata",                        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "multiscatterColor",               new (external_X_ITE_X3D_Fields_default()).SFColor ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "multiscatterColorTextureMapping", new (external_X_ITE_X3D_Fields_default()).SFString ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "multiscatterColorTexture",        new (external_X_ITE_X3D_Fields_default()).SFNode ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput, "scatterAnisotropy",               new (external_X_ITE_X3D_Fields_default()).SFFloat ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+const VolumeScatterMaterialExtension_default_ = VolumeScatterMaterialExtension;
+;
+
+/* harmony default export */ const X_ITE_VolumeScatterMaterialExtension = (external_X_ITE_X3D_Namespace_default().add ("VolumeScatterMaterialExtension", VolumeScatterMaterialExtension_default_));
 ;// ./src/assets/components/X_ITEComponent.js
+
+
 
 
 
@@ -2309,11 +2671,13 @@ external_X_ITE_X3D_Components_default().add ({
       X_ITE_SpecularMaterialExtension,
       X_ITE_TransmissionMaterialExtension,
       X_ITE_VolumeMaterialExtension,
+      X_ITE_VolumeScatterMaterialExtension,
    ],
    abstractNodes:
    [
       X_ITE_X3DMaterialExtensionNode,
    ],
+   browserContext: X_ITE_X3DX_ITEContext,
 });
 
 const X_ITEComponent_default_ = undefined;

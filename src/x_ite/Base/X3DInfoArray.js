@@ -266,16 +266,18 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
    },
    toVRMLStream (generator)
    {
+      const proto = this .getTypeName () .includes ("Proto");
+
       for (const value of this [_array])
       {
          try
          {
             value .toVRMLStream (generator);
 
-            generator .string += generator .Break ();
+            generator .Break ();
 
-            if (this .getTypeName () .match (/Proto/))
-               generator .string += generator .TidyBreak ();
+            if (proto)
+               generator .TidyBreak ();
          }
          catch (error)
          {
@@ -291,7 +293,7 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
          {
             value .toXMLStream (generator);
 
-            generator .string += generator .TidyBreak ();
+            generator .TidyBreak ();
          }
          catch (error)
          {
@@ -299,31 +301,26 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
          }
       }
    },
-   toJSONStream (generator, comma)
+   toJSONStream (generator, comma = false)
    {
-      let lastProperty = false;
-
       for (const value of this [_array])
       {
          try
          {
+            if (comma)
+               generator .string += ',';
+
             value .toJSONStream (generator, true);
 
-            generator .string += ',';
-            generator .string += generator .TidyBreak ();
-
-            lastProperty = true;
+            comma = true;
          }
-         catch (error)
+         catch
          {
-            // console .error (error);
+            generator .RemoveComma ();
          }
       }
 
-      if (lastProperty && !comma)
-         generator .JSONRemoveComma ();
-
-      return lastProperty;
+      return comma;
    },
 });
 

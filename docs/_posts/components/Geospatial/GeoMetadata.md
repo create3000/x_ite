@@ -33,12 +33,12 @@ The GeoMetadata node belongs to the [Geospatial](/x_ite/components/overview/#geo
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [load](#fields-load) | TRUE |
 | MFString | [in, out] | [url](#fields-url) | [ ] |
-| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0  |
-| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600  |
+| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0 |
+| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600 |
 | MFString | [in, out] | [summary](#fields-summary) | [ ] |
 | MFNode | [in, out] | [data](#fields-data) | [ ] |
 {: .fields }
@@ -140,6 +140,13 @@ The *summary* string array contains a set of keyword/value pairs, with each keyw
 ### Warning
 
 - Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

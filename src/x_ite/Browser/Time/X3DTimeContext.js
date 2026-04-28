@@ -1,6 +1,7 @@
 import Vector3 from "../../../standard/Math/Numbers/Vector3.js";
 
 const
+   _lastTime         = Symbol (),
    _currentTime      = Symbol (),
    _currentFrameRate = Symbol (),
    _currentPosition  = Symbol (),
@@ -40,11 +41,15 @@ Object .assign (X3DTimeContext .prototype,
       {
          const
             time          = Date .now () / 1000,
-            interval      = time - this [_currentTime],
+            interval      = time - this [_lastTime],
             viewpointNode = this .getActiveViewpoint ();
 
+         if (interval <= 1 / Math .max (this .getBrowserOption ("MaximumFrameRate"), 1))
+            return false;
+
+         this [_lastTime]         = time;
          this [_currentTime]      = time;
-         this [_currentFrameRate] = interval ? 1 / interval : 60;
+         this [_currentFrameRate] = 1 / interval;
 
          if (viewpointNode)
          {
@@ -62,6 +67,8 @@ Object .assign (X3DTimeContext .prototype,
 
          if (this [_currentSpeed] > 0)
             this .addBrowserEvent ();
+
+         return true;
       };
    })(),
 });

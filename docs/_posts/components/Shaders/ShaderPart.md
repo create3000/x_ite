@@ -31,13 +31,13 @@ The ShaderPart node belongs to the [Shaders](/x_ite/components/overview/#shaders
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
-| SFString | [ ] | [type](#fields-type) | "VERTEX"  |
+| SFString | [ ] | [type](#fields-type) | "VERTEX" |
 | SFBool | [in, out] | [load](#fields-load) | TRUE |
 | MFString | [in, out] | [url](#fields-url) | [ ] |
-| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0  |
-| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600  |
+| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0 |
+| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -139,13 +139,20 @@ Location and filename of shader. Multiple locations are more reliable, and inclu
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shaders/ShaderPart/ShaderPart.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Shaders/ShaderPart/ShaderPart.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Shaders/ShaderPart/screenshot.avif" alt="ShaderPart"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Shaders/ShaderPart/ShaderPart.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Shaders/ShaderPart/ShaderPart.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

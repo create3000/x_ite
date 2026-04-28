@@ -29,10 +29,10 @@ The Arc2D node belongs to the [Geometry2D](/x_ite/components/overview/#geometry2
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFFloat | [ ] | [startAngle](#fields-startAngle) | 0  |
-| SFFloat | [ ] | [endAngle](#fields-endAngle) | π/2  |
-| SFFloat | [ ] | [radius](#fields-radius) | 1  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFFloat | [ ] | [startAngle](#fields-startAngle) | 0 |
+| SFFloat | [ ] | [endAngle](#fields-endAngle) | π/2 |
+| SFFloat | [ ] | [radius](#fields-radius) | 1 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -101,13 +101,20 @@ Circle *radius*, of which the arc is a portion.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geometry2D/Arc2D/Arc2D.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Geometry2D/Arc2D/Arc2D.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Geometry2D/Arc2D/screenshot.avif" alt="Arc2D"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Geometry2D/Arc2D/Arc2D.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Geometry2D/Arc2D/Arc2D.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

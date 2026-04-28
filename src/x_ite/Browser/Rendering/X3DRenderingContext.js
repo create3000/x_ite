@@ -1,30 +1,31 @@
 import Fields                 from "../../Fields.js";
 import X3DConstants           from "../../Base/X3DConstants.js";
 import MultiSampleFramebuffer from "../../Rendering/MultiSampleFramebuffer.js";
-import TextureBuffer          from "../../Rendering/TextureBuffer.js";
 import { maxClipPlanes }      from "./RenderingConfiguration.js";
 import Lock                   from "../../../standard/Utility/Lock.js";
 
 const
-   _session            = Symbol (),
-   _framebuffers       = Symbol (),
-   _defaultFramebuffer = Symbol (),
-   _transmissionBuffer = Symbol (),
-   _resizer            = Symbol (),
-   _localObjects       = Symbol (),
-   _fullscreenArray    = Symbol (),
-   _fullscreenBuffer   = Symbol (),
-   _composeShader      = Symbol (),
-   _depthShaders       = Symbol (),
-   _buttonLock         = Symbol ();
+   _session             = Symbol (),
+   _framebuffers        = Symbol (),
+   _defaultFramebuffer  = Symbol (),
+   _textureBuffers      = Symbol (),
+   _resizer             = Symbol (),
+   _localObjects        = Symbol (),
+   _fullscreenArray     = Symbol (),
+   _fullscreenBuffer    = Symbol (),
+   _composeShader       = Symbol (),
+   _depthShaders        = Symbol (),
+   _shapeId             = Symbol (),
+   _buttonLock          = Symbol ();
 
 function X3DRenderingContext ()
 {
    this .addChildObjects (X3DConstants .outputOnly, "viewport", new Fields .SFVec4f (0, 0, 300, 150));
 
-   this [_framebuffers] = [ ];
-   this [_depthShaders] = new Map ();
-   this [_localObjects] = [ ]; // shader objects dumpster
+   this [_framebuffers]   = [ ];
+   this [_textureBuffers] = [ ];
+   this [_depthShaders]   = new Map ();
+   this [_localObjects]   = new Set (); // local objects dumpster
 
    // WebXR support
 
@@ -51,10 +52,21 @@ Object .assign (X3DRenderingContext .prototype,
 
       // Observe resize and parent changes of <canvas> and configure viewport.
 
-      this [_resizer] = new ResizeObserver (() => this .reshape ());
-      this [_resizer] .observe (this .getSurface () [0]);
-
       $(window) .on (`orientationchange.X3DRenderingContext-${this .getInstanceId ()}`, () => this .reshape ());
+
+      this [_resizer] = new ResizeObserver (() =>
+      {
+         this .reshape ();
+
+         // Unfortunately jest environment doesn't like a traverse here.
+         // TODO: figure out why.
+         if (typeof jest !== "undefined")
+            return;
+
+         this [Symbol .for ("X_ITE.X3DBrowserContext.traverse")] (performance .now ());
+      });
+
+      this [_resizer] .observe (this .getSurface () [0]);
 
       this .reshape ();
 
@@ -161,14 +173,9 @@ Object .assign (X3DRenderingContext .prototype,
 
       this .reshape ();
    },
-   getTransmissionBuffer ()
+   addTextureBuffer (key)
    {
-      return this [_transmissionBuffer] ??= new TextureBuffer ({
-         browser: this,
-         width: this ._viewport [2],
-         height: this ._viewport [3],
-         mipMaps: true,
-      });
+      this [_textureBuffers] .push (key);
    },
    getFullscreenVertexArrayObject ()
    {
@@ -196,12 +203,13 @@ Object .assign (X3DRenderingContext .prototype,
    {
       return this [_composeShader] ??= this .createShader ("OITCompose", "FullScreen", "OITCompose");
    },
-   getDepthShader (numClipPlanes, shapeNode, hAnimNode)
+   getDepthShader (normal, numClipPlanes, shapeNode, hAnimNode)
    {
       const geometryContext = shapeNode .getGeometryContext ();
 
       let key = "";
 
+      key += normal ? 1 : 0;
       key += numClipPlanes; // Could be more than 9.
       key += hAnimNode ?.getHAnimKey () ?? "[]";
       key += shapeNode .getShapeKey ();
@@ -223,14 +231,22 @@ Object .assign (X3DRenderingContext .prototype,
       }
 
       return this [_depthShaders] .get (key)
-         ?? this .createDepthShader (key, numClipPlanes, shapeNode, hAnimNode);
+         ?? this .createDepthShader (key, normal, numClipPlanes, shapeNode, hAnimNode);
    },
-   createDepthShader (key, numClipPlanes, shapeNode, hAnimNode)
+   createDepthShader (key, normal, numClipPlanes, shapeNode, hAnimNode)
    {
       const
          appearanceNode  = shapeNode .getAppearance (),
          geometryContext = shapeNode .getGeometryContext (),
          options         = [ ];
+
+      if (normal)
+      {
+         options .push ("X3D_NORMAL_BUFFER");
+
+         if (geometryContext .hasNormals)
+            options .push ("X3D_NORMALS");
+      }
 
       if (numClipPlanes)
       {
@@ -238,8 +254,16 @@ Object .assign (X3DRenderingContext .prototype,
          options .push ("X3D_NUM_CLIP_PLANES " + numClipPlanes);
       }
 
-      if (shapeNode .getShapeKey () > 0)
-         options .push ("X3D_INSTANCING");
+      switch (shapeNode .getShapeKey ())
+      {
+         case 1:
+         case 2:
+            options .push ("X3D_INSTANCING");
+            break;
+         case 3:
+            options .push ("X3D_INSTANCING", "X3D_INSTANCE_NORMAL");
+            break;
+      }
 
       options .push (`X3D_GEOMETRY_${geometryContext .geometryType}D`);
 
@@ -328,7 +352,8 @@ Object .assign (X3DRenderingContext .prototype,
 
       this [_framebuffers] [i] = new MultiSampleFramebuffer ({ browser: this, x, y, width, height, samples, oit });
 
-      this .reshapeTextureBuffer (_transmissionBuffer, width, height);
+      for (const key of this [_textureBuffers])
+         this .reshapeTextureBuffer (key, width, height);
    },
    reshapeTextureBuffer (key, width, height)
    {
@@ -343,6 +368,14 @@ Object .assign (X3DRenderingContext .prototype,
       textureBuffer .dispose ();
 
       this [key] = undefined;
+   },
+   resetShapeId ()
+   {
+      this [_shapeId] = 0;
+   },
+   getShapeId ()
+   {
+      return ++ this [_shapeId];
    },
    onfullscreen ()
    {
@@ -373,7 +406,7 @@ Object .assign (X3DRenderingContext .prototype,
    {
       return Lock .acquire (this [_buttonLock], async () =>
       {
-         this .getSurface () .children (".x_ite-private-xr-button") .remove ();
+         this .getSurface () .find (".x_ite-private-xr-button") .remove ();
 
          if (!await this .xrCheckSupport ())
             return;

@@ -134,8 +134,8 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, X3DParticleEm
          if (this .surfaceNode)
          {
             const
-               vertices         = this .surfaceNode .getVertices () .getValue (),
-               normals          = this .surfaceNode .getNormals () .getValue (),
+               vertices         = this .surfaceNode .getVertices (),
+               normals          = this .surfaceNode .getNormals (),
                numVertices      = vertices .length / 4,
                numAreaSoFar     = numVertices / 3 + 1,
                surfaceArraySize = Math .ceil (Math .sqrt (numAreaSoFar + numVertices + numVertices));

@@ -32,12 +32,12 @@ The ComposedTexture3D node belongs to the [Texturing3D](/x_ite/components/overvi
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [ ] | [repeatS](#fields-repeatS) | FALSE |
 | SFBool | [ ] | [repeatT](#fields-repeatT) | FALSE |
 | SFBool | [ ] | [repeatR](#fields-repeatR) | FALSE |
-| SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL  |
+| SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL |
 | MFNode | [in, out] | [texture](#fields-texture) | [ ] |
 {: .fields }
 
@@ -77,7 +77,7 @@ Whether to repeat texture along R axis from front to back.
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
 {: #fields-textureProperties }
 
-Single contained [TextureProperties](/x_ite/components/texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
+Optional single contained [TextureProperties](/x_ite/components/texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
 
 ### MFNode [in, out] **texture** [ ] <small>[X3DTexture2DNode]</small>
 {: #fields-texture }
@@ -90,12 +90,19 @@ Collection of 2D *texture* sources.
 
 - Insert 2^n [ImageTexture](/x_ite/components/texturing/imagetexture/), [PixelTexture](/x_ite/components/texturing/pixeltexture/) or [MovieTexture](/x_ite/components/texturing/movietexture/) child nodes. The first image is at depth 0 and each following image is at an increasing depth value in the R direction.
 - Can contain a single [TextureProperties](/x_ite/components/texturing/textureproperties/) node.
-- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
 - [X3D Architecture 33.2.2 3D texturing concepts](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texture3D.html#3DTextureconcepts)
 
 ### Warning
 
 - Requires X3D `profile='Full'` or else include `<component name='Texturing3D' level='1'/>`
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

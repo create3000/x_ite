@@ -1,14 +1,23 @@
 import X3DProtoDeclaration from "../Prototype/X3DProtoDeclaration.js";
 
-function X3DParser (scene)
+function X3DParser (scene, name = "Parser")
 {
+   this .name              = name;
    this .scene             = scene;
    this .executionContexts = [ scene ];
    this .prototypes        = [ ];
+   this .placeholders      = new Map ();
+   this .namedNodes        = new Map ();
+   this .importedNodes     = new Map ();
+   this .nodes             = new Map ();
 }
 
 Object .assign (X3DParser .prototype,
 {
+   getName ()
+   {
+      return this .name;
+   },
    getBrowser ()
    {
       return this .scene .getBrowser ();
@@ -31,11 +40,11 @@ Object .assign (X3DParser .prototype,
    },
    getOuterNode ()
    {
-      return this .getExecutionContext () .getOuterNode ();
+      return this .getExecutionContext () ?.getOuterNode ();
    },
    isInsideProtoDeclaration ()
    {
-      return this .getExecutionContext () .getOuterNode () instanceof X3DProtoDeclaration;
+      return this .getOuterNode () instanceof X3DProtoDeclaration;
    },
    /**
     * @deprecated Directly use `browser.loadComponents`.
@@ -57,13 +66,18 @@ Object .assign (X3DParser .prototype,
    },
    convertColor (value, defaultColor = "white")
    {
+      this .body ??= $("body");
+      this .wrap ??= $("<div></div>") .hide ();
+      this .div  ??= $("<div></div>") .appendTo (this .wrap);
+
+      this .wrap .css ("color", defaultColor) .appendTo (this .body);
+      this .div  .css ("color", value);
+
       const
-         wrap   = $("<div></div>") .hide () .css ("color", defaultColor) .appendTo ($("body")),
-         div    = $("<div></div>").css ("color", value) .appendTo (wrap),
-         rgb    = window .getComputedStyle (div [0]) .color,
+         rgb    = window .getComputedStyle (this .div [0]) .color,
          values = rgb .replace (/^rgba?\(|\)$/g, "") .split (/[\s,]+/) .map (s => parseFloat (s));
 
-      wrap .remove ();
+      this .wrap .detach ();
 
       values [0] /= 255;
       values [1] /= 255;
@@ -92,23 +106,94 @@ Object .assign (X3DParser .prototype,
    },
    renameExistingNode (name)
    {
+      const executionContext = this .getExecutionContext ();
+
       try
       {
-         const namedNode = this .getExecutionContext () .getNamedNode (name);
+         const namedNode = executionContext .getNamedNode (name);
 
-         this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (name), namedNode);
+         executionContext .updateNamedNode (executionContext .getUniqueName (name), namedNode);
+
+         // console .warn (`Duplicate DEF name '${name}' in file '${executionContext .getWorldURL ()}'.`);
       }
       catch
       { }
 
       try
       {
-         const importedName = this .getExecutionContext () .getUniqueImportName (name);
+         const importedName = executionContext .getUniqueImportName (name);
 
-         this .getExecutionContext () .renameImportedNode (name, importedName);
+         executionContext .renameImportedNode (name, importedName);
+
+         // console .warn (`Duplicate imported name '${name}' in file '${executionContext .getWorldURL ()}'.`);
       }
       catch
       { }
+   },
+   getNodes ()
+   {
+      return this .getContainer (this .nodes, Array);
+   },
+   getPlaceholders ()
+   {
+      return this .getContainer (this .placeholders, Map);
+   },
+   getNamedNodes ()
+   {
+      return this .getContainer (this .namedNodes, Map);
+   },
+   getImportedNodes ()
+   {
+      return this .getContainer (this .importedNodes, Map);
+   },
+   getContainer (objects, type)
+   {
+      const
+         executionContext = this .getExecutionContext (),
+         map              = objects .get (executionContext);
+
+      if (map)
+      {
+         return map;
+      }
+      else
+      {
+         const map = new type ();
+
+         objects .set (executionContext, map);
+
+         return map;
+      }
+   },
+   checkNodeType ()
+   { },
+   setupNodes ()
+   {
+      const
+         placeholders = this .getPlaceholders (),
+         nodes        = this .getNodes ();
+
+      placeholders .forEach (placeholder => placeholder .replaceWithNode ());
+      placeholders .clear ();
+
+      if (!this .isInsideProtoDeclaration ())
+         nodes .forEach (node => node .setup ());
+
+      nodes .length = 0;;
+   },
+   rotateAxes (array)
+   {
+      // This function is for STL and PLY models.
+
+      const length = array .length;
+
+      for (let i = 0; i < length; i += 3)
+      {
+         const z = -array [i + 1];
+
+         array [i + 1] = array [i + 2];
+         array [i + 2] = z;
+      }
    },
 });
 

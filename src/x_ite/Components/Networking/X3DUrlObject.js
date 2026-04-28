@@ -53,22 +53,10 @@ Object .assign (X3DUrlObject .prototype,
       if (!notify)
          return;
 
-      switch (value)
-      {
-         case X3DConstants .NOT_STARTED_STATE:
-            break;
-         case X3DConstants .IN_PROGRESS_STATE:
-         {
-            this .getScene () .addLoadingObject (this);
-            break;
-         }
-         case X3DConstants .COMPLETE_STATE:
-         case X3DConstants .FAILED_STATE:
-         {
-            this .getScene () .removeLoadingObject (this);
-            break;
-         }
-      }
+      if (value === X3DConstants .IN_PROGRESS_STATE)
+         this .getScene () .addLoadingObject (this);
+      else
+         this .getScene () .removeLoadingObject (this);
    },
    checkLoadState ()
    {
@@ -136,7 +124,7 @@ Object .assign (X3DUrlObject .prototype,
       {
          const _loading = Symbol ();
 
-         this ._loadState .addFieldCallback (_loading, () =>
+         const test = () =>
          {
             switch (this .checkLoadState ())
             {
@@ -153,7 +141,11 @@ Object .assign (X3DUrlObject .prototype,
                   break;
                }
             }
-         });
+         }
+
+         this ._loadState .addFieldCallback (_loading, test);
+
+         test ();
       });
    },
    loadNow ()
@@ -171,8 +163,8 @@ Object .assign (X3DUrlObject .prototype,
       if (loadState === X3DConstants .NOT_STARTED_STATE || loadState === X3DConstants .FAILED_STATE)
          return;
 
-      this .setLoadState (X3DConstants .NOT_STARTED_STATE);
       this .unloadData ();
+      this .setLoadState (X3DConstants .NOT_STARTED_STATE);
    },
    unloadNow ()
    {
@@ -240,7 +232,8 @@ Object .assign (X3DUrlObject .prototype,
 
       this .setAutoRefreshTimer (autoRefreshInterval);
    },
-   dispose () { },
+   dispose ()
+   { },
 });
 
 Object .defineProperties (X3DUrlObject, X3DNode .getStaticProperties ("X3DUrlObject", "Networking", 1));

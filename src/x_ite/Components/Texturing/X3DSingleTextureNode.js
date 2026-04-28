@@ -14,6 +14,8 @@ function X3DSingleTextureNode (executionContext)
 
    this .addChildObjects (X3DConstants .outputOnly, "linear", new Fields .SFBool ())
 
+   // Private properties
+
    this .matrix = new Float32Array (Matrix4 .IDENTITY);
 }
 
@@ -172,13 +174,13 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
    {
       if (typeof name === "number")
       {
-         options .push (`X3D_TEXTURE${name}_${this .getTextureTypeString ()}`);
+         options .push (`X3D_TEXTURE_${name}_${this .getTextureTypeString ()}`);
 
          if (this .getTextureType () === 1)
-            options .push (`X3D_TEXTURE${name}_FLIP_Y`);
+            options .push (`X3D_TEXTURE_${name}_FLIP_Y`);
 
          if (this .isLinear ())
-            options .push (`X3D_TEXTURE${name}_LINEAR`);
+            options .push (`X3D_TEXTURE_${name}_LINEAR`);
       }
       else
       {
@@ -193,9 +195,9 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
             options .push (`X3D_${name}_TEXTURE${ext}_LINEAR`);
       }
    },
-   setNamedShaderUniforms (gl, shaderObject, renderObject, uniformStruct, mapping, textureTransformMapping, textureCoordinateMapping)
+   setNamedShaderUniforms (gl, uniformStruct, mapping, textureTransformMapping, textureCoordinateMapping)
    {
-      this .setShaderUniforms (gl, shaderObject, renderObject, uniformStruct);
+      this .setShaderUniforms (gl, uniformStruct);
 
       gl .uniform1i (uniformStruct .textureTransformMapping,  textureTransformMapping  .get (mapping) ?? 0);
       gl .uniform1i (uniformStruct .textureCoordinateMapping, textureCoordinateMapping .get (mapping) ?? 0);

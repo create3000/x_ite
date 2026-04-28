@@ -20,6 +20,13 @@ function HAnimJoint (executionContext)
    this .setVisibleObject (true);
    this .addAllowedTypes (X3DConstants .HAnimJoint, X3DConstants .HAnimSegment);
 
+   // Units
+
+   // this ._llimit .setUnit ("angle"); // TODO: seems to be angle, but is it in radians or degrees?
+   // this ._ulimit .setUnit ("angle"); // TODO: seems to be angle, but is it in radians or degrees?
+   this ._minAngle .setUnit ("angle");
+   this ._maxAngle .setUnit ("angle");
+
    // Legacy
 
    if (executionContext .getSpecificationVersion () <= 3.3)
@@ -121,9 +128,11 @@ Object .defineProperties (HAnimJoint,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "scale",            new Fields .SFVec3f (1, 1, 1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "scaleOrientation", new Fields .SFRotation ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "center",           new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "limitOrientation", new Fields .SFRotation ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "llimit",           new Fields .MFFloat (0, 0, 0)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "ulimit",           new Fields .MFFloat (0, 0, 0)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "limitOrientation", new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "minAngle",         new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "maxAngle",         new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "stiffness",        new Fields .MFFloat (0, 0, 0)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "skinCoordIndex",   new Fields .MFInt32 ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "skinCoordWeight",  new Fields .MFFloat ()),

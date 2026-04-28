@@ -30,24 +30,24 @@ The SpatialSound node belongs to the [Sound](/x_ite/components/overview/#sound) 
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFBool | [ ] | [spatialize](#fields-spatialize) | TRUE |
-| SFFloat | [in, out] | [intensity](#fields-intensity) | 1  |
-| SFVec3f | [in, out] | [location](#fields-location) | 0 0 0  |
-| SFVec3f | [in, out] | [direction](#fields-direction) | 0 0 1  |
-| SFFloat | [in, out] | [gain](#fields-gain) | 1  |
-| SFFloat | [in, out] | [coneOuterGain](#fields-coneOuterGain) | 0  |
-| SFFloat | [in, out] | [coneInnerAngle](#fields-coneInnerAngle) | 6.2832  |
-| SFFloat | [in, out] | [coneOuterAngle](#fields-coneOuterAngle) | 6.2832  |
-| SFString | [in, out] | [distanceModel](#fields-distanceModel) | "INVERSE"  |
-| SFFloat | [in, out] | [maxDistance](#fields-maxDistance) | 10000  |
-| SFFloat | [in, out] | [referenceDistance](#fields-referenceDistance) | 1  |
-| SFFloat | [in, out] | [rolloffFactor](#fields-rolloffFactor) | 1  |
+| SFFloat | [in, out] | [intensity](#fields-intensity) | 1 |
+| SFVec3f | [in, out] | [location](#fields-location) | 0 0 0 |
+| SFVec3f | [in, out] | [direction](#fields-direction) | 0 0 1 |
+| SFFloat | [in, out] | [gain](#fields-gain) | 1 |
+| SFFloat | [in, out] | [coneOuterGain](#fields-coneOuterGain) | 0 |
+| SFFloat | [in, out] | [coneInnerAngle](#fields-coneInnerAngle) | 6.2832 |
+| SFFloat | [in, out] | [coneOuterAngle](#fields-coneOuterAngle) | 6.2832 |
+| SFString | [in, out] | [distanceModel](#fields-distanceModel) | "INVERSE" |
+| SFFloat | [in, out] | [maxDistance](#fields-maxDistance) | 10000 |
+| SFFloat | [in, out] | [referenceDistance](#fields-referenceDistance) | 1 |
+| SFFloat | [in, out] | [rolloffFactor](#fields-rolloffFactor) | 1 |
 | SFBool | [in, out] | [enableHRTF](#fields-enableHRTF) | FALSE |
-| SFBool | [in, out] | [dopplerEnabled](#fields-dopplerEnabled) | FALSE  |
-| SFFloat | [in, out] | [priority](#fields-priority) | 0  |
+| SFBool | [in, out] | [dopplerEnabled](#fields-dopplerEnabled) | FALSE |
+| SFFloat | [in, out] | [priority](#fields-priority) | 0 |
 | MFNode | [in, out] | [children](#fields-children) | [ ] |
 {: .fields }
 
@@ -133,7 +133,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 ### SFFloat [in, out] **coneOuterAngle** 6.2832 <small>[0,2π]</small>
 {: #fields-coneOuterAngle }
 
-*coneOuterAngle* is centered along direction and defines an outer conical volume, within which the sound gain decreases linearly from full gain to coneOuterGain. Outside of *coneOuterAngle*, gain equals coneOuterGain.
+*coneOuterAngle* is centered along direction and defines an outer conical volume, within which the sound gain decreases from full gain to coneOuterGain. Outside of *coneOuterAngle*, gain equals coneOuterGain.
 
 #### Hints
 
@@ -143,7 +143,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 ### SFString [in, out] **distanceModel** "INVERSE" <small>["LINEAR" "INVERSE" "EXPONENTIAL"]</small>
 {: #fields-distanceModel }
 
-*distanceModel* determines how field specifies which algorithm to use for sound attenuation, corresponding to distance between an audio source and a listener, as it moves away from the listener.
+*distanceModel* determines which algorithm to use for sound attenuation, corresponding to distance between an audio source and a listener, as it moves away from the listener.
 
 #### Hint
 
@@ -223,6 +223,13 @@ The *children* field specifies audio-graph sound sources providing input signals
 ### Warning
 
 - While providing sounds on the ground plane, ensure that the audible auralization volume is sufficiently elevated to match avatar height.
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

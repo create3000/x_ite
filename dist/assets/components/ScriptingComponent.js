@@ -1,15 +1,15 @@
-/* X_ITE v12.0.4 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.4")];
+/* X_ITE v14.2.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.2.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 254:
-/***/ ((module) => {
+/***/ 254
+(module) {
 
 module.exports = __X_ITE_X3D__ .jquery;
 
-/***/ })
+/***/ }
 
 /******/ 	});
 /************************************************************************/
@@ -358,7 +358,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
    async loadData ()
    {
       // See: 29.2.2 Script execution
-      // Wait a tick to get user-defined field with name self working.
+      // Wait a tick to get user-defined field with name 'self' working.
       await this .unloadData ();
 
       new (external_X_ITE_X3D_FileLoader_default()) (this) .loadDocument (this ._url, async data =>
@@ -404,7 +404,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
          node .fromString (vrmlSyntax, getScriptNode () .getExecutionContext ());
 
          if (node .getValue ())
-            return node;
+            return external_X_ITE_X3D_SFNodeCache_default().get (node .getValue ());
 
          throw new Error ("SFNode.new: invalid argument.");
       }
@@ -537,7 +537,9 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
          }
       }
 
-      sourceText += ";\n[" + callbacks .map (c => `typeof ${c} !== "undefined" ? ${c} : undefined`) .join (",") + "];";
+      // Add a \n immediately after sourceText, in case there is a comment in the last line.
+
+      sourceText += "\n;\n[" + callbacks .map (c => `typeof ${c} !== "undefined" ? ${c} : undefined`) .join (",") + "];";
 
       const
          result  = this .evaluate (sourceText),

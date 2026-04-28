@@ -3,7 +3,7 @@ title: Normal
 date: 2023-01-07
 nav: components-Rendering
 categories: [components, Rendering]
-tags: [Normal, Rendering]
+tags: [Normal, Rendering, VRML]
 ---
 <style>
 .post h3 {
@@ -13,7 +13,7 @@ tags: [Normal, Rendering]
 
 ## Overview
 
-Normal defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate or CoordinateDouble node, or else to a parent ElevationGrid node. Normal values are perpendicular directions that are used per-polygon or per-vertex when computing lighting and shading.
+Normal defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate or CoordinateDouble node, or else to a parent ElevationGrid node. Normal values are perpendicular directions that are used per-polygon or per-vertex when computing lighting and shading for advanced physically based rendering (PBR) effects.
 
 The Normal node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **2,** its default container field is *normal.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
@@ -30,7 +30,7 @@ The Normal node belongs to the [Rendering](/x_ite/components/overview/#rendering
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFVec3f | [in, out] | [vector](#fields-vector) | [ ] |
 {: .fields }
 
@@ -59,13 +59,21 @@ Set of unit-length normal vectors, corresponding to indexed polygons or vertices
 - Normal values are typically only calculated or applied once, during initial loading of model geometry.
 - Custom Normal values can produce special effects.
 - If no child Normal node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
-- Computation of normal values is performed quite quickly on modern 3D graphics hardware, often with no perceptible delay.
+- Computation of normal values is performed quite rapidly on modern 3D graphics hardware, often with no perceptible delay. This is why many models simply rely on automatic computation of normals.
 - [Normal vectors perpendicular to 3D surface](https://en.wikipedia.org/wiki/Normal_(geometry))
 
 ### Warning
 
 - Adding normal values to a model might significantly increase file size. Testing can help determine proper tradeoffs between file size, network transmission delays and initial rendering speed.
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of Normal Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#Normal)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

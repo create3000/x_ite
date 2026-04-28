@@ -43,7 +43,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
 
       return function ()
       {
-         const vertices = this .geometryNode .getVertices () .getValue ();
+         const vertices = this .geometryNode .getVertices ();
 
          if (vertices .length === 0)
             return null;
@@ -70,7 +70,7 @@ Object .assign (Object .setPrototypeOf (CollidableShape .prototype, X3DNBodyColl
 
       return function ()
       {
-         const vertices = this .geometryNode .getVertices () .getValue ();
+         const vertices = this .geometryNode .getVertices ();
 
          if (vertices .length === 0)
             return null;

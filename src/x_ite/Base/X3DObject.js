@@ -1,27 +1,30 @@
-import Generator from "../InputOutput/Generator.js";
-import Features  from "../Features.js";
+import VRMLGenerator from "../InputOutput/VRMLGenerator.js";
+import XMLGenerator  from "../InputOutput/XMLGenerator.js";
+import JSONGenerator from "../InputOutput/JSONGenerator.js";
+import Features      from "../Features.js";
 
 const
-   _name       = Symbol (),
-   _interests  = Symbol (),
-   _registry   = Symbol (),
-   _userData   = Symbol (),
-   _generator  = Symbol ();
-
-const EMPTY = [ ];
+   _id            = Symbol (),
+   _name          = Symbol (),
+   _interests     = Symbol (),
+   _registry      = Symbol (),
+   _userData      = Symbol (),
+   _vrmlGenerator = Symbol (),
+   _xmlGenerator  = Symbol (),
+   _jsonGenerator = Symbol ();
 
 function X3DObject () { }
 
 Object .assign (X3DObject .prototype,
 {
+   [_id]: undefined,
    [_name]: "",
    [_interests]: null,
    [_registry]: null,
    [_userData]: null,
-   [_generator]: new Generator ({ }),
    getId ()
    {
-      return X3DObject .getId (this);
+      return this [_id] ??= X3DObject .getId (this);
    },
    getTypeName ()
    {
@@ -72,16 +75,21 @@ Object .assign (X3DObject .prototype,
    {
       return this [_interests] ??= new Map ();
    },
-   processInterests ()
+   processInterests: (() =>
    {
-      for (const { callback, weakRef, args } of this [_interests] ?.values () ?? EMPTY)
-      {
-         const object = weakRef .deref ();
+      const EMPTY = [ ];
 
-         if (object)
-            callback .call (object, ... args, this);
-      }
-   },
+      return function ()
+      {
+         for (const { callback, weakRef, args } of this [_interests] ?.values () ?? EMPTY)
+         {
+            const object = weakRef .deref ();
+
+            if (object)
+               callback .call (object, ... args, this);
+         }
+      };
+   })(),
    getUserData (key)
    {
       return this [_userData] ?.get (key);
@@ -99,8 +107,8 @@ Object .assign (X3DObject .prototype,
    toString (options)
    {
       const generator = !options || $.isEmptyObject (options)
-         ? this [_generator]
-         : new Generator (options);
+         ? X3DObject [_vrmlGenerator] ??= new VRMLGenerator ()
+         : new VRMLGenerator (options);
 
       generator .string = "";
 
@@ -115,8 +123,8 @@ Object .assign (X3DObject .prototype,
    toVRMLString (options)
    {
       const generator = !options || $.isEmptyObject (options)
-         ? this [_generator]
-         : new Generator (options);
+         ? X3DObject [_vrmlGenerator] ??= new VRMLGenerator ()
+         : new VRMLGenerator (options);
 
       generator .string = "";
 
@@ -131,8 +139,8 @@ Object .assign (X3DObject .prototype,
    toXMLString (options)
    {
       const generator = !options || $.isEmptyObject (options)
-         ? this [_generator]
-         : new Generator (options);
+         ? X3DObject [_xmlGenerator] ??= new XMLGenerator ()
+         : new XMLGenerator (options);
 
       generator .string = "";
 
@@ -147,8 +155,8 @@ Object .assign (X3DObject .prototype,
    toJSONString (options)
    {
       const generator = !options || $.isEmptyObject (options)
-         ? this [_generator]
-         : new Generator (options);
+         ? X3DObject [_jsonGenerator] ??= new JSONGenerator ()
+         : new JSONGenerator (options);
 
       generator .string = "";
 
@@ -180,10 +188,19 @@ Object .defineProperties (X3DObject .prototype,
    {
       get () { return this .getTypeName (); },
    },
+   // using and Symbol.dispose are not yet supported by Safari.
+   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/using
+   // [Symbol .dispose]:
+   // {
+   //    get () { this .dispose (); },
+   // },
 });
 
 Object .assign (X3DObject,
 {
+   [_vrmlGenerator]: null,
+   [_xmlGenerator]: null,
+   [_jsonGenerator]: null,
    getId: Features .FINALIZATION_REGISTRY ? (() =>
    {
       const

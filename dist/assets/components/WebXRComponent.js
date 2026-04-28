@@ -1,15 +1,15 @@
-/* X_ITE v12.0.4 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.4")];
+/* X_ITE v14.2.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.2.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 254:
-/***/ ((module) => {
+/***/ 254
+(module) {
 
 module.exports = __X_ITE_X3D__ .jquery;
 
-/***/ })
+/***/ }
 
 /******/ 	});
 /************************************************************************/
@@ -183,9 +183,9 @@ Object .assign (ScreenPoint .prototype,
             scale       = radius * screenScale;
 
          const
-            x = modelViewMatrix .X_AXIS .normalize () .multiply (scale),
-            y = modelViewMatrix .Y_AXIS .normalize () .multiply (scale),
-            z = modelViewMatrix .Z_AXIS .normalize () .multiply (scale);
+            x = modelViewMatrix .xAxis .normalize () .multiply (scale),
+            y = modelViewMatrix .yAxis .normalize () .multiply (scale),
+            z = modelViewMatrix .zAxis .normalize () .multiply (scale);
 
          screenMatrix .set (... x, 0, ... y, 0, ... z, 0, ... modelViewMatrix .origin, 1);
 
@@ -281,6 +281,9 @@ var external_X_ITE_X3D_Rotation4_default = /*#__PURE__*/__webpack_require__.n(ex
 ;// external "__X_ITE_X3D__ .Lock"
 const external_X_ITE_X3D_Lock_namespaceObject = __X_ITE_X3D__ .Lock;
 var external_X_ITE_X3D_Lock_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Lock_namespaceObject);
+;// external "__X_ITE_X3D__ .gettext"
+const external_X_ITE_X3D_gettext_namespaceObject = __X_ITE_X3D__ .gettext;
+var external_X_ITE_X3D_gettext_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_gettext_namespaceObject);
 ;// external "__X_ITE_X3D__ .ExamineViewer"
 const external_X_ITE_X3D_ExamineViewer_namespaceObject = __X_ITE_X3D__ .ExamineViewer;
 var external_X_ITE_X3D_ExamineViewer_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_ExamineViewer_namespaceObject);
@@ -429,7 +432,9 @@ Object .assign ((external_X_ITE_X3D_X3DViewer_default()).prototype,
 
 
 
+
 const
+   _xrButton       = Symbol (),
    _sessionLock    = Symbol (),
    _referenceSpace = Symbol (),
    _baseLayer      = Symbol (),
@@ -454,10 +459,9 @@ Object .assign (X3DWebXRContext .prototype,
    },
    xrAddButton ()
    {
-      $("<div></div>")
-         .attr ("part", "xr-button")
-         .attr ("title", "Start WebXR session.")
-         .addClass ("x_ite-private-xr-button")
+      this [_xrButton] = $("<div></div>")
+         .attr ("title", external_X_ITE_X3D_gettext_default()("Start WebXR session."))
+         .addClass (["x_ite-private-xr-button", "x_ite-private-button"])
          .on ("mousedown touchstart", false)
          .on ("mouseup touchend", event =>
          {
@@ -472,7 +476,7 @@ Object .assign (X3DWebXRContext .prototype,
             else
                this .xrStopSession ();
          })
-         .appendTo (this .getSurface ());
+         .appendTo (this .getSurface () .find (".x_ite-private-buttons"));
    },
    async xrStartSession ()
    {
@@ -523,6 +527,10 @@ Object .assign (X3DWebXRContext .prototype,
 
          this .getRenderingProperties () ._XRSession = true;
 
+         // Button
+
+         this [_xrButton] .attr ("title", external_X_ITE_X3D_gettext_default()("Stop WebXR session."));
+
          // session .addEventListener ("select", event =>
          // {
          //    const { inputSource, frame } = event;
@@ -568,6 +576,10 @@ Object .assign (X3DWebXRContext .prototype,
          this .getRenderingProperties () ._ContentScale .removeInterest ("xrContentScale", this);
 
          this .getRenderingProperties () ._XRSession = false;
+
+         // Button
+
+         this [_xrButton] .attr ("title", external_X_ITE_X3D_gettext_default()("Start WebXR session."));
       });
    },
    xrContentScale ()
@@ -950,11 +962,9 @@ const X3DWebXRContext_default_ = X3DWebXRContext;
 external_X_ITE_X3D_Components_default().add ({
    name: "WebXR",
    concreteNodes:
-   [
-   ],
+   [ ],
    abstractNodes:
-   [
-   ],
+   [ ],
    browserContext: WebXR_X3DWebXRContext,
 });
 

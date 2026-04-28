@@ -1,3 +1,4 @@
+import Fields           from "../../Fields.js";
 import X3DNode          from "../Core/X3DNode.js";
 import X3DConstants     from "../../Base/X3DConstants.js";
 import X3DCast          from "../../Base/X3DCast.js";
@@ -10,52 +11,25 @@ function X3DProgrammableShaderObject (executionContext)
 {
    this .addType (X3DConstants .X3DProgrammableShaderObject);
 
-   this .uniformNames = [ ];
+   this .addChildObjects (X3DConstants .outputOnly, "renderedTextures", new Fields .SFTime ());
 
-   this .x3d_ClipPlane                           = [ ];
-   this .x3d_LightType                           = [ ];
-   this .x3d_LightOn                             = [ ];
-   this .x3d_LightColor                          = [ ];
-   this .x3d_LightIntensity                      = [ ];
-   this .x3d_LightAmbientIntensity               = [ ];
-   this .x3d_LightAttenuation                    = [ ];
-   this .x3d_LightLocation                       = [ ];
-   this .x3d_LightDirection                      = [ ];
-   this .x3d_LightBeamWidth                      = [ ];
-   this .x3d_LightCutOffAngle                    = [ ];
-   this .x3d_LightRadius                         = [ ];
-   this .x3d_LightMatrix                         = [ ];
-   this .x3d_ShadowIntensity                     = [ ];
-   this .x3d_ShadowColor                         = [ ];
-   this .x3d_ShadowBias                          = [ ];
-   this .x3d_ShadowMatrix                        = [ ];
-   this .x3d_ShadowMapSize                       = [ ];
-   this .x3d_ShadowMap                           = [ ];
-   this .x3d_Texture                             = [ ];
-   this .x3d_MultiTextureMode                    = [ ];
-   this .x3d_MultiTextureAlphaMode               = [ ];
-   this .x3d_MultiTextureSource                  = [ ];
-   this .x3d_MultiTextureFunction                = [ ];
-   this .x3d_TextureCoordinateGeneratorMode      = [ ];
-   this .x3d_TextureCoordinateGeneratorParameter = [ ];
-   this .x3d_TextureProjectorColor               = [ ];
-   this .x3d_TextureProjectorIntensity           = [ ];
-   this .x3d_TextureProjectorLocation            = [ ];
-   this .x3d_TextureProjectorParams              = [ ];
-   this .x3d_TextureProjectorTexture             = [ ];
-   this .x3d_TextureProjectorMatrix              = [ ];
-   this .x3d_TexCoord                            = [ ];
-   this .x3d_TextureMatrix                       = [ ];
+   // Private properties
 
-   this .fogNode                    = null;
-   this .numClipPlanes              = 0;
-   this .numEnvironmentLights       = 0;
-   this .environmentLightNodes      = [ ];
-   this .numLights                  = 0;
-   this .lightNodes                 = [ ];
-   this .numTextureProjectors       = 0;
-   this .textureProjectorNodes      = [ ];
-   this .textures                   = new Set ();
+   this .uniformNames           = [ ];
+   this .environmentLightNodes  = [ ];
+   this .lightNodes             = [ ];
+   this .textureProjectorNodes  = [ ];
+   this .textures               = new Set ();
+
+   this .x3d_ClipPlane                  = [ ];
+   this .x3d_EnvironmentLight           = [ ];
+   this .x3d_Light                      = [ ];
+   this .x3d_MultiTexture               = [ ];
+   this .x3d_TexCoord                   = [ ];
+   this .x3d_Texture                    = [ ];
+   this .x3d_TextureCoordinateGenerator = [ ];
+   this .x3d_TextureMatrix              = [ ];
+   this .x3d_TextureProjector           = [ ];
 }
 
 Object .assign (X3DProgrammableShaderObject .prototype,
@@ -83,6 +57,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          browser              = this .getBrowser (),
          gl                   = browser .getContext (),
          maxClipPlanes        = browser .getMaxClipPlanes (),
+         maxEnvironmentLights = browser .getMaxEnvironmentLights (),
          maxLights            = browser .getMaxLights (),
          maxTextures          = browser .getMaxTextures (),
          maxTextureTransforms = browser .getMaxTextureTransforms (),
@@ -98,7 +73,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
        */
 
       for (let i = 0; i < maxClipPlanes; ++ i)
-         this .x3d_ClipPlane [i] = gl .getUniformLocation (program, "x3d_ClipPlane[" + i + "]");
+         this .x3d_ClipPlane [i] = gl .getUniformLocation (program, `x3d_ClipPlane[${i}]`);
 
       this .x3d_FogColor           = this .getUniformLocation (gl, program, "x3d_Fog.color",           "x3d_FogColor");
       this .x3d_FogVisibilityStart = this .getUniformLocation (gl, program, "x3d_Fog.visibilityStart", "x3d_FogVisibilityStart");
@@ -120,43 +95,47 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       this .x3d_FillPropertiesTexture    = gl .getUniformLocation (program, "x3d_FillProperties.texture");
       this .x3d_FillPropertiesScale      = gl .getUniformLocation (program, "x3d_FillProperties.scale");
 
-      for (let i = 0; i < maxLights; ++ i)
+      for (let i = 0; i < maxEnvironmentLights; ++ i)
       {
-         this .x3d_LightType [i]             = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].type",             "x3d_LightType[" + i + "]");
-         this .x3d_LightColor [i]            = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].color",            "x3d_LightColor[" + i + "]");
-         this .x3d_LightAmbientIntensity [i] = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].ambientIntensity", "x3d_LightAmbientIntensity[" + i + "]");
-         this .x3d_LightIntensity [i]        = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].intensity",        "x3d_LightIntensity[" + i + "]");
-         this .x3d_LightAttenuation [i]      = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].attenuation",      "x3d_LightAttenuation[" + i + "]");
-         this .x3d_LightLocation [i]         = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].location",         "x3d_LightLocation[" + i + "]");
-         this .x3d_LightDirection [i]        = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].direction",        "x3d_LightDirection[" + i + "]");
-         this .x3d_LightBeamWidth [i]        = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].beamWidth",        "x3d_LightBeamWidth[" + i + "]");
-         this .x3d_LightCutOffAngle [i]      = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].cutOffAngle",      "x3d_LightCutOffAngle[" + i + "]");
-         this .x3d_LightRadius [i]           = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].radius",           "x3d_LightRadius[" + i + "]");
-         this .x3d_LightMatrix [i]           = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].matrix",           "x3d_LightMatrix[" + i + "]");
-
-         this .x3d_ShadowIntensity [i] = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowIntensity");
-         this .x3d_ShadowColor [i]     = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowColor");
-         this .x3d_ShadowBias [i]      = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowBias");
-         this .x3d_ShadowMatrix [i]    = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowMatrix");
-         this .x3d_ShadowMapSize [i]   = gl .getUniformLocation (program, "x3d_LightSource[" + i + "].shadowMapSize");
-         this .x3d_ShadowMap [i]       = gl .getUniformLocation (program, "x3d_ShadowMap[" + i + "]");
+         this .x3d_EnvironmentLight [i] = {
+            color:                 gl .getUniformLocation (program, "x3d_EnvironmentLightSource.color"),
+            intensity:             gl .getUniformLocation (program, "x3d_EnvironmentLightSource.intensity"),
+            ambientIntensity:      gl .getUniformLocation (program, "x3d_EnvironmentLightSource.ambientIntensity"),
+            rotation:              gl .getUniformLocation (program, "x3d_EnvironmentLightSource.rotation"),
+            diffuseTexture:        gl .getUniformLocation (program, "x3d_EnvironmentLightSource.diffuseTexture"),
+            diffuseTextureLevels:  gl .getUniformLocation (program, "x3d_EnvironmentLightSource.diffuseTextureLevels"),
+            specularTexture:       gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularTexture"),
+            specularTextureLevels: gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularTextureLevels"),
+            sheenTexture:          gl .getUniformLocation (program, "x3d_EnvironmentLightSource.sheenTexture"),
+            sheenTextureLevels:    gl .getUniformLocation (program, "x3d_EnvironmentLightSource.sheenTextureLevels"),
+            ggxLUTTexture:         gl .getUniformLocation (program, "x3d_EnvironmentLightSource.ggxLUTTexture"),
+            charlieLUTTexture:     gl .getUniformLocation (program, "x3d_EnvironmentLightSource.charlieLUTTexture"),
+         };
       }
 
-      this .x3d_EnvironmentLightColor                 = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.color");
-      this .x3d_EnvironmentLightIntensity             = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.intensity");
-      this .x3d_EnvironmentLightAmbientIntensity      = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.ambientIntensity");
-      this .x3d_EnvironmentLightRotation              = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.rotation");
-      this .x3d_EnvironmentLightDiffuseTexture        = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.diffuseTexture");
-      this .x3d_EnvironmentLightDiffuseTextureLinear  = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.diffuseTextureLinear");
-      this .x3d_EnvironmentLightDiffuseTextureLevels  = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.diffuseTextureLevels");
-      this .x3d_EnvironmentLightSpecularTexture       = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularTexture");
-      this .x3d_EnvironmentLightSpecularTextureLinear = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularTextureLinear");
-      this .x3d_EnvironmentLightSpecularTextureLevels = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.specularTextureLevels");
-      this .x3d_EnvironmentLightSheenTexture          = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.sheenTexture");
-      this .x3d_EnvironmentLightSheenTextureLinear    = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.sheenTextureLinear");
-      this .x3d_EnvironmentLightSheenTextureLevels    = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.sheenTextureLevels");
-      this .x3d_EnvironmentLightGGXLUTTexture         = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.GGXLUTTexture");
-      this .x3d_EnvironmentLightCharlieLUTTexture     = gl .getUniformLocation (program, "x3d_EnvironmentLightSource.CharlieLUTTexture");
+      for (let i = 0; i < maxLights; ++ i)
+      {
+         this .x3d_Light [i] = {
+            type:             this .getUniformLocation (gl, program, `x3d_LightSource[${i}].type`,             `x3d_LightType[${i}]`),
+            color:            this .getUniformLocation (gl, program, `x3d_LightSource[${i}].color`,            `x3d_LightColor[${i}]`),
+            ambientIntensity: this .getUniformLocation (gl, program, `x3d_LightSource[${i}].ambientIntensity`, `x3d_LightAmbientIntensity[${i}]`),
+            intensity:        this .getUniformLocation (gl, program, `x3d_LightSource[${i}].intensity`,        `x3d_LightIntensity[${i}]`),
+            attenuation:      this .getUniformLocation (gl, program, `x3d_LightSource[${i}].attenuation`,      `x3d_LightAttenuation[${i}]`),
+            location:         this .getUniformLocation (gl, program, `x3d_LightSource[${i}].location`,         `x3d_LightLocation[${i}]`),
+            direction:        this .getUniformLocation (gl, program, `x3d_LightSource[${i}].direction`,        `x3d_LightDirection[${i}]`),
+            beamWidth:        this .getUniformLocation (gl, program, `x3d_LightSource[${i}].beamWidth`,        `x3d_LightBeamWidth[${i}]`),
+            cutOffAngle:      this .getUniformLocation (gl, program, `x3d_LightSource[${i}].cutOffAngle`,      `x3d_LightCutOffAngle[${i}]`),
+            radius:           this .getUniformLocation (gl, program, `x3d_LightSource[${i}].radius`,           `x3d_LightRadius[${i}]`),
+            matrix:           this .getUniformLocation (gl, program, `x3d_LightSource[${i}].matrix`,           `x3d_LightMatrix[${i}]`),
+
+            shadowIntensity: gl .getUniformLocation (program, `x3d_LightSource[${i}].shadowIntensity`),
+            shadowColor:     gl .getUniformLocation (program, `x3d_LightSource[${i}].shadowColor`),
+            shadowBias:      gl .getUniformLocation (program, `x3d_LightSource[${i}].shadowBias`),
+            shadowMatrix:    gl .getUniformLocation (program, `x3d_LightSource[${i}].shadowMatrix`),
+            shadowMapSize:   gl .getUniformLocation (program, `x3d_LightSource[${i}].shadowMapSize`),
+            shadowMap:       gl .getUniformLocation (program, `x3d_ShadowMap[${i}]`),
+         };
+      }
 
       this .x3d_AmbientIntensity  = this .getUniformLocation (gl, program, "x3d_Material.ambientIntensity", "x3d_FrontMaterial.ambientIntensity");
       this .x3d_DiffuseColor      = this .getUniformLocation (gl, program, "x3d_Material.diffuseColor",     "x3d_FrontMaterial.diffuseColor");
@@ -169,7 +148,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       this .x3d_Glossiness        = gl .getUniformLocation (program, "x3d_Material.glossiness");
       this .x3d_OcclusionStrength = gl .getUniformLocation (program, "x3d_Material.occlusionStrength");
       this .x3d_NormalScale       = gl .getUniformLocation (program, "x3d_Material.normalScale");
-      this .x3d_Transparency      = this .getUniformLocation (gl, program, "x3d_Material.transparency",     "x3d_FrontMaterial.transparency");
+      this .x3d_Transparency      = this .getUniformLocation (gl, program, "x3d_Material.transparency", "x3d_FrontMaterial.transparency");
 
       const commonUniforms = [
          // Matrices
@@ -208,45 +187,44 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          };
       }
 
-      this .x3d_TexCoord .length = 0;
-
       for (let i = 0; i < maxTextures; ++ i)
       {
          this .x3d_Texture [i] = {
-            texture2D: gl .getUniformLocation (program, "x3d_Texture2D[" + i + "]"),
-            texture3D: gl .getUniformLocation (program, "x3d_Texture3D[" + i + "]"),
-            textureCube: this .getUniformLocation (gl, program, "x3d_TextureCube[" + i + "]", "x3d_CubeMapTexture[" + i + "]"),
+            texture2D: gl .getUniformLocation (program, `x3d_Texture2D[${i}]`),
+            texture3D: gl .getUniformLocation (program, `x3d_Texture3D[${i}]`),
+            textureCube: this .getUniformLocation (gl, program, `x3d_TextureCube[${i}]`, `x3d_CubeMapTexture[${i}]`),
          }
 
-         this .x3d_MultiTextureMode [i]      = gl .getUniformLocation (program, "x3d_MultiTexture[" + i + "].mode");
-         this .x3d_MultiTextureAlphaMode [i] = gl .getUniformLocation (program, "x3d_MultiTexture[" + i + "].alphaMode");
-         this .x3d_MultiTextureSource [i]    = gl .getUniformLocation (program, "x3d_MultiTexture[" + i + "].source");
-         this .x3d_MultiTextureFunction [i]  = gl .getUniformLocation (program, "x3d_MultiTexture[" + i + "].function");
+         this .x3d_MultiTexture [i] = {
+            mode:      gl .getUniformLocation (program, `x3d_MultiTexture[${i}].mode`),
+            alphaMode: gl .getUniformLocation (program, `x3d_MultiTexture[${i}].alphaMode`),
+            source:    gl .getUniformLocation (program, `x3d_MultiTexture[${i}].source`),
+            function:  gl .getUniformLocation (program, `x3d_MultiTexture[${i}].function`),
+         };
 
-         this .x3d_TextureProjectorColor [i]     = gl .getUniformLocation (program, "x3d_TextureProjectorColor[" + i + "]");
-         this .x3d_TextureProjectorIntensity [i] = gl .getUniformLocation (program, "x3d_TextureProjectorIntensity[" + i + "]");
-         this .x3d_TextureProjectorLocation [i]  = gl .getUniformLocation (program, "x3d_TextureProjectorLocation[" + i + "]");
-         this .x3d_TextureProjectorParams [i]    = gl .getUniformLocation (program, "x3d_TextureProjectorParams[" + i + "]");
-         this .x3d_TextureProjectorMatrix [i]    = gl .getUniformLocation (program, "x3d_TextureProjectorMatrix[" + i + "]");
-         this .x3d_TextureProjectorTexture [i]   = gl .getUniformLocation (program, "x3d_TextureProjectorTexture[" + i + "]");
+         this .x3d_TextureProjector [i] = {
+            color:     gl .getUniformLocation (program, `x3d_TextureProjector[${i}].color`),
+            intensity: gl .getUniformLocation (program, `x3d_TextureProjector[${i}].intensity`),
+            location:  gl .getUniformLocation (program, `x3d_TextureProjector[${i}].location`),
+            params:    gl .getUniformLocation (program, `x3d_TextureProjector[${i}].params`),
+            matrix:    gl .getUniformLocation (program, `x3d_TextureProjector[${i}].matrix`),
+            texture:   gl .getUniformLocation (program, `x3d_TextureProjectorTexture[${i}]`),
+         }
       }
 
       for (let i = 0; i < maxTextureTransforms; ++ i)
-      {
-         const uniform = gl .getUniformLocation (program, "x3d_TextureMatrix[" + i + "]");
+         this .x3d_TextureMatrix [i] = gl .getUniformLocation (program, `x3d_TextureMatrix[${i}]`);
 
-         if (uniform === null)
-            break;
-
-         this .x3d_TextureMatrix [i] = uniform;
-      }
+      this .x3d_TexCoord .length = 0;
 
       for (let i = 0; i < maxTexCoords; ++ i)
       {
-         this .x3d_TextureCoordinateGeneratorMode [i]      = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].mode");
-         this .x3d_TextureCoordinateGeneratorParameter [i] = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].parameter");
+         this .x3d_TextureCoordinateGenerator [i] = {
+            mode:      gl .getUniformLocation (program, `x3d_TextureCoordinateGenerator[${i}].mode`),
+            parameter: gl .getUniformLocation (program, `x3d_TextureCoordinateGenerator[${i}].parameter`),
+         };
 
-         const x3d_TexCoord = this .getAttribLocation (gl, program, "x3d_TexCoord" + i, i ? "" : "x3d_TexCoord");
+         const x3d_TexCoord = this .getAttribLocation (gl, program, `x3d_TexCoord${i}`, i ? "" : "x3d_TexCoord");
 
          if (x3d_TexCoord !== -1)
             this .x3d_TexCoord .push ([i, x3d_TexCoord]);
@@ -303,15 +281,15 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          }
       }
 
-      if (this .x3d_TexCoord .length === 0)
-      {
-         this .enableTexCoordAttribute  = Function .prototype;
-         this .texCoordAttributeDivisor = Function .prototype;
-      }
-      else
+      if (this .x3d_TexCoord .length)
       {
          delete this .enableTexCoordAttribute;
          delete this .texCoordAttributeDivisor;
+      }
+      else
+      {
+         this .enableTexCoordAttribute  = Function .prototype;
+         this .texCoordAttributeDivisor = Function .prototype;
       }
 
       /*
@@ -320,76 +298,72 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       gl .uniform1f (this .x3d_Exposure, Math .max (browser .getBrowserOption ("Exposure"), 0));
 
+      const
+         texture2DUnit   = browser .getDefaultTexture2DUnit (),
+         texture3DUnit   = browser .getDefaultTexture3DUnit (),
+         textureCubeUnit = browser .getDefaultTextureCubeUnit ();
+
+      for (const uniforms of this .x3d_Light)
+         gl .uniform1i (uniforms .shadowMap, texture2DUnit);
+
+      for (const uniform of this .x3d_Texture)
       {
-         const
-            texture2DUnit   = browser .getDefaultTexture2DUnit (),
-            texture3DUnit   = browser .getDefaultTexture3DUnit (),
-            textureCubeUnit = browser .getDefaultTextureCubeUnit ();
-
-         for (const uniform of this .x3d_Texture)
-         {
-            gl .uniform1i (uniform .texture2D,   texture2DUnit);
-            gl .uniform1i (uniform .texture3D,   texture3DUnit);
-            gl .uniform1i (uniform .textureCube, textureCubeUnit);
-         }
-      }
-
-      {
-         const texture2DUnit = browser .getDefaultTexture2DUnit ();
-
-         for (const uniform of this .x3d_ShadowMap)
-            gl .uniform1i (uniform, texture2DUnit);
+         gl .uniform1i (uniform .texture2D,   texture2DUnit);
+         gl .uniform1i (uniform .texture3D,   texture3DUnit);
+         gl .uniform1i (uniform .textureCube, textureCubeUnit);
       }
    },
-   getUniformLocation (gl, program, name, depreciated)
+   getUniformLocation (gl, program, name, deprecated)
    {
       // Legacy function to get uniform location.
 
-      let location = gl .getUniformLocation (program, name);
+      const location = gl .getUniformLocation (program, name);
 
       if (location)
-         return location;
-
-      // Look for depreciated location.
-
-      if (depreciated)
       {
-         location = gl .getUniformLocation (program, depreciated);
+         return location;
+      }
+      else
+      {
+         // Look for deprecated location.
+
+         const location = gl .getUniformLocation (program, deprecated);
 
          if (location)
          {
-            console .warn (this .getTypeName (), this .getName (), "Using uniform location name '" + depreciated + "' is depreciated, use '" + name + "'. See https://create3000.github.io/x_ite/custom-shaders.");
+            console .warn (this .getTypeName (), this .getName (), `Using uniform location name '${deprecated}' is deprecated, use '${name}'. See https://create3000.github.io/x_ite/custom-shaders.`);
          }
 
          return location;
       }
-
-      return 0;
    },
-   getAttribLocation (gl, program, name, depreciated)
+   getAttribLocation (gl, program, name, deprecated)
    {
       // Legacy function to get uniform location.
 
-      let location = gl .getAttribLocation (program, name);
+      const location = gl .getAttribLocation (program, name);
 
       if (location >= 0)
-         return location;
-
-      // Look for depreciated location.
-
-      if (depreciated)
       {
-         location = gl .getAttribLocation (program, depreciated);
+         return location;
+      }
+      else if (deprecated)
+      {
+         // Look for deprecated location.
+
+         const location = gl .getAttribLocation (program, deprecated);
 
          if (location >= 0)
          {
-            console .warn (this .getTypeName (), this .getName (), "Using attribute location name '" + depreciated + "' is depreciated, use '" + name + "'. See https://create3000.github.io/x_ite/custom-shaders.");
+            console .warn (this .getTypeName (), this .getName (), `Using attribute location name '${deprecated}' is deprecated, use '${name}'. See https://create3000.github.io/x_ite/custom-shaders.`);
          }
 
          return location;
       }
-
-      return -1;
+      else
+      {
+         return -1;
+      }
    },
    addShaderFields ()
    {
@@ -428,7 +402,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             }
             case X3DConstants .SFImage:
             {
-               location .array  = new Int32Array (3 + field .array .length);
+               location .array   = new Int32Array (3 + field .array .length);
                location .uniform = gl .uniform1iv;
                break;
             }
@@ -624,12 +598,12 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             }
             case X3DConstants .SFNode:
             {
-               const texture = X3DCast (X3DConstants .X3DTextureNode, field);
+               const textureNode = X3DCast (X3DConstants .X3DTextureNode, field);
 
-               if (texture)
+               if (textureNode)
                {
-                  location .name    = field .getName ();
-                  location .texture = texture;
+                  location .name        = field .getName ();
+                  location .textureNode = textureNode;
 
                   this .textures .add (location);
                }
@@ -638,6 +612,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                   this .textures .delete (location);
                }
 
+               this ._renderedTextures = this .getBrowser () .getCurrentTime ();
                return;
             }
             case X3DConstants .SFRotation:
@@ -730,12 +705,12 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
                for (let i = 0; i < fieldLength; ++ i)
                {
-                  const texture = X3DCast (X3DConstants .X3DTextureNode, field [i]);
+                  const textureNode = X3DCast (X3DConstants .X3DTextureNode, field [i]);
 
-                  if (texture)
+                  if (textureNode)
                   {
-                     locations [i] .name    = field .getName ();
-                     locations [i] .texture = texture;
+                     locations [i] .name        = field .getName ();
+                     locations [i] .textureNode = textureNode;
 
                      this .textures .add (locations [i]);
                   }
@@ -745,6 +720,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                   }
                }
 
+               this ._renderedTextures = this .getBrowser () .getCurrentTime ();
                return;
             }
             case X3DConstants .MFRotation:
@@ -820,6 +796,14 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             return i;
       }
    },
+   getRenderedTextures (renderedTextures)
+   {
+      for (const { textureNode } of this .textures)
+      {
+         if (textureNode .isRenderedTexture ())
+            renderedTextures .add (textureNode);
+      }
+   },
    hasFog (fogNode)
    {
       if (this .fogNode === fogNode)
@@ -869,18 +853,19 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       return function (gl, renderContext, geometryContext, front = true)
       {
-         const { renderObject, fogNode, appearanceNode, hAnimNode, modelViewMatrix } = renderContext;
+         const { renderObject, fogNode, appearanceNode, hAnimNode, modelViewMatrix, textureNode: geometryTextureNode, localObjects } = renderContext;
 
          const
             stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
             materialNode        = front ? appearanceNode .getMaterial () : appearanceNode .getBackMaterial (),
-            textureNode         = renderContext .textureNode || appearanceNode .getTexture ();
+            textureNode         = geometryTextureNode ?? appearanceNode .getTexture (),
+            renderCount         = renderObject .getRenderCount ();
 
          // Set global uniforms.
 
-         if (this .renderCount !== renderObject .getRenderCount ())
+         if (this .renderCount !== renderCount)
          {
-            this .renderCount = renderObject .getRenderCount ();
+            this .renderCount = renderCount;
 
             // Set viewport.
 
@@ -954,7 +939,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          this .numLights            = this .numGlobalLights;
          this .numTextureProjectors = this .numGlobalTextureProjectors;
 
-         for (const localObject of renderContext .localObjects)
+         for (const localObject of localObjects)
             localObject .setShaderUniforms (gl, this, renderObject);
 
          // Alpha
@@ -967,11 +952,11 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
          // Material
 
-         materialNode .setShaderUniforms (gl, this, renderObject, appearanceNode .getTextureTransformMapping (), geometryContext .getTextureCoordinateMapping (), front);
+         materialNode .setShaderUniforms (gl, this, appearanceNode .getTextureTransformMapping (), geometryContext .getTextureCoordinateMapping (), front);
 
          // Texture
 
-         textureNode ?.setShaderUniforms (gl, this, renderObject);
+         textureNode ?.setShaderUniforms (gl, this .x3d_Texture [0], this);
 
          appearanceNode  .getTextureTransform ()  .setShaderUniforms (gl, this);
          geometryContext .getTextureCoordinate () .setShaderUniforms (gl, this);
@@ -988,13 +973,13 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       for (const location of this .textures)
       {
          const
-            texture     = location .texture,
-            textureUnit = this .getBrowser () .getTextureUnit ();
+            texture     = location .textureNode,
+            textureUnit = this .getBrowser () .popTextureUnit ();
 
          if (textureUnit === undefined)
          {
-            console .warn ("Not enough combined texture units for uniform variable '" + location .name + "' available.");
-            return;
+            console .warn (`Not enough combined texture units for uniform variable '${location .name}' available.`);
+            break;
          }
 
          gl .activeTexture (gl .TEXTURE0 + textureUnit);

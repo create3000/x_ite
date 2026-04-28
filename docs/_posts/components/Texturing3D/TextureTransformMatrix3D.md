@@ -31,9 +31,9 @@ The TextureTransformMatrix3D node belongs to the [Texturing3D](/x_ite/components
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [mapping](#fields-mapping) | "" |
-| SFMatrix4f | [in, out] | [matrix](#fields-matrix) | 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1  |
+| SFMatrix4f | [in, out] | [matrix](#fields-matrix) | 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -64,13 +64,20 @@ The *mapping* label identifies which texture coordinates and transformations are
 ### Hints
 
 - Order of operations is translation, rotation about center, non-uniform scale about center.
-- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding TextureTransformMatrix3D.
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding TextureTransformMatrix3D.
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
 
 ### Warnings
 
 - Resulting visible effects appear reversed because image changes occur before mapping to geometry.
 - Requires X3D `profile='Full'` or else include `<component name='Texturing3D' level='1'/>`
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

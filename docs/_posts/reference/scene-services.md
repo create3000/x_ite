@@ -3,7 +3,7 @@ title: Scene Services
 date: 2022-11-28
 nav: reference
 categories: [Reference]
-tags: [Scene, Services, Authoring, Interface]
+tags: [X3DScene, ECMAScript, Javascript]
 ---
 
 ## Hierarchy
@@ -27,55 +27,84 @@ None. This object cannot be instantiated by the user.
 
 #### **specificationVersion**: string
 
-The string represent the basic specification version used by the parsed file in decimal format. For example, a scene conforming to this specification returns a value such as "4.0". This property is read only.
+The string represent the basic specification version used by the parsed file in decimal format. For example, a scene conforming to this specification returns a value such as "4.0". This property is read-only.
 
 #### **encoding**: string
 
-The encoding is represented as a string that describes the data encoding used. Valid values are "ASCII", "VRML", "XML", "BINARY", "SCRIPTED", "BIFS", "NONE". This property is read only.
+The encoding is represented as a string that describes the data encoding used. Valid values are "ASCII", "VRML", "XML", "BINARY", "SCRIPTED", "BIFS", "NONE". This property is read-only.
+
+Additional valid values are "GLTF", "OBJ", "STL", "PLY", "SVG".
+
+<x3d-script-area name="X3D ECMAScript Example: X3DExecutionContext specificationVersion/encoding">
+<pre>
+const scene = Browser .currentScene;
+
+print (scene .specificationVersion);
+print (scene .encoding);
+
+// Expected output: {{ site.x3d_latest_version }}
+// Expected output: SCRIPTED
+</pre>
+</x3d-script-area>
 
 #### **profile**: ProfileInfo | null
 
-A reference to the ProfileInfo object used by this execution context. A value of `null` implies profile `Full`.  This property is read only.
+A reference to the ProfileInfo object used by this execution context. A value of `null` implies profile `Full`.  This property is read-only.
 
 #### **components**: ComponentInfoArray
 
-A reference to the ComponentInfoArray object used by this execution context. This property is read only.
+A reference to the ComponentInfoArray object used by this execution context. This property is read-only.
 
 #### **worldURL**: string
 
-A string containing the URL of this execution context. This property is read only.
+A string containing the URL of this execution context. This property is read-only.
 
 #### **baseURL**: string
 
-A string containing the URL against which relative URLs are resolved. This property is read only.
+A string containing the URL against which relative URLs are resolved. This property is read-only.
 
 #### **units**: UnitInfoArray
 
-A reference to the UnitInfoArray object used by this execution context. This property is read only.
+A reference to the UnitInfoArray object used by this execution context. This property is read-only.
 
 #### **namedNodes**: NamedNodesArray
 
-A reference to the NamedNodesArray object used by this execution context. This property is read only.
+A reference to the NamedNodesArray object used by this execution context. This property is read-only.
 
 #### **importedNodes**: ImportedNodesArray
 
-A reference to the ImportedNodesArray object used by this execution context. This property is read only.
+A reference to the ImportedNodesArray object used by this execution context. This property is read-only.
 
 #### **rootNodes**: MFNode
 
 When used inside a prototype instance, this property is not writable. The MFNode object instance is also not be writable. When used anywhere else, it is writable.
 
+<x3d-script-area name="X3D ECMAScript Example: X3DExecutionContext rootNodes">
+<pre>
+const scene = Browser .currentScene;
+
+scene .rootNodes .push (scene .createNode ("Group"));
+scene .rootNodes .push (scene .createNode ("Switch"));
+
+for (const node of scene .rootNodes)
+  print (node);
+
+// Expected output: Group { }
+// Expected output: Switch { }
+</pre>
+</x3d-script-area>
+
 #### **protos**: ProtoDeclarationArray
 
-A reference to the ProtoDeclarationArray object used by this execution context. This property is read only.
+A reference to the ProtoDeclarationArray object used by this execution context. This property is read-only.
 
 #### **externprotos**: ExternProtoDeclarationArray
 
-A reference to the ExternProtoDeclarationArray object used by this execution context. This property is read only.
+A reference to the ExternProtoDeclarationArray object used by this execution context. This property is read-only.
 
 #### **routes**: RouteArray
 
-A reference to the RouteArray object used by this execution context. This property is read only.
+A reference to the RouteArray object used by this execution context. This property is read-only.
 
 ### Methods
 
@@ -86,6 +115,22 @@ Creates a new default instance of the node given by the *typeName* string contai
 #### **createProto** (*protoName: string*): SFNode
 
 Creates a new default instance of the prototype given by the *protoName* string containing the name of an prototype or extern prototype of this execution context.
+
+<x3d-script-area name="X3D ECMAScript Example: X3DExecutionContext createProto">
+<pre>
+const scene = await Browser .createX3DFromString (`#X3D V{{ site.x3d_latest_version }} utf8
+PROFILE Interchange
+PROTO MyBox [ ]
+{
+  Shape { geometry Box { } }
+}
+`);
+
+print (scene .createProto ("MyBox"));
+
+// Expected output: MyBox { }
+</pre>
+</x3d-script-area>
 
 #### **getNamedNode** (*name: string*): SFNode
 
@@ -123,6 +168,22 @@ Removes the imported node *importedName.*
 
 Add a route from the passed *sourceField* to the passed *destinationField.* The return value is an X3DRoute object.
 
+<x3d-script-area name="X3D ECMAScript Example: X3DExecutionContext addRoute">
+<pre>
+const scene        = Browser .currentScene;
+const timer        = scene .createNode ("TimeSensor");
+const interpolator = scene .createNode ("PositionInterpolator");
+
+const route = scene .addRoute (timer, "fraction_changed", interpolator, "set_fraction");
+
+print (route);
+print (scene .routes .length);
+
+// Expected output: [object X3DRoute]
+// Expected output: 1
+</pre>
+</x3d-script-area>
+
 #### **deleteRoute** (*route: X3DRoute*): void
 
 Remove the route if it is connected.
@@ -152,7 +213,7 @@ When used inside a prototype instance, this property is not writable. The MFNode
 
 #### **exportedNodes**: ExportedNodesArray
 
-A reference to the ExportedNodesArray object used by this execution context. This property is read only.
+A reference to the ExportedNodesArray object used by this execution context. This property is read-only.
 
 ### Methods
 
@@ -198,6 +259,10 @@ Creates or updates the metadata with *name* and *values.* There must be at least
 
 Adds the metadata with *name* and *value.*
 
+#### **addMetaData** (*name: string, values: string []*): void
+
+Adds the metadata with *name* and *values.* There must be at least one value in *values.*
+
 #### **removeMetaData** (*name: string*): void
 
 Removes the metadata *name.*
@@ -214,6 +279,20 @@ Removes *node* from the list of root nodes.
 
 Returns a reference to the node with the exported name *exportedName.* If no exported node *exportedName* is found an exception is thrown.
 
+<x3d-script-area name="X3D ECMAScript Example: X3DExecutionContext getExportedNode">
+<pre>
+const scene = await Browser .createX3DFromString (`#X3D V{{ site.x3d_latest_version }} utf8
+PROFILE Interchange
+DEF T Transform { }
+EXPORT T
+`);
+
+print (scene .getExportedNode ("T"));
+
+// Expected output: Transform { }
+</pre>
+</x3d-script-area>
+
 #### **addExportedNode** (*exportedName: string, node: SFNode*): void
 
 Creates the exported node *exportedName.*
@@ -226,7 +305,7 @@ Creates or updates the exported node *exportedName.*
 
 Removes the exported node *exportedName.*
 
-#### **toVRMLString** (options?: Options): string <small><span class="blue">non-standard</span></small>
+#### **toVRMLString** (options?: Options): string <small class="blue">non-standard</small>
 
 Returns the X3D VRML-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, will produce this scene.
 
@@ -242,13 +321,28 @@ An object with one or more of these properties:
 * **html:** boolean, HTML style, default: false
 * **closingTags:** boolean, use closing tags, default: false
 
-#### **toXMLString** (options?: Options): string <small><span class="blue">non-standard</span></small>
+<x3d-script-area name="X3D ECMAScript Example: X3DScene toVRMLString">
+<pre>
+const scene        = Browser .currentScene;
+const timer        = scene .createNode ("TimeSensor");
+const interpolator = scene .createNode ("PositionInterpolator");
+
+scene .rootNodes .push (timer, interpolator);
+scene .addNamedNode ("Timer", timer);
+scene .addNamedNode ("Interpolator", interpolator);
+scene .addRoute (timer, "fraction_changed", interpolator, "set_fraction");
+
+print (scene .toVRMLString ());
+</pre>
+</x3d-script-area>
+
+#### **toXMLString** (options?: Options): string <small class="blue">non-standard</small>
 
 Returns the X3D XML-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, will produce this scene.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
-#### **toJSONString** (options?: Options): string <small><span class="blue">non-standard</span></small>
+#### **toJSONString** (options?: Options): string <small class="blue">non-standard</small>
 
 Returns the X3D JSON-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, will produce this scene.
 
@@ -266,19 +360,19 @@ None. This object cannot be instantiated by the user.
 
 #### **name**: string
 
-A string of the formal name of this profile. This property is read only.
+A string of the formal name of this profile. This property is read-only.
 
 #### **title**: string
 
-A generic, freeform title string provided by the browser manufacturer. This property is read only.
+A generic, freeform title string provided by the browser manufacturer. This property is read-only.
 
 #### **providerURL**: string
 
-If provided, the URL to the entity that wrote this component. This assumes that extensions to the browser may not necessarily be provided by the browser writer's themselves. This property is read only.
+If provided, the URL to the entity that wrote this component. This assumes that extensions to the browser may not necessarily be provided by the browser writer's themselves. This property is read-only.
 
 #### **components**: ComponentInfoArray
 
-An ComponentInfoArray object of the ComponentInfo object instances that make up this profile. This property is read only.
+An ComponentInfoArray object of the ComponentInfo object instances that make up this profile. This property is read-only.
 
 ### Methods
 
@@ -296,19 +390,19 @@ None. This object cannot be instantiated by the user.
 
 #### **name**: string
 
-A string of the formal name of this profile. This property is read only.
+A string of the formal name of this profile. This property is read-only.
 
 #### **level**: number
 
-A number of the level of support of this instance. This property is read only.
+A number of the level of support of this instance. This property is read-only.
 
 #### **title**: string
 
-A generic, freeform title string provided by the browser manufacturer. This property is read only.
+A generic, freeform title string provided by the browser manufacturer. This property is read-only.
 
 #### **providerURL**: string
 
-If provided, the URL to the entity that wrote this component. This assumes that extensions to the browser may not necessarily be provided by the browser writer's themselves. This property is read only.
+If provided, the URL to the entity that wrote this component. This assumes that extensions to the browser may not necessarily be provided by the browser writer's themselves. This property is read-only.
 
 ### Methods
 
@@ -326,7 +420,7 @@ None. This object cannot be instantiated by the user.
 
 #### **category**: string
 
-The category of default unit being modified as defined in the table. This property is read only.
+The category of default unit being modified as defined in the table. This property is read-only.
 
 #### Standard units
 
@@ -354,11 +448,11 @@ The standard color space used by this International Standard is RGB where each c
 
 #### **name**: string
 
-A string of the name assigned to the new default unit. This property is read only.
+A string of the name assigned to the new default unit. This property is read-only.
 
 #### **conversionFactor**: number
 
-The double-precision number needed to convert from the new default unit to the initial default unit. This property is read only.
+The double-precision number needed to convert from the new default unit to the initial default unit. This property is read-only.
 
 ### Methods
 
@@ -376,19 +470,23 @@ None. This object cannot be instantiated by the user.
 
 #### **inlineNode**: SFNode
 
-The SFNode object of the Inline node. This property is read only.
+The SFNode object of the Inline node. This property is read-only.
 
 #### **exportedName**: string
 
-A string of the exported name. This property is read only.
+A string of the exported name. This property is read-only.
 
 #### **exportedNode**: SFNode
 
-The SFNode object of the exported node. This property is read only.
+The SFNode object of the exported node. This property is read-only.
 
 #### **importedName**: string
 
-A string of the imported name. This property is read only.
+A string of the imported name. This property is read-only.
+
+#### **description**: string
+
+An optional simple DESCRIPTION of intended purpose for the node provided via IMPORT.
 
 ## X3DExportedNode
 
@@ -402,11 +500,15 @@ None. This object cannot be instantiated by the user.
 
 #### **exportedName**: string
 
-A string of the exported name. This property is read only.
+A string of the exported name. This property is read-only.
 
 #### **localNode**: SFNode
 
-The SFNode object of the corresponding node. This property is read only.
+The SFNode object of the corresponding node. This property is read-only.
+
+#### **description**: string
+
+An optional simple DESCRIPTION of intended purpose for the node provided via EXPORT.
 
 ## ProfileInfoArray
 
@@ -416,15 +518,19 @@ ProfileInfoArray is an object that represents an array of ProfileInfo objects. T
 
 None. This object cannot be instantiated by the user.
 
+### Iterator
+
+The `[@@iterator]()` method of ProfileInfoArray instances implements the iterable protocol and allows ProfileInfoArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
+
 ### Properties
 
 #### **length**: number
 
-An integer containing the number of elements in the array. This property is read only.
+An integer containing the number of elements in the array. This property is read-only.
 
 ### Methods
 
-None
+Almost all read-only functions known from JavaScript [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array).
 
 ## ComponentInfoArray
 
@@ -434,15 +540,19 @@ ComponentInfoArray is an object that represents an array of ComponentInfo object
 
 None. This object cannot be instantiated by the user.
 
+### Iterator
+
+The `[@@iterator]()` method of ComponentInfoArray instances implements the iterable protocol and allows ComponentInfoArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
+
 ### Properties
 
 #### **length**: number
 
-An integer containing the number of elements in the array. This property is read only.
+An integer containing the number of elements in the array. This property is read-only.
 
 ### Methods
 
-None
+Almost all read-only functions known from JavaScript [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array).
 
 ## UnitInfoArray
 
@@ -452,15 +562,19 @@ UnitInfoArray is an object that represents an array of UnitInfo objects. This is
 
 None. This object cannot be instantiated by the user.
 
+### Iterator
+
+The `[@@iterator]()` method of UnitInfoArray instances implements the iterable protocol and allows UnitInfoArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
+
 ### Properties
 
 #### **length**: number
 
-An integer containing the number of elements in the array. This property is read only.
+An integer containing the number of elements in the array. This property is read-only.
 
 ### Methods
 
-None
+Almost all read-only functions known from JavaScript [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array).
 
 ## ImportedNodesArray
 
@@ -470,15 +584,19 @@ ImportedNodesArray is an object that represents an array of X3DImportedNode obje
 
 None. This object cannot be instantiated by the user.
 
+### Iterator
+
+The `[@@iterator]()` method of ImportedNodesArray instances implements the iterable protocol and allows ImportedNodesArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
+
 ### Properties
 
 #### **length**: number
 
-An integer containing the number of elements in the array. This property is read only.
+An integer containing the number of elements in the array. This property is read-only.
 
 ### Methods
 
-None
+Almost all read-only functions known from JavaScript [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array).
 
 ## ExportedNodesArray
 
@@ -488,12 +606,16 @@ ExportedNodesArray is an object that represents an array of X3DExportedNode obje
 
 None. This object cannot be instantiated by the user.
 
+### Iterator
+
+The `[@@iterator]()` method of ExportedNodesArray instances implements the iterable protocol and allows ExportedNodesArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
+
 ### Properties
 
 #### **length**: number
 
-An integer containing the number of elements in the array. This property is read only.
+An integer containing the number of elements in the array. This property is read-only.
 
 ### Methods
 
-None
+Almost all read-only functions known from JavaScript [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array).

@@ -6,6 +6,7 @@ import X3DMaterialExtensionNode from "./X3DMaterialExtensionNode.js";
 import X3DConstants             from "../../Base/X3DConstants.js";
 import X3DCast                  from "../../Base/X3DCast.js";
 import ExtensionKeys            from "../../Browser/X_ITE/ExtensionKeys.js";
+import Algorithm                from "../../../standard/Math/Algorithm.js";
 
 // Register key.
 
@@ -58,13 +59,13 @@ Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype,
    },
    set_iridescence__ ()
    {
-      this .iridescence = Math .max (this ._iridescence .getValue (), 0);
+      this .iridescence = Algorithm .clamp (this ._iridescence .getValue (), 0, 1);
    },
    set_iridescenceTexture__ ()
    {
       this .iridescenceTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._iridescenceTexture);
 
-      this .setTexture (0, this .iridescenceTextureNode);
+      this .addTexture (0, this .iridescenceTextureNode);
    },
    set_iridescenceIndexOfRefraction__ ()
    {
@@ -82,7 +83,7 @@ Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype,
    {
       this .iridescenceThicknessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._iridescenceThicknessTexture);
 
-      this .setTexture (1, this .iridescenceThicknessTextureNode);
+      this .addTexture (1, this .iridescenceThicknessTextureNode);
    },
    getExtensionKey ()
    {
@@ -107,7 +108,7 @@ Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype,
       uniforms .push ("x3d_IridescenceThicknessMinimumEXT");
       uniforms .push ("x3d_IridescenceThicknessMaximumEXT");
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform1f (shaderObject .x3d_IridescenceEXT,                  this .iridescence);
       gl .uniform1f (shaderObject .x3d_IridescenceIndexOfRefractionEXT, this .iridescenceIndexOfRefraction);
@@ -118,16 +119,12 @@ Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype,
          return;
 
       this .iridescenceTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_IridescenceTextureEXT,
          this ._iridescenceTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .iridescenceThicknessTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_IridescenceThicknessTextureEXT,
          this ._iridescenceThicknessTextureMapping .getValue (),
          textureTransformMapping,

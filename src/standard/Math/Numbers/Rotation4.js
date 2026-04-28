@@ -87,7 +87,7 @@ Object .assign (Rotation4 .prototype,
       copy [_z]     = this [_z];
       copy [_angle] = this [_angle];
 
-      copy [_quaternion]  = this [_quaternion] .copy ();
+      copy [_quaternion] = this [_quaternion] .copy ();
 
       return copy;
    },
@@ -259,10 +259,10 @@ Object .assign (Rotation4 .prototype,
    setEuler (x, y, z, order = "XYZ")
    {
       // Quaternion is then already normalized.
-		this [_quaternion] .setEuler (x, y, z, order);
+      this [_quaternion] .setEuler (x, y, z, order);
       this .update ();
-		return this;
-	},
+      return this;
+   },
    getEuler (euler = [ ], order = "XYZ")
    {
       return this [_quaternion] .getEuler (euler, order);

@@ -47,7 +47,7 @@ Object .assign (Object .setPrototypeOf (IORMaterialExtension .prototype, X3DMate
    {
       uniforms .push ("x3d_IorEXT");
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform1f (shaderObject .x3d_IorEXT, this .indexOfRefraction);
    },

@@ -3,7 +3,7 @@ title: TextureCoordinate
 date: 2023-01-07
 nav: components-Texturing
 categories: [components, Texturing]
-tags: [TextureCoordinate, Texturing]
+tags: [TextureCoordinate, Texturing, VRML]
 ---
 <style>
 .post h3 {
@@ -31,7 +31,7 @@ The TextureCoordinate node belongs to the [Texturing](/x_ite/components/overview
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [mapping](#fields-mapping) | "" |
 | MFVec2f | [in, out] | [point](#fields-point) | [ ] |
 {: .fields }
@@ -67,6 +67,14 @@ Pairs of 2D (s,t) texture coordinates, either in range [0,1] or higher if repeat
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
 - [X3D Texturing component Figure 18.1, Texture map coordinate system](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texturing.html#f-TextureMapCoordSystem)
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of TextureCoordinate Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#TextureCoordinate)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

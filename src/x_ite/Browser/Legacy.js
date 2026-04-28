@@ -5,7 +5,7 @@ const Legacy =
       if (!elements .length)
          return;
 
-      console .warn ("Use of <X3DCanvas> element is depreciated, please use <x3d-canvas> element instead. See https://create3000.github.io/x_ite/#embedding-x_ite-within-a-web-page.");
+      console .warn ("Use of <X3DCanvas> element is deprecated, please use <x3d-canvas> element instead. See https://create3000.github.io/x_ite/#embedding-x_ite-within-a-web-page.");
 
       $.map (elements, element => new X3DBrowser (element));
    },
@@ -19,9 +19,6 @@ const Legacy =
       for (const [name, property] of Object .entries (properties))
       {
          const set = property .set;
-
-         if (!set)
-            continue;
 
          property .set = function (value)
          {
@@ -44,7 +41,8 @@ const Legacy =
       element .attr ("tabindex", element .attr ("tabindex") ?? 0);
 
       // Process initial attributes.
-      browser .connectedCallback ();
+      for (const { name, value } of element [0] .attributes)
+         browser .attributeChangedCallback (name, undefined, value);
    },
    error (elements, error)
    {

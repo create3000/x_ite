@@ -3,7 +3,7 @@ title: Adding Sound
 date: 2022-11-28
 nav: tutorials-textures-lights-and-environment
 categories: [Tutorials]
-tags: [Sound]
+tags: [Sound, AudioClip]
 ---
 ## Motivation
 
@@ -36,9 +36,9 @@ An [AudioClip](/x_ite/components/sound/audioclip/) node creates a digital sound 
 <Sound>
   <AudioClip
       url='"myfile.mp3"'
-      pitch='1.0'
-      startTime='0.0'
-      stopTime='0.0'
+      pitch='1'
+      startTime='0'
+      stopTime='0'
       loop='false'/>
 </Sound>
 ```
@@ -49,9 +49,9 @@ An [AudioClip](/x_ite/components/sound/audioclip/) node creates a digital sound 
 Sound {
   source AudioClip {
     url "myfile.mp3"
-    pitch 1.0
-    startTime 0.0
-    stopTime  0.0
+    pitch 1
+    startTime 0
+    stopTime 0
     loop FALSE
   }
 }
@@ -71,9 +71,9 @@ A [MovieTexture](/x_ite/components/texturing/movietexture/) node creates a movie
 <Sound>
   <MovieTexture containerField='source'
       url='"movie.mp4"'
-      speed='1.0'
-      startTime='0.0'
-      stopTime='0.0'
+      speed='1'
+      startTime='0'
+      stopTime='0'
       loop='false'/>
 </Sound>
 ```
@@ -84,9 +84,9 @@ A [MovieTexture](/x_ite/components/texturing/movietexture/) node creates a movie
 Sound {
   source MovieTexture {
     url "movie.mp4"
-    speed 1.0
-    startTime 0.0
-    stopTime  0.0
+    speed 1
+    startTime 0
+    stopTime 0
     loop FALSE
   }
 }
@@ -115,8 +115,8 @@ A [Sound](/x_ite/components/sound/sound/) node describes a sound emitter:
 
 ```x3d
 <Sound
-    location='0.0 0.0 0.0'
-    direction='0.0 0.0 1.0'>
+    location='0 0 0'
+    direction='0 0 1'>
   <AudioClip ... />
 </Sound>
 ```
@@ -126,8 +126,8 @@ A [Sound](/x_ite/components/sound/sound/) node describes a sound emitter:
 ```vrml
 Sound {
   source AudioClip { ... }
-  location  0.0 0.0 0.0
-  direction 0.0 0.0 1.0
+  location 0 0 0
+  direction 0 0 1
 }
 ```
 
@@ -142,9 +142,9 @@ A [Sound](/x_ite/components/sound/sound/) node describes a sound emitter:
 ```x3d
 <Sound
     ...
-    intensity='1.0'
+    intensity='1'
     spatialize='true'
-    priority='0.0'>
+    priority='0'>
 </Sound>
 ```
 
@@ -153,9 +153,9 @@ A [Sound](/x_ite/components/sound/sound/) node describes a sound emitter:
 ```vrml
 Sound {
   ...
-  intensity 1.0
+  intensity 1
   spatialize TRUE
-  priority 0.0
+  priority 0
 }
 ```
 
@@ -183,7 +183,7 @@ A [Sound](/x_ite/components/sound/sound/) node describes a sound emitter:
 
 - *spatialize* **TRUE**
 - *minFront* etc. with small values
-- *priority* 1.0
+- *priority* 1
 
 ## A sample using triggered sound
 
@@ -218,7 +218,7 @@ Group {
     Shape {
       appearance Appearance {
         material Material {
-          diffuseColor 1.0 1.0 1.0
+          diffuseColor 1 1 1
         }
       }
       geometry Box {
@@ -227,11 +227,11 @@ Group {
     }
     DEF C4 TouchSensor { }
     Sound {
-      maxFront 100.0
-      maxBack 100.0
+      maxFront 100
+      maxBack 100
       source DEF PitchC4 AudioClip {
         url "tone1.mp3"
-        pitch 1.0
+        pitch 1
       }
     }
   ]
@@ -254,14 +254,14 @@ ROUTE C4.touchTime TO PitchC4.set_startTime
 [AudioClip](/x_ite/components/sound/audioclip/) node:
 
 - *loop* **TRUE**
-- *startTime* 0.0 (default)
-- *stopTime* 0.0 (default)
+- *startTime* 0 (default)
+- *stopTime* 0 (default)
 
 [Sound](/x_ite/components/sound/sound/) node:
 
 - *spatialize* **TRUE** (default)
 - *minFront* etc. with medium values
-- *priority* 0.0 (default)
+- *priority* 0 (default)
 
 ## A sample using continuous localized sound
 
@@ -287,19 +287,19 @@ ROUTE C4.touchTime TO PitchC4.set_startTime
 
 ```vrml
 Sound {
-  minFront 5.0
-  minBack  5.0
-  maxFront 10.0
-  maxBack  10.0
+  minFront 5
+  minBack 5
+  maxFront 10
+  maxBack 10
   source AudioClip {
     url "willow1.mp3"
     loop TRUE
-    startTime 1.0
-    stopTime 0.0
+    startTime 1
+    stopTime 0
   }
 }
 Transform {
-  translation 0.0 -1.65 0.0
+  translation 0 -1.65 0
   children [
     Inline {
       url "sndmark.wrl"
@@ -313,14 +313,14 @@ Transform {
 [AudioClip](/x_ite/components/sound/audioclip/) node:
 
 - *loop* **TRUE**
-- *startTime* 0.0 (default)
-- *stopTime* 0.0 (default)
+- *startTime* 0 (default)
+- *stopTime* 0 (default)
 
 [Sound](/x_ite/components/sound/sound/) node:
 
 - *spatialize* **FALSE** (default)
 - *minFront* etc. with large values
-- *priority* 0.0 (default)
+- *priority* 0 (default)
 
 ## Summary
 

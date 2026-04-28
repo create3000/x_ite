@@ -3,7 +3,7 @@ title: Color
 date: 2023-01-07
 nav: components-Rendering
 categories: [components, Rendering]
-tags: [Color, Rendering]
+tags: [Color, Rendering, VRML]
 ---
 <style>
 .post h3 {
@@ -30,7 +30,7 @@ The Color node belongs to the [Rendering](/x_ite/components/overview/#rendering)
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFColor | [in, out] | [color](#fields-color) | [ ] |
 {: .fields }
 
@@ -57,7 +57,7 @@ The *color* field defines an array of 3-tuple RGB colors.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/Color/Color.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Rendering/Color/Color.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Rendering/Color/screenshot.avif" alt="Color"/>
 </x3d-canvas>
 
@@ -65,6 +65,14 @@ The *color* field defines an array of 3-tuple RGB colors.
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Rendering/Color/Color.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of Color Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#Color)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

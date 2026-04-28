@@ -12,6 +12,8 @@ function TextureCoordinateGenerator (executionContext)
 
    this .addType (X3DConstants .TextureCoordinateGenerator);
 
+   // Private properties
+
    this .mode      = ModeType .SPHERE;
    this .parameter = new Float32Array (6);
 }
@@ -71,8 +73,10 @@ Object .assign (Object .setPrototypeOf (TextureCoordinateGenerator .prototype, X
    },
    setShaderUniforms (gl, shaderObject, channel = 0)
    {
-      gl .uniform1i  (shaderObject .x3d_TextureCoordinateGeneratorMode [channel],      this .mode);
-      gl .uniform1fv (shaderObject .x3d_TextureCoordinateGeneratorParameter [channel], this .parameter);
+      const uniforms = shaderObject .x3d_TextureCoordinateGenerator [channel];
+
+      gl .uniform1i  (uniforms .mode,      this .mode);
+      gl .uniform1fv (uniforms .parameter, this .parameter);
    },
 });
 

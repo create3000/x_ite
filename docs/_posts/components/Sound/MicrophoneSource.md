@@ -31,15 +31,15 @@ The MicrophoneSource node belongs to the [Sound](/x_ite/components/overview/#sou
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFFloat | [in, out] | [gain](#fields-gain) | 1  |
+| SFFloat | [in, out] | [gain](#fields-gain) | 1 |
 | SFString | [in, out] | [mediaDeviceID](#fields-mediaDeviceID) | "" |
-| SFTime | [in, out] | [startTime](#fields-startTime) | 0  |
-| SFTime | [in, out] | [resumeTime](#fields-resumeTime) | 0  |
-| SFTime | [in, out] | [pauseTime](#fields-pauseTime) | 0  |
-| SFTime | [in, out] | [stopTime](#fields-stopTime) | 0  |
+| SFTime | [in, out] | [startTime](#fields-startTime) | 0 |
+| SFTime | [in, out] | [resumeTime](#fields-resumeTime) | 0 |
+| SFTime | [in, out] | [pauseTime](#fields-pauseTime) | 0 |
+| SFTime | [in, out] | [stopTime](#fields-stopTime) | 0 |
 | SFBool | [out] | [isPaused](#fields-isPaused) |  |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFTime | [out] | [elapsedTime](#fields-elapsedTime) |  |
@@ -174,13 +174,20 @@ Current elapsed time since [AudioClip](/x_ite/components/sound/audioclip/) activ
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Sound/MicrophoneSource/MicrophoneSource.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Sound/MicrophoneSource/MicrophoneSource.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Sound/MicrophoneSource/screenshot.avif" alt="MicrophoneSource"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Sound/MicrophoneSource/MicrophoneSource.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Sound/MicrophoneSource/MicrophoneSource.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

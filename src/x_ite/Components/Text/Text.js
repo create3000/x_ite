@@ -70,44 +70,29 @@ Object .assign (Object .setPrototypeOf (Text .prototype, X3DGeometryNode .protot
 
       this .fontStyleNode .addInterest ("requestRebuild", this);
 
-      this .textGeometry = this .fontStyleNode .getTextGeometry (this);
+      this .textGeometry = this .fontStyleNode .createTextGeometry (this);
    },
    build ()
    {
       this .textGeometry .update ();
-      this .textGeometry .build ();
 
       this .setSolid (this ._solid .getValue ());
    },
-   traverse (type, renderObject)
+   traverseBefore (type, renderObject, shapeNode)
    {
-      this .textGeometry .traverse (type, renderObject);
-
-      X3DGeometryNode .prototype .traverse .call (this, type, renderObject);
+      this .textGeometry .traverseBefore ?.(type, renderObject, shapeNode);
    },
-   displaySimple (gl, renderContext, shaderNode)
+   traverseAfter (type, renderObject)
    {
-      this .textGeometry .displaySimple (gl, renderContext, shaderNode);
-
-      X3DGeometryNode .prototype .displaySimple .call (this, gl, renderContext, shaderNode);
+      this .textGeometry .traverseAfter ?.(type, renderObject);
    },
    display (gl, renderContext)
    {
-      this .textGeometry .display (gl, renderContext);
+      renderContext .textureNode = this .textGeometry .getTextureNode ();
 
       X3DGeometryNode .prototype .display .call (this, gl, renderContext);
 
       renderContext .textureNode = null;
-   },
-   transformLine (line)
-   {
-      // Apply screen nodes transformation in place here.
-      return this .textGeometry .transformLine (line);
-   },
-   transformMatrix (matrix)
-   {
-      // Apply screen nodes transformation in place here.
-      return this .textGeometry .transformMatrix (matrix);
    },
 });
 

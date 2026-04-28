@@ -32,21 +32,21 @@ The GeoLOD node belongs to the [Geospatial](/x_ite/components/overview/#geospati
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFNode | [ ] | [geoOrigin](#fields-geoOrigin) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFNode | [ ] | [geoOrigin](#fields-geoOrigin) | NULL |
 | MFString | [ ] | [geoSystem](#fields-geoSystem) | [ "GD", "WE" ] |
 | MFString | [ ] | [rootUrl](#fields-rootUrl) | [ ] |
 | MFString | [ ] | [child1Url](#fields-child1Url) | [ ] |
 | MFString | [ ] | [child2Url](#fields-child2Url) | [ ] |
 | MFString | [ ] | [child3Url](#fields-child3Url) | [ ] |
 | MFString | [ ] | [child4Url](#fields-child4Url) | [ ] |
-| SFVec3d | [ ] | [center](#fields-center) | 0 0 0  |
-| SFFloat | [ ] | [range](#fields-range) | 10  |
+| SFVec3d | [ ] | [center](#fields-center) | 0 0 0 |
+| SFFloat | [ ] | [range](#fields-range) | 10 |
 | SFInt32 | [out] | [level_changed](#fields-level_changed) |  |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
 | MFNode | [ ] | [rootNode](#fields-rootNode) | [ ] |
 | MFNode | [out] | [children](#fields-children) |  |
 {: .fields }
@@ -63,7 +63,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### SFNode [ ] **geoOrigin** NULL <small>[GeoOrigin] (deprecated)</small>
 {: #fields-geoOrigin }
 
-Single contained [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node that can specify a local coordinate frame for extended precision.
+Optional single contained [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node that can specify a local coordinate frame for extended precision.
 
 #### Hint
 
@@ -216,13 +216,20 @@ The outputOnly *children* field exposes a portion of the scene graph for the cur
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geospatial/GeoLOD/GeoLOD.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Geospatial/GeoLOD/GeoLOD.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Geospatial/GeoLOD/screenshot.avif" alt="GeoLOD"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Geospatial/GeoLOD/GeoLOD.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Geospatial/GeoLOD/GeoLOD.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

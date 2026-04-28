@@ -14,6 +14,10 @@ function StreamAudioDestination (executionContext)
    X3DSoundDestinationNode .call (this, executionContext);
 
    this .addType (X3DConstants .StreamAudioDestination);
+
+   const audioContext = this .getBrowser () .getAudioContext ();
+
+   this .mediaStreamAudioDestinationNode = new MediaStreamAudioDestinationNode (audioContext);
 }
 
 Object .assign (Object .setPrototypeOf (StreamAudioDestination .prototype, X3DSoundDestinationNode .prototype),
@@ -28,7 +32,7 @@ Object .assign (Object .setPrototypeOf (StreamAudioDestination .prototype, X3DSo
    },
    getSoundDestination ()
    {
-      return;
+      return this .mediaStreamAudioDestinationNode;
    },
    set_enabled__ () { /* remove this function if implemented */ },
    set_mediaDeviceID__ ()

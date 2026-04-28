@@ -31,11 +31,11 @@ The GeneratedCubeMapTexture node belongs to the [CubeMapTexturing](/x_ite/compon
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
-| SFString | [in, out] | [update](#fields-update) | "NONE"  |
-| SFInt32 | [ ] | [size](#fields-size) | 128  |
-| SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL  |
+| SFString | [in, out] | [update](#fields-update) | "NONE" |
+| SFInt32 | [ ] | [size](#fields-size) | 128 |
+| SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -74,7 +74,7 @@ Author-provided prose that describes intended purpose of the url asset.
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
 {: #fields-textureProperties }
 
-Single contained [TextureProperties](/x_ite/components/texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
+Optional single contained [TextureProperties](/x_ite/components/texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
 
 ## Advice
 
@@ -82,20 +82,29 @@ Single contained [TextureProperties](/x_ite/components/texturing/textureproperti
 
 - Can contain a single [TextureProperties](/x_ite/components/texturing/textureproperties/) node.
 - Typically a [Box](/x_ite/components/geometry3d/box/) is used for applying the GeneratedCubeMapTexture.
+- [Wikipedia reference, Droste effect](https://en.wikipedia.org/wiki/Droste_effect)
+- Requires X3D `profile='Full'` or else include `<component name='CubeMapTexturing' level='3'/>`
 
 ### Warning
 
-- Requires X3D `profile='Full'` or else include `<component name='CubeMapTexturing' level='3'/>`
+- X3D specification recommends against recursive perspective when generating textures at run time.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/CubeMapTexturing/GeneratedCubeMapTexture/GeneratedCubeMapTexture.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/CubeMapTexturing/GeneratedCubeMapTexture/GeneratedCubeMapTexture.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/CubeMapTexturing/GeneratedCubeMapTexture/screenshot.avif" alt="GeneratedCubeMapTexture"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/CubeMapTexturing/GeneratedCubeMapTexture/GeneratedCubeMapTexture.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/CubeMapTexturing/GeneratedCubeMapTexture/GeneratedCubeMapTexture.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

@@ -1,7 +1,7 @@
 export default () => /* glsl */ `
 #if defined (X3D_GEOMETRY_1D) && defined (X3D_STYLE_PROPERTIES)
 
-#pragma X3D include "Line2.glsl"
+#include <Line2>
 
 uniform x3d_LinePropertiesParameters x3d_LineProperties;
 
@@ -10,9 +10,9 @@ flat in vec2  startPoint;  // in px
 in vec2       midPoint;    // in px
 
 void
-stipple ()
+stipple (const in vec4 fragCoord)
 {
-   vec2  point = closest_point (line2 (startPoint, midPoint), gl_FragCoord .xy);
+   vec2  point = closest_point (line2 (startPoint, midPoint), fragCoord .xy);
    float s     = (lengthSoFar + length (point - startPoint)) * x3d_LineProperties .lineStippleScale;
 
    #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)

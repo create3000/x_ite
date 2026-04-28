@@ -60,43 +60,13 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
    },
    unloadData ()
    {
-      this .abortLoading ();
+      this .fileLoader ?.abort ();
       this .setInternalScene (this .getBrowser () .getDefaultScene ());
    },
    loadData ()
    {
-      this .abortLoading ();
-      this .fileLoader = new FileLoader (this) .createX3DFromURL (this ._url, null, this .setInternalSceneAsync .bind (this));
-   },
-   abortLoading ()
-   {
-      this .scene ._loadCount .removeInterest ("checkLoadCount", this);
-
-      if (this .fileLoader)
-         this .fileLoader .abort ();
-   },
-   setInternalSceneAsync (scene)
-   {
-      if (scene)
-      {
-         scene ._loadCount .addInterest ("checkLoadCount", this);
-         this .setInternalScene (scene);
-         this .checkLoadCount (scene ._loadCount);
-      }
-      else
-      {
-         this .setInternalScene (this .getBrowser () .getDefaultScene ());
-         this .setLoadState (X3DConstants .FAILED_STATE);
-      }
-   },
-   checkLoadCount (loadCount)
-   {
-      if (loadCount .getValue ())
-         return;
-
-      loadCount .removeInterest ("checkLoadCount", this);
-
-      this .setLoadState (X3DConstants .COMPLETE_STATE);
+      this .fileLoader ?.abort ();
+      this .fileLoader = new FileLoader (this) .createX3DFromURL (this ._url, null, this .setInternalScene .bind (this));
    },
    setInternalScene (scene)
    {
@@ -105,25 +75,30 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
 
       // Set new scene.
 
-      this .scene = scene;
+      this .scene = scene ?? this .getBrowser () .getDefaultScene ();
 
-      if (this .scene !== this .getBrowser () .getDefaultScene ())
+      if (scene)
       {
          this .scene .setExecutionContext (this .getExecutionContext ());
          this .scene .setLive (true);
          this .scene .rootNodes .addFieldInterest (this .groupNode ._children);
-         this .groupNode ._children = this .scene .rootNodes;
+
+         this .groupNode ._children = scene .rootNodes;
+
+         this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
       else
       {
          this .groupNode ._children .length = 0;
+
+         this .setLoadState (X3DConstants .FAILED_STATE);
       }
 
       this .getBrowser () .addBrowserEvent ();
    },
    getInternalScene ()
    {
-      ///  Returns the internal X3DScene of this inline, that is loaded from the url given.
+      ///  Returns the internal X3DScene of this Inline node, that is loaded from the url given.
       ///  If the load field was false an empty scene is returned.  This empty scene is the same for all Inline
       ///  nodes (due to performance reasons).
 
@@ -179,7 +154,7 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
                      const browser = this .getBrowser ();
 
                      for (let i = 0; i < numLocalObjects; ++ i)
-                        browser .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
+                        browser .getLocalObjects () .add (renderObject .getLocalObjects () .pop ());
                   }
                   else
                   {
@@ -221,6 +196,16 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
    },
    dispose ()
    {
+      // Remove all imported nodes with this Inline node.
+
+      const executionContext = this .getExecutionContext ();
+
+      for (const importedNode of Array .from (executionContext .getImportedNodes ()))
+      {
+         if (importedNode .getInlineNode () === this)
+            executionContext .removeImportedNode (importedNode .getImportedName ());
+      }
+
       X3DBoundedObject .prototype .dispose .call (this);
       X3DUrlObject     .prototype .dispose .call (this);
       X3DChildNode     .prototype .dispose .call (this);

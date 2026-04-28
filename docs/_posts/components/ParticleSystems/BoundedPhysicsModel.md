@@ -29,10 +29,10 @@ The BoundedPhysicsModel node belongs to the [ParticleSystems](/x_ite/components/
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFFloat | [in, out] | [damping](#fields-damping) | 1  |
-| SFNode | [in, out] | [geometry](#fields-geometry) | NULL  |
+| SFFloat | [in, out] | [damping](#fields-damping) | 1 |
+| SFNode | [in, out] | [geometry](#fields-geometry) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -57,7 +57,7 @@ Damping of velocity in the event of a collision.
 ### SFNode [in, out] **geometry** NULL <small>[X3DGeometryNode]</small>
 {: #fields-geometry }
 
-Single contained *geometry* node provides the *geometry* used for each particle when the parent [ParticleSystem](/x_ite/components/particlesystems/particlesystem/) node has geometryType=GEOMETRY.
+Optional single contained *geometry* node provides the *geometry* used for each particle when the parent [ParticleSystem](/x_ite/components/particlesystems/particlesystem/) node has geometryType=GEOMETRY.
 
 #### Hint
 
@@ -75,13 +75,20 @@ Single contained *geometry* node provides the *geometry* used for each particle 
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/ParticleSystems/BoundedPhysicsModel/BoundedPhysicsModel.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/ParticleSystems/BoundedPhysicsModel/BoundedPhysicsModel.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/ParticleSystems/BoundedPhysicsModel/screenshot.avif" alt="BoundedPhysicsModel"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/ParticleSystems/BoundedPhysicsModel/BoundedPhysicsModel.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/ParticleSystems/BoundedPhysicsModel/BoundedPhysicsModel.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

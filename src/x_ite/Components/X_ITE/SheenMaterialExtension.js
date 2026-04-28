@@ -60,7 +60,7 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X3DMa
    {
       this .sheenColorTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._sheenColorTexture);
 
-      this .setTexture (0, this .sheenColorTextureNode);
+      this .addTexture (0, this .sheenColorTextureNode);
    },
    set_sheenRoughness__ ()
    {
@@ -70,7 +70,7 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X3DMa
    {
       this .sheenRoughnessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._sheenRoughnessTexture);
 
-      this .setTexture (1, this .sheenRoughnessTextureNode);
+      this .addTexture (1, this .sheenRoughnessTextureNode);
    },
    getExtensionKey ()
    {
@@ -94,34 +94,30 @@ Object .assign (Object .setPrototypeOf (SheenMaterialExtension .prototype, X3DMa
       uniforms .push ("x3d_SheenRoughnessEXT");
       uniforms .push ("x3d_SheenELUTTextureEXT");
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform3fv (shaderObject .x3d_SheenColorEXT,     this .sheenColorArray);
       gl .uniform1f  (shaderObject .x3d_SheenRoughnessEXT, this .sheenRoughness);
 
       const
          browser              = this .getBrowser (),
-         SheenELUTTexture     = browser .getLibraryTexture ("lut_sheen_E.png"),
-         SheenELUTTextureUnit = browser .getTextureUnit ();
+         sheenELUTTexture     = browser .getLibraryTexture ("lut_sheen_E.png"),
+         sheenELUTTextureUnit = browser .popTextureUnit ();
 
-      gl .activeTexture (gl .TEXTURE0 + SheenELUTTextureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, SheenELUTTexture .getTexture ());
-      gl .uniform1i (shaderObject .x3d_SheenELUTTextureEXT, SheenELUTTextureUnit);
+      gl .activeTexture (gl .TEXTURE0 + sheenELUTTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, sheenELUTTexture .getTexture ());
+      gl .uniform1i (shaderObject .x3d_SheenELUTTextureEXT, sheenELUTTextureUnit);
 
       if (!+this .getTextureBits ())
          return;
 
       this .sheenColorTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_SheenColorTextureEXT,
          this ._sheenColorTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .sheenRoughnessTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_SheenRoughnessTextureEXT,
          this ._sheenRoughnessTextureMapping .getValue (),
          textureTransformMapping,

@@ -20,7 +20,6 @@ import "./Fonts.js";
 const
    _instanceId          = Symbol (),
    _element             = Symbol (),
-   _attributes          = Symbol (),
    _shadow              = Symbol (),
    _surface             = Symbol (),
    _canvas              = Symbol (),
@@ -56,12 +55,14 @@ function X3DCoreContext (element)
       surface      = $("<div></div>", { class: "x_ite-private-surface", part: "surface" }),
       splashScreen = $("<div></div>", { class: "x_ite-private-splash-screen x_ite-private-hidden" }),
       spinner      = $("<div></div>", { class: "x_ite-private-spinner" }),
-      progress     = $("<div></div>", { class: "x_ite-private-progress" });
+      progress     = $("<div></div>", { class: "x_ite-private-progress" }),
+      buttons      = $("<div></div>", { class: "x_ite-private-buttons", part: "buttons" });
 
    surface      .appendTo (browser);
    splashScreen .appendTo (browser);
    spinner      .appendTo (splashScreen);
    progress     .appendTo (splashScreen);
+   buttons      .appendTo (surface);
 
    if (element .prop ("nodeName") .toLowerCase () === "x3d-canvas")
    {
@@ -96,7 +97,6 @@ function X3DCoreContext (element)
    this [_instanceId]   = ++ instanceId;
    this [_localStorage] = new DataStorage (localStorage, `X_ITE.X3DBrowser(${this [_instanceId]}).`);
    this [_element]      = element;
-   this [_attributes]   = new Map ();
    this [_surface]      = surface;
    this [_canvas]       = $("<canvas></canvas>", { part: "canvas", class: "x_ite-private-canvas" }) .prependTo (surface);
    this [_context]      = Context .create (this [_canvas] [0], element .attr ("preserveDrawingBuffer") === "true");
@@ -134,22 +134,33 @@ Object .assign (X3DCoreContext .prototype,
             value: this,
             enumerable: true,
          },
-         ... Legacy .properties (this, Object .fromEntries ([
-            "src",
-            "url",
-         ]
-         .map (name => [name,
+         ... Legacy .properties (this,
          {
-            get: () =>
+            src:
             {
-               return this [_attributes] .get (name .toLowerCase ());
+               get: () =>
+               {
+                  return element .attr ("src");
+               },
+               set: (value) =>
+               {
+                  element .attr ("src", value);
+               },
+               enumerable: true,
             },
-            set: (value) =>
+            url:
             {
-               element .attr (name, value);
+               get: () =>
+               {
+                  return this .parseUrlAttribute (element .attr ("url"));
+               },
+               set: (value) =>
+               {
+                  element .attr ("url", [... value] .map (src => `"${src}"`) .join (", "));
+               },
+               enumerable: true,
             },
-            enumerable: true,
-         }]))),
+         }),
       });
 
       // Configure browser event handlers.
@@ -157,6 +168,27 @@ Object .assign (X3DCoreContext .prototype,
       element
          .on ("keydown.X3DCoreContext", this [_keydown] .bind (this))
          .on ("keyup.X3DCoreContext",   this [_keyup]   .bind (this));
+
+      // Workaround for a bug in Chrome (v135) where attributeChangedCallback is not
+      // initially called for attributes set in XHTML.
+
+      (() =>
+      {
+         if (element .prop ("nodeName") .toUpperCase () !== "X3D-CANVAS")
+            return;
+
+         if (document .contentType !== "application/xhtml+xml")
+            return;
+
+         if (!navigator .userAgent .includes ("Chrome/"))
+            return;
+
+         setTimeout (() =>
+         {
+            for (const { name, value } of element [0] .attributes)
+               this .attributeChangedCallback (name, undefined, value);
+         });
+      })();
    },
    getInstanceId ()
    {
@@ -231,18 +263,6 @@ Object .assign (X3DCoreContext .prototype,
    },
    connectedCallback ()
    {
-      // Workaround for a bug in Chrome (v135) where attributeChangedCallback is not
-      // initially called for attributes set in XHTML and call callback initially
-      // for legacy X3DCanvas element.
-
-      for (const { name, value } of this .getElement () [0] .attributes)
-      {
-         if (this [_attributes] .has (name .toLowerCase ()))
-            continue;
-
-         this .attributeChangedCallback (name, undefined, value);
-      }
-
       // AutoUpdate
 
       this .getBrowserOptions () .checkUpdate ();
@@ -279,7 +299,7 @@ Object .assign (X3DCoreContext .prototype,
          }
          case "contentscale":
          {
-            this .setBrowserOption ("ContentScale", newValue === "auto" ? -1 : parseFloat (newValue));
+            this .setBrowserOption ("ContentScale", newValue === "auto" ? -1 : newValue);
             break;
          }
          case "contextmenu":
@@ -292,6 +312,11 @@ Object .assign (X3DCoreContext .prototype,
             this .setBrowserOption ("Debug", this .parseBooleanAttribute (newValue) ?? false);
             break;
          }
+         case "displaycolorspace":
+         {
+            this .setBrowserOption ("DisplayColorSpace", newValue);
+            break;
+         }
          case "exposure":
          {
             this .setBrowserOption ("Exposure", newValue);
@@ -302,11 +327,14 @@ Object .assign (X3DCoreContext .prototype,
             this .setBrowserOption ("LogarithmicDepthBuffer", this .parseBooleanAttribute (newValue) ?? false);
             break;
          }
+         case "maximumframerate":
+         {
+            this .setBrowserOption ("MaximumFrameRate", newValue);
+            break;
+         }
          case "multisampling":
          {
-            const samples = parseInt (newValue);
-
-            this .setBrowserOption ("Multisampling", isNaN (samples) ? 4 : samples);
+            this .setBrowserOption ("Multisampling", samples);
             break;
          }
          case "notifications":
@@ -395,7 +423,7 @@ Object .assign (X3DCoreContext .prototype,
          {
             if (newValue)
             {
-               this .loadURL (newValue = this .parseUrlAttribute (newValue))
+               this .loadURL (this .parseUrlAttribute (newValue))
                   .catch (error => console .error (error));
             }
 
@@ -407,8 +435,6 @@ Object .assign (X3DCoreContext .prototype,
             break;
          }
       }
-
-      this [_attributes] .set (name .toLowerCase (), newValue);
    },
    parseBooleanAttribute (value)
    {
@@ -424,10 +450,8 @@ Object .assign (X3DCoreContext .prototype,
       {
          const url = new Fields .MFString ();
 
-         if (!/^\[.*?\]$/s .test (urlCharacters))
-            urlCharacters = `[${urlCharacters}]`;
-
-         url .fromString (urlCharacters, this .getExecutionContext ());
+         url .setName ("url");
+         url .fromXMLString (urlCharacters, this .getExecutionContext ());
 
          return url;
       }
@@ -486,6 +510,8 @@ Object .assign (X3DCoreContext .prototype,
    },
    [_keydown] (event)
    {
+      // console .log (event .keyCode);
+
       switch (event .keyCode)
       {
          case 16: // Shift

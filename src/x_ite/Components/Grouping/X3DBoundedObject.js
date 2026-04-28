@@ -29,8 +29,10 @@ Object .assign (X3DBoundedObject .prototype,
    childBBox: new Box3 (), // X3DExecutionContext needs this.
    initialize ()
    {
-      this ._hidden  .addInterest ("set_visible_and_hidden__", this);
-      this ._visible .addInterest ("set_visible_and_hidden__", this);
+      this ._hidden     .addInterest ("set_visible_and_hidden__",      this);
+      this ._visible    .addInterest ("set_visible_and_hidden__",      this);
+      this ._bboxSize   .addInterest ("set_bboxSize_and_bboxCenter__", this);
+      this ._bboxCenter .addInterest ("set_bboxSize_and_bboxCenter__", this);
 
       this .set_visible_and_hidden__ ();
    },
@@ -113,7 +115,12 @@ Object .assign (X3DBoundedObject .prototype,
 
       this ._display = value;
    },
-   dispose () { },
+   set_bboxSize_and_bboxCenter__ ()
+   {
+      this .getExecutionContext () ._bbox_changed = Date .now () / 1000;
+   },
+   dispose ()
+   { },
 });
 
 Object .defineProperties (X3DBoundedObject, X3DNode .getStaticProperties ("X3DBoundedObject", "Grouping", 1));

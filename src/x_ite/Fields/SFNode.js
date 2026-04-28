@@ -142,7 +142,10 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
       {
          const copy = value .copy (instance);
 
-         copy .setup ();
+         if (!copy .isInitialized () && !instance .getExecutionContext () .getOuterNode () ?.getType () .includes (X3DConstants .X3DProtoDeclaration))
+         {
+            copy .setup ();
+         }
 
          return new SFNode (copy);
       }
@@ -357,7 +360,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
       if (value)
          value .toStream (generator);
       else
-         generator .string += "NULL";
+         generator .NULL ();
    },
    toVRMLStream (generator)
    {
@@ -368,7 +371,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
       if (value)
          value .toVRMLStream (generator);
       else
-         generator .string += "NULL";
+         generator .NULL ();
    },
    toXMLStream (generator)
    {
@@ -410,13 +413,6 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
 for (const key of Object .keys (SFNode .prototype))
    Object .defineProperty (SFNode .prototype, key, { enumerable: false });
 
-Object .defineProperties (SFNode,
-{
-   typeName:
-   {
-      value: "SFNode",
-      enumerable: true,
-   },
-});
+X3DField .addStaticProperties (SFNode, "SFNode");
 
 export default SFNode;

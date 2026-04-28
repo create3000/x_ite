@@ -14,10 +14,10 @@
       url: /components/x-ite/dispersionmaterialextension/
     - title: "EmissiveStrengthMaterialExtension"
       url: /components/x-ite/emissivestrengthmaterialextension/
-    - title: "IORMaterialExtension"
-      url: /components/x-ite/iormaterialextension/
     - title: "InstancedShape"
       url: /components/x-ite/instancedshape/
+    - title: "IORMaterialExtension"
+      url: /components/x-ite/iormaterialextension/
     - title: "IridescenceMaterialExtension"
       url: /components/x-ite/iridescencematerialextension/
     - title: "SheenMaterialExtension"
@@ -30,3 +30,5 @@
       url: /components/x-ite/transmissionmaterialextension/
     - title: "VolumeMaterialExtension"
       url: /components/x-ite/volumematerialextension/
+    - title: "VolumeScatterMaterialExtension"
+      url: /components/x-ite/volumescattermaterialextension/

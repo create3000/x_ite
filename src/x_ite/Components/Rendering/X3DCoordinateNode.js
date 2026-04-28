@@ -66,7 +66,7 @@ Object .assign (Object .setPrototypeOf (X3DCoordinateNode .prototype, X3DGeometr
          array .push (0, 0, 0, 1);
       }
    },
-   addPoints (array)
+   addPoints (array, min = this .length)
    {
       const
          point  = this .point,
@@ -74,6 +74,19 @@ Object .assign (Object .setPrototypeOf (X3DCoordinateNode .prototype, X3DGeometr
 
       for (let index = 0; index < length; index += 3)
          array .push (point [index], point [index + 1], point [index + 2], 1);
+
+      min *= 3;
+
+      if (length)
+      {
+         for (let index = length; index < min; index += 3)
+            array .push (point [length - 3], point [length - 2], point [length - 1], 1);
+      }
+      else
+      {
+         for (let index = length; index < min; index += 3)
+            array .push (0, 0, 0, 1);
+      }
 
       return array;
    },

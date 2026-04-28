@@ -112,7 +112,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
    async loadData ()
    {
       // See: 29.2.2 Script execution
-      // Wait a tick to get user-defined field with name self working.
+      // Wait a tick to get user-defined field with name 'self' working.
       await this .unloadData ();
 
       new FileLoader (this) .loadDocument (this ._url, async data =>
@@ -158,7 +158,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
          node .fromString (vrmlSyntax, getScriptNode () .getExecutionContext ());
 
          if (node .getValue ())
-            return node;
+            return SFNodeCache .get (node .getValue ());
 
          throw new Error ("SFNode.new: invalid argument.");
       }
@@ -291,7 +291,9 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
          }
       }
 
-      sourceText += ";\n[" + callbacks .map (c => `typeof ${c} !== "undefined" ? ${c} : undefined`) .join (",") + "];";
+      // Add a \n immediately after sourceText, in case there is a comment in the last line.
+
+      sourceText += "\n;\n[" + callbacks .map (c => `typeof ${c} !== "undefined" ? ${c} : undefined`) .join (",") + "];";
 
       const
          result  = this .evaluate (sourceText),

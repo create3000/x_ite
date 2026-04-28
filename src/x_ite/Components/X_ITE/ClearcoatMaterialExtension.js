@@ -51,13 +51,13 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
    },
    set_clearcoat__ ()
    {
-      this .clearcoat = Math .max (this ._clearcoat .getValue (), 0);
+      this .clearcoat = Algorithm .clamp (this ._clearcoat .getValue (), 0, 1);
    },
    set_clearcoatTexture__ ()
    {
       this .clearcoatTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._clearcoatTexture);
 
-      this .setTexture (0, this .clearcoatTextureNode);
+      this .addTexture (0, this .clearcoatTextureNode);
    },
    set_clearcoatRoughness__ ()
    {
@@ -67,13 +67,13 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
    {
       this .clearcoatRoughnessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._clearcoatRoughnessTexture);
 
-      this .setTexture (1, this .clearcoatRoughnessTextureNode);
+      this .addTexture (1, this .clearcoatRoughnessTextureNode);
    },
    set_clearcoatNormalTexture__ ()
    {
       this .clearcoatNormalTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._clearcoatNormalTexture);
 
-      this .setTexture (2, this .clearcoatNormalTextureNode);
+      this .addTexture (2, this .clearcoatNormalTextureNode);
    },
    getExtensionKey ()
    {
@@ -97,7 +97,7 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
       uniforms .push ("x3d_ClearcoatEXT");
       uniforms .push ("x3d_ClearcoatRoughnessEXT");
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
       gl .uniform1f (shaderObject .x3d_ClearcoatEXT,          this .clearcoat);
       gl .uniform1f (shaderObject .x3d_ClearcoatRoughnessEXT, this .clearcoatRoughness);
@@ -106,24 +106,18 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
          return;
 
       this .clearcoatTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_ClearcoatTextureEXT,
          this ._clearcoatTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .clearcoatRoughnessTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_ClearcoatRoughnessTextureEXT,
          this ._clearcoatRoughnessTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .clearcoatNormalTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_ClearcoatNormalTextureEXT,
          this ._clearcoatNormalTextureMapping .getValue (),
          textureTransformMapping,

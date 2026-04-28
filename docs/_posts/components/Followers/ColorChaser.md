@@ -31,12 +31,12 @@ The ColorChaser node belongs to the [Followers](/x_ite/components/overview/#foll
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFColor | [in] | [set_value](#fields-set_value) |  |
 | SFColor | [in] | [set_destination](#fields-set_destination) |  |
-| SFColor | [ ] | [initialValue](#fields-initialValue) | 0.8 0.8 0.8  |
-| SFColor | [ ] | [initialDestination](#fields-initialDestination) | 0.8 0.8 0.8  |
-| SFTime | [ ] | [duration](#fields-duration) | 1  |
+| SFColor | [ ] | [initialValue](#fields-initialValue) | 0.8 0.8 0.8 |
+| SFColor | [ ] | [initialDestination](#fields-initialDestination) | 0.8 0.8 0.8 |
+| SFTime | [ ] | [duration](#fields-duration) | 1 |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFColor | [out] | [value_changed](#fields-value_changed) |  |
 {: .fields }
@@ -114,13 +114,20 @@ Computed output value that approaches within tolerance of destination value, as 
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Followers/ColorChaser/ColorChaser.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Followers/ColorChaser/ColorChaser.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Followers/ColorChaser/screenshot.avif" alt="ColorChaser"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Followers/ColorChaser/ColorChaser.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Followers/ColorChaser/ColorChaser.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

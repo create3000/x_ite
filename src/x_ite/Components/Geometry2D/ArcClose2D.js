@@ -42,15 +42,18 @@ Object .assign (Object .setPrototypeOf (ArcClose2D .prototype, X3DGeometryNode .
       if (start > end)
          return (Math .PI * 2) - sweepAngle;
 
-      if (! isNaN (sweepAngle))
+      if (!isNaN (sweepAngle))
          return sweepAngle;
 
-      // We must test for NAN, as NAN to int is undefined.
+      // We must test for NaN, as NaN to int is undefined.
       return 0;
    },
    build: (() =>
    {
-      const half = new Complex (0.5, 0.5);
+      const
+         texCoords = [ ],
+         points    = [ ],
+         half      = new Complex (0.5, 0.5);
 
       return function ()
       {
@@ -64,9 +67,7 @@ Object .assign (Object .setPrototypeOf (ArcClose2D .prototype, X3DGeometryNode .
             steps         = Math .max (4, Math .floor (sweepAngle * dimension / (Math .PI * 2))),
             texCoordArray = this .getTexCoords (),
             normalArray   = this .getNormals (),
-            vertexArray   = this .getVertices (),
-            texCoords     = [ ],
-            points        = [ ];
+            vertexArray   = this .getVertices ();
 
          this .getMultiTexCoords () .push (texCoordArray);
 
@@ -78,8 +79,14 @@ Object .assign (Object .setPrototypeOf (ArcClose2D .prototype, X3DGeometryNode .
                t     = n / steps_1,
                theta = startAngle + (sweepAngle * t);
 
-            texCoords .push (Complex .Polar (0.5, theta) .add (half));
-            points    .push (Complex .Polar (radius, theta));
+            if (n >= texCoords .length)
+               texCoords .push (new Complex ());
+
+            if (n >= points .length)
+               points .push (new Complex ());
+
+            texCoords [n] .setPolar (0.5, theta) .add (half);
+            points    [n] .setPolar (radius, theta);
          }
 
          if (chord)

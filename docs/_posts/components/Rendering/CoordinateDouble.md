@@ -30,7 +30,7 @@ The CoordinateDouble node belongs to the [Rendering](/x_ite/components/overview/
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFVec3d | [in, out] | [point](#fields-point) | [ ] |
 {: .fields }
 
@@ -53,6 +53,13 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### Warning
 
 - CoordinateDouble requires Rendering component level 1, otherwise Full profile.
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

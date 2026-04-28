@@ -192,8 +192,8 @@ Highest supported level: **2**
 
 - [GeoCoordinate](/x_ite/components/geospatial/geocoordinate/)
 - [GeoElevationGrid](/x_ite/components/geospatial/geoelevationgrid/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/geospatial/geoelevationgrid/#example)
-- [GeoLOD](/x_ite/components/geospatial/geolod/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/geospatial/geolod/#example)
 - [GeoLocation](/x_ite/components/geospatial/geolocation/)
+- [GeoLOD](/x_ite/components/geospatial/geolod/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/geospatial/geolod/#example)
 - [GeoMetadata](/x_ite/components/geospatial/geometadata/)
 - [GeoOrigin](/x_ite/components/geospatial/geoorigin/)
 - [GeoPositionInterpolator](/x_ite/components/geospatial/geopositioninterpolator/)
@@ -223,6 +223,7 @@ Highest supported level: **3**
 - [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/hanim/hanimhumanoid/#example)
 - [HAnimJoint](/x_ite/components/hanim/hanimjoint/)
 - [HAnimMotion](/x_ite/components/hanim/hanimmotion/)
+- [HAnimPose](/x_ite/components/hanim/hanimpose/) <small class="blue">experimental</small>
 - [HAnimSegment](/x_ite/components/hanim/hanimsegment/)
 - [HAnimSite](/x_ite/components/hanim/hanimsite/)
 
@@ -288,26 +289,6 @@ Highest supported level: **3**
 - [PointLight](/x_ite/components/lighting/pointlight/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/lighting/pointlight/#example)
 - [SpotLight](/x_ite/components/lighting/spotlight/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/lighting/spotlight/#example)
 
-### NURBS
-
-NURBS<br>
-Highest supported level: **4**
-{: .small }
-
-- [Contour2D](/x_ite/components/nurbs/contour2d/)
-- [ContourPolyline2D](/x_ite/components/nurbs/contourpolyline2d/)
-- [NurbsCurve](/x_ite/components/nurbs/nurbscurve/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/nurbs/nurbscurve/#example)
-- [NurbsCurve2D](/x_ite/components/nurbs/nurbscurve2d/)
-- [NurbsOrientationInterpolator](/x_ite/components/nurbs/nurbsorientationinterpolator/)
-- [NurbsPatchSurface](/x_ite/components/nurbs/nurbspatchsurface/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/nurbs/nurbspatchsurface/#example)
-- [NurbsPositionInterpolator](/x_ite/components/nurbs/nurbspositioninterpolator/)
-- [NurbsSet](/x_ite/components/nurbs/nurbsset/)
-- [NurbsSurfaceInterpolator](/x_ite/components/nurbs/nurbssurfaceinterpolator/)
-- [NurbsSweptSurface](/x_ite/components/nurbs/nurbssweptsurface/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/nurbs/nurbssweptsurface/#example)
-- [NurbsSwungSurface](/x_ite/components/nurbs/nurbsswungsurface/)
-- [NurbsTextureCoordinate](/x_ite/components/nurbs/nurbstexturecoordinate/)
-- [NurbsTrimmedSurface](/x_ite/components/nurbs/nurbstrimmedsurface/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/nurbs/nurbstrimmedsurface/#example)
-
 ### Navigation
 
 Navigation<br>
@@ -330,7 +311,28 @@ Highest supported level: **4**
 
 - [Anchor](/x_ite/components/networking/anchor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/networking/anchor/#example)
 - [Inline](/x_ite/components/networking/inline/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/networking/inline/#example)
+- [InlineGeometry](/x_ite/components/networking/inlinegeometry/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/networking/inlinegeometry/#example) <small class="blue">experimental</small>
 - [LoadSensor](/x_ite/components/networking/loadsensor/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/networking/loadsensor/#example)
+
+### NURBS
+
+NURBS<br>
+Highest supported level: **4**
+{: .small }
+
+- [Contour2D](/x_ite/components/nurbs/contour2d/)
+- [ContourPolyline2D](/x_ite/components/nurbs/contourpolyline2d/)
+- [NurbsCurve](/x_ite/components/nurbs/nurbscurve/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/nurbs/nurbscurve/#example)
+- [NurbsCurve2D](/x_ite/components/nurbs/nurbscurve2d/)
+- [NurbsOrientationInterpolator](/x_ite/components/nurbs/nurbsorientationinterpolator/)
+- [NurbsPatchSurface](/x_ite/components/nurbs/nurbspatchsurface/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/nurbs/nurbspatchsurface/#example)
+- [NurbsPositionInterpolator](/x_ite/components/nurbs/nurbspositioninterpolator/)
+- [NurbsSet](/x_ite/components/nurbs/nurbsset/)
+- [NurbsSurfaceInterpolator](/x_ite/components/nurbs/nurbssurfaceinterpolator/)
+- [NurbsSweptSurface](/x_ite/components/nurbs/nurbssweptsurface/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/nurbs/nurbssweptsurface/#example)
+- [NurbsSwungSurface](/x_ite/components/nurbs/nurbsswungsurface/)
+- [NurbsTextureCoordinate](/x_ite/components/nurbs/nurbstexturecoordinate/)
+- [NurbsTrimmedSurface](/x_ite/components/nurbs/nurbstrimmedsurface/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/nurbs/nurbstrimmedsurface/#example)
 
 ### ParticleSystems
 
@@ -448,7 +450,7 @@ Highest supported level: **4**
 - [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/)
 - [PointProperties](/x_ite/components/shape/pointproperties/)
 - [Shape](/x_ite/components/shape/shape/)
-- [TwoSidedMaterial](/x_ite/components/shape/twosidedmaterial/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/shape/twosidedmaterial/#example) <small class="yellow">depreciated</small>
+- [TwoSidedMaterial](/x_ite/components/shape/twosidedmaterial/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/shape/twosidedmaterial/#example) <small class="yellow">deprecated</small>
 - [UnlitMaterial](/x_ite/components/shape/unlitmaterial/)
 
 ### Sound
@@ -480,9 +482,10 @@ Highest supported level: **3**
 ### Text
 
 Text<br>
-Highest supported level: **1**
+Highest supported level: **2**
 {: .small }
 
+- [FontLibrary](/x_ite/components/text/fontlibrary/) <small class="blue">experimental</small>
 - [FontStyle](/x_ite/components/text/fontstyle/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/text/fontstyle/#example)
 - [Text](/x_ite/components/text/text/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/text/text/#example)
 
@@ -507,6 +510,7 @@ Highest supported level: **4**
 - [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/)
 - [MultiTextureTransform](/x_ite/components/texturing/multitexturetransform/)
 - [PixelTexture](/x_ite/components/texturing/pixeltexture/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/texturing/pixeltexture/#example)
+- [RenderedTexture](/x_ite/components/texturing/renderedtexture/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/texturing/renderedtexture/#example) <small class="blue">experimental</small>
 - [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/)
 - [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/)
 - [TextureProperties](/x_ite/components/texturing/textureproperties/)
@@ -568,13 +572,14 @@ Highest supported level: **1**
 - [DiffuseTransmissionMaterialExtension](/x_ite/components/x-ite/diffusetransmissionmaterialextension/) <small class="blue">experimental</small>
 - [DispersionMaterialExtension](/x_ite/components/x-ite/dispersionmaterialextension/) <small class="blue">experimental</small>
 - [EmissiveStrengthMaterialExtension](/x_ite/components/x-ite/emissivestrengthmaterialextension/) <small class="blue">experimental</small>
-- [IORMaterialExtension](/x_ite/components/x-ite/iormaterialextension/) <small class="blue">experimental</small>
 - [InstancedShape](/x_ite/components/x-ite/instancedshape/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/x-ite/instancedshape/#example) <small class="blue">experimental</small>
+- [IORMaterialExtension](/x_ite/components/x-ite/iormaterialextension/) <small class="blue">experimental</small>
 - [IridescenceMaterialExtension](/x_ite/components/x-ite/iridescencematerialextension/) <small class="blue">experimental</small>
 - [SheenMaterialExtension](/x_ite/components/x-ite/sheenmaterialextension/) <small class="blue">experimental</small>
-- [SpecularGlossinessMaterial](/x_ite/components/x-ite/specularglossinessmaterial/) <small class="yellow">depreciated</small>
+- [SpecularGlossinessMaterial](/x_ite/components/x-ite/specularglossinessmaterial/) <small class="yellow">deprecated</small>
 - [SpecularMaterialExtension](/x_ite/components/x-ite/specularmaterialextension/) <small class="blue">experimental</small>
 - [TransmissionMaterialExtension](/x_ite/components/x-ite/transmissionmaterialextension/) <small class="blue">experimental</small>
 - [VolumeMaterialExtension](/x_ite/components/x-ite/volumematerialextension/) <small class="blue">experimental</small>
+- [VolumeScatterMaterialExtension](/x_ite/components/x-ite/volumescattermaterialextension/) <small class="blue">experimental</small>
 
 <!-- COMPONENTS END -->

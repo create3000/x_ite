@@ -33,15 +33,21 @@ Object .assign (TextureProjectorContainer .prototype,
 {
    set (lightNode, groupNode, modelViewMatrix)
    {
-      this .browser   = lightNode .getBrowser ();
-      this .lightNode = lightNode;
-      this .global    = lightNode .getGlobal ();
+      this .browser           = lightNode .getBrowser ();
+      this .lightNode         = lightNode;
+      this .global            = lightNode .getGlobal ();
+      this .shadowMapRendered = false;
 
       this .modelViewMatrix .push (modelViewMatrix);
       this .textureMatrix .assign (lightNode .getTexture () .getMatrix ());
    },
    renderShadowMap (renderObject)
    {
+      if (this .shadowMapRendered)
+         return;
+
+      this .shadowMapRendered = true;
+
       const
          lightNode             = this .lightNode,
          cameraSpaceMatrix     = renderObject .getCameraSpaceMatrixArray (),
@@ -87,18 +93,23 @@ Object .assign (TextureProjectorContainer .prototype,
    },
    setShaderUniforms (gl, shaderObject, renderObject)
    {
-      const i = shaderObject .numTextureProjectors ++;
+      const
+         i        = shaderObject .numTextureProjectors ++,
+         uniforms = shaderObject .x3d_TextureProjector [i];
+
+      if (!uniforms)
+         return;
 
       const
          lightNode   = this .lightNode,
          texture     = lightNode .getTexture (),
          textureUnit = this .global
-            ? (this .textureUnit = this .textureUnit ?? this .browser .popTextureUnit ())
-            : this .browser .getTextureUnit ();
+            ? this .textureUnit ??= this .browser .popGlobalTextureUnit ()
+            : this .browser .popTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
-      gl .uniform1i (shaderObject .x3d_TextureProjectorTexture [i], textureUnit);
+      gl .uniform1i (uniforms .texture, textureUnit);
 
       if (shaderObject .hasTextureProjector (i, this))
          return;
@@ -107,19 +118,18 @@ Object .assign (TextureProjectorContainer .prototype,
          nearParameter = lightNode .getNearParameter (),
          farParameter  = lightNode .getFarParameter ();
 
-      gl .uniform3f        (shaderObject .x3d_TextureProjectorColor [i],         ... lightNode .getColor ());
-      gl .uniform1f        (shaderObject .x3d_TextureProjectorIntensity [i],     lightNode .getIntensity ());
-      gl .uniform3fv       (shaderObject .x3d_TextureProjectorLocation [i],      this .locationArray);
-      gl .uniform3f        (shaderObject .x3d_TextureProjectorParams [i],        nearParameter, farParameter, texture .isLinear ());
-      gl .uniformMatrix4fv (shaderObject .x3d_TextureProjectorMatrix [i], false, this .matrixArray);
+      gl .uniform3f        (uniforms .color,         ... lightNode .getColor ());
+      gl .uniform1f        (uniforms .intensity,     lightNode .getIntensity ());
+      gl .uniform3fv       (uniforms .location,      this .locationArray);
+      gl .uniform2f        (uniforms .params,        nearParameter, farParameter);
+      gl .uniformMatrix4fv (uniforms .matrix, false, this .matrixArray);
    },
    dispose ()
    {
-      this .browser .pushTextureUnit (this .textureUnit);
+      if (this .global)
+         this .textureUnit = undefined;
 
       this .modelViewMatrix .clear ();
-
-      this .textureUnit = undefined;
 
       TextureProjectorCache .push (this);
    },
@@ -134,6 +144,11 @@ function TextureProjector (executionContext)
    // Units
 
    this ._fieldOfView .setUnit ("angle");
+
+   // Legacy
+
+   if (executionContext .getSpecificationVersion () <= 4.0)
+      this ._upVector = new Vector3 (0, 0, 1);
 }
 
 Object .assign (Object .setPrototypeOf (TextureProjector .prototype, X3DTextureProjectorNode .prototype),
@@ -170,7 +185,7 @@ Object .defineProperties (TextureProjector,
 
          new X3DFieldDefinition (X3DConstants .inputOutput,    "location",         new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",        new Fields .SFVec3f (0, 0, 1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "upVector",         new Fields .SFVec3f (0, 0, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "upVector",         new Fields .SFVec3f (0, 1, 0)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "fieldOfView",      new Fields .SFFloat (0.785398)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "nearDistance",     new Fields .SFFloat (-1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "farDistance",      new Fields .SFFloat (-1)),

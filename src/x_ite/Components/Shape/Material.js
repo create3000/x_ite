@@ -88,15 +88,15 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    },
    set_ambientTexture__ ()
    {
-      const index = this .getTextureIndices () .AMBIENT_TEXTURE
+      const index = this .getTextureIndices () .AMBIENT_TEXTURE;
 
-      this .ambientTextureNode ?._linear .removeInterest (`setTexture${index}`, this);
+      this .ambientTextureNode ?._linear .removeInterest ("addTexture", this);
 
       this .ambientTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._ambientTexture);
 
-      this .ambientTextureNode ?._linear .addInterest (`setTexture${index}`, this, index, this .ambientTextureNode);
+      this .ambientTextureNode ?._linear .addInterest ("addTexture", this, index, this .ambientTextureNode);
 
-      this .setTexture (index, this .ambientTextureNode);
+      this .addTexture (index, this .ambientTextureNode);
    },
    set_diffuseColor__ ()
    {
@@ -108,19 +108,19 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
 
       if (this .diffuseTextureNode)
       {
-         this .diffuseTextureNode ._transparent .removeInterest ("set_transparent__",  this);
-         this .diffuseTextureNode ._linear      .removeInterest (`setTexture${index}`, this);
+         this .diffuseTextureNode ._transparent .removeInterest ("set_transparent__", this);
+         this .diffuseTextureNode ._linear      .removeInterest ("addTexture",        this);
       }
 
       this .diffuseTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._diffuseTexture);
 
       if (this .diffuseTextureNode)
       {
-         this .diffuseTextureNode ._transparent .addInterest ("set_transparent__",  this);
-         this .diffuseTextureNode ._linear      .addInterest (`setTexture${index}`, this, index, this .diffuseTextureNode);
+         this .diffuseTextureNode ._transparent .addInterest ("set_transparent__", this);
+         this .diffuseTextureNode ._linear      .addInterest ("addTexture",        this, index, this .diffuseTextureNode);
       }
 
-      this .setTexture (index, this .diffuseTextureNode);
+      this .addTexture (index, this .diffuseTextureNode);
    },
    set_specularColor__ ()
    {
@@ -130,13 +130,13 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    {
       const index = this .getTextureIndices () .SPECULAR_TEXTURE;
 
-      this .specularTextureNode ?._linear .removeInterest (`setTexture${index}`, this);
+      this .specularTextureNode ?._linear .removeInterest ("addTexture", this);
 
       this .specularTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._specularTexture);
 
-      this .specularTextureNode ?._linear .addInterest (`setTexture${index}`, this, index, this .specularTextureNode);
+      this .specularTextureNode ?._linear .addInterest ("addTexture", this, index, this .specularTextureNode);
 
-      this .setTexture (index, this .specularTextureNode);
+      this .addTexture (index, this .specularTextureNode);
    },
    set_shininess__ ()
    {
@@ -146,7 +146,7 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    {
       this .shininessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._shininessTexture);
 
-      this .setTexture (this .getTextureIndices () .SHININESS_TEXTURE, this .shininessTextureNode);
+      this .addTexture (this .getTextureIndices () .SHININESS_TEXTURE, this .shininessTextureNode);
    },
    set_occlusionStrength__ ()
    {
@@ -156,7 +156,7 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    {
       this .occlusionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._occlusionTexture);
 
-      this .setTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
+      this .addTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
    },
    createShader (key, geometryContext, renderContext)
    {
@@ -208,9 +208,9 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
 
       return shaderNode;
    },
-   setShaderUniforms (gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping)
+   setShaderUniforms (gl, shaderObject, textureTransformMapping, textureCoordinateMapping)
    {
-      X3DOneSidedMaterialNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, textureTransformMapping, textureCoordinateMapping);
+      X3DOneSidedMaterialNode .prototype .setShaderUniforms .call (this, gl, shaderObject, textureTransformMapping, textureCoordinateMapping);
 
       gl .uniform1f  (shaderObject .x3d_AmbientIntensity, this .ambientIntensity);
       gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .diffuseColorArray);
@@ -221,32 +221,24 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
          return;
 
       this .ambientTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_AmbientTexture,
          this ._ambientTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .diffuseTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_DiffuseTexture,
          this ._diffuseTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .specularTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_SpecularTexture,
          this ._specularTextureMapping .getValue (),
          textureTransformMapping,
          textureCoordinateMapping);
 
       this .shininessTextureNode ?.setNamedShaderUniforms (gl,
-         shaderObject,
-         renderObject,
          shaderObject .x3d_ShininessTexture,
          this ._shininessTextureMapping .getValue (),
          textureTransformMapping,
@@ -257,8 +249,6 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
          gl .uniform1f (shaderObject .x3d_OcclusionStrength, this .occlusionStrength);
 
          this .occlusionTextureNode .setNamedShaderUniforms (gl,
-            shaderObject,
-            renderObject,
             shaderObject .x3d_OcclusionTexture,
             this ._occlusionTextureMapping .getValue (),
             textureTransformMapping,
@@ -311,13 +301,5 @@ Object .defineProperties (Material,
       enumerable: true,
    },
 });
-
-for (const index of Object .values (Material .prototype .getTextureIndices ()))
-{
-   Material .prototype [`setTexture${index}`] = function (index, textureNode)
-   {
-      this .setTexture (index, textureNode);
-   };
-}
 
 export default Material;

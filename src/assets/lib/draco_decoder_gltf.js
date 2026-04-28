@@ -26,4 +26,4 @@ e=G;p(q);var $=c([null,Cc,Pa,Ha,Xd,ii,jh,ag,zc,xe,uc,jg,Wd,Qh,Pa,Pg,Hg,ua,yh,mh,
 );
 })();
 
-return DracoDecoderModule;
+return DracoDecoderModule ();

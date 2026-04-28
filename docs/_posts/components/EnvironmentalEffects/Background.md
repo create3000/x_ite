@@ -3,7 +3,7 @@ title: Background
 date: 2023-01-07
 nav: components-EnvironmentalEffects
 categories: [components, EnvironmentalEffects]
-tags: [Background, EnvironmentalEffects]
+tags: [Background, EnvironmentalEffects, VRML]
 ---
 <style>
 .post h3 {
@@ -31,7 +31,7 @@ The Background node belongs to the [EnvironmentalEffects](/x_ite/components/over
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in] | [set_bind](#fields-set_bind) |  |
 | MFString | [in, out] | [frontUrl](#fields-frontUrl) | [ ] |
 | MFString | [in, out] | [backUrl](#fields-backUrl) | [ ] |
@@ -40,10 +40,10 @@ The Background node belongs to the [EnvironmentalEffects](/x_ite/components/over
 | MFString | [in, out] | [topUrl](#fields-topUrl) | [ ] |
 | MFString | [in, out] | [bottomUrl](#fields-bottomUrl) | [ ] |
 | MFFloat | [in, out] | [skyAngle](#fields-skyAngle) | [ ] |
-| MFColor | [in, out] | [skyColor](#fields-skyColor) | 0 0 0  |
+| MFColor | [in, out] | [skyColor](#fields-skyColor) | 0 0 0 |
 | MFFloat | [in, out] | [groundAngle](#fields-groundAngle) | [ ] |
 | MFColor | [in, out] | [groundColor](#fields-groundColor) | [ ] |
-| SFFloat | [in, out] | [transparency](#fields-transparency) | 0  |
+| SFFloat | [in, out] | [transparency](#fields-transparency) | 0 |
 | SFBool | [out] | [isBound](#fields-isBound) |  |
 | SFTime | [out] | [bindTime](#fields-bindTime) |  |
 {: .fields }
@@ -79,8 +79,8 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
 - Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
-- Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile
-- This field may be ignored, applying the default value regardless.
+- Can replace embedded blank(s) in url queries with %20 for each blank character.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 #### Warning
 
@@ -95,8 +95,8 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
 - Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
-- Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile
-- This field may be ignored, applying the default value regardless.
+- Can replace embedded blank(s) in url queries with %20 for each blank character.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 #### Warning
 
@@ -111,8 +111,8 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
 - Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
-- Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile
-- This field may be ignored, applying the default value regardless.
+- Can replace embedded blank(s) in url queries with %20 for each blank character.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 #### Warning
 
@@ -127,8 +127,8 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
 - Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
-- Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile
-- This field may be ignored, applying the default value regardless.
+- Can replace embedded blank(s) in url queries with %20 for each blank character.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 #### Warning
 
@@ -143,8 +143,8 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
 - Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
-- Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile
-- This field may be ignored, applying the default value regardless.
+- Can replace embedded blank(s) in url queries with %20 for each blank character.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 #### Warning
 
@@ -159,8 +159,8 @@ Image background panorama between ground/sky backdrop and scene's geometry.
 
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
 - Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
-- Can replace embedded blank(s) in url queries with %20 for each blank character. Interchange profile
-- This field may be ignored, applying the default value regardless.
+- Can replace embedded blank(s) in url queries with %20 for each blank character.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 #### Warning
 
@@ -173,13 +173,13 @@ The angle array values increase from 0.0 zenith (straight up) to π/2=1.570796 (
 
 #### Hints
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 - [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 #### Warnings
 
 - You must have one more skyColor value than *skyAngle* values.
-- Colors at *skyAngle*=0 are ignored. Interchange profile
+- Colors at *skyAngle*=0 are ignored.
 
 ### MFColor [in, out] **skyColor** 0 0 0 <small>[0,1]</small>
 {: #fields-skyColor }
@@ -189,12 +189,12 @@ The angle array values increase from 0.0 zenith (straight up) to π/2=1.570796 (
 #### Hints
 
 - Setting the same color at two consecutive angles produces a solid color band.
-- Only one color might be rendered, others can be ignored.
+- In Interchange profile only one color might be rendered, others can be ignored.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
 #### Warning
 
-- You must have one more *skyColor* value than skyAngle values. Interchange profile
+- You must have one more *skyColor* value than skyAngle values.
 
 ### MFFloat [in, out] **groundAngle** [ ] <small>[0,π/2]</small>
 {: #fields-groundAngle }
@@ -203,13 +203,13 @@ The angle array values increase from 0.0 nadir (straight down) to π/2=1.570796 
 
 #### Hints
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 - [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 #### Warnings
 
 - You must have one more groundColor value than *groundAngle* values.
-- Colors at *groundAngle*=0 are ignored. Interchange profile
+- Colors at *groundAngle*=0 are ignored.
 
 ### MFColor [in, out] **groundColor** [ ] <small>[0,1]</small>
 {: #fields-groundColor }
@@ -219,21 +219,21 @@ The angle array values increase from 0.0 nadir (straight down) to π/2=1.570796 
 #### Hints
 
 - Setting the same color at two consecutive angles produces a solid color band.
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
 #### Warning
 
-- You must have one more *groundColor* value than groundAngle values. Interchange profile
+- You must have one more *groundColor* value than groundAngle values.
 
 ### SFFloat [in, out] **transparency** 0 <small>[0,1]</small>
 {: #fields-transparency }
 
-How "clear" the background is, allows underlying page to show through: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile
+How "clear" the background is, allows underlying page to show through: 1.0 is completely transparent, 0.0 is completely opaque.
 
 #### Hint
 
-- *transparency* \< .5 opaque, *transparency* \> .5 transparent.
+- In Interchange profile *transparency* \< .5 opaque, *transparency* \> .5 transparent.
 
 ### SFBool [out] **isBound**
 {: #fields-isBound }
@@ -271,7 +271,7 @@ Event sent when node becomes active/inactive.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/EnvironmentalEffects/Background/Background.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/EnvironmentalEffects/Background/Background.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/EnvironmentalEffects/Background/screenshot.avif" alt="Background"/>
 </x3d-canvas>
 
@@ -279,6 +279,14 @@ Event sent when node becomes active/inactive.
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/EnvironmentalEffects/Background/Background.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of Background Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#Background)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

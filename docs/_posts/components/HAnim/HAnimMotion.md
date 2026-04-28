@@ -29,11 +29,11 @@ The HAnimMotion node belongs to the [HAnim](/x_ite/components/overview/#hanim) c
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFString | [in, out] | [name](#fields-name) | "" |
+| SFInt32 | [in, out] | [loa](#fields-loa) | -1 |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFInt32 | [in, out] | [loa](#fields-loa) | -1  |
 | SFString | [in, out] | [joints](#fields-joints) | "" |
 | MFBool | [in, out] | [channelsEnabled](#fields-channelsEnabled) | [ ] |
 | SFString | [in, out] | [channels](#fields-channels) | "" |
@@ -41,11 +41,11 @@ The HAnimMotion node belongs to the [HAnim](/x_ite/components/overview/#hanim) c
 | SFBool | [in, out] | [loop](#fields-loop) | FALSE |
 | SFBool | [in] | [next](#fields-next) |  |
 | SFBool | [in] | [previous](#fields-previous) |  |
-| SFInt32 | [in, out] | [frameIndex](#fields-frameIndex) | 0  |
-| SFTime | [in, out] | [frameDuration](#fields-frameDuration) | 0.1  |
-| SFInt32 | [in, out] | [frameIncrement](#fields-frameIncrement) | 1  |
-| SFInt32 | [in, out] | [startFrame](#fields-startFrame) | 0  |
-| SFInt32 | [in, out] | [endFrame](#fields-endFrame) | 0  |
+| SFInt32 | [in, out] | [frameIndex](#fields-frameIndex) | 0 |
+| SFTime | [in, out] | [frameDuration](#fields-frameDuration) | 0.1 |
+| SFInt32 | [in, out] | [frameIncrement](#fields-frameIncrement) | 1 |
+| SFInt32 | [in, out] | [startFrame](#fields-startFrame) | 0 |
+| SFInt32 | [in, out] | [endFrame](#fields-endFrame) | 0 |
 | SFTime | [out] | [cycleTime](#fields-cycleTime) |  |
 | SFTime | [out] | [elapsedTime](#fields-elapsedTime) |  |
 | SFInt32 | [out] | [frameCount](#fields-frameCount) |  |
@@ -74,11 +74,6 @@ Author-provided prose that describes intended purpose of this node.
 
 Unique *name* attribute must be defined so that HAnimMotion node can be identified at run time for animation purposes.
 
-### SFBool [in, out] **enabled** TRUE
-{: #fields-enabled }
-
-Enables/disables node operation.
-
 ### SFInt32 [in, out] **loa** -1 <small>[-1,4]</small>
 {: #fields-loa }
 
@@ -88,6 +83,11 @@ Level Of Articulation 0..4 indicates complexity and detail of joints for given h
 
 - *loa* value of -1 indicates that no LOA conformance is provided.
 - [Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8.4 Levels of articulation](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#LevelsOfArticulation)
+
+### SFBool [in, out] **enabled** TRUE
+{: #fields-enabled }
+
+Enables/disables node operation.
 
 ### SFString [in, out] **joints** ""
 {: #fields-joints }
@@ -225,9 +225,18 @@ Send *previous* output value in values array, using/updating various frame value
 
 ### Hints
 
+- [HAnim Architecture draft version 2.1](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-2/ISO-IEC19774-2v2.1/ISO-IEC19774-2v2.1-WD/MotionDataAnimation/MotionNodes.html#MotionObject)
+- [HAnim Architecture draft version 2.1, 6.4 Extended definition of Humanoid object](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-2/ISO-IEC19774-2v2.1/ISO-IEC19774-2v2.1-WD/MotionDataAnimation/MotionNodes.html#HumanoidObjectExtension)
 - [HAnim Specification](https://www.web3d.org/documents/specifications/19774/V2.0)
-- HAnim Specification, clause 6.2 Introduction to Motion objectshttps://www.web3d.org/documents/specifications/19774/V2.0/MotionDataAnimation/MotionNodes.html#IntroductionToMotionNodes
+- [HAnim Specification, clause 6.2 Introduction to Motion objects](https://www.web3d.org/documents/specifications/19774/V2.0/MotionDataAnimation/MotionNodes.html#IntroductionToMotionNodes)
 - [HAnim Specification part 2, clause 6.6 Example Usage of Motion object](https://www.web3d.org/documents/specifications/19774/V2.0/MotionDataAnimation/MotionNodes.html#MotionObjectExample)
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

@@ -5,6 +5,10 @@ function PointingBuffer ({ browser })
    this .context = gl;
    this .array   = new Float32Array (4);
 
+   // Get current frame buffer.
+
+   const currentFrameBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
+
    // Create frame buffer.
 
    this .frameBuffer = gl .createFramebuffer ();
@@ -46,6 +50,10 @@ function PointingBuffer ({ browser })
    gl .framebufferTexture2D (gl .FRAMEBUFFER, gl .DEPTH_ATTACHMENT, gl .TEXTURE_2D, this .depthTexture, 0);
 
    const status = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
+
+   // Restore current frame buffer.
+
+   gl .bindFramebuffer (gl .FRAMEBUFFER, currentFrameBuffer);
 
    // Always check that our frame buffer is ok.
 

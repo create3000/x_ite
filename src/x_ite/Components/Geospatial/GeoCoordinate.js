@@ -83,7 +83,7 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, X3DCoordinateN
          p = new Vector3 (),
          g = new Vector3 ();
 
-      return function (array)
+      return function (array, min = this .length)
       {
          const
             point  = this .point,
@@ -94,6 +94,19 @@ Object .assign (Object .setPrototypeOf (GeoCoordinate .prototype, X3DCoordinateN
             this .getCoord (p .set (point [index], point [index + 1], point [index + 2]), g);
 
             array .push (g [0], g [1], g [2], 1);
+         }
+
+         min *= 3;
+
+         if (length)
+         {
+            for (let index = length; index < min; index += 3)
+               array .push (g [0], g [1], g [2], 1);
+         }
+         else
+         {
+            for (let index = length; index < min; index += 3)
+               array .push (0, 0, 0, 1);
          }
 
          return array;

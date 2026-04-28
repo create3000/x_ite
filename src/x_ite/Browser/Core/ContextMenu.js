@@ -1,5 +1,6 @@
-import X3DBaseNode from "../../Base/X3DBaseNode.js";
-import _           from "../../../locale/gettext.js";
+import X3DBaseNode  from "../../Base/X3DBaseNode.js";
+import X3DConstants from "../../Base/X3DConstants.js";
+import _            from "../../../locale/gettext.js";
 
 const
    _options  = Symbol (),
@@ -470,6 +471,9 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
             ... this .createUserMenu (),
 
             "separator3": "--------",
+
+            ... this .createAnimationsMenu (),
+
             "browser-timings": {
                name: _("Browser Timings"),
                type: "checkbox",
@@ -500,24 +504,125 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
                   browser .getShadow () .find (".x_ite-private-world-info") .remove ();
 
                   const
-                     priv      = browser .getShadow () .find (".x_ite-private-browser"),
-                     overlay   = $("<div></div>") .addClass ("x_ite-private-world-info-overlay") .appendTo (priv),
-                     div       = $("<div></div>") .hide () .addClass (["x_ite-private-world-info", "x_ite-private-hidden"]) .appendTo (overlay),
-                     worldInfo = browser .getExecutionContext () .getWorldInfos () [0],
-                     title     = worldInfo .title,
-                     info      = worldInfo .info;
+                     priv         = browser .getShadow () .find (".x_ite-private-browser"),
+                     overlay      = $("<div></div>") .addClass ("x_ite-private-world-info-overlay") .appendTo (priv),
+                     div          = $("<div></div>") .hide () .addClass (["x_ite-private-world-info", "x_ite-private-hidden"]) .appendTo (overlay),
+                     content      = $("<div></div>"),
+                     worldInfos   = browser .getExecutionContext () .getWorldInfos (),
+                     worldInfo    = worldInfos .length ? worldInfos [0] : null,
+                     hasWorldInfo = worldInfo ?.title .length || worldInfo ?.info .length;
 
-                  $("<div></div>") .addClass ("x_ite-private-world-info-top") .text ("World Info") .appendTo (div);
-
-                  if (title .length)
+                  const linkify = function ()
                   {
-                     $("<div></div>") .addClass ("x_ite-private-world-info-title") .text (title) .appendTo (div);
-                  }
+                     const email = /([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z0-9]{2,})/ig;
 
-                  for (const line of info)
-                  {
-                     $("<div></div>") .addClass ("x_ite-private-world-info-info") .text (line) .appendTo (div);
-                  }
+                     const link = /(https?:\/\/[-a-zA-Z0-9@:%._\+~#=]+\.[a-zA-Z0-9]{2,}\b[-a-zA-Z0-9()@:%_\+.~#?&\/=]*\b\/?)/ig;
+
+                     const replaced_text = $(this) .html ()
+                        .replace (email, `<a href="mailto:$1" target="_blank">$1</a>`)
+                        .replace (link, `<a href="$1" target="_blank">$1</a>`);
+
+                     $(this)
+                        .html (replaced_text)
+                        .find ("a")
+                        .on ("click", event => event .stopPropagation ());
+                  };
+
+                  const buttons = $("<div></div>")
+                     .addClass ("x_ite-private-world-info-buttons")
+                     .appendTo (div);
+
+                  const worldInfoButton = $("<button></button>")
+                     .addClass ("x_ite-private-browser-button")
+                     .css ("width", "100pt")
+                     .text ("World Info")
+                     .on ("click", event =>
+                     {
+                        event .preventDefault ();
+                        event .stopPropagation ();
+                        event .stopImmediatePropagation ();
+
+                        const
+                           title = worldInfo .title,
+                           info  = worldInfo .info;
+
+                        buttons .find ("button") .removeClass ("active");
+                        worldInfoButton .addClass ("active");
+
+                        content .empty ();
+
+                        $("<div></div>")
+                           .addClass ("x_ite-private-world-info-top")
+                           .text ("World Info")
+                           .appendTo (content);
+
+                        if (title .length)
+                        {
+                           $("<div></div>")
+                              .addClass ("x_ite-private-world-info-title")
+                              .text (title)
+                              .appendTo (content);
+                        }
+
+                        for (const line of info)
+                        {
+                           $("<div></div>")
+                              .addClass ("x_ite-private-world-info-info")
+                              .text (line)
+                              .appendTo (content)
+                              .each (linkify);
+                        }
+                     })
+                     .appendTo (buttons);
+
+                  const metaDataButton = $("<button></button>")
+                     .addClass ("x_ite-private-browser-button")
+                     .css ("width", "100pt")
+                     .text ("Metadata")
+                     .on ("click", event =>
+                     {
+                        event .preventDefault ();
+                        event .stopPropagation ();
+                        event .stopImmediatePropagation ();
+
+                        buttons .find ("button") .removeClass ("active");
+                        metaDataButton .addClass ("active");
+
+                        content .empty ();
+
+                        $("<div></div>")
+                           .addClass ("x_ite-private-world-info-top")
+                           .text ("Metadata")
+                           .appendTo (content);
+
+                        const table = $("<table></table>") .appendTo (content);
+
+                        for (const [key, value] of browser .currentScene .getMetaDatas ())
+                        {
+                           const tr = $("<tr></tr>") .appendTo (table);
+
+                           $("<td></td>") .text (key + ":") .appendTo (tr);
+                           $("<td></td>")
+                              .text (value)
+                              .appendTo (tr)
+                              .each (linkify);
+                        }
+
+                     })
+                     .appendTo (buttons);
+
+                  content .appendTo (div);
+
+                  if (!hasWorldInfo)
+                     worldInfoButton .hide ();
+
+                  if (!browser .currentScene .getMetaDatas () .length)
+                     metaDataButton .hide ();
+
+                  if (hasWorldInfo)
+                     worldInfoButton .trigger ("click");
+                  else
+                     metaDataButton .trigger ("click");
 
                   div
                      .show ()
@@ -567,7 +672,7 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
 
       const worldInfo = browser .getExecutionContext () .getWorldInfos () [0];
 
-      if (!worldInfo || (worldInfo .title .length === 0 && worldInfo .info .length === 0))
+      if ((!worldInfo || (worldInfo .title .length === 0 && worldInfo .info .length === 0)) && !browser .currentScene .getMetaDatas () .length)
       {
          delete menu .items ["world-info"];
       }
@@ -651,6 +756,76 @@ Object .assign (Object .setPrototypeOf (ContextMenu .prototype, X3DBaseNode .pro
             return _("None Viewer");
       }
    },
+   createAnimationsMenu ()
+   {
+      const
+         browser = this .getBrowser (),
+         scene   = browser .currentScene;
+
+      const animations = $.try (() => scene .getExportedNode ("Animations"));
+
+      if (!animations)
+         return { };
+
+      const timeSensors = $.try (() => Array .from (animations .children, group => group .children [0]))
+         .filter (node => node .getNodeType () .includes (X3DConstants .TimeSensor));
+
+      if (!timeSensors ?.length)
+         return { };
+
+      return {
+         "animations": {
+            name: _("Animations"),
+            className: "context-menu-icon x_ite-private-icon-animations",
+            items: {
+               ... Object .fromEntries (timeSensors .map ((timeSensor, i) =>
+               {
+                  return [`animation-${i}`, {
+                     name: timeSensor .description,
+                     type: "checkbox",
+                     selected: timeSensor .isActive,
+                     callback ()
+                     {
+                        if (timeSensor .isActive)
+                        {
+                           timeSensor .stopTime = Date .now () / 1000;
+                        }
+                        else
+                        {
+                           timeSensor .loop      = true;
+                           timeSensor .startTime = Date .now () / 1000;
+                        }
+                     },
+                  }];
+               })),
+
+               "separator2": "--------",
+
+               "all": {
+                  name: _("All"),
+                  className: "context-menu-icon x_ite-private-icon-play",
+                  callback ()
+                  {
+                     for (const timeSensor of timeSensors)
+                     {
+                        timeSensor .loop      = true;
+                        timeSensor .startTime = Date .now () / 1000;
+                     }
+                  },
+               },
+               "none": {
+                  name: _("None"),
+                  className: "context-menu-icon x_ite-private-icon-stop",
+                  callback ()
+                  {
+                     for (const timeSensor of timeSensors)
+                        timeSensor .stopTime = Date .now () / 1000;
+                  },
+               },
+            },
+         },
+      };
+   }
 });
 
 Object .defineProperties (ContextMenu .prototype,

@@ -83,13 +83,15 @@ Object .assign (Object .setPrototypeOf (LineProperties .prototype, X3DAppearance
 
       if (this .applied)
       {
-         const textureUnit = browser .getTextureUnit ();
+         const lineStippleScale = 1 / (browser .getRenderingProperty ("PixelsPerPoint") * browser .getRenderingProperty ("ContentScale") * 32); // 32px
+
+         const textureUnit = browser .popTextureUnit ();
 
          if (!this .transformLines)
             gl .lineWidth (this .linewidthScaleFactor);
 
          gl .uniform1i (shaderObject .x3d_LinePropertiesLinetype, this .linetype);
-         gl .uniform1f (shaderObject .x3d_LineStippleScale,       browser .getLineStippleScale ());
+         gl .uniform1f (shaderObject .x3d_LineStippleScale,       lineStippleScale);
 
          gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_2D, browser .getLinetypeTexture () .getTexture ());

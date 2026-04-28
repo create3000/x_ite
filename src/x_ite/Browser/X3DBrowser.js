@@ -22,7 +22,6 @@ import X3DConstants         from "../Base/X3DConstants.js";
 import SFNodeCache          from "../Fields/SFNodeCache.js";
 import Features             from "../Features.js";
 import Algorithm            from "../../standard/Math/Algorithm.js";
-import MikkTSpace           from "./Rendering/MikkTSpace.js";
 import _                    from "../../locale/gettext.js";
 import DEVELOPMENT          from "../DEVELOPMENT.js";
 
@@ -75,6 +74,11 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    initialize ()
    {
       X3DBrowserContext .prototype .initialize .call (this);
+
+      this .getCanvas () .on ("webglcontextlost", event =>
+      {
+         this .callBrowserCallbacks (X3DConstants .CONNECTION_ERROR);
+      });
 
       const scene = new X3DScene (this);
 
@@ -279,11 +283,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          }
 
          // Load array of component names.
-         return Promise .all ([
-            MikkTSpace .initialize (), // Required by Rendering component.
-            loadComponents .call (this, component, new Set ()),
-         ])
-         .then (Function .prototype);
+         return loadComponents .call (this, component, new Set ());
       };
    })(),
    addConcreteNode (ConcreteNode)
@@ -365,7 +365,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
             if (!(component instanceof ComponentInfo))
                throw new Error ("Couldn't create scene: component must be of type ComponentInfo.");
 
-            scene .addComponent (component);
+            scene .updateComponent (component);
          }
       }
 
@@ -621,7 +621,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
                }
                else
                {
-                  this .callBrowserCallbacks (X3DConstants .CONNECTION_ERROR);
+                  this .callBrowserCallbacks (X3DConstants .INITIALIZED_ERROR);
                   this .callBrowserEventHandler ("error");
 
                   setTimeout (() =>
@@ -885,6 +885,20 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       this .currentScene .deleteRoute (sourceNode, sourceField, destinationNode, destinationField);
    },
+   constrainTranslation (layerNode, translation)
+   {
+      if (arguments .length === 1)
+      {
+         translation = layerNode;
+         layerNode   = this .getActiveLayer ();
+      }
+
+      layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
+
+      const constrained = layerNode ?.constrainTranslation (translation .getValue ());
+
+      return constrained ? new Fields .SFVec3f (... constrained) : null;
+   },
    getClosestObject (layerNode, direction)
    {
       if (arguments .length === 1)
@@ -895,13 +909,19 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
       layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode) ?? this .getActiveLayer ();
 
-      const closestObject = layerNode ?.getClosestObject (direction .getValue ())
+      const closestObject = layerNode ?.getClosestObject (direction .getValue ());
 
-      return closestObject ?.node ? {
+      return closestObject ?.node
+      ? {
          node: SFNodeCache .get (closestObject .node),
          distance: closestObject .distance,
+         normal: new Fields .SFVec3f (... closestObject .normal),
       }
-      : { node: null, distance: Infinity };
+      : {
+         node: null,
+         distance: Infinity,
+         normal: null,
+      };
    },
    beginUpdate ()
    {
@@ -916,7 +936,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    print (... args)
    {
-      const string = args .map (arg => String (arg)) .join (" ");
+      const string = args .map (String) .join (" ");
 
       console .log (string);
 
@@ -925,7 +945,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    println (... args)
    {
-      const string = args .map (arg => String (arg)) .join (" ");
+      const string = args .map (String) .join (" ");
 
       console .log (string);
 
@@ -943,6 +963,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    toJSONStream (generator)
    {
       this .currentScene .toJSONStream (generator);
+   },
+   loseContext ()
+   {
+      this .getContext () .getExtension ("WEBGL_lose_context") .loseContext ();
    },
    dispose ()
    {

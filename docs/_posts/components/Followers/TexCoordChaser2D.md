@@ -31,12 +31,12 @@ The TexCoordChaser2D node belongs to the [Followers](/x_ite/components/overview/
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFVec2f | [in] | [set_value](#fields-set_value) |  |
 | MFVec2f | [in] | [set_destination](#fields-set_destination) |  |
 | MFVec2f | [ ] | [initialValue](#fields-initialValue) | [ ] |
 | MFVec2f | [ ] | [initialDestination](#fields-initialDestination) | [ ] |
-| SFTime | [ ] | [duration](#fields-duration) | 1  |
+| SFTime | [ ] | [duration](#fields-duration) | 1 |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | MFVec2f | [out] | [value_changed](#fields-value_changed) |  |
 {: .fields }
@@ -110,6 +110,13 @@ Computed output value that approaches within tolerance of destination value, as 
 ### Hint
 
 - ROUTE value_changed output events to a \<[TextureTransform](/x_ite/components/texturing/texturetransform/)\> node's translation field, for example.
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

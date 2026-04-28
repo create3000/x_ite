@@ -1,15 +1,15 @@
-/* X_ITE v12.0.4 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.0.4")];
+/* X_ITE v14.2.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.2.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 254:
-/***/ ((module) => {
+/***/ 254
+(module) {
 
 module.exports = __X_ITE_X3D__ .jquery;
 
-/***/ })
+/***/ }
 
 /******/ 	});
 /************************************************************************/
@@ -211,9 +211,9 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, (e
                                                                       false,
                                                                       false);
    },
-   setShaderUniforms (gl, shaderObject, renderObject, channel = shaderObject .x3d_Texture [0])
+   setShaderUniforms (gl, channel)
    {
-      const textureUnit = this .getBrowser () .getTextureUnit ();
+      const textureUnit = this .getBrowser () .popTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
       gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .getTexture ());
@@ -304,11 +304,11 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, CubeM
    {
       let textureNode = this .textureNodes [index];
 
-      textureNode ?.removeInterest (`set_loadState${index}__`, this);
+      textureNode ?.removeInterest ("set_loadState__", this);
 
       textureNode = this .textureNodes [index] = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture2DNode, node);
 
-      textureNode ?.addInterest (`set_loadState${index}__`, this, index, textureNode);
+      textureNode ?.addInterest ("set_loadState__", this, index, textureNode);
 
       this .set_loadState__ (index, textureNode);
    },
@@ -426,133 +426,19 @@ Object .defineProperties (ComposedCubeMapTexture,
    },
 });
 
-for (let index = 0; index < 6; ++ index)
-{
-   ComposedCubeMapTexture .prototype [`set_loadState${index}__`] = function (index, textureNode)
-   {
-      this .set_loadState__ (index, textureNode);
-   };
-}
-
 const ComposedCubeMapTexture_default_ = ComposedCubeMapTexture;
 ;
 
 /* harmony default export */ const CubeMapTexturing_ComposedCubeMapTexture = (external_X_ITE_X3D_Namespace_default().add ("ComposedCubeMapTexture", ComposedCubeMapTexture_default_));
-;// external "__X_ITE_X3D__ .X3DBaseNode"
-const external_X_ITE_X3D_X3DBaseNode_namespaceObject = __X_ITE_X3D__ .X3DBaseNode;
-var external_X_ITE_X3D_X3DBaseNode_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DBaseNode_namespaceObject);
-;// external "__X_ITE_X3D__ .X3DRenderObject"
-const external_X_ITE_X3D_X3DRenderObject_namespaceObject = __X_ITE_X3D__ .X3DRenderObject;
-var external_X_ITE_X3D_X3DRenderObject_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DRenderObject_namespaceObject);
-;// external "__X_ITE_X3D__ .TraverseType"
-const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
-var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
-;// ./src/x_ite/Rendering/DependentRenderer.js
-
-
-
-
-function DependentRenderer (executionContext, renderObject, node)
-{
-   external_X_ITE_X3D_X3DBaseNode_default().call (this, executionContext);
-   external_X_ITE_X3D_X3DRenderObject_default().call (this, executionContext);
-
-   this .renderObject = renderObject;
-   this .node         = node;
-   this .framebuffers = [ ];
-}
-
-Object .assign (Object .setPrototypeOf (DependentRenderer .prototype, (external_X_ITE_X3D_X3DBaseNode_default()).prototype),
-   (external_X_ITE_X3D_X3DRenderObject_default()).prototype,
-{
-   initialize ()
-   {
-      external_X_ITE_X3D_X3DBaseNode_default().prototype .initialize .call (this);
-      external_X_ITE_X3D_X3DRenderObject_default().prototype .initialize .call (this);
-   },
-   isIndependent ()
-   {
-      return false;
-   },
-   getNode ()
-   {
-      return this .node;
-   },
-   getLayer ()
-   {
-      return this .renderObject .getLayer ();
-   },
-   getBackground ()
-   {
-      return this .renderObject .getBackground ();
-   },
-   getFog ()
-   {
-      return this .renderObject .getFog ();
-   },
-   getNavigationInfo ()
-   {
-      return this .renderObject .getNavigationInfo ();
-   },
-   getViewpoint ()
-   {
-      return this .renderObject .getViewpoint ();
-   },
-   getViewpointStack ()
-   {
-      return this .renderObject .getViewpointStack ();
-   },
-   getLightContainer ()
-   {
-      return this .renderObject .getLights () [this .lightIndex ++];
-   },
-   getFramebuffers ()
-   {
-      return this .framebuffers;
-   },
-   setFramebuffer (frameBuffer)
-   {
-      this .framebuffers [0] = frameBuffer;
-   },
-   render (type, callback, group)
-   {
-      switch (type)
-      {
-         case (external_X_ITE_X3D_TraverseType_default()).COLLISION:
-         {
-            external_X_ITE_X3D_X3DRenderObject_default().prototype .render .call (this, type, callback, group);
-            break;
-         }
-         case (external_X_ITE_X3D_TraverseType_default()).SHADOW:
-         {
-            external_X_ITE_X3D_X3DRenderObject_default().prototype .render .call (this, type, callback, group);
-            break;
-         }
-         case (external_X_ITE_X3D_TraverseType_default()).DISPLAY:
-         {
-            this .lightIndex = 0;
-
-            external_X_ITE_X3D_X3DRenderObject_default().prototype .render .call (this, type, callback, group);
-
-            for (const light of this .renderObject .getLights ())
-               light .modelViewMatrix .pop ();
-
-            break;
-         }
-      }
-   },
-});
-
-for (const key of Object .keys (DependentRenderer .prototype))
-   Object .defineProperty (DependentRenderer .prototype, key, { enumerable: false });
-
-const DependentRenderer_default_ = DependentRenderer;
-;
-
-/* harmony default export */ const Rendering_DependentRenderer = (external_X_ITE_X3D_Namespace_default().add ("DependentRenderer", DependentRenderer_default_));
+;// external "__X_ITE_X3D__ .DependentRenderer"
+const external_X_ITE_X3D_DependentRenderer_namespaceObject = __X_ITE_X3D__ .DependentRenderer;
+var external_X_ITE_X3D_DependentRenderer_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_DependentRenderer_namespaceObject);
 ;// external "__X_ITE_X3D__ .TextureBuffer"
 const external_X_ITE_X3D_TextureBuffer_namespaceObject = __X_ITE_X3D__ .TextureBuffer;
 var external_X_ITE_X3D_TextureBuffer_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TextureBuffer_namespaceObject);
+;// external "__X_ITE_X3D__ .TraverseType"
+const external_X_ITE_X3D_TraverseType_namespaceObject = __X_ITE_X3D__ .TraverseType;
+var external_X_ITE_X3D_TraverseType_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_TraverseType_namespaceObject);
 ;// external "__X_ITE_X3D__ .Camera"
 const external_X_ITE_X3D_Camera_namespaceObject = __X_ITE_X3D__ .Camera;
 var external_X_ITE_X3D_Camera_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Camera_namespaceObject);
@@ -598,10 +484,12 @@ function GeneratedCubeMapTexture (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).GeneratedCubeMapTexture);
 
+   // Private properties
+
    this .dependentRenderers = new WeakMap ();
    this .projectionMatrix   = new (external_X_ITE_X3D_Matrix4_default()) ();
    this .modelMatrix        = new (external_X_ITE_X3D_Matrix4_default()) ();
-   this .viewVolume         = new (external_X_ITE_X3D_ViewVolume_default()) ();
+   this .updateCallbacks    = new Map ();
 }
 
 Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, CubeMapTexturing_X3DEnvironmentTextureNode .prototype),
@@ -619,6 +507,18 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
       this ._size .addInterest ("set_size__", this);
 
       this .set_size__ ();
+   },
+   isRenderedTexture ()
+   {
+      return true;
+   },
+   addUpdateCallback (key, callback)
+   {
+      this .updateCallbacks .set (key, callback);
+   },
+   removeUpdateCallback (key)
+   {
+      this .updateCallbacks .delete (key);
    },
    set_size__ ()
    {
@@ -646,7 +546,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
          // Properties
 
          this .viewport    = new (external_X_ITE_X3D_Vector4_default()) (0, 0, size, size);
-         this .frameBuffer = new (external_X_ITE_X3D_TextureBuffer_default()) ({ browser: this .getBrowser (), width: size, height: size });
+         this .frameBuffer = new (external_X_ITE_X3D_TextureBuffer_default()) ({ browser, width: size, height: size });
 
          this .setSize (size);
       }
@@ -661,18 +561,19 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
    {
       // TraverseType .DISPLAY
 
-      if (this ._update .getValue () === "NONE")
-         return;
-
       if (!renderObject .isIndependent ())
          return;
 
       if (!this .frameBuffer)
          return;
 
-      renderObject .getGeneratedCubeMapTextures () .push (this);
+      if (this ._update .getValue () === "NONE")
+         return;
 
-      this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ()) .multRight (renderObject .getCameraSpaceMatrix () .get ());
+      renderObject .getRenderedTextures () .add (this);
+
+      this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ())
+         .multRight (renderObject .getCameraSpaceMatrix () .get ());
    },
    renderTexture: (() =>
    {
@@ -698,18 +599,20 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
          new (external_X_ITE_X3D_Vector3_default()) ( 1,  1,  1), // bottom
       ];
 
-      const invCameraSpaceMatrix = new (external_X_ITE_X3D_Matrix4_default()) ();
+      const
+         invCameraSpaceMatrix = new (external_X_ITE_X3D_Matrix4_default()) (),
+         viewVolume           = new (external_X_ITE_X3D_ViewVolume_default()) ();
 
       return function (renderObject)
       {
+         this .textureRenderingPass = true;
+
+         // Make dependent renderer.
+
          if (!this .dependentRenderers .has (renderObject))
-         {
-            const dependentRenderer = new Rendering_DependentRenderer (this .getExecutionContext (), renderObject, this);
+            this .dependentRenderers .set (renderObject, new (external_X_ITE_X3D_DependentRenderer_default()) (this .getExecutionContext (), renderObject));
 
-            dependentRenderer .setup ();
-
-            this .dependentRenderers .set (renderObject, dependentRenderer);
-         }
+         // Prepare.
 
          const
             dependentRenderer  = this .dependentRenderers .get (renderObject),
@@ -730,13 +633,18 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
          this .setTransparent (background .isTransparent ());
 
          dependentRenderer .setFramebuffer (this .frameBuffer);
-         dependentRenderer .getViewVolumes () .push (this .viewVolume .set (projectionMatrix, this .viewport, this .viewport));
+         dependentRenderer .getViewVolumes () .push (viewVolume .set (projectionMatrix, this .viewport, this .viewport));
          dependentRenderer .getProjectionMatrix () .push (projectionMatrix);
 
          gl .bindTexture (this .getTarget (), this .getTexture ());
 
+         this .frameBuffer .bind ();
+
          for (let i = 0; i < 6; ++ i)
          {
+            gl .viewport (... this .viewport);
+            gl .scissor (... this .viewport);
+            gl .clearColor (0, 0, 0, 0);
             gl .clear (gl .COLOR_BUFFER_BIT); // Always clear, X3DBackground could be transparent!
 
             // Setup inverse texture space matrix.
@@ -745,7 +653,9 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
             dependentRenderer .getCameraSpaceMatrix () .rotate (rotations [i]);
             dependentRenderer .getCameraSpaceMatrix () .scale (scales [i]);
 
-            dependentRenderer .getViewMatrix () .push (invCameraSpaceMatrix .assign (dependentRenderer .getCameraSpaceMatrix () .get ()) .inverse ());
+            invCameraSpaceMatrix .assign (dependentRenderer .getCameraSpaceMatrix () .get ()) .inverse ();
+
+            dependentRenderer .getViewMatrix ()      .push (invCameraSpaceMatrix);
             dependentRenderer .getModelViewMatrix () .push (invCameraSpaceMatrix);
 
             // Setup headlight if enabled.
@@ -780,22 +690,22 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
          dependentRenderer .getProjectionMatrix () .pop ();
          dependentRenderer .getViewVolumes      () .pop ();
 
-         if (this ._update .getValue () === "NEXT_FRAME_ONLY")
+         if (this ._update .equals ("NEXT_FRAME_ONLY"))
             this ._update = "NONE";
+
+         for (const callback of this .updateCallbacks .values ())
+            callback ();
+
+         this .textureRenderingPass = false;
       };
    })(),
-   setShaderUniforms: (() =>
+   setShaderUniforms (gl, channel)
    {
-      const zeros = new Float32Array (16); // Trick: zero model view matrix to hide object.
+      CubeMapTexturing_X3DEnvironmentTextureNode .prototype .setShaderUniforms .call (this, gl, channel);
 
-      return function (gl, shaderObject, renderObject, channel)
-      {
-         CubeMapTexturing_X3DEnvironmentTextureNode .prototype .setShaderUniforms .call (this, gl, shaderObject, renderObject, channel);
-
-         if (renderObject .getNode () === this)
-            gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, zeros);
-      };
-   })(),
+      if (this .textureRenderingPass)
+         gl .viewport (0, 0, 0, 0); // Hide object by making viewport zero size.
+   },
 });
 
 Object .defineProperties (GeneratedCubeMapTexture,
@@ -1076,7 +986,6 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
          gl          = browser .getContext (),
          shaderNode  = browser .getPanoramaShader (),
          framebuffer = gl .createFramebuffer (),
-         textureUnit = browser .getTextureUnit (),
          size        = Math .floor (height / 2),
          data        = new Uint8Array (size * size * 4);
 
@@ -1099,9 +1008,9 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
 
       gl .useProgram (shaderNode .getProgram ());
 
-      gl .activeTexture (gl .TEXTURE0 + textureUnit);
+      gl .activeTexture (gl .TEXTURE0);
       gl .bindTexture (gl .TEXTURE_2D, panoramaTexture);
-      gl .uniform1i (shaderNode .x3d_PanoramaTextureEXT, textureUnit);
+      gl .uniform1i (shaderNode .x3d_PanoramaTextureEXT, 0);
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, framebuffer);
       gl .viewport (0, 0, size, size);
@@ -1132,8 +1041,6 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
       gl .enable (gl .DEPTH_TEST);
       gl .deleteFramebuffer (framebuffer);
       gl .deleteTexture (panoramaTexture);
-
-      browser .resetTextureUnits ();
 
       // Update size and transparent field.
 

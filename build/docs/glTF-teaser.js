@@ -26,7 +26,7 @@ function main ()
 
    // .md
 
-   const links = ["light", "dark"] .flatMap (theme => files .map ((file, i) => `[![Teaser${i + 1}](/assets/laboratory/gltf-sample-viewer/teaser/${theme}-image${i + 1}.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=${file}){: .${theme} .img-link .w-25 }`)) .join ("");
+   const links = ["light", "dark"] .flatMap (theme => files .map ((file, i) => `[![Teaser${i + 1}](/assets/laboratory/gltf-sample-viewer/teaser/${theme}-image${i + 1}.avif)](/x_ite/laboratory/gltf-sample-viewer/?url=${file}){: .${theme} .img-link .w-25 width="${width}" height="${height}" }`)) .join ("");
 
    const md = sh (`cat docs/_posts/getting-started.md`)
       .replace (/><br><br>\[!\[Teaser1\].*?\n/, `><br><br>${links}\n`);
@@ -46,7 +46,7 @@ function main ()
    {
       for (const [i, file] of files .entries ())
       {
-         systemSync (`npx --yes x3d-image -s 3200x1800 -c LINEAR -m KHR_PBR_NEUTRAL -e CANNON -b "${x3d}" -r "${rotation}" -a -i "${file}" -o image.png`);
+         systemSync (`npx --yes x3d-image -s 3200x1800 -c LINEAR -m KHR_PBR_NEUTRAL -w CANNON -b "${x3d}" -r "${rotation}" -a -i "${file}" -o image.png`);
          systemSync (`magick image.png -trim -resize ${resize} -size ${size} "xc:${magick}" +swap -gravity center -composite -quality 50 ${theme}-image${i + 1}.avif`);
       }
    }

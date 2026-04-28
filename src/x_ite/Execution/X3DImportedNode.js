@@ -1,13 +1,16 @@
-import X3DObject   from "../Base/X3DObject.js";
-import SFNodeCache from "../Fields/SFNodeCache.js";
+import X3DObject            from "../Base/X3DObject.js";
+import SFNodeCache          from "../Fields/SFNodeCache.js";
+import X3DImportedNodeProxy from "../Components/Core/X3DImportedNodeProxy.js";
 
 const
    _executionContext = Symbol (),
    _inlineNode       = Symbol (),
    _exportedName     = Symbol (),
-   _importedName     = Symbol ();
+   _importedName     = Symbol (),
+   _description      = Symbol (),
+   _exportedNodes    = Symbol ();
 
-function X3DImportedNode (executionContext, inlineNode, exportedName, importedName)
+function X3DImportedNode (executionContext, inlineNode, exportedName, importedName, description)
 {
    X3DObject .call (this);
 
@@ -15,6 +18,8 @@ function X3DImportedNode (executionContext, inlineNode, exportedName, importedNa
    this [_inlineNode]       = inlineNode;
    this [_exportedName]     = exportedName;
    this [_importedName]     = importedName;
+   this [_description]      = description;
+   this [_exportedNodes]    = executionContext [_exportedNodes] ??= new Map ();
 }
 
 Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .prototype),
@@ -31,17 +36,59 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    {
       return this [_exportedName];
    },
-   getExportedNode ()
+   getExportedNode (type)
    {
-      return this .getInlineNode () .getInternalScene () .getExportedNode (this [_exportedName]) .getValue ();
+      const exportedNode = this [_exportedNodes] .get (this [_importedName]);
+
+      exportedNode ?.setTypeHint (type);
+
+      return exportedNode ?? this .createExportedNode (type);
+   },
+   createExportedNode (type)
+   {
+      const exportedNode = new X3DImportedNodeProxy (this .getExecutionContext (), this [_importedName], type);
+
+      this [_exportedNodes] .set (this [_importedName], exportedNode);
+
+      return exportedNode;
+   },
+   updateExportedNode ()
+   {
+      this [_exportedNodes] .get (this [_importedName]) ?.update ();
+   },
+   getSharedNode ()
+   {
+      const exportedNode = this .getInlineNode () .getInternalScene () .getExportedNodes () .get (this [_exportedName]);
+
+      if (exportedNode)
+         return exportedNode .getLocalNode ();
+
+      throw new Error (`Exported node '${this [_exportedName]}' not found.`);
    },
    getImportedName ()
    {
       return this [_importedName];
    },
-   [Symbol .for ("X_ITE.X3DImportedNode.setImportName")] (importName)
+   [Symbol .for ("X_ITE.X3DImportedNode.setImportName")] (importedName)
    {
-      this [_importedName] = importName;
+      const
+         exportedNode  = this .getExportedNode (),
+         exportedNodes = this [_exportedNodes];
+
+      exportedNodes .delete (this [_importedName]);
+      exportedNodes .set (importedName, exportedNode);
+
+      this [_importedName] = importedName;
+
+      exportedNode .setName (importedName);
+   },
+   getDescription ()
+   {
+      return this [_description];
+   },
+   setDescription (value)
+   {
+      this [_description] = String (value);
    },
    toVRMLStream (generator)
    {
@@ -52,19 +99,29 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
 
       const importedName = generator .ImportedName (this);
 
-      generator .string += generator .Indent ();
+      generator .Indent ();
       generator .string += "IMPORT";
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += generator .Name (this .getInlineNode ());
       generator .string += ".";
       generator .string += this .getExportedName ();
 
       if (importedName !== this .getExportedName ())
       {
-         generator .string += generator .Space ();
+         generator .Space ();
          generator .string += "AS";
-         generator .string += generator .Space ();
+         generator .Space ();
          generator .string += importedName;
+      }
+
+      if (this [_description])
+      {
+         generator .Space ();
+         generator .string += "DESCRIPTION";
+         generator .Space ();
+         generator .string += '"';
+         generator .string += this [_description];
+         generator .string += '"';
       }
    },
    toXMLStream (generator)
@@ -76,99 +133,41 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
 
       const importedName = generator .ImportedName (this);
 
-      generator .string += generator .Indent ();
-      generator .string += "<IMPORT";
-      generator .string += generator .Space ();
-      generator .string += "inlineDEF='";
-      generator .string += generator .XMLEncode (generator .Name (this .getInlineNode ()));
-      generator .string += "'";
-      generator .string += generator .Space ();
-      generator .string += "importedDEF='";
-      generator .string += generator .XMLEncode (this .getExportedName ());
-      generator .string += "'";
+      generator .openTag ("IMPORT");
+      generator .attribute ("inlineDEF",   generator .Name (this .getInlineNode ()));
+      generator .attribute ("importedDEF", this .getExportedName ());
 
       if (importedName !== this .getExportedName ())
-      {
-         generator .string += generator .Space ();
-         generator .string += "AS='";
-         generator .string += generator .XMLEncode (importedName);
-         generator .string += "'";
-      }
+         generator .attribute ("AS", importedName);
 
-      generator .string += generator .closingTags ? "></IMPORT>" : "/>";
+      if (this [_description])
+         generator .attribute ("DESCRIPTION", this [_description]);
+
+      generator .closeTag ("IMPORT");
    },
    toJSONStream (generator)
    {
       if (!generator .ExistsNode (this .getInlineNode ()))
          throw new Error ("X3DImportedNode.toJSONStream: Inline node does not exist.");
 
+      generator .TidyBreak ();
+      generator .Indent ();
+
       generator .AddRouteNode (this);
+      generator .beginObject ("IMPORT", false, true);
+      generator .stringProperty ("@inlineDEF",   generator .Name (this .getInlineNode ()), false);
+      generator .stringProperty ("@importedDEF", this .getExportedName ());
 
       const importedName = generator .ImportedName (this);
 
-      generator .string += generator .Indent ();
-      generator .string += '{';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += "IMPORT";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .IncIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '{';
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .IncIndent ();
-
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@inlineDEF";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += generator .JSONEncode (generator .Name (this .getInlineNode ()));
-      generator .string += '"';
-      generator .string += ',';
-      generator .string += generator .TidyBreak ();
-
-      generator .string += generator .Indent ();
-      generator .string += '"';
-      generator .string += "@importedDEF";
-      generator .string += '"';
-      generator .string += ':';
-      generator .string += generator .TidySpace ();
-      generator .string += '"';
-      generator .string += generator .JSONEncode (this .getExportedName ());
-      generator .string += '"';
-
       if (importedName !== this .getExportedName ())
-      {
-         generator .string += ',';
-         generator .string += generator .TidyBreak ();
-         generator .string += generator .Indent ();
-         generator .string += '"';
-         generator .string += "@AS";
-         generator .string += '"';
-         generator .string += ':';
-         generator .string += generator .TidySpace ();
-         generator .string += '"';
-         generator .string += generator .JSONEncode (importedName);
-         generator .string += '"';
-         generator .string += generator .TidyBreak ();
-      }
-      else
-      {
-         generator .string += generator .TidyBreak ();
-      }
+         generator .stringProperty ("@AS", importedName);
 
-      generator .string += generator .DecIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '}';
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .DecIndent ();
-      generator .string += generator .Indent ();
-      generator .string += '}';
+      if (this [_description])
+         generator .stringProperty ("@DESCRIPTION", this [_description]);
+
+      generator .endObject ();
+      generator .endObject ();
    },
    dispose ()
    {
@@ -206,26 +205,26 @@ Object .defineProperties (X3DImportedNode .prototype,
    },
    exportedName:
    {
-      get ()
-      {
-         return this [_exportedName];
-      },
+      get: X3DImportedNode .prototype .getExportedName,
       enumerable: true,
    },
    exportedNode:
    {
       get ()
       {
-         return this .getInlineNode () .getInternalScene () .getExportedNode (this [_exportedName]);
+         return SFNodeCache .get (this .getExportedNode ());
       },
       enumerable: true,
    },
    importedName:
    {
-      get ()
-      {
-         return this [_importedName];
-      },
+      get: X3DImportedNode .prototype .getImportedName,
+      enumerable: true,
+   },
+   description:
+   {
+      get: X3DImportedNode .prototype .getDescription,
+      set: X3DImportedNode .prototype .setDescription,
       enumerable: true,
    },
 });

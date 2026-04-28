@@ -15,7 +15,7 @@ This example can be tested with [Electron Fiddle](https://www.electronjs.org/de/
 https://gist.github.com/create3000/88bb73719dba1f70a0422d12d61db62f
 ```
 
-![Electron Fiddle](assets/img/electron/electron-fiddle.avif){: .normal .w-100 }
+![Electron Fiddle](/assets/img/electron/electron-fiddle.avif){: .normal .w-100 }
 
 ## What Files Are Needed?
 
@@ -59,6 +59,7 @@ async function main ()
 
 main ();
 ```
+{: file='main.js' }
 
 ### index.html
 
@@ -76,10 +77,11 @@ This is the HTML page, which will be displayed in your browser window.
   <body></body>
 </html>
 ```
+{: file='index.html' }
 
 ### preload.js
 
-The preload script runs before `index.html` is loaded in the renderer. It has access to web APIs as well as Electron's renderer process modules and some polyfilled Node.js functions.
+The preload script runs before `index.html`{: .filepath } is loaded in the renderer. It has access to web APIs as well as Electron's renderer process modules and some polyfilled Node.js functions.
 
 ```js
 /**
@@ -109,10 +111,11 @@ function preload ()
   browser .loadURL (new X3D .MFString ("https://create3000.github.io/media/x_ite/info/info.x3d"));
 }
 ```
+{: file='preload.js' }
 
 ### styles.css
 
-Styles for index.html
+Styles for `index.html`{: .filepath }
 
 ```css
 /* styles.css */
@@ -131,3 +134,4 @@ body {
   padding: 10px;
 }
 ```
+{: file='styles.css' }

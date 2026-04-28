@@ -382,14 +382,15 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
    {
       const
          target = this [_target],
-         array  = target .getValue ();
+         array  = target .getValue (),
+         length = array .length;
 
-      switch (array .length)
+      switch (length)
       {
          case 0:
          {
             generator .string += "[";
-            generator .string += generator .TidySpace ();
+            generator .TidySpace ();
             generator .string += "]";
             break;
          }
@@ -400,24 +401,26 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
          }
          default:
          {
+            const last = length - 1;
+
             generator .string += "[";
-            generator .string += generator .ListStart ();
+            generator .ListStart ();
             generator .IncIndent ();
 
-            for (let i = 0, length = array .length - 1; i < length; ++ i)
+            for (let i = 0; i < last; ++ i)
             {
-               generator .string += generator .ListIndent ();
+               generator .ListIndent ();
                array [i] .toStream (generator);
-               generator .string += generator .Comma ();
-               generator .string += generator .ListBreak ();
+               generator .Comma ();
+               generator .ListBreak ();
             }
 
-            generator .string += generator .ListIndent ();
+            generator .ListIndent ();
             array .at (-1) .toStream (generator);
 
-            generator .string += generator .ListEnd ();
+            generator .ListEnd ();
             generator .DecIndent ();
-            generator .string += generator .ListIndent ();
+            generator .ListIndent ();
             generator .string += "]";
             break;
          }
@@ -435,13 +438,15 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
 
       if (length)
       {
-         const array = target .getValue ();
+         const
+            array = target .getValue (),
+            last  = length - 1;
 
-         for (let i = 0, length = array .length - 1; i < length; ++ i)
+         for (let i = 0; i < last; ++ i)
          {
             array [i] .toXMLStream (generator);
-            generator .string += generator .Comma ();
-            generator .string += generator .TidySpace ();
+            generator .Comma ();
+            generator .TidySpace ();
          }
 
          array .at (-1) .toXMLStream (generator);
@@ -455,35 +460,37 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
 
       if (length)
       {
-         const value = this .getValue ();
+         const
+            array = target .getValue (),
+            last  = length - 1;
 
          generator .string += '[';
-         generator .string += generator .ListBreak ();
-         generator .string += generator .IncIndent ();
+         generator .ListBreak ();
+         generator .IncIndent ();
 
-         for (let i = 0, n = length - 1; i < n; ++ i)
+         for (let i = 0; i < last; ++ i)
          {
-            generator .string += generator .ListIndent ();
+            generator .ListIndent ();
 
-            value [i] .toJSONStreamValue (generator);
+            array [i] .toJSONStreamValue (generator);
 
             generator .string += ',';
-            generator .string += generator .ListBreak ();
+            generator .ListBreak ();
          }
 
-         generator .string += generator .ListIndent ();
+         generator .ListIndent ();
 
-         value .at (-1) .toJSONStreamValue (generator);
+         array .at (-1) .toJSONStreamValue (generator);
 
-         generator .string += generator .ListBreak ();
-         generator .string += generator .DecIndent ();
-         generator .string += generator .ListIndent ();
+         generator .ListBreak ();
+         generator .DecIndent ();
+         generator .ListIndent ();
          generator .string += ']';
       }
       else
       {
          generator .string += '[';
-         generator .string += generator .TidySpace ();
+         generator .TidySpace ();
          generator .string += ']';
       }
    },

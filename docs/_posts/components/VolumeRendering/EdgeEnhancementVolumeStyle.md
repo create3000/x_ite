@@ -30,11 +30,11 @@ The EdgeEnhancementVolumeStyle node belongs to the [VolumeRendering](/x_ite/comp
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFColorRGBA | [in, out] | [edgeColor](#fields-edgeColor) | 0 0 0 1  |
-| SFFloat | [in, out] | [gradientThreshold](#fields-gradientThreshold) | 0.4  |
-| SFNode | [in, out] | [surfaceNormals](#fields-surfaceNormals) | NULL  |
+| SFColorRGBA | [in, out] | [edgeColor](#fields-edgeColor) | 0 0 0 1 |
+| SFFloat | [in, out] | [gradientThreshold](#fields-gradientThreshold) | 0.4 |
+| SFNode | [in, out] | [surfaceNormals](#fields-surfaceNormals) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -82,13 +82,20 @@ The *surfaceNormals* field contains a 3D texture with at least three component v
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/VolumeRendering/EdgeEnhancementVolumeStyle/EdgeEnhancementVolumeStyle.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/VolumeRendering/EdgeEnhancementVolumeStyle/EdgeEnhancementVolumeStyle.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/VolumeRendering/EdgeEnhancementVolumeStyle/screenshot.avif" alt="EdgeEnhancementVolumeStyle"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/VolumeRendering/EdgeEnhancementVolumeStyle/EdgeEnhancementVolumeStyle.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/VolumeRendering/EdgeEnhancementVolumeStyle/EdgeEnhancementVolumeStyle.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

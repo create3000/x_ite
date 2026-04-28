@@ -1,6 +1,6 @@
 export default () => /* glsl */ `
 
-// Originally from:
+// Original source code from:
 // https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/punctual.glsl
 
 #if defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
@@ -15,7 +15,7 @@ applyIorToRoughness (const in float roughness, const in float ior)
 
 #if defined (X3D_LIGHTING)
 
-#pragma X3D include "../common/Lighting.glsl"
+#include <Lighting>
 
 // https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_lights_punctual/README.md#range-property
 float
@@ -147,4 +147,6 @@ getVolumeTransmissionRay (const in vec3 n, const in vec3 v, const in float thick
    return normalize (refractionVector) * thickness * modelScale;
 }
 #endif
+
+#include <SubsurfaceScattering>
 `;

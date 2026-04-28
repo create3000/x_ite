@@ -123,13 +123,17 @@ sub update_node {
    $source        = shift;
    $node          = $node -> [1];
 
+   $source =~ /X3D specification adds this node in (\d+\.\d+)/;
+   $from = $1;
+
    $source =~ /getStaticProperties\s*\("(.*?)",\s*"(.*?)",\s*(\d+),\s*"(.*?)",\s*"(.*?)"(?:,\s*"(.*?)")?\)/;
    $componentLevel = $3;
    $containerField = $4;
-   $from           = $5;
+   $from           = $5 unless $from;
    $to             = $6 // "Infinity";
 
-   $deprecated = $source =~ /THIS NODE IS DEPRECIATED SINCE X3D VERSION ([\d\.]+)./ ? $1 : "";
+   $deprecated   = $source =~ /THIS NODE IS DEPRECIATED SINCE X3D VERSION ([\d\.]+)./ ? $1 : "";
+   $experimental = $source =~ /THIS NODE IS STILL EXPERIMENTAL./;
 
    1 while $node =~ s/^\s*(?:\[.*?\]|\(.*?\))\s*//so;
    1 while $node =~ s/^(?:\s*or)?\s*(?:[\[\()].*?[\]\)]|-1\.)\s*//so;
@@ -219,6 +223,7 @@ sub update_node {
    $string .= "\n";
    $string .= "\n";
    $string .= ">**Deprecated:** This node is **deprecated** as of X3D version $deprecated. Future versions of the standard may remove this node.\n{: .prompt-danger }\n\n" if $deprecated;
+   $string .= ">**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.\n{: .prompt-info }\n\n" if $experimental;
 
    $file =~ s/(## Overview\n).*?\n(?=##\s+)/$1$string/s;
 
@@ -284,7 +289,8 @@ sub spelling {
    $string = shift;
 
    $string =~ s/\*next\* to/next to/sgo;
-   $string =~ s/\[autoRefresh\b/autoRefresh/sgo;
+   $string =~ s/\[\*autoRefresh\b/*autoRefresh/sgo;
+   $string =~ s/\[\*autoRefreshTimeLimit\b/*autoRefreshTimeLimit/sgo;
    $string =~ s/incldes/includes/sgo;
    $string =~ s/polgyonal/polygonal/sgo;
    $string =~ s/renderStryle/renderStyle/sgo;
@@ -351,12 +357,11 @@ sub fields_list {
    {
       $name = $field -> [1];
 
-      if ($file =~ m/###\s*(\w+)\s+(\[.*?\])\s+\*\*$name\*\*[ ]*(\[.*?\]|[ a-zA-Z\-+\d\."\/π]*).*?\n/)
-      {
-         $text = "| $1 | $2 | [$name](#fields-$name) | $3 |";
+      next unless $file =~ m/###\s*(\w+)\s+(\[.*?\])\s+\*\*$name\*\*[ ]*(\[.*?\]|[ a-zA-Z\-+\d\."\/π]*).*?\n/;
 
-         $fields -> {$name} = $text;
-      }
+      $text = "| $1 | $2 | [$name](#fields-$name) | " . trim ($3) . " |";
+
+      $fields -> {$name} = $text;
    }
 
    $string = "";
@@ -370,6 +375,8 @@ sub fields_list {
 
    return $file;
 }
+
+sub trim { my $s = shift; $s =~ s/^\s+|\s+$//g; return $s };
 
 $json   = `cat ../media/docs/examples/config.json`;
 $config = parse_json ($json);
@@ -387,11 +394,11 @@ sub update_example {
 
    return $file unless -d "../media/docs/examples/$componentName/$typeName";
 
-   $xrButtonPosition  = "xr-button-" . ($tree -> {$componentName} -> {$typeName} -> {"xrButtonPosition"} // "br");
+   $buttonsPosition  = "buttons-" . ($tree -> {$componentName} -> {$typeName} -> {"buttonsPosition"} // "br");
 
    $string = "## Example\n";
    $string .= "\n";
-   $string .= "<x3d-canvas class=\"$xrButtonPosition\" src=\"https://create3000.github.io/media/examples/$componentName/$typeName/$typeName.x3d\" contentScale=\"auto\" update=\"auto\">\n";
+   $string .= "<x3d-canvas class=\"$buttonsPosition\" src=\"https://create3000.github.io/media/examples/$componentName/$typeName/$typeName.x3d\" contentScale=\"auto\" update=\"auto\">\n";
    $string .= "  <img src=\"https://create3000.github.io/media/examples/$componentName/$typeName/screenshot.avif\" alt=\"$typeName\"/>\n";
    $string .= "</x3d-canvas>\n";
    $string .= "\n";
@@ -562,7 +569,7 @@ sub update_field {
 
 sub reorder_sections {
    $file     = shift;
-   @sections = ("Overview", "Hierarchy", "Fields", "Supported File Formats", "Advice", "Example", "See Also");
+   @sections = ("Overview", "Hierarchy", "Fields", "Supported File Formats", "Advice", "X_ITE", "Example", "Browser Compatibility", "See Also");
    $sections = { };
 
    foreach $s (@sections)

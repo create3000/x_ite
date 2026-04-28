@@ -22,28 +22,28 @@ import MatrixStack  from "../../standard/Math/Utility/MatrixStack.js";
 // Lexical elements
 const Grammar = Expressions ({
    // General
-   whitespaces: /[\x20\n\t\r]+/gy,
-   comma: /,/gy,
-   openParenthesis: /\(/gy,
-   closeParenthesis: /\)/gy,
+   whitespaces: /[\x20\n\t\r]+/y,
+   comma: /,/y,
+   openParenthesis: /\(/y,
+   closeParenthesis: /\)/y,
 
    // Units
-   length: /em|ex|px|in|cm|mm|pt|pc|%/gy,
-   percent: /%/gy,
+   length: /em|ex|px|in|cm|mm|pt|pc|%/y,
+   percent: /%/y,
 
    // Values
-   int32: /(?:0[xX][\da-fA-F]+)|(?:[+-]?\d+)/gy,
-   double: /[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/gy,
-   constants: /([+-])((?:NAN|INF|INFINITY))/igy,
-   matrix: /matrix/gy,
-   translate: /translate/gy,
-   rotate: /rotate/gy,
-   scale: /scale/gy,
-   skewX: /skewX/gy,
-   skewY: /skewY/gy,
-   color: /[a-zA-Z]+|#[\da-fA-F]+|rgba?\(.*?\)/gy,
-   url: /url\("?(.*?)"?\)/gy,
-   path: /[mMlLhHvVqQtTcCsSaAzZ]/gy,
+   int32: /(?:0[xX][\da-fA-F]+)|(?:[+-]?\d+)/y,
+   double: /[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/y,
+   constants: /([+-])((?:NAN|INF|INFINITY))/iy,
+   matrix: /matrix/y,
+   translate: /translate/y,
+   rotate: /rotate/y,
+   scale: /scale/y,
+   skewX: /skewX/y,
+   skewY: /skewY/y,
+   color: /#[\da-fA-F]+|[a-zA-Z]+\([^\)]*\)|[a-zA-Z]+/y,
+   url: /url\("?(.*?)"?\)/y,
+   path: /[mMlLhHvVqQtTcCsSaAzZ]/y,
 });
 
 /*
@@ -114,15 +114,15 @@ function SVGParser (scene)
    switch (browser .getBrowserOption ("PrimitiveQuality"))
    {
       case "LOW":
-         this .BEZIER_STEPS = 6;  // Subdivisions of a span.
+         this .BEZIER_STEPS = 9;  // Subdivisions of a span.
          this .CIRCLE_STEPS = 20; // Subdivisions of a circle, used for arc and rounded rect.
          break;
       case "HIGH":
-         this .BEZIER_STEPS = 10; // Subdivisions of a span.
+         this .BEZIER_STEPS = 15; // Subdivisions of a span.
          this .CIRCLE_STEPS = 64; // Subdivisions of a circle, used for arc and rounded rect.
          break;
       default:
-         this .BEZIER_STEPS = 8;  // Subdivisions of a span.
+         this .BEZIER_STEPS = 12;  // Subdivisions of a span.
          this .CIRCLE_STEPS = 32; // Subdivisions of a circle, used for arc and rounded rect.
          break;
    }
@@ -220,7 +220,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
       scene .setEncoding ("SVG");
       scene .setProfile (browser .getProfile ("Interchange"));
-      scene .addComponent (browser .getComponent ("Geometry2D", 2));
+      scene .updateComponent (browser .getComponent ("Geometry2D", 2));
 
       await browser .loadComponents (scene);
 
@@ -280,12 +280,12 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       viewpoint .position         = new Vector3 (x, y, 10);
       viewpoint .centerOfRotation = new Vector3 (x, y, 0);
 
-      viewpoint .fieldOfView = [
+      viewpoint .fieldOfView = new Vector4 (
          -width  / 2 * PIXEL,
          -height / 2 * PIXEL,
           width  / 2 * PIXEL,
           height / 2 * PIXEL,
-      ];
+      );
 
       scene .getRootNodes () .push (viewpoint);
 
@@ -570,7 +570,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
             for (let i = 0, N = this .CIRCLE_STEPS / 4; i < N; ++ i)
             {
-               const p = Complex .Polar (1, s + Math .PI / 2 * i / (N - 1));
+               const p = Complex .fromPolar (1, s + Math .PI / 2 * i / (N - 1));
 
                points .push (new Vector3 (xOffsets [c] + p .real * rx, yOffsets [c] + p .imag * ry, 0));
             }
@@ -867,7 +867,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          bbox          = new Box2 ();
 
       for (const points of contours)
-         bbox .add (Box2 .Points (points));
+         bbox .add (Box2 .fromPoints (points));
 
       this .groupNodes .push (transformNode);
 
@@ -2478,7 +2478,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          m     = this .transformAttribute (xmlElement .getAttribute ("transform"));
 
       this .modelMatrix .push ();
-      this .modelMatrix .multLeft (Matrix4 .Matrix3 (m));
+      this .modelMatrix .multLeft (Matrix4 .fromMatrix3 (m));
 
       m .translate (t);
       m .scale (s);
@@ -2487,7 +2487,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
 
       const
          transformNode    = scene .createNode ("Transform"),
-         matrix           = Matrix4 .Matrix3 (m),
+         matrix           = Matrix4 .fromMatrix3 (m),
          translation      = new Vector3 (),
          rotation         = new Rotation4 (),
          scale            = new Vector3 (1),

@@ -1,51 +1,21 @@
 import X3DField                  from "../Base/X3DField.js";
 import SFMatrixPrototypeTemplate from "./SFMatrixPrototypeTemplate.js";
 import Matrix4                   from "../../standard/Math/Numbers/Matrix4.js";
+import SFVec4                    from "./SFVec4.js";
+
+const { SFVec4d, SFVec4f } = SFVec4;
 
 function SFMatrix4Template (TypeName, double)
 {
-   function SFMatrix4 (m00, m01, m02, m03,
-                       m10, m11, m12, m13,
-                       m20, m21, m22, m23,
-                       m30, m31, m32, m33)
+   function SFMatrix4 (m00 = 1, m01 = 0, m02 = 0, m03 = 0,
+                       m10 = 0, m11 = 1, m12 = 0, m13 = 0,
+                       m20 = 0, m21 = 0, m22 = 1, m23 = 0,
+                       m30 = 0, m31 = 0, m32 = 0, m33 = 1)
    {
-      switch (arguments .length)
-      {
-         case 0:
-            X3DField .call (this, new Matrix4 ());
-            break;
-
-         case 1:
-            X3DField .call (this, arguments [0]);
-            break;
-
-         case 4:
-         {
-            const
-               r0 = arguments [0],
-               r1 = arguments [1],
-               r2 = arguments [2],
-               r3 = arguments [3];
-
-            X3DField .call (this, new Matrix4 (r0 .x, r0 .y, r0 .z, r0 .w,
-                                               r1 .x, r1 .y, r1 .z, r1 .w,
-                                               r2 .x, r2 .y, r2 .z, r2 .w,
-                                               r3 .x, r3 .y, r3 .z, r3 .w));
-
-            break;
-         }
-         case 16:
-         {
-            X3DField .call (this, new Matrix4 (+m00, +m01, +m02, +m03,
-                                               +m10, +m11, +m12, +m13,
-                                               +m20, +m21, +m22, +m23,
-                                               +m30, +m31, +m32, +m33));
-
-            break;
-         }
-         default:
-            throw new Error ("Invalid arguments.");
-      }
+      X3DField .call (this, new Matrix4 (+m00, +m01, +m02, +m03,
+                                         +m10, +m11, +m12, +m13,
+                                         +m20, +m21, +m22, +m23,
+                                         +m30, +m31, +m32, +m33));
    }
 
    return SFMatrixPrototypeTemplate (SFMatrix4, TypeName, Matrix4, double);

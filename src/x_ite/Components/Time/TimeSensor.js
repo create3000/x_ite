@@ -75,9 +75,9 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
 
       const time = this .getBrowser () .getCurrentTime ();
 
+      this ._time             = time;
       this ._cycleTime        = time;
       this ._fraction_changed = this .fraction;
-      this ._time             = time;
    },
    set_resume (pauseInterval)
    {
@@ -85,13 +85,18 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
    },
    set_fraction (time)
    {
-      this ._fraction_changed = this .fraction = this .first + (this .interval ? Algorithm .fract ((time - this .cycle) / this .interval) : 0) * this .scale;
+      const fraction = this .first + (this .interval ? Algorithm .fract ((time - this .cycle) / this .interval) : 0) * this .scale;
+
+      this .fraction          = fraction;
+      this ._fraction_changed = fraction;
    },
    set_time ()
    {
       // The event order below is very important.
 
       const time = this .getBrowser () .getCurrentTime ();
+
+      this ._time = time;
 
       if (time - this .cycle >= this .interval)
       {
@@ -101,28 +106,26 @@ Object .assign (Object .setPrototypeOf (TimeSensor .prototype, X3DSensorNode .pr
             {
                this .cycle += this .interval * Math .floor ((time - this .cycle) / this .interval);
 
-               this .set_fraction (time);
-
                this ._elapsedTime = this .getElapsedTime ();
                this ._cycleTime   = time;
+
+               this .set_fraction (time);
             }
          }
          else
          {
-            this ._fraction_changed = this .fraction = this .last;
             this ._elapsedTime      = this .getElapsedTime ();
+            this ._fraction_changed = this .fraction = this .last;
 
             this .stop ();
          }
       }
       else
       {
-         this .set_fraction (time);
-
          this ._elapsedTime = this .getElapsedTime ();
-      }
 
-      this ._time = time;
+         this .set_fraction (time);
+      }
    },
    dispose ()
    {

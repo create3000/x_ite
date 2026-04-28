@@ -1,18 +1,17 @@
 export default () => /* glsl */ `
 
-// Originally from:
+// Original source code from:
 // https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/pbr.frag
 
-#pragma X3D include "../common/Fragment.glsl"
-#pragma X3D include "../common/Shadow.glsl"
+#include <Fragment>
+#include <Shadow>
 
-#if defined (X3D_TRANSMISSION_MATERIAL_EXT)
+#if defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
    uniform ivec4 x3d_Viewport;
 #endif
 
-#if defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
+#if defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT) || defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
    uniform mat4 x3d_ProjectionMatrix;
-   uniform mat4 x3d_ViewMatrix;
    uniform mat4 x3d_ModelViewMatrix;
 #endif
 
@@ -34,14 +33,17 @@ eye (const in mat4 modelViewMatrix)
 
 uniform x3d_PhysicalMaterialParameters x3d_Material;
 
-#pragma X3D include "pbr/BRDF.glsl"
-#pragma X3D include "pbr/MaterialInfo.glsl"
-#pragma X3D include "pbr/Punctual.glsl"
-#pragma X3D include "pbr/IBL.glsl"
-#pragma X3D include "pbr/Iridescence.glsl"
+#include <BRDF>
+#include <MaterialInfo>
+#include <Punctual>
+#include <IBL>
+#include <Iridescence>
 
+#if defined (X3D_VOLUME_SCATTER_PASS)
+#include <Scatter>
+#else
 vec4
-getMaterialColor ()
+getMaterialColor (const in vec4 fragCoord)
 {
    #if defined (X3D_TRANSMISSION_MATERIAL_EXT)
       mat4 modelViewMatrix = eye (x3d_ModelViewMatrix);
@@ -112,6 +114,10 @@ getMaterialColor ()
       materialInfo = getDiffuseTransmissionInfo (materialInfo);
    #endif
 
+   #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+      materialInfo = getVolumeScatterInfo (materialInfo);
+   #endif
+
    #if defined (X3D_ANISOTROPY_MATERIAL_EXT)
       materialInfo = getAnisotropyInfo (materialInfo, normalInfo);
    #endif
@@ -140,6 +146,7 @@ getMaterialColor ()
 
    float albedoSheenScaling           = 1.0;
    float diffuseTransmissionThickness = 1.0;
+   vec3  diffuseTransmissionIBL       = vec3 (0.0);
 
    #if defined (X3D_USE_IBL) || defined (X3D_LIGHTING)
    // Holger: Values are only used if X3D_USE_IBL or X3D_LIGHTING is defined.
@@ -158,20 +165,30 @@ getMaterialColor ()
    #endif
    #endif
 
+   #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+      // Used for weighting absorption and scattering.
+      vec3 singleScatter = multiToSingleScatter (materialInfo .multiscatterColor);
+   #endif
+
    #if defined (X3D_CLEARCOAT_MATERIAL_EXT)
       clearcoatFactor  = materialInfo .clearcoatFactor;
       clearcoatFresnel = F_Schlick (materialInfo .clearcoatF0, materialInfo .clearcoatF90, clamp (dot (materialInfo .clearcoatNormal, v), 0.0, 1.0));
    #endif
 
    // Calculate lighting contribution from image based lighting source (IBL)
+   // Holger: no (|| X3D_TRANSMISSION_MATERIAL_EXT)
    #if defined (X3D_USE_IBL)
       f_diffuse = getDiffuseLight (n) * baseColor .rgb;
 
       #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
-         vec3 diffuseTransmissionIBL = getDiffuseLight (-n) * materialInfo .diffuseTransmissionColorFactor;
+         diffuseTransmissionIBL = getDiffuseLight (-n) * materialInfo .diffuseTransmissionColorFactor;
 
          #if defined (X3D_VOLUME_MATERIAL_EXT)
             diffuseTransmissionIBL = applyVolumeAttenuation (diffuseTransmissionIBL, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
+         #endif
+
+         #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+            diffuseTransmissionIBL *= (1.0 - singleScatter);
          #endif
 
          f_diffuse = mix (f_diffuse, diffuseTransmissionIBL, materialInfo .diffuseTransmissionFactor);
@@ -230,13 +247,12 @@ getMaterialColor ()
       color = mix (f_dielectric_brdf_ibl, f_metal_brdf_ibl, materialInfo .metallic);
       color = f_sheen + color * albedoSheenScaling;
       color = mix (color, clearcoat_brdf, clearcoatFactor * clearcoatFresnel);
-   #endif
 
-   // Holger: moved occlusion out of IBL.
-   #if defined (X3D_OCCLUSION_TEXTURE)
-      float ao = getOcclusionFactor ();
+      #if defined (X3D_OCCLUSION_TEXTURE)
+         float ao = getOcclusionFactor ();
 
-      color *= 1.0 + x3d_Material .occlusionStrength * (ao - 1.0);
+         color *= 1.0 + x3d_Material .occlusionStrength * (ao - 1.0);
+      #endif
    #endif
 
    f_diffuse             = vec3 (0.0);
@@ -282,10 +298,6 @@ getMaterialColor ()
          // https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
          vec3 lightIntensity = getLightIntensity (light, l, distanceToLight);
 
-         #if defined (X3D_SHADOWS)
-            lightIntensity = mix (lightIntensity, light .shadowColor, getShadowIntensity (i, light));
-         #endif
-
          vec3  l_diffuse             = lightIntensity * NdotL * BRDF_lambertian (baseColor .rgb);
          vec3  l_specular_dielectric = vec3 (0.0);
          vec3  l_specular_metal      = vec3 (0.0);
@@ -294,6 +306,7 @@ getMaterialColor ()
          vec3  l_clearcoat_brdf      = vec3 (0.0);
          vec3  l_sheen               = vec3 (0.0);
          float l_albedoSheenScaling  = 1.0;
+         vec3  l_diffuse_btdf        = vec3 (0.0);
 
          #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
             l_diffuse *= 1.0 - materialInfo .diffuseTransmissionFactor;
@@ -301,7 +314,8 @@ getMaterialColor ()
             if (dot (n, l) < 0.0)
             {
                float diffuseNdotL = clamp (dot (-n, l), 0.0, 1.0);
-               vec3  diffuse_btdf = lightIntensity * diffuseNdotL * BRDF_lambertian (materialInfo .diffuseTransmissionColorFactor);
+
+               l_diffuse_btdf = lightIntensity * diffuseNdotL * BRDF_lambertian (materialInfo .diffuseTransmissionColorFactor);
 
                vec3  l_mirror     = normalize (reflect (l, n)); // Mirror light reflection vector on surface
                float diffuseVdotH = clamp (dot (v, normalize (l_mirror + v)), 0.0, 1.0);
@@ -309,10 +323,14 @@ getMaterialColor ()
                dielectric_fresnel = F_Schlick (materialInfo .f0_dielectric * materialInfo .specularWeight, materialInfo .f90_dielectric, abs (diffuseVdotH));
 
                #if defined (X3D_VOLUME_MATERIAL_EXT)
-                  diffuse_btdf = applyVolumeAttenuation (diffuse_btdf, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
+                  l_diffuse_btdf = applyVolumeAttenuation (l_diffuse_btdf, diffuseTransmissionThickness, materialInfo .attenuationColor, materialInfo .attenuationDistance);
                #endif
 
-               l_diffuse += diffuse_btdf * materialInfo .diffuseTransmissionFactor;
+               #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+                  l_diffuse_btdf *= (1.0 - singleScatter);
+               #endif
+
+               l_diffuse += l_diffuse_btdf * materialInfo .diffuseTransmissionFactor;
             }
          #endif // X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT
 
@@ -367,9 +385,21 @@ getMaterialColor ()
 
          l_color = l_sheen + l_color * l_albedoSheenScaling;
          l_color = mix (l_color, l_clearcoat_brdf, clearcoatFactor * clearcoatFresnel);
-         color  += l_color;
+
+         #if defined (X3D_SHADOWS)
+            l_color = mix (l_color, light .shadowColor, getShadowIntensity (i, light));
+         #endif
+
+         color += l_color;
       }
    }
+   #endif
+
+   #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+      // Subsurface scattering is calculated based on fresnel weighted diffuse terms.
+      vec3 l_color = getSubsurfaceScattering (vertex, x3d_ProjectionMatrix, materialInfo .attenuationDistance, materialInfo .diffuseTransmissionColorFactor, materialInfo .multiscatterColor, fragCoord);
+
+      color += l_color * (1.0 - materialInfo .metallic) * (1.0 - clearcoatFactor * clearcoatFresnel) * (1.0 - materialInfo .iridescenceFactor) * (1.0 - materialInfo .transmissionFactor);
    #endif
 
    f_emissive = getEmissiveColor ();
@@ -385,4 +415,5 @@ getMaterialColor ()
 
    return vec4 (color, baseColor .a);
 }
+#endif
 `;

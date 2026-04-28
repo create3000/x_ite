@@ -3,7 +3,7 @@ title: Introducing X3D
 date: 2022-11-28
 nav: tutorials-shapes-geometry-and-appearance
 categories: [Tutorials]
-tags: [Introducing]
+tags: [X3D, VRML]
 ---
 ## What is X3D?
 

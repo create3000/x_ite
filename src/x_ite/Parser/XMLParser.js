@@ -6,9 +6,11 @@ import Fields                    from "../Fields.js";
 import X3DParser                 from "./X3DParser.js";
 import VRMLParser                from "./VRMLParser.js";
 import HTMLSupport               from "./HTMLSupport.js";
+import X3DImportedNode           from "../Execution/X3DImportedNode.js";
 import X3DExternProtoDeclaration from "../Prototype/X3DExternProtoDeclaration.js";
 import X3DProtoDeclaration       from "../Prototype/X3DProtoDeclaration.js";
 import X3DConstants              from "../Base/X3DConstants.js";
+import Placeholder               from "./Placeholder.js";
 import DEVELOPMENT               from "../DEVELOPMENT.js";
 
 const AccessType =
@@ -21,7 +23,7 @@ const AccessType =
 
 function XMLParser (scene)
 {
-   X3DParser .call (this, scene);
+   X3DParser .call (this, scene, "XML Parser");
 
    this .protoDeclarations = [ ];
    this .parents           = [ ];
@@ -109,6 +111,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                   browser .loadComponents (scene) .then (() =>
                   {
                      this .childrenElements (xmlElement);
+                     this .setupNodes ();
                      this .resolve (scene);
                   })
                   .catch (this .reject);
@@ -116,6 +119,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                else
                {
                   this .childrenElements (xmlElement);
+                  this .setupNodes ();
                }
             }
 
@@ -134,6 +138,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                browser .loadComponents (scene) .then (() =>
                {
                   this .sceneElement (xmlElement);
+                  this .setupNodes ();
                   this .resolve (scene);
                })
                .catch (this .reject);
@@ -141,6 +146,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             else
             {
                this .sceneElement (xmlElement);
+               this .setupNodes ();
             }
 
             break;
@@ -152,6 +158,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                browser .loadComponents (scene) .then (() =>
                {
                   this .childrenElements (xmlElement);
+                  this .setupNodes ();
                   this .resolve (scene);
                })
                .catch (this .reject);
@@ -159,6 +166,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             else
             {
                this .childrenElements (xmlElement);
+               this .setupNodes ();
             }
 
             break;
@@ -210,6 +218,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             for (const childNode of xmlElement .childNodes)
                this .x3dElementChildScene (childNode)
 
+            this .setupNodes ();
             this .resolve (scene);
          })
          .catch (this .reject);
@@ -218,6 +227,8 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       {
          for (const childNode of xmlElement .childNodes)
             this .x3dElementChildScene (childNode)
+
+         this .setupNodes ();
       }
    },
    x3dElementChildHead (xmlElement)
@@ -278,9 +289,6 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             return console .warn ("XML Parser: Bad component statement. Expected level attribute.");
 
          const component = this .getBrowser () .getComponent (componentNameIdCharacters, parseInt (componentSupportLevel));
-
-         if (this .getScene () .hasComponent (component))
-            return;
 
          this .getScene () .updateComponent (component);
       }
@@ -476,6 +484,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
                   this .pushParent (proto);
                   this .protoBodyElement (childNode);
                   this .popParent ();
+                  this .setupNodes ();
                   this .popExecutionContext ();
                   break;
                }
@@ -662,7 +671,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             this .childrenElements (xmlElement);
 
             if (!this .isInsideProtoDeclaration ())
-               node .setup ();
+               this .getNodes () .push (node);
 
             this .popParent ();
          }
@@ -700,7 +709,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          {
             if (field .getType () === X3DConstants .MFNode)
             {
-               field .length = 0
+               field .length = 0;
             }
 
             this .fieldValue (field, xmlElement .getAttribute ("value"));
@@ -726,7 +735,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
             ?? this .getExecutionContext () .createProto (this .protoNameToCamelCase (xmlElement .nodeName), false);
 
          if (!node)
-            throw new Error (`Unknown node type '${xmlElement .nodeName}', you probably have insufficient component/profile statements and/or an inappropriate specification version.`);
+            throw new Error (`Unknown node type '${xmlElement .nodeName}'. You probably have insufficient component/profile statements and/or an inappropriate specification version.`);
 
          ///DOMIntegration: attach node to DOM xmlElement for access from DOM.
          $.data (xmlElement, "node", node);
@@ -742,7 +751,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          this .childrenElements (xmlElement);
 
          if (!this .isInsideProtoDeclaration ())
-            node .setup ();
+            this .getNodes () .push (node);
 
          this .popParent ();
       }
@@ -823,7 +832,8 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          const
             inlineNodeName   = xmlElement .getAttribute ("inlineDEF"),
             exportedNodeName = xmlElement .getAttribute ("importedDEF") || xmlElement .getAttribute ("exportedDEF"),
-            localNodeName    = xmlElement .getAttribute ("AS") || exportedNodeName;
+            localNodeName    = xmlElement .getAttribute ("AS") || exportedNodeName,
+            description      = xmlElement .getAttribute ("DESCRIPTION") || "";
 
          if (inlineNodeName === null)
             throw new Error ("Bad IMPORT statement: Expected inlineDEF attribute.");
@@ -839,7 +849,12 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
          // Add new imported node.
 
-         this .getExecutionContext () .addImportedNode (inlineNode, exportedNodeName, localNodeName);
+         this .getExecutionContext () .addImportedNode (inlineNode, exportedNodeName, localNodeName, description);
+
+         if (!this .getImportedNodes () .has (localNodeName))
+         {
+            this .getImportedNodes () .set (localNodeName, this .getExecutionContext () .getImportedNodes () .get (localNodeName));
+         }
       }
       catch (error)
       {
@@ -852,7 +867,8 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       {
          const
             localNodeName    = xmlElement .getAttribute ("localDEF"),
-            exportedNodeName = xmlElement .getAttribute ("AS") || localNodeName;
+            exportedNodeName = xmlElement .getAttribute ("AS") || localNodeName,
+            description      = xmlElement .getAttribute ("DESCRIPTION") || "";
 
          if (localNodeName === null)
             throw new Error ("Bad EXPORT statement: Expected localDEF attribute.");
@@ -868,7 +884,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          catch
          { }
 
-         this .getScene () .updateExportedNode (exportedNodeName, localNode);
+         this .getScene () .updateExportedNode (exportedNodeName, localNode, description);
       }
       catch (error)
       {
@@ -887,40 +903,74 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
    },
    useAttribute (xmlElement)
    {
-      try
-      {
-         const name = xmlElement .getAttribute ("USE");
+      const name = xmlElement .getAttribute ("USE");
 
-         if (this .id (name))
+      if (this .id (name))
+      {
+         const
+            browser  = this .getBrowser (),
+            nodeName = this .nodeNameToCamelCase (xmlElement .nodeName);
+
+         const type = $.try (() => nodeName === "ProtoInstance"
+            ? browser .getAbstractNode ("X3DPrototypeInstance")
+            : browser .getConcreteNode (nodeName))
+            ?? X3DNode;
+
+         const typeName = xmlElement .getAttribute ("name");
+
+         try
          {
-            const node = this .getExecutionContext () .getNamedNode (name);
+            const localNode = this .getExecutionContext () .getLocalNode (name);
 
-            if (this .nodeNameToCamelCase (xmlElement .nodeName) === "ProtoInstance")
-            {
-               if (!node .getNodeType () .includes (X3DConstants .X3DPrototypeInstance))
-               {
-                  console .warn (`XML Parser: DEF/USE mismatch, '${name}', referenced node is not of type X3DPrototypeInstance.`);
-               }
-               else if (xmlElement .getAttribute ("name") !== node .getNodeTypeName ())
-               {
-                  console .warn (`XML Parser: DEF/USE mismatch, '${name}', name ${xmlElement .getAttribute ("name")} != ${node .getNodeTypeName ()}.`);
-               }
-            }
-            else if (this .nodeNameToCamelCase (xmlElement .nodeName) !== node .getNodeTypeName ())
-            {
-               console .warn (`XML Parser: DEF/USE mismatch, '${name}', ${xmlElement .nodeName} != ${node .getNodeTypeName ()}.`);
-            }
+            const node = localNode instanceof X3DImportedNode
+               ? localNode .getExportedNode (type)
+               : localNode .getValue ();
 
-            this .addNode (xmlElement, node .getValue ());
-            return true;
+            this .checkNodeType (node, name, type, typeName);
+            this .addNode (xmlElement, node);
          }
-      }
-      catch (error)
-      {
-         console .warn (`XML Parser: Invalid USE name: ${error .message}`);
+         catch
+         {
+            const placeholder = this .getPlaceholders () .get (name);
+
+            if (placeholder)
+            {
+               this .addNode (xmlElement, placeholder);
+            }
+            else
+            {
+               const placeholder = new Placeholder (this, name, type, typeName);
+
+               this .getPlaceholders () .set (name, placeholder);
+               this .addNode (xmlElement, placeholder);
+            }
+         }
+
+         return true;
       }
 
       return false;
+   },
+   checkNodeType (node, name, type, typeName)
+   {
+      if (type === X3DNode)
+         return;
+
+      if (type === X3DPrototypeInstance)
+      {
+         if (!node .getType () .includes (X3DConstants .X3DPrototypeInstance))
+         {
+            console .warn (`XML Parser: DEF/USE mismatch, '${name}', referenced node is not of type X3DPrototypeInstance.`);
+         }
+         else if (typeName !== node .getTypeName ())
+         {
+            console .warn (`XML Parser: DEF/USE mismatch, '${name}', name ${typeName} != ${node .getTypeName ()}.`);
+         }
+      }
+      else if (type !== node .constructor)
+      {
+         console .warn (`XML Parser: DEF/USE mismatch, '${name}', ${type .typeName} != ${node .getTypeName ()}.`);
+      }
    },
    defAttribute (xmlElement, node)
    {
@@ -930,6 +980,9 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
 
          if (name)
          {
+            if (!this .getNamedNodes () .has (name))
+               this .getNamedNodes () .set (name, node);
+
             this .renameExistingNode (name);
 
             this .getExecutionContext () .updateNamedNode (name, node);
@@ -956,7 +1009,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       }
       catch (error)
       {
-         //console .error (error);
+         // console .error (error);
       }
    },
    fieldValue (field, value)
@@ -1053,14 +1106,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       }
       catch (error)
       {
-         // console .error (error);
-
-         if (node ?.getType () .includes (X3DConstants .X3DMetadataObject))
-         {
-            xmlElement .setAttribute ("containerField", "metadata");
-
-            this .addNode (xmlElement, node);
-         }
+         console .warn (`XML Parser: Container field for node ${node ?.getTypeName () ?? node} not found. ${error .message}`);
       }
    },
    // Overloaded by HTMLParser.
@@ -1133,7 +1179,21 @@ Object .assign (XMLParser .prototype,
       return true;
    },
    [X3DConstants .MFRotation]:  VRMLParser .prototype .sfrotationValues,
-   [X3DConstants .MFString]:    VRMLParser .prototype .sfstringValues,
+   [X3DConstants .MFString] (field)
+   {
+      if (VRMLParser .prototype .sfstringValues .call (this, field))
+         return true;
+
+      if (this .input)
+      {
+         console .warn (`XML Parser: Field '${field .getName ()}' is an MFString array and can have multiple values, so make sure to separate each individual string with double quotation marks!`);
+
+         field .setValue ([this .input]);
+         return true;
+      }
+
+      return false;
+   },
    [X3DConstants .MFTime]:      VRMLParser .prototype .sfdoubleValues,
    [X3DConstants .MFVec2d]:     VRMLParser .prototype .sfvecValues,
    [X3DConstants .MFVec2f]:     VRMLParser .prototype .sfvecValues,
@@ -1208,14 +1268,14 @@ const HTMLParser =
    },
 };
 
-X3DField .prototype .fromXMLString = function (string, scene)
+X3DField .prototype .fromXMLString = function (value, scene)
 {
    const parser = new XMLParser (scene);
 
-   if (parser .fieldValue (this, string))
-      return;
+   if (!parser .fieldValue (this, value))
+      throw new Error (`Couldn't read value for field '${this .getName ()}'.`);
 
-   throw new Error (`Couldn't read value for field '${this .getName ()}'.`);
+   parser .setupNodes ();
 };
 
 export default XMLParser;

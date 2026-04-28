@@ -1,3 +1,4 @@
+import Fields       from "../../Fields.js";
 import X3DNode      from "../Core/X3DNode.js";
 import X3DConstants from "../../Base/X3DConstants.js";
 import BitSet       from "../../../standard/Utility/BitSet.js";
@@ -8,21 +9,34 @@ function X3DMaterialExtensionNode (executionContext)
 
    this .addType (X3DConstants .X3DMaterialExtensionNode);
 
-   this .textureBits = new BitSet ();
+   this .addChildObjects (X3DConstants .outputOnly, "renderedTextures", new Fields .SFTime ());
+
+   // Private properties
+
+   this .textureBits      = new BitSet ();
+   this .renderedTextures = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (X3DMaterialExtensionNode .prototype, X3DNode .prototype),
 {
-   setTexture (index, textureNode)
+   addTexture (index, textureNode)
    {
       index *= 4;
 
       this .textureBits .remove (index, 0xf);
       this .textureBits .add (index, textureNode ?.getTextureBits () ?? 0);
+
+      this .renderedTextures [index] = textureNode ?.isRenderedTexture () ? textureNode : undefined;
+
+      this ._renderedTextures = this .getBrowser () .getCurrentTime ();
    },
    getTextureBits ()
    {
       return this .textureBits;
+   },
+   getRenderedTextures ()
+   {
+      return this .renderedTextures;
    },
 });
 

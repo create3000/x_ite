@@ -3,7 +3,7 @@ title: Inline
 date: 2023-01-07
 nav: components-Networking
 categories: [components, Networking]
-tags: [Inline, Networking]
+tags: [Inline, Networking, VRML, glTF]
 ---
 <style>
 .post h3 {
@@ -32,17 +32,17 @@ The Inline node belongs to the [Networking](/x_ite/components/overview/#networki
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [global](#fields-global) | FALSE |
 | SFBool | [in, out] | [load](#fields-load) | TRUE |
 | MFString | [in, out] | [url](#fields-url) | [ ] |
-| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0  |
-| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600  |
+| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0 |
+| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600 |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -174,20 +174,42 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 ## Supported File Formats
 
-| Encoding         | File Extension | MIME Type       |
-|------------------|----------------|-----------------|
-| X3D XML          | .x3d, .x3dz    | model/x3d+xml   |
-| X3D JSON         | .x3dj, .x3djz  | model/x3d+json  |
-| X3D Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml  |
-| VRML 2.0         | .wrl, .wrz     | model/vrml      |
-| glTF             | .gltf, .glb    | model/gltf+json |
-| Wavefront OBJ    | .obj           | model/obj       |
-| STL              | .stl           | model/stl       |
-| PLY              | .ply           | model/ply       |
-| SVG Document     | .svg, .svgz    | image/svg+xml   |
+| Encoding         | File Extension | MIME Type         | Comment                         |
+|------------------|----------------|-------------------|---------------------------------|
+| X3D XML          | .x3d, .x3dz    | model/x3d+xml     | [X3D Encoding: XML][1]          |
+| X3D JSON         | .x3dj, .x3djz  | model/x3d+json    | [X3D Encoding: JSON][2]         |
+| X3D Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml    | [X3D Encoding: Classic VRML][3] |
+| VRML 2.0         | .wrl, .wrz     | model/vrml        | [X_ITE VRML Viewer][4]                |
+| glTF             | .gltf, .glb    | model/gltf+json   | [glTF Support][5]               |
+| VRM              | .vrm           | model/vrm         | [About VRM][6]                  |
+| Wavefront OBJ    | .obj           | model/obj         |                                 |
+| STL              | .stl           | model/stl         | ASCII & Binary                  |
+| PLY              | .ply           | model/ply         | ASCII & Binary                  |
+| SVG Document     | .svg, .svgz    | image/svg+xml     |                                 |
+
+  [1]: https://www.web3d.org/documents/specifications/19776-1/V3.3/index.html
+  [2]: https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19776-5v4.0-WD1/Part05/X3D_JSON.html
+  [3]: https://www.web3d.org/documents/specifications/19776-2/V3.3/index.html
+  [4]: /x_ite/features/#vrml-viewer
+  [5]: /x_ite/features/#gltf-support
+  [6]: https://vrm.dev/en/vrm/vrm_about/
 
 >**Tip:** All files can be compressed using GZip compression (usually denoted by a 'z' at the end of the filename suffix). This saves bandwidth and speeds up download time.
 {: .prompt-tip }
+
+### About Special Exported Nodes
+
+When you load a glTF or other file format, it is converted to an X3D scene and some nodes are exported from this scene. These nodes can then be imported into a parent scene where the file was loaded using an Inline node.
+
+The easiest way to see what has been exported is to use [Sunrize](/sunrize/) and inspect the scene.
+
+If you have animations, then a [TimeSensor](/x_ite/components/time/timesensor/) named *Timer1*, *Timer2*, and so on is exported for each animation. Additionally, a [Group](/x_ite/components/grouping/group/) named *Animations* is exported.
+
+You can then import these [TimeSensor](/x_ite/components/time/timesensor/) nodes into the parent file using an [IMPORT statement](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#IMPORTStatement).
+
+#### The second method involves doing it programmatically:
+
+Load the scene using `Browser.createX3DFromURL`, then access the [TimeSensor](/x_ite/components/time/timesensor/) nodes using [`scene.getExportedNode`](/x_ite/reference/scene-services/#getexportednode-exportedname-string-sfnode).
 
 ## Advice
 
@@ -202,7 +224,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Networking/Inline/Inline.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Networking/Inline/Inline.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Networking/Inline/screenshot.avif" alt="Inline"/>
 </x3d-canvas>
 
@@ -210,6 +232,14 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Networking/Inline/Inline.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of Inline Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#Inline)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

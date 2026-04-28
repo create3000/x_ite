@@ -2,11 +2,11 @@ import MaterialTextures from "../../MaterialTextures.js";
 
 export default () => /* glsl */ `
 
-// Originally from:
+// Original source code from:
 // https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/pbr.frag
 
-#pragma X3D include "../common/Fragment.glsl"
-#pragma X3D include "../common/Shadow.glsl"
+#include <Fragment>
+#include <Shadow>
 
 #if defined (X3D_LIGHTING)
    uniform x3d_LightSourceParameters x3d_LightSource [X3D_NUM_LIGHTS];
@@ -14,10 +14,10 @@ export default () => /* glsl */ `
 
 uniform x3d_PhysicalMaterialParameters x3d_Material;
 
-#pragma X3D include "pbr/BRDF.glsl"
-#pragma X3D include "pbr/MaterialInfo.glsl"
-#pragma X3D include "pbr/Punctual.glsl"
-#pragma X3D include "pbr/IBL.glsl"
+#include <BRDF>
+#include <MaterialInfo>
+#include <Punctual>
+#include <IBL>
 
 ${MaterialTextures .texture ("x3d_DiffuseTexture", "rgba", "linear")}
 
@@ -67,7 +67,7 @@ getSpecularGlossinessInfo (in MaterialInfo info)
 }
 
 vec4
-getMaterialColor ()
+getMaterialColor (const in vec4 fragCoord)
 {
    vec4 baseColor = getBaseColor ();
 

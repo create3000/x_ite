@@ -77,6 +77,8 @@ import X3D from "https://www.unpkg.com/x_ite@latest/dist/x_ite.min.mjs";
 
 ### GitHub CDN
 
+‼️ Use of this server is depreciated.
+
 ```html
 <script defer src="https://create3000.github.io/code/x_ite/latest/x_ite.min.js"></script>
 <!-- or as ES module for use in scripts -->

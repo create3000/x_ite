@@ -65,8 +65,6 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
       this .orientationChaser ._duration = ROTATE_TIME;
       this .orientationChaser .setup ();
    },
-   addCollision () { },
-   removeCollision () { },
    set_controlKey__ ()
    {
       if (this .event && this .event .button === 0)
@@ -107,7 +105,6 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
             this .disconnect ();
             this .getActiveViewpoint () .transitionStop ();
             this .getBrowser () .setCursor ("MOVE");
-            this .addCollision ();
 
             if (this .getBrowser () .getControlKey () || this .getBrowser () .getCommandKey () || this .lookAround)
             {
@@ -148,7 +145,6 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
             this .disconnect ();
             this .getActiveViewpoint () .transitionStop ();
             this .getBrowser () .setCursor ("MOVE");
-            this .addCollision ();
 
             this .fromVector .set (x, y, 0);
             this .toVector   .assign (this .fromVector);
@@ -184,7 +180,6 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
       this .disconnect ();
       this .getBrowser () .setCursor ("DEFAULT");
-      this .removeCollision ();
 
       this ._isActive = false;
    },
@@ -389,11 +384,11 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          speedFactor *= this .getBrowser () .getShiftKey () ? SHIFT_SPEED_FACTOR : SPEED_FACTOR;
          speedFactor *= dt;
 
-         const translation = this .getTranslationOffset (direction .assign (this .direction) .multiply (speedFactor));
+         const
+            translation = this .getTranslationOffset (direction .assign (this .direction) .multiply (speedFactor)),
+            constrained = this .getActiveLayer () .constrainTranslation (translation);
 
-         this .getActiveLayer () .constrainTranslation (translation, true);
-
-         viewpoint ._positionOffset = translation .add (viewpoint ._positionOffset .getValue ());
+         viewpoint ._positionOffset = constrained .add (viewpoint ._positionOffset .getValue ());
 
          // Determine weight for rubberBandRotation.
 
@@ -451,11 +446,10 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
 
          const
             orientation = viewpoint .getUserOrientation () .multRight (new Rotation4 (viewpoint .getUserOrientation () .multVecRot (axis .assign (Vector3 .Y_AXIS)), upVector)),
-            translation = orientation .multVecRot (direction .multiply (speedFactor));
+            translation = orientation .multVecRot (direction .multiply (speedFactor)),
+            constrained = this .getActiveLayer () .constrainTranslation (translation);
 
-         this .getActiveLayer () .constrainTranslation (translation, true);
-
-         viewpoint ._positionOffset = translation .add (viewpoint ._positionOffset .getValue ());
+         viewpoint ._positionOffset = constrained .add (viewpoint ._positionOffset .getValue ());
 
          this .startTime = now;
       };

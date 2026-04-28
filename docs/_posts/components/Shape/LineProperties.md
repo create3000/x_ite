@@ -13,7 +13,7 @@ tags: [LineProperties, Shape]
 
 ## Overview
 
-LineProperties allows precise fine-grained control over the rendering style of lines and edges for associated geometry nodes inside the same Shape.
+LineProperties allows precise fine-grained control over the rendering style of lines and edges for associated geometry inside the same Shape.
 
 The LineProperties node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **2,** its default container field is *lineProperties.* It is available from X3D version 3.0 or higher.
 
@@ -29,10 +29,10 @@ The LineProperties node belongs to the [Shape](/x_ite/components/overview/#shape
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [applied](#fields-applied) | TRUE |
-| SFInt32 | [in, out] | [linetype](#fields-linetype) | 1  |
-| SFFloat | [in, out] | [linewidthScaleFactor](#fields-linewidthScaleFactor) | 0  |
+| SFInt32 | [in, out] | [linetype](#fields-linetype) | 1 |
+| SFFloat | [in, out] | [linewidthScaleFactor](#fields-linewidthScaleFactor) | 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -76,13 +76,20 @@ Whether or not LineProperties are *applied* to associated geometry.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shape/LineProperties/LineProperties.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Shape/LineProperties/LineProperties.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Shape/LineProperties/screenshot.avif" alt="LineProperties"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Shape/LineProperties/LineProperties.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Shape/LineProperties/LineProperties.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 
