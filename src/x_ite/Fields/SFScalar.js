@@ -3,7 +3,7 @@ import X3DConstants from "../Base/X3DConstants.js";
 
 function SFBoolTemplate (TypeName)
 {
-   function SFBool (value)
+   function SFBool (value = false)
    {
       X3DField .call (this, !! value);
    }
@@ -37,9 +37,9 @@ function SFNumberTemplate (TypeName, double, defaultValue)
 {
    const _formatter = double ? "DoubleFormat" : "FloatFormat";
 
-   function SFNumber (value)
+   function SFNumber (value = defaultValue)
    {
-      X3DField .call (this, arguments .length ? +value : defaultValue);
+      X3DField .call (this, +value);
    }
 
    return SFScalarPrototypeTemplate (SFNumber, TypeName,
@@ -69,7 +69,7 @@ function SFNumberTemplate (TypeName, double, defaultValue)
 
 function SFInt32Template (TypeName)
 {
-   function SFInt32 (value)
+   function SFInt32 (value = 0)
    {
       X3DField .call (this, value|0);
    }
@@ -89,9 +89,9 @@ function SFInt32Template (TypeName)
 
 function SFStringTemplate (TypeName)
 {
-   function SFString (value)
+   function SFString (value = "")
    {
-      X3DField .call (this, arguments .length ? String (value) : "");
+      X3DField .call (this, String (value));
    }
 
    SFScalarPrototypeTemplate (SFString, TypeName,
