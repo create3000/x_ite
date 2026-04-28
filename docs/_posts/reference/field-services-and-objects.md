@@ -885,6 +885,10 @@ Returns the identity rotation.
 
 *matrix* is an SFMatrix3d/f rotation matrix object whose value is converted into an SFRotation object.
 
+#### **fromQuaternion** (*x: number, y: number, z: number, w:number *): SFRotation
+
+*x, y, z, w* is a quaternion whose value is converted into an SFRotation object.
+
 ### Properties
 
 Each component of the rotation can be accessed using the `x`, `y`, `z` and `angle` properties or using the standard C-style dereferencing operator (e.g. `sfRotationObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<4).

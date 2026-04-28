@@ -76,7 +76,7 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
 
       return function (x, y, z, w)
       {
-         this .getValue () .setQuaternion (q .set (x, y, z, w));
+         this .getValue () .setQuaternion (q .set (+x, +y, +z, +w));
          this .addEvent ();
       };
    })(),
@@ -227,6 +227,17 @@ Object .defineProperties (SFRotation,
    {
       value: SFRotation .fromValue (Rotation4 .IDENTITY),
       enumerable: true,
+   },
+   fromQuaternion:
+   {
+      value (x, y, z, w)
+      {
+         const rotation = new SFRotation ();
+
+         rotation .setQuaternion (q .set (+x, +y, +z, +w));
+
+         return rotation;
+      },
    },
    fromMatrix:
    {
