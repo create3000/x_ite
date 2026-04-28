@@ -245,7 +245,7 @@ Object .defineProperties (SFRotation,
       {
          const rotation = new SFRotation ();
 
-         rotation .setQuaternion (q .set (+x, +y, +z, +w));
+         rotation .setQuaternion (+x, +y, +z, +w);
 
          return rotation;
       },
