@@ -52,24 +52,33 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
    {
       this .getValue () .assign (value);
    },
-   setAxis (vector)
-   {
-      this .getValue () .setAxis (vector .getValue ());
-      this .addEvent ();
-   },
    getAxis ()
    {
       return SFVec3f .fromValue (this .getValue () .getAxis ());
    },
-   setMatrix (matrix)
+   setAxis (vector)
    {
-      this .getValue () .setMatrix (matrix .getValue ());
+      this .getValue () .setAxis (vector .getValue ());
       this .addEvent ();
    },
    getMatrix ()
    {
       return SFMatrix3f .fromValue (this .getValue () .getMatrix ());
    },
+   setMatrix (matrix)
+   {
+      this .getValue () .setMatrix (matrix .getValue ());
+      this .addEvent ();
+   },
+   getQuaternion: (() =>
+   {
+      const q = new Quaternion ();
+
+      return function ()
+      {
+         return [... this .getValue () .getQuaternion (q)];
+      };
+   })(),
    setQuaternion: (() =>
    {
       const q = new Quaternion ();
@@ -78,15 +87,6 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
       {
          this .getValue () .setQuaternion (q .set (+x, +y, +z, +w));
          this .addEvent ();
-      };
-   })(),
-   getQuaternion: (() =>
-   {
-      const q = new Quaternion ();
-
-      return function ()
-      {
-         return [... this .getValue () .getQuaternion (q)];
       };
    })(),
    inverse ()
