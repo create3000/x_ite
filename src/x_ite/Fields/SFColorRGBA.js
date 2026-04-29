@@ -55,7 +55,7 @@ Object .assign (Object .setPrototypeOf (SFColorRGBA .prototype, X3DField .protot
          this .getValue () .getHSVA (s);
          destination .getValue () .getHSVA (d);
 
-         Color4 .lerp (s, d, t, r);
+         Color4 .lerp (s, d, +t, r);
 
          result .setHSVA (r [0], r [1], r [2], r [3]);
 

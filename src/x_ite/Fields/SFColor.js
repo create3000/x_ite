@@ -60,7 +60,7 @@ Object .assign (Object .setPrototypeOf (SFColor .prototype, X3DField .prototype)
          this .getValue () .getHSV (s);
          destination .getValue () .getHSV (d);
 
-         Color3 .lerp (s, d, t, r);
+         Color3 .lerp (s, d, +t, r);
 
          result .setHSV (r [0], r [1], r [2]);
 

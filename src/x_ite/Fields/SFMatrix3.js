@@ -24,7 +24,7 @@ function SFMatrix3Template (TypeName, double)
 
          return function (translation, rotation, scale, scaleOrientation, center)
          {
-            args .push (translation ?.getValue (), rotation, scale ?.getValue (), scaleOrientation, center ?.getValue ());
+            args .push (translation ?.getValue (), +rotation, scale ?.getValue (), +scaleOrientation, center ?.getValue ());
 
             for (let i = args .length - 1; i > -1; -- i)
             {
@@ -41,15 +41,15 @@ function SFMatrix3Template (TypeName, double)
       })(),
       rotate (rotation)
       {
-         return SFMatrix3 .fromValue (this .getValue () .copy () .rotate (rotation));
+         return SFMatrix3 .fromValue (this .getValue () .copy () .rotate (+rotation));
       },
       skewX (angle)
       {
-         return SFMatrix3 .fromValue (this .getValue () .copy () .skewX (angle));
+         return SFMatrix3 .fromValue (this .getValue () .copy () .skewX (+angle));
       },
       skewY (angle)
       {
-         return SFMatrix3 .fromValue (this .getValue () .copy () .skewY (angle));
+         return SFMatrix3 .fromValue (this .getValue () .copy () .skewY (+angle));
       },
    });
 }
