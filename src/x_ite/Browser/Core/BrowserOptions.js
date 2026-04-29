@@ -313,8 +313,6 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
       browser .getRenderingProperties () ._ContentScale = window .devicePixelRatio;
 
-      console .log (window .devicePixelRatio)
-
       browser .reshape ();
    },
    set_DisplayColorSpace (displayColorSpace)
