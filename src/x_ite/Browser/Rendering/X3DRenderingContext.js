@@ -283,7 +283,6 @@ Object .assign (X3DRenderingContext .prototype,
       return new Promise (resolve =>
       {
          const
-            contentScale      = this .getRenderingProperty ("ContentScale"),
             [vWidth, vHeight] = this .limitFramebufferSize (width, height),
             key               = Symbol ();
 
@@ -313,11 +312,11 @@ Object .assign (X3DRenderingContext .prototype,
          return;
 
       const
-         canvas          = this .getCanvas (),
-         parent          = canvas .parent (),
-         [width, height] = this .limitFramebufferSize (parent .width (), parent .height ());
+         canvas = this .getCanvas (),
+         parent = canvas .parent (),
+         [width, height, contentScale] = this .limitFramebufferSize (parent .width (), parent .height ());
 
-      this .getRenderingProperties () ._ContentScale = width / parent .width ();
+      this .getRenderingProperties () ._ContentScale = parent .width () ? width / parent .width () : contentScale;
 
       // this .println (this .getRenderingProperty ("ContentScale"), devicePixelRatio)
 
@@ -360,7 +359,7 @@ Object .assign (X3DRenderingContext .prototype,
       width  = Math .max (width|0,  1);
       height = Math .max (height|0, 1);
 
-      return [width, height];
+      return [width, height, contentScale];
    },
    reshapeFramebuffer (i, x, y, width, height)
    {
