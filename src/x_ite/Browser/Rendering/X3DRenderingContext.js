@@ -314,10 +314,28 @@ Object .assign (X3DRenderingContext .prototype,
          return;
 
       const
-         canvas       = this .getCanvas (),
-         contentScale = this .getRenderingProperty ("ContentScale"),
-         width        = Math .max (canvas .parent () .width ()  * contentScale, 1)|0,
-         height       = Math .max (canvas .parent () .height () * contentScale, 1)|0;
+         gl              = this .getContext (),
+         canvas          = this .getCanvas (),
+         contentScale    = this .getRenderingProperty ("ContentScale"),
+         maxViewportDims = gl .getParameter (gl .MAX_VIEWPORT_DIMS);
+
+      let
+         width  = Math .max (canvas .parent () .width ()  * contentScale, 1)|0,
+         height = Math .max (canvas .parent () .height () * contentScale, 1)|0;
+
+      if (width > maxViewportDims [0] || height > maxViewportDims [1])
+      {
+         if (width > height)
+         {
+            height = (maxViewportDims [1] * height / width)|0;
+            width  = maxViewportDims [0];
+         }
+         else
+         {
+            width  = (maxViewportDims [0] * width / height)|0;
+            height = maxViewportDims [1];
+         }
+      }
 
       canvas
          .prop ("width",  width)
