@@ -283,17 +283,16 @@ Object .assign (X3DRenderingContext .prototype,
       return new Promise (resolve =>
       {
          const
-            contentScale   = this .getRenderingProperty ("ContentScale"),
-            viewportWidth  = Math .max (width * contentScale, 1)|0,
-            viewportHeight = Math .max (height * contentScale, 1)|0,
-            key            = Symbol ();
+            contentScale      = this .getRenderingProperty ("ContentScale"),
+            [vWidth, vHeight] = this .limitFramebufferSize (width, height),
+            key               = Symbol ();
 
          const test = () =>
          {
-            if (this ._viewport [2] !== viewportWidth)
+            if (this ._viewport [2] !== vWidth)
                return;
 
-            if (this ._viewport [3] !== viewportHeight)
+            if (this ._viewport [3] !== vHeight)
                return;
 
             this ._viewport .removeFieldCallback (key);
@@ -314,28 +313,10 @@ Object .assign (X3DRenderingContext .prototype,
          return;
 
       const
-         gl              = this .getContext (),
          canvas          = this .getCanvas (),
-         contentScale    = this .getRenderingProperty ("ContentScale"),
-         maxViewportDims = gl .getParameter (gl .MAX_VIEWPORT_DIMS);
+         [width, height] = this .limitFramebufferSize (canvas .parent () .width (), canvas .parent () .height ());
 
-      let
-         width  = Math .max (canvas .parent () .width ()  * contentScale, 1)|0,
-         height = Math .max (canvas .parent () .height () * contentScale, 1)|0;
-
-      if (width > maxViewportDims [0] || height > maxViewportDims [1])
-      {
-         if (width > height)
-         {
-            height = (maxViewportDims [1] * height / width)|0;
-            width  = maxViewportDims [0];
-         }
-         else
-         {
-            width  = (maxViewportDims [0] * width / height)|0;
-            height = maxViewportDims [1];
-         }
-      }
+      this .getRenderingProperties () ._ContentScale = width / canvas .parent () .width ();
 
       canvas
          .prop ("width",  width)
@@ -344,6 +325,36 @@ Object .assign (X3DRenderingContext .prototype,
       this .reshapeFramebuffer (0, 0, 0, width, height);
 
       this .addBrowserEvent ();
+   },
+   limitFramebufferSize (width, height)
+   {
+      const
+         gl              = this .getContext (),
+         contentScale    = this .getBrowserOption ("ContentScale"),
+         xContentScale   = contentScale === -1 ? window .devicePixelRatio : contentScale,
+         maxViewportDims = gl .getParameter (gl .MAX_VIEWPORT_DIMS);
+
+      width  *= xContentScale,
+      height *= xContentScale;
+
+      if (width > maxViewportDims [0] || height > maxViewportDims [1])
+      {
+         if (width > height)
+         {
+            height = maxViewportDims [1] * height / width;
+            width  = maxViewportDims [0];
+         }
+         else
+         {
+            width  = maxViewportDims [0] * width / height;
+            height = maxViewportDims [1];
+         }
+      }
+
+      width  = Math .max (width|0,  1);
+      height = Math .max (height|0, 1);
+
+      return [width, height];
    },
    reshapeFramebuffer (i, x, y, width, height)
    {
