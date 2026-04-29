@@ -47,7 +47,7 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double, properti
       },
       divide (value)
       {
-         return Constructor .fromValue (this .getValue () .copy () .divide (value));
+         return Constructor .fromValue (this .getValue () .copy () .divide (+value));
       },
       divVec (vector)
       {
@@ -67,7 +67,7 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double, properti
       },
       lerp (destination, t)
       {
-         return Constructor .fromValue (this .getValue () .copy () .lerp (destination, t));
+         return Constructor .fromValue (this .getValue () .copy () .lerp (destination, +t));
       },
       max (vector)
       {
@@ -79,7 +79,7 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double, properti
       },
       multiply (value)
       {
-         return Constructor .fromValue (this .getValue () .copy () .multiply (value));
+         return Constructor .fromValue (this .getValue () .copy () .multiply (+value));
       },
       multVec (vector)
       {
