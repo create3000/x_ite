@@ -12,7 +12,6 @@ import SFVec4              from "./SFVec4.js";
 import X3DField            from "../Base/X3DField.js";
 import X3DObjectArrayField from "../Base/X3DObjectArrayField.js";
 import X3DTypedArrayField  from "../Base/X3DTypedArrayField.js";
-import X3DConstants        from "../Base/X3DConstants.js";
 import Matrix3             from "../../standard/Math/Numbers/Matrix3.js";
 import Matrix4             from "../../standard/Math/Numbers/Matrix4.js";
 import Rotation4           from "../../standard/Math/Numbers/Rotation4.js";

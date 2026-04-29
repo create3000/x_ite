@@ -124,21 +124,20 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
             return;
 
          const
-            browser             = this .getBrowser (),
-            text                = this .getText (),
-            glyphs              = this .getGlyphs (),
-            minorAlignment      = this .getMinorAlignment (),
-            translations        = this .getTranslations (),
-            charSpacings        = this .getCharSpacings (),
-            scales              = this .getScales (),
-            size                = fontStyle .getScale (), // in pixel
-            sizeUnitsPerEm      = size / font .unitsPerEm,
-            texCoordArray       = text .getTexCoords (),
-            normalArray         = text .getNormals (),
-            vertexArray         = text .getVertices (),
-            contentScale        = fontStyle .getContentScale (),
-            canvas              = this .context .canvas,
-            cx                  = this .context;
+            text           = this .getText (),
+            glyphs         = this .getGlyphs (),
+            minorAlignment = this .getMinorAlignment (),
+            translations   = this .getTranslations (),
+            charSpacings   = this .getCharSpacings (),
+            scales         = this .getScales (),
+            size           = fontStyle .getScale (), // in pixel
+            sizeUnitsPerEm = size / font .unitsPerEm,
+            texCoordArray  = text .getTexCoords (),
+            normalArray    = text .getNormals (),
+            vertexArray    = text .getVertices (),
+            contentScale   = fontStyle .getContentScale (),
+            canvas         = this .context .canvas,
+            cx             = this .context;
 
          // Set texCoord.
 

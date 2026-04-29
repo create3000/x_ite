@@ -1,9 +1,6 @@
 import X3DField                  from "../Base/X3DField.js";
 import SFMatrixPrototypeTemplate from "./SFMatrixPrototypeTemplate.js";
 import Matrix4                   from "../../standard/Math/Numbers/Matrix4.js";
-import SFVec4                    from "./SFVec4.js";
-
-const { SFVec4d, SFVec4f } = SFVec4;
 
 function SFMatrix4Template (TypeName, double)
 {

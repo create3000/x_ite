@@ -1,7 +1,6 @@
-import X3DField     from "../Base/X3DField.js";
-import ArrayFields  from "./ArrayFields.js";
-import X3DConstants from "../Base/X3DConstants.js";
-import Algorithm    from "../../standard/Math/Algorithm.js";
+import X3DField    from "../Base/X3DField.js";
+import ArrayFields from "./ArrayFields.js";
+import Algorithm   from "../../standard/Math/Algorithm.js";
 
 const { MFInt32 } = ArrayFields;
 
