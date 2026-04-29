@@ -314,9 +314,10 @@ Object .assign (X3DRenderingContext .prototype,
 
       const
          canvas          = this .getCanvas (),
-         [width, height] = this .limitFramebufferSize (canvas .parent () .width (), canvas .parent () .height ());
+         parent          = canvas .parent (),
+         [width, height] = this .limitFramebufferSize (parent .width (), parent .height ());
 
-      this .getRenderingProperties () ._ContentScale = width / canvas .parent () .width ();
+      this .getRenderingProperties () ._ContentScale = width / parent .width ();
 
       // this .println (this .getRenderingProperty ("ContentScale"), devicePixelRatio)
 
