@@ -288,6 +288,8 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
       if (contentScale .getValue () === -1)
          this .updateContentScale ();
+      else
+         browser .getRenderingProperties () ._ContentScale = Math .max (contentScale .getValue (), 0) || 1;
 
       browser .reshape ();
    },
@@ -300,14 +302,11 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
       this .removeUpdateContentScale ?.();
 
-      this .removeUpdateContentScale = () =>
-      {
-         visualViewport .removeEventListener ("resize", update);
-         media          .removeEventListener ("change", update);
-      };
+      this .removeUpdateContentScale = () => media .removeEventListener ("change", update);
 
-      visualViewport .addEventListener ("resize", update);
-      media          .addEventListener ("change", update);
+      media .addEventListener ("change", update);
+
+      browser .getRenderingProperties () ._ContentScale = window .devicePixelRatio;
 
       browser .reshape ();
    },
