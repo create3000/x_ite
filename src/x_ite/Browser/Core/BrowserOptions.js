@@ -311,8 +311,6 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       visualViewport .addEventListener ("resize", update);
       media          .addEventListener ("change", update);
 
-      browser .getRenderingProperties () ._ContentScale = window .devicePixelRatio;
-
       browser .reshape ();
    },
    set_DisplayColorSpace (displayColorSpace)
