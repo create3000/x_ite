@@ -154,7 +154,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       if (!this [_units] .has (category))
          return;
 
-      this [_units] .update (category, category, new UnitInfo (category, String (name),  Number (conversionFactor)));
+      this [_units] .update (category, category, new UnitInfo (category, String (name), +conversionFactor));
 
       this ._units_changed = Date .now () / 1000;
    },
