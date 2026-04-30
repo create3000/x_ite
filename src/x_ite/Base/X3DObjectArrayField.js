@@ -53,10 +53,10 @@ const handler =
    {
       if (typeof key === "string")
       {
-         let index = +key;
+         const index = +key;
 
          if (Number .isInteger (index))
-            return key < target .getValue () .length;
+            return index < target .getValue () .length;
       }
 
       return Reflect .has (target, key);
@@ -67,13 +67,15 @@ const handler =
    },
    getOwnPropertyDescriptor (target, key)
    {
-      if (typeof key !== "string")
-         return;
+      if (typeof key === "string")
+      {
+         const index = +key;
 
-      const index = +key;
+         if (Number .isInteger (index) && index < target .getValue () .length)
+            return Object .getOwnPropertyDescriptor (target .getValue (), key);
+      }
 
-      if (Number .isInteger (index) && index < target .getValue () .length)
-         return Object .getOwnPropertyDescriptor (target .getValue (), key);
+      return Reflect .getOwnPropertyDescriptor (target, key);
    },
 };
 

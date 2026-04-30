@@ -87,32 +87,36 @@ const handler =
    {
       if (typeof key === "string")
       {
-         let index = +key;
+         const index = +key;
 
          if (Number .isInteger (index))
-            return key < target [_length];
+            return index < target [_length];
       }
 
       return Reflect .has (target, key);
    },
    ownKeys (target)
    {
-      const ownKeys = [ ];
+      const
+         length  = target [_length],
+         ownKeys = [ ];
 
-      for (let i = 0, length = target [_length]; i < length; ++ i)
+      for (let i = 0; i < length; ++ i)
          ownKeys .push (String (i));
 
       return ownKeys;
    },
    getOwnPropertyDescriptor (target, key)
    {
-      if (typeof key !== "string")
-         return;
+      if (typeof key === "string")
+      {
+         const index = +key;
 
-      const index = +key;
+         if (Number .isInteger (index) && index < target [_length])
+            return Object .getOwnPropertyDescriptor (target .getValue (), key);
+      }
 
-      if (Number .isInteger (index) && index < target [_length])
-         return Object .getOwnPropertyDescriptor (target .getValue (), key);
+      return Reflect .getOwnPropertyDescriptor (target, key);
    },
 };
 
