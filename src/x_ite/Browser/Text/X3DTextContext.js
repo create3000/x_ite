@@ -1,7 +1,7 @@
 import FontStyle     from "../../Components/Text/FontStyle.js";
 import URLs          from "../Networking/URLs.js";
 import FontLibrary   from "../../Components/Text/FontLibrary.js";
-import * as OpenType from "../../../lib/opentype/opentype.mjs";
+import * as OpenType from "../../../../node_modules/opentype.js/dist/opentype.mjs";
 import DEVELOPMENT   from "../../DEVELOPMENT.js";
 
 const
