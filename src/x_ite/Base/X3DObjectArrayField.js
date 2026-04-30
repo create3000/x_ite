@@ -9,57 +9,57 @@ const
 
 const handler =
 {
-   get (target, key)
+   get (target, key, receiver)
    {
-      const value = target [key];
-
-      if (value !== undefined)
-         return value;
-
       if (typeof key === "string")
       {
-         const
-            array = target .getValue (),
-            index = +key;
+         const index = +key;
 
          if (Number .isInteger (index))
          {
+            const array = target .getValue ();
+
             if (index >= array .length)
                return undefined;
 
             return array [index] .valueOf ();
          }
-         else
+      }
+
+      return Reflect .get (target, key, receiver);
+   },
+   set (target, key, value, receiver)
+   {
+      if (typeof key === "string")
+      {
+         const index = +key;
+
+         if (Number .isInteger (index))
          {
-            return target [key];
+            const array = target .getValue ();
+
+            if (index >= array .length)
+               target .resize (index + 1);
+
+            array [index] .setValue (value);
+
+            return true;
          }
       }
-   },
-   set (target, key, value)
-   {
-      if (key in target)
-      {
-         target [key] = value;
-         return true;
-      }
 
-      const
-         array = target .getValue (),
-         index = +key;
-
-      if (index >= array .length)
-         target .resize (index + 1);
-
-      array [index] .setValue (value);
-
-      return true;
+      return Reflect .set (target, key, value, receiver);
    },
    has (target, key)
    {
-      if (Number .isInteger (+key))
-         return key < target .getValue () .length;
+      if (typeof key === "string")
+      {
+         let index = +key;
 
-      return key in target;
+         if (Number .isInteger (index))
+            return key < target .getValue () .length;
+      }
+
+      return Reflect .has (target, key);
    },
    ownKeys (target)
    {
