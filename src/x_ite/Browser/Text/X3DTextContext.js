@@ -12,8 +12,8 @@ const
 
 function X3DTextContext ()
 {
-   this [_fontCache]    = new Map ();
-   this [_library]      = new WeakMap ();
+   this [_fontCache] = new Map ();
+   this [_library]   = new WeakMap ();
 }
 
 Object .assign (X3DTextContext .prototype,
