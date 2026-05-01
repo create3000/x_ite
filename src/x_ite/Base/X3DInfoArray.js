@@ -53,14 +53,17 @@ const handler =
       {
          const index = +key;
 
-         if (Number .isInteger (index) && index < target [_array] .length)
+         if (Number .isInteger (index))
          {
-            const propertyDescriptor = Object .getOwnPropertyDescriptor (target [_array], key);
+            if (index < target [_array] .length)
+            {
+               const propertyDescriptor = Object .getOwnPropertyDescriptor (target [_array], key);
 
-            if (propertyDescriptor)
-               propertyDescriptor .writable = false;
+               if (propertyDescriptor)
+                  propertyDescriptor .writable = false;
 
-            return propertyDescriptor;
+               return propertyDescriptor;
+            }
          }
       }
 

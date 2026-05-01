@@ -71,8 +71,11 @@ const handler =
       {
          const index = +key;
 
-         if (Number .isInteger (index) && index < target .getValue () .length)
-            return Object .getOwnPropertyDescriptor (target .getValue (), key);
+         if (Number .isInteger (index))
+         {
+            if (index < target .getValue () .length)
+               return Object .getOwnPropertyDescriptor (target .getValue (), key);
+         }
       }
 
       return Reflect .getOwnPropertyDescriptor (target, key);
