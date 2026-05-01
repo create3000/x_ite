@@ -11,7 +11,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 *Leipzig, 3rd May 2026:* The 15.0 release of X_ITE introduces several breaking changes aimed at improving consistency and performance across field handling.
 
-- Out-of-range access for MF fields: Multi-value fields (MF*) derived from X3DArrayField now return undefined when accessing an index that is out of range. Previously, such access could return unexpected values or behave inconsistently. Applications relying on the old behavior should add explicit bounds checks.
+- Out-of-range access for MF fields: Multi-value fields (MF*) derived from X3DArrayField now return undefined when accessing an index that is out of range. This behavior is now treated as a security risk to prevent unintended data access. Previously, such access could return unexpected values or behave inconsistently. Applications relying on the old behavior should add explicit set the length of the array.
 - Optimized constructors for SF and MF fields: Fields derived from X3DField now use more efficient constructors. As a result, some construction patterns have changed:
   - `new SFRotation(matrix)` has been replaced with `SFRotation.fromMatrix(matrix)`.
   - SFMatrix[34][df] constructors that previously accepted multiple vector arguments should now use spread syntax:
