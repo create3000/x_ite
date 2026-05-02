@@ -13,7 +13,7 @@ tags: [PointLight, Lighting, VRML]
 
 ## Overview
 
-PointLight is a single light source that illuminates outwards in all directions. Lighting illuminates all geometry except lines and points. By default, light scope only illuminates peer geometry and children nodes within the scene graph hierarchy.
+PointLight is a single light source that illuminates outwards in all directions. X3D lights illuminate all geometry except lines and points. By default, light scope only illuminates peer geometry and children nodes within the scene graph hierarchy.
 
 The PointLight node belongs to the [Lighting](/x_ite/components/overview/#lighting) component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 

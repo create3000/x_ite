@@ -87,7 +87,7 @@ Enables/disables node operation.
 ### SFFloat [in, out] **transitionDuration** 0 <small>(0,∞)</small>
 {: #fields-transitionDuration }
 
-Duration in seconds for a pose transition.
+Duration in seconds for animating a pose transition.
 
 ### SFBool [in] **resetAllJoints**
 {: #fields-resetAllJoints }

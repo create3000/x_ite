@@ -61,7 +61,7 @@ Author-provided prose that describes intended purpose of the url asset.
 ### SFImage [in, out] **image** 0 0 0
 {: #fields-image }
 
-Defines *image*: width, height, number_of_components per each pixel value, and list of pixel_values. Note that width and height are pixel count, and allowed values for RGBA number_of_components in each pixel value are 1 (intensity), 2 (intensity alpha), 3 (red green blue), 4 (red green blue alpha-opacity).
+Defines *image*: width, height, number_of_components per each pixel value, and list of pixel_values. Note that width and height are pixel count, and allowed values for RGBA number_of_components in each pixel value are 1 (intensity), 2 (intensity alpha), 3 (RGB red green blue), 4 (RGBA red green blue alpha-opacity).
 
 #### Hints
 

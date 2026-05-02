@@ -125,6 +125,10 @@ Indicates time intervals between render captures when the update field is "ALWAY
 
 Sets values for width, height, and number of color components [1..4] for the rendered texture.
 
+#### Hint
+
+- Components in each pixel value are 1 (intensity), 2 (intensity alpha), 3 (RGB red green blue), 4 (RGBA red green blue alpha-opacity).
+
 ### SFBool [in, out] **depthMap** FALSE
 {: #fields-depthMap }
 
