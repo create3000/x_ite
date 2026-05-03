@@ -27,7 +27,7 @@ Object .assign (Object .setPrototypeOf (SFColorRGBA .prototype, X3DField .protot
    {
       return this .getValue () .getHSVA ([ ]);
    },
-   setHSVA (h, s, v, a)
+   setHSVA (h, s, v, a = 1)
    {
       this .getValue () .setHSVA (+h, +s, +v, +a);
       this .addEvent ();

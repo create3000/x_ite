@@ -332,7 +332,7 @@ Returns a white color.
 
 ### Static Methods
 
-#### **fromHSVA** (*h: number, s: number, v: number, a: number*): SFColorRGBA
+#### **fromHSVA** (*h: number, s: number, v: number, a: number = 1*): SFColorRGBA
 
 Creates a SFColorRGBA object from a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and *a* is the alpha component of the HSVA color.
 
@@ -387,7 +387,7 @@ Alpha component of the color.
 
 Returns an array with the components of the color's HSVA value.
 
-#### **setHSVA** (*h: number, s: number, v: number, a: number*): void
+#### **setHSVA** (*h: number, s: number, v: number, a: number = 1*): void
 
 Sets a HSVA color value; *h* is the hue, *s* is the saturation, *v* is the value and *a* is the alpha component of the HSVA color.
 
