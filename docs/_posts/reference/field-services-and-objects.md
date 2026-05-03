@@ -163,19 +163,19 @@ Removes a field callback function associated with *key*.
 
 #### **fromString** (*value: string, scene?: X3DScene*): void
 
-Set value from string.
+Set value from string. If an X3DScene is provided, units are respected and necessary conversions are performed.
 
 #### **fromVRMLString** (*value: string, scene?: X3DScene*): void
 
-Set value from VRML string.
+Set value from VRML string. If an X3DScene is provided, units are respected and necessary conversions are performed.
 
 #### **fromXMLString** (*value: string, scene?: X3DScene*): void
 
-Set value from XML string.
+Set value from XML string. If an X3DScene is provided, units are respected and necessary conversions are performed.
 
 #### **fromJSONString** (*value: string, scene?: X3DScene*): void
 
-Set value from JSON string.
+Set value from JSON string. If an X3DScene is provided, units are respected and necessary conversions are performed.
 
 #### **dispose** (): void
 
