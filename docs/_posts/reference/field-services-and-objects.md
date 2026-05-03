@@ -137,6 +137,17 @@ None
 
 Returns one of the **Field Type Constants** from [X3DConstants](/x_ite/reference/constants-services/#field-type-constants) object.
 
+<x3d-script-area name="X3D ECMAScript Example: X3DField getType">
+<pre>
+const field = new MFBool ();
+
+print (field .getType () === X3DConstants .MFBool);
+print (field .getTypeName ());
+// Expected output: true
+// Expected output: MFBool
+</pre>
+</x3d-script-area>
+
 #### **getTypeName** (): string
 
 Returns the field type name.
