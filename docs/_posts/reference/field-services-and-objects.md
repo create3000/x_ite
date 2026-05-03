@@ -137,6 +137,20 @@ None
 
 Returns a copy of this X3DField.
 
+<x3d-script-area name="X3D ECMAScript Example: X3DField copy">
+<pre>
+const field = new SFVec3f (2, 4, 8);
+const copy  = field .copy ();
+
+print (copy .equals (field));
+print (copy !== field);
+print (copy);
+// Expected output: true
+// Expected output: true
+// Expected output: 2 4 8
+</pre>
+</x3d-script-area>
+
 #### **dispose** (): void
 
 Disposes this X3DField. The object can then no longer be used.
