@@ -318,7 +318,7 @@ An object with one or more of these properties:
 * **indentChar:** string, indentation char(s) for each level, default: `"  "` (two spaces)
 * **precision:** integer, float precision, default: `7`
 * **doublePrecision:** integer, double precision, default: `15`
-* **html:** boolean, HTML style, default: `false`, if this is `true`, then `closingTags` is automatically set to `true` as well
+* **html:** boolean, HTML style, default: `false`; if this is `true`, then `closingTags` is automatically set to `true` as well
 * **closingTags:** boolean, use closing tags, default: `false`
 * **scene:** X3DScene, this is either this scene or can be a custom scene
 
