@@ -336,7 +336,7 @@ Returns a white color.
 
 Creates a SFColorRGBA object from a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and *a* is the alpha component of the HSVA color.
 
-The saturation and value component must be in the range [0,1], and the hue component must be in the range [0,2π].
+The saturation, value and alpha component must be in the range [0,1], and the hue component must be in the range [0,2π].
 
 <x3d-script-area name="X3D ECMAScript Example: SFColorRGBA fromHSVA">
 <pre>
