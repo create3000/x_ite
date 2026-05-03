@@ -133,25 +133,6 @@ None
 
 ### Methods
 
-#### **getType** (): number
-
-Returns one of the **Field Type Constants** from [X3DConstants](/x_ite/reference/constants-services/#field-type-constants) object.
-
-<x3d-script-area name="X3D ECMAScript Example: X3DField getType">
-<pre>
-const field = new MFBool ();
-
-print (field .getType () === X3DConstants .MFBool);
-print (field .getTypeName ());
-// Expected output: true
-// Expected output: MFBool
-</pre>
-</x3d-script-area>
-
-#### **getTypeName** (): string
-
-Returns the field type name.
-
 #### **copy** (): X3DField
 
 Returns a copy of this X3DField.
@@ -159,18 +140,6 @@ Returns a copy of this X3DField.
 #### **equals** (*field: X3DField*): boolean
 
 Returns `true` if the passed SF* or MF* *field* of the same type is equals to this object, otherwise `false`.
-
-<!--
-#### **addFieldCallback** (*key: any, callback: (value: any) => void*): void
-
-Adds a field callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*, this key can later be used to remove the callback. The callback is called when the field has been changed.
-
-The callback has a signature of `function (value)`, where value is the current value of the field.
-
-#### **removeFieldCallback** (*key: any*): void
-
-Removes a field callback function associated with *key*.
--->
 
 #### **fromString** (*value: string, scene?: X3DScene*): void
 
@@ -198,6 +167,25 @@ Set the value from a XML string. If an X3DScene is provided, units are respected
 #### **fromJSONString** (*value: string, scene?: X3DScene*): void
 
 Set the value from a JSON string. If an X3DScene is provided, units are respected and necessary conversions are performed. The string can be any legal value as produced by the `toJSONString()` function.
+
+#### **getType** (): number
+
+Returns one of the **Field Type Constants** from [X3DConstants](/x_ite/reference/constants-services/#field-type-constants) object.
+
+<x3d-script-area name="X3D ECMAScript Example: X3DField getType">
+<pre>
+const field = new MFBool ();
+
+print (field .getType () === X3DConstants .MFBool);
+print (field .getTypeName ());
+// Expected output: true
+// Expected output: MFBool
+</pre>
+</x3d-script-area>
+
+#### **getTypeName** (): string
+
+Returns the field type name.
 
 #### **toString** (*options?: Options*): string
 
@@ -559,13 +547,13 @@ const copy = new SFMatrix3d (... matrix); // Copy using spread syntax.
 
 ### Static Properties
 
-#### **ZERO**: SFMatrix3d/f
-
-Returns the zero matrix.
-
 #### **IDENTITY**: SFMatrix3d/f
 
 Returns the identity matrix.
+
+#### **ZERO**: SFMatrix3d/f
+
+Returns the zero matrix.
 
 ### Properties
 
@@ -689,13 +677,13 @@ const copy = new SFMatrix4d (... matrix); // Copy using spread syntax.
 
 ### Static Properties
 
-#### **ZERO**: SFMatrix4d/f
-
-Returns the zero matrix.
-
 #### **IDENTITY**: SFMatrix4d/f
 
 Returns the identity matrix.
+
+#### **ZERO**: SFMatrix4d/f
+
+Returns the zero matrix.
 
 ### Properties
 
