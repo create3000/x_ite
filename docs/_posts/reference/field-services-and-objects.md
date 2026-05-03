@@ -186,7 +186,7 @@ const field = new MFInt32 ();
 
 field .fromVRMLString ("[ 0, 1, -1, 2147483647, -2147483648, 42 ]");
 
-print (field);
+print (field .toVRMLString ());
 // Expected output: [ 0, 1, -1, 2147483647, -2147483648, 42 ]
 </pre>
 </x3d-script-area>
