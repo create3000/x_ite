@@ -174,11 +174,11 @@ Removes a field callback function associated with *key*.
 
 #### **fromString** (*value: string, scene?: X3DScene*): void
 
-Set value from string. If an X3DScene is provided, units are respected and necessary conversions are performed.
+Set the value from a string. If an X3DScene is provided, units are respected and necessary conversions are performed. The string can be any legal value as produced by the `toString()` function.
 
 #### **fromVRMLString** (*value: string, scene?: X3DScene*): void
 
-Set value from VRML string. If an X3DScene is provided, units are respected and necessary conversions are performed.
+Set the value from a VRML string. If an X3DScene is provided, units are respected and necessary conversions are performed. The string can be any legal value as produced by the `toVRMLString()` function.
 
 <x3d-script-area name="X3D ECMAScript Example: X3DField fromVRMLString">
 <pre>
@@ -193,11 +193,11 @@ print (field);
 
 #### **fromXMLString** (*value: string, scene?: X3DScene*): void
 
-Set value from XML string. If an X3DScene is provided, units are respected and necessary conversions are performed.
+Set the value from a XML string. If an X3DScene is provided, units are respected and necessary conversions are performed. The string can be any legal value as produced by the `toXMLString()` function.
 
 #### **fromJSONString** (*value: string, scene?: X3DScene*): void
 
-Set value from JSON string. If an X3DScene is provided, units are respected and necessary conversions are performed.
+Set the value from a JSON string. If an X3DScene is provided, units are respected and necessary conversions are performed. The string can be any legal value as produced by the `toJSONString()` function.
 
 #### **dispose** (): void
 
