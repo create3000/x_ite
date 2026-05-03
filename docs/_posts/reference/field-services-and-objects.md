@@ -137,6 +137,10 @@ None
 
 Returns a copy of this X3DField.
 
+#### **dispose** (): void
+
+Disposes this X3DField. The object can then no longer be used.
+
 #### **equals** (*field: X3DField*): boolean
 
 Returns `true` if the passed SF* or MF* *field* of the same type is equals to this object, otherwise `false`.
@@ -208,10 +212,6 @@ For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmls
 Returns the X3D JSON-encoded string that, if parsed as the value of an X3DField field with `fromJSONString`, will produce this field.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
-
-#### **dispose** (): void
-
-Disposes this X3DField. The object can then no longer be used.
 
 ## SFColor Object
 
