@@ -376,7 +376,7 @@ console .log ("The scene is loaded here as well.");
 
 Removes a browser callback function associated with *key* and *event*. If *event* is omitted, all callbacks associated with key will be removed.
 
-#### **viewAll** (*[layer?: X3DLayerNode,] transitionTime?: number = 1*): void <small class="blue">non-standard</small>
+#### **viewAll** (*[layer?: X3DLayerNode,] transitionTime: number = 1*): void <small class="blue">non-standard</small>
 
 Modifies the current view to show the entire visible scene within *transitionTime* seconds. If *layer* is omitted, the active layer is used.
 

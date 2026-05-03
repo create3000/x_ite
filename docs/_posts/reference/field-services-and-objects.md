@@ -199,23 +199,23 @@ Set the value from a XML string. If an X3DScene is provided, units are respected
 
 Set the value from a JSON string. If an X3DScene is provided, units are respected and necessary conversions are performed. The string can be any legal value as produced by the `toJSONString()` function.
 
-#### **toString** (options?: Options): string
+#### **toString** (*options?: Options*): string
 
 Returns the a string that, if parsed as the value of an X3DField field with `fromString`, will produce this field.
 
-#### **toVRMLString** (options?: Options): string
+#### **toVRMLString** (*options?: Options*): string
 
 Returns the X3D VRML-encoded string that, if parsed as the value of an X3DField field with `fromVRMLString`, will produce this field.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
-#### **toXMLString** (options?: Options): string
+#### **toXMLString** (*options?: Options*): string
 
 Returns the X3D XML-encoded string that, if parsed as the value of an X3DField field with `fromXMLString`, will produce this field.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
-#### **toJSONString** (options?: Options): string
+#### **toJSONString** (*options?: Options*): string
 
 Returns the X3D JSON-encoded string that, if parsed as the value of an X3DField field with `fromJSONString`, will produce this field.
 
@@ -856,19 +856,19 @@ Returns the node type name.
 
 Removes a field callback function associated with *key* and *name* from the field.
 
-#### **toVRMLString** (options?: Options): string
+#### **toVRMLString** (*options?: Options*): string
 
 Returns the X3D VRML-encoded string that, if parsed as the value of a SFNode field, will produce this node.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
-#### **toXMLString** (options?: Options): string
+#### **toXMLString** (*options?: Options*): string
 
 Returns the X3D XML-encoded string that, if parsed as the value of a SFNode field, will produce this node.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
-#### **toJSONString** (options?: Options): string
+#### **toJSONString** (*options?: Options*): string
 
 Returns the X3D JSON-encoded string that, if parsed as the value of a SFNode field, will produce this node.
 
@@ -1013,7 +1013,7 @@ Set the value of this rotation to the quaternion passed in *x, y, z, w*.
 
 Returns a SFRotation whose value is the spherical linear interpolation between this object's rotation and *destRotation* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's rotation. For *t* = 1, the value is *destRotation*.
 
-#### **straighten** (*upVector?: SFVec3d/f = new SFVec3f (0, 1, 0)*): SFRotation
+#### **straighten** (*upVector: SFVec3d/f = new SFVec3f (0, 1, 0)*): SFRotation
 
 Straightens the rotation so that the x-axis of the resulting rotation is parallel to the plane spawned by upVector. The default  value for *upVector* is the y-axis.
 
