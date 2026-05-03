@@ -1,5 +1,5 @@
-/* X_ITE v14.2.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.2.0")];
+/* X_ITE v15.0.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -449,6 +449,11 @@ Object .assign (X3DTextGeometry .prototype,
       return this .bbox;
    },
    update ()
+   {
+      this .configure ();
+      this .build ();
+   },
+   configure ()
    {
       const
          text      = this .text,
@@ -1507,7 +1512,7 @@ const FontLibrary_default_ = FontLibrary;
 ;
 
 /* harmony default export */ const Text_FontLibrary = (external_X_ITE_X3D_Namespace_default().add ("FontLibrary", FontLibrary_default_));
-;// ./src/lib/opentype/opentype.mjs
+;// ./node_modules/opentype.js/dist/opentype.mjs
 // src/tiny-inflate@1.0.3.esm.mjs
 var TINF_OK = 0;
 var TINF_DATA_ERROR = -3;
@@ -1870,7 +1875,7 @@ function optimizeCommands(commands) {
     if (cmd.type === "M") {
       startX = cmd.x;
       startY = cmd.y;
-    } else if (cmd.type === "L" && (!nextCommand || nextCommand.command === "Z")) {
+    } else if (cmd.type === "L" && (!nextCommand || nextCommand.type === "Z")) {
       if (!(Math.abs(cmd.x - startX) > 1 || Math.abs(cmd.y - startY) > 1)) {
         subpath.pop();
       }
@@ -2317,9 +2322,8 @@ Path.prototype.toDOMElement = function(options, pathData) {
   if (!pathData) {
     pathData = this.toPathData(options);
   }
-  const temporaryPath = pathData;
   const newPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  newPath.setAttribute("d", temporaryPath);
+  newPath.setAttribute("d", pathData);
   if (this.fill !== void 0 && this.fill !== "black") {
     if (this.fill === null) {
       newPath.setAttribute("fill", "none");
@@ -3716,7 +3720,7 @@ Parser.prototype.parseDeltaSetIndexMap = function() {
     } else if (entrySize === 3) {
       entry = this.parseUInt24();
     } else if (entrySize === 4) {
-      entry = this.getULong();
+      entry = this.parseULong();
     } else {
       throw new Error(`Invalid entry size of ${entrySize}`);
     }
@@ -5080,13 +5084,26 @@ function addTerminatorSegment(t) {
     offset: 0
   });
 }
+function mergeSegments(segments) {
+  if (segments.length === 0) return segments;
+  const merged = [segments[0]];
+  for (let i = 1; i < segments.length; i++) {
+    const prev = merged[merged.length - 1];
+    const curr = segments[i];
+    if (prev.end + 1 === curr.start && prev.delta === curr.delta && curr.end !== 65535) {
+      prev.end = curr.end;
+    } else {
+      merged.push(curr);
+    }
+  }
+  return merged;
+}
 function makeCmapTable(glyphs) {
   let isPlan0Only = true;
   let i;
   for (i = glyphs.length - 1; i > 0; i -= 1) {
     const g = glyphs.get(i);
     if (g.unicode > 65535) {
-      console.log("Adding CMAP format 12 (needed!)");
       isPlan0Only = false;
       break;
     }
@@ -5128,6 +5145,7 @@ function makeCmapTable(glyphs) {
   t.segments.sort(function(a, b) {
     return a.start - b.start;
   });
+  t.segments = mergeSegments(t.segments);
   addTerminatorSegment(t);
   const segCount = t.segments.length;
   let segCountToRemove = 0;
@@ -7410,13 +7428,13 @@ Glyph.prototype.getPath = function(x, y, fontSize, options, font) {
 };
 Glyph.prototype.getLayers = function(font) {
   if (!font) {
-    throw Error("The font object is required to read the colr/cpal tables in order to get the layers.");
+    throw new Error("The font object is required to read the colr/cpal tables in order to get the layers.");
   }
   return font.layers.get(this.index);
 };
 Glyph.prototype.getSvgImage = function(font) {
   if (!font) {
-    throw Error("The font object is required to read the svg table in order to get the image.");
+    throw new Error("The font object is required to read the svg table in order to get the image.");
   }
   return font.svgImages.get(this.index);
 };
@@ -7480,7 +7498,7 @@ Glyph.prototype.getMetrics = function() {
   return metrics;
 };
 Glyph.prototype.draw = function(ctx, x, y, fontSize, options, font) {
-  options = Object.assign({}, font.defaultRenderOptions, options);
+  options = Object.assign({}, font && font.defaultRenderOptions, options);
   const path = this.getPath(x, y, fontSize, options, font);
   path.draw(ctx);
 };
@@ -7563,8 +7581,8 @@ Glyph.prototype.toPathData = function(options, font) {
     useGlyph = font.variation.getTransform(this, options.variation);
   }
   let usePath = useGlyph.points && options.pointsTransform ? options.pointsTransform(useGlyph.points) : useGlyph.path;
-  if (options.pathTramsform) {
-    usePath = options.pathTramsform(usePath);
+  if (options.pathTransform) {
+    usePath = options.pathTransform(usePath);
   }
   return usePath.toPathData(options);
 };
@@ -7705,6 +7723,7 @@ function equals(a, b) {
     return false;
   }
 }
+var MAX_CALL_DEPTH = 10;
 function calcCFFSubroutineBias(subrs) {
   let bias;
   if (subrs.length < 1240) {
@@ -8176,6 +8195,7 @@ function parseCFFCharstring(font, glyph, code, version, coords) {
   let vsindex = 0;
   let vstore = [];
   let blendVector;
+  let callDepth = 0;
   const cffTable = font.tables.cff2 || font.tables.cff;
   defaultWidthX = cffTable.topDict._defaultWidthX;
   nominalWidthX = cffTable.topDict._nominalWidthX;
@@ -8296,7 +8316,13 @@ function parseCFFCharstring(font, glyph, code, version, coords) {
           codeIndex = stack.pop() + subrsBias;
           subrCode = subrs[codeIndex];
           if (subrCode) {
+            if (callDepth >= MAX_CALL_DEPTH) {
+              console.warn("CFF charstring subroutine call depth exceeded, skipping callsubr");
+              break;
+            }
+            callDepth++;
             parse(subrCode);
+            callDepth--;
           }
           break;
         case 11:
@@ -8562,7 +8588,13 @@ function parseCFFCharstring(font, glyph, code, version, coords) {
           codeIndex = stack.pop() + font.gsubrsBias;
           subrCode = font.gsubrs[codeIndex];
           if (subrCode) {
+            if (callDepth >= MAX_CALL_DEPTH) {
+              console.warn("CFF charstring subroutine call depth exceeded, skipping callgsubr");
+              break;
+            }
+            callDepth++;
             parse(subrCode);
+            callDepth--;
           }
           break;
         case 30:
@@ -12293,6 +12325,7 @@ function makeSvgImage(text, unitsPerEm) {
 }
 
 // src/tables/glyf.mjs
+var _resolving = /* @__PURE__ */ new WeakMap();
 function parseGlyphCoordinate(p, flag, previousValue, shortVectorBitMask, sameBitMask) {
   let v;
   if ((flag & shortVectorBitMask) > 0) {
@@ -12373,7 +12406,7 @@ function parseGlyph(glyph, data, start) {
     } else {
       glyph.points = [];
     }
-  } else if (glyph.numberOfContours === 0) {
+  } else if (glyph._numberOfContours === 0) {
     glyph.points = [];
   } else {
     glyph.isComposite = true;
@@ -12496,35 +12529,47 @@ function getPath(points) {
 }
 function buildPath(glyphs, glyph) {
   if (glyph.isComposite) {
-    for (let j = 0; j < glyph.components.length; j += 1) {
-      const component = glyph.components[j];
-      const componentGlyph = glyphs.get(component.glyphIndex);
-      componentGlyph.getPath();
-      if (componentGlyph.points) {
-        let transformedPoints;
-        if (component.matchedPoints === void 0) {
-          transformedPoints = transformPoints(componentGlyph.points, component);
-        } else {
-          if (component.matchedPoints[0] > glyph.points.length - 1 || component.matchedPoints[1] > componentGlyph.points.length - 1) {
-            throw Error("Matched points out of range in " + glyph.name);
-          }
-          const firstPt = glyph.points[component.matchedPoints[0]];
-          let secondPt = componentGlyph.points[component.matchedPoints[1]];
-          const transform = {
-            xScale: component.xScale,
-            scale01: component.scale01,
-            scale10: component.scale10,
-            yScale: component.yScale,
-            dx: 0,
-            dy: 0
-          };
-          secondPt = transformPoints([secondPt], transform)[0];
-          transform.dx = firstPt.x - secondPt.x;
-          transform.dy = firstPt.y - secondPt.y;
-          transformedPoints = transformPoints(componentGlyph.points, transform);
+    if (!_resolving.has(glyphs)) {
+      _resolving.set(glyphs, /* @__PURE__ */ new Set());
+    }
+    const resolving = _resolving.get(glyphs);
+    resolving.add(glyph.index);
+    try {
+      for (let j = 0; j < glyph.components.length; j += 1) {
+        const component = glyph.components[j];
+        if (resolving.has(component.glyphIndex)) {
+          continue;
         }
-        glyph.points = glyph.points.concat(transformedPoints);
+        const componentGlyph = glyphs.get(component.glyphIndex);
+        componentGlyph.getPath();
+        if (componentGlyph.points) {
+          let transformedPoints;
+          if (component.matchedPoints === void 0) {
+            transformedPoints = transformPoints(componentGlyph.points, component);
+          } else {
+            if (component.matchedPoints[0] > glyph.points.length - 1 || component.matchedPoints[1] > componentGlyph.points.length - 1) {
+              throw Error("Matched points out of range in " + glyph.name);
+            }
+            const firstPt = glyph.points[component.matchedPoints[0]];
+            let secondPt = componentGlyph.points[component.matchedPoints[1]];
+            const transform = {
+              xScale: component.xScale,
+              scale01: component.scale01,
+              scale10: component.scale10,
+              yScale: component.yScale,
+              dx: 0,
+              dy: 0
+            };
+            secondPt = transformPoints([secondPt], transform)[0];
+            transform.dx = firstPt.x - secondPt.x;
+            transform.dy = firstPt.y - secondPt.y;
+            transformedPoints = transformPoints(componentGlyph.points, transform);
+          }
+          glyph.points = glyph.points.concat(transformedPoints);
+        }
       }
+    } finally {
+      resolving.delete(glyph.index);
     }
   }
   return getPath(glyph.points);
@@ -13168,6 +13213,9 @@ var VariationManager = class {
 };
 
 // src/hintingtt.mjs
+var MAX_INSTRUCTIONS = 1e6;
+var MAX_CALL_DEPTH2 = 64;
+var MAX_LOOP_COUNT = 1e4;
 var instructionTable;
 var exec;
 var execGlyph;
@@ -13509,6 +13557,8 @@ Hinting.prototype.exec = function(glyph, ppem) {
       fpgmState = this._fpgmState = new State("fpgm", font.tables.fpgm);
       fpgmState.funcs = [];
       fpgmState.font = font;
+      fpgmState.instructionCount = 0;
+      fpgmState.callDepth = 0;
       if (false) // removed by dead control flow
 {}
       try {
@@ -13522,6 +13572,8 @@ Hinting.prototype.exec = function(glyph, ppem) {
     State.prototype = fpgmState;
     prepState = this._prepState = new State("prep", font.tables.prep);
     prepState.ppem = ppem;
+    prepState.instructionCount = 0;
+    prepState.callDepth = 0;
     const oCvt = font.variation && font.variation.process.getCvarTransform() || font.tables.cvt;
     if (oCvt) {
       const cvt = prepState.cvt = new Array(oCvt.length);
@@ -13565,6 +13617,8 @@ execGlyph = function(glyph, prepState) {
   State.prototype = prepState;
   if (!components) {
     state = new State("glyf", glyph.instructions);
+    state.instructionCount = 0;
+    state.callDepth = 0;
     if (false) // removed by dead control flow
 {}
     execComponent(glyph, state, xScale, yScale);
@@ -13577,6 +13631,8 @@ execGlyph = function(glyph, prepState) {
       const c = components[i];
       const cg = font.glyphs.get(c.glyphIndex);
       state = new State("glyf", cg.instructions);
+      state.instructionCount = 0;
+      state.callDepth = 0;
       if (false) // removed by dead control flow
 {}
       execComponent(cg, state, xScale, yScale);
@@ -13663,6 +13719,11 @@ exec = function(state) {
   const pLen = prog.length;
   let ins;
   for (state.ip = 0; state.ip < pLen; state.ip++) {
+    if (++state.instructionCount > MAX_INSTRUCTIONS) {
+      throw new Error(
+        "Hinting instructions exceeded maximum of " + MAX_INSTRUCTIONS
+      );
+    }
     if (false) // removed by dead control flow
 {}
     ins = instructionTable[prog[state.ip]];
@@ -13909,6 +13970,9 @@ function SZPS(state) {
 }
 function SLOOP(state) {
   state.loop = state.stack.pop();
+  if (state.loop > MAX_LOOP_COUNT) {
+    state.loop = MAX_LOOP_COUNT;
+  }
   if (false) // removed by dead control flow
 {}
 }
@@ -13979,9 +14043,13 @@ function DEPTH(state) {
 function LOOPCALL(state) {
   const stack = state.stack;
   const fn = stack.pop();
-  const c = stack.pop();
+  let c = stack.pop();
+  if (c > MAX_LOOP_COUNT) c = MAX_LOOP_COUNT;
   if (false) // removed by dead control flow
 {}
+  if (++state.callDepth > MAX_CALL_DEPTH2) {
+    throw new Error("Hinting call depth exceeded maximum of " + MAX_CALL_DEPTH2);
+  }
   const cip = state.ip;
   const cprog = state.prog;
   state.prog = state.funcs[fn];
@@ -13992,17 +14060,22 @@ function LOOPCALL(state) {
   }
   state.ip = cip;
   state.prog = cprog;
+  state.callDepth--;
 }
 function CALL(state) {
   const fn = state.stack.pop();
   if (false) // removed by dead control flow
 {}
+  if (++state.callDepth > MAX_CALL_DEPTH2) {
+    throw new Error("Hinting call depth exceeded maximum of " + MAX_CALL_DEPTH2);
+  }
   const cip = state.ip;
   const cprog = state.prog;
   state.prog = state.funcs[fn];
   exec(state);
   state.ip = cip;
   state.prog = cprog;
+  state.callDepth--;
   if (false) // removed by dead control flow
 {}
 }
@@ -15766,11 +15839,13 @@ function chainingSubstitutionFormat3(contextParams, subtable) {
           lookup = this.getLookupMethod(lookupTable, subtable2);
         }
         if (substitutionType === "12") {
-          for (let n = 0; n < inputLookups.length; n++) {
-            const glyphIndex = contextParams.get(n);
-            const substitution = lookup(glyphIndex);
-            if (substitution) substitutions.push(substitution);
-          }
+          const glyphIndex = contextParams.get(lookupRecord.sequenceIndex);
+          const substitution = lookup(glyphIndex);
+          if (substitution) substitutions.push(substitution);
+        } else if (substitutionType === "21") {
+          const glyphIndex = contextParams.get(lookupRecord.sequenceIndex);
+          const substitution = lookup(glyphIndex);
+          if (substitution) substitutions.push(substitution);
         } else {
           throw new Error(`Substitution type ${substitutionType} is not supported in chaining substitution`);
         }
@@ -15837,34 +15912,40 @@ function contextSubstitutionFormat1(contextParams, subtable) {
   return null;
 }
 function contextSubstitutionFormat3(contextParams, subtable) {
-  let substitutions = [];
+  if (contextParams.context.length < subtable.coverages.length) {
+    return [];
+  }
   for (let i = 0; i < subtable.coverages.length; i++) {
-    const lookupRecord = subtable.lookupRecords[i];
-    const coverage = subtable.coverages[i];
-    let glyphIndex = contextParams.context[contextParams.index + lookupRecord.sequenceIndex];
-    let ligSetIndex = lookupCoverage(glyphIndex, coverage);
-    if (ligSetIndex === -1) {
-      return null;
+    let glyphIndex = contextParams.get(i);
+    glyphIndex = Array.isArray(glyphIndex) ? glyphIndex[0] : glyphIndex;
+    if (lookupCoverage(glyphIndex, subtable.coverages[i]) === -1) {
+      return [];
     }
-    let lookUp = this.font.tables.gsub.lookups[lookupRecord.lookupListIndex];
-    for (let i2 = 0; i2 < lookUp.subtables.length; i2++) {
-      let subtable2 = lookUp.subtables[i2];
-      let ligSetIndex2 = lookupCoverage(glyphIndex, subtable2.coverage);
-      if (ligSetIndex2 === -1)
-        return null;
-      switch (lookUp.lookupType) {
-        case 1: {
-          let ligature = subtable2.substitute[ligSetIndex2];
-          substitutions.push(ligature);
-          break;
-        }
-        case 2: {
-          let ligatureSet = subtable2.sequences[ligSetIndex2];
-          substitutions.push(ligatureSet);
-          break;
-        }
-        default:
-          break;
+  }
+  let substitutions = [];
+  for (let i = 0; i < subtable.lookupRecords.length; i++) {
+    const lookupRecord = subtable.lookupRecords[i];
+    const lookupListIndex = lookupRecord.lookupListIndex;
+    const lookupTable = this.getLookupByIndex(lookupListIndex);
+    for (let s = 0; s < lookupTable.subtables.length; s++) {
+      let subtable2 = lookupTable.subtables[s];
+      let lookup;
+      let substitutionType = this.getSubstitutionType(lookupTable, subtable2);
+      if (substitutionType === "71") {
+        substitutionType = this.getSubstitutionType(subtable2, subtable2.extension);
+        lookup = this.getLookupMethod(subtable2, subtable2.extension);
+        subtable2 = subtable2.extension;
+      } else {
+        lookup = this.getLookupMethod(lookupTable, subtable2);
+      }
+      if (substitutionType === "12") {
+        const glyphIndex = contextParams.get(lookupRecord.sequenceIndex);
+        const substitution = lookup(glyphIndex);
+        if (substitution) substitutions.push(substitution);
+      } else if (substitutionType === "21") {
+        const glyphIndex = contextParams.get(lookupRecord.sequenceIndex);
+        const substitution = lookup(glyphIndex);
+        if (substitution) substitutions.push(substitution);
       }
     }
   }
@@ -16764,11 +16845,11 @@ function Font(options) {
   options = options || {};
   options.tables = options.tables || {};
   if (!options.empty) {
-    if (!options.familyName) throw "When creating a new Font object, familyName is required.";
-    if (!options.styleName) throw "When creating a new Font object, styleName is required.";
-    if (!options.unitsPerEm) throw "When creating a new Font object, unitsPerEm is required.";
-    if (!options.ascender) throw "When creating a new Font object, ascender is required.";
-    if (options.descender > 0) throw "When creating a new Font object, negative descender value is required.";
+    if (!options.familyName) throw new Error("When creating a new Font object, familyName is required.");
+    if (!options.styleName) throw new Error("When creating a new Font object, styleName is required.");
+    if (!options.unitsPerEm) throw new Error("When creating a new Font object, unitsPerEm is required.");
+    if (!options.ascender) throw new Error("When creating a new Font object, ascender is required.");
+    if (options.descender > 0) throw new Error("When creating a new Font object, negative descender value is required.");
     this.names = {};
     this.names.unicode = createDefaultNamesInfo(options);
     this.names.macintosh = createDefaultNamesInfo(options);
@@ -16791,7 +16872,7 @@ function Font(options) {
       if (this.weightClass >= 600) {
         selection |= this.fsSelectionValues.BOLD;
       }
-      if (selection == 0) {
+      if (selection === 0) {
         selection = this.fsSelectionValues.REGULAR;
       }
     }
@@ -17507,7 +17588,7 @@ function parseBuffer(buffer, opt = {}) {
     numTables = parse_default.getUShort(data, 12);
     tableEntries = parseWOFFTableEntries(data, numTables);
   } else if (signature === "wOF2") {
-    var issue = "https://github.com/opentypejs/opentype.js/issues/183#issuecomment-1147228025";
+    const issue = "https://github.com/opentypejs/opentype.js/issues/183#issuecomment-1147228025";
     throw new Error("WOFF2 require an external decompressor library, see examples at: " + issue);
   } else {
     throw new Error("Unsupported OpenType signature " + signature);
@@ -17783,8 +17864,8 @@ const
 
 function X3DTextContext ()
 {
-   this [_fontCache]    = new Map ();
-   this [_library]      = new WeakMap ();
+   this [_fontCache] = new Map ();
+   this [_library]   = new WeakMap ();
 }
 
 Object .assign (X3DTextContext .prototype,
@@ -18016,13 +18097,12 @@ Object .assign (Object .setPrototypeOf (Text .prototype, (external_X_ITE_X3D_X3D
    build ()
    {
       this .textGeometry .update ();
-      this .textGeometry .build ();
 
       this .setSolid (this ._solid .getValue ());
    },
-   traverseBefore (type, renderObject)
+   traverseBefore (type, renderObject, shapeNode)
    {
-      this .textGeometry .traverseBefore ?.(type, renderObject);
+      this .textGeometry .traverseBefore ?.(type, renderObject, shapeNode);
    },
    traverseAfter (type, renderObject)
    {

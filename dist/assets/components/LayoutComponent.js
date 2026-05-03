@@ -1,5 +1,5 @@
-/* X_ITE v14.2.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.2.0")];
+/* X_ITE v15.0.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -973,10 +973,7 @@ var external_X_ITE_X3D_PixelTexture_default = /*#__PURE__*/__webpack_require__.n
 ;// external "__X_ITE_X3D__ .Box3"
 const external_X_ITE_X3D_Box3_namespaceObject = __X_ITE_X3D__ .Box3;
 var external_X_ITE_X3D_Box3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Box3_namespaceObject);
-;// external "__X_ITE_X3D__ .Algorithm"
-const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
 ;// ./src/x_ite/Browser/Layout/ScreenText.js
-
 
 
 
@@ -990,14 +987,14 @@ function ScreenText (text, fontStyle)
 
    text .setTransparent (true);
 
+   // Private properties
+
    this .textureNode = new (external_X_ITE_X3D_PixelTexture_default()) (text .getExecutionContext ());
    this .context     = document .createElement ("canvas") .getContext ("2d", { willReadFrequently: true });
    this .matrix      = new (external_X_ITE_X3D_Matrix4_default()) ();
 
    this .textureNode ._textureProperties = fontStyle .getBrowser () .getScreenTextureProperties ();
    this .textureNode .setup ();
-
-   this .getBrowser () .getRenderingProperties () ._ContentScale .addInterest ("build", this);
 }
 
 Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X3D_X3DTextGeometry_default()).prototype),
@@ -1010,20 +1007,21 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
    {
       return this .textureNode;
    },
-   update: (() =>
+   configure: (() =>
    {
       const
          min = new (external_X_ITE_X3D_Vector3_default()) (),
-         max = new (external_X_ITE_X3D_Vector3_default()) (1, 1, 0);
+         max = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function ()
       {
-         external_X_ITE_X3D_X3DTextGeometry_default().prototype .update .call (this);
+         external_X_ITE_X3D_X3DTextGeometry_default().prototype .configure .call (this);
 
          const
-            fontStyle = this .getFontStyle (),
-            text      = this .getText (),
-            offset    = 1; // For antialiasing border on bottom and right side
+            fontStyle    = this .getFontStyle (),
+            text         = this .getText (),
+            contentScale = fontStyle .getContentScale (),
+            offset       = 1; // For antialiasing border on bottom and right side
 
          text ._textBounds .x = Math .ceil (text ._textBounds .x) + offset;
          text ._textBounds .y = Math .ceil (text ._textBounds .y) + offset;
@@ -1067,17 +1065,30 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
                break;
          }
 
-         text ._origin .x = min .x;
-         text ._origin .y = max .y;
-
          this .getBBox () .setExtents (min, max);
+
+         this .matrix .assign ((external_X_ITE_X3D_Matrix4_default()).ZERO);
+
+         // Scale origin, text and line bounds by contentScale.
+
+         text ._origin .x = min .x / contentScale;
+         text ._origin .y = max .y / contentScale;
+
+         text ._textBounds .x /= contentScale;
+         text ._textBounds .y /= contentScale;
+
+         for (const lineBound of text ._lineBounds)
+         {
+            lineBound .x /= contentScale;
+            lineBound .y /= contentScale;
+         }
       };
    })(),
    build: (() =>
    {
       const
          min = new (external_X_ITE_X3D_Vector3_default()) (),
-         max = new (external_X_ITE_X3D_Vector3_default()) (1, 1, 0);
+         max = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function ()
       {
@@ -1089,7 +1100,6 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
             return;
 
          const
-            browser        = this .getBrowser (),
             text           = this .getText (),
             glyphs         = this .getGlyphs (),
             minorAlignment = this .getMinorAlignment (),
@@ -1101,7 +1111,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
             texCoordArray  = text .getTexCoords (),
             normalArray    = text .getNormals (),
             vertexArray    = text .getVertices (),
-            contentScale   = browser .getRenderingProperty ("ContentScale"),
+            contentScale   = fontStyle .getContentScale (),
             canvas         = this .context .canvas,
             cx             = this .context;
 
@@ -1112,6 +1122,13 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
          // Triangle one and two.
 
          this .getBBox () .getExtents (min, max);
+
+         texCoordArray .push (0, 0, 0, 1,
+                              1, 0, 0, 1,
+                              1, 1, 0, 1,
+                              0, 0, 0, 1,
+                              1, 1, 0, 1,
+                              0, 1, 0, 1);
 
          normalArray .push (0, 0, 1,
                             0, 0, 1,
@@ -1129,26 +1146,12 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
 
          // Generate texture.
 
-         const
-            width  = text ._textBounds .x,
-            height = text ._textBounds .y;
+         const [width, height] = text ._textBounds;
 
          // Scale canvas.
 
          canvas .width  = width  * contentScale;
          canvas .height = height * contentScale;
-
-         const
-            w = width  / canvas .width,
-            h = height / canvas .height,
-            y = 1 - h;
-
-         texCoordArray .push (0, y, 0, 1,
-                              w, y, 0, 1,
-                              w, 1, 0, 1,
-                              0, y, 0, 1,
-                              w, 1, 0, 1,
-                              0, 1, 0, 1);
 
          // Setup canvas.
 
@@ -1164,17 +1167,20 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
 
          if (fontStyle ._horizontal .getValue ())
          {
-            for (let l = 0, length = glyphs .length; l < length; ++ l)
+            const numLines = glyphs .length;
+
+            for (let l = 0; l < numLines; ++ l)
             {
                const
                   line        = glyphs [l],
                   translation = translations [l],
                   charSpacing = charSpacings [l],
-                  scale       = scales [l];
+                  scale       = scales [l],
+                  numGlyphs   = line .length;
 
                let advanceWidth = 0;
 
-               for (let g = 0, gl = line .length; g < gl; ++ g)
+               for (let g = 0; g < numGlyphs; ++ g)
                {
                   const
                      glyph = line [g],
@@ -1266,10 +1272,8 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
 
       cx .beginPath ();
 
-      for (let i = 0, cl = commands .length; i < cl; ++ i)
+      for (const command of commands)
       {
-         const command = commands [i];
-
          switch (command .type)
          {
             case "M": // Start
@@ -1318,22 +1322,33 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
    },
    traverseBefore: (() =>
    {
-      const bbox = new (external_X_ITE_X3D_Box3_default()) ();
+      const
+         bbox   = new (external_X_ITE_X3D_Box3_default()) (),
+         matrix = new (external_X_ITE_X3D_Matrix4_default()) ();
 
-      return function (type, renderObject)
+      return function (type, renderObject, shapeNode)
       {
-         this .getBrowser () .getScreenScaleMatrix (renderObject, this .matrix, 1, true);
+         this .getBrowser () .getScreenScaleMatrix (renderObject, matrix, 1, true);
 
          const modelViewMatrix = renderObject .getModelViewMatrix ();
 
          modelViewMatrix .push ();
-         modelViewMatrix .multLeft (this .matrix);
+         modelViewMatrix .multLeft (matrix);
+
+         if (matrix .equals (this .matrix))
+            return;
+
+         this .matrix .assign (matrix);
 
          // Update Text bbox.
 
          bbox .assign (this .getBBox ()) .multRight (this .matrix);
 
          this .getText () .setBBox (bbox);
+
+         // Immediately update X3DShapeNode bbox.
+
+         shapeNode .set_bbox__ ();
       };
    })(),
    traverseAfter (type, renderObject)
@@ -1368,6 +1383,7 @@ Object .assign (Object .setPrototypeOf (ScreenFontStyle .prototype, (external_X_
    {
       external_X_ITE_X3D_X3DFontStyleNode_default().prototype .initialize .call (this);
 
+      // Trigger requestRebuild of text geometry when ContentScale changes.
       this .getBrowser () .getRenderingProperties () ._ContentScale .addInterest ("addNodeEvent", this);
    },
    createTextGeometry (text)
@@ -1376,7 +1392,7 @@ Object .assign (Object .setPrototypeOf (ScreenFontStyle .prototype, (external_X_
    },
    getScale ()
    {
-      return this ._pointSize .getValue () * this .getBrowser () .getRenderingProperty ("PixelsPerPoint");
+      return this ._pointSize .getValue () * this .getBrowser () .getRenderingProperty ("PixelsPerPoint") * this .getContentScale ();
    },
    getContentScale ()
    {
