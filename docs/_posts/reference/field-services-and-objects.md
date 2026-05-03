@@ -180,8 +180,10 @@ Returns one of the **Field Type Constants** from [X3DConstants](/x_ite/reference
 <pre>
 const field = new MFBool ();
 
+print (field instanceof MFBool);
 print (field .getType () === X3DConstants .MFBool);
 print (field .getTypeName ());
+// Expected output: true
 // Expected output: true
 // Expected output: MFBool
 </pre>
