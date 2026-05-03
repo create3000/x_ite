@@ -55,7 +55,6 @@ Object .assign (Image .prototype,
    setWidth (value)
    {
       this .width = Math .max (value|0, 0);
-      this .array .length = this .width * this .height;
    },
    getHeight ()
    {
@@ -64,7 +63,6 @@ Object .assign (Image .prototype,
    setHeight (value)
    {
       this .height = Math .max (value|0, 0);
-      this .array .length = this .width * this .height;
    },
    getComp ()
    {
@@ -81,7 +79,6 @@ Object .assign (Image .prototype,
    setArray (value)
    {
       this .array .setValue (value);
-      this .array .length = this .width * this .height;
    },
 });
 
@@ -109,8 +106,8 @@ Object .assign (Object .setPrototypeOf (SFImage .prototype, X3DField .prototype)
    {
       const size = this .width * this .height;
 
-      if (this .getValue () .getArray () .length !== size)
-         this .getValue () .getArray () .length = size;
+      if (this .array .length !== size)
+         this .array .length = size;
 
       X3DField .prototype .addEvent .call (this);
    },
