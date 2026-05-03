@@ -313,13 +313,13 @@ Returns the X3D VRML-encoded string that, if parsed as the value of `createX3DFr
 
 An object with one or more of these properties:
 
-* **style:** string, output style, one of: **"TIDY"**, "COMPACT", "SMALL", "CLEAN"
-* **indent:** string, initial indent, default: "" (empty string)
-* **indentChar:** string, indentation char(s) for each level, default: "  " (two spaces)
-* **precision:** integer, float precision, default: 7
-* **doublePrecision:** integer, double precision, default: 15
-* **html:** boolean, HTML style, default: false
-* **closingTags:** boolean, use closing tags, default: false
+* **style:** string, output style, one of: `"TIDY"`, "COMPACT", "SMALL", "CLEAN"
+* **indent:** string, initial indent, default: `""` (empty string)
+* **indentChar:** string, indentation char(s) for each level, default: `"  "` (two spaces)
+* **precision:** integer, float precision, default: `7`
+* **doublePrecision:** integer, double precision, default: `15`
+* **html:** boolean, HTML style, default: `false`, if `true`, it automatically sets `closingTags` also to `true`
+* **closingTags:** boolean, use closing tags, default: `false`
 * **scene:** X3DScene, this is either this scene or a custom scene
 
 <x3d-script-area name="X3D ECMAScript Example: X3DScene toVRMLString">
