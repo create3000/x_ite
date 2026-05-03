@@ -14,7 +14,10 @@ function Image (width, height, comp, array)
    this .height = Math .max (height|0, 0);
    this .comp   = Algorithm .clamp (comp|0, 0, 4);
    this .array  = new MFInt32 ();
-   this .array .setValue (array);
+
+   if (array)
+      this .array .assign (array);
+
    this .array .length = this .width * this .height;
 }
 
@@ -86,28 +89,30 @@ Object .assign (Image .prototype,
  *  SFImage
  */
 
-const _set_size = Symbol ();
-
-function SFImage (width = 0, height = 0, comp = 0, array = new MFInt32 ())
+function SFImage (width = 0, height = 0, comp = 0, array)
 {
    X3DField .call (this, new Image (width, height, comp, array));
 
    this .getValue () .getArray () .addParent (this);
-   this .addInterest (_set_size, this);
 }
 
 Object .assign (Object .setPrototypeOf (SFImage .prototype, X3DField .prototype),
 {
-   [_set_size] ()
-   {
-      this .getValue () .getArray () .length = this .width * this .height;
-   },
    *[Symbol .iterator] ()
    {
       yield  this .width;
       yield  this .height;
       yield  this .comp;
       yield* this .array;
+   },
+   addEvent ()
+   {
+      const size = this .width * this .height;
+
+      if (this .getValue () .getArray () .length !== size)
+         this .getValue () .getArray () .length = size;
+
+      X3DField .prototype .addEvent .call (this);
    },
    copy ()
    {
