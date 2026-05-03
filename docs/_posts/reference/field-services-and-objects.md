@@ -157,7 +157,7 @@ Disposes this X3DField. The object can then no longer be used.
 
 #### **equals** (*field: X3DField*): boolean
 
-Returns `true` if the passed SF* or MF* *field* of the same type is equals to this object, otherwise `false`.
+Returns `true` if the value of the passed SF* or MF* *field* of the same type is equals to this object, otherwise `false`.
 
 #### **fromString** (*value: string, scene?: X3DScene*): void
 
