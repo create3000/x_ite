@@ -1656,6 +1656,24 @@ declare namespace X3D
        * Set value from JSON string.
        */
       fromJSONString (value: string, scene?: X3DScene): void;
+      /**
+       * Returns the X3D VRML-encoded string that, if parsed as the value of an X3DField field with `fromVRMLString`, produce this field.
+       *
+       * For options see `X3DScene.toVRMLString`.
+       */
+      toVRMLString (options?: ToStringOptions): string;
+      /**
+       * Returns the X3D XML-encoded string that, if parsed as the value of an X3DField field with `fromXMLString`, produce this field.
+       *
+       * For options see `X3DScene.toVRMLString`.
+       */
+      toXMLString (options?: ToStringOptions): string;
+      /**
+       * Returns the X3D JSON-encoded string that, if parsed as the value of an X3DField field with `fromJSONString`, produce this field.
+       *
+       * For options see `X3DScene.toVRMLString`.
+       */
+      toJSONString (options?: ToStringOptions): string;
    }
 
    /**
@@ -2215,19 +2233,19 @@ declare namespace X3D
        */
       setNodeUserData (key: any, value: any): void;
       /**
-       * Returns the X3D VRML-encoded string that, if parsed as the value of an SFNode field, produce this node.
+       * Returns the X3D VRML-encoded string that, if parsed as the value of a SFNode field, produce this node.
        *
        * For options see `X3DScene.toVRMLString`.
        */
       toVRMLString (options?: ToStringOptions): string;
       /**
-       * Returns the X3D XML-encoded string that, if parsed as the value of an SFNode field, produce this node.
+       * Returns the X3D XML-encoded string that, if parsed as the value of a SFNode field, produce this node.
        *
        * For options see `X3DScene.toVRMLString`.
        */
       toXMLString (options?: ToStringOptions): string;
       /**
-       * Returns the X3D JSON-encoded string that, if parsed as the value of an SFNode field, produce this node.
+       * Returns the X3D JSON-encoded string that, if parsed as the value of a SFNode field, produce this node.
        *
        * For options see `X3DScene.toVRMLString`.
        */

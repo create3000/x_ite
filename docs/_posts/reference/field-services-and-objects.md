@@ -199,6 +199,28 @@ Set the value from a XML string. If an X3DScene is provided, units are respected
 
 Set the value from a JSON string. If an X3DScene is provided, units are respected and necessary conversions are performed. The string can be any legal value as produced by the `toJSONString()` function.
 
+#### **toString** (options?: Options): string
+
+Returns the a string that, if parsed as the value of an X3DField field with `fromString`, will produce this field.
+
+#### **toVRMLString** (options?: Options): string
+
+Returns the X3D VRML-encoded string that, if parsed as the value of an X3DField field with `fromVRMLString`, will produce this field.
+
+For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
+
+#### **toXMLString** (options?: Options): string
+
+Returns the X3D XML-encoded string that, if parsed as the value of an X3DField field with `fromXMLString`, will produce this field.
+
+For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
+
+#### **toJSONString** (options?: Options): string
+
+Returns the X3D JSON-encoded string that, if parsed as the value of an X3DField field with `fromJSONString`, will produce this field.
+
+For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
+
 #### **dispose** (): void
 
 Disposes this X3DField. The object can then no longer be used.
@@ -836,19 +858,19 @@ Removes a field callback function associated with *key* and *name* from the fiel
 
 #### **toVRMLString** (options?: Options): string
 
-Returns the X3D VRML-encoded string that, if parsed as the value of an SFNode field, will produce this node.
+Returns the X3D VRML-encoded string that, if parsed as the value of a SFNode field, will produce this node.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
 #### **toXMLString** (options?: Options): string
 
-Returns the X3D XML-encoded string that, if parsed as the value of an SFNode field, will produce this node.
+Returns the X3D XML-encoded string that, if parsed as the value of a SFNode field, will produce this node.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
 #### **toJSONString** (options?: Options): string
 
-Returns the X3D JSON-encoded string that, if parsed as the value of an SFNode field, will produce this node.
+Returns the X3D JSON-encoded string that, if parsed as the value of a SFNode field, will produce this node.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
