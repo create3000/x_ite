@@ -15,7 +15,7 @@ function Image (width, height, comp, array)
    this .comp   = Algorithm .clamp (comp|0, 0, 4);
    this .array  = new MFInt32 ();
 
-   if (array)
+   if (array instanceof MFInt32)
       this .array .assign (array);
 
    this .array .length = this .width * this .height;
