@@ -274,7 +274,6 @@ const array = {
    set (value)
    {
       this .getValue () .setArray (value);
-      this .addEvent ();
    },
 };
 
