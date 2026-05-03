@@ -195,7 +195,7 @@ Returns the field type name.
 
 #### **toString** (*options?: Options*): string
 
-Returns the a string that, if parsed as the value of an X3DField field with `fromString`, will produce this field.
+Returns the a string that, if parsed as the value of an X3DField field with `fromString`, will produce this field. Actually, this function is the same as `toVRMLString`, except for SFNode and MFNode.
 
 #### **toVRMLString** (*options?: Options*): string
 
