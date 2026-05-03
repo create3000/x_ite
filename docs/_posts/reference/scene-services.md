@@ -320,7 +320,7 @@ An object with one or more of these properties:
 * **doublePrecision:** integer, double precision, default: `15`
 * **html:** boolean, HTML style, default: `false`, if this is `true`, then `closingTags` is automatically set to `true` as well
 * **closingTags:** boolean, use closing tags, default: `false`
-* **scene:** X3DScene, this is either this scene or a custom scene
+* **scene:** X3DScene, this is either this scene or can be a custom scene
 
 <x3d-script-area name="X3D ECMAScript Example: X3DScene toVRMLString">
 <pre>
