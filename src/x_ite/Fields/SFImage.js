@@ -15,18 +15,14 @@ function Image (width, height, comp, array)
    this .comp   = Algorithm .clamp (comp|0, 0, 4);
    this .array  = new MFInt32 ();
 
-   if (array instanceof MFInt32)
-      this .array .assign (array);
+   if (array)
+      this .array .setValue (array);
 
    this .array .length = this .width * this .height;
 }
 
 Object .assign (Image .prototype,
 {
-   copy ()
-   {
-      return new Image (this .width, this .height, this .comp, this .array);
-   },
    equals (image)
    {
       return this .width  === image .width &&
@@ -39,14 +35,8 @@ Object .assign (Image .prototype,
       this .width  = image .width;
       this .height = image .height;
       this .comp   = image .comp;
+
       this .array .assign (image .array);
-   },
-   set (width, height, comp, array)
-   {
-      this .width  = width|0;
-      this .height = height|0;
-      this .comp   = comp|0;
-      this .array .assign (array);
    },
    getWidth ()
    {
