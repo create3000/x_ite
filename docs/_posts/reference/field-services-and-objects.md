@@ -180,6 +180,17 @@ Set value from string. If an X3DScene is provided, units are respected and neces
 
 Set value from VRML string. If an X3DScene is provided, units are respected and necessary conversions are performed.
 
+<x3d-script-area name="X3D ECMAScript Example: X3DField fromVRMLString">
+<pre>
+const field = new MFInt32 ();
+
+field .fromVRMLString ("[ 0, 1, -1, 2147483647, -2147483648, 42 ]");
+
+print (field);
+// Expected output: [ 0, 1, -1, 2147483647, -2147483648, 42 ]
+</pre>
+</x3d-script-area>
+
 #### **fromXMLString** (*value: string, scene?: X3DScene*): void
 
 Set value from XML string. If an X3DScene is provided, units are respected and necessary conversions are performed.
