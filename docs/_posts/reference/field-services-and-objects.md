@@ -929,7 +929,7 @@ Returns the identity rotation.
 
 *matrix* is an SFMatrix3d/f rotation matrix object whose value is converted into an SFRotation object.
 
-#### **fromQuaternion** (*x: number, y: number, z: number, w:number *): SFRotation
+#### **fromQuaternion** (*x: number, y: number, z: number, w: number*): SFRotation
 
 `x`, `y`, `z`, `w` is a quaternion whose value is converted into an SFRotation object.
 
