@@ -166,18 +166,14 @@ Object .defineProperties (SFColor .prototype,
 
 X3DField .addStaticProperties (SFColor, "SFColor");
 
+Object .defineProperties (SFColor, Object .fromEntries ([
+   "BLACK",
+   "WHITE",
+]
+.map (key => [key, { value: SFColor .fromValue (Color3 [key]), enumerable: true }])));
+
 Object .defineProperties (SFColor,
 {
-   BLACK:
-   {
-      value: SFColor .fromValue (Color3 .BLACK),
-      enumerable: true,
-   },
-   WHITE:
-   {
-      value: SFColor .fromValue (Color3 .WHITE),
-      enumerable: true,
-   },
    fromHSV:
    {
       value (h, s, v)

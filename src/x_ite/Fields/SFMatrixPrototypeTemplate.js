@@ -204,19 +204,11 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
    for (let i = 0; i < Matrix .prototype .length; ++ i)
       defineProperty (i);
 
-   Object .defineProperties (Constructor,
-   {
-      ZERO:
-      {
-         value: Constructor .fromValue (Matrix .ZERO),
-         enumerable: true,
-      },
-      IDENTITY:
-      {
-         value: Constructor .fromValue (Matrix .IDENTITY),
-         enumerable: true,
-      },
-   });
+   Object .defineProperties (Constructor, Object .fromEntries ([
+      "IDENTITY",
+      "ZERO",
+   ]
+   .map (key => [key, { value: Constructor .fromValue (Matrix [key]), enumerable: true }])));
 
    return Constructor;
 }

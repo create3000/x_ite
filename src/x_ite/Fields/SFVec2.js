@@ -11,19 +11,11 @@ function SFVec2Template (TypeName, double)
 
    SFVecPrototypeTemplate (SFVec2, TypeName, Vector2, double)
 
-   Object .defineProperties (SFVec2,
-   {
-      X_AXIS:
-      {
-         value: SFVec2 .fromValue (Vector2 .X_AXIS),
-         enumerable: true,
-      },
-      Y_AXIS:
-      {
-         value: SFVec2 .fromValue (Vector2 .Y_AXIS),
-         enumerable: true,
-      },
-   });
+   Object .defineProperties (SFVec2, Object .fromEntries ([
+      "X_AXIS",
+      "Y_AXIS",
+   ]
+   .map (key => [key, { value: SFVec2 .fromValue (Vector2 [key]), enumerable: true }])));
 
    return SFVec2;
 }

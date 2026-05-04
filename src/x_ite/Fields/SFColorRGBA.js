@@ -133,23 +133,15 @@ Object .defineProperties (SFColorRGBA .prototype,
 
 X3DField .addStaticProperties (SFColorRGBA, "SFColorRGBA");
 
+Object .defineProperties (SFColorRGBA, Object .fromEntries ([
+   "BLACK",
+   "TRANSPARENT",
+   "WHITE",
+]
+.map (key => [key, { value: SFColorRGBA .fromValue (Color4 [key]), enumerable: true }])));
+
 Object .defineProperties (SFColorRGBA,
 {
-   BLACK:
-   {
-      value: SFColorRGBA .fromValue (Color4 .BLACK),
-      enumerable: true,
-   },
-   TRANSPARENT:
-   {
-      value: SFColorRGBA .fromValue (Color4 .TRANSPARENT),
-      enumerable: true,
-   },
-   WHITE:
-   {
-      value: SFColorRGBA .fromValue (Color4 .WHITE),
-      enumerable: true,
-   },
    fromHSVA:
    {
       value (h, s, v, a)
