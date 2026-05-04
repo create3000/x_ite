@@ -1053,6 +1053,18 @@ Returns the x-axis vector. This property is read-only.
 
 Returns the y-axis vector. This property is read-only.
 
+#### **NEGATIVE_ONE**: SFVec2d/f
+
+Returns a vector with all elements set to -1. This property is read-only.
+
+#### **NEGATIVE_X_AXIS**: SFVec2d/f
+
+Returns the negative x-axis vector. This property is read-only.
+
+#### **NEGATIVE_Y_AXIS**: SFVec2d/f
+
+Returns the negative y-axis vector. This property is read-only.
+
 ### Instance Creation Method(s)
 
 #### *sfVec2d/fObjectName* = new **SFVec2d/f** ()
@@ -1198,6 +1210,22 @@ Returns the y-axis vector. This property is read-only.
 #### **Z_AXIS**: SFVec3d/f
 
 Returns the z-axis vector. This property is read-only.
+
+#### **NEGATIVE_ONE**: SFVec3d/f
+
+Returns a vector with all elements set to -1. This property is read-only.
+
+#### **NEGATIVE_X_AXIS**: SFVec3d/f
+
+Returns the negative x-axis vector. This property is read-only.
+
+#### **NEGATIVE_Y_AXIS**: SFVec3d/f
+
+Returns the negative y-axis vector. This property is read-only.
+
+#### **NEGATIVE_Z_AXIS**: SFVec3d/f
+
+Returns the negative z-axis vector. This property is read-only.
 
 ### Instance Creation Method(s)
 
@@ -1357,6 +1385,26 @@ Returns the z-axis vector. This property is read-only.
 #### **W_AXIS**: SFVec4d/f
 
 Returns the w-axis vector. This property is read-only.
+
+#### **NEGATIVE_ONE**: SFVec4d/f
+
+Returns a vector with all elements set to -1. This property is read-only.
+
+#### **NEGATIVE_X_AXIS**: SFVec4d/f
+
+Returns the negative x-axis vector. This property is read-only.
+
+#### **NEGATIVE_Y_AXIS**: SFVec4d/f
+
+Returns the negative y-axis vector. This property is read-only.
+
+#### **NEGATIVE_Z_AXIS**: SFVec4d/f
+
+Returns the negative z-axis vector. This property is read-only.
+
+#### **NEGATIVE_W_AXIS**: SFVec4d/f
+
+Returns the negative w-axis vector. This property is read-only.
 
 ### Instance Creation Method(s)
 
