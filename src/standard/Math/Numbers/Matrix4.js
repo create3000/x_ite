@@ -5,10 +5,10 @@ import Rotation4           from "./Rotation4.js";
 import Matrix3             from "./Matrix3.js";
 import eigen_decomposition from "../Algorithms/eigen_decomposition.js";
 
-function Matrix4 (m00 = 1, m01 = 0, m02 = 0, m03 = 0,
-                  m10 = 0, m11 = 1, m12 = 0, m13 = 0,
-                  m20 = 0, m21 = 0, m22 = 1, m23 = 0,
-                  m30 = 0, m31 = 0, m32 = 0, m33 = 1)
+function Matrix4 (m00 = 1, m01 = 0,   m02 = 0,   m03 = 0,
+                  m10 = 0, m11 = m00, m12 = 0,   m13 = 0,
+                  m20 = 0, m21 = 0,   m22 = m11, m23 = 0,
+                  m30 = 0, m31 = 0,   m32 = 0,   m33 = m22)
 {
    this [ 0] = m00;
    this [ 1] = m01;
@@ -718,7 +718,7 @@ Object .defineProperties (Matrix4 .prototype,
 
 Object .assign (Matrix4,
 {
-   ZERO: Object .freeze (new Matrix4 (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)),
+   ZERO: Object .freeze (new Matrix4 (0)),
    IDENTITY: Object .freeze (new Matrix4 ()),
    fromRotation (rotation)
    {

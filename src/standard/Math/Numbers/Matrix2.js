@@ -1,6 +1,6 @@
 import Vector2 from "./Vector2.js";
 
-function Matrix2 (m00 = 1, m01 = 0, m10 = 0, m11 = 1)
+function Matrix2 (m00 = 1, m01 = 0, m10 = 0, m11 = m00)
 {
    this [0] = m00;
    this [1] = m01;
@@ -229,7 +229,7 @@ Object .defineProperties (Matrix2 .prototype,
 
 Object .assign (Matrix2,
 {
-   ZERO: Object .freeze (new Matrix2 (0, 0, 0, 0)),
+   ZERO: Object .freeze (new Matrix2 (0)),
    IDENTITY: Object .freeze (new Matrix2 ()),
 });
 

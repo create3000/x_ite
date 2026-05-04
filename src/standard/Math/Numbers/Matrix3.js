@@ -3,9 +3,9 @@ import Vector3             from "./Vector3.js";
 import Matrix2             from "./Matrix2.js";
 import eigen_decomposition from "../Algorithms/eigen_decomposition.js";
 
-function Matrix3 (m00 = 1, m01 = 0, m02 = 0,
-                  m10 = 0, m11 = 1, m12 = 0,
-                  m20 = 0, m21 = 0, m22 = 1)
+function Matrix3 (m00 = 1, m01 = 0,   m02 = 0,
+                  m10 = 0, m11 = m00, m12 = 0,
+                  m20 = 0, m21 = 0,   m22 = m11)
 {
    this [0] = m00;
    this [1] = m01;
@@ -587,7 +587,7 @@ Object .defineProperties (Matrix3 .prototype,
 
 Object .assign (Matrix3,
 {
-   ZERO: Object .freeze (new Matrix3 (0, 0, 0, 0, 0, 0, 0, 0, 0)),
+   ZERO: Object .freeze (new Matrix3 (0)),
    IDENTITY: Object .freeze (new Matrix3 ()),
    fromRotation (rotation)
    {

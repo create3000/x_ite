@@ -19,7 +19,7 @@ function ScreenGroup (executionContext)
    if (executionContext .getOuterNode () instanceof X3DProtoDeclaration)
       this .matrix = new Matrix4 ();
    else
-      this .matrix = new Matrix4 (0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0);
+      this .matrix = new Matrix4 (0);
 }
 
 Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, X3DGroupingNode .prototype),
