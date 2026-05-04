@@ -237,11 +237,11 @@ The SFColor object corresponds to an X3D SFColor field.
 
 #### **BLACK**: SFColor
 
-Returns a black color.
+Returns a black color. This property is read-only.
 
 #### **WHITE**: SFColor
 
-Returns a white color.
+Returns a white color. This property is read-only.
 
 ### Static Methods
 
@@ -350,15 +350,15 @@ The SFColorRGBA object corresponds to an X3D SFColorRGBA field.
 
 #### **BLACK**: SFColorRGBA
 
-Returns a black color.
+Returns a black color. This property is read-only.
 
 #### **TRANSPARENT**: SFColorRGBA
 
-Returns a fully transparent color.
+Returns a fully transparent color. This property is read-only.
 
 #### **WHITE**: SFColorRGBA
 
-Returns a white color.
+Returns a white color. This property is read-only.
 
 ### Static Methods
 
@@ -547,11 +547,11 @@ The SFMatrix3d/f object provides many useful methods for performing manipulation
 
 #### **IDENTITY**: SFMatrix3d/f
 
-Returns the identity matrix.
+Returns the identity matrix. This property is read-only.
 
 #### **ZERO**: SFMatrix3d/f
 
-Returns the zero matrix.
+Returns the zero matrix. This property is read-only.
 
 ### Instance Creation Method(s)
 
@@ -677,11 +677,11 @@ The SFMatrix4d/f object provides many useful methods for performing manipulation
 
 #### **IDENTITY**: SFMatrix4d/f
 
-Returns the identity matrix.
+Returns the identity matrix. This property is read-only.
 
 #### **ZERO**: SFMatrix4d/f
 
-Returns the zero matrix.
+Returns the zero matrix. This property is read-only.
 
 ### Instance Creation Method(s)
 
@@ -886,7 +886,7 @@ The SFRotation object corresponds to an X3D SFRotation field.
 
 #### **IDENTITY**: SFRotation
 
-Returns the identity rotation.
+Returns the identity rotation. This property is read-only.
 
 ### Static Methods
 
@@ -1039,19 +1039,19 @@ The SFVec2d/f object corresponds to an X3D SFVec2d/f field.
 
 #### **ZERO**: SFVec2d/f
 
-Returns a vector with all elements set to 0.
+Returns a vector with all elements set to 0. This property is read-only.
 
 #### **ONE**: SFVec2d/f
 
-Returns a vector with all elements set to 1.
+Returns a vector with all elements set to 1. This property is read-only.
 
 #### **X_AXIS**: SFVec2d/f
 
-Returns the x-axis vector.
+Returns the x-axis vector. This property is read-only.
 
 #### **Y_AXIS**: SFVec2d/f
 
-Returns the y-axis vector.
+Returns the y-axis vector. This property is read-only.
 
 ### Instance Creation Method(s)
 
@@ -1181,23 +1181,23 @@ The SFVec3d/f object corresponds to an X3D SFVec3d/f field.
 
 #### **ZERO**: SFVec3d/f
 
-Returns a vector with all elements set to 0.
+Returns a vector with all elements set to 0. This property is read-only.
 
 #### **ONE**: SFVec3d/f
 
-Returns a vector with all elements set to 1.
+Returns a vector with all elements set to 1. This property is read-only.
 
 #### **X_AXIS**: SFVec3d/f
 
-Returns the x-axis vector.
+Returns the x-axis vector. This property is read-only.
 
 #### **Y_AXIS**: SFVec3d/f
 
-Returns the y-axis vector.
+Returns the y-axis vector. This property is read-only.
 
 #### **Z_AXIS**: SFVec3d/f
 
-Returns the z-axis vector.
+Returns the z-axis vector. This property is read-only.
 
 ### Instance Creation Method(s)
 
@@ -1336,27 +1336,27 @@ The SFVec4d/f object corresponds to an X3D SFVec4d/f field.
 
 #### **ZERO**: SFVec4d/f
 
-Returns a vector with all elements set to 0.
+Returns a vector with all elements set to 0. This property is read-only.
 
 #### **ONE**: SFVec4d/f
 
-Returns a vector with all elements set to 1.
+Returns a vector with all elements set to 1. This property is read-only.
 
 #### **X_AXIS**: SFVec4d/f
 
-Returns the x-axis vector.
+Returns the x-axis vector. This property is read-only.
 
 #### **Y_AXIS**: SFVec4d/f
 
-Returns the y-axis vector.
+Returns the y-axis vector. This property is read-only.
 
 #### **Z_AXIS**: SFVec4d/f
 
-Returns the z-axis vector.
+Returns the z-axis vector. This property is read-only.
 
 #### **W_AXIS**: SFVec4d/f
 
-Returns the w-axis vector.
+Returns the w-axis vector. This property is read-only.
 
 ### Instance Creation Method(s)
 
