@@ -51,15 +51,10 @@ Object .assign (X3DBoundedObject .prototype,
 
       this ._hidden = value;
    },
-   isDefaultBBoxSize: (() =>
+   isDefaultBBoxSize ()
    {
-      const defaultBBoxSize = new Vector3 (-1);
-
-      return function ()
-      {
-         return this ._bboxSize .getValue () .equals (defaultBBoxSize);
-      };
-   })(),
+      return this ._bboxSize .getValue () .equals (Vector3 .NEGATIVE_ONE);
+   },
    isBBoxVisible ()
    {
       return this ._bboxDisplay .getValue ();

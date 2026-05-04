@@ -156,35 +156,30 @@ Object .assign (Object .setPrototypeOf (TransformSensor .prototype, X3DEnvironme
          targetMatrices .length = 0;
       };
    })(),
-   intersects: (() =>
+   intersects ()
    {
-      const infinity = new Vector3 (-1);
+      const
+         modelMatrices  = this .modelMatrices,
+         targetMatrices = this .targetMatrices,
+         always         = this ._size .getValue () .equals (Vector3 .NEGATIVE_ONE);
 
-      return function ()
+      for (const modelMatrix of modelMatrices)
       {
-         const
-            modelMatrices  = this .modelMatrices,
-            targetMatrices = this .targetMatrices,
-            always         = this ._size .getValue () .equals (infinity);
+         const invModelMatrix = modelMatrix .inverse ();
 
-         for (const modelMatrix of modelMatrices)
+         for (const targetMatrix of targetMatrices)
          {
-            const invModelMatrix = modelMatrix .inverse ();
+            const matrix = targetMatrix .multRight (invModelMatrix);
 
-            for (const targetMatrix of targetMatrices)
+            if (always || this .containsPoint (matrix .origin))
             {
-               const matrix = targetMatrix .multRight (invModelMatrix);
-
-               if (always || this .containsPoint (matrix .origin))
-               {
-                  return matrix;
-               }
+               return matrix;
             }
          }
+      }
 
-         return null;
-      };
-   })(),
+      return null;
+   },
    containsPoint (point)
    {
       const

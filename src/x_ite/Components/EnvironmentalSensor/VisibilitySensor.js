@@ -53,9 +53,7 @@ Object .assign (Object .setPrototypeOf (VisibilitySensor .prototype, X3DEnvironm
    },
    traverse: (() =>
    {
-      const
-         bbox     = new Box3 (),
-         infinity = new Vector3 (-1);
+      const bbox = new Box3 ();
 
       return function (type, renderObject)
       {
@@ -64,7 +62,7 @@ Object .assign (Object .setPrototypeOf (VisibilitySensor .prototype, X3DEnvironm
          if (this .visible)
             return;
 
-         if (this ._size .getValue () .equals (infinity))
+         if (this ._size .getValue () .equals (Vector3 .NEGATIVE_ONE))
          {
             this .visible = true;
          }
