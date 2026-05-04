@@ -894,6 +894,16 @@ Returns the identity rotation.
 
 *matrix* is an SFMatrix3d/f rotation matrix object whose value is converted into an SFRotation object.
 
+<x3d-script-area name="X3D ECMAScript Example: SFRotation fromMatrix">
+<pre>
+const matrix   = new SFMatrix3f (0, 1, 0, 0, 0, 1, 1, 0, 0);
+const rotation = SFRotation .fromMatrix (matrix);
+
+print (rotation);
+// Expected output: 0.577350269189626 0.577350269189626 0.577350269189626 2.0943951023932
+</pre>
+</x3d-script-area>
+
 #### **fromQuaternion** (*x: number, y: number, z: number, w: number*): SFRotation
 
 `x`, `y`, `z`, `w` is a quaternion whose value is converted into an SFRotation object.
