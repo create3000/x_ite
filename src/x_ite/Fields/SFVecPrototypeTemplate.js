@@ -222,6 +222,20 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double, properti
 
    Object .defineProperties (Constructor .prototype, Object .fromEntries (indices .concat (props)));
 
+   Object .defineProperties (Constructor,
+   {
+      ONE:
+      {
+         value: Constructor .fromValue (Vector .ONE),
+         enumerable: true,
+      },
+      ZERO:
+      {
+         value: Constructor .fromValue (Vector .ZERO),
+         enumerable: true,
+      },
+   });
+
    return Constructor;
 }
 
