@@ -1362,6 +1362,10 @@ Returns the y-axis vector.
 
 Returns the z-axis vector.
 
+#### **W_AXIS**: SFVec4d/f
+
+Returns the w-axis vector.
+
 ### Properties
 
 Each component of the vector can be accessed using the `x`, `y`, `z` and `w` properties or using the standard C-style dereferencing operator (e.g. `sfVec4d/fObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<4).
