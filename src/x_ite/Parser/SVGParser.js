@@ -2490,7 +2490,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          matrix           = Matrix4 .fromMatrix3 (m),
          translation      = new Vector3 (),
          rotation         = new Rotation4 (),
-         scale            = new Vector3 (1),
+         scale            = new Vector3 (),
          scaleOrientation = new Rotation4 ();
 
       matrix .get (translation, rotation, scale, scaleOrientation);

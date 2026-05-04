@@ -47,7 +47,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
    },
    createPoints: (() =>
    {
-      const scale3 = new Vector3 (1);
+      const scale3 = new Vector3 ();
 
       return function ()
       {
