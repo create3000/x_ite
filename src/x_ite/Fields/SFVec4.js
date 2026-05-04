@@ -17,14 +17,6 @@ function SFVec4Template (TypeName, double)
       },
    });
 
-   Object .defineProperties (SFVec4, Object .fromEntries ([
-      "X_AXIS",
-      "Y_AXIS",
-      "Z_AXIS",
-      "W_AXIS",
-   ]
-   .map (key => [key, { value: SFVec4 .fromValue (Vector4 [key]), enumerable: true }])));
-
    return SFVec4;
 }
 

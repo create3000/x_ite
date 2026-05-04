@@ -217,14 +217,23 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double, properti
       ["w", Object .assign ({ enumerable: true }, w)],
    ];
 
-   indices .length = Vector .prototype .length;
-   props   .length = Vector .prototype .length;
+   const constants = [
+      "X_AXIS",
+      "Y_AXIS",
+      "Z_AXIS",
+      "W_AXIS",
+   ];
+
+   indices   .length = Vector .prototype .length;
+   props     .length = Vector .prototype .length;
+   constants .length = Vector .prototype .length;
 
    Object .defineProperties (Constructor .prototype, Object .fromEntries (indices .concat (props)));
 
    Object .defineProperties (Constructor, Object .fromEntries ([
       "ONE",
       "ZERO",
+      ... constants,
    ]
    .map (key => [key, { value: Constructor .fromValue (Vector [key]), enumerable: true }])));
 

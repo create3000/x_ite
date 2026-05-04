@@ -17,13 +17,6 @@ function SFVec3Template (TypeName, double)
       },
    });
 
-   Object .defineProperties (SFVec3, Object .fromEntries ([
-      "X_AXIS",
-      "Y_AXIS",
-      "Z_AXIS",
-   ]
-   .map (key => [key, { value: SFVec3 .fromValue (Vector3 [key]), enumerable: true }])));
-
    return SFVec3;
 }
 
