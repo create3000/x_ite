@@ -1047,11 +1047,11 @@ const copy = new SFVec2d (... vector); // Copy using spread syntax.
 
 #### **ZERO**: SFVec2d/f
 
-Returns the a vector with all values set to 0.
+Returns the a vector with all elements set to 0.
 
 #### **ONE**: SFVec2d/f
 
-Returns the a vector with all values set to 1.
+Returns the a vector with all elements set to 1.
 
 #### **X_AXIS**: SFVec2d/f
 
@@ -1189,11 +1189,11 @@ const copy = new SFVec3d (... vector); // Copy using spread syntax.
 
 #### **ZERO**: SFVec3d/f
 
-Returns the a vector with all values set to 0.
+Returns the a vector with all elements set to 0.
 
 #### **ONE**: SFVec3d/f
 
-Returns the a vector with all values set to 1.
+Returns the a vector with all elements set to 1.
 
 #### **X_AXIS**: SFVec3d/f
 
@@ -1344,11 +1344,11 @@ const copy = new SFVec4d (... vector); // Copy using spread syntax.
 
 #### **ZERO**: SFVec4d/f
 
-Returns the a vector with all values set to 0.
+Returns the a vector with all elements set to 0.
 
 #### **ONE**: SFVec4d/f
 
-Returns the a vector with all values set to 1.
+Returns the a vector with all elements set to 1.
 
 #### **X_AXIS**: SFVec4d/f
 
