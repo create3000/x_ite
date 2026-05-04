@@ -5,17 +5,27 @@ import Rotation4           from "./Rotation4.js";
 import Matrix3             from "./Matrix3.js";
 import eigen_decomposition from "../Algorithms/eigen_decomposition.js";
 
-function Matrix4 (... args)
+function Matrix4 (m00 = 1, m01 = 0, m02 = 0, m03 = 0,
+                  m10 = 0, m11 = 1, m12 = 0, m13 = 0,
+                  m20 = 0, m21 = 0, m22 = 1, m23 = 0,
+                  m30 = 0, m31 = 0, m32 = 0, m33 = 1)
 {
-   if (args .length)
-   {
-      for (let i = 0; i < 16; ++ i)
-         this [i] = args [i];
-   }
-   else
-   {
-      this .identity ();
-   }
+   this [ 0] = m00;
+   this [ 1] = m01;
+   this [ 2] = m02;
+   this [ 3] = m03;
+   this [ 4] = m10;
+   this [ 5] = m11;
+   this [ 6] = m12;
+   this [ 7] = m13;
+   this [ 8] = m20;
+   this [ 9] = m21;
+   this [10] = m22;
+   this [11] = m23;
+   this [12] = m30;
+   this [13] = m31;
+   this [14] = m32;
+   this [15] = m33;
 }
 
 Object .assign (Matrix4 .prototype,
