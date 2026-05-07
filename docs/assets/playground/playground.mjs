@@ -645,7 +645,7 @@ class Playground
                [/[^\\"]+/,  "string"],
                [/@escapes/, "string.escape"],
                [/\\./,      "string.escape.invalid"],
-               [/"/,        { token: "string.quote", bracket: "@close", next: "@pop", nextEmbedded: "@pop" }]
+               [/(?<!\\)"/, { token: "string.quote", bracket: "@close", next: "@pop", nextEmbedded: "@pop" }]
             ],
             string: [
                [/[^\\"]+/,  "string"],
