@@ -620,12 +620,12 @@ class Playground
                [/0[xX][\da-fA-F]+/, "number.hex"],
                [/[+-]?\d+/, "number"],
                [/(")((?:ecmascript|javascript|vrmlscript):|data:(?:text|application)\/javascript,)/, [
-                  "string.quote",
-                  { token: "comment", bracket: "@open", next: "@stringEmbedded", nextEmbedded: "text/javascript" }
+                  { token: "string.quote", bracket: "@open" },
+                  { token: "comment", next: "@stringEmbedded", nextEmbedded: "text/javascript" }
                ]],
                [/(")(data:x-shader\/(?:x-vertex|x-fragment),)/, [
-                  "string.quote",
-                  { token: "comment", bracket: "@open", next: "@stringEmbedded", nextEmbedded: "x-shader/x-vertex" }
+                  { token: "string.quote", bracket: "@open" },
+                  { token: "comment", next: "@stringEmbedded", nextEmbedded: "x-shader/x-vertex" }
                ]],
                [/"/, { token: "string.quote", bracket: "@open", next: "@string" }],
             ],
@@ -670,11 +670,11 @@ class Playground
          },
          brackets: [["{", "}"], ["[", "]"], ["(", ")"]],
          autoClosingPairs: [
-         { open: "{", close: "}" },
-         { open: "[", close: "]" },
-         { open: "(", close: ")" },
-         { open: "\"", close: "\"" },
-         { open: "'", close: "'" },
+            { open: "{", close: "}" },
+            { open: "[", close: "]" },
+            { open: "(", close: ")" },
+            { open: "\"", close: "\"" },
+            { open: "'", close: "'" },
          ],
       });
    }
@@ -846,7 +846,7 @@ class Playground
                [/[ \t\r\n]+/, "white"],
                [/\/\*/, "comment", "@comment"],
                [/\/\/.*$/, "comment"],
-            ]
+            ],
          }
       };
 
