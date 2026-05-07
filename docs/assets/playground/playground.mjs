@@ -600,8 +600,7 @@ class Playground
                [/[,:.]/, "delimiter"],
                [/TRUE|FALSE|NULL/, "constant"],
                [/PROTO|EXTERNPROTO/, "regexp", "@typeName"],
-               [/DEF|USE|AS|ROUTE|TO|EXPORT/, "regexp", "@name"],
-               [/(IMPORT)(\s+)(@id)(\s*)(\.)(\s*)(@id)/, ["regexp", "", "attribute.name", "", "delimiter", "", "attribute.name"]],
+               [/UNIT|DEF|USE|ROUTE|TO|EXPORT|IMPORT|AS/, "regexp", "@name"],
                [/@id(?=\s*\{)/, "type.identifier"], // type names
                [/@id/, {
                   cases: {
@@ -634,7 +633,7 @@ class Playground
                [/@id/, "type.identifier", "@pop"],
             ],
             name: [
-               [/@id/, "attribute.name", "@pop"],
+               [/@id/, "constant", "@pop"],
             ],
             blockComment: [
                [/[^#\/*]+/, "comment"],
