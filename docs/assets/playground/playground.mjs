@@ -621,11 +621,11 @@ class Playground
                [/[+-]?\d+/, "number"],
                [/(")((?:ecmascript|javascript|vrmlscript):|data:(?:text|application)\/javascript,)/, [
                   { token: "string.quote", bracket: "@open" },
-                  { token: "comment", next: "@stringEmbedded", nextEmbedded: "text/javascript" }
+                  { token: "comment", next: "@stringEmbedded", nextEmbedded: "text/javascript" },
                ]],
                [/(")(data:x-shader\/(?:x-vertex|x-fragment),)/, [
                   { token: "string.quote", bracket: "@open" },
-                  { token: "comment", next: "@stringEmbedded", nextEmbedded: "x-shader/x-vertex" }
+                  { token: "comment", next: "@stringEmbedded", nextEmbedded: "x-shader/x-vertex" },
                ]],
                [/"/, { token: "string.quote", bracket: "@open", next: "@string" }],
             ],
@@ -638,19 +638,19 @@ class Playground
             blockComment: [
                [/[^#\/*]+/, "comment"],
                [/\*\/#/, "comment", "@pop"],
-               [/[#\/*]/, "comment"]
+               [/[#\/*]/, "comment"],
             ],
             stringEmbedded: [
                [/[^\\"]+/,  "string"],
                [/@escapes/, "string.escape"],
                [/\\./,      "string.escape.invalid"],
-               [/(?<!\\)"/, { token: "string.quote", bracket: "@close", next: "@pop", nextEmbedded: "@pop" }]
+               [/(?<!\\)"/, { token: "string.quote", bracket: "@close", next: "@pop", nextEmbedded: "@pop" }],
             ],
             string: [
                [/[^\\"]+/,  "string"],
                [/@escapes/, "string.escape"],
                [/\\./,      "string.escape.invalid"],
-               [/"/,        { token: "string.quote", bracket: "@close", next: "@pop" }]
+               [/"/,        { token: "string.quote", bracket: "@close", next: "@pop" }],
             ],
          },
       });
@@ -666,7 +666,7 @@ class Playground
       {
          comments: {
             lineComment: "#",
-            blockComment: ["#/*", "*/#"]
+            blockComment: ["#/*", "*/#"],
          },
          brackets: [["{", "}"], ["[", "]"], ["(", ")"]],
          autoClosingPairs: [
@@ -684,26 +684,26 @@ class Playground
       const conf = {
          comments: {
             lineComment: "//",
-            blockComment: ["/*", "*/"]
+            blockComment: ["/*", "*/"],
          },
          brackets: [
             ["{", "}"],
             ["[", "]"],
-            ["(", ")"]
+            ["(", ")"],
          ],
          autoClosingPairs: [
             { open: "[", close: "]" },
             { open: "{", close: "}" },
             { open: "(", close: ")" },
             { open: "'", close: "'", notIn: ["string", "comment"] },
-            { open: '"', close: '"', notIn: ["string"] }
+            { open: '"', close: '"', notIn: ["string"] },
          ],
          surroundingPairs: [
             { open: "{", close: "}" },
             { open: "[", close: "]" },
             { open: "(", close: ")" },
             { open: '"', close: '"' },
-            { open: "'", close: "'" }
+            { open: "'", close: "'" },
          ]
       };
 
@@ -773,7 +773,7 @@ class Playground
             "%=",
             "<<=",
             ">>=",
-            ">>>="
+            ">>>=",
          ],
          symbols: /[=><!~?:&|+\-*\/\^%]+/,
          escapes: /\\(?:[abfnrtv\\"']|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
