@@ -601,7 +601,7 @@ class Playground
                [/TRUE|FALSE|NULL/, "constant"],
                [/PROTO|EXTERNPROTO/, "regexp", "@typeName"],
                [/DEF|USE|AS|ROUTE|TO|EXPORT/, "regexp", "@name"],
-               [/(IMPORT)(\s+)(@id)(\s*)(\.)(\s*)(@id)/, ["regexp", "", "type.identifier", "", "delimiter", "", "type.identifier"]],
+               [/(IMPORT)(\s+)(@id)(\s*)(\.)(\s*)(@id)/, ["regexp", "", "attribute.name", "", "delimiter", "", "attribute.name"]],
                [/@id(?=\s*\{)/, "type.identifier"], // type names
                [/@id/, {
                   cases: {
