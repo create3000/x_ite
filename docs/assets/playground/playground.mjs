@@ -621,7 +621,7 @@ class Playground
                [/[+-]?\d+/, "number"],
                [/(")((?:ecmascript|javascript|vrmlscript):|data:(?:text|application)\/javascript,)/, [
                   { token: "string.quote", bracket: "@open" },
-                  { token: "comment", next: "@stringEmbedded", nextEmbedded: "text/javascript" },
+                  { token: "comment", next: "@stringEmbeddedJavaScript" },
                ]],
                [/(")(data:x-shader\/(?:x-vertex|x-fragment),)/, [
                   { token: "string.quote", bracket: "@open" },
@@ -639,6 +639,26 @@ class Playground
                [/[^#\/*]+/, "comment"],
                [/\*\/#/, "comment", "@pop"],
                [/[#\/*]/, "comment"],
+            ],
+            stringEmbeddedJavaScript: [
+               [/[^\\"'`]+/, { token: "@rematch", next: "@stringEmbeddedJavaScriptCode", nextEmbedded: "text/javascript" }],
+               [/`/,         "string", "@string_backtick"],
+               [/@escapes/,  "string.escape"],
+               [/\\./,       "string.escape.invalid"],
+               [/(?<!\\)"/,  { token: "string.quote", bracket: "@close", next: "@pop" }],
+            ],
+            stringEmbeddedJavaScriptCode: [
+               [/[^\\"'`]+/,  "string"],
+               [/\\".*?\\"/, { token: "string",   next: "@pop", nextEmbedded: "@pop" }],
+               [/'.*?'/,     { token: "string",   next: "@pop", nextEmbedded: "@pop" }],
+               [/`/,         { token: "@rematch", next: "@pop", nextEmbedded: "@pop" }],
+               [/@escapes/,  { token: "@rematch", next: "@pop", nextEmbedded: "@pop" }],
+               [/\\./,       { token: "@rematch", next: "@pop", nextEmbedded: "@pop" }],
+               [/(?<!\\)"/,  { token: "@rematch", next: "@pop", nextEmbedded: "@pop" }],
+            ],
+            string_backtick: [
+               [/[^`]+/, "string"],
+               [/`/,     "string", "@pop"],
             ],
             stringEmbedded: [
                [/[^\\"]+/,  "string"],
