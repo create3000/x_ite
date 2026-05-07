@@ -581,7 +581,7 @@ class Playground
             "PROFILE", "COMPONENT", "UNIT", "META", "EXTERNPROTO", "PROTO", "IS", "DEF", "USE", "ROUTE", "TO", "IMPORT", "EXPORT", "AS", "DESCRIPTION",
          ],
          profiles: Array .from (browser .supportedProfiles, ({name}) => name),
-         components: Array .from (browser .supportedComponents, ({name}) => name),
+         components: Array .from (browser .supportedComponents, ({name}) => name) .filter (name => !name .match (/^(WebXR|X_ITE)$/)),
          nodes: Array .from (browser .concreteNodes, ({typeName}) => typeName),
          accessTypes: [
             // X3D
