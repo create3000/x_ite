@@ -602,13 +602,13 @@ class Playground
                [/PROTO|EXTERNPROTO/, "regexp", "@typeName"],
                [/DEF|USE|AS|ROUTE|TO|EXPORT/, "regexp", "@name"],
                [/(IMPORT)(\s+)(@id)(\s*)(\.)(\s*)(@id)/, ["regexp", "", "type.identifier", "", "delimiter", "", "type.identifier"]],
-               [/@id(?=\s*\{)/, "keyword"], // type names
+               [/@id(?=\s*\{)/, "type.identifier"], // type names
                [/@id/, {
                   cases: {
                      "@keywords": "regexp",
                      "@profiles": "keyword",
                      "@components": "keyword",
-                     "@nodes": "keyword",
+                     "@nodes": "type.identifier",
                      "@accessTypes": "regexp",
                      "@fieldTypes": "type.identifier",
                      "@default": "attribute.name", // field names
@@ -631,10 +631,10 @@ class Playground
                [/"/, { token: "string.quote", bracket: "@open", next: "@string" }],
             ],
             typeName: [
-               [/@id/, "keyword", "@pop"],
+               [/@id/, "type.identifier", "@pop"],
             ],
             name: [
-               [/@id/, "type.identifier", "@pop"],
+               [/@id/, "attribute.name", "@pop"],
             ],
             blockComment: [
                [/[^#\/*]+/, "comment"],
