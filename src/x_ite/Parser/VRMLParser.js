@@ -352,7 +352,6 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    {
       if (Grammar .Header .parse (this))
       {
-         console .log (this .result)
          this .lines (this .result [0]);
 
          this .getScene () .setSpecificationVersion (this .result [2]);
