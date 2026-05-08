@@ -64,6 +64,7 @@ class Playground
       if (searchParams .has ("fullSize"))
          this .localStorage .fullSize = searchParams .get ("fullSize") === "true";
 
+      this .addX3DEncoding ();
       this .addVRMLEncoding ();
       this .addGLSL ();
       this .updateToolbar ();
@@ -390,7 +391,9 @@ class Playground
       $(".language") .removeClass ("selected");
       $(`.language.${encoding}`) .addClass ("selected");
 
-      monaco .editor .setModelLanguage (this .model, encoding .toLowerCase ());
+      const language = { XML: "x3d", VRML: "x3dv", JSON: "json" } [encoding];
+
+      monaco .editor .setModelLanguage (this .model, language);
    }
 
    setFullSize (fullSize)
@@ -569,14 +572,143 @@ class Playground
       console .scrollTop (console .prop ("scrollHeight"));
    }
 
+   addX3DEncoding ()
+   {
+      monaco .languages .setMonarchTokensProvider ("x3d",
+      {
+         defaultToken: '',
+         tokenPostfix: '.xml',
+
+         ignoreCase: true,
+
+         // Useful regular expressions
+         qualifiedName: /(?:[\w\.\-]+:)?[\w\.\-]+/,
+
+         tokenizer: {
+            root: [
+               [/[^<&]+/, ''],
+
+               { include: '@whitespace' },
+
+               // Standard opening tag
+               [/(<)(@qualifiedName)/, [{ token: 'delimiter' }, { token: 'tag', next: '@tag' }]],
+
+               // Standard closing tag
+               [
+                  /(<\/)(@qualifiedName)(\s*)(>)/,
+                  [{ token: 'delimiter' }, { token: 'tag' }, '', { token: 'delimiter' }]
+               ],
+
+               // Meta tags - instruction
+               [/(<\?)(@qualifiedName)/, [{ token: 'delimiter' }, { token: 'metatag', next: '@tag' }]],
+
+               // Meta tags - declaration
+               [/(<\!)(@qualifiedName)/, [{ token: 'delimiter' }, { token: 'metatag', next: '@tag' }]],
+
+               // CDATA
+               [/(<\!\[CDATA\[)\s*((?:ecmascript|javascript|vrmlscript):|data:(?:text|application)\/javascript,)/, [
+                  { token: 'string' },
+                  { token: 'comment', next: '@cdataEmbedded', nextEmbedded: 'text/javascript' },
+               ]],
+
+               // CDATA
+               [/(<\!\[CDATA\[)\s*(data:x-shader\/x-(?:vertex|fragment),)/, [
+                  { token: 'string' },
+                  { token: 'comment', next: '@cdataEmbedded', nextEmbedded: 'x-shader/x-vertex' },
+               ]],
+
+               // CDATA
+               [/<\!\[CDATA\[/, { token: 'delimiter.cdata', next: '@cdata' }],
+
+               [/&\w+;/, 'string.escape']
+            ],
+
+            cdataEmbedded: [
+               [/[^\]]+/, ''],
+               [/\]\]>/, { token: 'string', next: '@pop', nextEmbedded: '@pop' }],
+               [/\]/, '']
+            ],
+
+            cdata: [
+               [/[^\]]+/, ''],
+               [/\]\]>/, { token: 'delimiter.cdata', next: '@pop' }],
+               [/\]/, '']
+            ],
+
+            tag: [
+               [/[ \t\r\n]+/, ''],
+               [/(@qualifiedName)(\s*=\s*)("[^"]*"|'[^']*')/, ['attribute.name', '', 'attribute.value']],
+               [
+                  /(@qualifiedName)(\s*=\s*)("[^">?\/]*|'[^'>?\/]*)(?=[\?\/]\>)/,
+                  ['attribute.name', '', 'attribute.value']
+               ],
+               [/(@qualifiedName)(\s*=\s*)("[^">]*|'[^'>]*)/, ['attribute.name', '', 'attribute.value']],
+               [/@qualifiedName/, 'attribute.name'],
+               [/\?>/, { token: 'delimiter', next: '@pop' }],
+               [/(\/)(>)/, [{ token: 'tag' }, { token: 'delimiter', next: '@pop' }]],
+               [/>/, { token: 'delimiter', next: '@pop' }]
+            ],
+
+            whitespace: [
+               [/[ \t\r\n]+/, ''],
+               [/<!--/, { token: 'comment', next: '@comment' }]
+            ],
+
+            comment: [
+               [/[^<\-]+/, 'comment.content'],
+               [/-->/, { token: 'comment', next: '@pop' }],
+               [/<!--/, 'comment.content.invalid'],
+               [/[<\-]/, 'comment.content']
+            ]
+         }
+      });
+
+      monaco .languages .register ({
+         id: "x3d",
+         extensions: [".x3d"],
+         aliases: ["X3D"],
+         mimetypes: ["model/x3d+xml"],
+      });
+
+      monaco .languages .setLanguageConfiguration ("x3d", {
+         comments: {
+            blockComment: ['<!--', '-->']
+         },
+         brackets: [['<', '>']],
+         autoClosingPairs: [
+            { open: '<', close: '>' },
+            { open: "'", close: "'" },
+            { open: '"', close: '"' }
+         ],
+         surroundingPairs: [
+            { open: '<', close: '>' },
+            { open: "'", close: "'" },
+            { open: '"', close: '"' }
+         ],
+         onEnterRules: [
+            {
+               beforeText: new RegExp(`<([_:\\w][_:\\w-.\\d]*)([^/>]*(?!/)>)[^<]*$`, 'i'),
+               afterText: /^<\/([_:\w][_:\w-.\d]*)\s*>$/i,
+               action: {
+                  indentAction: monaco .languages .IndentAction .IndentOutdent
+               }
+            },
+            {
+               beforeText: new RegExp(`<(\\w[\\w\\d]*)([^/>]*(?!/)>)[^<]*$`, 'i'),
+               action: { indentAction: monaco .languages .IndentAction .Indent }
+            }
+         ]
+      });
+   }
+
    addVRMLEncoding ()
    {
-      const browser = this .browser;
+      const { browser } = this;
 
-      monaco .languages .setMonarchTokensProvider ("vrml",
+      monaco .languages .setMonarchTokensProvider ("x3dv",
       {
          defaultToken: "invalid",
-         tokenPostfix: ".vrml",
+         tokenPostfix: ".x3dv",
          keywords: [
             "PROFILE", "COMPONENT", "UNIT", "META", "EXTERNPROTO", "PROTO", "IS", "DEF", "USE", "ROUTE", "TO", "IMPORT", "EXPORT", "AS", "DESCRIPTION",
          ],
@@ -676,13 +808,13 @@ class Playground
       });
 
       monaco .languages .register ({
-         id: "vrml",
+         id: "x3dv",
          extensions: [".x3dv"],
          aliases: ["VRML"],
          mimetypes: ["model/x3d+vrml"],
       });
 
-      monaco .languages .setLanguageConfiguration ("vrml",
+      monaco .languages .setLanguageConfiguration ("x3dv",
       {
          comments: {
             lineComment: "#",
