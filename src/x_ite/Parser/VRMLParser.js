@@ -29,7 +29,7 @@ const Grammar = Expressions ({
    LineFeed:    /\n/g,
 
    // Header
-   Header:      /^#(VRML|X3D) V(.*?) (utf8)(.*?)[\r\n]/y,
+   Header:      /^#(VRML|X3D) V(.*?) (utf8)\b(.*?)[\r\n]/y,
 
    // Keywords
    AS:          /AS/y,
@@ -352,6 +352,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    {
       if (Grammar .Header .parse (this))
       {
+         console .log (this .result)
          this .lines (this .result [0]);
 
          this .getScene () .setSpecificationVersion (this .result [2]);
