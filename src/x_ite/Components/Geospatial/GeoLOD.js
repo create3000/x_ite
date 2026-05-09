@@ -54,6 +54,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
 
       this .rootGroupNode ._children = this ._rootNode;
       this .rootGroupNode .setPrivate (true);
+      this .rootGroupNode .setup ();
 
       this .rootInlineNode ._loadState .addInterest ("set_rootLoadState__", this);
 

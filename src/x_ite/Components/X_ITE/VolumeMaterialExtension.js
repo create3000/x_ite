@@ -61,11 +61,13 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X3DM
    {
       this .thicknessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._thicknessTexture);
 
-      this .setTexture (0, this .thicknessTextureNode);
+      this .addTexture (0, this .thicknessTextureNode);
    },
    set_attenuationDistance__ ()
    {
-      this .attenuationDistance = Math .max (this ._attenuationDistance .getValue (), 0);
+      const attenuationDistance = this ._attenuationDistance .getValue ();
+
+      this .attenuationDistance = attenuationDistance ? Math .max (attenuationDistance, 0) : 1_000_000;
    },
    set_attenuationColor__ ()
    {
@@ -97,9 +99,6 @@ Object .assign (Object .setPrototypeOf (VolumeMaterialExtension .prototype, X3DM
       gl .uniform1f  (shaderObject .x3d_ThicknessEXT,           this .thickness);
       gl .uniform1f  (shaderObject .x3d_AttenuationDistanceEXT, this .attenuationDistance);
       gl .uniform3fv (shaderObject .x3d_AttenuationColorEXT,    this .attenuationColorArray);
-
-      if (!+this .getTextureBits ())
-         return;
 
       this .thicknessTextureNode ?.setNamedShaderUniforms (gl,
          shaderObject .x3d_ThicknessTextureEXT,

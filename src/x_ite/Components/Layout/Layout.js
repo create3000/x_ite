@@ -55,7 +55,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
    pixelSize: new Vector2 (),
    translation: new Vector3 (),
    offset: new Vector3 (),
-   scale: new Vector3 (1),
+   scale: new Vector3 (),
    currentTranslation: new Vector3 (),
    currentRotation: new Rotation4 (),
    currentScale: new Vector3 (),

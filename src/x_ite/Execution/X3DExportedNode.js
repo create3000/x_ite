@@ -4,15 +4,17 @@ import SFNodeCache from "../Fields/SFNodeCache.js";
 const
    _executionContext = Symbol (),
    _exportedName     = Symbol (),
-   _localNode        = Symbol ();
+   _localNode        = Symbol (),
+   _description      = Symbol ();
 
-function X3DExportedNode (executionContext, exportedName, localNode)
+function X3DExportedNode (executionContext, exportedName, localNode, description)
 {
    X3DObject .call (this);
 
    this [_executionContext] = executionContext;
    this [_exportedName]     = exportedName;
    this [_localNode]        = localNode;
+   this [_description]      = description;
 }
 
 Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .prototype),
@@ -29,21 +31,39 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
    {
       return this [_localNode];
    },
+   getDescription ()
+   {
+      return this [_description];
+   },
+   setDescription (value)
+   {
+      this [_description] = String (value);
+   },
    toVRMLStream (generator)
    {
       const localName = generator .Name (this .getLocalNode ());
 
-      generator .string += generator .Indent ();
+      generator .Indent ();
       generator .string += "EXPORT";
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += localName;
 
       if (this [_exportedName] !== localName)
       {
-         generator .string += generator .Space ();
+         generator .Space ();
          generator .string += "AS";
-         generator .string += generator .Space ();
+         generator .Space ();
          generator .string += this [_exportedName];
+      }
+
+      if (this [_description])
+      {
+         generator .Space ();
+         generator .string += "DESCRIPTION";
+         generator .Space ();
+         generator .string += '"';
+         generator .string += this [_description];
+         generator .string += '"';
       }
    },
    toXMLStream (generator)
@@ -56,20 +76,26 @@ Object .assign (Object .setPrototypeOf (X3DExportedNode .prototype, X3DObject .p
       if (this [_exportedName] !== localName)
          generator .attribute ("AS", this [_exportedName]);
 
+      if (this [_description])
+         generator .attribute ("DESCRIPTION", this [_description]);
+
       generator .closeTag ("EXPORT");
    },
    toJSONStream (generator)
    {
       const localName = generator .Name (this .getLocalNode ());
 
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .Indent ();
+      generator .TidyBreak ();
+      generator .Indent ();
 
       generator .beginObject ("EXPORT", false, true);
       generator .stringProperty ("@localDEF", localName, false);
 
       if (this [_exportedName] !== localName)
          generator .stringProperty ("@AS", this [_exportedName]);
+
+      if (this [_description])
+         generator .stringProperty ("@DESCRIPTION", this [_description]);
 
       generator .endObject ();
       generator .endObject ();
@@ -83,10 +109,7 @@ Object .defineProperties (X3DExportedNode .prototype,
 {
    exportedName:
    {
-      get ()
-      {
-         return this [_exportedName];
-      },
+      get: X3DExportedNode .prototype .getExportedName,
       enumerable: true,
    },
    localNode:
@@ -95,6 +118,12 @@ Object .defineProperties (X3DExportedNode .prototype,
       {
          return SFNodeCache .get (this [_localNode]);
       },
+      enumerable: true,
+   },
+   description:
+   {
+      get: X3DExportedNode .prototype .getDescription,
+      set: X3DExportedNode .prototype .setDescription,
       enumerable: true,
    },
 });

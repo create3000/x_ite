@@ -17,6 +17,10 @@ function X3DVolumeDataNode (executionContext)
 
    this .setCameraObject (true);
 
+   // Units
+
+   this ._dimensions .setUnit ("length");
+
    // Private properties
 
    const

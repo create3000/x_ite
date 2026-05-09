@@ -1,7 +1,7 @@
 import MaterialTextures from "../../MaterialTextures.js";
 
 export default () => /* glsl */ `
-#pragma X3D include "Fragment.glsl"
+#include <Fragment>
 
 uniform x3d_MaterialParameters x3d_Material;
 
@@ -125,8 +125,8 @@ getOcclusionFactor ()
 
 #if defined (X3D_LIGHTING)
 
-#pragma X3D include "Lighting.glsl"
-#pragma X3D include "Shadow.glsl"
+#include <Lighting>
+#include <Shadow>
 
 uniform x3d_LightSourceParameters x3d_LightSource [X3D_NUM_LIGHTS];
 
@@ -183,7 +183,7 @@ getMaterialColor (const in vec3 vertex, const in vec3 N, const in vec3 ambientCo
 // Simulate Gouraud shading. Although this is a Phong shader, we use the same
 // calculations as a Gouraud shader would do.
 vec4
-getMaterialColor ()
+getMaterialColor (const in vec4 fragCoord)
 {
    // Calculate diffuseColor & alpha
 
@@ -229,7 +229,7 @@ getMaterialColor ()
 
 #if defined (X3D_PHONG_MATERIAL)
 vec4
-getMaterialColor ()
+getMaterialColor (const in vec4 fragCoord)
 {
    // Calculate diffuseColor & alpha
 

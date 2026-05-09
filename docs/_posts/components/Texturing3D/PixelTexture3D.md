@@ -32,13 +32,13 @@ The PixelTexture3D node belongs to the [Texturing3D](/x_ite/components/overview/
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | MFInt32 | [in, out] | [image](#fields-image) | [ 0, 0, 0, 0 ] |
 | SFBool | [ ] | [repeatS](#fields-repeatS) | FALSE |
 | SFBool | [ ] | [repeatT](#fields-repeatT) | FALSE |
 | SFBool | [ ] | [repeatR](#fields-repeatR) | FALSE |
-| SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL  |
+| SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -86,19 +86,26 @@ Whether to repeat texture along R axis from front to back.
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
 {: #fields-textureProperties }
 
-Single contained [TextureProperties](/x_ite/components/texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
+Optional single contained [TextureProperties](/x_ite/components/texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
 
 ## Advice
 
 ### Hints
 
 - Can contain a single [TextureProperties](/x_ite/components/texturing/textureproperties/) node.
-- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
 - [X3D Architecture 33.2.2 3D texturing concepts](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texture3D.html#3DTextureconcepts)
 
 ### Warning
 
 - Requires X3D `profile='Full'` or else include `<component name='Texturing3D' level='1'/>`
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

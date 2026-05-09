@@ -13,11 +13,11 @@ tags: [EnvironmentLight, Lighting]
 
 ## Overview
 
-EnvironmentLight is a light node for [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/) and [SpecularGlossinessMaterial](/x_ite/components/x-ite/specularglossinessmaterial/) nodes.
+EnvironmentLight node uses an environment map to represent incident illumination around a point, and can be used to show reflections of distant objects. The EnvironmentLight node supports Image Based Lighting (IBL) techniques by specifying light-source intensity around a given location (i.e., the environment) as a cube map. EnvironmentLight defines both specular radiance and diffuse irradiance, converting an environment map into an irradiance map that shows how much light comes from any particular direction.
 
-The EnvironmentLight node belongs to the **Lighting** component and its default container field is *children.* It is available since X3D version 4.0 or later.
+The EnvironmentLight node belongs to the [Lighting](/x_ite/components/overview/#lighting) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 4.1 or higher.
 
->**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE. This node only affects the [PhysicalMaterial](../../shape/physicalmaterial/) and [SpecularGlossinessMaterial](../../x-ite/specularglossinessmaterial/) nodes.
+>**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
 
 ## Hierarchy
@@ -33,21 +33,22 @@ The EnvironmentLight node belongs to the **Lighting** component and its default 
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFBool | [in, out] | [global](#fields-global) | FALSE |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFBool | [in, out] | [global](#fields-global) | TRUE |
 | SFBool | [in, out] | [on](#fields-on) | TRUE |
-| SFColor | [in, out] | [color](#fields-color) | 1 1 1  |
-| SFFloat | [in, out] | [intensity](#fields-intensity) | 1  |
-| SFFloat | [in, out] | [ambientIntensity](#fields-ambientIntensity) | 0  |
-| SFRotation | [in, out] | [rotation](#fields-rotation) | 0 0 1 0  |
+| SFColor | [in, out] | [color](#fields-color) | 1 1 1 |
+| SFFloat | [in, out] | [intensity](#fields-intensity) | 1 |
+| SFFloat | [in, out] | [ambientIntensity](#fields-ambientIntensity) | 0 |
+| SFVec3f | [in, out] | [origin](#fields-origin) | 0 0 0 |
+| SFRotation | [in, out] | [rotation](#fields-rotation) | 0 0 1 0 |
 | MFFloat | [in, out] | [diffuseCoefficients](#fields-diffuseCoefficients) | [ ] |
-| SFNode | [in, out] | [diffuseTexture](#fields-diffuseTexture) | NULL  |
-| SFNode | [in, out] | [specularTexture](#fields-specularTexture) | NULL  |
+| SFNode | [in, out] | [diffuseTexture](#fields-diffuseTexture) | NULL |
+| SFNode | [in, out] | [specularTexture](#fields-specularTexture) | NULL |
 | SFBool | [in, out] | [shadows](#fields-shadows) | FALSE |
-| SFColor | [in, out] | [shadowColor](#fields-shadowColor) | 0 0 0  |
-| SFFloat | [in, out] | [shadowIntensity](#fields-shadowIntensity) | 1  |
-| SFFloat | [in, out] | [shadowBias](#fields-shadowBias) | 0.005  |
-| SFInt32 | [ ] | [shadowMapSize](#fields-shadowMapSize) | 1024  |
+| SFColor | [in, out] | [shadowColor](#fields-shadowColor) | 0 0 0 |
+| SFFloat | [in, out] | [shadowIntensity](#fields-shadowIntensity) | 1 |
+| SFFloat | [in, out] | [shadowBias](#fields-shadowBias) | 0.005 |
+| SFInt32 | [ ] | [shadowMapSize](#fields-shadowMapSize) | 1024 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -59,10 +60,10 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
-### SFBool [in, out] **global** FALSE
+### SFBool [in, out] **global** TRUE
 {: #fields-global }
 
-Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
+*global* field affects the scope of lighting effects produced by the EnvironmentLight node, and has no effect on the computation of environment textures. Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
 
 #### Warning
 
@@ -87,38 +88,59 @@ Enables/disables this light source.
 
 Brightness of direct emission from the light.
 
+#### Warning
+
+- Values greater than 1.0 require X3D version='4.0' or greater.
+
 ### SFFloat [in, out] **ambientIntensity** 0 <small>[0,1]</small>
 {: #fields-ambientIntensity }
 
-Brightness of ambient (nondirectional background) emission from the light. Interchange profile
+Brightness of ambient (nondirectional background) emission from the light.
 
 #### Hint
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
+
+### SFVec3f [in, out] **origin** 0 0 0 <small>(-∞,∞)</small>
+{: #fields-origin }
+
+*origin* defines the relative position for observing the surrounding scene to create an environment texture. Input illumination to the EnvironmentLight node reflects all scene illumination visible at the node *origin*.
 
 ### SFRotation [in, out] **rotation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
 {: #fields-rotation }
 
-Input/Output field *rotation*.
+*rotation* field represents the overall *rotation* of the IBL environment.
 
 ### MFFloat [in, out] **diffuseCoefficients** [ ]
 {: #fields-diffuseCoefficients }
 
-Input/Output field *diffuseCoefficients*. Coefficients used during generation of diffuse texture from specular texture.
+*diffuseCoefficients* field provides a 3 x 9 array of float values providing spherical harmonic coefficients for low-frequency characteristics of the environment map to produce an irradiance map corresponding to glTF irradianceCoefficients field.
 
-### SFNode [in, out] **diffuseTexture** NULL <small>[X3DEnvironmentTextureNode]</small>
+### SFNode [in, out] **diffuseTexture** NULL <small>[X3DEnvironmentTextureNode]</small> <small class="red">not supported</small>
 {: #fields-diffuseTexture }
 
-Input/Output field *diffuseTexture*. If `NULL` the texture is generated from specular texture.
+*diffuseTexture* defines explicit precomputed X3DEnvironmentTextureNode ([ComposedCubeMapTexture](/x_ite/components/cubemaptexturing/composedcubemaptexture/), [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/), [ImageCubeMapTexture](/x_ite/components/cubemaptexturing/imagecubemaptexture/)) nodes as the image source for the EnvironmentLight. When applying diffuseColor for this light node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
+
+#### Hint
+
+- If texture node is NULL or unspecified, no effect is applied.
+
+#### Warning
+
+- Contained texture node must include `containerField='diffuseTexture'`
 
 ### SFNode [in, out] **specularTexture** NULL <small>[X3DEnvironmentTextureNode]</small>
 {: #fields-specularTexture }
 
-Input/Output field *specularTexture*.
+*specularTexture* defines explicit precomputed X3DEnvironmentTextureNode ([ComposedCubeMapTexture](/x_ite/components/cubemaptexturing/composedcubemaptexture/), [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/), [ImageCubeMapTexture](/x_ite/components/cubemaptexturing/imagecubemaptexture/)) nodes as the image source for the EnvironmentLight. When applying specularColor for this light node, the contained texture provides Physically Based Rendering (PBR) modulation for each pixel.
 
 #### Hint
 
-- [glTF Sample Environments](https://github.com/KhronosGroup/glTF-Sample-Environments)
+- If texture node is NULL or unspecified, no effect is applied.
+
+#### Warning
+
+- Contained texture node must include `containerField='specularTexture'`
 
 ### SFBool [in, out] **shadows** FALSE
 {: #fields-shadows }
@@ -144,6 +166,30 @@ The shadowBias value controls the visibility of *shadow acne*.
 {: #fields-shadowMapSize }
 
 Size of the shadow map in pixels, must be power of two.
+
+## Advice
+
+### Hints
+
+- Lights have no visible shape themselves and lighting effects continue through any intermediate geometry.
+- The bound [NavigationInfo](/x_ite/components/navigation/navigationinfo/) controls whether the user headlight is enabled on/off.
+- [Wikipedia Cube mapping](https://en.wikipedia.org/wiki/Cube_mapping)
+
+## X_ITE
+
+- Most scenes with [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/) require an EnvironmentLight node.
+- If *diffuseTexture* is not present, X_ITE will automatically generate this texture using the *specularTexture*.
+
+## Example
+
+- [View »Environment Test« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=EnvironmentTest)
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

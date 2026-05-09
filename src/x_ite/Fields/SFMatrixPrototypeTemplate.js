@@ -4,14 +4,7 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
 {
    const _formatter = double ? "DoubleFormat" : "FloatFormat";
 
-   Object .defineProperties (Constructor,
-   {
-      typeName:
-      {
-         value: TypeName,
-         enumerable: true,
-      },
-   });
+   X3DField .addStaticProperties (Constructor, TypeName);
 
    Object .assign (Object .setPrototypeOf (Constructor .prototype, X3DField .prototype),
    {
@@ -21,7 +14,7 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
       },
       copy ()
       {
-         return new (this .constructor) (this .getValue () .copy ());
+         return Constructor .fromValue (this .getValue () .copy ());
       },
       equals (matrix)
       {
@@ -96,47 +89,47 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
       },
       transpose ()
       {
-         return new (this .constructor) (this .getValue () .copy () .transpose ());
+         return Constructor .fromValue (this .getValue () .copy () .transpose ());
       },
       inverse ()
       {
-         return new (this .constructor) (this .getValue () .copy () .inverse ());
+         return Constructor .fromValue (this .getValue () .copy () .inverse ());
       },
       multLeft (matrix)
       {
-         return new (this .constructor) (this .getValue () .copy () .multLeft (matrix .getValue ()));
+         return Constructor .fromValue (this .getValue () .copy () .multLeft (matrix .getValue ()));
       },
       multRight (matrix)
       {
-         return new (this .constructor) (this .getValue () .copy () .multRight (matrix .getValue ()));
+         return Constructor .fromValue (this .getValue () .copy () .multRight (matrix .getValue ()));
       },
       multVecMatrix (vector)
       {
-         return new (vector .constructor) (this .getValue () .multVecMatrix (vector .getValue () .copy ()));
+         return vector .constructor .fromValue (this .getValue () .multVecMatrix (vector .getValue () .copy ()));
       },
       multMatrixVec (vector)
       {
-         return new (vector .constructor) (this .getValue () .multMatrixVec (vector .getValue () .copy ()));
+         return vector .constructor .fromValue (this .getValue () .multMatrixVec (vector .getValue () .copy ()));
       },
       multDirMatrix (vector)
       {
-         return new (vector .constructor) (this .getValue () .multDirMatrix (vector .getValue () .copy ()));
+         return vector .constructor .fromValue (this .getValue () .multDirMatrix (vector .getValue () .copy ()));
       },
       multMatrixDir (vector)
       {
-         return new (vector .constructor) (this .getValue () .multMatrixDir (vector .getValue () .copy ()));
+         return vector .constructor .fromValue (this .getValue () .multMatrixDir (vector .getValue () .copy ()));
       },
       translate (translation)
       {
-         return new (this .constructor) (this .getValue () .copy () .translate (translation .getValue ()));
+         return Constructor .fromValue (this .getValue () .copy () .translate (translation .getValue ()));
       },
       rotate (rotation)
       {
-         return new (this .constructor) (this .getValue () .copy () .rotate (rotation .getValue ()));
+         return Constructor .fromValue (this .getValue () .copy () .rotate (rotation .getValue ()));
       },
       scale (scale)
       {
-         return new (this .constructor) (this .getValue () .copy () .scale (scale .getValue ()));
+         return Constructor .fromValue (this .getValue () .copy () .scale (scale .getValue ()));
       },
       toStream (generator)
       {
@@ -147,7 +140,7 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
          for (let i = 0; i < last; ++ i)
          {
             generator .string += generator [_formatter] (value [i]);
-            generator .string += generator .Space ();
+            generator .Space ();
          }
 
          generator .string += generator [_formatter] (value [last]);
@@ -163,11 +156,11 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
       toJSONStream (generator)
       {
          generator .string += '[';
-         generator .string += generator .TidySpace ();
+         generator .TidySpace ();
 
          this .toJSONStreamValue (generator);
 
-         generator .string += generator .TidySpace ();
+         generator .TidySpace ();
          generator .string += ']';
       },
       toJSONStreamValue (generator)
@@ -180,7 +173,7 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
          {
             generator .string += generator .Number (generator [_formatter] (value [i]));
             generator .string += ',';
-            generator .string += generator .TidySpace ();
+            generator .TidySpace ();
          }
 
          generator .string += generator .Number (generator [_formatter] (value [last]));
@@ -210,6 +203,12 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
 
    for (let i = 0; i < Matrix .prototype .length; ++ i)
       defineProperty (i);
+
+   Object .defineProperties (Constructor, Object .fromEntries ([
+      "IDENTITY",
+      "ZERO",
+   ]
+   .map (key => [key, { value: Constructor .fromValue (Matrix [key]), enumerable: true }])));
 
    return Constructor;
 }

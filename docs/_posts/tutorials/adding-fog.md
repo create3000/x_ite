@@ -46,18 +46,18 @@ A [Fog](/x_ite/components/environmentaleffects/fog/) node creates colored fog
 
 ```x3d
 <Fog
-    color='1.0 1.0 1.0'
+    color='1 1 1'
     fogType='LINEAR'
-    visibilityRange='10.0'/>
+    visibilityRange='10'/>
 ```
 
 ### Classic VRML Encoding
 
 ```vrml
 Fog {
-  color 1.0 1.0 1.0
+  color 1 1 1
   fogType "LINEAR"
-  visibilityRange 10.0
+  visibilityRange 10
 }
 ```
 

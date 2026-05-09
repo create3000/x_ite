@@ -3,7 +3,7 @@ title: Switch
 date: 2023-01-07
 nav: components-Grouping
 categories: [components, Grouping]
-tags: [Switch, Grouping]
+tags: [Switch, Grouping, VRML]
 ---
 <style>
 .post h3 {
@@ -22,20 +22,23 @@ The Switch node belongs to the [Grouping](/x_ite/components/overview/#grouping) 
 ```
 + X3DNode
   + X3DChildNode
-    + X3DGroupingNode
+    + X3DGroupingNode (X3DBoundedObject)*
       + Switch
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFInt32 | [in, out] | [whichChoice](#fields-whichChoice) | -1  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFInt32 | [in, out] | [whichChoice](#fields-whichChoice) | -1 |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
 | MFNode | [in] | [addChildren](#fields-addChildren) |  |
 | MFNode | [in] | [removeChildren](#fields-removeChildren) |  |
 | MFNode | [in, out] | [children](#fields-children) | [ ] |
@@ -130,17 +133,17 @@ Grouping nodes contain an ordered list of *children* nodes.
 - Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 - Authors can temporarily hide test geometry under an unselected child of a Switch. This is a good alternative to "commenting out" nodes.
 - [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) and [Viewpoint](/x_ite/components/navigation/viewpoint/) share the same binding stack, so no more than one of these nodes can be bound and active at a given time.
-- Contained nodes must have type X3DChildNode, such as [Group](/x_ite/components/grouping/group/) or [Transform](/x_ite/components/grouping/transform/) or [Shape](/x_ite/components/shape/shape/).
 
 ### Warnings
 
 - Do not include [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) or [Viewpoint](/x_ite/components/navigation/viewpoint/) as a child of [LOD](/x_ite/components/navigation/lod/) or Switch, instead use [ViewpointGroup](/x_ite/components/navigation/viewpointgroup/) as parent to constrain location proximity where the viewpoint is available to user.
 - Results are undefined if a bindable node ([Background](/x_ite/components/environmentaleffects/background/), [Fog](/x_ite/components/environmentaleffects/fog/), [NavigationInfo](/x_ite/components/navigation/navigationinfo/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/), [Viewpoint](/x_ite/components/navigation/viewpoint/)) is a contained descendant node of either [LOD](/x_ite/components/navigation/lod/) or Switch. Avoid this authoring pattern.
+- Contained nodes must have type X3DChildNode, such as [Group](/x_ite/components/grouping/group/) or [Transform](/x_ite/components/grouping/transform/) or [Shape](/x_ite/components/shape/shape/).
 - Switch is not allowed as parent of [Appearance](/x_ite/components/shape/appearance/), [Material](/x_ite/components/shape/material/), [Color](/x_ite/components/rendering/color/), [Coordinate](/x_ite/components/rendering/coordinate/), [Normal](/x_ite/components/rendering/normal/) or Texture nodes.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Grouping/Switch/Switch.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Grouping/Switch/Switch.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Grouping/Switch/screenshot.avif" alt="Switch"/>
 </x3d-canvas>
 
@@ -148,6 +151,14 @@ Grouping nodes contain an ordered list of *children* nodes.
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Grouping/Switch/Switch.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of Switch Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#Switch)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

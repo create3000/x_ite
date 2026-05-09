@@ -1,25 +1,9 @@
-import Color3   from "../../standard/Math/Numbers/Color3.js";
 import X3DField from "../Base/X3DField.js";
+import Color3   from "../../standard/Math/Numbers/Color3.js";
 
-function SFColor (r, g, b)
+function SFColor (r = 0, g = 0, b = 0)
 {
-   switch (arguments .length)
-   {
-      case 0:
-         X3DField .call (this, new Color3 ());
-         break;
-
-      case 1:
-         X3DField .call (this, arguments [0]);
-         break;
-
-      case 3:
-         X3DField .call (this, new Color3 (+r, +g, +b));
-         break;
-
-      default:
-         throw new Error ("Invalid arguments.");
-   }
+   X3DField .call (this, new Color3 (+r, +g, +b));
 }
 
 Object .assign (Object .setPrototypeOf (SFColor .prototype, X3DField .prototype),
@@ -30,7 +14,7 @@ Object .assign (Object .setPrototypeOf (SFColor .prototype, X3DField .prototype)
    },
    copy ()
    {
-      return new SFColor (this .getValue () .copy ());
+      return SFColor .fromValue (this .getValue () .copy ());
    },
    equals (color)
    {
@@ -50,16 +34,16 @@ Object .assign (Object .setPrototypeOf (SFColor .prototype, X3DField .prototype)
    },
    setHSV (h, s, v)
    {
-      this .getValue () .setHSV (h, s, v);
+      this .getValue () .setHSV (+h, +s, +v);
       this .addEvent ();
    },
    linearToSRGB ()
    {
-      return new SFColor (this .getValue () .linearToSRGB ());
+      return SFColor .fromValue (this .getValue () .linearToSRGB ());
    },
    sRGBToLinear ()
    {
-      return new SFColor (this .getValue () .sRGBToLinear ());
+      return SFColor .fromValue (this .getValue () .sRGBToLinear ());
    },
    lerp: (() =>
    {
@@ -75,7 +59,7 @@ Object .assign (Object .setPrototypeOf (SFColor .prototype, X3DField .prototype)
          this .getValue () .getHSV (s);
          destination .getValue () .getHSV (d);
 
-         Color3 .lerp (s, d, t, r);
+         Color3 .lerp (s, d, +t, r);
 
          result .setHSV (r [0], r [1], r [2]);
 
@@ -91,7 +75,7 @@ Object .assign (Object .setPrototypeOf (SFColor .prototype, X3DField .prototype)
       for (let i = 0; i < last; ++ i)
       {
          generator .string += generator .FloatFormat (value [i]);
-         generator .string += generator .Space ();
+         generator .Space ();
       }
 
       generator .string += generator .FloatFormat (value [last]);
@@ -107,11 +91,11 @@ Object .assign (Object .setPrototypeOf (SFColor .prototype, X3DField .prototype)
    toJSONStream (generator)
    {
       generator .string += '[';
-      generator .string += generator .TidySpace ();
+      generator .TidySpace ();
 
       this .toJSONStreamValue (generator);
 
-      generator .string += generator .TidySpace ();
+      generator .TidySpace ();
       generator .string += ']';
    },
    toJSONStreamValue (generator)
@@ -124,7 +108,7 @@ Object .assign (Object .setPrototypeOf (SFColor .prototype, X3DField .prototype)
       {
          generator .string += generator .Number (generator .FloatFormat (value [i]));
          generator .string += ',';
-         generator .string += generator .TidySpace ();
+         generator .TidySpace ();
       }
 
       generator .string += generator .Number (generator .FloatFormat (value [last]));
@@ -180,12 +164,26 @@ Object .defineProperties (SFColor .prototype,
    b: Object .assign ({ enumerable: true }, b),
 });
 
+X3DField .addStaticProperties (SFColor, "SFColor");
+
+Object .defineProperties (SFColor, Object .fromEntries ([
+   "BLACK",
+   "WHITE",
+]
+.map (key => [key, { value: SFColor .fromValue (Color3 [key]), enumerable: true }])));
+
 Object .defineProperties (SFColor,
 {
-   typeName:
+   fromHSV:
    {
-      value: "SFColor",
-      enumerable: true,
+      value (h, s, v)
+      {
+         const color = new this ();
+
+         color .setHSV (h, s, v);
+
+         return color;
+      },
    },
 });
 

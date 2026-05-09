@@ -14,28 +14,21 @@ const
 
 const handler =
 {
-   get (target, key)
+   get (target, key, receiver)
    {
-      const value = target [key];
-
-      if (value !== undefined)
-         return value;
-
       if (typeof key === "string")
       {
          const index = +key;
 
          if (Number .isInteger (index))
          {
+            if (index >= target [_length])
+               return undefined;
+
             const
                components = target .getComponents (),
-               valueType  = target .getValueType ();
-
-            // For historical reasons this behavior is intended (resize), there are
-            // enough X3D/VRML worlds in the Internet who rely on this behavior.
-            const array = index < target [_length]
-               ? target .getValue ()
-               : target .resize (index + 1, target .getSingleValue ());
+               valueType  = target .getValueType (),
+               array      = target .getValue ();
 
             if (components === 1)
             {
@@ -46,76 +39,87 @@ const handler =
             {
                // Return reference to index.
 
-               return target [_cache] [index]
-                  ?? (target [_cache] [index] = createValue (target, index, components, valueType));
+               return target [_cache] [index] ??= createValue (target, index, components, valueType);
             }
          }
-         else
+      }
+
+      return Reflect .get (target, key, receiver);
+   },
+   set (target, key, value, receiver)
+   {
+      if (typeof key === "string")
+      {
+         let index = +key;
+
+         if (Number .isInteger (index))
          {
-            return target [key];
+            const components = target .getComponents ();
+
+            let array = target .getValue ();
+
+            if (index >= target [_length])
+               array = target .resize (index + 1, target .getSingleValue ());
+
+            if (components === 1)
+            {
+               const valueType = target .getValueType ();
+
+               array [index] = valueType (value);
+            }
+            else
+            {
+               index *= components;
+
+               for (let c = 0; c < components; ++ c, ++ index)
+                  array [index] = value [c];
+            }
+
+            target .addEvent ();
+
+            return true;
          }
       }
-   },
-   set (target, key, value)
-   {
-      if (key in target)
-      {
-         target [key] = value;
-         return true;
-      }
 
-      const components = target .getComponents ();
-
-      let
-         index = +key,
-         array = target .getValue ();
-
-      if (index >= target [_length])
-         array = target .resize (index + 1, target .getSingleValue ());
-
-      if (components === 1)
-      {
-         const valueType = target .getValueType ();
-
-         array [index] = valueType (value);
-      }
-      else
-      {
-         index *= components;
-
-         for (let c = 0; c < components; ++ c, ++ index)
-            array [index] = value [c];
-      }
-
-      target .addEvent ();
-
-      return true;
+      return Reflect .set (target, key, value, receiver);
    },
    has (target, key)
    {
-      if (Number .isInteger (+key))
-         return key < target [_length];
+      if (typeof key === "string")
+      {
+         const index = +key;
 
-      return key in target;
+         if (Number .isInteger (index))
+            return index < target [_length];
+      }
+
+      return Reflect .has (target, key);
    },
    ownKeys (target)
    {
-      const ownKeys = [ ];
+      const
+         length  = target [_length],
+         ownKeys = [ ];
 
-      for (let i = 0, length = target [_length]; i < length; ++ i)
+      for (let i = 0; i < length; ++ i)
          ownKeys .push (String (i));
 
-      return ownKeys;
+      return ownKeys .concat (Reflect .ownKeys (target));
    },
    getOwnPropertyDescriptor (target, key)
    {
-      if (typeof key !== "string")
-         return;
+      if (typeof key === "string")
+      {
+         const index = +key;
 
-      const index = +key;
+         if (Number .isInteger (index))
+         {
+            if (index < target [_length])
+               return Object .getOwnPropertyDescriptor (target .getValue (), key);
+         }
+      }
 
-      if (Number .isInteger (index) && index < target [_length])
-         return Object .getOwnPropertyDescriptor (target .getValue (), key);
+      return Reflect .getOwnPropertyDescriptor (target, key);
    },
 };
 
@@ -822,7 +826,7 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          case 0:
          {
             generator .string += "[";
-            generator .string += generator .TidySpace ();
+            generator .TidySpace ();
             generator .string += "]";
             break;
          }
@@ -845,53 +849,56 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          }
          default:
          {
+            const last = length - 1;
+
             generator .string += "[";
-            generator .string += generator .ListStart ();
+            generator .ListStart ();
             generator .IncIndent ();
 
             if (components === 1)
             {
-               for (let i = 0, n = length - 1; i < n; ++ i)
+               for (let i = 0; i < last; ++ i)
                {
-                  generator .string += generator .ListIndent ();
+                  generator .ListIndent ();
 
                   value .set (array [i * components]);
                   value .toStream (generator);
 
-                  generator .string += generator .Comma ();
-                  generator .string += generator .ListBreak ();
+                  generator .Comma ();
+                  generator .ListBreak ();
                }
 
-               generator .string += generator .ListIndent ();
-               value .set (array [(length - 1) * components]);
+               generator .ListIndent ();
+
+               value .set (array [last * components]);
                value .toStream (generator);
             }
             else
             {
-               for (let i = 0, n = length - 1; i < n; ++ i)
+               for (let i = 0; i < last; ++ i)
                {
-                  generator .string += generator .ListIndent ();
+                  generator .ListIndent ();
 
                   for (let c = 0, first = i * components; c < components; ++ c, ++ first)
                      value [c] = array [first];
 
                   value .toStream (generator);
 
-                  generator .string += generator .Comma ();
-                  generator .string += generator .ListBreak ();
+                  generator .Comma ();
+                  generator .ListBreak ();
                }
 
-               generator .string += generator .ListIndent ();
+               generator .ListIndent ();
 
-               for (let c = 0, first = (length - 1) * components; c < components; ++ c, ++ first)
+               for (let c = 0, first = last * components; c < components; ++ c, ++ first)
                   value [c] = array [first];
 
                value .toStream (generator);
             }
 
-            generator .string += generator .ListEnd ();
+            generator .ListEnd ();
             generator .DecIndent ();
-            generator .string += generator .ListIndent ();
+            generator .ListIndent ();
             generator .string += "]";
             break;
          }
@@ -912,39 +919,39 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          const
             array      = target .getValue (),
             components = target .getComponents (),
-            value      = new (target .getSingleType ()) ();
+            value      = new (target .getSingleType ()) (),
+            last       = length - 1;
 
          value .setUnit (target .getUnit ());
 
          if (components === 1)
          {
-            for (let i = 0, n = length - 1; i < n; ++ i)
+            for (let i = 0; i < last; ++ i)
             {
                value .set (array [i * components]);
                value .toXMLStream (generator);
 
-               generator .string += generator .Comma ();
-               generator .string += generator .TidySpace ();
+               generator .Comma ();
+               generator .TidySpace ();
             }
 
-            value .set (array [(length - 1) * components]);
-
+            value .set (array [last * components]);
             value .toXMLStream (generator);
          }
          else
          {
-            for (let i = 0, n = length - 1; i < n; ++ i)
+            for (let i = 0; i < last; ++ i)
             {
                for (let c = 0, first = i * components; c < components; ++ c, ++ first)
                   value [c] = array [first];
 
                value .toXMLStream (generator);
 
-               generator .string += generator .Comma ();
-               generator .string += generator .TidySpace ();
+               generator .Comma ();
+               generator .TidySpace ();
             }
 
-            for (let c = 0, first = (length - 1) * components; c < components; ++ c, ++ first)
+            for (let c = 0, first = last * components; c < components; ++ c, ++ first)
                value [c] = array [first];
 
             value .toXMLStream (generator);
@@ -962,37 +969,38 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
          const
             array      = target .getValue (),
             components = target .getComponents (),
-            value      = new (target .getSingleType ()) ();
+            value      = new (target .getSingleType ()) (),
+            last       = length - 1;
 
          value .setUnit (target .getUnit ());
 
          generator .string += '[';
-         generator .string += generator .ListBreak ();
-         generator .string += generator .IncIndent ();
+         generator .ListBreak ();
+         generator .IncIndent ();
 
          if (components === 1)
          {
-            for (let i = 0, n = length - 1; i < n; ++ i)
+            for (let i = 0; i < last; ++ i)
             {
-               generator .string += generator .ListIndent ();
+               generator .ListIndent ();
 
                value .set (array [i * components]);
                value .toJSONStreamValue (generator);
 
                generator .string += ',';
-               generator .string += generator .ListBreak ();
+               generator .ListBreak ();
             }
 
-            generator .string += generator .ListIndent ();
+            generator .ListIndent ();
 
-            value .set (array [(length - 1) * components]);
+            value .set (array [last * components]);
             value .toJSONStreamValue (generator);
          }
          else
          {
-            for (let i = 0, n = length - 1; i < n; ++ i)
+            for (let i = 0; i < last; ++ i)
             {
-               generator .string += generator .ListIndent ();
+               generator .ListIndent ();
 
                for (let c = 0, first = i * components; c < components; ++ c, ++ first)
                   value [c] = array [first];
@@ -1000,26 +1008,26 @@ Object .assign (Object .setPrototypeOf (X3DTypedArrayField .prototype, X3DArrayF
                value .toJSONStreamValue (generator);
 
                generator .string += ',';
-               generator .string += generator .ListBreak ();
+               generator .ListBreak ();
             }
 
-            generator .string += generator .ListIndent ();
+            generator .ListIndent ();
 
-            for (let c = 0, first = (length - 1) * components; c < components; ++ c, ++ first)
+            for (let c = 0, first = last * components; c < components; ++ c, ++ first)
                value [c] = array [first];
 
             value .toJSONStreamValue (generator);
          }
 
-         generator .string += generator .ListBreak ();
-         generator .string += generator .DecIndent ();
-         generator .string += generator .ListIndent ();
+         generator .ListBreak ();
+         generator .DecIndent ();
+         generator .ListIndent ();
          generator .string += ']';
       }
       else
       {
          generator .string += '[';
-         generator .string += generator .TidySpace ();
+         generator .TidySpace ();
          generator .string += ']';
       }
    },

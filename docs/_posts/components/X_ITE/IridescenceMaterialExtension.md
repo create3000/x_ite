@@ -32,15 +32,15 @@ The IridescenceMaterialExtension node belongs to the [X_ITE](/x_ite/components/o
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFFloat | [in, out] | [iridescence](#fields-iridescence) | 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFFloat | [in, out] | [iridescence](#fields-iridescence) | 0 |
 | SFString | [in, out] | [iridescenceTextureMapping](#fields-iridescenceTextureMapping) | "" |
-| SFNode | [in, out] | [iridescenceTexture](#fields-iridescenceTexture) | NULL  |
-| SFFloat | [in, out] | [iridescenceIndexOfRefraction](#fields-iridescenceIndexOfRefraction) | 1.3  |
-| SFFloat | [in, out] | [iridescenceThicknessMinimum](#fields-iridescenceThicknessMinimum) | 100  |
-| SFFloat | [in, out] | [iridescenceThicknessMaximum](#fields-iridescenceThicknessMaximum) | 400  |
+| SFNode | [in, out] | [iridescenceTexture](#fields-iridescenceTexture) | NULL |
+| SFFloat | [in, out] | [iridescenceIndexOfRefraction](#fields-iridescenceIndexOfRefraction) | 1.3 |
+| SFFloat | [in, out] | [iridescenceThicknessMinimum](#fields-iridescenceThicknessMinimum) | 100 |
+| SFFloat | [in, out] | [iridescenceThicknessMaximum](#fields-iridescenceThicknessMaximum) | 400 |
 | SFString | [in, out] | [iridescenceThicknessTextureMapping](#fields-iridescenceThicknessTextureMapping) | "" |
-| SFNode | [in, out] | [iridescenceThicknessTexture](#fields-iridescenceThicknessTexture) | NULL  |
+| SFNode | [in, out] | [iridescenceThicknessTexture](#fields-iridescenceThicknessTexture) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -52,7 +52,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
-### SFFloat [in, out] **iridescence** 0 <small>[0,∞)</small>
+### SFFloat [in, out] **iridescence** 0 <small>[0,1]</small>
 {: #fields-iridescence }
 
 The iridescence intensity factor.
@@ -65,7 +65,7 @@ Input/Output field *iridescenceTextureMapping*.
 ### SFNode [in, out] **iridescenceTexture** NULL <small>[X3DSingleTextureNode]</small>
 {: #fields-iridescenceTexture }
 
-The iridescence intensity texture.
+The iridescence intensity texture, stored in the red (R) channel.
 
 ### SFFloat [in, out] **iridescenceIndexOfRefraction** 1.3 <small>[1,∞)</small>
 {: #fields-iridescenceIndexOfRefraction }
@@ -90,11 +90,18 @@ Input/Output field *iridescenceThicknessTextureMapping*.
 ### SFNode [in, out] **iridescenceThicknessTexture** NULL <small>[X3DSingleTextureNode]</small>
 {: #fields-iridescenceThicknessTexture }
 
-The thickness texture of the thin-film layer.
+The thickness texture of the thin-film layer, stored in the green (G) channel.
 
 ## Example
 
 - [View »Iridescent Dish With Olives« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=IridescentDishWithOlives)
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

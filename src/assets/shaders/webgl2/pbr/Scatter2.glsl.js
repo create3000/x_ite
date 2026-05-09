@@ -1,5 +1,6 @@
 export default () => /* glsl */ `
-// Originally from:
+
+// Original source code from:
 // https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/scatter.frag
 
 // This fragment shader accumulates the diffuse light contribution for subsurface scattering in two color attachments for ibl and punctual lighting.
@@ -10,10 +11,9 @@ export default () => /* glsl */ `
 uniform float x3d_ScatterMaterialIdEXT;
 
 vec4
-getMaterialColor ()
+getMaterialColor (const in vec4 fragCoord)
 {
-   vec3 singleScatter = multiToSingleScatter ();
-   vec4 baseColor     = getBaseColor ();
+   vec4 baseColor = getBaseColor ();
 
    #if defined (X3D_TEXTURE_PROJECTION)
       baseColor .rgb *= getTextureProjectorColor ();
@@ -70,6 +70,12 @@ getMaterialColor ()
       materialInfo = getDiffuseTransmissionInfo (materialInfo);
    #endif
 
+   #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+      materialInfo = getVolumeScatterInfo (materialInfo);
+
+      vec3 singleScatter = multiToSingleScatter (materialInfo .multiscatterColor);
+   #endif
+
    materialInfo .perceptualRoughness = clamp (materialInfo .perceptualRoughness, 0.0, 1.0);
 
    // Roughness is authored as perceptual roughness; as is convention,
@@ -91,7 +97,7 @@ getMaterialColor ()
    #endif
 
    // Calculate lighting contribution from image based lighting source (IBL)
-   #if defined (X3D_USE_IBL)
+   #if defined (X3D_USE_IBL) || defined (X3D_TRANSMISSION_MATERIAL_EXT)
       #if defined (X3D_DIFFUSE_TRANSMISSION_MATERIAL_EXT)
          f_diffuse = getDiffuseLight (n) * materialInfo .diffuseTransmissionColorFactor * singleScatter;
 

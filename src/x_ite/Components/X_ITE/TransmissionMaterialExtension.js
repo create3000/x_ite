@@ -49,7 +49,7 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
    {
       this .transmissionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._transmissionTexture);
 
-      this .setTexture (0, this .transmissionTextureNode);
+      this .addTexture (0, this .transmissionTextureNode);
    },
    getExtensionKey ()
    {
@@ -78,7 +78,7 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
       const
          browser                   = this .getBrowser (),
          transmissionBuffer        = browser .getTransmissionBuffer (),
-         transmissionUnit          = browser .getTextureUnit (),
+         transmissionUnit          = browser .popTextureUnit (),
          transmissionBufferTexture = transmissionBuffer .getColorTexture ();
 
       gl .uniform1f (shaderObject .x3d_TransmissionEXT, this .transmission);
@@ -86,9 +86,6 @@ Object .assign (Object .setPrototypeOf (TransmissionMaterialExtension .prototype
       gl .activeTexture (gl .TEXTURE0 + transmissionUnit);
       gl .bindTexture (gl .TEXTURE_2D, transmissionBufferTexture);
       gl .uniform1i (shaderObject .x3d_TransmissionSamplerEXT, transmissionUnit);
-
-      if (!+this .getTextureBits ())
-         return;
 
       this .transmissionTextureNode ?.setNamedShaderUniforms (gl,
          shaderObject .x3d_TransmissionTextureEXT,

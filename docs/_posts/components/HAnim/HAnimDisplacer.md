@@ -29,10 +29,10 @@ The HAnimDisplacer node belongs to the [HAnim](/x_ite/components/overview/#hanim
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFString | [in, out] | [name](#fields-name) | "" |
-| SFFloat | [in, out] | [weight](#fields-weight) | 0  |
+| SFFloat | [in, out] | [weight](#fields-weight) | 0 |
 | MFInt32 | [in, out] | [coordIndex](#fields-coordIndex) | [ ] |
 | MFVec3f | [in, out] | [displacements](#fields-displacements) | [ ] |
 {: .fields }
@@ -108,6 +108,7 @@ Defines index values into the parent [HAnimSegment](/x_ite/components/hanim/hani
 
 - HAnimDisplacer can be used in three different ways: (a) identify vertices corresponding to a particular feature in a parent [HAnimSegment](/x_ite/components/hanim/hanimsegment/) node, (b) represent a particular muscular action for a parent [HAnimJoint](/x_ite/components/hanim/hanimjoint/) node by displacing corresponding [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skin vertices in various directions (linearly or radially), or (c) represent a complete configuration of coordinate vertices in parent [HAnimSegment](/x_ite/components/hanim/hanimsegment/) or [HAnimJoint](/x_ite/components/hanim/hanimjoint/) nodes. Example: in the case of a face, there might be a separate HAnimDisplacer node for each facial expression.
 - Multiple HAnimDisplacer nodes must appear consecutively inside parent [HAnimSegment](/x_ite/components/hanim/hanimsegment/) for proper content validation in XML encoding.
+- [HAnim Architecture draft version 2.1](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-1/ISO-IEC19774-1v2.1/ISO-IEC19774-1v2.1-WD/Architecture/ObjectInterfaces.html#Displacer)
 - [HAnim Specification](https://www.web3d.org/documents/specifications/19774/V2.0)
 - [HAnim Specification part 1, Displacer](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/ObjectInterfaces.html#Displacer)
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/HumanoidAnimation.pdf)
@@ -118,6 +119,13 @@ Defines index values into the parent [HAnimSegment](/x_ite/components/hanim/hani
 - Index values for [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skin [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), skinCoord and skinNormal nodes must all be consistently defined together with [HAnimJoint](/x_ite/components/hanim/hanimjoint/) [HAnimSegment](/x_ite/components/hanim/hanimsegment/) and HAnimDisplacer nodes for proper skin animation.
 - Requires X3D `profile='Full'` or else include `<component name='HAnim' level='1'/>`
 - For X3D3 HAnim1, previous spelling of component name was 'H-Anim' (including hyphen).
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

@@ -3,7 +3,7 @@ title: Sensing the Viewer
 date: 2022-11-28
 nav: tutorials-textures-lights-and-environment
 categories: [Tutorials]
-tags: [Sensing, Viewer]
+tags: [VisibilitySensor, ProximitySensor, Collision]
 ---
 ## Motivation
 
@@ -48,8 +48,8 @@ A [VisibilitySensor](/x_ite/components/environmentalsensor/visibilitysensor/) no
 
 ```x3d
 <VisibilitySensor DEF='Sensor'
-    center='0.0 0.0 0.0'
-    size='14.0 14.0 14.0'/>
+    center='0 0 0'
+    size='14 14 14'/>
 
 <ROUTE fromNode='Sensor' fromField='enterTime' toNode='Clock' toField='set_startTime'/>
 ```
@@ -58,8 +58,8 @@ A [VisibilitySensor](/x_ite/components/environmentalsensor/visibilitysensor/) no
 
 ```vrml
 DEF Sensor VisibilitySensor {
-  center 0.0 0.0 0.0
-  size   14.0 14.0 14.0
+  center 0 0 0
+  size 14 14 14
 }
 
 ROUTE Sensor.enterTime TO Clock.set_startTime
@@ -87,8 +87,8 @@ A [ProximitySensor](/x_ite/components/environmentalsensor/proximitysensor/) node
 
 ```x3d
 <ProximitySensor DEF='Sensor'
-    center='0.0 0.0 0.0'
-    size='14.0 14.0 14.0'/>
+    center='0 0 0'
+    size='14 14 14'/>
 
 <ROUTE fromNode='Sensor' fromField='enterTime' toNode='Clock' toField='set_startTime'/>
 ```
@@ -97,8 +97,8 @@ A [ProximitySensor](/x_ite/components/environmentalsensor/proximitysensor/) node
 
 ```vrml
 DEF Sensor ProximitySensor {
-  center 0.0 0.0 0.0
-  size   14.0 14.0 14.0
+  center 0 0 0
+  size 14 14 14
 }
 
 ROUTE Sensor.enterTime TO Clock.set_startTime

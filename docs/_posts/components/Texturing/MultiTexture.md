@@ -30,10 +30,10 @@ The MultiTexture node belongs to the [Texturing](/x_ite/components/overview/#tex
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
-| SFColor | [in, out] | [color](#fields-color) | 1 1 1  |
-| SFFloat | [in, out] | [alpha](#fields-alpha) | 1  |
+| SFColor | [in, out] | [color](#fields-color) | 1 1 1 |
+| SFFloat | [in, out] | [alpha](#fields-alpha) | 1 |
 | MFString | [in, out] | [mode](#fields-mode) | [ ] |
 | MFString | [in, out] | [source](#fields-source) | [ ] |
 | MFString | [in, out] | [function](#fields-function) | [ ] |
@@ -126,7 +126,7 @@ Contained *texture* nodes ([ImageTexture](/x_ite/components/texturing/imagetextu
 
 ### Hints
 
-- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
 - Multitexturing is accomplished using MultiTexture, [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) and [MultiTextureTransform](/x_ite/components/texturing/multitexturetransform/) nodes.
 - Texture coordinates are reapplied (or else recomputed if textureTransform field initially NULL) whenever the corresponding vertex-based geometry changes.
@@ -141,13 +141,20 @@ Contained *texture* nodes ([ImageTexture](/x_ite/components/texturing/imagetextu
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Texturing/MultiTexture/MultiTexture.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Texturing/MultiTexture/MultiTexture.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Texturing/MultiTexture/screenshot.avif" alt="MultiTexture"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Texturing/MultiTexture/MultiTexture.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Texturing/MultiTexture/MultiTexture.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

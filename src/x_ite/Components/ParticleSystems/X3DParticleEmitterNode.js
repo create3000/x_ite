@@ -466,9 +466,9 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       }
 
       float
-      getRandomValue (const in float min, const in float max)
+      getRandomValue (const in float min_, const in float max_)
       {
-         return min + random () * (max - min);
+         return min_ + random () * (max_ - min_);
       }
 
       float
@@ -894,7 +894,8 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       precision highp float;
 
       void
-      main () { }
+      main ()
+      { }
       `;
 
       // Vertex shader
@@ -972,7 +973,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       {
          const location = gl .getUniformLocation (program, name);
 
-         gl .uniform1i (location, program [name + "TextureUnit"] = browser .getTextureUnit ());
+         gl .uniform1i (location, program [name + "TextureUnit"] = browser .popTextureUnit ());
       }
 
       for (const [key, symbol] of Object .entries (ParticleSampler))
@@ -1008,12 +1009,12 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       return texture;
    },
-   getTextureUnit (browser, object, property)
+   popTextureUnit (browser, object, property)
    {
       const textureUnit = object [property];
 
       if (textureUnit === undefined)
-         return object [property] = browser .getTextureUnit ();
+         return object [property] = browser .popTextureUnit ();
 
       return textureUnit;
    },

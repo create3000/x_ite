@@ -32,8 +32,8 @@ The EmissiveStrengthMaterialExtension node belongs to the [X_ITE](/x_ite/compone
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFFloat | [in, out] | [emissiveStrength](#fields-emissiveStrength) | 1  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFFloat | [in, out] | [emissiveStrength](#fields-emissiveStrength) | 1 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -48,12 +48,18 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### SFFloat [in, out] **emissiveStrength** 1 <small>[0,∞)</small>
 {: #fields-emissiveStrength }
 
-The strength adjustment to be multiplied with the material's emissive value.
- strength of the dispersion effect, specified as 20/Abbe number.
+The strength adjustment to be multiplied with the material's *emissiveColor* value.
 
 ## Example
 
 - [View »Emissive Strength Test« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=EmissiveStrengthTest)
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

@@ -31,21 +31,21 @@ The TextureBackground node belongs to the [EnvironmentalEffects](/x_ite/componen
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in] | [set_bind](#fields-set_bind) |  |
 | MFFloat | [in, out] | [skyAngle](#fields-skyAngle) | [ ] |
-| MFColor | [in, out] | [skyColor](#fields-skyColor) | 0 0 0  |
+| MFColor | [in, out] | [skyColor](#fields-skyColor) | 0 0 0 |
 | MFFloat | [in, out] | [groundAngle](#fields-groundAngle) | [ ] |
 | MFColor | [in, out] | [groundColor](#fields-groundColor) | [ ] |
-| SFFloat | [in, out] | [transparency](#fields-transparency) | 0  |
+| SFFloat | [in, out] | [transparency](#fields-transparency) | 0 |
 | SFBool | [out] | [isBound](#fields-isBound) |  |
 | SFTime | [out] | [bindTime](#fields-bindTime) |  |
-| SFNode | [in, out] | [frontTexture](#fields-frontTexture) | NULL  |
-| SFNode | [in, out] | [backTexture](#fields-backTexture) | NULL  |
-| SFNode | [in, out] | [leftTexture](#fields-leftTexture) | NULL  |
-| SFNode | [in, out] | [rightTexture](#fields-rightTexture) | NULL  |
-| SFNode | [in, out] | [topTexture](#fields-topTexture) | NULL  |
-| SFNode | [in, out] | [bottomTexture](#fields-bottomTexture) | NULL  |
+| SFNode | [in, out] | [frontTexture](#fields-frontTexture) | NULL |
+| SFNode | [in, out] | [backTexture](#fields-backTexture) | NULL |
+| SFNode | [in, out] | [leftTexture](#fields-leftTexture) | NULL |
+| SFNode | [in, out] | [rightTexture](#fields-rightTexture) | NULL |
+| SFNode | [in, out] | [topTexture](#fields-topTexture) | NULL |
+| SFNode | [in, out] | [bottomTexture](#fields-bottomTexture) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -77,13 +77,13 @@ The angle array values increase from 0.0 zenith (straight up) to π/2=1.570796 (
 
 #### Hints
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 - [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 #### Warnings
 
 - You must have one more skyColor value than *skyAngle* values.
-- Colors at *skyAngle*=0 are ignored. Interchange profile
+- Colors at *skyAngle*=0 are ignored.
 
 ### MFColor [in, out] **skyColor** 0 0 0 <small>[0,1]</small>
 {: #fields-skyColor }
@@ -93,12 +93,12 @@ The angle array values increase from 0.0 zenith (straight up) to π/2=1.570796 (
 #### Hints
 
 - Setting the same color at two consecutive angles produces a solid color band.
-- Only one color might be rendered, others can be ignored.
+- In Interchange profile only one color might be rendered, others can be ignored.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
 #### Warning
 
-- You must have one more *skyColor* value than skyAngle values. Interchange profile
+- You must have one more *skyColor* value than skyAngle values.
 
 ### MFFloat [in, out] **groundAngle** [ ] <small>[0,π/2]</small>
 {: #fields-groundAngle }
@@ -107,13 +107,13 @@ The angle array values increase from 0.0 nadir (straight down) to π/2=1.570796 
 
 #### Hints
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 - [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
 #### Warnings
 
 - You must have one more groundColor value than *groundAngle* values.
-- Colors at *groundAngle*=0 are ignored. Interchange profile
+- Colors at *groundAngle*=0 are ignored.
 
 ### MFColor [in, out] **groundColor** [ ] <small>[0,1]</small>
 {: #fields-groundColor }
@@ -123,12 +123,12 @@ The angle array values increase from 0.0 nadir (straight down) to π/2=1.570796 
 #### Hints
 
 - Setting the same color at two consecutive angles produces a solid color band.
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
 #### Warning
 
-- You must have one more *groundColor* value than groundAngle values. Interchange profile
+- You must have one more *groundColor* value than groundAngle values.
 
 ### SFFloat [in, out] **transparency** 0 <small>[0,1]</small>
 {: #fields-transparency }
@@ -225,13 +225,20 @@ Parent TextureBackground element can contain up to six image nodes ([ImageTextur
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/EnvironmentalEffects/TextureBackground/TextureBackground.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/EnvironmentalEffects/TextureBackground/TextureBackground.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/EnvironmentalEffects/TextureBackground/screenshot.avif" alt="TextureBackground"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/EnvironmentalEffects/TextureBackground/TextureBackground.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/EnvironmentalEffects/TextureBackground/TextureBackground.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

@@ -12,6 +12,8 @@ function MultiTextureCoordinate (executionContext)
 
    this .addType (X3DConstants .MultiTextureCoordinate);
 
+   // Private properties
+
    const browser = this .getBrowser ();
 
    this .maxTexCoords           = browser .getMaxTexCoords ();

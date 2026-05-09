@@ -3,7 +3,7 @@ title: Constants Services
 date: 2022-11-28
 nav: reference
 categories: [Reference]
-tags: [Constants, Services, Authoring, Interface]
+tags: [X3DConstants, ECMAScript, Javascript]
 ---
 ## X3DConstants
 
@@ -207,6 +207,7 @@ All concrete node types from *AcousticProperties, Analyser, …* to *WorldInfo.*
 - IndexedTriangleSet
 - IndexedTriangleStripSet
 - Inline
+- InlineGeometry
 - InstancedShape
 - IntegerSequencer
 - IntegerTrigger
@@ -290,6 +291,7 @@ All concrete node types from *AcousticProperties, Analyser, …* to *WorldInfo.*
 - QuadSet
 - ReceiverPdu
 - Rectangle2D
+- RenderedTexture
 - RigidBody
 - RigidBodyCollection
 - ScalarChaser
@@ -449,6 +451,7 @@ All abstract node types from *X3DAppearanceChildNode, X3DAppearanceNode,* … to
 - X3DTouchSensorNode
 - X3DTriggerNode
 - X3DUrlObject
+- X3DUrlOutputObject
 - X3DVertexAttributeNode
 - X3DViewpointNode
 - X3DViewportNode

@@ -121,7 +121,7 @@ Object .assign (X3DOptimizer .prototype,
             return node;
       }
 
-      if (!node .children)
+      if (!node .getNodeType () .includes (X3DConstants .X3DGroupingNode))
          return node;
 
       const children = Array .from (node .children);
@@ -237,7 +237,7 @@ Object .assign (X3DOptimizer .prototype,
       const
          translation      = new Vector3 (),
          rotation         = new Rotation4 (),
-         scale            = new Vector3 (1),
+         scale            = new Vector3 (),
          scaleOrientation = new Rotation4 (),
          nodeMatrix       = new Matrix4 (),
          childMatrix      = new Matrix4 ();

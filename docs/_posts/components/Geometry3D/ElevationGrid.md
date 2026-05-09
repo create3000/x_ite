@@ -3,7 +3,7 @@ title: ElevationGrid
 date: 2023-01-07
 nav: components-Geometry3D
 categories: [components, Geometry3D]
-tags: [ElevationGrid, Geometry3D]
+tags: [ElevationGrid, Geometry3D, VRML]
 ---
 <style>
 .post h3 {
@@ -29,23 +29,23 @@ The ElevationGrid node belongs to the [Geometry3D](/x_ite/components/overview/#g
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFFloat | [in] | [set_height](#fields-set_height) |  |
-| SFInt32 | [ ] | [xDimension](#fields-xDimension) | 0  |
-| SFInt32 | [ ] | [zDimension](#fields-zDimension) | 0  |
-| SFFloat | [ ] | [xSpacing](#fields-xSpacing) | 1  |
-| SFFloat | [ ] | [zSpacing](#fields-zSpacing) | 1  |
+| SFInt32 | [ ] | [xDimension](#fields-xDimension) | 0 |
+| SFInt32 | [ ] | [zDimension](#fields-zDimension) | 0 |
+| SFFloat | [ ] | [xSpacing](#fields-xSpacing) | 1 |
+| SFFloat | [ ] | [zSpacing](#fields-zSpacing) | 1 |
 | SFBool | [ ] | [solid](#fields-solid) | TRUE |
 | SFBool | [ ] | [ccw](#fields-ccw) | TRUE |
-| SFFloat | [ ] | [creaseAngle](#fields-creaseAngle) | 0  |
+| SFFloat | [ ] | [creaseAngle](#fields-creaseAngle) | 0 |
 | SFBool | [ ] | [colorPerVertex](#fields-colorPerVertex) | TRUE |
 | SFBool | [ ] | [normalPerVertex](#fields-normalPerVertex) | TRUE |
 | MFNode | [in, out] | [attrib](#fields-attrib) | [ ] |
-| SFNode | [in, out] | [fogCoord](#fields-fogCoord) | NULL  |
-| SFNode | [in, out] | [color](#fields-color) | NULL  |
-| SFNode | [in, out] | [texCoord](#fields-texCoord) | NULL  |
-| SFNode | [in, out] | [tangent](#fields-tangent) | NULL  |
-| SFNode | [in, out] | [normal](#fields-normal) | NULL  |
+| SFNode | [in, out] | [fogCoord](#fields-fogCoord) | NULL |
+| SFNode | [in, out] | [color](#fields-color) | NULL |
+| SFNode | [in, out] | [texCoord](#fields-texCoord) | NULL |
+| SFNode | [in, out] | [tangent](#fields-tangent) | NULL |
+| SFNode | [in, out] | [normal](#fields-normal) | NULL |
 | MFFloat | [ ] | [height](#fields-height) | [ ] |
 {: .fields }
 
@@ -176,7 +176,7 @@ Whether [Normal](/x_ite/components/rendering/normal/) node vector values are app
 ### MFNode [in, out] **attrib** [ ] <small>[X3DVertexAttributeNode]</small>
 {: #fields-attrib }
 
-Single contained [FloatVertexAttribute](/x_ite/components/shaders/floatvertexattribute/) node that can specify list of per-vertex attribute information for programmable shaders.
+Optional single contained [FloatVertexAttribute](/x_ite/components/shaders/floatvertexattribute/) node that can specify list of per-vertex attribute information for programmable shaders.
 
 #### Hint
 
@@ -185,17 +185,17 @@ Single contained [FloatVertexAttribute](/x_ite/components/shaders/floatvertexatt
 ### SFNode [in, out] **fogCoord** NULL <small>[FogCoordinate]</small>
 {: #fields-fogCoord }
 
-Single contained [FogCoordinate](/x_ite/components/environmentaleffects/fogcoordinate/) node that can specify depth parameters for fog in corresponding geometry.
+Optional single contained [FogCoordinate](/x_ite/components/environmentaleffects/fogcoordinate/) node that can specify depth parameters for fog in corresponding geometry.
 
 ### SFNode [in, out] **color** NULL <small>[X3DColorNode]</small>
 {: #fields-color }
 
-Single contained [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) node that can specify *color* values applied to corresponding vertices according to colorPerVertex field.
+Optional single contained [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) node that can specify *color* values applied to corresponding vertices according to colorPerVertex field.
 
 ### SFNode [in, out] **texCoord** NULL <small>[X3DTextureCoordinateNode]</small>
 {: #fields-texCoord }
 
-Single contained [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/), [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) or [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) node that can specify coordinates for texture mapping onto corresponding geometry.
+Optional single contained [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/), [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) or [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) node that can specify coordinates for texture mapping onto corresponding geometry.
 
 ### SFNode [in, out] **tangent** NULL <small>[Tangent]</small> <small class="blue">non-standard</small>
 {: #fields-tangent }
@@ -205,7 +205,7 @@ Input/Output field *tangent*. If there is no [Tangent](/x_ite/components/renderi
 ### SFNode [in, out] **normal** NULL <small>[X3DNormalNode]</small>
 {: #fields-normal }
 
-Single contained [Normal](/x_ite/components/rendering/normal/) node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
+Optional single contained [Normal](/x_ite/components/rendering/normal/) node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
 
 #### Hint
 
@@ -245,7 +245,7 @@ Grid array of *height* vertices with upward direction along +Y axis, with xDimen
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geometry3D/ElevationGrid/ElevationGrid.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Geometry3D/ElevationGrid/ElevationGrid.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Geometry3D/ElevationGrid/screenshot.avif" alt="ElevationGrid"/>
 </x3d-canvas>
 
@@ -253,6 +253,14 @@ Grid array of *height* vertices with upward direction along +Y axis, with xDimen
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Geometry3D/ElevationGrid/ElevationGrid.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of ElevationGrid Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#ElevationGrid)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

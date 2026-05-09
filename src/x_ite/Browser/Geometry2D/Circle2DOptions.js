@@ -47,7 +47,7 @@ Object .assign (Object .setPrototypeOf (Circle2DOptions .prototype, X3DBaseNode 
 
       for (let n = 0; n < dimension; ++ n)
       {
-         const p = Complex .Polar (1, angle * n);
+         const p = Complex .fromPolar (1, angle * n);
 
          point .push (new Fields .SFVec3f (p .real, p .imag, 0));
       }

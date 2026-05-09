@@ -35,9 +35,10 @@ function X3DRenderObject (executionContext)
    this .viewMatrixArray          = new Float32Array (16);
    this .cameraSpaceMatrixArray   = new Float32Array (16);
    this .hitRay                   = new Line3 ();
+   this .path                     = [ ];
    this .sensors                  = [[ ]];
    this .viewpointGroups          = [ ];
-   this .lights                   = [ ];
+   this .lights                   = new Map ();
    this .globalLightsKeys         = [ ];
    this .globalLights             = [ ];
    this .localObjectsKeys         = [ ];
@@ -49,23 +50,24 @@ function X3DRenderObject (executionContext)
    this .layouts                  = [ ];
    this .hAnimNode                = [ null ];
    this .invHumanoidMatrix        = new MatrixStack (Matrix4);
-   this .generatedCubeMapTextures = [ ];
+   this .renderedTextures         = new Set ();
    this .collisions               = [ ];
    this .collisionTime            = new StopWatch ();
    this .numPointingShapes        = 0;
    this .numCollisionShapes       = 0;
-   this .numShadowShapes          = 0;
+   this .numDepthShapes          = 0;
    this .numOpaqueShapes          = 0;
    this .numTransparentShapes     = 0;
    this .pointingShapes           = [ ];
    this .collisionShapes          = [ ];
    this .activeCollisions         = [ ];
-   this .shadowShapes             = [ ];
+   this .depthShapes             = [ ];
    this .opaqueShapes             = [ ];
    this .transparentShapes        = [ ];
    this .transparencySorter       = new MergeSort (this .transparentShapes, (a, b) => a .distance < b .distance);
    this .renderPasses             = 0;
    this .renderPass               = RenderPass .NONE;
+   this .depthClearColor          = new Vector4 (1, -1, -1, -1); // '1' for infinity, '-1' for no hit.
    this .speed                    = 0;
    this .depthBuffer              = new TextureBuffer ({ browser, width: DEPTH_BUFFER_SIZE, height: DEPTH_BUFFER_SIZE, float: true, colorTextures: 2 });
 }
@@ -228,6 +230,10 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .hitRay;
    },
+   getPath ()
+   {
+      return this .path;
+   },
    getSensors ()
    {
       return this .sensors;
@@ -317,9 +323,9 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .invHumanoidMatrix;
    },
-   getGeneratedCubeMapTextures ()
+   getRenderedTextures ()
    {
-      return this .generatedCubeMapTextures;
+      return this .renderedTextures;
    },
    getCollisions ()
    {
@@ -329,50 +335,9 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .collisionTime;
    },
-   setNumPointingShapes (value)
-   {
-      this .numPointingShapes = value;
-   },
-   getNumPointingShapes ()
-   {
-      return this .numPointingShapes;
-   },
-   getPointingShapes ()
-   {
-      return this .pointingShapes;
-   },
-   setNumCollisionShapes (value)
-   {
-      this .numCollisionShapes = value;
-   },
-   getNumCollisionShapes ()
-   {
-      return this .numCollisionShapes;
-   },
-   getCollisionShapes ()
-   {
-      return this .collisionShapes;
-   },
-   setNumShadowShapes (value)
-   {
-      this .numShadowShapes = value;
-   },
-   getNumShadowShapes ()
-   {
-      return this .numShadowShapes;
-   },
-   getShadowShapes ()
-   {
-      return this .shadowShapes;
-   },
    getNumOpaqueShapes ()
    {
       return this .numOpaqueShapes;
-   },
-   setNumOpaqueShapes (value)
-   {
-      // Needed for StaticGroup.
-      this .numOpaqueShapes = value;
    },
    getOpaqueShapes ()
    {
@@ -382,11 +347,6 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .numTransparentShapes;
    },
-   setNumTransparentShapes (value)
-   {
-      // Needed for StaticGroup.
-      this .numTransparentShapes = value;
-   },
    getTransparentShapes ()
    {
       return this .transparentShapes;
@@ -394,6 +354,10 @@ Object .assign (X3DRenderObject .prototype,
    getRenderPass ()
    {
       return this .renderPass;
+   },
+   setDepthClearColor (r, g, b, a)
+   {
+      this .depthClearColor .set (r, g, b, a);
    },
    constrainTranslation: (() =>
    {
@@ -596,12 +560,13 @@ Object .assign (X3DRenderObject .prototype,
             this .gravitate ();
             break;
          }
+         case TraverseType .DEPTH:
          case TraverseType .SHADOW:
          {
-            this .numShadowShapes = 0;
+            this .numDepthShapes = 0;
 
             callback .call (group, type, this);
-            this .depth (this .shadowShapes, this .numShadowShapes, false);
+            this .depth (this .depthShapes, this .numDepthShapes, false);
             break;
          }
          case TraverseType .DISPLAY:
@@ -712,20 +677,18 @@ Object .assign (X3DRenderObject .prototype,
          const renderContext = this .collisionShapes [num];
 
          renderContext .modelViewMatrix .set (modelViewMatrix);
+         renderContext .hAnimNode = this .hAnimNode .at (-1);
          renderContext .shapeNode = shapeNode;
 
-         // Collisions
-
-         assign (renderContext .collisions, this .collisions);
-
-         // Clip planes
+         // Clip planes & Collision nodes
 
          assign (renderContext .clipPlanes, this .localObjects);
+         assign (renderContext .collisions, this .collisions);
 
          return true;
       };
    })(),
-   addShadowShape: (() =>
+   addDepthShape: (() =>
    {
       const
          bboxSize   = new Vector3 (),
@@ -745,9 +708,9 @@ Object .assign (X3DRenderObject .prototype,
          if (!viewVolume .intersectsSphere (radius, bboxCenter))
             return false;
 
-         const num = this .numShadowShapes ++;
+         const num = this .numDepthShapes ++;
 
-         if (num === this .shadowShapes .length)
+         if (num === this .depthShapes .length)
          {
             const renderContext = {
                renderObject: this,
@@ -757,10 +720,10 @@ Object .assign (X3DRenderObject .prototype,
                get renderContext () { return this; },
             };
 
-            this .shadowShapes .push (renderContext);
+            this .depthShapes .push (renderContext);
          }
 
-         const renderContext = this .shadowShapes [num];
+         const renderContext = this .depthShapes [num];
 
          renderContext .modelViewMatrix .set (modelViewMatrix);
          renderContext .viewport .assign (viewVolume .getViewport ());
@@ -925,20 +888,24 @@ Object .assign (X3DRenderObject .prototype,
          Vector3 .NEGATIVE_Z_AXIS,
       ];
 
-      const closestShapes = new Set ();
+      const
+         closestShapes    = new Set (),
+         activeCollisions = [ ]; // current active Collision nodes
 
       return function ()
       {
+         const browser = this .getBrowser ();
+
+         // Check if there are enabled Collision nodes.
+         if (!browser .getCollisionCount ())
+            return;
+
          // Collision nodes are handled here.
 
-         const
-            activeCollisions = [ ], // current active Collision nodes
-            collisionRadius  = this .getNavigationInfo () .getCollisionRadius () * Math .SQRT2;
+         const collisionRadius = this .getNavigationInfo () .getCollisionRadius () * Math .SQRT2;
 
          if (this .numCollisionShapes)
          {
-            closestShapes .clear ();
-
             for (const axis of axes)
             {
                const closestObject = this .getClosestObject (axis);
@@ -959,26 +926,28 @@ Object .assign (X3DRenderObject .prototype,
                for (const collision of collisions)
                   activeCollisions .push (collision);
             }
+
+            closestShapes .clear ();
          }
 
          // Set isActive to FALSE for affected nodes.
 
-         if (this .activeCollisions .length)
+         for (const collision of this .activeCollisions)
          {
-            const inActiveCollisions = activeCollisions .length
-                                       ? this .activeCollisions .filter (a => !activeCollisions .includes (a))
-                                       : this .activeCollisions;
+            if (activeCollisions .includes (collision))
+               continue;
 
-            for (const collision of inActiveCollisions)
-               collision .set_active (false);
+            collision .set_active__ (false);
          }
 
          // Set isActive to TRUE for affected nodes.
 
-         this .activeCollisions = activeCollisions;
-
          for (const collision of activeCollisions)
-            collision .set_active (true);
+            collision .set_active__ (true);
+
+         assign (this .activeCollisions, activeCollisions);
+
+         activeCollisions .length = 0;
       };
    })(),
    gravitate: (() =>
@@ -1113,7 +1082,7 @@ Object .assign (X3DRenderObject .prototype,
          gl .viewport (... viewport);
          gl .scissor (... viewport);
 
-         gl .clearColor (1, -1, -1, -1); // '1' for infinity, '-1' for no hit.
+         gl .clearColor (... this .depthClearColor);
          gl .clear (gl .COLOR_BUFFER_BIT | gl .DEPTH_BUFFER_BIT);
 
          // Render all objects
@@ -1151,7 +1120,6 @@ Object .assign (X3DRenderObject .prototype,
    draw ()
    {
       const
-         independent              = this .isIndependent (),
          browser                  = this .getBrowser (),
          gl                       = browser .getContext (),
          pose                     = browser .getPose (),
@@ -1160,9 +1128,9 @@ Object .assign (X3DRenderObject .prototype,
          viewport                 = this .viewVolumes .at (-1) .getViewport (),
          lights                   = this .lights,
          globalLightsKeys         = this .globalLightsKeys,
-         globalLightsKey          = globalLightsKeys .sort () .join (""),
+         globalLightsKey          = globalLightsKeys .join (""),
          globalLights             = this .globalLights,
-         generatedCubeMapTextures = this .generatedCubeMapTextures,
+         renderedTextures         = this .renderedTextures,
          globalShadows            = this .globalShadows,
          headlight                = this .getNavigationInfo () ._headlight .getValue ();
 
@@ -1174,18 +1142,16 @@ Object .assign (X3DRenderObject .prototype,
       this .viewMatrixArray        .set (this .getViewMatrix () .get ());
       this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
 
-      if (independent)
-      {
-         // Render shadow maps and prepare texture projectors.
+      // Render shadow maps and prepare texture projectors.
+      // This must be done before rendered textures are updated.
 
-         for (const light of lights)
-            light .renderShadowMap (this);
+      for (const light of lights .values ())
+         light .renderShadowMap (this);
 
-         // Render GeneratedCubeMapTexture nodes.
+      // Render GeneratedCubeMapTexture and RenderedTexture nodes.
 
-         for (const generatedCubeMapTexture of generatedCubeMapTextures)
-            generatedCubeMapTexture .renderTexture (this);
-      }
+      for (const renderedTexture of renderedTextures)
+         renderedTexture .renderTexture (this);
 
       this .globalShadow = globalShadows .at (-1);
 
@@ -1204,6 +1170,8 @@ Object .assign (X3DRenderObject .prototype,
 
       for (let i = 0; i < numFramebuffers; ++ i)
       {
+         this .advanceRenderCount ();
+
          // Set matrices with XR support.
 
          const view = this .view = pose ?.views [i];
@@ -1224,12 +1192,12 @@ Object .assign (X3DRenderObject .prototype,
          if (headlight)
             browser .getHeadlight () .setGlobalVariables (this);
 
-         for (const light of lights)
+         for (const light of lights .values ())
             light .setGlobalVariables (this);
 
          // Render transmission texture and volume scatter texture.
 
-         if (independent && this .renderPasses !== RenderPass .NONE)
+         if (this .renderPasses !== RenderPass .NONE)
          {
             // Render to volume scatter buffer.
 
@@ -1242,7 +1210,7 @@ Object .assign (X3DRenderObject .prototype,
 
                const volumeScatterBuffer = browser .getVolumeScatterBuffer ();
 
-               this .drawShapes (RenderPass .VOLUME_SCATTER_KEY, gl, browser, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport);
+               this .drawShapes (RenderPass .VOLUME_SCATTER_KEY, gl, volumeScatterBuffer, gl .COLOR_BUFFER_BIT, viewport);
             }
 
             // Render to transmission buffer.
@@ -1254,7 +1222,7 @@ Object .assign (X3DRenderObject .prototype,
 
                const transmissionBuffer = browser .getTransmissionBuffer ();
 
-               this .drawShapes (RenderPass .TRANSMISSION_KEY, gl, browser, transmissionBuffer, gl .COLOR_BUFFER_BIT, viewport);
+               this .drawShapes (RenderPass .TRANSMISSION_KEY, gl, transmissionBuffer, gl .COLOR_BUFFER_BIT, viewport);
 
                // Mipmap is later selected based on roughness and ior.
                gl .bindTexture (gl .TEXTURE_2D, transmissionBuffer .getColorTexture ());
@@ -1269,14 +1237,14 @@ Object .assign (X3DRenderObject .prototype,
 
          const frameBuffer = framebuffers [i];
 
-         this .drawShapes (RenderPass .RENDER_KEY, gl, browser, frameBuffer, 0, viewport);
+         this .drawShapes (RenderPass .RENDER_KEY, gl, frameBuffer, 0, viewport);
       }
 
       this .view = null;
 
       // POST DRAW
 
-      if (independent)
+      if (this .isIndependent ())
       {
          // Recycle clip planes, local fogs, local lights, and local projective textures.
 
@@ -1285,27 +1253,33 @@ Object .assign (X3DRenderObject .prototype,
          for (const localObject of localObjects)
             localObject .dispose ();
 
-         localObjects .length = 0;
+         localObjects .clear ();
 
          // Recycle global lights and global projective textures.
 
          for (const globalObject of globalLights)
             globalObject .dispose ();
+
+         browser .resetGlobalTextureUnits ();
+      }
+      else
+      {
+         for (const light of lights .values ())
+            light .modelViewMatrix .pop ();
       }
 
       // Reset containers.
 
-      globalLightsKeys         .length = 0;
-      globalLights             .length = 0;
-      lights                   .length = 0;
-      globalShadows            .length = 1;
-      generatedCubeMapTextures .length = 0;
+      globalLightsKeys .length = 0;
+      globalLights     .length = 0;
+      globalShadows    .length = 1;
+
+      lights           .clear ();
+      renderedTextures .clear ();
    },
-   drawShapes (renderPass, gl, browser, frameBuffer, clearBits, viewport)
+   drawShapes (renderPass, gl, frameBuffer, clearBits, viewport)
    {
       const { opaqueShapes, numOpaqueShapes, transparentShapes, numTransparentShapes } = this;
-
-      this .advanceRenderCount ();
 
       frameBuffer .bind ();
 

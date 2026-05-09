@@ -3,7 +3,7 @@ title: Appearance
 date: 2023-01-07
 nav: components-Shape
 categories: [components, Shape]
-tags: [Appearance, Shape]
+tags: [Appearance, Shape, VRML]
 ---
 <style>
 .post h3 {
@@ -29,20 +29,20 @@ The Appearance node belongs to the [Shape](/x_ite/components/overview/#shape) co
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFString | [in, out] | [alphaMode](#fields-alphaMode) | "AUTO"  |
-| SFFloat | [in, out] | [alphaCutoff](#fields-alphaCutoff) | 0.5  |
-| SFNode | [in, out] | [acousticProperties](#fields-acousticProperties) | NULL  |
-| SFNode | [in, out] | [pointProperties](#fields-pointProperties) | NULL  |
-| SFNode | [in, out] | [lineProperties](#fields-lineProperties) | NULL  |
-| SFNode | [in, out] | [fillProperties](#fields-fillProperties) | NULL  |
-| SFNode | [in, out] | [material](#fields-material) | NULL  |
-| SFNode | [in, out] | [backMaterial](#fields-backMaterial) | NULL  |
-| SFNode | [in, out] | [texture](#fields-texture) | NULL  |
-| SFNode | [in, out] | [textureTransform](#fields-textureTransform) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFString | [in, out] | [alphaMode](#fields-alphaMode) | "AUTO" |
+| SFFloat | [in, out] | [alphaCutoff](#fields-alphaCutoff) | 0.5 |
+| SFNode | [in, out] | [acousticProperties](#fields-acousticProperties) | NULL |
+| SFNode | [in, out] | [pointProperties](#fields-pointProperties) | NULL |
+| SFNode | [in, out] | [lineProperties](#fields-lineProperties) | NULL |
+| SFNode | [in, out] | [fillProperties](#fields-fillProperties) | NULL |
+| SFNode | [in, out] | [material](#fields-material) | NULL |
+| SFNode | [in, out] | [backMaterial](#fields-backMaterial) | NULL |
+| SFNode | [in, out] | [texture](#fields-texture) | NULL |
+| SFNode | [in, out] | [textureTransform](#fields-textureTransform) | NULL |
 | MFNode | [in, out] | [shaders](#fields-shaders) | [ ] |
-| SFNode | [in, out] | [blendMode](#fields-blendMode) | NULL  |
-| SFNode | [in, out] | [depthMode](#fields-depthMode) | NULL  |
+| SFNode | [in, out] | [blendMode](#fields-blendMode) | NULL |
+| SFNode | [in, out] | [depthMode](#fields-depthMode) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -75,27 +75,27 @@ Threshold value used for pixel rendering either transparent or opaque, used when
 ### SFNode [in, out] **acousticProperties** NULL <small>[AcousticProperties]</small>
 {: #fields-acousticProperties }
 
-Single contained *acousticProperties* node that can specify additional acoustic attributes applied to associated surface geometry.
+Optional single contained *acousticProperties* node that can specify additional acoustic attributes applied to associated surface geometry.
 
 ### SFNode [in, out] **pointProperties** NULL <small>[PointProperties]</small>
 {: #fields-pointProperties }
 
-Single contained [PointProperties](/x_ite/components/shape/pointproperties/) node that can specify additional visual attributes applied to corresponding point geometry.
+Optional single contained [PointProperties](/x_ite/components/shape/pointproperties/) node that can specify additional visual attributes applied to corresponding point geometry.
 
 ### SFNode [in, out] **lineProperties** NULL <small>[LineProperties]</small>
 {: #fields-lineProperties }
 
-Single contained [LineProperties](/x_ite/components/shape/lineproperties/) node that can specify additional visual attributes applied to corresponding line geometry.
+Optional single contained [LineProperties](/x_ite/components/shape/lineproperties/) node that can specify additional visual attributes applied to corresponding line geometry.
 
 ### SFNode [in, out] **fillProperties** NULL <small>[FillProperties]</small>
 {: #fields-fillProperties }
 
-Single contained [FillProperties](/x_ite/components/shape/fillproperties/) node that can specify additional visual attributes applied to polygonal areas of corresponding geometry, on top of whatever other appearance is already defined.
+Optional single contained [FillProperties](/x_ite/components/shape/fillproperties/) node that can specify additional visual attributes applied to polygonal areas of corresponding geometry, on top of whatever other appearance is already defined.
 
 ### SFNode [in, out] **material** NULL <small>[X3DMaterialNode]</small>
 {: #fields-material }
 
-Single contained [Material](/x_ite/components/shape/material/), [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/), [TwoSidedMaterial](/x_ite/components/shape/twosidedmaterial/) (deprecated), or [UnlitMaterial](/x_ite/components/shape/unlitmaterial/) node that can specify visual attributes for lighting response (color types, transparency, etc.) applied to corresponding geometry.
+Optional single contained [Material](/x_ite/components/shape/material/), [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/), [TwoSidedMaterial](/x_ite/components/shape/twosidedmaterial/) (deprecated), or [UnlitMaterial](/x_ite/components/shape/unlitmaterial/) node that can specify visual attributes for lighting response (color types, transparency, etc.) applied to corresponding geometry.
 
 #### Warning
 
@@ -104,7 +104,7 @@ Single contained [Material](/x_ite/components/shape/material/), [PhysicalMateria
 ### SFNode [in, out] **backMaterial** NULL <small>[X3DOneSidedMaterialNode]</small>
 {: #fields-backMaterial }
 
-Single contained [Material](/x_ite/components/shape/material/), [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/) or [UnlitMaterial](/x_ite/components/shape/unlitmaterial/) node that can specify visual attributes for lighting response (color types, transparency, etc.) applied to back faces of corresponding geometry.
+Optional single contained [Material](/x_ite/components/shape/material/), [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/) or [UnlitMaterial](/x_ite/components/shape/unlitmaterial/) node that can specify visual attributes for lighting response (color types, transparency, etc.) applied to back faces of corresponding geometry.
 
 #### Warnings
 
@@ -115,7 +115,7 @@ Single contained [Material](/x_ite/components/shape/material/), [PhysicalMateria
 ### SFNode [in, out] **texture** NULL <small>[X3DTextureNode]</small>
 {: #fields-texture }
 
-Single contained *texture* node ([ImageTexture](/x_ite/components/texturing/imagetexture/), [MovieTexture](/x_ite/components/texturing/movietexture/), [PixelTexture](/x_ite/components/texturing/pixeltexture/), [MultiTexture](/x_ite/components/texturing/multitexture/)) that maps image(s) to surface geometry.
+Optional single contained *texture* node ([ImageTexture](/x_ite/components/texturing/imagetexture/), [MovieTexture](/x_ite/components/texturing/movietexture/), [PixelTexture](/x_ite/components/texturing/pixeltexture/), [MultiTexture](/x_ite/components/texturing/multitexture/)) that maps image(s) to surface geometry.
 
 #### Hints
 
@@ -127,7 +127,7 @@ Single contained *texture* node ([ImageTexture](/x_ite/components/texturing/imag
 ### SFNode [in, out] **textureTransform** NULL <small>[X3DTextureTransformNode]</small>
 {: #fields-textureTransform }
 
-Single contained [TextureTransform](/x_ite/components/texturing/texturetransform/) node that defines 2D transformation applied to texture coordinates.
+Optional single contained [TextureTransform](/x_ite/components/texturing/texturetransform/) node that defines 2D transformation applied to texture coordinates.
 
 #### Hints
 
@@ -157,8 +157,8 @@ Single contained [DepthMode](../../x-ite/depthmode) node that defines depth mode
 
 ### Hints
 
-- Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or Appearance. Interchange profile
-- Only [Material](/x_ite/components/shape/material/) and [ImageTexture](/x_ite/components/texturing/imagetexture/) children are allowed.
+- Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or Appearance.
+- In Interchange profile only [Material](/x_ite/components/shape/material/) and [ImageTexture](/x_ite/components/texturing/imagetexture/) children are allowed.
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
 - Advanced uses can contain [MultiTexture](/x_ite/components/texturing/multitexture/), [MultiTextureTransform](/x_ite/components/texturing/multitexturetransform/)/[TextureTransformMatrix3D](/x_ite/components/texturing3d/texturetransformmatrix3d/)/[TextureTransform3D](/x_ite/components/texturing3d/texturetransform3d/), [ComposedShader](/x_ite/components/shaders/composedshader/)/[PackagedShader](/x_ite/components/shaders/packagedshader/)/[ProgramShader](/x_ite/components/shaders/programshader/), [ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/)/[ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/)/[PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/), or [ComposedCubeMapTexture](/x_ite/components/cubemaptexturing/composedcubemaptexture/)/[GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/)/[ImageCubeMapTexture](/x_ite/components/cubemaptexturing/imagecubemaptexture/).
 - [X3D Architecture 12.2.2 Appearance node](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/shape.html#Appearancenode)
@@ -166,7 +166,7 @@ Single contained [DepthMode](../../x-ite/depthmode) node that defines depth mode
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shape/Appearance/Appearance.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Shape/Appearance/Appearance.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Shape/Appearance/screenshot.avif" alt="Appearance"/>
 </x3d-canvas>
 
@@ -174,6 +174,14 @@ Single contained [DepthMode](../../x-ite/depthmode) node that defines depth mode
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Shape/Appearance/Appearance.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of Appearance Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Appearance)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

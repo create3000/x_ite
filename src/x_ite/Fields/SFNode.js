@@ -8,104 +8,95 @@ const
 
 const handler =
 {
-   get (target, key)
+   get (target, key, receiver)
    {
-      try
+      if (typeof key === "string")
       {
-         const value = target [key];
-
-         if (value !== undefined)
-            return value;
-
          const
             node  = target .getValue (),
-            field = node .getField (key);
+            field = node ?.getField (key, false);
 
-         // Specification conform would be: accessType & X3DConstants .outputOnly.
-         // But we allow read access to plain fields, too.
-         if (field .getAccessType () === X3DConstants .inputOnly)
-            return undefined;
+         if (field)
+         {
+            // Specification conform would be: accessType & X3DConstants .outputOnly.
+            // But we allow read access to plain fields, too.
+            if (field .getAccessType () === X3DConstants .inputOnly)
+               return undefined;
 
-         return field .valueOf ();
+            return field .valueOf ();
+         }
       }
-      catch
-      {
-         return undefined;
-      }
+
+      return Reflect .get (target, key, receiver);
    },
-   set (target, key, value)
+   set (target, key, value, receiver)
    {
-      if (key in target)
-      {
-         target [key] = value;
-         return true;
-      }
-
-      try
+      if (typeof key === "string")
       {
          const
-            node       = target .getValue (),
-            field      = node .getField (key),
-            accessType = field .getAccessType ();
+            node  = target .getValue (),
+            field = node ?.getField (key, false);
 
-         if (accessType !== X3DConstants .outputOnly)
+         if (field)
+         {
+            const accessType = field .getAccessType ();
+
+            if (accessType === X3DConstants .outputOnly)
+               return false;
+
             field .setValue (value);
+            return true;
+         }
+      }
 
-         return true;
-      }
-      catch (error)
-      {
-         console .error (target, key, error);
-         return false;
-      }
+      return Reflect .set (target, key, value, receiver);
    },
    has (target, key)
    {
-      try
-      {
-         return !! target .getValue () .getField (key);
-      }
-      catch
-      {
-         return key in target;
-      }
+      return Boolean (target .getValue () .getField (key, false))
+         || Reflect .has (target, key);
    },
    ownKeys (target)
    {
       const
-         value   = target .getValue (),
+         node    = target .getValue (),
          ownKeys = [ ];
 
-      if (value)
+      if (node)
       {
-         for (const { name } of value .getFieldDefinitions ())
+         for (const { name } of node .getFieldDefinitions ())
             ownKeys .push (name);
       }
 
-      return ownKeys;
+      return ownKeys .concat (Reflect .ownKeys (target));
    },
    getOwnPropertyDescriptor (target, key)
    {
-      const value = target .getValue ();
-
-      if (value)
+      if (typeof key === "string")
       {
-         const fieldDefinition = value .getFieldDefinitions () .get (key);
+         const node = target .getValue ();
 
-         if (fieldDefinition)
+         if (node)
          {
-            return {
-               value: this .get (target, key),
-               writable: fieldDefinition .accessType !== X3DConstants .outputOnly,
-               enumerable: true,
-               configurable: true,
-            };
+            const fieldDefinition = node .getFieldDefinitions () .get (key);
+
+            if (fieldDefinition)
+            {
+               return {
+                  value: this .get (target, key),
+                  writable: fieldDefinition .accessType !== X3DConstants .outputOnly,
+                  enumerable: true,
+                  configurable: true,
+               };
+            }
          }
       }
+
+      return Reflect .getOwnPropertyDescriptor (target, key);
    },
 };
 
-function SFNode (value)
+function SFNode (node)
 {
    // Node need to test for X3DBaseNode, because there is a special version of SFNode in Script.
 
@@ -114,11 +105,11 @@ function SFNode (value)
    this [_target] = this;
    this [_proxy]  = proxy;
 
-   if (value ?.getType () .includes (X3DConstants .X3DNode))
+   if (node ?.getType () .includes (X3DConstants .X3DNode))
    {
-      value .addParent (proxy);
+      node .addParent (proxy);
 
-      X3DField .call (this, value);
+      X3DField .call (this, node);
    }
    else
    {
@@ -136,18 +127,21 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
    {
       const
          target = this [_target],
-         value  = target .getValue ();
+         node   = target .getValue ();
 
-      if (value && instance)
+      if (node && instance)
       {
-         const copy = value .copy (instance);
+         const copy = node .copy (instance);
 
-         copy .setup ();
+         if (!copy .isInitialized () && !instance .getExecutionContext () .getOuterNode () ?.getType () .includes (X3DConstants .X3DProtoDeclaration))
+         {
+            copy .setup ();
+         }
 
          return new SFNode (copy);
       }
 
-      return new SFNode (value);
+      return new SFNode (node);
    },
    equals (node)
    {
@@ -164,7 +158,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
 
       return target .getValue () === null;
    },
-   set (value)
+   set (node)
    {
       const
          target  = this [_target],
@@ -174,11 +168,11 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
 
       // No need to test for X3DBaseNode, because there is a special version of SFNode in Script.
 
-      if (value ?.getType () .includes (X3DConstants .X3DNode))
+      if (node ?.getType () .includes (X3DConstants .X3DNode))
       {
-         value .addParent (target [_proxy]);
+         node .addParent (target [_proxy]);
 
-         X3DField .prototype .set .call (target, value);
+         X3DField .prototype .set .call (target, node);
       }
       else
       {
@@ -189,10 +183,10 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
    {
       const
          target = this [_target],
-         value  = target .getValue ();
+         node   = target .getValue ();
 
-      if (value)
-         return value .getTypeName ();
+      if (node)
+         return node .getTypeName ();
 
       throw new Error ("SFNode.getNodeTypeName: node is null.");
    },
@@ -200,10 +194,10 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
    {
       const
          target = this [_target],
-         value  = target .getValue ();
+         node   = target .getValue ();
 
-      if (value)
-         return value .getName ();
+      if (node)
+         return node .getName ();
 
       throw new Error ("SFNode.getNodeName: node is null.");
    },
@@ -211,10 +205,10 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
    {
       const
          target = this [_target],
-         value  = target .getValue ();
+         node   = target .getValue ();
 
-      if (value)
-         return value .getDisplayName ();
+      if (node)
+         return node .getDisplayName ();
 
       throw new Error ("SFNode.getNodeDisplayName: node is null.");
    },
@@ -222,10 +216,10 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
    {
       const
          target = this [_target],
-         value  = target .getValue ();
+         node   = target .getValue ();
 
-      if (value)
-         return Array .from (value .getType ());
+      if (node)
+         return Array .from (node .getType ());
 
       throw new Error ("SFNode.getNodeType: node is null.");
    },
@@ -242,10 +236,10 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
    {
       const
          target = this [_target],
-         value  = target .getValue ();
+         node   = target .getValue ();
 
-      if (value)
-         return value .getFieldDefinitions ();
+      if (node)
+         return node .getFieldDefinitions ();
 
       throw new Error ("SFNode.getFieldDefinitions: node is null.");
    },
@@ -256,10 +250,10 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
    {
       const
          target = this [_target],
-         value  = target .getValue ();
+         node   = target .getValue ();
 
-      if (value)
-         return value .getField (name);
+      if (node)
+         return node .getField (name);
 
       throw new Error ("SFNode is disposed.")
    },
@@ -279,10 +273,10 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
          {
             const
                [key, name, callback] = args,
-               value                 = target .getValue ();
+               node                  = target .getValue ();
 
-            if (value)
-               return value .getField (name) .addFieldCallback (key, callback);
+            if (node)
+               return node .getField (name) .addFieldCallback (key, callback);
 
             throw new Error ("SFNode.addFieldCallback: node is null.");
          }
@@ -304,10 +298,10 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
          {
             const
                [key, name] = args,
-               value       = target .getValue ();
+               node        = target .getValue ();
 
-            if (value)
-               return value .getField (name) .removeFieldCallback (key);
+            if (node)
+               return node .getField (name) .removeFieldCallback (key);
 
             throw new Error ("SFNode.removeFieldCallback: node is null.");
          }
@@ -315,28 +309,28 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
    },
    getNodeUserData (key)
    {
-      const value = this [_target] .getValue ();
+      const node = this [_target] .getValue ();
 
-      if (value)
-         return value .getUserData (key);
+      if (node)
+         return node .getUserData (key);
 
       throw new Error ("SFNode.getNodeUserData: node is null.");
    },
    setNodeUserData (key, data)
    {
-      const value = this [_target] .getValue ();
+      const node = this [_target] .getValue ();
 
-      if (value)
-         return value .setUserData (key, data);
+      if (node)
+         return node .setUserData (key, data);
 
       throw new Error ("SFNode.setNodeUserData: node is null.");
    },
    removeNodeUserData (key)
    {
-      const value = this [_target] .getValue ();
+      const node = this [_target] .getValue ();
 
-      if (value)
-         return value .removeUserData (key);
+      if (node)
+         return node .removeUserData (key);
 
       throw new Error ("SFNode.removeNodeUserData: node is null.");
    },
@@ -344,40 +338,40 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
    {
       const
          target = this [_target],
-         value  = target .getValue ();
+         node   = target .getValue ();
 
-      return value ? SFNodeCache .get (value) : null;
+      return node ? SFNodeCache .get (node) : null;
    },
    toStream (generator)
    {
       const
          target = this [_target],
-         value  = target .getValue ();
+         node   = target .getValue ();
 
-      if (value)
-         value .toStream (generator);
+      if (node)
+         node .toStream (generator);
       else
-         generator .string += "NULL";
+         generator .NULL ();
    },
    toVRMLStream (generator)
    {
       const
          target = this [_target],
-         value  = target .getValue ();
+         node   = target .getValue ();
 
-      if (value)
-         value .toVRMLStream (generator);
+      if (node)
+         node .toVRMLStream (generator);
       else
-         generator .string += "NULL";
+         generator .NULL ();
    },
    toXMLStream (generator)
    {
       const
          target = this [_target],
-         value  = target .getValue ();
+         node   = target .getValue ();
 
-      if (value)
-         value .toXMLStream (generator);
+      if (node)
+         node .toXMLStream (generator);
       else
          generator .string += "<!-- NULL -->";
    },
@@ -389,10 +383,10 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
    {
       const
          target = this [_target],
-         value  = target .getValue ();
+         node   = target .getValue ();
 
-      if (value)
-         value .toJSONStream (generator);
+      if (node)
+         node .toJSONStream (generator);
       else
          generator .string += "null";
    },
@@ -410,13 +404,6 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
 for (const key of Object .keys (SFNode .prototype))
    Object .defineProperty (SFNode .prototype, key, { enumerable: false });
 
-Object .defineProperties (SFNode,
-{
-   typeName:
-   {
-      value: "SFNode",
-      enumerable: true,
-   },
-});
+X3DField .addStaticProperties (SFNode, "SFNode");
 
 export default SFNode;

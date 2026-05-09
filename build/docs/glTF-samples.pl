@@ -45,10 +45,10 @@ sub glTF {
    {
       say "Getting $folder files ...";
 
-      @models   = `find '$samples/glTF-Sample-Models/2.0'    -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/"`;
-      @assets   = `find '$samples/glTF-Sample-Assets/Models' -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/"`;
-      @commerce = `find '$samples/3DC-Certification/models'  -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/"`;
-      @files    = (@models, @assets, @commerce);
+      @commerce = sort `find '$samples/3DC-Certification/models'  -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/"`;
+      @models   = sort `find '$samples/glTF-Sample-Models/2.0'    -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/"`;
+      @assets   = sort `find '$samples/glTF-Sample-Assets/Models' -type f -name "*$suffix" -not -path '*/\.*' | grep -i "/$folder/"`;
+      @files    = (@commerce, @models, @assets);
 
       s|/glTF-Sample-Models/|/glTF-Sample-Models/master/| foreach @files;
       s|/glTF-Sample-Assets/|/glTF-Sample-Assets/master/| foreach @files;
@@ -61,7 +61,7 @@ sub glTF {
 
    my $string = "const $var = [\n";
 
-   foreach (sort @all)
+   foreach (@all)
    {
       chomp;
       $string .= "   \"$khronos/$_\",\n";
@@ -81,17 +81,19 @@ system "git pull origin";
 
 $string = "";
 $string .= "// SAMPLES_BEGIN\n\n";
-$string .= media;
-$string .= "\n";
 $string .= glTF (["glTF"], ".gltf", "glTF");
 $string .= "\n";
 $string .= glTF (["glTF-Binary"], ".glb", "glb");
+$string .= "\n";
+$string .= glTF (["glTF-Embedded"], ".gltf", "embedded");
 $string .= "\n";
 $string .= glTF (["glTF-Quantized"], ".gltf", "quantized");
 $string .= "\n";
 $string .= glTF (["glTF-Draco", "glTF-KTX-BasisU-Draco"], ".gltf", "draco");
 $string .= "\n";
-$string .= glTF (["glTF-Embedded"], ".gltf", "embedded");
+$string .= glTF (["glTF-Meshopt"], ".gltf", "meshopt");
+$string .= "\n";
+$string .= glTF (["glTF-Meshopt-EXT"], ".gltf", "meshoptEXT");
 $string .= "\n";
 $string .= glTF (["glTF-IBL"], ".gltf", "ibl");
 $string .= "\n";
@@ -100,6 +102,8 @@ $string .= "\n";
 $string .= glTF (["glTF-KTX", "glTF-KTX-BasisU"], ".gltf", "ktx");
 $string .= "\n";
 $string .= glTF (["glTF-JPG-PNG", "glTF-JPG"], ".gltf", "jpg");
+$string .= "\n";
+$string .= media;
 $string .= "\n// SAMPLES_END";
 
 $viewer =~ s|// SAMPLES_BEGIN.*?// SAMPLES_END|$string|s;

@@ -8,6 +8,8 @@
       url: /components/hanim/hanimjoint/
     - title: "HAnimMotion"
       url: /components/hanim/hanimmotion/
+    - title: "HAnimPose"
+      url: /components/hanim/hanimpose/
     - title: "HAnimSegment"
       url: /components/hanim/hanimsegment/
     - title: "HAnimSite"

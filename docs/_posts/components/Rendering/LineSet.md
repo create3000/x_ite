@@ -29,14 +29,14 @@ The LineSet node belongs to the [Rendering](/x_ite/components/overview/#renderin
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFInt32 | [in, out] | [vertexCount](#fields-vertexCount) | [ ] |
 | MFNode | [in, out] | [attrib](#fields-attrib) | [ ] |
-| SFNode | [in, out] | [fogCoord](#fields-fogCoord) | NULL  |
-| SFNode | [in, out] | [color](#fields-color) | NULL  |
-| SFNode | [in, out] | [tangent](#fields-tangent) | NULL  |
-| SFNode | [in, out] | [normal](#fields-normal) | NULL  |
-| SFNode | [in, out] | [coord](#fields-coord) | NULL  |
+| SFNode | [in, out] | [fogCoord](#fields-fogCoord) | NULL |
+| SFNode | [in, out] | [color](#fields-color) | NULL |
+| SFNode | [in, out] | [tangent](#fields-tangent) | NULL |
+| SFNode | [in, out] | [normal](#fields-normal) | NULL |
+| SFNode | [in, out] | [coord](#fields-coord) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -56,7 +56,7 @@ Vertices at a time.
 ### MFNode [in, out] **attrib** [ ] <small>[X3DVertexAttributeNode]</small>
 {: #fields-attrib }
 
-Single contained [FloatVertexAttribute](/x_ite/components/shaders/floatvertexattribute/) node that can specify list of per-vertex attribute information for programmable shaders.
+Optional single contained [FloatVertexAttribute](/x_ite/components/shaders/floatvertexattribute/) node that can specify list of per-vertex attribute information for programmable shaders.
 
 #### Hint
 
@@ -65,12 +65,12 @@ Single contained [FloatVertexAttribute](/x_ite/components/shaders/floatvertexatt
 ### SFNode [in, out] **fogCoord** NULL <small>[FogCoordinate]</small>
 {: #fields-fogCoord }
 
-Single contained [FogCoordinate](/x_ite/components/environmentaleffects/fogcoordinate/) node that can specify depth parameters for fog in corresponding geometry.
+Optional single contained [FogCoordinate](/x_ite/components/environmentaleffects/fogcoordinate/) node that can specify depth parameters for fog in corresponding geometry.
 
 ### SFNode [in, out] **color** NULL <small>[X3DColorNode]</small>
 {: #fields-color }
 
-Single contained [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) node that can specify *color* values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
+Optional single contained [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) node that can specify *color* values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
 
 ### SFNode [in, out] **tangent** NULL <small>[Tangent]</small> <small class="blue">non-standard</small>
 {: #fields-tangent }
@@ -80,7 +80,7 @@ Input/Output field *tangent*. If there is no [Tangent](/x_ite/components/renderi
 ### SFNode [in, out] **normal** NULL <small>[X3DNormalNode]</small>
 {: #fields-normal }
 
-Single contained [Normal](/x_ite/components/rendering/normal/) node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
+Optional single contained [Normal](/x_ite/components/rendering/normal/) node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
 
 #### Hint
 
@@ -93,7 +93,7 @@ Single contained [Normal](/x_ite/components/rendering/normal/) node that can spe
 ### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
 {: #fields-coord }
 
-Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node that can specify a list of vertex values.
+Optional single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node that can specify a list of vertex values.
 
 ## Advice
 
@@ -114,13 +114,20 @@ Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [Coord
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Rendering/LineSet/LineSet.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Rendering/LineSet/LineSet.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Rendering/LineSet/screenshot.avif" alt="LineSet"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Rendering/LineSet/LineSet.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Rendering/LineSet/LineSet.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

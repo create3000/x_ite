@@ -5,10 +5,7 @@ function X3DPointGeometryNode (executionContext)
 {
    X3DGeometryNode .call (this, executionContext);
 
-   const browser = this .getBrowser ();
-
    this .setGeometryType (0);
-   this .setPrimitiveMode (browser .getContext () .POINTS);
    this .setSolid (false);
 }
 
@@ -20,6 +17,24 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
    },
    generateTexCoords ()
    { },
+   displaySimple (gl, renderContext, shaderNode)
+   {
+      if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
+      {
+         if (this .coordIndices .length)
+            shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
+
+         if (this .multiTexCoords .length)
+            shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+
+         if (this .hasNormals)
+            shaderNode .enableNormalAttribute (gl, this .normalBuffer, 0, 0);
+
+         shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
+      }
+
+      gl .drawArrays (gl .POINTS, 0, this .vertexCount);
+   },
    display (gl, renderContext)
    {
       const
@@ -33,8 +48,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
       if (!transparent)
       {
          gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
-         gl .enable (gl .BLEND);
-         gl .blendFuncSeparate (gl .ONE, gl .ZERO, gl .ZERO, gl .ONE);
+         gl .colorMask (true, true, true, false);
       }
 
       // Set viewport.
@@ -80,7 +94,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
          shaderNode .enableVertexAttribute (gl, this .vertexBuffer, 0, 0);
       }
 
-      gl .drawArrays (this .primitiveMode, 0, this .vertexCount);
+      gl .drawArrays (gl .POINTS, 0, this .vertexCount);
 
       // Disable render mode nodes.
 
@@ -96,9 +110,36 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
       if (!transparent)
       {
          gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
-         gl .disable (gl .BLEND);
-         gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
+         gl .colorMask (true, true, true, true);
       }
+   },
+   displaySimpleInstanced (gl, shaderNode, shapeNode)
+   {
+      const instances = shapeNode .getInstances ();
+
+      if (instances .vertexArrayObject .update (this .updateInstances) .enable (shaderNode .getProgram ()))
+      {
+         const { instancesStride, particleOffset, matrixOffset, normalMatrixOffset } = shapeNode;
+
+         if (particleOffset !== undefined)
+            shaderNode .enableParticleAttribute (gl, instances, instancesStride, particleOffset, 1);
+
+         shaderNode .enableInstanceMatrixAttribute (gl, instances, instancesStride, matrixOffset, 1);
+
+         if (normalMatrixOffset !== undefined)
+            shaderNode .enableInstanceNormalMatrixAttribute (gl, instances, instancesStride, normalMatrixOffset, 1);
+
+         if (this .coordIndices .length)
+            shaderNode .enableCoordIndexAttribute (gl, this .coordIndexBuffer, 0, 0);
+
+         shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, 0);
+         shaderNode .enableNormalAttribute   (gl, this .normalBuffer,    0, 0);
+         shaderNode .enableVertexAttribute   (gl, this .vertexBuffer,    0, 0);
+
+         this .updateInstances = false;
+      }
+
+      gl .drawArraysInstanced (gl .POINTS, 0, this .vertexCount, shapeNode .getNumInstances ());
    },
    displayInstanced (gl, renderContext, shapeNode)
    {
@@ -113,8 +154,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
       if (!transparent)
       {
          gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
-         gl .enable (gl .BLEND);
-         gl .blendFuncSeparate (gl .ONE, gl .ZERO, gl .ZERO, gl .ONE);
+         gl .colorMask (true, true, true, false);
       }
 
       // Set viewport.
@@ -179,7 +219,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
 
       // Wireframes are always solid so only one drawing call is needed.
 
-      gl .drawArraysInstanced (this .primitiveMode, 0, this .vertexCount, shapeNode .getNumInstances ());
+      gl .drawArraysInstanced (gl .POINTS, 0, this .vertexCount, shapeNode .getNumInstances ());
 
       // Disable render mode nodes.
 
@@ -195,8 +235,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
       if (!transparent)
       {
          gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
-         gl .disable (gl .BLEND);
-         gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
+         gl .colorMask (true, true, true, true);
       }
    },
 });

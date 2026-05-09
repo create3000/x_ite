@@ -31,24 +31,24 @@ The GeoViewpoint node belongs to the [Geospatial](/x_ite/components/overview/#ge
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFNode | [ ] | [geoOrigin](#fields-geoOrigin) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFNode | [ ] | [geoOrigin](#fields-geoOrigin) | NULL |
 | MFString | [ ] | [geoSystem](#fields-geoSystem) | [ "GD", "WE" ] |
 | SFBool | [in] | [set_bind](#fields-set_bind) |  |
 | SFString | [in, out] | [description](#fields-description) | "" |
-| SFVec3d | [in, out] | [position](#fields-position) | 0 0 100000  |
-| SFRotation | [in, out] | [orientation](#fields-orientation) | 0 0 1 0  |
-| SFVec3d | [in, out] | [centerOfRotation](#fields-centerOfRotation) | 0 0 0  |
-| SFFloat | [in, out] | [fieldOfView](#fields-fieldOfView) | π/4  |
-| SFFloat | [in, out] | [nearDistance](#fields-nearDistance) | -1  |
-| SFFloat | [in, out] | [farDistance](#fields-farDistance) | -1  |
+| SFVec3d | [in, out] | [position](#fields-position) | 0 0 100000 |
+| SFRotation | [in, out] | [orientation](#fields-orientation) | 0 0 1 0 |
+| SFVec3d | [in, out] | [centerOfRotation](#fields-centerOfRotation) | 0 0 0 |
+| SFFloat | [in, out] | [fieldOfView](#fields-fieldOfView) | π/4 |
+| SFFloat | [in, out] | [nearDistance](#fields-nearDistance) | -1 |
+| SFFloat | [in, out] | [farDistance](#fields-farDistance) | -1 |
 | SFBool | [in, out] | [viewAll](#fields-viewAll) | FALSE |
 | SFBool | [in, out] | [jump](#fields-jump) | TRUE |
 | SFBool | [in, out] | [retainUserOffsets](#fields-retainUserOffsets) | FALSE |
-| SFFloat | [ ] | [speedFactor](#fields-speedFactor) | 1  |
+| SFFloat | [ ] | [speedFactor](#fields-speedFactor) | 1 |
 | SFBool | [out] | [isBound](#fields-isBound) |  |
 | SFTime | [out] | [bindTime](#fields-bindTime) |  |
-| SFNode | [in, out] | [navigationInfo](#fields-navigationInfo) | NULL  |
+| SFNode | [in, out] | [navigationInfo](#fields-navigationInfo) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -63,7 +63,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### SFNode [ ] **geoOrigin** NULL <small>[GeoOrigin] (deprecated)</small>
 {: #fields-geoOrigin }
 
-Single contained [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node that can specify a local coordinate frame for extended precision.
+Optional single contained [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node that can specify a local coordinate frame for extended precision.
 
 #### Hint
 
@@ -247,13 +247,20 @@ The *navigationInfo* field defines a dedicated [NavigationInfo](/x_ite/component
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geospatial/GeoViewpoint/GeoViewpoint.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Geospatial/GeoViewpoint/GeoViewpoint.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Geospatial/GeoViewpoint/screenshot.avif" alt="GeoViewpoint"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Geospatial/GeoViewpoint/GeoViewpoint.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Geospatial/GeoViewpoint/GeoViewpoint.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

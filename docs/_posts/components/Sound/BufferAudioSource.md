@@ -27,35 +27,38 @@ The BufferAudioSource node belongs to the [Sound](/x_ite/components/overview/#so
         + BufferAudioSource (X3DUrlObject)*
 ```
 
+\* Derived from multiple interfaces.
+{: .small }
+
 ## Fields
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFBool | [in, out] | [load](#fields-load) | TRUE |
 | MFString | [in, out] | [url](#fields-url) | [ ] |
-| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0  |
-| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600  |
-| SFInt32 | [in, out] | [numberOfChannels](#fields-numberOfChannels) | 0  |
-| SFFloat | [in, out] | [sampleRate](#fields-sampleRate) | 0  |
+| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0 |
+| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600 |
+| SFInt32 | [in, out] | [numberOfChannels](#fields-numberOfChannels) | 0 |
+| SFFloat | [in, out] | [sampleRate](#fields-sampleRate) | 0 |
 | SFInt32 | [in, out] | [bufferLength](#fields-bufferLength) |  |
 | MFFloat | [in, out] | [buffer](#fields-buffer) | [ ] |
-| SFTime | [out] | [bufferDuration](#fields-bufferDuration) | 0  |
-| SFFloat | [in, out] | [gain](#fields-gain) | 1  |
-| SFFloat | [in, out] | [detune](#fields-detune) | 0  |
-| SFFloat | [in, out] | [playbackRate](#fields-playbackRate) | 1  |
-| SFTime | [in, out] | [loopStart](#fields-loopStart) | 0  |
-| SFTime | [in, out] | [loopEnd](#fields-loopEnd) | 0  |
+| SFTime | [out] | [bufferDuration](#fields-bufferDuration) | 0 |
+| SFFloat | [in, out] | [gain](#fields-gain) | 1 |
+| SFFloat | [in, out] | [detune](#fields-detune) | 0 |
+| SFFloat | [in, out] | [playbackRate](#fields-playbackRate) | 1 |
+| SFTime | [in, out] | [loopStart](#fields-loopStart) | 0 |
+| SFTime | [in, out] | [loopEnd](#fields-loopEnd) | 0 |
 | SFInt32 | [in, out] | [channelCount](#fields-channelCount) |  |
-| SFString | [in, out] | [channelCountMode](#fields-channelCountMode) | "MAX"  |
-| SFString | [in, out] | [channelInterpretation](#fields-channelInterpretation) | "SPEAKERS"  |
+| SFString | [in, out] | [channelCountMode](#fields-channelCountMode) | "MAX" |
+| SFString | [in, out] | [channelInterpretation](#fields-channelInterpretation) | "SPEAKERS" |
 | SFBool | [in, out] | [loop](#fields-loop) | FALSE |
-| SFTime | [in, out] | [startTime](#fields-startTime) | 0  |
-| SFTime | [in, out] | [resumeTime](#fields-resumeTime) | 0  |
-| SFTime | [in, out] | [pauseTime](#fields-pauseTime) | 0  |
-| SFTime | [in, out] | [stopTime](#fields-stopTime) | 0  |
+| SFTime | [in, out] | [startTime](#fields-startTime) | 0 |
+| SFTime | [in, out] | [resumeTime](#fields-resumeTime) | 0 |
+| SFTime | [in, out] | [pauseTime](#fields-pauseTime) | 0 |
+| SFTime | [in, out] | [stopTime](#fields-stopTime) | 0 |
 | SFBool | [out] | [isPaused](#fields-isPaused) |  |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFTime | [out] | [elapsedTime](#fields-elapsedTime) |  |
@@ -192,11 +195,13 @@ The *gain* field is a factor that represents the amount of linear amplification 
 ### SFFloat [in, out] **detune** 0 <small>[0,∞)</small>
 {: #fields-detune }
 
-The *detune* field forms a compound field together with playbackRate that together determine a computedPlaybackRate value.
+The *detune* field, measured in cents, modulates the speed at which the the audio stream is rendered. It forms a compound field together with playbackRate that together determine a computedPlaybackRate value.
 
-#### Hint
+#### Hints
 
 - ComputedPlaybackRate(t) = playbackRate(t) * pow(2, *detune*(t) / 1200)
+- The cent is a logarithmic unit of measure used for musical intervals. Twelve-tone equal temperament divides the octave into 12 semitones of 100 cents each. Typically, cents are used to express small intervals, to check intonation, or to compare the sizes of comparable intervals in different tuning systems. For humans, a single cent is too small to be perceived between successive notes.
+- [Cent(music)](https://en.wikipedia.org/wiki/Cent_(music))
 
 ### SFFloat [in, out] **playbackRate** 1 <small>(-∞,∞)</small>
 {: #fields-playbackRate }
@@ -348,6 +353,13 @@ Any audio file format supported by the web browser, but at least:
 ### Warning
 
 - For longer sounds, such as music soundtracks, streaming such as [StreamAudioSource](/x_ite/components/sound/streamaudiosource/) should be used.
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

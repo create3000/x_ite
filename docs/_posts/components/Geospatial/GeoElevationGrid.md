@@ -29,25 +29,25 @@ The GeoElevationGrid node belongs to the [Geospatial](/x_ite/components/overview
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFNode | [ ] | [geoOrigin](#fields-geoOrigin) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFNode | [ ] | [geoOrigin](#fields-geoOrigin) | NULL |
 | MFString | [ ] | [geoSystem](#fields-geoSystem) | [ "GD", "WE" ] |
 | MFDouble | [in] | [set_height](#fields-set_height) |  |
-| SFVec3d | [ ] | [geoGridOrigin](#fields-geoGridOrigin) | 0 0 0  |
-| SFInt32 | [ ] | [xDimension](#fields-xDimension) | 0  |
-| SFInt32 | [ ] | [zDimension](#fields-zDimension) | 0  |
-| SFDouble | [ ] | [xSpacing](#fields-xSpacing) | 1  |
-| SFDouble | [ ] | [zSpacing](#fields-zSpacing) | 1  |
-| SFFloat | [in, out] | [yScale](#fields-yScale) | 1  |
+| SFVec3d | [ ] | [geoGridOrigin](#fields-geoGridOrigin) | 0 0 0 |
+| SFInt32 | [ ] | [xDimension](#fields-xDimension) | 0 |
+| SFInt32 | [ ] | [zDimension](#fields-zDimension) | 0 |
+| SFDouble | [ ] | [xSpacing](#fields-xSpacing) | 1 |
+| SFDouble | [ ] | [zSpacing](#fields-zSpacing) | 1 |
+| SFFloat | [in, out] | [yScale](#fields-yScale) | 1 |
 | SFBool | [ ] | [solid](#fields-solid) | TRUE |
 | SFBool | [ ] | [ccw](#fields-ccw) | TRUE |
-| SFDouble | [ ] | [creaseAngle](#fields-creaseAngle) | 0  |
+| SFDouble | [ ] | [creaseAngle](#fields-creaseAngle) | 0 |
 | SFBool | [ ] | [colorPerVertex](#fields-colorPerVertex) | TRUE |
 | SFBool | [ ] | [normalPerVertex](#fields-normalPerVertex) | TRUE |
-| SFNode | [in, out] | [color](#fields-color) | NULL  |
-| SFNode | [in, out] | [texCoord](#fields-texCoord) | NULL  |
-| SFNode | [in, out] | [tangent](#fields-tangent) | NULL  |
-| SFNode | [in, out] | [normal](#fields-normal) | NULL  |
+| SFNode | [in, out] | [color](#fields-color) | NULL |
+| SFNode | [in, out] | [texCoord](#fields-texCoord) | NULL |
+| SFNode | [in, out] | [tangent](#fields-tangent) | NULL |
+| SFNode | [in, out] | [normal](#fields-normal) | NULL |
 | MFDouble | [ ] | [height](#fields-height) | [ 0, 0 ] |
 {: .fields }
 
@@ -63,7 +63,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### SFNode [ ] **geoOrigin** NULL <small>[GeoOrigin] (deprecated)</small>
 {: #fields-geoOrigin }
 
-Single contained [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node that can specify a local coordinate frame for extended precision.
+Optional single contained [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node that can specify a local coordinate frame for extended precision.
 
 #### Hint
 
@@ -223,12 +223,12 @@ Whether [Normal](/x_ite/components/rendering/normal/) node vector values are app
 ### SFNode [in, out] **color** NULL <small>[X3DColorNode]</small>
 {: #fields-color }
 
-Single contained [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) node that can specify *color* values applied to corresponding vertices according to colorPerVertex field.
+Optional single contained [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) node that can specify *color* values applied to corresponding vertices according to colorPerVertex field.
 
 ### SFNode [in, out] **texCoord** NULL <small>[X3DTextureCoordinateNode]</small>
 {: #fields-texCoord }
 
-Single contained [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/), [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) or [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) node that can specify coordinates for texture mapping onto corresponding geometry.
+Optional single contained [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/), [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) or [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) node that can specify coordinates for texture mapping onto corresponding geometry.
 
 ### SFNode [in, out] **tangent** NULL <small>[Tangent]</small> <small class="blue">non-standard</small>
 {: #fields-tangent }
@@ -238,7 +238,7 @@ Input/Output field *tangent*. If there is no [Tangent](/x_ite/components/renderi
 ### SFNode [in, out] **normal** NULL <small>[X3DNormalNode]</small>
 {: #fields-normal }
 
-Single contained [Normal](/x_ite/components/rendering/normal/) node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
+Optional single contained [Normal](/x_ite/components/rendering/normal/) node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
 
 #### Hint
 
@@ -282,13 +282,20 @@ Contains xDimension rows * zDimension columns floating-point values for elevatio
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geospatial/GeoElevationGrid/GeoElevationGrid.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Geospatial/GeoElevationGrid/GeoElevationGrid.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Geospatial/GeoElevationGrid/screenshot.avif" alt="GeoElevationGrid"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Geospatial/GeoElevationGrid/GeoElevationGrid.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Geospatial/GeoElevationGrid/GeoElevationGrid.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

@@ -8,6 +8,8 @@ function X3DShaderNode (executionContext)
 
    this .addType (X3DConstants .X3DShaderNode);
 
+   // Private properties
+
    this .valid    = false;
    this .selected = 0;
 }
@@ -26,7 +28,7 @@ Object .assign (Object .setPrototypeOf (X3DShaderNode .prototype, X3DAppearanceC
    {
       ++ this .selected;
 
-      if (! this ._isSelected .getValue ())
+      if (!this ._isSelected .getValue ())
          this ._isSelected = true;
    },
    deselect ()

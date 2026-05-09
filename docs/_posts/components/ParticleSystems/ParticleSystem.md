@@ -33,31 +33,31 @@ The ParticleSystem node belongs to the [ParticleSystems](/x_ite/components/overv
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
+| SFString | [ ] | [geometryType](#fields-geometryType) | "QUAD" |
 | SFBool | [in, out] | [createParticles](#fields-createParticles) | TRUE |
-| SFString | [ ] | [geometryType](#fields-geometryType) | "QUAD"  |
-| SFInt32 | [in, out] | [maxParticles](#fields-maxParticles) | 200  |
-| SFFloat | [in, out] | [particleLifetime](#fields-particleLifetime) | 5  |
-| SFFloat | [in, out] | [lifetimeVariation](#fields-lifetimeVariation) | 0.25  |
-| SFVec2f | [in, out] | [particleSize](#fields-particleSize) | 0.02 0.02  |
-| SFNode | [ ] | [emitter](#fields-emitter) | NULL  |
+| SFInt32 | [in, out] | [maxParticles](#fields-maxParticles) | 200 |
+| SFTime | [in, out] | [particleLifetime](#fields-particleLifetime) | 5 |
+| SFFloat | [in, out] | [lifetimeVariation](#fields-lifetimeVariation) | 0.25 |
+| SFVec2f | [in, out] | [particleSize](#fields-particleSize) | 0.02 0.02 |
+| SFNode | [ ] | [emitter](#fields-emitter) | NULL |
 | MFNode | [ ] | [physics](#fields-physics) | [ ] |
 | MFFloat | [ ] | [colorKey](#fields-colorKey) | [ ] |
-| SFNode | [ ] | [color](#fields-color) | NULL  |
+| SFNode | [ ] | [color](#fields-color) | NULL |
 | MFFloat | [ ] | [texCoordKey](#fields-texCoordKey) | [ ] |
-| SFNode | [ ] | [texCoord](#fields-texCoord) | NULL  |
+| SFNode | [ ] | [texCoord](#fields-texCoord) | NULL |
 | MFFloat | [ ] | [scaleKey](#fields-scaleKey) | [ ] |
-| SFNode | [ ] | [scale](#fields-scale) | NULL  |
+| SFNode | [ ] | [scale](#fields-scale) | NULL |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
-| SFBool | [in, out] | [pointerEvents](#fields-pointerEvents) | TRUE  |
+| SFBool | [in, out] | [pointerEvents](#fields-pointerEvents) | TRUE |
 | SFBool | [in, out] | [castShadow](#fields-castShadow) | TRUE |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
-| SFNode | [in, out] | [appearance](#fields-appearance) | NULL  |
-| SFNode | [in, out] | [geometry](#fields-geometry) | NULL  |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
+| SFNode | [in, out] | [appearance](#fields-appearance) | NULL |
+| SFNode | [in, out] | [geometry](#fields-geometry) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -73,15 +73,6 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 {: #fields-enabled }
 
 Enables/disables node operation.
-
-### SFBool [in, out] **createParticles** TRUE
-{: #fields-createParticles }
-
-Enables/disables creation of new particles, while any existing particles remain in existence and continue to animate until the end of their lifetimes.
-
-#### Hint
-
-- If no particles are left in scene, system is considered both active and enabled.
 
 ### SFString [ ] **geometryType** "QUAD" <small>["LINE"|"POINT"|"QUAD"|"SPRITE"|"TRIANGLE"|"GEOMETRY"|...]</small>
 {: #fields-geometryType }
@@ -103,12 +94,21 @@ Specifies type of geometry used to represent individual particles. Typically, a 
 - Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
 - Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
 
+### SFBool [in, out] **createParticles** TRUE
+{: #fields-createParticles }
+
+Enables/disables creation of new particles, while any existing particles remain in existence and continue to animate until the end of their lifetimes.
+
+#### Hint
+
+- If no particles are left in scene, system is considered both active and enabled.
+
 ### SFInt32 [in, out] **maxParticles** 200 <small>[0,∞)</small>
 {: #fields-maxParticles }
 
 Maximum number of particles to be generated at one time (subject to player limitations).
 
-### SFFloat [in, out] **particleLifetime** 5 <small>[0,∞)</small>
+### SFTime [in, out] **particleLifetime** 5 <small>[0,∞)</small>
 {: #fields-particleLifetime }
 
 TODO not properly defined in X3D specification. Particle animation lifetime in base time units (default is seconds).
@@ -230,7 +230,7 @@ The *scale* field contains a [Coordinate](/x_ite/components/rendering/coordinate
 ### SFBool [in, out] **pointerEvents** TRUE <small class="blue">non-standard</small>
 {: #fields-pointerEvents }
 
-*pointerEvents* defines whether this Shape becomes target for pointer events.
+The *pointerEvents* field defines whether this ParticleSystem becomes target for pointer events. A value of `FALSE` makes this ParticleSystem node invisible during pointer picking.
 
 ### SFBool [in, out] **castShadow** TRUE
 {: #fields-castShadow }
@@ -297,7 +297,7 @@ The *appearance* field holds an [Appearance](/x_ite/components/shape/appearance/
 ### SFNode [in, out] **geometry** NULL <small>[X3DGeometryNode]</small>
 {: #fields-geometry }
 
-Single contained *geometry* node provides *geometry* used for each particle when geometryType=GEOMETRY.
+Optional single contained *geometry* node provides *geometry* used for each particle when geometryType=GEOMETRY.
 
 #### Hint
 
@@ -318,13 +318,20 @@ Single contained *geometry* node provides *geometry* used for each particle when
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/ParticleSystems/ParticleSystem/ParticleSystem.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/ParticleSystems/ParticleSystem/ParticleSystem.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/ParticleSystems/ParticleSystem/screenshot.avif" alt="ParticleSystem"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/ParticleSystems/ParticleSystem/ParticleSystem.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/ParticleSystems/ParticleSystem/ParticleSystem.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

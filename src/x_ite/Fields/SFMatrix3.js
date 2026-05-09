@@ -2,46 +2,16 @@ import X3DField                  from "../Base/X3DField.js";
 import SFMatrixPrototypeTemplate from "./SFMatrixPrototypeTemplate.js";
 import Matrix3                   from "../../standard/Math/Numbers/Matrix3.js";
 
+
 function SFMatrix3Template (TypeName, double)
 {
-   function SFMatrix3 (m00, m01, m02,
-                       m10, m11, m12,
-                       m20, m21, m22)
+   function SFMatrix3 (m00 = 1, m01 = 0, m02 = 0,
+                       m10 = 0, m11 = 1, m12 = 0,
+                       m20 = 0, m21 = 0, m22 = 1)
    {
-      switch (arguments .length)
-      {
-         case 0:
-            X3DField .call (this, new Matrix3 ());
-            break;
-
-         case 1:
-            X3DField .call (this, arguments [0]);
-            break;
-
-         case 3:
-         {
-            const
-               r0 = arguments [0],
-               r1 = arguments [1],
-               r2 = arguments [2];
-
-            X3DField .call (this, new Matrix3 (r0 .x, r0 .y, r0 .z,
-                                               r1 .x, r1 .y, r1 .z,
-                                               r2 .x, r2 .y, r2 .z));
-
-            break;
-         }
-         case 9:
-         {
-            X3DField .call (this, new Matrix3 (+m00, +m01, +m02,
-                                               +m10, +m11, +m12,
-                                               +m20, +m21, +m22));
-
-            break;
-         }
-         default:
-            throw new Error ("Invalid arguments.");
-      }
+      X3DField .call (this, new Matrix3 (+m00, +m01, +m02,
+                                         +m10, +m11, +m12,
+                                         +m20, +m21, +m22));
    }
 
    return SFMatrixPrototypeTemplate (SFMatrix3, TypeName, Matrix3, double,
@@ -52,7 +22,7 @@ function SFMatrix3Template (TypeName, double)
 
          return function (translation, rotation, scale, scaleOrientation, center)
          {
-            args .push (translation ?.getValue (), rotation, scale ?.getValue (), scaleOrientation, center ?.getValue ());
+            args .push (translation ?.getValue (), +rotation, scale ?.getValue (), +scaleOrientation, center ?.getValue ());
 
             for (let i = args .length - 1; i > -1; -- i)
             {
@@ -69,15 +39,15 @@ function SFMatrix3Template (TypeName, double)
       })(),
       rotate (rotation)
       {
-         return new (this .constructor) (this .getValue () .copy () .rotate (rotation));
+         return SFMatrix3 .fromValue (this .getValue () .copy () .rotate (+rotation));
       },
       skewX (angle)
       {
-         return new (this .constructor) (this .getValue () .copy () .skewX (angle));
+         return SFMatrix3 .fromValue (this .getValue () .copy () .skewX (+angle));
       },
       skewY (angle)
       {
-         return new (this .constructor) (this .getValue () .copy () .skewY (angle));
+         return SFMatrix3 .fromValue (this .getValue () .copy () .skewY (+angle));
       },
    });
 }

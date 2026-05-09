@@ -25,7 +25,7 @@ function X3DRenderingContext ()
    this [_framebuffers]   = [ ];
    this [_textureBuffers] = [ ];
    this [_depthShaders]   = new Map ();
-   this [_localObjects]   = [ ]; // shader objects dumpster
+   this [_localObjects]   = new Set (); // local objects dumpster
 
    // WebXR support
 
@@ -283,17 +283,15 @@ Object .assign (X3DRenderingContext .prototype,
       return new Promise (resolve =>
       {
          const
-            contentScale   = this .getRenderingProperty ("ContentScale"),
-            viewportWidth  = Math .max (width * contentScale, 1)|0,
-            viewportHeight = Math .max (height * contentScale, 1)|0,
-            key            = Symbol ();
+            [vWidth, vHeight] = this .limitFramebufferSize (width, height),
+            key               = Symbol ();
 
          const test = () =>
          {
-            if (this ._viewport [2] !== viewportWidth)
+            if (this ._viewport [2] !== vWidth)
                return;
 
-            if (this ._viewport [3] !== viewportHeight)
+            if (this ._viewport [3] !== vHeight)
                return;
 
             this ._viewport .removeFieldCallback (key);
@@ -314,10 +312,13 @@ Object .assign (X3DRenderingContext .prototype,
          return;
 
       const
-         canvas       = this .getCanvas (),
-         contentScale = this .getRenderingProperty ("ContentScale"),
-         width        = Math .max (canvas .parent () .width ()  * contentScale, 1)|0,
-         height       = Math .max (canvas .parent () .height () * contentScale, 1)|0;
+         canvas = this .getCanvas (),
+         parent = canvas .parent (),
+         [width, height, contentScale] = this .limitFramebufferSize (parent .width (), parent .height ());
+
+      this .getRenderingProperties () ._ContentScale = parent .width () ? width / parent .width () : contentScale;
+
+      // this .println (this .getRenderingProperty ("ContentScale"), devicePixelRatio)
 
       canvas
          .prop ("width",  width)
@@ -326,6 +327,39 @@ Object .assign (X3DRenderingContext .prototype,
       this .reshapeFramebuffer (0, 0, 0, width, height);
 
       this .addBrowserEvent ();
+   },
+   limitFramebufferSize (width, height)
+   {
+      const
+         gl              = this .getContext (),
+         maxViewportDims = gl .getParameter (gl .MAX_VIEWPORT_DIMS);
+
+      let contentScale = this .getBrowserOption ("ContentScale");
+
+      if (contentScale === -1)
+         contentScale = devicePixelRatio;
+
+      width  *= contentScale,
+      height *= contentScale;
+
+      if (width > maxViewportDims [0] || height > maxViewportDims [1])
+      {
+         if (width > height)
+         {
+            height = maxViewportDims [1] * height / width;
+            width  = maxViewportDims [0];
+         }
+         else
+         {
+            width  = maxViewportDims [0] * width / height;
+            height = maxViewportDims [1];
+         }
+      }
+
+      width  = Math .max (width|0,  1);
+      height = Math .max (height|0, 1);
+
+      return [width, height, contentScale];
    },
    reshapeFramebuffer (i, x, y, width, height)
    {
@@ -406,7 +440,7 @@ Object .assign (X3DRenderingContext .prototype,
    {
       return Lock .acquire (this [_buttonLock], async () =>
       {
-         this .getSurface () .children (".x_ite-private-xr-button") .remove ();
+         this .getSurface () .find (".x_ite-private-xr-button") .remove ();
 
          if (!await this .xrCheckSupport ())
             return;

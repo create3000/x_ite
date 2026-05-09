@@ -3,7 +3,7 @@ title: Sensing Viewer Actions
 date: 2022-11-28
 nav: tutorials-animation-sensors-and-geometry
 categories: [Tutorials]
-tags: [Sensing, Viewer, Actions]
+tags: [TouchSensor, SphereSensor, CylinderSensor, PlaneSensor]
 ---
 ## Motivation
 
@@ -214,7 +214,7 @@ A [PlaneSensor](/x_ite/components/pointingdevicesensor/planesensor/) node senses
 ```vrml
 Transform {
   children [
-    DEF Mover  PlaneSensor { }
+    DEF Mover PlaneSensor { }
     DEF MoveMe Transform { ... }
   ]
 }

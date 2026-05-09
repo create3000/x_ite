@@ -3,7 +3,7 @@ title: Building an X3D World
 date: 2022-11-28
 nav: tutorials-shapes-geometry-and-appearance
 categories: [Tutorials]
-tags: [Building, World]
+tags: [Basic, Getting Started]
 ---
 ## X3D file structure
 
@@ -32,7 +32,7 @@ X3D files contain:
       <Material/>
     <Appearance>
     <Cylinder
-        height='2.0'
+        height='2'
         radius='1.5'/>
     </Shape>
   </Scene>
@@ -52,7 +52,7 @@ Shape {
     material Material { }
   }
   geometry Cylinder {
-    height 2.0
+    height 2
     radius 1.5
   }
 }
@@ -138,8 +138,8 @@ Order of header statements is important!
 
 ```x3d
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D 4.0//EN" "https://www.web3d.org/specifications/x3d-4.0.dtd">
-<X3D profile='Interchange' version='4.0' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-4.0.xsd'>
+<!DOCTYPE X3D PUBLIC "ISO//Web3D//DTD X3D {{ site.x3d_latest_version }}/EN" "https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.dtd">
+<X3D profile='Interchange' version='{{ site.x3d_latest_version }}' xmlns:xsd='http://www.w3.org/2001/XMLSchema-instance' xsd:noNamespaceSchemaLocation='https://www.web3d.org/specifications/x3d-{{ site.x3d_latest_version }}.xsd'>
   <head>
     <component name='CubeMapTexturing' level='3'/>
     <component name='Scripting' level='1'/>
@@ -241,7 +241,7 @@ Some examples:
 
 ```x3d
 <Cylinder
-    height='2.0'
+    height='2'
     radius='1.5'/>
 ```
 
@@ -249,7 +249,7 @@ Some examples:
 
 ```vrml
 Cylinder {
-  height 2.0
+  height 2
   radius 1.5
 }
 ```

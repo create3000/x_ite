@@ -11,6 +11,7 @@ import StopWatch      from "../../../standard/Time/StopWatch.js";
 const
    _pointingDevice            = Symbol (),
    _pointingDeviceSensorNodes = Symbol (),
+   _cursorTypes               = Symbol (),
    _cursorType                = Symbol (),
    _pointer                   = Symbol (),
    _hit                       = Symbol (),
@@ -93,6 +94,12 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    {
       this [_pointingDeviceSensorNodes] .delete (node);
    },
+   setCursors (cursorTypes)
+   {
+      this [_cursorTypes] = cursorTypes;
+
+      this .updateCursor ();
+   },
    setCursor (cursorType)
    {
       if (cursorType === this [_cursorType])
@@ -104,7 +111,11 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    },
    updateCursor ()
    {
-      this .getSurface () .css ("cursor", this .getDisplayLoadCount () ? "wait" : this [_cursorType] .toLowerCase ());
+      const
+         cursorType = this .getDisplayLoadCount () ? "WAIT" : this [_cursorType],
+         css        = this [_cursorTypes] ?.[cursorType] ?? cursorType .toLowerCase ();
+
+      this .getSurface () .css ("cursor", css);
    },
    getPointer ()
    {
@@ -240,16 +251,13 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
    { },
    touch (x, y, hit = this [_hit], inputSource = null)
    {
-      this [_pointingTime] .start ();
-
       if (this .getViewer () .isActive ())
-      {
-         this [_pointingTime] .reset ();
          return false;
-      }
 
       if (Boolean (this .getPose ()) !== Boolean (inputSource))
          return false;
+
+      this [_pointingTime] .start ();
 
       // Pick.
 
@@ -284,7 +292,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          hit .shapeNode = shapeNode;
 
          hit .viewMatrix      .assign (renderObject .getViewpoint () .getViewMatrix ());
-         hit .modelViewMatrix .assign (modelViewMatrix);
+         hit .modelViewMatrix .assign (geometryContext .getMatrix ()) .inverse () .multRight (modelViewMatrix);
 
          // A ParticleSystem has only a geometry context.
          // Hit normal must be normalized if used.
@@ -322,7 +330,6 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       // Picking end.
 
-      this .addBrowserEvent ();
       this [_pointingTime] .stop ();
 
       return !! hit .id;

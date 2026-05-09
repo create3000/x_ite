@@ -29,11 +29,11 @@ The ArcClose2D node belongs to the [Geometry2D](/x_ite/components/overview/#geom
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFString | [ ] | [closureType](#fields-closureType) | "PIE"  |
-| SFFloat | [ ] | [startAngle](#fields-startAngle) | 0  |
-| SFFloat | [ ] | [endAngle](#fields-endAngle) | π/2  |
-| SFFloat | [ ] | [radius](#fields-radius) | 1  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFString | [ ] | [closureType](#fields-closureType) | "PIE" |
+| SFFloat | [ ] | [startAngle](#fields-startAngle) | 0 |
+| SFFloat | [ ] | [endAngle](#fields-endAngle) | π/2 |
+| SFFloat | [ ] | [radius](#fields-radius) | 1 |
 | SFBool | [ ] | [solid](#fields-solid) | FALSE |
 {: .fields }
 
@@ -124,13 +124,20 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geometry2D/ArcClose2D/ArcClose2D.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Geometry2D/ArcClose2D/ArcClose2D.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Geometry2D/ArcClose2D/screenshot.avif" alt="ArcClose2D"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Geometry2D/ArcClose2D/ArcClose2D.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Geometry2D/ArcClose2D/ArcClose2D.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

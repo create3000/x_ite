@@ -3,7 +3,7 @@ title: Sphere
 date: 2023-01-07
 nav: components-Geometry3D
 categories: [components, Geometry3D]
-tags: [Sphere, Geometry3D]
+tags: [Sphere, Geometry3D, VRML]
 ---
 <style>
 .post h3 {
@@ -29,8 +29,8 @@ The Sphere node belongs to the [Geometry3D](/x_ite/components/overview/#geometry
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFFloat | [ ] | [radius](#fields-radius) | 1  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFFloat | [ ] | [radius](#fields-radius) | 1 |
 | SFBool | [ ] | [solid](#fields-solid) | TRUE |
 {: .fields }
 
@@ -81,7 +81,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geometry3D/Sphere/Sphere.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Geometry3D/Sphere/Sphere.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Geometry3D/Sphere/screenshot.avif" alt="Sphere"/>
 </x3d-canvas>
 
@@ -89,6 +89,14 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Geometry3D/Sphere/Sphere.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of Sphere Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Sphere)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

@@ -431,7 +431,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    set_physics__ ()
    {
       const
-         physics                  = this ._physics .getValue (),
          forcePhysicsModelNodes   = this .forcePhysicsModelNodes,
          boundedPhysicsModelNodes = this .boundedPhysicsModelNodes;
 
@@ -444,12 +443,12 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       forcePhysicsModelNodes   .length = 0;
       boundedPhysicsModelNodes .length = 0;
 
-      for (let i = 0, length = physics .length; i < length; ++ i)
+      for (const node of this ._physics)
       {
          try
          {
             const
-               innerNode = physics [i] .getValue () .getInnerNode (),
+               innerNode = node .getValue () .getInnerNode (),
                type      = innerNode .getType ();
 
             for (let t = type .length - 1; t >= 0; -- t)
@@ -953,7 +952,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          case GeometryType .QUAD:
          case GeometryType .TRIANGLE:
          {
-            const positiveScale = Matrix4 .prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
+            const positiveScale = Matrix4 .prototype .determinant3 .call (renderContext .modelViewMatrix) >= 0;
 
             gl .frontFace (positiveScale ? gl .CCW : gl .CW);
             gl .enable (gl .CULL_FACE);
@@ -968,15 +967,15 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
                appearanceNode  = this .getAppearance (),
                renderModeNodes = appearanceNode .getRenderModes (),
                shaderNode      = appearanceNode .getShader (this .geometryContext, renderContext),
-               primitiveMode   = browser .getPrimitiveMode (this .primitiveMode);
+               primitiveMode   = browser .getPrimitiveMode (this .primitiveMode),
+               opaquePoints    = this .geometryType === GeometryType .POINT && !renderContext .transparent;
 
             // Enable sample alpha to coverage if not transparent.
 
-            if (this .geometryType === GeometryType .POINT && !renderContext .transparent)
+            if (opaquePoints)
             {
                gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
-               gl .enable (gl .BLEND);
-               gl .blendFuncSeparate (gl .ONE, gl .ZERO, gl .ZERO, gl .ONE);
+               gl .colorMask (true, true, true, false);
             }
 
             // Set viewport.
@@ -995,7 +994,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
             if (this .numTexCoords)
             {
-               const textureUnit = browser .getTextureUnit ();
+               const textureUnit = browser .popTextureUnit ();
 
                gl .activeTexture (gl .TEXTURE0 + textureUnit);
                gl .bindTexture (gl .TEXTURE_2D, this [ParticleSampler .texCoords]);
@@ -1045,11 +1044,10 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
 
             // Disable sample alpha to coverage if not transparent.
 
-            if (this .geometryType === GeometryType .POINT && !renderContext .transparent)
+            if (opaquePoints)
             {
                gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
-               gl .disable (gl .BLEND);
-               gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
+               gl .colorMask (true, true, true, true);
             }
 
             break;
@@ -1060,20 +1058,19 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    {
       const
          invModelViewMatrix = new Matrix4 (),
-         billboardToScreen  = new Vector3 (),
-         viewerYAxis        = new Vector3 (),
+         x                  = new Vector3 (),
          y                  = new Vector3 (),
-         rotation           = new Matrix3 (9);
+         z                  = new Vector3 (),
+         rotation           = new Matrix3 ();
 
       return function (modelViewMatrix)
       {
          invModelViewMatrix .assign (modelViewMatrix) .inverse ();
-         invModelViewMatrix .multDirMatrix (billboardToScreen .assign (Vector3 .Z_AXIS));
-         invModelViewMatrix .multDirMatrix (viewerYAxis .assign (Vector3 .Y_AXIS));
+         invModelViewMatrix .multDirMatrix (x .assign (Vector3 .Y_AXIS));
+         invModelViewMatrix .multDirMatrix (z .assign (Vector3 .Z_AXIS));
 
-         const x = viewerYAxis .cross (billboardToScreen);
-         y .assign (billboardToScreen) .cross (x);
-         const z = billboardToScreen;
+         x .cross (z);
+         y .assign (z) .cross (x);
 
          // Compose rotation matrix.
 
@@ -1081,9 +1078,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          y .normalize ();
          z .normalize ();
 
-         rotation .set (x .x, x .y, x .z,
-                        y .x, y .y, y .z,
-                        z .x, z .y, z .z);
+         rotation .set (... x, ... y, ... z);
 
          return rotation;
       };
@@ -1098,10 +1093,10 @@ Object .defineProperties (ParticleSystem,
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",           new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "createParticles",   new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "geometryType",      new Fields .SFString ("QUAD")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "createParticles",   new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "maxParticles",      new Fields .SFInt32 (200)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "particleLifetime",  new Fields .SFFloat (5)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "particleLifetime",  new Fields .SFTime (5)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "lifetimeVariation", new Fields .SFFloat (0.25)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "particleSize",      new Fields .SFVec2f (0.02, 0.02)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "emitter",           new Fields .SFNode ()),
@@ -1110,10 +1105,10 @@ Object .defineProperties (ParticleSystem,
          new X3DFieldDefinition (X3DConstants .initializeOnly, "color",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "texCoordKey",       new Fields .MFFloat ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "texCoord",          new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "scaleKey",          new Fields .MFFloat ()), // skip test
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "scale",             new Fields .SFNode ()), // skip test
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "scaleKey",          new Fields .MFFloat ()),    // experimental
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "scale",             new Fields .SFNode ()),     // experimental
          new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",          new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "pointerEvents",     new Fields .SFBool (true)), // skip test
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "pointerEvents",     new Fields .SFBool (true)), // experimental
          new X3DFieldDefinition (X3DConstants .inputOutput,    "castShadow",        new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",           new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",       new Fields .SFBool ()),

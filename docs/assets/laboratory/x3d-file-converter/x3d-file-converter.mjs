@@ -28,6 +28,7 @@ $("#open-files a") .on ("click", event =>
       ".vrml",
       ".gltf",
       ".glb",
+      ".vrm",
       ".obj",
       ".stl",
       ".ply",
@@ -38,6 +39,7 @@ $("#open-files a") .on ("click", event =>
    const input = $("<input></input>")
       .attr ("type", "file")
       .attr ("accept", suffixes .join (","))
+      .attr ("multiple", "")
       .appendTo ($("#open-files"));
 
    input .on ("change", event =>
@@ -52,7 +54,21 @@ $("#open-files a") .on ("click", event =>
 
 function read (files)
 {
+   const n = files .length;
+
    read .files = [... files];
+
+   $("#filenames") .empty ();
+
+   read .files
+      .flatMap ((file, i) => [
+         $("<span></span>") .text (`»${file .name}«`),
+         ... (i < n - 1 ? [$("<span></span>") .text (","), $("<br>")] : [ ])
+      ])
+      .forEach (element => element .appendTo ($("#filenames")));
+
+   if (n > 1)
+      $("#filenames") .prepend ($("<br>")) .append ($("<br>"));
 
    $("#open-files") .hide ();
    $("#convert-files") .show ();
@@ -84,21 +100,20 @@ async function convert (encoding, files)
       try
       {
          const
-            Browser = X3D .createBrowser () .browser,
+            browser = X3D .createBrowser () .browser,
             url     = URL .createObjectURL (file);
 
-         Browser .endUpdate ();
-         Browser .setBrowserOption ("LoadUrlObjects",   false);
-         Browser .setBrowserOption ("PrimitiveQuality", "HIGH");
-         Browser .setBrowserOption ("TextureQuality",   "HIGH");
-
-         await Browser .loadURL (new X3D .MFString (url));
+         browser .setBrowserOption ("PrimitiveQuality", "HIGH");
+         browser .setBrowserOption ("TextureQuality",   "HIGH");
+         browser .setBrowserOption ("LoadUrlObjects",   false);
+         browser .setBrowserOption ("Mute",             true);
+         browser .endUpdate ();
 
          const
-            scene     = Browser .currentScene,
-            generator = scene .getMetaData ("generator") ?.filter (value => !value .startsWith (Browser .name)) ?? [ ];
+            scene     = await browser .createX3DFromURL (new X3D .MFString (url)),
+            generator = scene .getMetaData ("generator") ?.filter (value => !value .startsWith (browser .name)) ?? [ ];
 
-         generator .push (`${Browser .name} V${Browser .version}, ${Browser .providerURL}`);
+         generator .push (`${browser .name} V${browser .version}, ${browser .providerURL}`);
 
          scene .setMetaData ("generator", generator);
          scene .setMetaData ("modified", new Date () .toUTCString ());
@@ -136,20 +151,67 @@ function getHTML (scene, filename)
 <html>
   <head>
     <meta charset="utf-8">
-    <script src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/x_ite@latest/dist/x_ite.min.js"></script>
     <style>
-body {
-  background-color: rgb(21, 22, 24);
-  color: rgb(108, 110, 113);
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400&family=Source+Sans+3:ital,wght@0,400&display=swap");
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --text-color: rgb(42, 42, 42);
+    --background-color: white;
+    --link-color: rgb(0, 86, 178);
+    --link-hover-color: rgb(210, 96, 58);
+  }
 }
 
-a {
-  color: rgb(106, 140, 191);
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: rgb(175, 176, 177);
+    --background-color: rgb(27, 27, 30);
+    --link-color: rgb(82, 108, 150);
+    --link-hover-color: rgb(210, 96, 58);
+  }
+}
+
+body {
+  color-scheme: light dark;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  margin: 0px;
+  padding: 0px;
+  height: 100vh;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 1.08rem;
+}
+
+body > * {
+  flex: 0 0 auto;
+  padding: 0px 1rem;
+}
+
+h1 {
+   font-family: Lato, sans-serif;
 }
 
 x3d-canvas {
-  width: 768px;
-  height: 432px;
+  flex: 1 1 auto;
+  box-sizing: border-box;
+  border-top: 1px solid color-mix(in srgb, var(--text-color), transparent 90%);
+  border-bottom: 1px solid color-mix(in srgb, var(--text-color), transparent 90%);
+  padding: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+a {
+  color: var(--link-color);
+}
+
+a:hover {
+  color: var(--link-hover-color);
 }
     </style>
   </head>
@@ -158,7 +220,7 @@ x3d-canvas {
     <x3d-canvas>
 ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd ()}
     </x3d-canvas>
-    <p>Made with <a href="https://create3000.github.io/x_ite/laboratory/x3d-file-converter/" target="_blank">X_ITE Online File Format Converter.</a></p>
+    <p>Made with <a href="https://create3000.github.io/x_ite/laboratory/x3d-file-converter/" target="_blank">X_ITE Online File Format Converter</a>. If local files are not loaded <a href="https://create3000.github.io/x_ite/setup-a-localhost-server">consider setup a localhost server</a> or use <a href="https://create3000.github.io/x_ite/dom-integration">DOM integration methods</a>.</p>
   </body>
 </html>`
 }
@@ -166,11 +228,35 @@ ${scene .toXMLString ({ html: true, indent: " " .repeat (6) }) .trimEnd ()}
 function link (mimeType, name, x3dSyntax)
 {
    const a = $("<a></a>")
-      .text (name)
+      .text (`${name} (${humanFileSize (x3dSyntax .length, true)})`)
       .attr ("href", "#")
       .on ("click", () => download (mimeType, name, x3dSyntax));
 
    $("<li></li>") .append (a) .appendTo ($("#download-links"));
+}
+
+function humanFileSize (bytes, si = false, dp = 1)
+{
+   const thresh = si ? 1000 : 1024;
+
+   if (Math .abs (bytes) < thresh)
+      return bytes + ' B';
+
+   const units = si
+      ? ['kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+      : ['KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
+
+   const r = 10 ** dp;
+
+   let u = -1;
+
+   do {
+      bytes /= thresh;
+      ++ u;
+   }
+   while (Math .round (Math .abs (bytes) * r) / r >= thresh && u < units .length - 1);
+
+   return bytes .toFixed (dp) + ' ' + units [u];
 }
 
 function download (mimeType, name, x3dSyntax)

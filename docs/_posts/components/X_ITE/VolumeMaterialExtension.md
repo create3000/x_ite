@@ -32,12 +32,12 @@ The VolumeMaterialExtension node belongs to the [X_ITE](/x_ite/components/overvi
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFFloat | [in, out] | [thickness](#fields-thickness) | 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFFloat | [in, out] | [thickness](#fields-thickness) | 0 |
 | SFString | [in, out] | [thicknessTextureMapping](#fields-thicknessTextureMapping) | "" |
-| SFNode | [in, out] | [thicknessTexture](#fields-thicknessTexture) | NULL  |
-| SFFloat | [in, out] | [attenuationDistance](#fields-attenuationDistance) | 1000000  |
-| SFColor | [in, out] | [attenuationColor](#fields-attenuationColor) | 1 1 1  |
+| SFNode | [in, out] | [thicknessTexture](#fields-thicknessTexture) | NULL |
+| SFFloat | [in, out] | [attenuationDistance](#fields-attenuationDistance) | 1000000 |
+| SFColor | [in, out] | [attenuationColor](#fields-attenuationColor) | 1 1 1 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -62,9 +62,9 @@ Input/Output field *thicknessTextureMapping*.
 ### SFNode [in, out] **thicknessTexture** NULL <small>[X3DSingleTextureNode]</small>
 {: #fields-thicknessTexture }
 
-A texture that defines the thickness, stored in the G channel. This will be multiplied by thicknessFactor.
+A texture that defines the thickness, stored in the green (G) channel. This will be multiplied by thicknessFactor.
 
-### SFFloat [in, out] **attenuationDistance** 1000000 <small>[0,∞)</small>
+### SFFloat [in, out] **attenuationDistance** 1000000 <small>(0,∞)</small>
 {: #fields-attenuationDistance }
 
 Density of the medium given as the average distance that light travels in the medium before interacting with a particle. The value is given in world space.
@@ -77,6 +77,13 @@ The color that white light turns into due to absorption when reaching the attenu
 ## Example
 
 - [View »Dragon Attenuation« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=DragonAttenuation)
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

@@ -3,7 +3,7 @@ title: Viewpoint
 date: 2023-01-07
 nav: components-Navigation
 categories: [components, Navigation]
-tags: [Viewpoint, Navigation]
+tags: [Viewpoint, Navigation, VRML]
 ---
 <style>
 .post h3 {
@@ -31,21 +31,21 @@ The Viewpoint node belongs to the [Navigation](/x_ite/components/overview/#navig
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in] | [set_bind](#fields-set_bind) |  |
 | SFString | [in, out] | [description](#fields-description) | "" |
-| SFVec3f | [in, out] | [position](#fields-position) | 0 0 10  |
-| SFRotation | [in, out] | [orientation](#fields-orientation) | 0 0 1 0  |
-| SFVec3f | [in, out] | [centerOfRotation](#fields-centerOfRotation) | 0 0 0  |
-| SFFloat | [in, out] | [fieldOfView](#fields-fieldOfView) | π/4  |
-| SFFloat | [in, out] | [nearDistance](#fields-nearDistance) | -1  |
-| SFFloat | [in, out] | [farDistance](#fields-farDistance) | -1  |
+| SFVec3f | [in, out] | [position](#fields-position) | 0 0 10 |
+| SFRotation | [in, out] | [orientation](#fields-orientation) | 0 0 1 0 |
+| SFVec3f | [in, out] | [centerOfRotation](#fields-centerOfRotation) | 0 0 0 |
+| SFFloat | [in, out] | [fieldOfView](#fields-fieldOfView) | π/4 |
+| SFFloat | [in, out] | [nearDistance](#fields-nearDistance) | -1 |
+| SFFloat | [in, out] | [farDistance](#fields-farDistance) | -1 |
 | SFBool | [in, out] | [viewAll](#fields-viewAll) | FALSE |
 | SFBool | [in, out] | [jump](#fields-jump) | TRUE |
 | SFBool | [in, out] | [retainUserOffsets](#fields-retainUserOffsets) | FALSE |
 | SFBool | [out] | [isBound](#fields-isBound) |  |
 | SFTime | [out] | [bindTime](#fields-bindTime) |  |
-| SFNode | [in, out] | [navigationInfo](#fields-navigationInfo) | NULL  |
+| SFNode | [in, out] | [navigationInfo](#fields-navigationInfo) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -119,12 +119,12 @@ Preferred minimum viewing angle from this viewpoint in radians, providing minimu
 #### Hints
 
 - Modifying Viewpoint distance to object may be better for zooming.
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 #### Warnings
 
 - *fieldOfView* may not be correct for different window sizes and aspect ratios.
-- For VR/AR/MR/XR users wearing a head-mounted display (HMD), animating this field may induce motion sickness. Interchange profile
+- For VR/AR/MR/XR users wearing a head-mounted display (HMD), animating this field may induce motion sickness.
 
 ### SFFloat [in, out] **nearDistance** -1 <small>-1 or (0,∞)</small>
 {: #fields-nearDistance }
@@ -241,7 +241,7 @@ The *navigationInfo* field defines a dedicated [NavigationInfo](/x_ite/component
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Navigation/Viewpoint/Viewpoint.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Navigation/Viewpoint/Viewpoint.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Navigation/Viewpoint/screenshot.avif" alt="Viewpoint"/>
 </x3d-canvas>
 
@@ -249,6 +249,14 @@ The *navigationInfo* field defines a dedicated [NavigationInfo](/x_ite/component
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Navigation/Viewpoint/Viewpoint.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of Viewpoint Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#Viewpoint)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

@@ -34,13 +34,13 @@ The ImageCubeMapTexture node belongs to the [CubeMapTexturing](/x_ite/components
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [load](#fields-load) | TRUE |
 | MFString | [in, out] | [url](#fields-url) | [ ] |
-| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0  |
-| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600  |
-| SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL  |
+| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0 |
+| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600 |
+| SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -117,7 +117,7 @@ Location and filename of image. Multiple locations are more reliable, and includ
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
 {: #fields-textureProperties }
 
-Single contained [TextureProperties](/x_ite/components/texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
+Optional single contained [TextureProperties](/x_ite/components/texturing/textureproperties/) node that can specify additional visual attributes applied to corresponding texture images.
 
 ## Supported File Formats
 
@@ -153,6 +153,13 @@ Skybox images must have an exact aspect ratio of 4:3 of width to height.
 
 - Can contain a single [TextureProperties](/x_ite/components/texturing/textureproperties/) node.
 - [When parent node is LoadSensor, apply `containerField='children'` (X3Dv4) or `containerField='watchList'` (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

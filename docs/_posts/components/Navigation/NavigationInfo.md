@@ -3,7 +3,7 @@ title: NavigationInfo
 date: 2023-01-07
 nav: components-Navigation
 categories: [components, Navigation]
-tags: [NavigationInfo, Navigation]
+tags: [NavigationInfo, Navigation, VRML]
 ---
 <style>
 .post h3 {
@@ -30,15 +30,15 @@ The NavigationInfo node belongs to the [Navigation](/x_ite/components/overview/#
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in] | [set_bind](#fields-set_bind) |  |
 | MFString | [in, out] | [type](#fields-type) | [ "EXAMINE", "ANY" ] |
 | MFFloat | [in, out] | [avatarSize](#fields-avatarSize) | [ 0.25, 1.6, 0.75 ] |
-| SFFloat | [in, out] | [speed](#fields-speed) | 1  |
+| SFFloat | [in, out] | [speed](#fields-speed) | 1 |
 | SFBool | [in, out] | [headlight](#fields-headlight) | TRUE |
-| SFFloat | [in, out] | [visibilityLimit](#fields-visibilityLimit) | 0  |
-| MFString | [in, out] | [transitionType](#fields-transitionType) | "LINEAR"  |
-| SFTime | [in, out] | [transitionTime](#fields-transitionTime) | 1  |
+| SFFloat | [in, out] | [visibilityLimit](#fields-visibilityLimit) | 0 |
+| MFString | [in, out] | [transitionType](#fields-transitionType) | "LINEAR" |
+| SFTime | [in, out] | [transitionTime](#fields-transitionTime) | 1 |
 | SFBool | [out] | [transitionComplete](#fields-transitionComplete) |  |
 | SFBool | [out] | [isBound](#fields-isBound) |  |
 | SFTime | [out] | [bindTime](#fields-bindTime) |  |
@@ -76,8 +76,8 @@ Enter one or more quoted SFString values: "EXAMINE" "WALK" "FLY" "LOOKAT" "EXPLO
 - For inspection of simple objects, usability often improves with *type*="EXAMINE" "ANY".
 - Types WALK and FLY force strict camera-to-object collision detection.
 - See [Collision](/x_ite/components/navigation/collision/) node for further details on camera-to-object collision detection.
-- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." ] Interchange profile
-- This field may be ignored, applying the default value regardless.
+- MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc." ]
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### MFFloat [in, out] **avatarSize** [ 0.25, 1.6, 0.75 ] <small>[0,∞)</small>
 {: #fields-avatarSize }
@@ -87,8 +87,8 @@ Enter one or more quoted SFString values: "EXAMINE" "WALK" "FLY" "LOOKAT" "EXPLO
 #### Hints
 
 - X3D specification recommends that browsers set near clipping plane to one-half of *avatarSize*.CollisionDistance value.
-- [Aliasing](https://en.wikipedia.org/wiki/Aliasing) and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics)) Interchange profile
-- This field may be ignored, applying the default value regardless.
+- [Aliasing](https://en.wikipedia.org/wiki/Aliasing) and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics))
+- In Interchange profile this field may be ignored, applying the default value regardless.
 - Transformation hierarchy of currently bound [Viewpoint](/x_ite/components/navigation/viewpoint/) node scales *avatarSize*, but translations and rotations have no effect.
 - Content must be visible to be collidable and to be pickable.
 
@@ -104,11 +104,11 @@ Default rate at which viewer travels through scene, meters/second.
 
 #### Hint
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 #### Warning
 
-- Default 1 m/s usually seems slow for ordinary navigation. Interchange profile
+- Default 1 m/s usually seems slow for ordinary navigation.
 
 ### SFBool [in, out] **headlight** TRUE
 {: #fields-headlight }
@@ -125,8 +125,8 @@ Geometry beyond the *visibilityLimit* may not be rendered (far clipping plane of
 - *visibilityLimit*=0.0 indicates an infinite visibility limit (no far clipping plane).
 - Set *visibilityLimit* to appropriate positive value in meters to define far culling plane of view frustum.
 - X3D specification recommends that browsers set near clipping plane to one-half of avatarSize.CollisionDistance value.
-- [Aliasing](https://en.wikipedia.org/wiki/Aliasing) and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics)) Interchange profile
-- This field may be ignored, applying the default value regardless.
+- [Aliasing](https://en.wikipedia.org/wiki/Aliasing) and [Clipping](https://en.wikipedia.org/wiki/Clipping_(computer_graphics))
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 #### Warning
 
@@ -148,17 +148,17 @@ Camera transition between viewpoints. Enter one or more quoted SFString values: 
 
 #### Hints
 
-- If transitionType is "ANIMATE", *transitionTime* provides browser-dependent animation parameters. Interchange profile
-- This field may be ignored, applying the default value regardless.
+- If transitionType is "ANIMATE", *transitionTime* provides browser-dependent animation parameters.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### SFBool [out] **transitionComplete**
 {: #fields-transitionComplete }
 
-Event signaling viewpoint transition complete. Interchange profile
+Event signaling viewpoint transition complete.
 
 #### Hint
 
-- This field may be ignored.
+- In Interchange profile this field may be ignored.
 
 #### Warning
 
@@ -203,7 +203,7 @@ Event sent reporting timestamp when node becomes active/inactive.
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Navigation/NavigationInfo/NavigationInfo.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Navigation/NavigationInfo/NavigationInfo.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Navigation/NavigationInfo/screenshot.avif" alt="NavigationInfo"/>
 </x3d-canvas>
 
@@ -211,7 +211,15 @@ Event sent reporting timestamp when node becomes active/inactive.
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Navigation/NavigationInfo/NavigationInfo.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of NavigationInfo Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#NavigationInfo)
 - [How to Navigate in a Scene](/x_ite/tutorials/how-to-navigate-in-a-scene/)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

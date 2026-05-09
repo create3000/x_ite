@@ -44,6 +44,8 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
    },
    set_enabled__ ()
    {
+      // If enabled field is FALSE, the audio signal is blocked and does not pass through.
+
       if (this ._enabled .getValue () && this .getLive () .getValue ())
          this .audioDestination .connect (this .getSoundDestination ());
       else
@@ -69,9 +71,6 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
 
       return function ()
       {
-         if (!this ._enabled .getValue ())
-            return;
-
          this .audioDestination .channelCountMode = channelCountModes .get (this ._channelCountMode .getValue ()) ?? "max";
       };
    })(),
@@ -84,9 +83,6 @@ Object .assign (Object .setPrototypeOf (X3DSoundDestinationNode .prototype, X3DS
 
       return function ()
       {
-         if (!this ._enabled .getValue ())
-            return;
-
          this .audioDestination .channelInterpretation = channelInterpretations .get (this ._channelInterpretation .getValue ()) ?? "speakers";
       };
    })(),

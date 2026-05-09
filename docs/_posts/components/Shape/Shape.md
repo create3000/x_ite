@@ -3,7 +3,7 @@ title: Shape
 date: 2023-01-07
 nav: components-Shape
 categories: [components, Shape]
-tags: [Shape, Shape]
+tags: [Shape, Shape, VRML]
 ---
 <style>
 .post h3 {
@@ -22,23 +22,26 @@ The Shape node belongs to the [Shape](/x_ite/components/overview/#shape) compone
 ```
 + X3DNode
   + X3DChildNode
-    + X3DShapeNode
+    + X3DShapeNode (X3DBoundedObject)*
       + Shape
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFBool | [in, out] | [pointerEvents](#fields-pointerEvents) | TRUE  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFBool | [in, out] | [pointerEvents](#fields-pointerEvents) | TRUE |
 | SFBool | [in, out] | [castShadow](#fields-castShadow) | TRUE |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
-| SFNode | [in, out] | [appearance](#fields-appearance) | NULL  |
-| SFNode | [in, out] | [geometry](#fields-geometry) | NULL  |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
+| SFNode | [in, out] | [appearance](#fields-appearance) | NULL |
+| SFNode | [in, out] | [geometry](#fields-geometry) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -53,7 +56,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### SFBool [in, out] **pointerEvents** TRUE <small class="blue">non-standard</small>
 {: #fields-pointerEvents }
 
-*pointerEvents* defines whether this Shape becomes target for pointer events.
+The *pointerEvents* field defines whether this Shape becomes target for pointer events. A value of `FALSE` makes this Shape node invisible during pointer picking.
 
 ### SFBool [in, out] **castShadow** TRUE
 {: #fields-castShadow }
@@ -110,12 +113,12 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 ### SFNode [in, out] **appearance** NULL <small>[X3DAppearanceNode]</small>
 {: #fields-appearance }
 
-Single contained [Appearance](/x_ite/components/shape/appearance/) node that can specify visual attributes (such as material, texture, fillProperties and lineProperties) applied to corresponding geometry.
+Optional single contained [Appearance](/x_ite/components/shape/appearance/) node that can specify visual attributes (such as material, texture, fillProperties and lineProperties) applied to corresponding geometry.
 
 ### SFNode [in, out] **geometry** NULL <small>[X3DGeometryNode]</small>
 {: #fields-geometry }
 
-Single contained *geometry* node that is rendered according to corresponding appearance.
+Optional single contained *geometry* node that is rendered according to corresponding appearance.
 
 ## Advice
 
@@ -128,6 +131,14 @@ Single contained *geometry* node that is rendered according to corresponding app
 - [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/lighting.html#Lightingmodel)
 - Apply `containerField='shape'` if parent node is [CADFace](/x_ite/components/cadgeometry/cadface/).
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of Shape Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Shape)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

@@ -30,7 +30,7 @@ The Layout node belongs to the [Layout](/x_ite/components/overview/#layout) comp
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFString | [in, out] | [align](#fields-align) | [ "CENTER", "CENTER" ] |
 | MFString | [in, out] | [offsetUnits](#fields-offsetUnits) | [ "WORLD", "WORLD" ] |
 | MFFloat | [in, out] | [offset](#fields-offset) | [ 0, 0 ] |
@@ -130,6 +130,13 @@ The *scaleMode* field specifies how the scale of the parent is modified. Two quo
 ### Hint
 
 - The align, offset, and offsetUnits fields are used to determine the location of the layout region.
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

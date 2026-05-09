@@ -7,9 +7,10 @@ const
    _inlineNode       = Symbol (),
    _exportedName     = Symbol (),
    _importedName     = Symbol (),
+   _description      = Symbol (),
    _exportedNodes    = Symbol ();
 
-function X3DImportedNode (executionContext, inlineNode, exportedName, importedName)
+function X3DImportedNode (executionContext, inlineNode, exportedName, importedName, description)
 {
    X3DObject .call (this);
 
@@ -17,6 +18,7 @@ function X3DImportedNode (executionContext, inlineNode, exportedName, importedNa
    this [_inlineNode]       = inlineNode;
    this [_exportedName]     = exportedName;
    this [_importedName]     = importedName;
+   this [_description]      = description;
    this [_exportedNodes]    = executionContext [_exportedNodes] ??= new Map ();
 }
 
@@ -36,8 +38,11 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
    },
    getExportedNode (type)
    {
-      return this [_exportedNodes] .get (this [_importedName])
-         ?? this .createExportedNode (type);
+      const exportedNode = this [_exportedNodes] .get (this [_importedName]);
+
+      exportedNode ?.setTypeHint (type);
+
+      return exportedNode ?? this .createExportedNode (type);
    },
    createExportedNode (type)
    {
@@ -46,6 +51,10 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
       this [_exportedNodes] .set (this [_importedName], exportedNode);
 
       return exportedNode;
+   },
+   updateExportedNode ()
+   {
+      this [_exportedNodes] .get (this [_importedName]) ?.update ();
    },
    getSharedNode ()
    {
@@ -73,6 +82,14 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
 
       exportedNode .setName (importedName);
    },
+   getDescription ()
+   {
+      return this [_description];
+   },
+   setDescription (value)
+   {
+      this [_description] = String (value);
+   },
    toVRMLStream (generator)
    {
       if (!generator .ExistsNode (this .getInlineNode ()))
@@ -82,19 +99,29 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
 
       const importedName = generator .ImportedName (this);
 
-      generator .string += generator .Indent ();
+      generator .Indent ();
       generator .string += "IMPORT";
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += generator .Name (this .getInlineNode ());
       generator .string += ".";
       generator .string += this .getExportedName ();
 
       if (importedName !== this .getExportedName ())
       {
-         generator .string += generator .Space ();
+         generator .Space ();
          generator .string += "AS";
-         generator .string += generator .Space ();
+         generator .Space ();
          generator .string += importedName;
+      }
+
+      if (this [_description])
+      {
+         generator .Space ();
+         generator .string += "DESCRIPTION";
+         generator .Space ();
+         generator .string += '"';
+         generator .string += this [_description];
+         generator .string += '"';
       }
    },
    toXMLStream (generator)
@@ -113,6 +140,9 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
       if (importedName !== this .getExportedName ())
          generator .attribute ("AS", importedName);
 
+      if (this [_description])
+         generator .attribute ("DESCRIPTION", this [_description]);
+
       generator .closeTag ("IMPORT");
    },
    toJSONStream (generator)
@@ -120,8 +150,8 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
       if (!generator .ExistsNode (this .getInlineNode ()))
          throw new Error ("X3DImportedNode.toJSONStream: Inline node does not exist.");
 
-      generator .string += generator .TidyBreak ();
-      generator .string += generator .Indent ();
+      generator .TidyBreak ();
+      generator .Indent ();
 
       generator .AddRouteNode (this);
       generator .beginObject ("IMPORT", false, true);
@@ -132,6 +162,9 @@ Object .assign (Object .setPrototypeOf (X3DImportedNode .prototype, X3DObject .p
 
       if (importedName !== this .getExportedName ())
          generator .stringProperty ("@AS", importedName);
+
+      if (this [_description])
+         generator .stringProperty ("@DESCRIPTION", this [_description]);
 
       generator .endObject ();
       generator .endObject ();
@@ -172,10 +205,7 @@ Object .defineProperties (X3DImportedNode .prototype,
    },
    exportedName:
    {
-      get ()
-      {
-         return this [_exportedName];
-      },
+      get: X3DImportedNode .prototype .getExportedName,
       enumerable: true,
    },
    exportedNode:
@@ -188,10 +218,13 @@ Object .defineProperties (X3DImportedNode .prototype,
    },
    importedName:
    {
-      get ()
-      {
-         return this [_importedName];
-      },
+      get: X3DImportedNode .prototype .getImportedName,
+      enumerable: true,
+   },
+   description:
+   {
+      get: X3DImportedNode .prototype .getDescription,
+      set: X3DImportedNode .prototype .setDescription,
       enumerable: true,
    },
 });

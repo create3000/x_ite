@@ -1,22 +1,19 @@
 import FontStyle     from "../../Components/Text/FontStyle.js";
 import URLs          from "../Networking/URLs.js";
-import * as OpenType from "../../../lib/opentype/opentype.mjs";
+import FontLibrary   from "../../Components/Text/FontLibrary.js";
+import * as OpenType from "../../../../node_modules/opentype.js/dist/opentype.mjs";
 import DEVELOPMENT   from "../../DEVELOPMENT.js";
 
 const
    _defaultFontStyle = Symbol (),
    _fontCache        = Symbol (),
-   _loadingFonts     = Symbol (),
-   _families         = Symbol (),
    _library          = Symbol (),
    _woff2Decoder     = Symbol ();
 
 function X3DTextContext ()
 {
-   this [_loadingFonts] = new Set ();
-   this [_fontCache]    = new Map ();
-   this [_families]     = new WeakMap ();
-   this [_library]      = new WeakMap ();
+   this [_fontCache] = new Map ();
+   this [_library]   = new WeakMap ();
 }
 
 Object .assign (X3DTextContext .prototype,
@@ -73,44 +70,13 @@ Object .assign (X3DTextContext .prototype,
 
                resolve (null);
             }
-            finally
-            {
-               this [_loadingFonts] .delete (promise);
-            }
          });
-
-         this [_loadingFonts] .add (promise);
 
          if (!fileURL .search)
             this [_fontCache] .set (fileURL .href, promise);
       }
 
       return promise;
-   },
-   registerFont (executionContext, font)
-   {
-      const families = this [_families] .getOrInsertComputed (executionContext, () => new Map ());
-
-      // fontFamily - fontStyle
-
-      const fontFamilies = new Map (Object .values (font .names)
-         .flatMap (name => Object .values (name .fontFamily ?? { }) .map (fontFamily => [fontFamily, name])));
-
-      for (const [fontFamily, name] of fontFamilies)
-      {
-         const fontStyles = families .getOrInsertComputed (fontFamily .toUpperCase (), () => new Map ());
-
-         for (const fontStyle of new Set (Object .values (name .fontSubfamily ?? { })))
-         {
-            if (this .getBrowserOption ("Debug"))
-               console .info (`Registering font family ${fontFamily} - ${fontStyle}.`);
-
-            fontStyles .set (fontStyle .toUpperCase () .replaceAll (" ", ""), font);
-         }
-      }
-
-      // console .log (name .preferredFamily);
-      // console .log (name .preferredSubfamily);
    },
    registerFontLibrary (executionContext, fontFamily, font)
    {
@@ -121,26 +87,24 @@ Object .assign (X3DTextContext .prototype,
 
       library .set (fontFamily .toUpperCase (), font);
    },
-   async getFont (executionContext, fontFamily, fontStyle)
+   async getFont (executionContext, fontFamily)
    {
       try
       {
          fontFamily = fontFamily .toUpperCase ();
-         fontStyle  = fontStyle .toUpperCase () .replaceAll (" ", "");
 
          for (;;)
          {
-            const
-               library  = this [_library]  .get (executionContext),
-               families = this [_families] .get (executionContext);
-
-            const font = library ?.get (fontFamily)
-               ?? families ?.get (fontFamily) ?.get (fontStyle);
+            const font = this [_library] .get (executionContext) ?.get (fontFamily);
 
             if (font)
                return font;
 
-            await Promise .any (this [_loadingFonts]);
+            const fontLibraries = Array .from (this .getLoadingObjects ())
+               .filter (object => object instanceof FontLibrary)
+               .map (object => object .loading ());
+
+            await Promise .any (fontLibraries);
          }
       }
       catch

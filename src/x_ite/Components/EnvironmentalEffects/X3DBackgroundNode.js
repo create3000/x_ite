@@ -108,11 +108,11 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
    },
    set_texture__ (index, textureNode)
    {
-      this .textureNodes [index] ?.removeInterest (`set_loadState${index}__`, this);
+      this .textureNodes [index] ?.removeInterest ("set_loadState__", this);
 
       this .textureNodes [index] = textureNode;
 
-      textureNode ?.addInterest (`set_loadState${index}__`, this, index, textureNode);
+      textureNode ?.addInterest ("set_loadState__", this, index, textureNode);
 
       this .set_loadState__ (index, textureNode);
    },
@@ -516,10 +516,9 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
       gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,        false, renderObject .getEyeMatrixArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
 
-      gl .uniform3f (shaderNode .x3d_EmissiveColor,                      1, 1, 1)
-      gl .uniform1f (shaderNode .x3d_Transparency,                       transparency)
-      gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
-      gl .uniform1f (shaderNode .x3d_Exposure,                           1);
+      gl .uniform3f (shaderNode .x3d_EmissiveColor,                        1, 1, 1)
+      gl .uniform1f (shaderNode .x3d_Transparency,                         transparency)
+      gl .uniform1i (shaderNode .x3d_TextureCoordinateGenerator [0] .mode, 0);
 
       // Enable vertex attribute arrays.
 
@@ -537,8 +536,6 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          gl .disable (gl .BLEND);
 
       gl .drawArrays (gl .TRIANGLES, 0, this .sphereCount);
-
-      gl .uniform1f (shaderNode .x3d_Exposure, Math .max (browser .getBrowserOption ("Exposure"), 0));
    },
    drawCube: (() =>
    {
@@ -573,14 +570,11 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
             gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, modelViewMatrixArray);
             gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
 
-            gl .uniform3f (shaderNode .x3d_EmissiveColor,                      1, 1, 1);
-            gl .uniform1f (shaderNode .x3d_Transparency,                       0);
-            gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
-            gl .uniform1f (shaderNode .x3d_Exposure,                           1);
+            gl .uniform3f (shaderNode .x3d_EmissiveColor,                        1, 1, 1);
+            gl .uniform1f (shaderNode .x3d_Transparency,                         0);
+            gl .uniform1i (shaderNode .x3d_TextureCoordinateGenerator [0] .mode, 0);
 
             this .drawRectangle (gl, browser, shaderNode, textureNode, this .textureBuffers [i], this .textureArrayObjects [i]);
-
-            gl .uniform1f (shaderNode .x3d_Exposure, Math .max (browser .getBrowserOption ("Exposure"), 0));
          }
       };
    })(),
@@ -608,13 +602,5 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 });
 
 Object .defineProperties (X3DBackgroundNode, X3DNode .getStaticProperties ("X3DBackgroundNode", "EnvironmentalEffects", 1));
-
-for (let index = 0; index < 6; ++ index)
-{
-   X3DBackgroundNode .prototype [`set_loadState${index}__`] = function (index, textureNode)
-   {
-      this .set_loadState__ (index, textureNode);
-   };
-}
 
 export default X3DBackgroundNode;

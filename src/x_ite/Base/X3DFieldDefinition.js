@@ -34,9 +34,17 @@ Object .assign (Object .setPrototypeOf (X3DFieldDefinition .prototype, X3DObject
    {
       return this [_value] .getAppInfo ();
    },
+   setAppInfo (value)
+   {
+      return this [_value] .setAppInfo (value);
+   },
    getDocumentation ()
    {
       return this [_value] .getDocumentation ();
+   },
+   setDocumentation (value)
+   {
+      this [_value] .setDocumentation (value);
    },
 });
 
@@ -68,11 +76,13 @@ Object .defineProperties (X3DFieldDefinition .prototype,
    appInfo:
    {
       get: X3DFieldDefinition .prototype .getAppInfo,
+      set: X3DFieldDefinition .prototype .setAppInfo,
       enumerable: true,
    },
    documentation:
    {
       get: X3DFieldDefinition .prototype .getDocumentation,
+      set: X3DFieldDefinition .prototype .setDocumentation,
       enumerable: true,
    },
 });

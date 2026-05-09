@@ -33,16 +33,16 @@ The PackagedShader node belongs to the [Shaders](/x_ite/components/overview/#sha
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in] | [activate](#fields-activate) |  |
 | SFBool | [out] | [isSelected](#fields-isSelected) |  |
 | SFBool | [out] | [isValid](#fields-isValid) |  |
-| SFString | [ ] | [language](#fields-language) | ""  |
+| SFString | [ ] | [language](#fields-language) | "" |
 | SFBool | [in, out] | [load](#fields-load) | TRUE |
 | MFString | [in, out] | [url](#fields-url) | [ ] |
-| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0  |
-| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600  |
+| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0 |
+| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -156,6 +156,13 @@ The *language* field indicates to the X3D player which shading *language* is use
 ### Warning
 
 - PackagedShader does not contain CDATA section of plain-text source code.
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

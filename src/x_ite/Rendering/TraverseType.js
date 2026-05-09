@@ -6,6 +6,7 @@ const TraverseType = Object .freeze ({
    CAMERA:    i ++,
    PICKING:   i ++,
    COLLISION: i ++,
+   DEPTH:     i ++,
    SHADOW:    i ++,
    DISPLAY:   i ++,
 });

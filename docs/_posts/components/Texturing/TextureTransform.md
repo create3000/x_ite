@@ -3,7 +3,7 @@ title: TextureTransform
 date: 2023-01-07
 nav: components-Texturing
 categories: [components, Texturing]
-tags: [TextureTransform, Texturing]
+tags: [TextureTransform, Texturing, VRML]
 ---
 <style>
 .post h3 {
@@ -31,12 +31,12 @@ The TextureTransform node belongs to the [Texturing](/x_ite/components/overview/
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [mapping](#fields-mapping) | "" |
-| SFVec2f | [in, out] | [translation](#fields-translation) | 0 0  |
-| SFFloat | [in, out] | [rotation](#fields-rotation) | 0  |
-| SFVec2f | [in, out] | [scale](#fields-scale) | 1 1  |
-| SFVec2f | [in, out] | [center](#fields-center) | 0 0  |
+| SFVec2f | [in, out] | [translation](#fields-translation) | 0 0 |
+| SFFloat | [in, out] | [rotation](#fields-rotation) | 0 |
+| SFVec2f | [in, out] | [scale](#fields-scale) | 1 1 |
+| SFVec2f | [in, out] | [center](#fields-center) | 0 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -86,13 +86,23 @@ Non-uniform planar scaling of texture about center (opposite effect appears on g
 ### Hints
 
 - Order of operations is translation, rotation about center, non-uniform scale about center.
-- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding TextureTransform.
+- Image flip horizontal \<TextureTransform DEF='FlipHorizontal' scale='-1 1' translation='-1 0'/\>
+- Image flip vertical \<TextureTransform DEF='FlipVertical' scale='1 -1' translation='0 -1'/\>
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding TextureTransform.
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
 
 ### Warning
 
-- Resulting visible effects appear reversed because image changes occur before mapping to geometry.
+- Resulting visual effects may seem reversed (or counterintuitive) because image changes occur before mapping to geometry.
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 
 - [X3D Specification of TextureTransform Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#TextureTransform)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

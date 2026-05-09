@@ -4,14 +4,14 @@ const
    path     = require ("path"),
    fs       = require ("fs"),
    os       = require ("os"),
-   { exec } = require ("child_process"),
+   { execFile } = require ("child_process"),
    { sh }   = require ("shell-tools");
 
 for (const filename of fs .readdirSync ("./src/assets/lib/") .filter (filename => filename .match (/\.js$/)))
 {
    console .log (`Compressing ${filename} ...`);
 
-   exec (`terser -c -m -p bare_returns -o ./dist/assets/lib/${filename} ./src/assets/lib/${filename}`);
+   execFile (`terser`, [`-c`, `-m`, `-p`, `bare_returns`, `-o`, `./dist/assets/lib/${filename}`, `./src/assets/lib/${filename}`]);
 }
 
 const
@@ -175,8 +175,8 @@ export default Namespace .add ("${base}", __default__);`;
       plugins: [
          new StringReplacePlugin (),
          new webpack .ProvidePlugin ({
-            $: "jquery",
-            jQuery: "jquery",
+            $: ["jquery", "default"],
+            jQuery: ["jquery", "default"],
             jquery_mousewheel: "jquery-mousewheel/jquery.mousewheel.js",
             libtess: "libtess/libtess.cat.js",
             pako: "pako/dist/pako_inflate.js",
@@ -230,7 +230,7 @@ export default Namespace .add ("${base}", __default__);`;
             fs: false,
          },
          alias: {
-           "jquery": "jquery/dist/jquery.slim.js",
+           "jquery": "jquery/slim",
          },
       },
       stats: "errors-warnings",
@@ -321,8 +321,8 @@ export default Namespace .add ("${base}", __default__);`;
       plugins: [
          new StringReplacePlugin (),
          new webpack .ProvidePlugin ({
-            $: "jquery",
-            jQuery: "jquery",
+            $: ["jquery", "default"],
+            jQuery: ["jquery", "default"],
             jquery_mousewheel: "jquery-mousewheel/jquery.mousewheel.js",
             libtess: "libtess/libtess.cat.js",
             pako: "pako/dist/pako_inflate.js",
@@ -371,7 +371,7 @@ export default Namespace .add ("${base}", __default__);`;
             fs: false,
          },
          alias: {
-           "jquery": "jquery/dist/jquery.slim.js",
+           "jquery": "jquery/slim",
          },
       },
       stats: "errors-warnings",

@@ -48,6 +48,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       this ._StraightenHorizon            .addInterest ("set_StraightenHorizon__",            this);
       this ._AutoUpdate                   .addInterest ("set_AutoUpdate__",                   this);
       this ._ContentScale                 .addInterest ("set_ContentScale__",                 this);
+      this ._DisplayColorSpace            .addInterest ("set_DisplayColorSpace",              this);
       this ._Exposure                     .addInterest ("set_Exposure__",                     this);
       this ._LogarithmicDepthBuffer       .addInterest ("set_LogarithmicDepthBuffer__",       this);
       this ._Multisampling                .addInterest ("set_Multisampling__",                this);
@@ -60,6 +61,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       this .set_Shading__                      (this ._Shading);
       this .set_AutoUpdate__                   (this ._AutoUpdate);
       this .set_ContentScale__                 (this ._ContentScale);
+      this .set_DisplayColorSpace              (this ._DisplayColorSpace);
       this .set_Exposure__                     (this ._Exposure);
       this .set_LogarithmicDepthBuffer__       (this ._LogarithmicDepthBuffer);
       this .set_Multisampling__                (this ._Multisampling);
@@ -78,8 +80,10 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          "ContentScale",
          "ContextMenu",
          "Debug",
+         "DisplayColorSpace",
          "Exposure",
          "LogarithmicDepthBuffer",
+         "MaximumFrameRate",
          "Multisampling",
          "Notifications",
          "OrderIndependentTransparency",
@@ -280,8 +284,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    {
       const browser = this .getBrowser ();
 
-      if (this .removeUpdateContentScale)
-         this .removeUpdateContentScale ();
+      this .removeUpdateContentScale ?.();
 
       if (contentScale .getValue () === -1)
          this .updateContentScale ();
@@ -297,16 +300,28 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
          media   = window .matchMedia (`(resolution: ${window .devicePixelRatio}dppx)`),
          update  = this .updateContentScale .bind (this);
 
-      if (this .removeUpdateContentScale)
-         this .removeUpdateContentScale ();
+      this .removeUpdateContentScale ?.();
 
-      this .removeUpdateContentScale = function () { media .removeEventListener ("change", update) };
+      this .removeUpdateContentScale = () =>
+      {
+         visualViewport .removeEventListener ("resize", update);
+         media          .removeEventListener ("change", update);
+      };
 
-      media .addEventListener ("change", update);
-
-      browser .getRenderingProperties () ._ContentScale = window .devicePixelRatio;
+      visualViewport .addEventListener ("resize", update);
+      media          .addEventListener ("change", update);
 
       browser .reshape ();
+   },
+   set_DisplayColorSpace (displayColorSpace)
+   {
+      const
+         browser  = this .getBrowser (),
+         gl       = browser .getContext (),
+         value    = displayColorSpace .getValue () .toLowerCase () .replace (/_/g, "-");
+
+      gl .drawingBufferColorSpace = value;
+      gl .unpackColorSpace        = value;
    },
    set_Exposure__ ()
    {
@@ -330,8 +345,9 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    set_Multisampling__ (multisampling)
    {
       const
-         browser = this .getBrowser (),
-         samples = Algorithm .clamp (multisampling .getValue (), 0, browser .getMaxSamples ());
+         browser    = this .getBrowser (),
+         maxSamples = browser .getMaxSamples (),
+         samples    = Algorithm .clamp (isNaN (multisampling .getValue ()) ? 4 : multisampling .getValue (), 0, maxSamples);
 
       browser .getRenderingProperties () ._Multisampling = this ._Antialiased .getValue () ? samples : 0;
       browser .getRenderingProperties () ._Antialiased   = samples > 0;
@@ -393,9 +409,11 @@ Object .defineProperties (BrowserOptions,
          new X3DFieldDefinition (X3DConstants .inputOutput, "ContextMenu",                  new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Debug",                        new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Exposure",                     new Fields .SFDouble (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "DisplayColorSpace",            new Fields .SFString ("SRGB")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Gravity",                      new Fields .SFDouble (9.80665)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "LoadUrlObjects",               new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "LogarithmicDepthBuffer",       new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "MaximumFrameRate",             new Fields .SFDouble (80)),
          // A string, which is set to the *reference* field of metadata nodes, when they are created.
          new X3DFieldDefinition (X3DConstants .inputOutput, "MetadataReference",            new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Multisampling",                new Fields .SFInt32 (4)),
@@ -406,7 +424,7 @@ Object .defineProperties (BrowserOptions,
          new X3DFieldDefinition (X3DConstants .inputOutput, "TextCompression",              new Fields .SFString ("CHAR_SPACING")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Timings",                      new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "ToneMapping",                  new Fields .SFString ("NONE")),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "WallFriction",                 new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "WallFriction",                 new Fields .SFDouble ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "XRSessionMode",                new Fields .SFString ("IMMERSIVE_VR")),
       ]),
       enumerable: true,

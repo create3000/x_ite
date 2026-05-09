@@ -31,14 +31,14 @@ The PositionDamper2D node belongs to the [Followers](/x_ite/components/overview/
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFVec2f | [in] | [set_value](#fields-set_value) |  |
 | SFVec2f | [in] | [set_destination](#fields-set_destination) |  |
-| SFVec2f | [ ] | [initialValue](#fields-initialValue) | 0 0  |
-| SFVec2f | [ ] | [initialDestination](#fields-initialDestination) | 0 0  |
-| SFInt32 | [ ] | [order](#fields-order) | 3  |
-| SFTime | [in, out] | [tau](#fields-tau) | 0.3  |
-| SFFloat | [in, out] | [tolerance](#fields-tolerance) | -1  |
+| SFVec2f | [ ] | [initialValue](#fields-initialValue) | 0 0 |
+| SFVec2f | [ ] | [initialDestination](#fields-initialDestination) | 0 0 |
+| SFInt32 | [ ] | [order](#fields-order) | 3 |
+| SFTime | [in, out] | [tau](#fields-tau) | 0.3 |
+| SFFloat | [in, out] | [tolerance](#fields-tolerance) | -1 |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFVec2f | [out] | [value_changed](#fields-value_changed) |  |
 {: .fields }
@@ -118,6 +118,13 @@ Computed output value that approaches within tolerance of destination value, as 
 ### Hint
 
 - ROUTE value_changed output events to a \<[TextureTransform](/x_ite/components/texturing/texturetransform/)\> node's translation field, for example.
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

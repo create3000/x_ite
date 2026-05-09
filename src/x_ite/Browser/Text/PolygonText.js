@@ -20,6 +20,10 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
    {
       return Matrix4 .IDENTITY;
    },
+   getTextureNode ()
+   {
+      return null;
+   },
    build: (() =>
    {
       const
@@ -302,14 +306,6 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, X3DTextGeometry 
          return triangles;
       };
    })(),
-   displaySimple (gl, renderContext)
-   { },
-   display (gl, renderContext)
-   { },
-   transformLine (line)
-   { },
-   transformMatrix (matrix)
-   { },
 });
 
 export default PolygonText;

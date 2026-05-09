@@ -29,16 +29,16 @@ The ScreenFontStyle node belongs to the [Layout](/x_ite/components/overview/#lay
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [language](#fields-language) | "" |
-| MFString | [in, out] | [family](#fields-family) | "SERIF"  |
-| SFString | [in, out] | [style](#fields-style) | "PLAIN"  |
-| SFFloat | [in, out] | [pointSize](#fields-pointSize) | 12  |
-| SFFloat | [in, out] | [spacing](#fields-spacing) | 1  |
+| MFString | [in, out] | [family](#fields-family) | "SERIF" |
+| SFString | [in, out] | [style](#fields-style) | "PLAIN" |
+| SFFloat | [in, out] | [pointSize](#fields-pointSize) | 12 |
+| SFFloat | [in, out] | [spacing](#fields-spacing) | 1 |
 | SFBool | [in, out] | [horizontal](#fields-horizontal) | TRUE |
 | SFBool | [in, out] | [leftToRight](#fields-leftToRight) | TRUE |
 | SFBool | [in, out] | [topToBottom](#fields-topToBottom) | TRUE |
-| MFString | [in, out] | [justify](#fields-justify) | "BEGIN"  |
+| MFString | [in, out] | [justify](#fields-justify) | "BEGIN" |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -60,7 +60,7 @@ Language codes consist of a primary code and a (possibly empty) series of subcod
 - [See ISO639.2 Codes for the Representation of Names of Languages](https://www.loc.gov/standards/iso639-2/php/code_list.php)
 - [See RFC3066 Tags for the Identification of Languages](https://tools.ietf.org/html/rfc3066)
 - [See ISO3166 or](https://xml.coverpages.org/languageIdentifiers.html)
-- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
+- [Supports supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
 - AccessType relaxed to inputOutput in order to support animation and user accessibility.
 
 #### Warning
@@ -80,7 +80,7 @@ Array of quoted font *family* names in preference order, browsers use the first 
 - TYPEWRITER is a fixed-width font (for example, Courier).
 - MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
 - [See 15.2.2.2 Font *family* and style](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/text.html#Fontfamilyandstyle) for details.
-- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
+- [Supports supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
 - AccessType relaxed to inputOutput in order to support animation and user accessibility.
 
 #### Warning
@@ -134,7 +134,7 @@ Whether text direction is *horizontal* (true) or vertical (false).
 #### Hints
 
 - [See 15.2.2.3 Direction and justification](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/text.html#Directionandjustification) for details.
-- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
+- [Supports supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
 - AccessType relaxed to inputOutput in order to support animation and user accessibility.
 
 ### SFBool [in, out] **leftToRight** TRUE
@@ -145,7 +145,7 @@ Whether text direction is left-to-right (true) or right-to-left (false).
 #### Hints
 
 - [See 15.2.2.3 Direction and justification](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/text.html#Directionandjustification) for details.
-- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
+- [Supports supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
 - AccessType relaxed to inputOutput in order to support animation and user accessibility.
 
 ### SFBool [in, out] **topToBottom** TRUE
@@ -156,7 +156,7 @@ Whether text direction is top-to-bottom (true) or bottom-to-top (false).
 #### Hints
 
 - [See 15.2.2.3 Direction and justification](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/text.html#Directionandjustification) for details.
-- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
+- [Supports supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
 - AccessType relaxed to inputOutput in order to support animation and user accessibility.
 
 ### MFString [in, out] **justify** "BEGIN" <small>["BEGIN", "END", "FIRST", "MIDDLE", ""]</small>
@@ -176,17 +176,6 @@ The *justify* field determines horizontal and vertical alignment of text layout,
 - Exactly two string values are provided for major and minor axis alignment.
 - Do not use illegal values such as LEFT RIGHT TOP BOTTOM or CENTER.
 
-## Supported File Formats
-
-It is possible to specify in the *family* field a URL of a custom font file of the following types:
-
-| Encoding  | File Extension | MIME Type  |
-|-----------|----------------|------------|
-| WOFF2     | .woff2         | font/woff2 |
-| WOFF      | .woff          | font/woff  |
-| Open Type | .otf           | font/otf   |
-| True Type | .ttf           | font/ttf   |
-
 ## Advice
 
 ### Hints
@@ -197,13 +186,20 @@ It is possible to specify in the *family* field a URL of a custom font file of t
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Layout/ScreenFontStyle/ScreenFontStyle.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Layout/ScreenFontStyle/ScreenFontStyle.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Layout/ScreenFontStyle/screenshot.avif" alt="ScreenFontStyle"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Layout/ScreenFontStyle/ScreenFontStyle.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Layout/ScreenFontStyle/ScreenFontStyle.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

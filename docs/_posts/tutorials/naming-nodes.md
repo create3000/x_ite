@@ -3,7 +3,7 @@ title: Naming Nodes
 date: 2022-11-28
 nav: tutorials-shapes-geometry-and-appearance
 categories: [Tutorials]
-tags: [Naming, Nodes]
+tags: [DEF, USE]
 ---
 ## Motivation
 
@@ -21,7 +21,7 @@ The **DEF** syntax gives a name to a node.
 <Shape>
   <Appearance>
     <Material DEF='RedColor'
-        diffuseColor='1.0 0.0 0.0'/>
+        diffuseColor='1 0 0'/>
   </Appearance>
   <!-- geometry ... -->
 </Shape>
@@ -33,7 +33,7 @@ The **DEF** syntax gives a name to a node.
 Shape {
   appearance Appearance {
     material DEF RedColor Material {
-      diffuseColor 1.0 0.0 0.0
+      diffuseColor 1 0 0
     }
   }
   geometry ...
@@ -129,27 +129,27 @@ Inline {
 }
 
 Transform {
-  translation 0.95 0.0 0.0
+  translation 0.95 0 0
   children DEF Chair Inline {
     url "chair.x3dv"
   }
 }
 
 Transform {
-  translation -0.95 0.0 0.0
-  rotation 0.0 1.0 0.0 3.14
+  translation -0.95 0 0
+  rotation 0 1 0 3.14
   children USE Chair
 }
 
 Transform {
-  translation 0.0 0.0 0.95
-  rotation 0.0 1.0 0.0 -1.57
+  translation 0 0 0.95
+  rotation 0 1 0 -1.57
   children USE Chair
 }
 
 Transform {
-  translation 0.0 0.0 -0.95
-  rotation 0.0 1.0 0.0 1.57
+  translation 0 0 -0.95
+  rotation 0 1 0 1.57
   children USE Chair
 }
 ```

@@ -3,7 +3,7 @@ title: Building Elevation Grids
 date: 2022-11-28
 nav: tutorials-animation-sensors-and-geometry
 categories: [Tutorials]
-tags: [Building, Elevation grids]
+tags: [ElevationGrid]
 ---
 ## Motivation
 
@@ -28,8 +28,8 @@ An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) geometry node cr
   <ElevationGrid
       xDimension='3'
       zDimension='2'
-      xSpacing='1.0'
-      zSpacing='1.0'
+      xSpacing='1'
+      zSpacing='1'
       ... />
 </Shape>
 ```
@@ -42,8 +42,8 @@ Shape {
   geometry ElevationGrid {
     xDimension 3
     zDimension 2
-    xSpacing   1.0
-    zSpacing   1.0
+    xSpacing 1
+    zSpacing 1
     ...
   }
 }
@@ -60,8 +60,8 @@ An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) geometry node cr
   <Appearance><!-- ... --></Appearance>
   <ElevationGrid
       ...
-      height='0.0, -0.5, 0.0,
-              0.2,  4.0, 0.0'/>
+      height='0, -0.5, 0,
+              0.2, 4, 0'/>
 </Shape>
 ```
 
@@ -73,8 +73,8 @@ Shape {
   geometry ElevationGrid {
     ...
     height [
-      0.0, -0.5, 0.0,
-      0.2,  4.0, 0.0
+      0, -0.5, 0,
+      0.2, 4, 0
     ]
   }
 }
@@ -120,18 +120,18 @@ Shape {
   <ElevationGrid
       xDimension='9'
       zDimension='9'
-      xSpacing='1.0'
-      zSpacing='1.0'
+      xSpacing='1'
+      zSpacing='1'
       solid='false'
-      height='0.0, 0.0, 0.5, 1.0, 0.5, 0.0, 0.0, 0.0, 0.0,
-              0.0, 0.0, 0.0, 0.0, 2.5, 0.5, 0.0, 0.0, 0.0,
-              0.0, 0.0, 0.5, 0.5, 3.0, 1.0, 0.5, 0.0, 1.0,
-              0.0, 0.0, 0.5, 2.0, 4.5, 2.5, 1.0, 1.5, 0.5,
-              1.0, 2.5, 3.0, 4.5, 5.5, 3.5, 3.0, 1.0, 0.0,
-              0.5, 2.0, 2.0, 2.5, 3.5, 4.0, 2.0, 0.5, 0.0,
-              0.0, 0.0, 0.5, 1.5, 1.0, 2.0, 3.0, 1.5, 0.0,
-              0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 1.5, 0.5,
-              0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0,'/>
+      height='0, 0, 0.5, 1, 0.5, 0, 0, 0, 0,
+              0, 0, 0, 0, 2.5, 0.5, 0, 0, 0,
+              0, 0, 0.5, 0.5, 3, 1, 0.5, 0, 1,
+              0, 0, 0.5, 2, 4.5, 2.5, 1, 1.5, 0.5,
+              1, 2.5, 3, 4.5, 5.5, 3.5, 3, 1, 0,
+              0.5, 2, 2, 2.5, 3.5, 4, 2, 0.5, 0,
+              0, 0, 0.5, 1.5, 1, 2, 3, 1.5, 0,
+              0, 0, 0, 0, 0, 0, 2, 1.5, 0.5,
+              0, 0, 0, 0, 0, 0, 0.5, 0, 0,'/>
 </Shape>
 ```
 
@@ -143,19 +143,19 @@ Shape {
   geometry ElevationGrid {
     xDimension 9
     zDimension 9
-    xSpacing   1.0
-    zSpacing   1.0
+    xSpacing 1
+    zSpacing 1
     solid FALSE
     height [
-      0.0, 0.0, 0.5, 1.0, 0.5, 0.0, 0.0, 0.0, 0.0,
-      0.0, 0.0, 0.0, 0.0, 2.5, 0.5, 0.0, 0.0, 0.0,
-      0.0, 0.0, 0.5, 0.5, 3.0, 1.0, 0.5, 0.0, 1.0,
-      0.0, 0.0, 0.5, 2.0, 4.5, 2.5, 1.0, 1.5, 0.5,
-      1.0, 2.5, 3.0, 4.5, 5.5, 3.5, 3.0, 1.0, 0.0,
-      0.5, 2.0, 2.0, 2.5, 3.5, 4.0, 2.0, 0.5, 0.0,
-      0.0, 0.0, 0.5, 1.5, 1.0, 2.0, 3.0, 1.5, 0.0,
-      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 1.5, 0.5,
-      0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0,
+      0, 0, 0.5, 1, 0.5, 0, 0, 0, 0,
+      0, 0, 0, 0, 2.5, 0.5, 0, 0, 0,
+      0, 0, 0.5, 0.5, 3, 1, 0.5, 0, 1,
+      0, 0, 0.5, 2, 4.5, 2.5, 1, 1.5, 0.5,
+      1, 2.5, 3, 4.5, 5.5, 3.5, 3, 1, 0,
+      0.5, 2, 2, 2.5, 3.5, 4, 2, 0.5, 0,
+      0, 0, 0.5, 1.5, 1, 2, 3, 1.5, 0,
+      0, 0, 0, 0, 0, 0, 2, 1.5, 0.5,
+      0, 0, 0, 0, 0, 0, 0.5, 0, 0,
     ]
   }
 }

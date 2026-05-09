@@ -9,6 +9,8 @@ function X3DSingleTextureTransformNode (executionContext)
 
    this .addType (X3DConstants .X3DSingleTextureTransformNode);
 
+   // Private properties
+
    this .matrixArray = new Float32Array (Matrix4 .IDENTITY);
 }
 

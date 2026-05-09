@@ -2,7 +2,7 @@ import MaterialTextures from "../../MaterialTextures.js";
 
 export default () => /* glsl */ `
 
-#pragma X3D include "Fragment.glsl"
+#include <Fragment>
 
 uniform x3d_UnlitMaterialParameters x3d_Material;
 
@@ -33,7 +33,7 @@ getEmissiveColor ()
 }
 
 vec4
-getMaterialColor ()
+getMaterialColor (const in vec4 fragCoord)
 {
    vec4 finalColor = getEmissiveColor ();
 

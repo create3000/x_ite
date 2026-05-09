@@ -24,6 +24,7 @@ uniform int         x3d_SampleCountEXT;
 uniform float       x3d_RoughnessEXT;
 uniform float       x3d_LodBiasEXT;
 uniform float       x3d_IntensityEXT;
+uniform vec3        x3d_FlipEXT;
 
 in vec2 texCoord; // [-1,1]
 out vec4 x3d_FragColor;
@@ -376,7 +377,7 @@ getNormal (const in int face, const in vec2 t)
          break;
    }
 
-   return normalize (vec3 (x, y, z));
+   return normalize (vec3 (x, y, z)) * x3d_FlipEXT;
 }
 
 void

@@ -121,6 +121,9 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
             case "NONE":
                this ._viewer = string;
                break;
+            case "EXPLORE":
+               this ._viewer = "EXAMINE";
+               break;
             case "PLANE_create3000.github.io":
             case "PLANE_create3000.de":
                this ._viewer = "PLANE";

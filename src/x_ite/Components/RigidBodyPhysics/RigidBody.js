@@ -173,7 +173,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          if (this ._fixed .getValue ())
             lv .setValue (0, 0, 0);
          else
-            lv .setValue (this ._linearVelocity .x, this ._linearVelocity .y, this ._linearVelocity .z);
+            lv .setValue (... this ._linearVelocity);
 
          this .rigidBody .setLinearVelocity (lv);
          this .rigidBody .activate ();
@@ -188,7 +188,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
          if (this ._fixed .getValue ())
             av .setValue (0, 0, 0);
          else
-            av .setValue (this ._angularVelocity .x, this ._angularVelocity .y, this ._angularVelocity .z);
+            av .setValue (... this ._angularVelocity);
 
          this .rigidBody .setAngularVelocity (av);
          this .rigidBody .activate ();
@@ -201,7 +201,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       return function ()
       {
          if (this ._useFiniteRotation .getValue ())
-            angularFactor .setValue (this ._finiteRotationAxis .x, this ._finiteRotationAxis .y, this ._finiteRotationAxis .z);
+            angularFactor .setValue (... this ._finiteRotationAxis);
          else
             angularFactor .setValue (1, 1, 1);
 
@@ -226,7 +226,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
 
       return function ()
       {
-         origin .setValue (this ._centerOfMass .x, this ._centerOfMass .y, this ._centerOfMass .z);
+         origin .setValue (... this ._centerOfMass);
          centerOfMass .setOrigin (origin);
 
          this .rigidBody .setCenterOfMassTransform (centerOfMass);
@@ -374,12 +374,12 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
             return;
 
          if (this ._useGlobalGravity .getValue ())
-            g .setValue (gravity .x, gravity .y, gravity .z);
+            g .setValue (... gravity);
          else
             g .setValue (0, 0, 0);
 
-         f .setValue (this .force  .x, this .force  .y, this .force  .z);
-         t .setValue (this .torque .x, this .torque .y, this .torque .z);
+         f .setValue (... this .force);
+         t .setValue (... this .torque);
 
          this .rigidBody .setGravity (g);
          this .rigidBody .applyForce (f, z);
@@ -446,20 +446,20 @@ Object .defineProperties (RigidBody,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "angularDampingFactor", new Fields .SFFloat (0.001)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "mass",                 new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "centerOfMass",         new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "inertia",              new Fields .SFMatrix3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "massDensityModel",     new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "useGlobalGravity",     new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "forces",               new Fields .MFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "torques",              new Fields .MFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "inertia",              new Fields .SFMatrix3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "autoDisable",          new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "disableTime",          new Fields .SFTime (0)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "disableLinearSpeed",   new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "disableAngularSpeed",  new Fields .SFFloat ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",             new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",              new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",          new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",             new Fields .SFVec3f (-1, -1, -1)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",           new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",             new Fields .MFNode ()),
       ]),
       enumerable: true,
    },

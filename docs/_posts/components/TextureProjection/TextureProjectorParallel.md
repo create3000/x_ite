@@ -31,26 +31,26 @@ The TextureProjectorParallel node belongs to the [TextureProjection](/x_ite/comp
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [global](#fields-global) | TRUE |
 | SFBool | [in, out] | [on](#fields-on) | TRUE |
-| SFColor | [in, out] | [color](#fields-color) | 1 1 1  |
-| SFFloat | [in, out] | [intensity](#fields-intensity) | 1  |
-| SFFloat | [in, out] | [ambientIntensity](#fields-ambientIntensity) | 0  |
-| SFVec3f | [in, out] | [location](#fields-location) | 0 0 0  |
-| SFVec3f | [in, out] | [direction](#fields-direction) | 0 0 1  |
-| SFVec3f | [in, out] | [upVector](#fields-upVector) | 0 0 1  |
-| SFVec4f | [in, out] | [fieldOfView](#fields-fieldOfView) | -1 -1 1 1  |
-| SFFloat | [in, out] | [nearDistance](#fields-nearDistance) | -1  |
-| SFFloat | [in, out] | [farDistance](#fields-farDistance) | -1  |
+| SFColor | [in, out] | [color](#fields-color) | 1 1 1 |
+| SFFloat | [in, out] | [intensity](#fields-intensity) | 1 |
+| SFFloat | [in, out] | [ambientIntensity](#fields-ambientIntensity) | 0 |
+| SFVec3f | [in, out] | [location](#fields-location) | 0 0 0 |
+| SFVec3f | [in, out] | [direction](#fields-direction) | 0 0 1 |
+| SFVec3f | [in, out] | [upVector](#fields-upVector) | 0 1 0 |
+| SFVec4f | [in, out] | [fieldOfView](#fields-fieldOfView) | -1 -1 1 1 |
+| SFFloat | [in, out] | [nearDistance](#fields-nearDistance) | -1 |
+| SFFloat | [in, out] | [farDistance](#fields-farDistance) | -1 |
 | SFFloat | [out] | [aspectRatio](#fields-aspectRatio) |  |
-| SFNode | [in, out] | [texture](#fields-texture) | NULL  |
+| SFNode | [in, out] | [texture](#fields-texture) | NULL |
 | SFBool | [in, out] | [shadows](#fields-shadows) | FALSE |
-| SFColor | [in, out] | [shadowColor](#fields-shadowColor) | 0 0 0  |
-| SFFloat | [in, out] | [shadowIntensity](#fields-shadowIntensity) | 1  |
-| SFFloat | [in, out] | [shadowBias](#fields-shadowBias) | 0.005  |
-| SFInt32 | [ ] | [shadowMapSize](#fields-shadowMapSize) | 1024  |
+| SFColor | [in, out] | [shadowColor](#fields-shadowColor) | 0 0 0 |
+| SFFloat | [in, out] | [shadowIntensity](#fields-shadowIntensity) | 1 |
+| SFFloat | [in, out] | [shadowBias](#fields-shadowBias) | 0.005 |
+| SFInt32 | [ ] | [shadowMapSize](#fields-shadowMapSize) | 1024 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -95,14 +95,18 @@ Enables/disables this texture projection source.
 
 Brightness of direct emission from the light.
 
+#### Warning
+
+- Values greater than 1.0 require X3D version='4.0' or greater.
+
 ### SFFloat [in, out] **ambientIntensity** 0 <small>[0,1]</small>
 {: #fields-ambientIntensity }
 
-Brightness of ambient (nondirectional background) emission from the light. Interchange profile
+Brightness of ambient (nondirectional background) emission from the light.
 
 #### Hint
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### SFVec3f [in, out] **location** 0 0 0 <small>(-∞,∞)</small>
 {: #fields-location }
@@ -114,10 +118,10 @@ Position of center of texture projection relative to local coordinate system.
 
 Direction for projection.
 
-### SFVec3f [in, out] **upVector** 0 0 1 <small>(-∞,∞)</small>
+### SFVec3f [in, out] **upVector** 0 1 0 <small>(-∞,∞)</small>
 {: #fields-upVector }
 
-*upVector* describes the roll of the camera by defining which direction is up for camera orientation.
+*upVector* describes camera orientation by defining which direction is up.
 
 ### SFVec4f [in, out] **fieldOfView** -1 -1 1 1 <small>(-∞,∞)</small>
 {: #fields-fieldOfView }
@@ -136,22 +140,22 @@ Minimum and maximum extents of projection texture in units of local coordinate s
 ### SFFloat [in, out] **nearDistance** -1 <small>-1 or (0,∞)</small>
 {: #fields-nearDistance }
 
-Minimum distance necessary for texture display.
+Minimum distance necessary for texture display, -1 if unconstrained
 
 ### SFFloat [in, out] **farDistance** -1 <small>-1 or (0,∞)</small>
 {: #fields-farDistance }
 
-Maximum distance necessary for texture display.
+Maximum distance necessary for texture display, -1 if unconstrained
 
 ### SFFloat [out] **aspectRatio**
 {: #fields-aspectRatio }
 
-*aspectRatio* is the ratio of width and height that is projected.
+*aspectRatio* is the ratio of width and height that is projected, reported as output event when contained image is loaded.
 
 ### SFNode [in, out] **texture** NULL <small>[X3DTexture2DNode]</small>
 {: #fields-texture }
 
-Single contained *texture* node ([ImageTexture](/x_ite/components/texturing/imagetexture/), [MovieTexture](/x_ite/components/texturing/movietexture/), [PixelTexture](/x_ite/components/texturing/pixeltexture/), [MultiTexture](/x_ite/components/texturing/multitexture/)) that maps image(s) to surface geometry.
+Optional single contained *texture* node ([ImageTexture](/x_ite/components/texturing/imagetexture/), [MovieTexture](/x_ite/components/texturing/movietexture/), [PixelTexture](/x_ite/components/texturing/pixeltexture/), [MultiTexture](/x_ite/components/texturing/multitexture/)) that maps image(s) to surface geometry.
 
 #### Hints
 
@@ -198,6 +202,13 @@ Size of the shadow map in pixels, must be power of two.
 
 - [Specification errata corrections](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/textureProjection.html#TextureProjectorParallel)
 - [Diagram](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Images/ptmparallel2.png)
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

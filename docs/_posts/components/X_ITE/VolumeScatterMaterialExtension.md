@@ -32,9 +32,11 @@ The VolumeScatterMaterialExtension node belongs to the [X_ITE](/x_ite/components
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFColor | [in, out] | [multiscatterColor](#fields-multiscatterColor) | 0 0 0  |
-| SFFloat | [in, out] | [scatterAnisotropy](#fields-scatterAnisotropy) | 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFColor | [in, out] | [multiscatterColor](#fields-multiscatterColor) | 0 0 0 |
+| SFString | [in, out] | [multiscatterColorTextureMapping](#fields-multiscatterColorTextureMapping) | "" |
+| SFNode | [in, out] | [multiscatterColorTexture](#fields-multiscatterColorTexture) | NULL |
+| SFFloat | [in, out] | [scatterAnisotropy](#fields-scatterAnisotropy) | 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -51,14 +53,31 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 The multi-scatter albedo.
 
-### SFFloat [in, out] **scatterAnisotropy** 0 <small>(-1,1)</small>
+### SFString [in, out] **multiscatterColorTextureMapping** ""
+{: #fields-multiscatterColorTextureMapping }
+
+Input/Output field *multiscatterColorTextureMapping*.
+
+### SFNode [in, out] **multiscatterColorTexture** NULL <small>[X3DSingleTextureNode]</small>
+{: #fields-multiscatterColorTexture }
+
+A surface texture that defines the multi-scatter albedo at the volume's entry point. Stored in the RGB channels and encoded in sRGB. This will be multiplied by the *multiscatterColorFactor*.
+
+### SFFloat [in, out] **scatterAnisotropy** 0 <small>[-1,1]</small>
 {: #fields-scatterAnisotropy }
 
-The anisotropy of scatter events. Range is (-1, 1).
+The anisotropy of scatter events. Range is [-1, 1].
 
 ## Example
 
 - [View »Scattering Skull« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=ScatteringSkull)
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

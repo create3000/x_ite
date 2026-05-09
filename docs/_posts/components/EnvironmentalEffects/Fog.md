@@ -3,7 +3,7 @@ title: Fog
 date: 2023-01-07
 nav: components-EnvironmentalEffects
 categories: [components, EnvironmentalEffects]
-tags: [Fog, EnvironmentalEffects]
+tags: [Fog, EnvironmentalEffects, VRML]
 ---
 <style>
 .post h3 {
@@ -33,12 +33,12 @@ The Fog node belongs to the [EnvironmentalEffects](/x_ite/components/overview/#e
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in] | [set_bind](#fields-set_bind) |  |
-| SFString | [in, out] | [fogType](#fields-fogType) | "LINEAR"  |
-| SFColor | [in, out] | [color](#fields-color) | 1 1 1  |
-| SFFloat | [in, out] | [visibilityStart](#fields-visibilityStart) | 0  |
-| SFFloat | [in, out] | [visibilityRange](#fields-visibilityRange) | 0  |
+| SFString | [in, out] | [fogType](#fields-fogType) | "LINEAR" |
+| SFColor | [in, out] | [color](#fields-color) | 1 1 1 |
+| SFFloat | [in, out] | [visibilityStart](#fields-visibilityStart) | 0 |
+| SFFloat | [in, out] | [visibilityRange](#fields-visibilityRange) | 0 |
 | SFBool | [out] | [isBound](#fields-isBound) |  |
 | SFTime | [out] | [bindTime](#fields-bindTime) |  |
 {: .fields }
@@ -136,7 +136,7 @@ Event sent reporting timestamp when node becomes active/inactive.
 
 ## Example
 
-<x3d-canvas class="xr-button-tr" src="https://create3000.github.io/media/examples/EnvironmentalEffects/Fog/Fog.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-tr" src="https://create3000.github.io/media/examples/EnvironmentalEffects/Fog/Fog.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/EnvironmentalEffects/Fog/screenshot.avif" alt="Fog"/>
 </x3d-canvas>
 
@@ -144,6 +144,14 @@ Event sent reporting timestamp when node becomes active/inactive.
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/EnvironmentalEffects/Fog/Fog.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of Fog Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#Fog)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

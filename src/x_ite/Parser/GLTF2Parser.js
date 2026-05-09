@@ -3,6 +3,8 @@ import X3DOptimizer from "./X3DOptimizer.js";
 import Fields       from "../Fields.js";
 import X3DConstants from "../Base/X3DConstants.js";
 import URLs         from "../Browser/Networking/URLs.js";
+import Layer        from "../Components/Layering/Layer.js";
+import TraverseType from "../Rendering/TraverseType.js";
 import Algorithm    from "../../standard/Math/Algorithm.js";
 import Vector2      from "../../standard/Math/Numbers/Vector2.js";
 import Vector3      from "../../standard/Math/Numbers/Vector3.js";
@@ -11,6 +13,7 @@ import Rotation4    from "../../standard/Math/Numbers/Rotation4.js";
 import Matrix4      from "../../standard/Math/Numbers/Matrix4.js";
 import Color3       from "../../standard/Math/Numbers/Color3.js";
 import Color4       from "../../standard/Math/Numbers/Color4.js";
+import Box3         from "../../standard/Math/Geometry/Box3.js";
 
 // https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html
 // https://github.com/KhronosGroup/glTF-Sample-Assets
@@ -46,10 +49,11 @@ function GLTF2Parser (scene)
    this .cameras               = [ ];
    this .nodes                 = [ ];
    this .skins                 = [ ];
-   this .humanoidIndex         = new Map ();
+   this .skeletons             = new Map ();
    this .joints                = new Set ();
    this .pointerAliases        = new Map ();
    this .animationScripts      = [ ];
+   this .physicsNodes          = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .prototype),
@@ -76,25 +80,25 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    isValid: (() =>
    {
       const keys = new Set ([
+         "accessors",
+         "animations",
          "asset",
-         "extra",
+         "buffers",
+         "bufferViews",
+         "cameras",
          "extensions",
          "extensionsRequired",
          "extensionsUsed",
-         "buffers",
-         "bufferViews",
-         "accessors",
-         "samplers",
+         "extras",
          "images",
-         "textures",
          "materials",
          "meshes",
-         "cameras",
-         "skins",
          "nodes",
-         "scenes",
+         "samplers",
          "scene",
-         "animations",
+         "scenes",
+         "skins",
+         "textures",
       ]);
 
       return function ()
@@ -105,9 +109,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          if (!Object .keys (this .input) .every (key => keys .has (key)))
             return false;
 
-         const asset = this .input .asset;
-
-         if (!(asset instanceof Object && asset .version === "2.0"))
+         if (this .input .asset ?.version !== "2.0")
             return false;
 
          return true;
@@ -138,26 +140,24 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       scene .setProfile (browser .getProfile ("Interchange"));
 
       if (glTF .skins)
-         scene .addComponent (browser .getComponent ("HAnim"));
+         scene .updateComponent (browser .getComponent ("HAnim"));
 
       // Parse root objects.
 
-      this .assetObject      (glTF .asset, glTF .extensions);
-      this .extensionsArray  (glTF .extensionsRequired, this .extensions);
-      this .extensionsArray  (glTF .extensionsUsed, this .extensions);
+      this .assetObject (glTF .asset, glTF .extensions);
+      await this .extensionsArray (glTF .extensionsRequired, this .extensions);
+      await this .extensionsArray (glTF .extensionsUsed, this .extensions);
       this .extensionsObject (glTF .extensions);
 
       await browser .loadComponents (scene);
       await this .buffersArray (glTF .buffers);
-
-      if (this .extensions .has ("KHR_draco_mesh_compression"))
-         this .draco = await this .createDraco ();
 
       this .bufferViewsArray (glTF .bufferViews);
       this .accessorsArray   (glTF .accessors);
       this .samplersArray    (glTF .samplers);
 
       await this .imagesArray (glTF .images);
+      await this .videosArray (glTF .extensions ?.EXT_texture_video ?.videos);
 
       this .texturesArray   (glTF .textures);
       this .materialsArray  (glTF .materials);
@@ -166,14 +166,16 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .skinsArray      (glTF .skins, glTF .nodes);
       this .nodesArray      (glTF .nodes);
       this .scenesArray     (glTF, glTF .scenes, glTF .scene);
+      this .skinsHumanoid   ();
+      this .skinsBBox       ();
       this .animationsArray (glTF .animations);
 
       this .viewpointsCenterOfRotation (scene);
       this .optimizeSceneGraph (scene .getRootNodes ());
 
-      this .exportGroup ("Viewpoints",        this .cameras);
       this .exportGroup ("EnvironmentLights", this .envLights);
       this .exportGroup ("Lights",            this .lights);
+      this .exportGroup ("Viewpoints",        this .cameras);
       this .exportGroup ("Animations",        glTF .animations);
 
       this .cleanupAnimationScripts ();
@@ -186,17 +188,17 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!(asset instanceof Object))
          return;
 
-      const
-         scene         = this .getScene (),
-         worldURL      = scene .getWorldURL (),
-         worldInfoNode = scene .createNode ("WorldInfo", false);
+      const scene = this .getScene ();
 
       for (const [key, value] of Object .entries (asset))
       {
          if (typeof value !== "string")
             continue;
 
-         worldInfoNode ._info .push (`${key}: ${value}`);
+         if (key === "version")
+            continue;
+
+         scene .addMetaData (key, value);
       }
 
       if (asset .extras instanceof Object)
@@ -206,36 +208,29 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             if (typeof value !== "string")
                continue;
 
-            if (key === "title")
-               worldInfoNode ._title = value;
-            else
-               worldInfoNode ._info .push (`${key}: ${value}`);
+            scene .addMetaData (key, value);
          }
-      }
-
-      if (!worldInfoNode ._title .getValue ())
-      {
-         const url = new URL (worldURL);
-
-         if (url .protocol === "data:")
-            worldInfoNode ._title = "glTF Model";
-         else
-            worldInfoNode ._title = decodeURIComponent (url .pathname .split ("/") .at (-1) || worldURL);
       }
 
       if (asset .extensions ?.KHR_xmp_json_ld instanceof Object)
       {
          const packet = asset .extensions .KHR_xmp_json_ld .packet;
 
-         this .khrXmpJsonLdObject (packet, extensions ?.KHR_xmp_json_ld, worldInfoNode);
+         this .khrXmpJsonLdObject (packet, extensions ?.KHR_xmp_json_ld);
       }
 
-      worldInfoNode ._info .sort ();
-      worldInfoNode .setup ();
+      if (extensions ?.VRM ?.meta instanceof Object)
+      {
+         for (const [key, value] of Object .entries (extensions .VRM .meta))
+         {
+            if (typeof value !== "string")
+               continue;
 
-      scene .getRootNodes () .push (worldInfoNode);
+            scene .addMetaData (key, value);
+         }
+      }
    },
-   extensionsArray (extensions, set)
+   async extensionsArray (extensions, set)
    {
       if (!(extensions instanceof Array))
          return;
@@ -262,7 +257,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             //    break;
             // },
             case "EXT_mesh_gpu_instancing":
-            case "KHR_materials_pbrSpecularGlossiness":
             case "KHR_materials_anisotropy":
             case "KHR_materials_clearcoat":
             case "KHR_materials_diffuse_transmission":
@@ -270,11 +264,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_emissive_strength":
             case "KHR_materials_ior":
             case "KHR_materials_iridescence":
+            case "KHR_materials_pbrSpecularGlossiness":
             case "KHR_materials_sheen":
             case "KHR_materials_specular":
             case "KHR_materials_transmission":
-            case "KHR_materials_volume":
             case "KHR_materials_volume_scatter":
+            case "KHR_materials_volume":
             {
                components .push (browser .getComponent ("X_ITE", 1));
                break;
@@ -290,16 +285,35 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                components .push (browser .getComponent ("Scripting",      1));
                break;
             }
+            case "KHR_draco_mesh_compression":
+            {
+               this .draco ??= await this .getLibrary ("draco_decoder_gltf.js");
+               break;
+            }
+            case "KHR_meshopt_compression":
+            case "EXT_meshopt_compression":
+            {
+               this .MeshoptDecoder ??= await this .getLibrary ("meshopt_decoder.js");
+               await this .MeshoptDecoder .ready;
+               break;
+            }
          }
       }
 
       for (const component of components)
-      {
-         if (scene .hasComponent (component))
-            continue;
-
          scene .updateComponent (component);
-      }
+   },
+   getLibrary (file)
+   {
+      return this .constructor [file] ??= (async () =>
+      {
+         const
+            response = await fetch (URLs .getLibraryURL (file)),
+            text     = await response .text (),
+            library  = await new Function (text) ();
+
+         return library;
+      })();
    },
    extensionsObject (extensions)
    {
@@ -395,7 +409,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                if (name)
                   scene .addNamedNode (scene .getUniqueName (name), textureNode);
 
-               textureNode ._description = image ?.name ?? "";
+               textureNode ._description = image ?.name ?? `${$.toUpperCaseFirst (faces [i])} Texture`;
                textureNode ._url         = image ? [image .uri] : [ ];
                textureNode .setup ();
 
@@ -522,12 +536,14 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .materialVariants = variants;
    },
-   khrXmpJsonLdObject (index, KHR_xmp_json_ld, worldInfoNode)
+   khrXmpJsonLdObject (index, KHR_xmp_json_ld)
    {
       if (!(KHR_xmp_json_ld instanceof Object))
          return;
 
-      const packet = KHR_xmp_json_ld .packets [index];
+      const
+         scene  = this .getScene (),
+         packet = KHR_xmp_json_ld .packets [index];
 
       for (const [key, value] of Object .entries (packet))
       {
@@ -536,19 +552,25 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          if (!match)
             continue;
 
+         const k = match [1];
+
          if (value instanceof Object)
          {
             const array = value ["@set"] ?? value ["@list"];
 
             if (array instanceof Array)
             {
-               worldInfoNode ._info .push (`${match [1]}: ${array .map (v => v .toString ()) .join (", ")}`);
+               const v = array .map (v => v .toString ()) .join (", ");
+
+               scene .addMetaData (k, v);
                continue;
             }
 
             if (value ["rdf:_1"] ?.["@value"])
             {
-               worldInfoNode ._info .push (`${match [1]}: ${JSON .stringify (value ["rdf:_1"] ["@value"])}`);
+               const v = value ["rdf:_1"] ["@value"];
+
+               scene .addMetaData (k, v);
                continue;
             }
          };
@@ -556,7 +578,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          if (typeof value !== "string")
             continue;
 
-         worldInfoNode ._info .push (`${match [1]}: ${value}`);
+         const v = value;
+
+         scene .addMetaData (k, v);
       }
    },
    async buffersArray (buffers)
@@ -590,24 +614,78 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       this .bufferViews = bufferViews;
 
       for (const bufferView of bufferViews)
-         bufferView .buffer = this .bufferViewObject (bufferView);
+         bufferView .getBuffer = (componentType) => this .bufferViewObject (bufferView, componentType);
    },
-   bufferViewObject (bufferView)
+   bufferViewObject: (() =>
    {
-      if (!(bufferView instanceof Object))
-         return;
+      const ComponentSize = new Map ([
+         [5120, 1], // Int8Array
+         [5121, 1], // Uint8Array
+         [5122, 2], // Int16Array
+         [5123, 2], // Uint16Array
+         [5124, 4], // Int32Array
+         [5125, 4], // Uint32Array
+         [5131, 2], // Float16Array
+         [5126, 4], // Float32Array
+         [5130, 8], // Float64Array
+      ]);
 
-      const buffer = this .buffers [bufferView .buffer];
+      return function (bufferView, componentType)
+      {
+         if (!(bufferView instanceof Object))
+            return;
 
-      if (!buffer)
-         return;
+         if (bufferView .buffer instanceof Object)
+            return bufferView .buffer;
 
-      const
-         byteOffset = bufferView .byteOffset || 0,
-         byteLength = bufferView .byteLength;
+         const meshopt = bufferView .extensions ?.KHR_meshopt_compression
+            ?? bufferView .extensions ?.EXT_meshopt_compression;
 
-      return buffer .slice (byteOffset, byteOffset + byteLength);
-   },
+         if (meshopt instanceof Object)
+         {
+            const
+               MeshoptDecoder = this .MeshoptDecoder,
+               byteOffset     = meshopt .byteOffset || 0,
+               byteLength     = meshopt .byteLength,
+               byteStride     = meshopt .byteStride,
+               count          = meshopt .count,
+               mode           = meshopt .mode,
+               filter         = meshopt .filter || "NONE",
+               buffer         = this .buffers [meshopt .buffer];
+
+            const
+               componentSize   = ComponentSize .get (componentType),
+               componentCount  = byteStride / componentSize,
+               viewArrayLength = count * componentCount * componentSize,
+               encoded         = new Uint8Array (buffer, byteOffset, byteLength),
+               decoded         = new Uint8Array (viewArrayLength);
+
+            MeshoptDecoder .decodeGltfBuffer (
+               decoded,
+               count,
+               byteStride,
+               encoded,
+               mode,
+               filter
+            );
+
+            return bufferView .buffer = decoded .buffer;
+         }
+         else
+         {
+            const buffer = this .buffers [bufferView .buffer];
+
+            if (!buffer)
+               return;
+
+            const
+               byteOffset = bufferView .byteOffset || 0,
+               byteLength = bufferView .byteLength;
+
+            return bufferView .buffer = buffer .slice (byteOffset, byteOffset + byteLength);
+         }
+      };
+   })(),
    accessorsArray (accessors)
    {
       if (!(accessors instanceof Array))
@@ -620,6 +698,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    },
    accessorObject: (() =>
    {
+      // https://github.com/KhronosGroup/glTF/blob/2e51b3a2c5078a29f5c0d7aee567eb1d926265b4/extensions/2.0/Khronos/KHR_accessor_float64/README.md
+
       const TypedArrays = new Map ([
          [5120, Int8Array],
          [5121, Uint8Array],
@@ -627,7 +707,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          [5123, Uint16Array],
          [5124, Int32Array],
          [5125, Uint32Array],
+         [5131, Float16Array],
          [5126, Float32Array],
+         [5130, Float64Array],
       ]);
 
       const Components = new Map ([
@@ -658,7 +740,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                   count      = accessor .count || 0,
                   stride     = byteStride ? byteStride / TypedArray .BYTES_PER_ELEMENT : components,
                   length     = Math .min (stride * count, (bufferView .byteLength - byteOffset) / TypedArray .BYTES_PER_ELEMENT),
-                  array      = new TypedArray (bufferView .buffer, byteOffset, length);
+                  array      = new TypedArray (bufferView .getBuffer (accessor .componentType), byteOffset, length);
 
                let value;
 
@@ -711,16 +793,17 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             return array;
 
          const
-            IndicesTypedArray = TypedArrays .get (sparse .indices .componentType),
+            componentType     = sparse .indices .componentType,
+            IndicesTypedArray = TypedArrays .get (componentType),
             indicesBufferView = this .bufferViews [sparse .indices .bufferView],
             indicesByteOffset = sparse .indices .byteOffset,
-            indices           = new IndicesTypedArray (indicesBufferView .buffer, indicesByteOffset, sparse .count);
+            indices           = new IndicesTypedArray (indicesBufferView .getBuffer (componentType), indicesByteOffset, sparse .count);
 
          const
             ValuesTypedArray = array .constructor,
             valuesBufferView = this .bufferViews [sparse .values .bufferView],
             valuesByteOffset = sparse .values .byteOffset,
-            values           = new ValuesTypedArray (valuesBufferView .buffer, valuesByteOffset, sparse .count * components);
+            values           = new ValuesTypedArray (valuesBufferView .getBuffer (), valuesByteOffset, sparse .count * components);
 
          array = array .slice ();
 
@@ -754,8 +837,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             return Float32Array .from (array, v => Math .max (v / 2147483647, -1));
          case 5125: // Uint32Array
             return Float32Array .from (array, v => v / 4294967295);
+         case 5131: // Float16Array
          case 5126: // Float32Array
-            return array;
+         case 5130: // Float64Array
+            return array; // Their normalized property MUST NOT be set to true;
       }
    },
    samplersArray (samplers)
@@ -846,6 +931,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       this .images = await Promise .all (images .map ((image, index) => this .imageObject (image, index)));
    },
+   async videosArray (videos)
+   {
+      if (!(videos instanceof Array))
+         return;
+
+      this .videos = await Promise .all (videos .map ((video, index) => this .imageObject (video, index)));
+   },
    async imageObject (image, index)
    {
       if (!(image instanceof Object))
@@ -862,7 +954,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          return image;
 
       const
-         buffer = bufferView .buffer,
+         buffer = bufferView .getBuffer (),
          blob   = new Blob ([new Uint8Array (buffer)], { type: image .mimeType }),
          uri    = await this .blobToDataUrl (blob);
 
@@ -898,13 +990,16 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (texture .textureNode)
          return texture .textureNode;
 
-      const images = this .textureImageObject (texture);
+      const
+         videos = this .textureVideoObject (texture),
+         images = this .textureImageObject (texture),
+         medias = videos .length ? videos : images;
 
-      if (!images .length)
+      if (!medias .length)
          return null;
 
       const
-         key    = `${images .map (image => image .index) .join (",")}:${texture .sampler}`,
+         key    = `${medias .map (media => media .index) .join (",")}:${texture .sampler}`,
          cached = this .textureCache .get (key);
 
       if (cached)
@@ -912,14 +1007,22 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const
          scene       = this .getScene (),
-         textureNode = scene .createNode ("ImageTexture", false),
-         name        = this .sanitizeName (texture .name || images [0] .name);
+         textureNode = scene .createNode (videos .length ? "MovieTexture" : "ImageTexture", false),
+         name        = this .sanitizeName (texture .name || medias [0] .name);
 
       if (name)
          scene .addNamedNode (scene .getUniqueName (name), textureNode);
 
-      textureNode ._url                  = images .map (image => image .uri);
+      textureNode ._url                  = medias .map (image => image .uri);
       textureNode ._colorSpaceConversion = false;
+
+      if (videos .length)
+      {
+         if (name)
+            scene .addExportedNode (scene .getUniqueExportName (name), textureNode);
+
+         textureNode ._loop = true;
+      }
 
       const sampler = this .samplers [texture .sampler];
 
@@ -932,17 +1035,45 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       return texture .textureNode = textureNode;
    },
+   textureVideoObject (texture)
+   {
+      const videos = [ ];
+
+      if (this .extensions .has ("EXT_texture_video"))
+         videos .push (this .videos [texture .extensions ?.EXT_texture_video ?.source]);
+
+      return videos .filter (video => video);
+   },
    textureImageObject (texture)
    {
-      const images = [this .images [texture .source]];
+      const images = [ ];
 
-      if (this .extensions .has ("KHR_texture_basisu"))
-         images .unshift (this .images [texture .extensions ?.KHR_texture_basisu ?.source]);
+      this .textureImageExtensionsObject (texture .extensions, images)
 
-      if (this .extensions .has ("EXT_texture_webp"))
-         images .unshift (this .images [texture .extensions ?.EXT_texture_webp ?.source]);
+      images .push (this .images [texture .source]);
 
       return images .filter (image => image);
+   },
+   textureImageExtensionsObject (extensions, images)
+   {
+      if (!(extensions instanceof Object))
+         return;
+
+      for (const [key, extension] of Object .entries (extensions))
+      {
+         switch (key)
+         {
+            case "KHR_texture_basisu":
+            case "EXT_texture_avif":
+            case "EXT_texture_webp":
+            {
+               if (this .extensions .has (key))
+                  images .push (this .images [extension ?.source]);
+
+               break;
+            }
+         }
+      }
    },
    materialsArray (materials)
    {
@@ -1377,10 +1508,17 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       extension ._specularTexture        = this .textureInfo (KHR_materials_specular .specularTexture);
       extension ._specularTextureMapping = this .textureMapping (KHR_materials_specular .specularTexture);
 
-      const specularColorFactor = new Color3 ();
+      const specularColorFactor = new Vector3 ();
 
       if (this .vectorValue (KHR_materials_specular .specularColorFactor, specularColorFactor))
-         extension ._specularColor = specularColorFactor;
+      {
+         const
+            specularStrength = Math .max (... specularColorFactor),
+            specularColor    = [... specularColorFactor] .map (c => c / specularStrength);
+
+         extension ._specularColor    = new Color3 (... (specularStrength ? specularColor : [0]));
+         extension ._specularStrength = specularStrength;
+      }
 
       extension ._specularColorTexture        = this .textureInfo (KHR_materials_specular .specularColorTexture);
       extension ._specularColorTextureMapping = this .textureMapping (KHR_materials_specular .specularColorTexture);
@@ -1437,10 +1575,12 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const multiscatterColor = new Color3 ();
 
-      if (this .vectorValue (KHR_materials_volume_scatter .multiscatterColor, multiscatterColor))
+      if (this .vectorValue (KHR_materials_volume_scatter .multiscatterColorFactor, multiscatterColor))
          extension ._multiscatterColor = multiscatterColor;
 
-      extension ._scatterAnisotropy = this .numberValue (KHR_materials_volume_scatter .scatterAnisotropy, 0);
+      extension ._multiscatterColorTexture        = this .textureInfo (KHR_materials_volume_scatter .multiscatterColorTexture);
+      extension ._multiscatterColorTextureMapping = this .textureMapping (KHR_materials_volume_scatter .multiscatterColorTexture);
+      extension ._scatterAnisotropy               = this .numberValue (KHR_materials_volume_scatter .scatterAnisotropy, 0);
 
       extension .setup ();
 
@@ -1473,11 +1613,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    textureTransformObject: (() =>
    {
       const
-         translation = new Vector2 (),
-         scale       = new Vector2 (1),
-         matrix      = new Matrix4 (),
-         vector      = new Vector3 (),
-         rotation    = new Rotation4 ();
+         matrix   = new Matrix4 (),
+         vector   = new Vector3 (),
+         rotation = new Rotation4 ();
 
       return function (KHR_texture_transform, texCoord)
       {
@@ -1489,6 +1627,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
          texCoord = KHR_texture_transform .texCoord ?? texCoord;
 
+         const
+            translation = new Vector2 (),
+            scale       = new Vector2 (1);
+
          // Reset matrix.
          matrix .set ();
 
@@ -1499,7 +1641,9 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          if (this .vectorValue (KHR_texture_transform .offset, translation))
             matrix .translate (vector .set (... translation, 0));
 
-         matrix .rotate (rotation .set (0, 0, -1, this .numberValue (KHR_texture_transform .rotation, 0)));
+         const angle = this .numberValue (KHR_texture_transform .rotation, 0)
+
+         matrix .rotate (rotation .set (0, 0, -1, angle));
 
          if (this .vectorValue (KHR_texture_transform .scale, scale))
             matrix .scale (vector .set (... scale, 1));
@@ -1545,29 +1689,27 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             {
                const scriptNode = scene .createNode ("Script", false);
 
-               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "translation",   new Fields .SFVec2f ());
-               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "rotation",      new Fields .SFFloat ());
-               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "scale",         new Fields .SFVec2f (1, 1));
+               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "translation",   new Fields .SFVec2f (... translation));
+               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "rotation",      new Fields .SFFloat (angle));
+               scriptNode .addUserDefinedField (X3DConstants .inputOutput, "scale",         new Fields .SFVec2f (... scale));
                scriptNode .addUserDefinedField (X3DConstants .outputOnly,  "value_changed", new Fields .SFMatrix4f ());
 
                scriptNode ._url = [/* js */ `ecmascript:
 
-const
-   flipY  = new SFMatrix3f (1, 0, 0, 0, -1, 0, 0, 1, 1),
-   matrix = new SFMatrix3f ();
+const m = new SFMatrix3f ();
 
 function eventsProcessed ()
 {
-   matrix .setTransform (translation, -rotation, scale);
+   m .setTransform (translation, -rotation, scale);
 
-   const m = flipY .multLeft (matrix);
+   // m' = m * flipY
 
    value_changed [0]  = m [0];
-   value_changed [1]  = m [1];
+   value_changed [1]  = -m [1] + m [2];
    value_changed [4]  = m [3];
-   value_changed [5]  = m [4];
+   value_changed [5]  = -m [4] + m [5];
    value_changed [12] = m [6];
-   value_changed [13] = m [7];
+   value_changed [13] = -m [7] + m [8];
 }
 `];
 
@@ -1601,7 +1743,7 @@ function eventsProcessed ()
       if (!(mesh instanceof Object))
          return;
 
-      if (mesh .shapeNodes)
+      if (mesh .shapeNodes && !EXT_mesh_gpu_instancing)
       {
          const primitives = mesh .primitives;
 
@@ -1657,7 +1799,7 @@ function eventsProcessed ()
 
       const
          shapeNode    = this .createShape (primitive, weights, skin, EXT_mesh_gpu_instancing),
-         variantsNode = this .khrMaterialsVariantsExtension (primitive .extensions, shapeNode);
+         variantsNode = this .khrMaterialsVariantsExtension (primitive .extensions ?.KHR_materials_variants, shapeNode);
 
       shapeNodes .push (primitive .shapeNode = variantsNode ?? shapeNode);
    },
@@ -1727,7 +1869,7 @@ function eventsProcessed ()
 
       const
          attributes = primitive .attributes,
-         dataView   = new Uint8Array (this .bufferViews [draco .bufferView] .buffer);
+         dataView   = new Uint8Array (this .bufferViews [draco .bufferView] .getBuffer ());
 
       this .dracoDecodeMesh (this .draco, dataView, draco .attributes, indicesCallback, attributeCallback);
    },
@@ -1821,30 +1963,7 @@ function eventsProcessed ()
          draco .destroy (buffer);
       }
    },
-   async createDraco ()
-   {
-      if (this .constructor .draco)
-      {
-         return this .constructor .draco;
-      }
-      else
-      {
-         const
-            response = await fetch (URLs .getLibraryURL ("draco_decoder_gltf.js")),
-            text     = await response .text (),
-            draco    = await new Function (text) () ();
-
-         return this .constructor .draco = draco;
-      }
-   },
-   khrMaterialsVariantsExtension (extensions, shapeNode)
-   {
-      if (!(extensions instanceof Object))
-         return;
-
-      return this .khrMaterialsVariantsObjectMappings (extensions .KHR_materials_variants, shapeNode);
-   },
-   khrMaterialsVariantsObjectMappings (KHR_materials_variants, shapeNode)
+   khrMaterialsVariantsExtension (KHR_materials_variants, shapeNode)
    {
       if (!(KHR_materials_variants instanceof Object))
          return;
@@ -1968,19 +2087,14 @@ function eventsProcessed ()
 
       const
          scene         = this .getScene (),
-         viewpointNode = scene .createNode ("OrthoViewpoint", false);
+         viewpointNode = scene .createNode ("OrthoViewpoint", false),
+         xmag          = typeof camera .xmag === "number" ? camera .xmag : 1,
+         ymag          = typeof camera .ymag === "number" ? camera .ymag : 1;
 
-      if (typeof camera .xmag === "number")
-      {
-         viewpointNode ._fieldOfView [0] = -camera .xmag;
-         viewpointNode ._fieldOfView [2] = +camera .xmag;
-      }
-
-      if (typeof camera .ymag === "number")
-      {
-         viewpointNode ._fieldOfView [1] = -camera .ymag;
-         viewpointNode ._fieldOfView [3] = +camera .ymag;
-      }
+      viewpointNode ._fieldOfView [0] = -xmag;
+      viewpointNode ._fieldOfView [1] = -ymag;
+      viewpointNode ._fieldOfView [2] =  xmag;
+      viewpointNode ._fieldOfView [3] =  ymag;
 
       if (typeof camera .znear === "number")
          viewpointNode ._nearDistance = camera .znear;
@@ -1999,15 +2113,18 @@ function eventsProcessed ()
          {
             const scriptNode = scene .createNode ("Script", false);
 
-            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "xmag",          new Fields .SFFloat (1));
-            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "ymag",          new Fields .SFFloat (1));
+            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "xmag",          new Fields .SFFloat (xmag));
+            scriptNode .addUserDefinedField (X3DConstants .inputOutput, "ymag",          new Fields .SFFloat (ymag));
             scriptNode .addUserDefinedField (X3DConstants .outputOnly,  "value_changed", new Fields .MFFloat ());
 
             scriptNode ._url = [/* js */ `ecmascript:
 
 function eventsProcessed ()
 {
-   value_changed = new MFFloat (-xmag, -ymag, xmag, ymag);
+   value_changed [0] = -xmag;
+   value_changed [1] = -ymag;
+   value_changed [2] =  xmag;
+   value_changed [3] =  ymag;
 }
 `];
 
@@ -2084,30 +2201,8 @@ function eventsProcessed ()
          transformNode = scene .createNode (typeName, false);
 
       node .transformNode = transformNode;
-
-      // Create humanoid.
-
-      const skin = this .skins [node .skin];
-
-      if (skin)
-      {
-         // Skins can be cloned.
-
-         if (!skin .humanoidNode)
-         {
-            skin .humanoidNode = scene .createNode ("HAnimHumanoid", false);
-
-            skin .joints .map (joint => this .humanoidIndex .set (joint, skin .humanoidNode))
-         }
-
-         node .humanoidNode = skin .humanoidNode;
-      }
-
-      node .childNode = node .humanoidNode ?? node .transformNode;
-      node .pointers  = [node .childNode];
-
-      if (node .extensions ?.KHR_node_visibility ?.hidden)
-         node .childNode ._visible = false;
+      node .childNode     = node .transformNode;
+      node .pointers      = [node .childNode];
 
       return node;
    },
@@ -2119,13 +2214,16 @@ function eventsProcessed ()
          return;
 
       const
-         skeleton     = skin .skeleton .map (index => this .nodes [index]) .filter (node => node),
-         humanoidNode = skin .humanoidNode;
+         skeletons    = skin .skeleton .map (index => this .nodes [index]) .filter (node => node),
+         humanoidNode = skin .humanoidNode,
+         childNode    = skin .childNode;
 
-      for (const node of skeleton)
+      node .transformNode = childNode;
+
+      for (const skeleton of skeletons)
       {
-         node .humanoidNode = humanoidNode;
-         node .childNode    = humanoidNode;
+         skeleton .humanoidNode = humanoidNode;
+         skeleton .childNode    = childNode;
       }
    },
    nodeChildren: (() =>
@@ -2133,7 +2231,7 @@ function eventsProcessed ()
       const
          translation      = new Vector3 (),
          rotation         = new Rotation4 (),
-         scale            = new Vector3 (1),
+         scale            = new Vector3 (),
          scaleOrientation = new Rotation4 (),
          quaternion       = new Quaternion (),
          matrix           = new Matrix4 ();
@@ -2142,12 +2240,13 @@ function eventsProcessed ()
       {
          const
             scene         = this .getScene (),
+            skin          = this .skins [node .skin],
             transformNode = node .transformNode,
             name          = this .sanitizeName (node .name);
 
          // Name
 
-         if (name)
+         if (name && !skin)
          {
             scene .addNamedNode (scene .getUniqueName (name), transformNode);
 
@@ -2155,33 +2254,9 @@ function eventsProcessed ()
                transformNode ._name = node .name;
          }
 
-         // Set transformation matrix.
-
-         if (this .vectorValue (node .matrix, matrix))
-         {
-            matrix .get (translation, rotation, scale, scaleOrientation);
-
-            transformNode ._translation      = translation;
-            transformNode ._rotation         = rotation;
-            transformNode ._scale            = scale;
-            transformNode ._scaleOrientation = scaleOrientation;
-         }
-         else
-         {
-            if (this .vectorValue (node .translation, translation))
-               transformNode ._translation = translation;
-
-            if (this .vectorValue (node .rotation, quaternion))
-               transformNode ._rotation = rotation .setQuaternion (quaternion);
-
-            if (this .vectorValue (node .scale, scale))
-               transformNode ._scale = scale;
-         }
-
-         // Add mesh.
+         // Get mesh.
 
          const
-            skin                    = this .skins [node .skin],
             EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing,
             shapeNodes              = this .meshObject (this .meshes [node .mesh], skin, EXT_mesh_gpu_instancing);
 
@@ -2192,9 +2267,9 @@ function eventsProcessed ()
          if (viewpointNode)
             transformNode ._children .push (viewpointNode);
 
-         // Add light.
+         // Handle extensions.
 
-         this .nodeLight (node .extensions ?.KHR_lights_punctual, transformNode);
+         this .nodeExtensions (node);
 
          // Add children.
 
@@ -2206,17 +2281,14 @@ function eventsProcessed ()
 
             children = children .map (childNode =>
             {
-               if (childNode .getType () .at (-1) === X3DConstants .HAnimHumanoid)
+               if (childNode ._children .length &&
+                   childNode ._children [0] .getNodeType () .at (-1) === X3DConstants .HAnimHumanoid)
                {
                   const segmentNode = scene .createNode ("HAnimSegment", false);
 
                   segmentNode ._children .push (childNode);
 
                   segmentNode .setup ();
-
-                  const humanoidNode = this .humanoidIndex .get (index);
-
-                  humanoidNode ?._segments .push (segmentNode);
 
                   return segmentNode;
                }
@@ -2229,74 +2301,85 @@ function eventsProcessed ()
 
          transformNode ._children .push (... children);
 
-         // Add Shape nodes.
-
-         if (shapeNodes)
-            transformNode ._children .push (... shapeNodes);
-
-         transformNode .setup ();
-
-         // Skin
-
-         if (!skin)
-            return;
-
-         const humanoidNode = skin .humanoidNode;
-
-         if (!humanoidNode .isInitialized ())
+         if (skin)
          {
-            const name = this .sanitizeName (skin .name) || transformNode .getName ();
+            skin .name ??= node .name;
 
-            if (name)
-               scene .addNamedNode (scene .getUniqueName (name), humanoidNode);
+            const humanoidNode = skin .humanoidNode;
 
-            humanoidNode ._name                  = skin .name ?? node .name ?? "";
-            humanoidNode ._version               = "2.0";
-            humanoidNode ._skeletalConfiguration = "GLTF";
+            if (!shapeNodes ?.length)
+               return;
 
-            humanoidNode ._skeleton .push (... skin .skeleton
-               .map (index => this .nodes [index] ?.transformNode) .filter (node => node));
-
-            for (const [i, joint] of skin .joints .entries ())
-            {
-               const
-                  jointNode         = this .nodes [joint] ?.transformNode,
-                  inverseBindMatrix = skin .inverseBindMatrices [i] ?? Matrix4 .IDENTITY;
-
-               if (!jointNode)
-                  continue;
-
-               inverseBindMatrix .get (translation, rotation, scale);
-
-               humanoidNode ._joints                .push (jointNode);
-               humanoidNode ._jointBindingPositions .push (translation);
-               humanoidNode ._jointBindingRotations .push (rotation);
-               humanoidNode ._jointBindingScales    .push (scale);
-            }
-
-            humanoidNode .setup ();
-         }
-
-         if (shapeNodes ?.length)
-         {
             humanoidNode ._skinNormal = shapeNodes [0] ._geometry .normal;
             humanoidNode ._skinCoord  = shapeNodes [0] ._geometry .coord;
-         }
 
-         humanoidNode ._skin .push (transformNode);
+            humanoidNode ._skin .push (... shapeNodes);
+         }
+         else
+         {
+            // Set transformation matrix.
+
+            if (this .vectorValue (node .matrix, matrix))
+            {
+               matrix .get (translation, rotation, scale, scaleOrientation);
+
+               transformNode ._translation      = translation;
+               transformNode ._rotation         = rotation;
+               transformNode ._scale            = scale;
+               transformNode ._scaleOrientation = scaleOrientation;
+            }
+            else
+            {
+               if (this .vectorValue (node .translation, translation))
+                  transformNode ._translation = translation;
+
+               if (this .vectorValue (node .rotation, quaternion))
+                  transformNode ._rotation = rotation .setQuaternion (quaternion);
+
+               if (this .vectorValue (node .scale, scale))
+                  transformNode ._scale = scale;
+            }
+
+            // Add Shape nodes.
+
+            if (shapeNodes)
+               transformNode ._children .push (... shapeNodes);
+
+            transformNode .setup ();
+         }
       };
    })(),
-   nodeLight (KHR_lights_punctual, transformNode)
+   nodeExtensions (node)
    {
-      if (!(KHR_lights_punctual instanceof Object))
+      if (!(node .extensions instanceof Object))
          return;
 
-      const lightNode = this .lightObject (KHR_lights_punctual .light);
+      for (const [key, extension] of Object .entries (node .extensions))
+      {
+         if (!(extension instanceof Object))
+            continue;
 
-      if (!lightNode)
-         return;
+         switch (key)
+         {
+            case "KHR_lights_punctual":
+            {
+               const lightNode = this .lightObject (extension .light);
 
-      transformNode ._children .push (lightNode);
+               if (!lightNode)
+                  break;
+
+               node .transformNode ._children .push (lightNode);
+               break;
+            }
+            case "KHR_node_visibility":
+            {
+               // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_visibility
+               extension .pointers       = [node .childNode];
+               node .childNode ._visible = extension .visible ?? true;
+               break;
+            }
+         }
+      }
    },
    nodeChildrenArray (children)
    {
@@ -2304,9 +2387,10 @@ function eventsProcessed ()
          return [ ];
 
       const nodes = Array .from (new Set (children
-         .map (index => this .nodes [index] ?.childNode)
+         .map (index => this .nodes [index])
+         .filter (node => node ?.skin === undefined)
+         .map (node => node ?.childNode)
          .filter (node => node)
-         .filter (node => node .getType () .at (-1) !== X3DConstants .HAnimHumanoid || !node .getCloneCount ())
       ));
 
       return nodes;
@@ -2345,17 +2429,31 @@ function eventsProcessed ()
          skin .joints .push (skeleton);
       }
 
+      const commons = this .skeletons .getOrInsert (skin .skeleton [0], { });
+
+      commons .childNode      ??= scene .createNode ("Transform",  false);
+      commons .normalNode     ??= scene .createNode ("Normal",     false);
+      commons .coordinateNode ??= scene .createNode ("Coordinate", false);
+
+      skin .childNode                  = commons .childNode;
+      skin .normalNode                 = commons .normalNode;
+      skin .coordinateNode             = commons .coordinateNode;
+      skin .humanoidNode               = scene .createNode ("HAnimHumanoid",          false);
       skin .textureCoordinateNode      = scene .createNode ("TextureCoordinate",      false);
       skin .multiTextureCoordinateNode = scene .createNode ("MultiTextureCoordinate", false);
-      skin .normalNode                 = scene .createNode ("Normal",                 false);
-      skin .coordinateNode             = scene .createNode ("Coordinate",             false);
 
+      skin .childNode ._children .push (skin .humanoidNode);
       skin .textureCoordinateNode ._mapping = "TEXCOORD_0";
+
+      if (skin .childNode ._children .length === 1)
+      {
+         skin .childNode      .setup ();
+         skin .normalNode     .setup ();
+         skin .coordinateNode .setup ();
+      }
 
       skin .textureCoordinateNode      .setup ();
       skin .multiTextureCoordinateNode .setup ();
-      skin .normalNode                 .setup ();
-      skin .coordinateNode             .setup ();
    },
    jointsArray (joints, add)
    {
@@ -2394,6 +2492,113 @@ function eventsProcessed ()
 
       return matrices;
    },
+   skinsHumanoid ()
+   {
+      this .skins .forEach (skin => this .skinHumanoid (skin))
+   },
+   skinHumanoid: (() =>
+   {
+      const
+         translation = new Vector3 (),
+         rotation    = new Rotation4 (),
+         scale       = new Vector3 ();
+
+      return function (skin)
+      {
+         const
+            scene        = this .getScene (),
+            humanoidNode = skin .humanoidNode,
+            name         = this .sanitizeName (skin .name);
+
+         if (name)
+            scene .addNamedNode (scene .getUniqueName (name), humanoidNode);
+
+         humanoidNode ._name = skin .name ?? "";
+
+         if (this .input .extensions ?.VRM)
+            humanoidNode ._skeletalConfiguration = "VRM";
+         else
+            humanoidNode ._skeletalConfiguration = "GLTF";
+
+         humanoidNode ._skeleton .push (... skin .skeleton
+            .map (index => this .nodes [index] ?.transformNode) .filter (node => node));
+
+         for (const [i, joint] of skin .joints .entries ())
+         {
+            const
+               jointNode         = this .nodes [joint] ?.transformNode,
+               inverseBindMatrix = skin .inverseBindMatrices [i] ?? Matrix4 .IDENTITY;
+
+            if (!jointNode)
+               continue;
+
+            inverseBindMatrix .get (translation, rotation, scale);
+
+            humanoidNode ._joints                .push (jointNode);
+            humanoidNode ._jointBindingPositions .push (translation);
+            humanoidNode ._jointBindingRotations .push (rotation);
+            humanoidNode ._jointBindingScales    .push (scale);
+         }
+
+         humanoidNode .setup ();
+      };
+   })(),
+   skinsBBox ()
+   {
+      this .skins .forEach (skin => this .skinBBox (skin .humanoidNode))
+   },
+   skinBBox (humanoidNode)
+   {
+      if (!humanoidNode ._skinCoord .getValue ())
+         return;
+
+      const
+         jointMatrix = new Matrix4 (),
+         layerNode   = new Layer (this .getScene ());
+
+      // Generate joint model matrices.
+
+      layerNode .setup ();
+      layerNode .getViewport () .push (layerNode);
+
+      humanoidNode .traverse (TraverseType .DISPLAY, layerNode);
+
+      // Determine points at binding position.
+
+      const
+         skinCoord  = humanoidNode ._skinCoord,
+         points     = Array .from (skinCoord .point, p => p .getValue () .copy ()),
+         skinPoints = [ ];
+
+      for (const [j, jointNode] of humanoidNode ._joints .entries ())
+      {
+         const skinCoordWeight = jointNode .skinCoordWeight;
+
+         jointMatrix .set (humanoidNode ._jointBindingPositions [j] .getValue (), humanoidNode ._jointBindingRotations [j] .getValue (), humanoidNode ._jointBindingScales [j] .getValue ()) .multRight (jointNode .getValue () .getModelViewMatrix ());
+
+         for (const [c, index] of jointNode .skinCoordIndex .entries ())
+         {
+            const
+               point = points [index],
+               skin  = skinPoints [index] ??= point .copy ();
+
+            skin ?.add (jointMatrix .multVecMatrix (point .copy ()) .subtract (point) .multiply (skinCoordWeight [c]));
+         }
+      }
+
+      // Set bbox for all Shape nodes.
+
+      const
+         bbox       = Box3 .fromPoints (Object .values (skinPoints)),
+         bboxSize   = bbox .size,
+         bboxCenter = bbox .center;
+
+      for (const shapeNode of humanoidNode ._skin)
+      {
+         shapeNode .bboxSize   = bboxSize;
+         shapeNode .bboxCenter = bboxCenter;
+      }
+   },
    scenesArray (glTF, scenes, sceneNumber = 0)
    {
       if (!(scenes instanceof Array))
@@ -2401,7 +2606,7 @@ function eventsProcessed ()
 
       const
          scene    = this .getScene (),
-         children = scenes .map (scene => this .sceneObject (scene)) .filter (node => node);
+         children = scenes .map ((scene, index) => this .sceneObject (scene, index)) .filter (node => node);
 
       switch (children .length)
       {
@@ -2444,7 +2649,7 @@ function eventsProcessed ()
          }
       }
    },
-   sceneObject (scene)
+   sceneObject (scene, index)
    {
       if (!(scene instanceof Object))
          return null;
@@ -2464,17 +2669,23 @@ function eventsProcessed ()
          }
          case 1:
          {
-            return nodes [0];
+            const
+               scene = this .getScene (),
+               node  = nodes [0];
+
+            if (!node .getName ())
+               scene .addNamedNode (scene .getUniqueName (`Scene${index}`), node);
+
+            return node;
          }
          default:
          {
             const
                scene     = this .getScene (),
                groupNode = scene .createNode ("Group", false),
-               name      = this .sanitizeName (scene .name);
+               name      = this .sanitizeName (scene .name) || `Scene${index}`;
 
-            if (name)
-               scene .addNamedNode (scene .getUniqueName (name), groupNode);
+            scene .addNamedNode (scene .getUniqueName (name), groupNode);
 
             groupNode ._children = nodes;
 
@@ -2677,13 +2888,14 @@ function eventsProcessed ()
    createShape (primitive, weights, skin, EXT_mesh_gpu_instancing)
    {
       const
-         scene          = this .getScene (),
-         shapeNode      = this .meshInstancing (EXT_mesh_gpu_instancing) ?? scene .createNode ("Shape", false),
-         appearanceNode = this .materialObject (primitive),
-         geometryNode   = this .createGeometry (primitive, weights, skin);
+         scene     = this .getScene (),
+         shapeNode = this .meshInstancing (EXT_mesh_gpu_instancing) ?? scene .createNode ("Shape", false);
 
-      shapeNode ._appearance = appearanceNode;
-      shapeNode ._geometry   = geometryNode;
+      primitive .appearanceNode ??= this .materialObject (primitive);
+      primitive .geometryNode   ??= this .createGeometry (primitive, weights, skin);
+
+      shapeNode ._appearance = primitive .appearanceNode;
+      shapeNode ._geometry   = primitive .geometryNode;
 
       shapeNode .setup ();
 
@@ -3647,7 +3859,10 @@ function eventsProcessed ()
 
 function eventsProcessed ()
 {
-   value_changed = new SFColorRGBA (... color, alpha);
+   value_changed [0] = color [0];
+   value_changed [1] = color [1];
+   value_changed [2] = color [2];
+   value_changed [3] = alpha;
 }
    `];
 

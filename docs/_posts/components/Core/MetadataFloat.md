@@ -31,7 +31,7 @@ The MetadataFloat node belongs to the [Core](/x_ite/components/overview/#core) c
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [name](#fields-name) | "" |
 | SFString | [in, out] | [reference](#fields-reference) | "" |
 | MFFloat | [in, out] | [value](#fields-value) | [ ] |
@@ -91,6 +91,13 @@ The *value* attribute is a strictly typed data array providing relevant metadata
 
 - Default `containerField='metadata'` in X3D 3 changed to default `containerField='value'` in X3D 4.0, allowing construction of much terser [MetadataSet](/x_ite/components/core/metadataset/) vocabulary structures.
 - Metadata nodes can only contain other Metadata nodes.
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

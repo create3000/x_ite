@@ -112,178 +112,198 @@ Object .assign (Quaternion .prototype,
 
       return matrix;
    },
+   /**
+    * Sets the Euler components.
+    * @param {number} x - The angle of the x axis in radians.
+    * @param {number} y - The angle of the y axis in radians.
+    * @param {number} z - The angle of the z axis in radians.
+    * @param {string} order - A string representing the order that the rotations are applied.
+    * @returns {Quaternion} A reference to this quaternion.
+    */
    setEuler (x, y, z, order = "XYZ")
    {
-		// http://www.mathworks.com/matlabcentral/fileexchange/20696-function-to-convert-between-dcm-euler-angles-quaternions-and-euler-vectors/content/SpinCalc.m
+      // https://github.com/toji/gl-matrix/blob/accefb6ddf1897a0dc443bbc7664c90e67af6455/src/quat.js#L460
+
+      x /= 2;
+      y /= 2;
+      z /= 2;
 
       const
-		   c1 = Math .cos (x / 2),
-		   c2 = Math .cos (y / 2),
-		   c3 = Math .cos (z / 2),
-		   s1 = Math .sin (x / 2),
-		   s2 = Math .sin (y / 2),
-		   s3 = Math .sin (z / 2);
+         sx = Math .sin (x),
+         sy = Math .sin (y),
+         sz = Math .sin (z),
+         cx = Math .cos (x),
+         cy = Math .cos (y),
+         cz = Math .cos (z);
 
-		switch (order)
+      switch (order)
       {
-			case "XYZ":
-				this .x = s1 * c2 * c3 + c1 * s2 * s3;
-				this .y = c1 * s2 * c3 - s1 * c2 * s3;
-				this .z = c1 * c2 * s3 + s1 * s2 * c3;
-				this .w = c1 * c2 * c3 - s1 * s2 * s3;
-				break;
-
-         case "ZYX":
-            this .x = s1 * c2 * c3 - c1 * s2 * s3;
-            this .y = c1 * s2 * c3 + s1 * c2 * s3;
-            this .z = c1 * c2 * s3 - s1 * s2 * c3;
-            this .w = c1 * c2 * c3 + s1 * s2 * s3;
+         case "XYZ":
+            this .x = sx * cy * cz + cx * sy * sz;
+            this .y = cx * sy * cz - sx * cy * sz;
+            this .z = cx * cy * sz + sx * sy * cz;
+            this .w = cx * cy * cz - sx * sy * sz;
             break;
 
-			case "YXZ":
-				this .x = s1 * c2 * c3 + c1 * s2 * s3;
-				this .y = c1 * s2 * c3 - s1 * c2 * s3;
-				this .z = c1 * c2 * s3 - s1 * s2 * c3;
-				this .w = c1 * c2 * c3 + s1 * s2 * s3;
-				break;
+         case "ZYX":
+            this .x = sx * cy * cz - cx * sy * sz;
+            this .y = cx * sy * cz + sx * cy * sz;
+            this .z = cx * cy * sz - sx * sy * cz;
+            this .w = cx * cy * cz + sx * sy * sz;
+            break;
 
-			case "ZXY":
-				this .x = s1 * c2 * c3 - c1 * s2 * s3;
-				this .y = c1 * s2 * c3 + s1 * c2 * s3;
-				this .z = c1 * c2 * s3 + s1 * s2 * c3;
-				this .w = c1 * c2 * c3 - s1 * s2 * s3;
-				break;
+         case "YXZ":
+            this .x = sx * cy * cz + cx * sy * sz;
+            this .y = cx * sy * cz - sx * cy * sz;
+            this .z = cx * cy * sz - sx * sy * cz;
+            this .w = cx * cy * cz + sx * sy * sz;
+            break;
 
-			case "YZX":
-				this .x = s1 * c2 * c3 + c1 * s2 * s3;
-				this .y = c1 * s2 * c3 + s1 * c2 * s3;
-				this .z = c1 * c2 * s3 - s1 * s2 * c3;
-				this .w = c1 * c2 * c3 - s1 * s2 * s3;
-				break;
+         case "ZXY":
+            this .x = sx * cy * cz - cx * sy * sz;
+            this .y = cx * sy * cz + sx * cy * sz;
+            this .z = cx * cy * sz + sx * sy * cz;
+            this .w = cx * cy * cz - sx * sy * sz;
+            break;
 
-			case "XZY":
-				this .x = s1 * c2 * c3 - c1 * s2 * s3;
-				this .y = c1 * s2 * c3 - s1 * c2 * s3;
-				this .z = c1 * c2 * s3 + s1 * s2 * c3;
-				this .w = c1 * c2 * c3 + s1 * s2 * s3;
-				break;
-		}
+         case "YZX":
+            this .x = sx * cy * cz + cx * sy * sz;
+            this .y = cx * sy * cz + sx * cy * sz;
+            this .z = cx * cy * sz - sx * sy * cz;
+            this .w = cx * cy * cz - sx * sy * sz;
+            break;
 
-		return this;
-	},
+         case "XZY":
+            this .x = sx * cy * cz - cx * sy * sz;
+            this .y = cx * sy * cz - sx * cy * sz;
+            this .z = cx * cy * sz + sx * sy * cz;
+            this .w = cx * cy * cz + sx * sy * sz;
+            break;
+      }
+
+      return this;
+   },
+   /**
+    * Gets the Euler components.
+    * @param {number[]} euler - Array to be returned.
+    * @param {string} order - A string representing the order that the rotations are applied.
+    * @returns {number[]} The angles of the Euler rotations in radians.
+    */
    getEuler (euler = [ ], order = "XYZ")
    {
+      // https://github.com/mrdoob/three.js/blob/7a4f6b6637fbf10f1f36c9bb1f34b32452e516c6/src/math/Euler.js#L189
+
       const { 0: m0, 1: m1, 2: m2, 3: m3, 4: m4, 5: m5, 6: m6, 7: m7, 8: m8 } = this .getMatrix (m);
 
-		switch (order)
+      switch (order)
       {
-			case "XYZ":
+         case "XYZ":
          {
-				euler [1] = Math .asin (Algorithm .clamp (m6, -1, 1));
+            euler [1] = Math .asin (Algorithm .clamp (m6, -1, 1));
 
-				if (Math .abs (m6) < 0.9999999)
+            if (Math .abs (m6) < 0.9999999)
             {
-					euler [0] = Math .atan2 (-m7, m8);
-					euler [2] = Math .atan2 (-m3, m0);
-				}
+               euler [0] = Math .atan2 (-m7, m8);
+               euler [2] = Math .atan2 (-m3, m0);
+            }
             else
             {
-					euler [0] = Math .atan2 (m5, m4);
-					euler [2] = 0;
-				}
+               euler [0] = Math .atan2 (m5, m4);
+               euler [2] = 0;
+            }
 
-				break;
+            break;
          }
-			case "ZYX":
+         case "ZYX":
          {
-				euler [1] = Math .asin (- Algorithm .clamp (m2, -1, 1));
+            euler [1] = Math .asin (-Algorithm .clamp (m2, -1, 1));
 
-				if (Math .abs (m2) < 0.9999999)
+            if (Math .abs (m2) < 0.9999999)
             {
-					euler [0] = Math .atan2 (m5, m8);
-					euler [2] = Math .atan2 (m1, m0);
-				}
+               euler [0] = Math .atan2 (m5, m8);
+               euler [2] = Math .atan2 (m1, m0);
+            }
             else
             {
-					euler [0] = 0;
-					euler [2] = Math .atan2 (-m3, m4);
-				}
+               euler [0] = 0;
+               euler [2] = Math .atan2 (-m3, m4);
+            }
 
-				break;
+            break;
          }
-			case "YXZ":
+         case "YXZ":
          {
-				euler [0] = Math .asin (- Algorithm .clamp (m7, -1, 1));
+            euler [0] = Math .asin (-Algorithm .clamp (m7, -1, 1));
 
-				if (Math .abs (m7) < 0.9999999)
+            if (Math .abs (m7) < 0.9999999)
             {
-					euler [1] = Math .atan2 (m6, m8);
-					euler [2] = Math .atan2 (m1, m4);
+               euler [1] = Math .atan2 (m6, m8);
+               euler [2] = Math .atan2 (m1, m4);
 
-				}
+            }
             else
             {
-					euler [1] = Math .atan2 (-m2, m0);
-					euler [2] = 0;
-				}
+               euler [1] = Math .atan2 (-m2, m0);
+               euler [2] = 0;
+            }
 
-				break;
+            break;
          }
-			case "ZXY":
+         case "ZXY":
          {
-				euler [0] = Math .asin (Algorithm .clamp (m5, -1, 1));
+            euler [0] = Math .asin (Algorithm .clamp (m5, -1, 1));
 
-				if (Math .abs (m5) < 0.9999999)
+            if (Math .abs (m5) < 0.9999999)
             {
-					euler [1] = Math .atan2 (-m2, m8);
-					euler [2] = Math .atan2 (-m3, m4);
-				}
+               euler [1] = Math .atan2 (-m2, m8);
+               euler [2] = Math .atan2 (-m3, m4);
+            }
             else
             {
-					euler [1] = 0;
-					euler [2] = Math .atan2 (m1, m0);
-				}
+               euler [1] = 0;
+               euler [2] = Math .atan2 (m1, m0);
+            }
 
-				break;
+            break;
          }
-			case "YZX":
+         case "YZX":
          {
-				euler [2] = Math .asin (Algorithm .clamp (m1, -1, 1));
+            euler [2] = Math .asin (Algorithm .clamp (m1, -1, 1));
 
-				if (Math .abs (m1) < 0.9999999)
+            if (Math .abs (m1) < 0.9999999)
             {
-					euler [0] = Math .atan2 (-m7, m4);
-					euler [1] = Math .atan2 (-m2, m0);
-				}
+               euler [0] = Math .atan2 (-m7, m4);
+               euler [1] = Math .atan2 (-m2, m0);
+            }
             else
             {
-					euler [0] = 0;
-					euler [1] = Math .atan2 (m6, m8);
-				}
+               euler [0] = 0;
+               euler [1] = Math .atan2 (m6, m8);
+            }
 
-				break;
+            break;
          }
-			case "XZY":
+         case "XZY":
          {
-				euler [2] = Math .asin (- Algorithm .clamp (m3, -1, 1));
+            euler [2] = Math .asin (-Algorithm .clamp (m3, -1, 1));
 
-				if (Math .abs (m3) < 0.9999999)
+            if (Math .abs (m3) < 0.9999999)
             {
-					euler [0] = Math .atan2 (m5, m4);
-					euler [1] = Math .atan2 (m6, m0);
+               euler [0] = Math .atan2 (m5, m4);
+               euler [1] = Math .atan2 (m6, m0);
 
-				}
+            }
             else
             {
-					euler [0] = Math .atan2 (-m7, m8);
-					euler [1] = 0;
-				}
+               euler [0] = Math .atan2 (-m7, m8);
+               euler [1] = 0;
+            }
 
-				break;
+            break;
          }
-		}
+      }
 
-		return euler;
+      return euler;
    },
    isReal ()
    {

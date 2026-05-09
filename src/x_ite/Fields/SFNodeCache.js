@@ -21,26 +21,13 @@ const SFNodeCache =
 
          this .set (baseNode, node);
 
-         // i += 2;
-         // console .warn (`baseNode ${i} ${baseNode .getTypeName ()}`);
-         // r .register (baseNode, `baseNode ${baseNode .getTypeName ()}`);
-         // r .register (node, `node ${baseNode .getTypeName ()}`);
-
          return node;
       }
    },
    set (baseNode, node)
    {
-      Object .defineProperty (node, "dispose",
-      {
-         value: dispose,
-         writable: true,
-         configurable: true,
-      });
+      Object .defineProperties (node, properties);
 
-      // WeakMap allows associating data to objects in a way that doesn't prevent
-      // the key objects from being collected, even if the values reference the keys.
-      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap
       cache .set (baseNode, node);
    },
    delete (baseNode)
@@ -49,11 +36,28 @@ const SFNodeCache =
    },
 };
 
-function dispose ()
+const disable =
 {
-   this .getValue () ?.dispose ();
+   value: undefined,
+   configurable: true,
+};
 
-   SFNode .prototype .dispose .call (this);
-}
+const properties =
+{
+   fromString: disable,
+   fromVRMLString: disable,
+   fromXMLString: disable,
+   fromJSONString: disable,
+   dispose:
+   {
+      value ()
+      {
+         this .getValue () ?.dispose ();
+
+         SFNode .prototype .dispose .call (this);
+      },
+      configurable: true,
+   },
+};
 
 export default SFNodeCache;

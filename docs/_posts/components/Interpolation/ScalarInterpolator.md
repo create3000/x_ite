@@ -3,7 +3,7 @@ title: ScalarInterpolator
 date: 2023-01-07
 nav: components-Interpolation
 categories: [components, Interpolation]
-tags: [ScalarInterpolator, Interpolation]
+tags: [ScalarInterpolator, Interpolation, VRML]
 ---
 <style>
 .post h3 {
@@ -30,7 +30,7 @@ The ScalarInterpolator node belongs to the [Interpolation](/x_ite/components/ove
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFFloat | [in] | [set_fraction](#fields-set_fraction) |  |
 | MFFloat | [in, out] | [key](#fields-key) | [ ] |
 | MFFloat | [in, out] | [keyValue](#fields-keyValue) | [ ] |
@@ -109,7 +109,7 @@ Linearly interpolated output value determined by current key time and correspond
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Interpolation/ScalarInterpolator/ScalarInterpolator.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Interpolation/ScalarInterpolator/ScalarInterpolator.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Interpolation/ScalarInterpolator/screenshot.avif" alt="ScalarInterpolator"/>
 </x3d-canvas>
 
@@ -117,6 +117,14 @@ Linearly interpolated output value determined by current key time and correspond
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Interpolation/ScalarInterpolator/ScalarInterpolator.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of ScalarInterpolator Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#ScalarInterpolator)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

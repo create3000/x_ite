@@ -6,12 +6,14 @@ import Vector3     from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4   from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4     from "../../../standard/Math/Numbers/Matrix4.js";
 import Lock        from "../../../standard/Utility/Lock.js";
+import _           from "../../../locale/gettext.js";
 
 import "./xrExamineViewer.js";
 import "./xrX3DFlyViewer.js";
 import "./xrX3DViewer.js";
 
 const
+   _xrButton       = Symbol (),
    _sessionLock    = Symbol (),
    _referenceSpace = Symbol (),
    _baseLayer      = Symbol (),
@@ -36,10 +38,9 @@ Object .assign (X3DWebXRContext .prototype,
    },
    xrAddButton ()
    {
-      $("<div></div>")
-         .attr ("part", "xr-button")
-         .attr ("title", "Start WebXR session.")
-         .addClass ("x_ite-private-xr-button")
+      this [_xrButton] = $("<div></div>")
+         .attr ("title", _("Start WebXR session."))
+         .addClass (["x_ite-private-xr-button", "x_ite-private-button"])
          .on ("mousedown touchstart", false)
          .on ("mouseup touchend", event =>
          {
@@ -54,7 +55,7 @@ Object .assign (X3DWebXRContext .prototype,
             else
                this .xrStopSession ();
          })
-         .appendTo (this .getSurface ());
+         .appendTo (this .getSurface () .find (".x_ite-private-buttons"));
    },
    async xrStartSession ()
    {
@@ -105,6 +106,10 @@ Object .assign (X3DWebXRContext .prototype,
 
          this .getRenderingProperties () ._XRSession = true;
 
+         // Button
+
+         this [_xrButton] .attr ("title", _("Stop WebXR session."));
+
          // session .addEventListener ("select", event =>
          // {
          //    const { inputSource, frame } = event;
@@ -150,6 +155,10 @@ Object .assign (X3DWebXRContext .prototype,
          this .getRenderingProperties () ._ContentScale .removeInterest ("xrContentScale", this);
 
          this .getRenderingProperties () ._XRSession = false;
+
+         // Button
+
+         this [_xrButton] .attr ("title", _("Start WebXR session."));
       });
    },
    xrContentScale ()

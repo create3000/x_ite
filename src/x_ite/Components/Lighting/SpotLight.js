@@ -3,7 +3,6 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DLightNode         from "./X3DLightNode.js";
-import X3DGroupingNode      from "../Grouping/X3DGroupingNode.js";
 import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Box3                 from "../../../standard/Math/Geometry/Box3.js";
@@ -48,29 +47,28 @@ Object .assign (SpotLightContainer .prototype,
    {
       const shadowMapSize = lightNode .getShadowMapSize ();
 
-      this .browser   = lightNode .getBrowser ();
-      this .lightNode = lightNode;
-      this .groupNode = groupNode;
-      this .global    = lightNode .getGlobal ();
-
-      this .matrixArray .set (modelViewMatrix .submatrix .inverse ());
+      this .browser           = lightNode .getBrowser ();
+      this .lightNode         = lightNode;
+      this .groupNode         = groupNode;
+      this .global            = lightNode .getGlobal ();
+      this .shadowMapRendered = false;
 
       this .modelViewMatrix .push (modelViewMatrix);
 
       // Get shadow buffer from browser.
 
-      if (lightNode .getShadowIntensity () > 0 && shadowMapSize > 0)
-      {
+      if (lightNode .getShadowIntensity () && shadowMapSize)
          this .shadowBuffer = this .browser .popShadowBuffer (shadowMapSize);
-
-         if (!this .shadowBuffer)
-            console .warn ("Couldn't create shadow buffer.");
-      }
    },
    renderShadowMap (renderObject)
    {
       if (!this .shadowBuffer)
          return;
+
+      if (this .shadowMapRendered)
+         return;
+
+      this .shadowMapRendered = true;
 
       const
          lightNode            = this .lightNode,
@@ -102,7 +100,7 @@ Object .assign (SpotLightContainer .prototype,
       renderObject .getProjectionMatrix () .push (projectionMatrix);
       renderObject .getModelViewMatrix  () .push (invLightSpaceMatrix);
 
-      renderObject .render (TraverseType .SHADOW, X3DGroupingNode .prototype .traverse, this .groupNode);
+      renderObject .render (TraverseType .SHADOW, this .groupNode .traverse, this .groupNode);
 
       renderObject .getModelViewMatrix  () .pop ();
       renderObject .getProjectionMatrix () .pop ();
@@ -119,6 +117,8 @@ Object .assign (SpotLightContainer .prototype,
          lightNode       = this .lightNode,
          modelViewMatrix = this .modelViewMatrix .get ();
 
+      this .matrixArray .set (modelViewMatrix .submatrix .inverse ());
+
       modelViewMatrix .multVecMatrix (this .location  .assign (lightNode ._location  .getValue ()));
       modelViewMatrix .multDirMatrix (this .direction .assign (lightNode ._direction .getValue ())) .normalize ();
 
@@ -134,52 +134,52 @@ Object .assign (SpotLightContainer .prototype,
    },
    setShaderUniforms (gl, shaderObject)
    {
-      const i = shaderObject .numLights ++;
+      const
+         i        = shaderObject .numLights ++,
+         uniforms = shaderObject .x3d_Light [i];
+
+      if (!uniforms)
+         return;
 
       if (this .shadowBuffer)
       {
          const textureUnit = this .global
-            ? this .textureUnit ??= this .browser .popTextureUnit ()
-            : this .browser .getTextureUnit ();
+            ? this .textureUnit ??= this .browser .popGlobalTextureUnit ()
+            : this .browser .popTextureUnit ();
 
          gl .activeTexture (gl .TEXTURE0 + textureUnit);
          gl .bindTexture (gl .TEXTURE_2D, this .shadowBuffer .getDepthTexture ());
-         gl .uniform1i (shaderObject .x3d_ShadowMap [i], textureUnit);
+         gl .uniform1i (uniforms .shadowMap, textureUnit);
       }
 
       if (shaderObject .hasLight (i, this))
          return;
 
-      const
-         { lightNode, location, direction } = this,
-         color                              = lightNode .getColor (),
-         attenuation                        = lightNode .getAttenuation ();
+      const { lightNode, location, direction } = this;
 
-      gl .uniform1i        (shaderObject .x3d_LightType [i],             3);
-      gl .uniform3f        (shaderObject .x3d_LightColor [i],            ... color);
-      gl .uniform1f        (shaderObject .x3d_LightIntensity [i],        lightNode .getIntensity ());
-      gl .uniform1f        (shaderObject .x3d_LightAmbientIntensity [i], lightNode .getAmbientIntensity ());
-      gl .uniform3fv       (shaderObject .x3d_LightAttenuation [i],      attenuation);
-      gl .uniform3f        (shaderObject .x3d_LightLocation [i],         ... location);
-      gl .uniform3f        (shaderObject .x3d_LightDirection [i],        ... direction);
-      gl .uniform1f        (shaderObject .x3d_LightRadius [i],           lightNode .getRadius ());
-      gl .uniform1f        (shaderObject .x3d_LightBeamWidth [i],        lightNode .getBeamWidth ());
-      gl .uniform1f        (shaderObject .x3d_LightCutOffAngle [i],      lightNode .getCutOffAngle ());
-      gl .uniformMatrix3fv (shaderObject .x3d_LightMatrix [i], false,    this .matrixArray);
+      gl .uniform1i        (uniforms .type,             3);
+      gl .uniform3f        (uniforms .color,            ... lightNode .getColor ());
+      gl .uniform1f        (uniforms .intensity,        lightNode .getIntensity ());
+      gl .uniform1f        (uniforms .ambientIntensity, lightNode .getAmbientIntensity ());
+      gl .uniform3fv       (uniforms .attenuation,      lightNode .getAttenuation ());
+      gl .uniform3f        (uniforms .location,         ... location);
+      gl .uniform3f        (uniforms .direction,        ... direction);
+      gl .uniform1f        (uniforms .radius,           lightNode .getRadius ());
+      gl .uniform1f        (uniforms .beamWidth,        lightNode .getBeamWidth ());
+      gl .uniform1f        (uniforms .cutOffAngle,      lightNode .getCutOffAngle ());
+      gl .uniformMatrix3fv (uniforms .matrix, false,    this .matrixArray);
 
       if (this .renderShadow && this .shadowBuffer)
       {
-         const shadowColor = lightNode .getShadowColor ();
-
-         gl .uniform3f        (shaderObject .x3d_ShadowColor [i],         ... shadowColor);
-         gl .uniform1f        (shaderObject .x3d_ShadowIntensity [i],     lightNode .getShadowIntensity ());
-         gl .uniform1f        (shaderObject .x3d_ShadowBias [i],          lightNode .getShadowBias ());
-         gl .uniformMatrix4fv (shaderObject .x3d_ShadowMatrix [i], false, this .shadowMatrixArray);
-         gl .uniform1i        (shaderObject .x3d_ShadowMapSize [i],       lightNode .getShadowMapSize ());
+         gl .uniform3f        (uniforms .shadowColor,         ... lightNode .getShadowColor ());
+         gl .uniform1f        (uniforms .shadowIntensity,     lightNode .getShadowIntensity ());
+         gl .uniform1f        (uniforms .shadowBias,          lightNode .getShadowBias ());
+         gl .uniformMatrix4fv (uniforms .shadowMatrix, false, this .shadowMatrixArray);
+         gl .uniform1i        (uniforms .shadowMapSize,       lightNode .getShadowMapSize ());
       }
       else
       {
-         gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);
+         gl .uniform1f (uniforms .shadowIntensity, 0);
       }
    },
    dispose ()
@@ -195,11 +195,7 @@ Object .assign (SpotLightContainer .prototype,
          this .shadowBuffer = null;
 
          if (global)
-         {
-            browser .pushTextureUnit (this .textureUnit);
-
             this .textureUnit = undefined;
-         }
       }
 
       this .modelViewMatrix .clear ();

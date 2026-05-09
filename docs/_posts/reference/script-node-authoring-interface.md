@@ -3,7 +3,7 @@ title: Script Node Authoring Interface
 date: 2022-11-28
 nav: reference
 categories: [Reference]
-tags: [Script, Authoring, Interface]
+tags: [Script, ECMAScript, Javascript]
 ---
 ## Overview
 
@@ -31,7 +31,7 @@ The names specified in the declaration of a function (the data value and the tim
 
 Local variables can be created simply by assigning to a name that does not yet exist. Assigning to such a variable causes it take the type of the expression, so these local variables always have the type of the last assignment. Local variables are scoped by the block in which they were first introduced. Once that block is exited, the variable ceases to exist. Variables corresponding to `inputOutput`, `outputOnly` fields or `initializeOnly` fields of the Script node are global in scope.
 
-Variable names must start with the a lowercase character ('a' through 'z'), an uppercase character ('A' through 'Z'), or an underscore ('_'). Subsequent characters can be any of these or a digit ('0' through '9'). Variable names are case sensitive.
+Variable names must start with a lowercase character ('a' through 'z'), an uppercase character ('A' through 'Z'), or an underscore ('_'). Subsequent characters can be any of these or a digit ('0' through '9'). Variable names are case sensitive.
 
 Numeric, boolean, and string literals are allowed. Numeric literals can be integers in decimal (417), hex (0x5C), or octal (0177) notation. They can also be floating point numbers in fixed (1.76) or exponential (2.7e-12) notation. All numeric literals are of the number type. Boolean literals can be 'true' or 'false' and have the boolean type. String literals can be any sequence of UTF8 characters enclosed in single quotes (') or double quotes ("), and have the type string. Special (non-printable) characters can be included in a string using the following escape sequences:
 
@@ -94,14 +94,18 @@ For each `inputOutput`, `outputOnly` and `initializeOnly` fields in the Script n
 
 Every object has a set of *properties* and *methods*. Properties are names on the object that can be selected (using the `.` operator) then used in an expression or as the target of an expression. Methods are names on the object that can be called (using the function call operator) to perform some operation on the object. For example:
 
-```js
-function someFunction ()
-{
-  let a = new SFColor (0.5, 0.5, 0.5);
-  let b = a .r;                        // 'b' contains 0.5.
-  a .setHSV (0.1, 0.1, 0.1);           // 'a' now contains new properties.
-}
-```
+<x3d-script-area name="X3D ECMAScript Example: Objects and Fields">
+<pre>
+const a = new SFColor (0.5, 0.6, 0.7);
+const b = a .r;                      // 'b' contains 0.5.
+
+a .setHSV (0.1, 0.2, 0.3);           // 'a' now contains new properties.
+
+print (a);
+
+// Expected output: 0.3 0.2457296 0.24
+</pre>
+</x3d-script-area>
 
 The value `a.r` selects the property which corresponds to the red component of the color. The value `a .setHSV ()` selects the method which sets the color in HSV space.
 
@@ -109,103 +113,55 @@ The value `a.r` selects the property which corresponds to the red component of t
 
 For each object type there is a corresponding constructor. Constructors typically take a flexible set of parameters to allow construction of objects with any initial value. MF objects are essentially arrays so they always take 0 or more parameters of the corresponding SF object type. A value of a given data type is created using the `new` keyword with the data type name. For instance:
 
-```js
-let a = new SFVec3f (0, 1, 0);   // 'a' has a SFVec3f containing 0, 1, 0.
-let b = new MFFloat (1, 2, 3, 4) // 'b' has a MFFloat containing 4 floats.
-```
+<x3d-script-area name="X3D ECMAScript Example: Object Construction">
+<pre>
+const a = new SFVec3f (0, 1, 0);   // 'a' has a SFVec3f containing 0, 1, 0.
+const b = new MFFloat (1, 2, 3, 4) // 'b' has a MFFloat containing 4 floats.
+
+print (a);
+print (b);
+
+// Expected output: 0 1 0
+// Expected output: [ 1, 2, 3, 4 ]
+</pre>
+</x3d-script-area>
 
 ### Data Conversion
 
 Combining objects of different types in a single expression or assignment statement will often perform implicit type conversion. Rules for this conversion are described in the following table:
 
-<table>
-   <thead>
-      <tr>
-         <th>Type</th>
-         <th>Rules</th>
-      </tr>
-   </thead>
-   <tbody>
-      <tr>
-         <td><b>String</b></td>
-         <td>Combining a String with any number or boolean type produces a String.
-             Use parseInt () or parseFloat to convert a String to a number.
-         </td>
-      </tr>
-      <tr>
-         <td><b>Number and boolean types</b></td>
-         <td>Assigning a number or boolean expression to a fixed variable (<code>initializeOnly</code> field, <code>outputOnly</code> fields, or <code>inputOutput</code> fields) of scalar type (SFBool, SFDouble, SFFloat, SFInt32, SFTime) converts to the type of the fixed variable.
-         </td>
-      </tr>
-      <tr>
-         <td><b>Vector types</b><br>
-            SFColor<br>
-            SFColorRGBA<br>
-            SFMatrix3d<br>
-            SFMatrix3f<br>
-            SFMatrix4d<br>
-            SFMatrix4f<br>
-            SFRotation<br>
-            SFVec2d<br>
-            SFVec2f<br>
-            SFVec3d<br>
-            SFVec3f<br>
-            SFVec3d<br>
-            SFVec4f
-         </td>
-         <td>Only combine with like types.<br>
-             Dereference (foo[1]) produces a value of number type.
-         </td>
-      </tr>
-      <tr>
-         <td>SFImage</td>
-         <td>Assignment ('=') and selection ('.') are the only allowed operations.<br>
-             Can only assign SFImage type.
-         </td>
-      </tr>
-      <tr>
-         <td>SFNode</td>
-         <td>Assignment ('=') and selection ('.') are the only allowed operations.<br>
-             Can only assign SFNode type.
-         </td>
-      </tr>
-      <tr>
-         <td><b>MF types</b><br>
-            MFBool<br>
-            MFColor<br>
-            MFColorRGBA<br>
-            MFDouble<br>
-            MFFloat<br>
-            MFImage<br>
-            MFInt32<br>
-            MFMatrix3d<br>
-            MFMatrix3f<br>
-            MFMatrix4d<br>
-            MFMatrix4f<br>
-            MFNode<br>
-            MFRotation<br>
-            MFString<br>
-            MFTime<br>
-            MFVec2d<br>
-            MFVec2f<br>
-            MFVec3d<br>
-            MFVec3f<br>
-            MFVec4d<br>
-            MFVec4f
-         </td>
-         <td>Only combine with like types.<br>
-             Dereference (myArray[3]) produces the corresponding SF type.<br>
-             Dereferenced SF types follow same rules as normal SF types.
-         </td>
-      </tr>
-   </tbody>
-</table>
+| Type< | Rules |
+|-------|-------|
+| **String** | Combining a String with any number or boolean type produces a String. Use `parseInt()` or `parseFloat()` to convert a String to a number. |
+| **Number and boolean types** | Assigning a number or boolean expression to a fixed variable (`initializeOnly` field `outputOnly` fields, or `inputOutput` fields) of scalar type (SFBool, SFDouble, SFFloat, SFInt32, SFTime converts to the type of the fixed variable.) |
+| **Vector types** <br> SFColor <br> SFColorRGBA <br> SFMatrix3d <br> SFMatrix3f <br> SFMatrix4d <br> SFMatrix4f <br> SFRotation <br> SFVec2d <br> SFVec2f <br> SFVec3d <br> SFVec3f <br> SFVec3d <br> SFVec4f | Only combine with like types. <br> Dereference (myVector[1]) produces a value of number type. |
+| SFImage | Assignment ('=') and selection ('.') are the only allowed operations. <br> Can only assign SFImage type. |
+| SFNode | Assignment ('=') and selection ('.') are the only allowed operations. <br> Can only assign SFNode type. |
+| **MF types** <br> MFBool <br> MFColor <br> MFColorRGBA <br> MFDouble <br> MFFloat <br> MFImage <br> MFInt32 <br> MFMatrix3d <br> MFMatrix3f <br> MFMatrix4d <br> MFMatrix4f <br> MFNode <br> MFRotation <br> MFString <br> MFTime <br> MFVec2d <br> MFVec2f <br> MFVec3d <br> MFVec3f <br> MFVec4d <br> MFVec4f | Only combine with like types. <br> Dereference (myArray[3]) produces the corresponding SF type. <br> Dereferenced SF types follow same rules as normal SF types. |
 
 ### MF Objects
 
 Most SF objects in ECMAScript have a corresponding MF object. An MFObject is essentially an array of objects, with each element of the array having the type of the corresponding SF object. All MF objects have a *length* property which returns or sets the number of elements in the MF object. Array indexes start at 0. If *vecArray* is an MFVec3f object then *vecArray[0]* is the first SFVec3f object in the array.
 
 Dereferencing an MF object creates a new object of the corresponding SF object type with the contents of the dereferenced element. Assigning an SF object to a dereferenced MF object (which must be of the corresponding type) copies the contents of the SF object into the dereferenced element.
+
+### Global Objects and Types
+
+Fundamental X3D field types such as `SFColor`, `SFVec3f`, `SFRotation`, and their multi-valued counterparts (`MFColor`, `MFVec3f`, etc.) are accessible as JavaScript classes, allowing scripts to create, modify, and pass values between nodes in a type-safe way. The **`Browser`** object serves as a global interface to the current X3D browser instance, enabling operations like loading new worlds, creating nodes, or querying scene properties at runtime. Additionally, several **global utility functions** are defined for convenience — for example, `print()` outputs diagnostic messages to the browser console.
+
+<x3d-script-area name="X3D ECMAScript Example: Global Objects and Types">
+<pre>
+const material = Browser .currentScene .createNode ("Material");
+
+material .diffuseColor = new SFColor (0.1, 0.2, 0.3);
+
+print (material .toVRMLString ());
+print (material .diffuseColor .getType () === X3DConstants .SFColor);
+
+// Expected output: Material { diffuseColor 0.1 0.2 0.3 }
+// Expected output: true
+</pre>
+</x3d-script-area>
 
 ## Supported Protocol in the Script Node's **url** Field
 
@@ -266,13 +222,16 @@ Script {
 // Callback for 'inputOnly SFBool start'.
 function start (value, time)
 {
- ...
+   print (value); // Print value.
+   ...
 }
 
 // Callback for 'inputOutput SFTime duration'.
 function set_duration (value, time)
 {
- ...
+   print (value);    // Both values
+   print (duration); // are the same.
+   ...
 }
   "
 }

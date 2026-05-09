@@ -30,11 +30,11 @@ The ProgramShader node belongs to the [Shaders](/x_ite/components/overview/#shad
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in] | [activate](#fields-activate) |  |
 | SFBool | [out] | [isSelected](#fields-isSelected) |  |
 | SFBool | [out] | [isValid](#fields-isValid) |  |
-| SFString | [ ] | [language](#fields-language) | ""  |
+| SFString | [ ] | [language](#fields-language) | "" |
 | MFNode | [in, out] | [programs](#fields-programs) | [ ] |
 {: .fields }
 
@@ -101,6 +101,13 @@ ProgramShader contains zero or more [ShaderProgram](/x_ite/components/shaders/sh
 ### Warning
 
 - ProgramShader contains no field declarations and no plain-text CDATA block source code.
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

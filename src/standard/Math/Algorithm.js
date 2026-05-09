@@ -45,22 +45,22 @@ const Algorithm =
    {
       return source + t * (destination - source);
    },
-   slerp (source, destination, t)
+   slerp (source, destination, t, short = true)
    {
       let cosom = source .dot (destination);
 
       // if (cosom <= -1) ... vectors are inverse colinear.
       // ; // This case is not handled.
 
-      if (cosom >= 1) // Both normal vectors are equal.
-         return source;
-
-      if (cosom < 0)
+      if (short && cosom < 0)
       {
          // Reverse signs so we travel the short way round.
          cosom = -cosom;
          destination .negate ();
       }
+
+      if (cosom >= 1) // Both normal vectors are equal.
+         return source;
 
       const
          omega  = Math .acos (cosom),
@@ -77,25 +77,7 @@ const Algorithm =
    },
    simpleSlerp (source, destination, t)
    {
-      const cosom = source .dot (destination);
-
-      // if (cosom <= -1) ... vectors are inverse colinear.
-
-      if (cosom >= 1) // Both normal vectors are equal.
-         return source;
-
-      const
-         omega  = Math .acos (cosom),
-         sinom  = Math .sin  (omega),
-         scale0 = Math .sin ((1 - t) * omega) / sinom,
-         scale1 = Math .sin (t * omega) / sinom;
-
-      source .x = source .x * scale0 + destination .x * scale1;
-      source .y = source .y * scale0 + destination .y * scale1;
-      source .z = source .z * scale0 + destination .z * scale1;
-      source .w = source .w * scale0 + destination .w * scale1;
-
-      return source;
+      return this .slerp (source, destination, t, false);
    },
    isPowerOfTwo (n)
    {

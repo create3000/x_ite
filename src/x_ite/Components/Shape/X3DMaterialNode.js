@@ -12,18 +12,24 @@ function X3DMaterialNode (executionContext)
 
    this .addType (X3DConstants .X3DMaterialNode);
 
-   this .addChildObjects (X3DConstants .outputOnly, "transparent",   new Fields .SFBool (),
-                          X3DConstants .outputOnly, "transmission",  new Fields .SFBool (),
-                          X3DConstants .outputOnly, "volumeScatter", new Fields .SFBool ());
+   this .addChildObjects (X3DConstants .outputOnly, "transparent",      new Fields .SFBool (),
+                          X3DConstants .outputOnly, "transmission",     new Fields .SFBool (),
+                          X3DConstants .outputOnly, "volumeScatter",    new Fields .SFBool (),
+                          X3DConstants .outputOnly, "renderedTextures", new Fields .SFTime ());
 
    // Private properties
 
-   this .textureBits = new BitSet ();
-   this .shaderNodes = this .getBrowser () .getShaders ();
+   this .textureBits      = new BitSet ();
+   this .renderedTextures = [ ];
+   this .shaderNodes      = this .getBrowser () .getShaders ();
 }
 
 Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanceChildNode .prototype),
 {
+   isPhysical ()
+   {
+      return false;
+   },
    setTransparent (value)
    {
       if (!!value !== this ._transparent .getValue ())
@@ -51,16 +57,24 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
    {
       return this ._volumeScatter .getValue ();
    },
-   setTexture (index, textureNode)
+   addTexture (index, textureNode)
    {
       index *= 4;
 
       this .textureBits .remove (index, 0xf);
       this .textureBits .add (index, textureNode ?.getTextureBits () ?? 0);
+
+      this .renderedTextures [index] = textureNode ?.isRenderedTexture () ? textureNode : undefined;
+
+      this ._renderedTextures = this .getBrowser () .getCurrentTime ();
    },
    getTextureBits ()
    {
       return this .textureBits;
+   },
+   getRenderedTextures ()
+   {
+      return this .renderedTextures;
    },
    getShader (geometryContext, renderContext)
    {
@@ -84,7 +98,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          key += appearanceNode .getTextureTransformMapping () .size || 1;
          key += geometryContext .textureCoordinateMapping .size || 1;
          key += hAnimNode ?.getHAnimKey () ?? "[]";
-         key += localObjectsKeys .sort () .join (""); // ClipPlane, X3DLightNode
+         key += localObjectsKeys .join (""); // ClipPlane, X3DLightNode
          key += ".";
          key += textureNode ? 2 : appearanceNode .getTextureBits () .toString (16);
       }
@@ -97,7 +111,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          key += alphaMode;
          key += renderObject .getRenderKey ();
          key += "000011[]";
-         key += localObjectsKeys .sort () .join (""); // ClipPlane
+         key += localObjectsKeys .join (""); // ClipPlane
          key += ".";
          key += textureNode ?.getTextureBits () .toString (16) ?? 0;
       }
@@ -119,11 +133,11 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          case "SRGB":
             options .push ("X3D_COLORSPACE_SRGB");
             break;
-         default: // LINEAR_WHEN_PHYSICAL_MATERIAL
-            options .push ("X3D_COLORSPACE_LINEAR_WHEN_PHYSICAL_MATERIAL");
-            break;
          case "LINEAR":
             options .push ("X3D_COLORSPACE_LINEAR");
+            break;
+         default: // LINEAR_WHEN_PHYSICAL_MATERIAL
+            options .push (this .isPhysical () ? "X3D_COLORSPACE_LINEAR" : "X3D_COLORSPACE_SRGB");
             break;
       }
 
@@ -161,9 +175,6 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
          this .addRenderOptions (options, renderObject, shapeNode .getAlphaMode ());
 
-         if (renderContext .shadows || renderObject .getGlobalShadows () .at (-1))
-            options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
-
          switch (fogNode ?.getFogType ())
          {
             case 1:
@@ -177,11 +188,13 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          hAnimNode ?.getShaderOptions (options);
 
          const
-            objectsKeys          = localObjectsKeys .concat (renderObject .getGlobalLightsKeys ()),
-            numClipPlanes        = objectsKeys .reduce ((a, c) => a + (c === 0), 0),
-            numLights            = objectsKeys .reduce ((a, c) => a + (c === 1), 0),
-            numEnvironmentLights = objectsKeys .reduce ((a, c) => a + (c === 2), 0),
-            numTextureProjectors = objectsKeys .reduce ((a, c) => a + (c === 3), 0);
+            localLights          = renderContext .localObjects .filter (o => o .lightNode),
+            lights               = renderObject .getGlobalLights () .concat (localLights),
+            objectsKeys          = renderObject .getGlobalLightsKeys () .concat (localObjectsKeys),
+            numClipPlanes        = objectsKeys .reduce ((a, k) => a + (k === 0), 0),
+            numLights            = objectsKeys .reduce ((a, k) => a + (k === 1), 0),
+            numEnvironmentLights = objectsKeys .reduce ((a, k) => a + k .toString () .startsWith ("[2."), 0),
+            numTextureProjectors = objectsKeys .reduce ((a, k) => a + k .toString () .startsWith ("[3."), 0);
 
          if (numClipPlanes)
          {
@@ -193,19 +206,43 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          {
             options .push ("X3D_LIGHTING")
             options .push (`X3D_NUM_LIGHTS ${Math .min (numLights, browser .getMaxLights ())}`);
+
+            if (renderContext .shadows || renderObject .getGlobalShadows () .at (-1))
+               options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
          }
 
          if (numEnvironmentLights && geometryContext .hasNormals)
          {
+            const
+               container = lights .find (c => c .lightNode .getLightKey () .toString () .startsWith ("[2.")),
+               lightNode = container .lightNode;
+
             // Although we count this kind of light here, only one is supported.
             options .push ("X3D_USE_IBL")
-            options .push (`X3D_NUM_ENVIRONMENT_LIGHTS ${Math .min (numEnvironmentLights, browser .getMaxLights ())}`);
+            options .push (`X3D_NUM_ENVIRONMENT_LIGHTS ${Math .min (numEnvironmentLights, browser .getMaxEnvironmentLights ())}`);
+
+            if (lightNode .getDiffuseTexture () ?.isLinear ())
+               options .push ("X3D_ENVIRONMENT_DIFFUSE_TEXTURE_LINEAR");
+
+            if (lightNode .getSpecularTexture () ?.isLinear ())
+               options .push ("X3D_ENVIRONMENT_SPECULAR_TEXTURE_LINEAR");
+
+            if (lightNode .getSheenTexture () ?.isLinear ())
+               options .push ("X3D_ENVIRONMENT_SHEEN_TEXTURE_LINEAR");
          }
 
          if (numTextureProjectors)
          {
+            const textureProjectors = lights .filter (c => c .lightNode .getLightKey () .toString () .startsWith ("[3."));
+
             options .push ("X3D_TEXTURE_PROJECTION")
             options .push (`X3D_NUM_TEXTURE_PROJECTORS ${Math .min (numTextureProjectors, browser .getMaxTextures ())}`);
+
+            for (const [i, textureProjector] of textureProjectors .entries ())
+            {
+               if (textureProjector .lightNode .getTexture () .isLinear ())
+                  options .push (`X3D_TEXTURE_PROJECTOR_${i}_LINEAR`);
+            }
          }
 
          if (appearanceNode .getStyleProperties (geometryContext .geometryType))
@@ -234,15 +271,20 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          {
             if (+appearanceNode .getTextureBits () && !this .getBaseTexture ())
             {
-               const textureNode = appearanceNode .getTexture ();
+               const
+                  textureNode  = appearanceNode .getTexture (),
+                  textureCount = textureNode .getCount ();
 
-               options .push ("X3D_TEXTURE");
-               options .push (`X3D_NUM_TEXTURES ${textureNode .getCount ()}`);
+               if (textureCount)
+               {
+                  options .push ("X3D_TEXTURE");
+                  options .push (`X3D_NUM_TEXTURES ${textureCount}`);
 
-               if (textureNode .getType () .includes (X3DConstants .MultiTexture))
-                  options .push ("X3D_MULTI_TEXTURING");
+                  if (textureNode .getType () .includes (X3DConstants .MultiTexture))
+                     options .push ("X3D_MULTI_TEXTURING");
 
-               textureNode .getShaderOptions (options);
+                  textureNode .getShaderOptions (options);
+               }
             }
 
             options .push (`X3D_NUM_TEXTURE_TRANSFORMS ${appearanceNode .getTextureTransformMapping () .size || 1}`);
@@ -268,7 +310,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
          this .addRenderOptions (options, renderObject, alphaMode);
 
-         const numClipPlanes = localObjectsKeys .reduce ((a, c) => a + (c === 0), 0);
+         const numClipPlanes = localObjectsKeys .reduce ((a, k) => a + (k === 0), 0);
 
          if (numClipPlanes)
          {
@@ -295,14 +337,14 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
    {
       switch (renderObject .getRenderPass ())
       {
-         case RenderPass .TRANSMISSION_KEY:
-         {
-            options .push ("X3D_TRANSMISSION_PASS");
-            break;
-         }
          case RenderPass .VOLUME_SCATTER_KEY:
          {
-            options .push ("X3D_VOLUME_SCATTER_PASS");
+            options .push ("X3D_VOLUME_SCATTER_PASS", "X3D_LINEAR_OUTPUT");
+            break;
+         }
+         case RenderPass .TRANSMISSION_KEY:
+         {
+            options .push ("X3D_TRANSMISSION_PASS", "X3D_LINEAR_OUTPUT");
             break;
          }
       }

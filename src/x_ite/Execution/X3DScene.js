@@ -124,6 +124,9 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    },
    addComponent (component)
    {
+      if (this [_components] .get (component .name))
+         throw new Error (`Couldn't add component. Component '${component .name}' already exists.`);
+
       this [_components] .add (component .name, component);
 
       this ._components_changed = Date .now () / 1000;
@@ -151,7 +154,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       if (!this [_units] .has (category))
          return;
 
-      this [_units] .update (category, category, new UnitInfo (category, String (name),  Number (conversionFactor)));
+      this [_units] .update (category, category, new UnitInfo (category, String (name), +conversionFactor));
 
       this ._units_changed = Date .now () / 1000;
    },
@@ -277,21 +280,22 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    {
       return this [_metadata] .map (entry => entry .slice ());
    },
-   addExportedNode (exportedName, node)
+   addExportedNode (exportedName, node, description = "")
    {
       exportedName = String (exportedName);
 
       if (this [_exportedNodes] .has (exportedName))
          throw new Error (`Couldn't add exported node: exported name '${exportedName}' already in use.`);
 
-      this .updateExportedNode (exportedName, node);
+      this .updateExportedNode (exportedName, node, description);
 
       this ._sceneGraph_changed = Date .now () / 1000;
    },
-   updateExportedNode (exportedName, node)
+   updateExportedNode (exportedName, node, description = "")
    {
       exportedName = String (exportedName);
       node         = X3DCast (X3DConstants .X3DNode, node, false);
+      description  = String (description);
 
       if (exportedName .length === 0)
          throw new Error ("Couldn't update exported node: node exported name is empty.");
@@ -302,7 +306,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       //if (node .getExecutionContext () !== this)
       //   throw new Error ("Couldn't update exported node: node does not belong to this execution context.");
 
-      const exportedNode = new X3DExportedNode (this, exportedName, node);
+      const exportedNode = new X3DExportedNode (this, exportedName, node, description);
 
       this [_exportedNodes] .update (exportedName, exportedName, exportedNode);
 
@@ -360,18 +364,18 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
    },
    toVRMLStream (generator)
    {
-      generator .string += generator .Indent ();
+      generator .Indent ();
       generator .string += "#X3D V";
       generator .string += LATEST_VERSION;
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += "utf8";
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += this .getBrowser () .name;
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += "V";
       generator .string += this .getBrowser () .version;
-      generator .string += generator .ForceBreak ();
-      generator .string += generator .ForceBreak ();
+      generator .string += "\n";
+      generator .string += "\n";
 
       const profile = this .getProfile ();
 
@@ -379,8 +383,8 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       {
          profile .toVRMLStream (generator);
 
-         generator .string += generator .Break ();
-         generator .string += generator .TidyBreak ();
+         generator .Break ();
+         generator .TidyBreak ();
       }
 
       const components = this .getComponents ();
@@ -389,7 +393,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       {
          components .toVRMLStream (generator);
 
-         generator .string += generator .TidyBreak ();
+         generator .TidyBreak ();
       }
 
       const units = this .getUnits () .filter (unit => unit .conversionFactor !== 1);
@@ -400,10 +404,10 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
          {
             unit .toVRMLStream (generator);
 
-            generator .string += generator .Break ();
+            generator .Break ();
          }
 
-         generator .string += generator .TidyBreak ();
+         generator .TidyBreak ();
       }
 
       const metadata = this .getMetaDatas ();
@@ -412,50 +416,48 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       {
          for (const [key, value] of metadata)
          {
-            generator .string += generator .Indent ();
+            generator .Indent ();
             generator .string += "META";
-            generator .string += generator .Space ();
+            generator .Space ();
             generator .string += new Fields .SFString (key) .toString ();
-            generator .string += generator .Space ();
+            generator .Space ();
             generator .string += new Fields .SFString (value) .toString ();
-            generator .string += generator .Break ();
+            generator .Break ();
          }
 
-         generator .string += generator .TidyBreak ();
+         generator .TidyBreak ();
       }
 
       const exportedNodes = this .getExportedNodes ();
 
       generator .PushExecutionContext (this);
-      generator .EnterScope ();
       generator .ExportedNodes (exportedNodes);
 
       X3DExecutionContext .prototype .toVRMLStream .call (this, generator);
 
       if (exportedNodes .length)
       {
-         generator .string += generator .TidyBreak ();
+         generator .TidyBreak ();
 
          exportedNodes .toVRMLStream (generator);
       }
 
-      generator .LeaveScope ();
       generator .PopExecutionContext ();
    },
    toXMLStream (generator)
    {
       if (!generator .html)
       {
-         generator .string += generator .Indent ();
+         generator .Indent ();
          generator .string += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
-         generator .string += generator .TidyBreak ();
-         generator .string += generator .Indent ();
+         generator .TidyBreak ();
+         generator .Indent ();
          generator .string += "<!DOCTYPE X3D PUBLIC \"ISO//Web3D//DTD X3D ";
          generator .string += LATEST_VERSION;
          generator .string += "//EN\" \"https://www.web3d.org/specifications/x3d-";
          generator .string += LATEST_VERSION;
          generator .string += ".dtd\">";
-         generator .string += generator .TidyBreak ();
+         generator .TidyBreak ();
       }
 
       generator .openTag ("X3D");
@@ -474,7 +476,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
           metadata .length)
       {
          generator .openingTag ("head");
-         generator .AddTidyBreak ();
+         generator .TidyBreak ();
          generator .IncIndent ();
 
          // <head>
@@ -486,7 +488,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
             if (unit .conversionFactor !== 1)
             {
                unit .toXMLStream (generator);
-               generator .AddTidyBreak ();
+               generator .TidyBreak ();
             }
          }
 
@@ -496,14 +498,14 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
             generator .attribute ("name",    key);
             generator .attribute ("content", value);
             generator .closeTag ("meta");
-            generator .AddTidyBreak ();
+            generator .TidyBreak ();
          }
 
          // </head>
 
          generator .DecIndent ();
          generator .closingTag ("head");
-         generator .AddTidyBreak ();
+         generator .TidyBreak ();
       }
 
       if (this .getExternProtoDeclarations () .length ||
@@ -511,7 +513,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
           this .getRootNodes () .length)
       {
          generator .openingTag ("Scene");
-         generator .AddTidyBreak ();
+         generator .TidyBreak ();
          generator .IncIndent ();
 
          // <Scene>
@@ -519,23 +521,26 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
          const exportedNodes = this .getExportedNodes ();
 
          generator .PushExecutionContext (this);
-         generator .EnterScope ();
          generator .ExportedNodes (exportedNodes);
 
          X3DExecutionContext .prototype .toXMLStream .call (this, generator);
 
          exportedNodes .toXMLStream (generator);
 
-         generator .LeaveScope ();
          generator .PopExecutionContext ();
          generator .DecIndent ();
+         generator .closingTag ("Scene");
+      }
+      else
+      {
+         generator .openTag ("Scene");
+         generator .closeTag ("Scene");
       }
 
-      generator .closingTag ("Scene");
-      generator .AddTidyBreak ();
+      generator .TidyBreak ();
       generator .DecIndent ();
       generator .closingTag ("X3D");
-      generator .AddTidyBreak ();
+      generator .TidyBreak ();
    },
    toJSONStream (generator)
    {
@@ -624,7 +629,6 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
       const exportedNodes = this .getExportedNodes ();
 
       generator .PushExecutionContext (this);
-      generator .EnterScope ();
       generator .ExportedNodes (exportedNodes);
 
       const comma = X3DExecutionContext .prototype .toJSONStream .call (this, generator);
@@ -633,7 +637,6 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       this .getExportedNodes () .toJSONStream (generator, comma);
 
-      generator .LeaveScope ();
       generator .PopExecutionContext ();
 
       // Scene end
@@ -645,7 +648,7 @@ Object .assign (Object .setPrototypeOf (X3DScene .prototype, X3DExecutionContext
 
       generator .endObject ();
       generator .endObject ();
-      generator .AddTidyBreak ();
+      generator .TidyBreak ();
    },
    dispose ()
    {
@@ -775,7 +778,14 @@ Object .defineProperties (X3DScene .prototype,
    },
    sceneGraph_changed:
    {
+      // Fires when nodes are added or removed.
       get () { return this ._sceneGraph_changed; },
+      enumerable: false,
+   },
+   bbox_changed:
+   {
+      // Fires when somewhere in this scene a node changes its bbox.
+      get () { return this ._bbox_changed; },
       enumerable: false,
    },
 });

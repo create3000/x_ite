@@ -30,7 +30,7 @@ The CoordinateInterpolator2D node belongs to the [Interpolation](/x_ite/componen
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFFloat | [in] | [set_fraction](#fields-set_fraction) |  |
 | MFFloat | [in, out] | [key](#fields-key) | [ ] |
 | MFVec2f | [in, out] | [keyValue](#fields-keyValue) | [ ] |
@@ -110,6 +110,13 @@ Linearly interpolated output value determined by current key time and correspond
 ### Warning
 
 - Requires X3D `profile='Full'` or else include `<component name='Interpolation' level='3'/>`
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

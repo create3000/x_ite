@@ -165,6 +165,10 @@ html {
   text-transform: uppercase;
 }
 
+li.nav-item:has(> a[href="/x_ite/tags/"]) {
+  display: none;
+}
+
 .nav-wrapper {
   margin-top: 4rem;
   border-left: 1px solid var(--nav-border-color);
@@ -233,11 +237,6 @@ html {
   margin-bottom: .5rem;
 }
 
-.content a:has(> .example-icon),
-.content a:has(> .example-icon):hover {
-  border-bottom: none;
-}
-
 .content .example-icon {
   margin: 0 0.2rem;
 }
@@ -275,35 +274,37 @@ small, .small {
 
 /* xr-button */
 
-x3d-canvas.xr-button-tr::part(xr-button) {
+x3d-canvas.buttons-tr::part(buttons) {
   top: 10px;
   right: 10px;
   bottom: unset;
   left: unset;
 }
 
-x3d-canvas.xr-button-cr::part(xr-button) {
+x3d-canvas.buttons-cr::part(buttons) {
   top: 50%;
   right: 10px;
   bottom: unset;
   left: unset;
 }
 
-x3d-canvas.xr-button-br::part(xr-button) {
+x3d-canvas.buttons-br::part(buttons) {
   top: unset;
   right: 10px;
   bottom: 10px;
   left: unset;
 }
 
-x3d-canvas.xr-button-bl::part(xr-button) {
+x3d-canvas.buttons-bl::part(buttons) {
+  flex-direction: row-reverse;
   top: unset;
   right: unset;
   bottom: 10px;
   left: 10px;
 }
 
-x3d-canvas.xr-button-tl::part(xr-button) {
+x3d-canvas.buttons-tl::part(buttons) {
+  flex-direction: row-reverse;
   top: 10px;
   right: unset;
   bottom: unset;
@@ -320,6 +321,11 @@ span[data-label-text="VRML" i] {
 .table-wrapper > table tbody tr td,
 .table-wrapper > table thead th {
   white-space: initial;
+}
+
+.table-wrapper > table.browser-compatibility {
+  width: 100%;
+  table-layout: fixed;
 }
 
 .badge-link {
@@ -521,7 +527,7 @@ select.select option {
   background: var(--main-bg);
 }
 
-/* Patreon link  */
+/* Patreon Link  */
 
 .content .patreon {
   display: block;
@@ -529,6 +535,13 @@ select.select option {
   border-radius: .625rem;
   padding: .5rem;
   text-align: center;
+}
+
+.content .sponsors img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid #4a4a4a;
 }
 
 /* Documentation */
@@ -576,7 +589,7 @@ table.slim-table tbody tr td:has(img) {
   transform: translateY(-70%);
 }
 
-/* table examples */
+/* examples grid */
 
 .examples {
   display: grid;

@@ -4,34 +4,20 @@ import Vector4                from "../../standard/Math/Numbers/Vector4.js";
 
 function SFVec4Template (TypeName, double)
 {
-   function SFVec4 (x, y, z, w)
+   function SFVec4 (x = 0, y = 0, z = 0, w = 1)
    {
-      switch (arguments .length)
-      {
-         case 0:
-            X3DField .call (this, new Vector4 (0, 0, 0, 1));
-            break;
-
-         case 1:
-            X3DField .call (this, arguments [0]);
-            break;
-
-         case 4:
-            X3DField .call (this, new Vector4 (+x, +y, +z, +w));
-            break;
-
-         default:
-            throw new Error ("Invalid arguments.");
-      }
+      X3DField .call (this, new Vector4 (+x, +y, +z, +w));
    }
 
-   return SFVecPrototypeTemplate (SFVec4, TypeName, Vector4, double,
+   SFVecPrototypeTemplate (SFVec4, TypeName, Vector4, double,
    {
       isDefaultValue ()
       {
          return this .getValue () .equals (Vector4 .W_AXIS);
       },
    });
+
+   return SFVec4;
 }
 
 const SFVec4 = {

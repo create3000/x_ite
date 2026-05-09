@@ -30,11 +30,11 @@ The NurbsSwungSurface node belongs to the [NURBS](/x_ite/components/overview/#nu
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [ ] | [solid](#fields-solid) | TRUE |
 | SFBool | [ ] | [ccw](#fields-ccw) | TRUE |
-| SFNode | [in, out] | [profileCurve](#fields-profileCurve) | NULL  |
-| SFNode | [in, out] | [trajectoryCurve](#fields-trajectoryCurve) | NULL  |
+| SFNode | [in, out] | [profileCurve](#fields-profileCurve) | NULL |
+| SFNode | [in, out] | [trajectoryCurve](#fields-trajectoryCurve) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -84,6 +84,13 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 {: #fields-trajectoryCurve }
 
 2D curve in the xz-plane that describes path over which to trace the cross-section.
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

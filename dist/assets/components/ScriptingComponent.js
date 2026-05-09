@@ -1,15 +1,15 @@
-/* X_ITE v12.1.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.2")];
+/* X_ITE v15.0.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 254:
-/***/ ((module) => {
+/***/ 254
+(module) {
 
 module.exports = __X_ITE_X3D__ .jquery;
 
-/***/ })
+/***/ }
 
 /******/ 	});
 /************************************************************************/
@@ -381,7 +381,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
 
       const handler =
       {
-         get (target, key)
+         get (target, key, receiver)
          {
             switch (key)
             {
@@ -390,7 +390,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
                case "currentScene":
                   return getScriptNode () .getExecutionContext ();
                default:
-                  return target [key];
+                  return Reflect .get (target, key, receiver);
             }
          },
       };
@@ -404,7 +404,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
          node .fromString (vrmlSyntax, getScriptNode () .getExecutionContext ());
 
          if (node .getValue ())
-            return node;
+            return external_X_ITE_X3D_SFNodeCache_default().get (node .getValue ());
 
          throw new Error ("SFNode.new: invalid argument.");
       }
@@ -537,7 +537,9 @@ Object .assign (Object .setPrototypeOf (Script .prototype, Scripting_X3DScriptNo
          }
       }
 
-      sourceText += ";\n[" + callbacks .map (c => `typeof ${c} !== "undefined" ? ${c} : undefined`) .join (",") + "];";
+      // Add a \n immediately after sourceText, in case there is a comment in the last line.
+
+      sourceText += "\n;\n[" + callbacks .map (c => `typeof ${c} !== "undefined" ? ${c} : undefined`) .join (",") + "];";
 
       const
          result  = this .evaluate (sourceText),

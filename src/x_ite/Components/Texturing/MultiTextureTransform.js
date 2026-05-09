@@ -12,6 +12,8 @@ function MultiTextureTransform (executionContext)
 
    this .addType (X3DConstants .MultiTextureTransform);
 
+   // Private properties
+
    const browser = this .getBrowser ();
 
    this .maxTextureTransforms  = browser .getMaxTextureTransforms ();

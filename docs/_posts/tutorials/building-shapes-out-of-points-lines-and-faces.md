@@ -3,7 +3,7 @@ title: Building Shapes out of Points, Lines, and Faces
 date: 2022-11-28
 nav: tutorials-animation-sensors-and-geometry
 categories: [Tutorials]
-tags: [Building, Shapes, Points, Lines, Faces]
+tags: [Shape, PointSet, IndexedLineSet, IndexedFaceSet, Coordinate]
 ---
 ## Motivation
 
@@ -35,7 +35,7 @@ A [Coordinate](/x_ite/components/rendering/coordinate/) node contains a list of 
 ```x3d
 <!-- X Y Z -->
 <Coordinate
-    point='2.0 1.0 3.0, 4.0 2.5 5.3, ...'/>
+    point='2 1 3, 4 2.5 5.3, ...'/>
 ```
 
 ### Classic VRML Encoding
@@ -44,8 +44,8 @@ A [Coordinate](/x_ite/components/rendering/coordinate/) node contains a list of 
 Coordinate {
   point [
    #X   Y   Z
-    2.0 1.0 3.0,
-    4.0 2.5 5.3,
+    2 1 3,
+    4 2.5 5.3,
     ...
   ]
 }
@@ -126,7 +126,7 @@ An [IndexedLineSet](/x_ite/components/rendering/indexedlineset/) geometry node c
 ```vrml
 Shape {
   appearance Appearance { ... }
-  geometry  IndexedLineSet {
+  geometry IndexedLineSet {
     coordIndex [ ... ]
     coord Coordinate {
       point [ ... ]
@@ -145,7 +145,7 @@ Shape {
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/lines1/lines1.x3dv)
 {: .example-links }
 
-## Using line set coordinate indexes
+## Using line set coordinate indices
 
 Each coordinate in a [Coordinate](/x_ite/components/rendering/coordinate/) node is implicitly numbered
 
@@ -154,10 +154,10 @@ Each coordinate in a [Coordinate](/x_ite/components/rendering/coordinate/) node 
 
 To build a line shape:
 
-- Make a list of coordinates, using their indexes
-- List coordinate indexes in the *coordIndex* field of the [IndexedLineSet](/x_ite/components/rendering/indexedlineset/) node
+- Make a list of coordinates, using their indices
+- List coordinate indices in the *coordIndex* field of the [IndexedLineSet](/x_ite/components/rendering/indexedlineset/) node
 
-A line is drawn between pairs of coordinate indexes:
+A line is drawn between pairs of coordinate indices:
 
 - **-1** marks a break in the line
 - A line is not automatically drawn from the last index back to the first
@@ -173,7 +173,7 @@ A line is drawn between pairs of coordinate indexes:
 
 An [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) geometry node creates geometry out of faces:
 
-- A flat face (polygon) is drawn using an outline specified by coordinate indexes
+- A flat face (polygon) is drawn using an outline specified by coordinate indices
 
 ### XML Encoding
 
@@ -216,10 +216,10 @@ Shape {
 
 To build a face shape
 
-- Make a list of coordinates, using their indexes
-- List coordinate indexes in the *coordIndex* field of the [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) node
+- Make a list of coordinates, using their indices
+- List coordinate indices in the *coordIndex* field of the [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) node
 
-A triangle is drawn connecting sequences of coordinate indexes:
+A triangle is drawn connecting sequences of coordinate indices:
 
 - **-1** marks a break in the sequence
 - Each face is automatically closed, connecting the last index back to the first
@@ -296,16 +296,16 @@ A [CoordinateInterpolator](/x_ite/components/interpolation/coordinateinterpolato
 
 ```x3d
 <CoordinateInterpolator
-    key='0.0, ...'
-    keyValue='0.0 1.0 0.0, ...'/>
+    key='0, ...'
+    keyValue='0 1 0, ...'/>
 ```
 
 ### Classic VRML Encoding
 
 ```vrml
 CoordinateInterpolator {
-  key [ 0.0, ... ]
-  keyValue [ 0.0 1.0 0.0, ... ]
+  key [ 0, ... ]
+  keyValue [ 0 1 0, ... ]
 }
 ```
 
@@ -335,11 +335,11 @@ The [PointSet](/x_ite/components/rendering/pointset/) node draws a dot at every 
 The [IndexedLineSet](/x_ite/components/rendering/indexedlineset/) node draws lines between coordinates:
 
 - The *coord* field value is a Coordinate node
-- The *coordIndex* field value is a list of coordinate indexes
+- The *coordIndex* field value is a list of coordinate indices
 
 The [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) node draws faces outlined by coordinates:
 
 - The *coord* field value is a Coordinate node
-- The *coordIndex* field value is a list of coordinate indexes
+- The *coordIndex* field value is a list of coordinate indices
 
 The [CoordinateInterpolator](/x_ite/components/interpolation/coordinateinterpolator/) node converts times to coordinates.

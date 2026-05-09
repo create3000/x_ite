@@ -81,7 +81,8 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentalSensorNode .prototype, X
    {
       return this .currentTraversed;
    },
-   update () { },
+   update ()
+   { },
 });
 
 Object .defineProperties (X3DEnvironmentalSensorNode, X3DNode .getStaticProperties ("X3DEnvironmentalSensorNode", "EnvironmentalSensor", 1));

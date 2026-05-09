@@ -28,9 +28,9 @@ The GeoOrigin node belongs to the [Geospatial](/x_ite/components/overview/#geosp
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFString | [ ] | [geoSystem](#fields-geoSystem) | [ "GD", "WE" ] |
-| SFVec3d | [in, out] | [geoCoords](#fields-geoCoords) | 0 0 0  |
+| SFVec3d | [in, out] | [geoCoords](#fields-geoCoords) | 0 0 0 |
 | SFBool | [ ] | [rotateYUp](#fields-rotateYUp) | FALSE |
 {: .fields }
 
@@ -90,6 +90,13 @@ Whether to rotate coordinates of nodes using this GeoOrigin so that local-up dir
 - Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
 - GeoOrigin is deprecated, discouraged and not legal in X3D v3.3. GeoOrigin can be ignored in X3D v3.2 and below.
 - XML validation requires placement as first child node following contained metadata nodes (if any).
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

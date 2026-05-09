@@ -191,11 +191,11 @@ Object .assign (Object .setPrototypeOf (QuadSphereOptions .prototype, X3DBaseNod
       // Sphere segments
       for (let v = 1, vLength = yDimension - 1; v < vLength; ++ v)
       {
-         const zPlane = Complex .Polar (1, -Math .PI * v / vLength);
+         const zPlane = Complex .fromPolar (1, -Math .PI * v / vLength);
 
          for (let u = 0, uLength = xDimension - 1; u < uLength; ++ u)
          {
-            const yPlane = Complex .Polar (zPlane .imag, 2 * Math .PI * u / uLength);
+            const yPlane = Complex .fromPolar (zPlane .imag, 2 * Math .PI * u / uLength);
 
             point .push (new Vector3 (yPlane .imag, zPlane .real, yPlane .real));
          }

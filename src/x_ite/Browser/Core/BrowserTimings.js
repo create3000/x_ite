@@ -45,7 +45,6 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
          .appendTo (this .table);
 
       this .button = $("<button></button>")
-         .attr ("type", "button")
          .appendTo (this .footer .find ("td"));
 
       this .frameRate       = $("<td></td>");
@@ -60,8 +59,8 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
       this .pickingTime     = $("<td></td>");
       this .collisionTime   = $("<td></td>");
       this .renderTime      = $("<td></td>");
-      this .numPrimitives   = $("<td></td>");
-      this .numShapes       = $("<td></td>");
+      this .numPrimitives   = $("<td></td>") .addClass ("pointer") .attr ("title", _("Points; Lines; Triangles"));
+      this .numShapes       = $("<td></td>") .addClass ("pointer") .attr ("title", _("Opaque Shapes + Transparent Shapes"));
       this .sensors         = $("<td></td>");
 
       this .body .append ($("<tr></tr>")
@@ -137,7 +136,6 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
       }
       else
       {
-
          this .element
             .removeClass ("x_ite-private-fade-in-300")
             .addClass ("x_ite-private-fade-out-300");
@@ -211,11 +209,11 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
       const
          layers            = browser .getWorld () .getLayerSet () .getLayers (),
          activeLayer       = browser .getActiveLayer (),
-         navigationTime    = activeLayer && browser .getCollisionCount () ? activeLayer .getCollisionTime () .averageTime : 0,
+         navigationTime    = activeLayer ?.getCollisionTime () .averageTime ?? 0,
          collisionTime     = browser .getCollisionTime () .averageTime + navigationTime,
          routingTime       = Math .max (0, browser .getBrowserTime () .averageTime - (browser .getCameraTime () .averageTime + browser .getCollisionTime () .averageTime + browser .getDisplayTime () .averageTime)),
          prepareEvents     = browser .prepareEvents () .getInterests () .size - 1,
-         sensors           = browser .sensorEvents () .getInterests () .size,
+         sensors           = browser .timeEvents () .getInterests () .size + browser .sensorEvents () .getInterests () .size + browser .getCollisionCount (),
          primitives        = this .getPrimitives (layers),
          opaqueShapes      = this .getOpaqueShapes (layers),
          transparentShapes = this .getTransparentShapes (layers);

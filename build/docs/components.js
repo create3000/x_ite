@@ -13,10 +13,15 @@ const
    comp       = path .resolve ("./", "docs/_posts/components"),
    nav        = path .resolve ("./", "docs/_data/nav");
 
+function case_insensitive (a, b)
+{
+    return a .toLowerCase () .localeCompare (b .toLowerCase ());
+}
+
 function createIndex ()
 {
    const filenames = sh (`find ${components} -mindepth 2 -maxdepth 2 -type f`)
-      .trim () .split (/[\r\n]+/) .sort ();
+      .trim () .split (/[\r\n]+/) .sort (case_insensitive);
 
    const index = new Map ();
 
@@ -64,7 +69,7 @@ function updateNav ()
       text += `- title: "${component}"\n`;
       text += `  children:\n`;
 
-      for (const node of nodes .sort ())
+      for (const node of nodes .sort (case_insensitive))
       {
          const slug = `${component}/${node}` .toLowerCase () .replace (/_/g, "-");
 
@@ -98,7 +103,7 @@ function updateComponents (supported)
       list += `Highest supported level: **${level}**\n`;
       list += `{: .small }\n\n`;
 
-      for (const node of nodes .sort ())
+      for (const node of nodes .sort (case_insensitive))
       {
          const
             slug = `${component}/${node}` .toLowerCase () .replace (/_/g, "-"),
@@ -122,7 +127,7 @@ function updateComponents (supported)
             list += ` <small class="red">not supported</small>`;
 
          else if (file .includes ("DEPRECIATED"))
-            list += ` <small class="yellow">depreciated</small>`;
+            list += ` <small class="yellow">deprecated</small>`;
 
          else if (file .includes ("EXPERIMENTAL"))
             list += ` <small class="blue">experimental</small>`;
@@ -155,7 +160,7 @@ function updateComponents (supported)
 //       list += `| Node | Version | Status |\n`;
 //       list += `|------|---------|--------|\n`;
 
-//       for (const node of nodes .sort ())
+//       for (const node of nodes .sort (case_insensitive))
 //       {
 //          const
 //             slug    = `${component}/${node}` .toLowerCase () .replace (/_/g, "-"),
@@ -182,7 +187,7 @@ function updateProfiles ()
 
    const supportedProfiles = sh (`cat`, `src/x_ite/Configuration/SupportedProfiles.js`);
 
-   supportedProfiles .match (/add\s*\("(.*?)"/sg) .sort () .forEach (m =>
+   supportedProfiles .match (/add\s*\("(.*?)"/sg) .sort (case_insensitive) .forEach (m =>
    {
       m = m .match (/add\s*\("(.*?)"/s);
 
@@ -224,7 +229,7 @@ async function addNodeStubs ()
 
    for (const [component, nodes] of createIndex ())
    {
-      for (const node of nodes .sort ())
+      for (const node of nodes .sort (case_insensitive))
       {
          const
             js = path .resolve (components, `${component}/${node}.js`),

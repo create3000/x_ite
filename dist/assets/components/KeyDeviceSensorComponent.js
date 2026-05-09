@@ -1,5 +1,5 @@
-/* X_ITE v12.1.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.2")];
+/* X_ITE v15.0.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -49,7 +49,8 @@ var external_X_ITE_X3D_Namespace_default = /*#__PURE__*/__webpack_require__.n(ex
 const
    _keyDeviceSensorNodes = Symbol (),
    _keydown              = Symbol (),
-   _keyup                = Symbol ();
+   _keyup                = Symbol (),
+   _processEvents        = Symbol .for ("X_ITE.X3DRoutingContext.processEvents");
 
 function X3DKeyDeviceSensorContext ()
 {
@@ -79,17 +80,29 @@ Object .assign (X3DKeyDeviceSensorContext .prototype,
    },
    [_keydown] (event)
    {
+      // Must advance time, because event are later processed pressed simultaneously.
+      this .advanceOnlyTime ();
+
       //console .log (event .keyCode);
 
       for (const keyDeviceSensorNode of this [_keyDeviceSensorNodes])
          keyDeviceSensorNode .keydown (event);
+
+      // Immediately process events to handle event from two or more keys.
+      this [_processEvents] ();
    },
    [_keyup] (event)
    {
+      // Must advance time, because event are later processed.
+      this .advanceOnlyTime ();
+
       //console .log (event .which);
 
       for (const keyDeviceSensorNode of this [_keyDeviceSensorNodes])
          keyDeviceSensorNode .keyup (event);
+
+      // Immediately process events to handle event from two or more keys pressed simultaneously.
+      this [_processEvents] ();
    },
    dispose ()
    {
@@ -187,9 +200,12 @@ Object .assign (Object .setPrototypeOf (X3DKeyDeviceSensorNode .prototype, (exte
 
       this .release ();
    },
-   keydown () { },
-   keyup () { },
-   release () { },
+   keydown ()
+   { },
+   keyup ()
+   { },
+   release ()
+   { },
 });
 
 Object .defineProperties (X3DKeyDeviceSensorNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DKeyDeviceSensorNode", "KeyDeviceSensor", 1));

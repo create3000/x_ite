@@ -39,10 +39,7 @@ Object .assign (Box3 .prototype,
       {
          case 0:
          {
-            this .matrix .set (0, 0, 0, 0,
-                               0, 0, 0, 0,
-                               0, 0, 0, 0,
-                               0, 0, 0, 0);
+            this .matrix .assign (Matrix4 .ZERO);
 
             return this;
          }
@@ -97,9 +94,9 @@ Object .assign (Box3 .prototype,
       {
          const
             m = this .matrix,
-            x = m .X_AXIS,
-            y = m .Y_AXIS,
-            z = m .Z_AXIS;
+            x = m .xAxis,
+            y = m .yAxis,
+            z = m .zAxis;
 
          r1 .assign (y) .add (z);
 
@@ -148,9 +145,9 @@ Object .assign (Box3 .prototype,
 
          const m = this .matrix;
 
-         x .assign (m .X_AXIS);
-         y .assign (m .Y_AXIS);
-         z .assign (m .Z_AXIS);
+         x .assign (m .xAxis);
+         y .assign (m .yAxis);
+         z .assign (m .zAxis);
 
          r1 .assign (y) .add (z);
 
@@ -185,9 +182,9 @@ Object .assign (Box3 .prototype,
    {
       const m = this .matrix;
 
-      axes [0] .assign (m .X_AXIS);
-      axes [1] .assign (m .Y_AXIS);
-      axes [2] .assign (m .Z_AXIS);
+      axes [0] .assign (m .xAxis);
+      axes [1] .assign (m .yAxis);
+      axes [2] .assign (m .zAxis);
 
       return axes;
    },
@@ -204,9 +201,9 @@ Object .assign (Box3 .prototype,
       {
          const m = this .matrix;
 
-         x .assign (m .X_AXIS);
-         y .assign (m .Y_AXIS);
-         z .assign (m .Z_AXIS);
+         x .assign (m .xAxis);
+         y .assign (m .yAxis);
+         z .assign (m .zAxis);
 
          if (x .squaredNorm () === 0)
          {
@@ -482,11 +479,11 @@ Object .assign (Box3 .prototype,
 
 Object .assign (Box3,
 {
-   Extents (min, max)
+   fromExtents (min, max)
    {
       return new Box3 () .setExtents (min, max);
    },
-   Points (points)
+   fromPoints (points)
    {
       const
          min = new Vector3 (Number .POSITIVE_INFINITY),

@@ -3,7 +3,7 @@ title: Route Services
 date: 2022-11-28
 nav: reference
 categories: [Reference]
-tags: [Route, Services, Authoring, Interface]
+tags: [X3DRoute, ECMAScript, Javascript]
 ---
 ## X3DRoute
 
@@ -14,6 +14,22 @@ Routes are represented by the X3DRoute object. Routes can only be created throug
 None. This object cannot be instantiated by the user.
 
 ### Properties
+
+<x3d-script-area name="X3D ECMAScript Example: X3DRoute Properties">
+<pre>
+const scene        = Browser .currentScene;
+const timer        = scene .createNode ("TimeSensor");
+const interpolator = scene .createNode ("PositionInterpolator");
+
+const route = scene .addRoute (timer, "fraction_changed", interpolator, "set_fraction");
+
+print (route .sourceNode,      route .sourceField);
+print (route .destinationNode, route .destinationField);
+
+// Expected output: TimeSensor { } fraction_changed
+// Expected output: PositionInterpolator { } set_fraction
+</pre>
+</x3d-script-area>
 
 #### **sourceNode**: SFNode
 
@@ -43,12 +59,16 @@ RouteArray is an object that represents an array of X3DRoute objects. This is a 
 
 None. This object cannot be instantiated by the user.
 
+### Iterator
+
+The `[@@iterator]()` method of RouteArray instances implements the iterable protocol and allows RouteArray objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
+
 ### Properties
 
 #### **length**: number
 
-An integer containing the number of elements in the array. This property is read only.
+An integer containing the number of elements in the array. This property is read-only.
 
 ### Methods
 
-None
+Almost all read-only functions known from JavaScript [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array).

@@ -1,5 +1,5 @@
-/* X_ITE v12.1.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.2")];
+/* X_ITE v15.0.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -110,9 +110,9 @@ Object .assign (X3DLayoutContext .prototype,
          renderObject .getViewpoint () .getScreenScale (modelViewMatrix .origin, viewport, screenScale); // in meter/pixel
 
          const
-            x = modelViewMatrix .X_AXIS .normalize () .multiply (screenScale .x * contentScale),
-            y = modelViewMatrix .Y_AXIS .normalize () .multiply (screenScale .y * contentScale),
-            z = modelViewMatrix .Z_AXIS .normalize () .multiply (screenScale .x * contentScale);
+            x = modelViewMatrix .xAxis .normalize () .multiply (screenScale .x * contentScale),
+            y = modelViewMatrix .yAxis .normalize () .multiply (screenScale .y * contentScale),
+            z = modelViewMatrix .zAxis .normalize () .multiply (screenScale .x * contentScale);
 
          screenMatrix .set (... x, 0,
                             ... y, 0,
@@ -922,22 +922,14 @@ Object .assign (Object .setPrototypeOf (LayoutLayer .prototype, (external_X_ITE_
 {
    initialize ()
    {
+      const groupNode = this .getGroup ();
+
+      this ._layout .addFieldInterest (groupNode ._layout);
+
+      groupNode ._layout = this ._layout;
+
+      // Call super at end!
       external_X_ITE_X3D_X3DLayerNode_default().prototype .initialize .call (this);
-
-      const groupNode = this .getGroups () ._children [0] .getValue ();
-
-      this ._layout         .addFieldInterest (groupNode ._layout);
-      this ._addChildren    .addFieldInterest (groupNode ._addChildren);
-      this ._removeChildren .addFieldInterest (groupNode ._removeChildren);
-      this ._children       .addFieldInterest (groupNode ._children);
-
-      groupNode ._layout   = this ._layout;
-      groupNode ._children = this ._children;
-
-      groupNode .setPrivate (true);
-      groupNode .setup ();
-
-      this .getGroups () .setup ();
    },
 });
 
@@ -981,11 +973,7 @@ var external_X_ITE_X3D_PixelTexture_default = /*#__PURE__*/__webpack_require__.n
 ;// external "__X_ITE_X3D__ .Box3"
 const external_X_ITE_X3D_Box3_namespaceObject = __X_ITE_X3D__ .Box3;
 var external_X_ITE_X3D_Box3_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Box3_namespaceObject);
-;// external "__X_ITE_X3D__ .Algorithm"
-const external_X_ITE_X3D_Algorithm_namespaceObject = __X_ITE_X3D__ .Algorithm;
-var external_X_ITE_X3D_Algorithm_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Algorithm_namespaceObject);
 ;// ./src/x_ite/Browser/Layout/ScreenText.js
-
 
 
 
@@ -999,10 +987,11 @@ function ScreenText (text, fontStyle)
 
    text .setTransparent (true);
 
-   this .textureNode     = new (external_X_ITE_X3D_PixelTexture_default()) (text .getExecutionContext ());
-   this .context         = document .createElement ("canvas") .getContext ("2d", { willReadFrequently: true });
-   this .modelViewMatrix = new (external_X_ITE_X3D_Matrix4_default()) ();
-   this .matrix          = new (external_X_ITE_X3D_Matrix4_default()) ();
+   // Private properties
+
+   this .textureNode = new (external_X_ITE_X3D_PixelTexture_default()) (text .getExecutionContext ());
+   this .context     = document .createElement ("canvas") .getContext ("2d", { willReadFrequently: true });
+   this .matrix      = new (external_X_ITE_X3D_Matrix4_default()) ();
 
    this .textureNode ._textureProperties = fontStyle .getBrowser () .getScreenTextureProperties ();
    this .textureNode .setup ();
@@ -1010,25 +999,29 @@ function ScreenText (text, fontStyle)
 
 Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X3D_X3DTextGeometry_default()).prototype),
 {
-   modelViewMatrix: new (external_X_ITE_X3D_Matrix4_default()) (),
    getMatrix ()
    {
       return this .matrix;
    },
-   update: (() =>
+   getTextureNode ()
+   {
+      return this .textureNode;
+   },
+   configure: (() =>
    {
       const
          min = new (external_X_ITE_X3D_Vector3_default()) (),
-         max = new (external_X_ITE_X3D_Vector3_default()) (1, 1, 0);
+         max = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function ()
       {
-         external_X_ITE_X3D_X3DTextGeometry_default().prototype .update .call (this);
+         external_X_ITE_X3D_X3DTextGeometry_default().prototype .configure .call (this);
 
          const
-            fontStyle = this .getFontStyle (),
-            text      = this .getText (),
-            offset    = 1; // For antialiasing border on bottom and right side
+            fontStyle    = this .getFontStyle (),
+            text         = this .getText (),
+            contentScale = fontStyle .getContentScale (),
+            offset       = 1; // For antialiasing border on bottom and right side
 
          text ._textBounds .x = Math .ceil (text ._textBounds .x) + offset;
          text ._textBounds .y = Math .ceil (text ._textBounds .y) + offset;
@@ -1072,17 +1065,30 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
                break;
          }
 
-         text ._origin .x = min .x;
-         text ._origin .y = max .y;
-
          this .getBBox () .setExtents (min, max);
+
+         this .matrix .assign ((external_X_ITE_X3D_Matrix4_default()).ZERO);
+
+         // Scale origin, text and line bounds by contentScale.
+
+         text ._origin .x = min .x / contentScale;
+         text ._origin .y = max .y / contentScale;
+
+         text ._textBounds .x /= contentScale;
+         text ._textBounds .y /= contentScale;
+
+         for (const lineBound of text ._lineBounds)
+         {
+            lineBound .x /= contentScale;
+            lineBound .y /= contentScale;
+         }
       };
    })(),
    build: (() =>
    {
       const
          min = new (external_X_ITE_X3D_Vector3_default()) (),
-         max = new (external_X_ITE_X3D_Vector3_default()) (1, 1, 0);
+         max = new (external_X_ITE_X3D_Vector3_default()) ();
 
       return function ()
       {
@@ -1105,6 +1111,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
             texCoordArray  = text .getTexCoords (),
             normalArray    = text .getNormals (),
             vertexArray    = text .getVertices (),
+            contentScale   = fontStyle .getContentScale (),
             canvas         = this .context .canvas,
             cx             = this .context;
 
@@ -1115,6 +1122,13 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
          // Triangle one and two.
 
          this .getBBox () .getExtents (min, max);
+
+         texCoordArray .push (0, 0, 0, 1,
+                              1, 0, 0, 1,
+                              1, 1, 0, 1,
+                              0, 0, 0, 1,
+                              1, 1, 0, 1,
+                              0, 1, 0, 1);
 
          normalArray .push (0, 0, 1,
                             0, 0, 1,
@@ -1132,26 +1146,12 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
 
          // Generate texture.
 
-         const
-            width  = text ._textBounds .x,
-            height = text ._textBounds .y;
+         const [width, height] = text ._textBounds;
 
          // Scale canvas.
 
-         canvas .width  = external_X_ITE_X3D_Algorithm_default().nextPowerOfTwo (width),
-         canvas .height = external_X_ITE_X3D_Algorithm_default().nextPowerOfTwo (height);
-
-         const
-            w = width  / canvas .width,
-            h = height / canvas .height,
-            y = 1 - h;
-
-         texCoordArray .push (0, y, 0, 1,
-                              w, y, 0, 1,
-                              w, 1, 0, 1,
-                              0, y, 0, 1,
-                              w, 1, 0, 1,
-                              0, 1, 0, 1);
+         canvas .width  = width  * contentScale;
+         canvas .height = height * contentScale;
 
          // Setup canvas.
 
@@ -1167,17 +1167,20 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
 
          if (fontStyle ._horizontal .getValue ())
          {
-            for (let l = 0, length = glyphs .length; l < length; ++ l)
+            const numLines = glyphs .length;
+
+            for (let l = 0; l < numLines; ++ l)
             {
                const
                   line        = glyphs [l],
                   translation = translations [l],
                   charSpacing = charSpacings [l],
-                  scale       = scales [l];
+                  scale       = scales [l],
+                  numGlyphs   = line .length;
 
                let advanceWidth = 0;
 
-               for (let g = 0, gl = line .length; g < gl; ++ g)
+               for (let g = 0; g < numGlyphs; ++ g)
                {
                   const
                      glyph = line [g],
@@ -1269,10 +1272,8 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
 
       cx .beginPath ();
 
-      for (let i = 0, cl = commands .length; i < cl; ++ i)
+      for (const command of commands)
       {
-         const command = commands [i];
-
          switch (command .type)
          {
             case "M": // Start
@@ -1319,51 +1320,40 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, (external_X_ITE_X
       min .set ((glyph .xMin || 0) / unitsPerEm, (glyph .yMin || 0) / unitsPerEm, 0);
       max .set ((glyph .xMax || 0) / unitsPerEm, (glyph .yMax || 0) / unitsPerEm, 0);
    },
-   traverse: (() =>
+   traverseBefore: (() =>
    {
-      const bbox = new (external_X_ITE_X3D_Box3_default()) ();
+      const
+         bbox   = new (external_X_ITE_X3D_Box3_default()) (),
+         matrix = new (external_X_ITE_X3D_Matrix4_default()) ();
 
-      return function (type, renderObject)
+      return function (type, renderObject, shapeNode)
       {
-         this .getBrowser () .getScreenScaleMatrix (renderObject, this .matrix, 1, true);
+         this .getBrowser () .getScreenScaleMatrix (renderObject, matrix, 1, true);
 
-         this .modelViewMatrix
-            .assign (renderObject .getModelViewMatrix () .get ())
-            .multLeft (this .matrix);
+         const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+         modelViewMatrix .push ();
+         modelViewMatrix .multLeft (matrix);
+
+         if (matrix .equals (this .matrix))
+            return;
+
+         this .matrix .assign (matrix);
 
          // Update Text bbox.
 
          bbox .assign (this .getBBox ()) .multRight (this .matrix);
 
          this .getText () .setBBox (bbox);
+
+         // Immediately update X3DShapeNode bbox.
+
+         shapeNode .set_bbox__ ();
       };
    })(),
-   displaySimple (gl, renderContext, shaderNode)
+   traverseAfter (type, renderObject)
    {
-      renderContext .modelViewMatrix .set (this .modelViewMatrix);
-
-      gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, renderContext .modelViewMatrix);
-   },
-   display (gl, renderContext)
-   {
-      renderContext .modelViewMatrix .set (this .modelViewMatrix);
-
-      renderContext .textureNode = this .textureNode;
-   },
-   transformLine: (() =>
-   {
-      const invMatrix = new (external_X_ITE_X3D_Matrix4_default()) ();
-
-      return function (line)
-      {
-         // Apply screen nodes transformation in place here.
-         return line .multLineMatrix (invMatrix .assign (this .matrix) .inverse ());
-      };
-   })(),
-   transformMatrix (matrix)
-   {
-      // Apply screen nodes transformation in place here.
-      return matrix .multLeft (this .matrix);
+      renderObject .getModelViewMatrix () .pop ();
    },
 });
 
@@ -1393,15 +1383,16 @@ Object .assign (Object .setPrototypeOf (ScreenFontStyle .prototype, (external_X_
    {
       external_X_ITE_X3D_X3DFontStyleNode_default().prototype .initialize .call (this);
 
+      // Trigger requestRebuild of text geometry when ContentScale changes.
       this .getBrowser () .getRenderingProperties () ._ContentScale .addInterest ("addNodeEvent", this);
    },
-   getTextGeometry (text)
+   createTextGeometry (text)
    {
       return new Layout_ScreenText (text, this);
    },
    getScale ()
    {
-      return this ._pointSize .getValue () * this .getBrowser () .getRenderingProperty ("PixelsPerPoint");
+      return this ._pointSize .getValue () * this .getBrowser () .getRenderingProperty ("PixelsPerPoint") * this .getContentScale ();
    },
    getContentScale ()
    {
@@ -1484,7 +1475,8 @@ Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, (external_X_ITE_
       {
          case (external_X_ITE_X3D_TraverseType_default()).CAMERA:
          case (external_X_ITE_X3D_TraverseType_default()).PICKING:
-         case (external_X_ITE_X3D_TraverseType_default()).SHADOW: // ???
+         case (external_X_ITE_X3D_TraverseType_default()).DEPTH:
+         case (external_X_ITE_X3D_TraverseType_default()).SHADOW:
             // No clone support for shadows, generated cube map texture and bbox
             break;
          default:

@@ -77,14 +77,14 @@ Object .assign (Object .setPrototypeOf (X3DFollowerNode .prototype, X3DChildNode
       else
          this .getBrowser () .prepareEvents () .removeInterest ("prepareEvents", this);
    },
-   set_active (value)
+   set_active__ (value)
    {
-      if (value !== this ._isActive .getValue ())
-      {
-         this ._isActive = value;
+      if (value === this ._isActive .getValue ())
+         return;
 
-         this .set_live__ ();
-      }
+      this ._isActive = value;
+
+      this .set_live__ ();
    },
 });
 

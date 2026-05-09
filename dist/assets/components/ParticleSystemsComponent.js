@@ -1,5 +1,5 @@
-/* X_ITE v12.1.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-12.1.2")];
+/* X_ITE v15.0.0 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.0")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -423,7 +423,7 @@ uniform sampler2D scales;
 ${Array .from (this .uniforms .values ()) .join ("\n")}
 in vec4 input0;in vec4 input2;in vec4 input6;out vec4 output0;out vec4 output1;out vec4 output2;out vec4 output3;out vec4 output4;out vec4 output5;out vec4 output6;
 ${Object .entries ((external_X_ITE_X3D_GeometryType_default())) .map (([k, v]) => `#define ${k} ${v}`) .join ("\n")}
-const int ARRAY_SIZE=32;const float M_PI=3.14159265359;uniform float NaN;vec4 texelFetch(const in sampler2D sampler,const in int index,const in int lod){int x=textureSize(sampler,lod).x;ivec2 p=ivec2(index % x,index/x);vec4 t=texelFetch(sampler,p,lod);return t;}vec3 save_normalize(const in vec3 vector){float l=length(vector);if(l==0.)return vec3(0);return vector/l;}vec4 Quaternion(const in vec3 fromVector,const in vec3 toVector){vec3 from=save_normalize(fromVector);vec3 to=save_normalize(toVector);float cos_angle=dot(from,to);vec3 cross_vec=cross(from,to);float cross_len=length(cross_vec);if(cross_len==0.){if(cos_angle>0.){return vec4(0.,0.,0.,1.);}else{vec3 t=cross(from,vec3(1.,0.,0.));if(dot(t,t)==0.)t=cross(from,vec3(0.,1.,0.));t=save_normalize(t);return vec4(t,0.);}}else{float s=sqrt(abs(1.-cos_angle)*.5);cross_vec=save_normalize(cross_vec);return vec4(cross_vec*s,sqrt(abs(1.+cos_angle)*.5));}}vec3 multVecQuat(const in vec3 v,const in vec4 q){float a=q.w*q.w-q.x*q.x-q.y*q.y-q.z*q.z;float b=2.*(v.x*q.x+v.y*q.y+v.z*q.z);float c=2.*q.w;vec3 r=a*v.xyz+b*q.xyz+c*(q.yzx*v.zxy-q.zxy*v.yzx);return r;}mat3 Matrix3(const in vec4 quaternion){float x=quaternion.x;float y=quaternion.y;float z=quaternion.z;float w=quaternion.w;float A=y*y;float B=z*z;float C=x*y;float D=z*w;float E=z*x;float F=y*w;float G=x*x;float H=y*z;float I=x*w;return mat3(1.-2.*(A+B),2.*(C+D),2.*(E-F),2.*(C-D),1.-2.*(B+G),2.*(H+I),2.*(E+F),2.*(H-I),1.-2.*(A+G));}uint seed=1u;void srand(const in int value){seed=uint(value);}float random(){seed=seed*1103515245u+12345u;return float(seed)/4294967295.;}float getRandomValue(const in float min,const in float max){return min+random()*(max-min);}float getRandomLifetime(){float v=particleLifetime*lifetimeVariation;float min_=max(0.,particleLifetime-v);float max_=particleLifetime+v;return getRandomValue(min_,max_);}float getRandomSpeed(){float v=speed*variation;float min_=max(0.,speed-v);float max_=speed+v;return getRandomValue(min_,max_);}vec3 getRandomNormal(){float theta=getRandomValue(-M_PI,M_PI);float cphi=getRandomValue(-1.,1.);float r=sqrt(1.-cphi*cphi);return vec3(sin(theta)*r,cos(theta)*r,cphi);}vec3 getRandomNormalWithAngle(const in float angle){float theta=getRandomValue(-M_PI,M_PI);float cphi=getRandomValue(cos(angle),1.);float r=sqrt(1.-cphi*cphi);return vec3(sin(theta)*r,cos(theta)*r,cphi);}vec3 getRandomNormalWithDirectionAndAngle(const in vec3 direction,const in float angle){vec4 rotation=Quaternion(vec3(0.,0.,1.),direction);vec3 normal=getRandomNormalWithAngle(angle);return multVecQuat(normal,rotation);}vec3 getRandomSurfaceNormal(const in vec3 direction){float theta=getRandomValue(-M_PI,M_PI);float cphi=pow(random(),1./3.);float r=sqrt(1.-cphi*cphi);vec3 normal=vec3(sin(theta)*r,cos(theta)*r,cphi);vec4 rotation=Quaternion(vec3(0.,0.,1.),direction);return multVecQuat(normal,rotation);}vec3 getRandomSphericalVelocity(){vec3 normal=getRandomNormal();float speed=getRandomSpeed();return normal*speed;}int upperBound(const in sampler2D sampler,in int count,const in float value){int first=0;int step=0;while(count>0){int index=first;step=count>>1;index+=step;if(value<texelFetch(sampler,index,0).x){count=step;}else{first=++index;count-=step+1;}}return first;}
+const int ARRAY_SIZE=32;const float M_PI=3.14159265359;uniform float NaN;vec4 texelFetch(const in sampler2D sampler,const in int index,const in int lod){int x=textureSize(sampler,lod).x;ivec2 p=ivec2(index % x,index/x);vec4 t=texelFetch(sampler,p,lod);return t;}vec3 save_normalize(const in vec3 vector){float l=length(vector);if(l==0.)return vec3(0);return vector/l;}vec4 Quaternion(const in vec3 fromVector,const in vec3 toVector){vec3 from=save_normalize(fromVector);vec3 to=save_normalize(toVector);float cos_angle=dot(from,to);vec3 cross_vec=cross(from,to);float cross_len=length(cross_vec);if(cross_len==0.){if(cos_angle>0.){return vec4(0.,0.,0.,1.);}else{vec3 t=cross(from,vec3(1.,0.,0.));if(dot(t,t)==0.)t=cross(from,vec3(0.,1.,0.));t=save_normalize(t);return vec4(t,0.);}}else{float s=sqrt(abs(1.-cos_angle)*.5);cross_vec=save_normalize(cross_vec);return vec4(cross_vec*s,sqrt(abs(1.+cos_angle)*.5));}}vec3 multVecQuat(const in vec3 v,const in vec4 q){float a=q.w*q.w-q.x*q.x-q.y*q.y-q.z*q.z;float b=2.*(v.x*q.x+v.y*q.y+v.z*q.z);float c=2.*q.w;vec3 r=a*v.xyz+b*q.xyz+c*(q.yzx*v.zxy-q.zxy*v.yzx);return r;}mat3 Matrix3(const in vec4 quaternion){float x=quaternion.x;float y=quaternion.y;float z=quaternion.z;float w=quaternion.w;float A=y*y;float B=z*z;float C=x*y;float D=z*w;float E=z*x;float F=y*w;float G=x*x;float H=y*z;float I=x*w;return mat3(1.-2.*(A+B),2.*(C+D),2.*(E-F),2.*(C-D),1.-2.*(B+G),2.*(H+I),2.*(E+F),2.*(H-I),1.-2.*(A+G));}uint seed=1u;void srand(const in int value){seed=uint(value);}float random(){seed=seed*1103515245u+12345u;return float(seed)/4294967295.;}float getRandomValue(const in float min_,const in float max_){return min_+random()*(max_-min_);}float getRandomLifetime(){float v=particleLifetime*lifetimeVariation;float min_=max(0.,particleLifetime-v);float max_=particleLifetime+v;return getRandomValue(min_,max_);}float getRandomSpeed(){float v=speed*variation;float min_=max(0.,speed-v);float max_=speed+v;return getRandomValue(min_,max_);}vec3 getRandomNormal(){float theta=getRandomValue(-M_PI,M_PI);float cphi=getRandomValue(-1.,1.);float r=sqrt(1.-cphi*cphi);return vec3(sin(theta)*r,cos(theta)*r,cphi);}vec3 getRandomNormalWithAngle(const in float angle){float theta=getRandomValue(-M_PI,M_PI);float cphi=getRandomValue(cos(angle),1.);float r=sqrt(1.-cphi*cphi);return vec3(sin(theta)*r,cos(theta)*r,cphi);}vec3 getRandomNormalWithDirectionAndAngle(const in vec3 direction,const in float angle){vec4 rotation=Quaternion(vec3(0.,0.,1.),direction);vec3 normal=getRandomNormalWithAngle(angle);return multVecQuat(normal,rotation);}vec3 getRandomSurfaceNormal(const in vec3 direction){float theta=getRandomValue(-M_PI,M_PI);float cphi=pow(random(),1./3.);float r=sqrt(1.-cphi*cphi);vec3 normal=vec3(sin(theta)*r,cos(theta)*r,cphi);vec4 rotation=Quaternion(vec3(0.,0.,1.),direction);return multVecQuat(normal,rotation);}vec3 getRandomSphericalVelocity(){vec3 normal=getRandomNormal();float speed=getRandomSpeed();return normal*speed;}int upperBound(const in sampler2D sampler,in int count,const in float value){int first=0;int step=0;while(count>0){int index=first;step=count>>1;index+=step;if(value<texelFetch(sampler,index,0).x){count=step;}else{first=++index;count-=step+1;}}return first;}
 #if X3D_NUM_TEX_COORDS>0
 void interpolate(const in sampler2D sampler,const in int count,const in float fraction,out int index0){if(count==1||fraction<=texelFetch(sampler,0,0).x){index0=0;}else if(fraction>=texelFetch(sampler,count-1,0).x){index0=count-2;}else{int index=upperBound(sampler,count,fraction);if(index<count)index0=index-1;else index0=0;}}
 #endif
@@ -452,7 +452,7 @@ vec3 getScale(const in float fraction){int index0;int index1;float weight;interp
 #if defined(X3D_BOUNDED_VOLUME)
 void bounce(const in float deltaTime,const in vec4 fromPosition,inout vec4 toPosition,inout vec3 velocity){Line3 line=Line3(fromPosition.xyz,save_normalize(velocity));vec4 points[ARRAY_SIZE];vec3 normals[ARRAY_SIZE];int numIntersections=getIntersections(boundedVolume,boundedVerticesIndex,boundedNormalsIndex,boundedHierarchyIndex,boundedHierarchyRoot,line,points,normals);if(numIntersections==0)return;Plane3 plane1=plane3(line.point,line.direction);int index=min_index(points,numIntersections,0.,plane1);if(index==-1)return;vec3 point=points[index].xyz;vec3 normal=save_normalize(normals[index]);Plane3 plane2=plane3(point,normal);if(sign(plane_distance(plane2,fromPosition.xyz))==sign(plane_distance(plane2,toPosition.xyz)))return;float damping=length(normals[index]);velocity=reflect(velocity,normal);toPosition=vec4(point+save_normalize(velocity)*.0001,1.);velocity*=damping;}
 #endif
-void main(){uint life=uint(input0[0]);float lifetime=input0[1];float elapsedTime=input0[2]+deltaTime;float fraction=elapsedTime/lifetime;srand((gl_VertexID+randomSeed)*randomSeed);if(elapsedTime>lifetime){lifetime=getRandomLifetime();elapsedTime=0.;fraction=0.;output0=vec4(++life,lifetime,elapsedTime,getTexCoordIndex0(fraction));
+void main(){int life=int(input0[0]);float lifetime=input0[1];float elapsedTime=input0[2]+deltaTime;float fraction=elapsedTime/lifetime;srand((gl_VertexID+randomSeed)*randomSeed);if(elapsedTime>lifetime){lifetime=getRandomLifetime();elapsedTime=0.;fraction=0.;output0=vec4(max(life+1,1),lifetime,elapsedTime,getTexCoordIndex0(fraction));
 #if defined(X3D_CREATE_PARTICLES)
 output1=getColor(fraction);output2=vec4(getRandomVelocity(),0.);output6=getRandomPosition();
 #else
@@ -558,7 +558,7 @@ precision highp float;void main(){}`
       {
          const location = gl .getUniformLocation (program, name);
 
-         gl .uniform1i (location, program [name + "TextureUnit"] = browser .getTextureUnit ());
+         gl .uniform1i (location, program [name + "TextureUnit"] = browser .popTextureUnit ());
       }
 
       for (const [key, symbol] of Object .entries (ParticleSystems_ParticleSampler))
@@ -594,12 +594,12 @@ precision highp float;void main(){}`
 
       return texture;
    },
-   getTextureUnit (browser, object, property)
+   popTextureUnit (browser, object, property)
    {
       const textureUnit = object [property];
 
       if (textureUnit === undefined)
-         return object [property] = browser .getTextureUnit ();
+         return object [property] = browser .popTextureUnit ();
 
       return textureUnit;
    },
@@ -823,8 +823,8 @@ Object .assign (Object .setPrototypeOf (BoundedPhysicsModel .prototype, Particle
 
       const
          damping  = this ._damping .getValue (),
-         normals  = this .geometryNode .getNormals ()  .getValue (),
-         vertices = this .geometryNode .getVertices () .getValue ();
+         normals  = this .geometryNode .getNormals (),
+         vertices = this .geometryNode .getVertices ();
 
       for (const value of normals)
          boundedNormals .push (value * damping);
@@ -1925,7 +1925,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
    set_physics__ ()
    {
       const
-         physics                  = this ._physics .getValue (),
          forcePhysicsModelNodes   = this .forcePhysicsModelNodes,
          boundedPhysicsModelNodes = this .boundedPhysicsModelNodes;
 
@@ -1938,12 +1937,12 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
       forcePhysicsModelNodes   .length = 0;
       boundedPhysicsModelNodes .length = 0;
 
-      for (let i = 0, length = physics .length; i < length; ++ i)
+      for (const node of this ._physics)
       {
          try
          {
             const
-               innerNode = physics [i] .getValue () .getInnerNode (),
+               innerNode = node .getValue () .getInnerNode (),
                type      = innerNode .getType ();
 
             for (let t = type .length - 1; t >= 0; -- t)
@@ -2447,7 +2446,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
          case (external_X_ITE_X3D_GeometryType_default()).QUAD:
          case (external_X_ITE_X3D_GeometryType_default()).TRIANGLE:
          {
-            const positiveScale = external_X_ITE_X3D_Matrix4_default().prototype .determinant3 .call (renderContext .modelViewMatrix) > 0;
+            const positiveScale = external_X_ITE_X3D_Matrix4_default().prototype .determinant3 .call (renderContext .modelViewMatrix) >= 0;
 
             gl .frontFace (positiveScale ? gl .CCW : gl .CW);
             gl .enable (gl .CULL_FACE);
@@ -2462,15 +2461,15 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
                appearanceNode  = this .getAppearance (),
                renderModeNodes = appearanceNode .getRenderModes (),
                shaderNode      = appearanceNode .getShader (this .geometryContext, renderContext),
-               primitiveMode   = browser .getPrimitiveMode (this .primitiveMode);
+               primitiveMode   = browser .getPrimitiveMode (this .primitiveMode),
+               opaquePoints    = this .geometryType === (external_X_ITE_X3D_GeometryType_default()).POINT && !renderContext .transparent;
 
             // Enable sample alpha to coverage if not transparent.
 
-            if (this .geometryType === (external_X_ITE_X3D_GeometryType_default()).POINT && !renderContext .transparent)
+            if (opaquePoints)
             {
                gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
-               gl .enable (gl .BLEND);
-               gl .blendFuncSeparate (gl .ONE, gl .ZERO, gl .ZERO, gl .ONE);
+               gl .colorMask (true, true, true, false);
             }
 
             // Set viewport.
@@ -2489,7 +2488,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
 
             if (this .numTexCoords)
             {
-               const textureUnit = browser .getTextureUnit ();
+               const textureUnit = browser .popTextureUnit ();
 
                gl .activeTexture (gl .TEXTURE0 + textureUnit);
                gl .bindTexture (gl .TEXTURE_2D, this [ParticleSystems_ParticleSampler .texCoords]);
@@ -2539,11 +2538,10 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
 
             // Disable sample alpha to coverage if not transparent.
 
-            if (this .geometryType === (external_X_ITE_X3D_GeometryType_default()).POINT && !renderContext .transparent)
+            if (opaquePoints)
             {
                gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
-               gl .disable (gl .BLEND);
-               gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
+               gl .colorMask (true, true, true, true);
             }
 
             break;
@@ -2554,20 +2552,19 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
    {
       const
          invModelViewMatrix = new (external_X_ITE_X3D_Matrix4_default()) (),
-         billboardToScreen  = new (external_X_ITE_X3D_Vector3_default()) (),
-         viewerYAxis        = new (external_X_ITE_X3D_Vector3_default()) (),
+         x                  = new (external_X_ITE_X3D_Vector3_default()) (),
          y                  = new (external_X_ITE_X3D_Vector3_default()) (),
-         rotation           = new (external_X_ITE_X3D_Matrix3_default()) (9);
+         z                  = new (external_X_ITE_X3D_Vector3_default()) (),
+         rotation           = new (external_X_ITE_X3D_Matrix3_default()) ();
 
       return function (modelViewMatrix)
       {
          invModelViewMatrix .assign (modelViewMatrix) .inverse ();
-         invModelViewMatrix .multDirMatrix (billboardToScreen .assign ((external_X_ITE_X3D_Vector3_default()).Z_AXIS));
-         invModelViewMatrix .multDirMatrix (viewerYAxis .assign ((external_X_ITE_X3D_Vector3_default()).Y_AXIS));
+         invModelViewMatrix .multDirMatrix (x .assign ((external_X_ITE_X3D_Vector3_default()).Y_AXIS));
+         invModelViewMatrix .multDirMatrix (z .assign ((external_X_ITE_X3D_Vector3_default()).Z_AXIS));
 
-         const x = viewerYAxis .cross (billboardToScreen);
-         y .assign (billboardToScreen) .cross (x);
-         const z = billboardToScreen;
+         x .cross (z);
+         y .assign (z) .cross (x);
 
          // Compose rotation matrix.
 
@@ -2575,9 +2572,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
          y .normalize ();
          z .normalize ();
 
-         rotation .set (x .x, x .y, x .z,
-                        y .x, y .y, y .z,
-                        z .x, z .y, z .z);
+         rotation .set (... x, ... y, ... z);
 
          return rotation;
       };
@@ -2592,10 +2587,10 @@ Object .defineProperties (ParticleSystem,
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "metadata",          new (external_X_ITE_X3D_Fields_default()).SFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "enabled",           new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "createParticles",   new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "geometryType",      new (external_X_ITE_X3D_Fields_default()).SFString ("QUAD")),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "createParticles",   new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "maxParticles",      new (external_X_ITE_X3D_Fields_default()).SFInt32 (200)),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "particleLifetime",  new (external_X_ITE_X3D_Fields_default()).SFFloat (5)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "particleLifetime",  new (external_X_ITE_X3D_Fields_default()).SFTime (5)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "lifetimeVariation", new (external_X_ITE_X3D_Fields_default()).SFFloat (0.25)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "particleSize",      new (external_X_ITE_X3D_Fields_default()).SFVec2f (0.02, 0.02)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "emitter",           new (external_X_ITE_X3D_Fields_default()).SFNode ()),
@@ -2604,10 +2599,10 @@ Object .defineProperties (ParticleSystem,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "color",             new (external_X_ITE_X3D_Fields_default()).SFNode ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "texCoordKey",       new (external_X_ITE_X3D_Fields_default()).MFFloat ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "texCoord",          new (external_X_ITE_X3D_Fields_default()).SFNode ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "scaleKey",          new (external_X_ITE_X3D_Fields_default()).MFFloat ()), // skip test
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "scale",             new (external_X_ITE_X3D_Fields_default()).SFNode ()), // skip test
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "scaleKey",          new (external_X_ITE_X3D_Fields_default()).MFFloat ()),    // experimental
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "scale",             new (external_X_ITE_X3D_Fields_default()).SFNode ()),     // experimental
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "isActive",          new (external_X_ITE_X3D_Fields_default()).SFBool ()),
-         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "pointerEvents",     new (external_X_ITE_X3D_Fields_default()).SFBool (true)), // skip test
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "pointerEvents",     new (external_X_ITE_X3D_Fields_default()).SFBool (true)), // experimental
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "castShadow",        new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",           new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay",       new (external_X_ITE_X3D_Fields_default()).SFBool ()),
@@ -2765,7 +2760,7 @@ Object .assign (Object .setPrototypeOf (PolylineEmitter .prototype, ParticleSyst
       {
          const
             gl                = this .getBrowser () .getContext (),
-            vertices          = this .polylinesNode .getVertices () .getValue (),
+            vertices          = this .polylinesNode .getVertices (),
             numVertices       = vertices .length / 4,
             numLengthSoFar    = numVertices / 2 + 1,
             polylineArraySize = Math .ceil (Math .sqrt (numLengthSoFar + numVertices));
@@ -2974,8 +2969,8 @@ Object .assign (Object .setPrototypeOf (SurfaceEmitter .prototype, ParticleSyste
          if (this .surfaceNode)
          {
             const
-               vertices         = this .surfaceNode .getVertices () .getValue (),
-               normals          = this .surfaceNode .getNormals () .getValue (),
+               vertices         = this .surfaceNode .getVertices (),
+               normals          = this .surfaceNode .getNormals (),
                numVertices      = vertices .length / 4,
                numAreaSoFar     = numVertices / 3 + 1,
                surfaceArraySize = Math .ceil (Math .sqrt (numAreaSoFar + numVertices + numVertices));
@@ -3240,8 +3235,8 @@ Object .assign (Object .setPrototypeOf (VolumeEmitter .prototype, ParticleSystem
       {
          const
             gl              = this .getBrowser () .getContext (),
-            vertices        = this .volumeNode .getVertices () .getValue (),
-            normals         = this .volumeNode .getNormals () .getValue (),
+            vertices        = this .volumeNode .getVertices (),
+            normals         = this .volumeNode .getNormals (),
             hierarchy       = new Utility_BVH (vertices, normals) .toArray ([ ]),
             numVertices     = vertices .length / 4,
             numNormals      = normals .length / 3,

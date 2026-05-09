@@ -1,16 +1,11 @@
 import Vector2 from "./Vector2.js";
 
-function Matrix2 (... args)
+function Matrix2 (m00 = 1, m01 = 0, m10 = 0, m11 = m00)
 {
-   if (args .length)
-   {
-      for (let i = 0; i < 4; ++ i)
-         this [i] = args [i];
-   }
-   else
-   {
-      this .identity ();
-   }
+   this [0] = m00;
+   this [1] = m01;
+   this [2] = m10;
+   this [3] = m11;
 }
 
 Object .assign (Matrix2 .prototype,
@@ -38,10 +33,13 @@ Object .assign (Matrix2 .prototype,
    },
    equals (matrix)
    {
-      return this [0] === matrix [0] &&
-             this [1] === matrix [1] &&
-             this [2] === matrix [2] &&
-             this [3] === matrix [3];
+      for (let i = 0; i < 4; ++ i)
+      {
+         if (this [i] !== matrix [i])
+            return false;
+      }
+
+      return true;
    },
    set1 (r, c, value)
    {
@@ -107,27 +105,33 @@ Object .assign (Matrix2 .prototype,
    },
    multLeft (matrix)
    {
-      const
-         { 0: a0, 1: a1, 2: a2, 3: a3 } = this,
-         { 0: b0, 1: b1, 2: b2, 3: b3 } = matrix;
+      const { 0: a0, 1: a1, 2: a2, 3: a3 } = this;
+
+      var { 0: b0, 1: b1 } = matrix;
 
       this [0] = a0 * b0 + a2 * b1;
       this [1] = a1 * b0 + a3 * b1;
-      this [2] = a0 * b2 + a2 * b3;
-      this [3] = a1 * b2 + a3 * b3;
+
+      var { 2: b0, 3: b1 } = matrix;
+
+      this [2] = a0 * b0 + a2 * b1;
+      this [3] = a1 * b0 + a3 * b1;
 
       return this;
    },
    multRight (matrix)
    {
-      const
-         { 0: a0, 1: a1, 2: a2, 3: a3 } = this,
-         { 0: b0, 1: b1, 2: b2, 3: b3 } = matrix;
+      const { 0: b0, 1: b1, 2: b2, 3: b3 } = matrix;
+
+      var { 0: a0, 1: a1 } = this;
 
       this [0] = b0 * a0 + b2 * a1;
       this [1] = b1 * a0 + b3 * a1;
-      this [2] = b0 * a2 + b2 * a3;
-      this [3] = b1 * a2 + b3 * a3;
+
+      var { 2: a0, 3: a1 } = this;
+
+      this [2] = b0 * a0 + b2 * a1;
+      this [3] = b1 * a0 + b3 * a1;
 
       return this;
    },
@@ -209,7 +213,7 @@ Object .defineProperties (Matrix2 .prototype,
          return function () { return vector .set (this [2], this [3]); };
       })(),
    },
-   X_AXIS:
+   xAxis:
    {
       get () { return this [0]; },
    },
@@ -225,6 +229,7 @@ Object .defineProperties (Matrix2 .prototype,
 
 Object .assign (Matrix2,
 {
+   ZERO: Object .freeze (new Matrix2 (0)),
    IDENTITY: Object .freeze (new Matrix2 ()),
 });
 

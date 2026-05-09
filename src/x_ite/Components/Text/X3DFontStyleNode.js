@@ -38,6 +38,7 @@ function X3DFontStyleNode (executionContext)
    X3DNode      .call (this, executionContext);
    X3DUrlObject .call (this, executionContext);
 
+   this .getType () .pop (); // Remove X3DUrlObject type.
    this .addType (X3DConstants .X3DFontStyleNode);
 
    this .addChildObjects (X3DConstants .inputOutput, "description",          new Fields .SFString (),
@@ -46,7 +47,11 @@ function X3DFontStyleNode (executionContext)
                           X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime (0),
                           X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600));
 
-   this .alignments = [ ];
+   // Private properties
+
+   this .alignments  = [ ];
+   this .loadCounter = 0;
+   this .loadCount   = -1;
 }
 
 Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .prototype),
@@ -133,9 +138,9 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
    },
    async loadData ()
    {
-      // Wait for FontLibrary nodes to be setuped or changed.
+      // Prevent race condition when this function is called multiple times.
 
-      await $.sleep (0);
+      const count = ++ this .loadCounter;
 
       // Add default font to family array.
 
@@ -147,7 +152,13 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
       family .push ("SERIF");
 
-      this .font = null;
+      // Wait for FontLibrary nodes to be setuped or changed.
+
+      await $.sleep (0);
+
+      // Get font.
+
+      let font = null;
 
       for (const fontFamily of family)
       {
@@ -157,24 +168,18 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
          if (defaultFont)
          {
-            const font = await browser .loadFont (new URL (defaultFont), true);
+            font = await browser .loadFont (new URL (defaultFont), true);
 
             if (font)
-            {
-               this .font = font;
                break;
-            }
          }
 
          // Try to get font from family names.
 
-         const font = await browser .getFont (executionContext, fontFamily, fontStyle);
+         font = await browser .getFont (executionContext, fontFamily);
 
          if (font)
-         {
-            this .font = font;
             break;
-         }
 
          // DEPRECIATED: Try to get font by URL.
 
@@ -183,23 +188,27 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
          if (fileURL .protocol === "data:" || fileURL .pathname .match (/\.(?:woff2|woff|otf|ttf)$/i))
          {
             if (executionContext .getSpecificationVersion () >= 4.1)
-               console .warn (`Loading a font file via family field is depreciated, please use new FontLibrary node instead.`);
+               console .warn (`Loading a font file via family field is deprecated, please use new FontLibrary node instead.`);
 
-            const font = await browser .loadFont (fileURL, this .getCache ());
+            font = await browser .loadFont (fileURL, this .getCache ());
 
             if (font)
-            {
-               this .font = font;
                break;
-            }
          }
          else
          {
-            console .warn (`Couldn't find font family '${fontFamily}' with style '${fontStyle}'.`);
+            if (count > this .loadCount)
+               console .warn (`Couldn't find font family '${fontFamily}' with style '${fontStyle}'.`);
          }
       }
 
-      this .setLoadState (this .font ? X3DConstants .COMPLETE_STATE : X3DConstants .FAILED_STATE);
+      if (count < this .loadCount)
+         return;
+
+      this .loadCount = count;
+      this .font      = font;
+
+      this .setLoadState (font ? X3DConstants .COMPLETE_STATE : X3DConstants .FAILED_STATE);
       this .addNodeEvent ();
    },
    dispose ()

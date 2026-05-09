@@ -31,7 +31,7 @@ The TextureCoordinate4D node belongs to the [Texturing3D](/x_ite/components/over
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [mapping](#fields-mapping) | "" |
 | MFVec4f | [in, out] | [point](#fields-point) | [ ] |
 {: .fields }
@@ -68,6 +68,13 @@ The *mapping* label identifies which texture coordinates and transformations are
 ### Warning
 
 - Requires X3D `profile='Full'` or else include `<component name='Texturing3D' level='1'/>`
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

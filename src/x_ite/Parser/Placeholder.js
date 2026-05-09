@@ -5,8 +5,6 @@ import X3DImportedNode from "../Execution/X3DImportedNode.js";
 class Placeholder extends X3DNode
 {
    #parser;
-   #lastIndex;
-   #lineNumber;
    #name;
    #namedNodes;
    #importedNodes;
@@ -18,8 +16,6 @@ class Placeholder extends X3DNode
       super (parser .getExecutionContext ());
 
       this .#parser        = parser;
-      this .#lastIndex     = parser .lastIndex,
-      this .#lineNumber    = parser .lineNumber;
       this .#namedNodes    = parser .getNamedNodes ();
       this .#importedNodes = parser .getImportedNodes ();
 
@@ -53,22 +49,23 @@ class Placeholder extends X3DNode
          ? localNode .getExportedNode (this .#type)
          : localNode;
 
-      if (!node)
+      if (node)
       {
-         this .#parser .lastIndex  = this .#lastIndex;
-         this .#parser .lineNumber = this .#lineNumber;
+         this .#parser .checkNodeType (node, this .#name, this .#type, this .#typeName);
 
-         throw new Error (`Named node '${name}' not found.`);
+         for (const parent of Array .from (this .getParents ()))
+         {
+            if (!(parent instanceof Fields .SFNode))
+               continue;
+
+            parent .setValue (node);
+         }
       }
-
-      this .#parser .checkNodeType (node, this .#name, this .#type, this .#typeName);
-
-      for (const parent of Array .from (this .getParents ()))
+      else
       {
-         if (!(parent instanceof Fields .SFNode))
-            continue;
+         console .warn (`${this .#parser .getName ()}: Named or imported node '${name}' not found.`);
 
-         parent .setValue (node);
+         this .dispose ();
       }
    }
 }

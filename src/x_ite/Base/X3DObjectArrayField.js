@@ -9,73 +9,76 @@ const
 
 const handler =
 {
-   get (target, key)
+   get (target, key, receiver)
    {
-      const value = target [key];
-
-      if (value !== undefined)
-         return value;
-
       if (typeof key === "string")
       {
-         const
-            array = target .getValue (),
-            index = +key;
+         const index = +key;
 
          if (Number .isInteger (index))
          {
-            // For historical reasons this behavior is intended (resize), there are enough
-            // X3D/VRML worlds in the Internet who rely on this behavior.
+            const array = target .getValue ();
+
             if (index >= array .length)
-               target .resize (index + 1);
+               return undefined;
 
             return array [index] .valueOf ();
          }
-         else
+      }
+
+      return Reflect .get (target, key, receiver);
+   },
+   set (target, key, value, receiver)
+   {
+      if (typeof key === "string")
+      {
+         const index = +key;
+
+         if (Number .isInteger (index))
          {
-            return target [key];
+            const array = target .getValue ();
+
+            if (index >= array .length)
+               target .resize (index + 1);
+
+            array [index] .setValue (value);
+
+            return true;
          }
       }
-   },
-   set (target, key, value)
-   {
-      if (key in target)
-      {
-         target [key] = value;
-         return true;
-      }
 
-      const
-         array = target .getValue (),
-         index = +key;
-
-      if (index >= array .length)
-         target .resize (index + 1);
-
-      array [index] .setValue (value);
-
-      return true;
+      return Reflect .set (target, key, value, receiver);
    },
    has (target, key)
    {
-      if (Number .isInteger (+key))
-         return key < target .getValue () .length;
+      if (typeof key === "string")
+      {
+         const index = +key;
 
-      return key in target;
+         if (Number .isInteger (index))
+            return index < target .getValue () .length;
+      }
+
+      return Reflect .has (target, key);
    },
    ownKeys (target)
    {
-      return Object .keys (target .getValue ());
+      return Object .keys (target .getValue ()) .concat (Reflect .ownKeys (target));
    },
    getOwnPropertyDescriptor (target, key)
    {
-      if (typeof key !== "string")
-         return;
+      if (typeof key === "string")
+      {
+         const index = +key;
 
-      const index = +key;
+         if (Number .isInteger (index))
+         {
+            if (index < target .getValue () .length)
+               return Object .getOwnPropertyDescriptor (target .getValue (), key);
+         }
+      }
 
-      if (Number .isInteger (index) && index < target .getValue () .length)
-         return Object .getOwnPropertyDescriptor (target .getValue (), key);
+      return Reflect .getOwnPropertyDescriptor (target, key);
    },
 };
 
@@ -384,14 +387,15 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
    {
       const
          target = this [_target],
-         array  = target .getValue ();
+         array  = target .getValue (),
+         length = array .length;
 
-      switch (array .length)
+      switch (length)
       {
          case 0:
          {
             generator .string += "[";
-            generator .string += generator .TidySpace ();
+            generator .TidySpace ();
             generator .string += "]";
             break;
          }
@@ -402,24 +406,26 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
          }
          default:
          {
+            const last = length - 1;
+
             generator .string += "[";
-            generator .string += generator .ListStart ();
+            generator .ListStart ();
             generator .IncIndent ();
 
-            for (let i = 0, length = array .length - 1; i < length; ++ i)
+            for (let i = 0; i < last; ++ i)
             {
-               generator .string += generator .ListIndent ();
+               generator .ListIndent ();
                array [i] .toStream (generator);
-               generator .string += generator .Comma ();
-               generator .string += generator .ListBreak ();
+               generator .Comma ();
+               generator .ListBreak ();
             }
 
-            generator .string += generator .ListIndent ();
+            generator .ListIndent ();
             array .at (-1) .toStream (generator);
 
-            generator .string += generator .ListEnd ();
+            generator .ListEnd ();
             generator .DecIndent ();
-            generator .string += generator .ListIndent ();
+            generator .ListIndent ();
             generator .string += "]";
             break;
          }
@@ -437,13 +443,15 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
 
       if (length)
       {
-         const array = target .getValue ();
+         const
+            array = target .getValue (),
+            last  = length - 1;
 
-         for (let i = 0, length = array .length - 1; i < length; ++ i)
+         for (let i = 0; i < last; ++ i)
          {
             array [i] .toXMLStream (generator);
-            generator .string += generator .Comma ();
-            generator .string += generator .TidySpace ();
+            generator .Comma ();
+            generator .TidySpace ();
          }
 
          array .at (-1) .toXMLStream (generator);
@@ -457,35 +465,37 @@ Object .assign (Object .setPrototypeOf (X3DObjectArrayField .prototype, X3DArray
 
       if (length)
       {
-         const value = this .getValue ();
+         const
+            array = target .getValue (),
+            last  = length - 1;
 
          generator .string += '[';
-         generator .string += generator .ListBreak ();
-         generator .string += generator .IncIndent ();
+         generator .ListBreak ();
+         generator .IncIndent ();
 
-         for (let i = 0, n = length - 1; i < n; ++ i)
+         for (let i = 0; i < last; ++ i)
          {
-            generator .string += generator .ListIndent ();
+            generator .ListIndent ();
 
-            value [i] .toJSONStreamValue (generator);
+            array [i] .toJSONStreamValue (generator);
 
             generator .string += ',';
-            generator .string += generator .ListBreak ();
+            generator .ListBreak ();
          }
 
-         generator .string += generator .ListIndent ();
+         generator .ListIndent ();
 
-         value .at (-1) .toJSONStreamValue (generator);
+         array .at (-1) .toJSONStreamValue (generator);
 
-         generator .string += generator .ListBreak ();
-         generator .string += generator .DecIndent ();
-         generator .string += generator .ListIndent ();
+         generator .ListBreak ();
+         generator .DecIndent ();
+         generator .ListIndent ();
          generator .string += ']';
       }
       else
       {
          generator .string += '[';
-         generator .string += generator .TidySpace ();
+         generator .TidySpace ();
          generator .string += ']';
       }
    },

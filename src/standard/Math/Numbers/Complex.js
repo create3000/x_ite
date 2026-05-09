@@ -189,7 +189,7 @@ Object .defineProperties (Complex .prototype,
 
 Object .assign (Complex,
 {
-   Polar (magnitude, angle)
+   fromPolar (magnitude, angle)
    {
       return Object .create (Complex .prototype) .setPolar (magnitude, angle);
    },

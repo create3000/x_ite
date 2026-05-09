@@ -13,7 +13,7 @@ tags: [TwoSidedMaterial, Shape]
 
 ## Overview
 
-TwoSidedMaterial specifies surface rendering properties for associated geometry nodes, for outer (front) and inner (back) sides of polygons. Material attributes are used by the X3D lighting equations during rendering.
+TwoSidedMaterial specifies surface rendering properties for associated geometry, for outer (front) and inner (back) sides of polygons. Material attributes are used by the X3D lighting equations during rendering.
 
 The TwoSidedMaterial node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **4,** its default container field is *material.* It is available from X3D version 3.2 or higher.
 
@@ -33,20 +33,20 @@ The TwoSidedMaterial node belongs to the [Shape](/x_ite/components/overview/#sha
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [separateBackColor](#fields-separateBackColor) | FALSE |
-| SFFloat | [in, out] | [ambientIntensity](#fields-ambientIntensity) | 0.2  |
-| SFColor | [in, out] | [diffuseColor](#fields-diffuseColor) | 0.8 0.8 0.8  |
-| SFColor | [in, out] | [specularColor](#fields-specularColor) | 0 0 0  |
-| SFColor | [in, out] | [emissiveColor](#fields-emissiveColor) | 0 0 0  |
-| SFFloat | [in, out] | [shininess](#fields-shininess) | 0.2  |
-| SFFloat | [in, out] | [transparency](#fields-transparency) | 0  |
-| SFFloat | [in, out] | [backAmbientIntensity](#fields-backAmbientIntensity) | 0.2  |
-| SFColor | [in, out] | [backDiffuseColor](#fields-backDiffuseColor) | 0.8 0.8 0.8  |
-| SFColor | [in, out] | [backSpecularColor](#fields-backSpecularColor) | 0 0 0  |
-| SFColor | [in, out] | [backEmissiveColor](#fields-backEmissiveColor) | 0 0 0  |
-| SFFloat | [in, out] | [backShininess](#fields-backShininess) | 0.2  |
-| SFFloat | [in, out] | [backTransparency](#fields-backTransparency) | 0  |
+| SFFloat | [in, out] | [ambientIntensity](#fields-ambientIntensity) | 0.2 |
+| SFColor | [in, out] | [diffuseColor](#fields-diffuseColor) | 0.8 0.8 0.8 |
+| SFColor | [in, out] | [specularColor](#fields-specularColor) | 0 0 0 |
+| SFColor | [in, out] | [emissiveColor](#fields-emissiveColor) | 0 0 0 |
+| SFFloat | [in, out] | [shininess](#fields-shininess) | 0.2 |
+| SFFloat | [in, out] | [transparency](#fields-transparency) | 0 |
+| SFFloat | [in, out] | [backAmbientIntensity](#fields-backAmbientIntensity) | 0.2 |
+| SFColor | [in, out] | [backDiffuseColor](#fields-backDiffuseColor) | 0.8 0.8 0.8 |
+| SFColor | [in, out] | [backSpecularColor](#fields-backSpecularColor) | 0 0 0 |
+| SFColor | [in, out] | [backEmissiveColor](#fields-backEmissiveColor) | 0 0 0 |
+| SFFloat | [in, out] | [backShininess](#fields-backShininess) | 0.2 |
+| SFFloat | [in, out] | [backTransparency](#fields-backTransparency) | 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -70,11 +70,11 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### SFFloat [in, out] **ambientIntensity** 0.2 <small>[0,1]</small>
 {: #fields-ambientIntensity }
 
-How much ambient omnidirectional light is reflected from all light sources. Interchange profile
+How much ambient omnidirectional light is reflected from all light sources.
 
 #### Hint
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### SFColor [in, out] **diffuseColor** 0.8 0.8 0.8 <small>[0,1]</small>
 {: #fields-diffuseColor }
@@ -88,11 +88,11 @@ How much direct, angle-dependent light is reflected from all light sources.
 ### SFColor [in, out] **specularColor** 0 0 0 <small>[0,1]</small>
 {: #fields-specularColor }
 
-Specular highlights are brightness reflections (example: shiny spots on an apple). Interchange profile
+Specular highlights are brightness reflections (example: shiny spots on an apple).
 
 #### Hint
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### SFColor [in, out] **emissiveColor** 0 0 0 <small>[0,1]</small>
 {: #fields-emissiveColor }
@@ -112,29 +112,29 @@ How much glowing light is emitted from this object.
 ### SFFloat [in, out] **shininess** 0.2 <small>[0,1]</small>
 {: #fields-shininess }
 
-Lower *shininess* values provide soft specular glows, while higher values result in sharper, smaller highlights. Interchange profile
+Lower *shininess* values provide soft specular glows, while higher values result in sharper, smaller highlights.
 
 #### Hint
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### SFFloat [in, out] **transparency** 0 <small>[0,1]</small>
 {: #fields-transparency }
 
-How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile
+How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque.
 
 #### Hint
 
-- *transparency* \< .5 opaque, *transparency* \> .5 transparent.
+- In Interchange profile *transparency* \< .5 opaque, *transparency* \> .5 transparent.
 
 ### SFFloat [in, out] **backAmbientIntensity** 0.2 <small>[0,1]</small>
 {: #fields-backAmbientIntensity }
 
-How much ambient omnidirectional light is reflected from all light sources. Interchange profile
+How much ambient omnidirectional light is reflected from all light sources.
 
 #### Hint
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### SFColor [in, out] **backDiffuseColor** 0.8 0.8 0.8 <small>[0,1]</small>
 {: #fields-backDiffuseColor }
@@ -148,11 +148,11 @@ How much direct, angle-dependent light is reflected from all light sources.
 ### SFColor [in, out] **backSpecularColor** 0 0 0 <small>[0,1]</small>
 {: #fields-backSpecularColor }
 
-Specular highlights are brightness reflections (example: shiny spots on an apple). Interchange profile
+Specular highlights are brightness reflections (example: shiny spots on an apple).
 
 #### Hint
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### SFColor [in, out] **backEmissiveColor** 0 0 0 <small>[0,1]</small>
 {: #fields-backEmissiveColor }
@@ -172,26 +172,26 @@ How much glowing light is emitted from this object.
 ### SFFloat [in, out] **backShininess** 0.2 <small>[0,1]</small>
 {: #fields-backShininess }
 
-Lower shininess values provide soft specular glows, while higher values result in sharper, smaller highlights. Interchange profile
+Lower shininess values provide soft specular glows, while higher values result in sharper, smaller highlights.
 
 #### Hint
 
-- This field may be ignored, applying the default value regardless.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### SFFloat [in, out] **backTransparency** 0 <small>[0,1]</small>
 {: #fields-backTransparency }
 
-How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque. Interchange profile
+How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaque.
 
 #### Hint
 
-- Transparency \< .5 opaque, transparency \> .5 transparent.
+- In Interchange profile transparency \< .5 opaque, transparency \> .5 transparent.
 
 ## Advice
 
 ### Hints
 
-- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding material.
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding material.
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 - [X3D Architecture 12.2.3 Two-sided materials](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/shape.html#TwoSidedMaterials)
@@ -205,13 +205,20 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Shape/TwoSidedMaterial/TwoSidedMaterial.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Shape/TwoSidedMaterial/TwoSidedMaterial.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Shape/TwoSidedMaterial/screenshot.avif" alt="TwoSidedMaterial"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Shape/TwoSidedMaterial/TwoSidedMaterial.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Shape/TwoSidedMaterial/TwoSidedMaterial.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

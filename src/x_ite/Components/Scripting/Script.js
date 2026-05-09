@@ -135,7 +135,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
 
       const handler =
       {
-         get (target, key)
+         get (target, key, receiver)
          {
             switch (key)
             {
@@ -144,7 +144,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
                case "currentScene":
                   return getScriptNode () .getExecutionContext ();
                default:
-                  return target [key];
+                  return Reflect .get (target, key, receiver);
             }
          },
       };
@@ -158,7 +158,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
          node .fromString (vrmlSyntax, getScriptNode () .getExecutionContext ());
 
          if (node .getValue ())
-            return node;
+            return SFNodeCache .get (node .getValue ());
 
          throw new Error ("SFNode.new: invalid argument.");
       }
@@ -291,7 +291,9 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
          }
       }
 
-      sourceText += ";\n[" + callbacks .map (c => `typeof ${c} !== "undefined" ? ${c} : undefined`) .join (",") + "];";
+      // Add a \n immediately after sourceText, in case there is a comment in the last line.
+
+      sourceText += "\n;\n[" + callbacks .map (c => `typeof ${c} !== "undefined" ? ${c} : undefined`) .join (",") + "];";
 
       const
          result  = this .evaluate (sourceText),

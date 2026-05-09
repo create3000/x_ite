@@ -3,7 +3,7 @@ title: Lighting Your World
 date: 2022-11-28
 nav: tutorials-textures-lights-and-environment
 categories: [Tutorials]
-tags: [Lighting, World]
+tags: [Lighting, DirectionalLight, SpotLight, PointLight]
 ---
 ## Motivation
 
@@ -49,18 +49,18 @@ A [PointLight](/x_ite/components/lighting/pointlight/) node illuminates radially
 
 ```x3d
 <PointLight
-    location='0.0 0.0 0.0'
-    intensity='1.0'
-    color='1.0 1.0 1.0'/>
+    location='0 0 0'
+    intensity='1'
+    color='1 1 1'/>
 ```
 
 ### Classic VRML Encoding
 
 ```vrml
 PointLight {
-  location  0.0 0.0 0.0
-  intensity 1.0
-  color     1.0 1.0 1.0
+  location 0 0 0
+  intensity 1
+  color 1 1 1
 }
 ```
 
@@ -82,18 +82,18 @@ A [DirectionalLight](/x_ite/components/lighting/directionallight/) node illumina
 
 ```x3d
 <DirectionalLight
-    direction='1.0 0.0 0.0'
-    intensity='1.0'
-    color='1.0 1.0 1.0'/>
+    direction='1 0 0'
+    intensity='1'
+    color='1 1 1'/>
 ```
 
 ### Classic VRML Encoding
 
 ```vrml
 DirectionalLight {
-  direction 1.0 0.0 0.0
-  intensity 1.0
-  color     1.0 1.0 1.0
+  direction 1 0 0
+  intensity 1
+  color 1 1 1
 }
 ```
 
@@ -115,10 +115,10 @@ A [SpotLight](/x_ite/components/lighting/spotlight/) node illuminates from a poi
 
 ```x3d
 <SpotLight
-    location='0.0 0.0 0.0'
-    direction='1.0 0.0 0.0'
-    intensity='1.0'
-    color='1.0 1.0 1.0'
+    location='0 0 0'
+    direction='1 0 0'
+    intensity='1'
+    color='1 1 1'
     cutOffAngle='0.785'/>
 ```
 
@@ -126,10 +126,10 @@ A [SpotLight](/x_ite/components/lighting/spotlight/) node illuminates from a poi
 
 ```vrml
 SpotLight {
-  location    0.0 0.0 0.0
-  direction   1.0 0.0 0.0
-  intensity   1.0
-  color       1.0 1.0 1.0
+  location 0 0 0
+  direction 1 0 0
+  intensity 1
+  color 1 1 1
   cutOffAngle 0.785
 }
 ```
@@ -162,7 +162,7 @@ SpotLight {
 SpotLight {
   ...
   cutOffAngle 0.785
-  beamWidth   0.52
+  beamWidth 0.52
 }
 ```
 

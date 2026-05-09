@@ -22,33 +22,38 @@ The HAnimJoint node belongs to the [HAnim](/x_ite/components/overview/#hanim) co
 ```
 + X3DNode
   + X3DChildNode
-    + X3DGroupingNode
+    + X3DGroupingNode (X3DBoundedObject)*
       + HAnimJoint
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFString | [in, out] | [name](#fields-name) | "" |
-| SFVec3f | [in, out] | [translation](#fields-translation) | 0 0 0  |
-| SFRotation | [in, out] | [rotation](#fields-rotation) | 0 0 1 0  |
-| SFVec3f | [in, out] | [scale](#fields-scale) | 1 1 1  |
-| SFRotation | [in, out] | [scaleOrientation](#fields-scaleOrientation) | 0 0 1 0  |
-| SFVec3f | [in, out] | [center](#fields-center) | 0 0 0  |
+| SFVec3f | [in, out] | [translation](#fields-translation) | 0 0 0 |
+| SFRotation | [in, out] | [rotation](#fields-rotation) | 0 0 1 0 |
+| SFVec3f | [in, out] | [scale](#fields-scale) | 1 1 1 |
+| SFRotation | [in, out] | [scaleOrientation](#fields-scaleOrientation) | 0 0 1 0 |
+| SFVec3f | [in, out] | [center](#fields-center) | 0 0 0 |
+| SFRotation | [in, out] | [limitOrientation](#fields-limitOrientation) | 0 0 1 0 |
 | MFFloat | [in, out] | [llimit](#fields-llimit) | [ 0, 0, 0 ] |
 | MFFloat | [in, out] | [ulimit](#fields-ulimit) | [ 0, 0, 0 ] |
-| SFRotation | [in, out] | [limitOrientation](#fields-limitOrientation) | 0 0 1 0  |
+| SFFloat | [in, out] | [minAngle](#fields-minAngle) | 0 |
+| SFFloat | [in, out] | [maxAngle](#fields-maxAngle) | 0 |
 | MFFloat | [in, out] | [stiffness](#fields-stiffness) | [ 0, 0, 0 ] |
 | MFInt32 | [in, out] | [skinCoordIndex](#fields-skinCoordIndex) | [ ] |
 | MFFloat | [in, out] | [skinCoordWeight](#fields-skinCoordWeight) | [ ] |
 | MFNode | [in, out] | [displacers](#fields-displacers) | [ ] |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
 | MFNode | [in] | [addChildren](#fields-addChildren) |  |
 | MFNode | [in] | [removeChildren](#fields-removeChildren) |  |
 | MFNode | [in, out] | [children](#fields-children) | [ ] |
@@ -132,6 +137,11 @@ Translation offset from origin of local coordinate system.
 
 - Usually HAnimJoint position is controlled by the *center* field, not the translation field.
 
+### SFRotation [in, out] **limitOrientation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
+{: #fields-limitOrientation }
+
+Orientation of upper/lower rotation limits, relative to HAnimJoint center.
+
 ### MFFloat [in, out] **llimit** [ 0, 0, 0 ] <small>(-∞,∞)</small>
 {: #fields-llimit }
 
@@ -160,10 +170,15 @@ Upper limit for maximum joint rotation in radians.
 
 - Field shall contain three values or else be an empty array. Behavior is undefined when array length is 1, 2, or greater than 3.
 
-### SFRotation [in, out] **limitOrientation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
-{: #fields-limitOrientation }
+### SFFloat [in, out] **minAngle** 0 <small>(-∞,∞)</small>
+{: #fields-minAngle }
 
-Orientation of upper/lower rotation limits, relative to HAnimJoint center.
+Input/Output field *minAngle*.
+
+### SFFloat [in, out] **maxAngle** 0 <small>(-∞,∞)</small>
+{: #fields-maxAngle }
+
+Input/Output field *maxAngle*.
 
 ### MFFloat [in, out] **stiffness** [ 0, 0, 0 ] <small>[0,1]</small>
 {: #fields-stiffness }
@@ -286,6 +301,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 - HAnimJoint may only get inserted as one (or more) root nodes of [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skeleton field, as a child of another HAnimJoint node, or as a USE node in the [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) joints field.
 - Visualization shapes for HAnimJoint nodes can be placed in child [HAnimSegment](/x_ite/components/hanim/hanimsegment/) or [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes.
+- [HAnim Architecture draft version 2.1](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-1/ISO-IEC19774-1v2.1/ISO-IEC19774-1v2.1-WD/Architecture/ObjectInterfaces.html#Joint)
 - [HAnim Specification](https://www.web3d.org/documents/specifications/19774/V2.0)
 - [HAnim Specification part 1, Joint](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/ObjectInterfaces.html#Joint)
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/HumanoidAnimation.pdf)
@@ -299,6 +315,13 @@ Grouping nodes contain an ordered list of *children* nodes.
 - For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen).
 - For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen).
 - The number of contained \<HAnimJoint USE='*' `containerField='joints'/>` nodes at top level of [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) needs to match the number of corresponding HAnimJoint node instances found within the preceding skeleton hierarchy.
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

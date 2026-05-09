@@ -27,6 +27,13 @@ function X3DViewpointNode (executionContext)
                           X3DConstants .inputOutput, "centerOfRotationOffset", new Fields .SFVec3f (),
                           X3DConstants .inputOutput, "fieldOfViewScale",       new Fields .SFFloat (1));
 
+   // Units
+
+   this ._nearDistance .setUnit ("length");
+   this ._farDistance  .setUnit ("length");
+
+   // Private properties
+
    this .descriptions         = [ ];
    this .userPosition         = new Vector3 ();
    this .userOrientation      = new Rotation4 ();
@@ -236,13 +243,13 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    {
       this .farDistance = value;
    },
-   getProjectionMatrix (renderObject)
+   getProjectionMatrix (renderObject, viewport)
    {
       const navigationInfoNode = renderObject .getNavigationInfo ();
 
       return this .getProjectionMatrixWithLimits (this .getNearDistance (navigationInfoNode),
                                                   this .getFarDistance (navigationInfoNode),
-                                                  renderObject .getLayer () .getViewport () .getRectangle ());
+                                                  viewport ?? renderObject .getLayer () .getViewport () .getRectangle ());
    },
    getCameraSpaceMatrix ()
    {

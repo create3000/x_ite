@@ -16,21 +16,22 @@ timezone: Europe/Berlin
 
 title: X_ITE X3D Browser # the main title
 
-tagline: Ready for X3Dv4 and WebXR! # it will display as the sub-title
+tagline: Ready for X3Dv4.1 and WebXR! # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   X_ITE X3D Browser and VRML Viewer, view and manipulate X3D, VRML, glTF and other 3D sources in HTML.
 
-x3d_latest_version: 4.0 # x3d latest version
+x3d_latest_version: 4.1 # x3d latest version
 
 # x_ite settings
-x_ite_latest_version: 12.1.2 # x_ite latest version
-x_ite_compressed_size: 304 # size in kb
-x_ite_js_integrity: sha384-IZBerPPzwqWCefI47vZpJUozqXCao/8ZC50GzjdVbI8BECOiSzJvUSuYqnKbDlW7
-x_ite_min_js_integrity: sha384-JP2RGRz1gznxAYx40gJi3eED8jJd90P1cFKZmpeFrZObPXwO83R0971+qWFz2OeT
-x_ite_mjs_integrity: sha384-kVRe0XONd/Bs1KRGwVv5m3SS8ATsrUQFjZsUm0H8eZDpVRhQBt6qhE9t4WsNh7e1
-x_ite_min_mjs_integrity: sha384-mZD7Yezyqbs7BBkXDwtHbaCx+OCQ9hrJpDxSHFb6bQjBYNhXoMAwYWiPUNx8F6YV
-x_ite_css_integrity: sha384-lXrPqLdlLQcIpIyC13HmQxmemEejRZBm4FMlfKVR0og+1HpcOZZXAFEP9H7perde
+x_ite_teaser: stars-dance-in-galaxy
+x_ite_latest_version: 15.0.0 # x_ite latest version
+x_ite_compressed_size: 298 # size in kb
+x_ite_js_integrity: sha384-B+I3YHz1wGVqCi6/aUwS0XkCxiAaceg6VC8PnKNC4vYt2CM37GDbWlf6ldpaYMvM
+x_ite_min_js_integrity: sha384-IFxjIGbMjxtWyQSQCIUiwlZZsV6+O5ZFTH/u20zvINFHhDuSO7l8MxeJ7NUruKkN
+x_ite_mjs_integrity: sha384-jie1JeVh0EhroKeWgbnPiiu7pssRaMObsUdyw9byTmR+y82JhENPDDMh6aAdvPiV
+x_ite_min_mjs_integrity: sha384-rEgQEqSy5RVicVrfjc59ajqVW4N1hOjbtirL0MkTmpyFiNZwnWN+9feGBPt+uXth
+x_ite_css_integrity: sha384-G5VkYadcDZzXSxhlmPc/5UIeAmrawVALMA8v3XFvzwZZVIB+S7yim8TA6OqjypLp
 
 # Fill in the protocol & hostname for your site.
 # e.g. 'https://username.github.io', note that it does not end with a '/'.
@@ -107,7 +108,7 @@ theme_mode: # [light | dark]
 cdn:
 
 # the avatar on sidebar, support local or CORS resources
-avatar: "assets/img/logo.png"
+avatar: "/assets/img/logo.png"
 
 # The URL of the site-wide social preview image used in SEO `og:image` meta tag.
 # It can be overridden by a customized `page.image` in front matter.

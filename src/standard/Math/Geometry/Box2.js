@@ -34,9 +34,7 @@ Object .assign (Box2 .prototype,
       {
          case 0:
          {
-            this .matrix .set (0, 0, 0,
-                               0, 0, 0,
-                               0, 0, 0);
+            this .matrix .assign (Matrix3 .ZERO);
 
             return this;
          }
@@ -120,8 +118,8 @@ Object .assign (Box2 .prototype,
       {
          const
             m = this .matrix,
-            x = m .X_AXIS,
-            y = m .Y_AXIS;
+            x = m .xAxis,
+            y = m .yAxis;
 
          p1 .assign (x) .add (y);
 
@@ -161,11 +159,11 @@ Object .assign (Box2 .prototype,
 
 Object .assign (Box2,
 {
-   Extents (min, max)
+   fromExtents (min, max)
    {
       return new Box2 () .setExtents (min, max);
    },
-   Points (points)
+   fromPoints (points)
    {
       const
          min = new Vector2 (Number .POSITIVE_INFINITY),

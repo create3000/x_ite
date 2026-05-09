@@ -3,7 +3,7 @@ title: IndexedFaceSet
 date: 2023-01-07
 nav: components-Geometry3D
 categories: [components, Geometry3D]
-tags: [IndexedFaceSet, Geometry3D]
+tags: [IndexedFaceSet, Geometry3D, VRML]
 ---
 <style>
 .post h3 {
@@ -30,7 +30,7 @@ The IndexedFaceSet node belongs to the [Geometry3D](/x_ite/components/overview/#
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFInt32 | [in] | [set_colorIndex](#fields-set_colorIndex) |  |
 | MFInt32 | [in] | [set_texCoordIndex](#fields-set_texCoordIndex) |  |
 | MFInt32 | [in] | [set_normalIndex](#fields-set_normalIndex) |  |
@@ -38,7 +38,7 @@ The IndexedFaceSet node belongs to the [Geometry3D](/x_ite/components/overview/#
 | SFBool | [ ] | [solid](#fields-solid) | TRUE |
 | SFBool | [ ] | [ccw](#fields-ccw) | TRUE |
 | SFBool | [ ] | [convex](#fields-convex) | TRUE |
-| SFFloat | [ ] | [creaseAngle](#fields-creaseAngle) | 0  |
+| SFFloat | [ ] | [creaseAngle](#fields-creaseAngle) | 0 |
 | SFBool | [ ] | [colorPerVertex](#fields-colorPerVertex) | TRUE |
 | SFBool | [ ] | [normalPerVertex](#fields-normalPerVertex) | TRUE |
 | MFInt32 | [ ] | [colorIndex](#fields-colorIndex) | [ ] |
@@ -46,12 +46,12 @@ The IndexedFaceSet node belongs to the [Geometry3D](/x_ite/components/overview/#
 | MFInt32 | [ ] | [normalIndex](#fields-normalIndex) | [ ] |
 | MFInt32 | [ ] | [coordIndex](#fields-coordIndex) | [ ] |
 | MFNode | [in, out] | [attrib](#fields-attrib) | [ ] |
-| SFNode | [in, out] | [fogCoord](#fields-fogCoord) | NULL  |
-| SFNode | [in, out] | [color](#fields-color) | NULL  |
-| SFNode | [in, out] | [texCoord](#fields-texCoord) | NULL  |
-| SFNode | [in, out] | [tangent](#fields-tangent) | NULL  |
-| SFNode | [in, out] | [normal](#fields-normal) | NULL  |
-| SFNode | [in, out] | [coord](#fields-coord) | NULL  |
+| SFNode | [in, out] | [fogCoord](#fields-fogCoord) | NULL |
+| SFNode | [in, out] | [color](#fields-color) | NULL |
+| SFNode | [in, out] | [texCoord](#fields-texCoord) | NULL |
+| SFNode | [in, out] | [tangent](#fields-tangent) | NULL |
+| SFNode | [in, out] | [normal](#fields-normal) | NULL |
+| SFNode | [in, out] | [coord](#fields-coord) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -159,8 +159,8 @@ The *convex* field is a hint to renderers whether all polygons in a shape are *c
 
 #### Hints
 
-- Concave is the opposite of *convex*. Interchange profile
-- Only *convex*=true IndexedFaceSets have guaranteed support.
+- Concave is the opposite of *convex*.
+- In Interchange profile only *convex*=true IndexedFaceSets have guaranteed support.
 - Select *convex*=false (i.e. concave) and solid=false (i.e. two-sided display) for greatest visibility of geometry.
 - [*convex* polygon](https://en.wikipedia.org/wiki/Convex_polygon)
 - [Tessellation](https://en.wikipedia.org/wiki/Tessellation)
@@ -172,11 +172,11 @@ The *convex* field is a hint to renderers whether all polygons in a shape are *c
 ### SFFloat [ ] **creaseAngle** 0 <small>[0,∞)</small>
 {: #fields-creaseAngle }
 
-*creaseAngle* defines angle (in radians) for determining whether adjacent polygons are drawn with sharp edges or smooth shading. If angle between normals of two adjacent polygons is less than *creaseAngle*, smooth shading is rendered across the shared line segment. Interchange profile
+*creaseAngle* defines angle (in radians) for determining whether adjacent polygons are drawn with sharp edges or smooth shading. If angle between normals of two adjacent polygons is less than *creaseAngle*, smooth shading is rendered across the shared line segment.
 
 #### Hints
 
-- Only 0 and π radians supported.
+- In Interchange profile only 0 and π radians supported.
 - *creaseAngle*=0 means render all edges sharply, *creaseAngle*=3.14159 means render all edges smoothly.
 - [Radian units for angular measure](https://en.wikipedia.org/wiki/Radian)
 
@@ -237,8 +237,8 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 - If *normalIndex* array is not provided, then [Normal](/x_ite/components/rendering/normal/) values are indexed according to the coordIndex field. Omitting duplicative *normalIndex* fields can reduce file size.
 - If normalPerVertex='false' then one index is provided for each polygon defined by the coordIndex array. No sentinel -1 values are included.
 - If normalPerVertex='true' then a matching set of indices is provided, each separated by sentinel -1, that exactly corresponds to individual values in the coordIndex array polygon definitions.
-- If no child [Normal](/x_ite/components/rendering/normal/) node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices. Interchange profile
-- This field may be ignored, applying the default value regardless.
+- If no child [Normal](/x_ite/components/rendering/normal/) node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
+- In Interchange profile this field may be ignored, applying the default value regardless.
 
 ### MFInt32 [ ] **coordIndex** [ ] <small>[0,∞) or -1</small>
 {: #fields-coordIndex }
@@ -256,7 +256,7 @@ List of texture-coordinate indices mapping attached texture to corresponding coo
 ### MFNode [in, out] **attrib** [ ] <small>[X3DVertexAttributeNode]</small>
 {: #fields-attrib }
 
-Single contained [FloatVertexAttribute](/x_ite/components/shaders/floatvertexattribute/) node that can specify list of per-vertex attribute information for programmable shaders.
+Optional single contained [FloatVertexAttribute](/x_ite/components/shaders/floatvertexattribute/) node that can specify list of per-vertex attribute information for programmable shaders.
 
 #### Hint
 
@@ -265,27 +265,27 @@ Single contained [FloatVertexAttribute](/x_ite/components/shaders/floatvertexatt
 ### SFNode [in, out] **fogCoord** NULL <small>[FogCoordinate]</small>
 {: #fields-fogCoord }
 
-Single contained [FogCoordinate](/x_ite/components/environmentaleffects/fogcoordinate/) node that can specify depth parameters for fog in corresponding geometry.
+Optional single contained [FogCoordinate](/x_ite/components/environmentaleffects/fogcoordinate/) node that can specify depth parameters for fog in corresponding geometry.
 
 ### SFNode [in, out] **color** NULL <small>[X3DColorNode]</small>
 {: #fields-color }
 
-Single contained [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) node that can specify *color* values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
+Optional single contained [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) node that can specify *color* values applied to corresponding vertices according to colorIndex and colorPerVertex fields.
 
 ### SFNode [in, out] **texCoord** NULL <small>[X3DTextureCoordinateNode]</small>
 {: #fields-texCoord }
 
-Single contained [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/), [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) or [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) node that can specify coordinates for texture mapping onto corresponding geometry.
+Optional single contained [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/), [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) or [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) node that can specify coordinates for texture mapping onto corresponding geometry.
 
 ### SFNode [in, out] **tangent** NULL <small>[Tangent]</small> <small class="blue">non-standard</small>
 {: #fields-tangent }
 
-Input/Output field *tangent*. If there is no [Tangent](/x_ite/components/rendering/tangent/) node, the MikkTSpace algorithm is used to generate tangent vectors.
+Optional single contained [Tangent](/x_ite/components/rendering/tangent/) node that defines a set of 3D surface-normal vectors that apply either to a sibling [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node. [Tangent](/x_ite/components/rendering/tangent/) values are perpendicular directions that are used per-polygon or per-vertex when computing lighting and shading for advanced physically based rendering (PBR) effects.
 
 ### SFNode [in, out] **normal** NULL <small>[X3DNormalNode]</small>
 {: #fields-normal }
 
-Single contained [Normal](/x_ite/components/rendering/normal/) node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
+Optional single contained [Normal](/x_ite/components/rendering/normal/) node that can specify perpendicular vectors for corresponding vertices to support rendering computations, applied according to the normalPerVertex field.
 
 #### Hint
 
@@ -298,7 +298,7 @@ Single contained [Normal](/x_ite/components/rendering/normal/) node that can spe
 ### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
 {: #fields-coord }
 
-Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node that can specify a list of vertex values.
+Optional single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node that can specify a list of vertex values.
 
 ## Advice
 
@@ -315,7 +315,7 @@ Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [Coord
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geometry3D/IndexedFaceSet/IndexedFaceSet.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Geometry3D/IndexedFaceSet/IndexedFaceSet.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Geometry3D/IndexedFaceSet/screenshot.avif" alt="IndexedFaceSet"/>
 </x3d-canvas>
 
@@ -323,6 +323,14 @@ Single contained [Coordinate](/x_ite/components/rendering/coordinate/) or [Coord
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Geometry3D/IndexedFaceSet/IndexedFaceSet.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of IndexedFaceSet Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#IndexedFaceSet)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

@@ -49,15 +49,17 @@ Object .assign (Object .setPrototypeOf (LoadSensor .prototype, X3DNetworkSensorN
    },
    set_timeOut__ ()
    {
-      if (this ._isActive .getValue ())
-      {
-         this .clearTimeout ();
+      if (!this ._isActive .getValue ())
+         return;
 
-         this .aborted = false;
+      const timeOut = this ._timeOut .getValue ();
 
-         if (this ._timeOut .getValue () > 0)
-            this .timeOutId = setTimeout (this .abort .bind (this), this ._timeOut .getValue () * 1000);
-      }
+      this .clearTimeout ();
+
+      this .aborted = false;
+
+      if (timeOut > 0)
+         this .timeOutId = setTimeout (this .abort .bind (this), timeOut * 1000);
    },
    set_children__ ()
    {
@@ -65,18 +67,10 @@ Object .assign (Object .setPrototypeOf (LoadSensor .prototype, X3DNetworkSensorN
    },
    set_loadState__ (urlObject)
    {
-      switch (urlObject .checkLoadState ())
-      {
-         case X3DConstants .NOT_STARTED_STATE:
-            break;
-         case X3DConstants .IN_PROGRESS_STATE:
-         case X3DConstants .COMPLETE_STATE:
-         case X3DConstants .FAILED_STATE:
-         {
-            this .count ();
-            break;
-         }
-      }
+      if (urlObject .checkLoadState () === X3DConstants .NOT_STARTED_STATE)
+         return;
+
+      this .count ();
    },
    count ()
    {
@@ -90,8 +84,8 @@ Object .assign (Object .setPrototypeOf (LoadSensor .prototype, X3DNetworkSensorN
 
          for (const urlObject of urlObjects)
          {
-            complete += urlObject .checkLoadState () == X3DConstants .COMPLETE_STATE;
-            failed   += urlObject .checkLoadState () == X3DConstants .FAILED_STATE;
+            complete += urlObject .checkLoadState () === X3DConstants .COMPLETE_STATE;
+            failed   += urlObject .checkLoadState () === X3DConstants .FAILED_STATE;
          }
 
          const
@@ -144,7 +138,7 @@ Object .assign (Object .setPrototypeOf (LoadSensor .prototype, X3DNetworkSensorN
    {
       this .remove ();
 
-      if (! this ._enabled .getValue ())
+      if (!this ._enabled .getValue ())
          return;
 
       const urlObjects = this .urlObjects;
@@ -154,12 +148,11 @@ Object .assign (Object .setPrototypeOf (LoadSensor .prototype, X3DNetworkSensorN
          const urlObject = X3DCast (X3DConstants .X3DUrlObject, node);
 
          if (urlObject)
-         {
             urlObjects .push (urlObject);
-
-            urlObject ._loadState .addInterest ("set_loadState__", this, urlObject);
-         }
       }
+
+      for (const urlObject of urlObjects)
+         urlObject ._loadState .addInterest ("set_loadState__", this, urlObject);
 
       this .count ();
    },

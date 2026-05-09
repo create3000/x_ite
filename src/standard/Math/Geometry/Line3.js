@@ -201,7 +201,7 @@ Object .assign (Line3 .prototype,
 
 Object .assign (Line3,
 {
-   Points (point1, point2)
+   fromPoints (point1, point2)
    {
       const line = Object .create (Line3 .prototype);
       line .point     = point1 .copy ();

@@ -3,7 +3,7 @@ title: Text
 date: 2023-01-07
 nav: components-Text
 categories: [components, Text]
-tags: [Text, Text]
+tags: [Text, Text, VRML]
 ---
 <style>
 .post h3 {
@@ -29,15 +29,15 @@ The Text node belongs to the [Text](/x_ite/components/overview/#text) component 
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFString | [in, out] | [string](#fields-string) | [ ] |
 | MFFloat | [in, out] | [length](#fields-length) | [ ] |
-| SFFloat | [in, out] | [maxExtent](#fields-maxExtent) | 0  |
+| SFFloat | [in, out] | [maxExtent](#fields-maxExtent) | 0 |
 | SFBool | [ ] | [solid](#fields-solid) | FALSE |
 | SFVec3f | [out] | [origin](#fields-origin) |  |
 | SFVec2f | [out] | [textBounds](#fields-textBounds) |  |
 | MFVec2f | [out] | [lineBounds](#fields-lineBounds) |  |
-| SFNode | [in, out] | [fontStyle](#fields-fontStyle) | NULL  |
+| SFNode | [in, out] | [fontStyle](#fields-fontStyle) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -59,7 +59,7 @@ Single or multiple *string* values to present as Text. Each value in the *string
 - MFString arrays can have multiple values, so separate each individual *string* by quote marks.
 - Strings can contain quote marks by first escaping them with a backslash example: "say \"hello\" please"
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
-- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n) [Example](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter02-GeometryPrimitives/TextIndex.html) [Example](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter02-GeometryPrimitives/TextSpecialCharactersIndex.html)
+- [Supports supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n) [Example](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter02-GeometryPrimitives/TextIndex.html) [Example](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter02-GeometryPrimitives/TextSpecialCharactersIndex.html)
 
 ### MFFloat [in, out] **length** [ ] <small>[0,∞)</small>
 {: #fields-length }
@@ -128,8 +128,8 @@ The *fontStyle* field can contain a [FontStyle](/x_ite/components/text/fontstyle
 ### Hints
 
 - [String (computer science)](https://en.wikipedia.org/wiki/String_(computer_science))
-- Full internationalization (i18n) and localization (l10n) features are available for any written language.
-- [Relates to Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
+- Full Internationalization (i18n) and Localization (l10n) features are available for any written language.
+- [Supports supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
 - Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 - For advanced extensibility, authors can substitute a type-matched ProtoInstance node (with correct containerField value) for contained node content.
 
@@ -139,7 +139,7 @@ The *fontStyle* field can contain a [FontStyle](/x_ite/components/text/fontstyle
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Text/Text/Text.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Text/Text/Text.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Text/Text/screenshot.avif" alt="Text"/>
 </x3d-canvas>
 
@@ -147,7 +147,15 @@ The *fontStyle* field can contain a [FontStyle](/x_ite/components/text/fontstyle
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Text/Text/Text.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of Text Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/text.html#Text)
 - [Browser option »TextCompression«](/x_ite/reference/browser-services/#browser-options)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

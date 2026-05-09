@@ -31,7 +31,7 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureCoordinateNode .prototyp
    },
    setShaderUniforms (gl, shaderObject, channel = 0)
    {
-      gl .uniform1i (shaderObject .x3d_TextureCoordinateGeneratorMode [channel], 0);
+      gl .uniform1i (shaderObject .x3d_TextureCoordinateGenerator [channel] .mode, 0);
    },
 });
 

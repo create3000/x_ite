@@ -29,9 +29,9 @@ The Disk2D node belongs to the [Geometry2D](/x_ite/components/overview/#geometry
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFFloat | [ ] | [innerRadius](#fields-innerRadius) | 0  |
-| SFFloat | [ ] | [outerRadius](#fields-outerRadius) | 1  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFFloat | [ ] | [innerRadius](#fields-innerRadius) | 0 |
+| SFFloat | [ ] | [outerRadius](#fields-outerRadius) | 1 |
 | SFBool | [ ] | [solid](#fields-solid) | FALSE |
 {: .fields }
 
@@ -98,13 +98,20 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 
 ## Example
 
-<x3d-canvas class="xr-button-br" src="https://create3000.github.io/media/examples/Geometry2D/Disk2D/Disk2D.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Geometry2D/Disk2D/Disk2D.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Geometry2D/Disk2D/screenshot.avif" alt="Disk2D"/>
 </x3d-canvas>
 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Geometry2D/Disk2D/Disk2D.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Geometry2D/Disk2D/Disk2D.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

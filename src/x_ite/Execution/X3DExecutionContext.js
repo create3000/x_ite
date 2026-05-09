@@ -33,15 +33,17 @@ function X3DExecutionContext (executionContext, outerNode = null, browser = exec
    this .addChildObjects (X3DConstants .initializeOnly, "rootNodes",          new Fields .MFNode (),
                           X3DConstants .inputOutput,    "countPrimitives",    new Fields .SFBool (true),
                           X3DConstants .outputOnly,     "worldInfos",         new Fields .MFNode (),
-                          X3DConstants .outputOnly,     "sceneGraph_changed", new Fields .SFTime ())
+                          X3DConstants .outputOnly,     "sceneGraph_changed", new Fields .SFTime (),
+                          X3DConstants .outputOnly,     "bbox_changed",       new Fields .SFTime ())
 
    this ._rootNodes .setPrivate (false);
    this ._rootNodes .collectCloneCount = () => 1;
 
    if (executionContext)
    {
-      this ._countPrimitives .addReference (executionContext ._countPrimitives);
+      this ._countPrimitives    .addReference     (executionContext ._countPrimitives);
       this ._sceneGraph_changed .addFieldInterest (executionContext ._sceneGraph_changed);
+      this ._bbox_changed       .addFieldInterest (executionContext ._bbox_changed);
    }
 
    this [_outerNode]       = outerNode;
@@ -70,6 +72,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       {
          this ._countPrimitives .removeReference (this .getExecutionContext () ._countPrimitives);
          this ._sceneGraph_changed .removeFieldInterest (this .getExecutionContext () ._sceneGraph_changed);
+         this ._bbox_changed       .removeFieldInterest (this .getExecutionContext () ._bbox_changed);
       }
 
       X3DBaseNode .prototype .setExecutionContext .call (this, executionContext);
@@ -78,6 +81,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       {
          this ._countPrimitives .addReference (executionContext ._countPrimitives);
          this ._sceneGraph_changed .addFieldInterest (executionContext ._sceneGraph_changed);
+         this ._bbox_changed       .addFieldInterest (executionContext ._bbox_changed);
       }
    },
    getOuterNode ()
@@ -295,7 +299,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    {
       return getUniqueName (this [_namedNodes], name);
    },
-   addImportedNode (inlineNode, exportedName, importedName = exportedName)
+   addImportedNode (inlineNode, exportedName, importedName = exportedName, description = "")
    {
       exportedName = String (exportedName);
       importedName = String (importedName);
@@ -303,13 +307,14 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       if (this [_importedNodes] .has (importedName))
          throw new Error (`Couldn't add imported node: imported name '${importedName}' already in use.`);
 
-      this .updateImportedNode (inlineNode, exportedName, importedName);
+      this .updateImportedNode (inlineNode, exportedName, importedName, description);
    },
-   updateImportedNode (inlineNode, exportedName, importedName)
+   updateImportedNode (inlineNode, exportedName, importedName, description = "")
    {
       inlineNode   = X3DCast (X3DConstants .Inline, inlineNode, false);
       exportedName = String (exportedName);
       importedName = importedName === undefined ? exportedName : String (importedName);
+      description  = String (description);
 
       if (!inlineNode)
          throw new Error ("Node must be of type Inline node.");
@@ -327,11 +332,11 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       this .removeImportedNode (importedName);
 
-      const importedNode = new X3DImportedNode (this, inlineNode, exportedName, importedName);
+      const importedNode = new X3DImportedNode (this, inlineNode, exportedName, importedName, description);
 
       this [_importedNodes] .add (importedName, importedNode);
 
-      importedNode .getExportedNode () .update ();
+      importedNode .updateExportedNode ();
 
       this ._sceneGraph_changed = Date .now () / 1000;
    },
@@ -729,7 +734,6 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
    toVRMLStream (generator)
    {
       generator .PushExecutionContext (this);
-      generator .EnterScope ();
       generator .NamedNodes (this .getNamedNodes ());
       generator .ImportedNodes (this .getImportedNodes ());
 
@@ -749,17 +753,17 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       for (const [i, rootNode] of rootNodes .entries ())
       {
-         generator .string += generator .Indent ();
+         generator .Indent ();
 
          if (rootNode)
             rootNode .toVRMLStream (generator);
          else
-            generator .string += "NULL";
+            generator .NULL ();
 
-         generator .string += generator .TidyBreak ();
+         generator .TidyBreak ();
 
          if (i !== last)
-            generator .string += generator .TidyBreak ();
+            generator .TidyBreak ();
       }
 
       // Output imported nodes
@@ -768,7 +772,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       if (importedNodes .length)
       {
-         generator .string += generator .TidyBreak ();
+         generator .TidyBreak ();
 
          importedNodes .toVRMLStream (generator);
       }
@@ -779,18 +783,16 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       if (routes .length)
       {
-         generator .string += generator .TidyBreak ();
+         generator .TidyBreak ();
 
          routes .toVRMLStream (generator);
       }
 
-      generator .LeaveScope ();
       generator .PopExecutionContext ();
    },
    toXMLStream (generator)
    {
       generator .PushExecutionContext (this);
-      generator .EnterScope ();
       generator .NamedNodes (this .getNamedNodes ());
       generator .ImportedNodes (this .getImportedNodes ());
 
@@ -810,7 +812,7 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       {
          rootNodes .toXMLStream (generator);
 
-         generator .string += generator .TidyBreak ();
+         generator .TidyBreak ();
       }
 
       // Output imported nodes
@@ -821,13 +823,11 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
 
       this .getRoutes () .toXMLStream (generator);
 
-      generator .LeaveScope ();
       generator .PopExecutionContext ();
    },
    toJSONStream (generator)
    {
       generator .PushExecutionContext (this);
-      generator .EnterScope ();
       generator .NamedNodes (this .getNamedNodes ());
       generator .ImportedNodes (this .getImportedNodes ());
 
@@ -843,8 +843,8 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          if (comma)
             generator .string += ',';
 
-         generator .string += generator .TidyBreak ();
-         generator .string += generator .Indent ();
+         generator .TidyBreak ();
+         generator .Indent ();
 
          if (rootNode)
             rootNode .toJSONStream (generator);
@@ -857,7 +857,6 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
       this .getImportedNodes () .toJSONStream (generator, comma);
       this .getRoutes ()        .toJSONStream (generator, comma);
 
-      generator .LeaveScope ();
       generator .PopExecutionContext ();
 
       return comma;

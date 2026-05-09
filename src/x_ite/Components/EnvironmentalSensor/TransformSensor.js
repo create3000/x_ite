@@ -4,6 +4,7 @@ import FieldDefinitionArray       from "../../Base/FieldDefinitionArray.js";
 import X3DNode                    from "../Core/X3DNode.js";
 import X3DEnvironmentalSensorNode from "./X3DEnvironmentalSensorNode.js";
 import X3DConstants               from "../../Base/X3DConstants.js";
+import X3DCast                    from "../../Base/X3DCast.js";
 import Vector3                    from "../../../standard/Math/Numbers/Vector3.js";
 import Rotation4                  from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4                    from "../../../standard/Math/Numbers/Matrix4.js";
@@ -90,33 +91,8 @@ Object .assign (Object .setPrototypeOf (TransformSensor .prototype, X3DEnvironme
    },
    set_targetObject__ ()
    {
-      this .targetObjectNode = null;
-
-      try
-      {
-         const
-            node = this ._targetObject .getValue () .getInnerNode (),
-            type = node .getType ();
-
-         for (let t = type .length - 1; t >= 0; -- t)
-         {
-            switch (type [t])
-            {
-               case X3DConstants .X3DGroupingNode:
-               case X3DConstants .X3DShapeNode:
-               {
-                  this .targetObjectNode = node;
-                  break;
-               }
-               default:
-                  continue;
-            }
-
-            break;
-         }
-      }
-      catch
-      { }
+      this .targetObjectNode = X3DCast (X3DConstants .X3DGroupingNode, this ._targetObject)
+         ?? X3DCast (X3DConstants .X3DShapeNode, this ._targetObject);
 
       this .set_enabled__ ();
    },
@@ -180,35 +156,30 @@ Object .assign (Object .setPrototypeOf (TransformSensor .prototype, X3DEnvironme
          targetMatrices .length = 0;
       };
    })(),
-   intersects: (() =>
+   intersects ()
    {
-      const infinity = new Vector3 (-1);
+      const
+         modelMatrices  = this .modelMatrices,
+         targetMatrices = this .targetMatrices,
+         always         = this ._size .getValue () .equals (Vector3 .NEGATIVE_ONE);
 
-      return function ()
+      for (const modelMatrix of modelMatrices)
       {
-         const
-            modelMatrices  = this .modelMatrices,
-            targetMatrices = this .targetMatrices,
-            always         = this ._size .getValue () .equals (infinity);
+         const invModelMatrix = modelMatrix .inverse ();
 
-         for (const modelMatrix of modelMatrices)
+         for (const targetMatrix of targetMatrices)
          {
-            const invModelMatrix = modelMatrix .inverse ();
+            const matrix = targetMatrix .multRight (invModelMatrix);
 
-            for (const targetMatrix of targetMatrices)
+            if (always || this .containsPoint (matrix .origin))
             {
-               const matrix = targetMatrix .multRight (invModelMatrix);
-
-               if (always || this .containsPoint (matrix .origin))
-               {
-                  return matrix;
-               }
+               return matrix;
             }
          }
+      }
 
-         return null;
-      };
-   })(),
+      return null;
+   },
    containsPoint (point)
    {
       const

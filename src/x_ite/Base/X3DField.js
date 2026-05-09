@@ -73,7 +73,7 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    },
    getType ()
    {
-      return X3DConstants [this .constructor .typeName];
+      return this .constructor .type;
    },
    setAccessType (value)
    {
@@ -333,17 +333,21 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
    {
       return this [_documentation];
    },
-   fromString (string, scene)
+   fromString (value, scene)
    {
-      this .fromVRMLString (string, scene);
+      this .fromVRMLString (value, scene);
    },
-   fromVRMLString (string, scene)
+   fromVRMLString (value, scene)
    {
       // Function will be overridden in VRMLParser.
    },
-   fromXMLString (string, scene)
+   fromXMLString (value, scene)
    {
       // Function will be overridden in XMLParser.
+   },
+   fromJSONString (value, scene)
+   {
+      this .fromVRMLString (value, scene);
    },
    dispose ()
    {
@@ -370,5 +374,83 @@ Object .assign (Object .setPrototypeOf (X3DField .prototype, X3DChildObject .pro
 
 for (const key of Object .keys (X3DField .prototype))
    Object .defineProperty (X3DField .prototype, key, { enumerable: false });
+
+Object .defineProperties (X3DField,
+{
+   addStaticProperties:
+   {
+      value (constructor, typeName)
+      {
+         Object .defineProperties (constructor,
+         {
+            type:
+            {
+               value: X3DConstants [typeName],
+               enumerable: true,
+            },
+            typeName:
+            {
+               value: typeName,
+               enumerable: true,
+            },
+            fromValue:
+            {
+               value (value)
+               {
+                  const field = Object .create (this .prototype);
+
+                  X3DField .call (field, value);
+
+                  return field;
+               },
+            },
+            fromString:
+            {
+               value (value, scene)
+               {
+                  const field = new this ();
+
+                  field .fromString (value, scene);
+
+                  return field;
+               },
+            },
+            fromVRMLString:
+            {
+               value (value, scene)
+               {
+                  const field = new this ();
+
+                  field .fromVRMLString (value, scene);
+
+                  return field;
+               },
+            },
+            fromXMLString:
+            {
+               value (value, scene)
+               {
+                  const field = new this ();
+
+                  field .fromXMLString (value, scene);
+
+                  return field;
+               },
+            },
+            fromJSONString:
+            {
+               value (value, scene)
+               {
+                  const field = new this ();
+
+                  field .fromJSONString (value, scene);
+
+                  return field;
+               },
+            },
+         });
+      },
+   },
+})
 
 export default X3DField;

@@ -85,6 +85,11 @@ Object .assign (X3DTextGeometry .prototype,
    },
    update ()
    {
+      this .configure ();
+      this .build ();
+   },
+   configure ()
+   {
       const
          text      = this .text,
          fontStyle = this .fontStyle,
@@ -637,8 +642,6 @@ Object .assign (X3DTextGeometry .prototype,
 
       return glyphs;
    },
-   traverse (type, renderObject)
-   { },
 });
 
 export default X3DTextGeometry;

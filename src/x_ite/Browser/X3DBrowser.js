@@ -75,6 +75,11 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       X3DBrowserContext .prototype .initialize .call (this);
 
+      this .getCanvas () .on ("webglcontextlost", event =>
+      {
+         this .callBrowserCallbacks (X3DConstants .CONNECTION_ERROR);
+      });
+
       const scene = new X3DScene (this);
 
       scene .setup ();
@@ -360,7 +365,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
             if (!(component instanceof ComponentInfo))
                throw new Error ("Couldn't create scene: component must be of type ComponentInfo.");
 
-            scene .addComponent (component);
+            scene .updateComponent (component);
          }
       }
 
@@ -616,7 +621,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
                }
                else
                {
-                  this .callBrowserCallbacks (X3DConstants .CONNECTION_ERROR);
+                  this .callBrowserCallbacks (X3DConstants .INITIALIZED_ERROR);
                   this .callBrowserEventHandler ("error");
 
                   setTimeout (() =>
@@ -931,7 +936,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    print (... args)
    {
-      const string = args .map (arg => String (arg)) .join (" ");
+      const string = args .map (String) .join (" ");
 
       console .log (string);
 
@@ -940,7 +945,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    println (... args)
    {
-      const string = args .map (arg => String (arg)) .join (" ");
+      const string = args .map (String) .join (" ");
 
       console .log (string);
 
@@ -958,6 +963,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    toJSONStream (generator)
    {
       this .currentScene .toJSONStream (generator);
+   },
+   loseContext ()
+   {
+      this .getContext () .getExtension ("WEBGL_lose_context") .loseContext ();
    },
    dispose ()
    {

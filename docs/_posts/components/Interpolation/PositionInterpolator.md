@@ -3,7 +3,7 @@ title: PositionInterpolator
 date: 2023-01-07
 nav: components-Interpolation
 categories: [components, Interpolation]
-tags: [PositionInterpolator, Interpolation]
+tags: [PositionInterpolator, Interpolation, VRML]
 ---
 <style>
 .post h3 {
@@ -30,7 +30,7 @@ The PositionInterpolator node belongs to the [Interpolation](/x_ite/components/o
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFFloat | [in] | [set_fraction](#fields-set_fraction) |  |
 | MFFloat | [in, out] | [key](#fields-key) | [ ] |
 | MFVec3f | [in, out] | [keyValue](#fields-keyValue) | [ ] |
@@ -109,7 +109,7 @@ Linearly interpolated output value determined by current key time and correspond
 
 ## Example
 
-<x3d-canvas class="xr-button-tr" src="https://create3000.github.io/media/examples/Interpolation/PositionInterpolator/PositionInterpolator.x3d" contentScale="auto" update="auto">
+<x3d-canvas class="buttons-tr" src="https://create3000.github.io/media/examples/Interpolation/PositionInterpolator/PositionInterpolator.x3d" contentScale="auto" update="auto">
   <img src="https://create3000.github.io/media/examples/Interpolation/PositionInterpolator/screenshot.avif" alt="PositionInterpolator"/>
 </x3d-canvas>
 
@@ -117,6 +117,14 @@ Linearly interpolated output value determined by current key time and correspond
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Interpolation/PositionInterpolator/PositionInterpolator.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of PositionInterpolator Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/interpolators.html#PositionInterpolator)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

@@ -75,17 +75,17 @@ in vec3 vertex;
 // but assigning it to a global variable in a top level function fixes this issue.
 bool frontFacing;
 
-#pragma X3D include "../pbr/ToneMapping.glsl"
-#pragma X3D include "Texture.glsl"
-#pragma X3D include "Normal.glsl"
-#pragma X3D include "ClipPlanes.glsl"
-#pragma X3D include "Point.glsl"
-#pragma X3D include "Stipple.glsl"
-#pragma X3D include "Hatch.glsl"
-#pragma X3D include "Fog.glsl"
+#include <ToneMapping>
+#include <Texture>
+#include <Normal>
+#include <ClipPlanes>
+#include <Point>
+#include <Stipple>
+#include <Hatch>
+#include <Fog>
 
 vec4
-getMaterialColor ();
+getMaterialColor (const in vec4 fragCoord);
 
 #if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
 // https://learnopengl.com/Guest-Articles/2020/OIT/Weighted-Blended
@@ -110,22 +110,20 @@ main ()
    #endif
 
    #if defined (X3D_GEOMETRY_1D) && defined (X3D_STYLE_PROPERTIES)
-      stipple ();
+      stipple (gl_FragCoord);
    #endif
 
    #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
-      setPointTexCoords ();
+      setPointTexCoords (gl_PointCoord);
    #elif defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
       setTexCoords ();
    #endif
 
-   vec4 finalColor = getMaterialColor ();
+   vec4 finalColor = getMaterialColor (gl_FragCoord);
 
    #if defined (X3D_ALPHA_MODE_OPAQUE)
       finalColor .a = 1.0;
-   #endif
-
-   #if defined (X3D_ALPHA_MODE_MASK)
+   #elif defined (X3D_ALPHA_MODE_MASK)
       if (finalColor .a < x3d_AlphaCutoff)
          discard;
 
@@ -133,18 +131,18 @@ main ()
    #endif
 
    #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
-      finalColor = getPointColor (finalColor);
+      finalColor = getPointColor (finalColor, gl_PointCoord);
    #endif
 
    #if (defined (X3D_GEOMETRY_2D) || defined (X3D_GEOMETRY_3D)) && defined (X3D_STYLE_PROPERTIES)
-      finalColor = getHatchColor (finalColor);
+      finalColor = getHatchColor (finalColor, gl_FragCoord);
    #endif
 
    #if defined (X3D_FOG)
       finalColor .rgb = getFogColor (finalColor .rgb);
    #endif
 
-   #if !defined (X3D_VOLUME_SCATTER_PASS)
+   #if !defined (X3D_LINEAR_OUTPUT)
       finalColor .rgb = toneMap (finalColor .rgb);
    #endif
 

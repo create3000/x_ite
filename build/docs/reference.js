@@ -23,7 +23,7 @@ Array .prototype .unique ??= function ()
    return Array .from (new Set (this));
 };
 
-function cmpi (a, b)
+function case_insensitive (a, b)
 {
    return a .toLowerCase () .localeCompare (b .toLowerCase ());
 }
@@ -43,7 +43,7 @@ function ConcreteNodesConstants ()
    const string = `<!-- CONCRETE NODE TYPES START -->
 <!-- DO NOT EDIT THIS SECTION, THIS SECTION IS AUTOMATICALLY GENERATED. -->
 
-${Array .from (concreteNodes .keys ()) .concat (experimentalConcreteNodes) .unique () .sort (cmpi) .map (typeName => `- ${typeName}`) .join ("\n")}
+${Array .from (concreteNodes .keys ()) .concat (experimentalConcreteNodes) .unique () .sort (case_insensitive) .map (typeName => `- ${typeName}`) .join ("\n")}
 
 <!-- CONCRETE NODE TYPES END -->`;
 
@@ -55,7 +55,7 @@ function AbstractNodesConstants ()
    const string = `<!-- ABSTRACT NODE TYPES START -->
 <!-- DO NOT EDIT THIS SECTION, THIS SECTION IS AUTOMATICALLY GENERATED. -->
 
-${Array .from (abstractNodes .keys ()) .concat (experimentalAbstractNodes) .unique () .sort (cmpi) .map (typeName => `- ${typeName}`) .join ("\n")}
+${Array .from (abstractNodes .keys ()) .concat (experimentalAbstractNodes) .unique () .sort (case_insensitive) .map (typeName => `- ${typeName}`) .join ("\n")}
 
 <!-- ABSTRACT NODE TYPES END -->`;
 

@@ -238,6 +238,7 @@ Object .assign (Object .setPrototypeOf (CADFace .prototype, X3DProductStructureC
             this .collisionObject ?.traverse (type, renderObject);
             return;
          }
+         case TraverseType .DEPTH:
          case TraverseType .SHADOW:
          {
             this .shadowObject ?.traverse (type, renderObject);

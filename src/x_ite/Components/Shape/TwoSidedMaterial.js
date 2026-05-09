@@ -13,11 +13,13 @@ import Algorithm            from "../../../standard/Math/Algorithm.js";
 
 function TwoSidedMaterial (executionContext)
 {
-   console .warn ("TwoSidedMaterial is depreciated, please use Appearance backMaterial field instead.");
+   console .warn ("TwoSidedMaterial is deprecated, please use Appearance backMaterial field instead.");
 
    X3DMaterialNode .call (this, executionContext);
 
    this .addType (X3DConstants .TwoSidedMaterial);
+
+   // Private properties
 
    this .diffuseColorArray  = new Float32Array (3);
    this .specularColorArray = new Float32Array (3);

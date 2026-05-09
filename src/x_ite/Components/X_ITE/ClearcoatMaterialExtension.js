@@ -51,13 +51,13 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
    },
    set_clearcoat__ ()
    {
-      this .clearcoat = Math .max (this ._clearcoat .getValue (), 0);
+      this .clearcoat = Algorithm .clamp (this ._clearcoat .getValue (), 0, 1);
    },
    set_clearcoatTexture__ ()
    {
       this .clearcoatTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._clearcoatTexture);
 
-      this .setTexture (0, this .clearcoatTextureNode);
+      this .addTexture (0, this .clearcoatTextureNode);
    },
    set_clearcoatRoughness__ ()
    {
@@ -67,13 +67,13 @@ Object .assign (Object .setPrototypeOf (ClearcoatMaterialExtension .prototype, X
    {
       this .clearcoatRoughnessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._clearcoatRoughnessTexture);
 
-      this .setTexture (1, this .clearcoatRoughnessTextureNode);
+      this .addTexture (1, this .clearcoatRoughnessTextureNode);
    },
    set_clearcoatNormalTexture__ ()
    {
       this .clearcoatNormalTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._clearcoatNormalTexture);
 
-      this .setTexture (2, this .clearcoatNormalTextureNode);
+      this .addTexture (2, this .clearcoatNormalTextureNode);
    },
    getExtensionKey ()
    {

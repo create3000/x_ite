@@ -12,26 +12,26 @@ import Color3      from "../../standard/Math/Numbers/Color3.js";
 // Lexical elements
 const Grammar = Expressions ({
    // General
-   whitespaces: /[\x20\n\t\r,]+/gy,
-   whitespacesNoLineTerminator: /[\x20\t]+/gy,
-   comment: /;.*?(?=[\n\r]|$)/gy,
-   untilEndOfLine: /[^\r\n]+/gy,
+   whitespaces: /[\x20\n\t\r,]+/y,
+   whitespacesNoLineTerminator: /[\x20\t]+/y,
+   comment: /;[^\r\n]*(?=[\r\n]|$)/y,
+   untilEndOfLine: /[^\r\n]+/y,
 
    // Keywords
-   solid: /solid/gy,
-   facet: /facet/gy,
-   normal: /normal/gy,
-   outer: /outer/gy,
-   loop: /loop/gy,
-   vertex: /vertex/gy,
-   endloop: /endloop/gy,
-   endfacet: /endfacet/gy,
-   endsolid: /endsolid/gy,
+   solid: /\bsolid\b/y,
+   facet: /\bfacet\b/y,
+   normal: /\bnormal\b/y,
+   outer: /\bouter\b/y,
+   loop: /\bloop\b/y,
+   vertex: /\bvertex\b/y,
+   endloop: /\bendloop\b/y,
+   endfacet: /\bendfacet\b/y,
+   endsolid: /\bendsolid\b/y,
 
    // Values
-   name: /\w+/gy,
-   double: /[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/gy,
-   constants: /([+-])((?:NAN|INF|INFINITY))/igy,
+   name: /\w+/y,
+   double: /[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/y,
+   constants: /([+-])((?:NAN|INF|INFINITY))/iy,
 });
 
 /*
@@ -63,7 +63,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
       if (typeof this .input !== "string")
          return false;
 
-      return !! this .input .match (/^(?:[\x20\n\t\r]+|;.*?[\r\n])*\b(?:solid)\b/);
+      return !! this .input .match (/^(?:[\x20\n\t\r]|;[^\r\n]*[\r\n])*\bsolid\b.*?\bendsolid\b/s);
    },
    parseIntoScene (resolve, reject)
    {
@@ -129,47 +129,54 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
    {
       this .comments ();
 
-      if (Grammar .solid .parse (this))
+      if (!Grammar .solid .parse (this))
+         return false;
+
+      this .whitespacesNoLineTerminator ();
+
+      const
+         scene      = this .getExecutionContext (),
+         shape      = scene .createNode ("Shape"),
+         geometry   = scene .createNode ("TriangleSet"),
+         coordinate = scene .createNode ("Coordinate"),
+         hasNormals = this .normals ?.some (v => v !== 0),
+         name       = this .sanitizeName (Grammar .name .parse (this) ? this .result [0] : "");
+
+      Grammar .untilEndOfLine .parse (this);
+
+      this .facets ();
+      this .rotateAxes (this .vertices);
+
+      shape .appearance         = this .appearance;
+      shape .geometry           = geometry;
+      coordinate .point         = this .vertices;
+      geometry .normalPerVertex = false;
+      geometry .coord           = coordinate;
+
+      if (hasNormals)
       {
-         this .whitespacesNoLineTerminator ();
+         const normal = scene .createNode ("Normal");
 
-         const
-            scene      = this .getExecutionContext (),
-            shape      = scene .createNode ("Shape"),
-            geometry   = scene .createNode ("TriangleSet"),
-            normal     = scene .createNode ("Normal"),
-            coordinate = scene .createNode ("Coordinate"),
-            name       = this .sanitizeName (Grammar .name .parse (this) ? this .result [0] : "");
+         this .rotateAxes (this .normals);
 
-         Grammar .untilEndOfLine .parse (this);
-
-         this .facets ();
-
-         shape .appearance         = this .appearance;
-         shape .geometry           = geometry;
-         geometry .normalPerVertex = false;
-         geometry .normal          = normal;
-         geometry .coord           = coordinate;
-         normal .vector            = this .normals;
-         coordinate .point         = this .vertices;
-
-         if (name)
-         {
-            scene .addNamedNode (scene .getUniqueName (name), shape);
-            scene .addExportedNode (scene .getUniqueExportName (name), shape);
-         }
-
-         scene .getRootNodes () .push (shape);
-
-         this .comments ();
-
-         if (Grammar .endsolid .parse (this))
-            return true;
-
-         throw new Error ("Expected 'endsolid' statement.");
+         normal .vector   = this .normals;
+         geometry .normal = normal;
       }
 
-      return false;
+      if (name)
+      {
+         scene .addNamedNode (scene .getUniqueName (name), shape);
+         scene .addExportedNode (scene .getUniqueExportName (name), shape);
+      }
+
+      scene .getRootNodes () .push (shape);
+
+      this .comments ();
+
+      if (Grammar .endsolid .parse (this))
+         return true;
+
+      throw new Error ("Expected 'endsolid' statement.");
    },
    facets ()
    {

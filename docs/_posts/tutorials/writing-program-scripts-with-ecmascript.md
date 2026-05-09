@@ -3,7 +3,7 @@ title: Writing Program Scripts with ECMAScript
 date: 2022-11-28
 nav: tutorials-scripts-and-prototypes
 categories: [Tutorials]
-tags: [Program, Scripts, ECMAScript, Javascript]
+tags: [Script, ECMAScript, Javascript]
 ---
 ## Motivation
 
@@ -38,10 +38,10 @@ For a JavaScript program script, typically give the script in the Script node's 
 
 ```vrml
 DEF Bouncer Script {
-  initializeOnly  SFFloat bounceHeight 3.0
-  inputOnly       SFFloat set_fraction
-  outputOnly      SFVec3f value_changed
-  inputOutput     SFBool  enabled TRUE
+  initializeOnly SFFloat bounceHeight 3
+  inputOnly SFFloat set_fraction
+  outputOnly SFVec3f value_changed
+  inputOutput SFBool enabled TRUE
   url "ecmascript: ..."
 }
 ```
@@ -184,7 +184,7 @@ Script fields needed:
 
 ```vrml
 DEF Bouncer Script {
-  initializeOnly SFFloat bounceHeight 3.0
+  initializeOnly SFFloat bounceHeight 3
   ...
 }
 ```
@@ -279,11 +279,11 @@ function set_fraction (fraction, time)
    if (!enabled)
       return;
 
-   var y = 4.0 * bounceHeight * fraction * (1.0 - fraction);
+   const y = 4 * bounceHeight * fraction * (1 - fraction);
 
-   value_changed [0] = 0.0;
+   value_changed [0] = 0;
    value_changed [1] = y;
-   value_changed [2] = 0.0;
+   value_changed [2] = 0;
 }
 ]]>
 </Script>
@@ -304,11 +304,11 @@ function set_fraction (fraction, time)
    if (!enabled)
       return;
 
-   const y = 4.0 * bounceHeight * fraction * (1.0 - fraction);
+   const y = 4 * bounceHeight * fraction * (1 - fraction);
 
-   value_changed [0] = 0.0;
+   value_changed [0] = 0;
    value_changed [1] = y;
-   value_changed [2] = 0.0;
+   value_changed [2] = 0;
 }
 "
 }
@@ -373,11 +373,11 @@ function set_fraction (fraction, time)
    if (!enabled)
       return;
 
-   var y = 4.0 * bounceHeight * fraction * (1.0 - fraction);
+   const y = 4 * bounceHeight * fraction * (1 - fraction);
 
-   value_changed [0] = 0.0;
+   value_changed [0] = 0;
    value_changed [1] = y;
-   value_changed [2] = 0.0;
+   value_changed [2] = 0;
 }
 ]]>
     </Script>
@@ -399,7 +399,7 @@ DEF Ball Transform {
       appearance Appearance {
         material Material {
           ambientIntensity 0.5
-          diffuseColor 1.0 1.0 1.0
+          diffuseColor 1 1 1
           specularColor 0.7 0.7 0.7
           shininess 0.4
         }
@@ -407,7 +407,7 @@ DEF Ball Transform {
           url "beach.jpg"
         }
         textureTransform TextureTransform {
-          scale 2.0 1.0
+          scale 2 1
         }
       }
       geometry Sphere { }
@@ -416,17 +416,17 @@ DEF Ball Transform {
 }
 
 DEF Clock TimeSensor {
-  cycleInterval 2.0
-  startTime 1.0
-  stopTime 0.0
+  cycleInterval 2
+  startTime 1
+  stopTime 0
   loop TRUE
 }
 
 DEF Bouncer Script {
-  initializeOnly  SFFloat bounceHeight 3.0
-  inputOnly  SFFloat set_fraction
-  outputOnly SFVec3f value_changed
-  inputOutput SFBool enabled TRUE
+  initializeOnly  SFFloat bounceHeight 3
+  inputOnly       SFFloat set_fraction
+  outputOnly      SFVec3f value_changed
+  inputOutput     SFBool enabled TRUE
 
   url "ecmascript:
 function set_fraction (fraction, time)
@@ -434,11 +434,11 @@ function set_fraction (fraction, time)
    if (!enabled)
       return;
 
-   const y = 4.0 * bounceHeight * fraction * (1.0 - fraction);
+   const y = 4 * bounceHeight * fraction * (1 - fraction);
 
-   value_changed [0] = 0.0;
+   value_changed [0] = 0;
    value_changed [1] = y;
-   value_changed [2] = 0.0;
+   value_changed [2] = 0;
 }
 "
 }
@@ -579,8 +579,8 @@ function set_selection (value, time)
 
 ```vrml
 DEF ColorSelector Script {
-  initializeOnly  SFColor onColor  1.0 1.0 1.0
-  initializeOnly  SFColor offColor 0.0 0.0 0.0
+  initializeOnly  SFColor onColor 1 1 1
+  initializeOnly  SFColor offColor 0 0 0
   inputOnly       SFBool  set_selection
   outputOnly      SFColor color_changed
 

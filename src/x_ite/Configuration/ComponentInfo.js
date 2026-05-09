@@ -18,13 +18,13 @@ Object .assign (Object .setPrototypeOf (ComponentInfo .prototype, X3DObject .pro
 {
    toVRMLStream (generator)
    {
-      generator .string += generator .Indent ();
+      generator .Indent ();
       generator .string += "COMPONENT";
-      generator .string += generator .Space ();
+      generator .Space ();
       generator .string += this .name;
-      generator .string += generator .TidySpace ();
+      generator .TidySpace ();
       generator .string += ":";
-      generator .string += generator .TidySpace ();
+      generator .TidySpace ();
       generator .string += this .level;
    },
    toXMLStream (generator)
