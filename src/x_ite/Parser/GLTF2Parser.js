@@ -2277,12 +2277,11 @@ function eventsProcessed ()
 
          if (transformNode .getType () .at (-1) === X3DConstants .HAnimJoint)
          {
-            // Add a HAnimSegment if there are recursive skeletons.
+            // Add a HAnimSegment if there are recursive skeletons or Transform nodes as children.
 
             children = children .map (childNode =>
             {
-               if (childNode ._children .length &&
-                   childNode ._children [0] .getNodeType () .at (-1) === X3DConstants .HAnimHumanoid)
+               if (childNode .getType () .at (-1) !== X3DConstants .HAnimJoint)
                {
                   const segmentNode = scene .createNode ("HAnimSegment", false);
 
