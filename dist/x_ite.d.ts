@@ -1656,6 +1656,24 @@ declare namespace X3D
        * Set value from JSON string.
        */
       fromJSONString (value: string, scene?: X3DScene): void;
+      /**
+       * Returns the X3D VRML-encoded string that, if parsed as the value of an X3DField field with `fromVRMLString`, produce this field.
+       *
+       * For options see `X3DScene.toVRMLString`.
+       */
+      toVRMLString (options?: ToStringOptions): string;
+      /**
+       * Returns the X3D XML-encoded string that, if parsed as the value of an X3DField field with `fromXMLString`, produce this field.
+       *
+       * For options see `X3DScene.toVRMLString`.
+       */
+      toXMLString (options?: ToStringOptions): string;
+      /**
+       * Returns the X3D JSON-encoded string that, if parsed as the value of an X3DField field with `fromJSONString`, produce this field.
+       *
+       * For options see `X3DScene.toVRMLString`.
+       */
+      toJSONString (options?: ToStringOptions): string;
    }
 
    /**
@@ -2215,19 +2233,19 @@ declare namespace X3D
        */
       setNodeUserData (key: any, value: any): void;
       /**
-       * Returns the X3D VRML-encoded string that, if parsed as the value of an SFNode field, produce this node.
+       * Returns the X3D VRML-encoded string that, if parsed as the value of a SFNode field, produce this node.
        *
        * For options see `X3DScene.toVRMLString`.
        */
       toVRMLString (options?: ToStringOptions): string;
       /**
-       * Returns the X3D XML-encoded string that, if parsed as the value of an SFNode field, produce this node.
+       * Returns the X3D XML-encoded string that, if parsed as the value of a SFNode field, produce this node.
        *
        * For options see `X3DScene.toVRMLString`.
        */
       toXMLString (options?: ToStringOptions): string;
       /**
-       * Returns the X3D JSON-encoded string that, if parsed as the value of an SFNode field, produce this node.
+       * Returns the X3D JSON-encoded string that, if parsed as the value of a SFNode field, produce this node.
        *
        * For options see `X3DScene.toVRMLString`.
        */
@@ -2476,8 +2494,13 @@ declare namespace X3D
       static readonly type: number;
       static readonly typeName: "SFVec2d";
 
+      static readonly ZERO: SFVec2d;
+      static readonly ONE: SFVec2d;
       static readonly X_AXIS: SFVec2d;
       static readonly Y_AXIS: SFVec2d;
+      static readonly NEGATIVE_ONE: SFVec2d;
+      static readonly NEGATIVE_X_AXIS: SFVec2d;
+      static readonly NEGATIVE_Y_AXIS: SFVec2d;
    }
 
    /**
@@ -2488,8 +2511,13 @@ declare namespace X3D
       static readonly type: number;
       static readonly typeName: "SFVec2f";
 
+      static readonly ZERO: SFVec2f;
+      static readonly ONE: SFVec2f;
       static readonly X_AXIS: SFVec2f;
       static readonly Y_AXIS: SFVec2f;
+      static readonly NEGATIVE_ONE: SFVec2f;
+      static readonly NEGATIVE_X_AXIS: SFVec2f;
+      static readonly NEGATIVE_Y_AXIS: SFVec2f;
    }
 
    /**
@@ -2608,9 +2636,15 @@ declare namespace X3D
       static readonly type: number;
       static readonly typeName: "SFVec3d";
 
+      static readonly ZERO: SFVec3d;
+      static readonly ONE: SFVec3d;
       static readonly X_AXIS: SFVec3d;
       static readonly Y_AXIS: SFVec3d;
       static readonly Z_AXIS: SFVec3d;
+      static readonly NEGATIVE_ONE: SFVec3d;
+      static readonly NEGATIVE_X_AXIS: SFVec3d;
+      static readonly NEGATIVE_Y_AXIS: SFVec3d;
+      static readonly NEGATIVE_Z_AXIS: SFVec3d;
    }
 
    /**
@@ -2621,9 +2655,15 @@ declare namespace X3D
       static readonly type: number;
       static readonly typeName: "SFVec3f";
 
+      static readonly ZERO: SFVec3f;
+      static readonly ONE: SFVec3f;
       static readonly X_AXIS: SFVec3f;
       static readonly Y_AXIS: SFVec3f;
       static readonly Z_AXIS: SFVec3f;
+      static readonly NEGATIVE_ONE: SFVec3f;
+      static readonly NEGATIVE_X_AXIS: SFVec3f;
+      static readonly NEGATIVE_Y_AXIS: SFVec3f;
+      static readonly NEGATIVE_Z_AXIS: SFVec3f;
    }
 
    /**
@@ -2742,10 +2782,17 @@ declare namespace X3D
       static readonly type: number;
       static readonly typeName: "SFVec4d";
 
+      static readonly ZERO: SFVec4d;
+      static readonly ONE: SFVec4d;
       static readonly X_AXIS: SFVec4d;
       static readonly Y_AXIS: SFVec4d;
       static readonly Z_AXIS: SFVec4d;
       static readonly W_AXIS: SFVec4d;
+      static readonly NEGATIVE_ONE: SFVec4d;
+      static readonly NEGATIVE_X_AXIS: SFVec4d;
+      static readonly NEGATIVE_Y_AXIS: SFVec4d;
+      static readonly NEGATIVE_Z_AXIS: SFVec4d;
+      static readonly NEGATIVE_W_AXIS: SFVec4d;
    }
 
    /**
@@ -2756,10 +2803,17 @@ declare namespace X3D
       static readonly type: number;
       static readonly typeName: "SFVec4f";
 
+      static readonly ZERO: SFVec4f;
+      static readonly ONE: SFVec4f;
       static readonly X_AXIS: SFVec4f;
       static readonly Y_AXIS: SFVec4f;
       static readonly Z_AXIS: SFVec4f;
       static readonly W_AXIS: SFVec4f;
+      static readonly NEGATIVE_ONE: SFVec4f;
+      static readonly NEGATIVE_X_AXIS: SFVec4f;
+      static readonly NEGATIVE_Y_AXIS: SFVec4f;
+      static readonly NEGATIVE_Z_AXIS: SFVec4f;
+      static readonly NEGATIVE_W_AXIS: SFVec4f;
    }
 
    /**

@@ -1,4 +1,4 @@
-/* X_ITE v15.0.0 */
+/* X_ITE v15.0.1 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -12,7 +12,41 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 399
+/***/ 394
+(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const Namespace = { };
+
+Object .defineProperty (Namespace, "add",
+{
+   value (name, module)
+   {
+      if (Namespace .hasOwnProperty (name))
+      {
+         console .error (new Error (`Namespace: "${name}" already exists.`));
+         return module;
+      }
+
+      const X3D = window [Symbol .for ("X_ITE.X3D-15.0.1")];
+
+      if (X3D)
+         X3D [name] = module;
+
+      // For x_ite.js:
+      return Namespace [name] = module;
+   },
+});
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Namespace .add ("Namespace", Namespace));
+
+
+/***/ },
+
+/***/ 391
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1017,7 +1051,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 581
+/***/ 949
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2013,7 +2047,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 878
+/***/ 342
 (module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -2027,7 +2061,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
     if ( true ) {
 
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(227) ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(271) ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -2258,7 +2292,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 525
+/***/ 533
 (module) {
 
 /**
@@ -7037,7 +7071,7 @@ if (true) {
 
 /***/ },
 
-/***/ 260
+/***/ 436
 (__unused_webpack_module, exports) {
 
 
@@ -10282,54 +10316,20 @@ if (true) {
 
 /***/ },
 
-/***/ 642
-(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   A: () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-const Namespace = { };
-
-Object .defineProperty (Namespace, "add",
-{
-   value (name, module)
-   {
-      if (Namespace .hasOwnProperty (name))
-      {
-         console .error (new Error (`Namespace: "${name}" already exists.`));
-         return module;
-      }
-
-      const X3D = window [Symbol .for ("X_ITE.X3D-15.0.0")];
-
-      if (X3D)
-         X3D [name] = module;
-
-      // For x_ite.js:
-      return Namespace [name] = module;
-   },
-});
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Namespace .add ("Namespace", Namespace));
-
-
-/***/ },
-
-/***/ 227
+/***/ 271
 (module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
 
 // Bundlers are able to synchronously require an ESM module from a CommonJS one.
-const { jQuery } = __webpack_require__( 965 );
+const { jQuery } = __webpack_require__( 169 );
 module.exports = jQuery;
 
 
 /***/ },
 
-/***/ 965
+/***/ 169
 (__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10338,7 +10338,7 @@ module.exports = jQuery;
 /* harmony export */   jQuery: () => (/* binding */ jQuery)
 /* harmony export */ });
 /* unused harmony export $ */
-/* harmony import */ var _src_x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(642);
+/* harmony import */ var _src_x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(394);
 /*!
  * jQuery JavaScript Library v4.0.0+slim
  * https://jquery.com/
@@ -17261,7 +17261,7 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/x_ite/Namespace.js
-var Namespace = __webpack_require__(642);
+var Namespace = __webpack_require__(394);
 ;// ./src/x_ite/Base/X3DConstants.js
 const X3DConstants =
 {
@@ -18467,7 +18467,7 @@ const Features_default_ = Features;
 
 /* harmony default export */ const x_ite_Features = (Namespace/* default */.A .add ("Features", Features_default_));
 ;// ./src/x_ite/Base/X3DObject.js
-/* provided dependency */ var $ = __webpack_require__(965)["A"];
+/* provided dependency */ var $ = __webpack_require__(169)["A"];
 
 
 
@@ -20571,18 +20571,14 @@ Object .defineProperties (SFColor .prototype,
 
 Base_X3DField .addStaticProperties (SFColor, "SFColor");
 
+Object .defineProperties (SFColor, Object .fromEntries ([
+   "BLACK",
+   "WHITE",
+]
+.map (key => [key, { value: SFColor .fromValue (Numbers_Color3 [key]), enumerable: true }])));
+
 Object .defineProperties (SFColor,
 {
-   BLACK:
-   {
-      value: SFColor .fromValue (Numbers_Color3 .BLACK),
-      enumerable: true,
-   },
-   WHITE:
-   {
-      value: SFColor .fromValue (Numbers_Color3 .WHITE),
-      enumerable: true,
-   },
    fromHSV:
    {
       value (h, s, v)
@@ -20798,7 +20794,7 @@ Object .assign (Object .setPrototypeOf (SFColorRGBA .prototype, Base_X3DField .p
    {
       return this .getValue () .getHSVA ([ ]);
    },
-   setHSVA (h, s, v, a)
+   setHSVA (h, s, v, a = 1)
    {
       this .getValue () .setHSVA (+h, +s, +v, +a);
       this .addEvent ();
@@ -20904,23 +20900,15 @@ Object .defineProperties (SFColorRGBA .prototype,
 
 Base_X3DField .addStaticProperties (SFColorRGBA, "SFColorRGBA");
 
+Object .defineProperties (SFColorRGBA, Object .fromEntries ([
+   "BLACK",
+   "TRANSPARENT",
+   "WHITE",
+]
+.map (key => [key, { value: SFColorRGBA .fromValue (Numbers_Color4 [key]), enumerable: true }])));
+
 Object .defineProperties (SFColorRGBA,
 {
-   BLACK:
-   {
-      value: SFColorRGBA .fromValue (Numbers_Color4 .BLACK),
-      enumerable: true,
-   },
-   TRANSPARENT:
-   {
-      value: SFColorRGBA .fromValue (Numbers_Color4 .TRANSPARENT),
-      enumerable: true,
-   },
-   WHITE:
-   {
-      value: SFColorRGBA .fromValue (Numbers_Color4 .WHITE),
-      enumerable: true,
-   },
    fromHSVA:
    {
       value (h, s, v, a)
@@ -21145,19 +21133,11 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
    for (let i = 0; i < Matrix .prototype .length; ++ i)
       defineProperty (i);
 
-   Object .defineProperties (Constructor,
-   {
-      ZERO:
-      {
-         value: Constructor .fromValue (Matrix .ZERO),
-         enumerable: true,
-      },
-      IDENTITY:
-      {
-         value: Constructor .fromValue (Matrix .IDENTITY),
-         enumerable: true,
-      },
-   });
+   Object .defineProperties (Constructor, Object .fromEntries ([
+      "IDENTITY",
+      "ZERO",
+   ]
+   .map (key => [key, { value: Constructor .fromValue (Matrix [key]), enumerable: true }])));
 
    return Constructor;
 }
@@ -21666,17 +21646,12 @@ const Vector3_default_ = Vector3;
 ;// ./src/standard/Math/Numbers/Matrix2.js
 
 
-function Matrix2 (... args)
+function Matrix2 (m00 = 1, m01 = 0, m10 = 0, m11 = m00)
 {
-   if (args .length)
-   {
-      for (let i = 0; i < 4; ++ i)
-         this [i] = args [i];
-   }
-   else
-   {
-      this .identity ();
-   }
+   this [0] = m00;
+   this [1] = m01;
+   this [2] = m10;
+   this [3] = m11;
 }
 
 Object .assign (Matrix2 .prototype,
@@ -21900,7 +21875,7 @@ Object .defineProperties (Matrix2 .prototype,
 
 Object .assign (Matrix2,
 {
-   ZERO: Object .freeze (new Matrix2 (0, 0, 0, 0)),
+   ZERO: Object .freeze (new Matrix2 (0)),
    IDENTITY: Object .freeze (new Matrix2 ()),
 });
 
@@ -22061,550 +22036,611 @@ const eigen_decomposition_default_ = eigen_decomposition;
 
 
 
-function Matrix3(...args) {
-   if (args.length) {
-      for (let i = 0; i < 9; ++i)
-         this[i] = args[i];
-   }
-   else {
-      this.identity();
-   }
+function Matrix3 (m00 = 1, m01 = 0,   m02 = 0,
+                  m10 = 0, m11 = m00, m12 = 0,
+                  m20 = 0, m21 = 0,   m22 = m11)
+{
+   this [0] = m00;
+   this [1] = m01;
+   this [2] = m02;
+   this [3] = m10;
+   this [4] = m11;
+   this [5] = m12;
+   this [6] = m20;
+   this [7] = m21;
+   this [8] = m22;
 }
 
-Object.assign(Matrix3.prototype,
+Object .assign (Matrix3 .prototype,
+{
+   *[Symbol .iterator] ()
    {
-      *[Symbol.iterator]() {
-         for (let i = 0; i < 9; ++i)
-            yield this[i];
-      },
-      copy() {
-         const copy = Object.create(Matrix3.prototype);
+      for (let i = 0; i < 9; ++ i)
+         yield this [i];
+   },
+   copy ()
+   {
+      const copy = Object .create (Matrix3 .prototype);
 
-         for (let i = 0; i < 9; ++i)
-            copy[i] = this[i];
+      for (let i = 0; i < 9; ++ i)
+         copy [i] = this [i];
 
-         return copy;
-      },
-      assign(matrix) {
-         for (let i = 0; i < 9; ++i)
-            this[i] = matrix[i];
+      return copy;
+   },
+   assign (matrix)
+   {
+      for (let i = 0; i < 9; ++ i)
+         this [i] = matrix [i];
 
-         return this;
-      },
-      equals(matrix) {
-         for (let i = 0; i < 9; ++i) {
-            if (this[i] !== matrix[i])
-               return false;
+      return this;
+   },
+   equals (matrix)
+   {
+      for (let i = 0; i < 9; ++ i)
+      {
+         if (this [i] !== matrix [i])
+            return false;
+      }
+
+      return true;
+   },
+   set1 (r, c, value)
+   {
+      this [r * this .order + c] = value;
+
+      return this;
+   },
+   get1 (r, c)
+   {
+      return this [r * this .order + c];
+   },
+   set: (() =>
+   {
+      const invCenter = new Numbers_Vector2 ();
+
+      return function (translation, rotation, scale, scaleOrientation, center)
+      {
+         this .identity ();
+
+         switch (arguments .length)
+         {
+            case 1:
+            {
+               if (translation && !translation .equals (Numbers_Vector2 .ZERO))
+                  this .translate (translation);
+
+               break;
+            }
+            case 2:
+            {
+               if (translation && !translation .equals (Numbers_Vector2 .ZERO))
+                  this .translate (translation);
+
+               if (rotation)
+                  this .rotate (rotation);
+
+               break;
+            }
+            case 3:
+            {
+               if (translation && !translation .equals (Numbers_Vector2 .ZERO))
+                  this .translate (translation);
+
+               if (rotation)
+                  this .rotate (rotation);
+
+               if (scale && !scale .equals (Numbers_Vector2 .ONE))
+                  this .scale  (scale);
+
+               break;
+            }
+            case 4:
+            {
+               if (translation && !translation .equals (Numbers_Vector2 .ZERO))
+                  this .translate (translation);
+
+               if (rotation)
+                  this .rotate (rotation);
+
+               if (scale && !scale .equals (Numbers_Vector2 .ONE))
+               {
+                  if (scaleOrientation)
+                  {
+                     this .rotate (scaleOrientation);
+                     this .scale (scale);
+                     this .rotate (-scaleOrientation);
+                  }
+                  else
+                  {
+                     this .scale (scale);
+                  }
+               }
+
+               break;
+            }
+            case 5:
+            {
+               // P' = T * C * R * SR * S * -SR * -C * P
+               if (translation && !translation .equals (Numbers_Vector2 .ZERO))
+                  this .translate (translation);
+
+               const hasCenter = center && !center .equals (Numbers_Vector2 .ZERO);
+
+               if (hasCenter)
+                  this .translate (center);
+
+               if (rotation)
+                  this .rotate (rotation);
+
+               if (scale && !scale .equals (Numbers_Vector2 .ONE))
+               {
+                  if (scaleOrientation)
+                  {
+                     this .rotate (scaleOrientation);
+                     this .scale (scale);
+                     this .rotate (-scaleOrientation);
+                  }
+                  else
+                  {
+                     this .scale (scale);
+                  }
+               }
+
+               if (hasCenter)
+                  this .translate (invCenter .assign (center) .negate ());
+
+               break;
+            }
+            case 9:
+            {
+               for (let i = 0; i < 9; ++ i)
+                  this [i] = arguments [i];
+
+               break;
+            }
          }
 
-         return true;
-      },
-      set1(r, c, value) {
-         this[r * this.order + c] = value;
-
          return this;
-      },
-      get1(r, c) {
-         return this[r * this.order + c];
-      },
-      set: (() => {
-         const invCenter = new Numbers_Vector2();
+      };
+   })(),
+   get: (() =>
+   {
+      const c = new Numbers_Vector2 ();
 
-         return function (translation, rotation, scale, scaleOrientation, center) {
-            this.identity();
-
-            switch (arguments.length) {
-               case 1:
-                  {
-                     if (translation && !translation.equals(Numbers_Vector2.ZERO))
-                        this.translate(translation);
-
-                     break;
-                  }
-               case 2:
-                  {
-                     if (translation && !translation.equals(Numbers_Vector2.ZERO))
-                        this.translate(translation);
-
-                     if (rotation)
-                        this.rotate(rotation);
-
-                     break;
-                  }
-               case 3:
-                  {
-                     if (translation && !translation.equals(Numbers_Vector2.ZERO))
-                        this.translate(translation);
-
-                     if (rotation)
-                        this.rotate(rotation);
-
-                     if (scale && !scale.equals(Numbers_Vector2.ONE))
-                        this.scale(scale);
-
-                     break;
-                  }
-               case 4:
-                  {
-                     if (translation && !translation.equals(Numbers_Vector2.ZERO))
-                        this.translate(translation);
-
-                     if (rotation)
-                        this.rotate(rotation);
-
-                     if (scale && !scale.equals(Numbers_Vector2.ONE)) {
-                        if (scaleOrientation) {
-                           this.rotate(scaleOrientation);
-                           this.scale(scale);
-                           this.rotate(-scaleOrientation);
-                        }
-                        else {
-                           this.scale(scale);
-                        }
-                     }
-
-                     break;
-                  }
-               case 5:
-                  {
-                     // P' = T * C * R * SR * S * -SR * -C * P
-                     if (translation && !translation.equals(Numbers_Vector2.ZERO))
-                        this.translate(translation);
-
-                     const hasCenter = center && !center.equals(Numbers_Vector2.ZERO);
-
-                     if (hasCenter)
-                        this.translate(center);
-
-                     if (rotation)
-                        this.rotate(rotation);
-
-                     if (scale && !scale.equals(Numbers_Vector2.ONE)) {
-                        if (scaleOrientation) {
-                           this.rotate(scaleOrientation);
-                           this.scale(scale);
-                           this.rotate(-scaleOrientation);
-                        }
-                        else {
-                           this.scale(scale);
-                        }
-                     }
-
-                     if (hasCenter)
-                        this.translate(invCenter.assign(center).negate());
-
-                     break;
-                  }
-               case 9:
-                  {
-                     for (let i = 0; i < 9; ++i)
-                        this[i] = arguments[i];
-
-                     break;
-                  }
+      return function (translation, rotation, scale, scaleOrientation, center)
+      {
+         switch (arguments .length)
+         {
+            case 1:
+            {
+               translation .set (this [6], this [7]);
+               break;
             }
-
-            return this;
-         };
-      })(),
-      get: (() => {
-         const c = new Numbers_Vector2();
-
-         return function (translation, rotation, scale, scaleOrientation, center) {
-            switch (arguments.length) {
-               case 1:
-                  {
-                     translation.set(this[6], this[7]);
-                     break;
-                  }
-               case 2:
-               case 3:
-               case 4:
-                  {
-                     this.factor(translation, rotation, scale, scaleOrientation);
-                     break;
-                  }
-               case 5:
-                  {
-                     if (center) {
-                        m.set(c.assign(center).negate());
-                        m.multLeft(this);
-                        m.translate(center);
-                        m.get(translation, rotation, scale, scaleOrientation);
-                     }
-                     else {
-                        this.factor(translation, rotation, scale, scaleOrientation);
-                     }
-
-                     break;
-                  }
+            case 2:
+            case 3:
+            case 4:
+            {
+               this .factor (translation, rotation, scale, scaleOrientation);
+               break;
             }
-         };
-      })(),
-      factor: (() => {
+            case 5:
+            {
+               if (center)
+               {
+                  m .set (c .assign (center) .negate ());
+                  m .multLeft (this);
+                  m .translate (center);
+                  m .get (translation, rotation, scale, scaleOrientation);
+               }
+               else
+               {
+                  this .factor (translation, rotation, scale, scaleOrientation);
+               }
+
+               break;
+            }
+         }
+      };
+   })(),
+   factor: (() =>
+   {
+      const
+         s  = new Numbers_Vector2 (),
+         si = new Numbers_Matrix2 (),
+         so = new Numbers_Matrix2 (),
+         b  = new Numbers_Matrix2 ();
+
+      const eigen = { values: [ ], vectors: [[ ], [ ]] };
+
+      return function (translation, rotation, scale, scaleOrientation)
+      {
+         // (1) Get translation.
+         translation ?.set (this [6], this [7]);
+
+         // (2) Create 3x3 matrix.
+         const a = this .submatrix;
+
+         // (3) Compute det A. If negative, set sign = -1, else sign = 1
+         const det      = a .determinant ();
+         const det_sign = det < 0 ? -1 : 1;
+
+         // (4) B = A * !A  (here !A means A transpose)
+         b .assign (a) .transpose () .multLeft (a);
+         const e = Algorithms_eigen_decomposition (b, eigen);
+
+         // Find min / max eigenvalues and do ratio test to determine singularity.
+
+         so .set (e .vectors [0] [0], e .vectors [1] [0],
+                  e .vectors [0] [1], e .vectors [1] [1]);
+
+         if (scaleOrientation)
+         {
+            scaleOrientation [0] = so [0];
+            scaleOrientation [1] = so [1];
+            scaleOrientation [2] = Math .atan2 (so [1], so [0]);
+         }
+
+         // Compute s = sqrt(eigen values), with sign. Set si = s-inverse
+
+         s .set (det_sign * Math .sqrt (e .values [0]),
+                 det_sign * Math .sqrt (e .values [1]));
+
+         scale ?.assign (s);
+
+         if (rotation)
+         {
+            si [0] = 1 / s .x;
+            si [3] = 1 / s .y;
+
+            // (5) Compute U = !R ~S R A.
+            a .multLeft (so) .multLeft (si) .multLeft (so .transpose ());
+
+            rotation [0] = a [0];
+            rotation [1] = a [1];
+            rotation [2] = Math .atan2 (a [1], a [0]);
+         }
+      };
+   })(),
+   determinant2 ()
+   {
+      const { 0: m0, 1: m1, 3: m3, 4: m4 } = this;
+
+      return m0 * m4 - m1 * m3;
+   },
+   determinant ()
+   {
+      const { 0: m0, 1: m1, 2: m2, 3: m3, 4: m4, 5: m5, 6: m6, 7: m7, 8: m8 } = this;
+
+      return m0 * (m4 * m8 - m5 * m7) -
+             m1 * (m3 * m8 - m5 * m6) +
+             m2 * (m3 * m7 - m4 * m6);
+   },
+   transpose ()
+   {
+      let tmp;
+
+      tmp = this [1]; this [1] = this [3]; this [3] = tmp;
+      tmp = this [2]; this [2] = this [6]; this [6] = tmp;
+      tmp = this [5]; this [5] = this [7]; this [7] = tmp;
+
+      return this;
+   },
+   inverse ()
+   {
+      // Complexity 2 +, 16 -, 33 *, 1 /.
+
+      const
+         { 0: m0, 1: m1, 2: m2, 3: m3, 4: m4, 5: m5, 6: m6, 7: m7, 8: m8 } = this,
+         t4  = m0 * m4,
+         t6  = m0 * m7,
+         t8  = m3 * m1,
+         t10 = m3 * m7,
+         t12 = m6 * m1,
+         t14 = m6 * m4;
+
+      let d = (t4 * m8 - t6 * m5 - t8 * m8 + t10 * m2 + t12 * m5 - t14 * m2);
+
+      // if (d === 0) ... determinant is zero.
+
+      d = 1 / d;
+
+      const
+         b0 =  (m4 * m8 - m7 * m5) * d,
+         b1 = -(m1 * m8 - m7 * m2) * d,
+         b2 =  (m1 * m5 - m4 * m2) * d,
+         b3 = -(m3 * m8 - m6 * m5) * d,
+         b4 =  (m0 * m8 - m6 * m2) * d,
+         b5 = -(m0 * m5 - m3 * m2) * d;
+
+      this [0] = b0;
+      this [1] = b1;
+      this [2] = b2;
+      this [3] = b3;
+      this [4] = b4;
+      this [5] = b5;
+      this [6] =  (t10 - t14) * d;
+      this [7] = -(t6 - t12) * d;
+      this [8] =  (t4 - t8) * d;
+
+      return this;
+   },
+   multLeft (matrix)
+   {
+      // Complexity 18 +, 27 *.
+
+      const { 0: a0, 1: a1, 2: a2, 3: a3, 4: a4, 5: a5, 6: a6, 7: a7, 8: a8 } = this;
+
+      var { 0: b0, 1: b1, 2: b2 } = matrix;
+
+      this [0] = a0 * b0 + a3 * b1 + a6 * b2;
+      this [1] = a1 * b0 + a4 * b1 + a7 * b2;
+      this [2] = a2 * b0 + a5 * b1 + a8 * b2;
+
+      var { 3: b0, 4: b1, 5: b2 } = matrix;
+
+      this [3] = a0 * b0 + a3 * b1 + a6 * b2;
+      this [4] = a1 * b0 + a4 * b1 + a7 * b2;
+      this [5] = a2 * b0 + a5 * b1 + a8 * b2;
+
+      var { 6: b0, 7: b1, 8: b2 } = matrix;
+
+      this [6] = a0 * b0 + a3 * b1 + a6 * b2;
+      this [7] = a1 * b0 + a4 * b1 + a7 * b2;
+      this [8] = a2 * b0 + a5 * b1 + a8 * b2;
+
+      return this;
+   },
+   multRight (matrix)
+   {
+      // Complexity 18 +, 27 *.
+
+      const { 0: b0, 1: b1, 2: b2, 3: b3, 4: b4, 5: b5, 6: b6, 7: b7, 8: b8 } = matrix;
+
+      var { 0: a0, 1: a1, 2: a2 } = this;
+
+      this [0] = a0 * b0 + a1 * b3 + a2 * b6;
+      this [1] = a0 * b1 + a1 * b4 + a2 * b7;
+      this [2] = a0 * b2 + a1 * b5 + a2 * b8;
+
+      var { 3: a0, 4: a1, 5: a2 } = this;
+
+      this [3] = a0 * b0 + a1 * b3 + a2 * b6;
+      this [4] = a0 * b1 + a1 * b4 + a2 * b7;
+      this [5] = a0 * b2 + a1 * b5 + a2 * b8;
+
+      var { 6: a0, 7: a1, 8: a2 } = this;
+
+      this [6] = a0 * b0 + a1 * b3 + a2 * b6;
+      this [7] = a0 * b1 + a1 * b4 + a2 * b7;
+      this [8] = a0 * b2 + a1 * b5 + a2 * b8;
+
+      return this;
+   },
+   multVecMatrix (vector)
+   {
+      if (vector .length === 2)
+      {
          const
-            s = new Numbers_Vector2(),
-            si = new Numbers_Matrix2(),
-            so = new Numbers_Matrix2(),
-            b = new Numbers_Matrix2();
+            { x, y } = vector,
+            w = x * this [2] + y * this [5] + this [8];
 
-         const eigen = { values: [], vectors: [[], []] };
-
-         return function (translation, rotation, scale, scaleOrientation) {
-            // (1) Get translation.
-            translation?.set(this[6], this[7]);
-
-            // (2) Create 3x3 matrix.
-            const a = this.submatrix;
-
-            // (3) Compute det A. If negative, set sign = -1, else sign = 1
-            const det = a.determinant();
-            const det_sign = det < 0 ? -1 : 1;
-
-            // (4) B = A * !A  (here !A means A transpose)
-            b.assign(a).transpose().multLeft(a);
-            const e = Algorithms_eigen_decomposition(b, eigen);
-
-            // Find min / max eigenvalues and do ratio test to determine singularity.
-
-            so.set(e.vectors[0][0], e.vectors[1][0],
-               e.vectors[0][1], e.vectors[1][1]);
-
-            if (scaleOrientation) {
-               scaleOrientation[0] = so[0];
-               scaleOrientation[1] = so[1];
-               scaleOrientation[2] = Math.atan2(so[1], so[0]);
-            }
-
-            // Compute s = sqrt(eigen values), with sign. Set si = s-inverse
-
-            s.set(det_sign * Math.sqrt(e.values[0]),
-               det_sign * Math.sqrt(e.values[1]));
-
-            scale?.assign(s);
-
-            if (rotation) {
-               si[0] = 1 / s.x;
-               si[3] = 1 / s.y;
-
-               // (5) Compute U = !R ~S R A.
-               a.multLeft(so).multLeft(si).multLeft(so.transpose());
-
-               rotation[0] = a[0];
-               rotation[1] = a[1];
-               rotation[2] = Math.atan2(a[1], a[0]);
-            }
-         };
-      })(),
-      determinant2() {
-         const { 0: m0, 1: m1, 3: m3, 4: m4 } = this;
-
-         return m0 * m4 - m1 * m3;
-      },
-      determinant() {
-         const { 0: m0, 1: m1, 2: m2, 3: m3, 4: m4, 5: m5, 6: m6, 7: m7, 8: m8 } = this;
-
-         return m0 * (m4 * m8 - m5 * m7) -
-            m1 * (m3 * m8 - m5 * m6) +
-            m2 * (m3 * m7 - m4 * m6);
-      },
-      transpose() {
-         let tmp;
-
-         tmp = this[1]; this[1] = this[3]; this[3] = tmp;
-         tmp = this[2]; this[2] = this[6]; this[6] = tmp;
-         tmp = this[5]; this[5] = this[7]; this[7] = tmp;
-
-         return this;
-      },
-      inverse() {
-         // Complexity 2 +, 16 -, 33 *, 1 /.
-
-         const
-            { 0: m0, 1: m1, 2: m2, 3: m3, 4: m4, 5: m5, 6: m6, 7: m7, 8: m8 } = this,
-            t4 = m0 * m4,
-            t6 = m0 * m7,
-            t8 = m3 * m1,
-            t10 = m3 * m7,
-            t12 = m6 * m1,
-            t14 = m6 * m4;
-
-         let d = (t4 * m8 - t6 * m5 - t8 * m8 + t10 * m2 + t12 * m5 - t14 * m2);
-
-         // if (d === 0) ... determinant is zero.
-
-         d = 1 / d;
-
-         const
-            b0 = (m4 * m8 - m7 * m5) * d,
-            b1 = -(m1 * m8 - m7 * m2) * d,
-            b2 = (m1 * m5 - m4 * m2) * d,
-            b3 = -(m3 * m8 - m6 * m5) * d,
-            b4 = (m0 * m8 - m6 * m2) * d,
-            b5 = -(m0 * m5 - m3 * m2) * d;
-
-         this[0] = b0;
-         this[1] = b1;
-         this[2] = b2;
-         this[3] = b3;
-         this[4] = b4;
-         this[5] = b5;
-         this[6] = (t10 - t14) * d;
-         this[7] = -(t6 - t12) * d;
-         this[8] = (t4 - t8) * d;
-
-         return this;
-      },
-      multLeft(matrix) {
-         // Complexity 18 +, 27 *.
-
-         const { 0: a0, 1: a1, 2: a2, 3: a3, 4: a4, 5: a5, 6: a6, 7: a7, 8: a8 } = this;
-
-         var { 0: b0, 1: b1, 2: b2 } = matrix;
-
-         this[0] = a0 * b0 + a3 * b1 + a6 * b2;
-         this[1] = a1 * b0 + a4 * b1 + a7 * b2;
-         this[2] = a2 * b0 + a5 * b1 + a8 * b2;
-
-         var { 3: b0, 4: b1, 5: b2 } = matrix;
-
-         this[3] = a0 * b0 + a3 * b1 + a6 * b2;
-         this[4] = a1 * b0 + a4 * b1 + a7 * b2;
-         this[5] = a2 * b0 + a5 * b1 + a8 * b2;
-
-         var { 6: b0, 7: b1, 8: b2 } = matrix;
-
-         this[6] = a0 * b0 + a3 * b1 + a6 * b2;
-         this[7] = a1 * b0 + a4 * b1 + a7 * b2;
-         this[8] = a2 * b0 + a5 * b1 + a8 * b2;
-
-         return this;
-      },
-      multRight(matrix) {
-         // Complexity 18 +, 27 *.
-
-         const { 0: b0, 1: b1, 2: b2, 3: b3, 4: b4, 5: b5, 6: b6, 7: b7, 8: b8 } = matrix;
-
-         var { 0: a0, 1: a1, 2: a2 } = this;
-
-         this[0] = a0 * b0 + a1 * b3 + a2 * b6;
-         this[1] = a0 * b1 + a1 * b4 + a2 * b7;
-         this[2] = a0 * b2 + a1 * b5 + a2 * b8;
-
-         var { 3: a0, 4: a1, 5: a2 } = this;
-
-         this[3] = a0 * b0 + a1 * b3 + a2 * b6;
-         this[4] = a0 * b1 + a1 * b4 + a2 * b7;
-         this[5] = a0 * b2 + a1 * b5 + a2 * b8;
-
-         var { 6: a0, 7: a1, 8: a2 } = this;
-
-         this[6] = a0 * b0 + a1 * b3 + a2 * b6;
-         this[7] = a0 * b1 + a1 * b4 + a2 * b7;
-         this[8] = a0 * b2 + a1 * b5 + a2 * b8;
-
-         return this;
-      },
-      multVecMatrix(vector) {
-         if (vector.length === 2) {
-            const
-               { x, y } = vector,
-               w = x * this[2] + y * this[5] + this[8];
-
-            vector.x = (x * this[0] + y * this[3] + this[6]) / w;
-            vector.y = (x * this[1] + y * this[4] + this[7]) / w;
-
-            return vector;
-         }
-         else {
-            const { x, y, z } = vector;
-
-            vector.x = x * this[0] + y * this[3] + z * this[6];
-            vector.y = x * this[1] + y * this[4] + z * this[7];
-            vector.z = x * this[2] + y * this[5] + z * this[8];
-
-            return vector;
-         }
-      },
-      multMatrixVec(vector) {
-         if (vector.length === 2) {
-            const
-               { x, y } = vector,
-               w = x * this[6] + y * this[7] + this[8];
-
-            vector.x = (x * this[0] + y * this[1] + this[2]) / w;
-            vector.y = (x * this[3] + y * this[4] + this[5]) / w;
-
-            return vector;
-         }
-         else {
-            const { x, y, z } = vector;
-
-            vector.x = x * this[0] + y * this[1] + z * this[2];
-            vector.y = x * this[3] + y * this[4] + z * this[5];
-            vector.z = x * this[6] + y * this[7] + z * this[8];
-
-            return vector;
-         }
-      },
-      multDirMatrix(vector) {
-         const { x, y } = vector;
-
-         vector.x = x * this[0] + y * this[3];
-         vector.y = x * this[1] + y * this[4];
+         vector .x = (x * this [0] + y * this [3] + this [6]) / w;
+         vector .y = (x * this [1] + y * this [4] + this [7]) / w;
 
          return vector;
-      },
-      multMatrixDir(vector) {
-         const { x, y } = vector;
+      }
+      else
+      {
+         const { x, y, z } = vector;
 
-         vector.x = x * this[0] + y * this[1];
-         vector.y = x * this[3] + y * this[4];
+         vector .x = x * this [0] + y * this [3] + z * this [6];
+         vector .y = x * this [1] + y * this [4] + z * this [7];
+         vector .z = x * this [2] + y * this [5] + z * this [8];
 
          return vector;
-      },
-      identity() {
-         this[0] = 1; this[1] = 0; this[2] = 0;
-         this[3] = 0; this[4] = 1; this[5] = 0;
-         this[6] = 0; this[7] = 0; this[8] = 1;
-
-         return this;
-      },
-      translate(translation) {
-         const { x, y } = translation;
-
-         this[6] += this[0] * x + this[3] * y;
-         this[7] += this[1] * x + this[4] * y;
-
-         return this;
-      },
-      rotate(rotation) {
-         return this.multLeft(Matrix3.fromRotation(rotation));
-      },
-      scale(scale) {
-         const { x, y } = scale;
-
-         this[0] *= x;
-         this[3] *= y;
-
-         this[1] *= x;
-         this[4] *= y;
-
-         return this;
-      },
-      skewX(angle) {
-         const a = Math.tan(angle);
-
-         this[3] += this[0] * a;
-         this[4] += this[1] * a;
-         this[5] += this[2] * a;
-
-         return this;
-      },
-      skewY(angle) {
-         const a = Math.tan(angle);
-
-         this[0] += this[3] * a;
-         this[1] += this[4] * a;
-         this[2] += this[5] * a;
-
-         return this;
-      },
-      toString() {
-         return Array.prototype.join.call(this, " ");
-      },
-   });
-
-for (const key of Object.keys(Matrix3.prototype))
-   Object.defineProperty(Matrix3.prototype, key, { enumerable: false });
-
-Object.defineProperties(Matrix3.prototype,
+      }
+   },
+   multMatrixVec (vector)
    {
-      order: { value: 3 },
-      length: { value: 9 },
-      x:
+      if (vector .length === 2)
       {
-         get: (() => {
-            const vector = new Numbers_Vector3();
-
-            return function () { return vector.set(this[0], this[1], this[2]); };
-         })(),
-      },
-      y:
-      {
-         get: (() => {
-            const vector = new Numbers_Vector3();
-
-            return function () { return vector.set(this[3], this[4], this[5]); };
-         })(),
-      },
-      z:
-      {
-         get: (() => {
-            const vector = new Numbers_Vector3();
-
-            return function () { return vector.set(this[6], this[7], this[8]); };
-         })(),
-      },
-      xAxis:
-      {
-         get: (() => {
-            const vector = new Numbers_Vector2();
-
-            return function () { return vector.set(this[0], this[1]); };
-         })(),
-      },
-      yAxis:
-      {
-         get: (() => {
-            const vector = new Numbers_Vector2();
-
-            return function () { return vector.set(this[3], this[4]); };
-         })(),
-      },
-      origin:
-      {
-         get: (() => {
-            const vector = new Numbers_Vector2();
-
-            return function () { return vector.set(this[6], this[7]); };
-         })(),
-      },
-      submatrix:
-      {
-         get: (() => {
-            const matrix = new Numbers_Matrix2();
-
-            return function () {
-               matrix[0] = this[0]; matrix[1] = this[1];
-               matrix[2] = this[3]; matrix[3] = this[4];
-               return matrix;
-            };
-         })(),
-      },
-   });
-
-Object.assign(Matrix3,
-   {
-      ZERO: Object.freeze(new Matrix3(0, 0, 0, 0, 0, 0, 0, 0, 0)),
-      IDENTITY: Object.freeze(new Matrix3()),
-      fromRotation(rotation) {
          const
-            sinAngle = Math.sin(rotation),
-            cosAngle = Math.cos(rotation);
+            { x, y } = vector,
+            w = x * this [6] + y * this [7] + this [8];
 
-         return new Matrix3(cosAngle, sinAngle, 0,
-            -sinAngle, cosAngle, 0,
-            0, 0, 1);
-      },
-      fromMatrix2(matrix) {
-         return new Matrix3(matrix[0], matrix[1], 0,
-            matrix[2], matrix[3], 0,
-            0, 0, 1);
-      },
-   });
+         vector .x = (x * this [0] + y * this [1] + this [2]) / w;
+         vector .y = (x * this [3] + y * this [4] + this [5]) / w;
 
-const m = new Matrix3();
+         return vector;
+      }
+      else
+      {
+         const { x, y, z } = vector;
+
+         vector .x = x * this [0] + y * this [1] + z * this [2];
+         vector .y = x * this [3] + y * this [4] + z * this [5];
+         vector .z = x * this [6] + y * this [7] + z * this [8];
+
+         return vector;
+      }
+   },
+   multDirMatrix (vector)
+   {
+      const { x, y } = vector;
+
+      vector .x = x * this [0] + y * this [3];
+      vector .y = x * this [1] + y * this [4];
+
+      return vector;
+   },
+   multMatrixDir (vector)
+   {
+      const { x, y } = vector;
+
+      vector .x = x * this [0] + y * this [1];
+      vector .y = x * this [3] + y * this [4];
+
+      return vector;
+   },
+   identity ()
+   {
+      this [0] = 1; this [1] = 0; this [2] = 0;
+      this [3] = 0; this [4] = 1; this [5] = 0;
+      this [6] = 0; this [7] = 0; this [8] = 1;
+
+      return this;
+   },
+   translate (translation)
+   {
+      const { x, y } = translation;
+
+      this [6] += this [0] * x + this [3] * y;
+      this [7] += this [1] * x + this [4] * y;
+
+      return this;
+   },
+   rotate (rotation)
+   {
+      return this .multLeft (Matrix3 .fromRotation (rotation));
+   },
+   scale (scale)
+   {
+      const { x, y } = scale;
+
+      this [0] *= x;
+      this [3] *= y;
+
+      this [1] *= x;
+      this [4] *= y;
+
+      return this;
+   },
+   skewX (angle)
+   {
+      const a = Math .tan (angle);
+
+      this [3] += this [0] * a;
+      this [4] += this [1] * a;
+      this [5] += this [2] * a;
+
+      return this;
+   },
+   skewY (angle)
+   {
+      const a = Math .tan (angle);
+
+      this [0] += this [3] * a;
+      this [1] += this [4] * a;
+      this [2] += this [5] * a;
+
+      return this;
+   },
+   toString ()
+   {
+      return Array .prototype .join .call (this, " ");
+   },
+});
+
+for (const key of Object .keys (Matrix3 .prototype))
+   Object .defineProperty (Matrix3 .prototype, key, { enumerable: false });
+
+Object .defineProperties (Matrix3 .prototype,
+{
+   order: { value: 3 },
+   length: { value: 9 },
+   x:
+   {
+      get: (() =>
+      {
+         const vector = new Numbers_Vector3 ();
+
+         return function () { return vector .set (this [0], this [1], this [2]); };
+      })(),
+   },
+   y:
+   {
+      get: (() =>
+      {
+         const vector = new Numbers_Vector3 ();
+
+         return function () { return vector .set (this [3], this [4], this [5]); };
+      })(),
+   },
+   z:
+   {
+      get: (() =>
+      {
+         const vector = new Numbers_Vector3 ();
+
+         return function () { return vector .set (this [6], this [7], this [8]); };
+      })(),
+   },
+   xAxis:
+   {
+      get: (() =>
+      {
+         const vector = new Numbers_Vector2 ();
+
+         return function () { return vector .set (this [0], this [1]); };
+      })(),
+   },
+   yAxis:
+   {
+      get: (() =>
+      {
+         const vector = new Numbers_Vector2 ();
+
+         return function () { return vector .set (this [3], this [4]); };
+      })(),
+   },
+   origin:
+   {
+      get: (() =>
+      {
+         const vector = new Numbers_Vector2 ();
+
+         return function () { return vector .set (this [6], this [7]); };
+      })(),
+   },
+   submatrix:
+   {
+      get: (() =>
+      {
+         const matrix = new Numbers_Matrix2 ();
+
+         return function ()
+         {
+            matrix [0] = this [0]; matrix [1] = this [1];
+            matrix [2] = this [3]; matrix [3] = this [4];
+            return matrix;
+         };
+      })(),
+   },
+});
+
+Object .assign (Matrix3,
+{
+   ZERO: Object .freeze (new Matrix3 (0)),
+   IDENTITY: Object .freeze (new Matrix3 ()),
+   fromRotation (rotation)
+   {
+      const
+         sinAngle = Math .sin (rotation),
+         cosAngle = Math .cos (rotation);
+
+      return new Matrix3 ( cosAngle, sinAngle, 0,
+                          -sinAngle, cosAngle, 0,
+                           0, 0, 1);
+   },
+   fromMatrix2 (matrix)
+   {
+      return new Matrix3 (matrix [0], matrix [1], 0,
+                          matrix [2], matrix [3], 0,
+                          0, 0, 1);
+   },
+});
+
+const m = new Matrix3 ();
 
 const Matrix3_default_ = Matrix3;
 ;
@@ -24091,17 +24127,27 @@ const Rotation4_default_ = Rotation4;
 
 
 
-function Matrix4_Matrix4 (... args)
+function Matrix4_Matrix4 (m00 = 1, m01 = 0,   m02 = 0,   m03 = 0,
+                  m10 = 0, m11 = m00, m12 = 0,   m13 = 0,
+                  m20 = 0, m21 = 0,   m22 = m11, m23 = 0,
+                  m30 = 0, m31 = 0,   m32 = 0,   m33 = m22)
 {
-   if (args .length)
-   {
-      for (let i = 0; i < 16; ++ i)
-         this [i] = args [i];
-   }
-   else
-   {
-      this .identity ();
-   }
+   this [ 0] = m00;
+   this [ 1] = m01;
+   this [ 2] = m02;
+   this [ 3] = m03;
+   this [ 4] = m10;
+   this [ 5] = m11;
+   this [ 6] = m12;
+   this [ 7] = m13;
+   this [ 8] = m20;
+   this [ 9] = m21;
+   this [10] = m22;
+   this [11] = m23;
+   this [12] = m30;
+   this [13] = m31;
+   this [14] = m32;
+   this [15] = m33;
 }
 
 Object .assign (Matrix4_Matrix4 .prototype,
@@ -24794,7 +24840,7 @@ Object .defineProperties (Matrix4_Matrix4 .prototype,
 
 Object .assign (Matrix4_Matrix4,
 {
-   ZERO: Object .freeze (new Matrix4_Matrix4 (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)),
+   ZERO: Object .freeze (new Matrix4_Matrix4 (0)),
    IDENTITY: Object .freeze (new Matrix4_Matrix4 ()),
    fromRotation (rotation)
    {
@@ -25559,10 +25605,35 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double, properti
       ["w", Object .assign ({ enumerable: true }, w)],
    ];
 
-   indices .length = Vector .prototype .length;
-   props   .length = Vector .prototype .length;
+   const constants = [
+      "X_AXIS",
+      "Y_AXIS",
+      "Z_AXIS",
+      "W_AXIS",
+   ];
+
+   const negatives = [
+      "NEGATIVE_X_AXIS",
+      "NEGATIVE_Y_AXIS",
+      "NEGATIVE_Z_AXIS",
+      "NEGATIVE_W_AXIS",
+   ];
+
+   indices   .length = Vector .prototype .length;
+   props     .length = Vector .prototype .length;
+   constants .length = Vector .prototype .length;
+   negatives .length = Vector .prototype .length;
 
    Object .defineProperties (Constructor .prototype, Object .fromEntries (indices .concat (props)));
+
+   Object .defineProperties (Constructor, Object .fromEntries ([
+      "ONE",
+      "NEGATIVE_ONE",
+      "ZERO",
+      ... constants,
+      ... negatives,
+   ]
+   .map (key => [key, { value: Constructor .fromValue (Vector [key]), enumerable: true }])));
 
    return Constructor;
 }
@@ -25588,25 +25659,6 @@ function SFVec3Template (TypeName, double)
       cross (vector)
       {
          return SFVec3 .fromValue (this .getValue () .copy () .cross (vector .getValue ()));
-      },
-   });
-
-   Object .defineProperties (SFVec3,
-   {
-      X_AXIS:
-      {
-         value: SFVec3 .fromValue (Numbers_Vector3 .X_AXIS),
-         enumerable: true,
-      },
-      Y_AXIS:
-      {
-         value: SFVec3 .fromValue (Numbers_Vector3 .Y_AXIS),
-         enumerable: true,
-      },
-      Z_AXIS:
-      {
-         value: SFVec3 .fromValue (Numbers_Vector3 .Z_AXIS),
-         enumerable: true,
       },
    });
 
@@ -25894,20 +25946,6 @@ function SFVec2Template (TypeName, double)
 
    Fields_SFVecPrototypeTemplate (SFVec2, TypeName, Numbers_Vector2, double)
 
-   Object .defineProperties (SFVec2,
-   {
-      X_AXIS:
-      {
-         value: SFVec2 .fromValue (Numbers_Vector2 .X_AXIS),
-         enumerable: true,
-      },
-      Y_AXIS:
-      {
-         value: SFVec2 .fromValue (Numbers_Vector2 .Y_AXIS),
-         enumerable: true,
-      },
-   });
-
    return SFVec2;
 }
 
@@ -25937,30 +25975,6 @@ function SFVec4Template (TypeName, double)
       isDefaultValue ()
       {
          return this .getValue () .equals (Numbers_Vector4 .W_AXIS);
-      },
-   });
-
-   Object .defineProperties (SFVec4,
-   {
-      X_AXIS:
-      {
-         value: SFVec4 .fromValue (Numbers_Vector4 .X_AXIS),
-         enumerable: true,
-      },
-      Y_AXIS:
-      {
-         value: SFVec4 .fromValue (Numbers_Vector4 .Y_AXIS),
-         enumerable: true,
-      },
-      Z_AXIS:
-      {
-         value: SFVec4 .fromValue (Numbers_Vector4 .Z_AXIS),
-         enumerable: true,
-      },
-      W_AXIS:
-      {
-         value: SFVec4 .fromValue (Numbers_Vector4 .W_AXIS),
-         enumerable: true,
       },
    });
 
@@ -28094,16 +28108,15 @@ function Image (width, height, comp, array)
    this .height = Math .max (height|0, 0);
    this .comp   = Math_Algorithm .clamp (comp|0, 0, 4);
    this .array  = new MFInt32 ();
-   this .array .setValue (array);
+
+   if (array)
+      this .array .setValue (array);
+
    this .array .length = this .width * this .height;
 }
 
 Object .assign (Image .prototype,
 {
-   copy ()
-   {
-      return new Image (this .width, this .height, this .comp, this .array);
-   },
    equals (image)
    {
       return this .width  === image .width &&
@@ -28116,14 +28129,8 @@ Object .assign (Image .prototype,
       this .width  = image .width;
       this .height = image .height;
       this .comp   = image .comp;
+
       this .array .assign (image .array);
-   },
-   set (width, height, comp, array)
-   {
-      this .width  = width|0;
-      this .height = height|0;
-      this .comp   = comp|0;
-      this .array .assign (array);
    },
    getWidth ()
    {
@@ -28132,7 +28139,6 @@ Object .assign (Image .prototype,
    setWidth (value)
    {
       this .width = Math .max (value|0, 0);
-      this .array .length = this .width * this .height;
    },
    getHeight ()
    {
@@ -28141,7 +28147,6 @@ Object .assign (Image .prototype,
    setHeight (value)
    {
       this .height = Math .max (value|0, 0);
-      this .array .length = this .width * this .height;
    },
    getComp ()
    {
@@ -28158,7 +28163,6 @@ Object .assign (Image .prototype,
    setArray (value)
    {
       this .array .setValue (value);
-      this .array .length = this .width * this .height;
    },
 });
 
@@ -28166,28 +28170,30 @@ Object .assign (Image .prototype,
  *  SFImage
  */
 
-const _set_size = Symbol ();
-
-function SFImage (width = 0, height = 0, comp = 0, array = new MFInt32 ())
+function SFImage (width = 0, height = 0, comp = 0, array)
 {
    Base_X3DField .call (this, new Image (width, height, comp, array));
 
    this .getValue () .getArray () .addParent (this);
-   this .addInterest (_set_size, this);
 }
 
 Object .assign (Object .setPrototypeOf (SFImage .prototype, Base_X3DField .prototype),
 {
-   [_set_size] ()
-   {
-      this .getValue () .getArray () .length = this .width * this .height;
-   },
    *[Symbol .iterator] ()
    {
       yield  this .width;
       yield  this .height;
       yield  this .comp;
       yield* this .array;
+   },
+   addEvent ()
+   {
+      const size = this .width * this .height;
+
+      if (this .array .length !== size)
+         this .array .length = size;
+
+      Base_X3DField .prototype .addEvent .call (this);
    },
    copy ()
    {
@@ -28362,7 +28368,6 @@ const array = {
    set (value)
    {
       this .getValue () .setArray (value);
-      this .addEvent ();
    },
 };
 
@@ -29086,7 +29091,7 @@ const X3DBaseNode_default_ = X3DBaseNode;
 
 /* harmony default export */ const Base_X3DBaseNode = (Namespace/* default */.A .add ("X3DBaseNode", X3DBaseNode_default_));
 ;// ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var Legacy_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var Legacy_$ = __webpack_require__(169)["A"];
 const Legacy =
 {
    elements (elements, X3DBrowser)
@@ -29148,7 +29153,7 @@ const Legacy_default_ = Legacy;
 
 /* harmony default export */ const Browser_Legacy = (Namespace/* default */.A .add ("Legacy", Legacy_default_));
 ;// ./src/x_ite/BROWSER_VERSION.js
-const BROWSER_VERSION_default_ = "15.0.0";
+const BROWSER_VERSION_default_ = "15.0.1";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (Namespace/* default */.A .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -29735,7 +29740,7 @@ const gettext_default_ = (string) => locale .get (string) || string;
 
 /* harmony default export */ const gettext = (Namespace/* default */.A .add ("gettext", gettext_default_));
 ;// ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(169)["A"];
 
 
 
@@ -30186,7 +30191,7 @@ const TextCompression_default_ = TextCompression;
 
 /* harmony default export */ const Core_TextCompression = (Namespace/* default */.A .add ("TextCompression", TextCompression_default_));
 ;// ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(169)["A"];
 
 
 
@@ -30668,7 +30673,7 @@ const BrowserProperties_default_ = BrowserProperties;
 
 /* harmony default export */ const Core_BrowserProperties = (Namespace/* default */.A .add ("BrowserProperties", BrowserProperties_default_));
 ;// ./src/x_ite/Browser/Core/RenderingProperties.js
-/* provided dependency */ var RenderingProperties_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var RenderingProperties_$ = __webpack_require__(169)["A"];
 
 
 
@@ -30750,7 +30755,7 @@ const RenderingProperties_default_ = RenderingProperties;
 
 /* harmony default export */ const Core_RenderingProperties = (Namespace/* default */.A .add ("RenderingProperties", RenderingProperties_default_));
 ;// ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var Notification_$ = __webpack_require__(169)["A"];
 
 
 
@@ -30836,7 +30841,7 @@ const Notification_default_ = Notification;
 
 /* harmony default export */ const Core_Notification = (Namespace/* default */.A .add ("Notification", Notification_default_));
 ;// ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(169)["A"];
 
 
 
@@ -32651,7 +32656,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, Base_X3DBaseNode .pr
 
       let cdata = this .getSourceText ();
 
-      if (cdata ?.length === 0 || (generator .html && this .getTypeName () !== "Script"))
+      if (cdata ?.length === 0)
          cdata = null;
 
       if (!cdata ?.some (string => string .match (/^\s*(?:data|ecmascript|javascript|vrmlscript)\:/s)))
@@ -34165,15 +34170,10 @@ Object .assign (X3DBoundedObject .prototype,
 
       this ._hidden = value;
    },
-   isDefaultBBoxSize: (() =>
+   isDefaultBBoxSize ()
    {
-      const defaultBBoxSize = new Numbers_Vector3 (-1);
-
-      return function ()
-      {
-         return this ._bboxSize .getValue () .equals (defaultBBoxSize);
-      };
-   })(),
+      return this ._bboxSize .getValue () .equals (Numbers_Vector3 .NEGATIVE_ONE);
+   },
    isBBoxVisible ()
    {
       return this ._bboxDisplay .getValue ();
@@ -34271,7 +34271,7 @@ const NamedNodesArray_default_ = NamedNodesArray;
 
 /* harmony default export */ const Execution_NamedNodesArray = (Namespace/* default */.A .add ("NamedNodesArray", NamedNodesArray_default_));
 ;// ./src/x_ite/Components/Core/X3DImportedNodeProxy.js
-/* provided dependency */ var X3DImportedNodeProxy_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var X3DImportedNodeProxy_$ = __webpack_require__(169)["A"];
 
 
 
@@ -36220,7 +36220,7 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (Namespace/* default */.A .add ("X3DProtoDeclaration", X3DProtoDeclaration_default_));
 ;// ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var X3DParser_$ = __webpack_require__(169)["A"];
 
 
 function X3DParser (scene, name = "Parser")
@@ -36543,7 +36543,7 @@ const Placeholder_default_ = Placeholder;
 
 /* harmony default export */ const Parser_Placeholder = (Namespace/* default */.A .add ("Placeholder", Placeholder_default_));
 ;// ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(169)["A"];
 
 
 
@@ -36575,7 +36575,7 @@ const Grammar = Parser_Expressions ({
    LineFeed:    /\n/g,
 
    // Header
-   Header:      /^#(VRML|X3D) V(.*?) (utf8)(.*?)[\r\n]/y,
+   Header:      /^#(VRML|X3D) V(.*?) (utf8)\b(.*?)[\r\n]/y,
 
    // Keywords
    AS:          /AS/y,
@@ -39236,7 +39236,7 @@ const VRMLParser_default_ = VRMLParser;
 
 /* harmony default export */ const Parser_VRMLParser = (Namespace/* default */.A .add ("VRMLParser", VRMLParser_default_));
 ;// ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var XMLParser_$ = __webpack_require__(169)["A"];
 
 
 
@@ -40522,7 +40522,7 @@ const XMLParser_default_ = XMLParser;
 
 /* harmony default export */ const Parser_XMLParser = (Namespace/* default */.A .add ("XMLParser", XMLParser_default_));
 ;// ./src/x_ite/Parser/JSONParser.js
-/* provided dependency */ var JSONParser_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var JSONParser_$ = __webpack_require__(169)["A"];
 
 
 
@@ -41153,7 +41153,7 @@ Object .assign (X3DOptimizer .prototype,
       const
          translation      = new Numbers_Vector3 (),
          rotation         = new Numbers_Rotation4 (),
-         scale            = new Numbers_Vector3 (1),
+         scale            = new Numbers_Vector3 (),
          scaleOrientation = new Numbers_Rotation4 (),
          nodeMatrix       = new Numbers_Matrix4 (),
          childMatrix      = new Numbers_Matrix4 ();
@@ -41431,7 +41431,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (Namespace/* default */.A .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(525);
+/* provided dependency */ var libtess = __webpack_require__(533);
 
 
 const Triangle3 =
@@ -48136,7 +48136,7 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 
 /* harmony default export */ const Texturing_X3DTexture2DNode = (Namespace/* default */.A .add ("X3DTexture2DNode", X3DTexture2DNode_default_));
 ;// ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(169)["A"];
 
 
 
@@ -50652,7 +50652,7 @@ const Layer_default_ = Layer;
 
 /* harmony default export */ const Layering_Layer = (Namespace/* default */.A .add ("Layer", Layer_default_));
 ;// ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(169)["A"];
 
 
 
@@ -55007,7 +55007,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 
 /* harmony default export */ const Parser_GLTF2Parser = (Namespace/* default */.A .add ("GLTF2Parser", GLTF2Parser_default_));
 ;// ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(169)["A"];
 
 
 
@@ -55113,7 +55113,7 @@ const GLB2Parser_default_ = GLB2Parser;
 
 /* harmony default export */ const Parser_GLB2Parser = (Namespace/* default */.A .add ("GLB2Parser", GLB2Parser_default_));
 ;// ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var OBJParser_$ = __webpack_require__(169)["A"];
 
 
 
@@ -56567,7 +56567,7 @@ const STLAParser_default_ = STLAParser;
 
 /* harmony default export */ const Parser_STLAParser = (Namespace/* default */.A .add ("STLAParser", STLAParser_default_));
 ;// ./src/x_ite/Parser/STLBParser.js
-/* provided dependency */ var STLBParser_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var STLBParser_$ = __webpack_require__(169)["A"];
 
 
 
@@ -57935,8 +57935,8 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (Namespace/* default */.A .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(965)["A"];
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(525);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(169)["A"];
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(533);
 
 
 
@@ -60429,7 +60429,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, Parser_X3DParser .
          matrix           = Numbers_Matrix4 .fromMatrix3 (m),
          translation      = new Numbers_Vector3 (),
          rotation         = new Numbers_Rotation4 (),
-         scale            = new Numbers_Vector3 (1),
+         scale            = new Numbers_Vector3 (),
          scaleOrientation = new Numbers_Rotation4 ();
 
       matrix .get (translation, rotation, scale, scaleOrientation);
@@ -60670,7 +60670,7 @@ const SVGParser_default_ = SVGParser;
 
 /* harmony default export */ const Parser_SVGParser = (Namespace/* default */.A .add ("SVGParser", SVGParser_default_));
 ;// ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(169)["A"];
 
 
 
@@ -61086,7 +61086,7 @@ const X3DWorld_default_ = X3DWorld;
 
 /* harmony default export */ const Execution_X3DWorld = (Namespace/* default */.A .add ("X3DWorld", X3DWorld_default_));
 ;// ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var FileLoader_$ = __webpack_require__(169)["A"];
 
 
 
@@ -61793,7 +61793,7 @@ const ProtoDeclarationArray_default_ = ProtoDeclarationArray;
 
 /* harmony default export */ const Prototype_ProtoDeclarationArray = (Namespace/* default */.A .add ("ProtoDeclarationArray", ProtoDeclarationArray_default_));
 ;// ./src/x_ite/Routing/X3DRoute.js
-/* provided dependency */ var X3DRoute_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var X3DRoute_$ = __webpack_require__(169)["A"];
 
 
 
@@ -64450,7 +64450,7 @@ add ("PT_Sans/PTSans-Italic.woff2",     false, true);
 // add ("PT_Sans/PTSans-BoldItalic.woff2", true,  true);
 
 ;// ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(169)["A"];
 
 
 
@@ -64526,7 +64526,7 @@ function X3DCoreContext (element)
          X3DCoreContext_$("<link/>",
          {
             on: { load: resolve },
-            integrity: "sha384-G5VkYadcDZzXSxhlmPc/5UIeAmrawVALMA8v3XFvzwZZVIB+S7yim8TA6OqjypLp",
+            integrity: "sha384-oHx5s+/JOaejf3OctTXkk6PJ4BcvenVEjjq1vPg+PVF9TSO6uEEJTnsmv/pQMih1",
             crossorigin: "anonymous",
             rel: "stylesheet",
             href: new URL ("x_ite.css", Networking_URLs .getScriptURL ()),
@@ -70563,8 +70563,8 @@ const OrientationChaser_default_ = OrientationChaser;
 
 /* harmony default export */ const Followers_OrientationChaser = (Namespace/* default */.A .add ("OrientationChaser", OrientationChaser_default_));
 ;// ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(878);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(342);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(169)["A"];
 
 
 
@@ -71639,8 +71639,8 @@ const ScreenLine_default_ = ScreenLine;
 
 /* harmony default export */ const Rendering_ScreenLine = (Namespace/* default */.A .add ("ScreenLine", ScreenLine_default_));
 ;// ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(878);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(342);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(169)["A"];
 
 
 
@@ -72377,8 +72377,8 @@ const FlyViewer_default_ = FlyViewer;
 
 /* harmony default export */ const Navigation_FlyViewer = (Namespace/* default */.A .add ("FlyViewer", FlyViewer_default_));
 ;// ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(878);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(342);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(169)["A"];
 
 
 
@@ -72591,8 +72591,8 @@ const NoneViewer_default_ = NoneViewer;
 
 /* harmony default export */ const Navigation_NoneViewer = (Namespace/* default */.A .add ("NoneViewer", NoneViewer_default_));
 ;// ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(878);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(342);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(169)["A"];
 
 
 
@@ -73937,8 +73937,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 
 /* harmony default export */ const Picking_X3DPickingContext = (Namespace/* default */.A .add ("X3DPickingContext", X3DPickingContext_default_));
 ;// ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(878);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(342);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(169)["A"];
 
 
 
@@ -75198,7 +75198,7 @@ const Lock_default_ = Lock;
 
 /* harmony default export */ const Utility_Lock = (Namespace/* default */.A .add ("Lock", Lock_default_));
 ;// ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(169)["A"];
 
 
 
@@ -77387,7 +77387,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 
 /* harmony default export */ const Shaders_X3DShaderNode = (Namespace/* default */.A .add ("X3DShaderNode", X3DShaderNode_default_));
 ;// ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(169)["A"];
 
 
 
@@ -79386,7 +79386,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 
 /* harmony default export */ const Shaders_ShaderCompiler = (Namespace/* default */.A .add ("ShaderCompiler", ShaderCompiler_default_));
 ;// ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(169)["A"];
 
 
 
@@ -81316,7 +81316,7 @@ const PeriodicWave_default_ = PeriodicWave;
 
 /* harmony default export */ const Sound_PeriodicWave = (Namespace/* default */.A .add ("PeriodicWave", PeriodicWave_default_));
 ;// ./src/x_ite/Browser/Sound/X3DSoundContext.js
-/* provided dependency */ var X3DSoundContext_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var X3DSoundContext_$ = __webpack_require__(169)["A"];
 
 
 
@@ -81623,7 +81623,7 @@ const TextureTransform_default_ = TextureTransform;
 
 /* harmony default export */ const Texturing_TextureTransform = (Namespace/* default */.A .add ("TextureTransform", TextureTransform_default_));
 ;// ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(169)["A"];
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -82656,7 +82656,7 @@ const X3DBrowserContext_default_ = X3DBrowserContext;
 
 /* harmony default export */ const Browser_X3DBrowserContext = (Namespace/* default */.A .add ("X3DBrowserContext", X3DBrowserContext_default_));
 ;// ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(169)["A"];
 /*******************************************************************************
  * MIT License
  *
@@ -84726,9 +84726,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, Environmenta
    })(),
    traverse: (() =>
    {
-      const
-         invModelViewMatrix = new Numbers_Matrix4 (),
-         infinity           = new Numbers_Vector3 (-1);
+      const invModelViewMatrix = new Numbers_Matrix4 ();
 
       return function (type, renderObject)
       {
@@ -84747,7 +84745,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, Environmenta
                if (this .inside)
                   return;
 
-               if (this ._size .getValue () .equals (infinity))
+               if (this ._size .getValue () .equals (Numbers_Vector3 .NEGATIVE_ONE))
                {
                   this .inside = true;
                }
@@ -84963,35 +84961,30 @@ Object .assign (Object .setPrototypeOf (TransformSensor .prototype, Environmenta
          targetMatrices .length = 0;
       };
    })(),
-   intersects: (() =>
+   intersects ()
    {
-      const infinity = new Numbers_Vector3 (-1);
+      const
+         modelMatrices  = this .modelMatrices,
+         targetMatrices = this .targetMatrices,
+         always         = this ._size .getValue () .equals (Numbers_Vector3 .NEGATIVE_ONE);
 
-      return function ()
+      for (const modelMatrix of modelMatrices)
       {
-         const
-            modelMatrices  = this .modelMatrices,
-            targetMatrices = this .targetMatrices,
-            always         = this ._size .getValue () .equals (infinity);
+         const invModelMatrix = modelMatrix .inverse ();
 
-         for (const modelMatrix of modelMatrices)
+         for (const targetMatrix of targetMatrices)
          {
-            const invModelMatrix = modelMatrix .inverse ();
+            const matrix = targetMatrix .multRight (invModelMatrix);
 
-            for (const targetMatrix of targetMatrices)
+            if (always || this .containsPoint (matrix .origin))
             {
-               const matrix = targetMatrix .multRight (invModelMatrix);
-
-               if (always || this .containsPoint (matrix .origin))
-               {
-                  return matrix;
-               }
+               return matrix;
             }
          }
+      }
 
-         return null;
-      };
-   })(),
+      return null;
+   },
    containsPoint (point)
    {
       const
@@ -85089,9 +85082,7 @@ Object .assign (Object .setPrototypeOf (VisibilitySensor .prototype, Environment
    },
    traverse: (() =>
    {
-      const
-         bbox     = new Geometry_Box3 (),
-         infinity = new Numbers_Vector3 (-1);
+      const bbox = new Geometry_Box3 ();
 
       return function (type, renderObject)
       {
@@ -85100,7 +85091,7 @@ Object .assign (Object .setPrototypeOf (VisibilitySensor .prototype, Environment
          if (this .visible)
             return;
 
-         if (this ._size .getValue () .equals (infinity))
+         if (this ._size .getValue () .equals (Numbers_Vector3 .NEGATIVE_ONE))
          {
             this .visible = true;
          }
@@ -86982,7 +86973,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, Rendering_X3DGeome
    },
    createPoints: (() =>
    {
-      const scale3 = new Numbers_Vector3 (1);
+      const scale3 = new Numbers_Vector3 ();
 
       return function ()
       {
@@ -99825,7 +99816,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, Sound_X3DSoundNode .pr
          sphereMatrix    = new Numbers_Matrix4 (),
          invSphereMatrix = new Numbers_Matrix4 (),
          rotation        = new Numbers_Rotation4 (),
-         scale           = new Numbers_Vector3 (1),
+         scale           = new Numbers_Vector3 (),
          sphere          = new Geometry_Sphere3 (1, Numbers_Vector3 .ZERO),
          normal          = new Numbers_Vector3 (),
          line            = new Geometry_Line3 (),
@@ -100706,9 +100697,9 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (Namespace/* default */.A .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(965)["A"];
-/* provided dependency */ var SuperGif = __webpack_require__(399);
-/* provided dependency */ var APNG = __webpack_require__(581);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(169)["A"];
+/* provided dependency */ var SuperGif = __webpack_require__(391);
+/* provided dependency */ var APNG = __webpack_require__(949);
 
 
 
@@ -102068,7 +102059,7 @@ const Components_default_ = Components;
 
 /* harmony default export */ const x_ite_Components = (Namespace/* default */.A .add ("Components", Components_default_));
 ;// ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(169)["A"];
 
 
 
@@ -103215,7 +103206,7 @@ const SUPPORTED_VERSIONS_default_ = [
 
 /* harmony default export */ const SUPPORTED_VERSIONS = (Namespace/* default */.A .add ("SUPPORTED_VERSIONS", SUPPORTED_VERSIONS_default_));
 ;// ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(169)["A"];
 
 
 class X3DCanvasElement extends HTMLElement
@@ -103379,8 +103370,8 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (Namespace/* default */.A .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(965)["A"];
-/* provided dependency */ var pako = __webpack_require__(260);
+/* provided dependency */ var jquery_$ = __webpack_require__(169)["A"];
+/* provided dependency */ var pako = __webpack_require__(436);
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -103444,13 +103435,13 @@ const jquery_default_ = jquery_$;
 
 /* harmony default export */ const jquery = (Namespace/* default */.A .add ("jquery", jquery_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(525);
+/* provided dependency */ var libtess_libtess = __webpack_require__(533);
 const libtess_default_ = libtess_libtess;
 ;
 
 /* harmony default export */ const lib_libtess = (Namespace/* default */.A .add ("libtess", libtess_default_));
 ;// ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(965)["A"];
+/* provided dependency */ var X3D_$ = __webpack_require__(169)["A"];
 
 
 
@@ -103616,7 +103607,7 @@ Namespace/* default */.A, Namespace/* default */.A .Fields,
 
 // Assign X3D to global namespace.
 
-window [Symbol .for ("X_ITE.X3D-15.0.0")] = x_ite_X3D;
+window [Symbol .for ("X_ITE.X3D-15.0.1")] = x_ite_X3D;
 
 customElements .define ("x3d-canvas", x_ite_X3DCanvasElement);
 
