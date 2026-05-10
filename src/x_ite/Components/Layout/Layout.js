@@ -31,19 +31,6 @@ function Layout (executionContext)
 
    // Private properties
 
-   this .alignX          = CENTER;
-   this .alignY          = CENTER;
-   this .offsetUnitX     = WORLD;
-   this .offsetUnitY     = WORLD;
-   this .offsetX         = 0;
-   this .offsetY         = 0;
-   this .sizeUnitX       = WORLD;
-   this .sizeUnitY       = WORLD;
-   this .sizeX           = 1;
-   this .sizeY           = 1;
-   this .scaleModeX      = NONE;
-   this .scaleModeY      = NONE;
-   this .parent          = null;
    this .rectangleCenter = new Vector2 (); // Useful for tools.
    this .rectangleSize   = new Vector2 (); // Useful for tools.
    this .matrix          = new Matrix4 ();
