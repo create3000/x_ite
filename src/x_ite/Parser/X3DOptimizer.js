@@ -36,7 +36,20 @@ Object .assign (X3DOptimizer .prototype,
          return [ ];
 
       if (seen .has (node))
+      {
+         switch (node .getNodeTypeName ())
+         {
+            case "HAnimJoint":
+            case "HAnimSegment":
+            case "HAnimSite":
+            {
+               if (!this .inSkeleton .at (-1))
+                  return [ ];
+            }
+         }
+
          return node;
+      }
 
       seen .add (node);
 

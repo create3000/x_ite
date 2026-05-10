@@ -2224,6 +2224,7 @@ function eventsProcessed ()
       {
          skeleton .humanoidNode = humanoidNode;
          skeleton .childNode    = childNode;
+         break;
       }
    },
    nodeChildren: (() =>
