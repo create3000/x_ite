@@ -93,17 +93,24 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
 
       // Y
 
-      if (this ._align [1] === "BOTTOM")
-         this .alignY = BOTTOM;
+      if (this ._offsetUnits .length > 1)
+      {
+         if (this ._align [1] === "BOTTOM")
+            this .alignY = BOTTOM;
 
-      else if (this ._align [1] === "TOP")
-         this .alignY = TOP;
+         else if (this ._align [1] === "TOP")
+            this .alignY = TOP;
 
+         else
+            this .alignY = CENTER;
+      }
       else
-         this .alignY = CENTER;
+      {
+         this .alignY = this .alignX;
+      }
    },
    set_offsetUnits__ ()
-{
+   {
       // X
 
       if (this ._offsetUnits [0] === "FRACTION")
@@ -141,11 +148,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
 
       // Y
 
-      if (this ._offset .length > 1)
-         this .offsetY = this ._offset [1];
-
-      else
-         this .offsetY = offsetX;
+      this .offsetY = this ._offset [1] ?? this .offsetX;
    },
    set_sizeUnits__ ()
    {
@@ -186,11 +189,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
 
       // Y
 
-      if (this ._size .length > 1)
-         this .sizeY = this ._size [1];
-
-      else
-         this .sizeY = this .sizeX;
+      this .sizeY = this ._size [1] ?? this .sizeX;
    },
    set_scaleMode__ ()
    {
