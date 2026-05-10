@@ -4,7 +4,10 @@ import Matrix4      from "../../standard/Math/Numbers/Matrix4.js";
 import Box3         from "../../standard/Math/Geometry/Box3.js";
 import X3DConstants from "../Base/X3DConstants.js";
 
-function X3DOptimizer () { }
+function X3DOptimizer ()
+{
+   this .inSkeleton = [ ];
+}
 
 Object .assign (X3DOptimizer .prototype,
 {
@@ -75,27 +78,26 @@ Object .assign (X3DOptimizer .prototype,
          {
             node .children = this .optimizeNodes (node, node .children, true, removedNodes, seen);
 
-            switch (parent ?.getNodeTypeName ())
+            if (this .inSkeleton .at (-1))
             {
-               case "HAnimHumanoid":
-               case "HAnimJoint":
-               case "HAnimSegment":
-               case "HAnimSite":
-               {
-                  return node;
-               }
-               default:
-               {
-                  removedNodes .push (node);
+               return node;
+            }
+            else
+            {
+               removedNodes .push (node);
 
-                  return [ ];
-               }
+               return [ ];
             }
          }
          case "HAnimHumanoid":
          {
+            this .inSkeleton .push (true);
+
             node .skeleton = this .optimizeNodes (node, node .skeleton, true, removedNodes, seen);
-            node .skin     = this .optimizeNodes (node, node .skin,     true, removedNodes, seen);
+
+            this .inSkeleton .pop ();
+
+            node .skin = this .optimizeNodes (node, node .skin, true, removedNodes, seen);
 
             return this .removeIfNoChildren (node, removedNodes);
          }

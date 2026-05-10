@@ -2201,8 +2201,8 @@ function eventsProcessed ()
          transformNode = scene .createNode (typeName, false);
 
       node .transformNode = transformNode;
-      node .childNode     = node .transformNode;
-      node .pointers      = [node .childNode];
+      node .childNode     = transformNode;
+      node .pointers      = [transformNode];
 
       return node;
    },
@@ -2468,13 +2468,23 @@ function eventsProcessed ()
    },
    skeleton (joints, nodes)
    {
-      const children = new Set (joints
-         .map (index => nodes [index])
-         .filter (node => node instanceof Object)
-         .filter (node => node .children instanceof Array)
-         .flatMap (node => node .children));
+      const children = new Set (joints .flatMap (index => this .skeletonChildren (index)));
 
       return joints .filter (index => !children .has (index));
+   },
+   skeletonChildren (index)
+   {
+      const node = this .input .nodes [index];
+
+      if (!(node instanceof Object))
+         return [ ];
+
+      const children = node .children;
+
+      if (!(children instanceof Array))
+         return [ ];
+
+      return children .concat (children .flatMap (child => this .skeletonChildren (child)));
    },
    inverseBindMatricesAccessors (inverseBindMatrices)
    {
