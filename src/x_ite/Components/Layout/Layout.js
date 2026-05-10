@@ -44,8 +44,8 @@ function Layout (executionContext)
    this .scaleModeX      = NONE;
    this .scaleModeY      = NONE;
    this .parent          = null;
-   this .rectangleCenter = new Vector2 ();
-   this .rectangleSize   = new Vector2 ();
+   this .rectangleCenter = new Vector2 (); // Useful for tools.
+   this .rectangleSize   = new Vector2 (); // Useful for tools.
    this .matrix          = new Matrix4 ();
 }
 
