@@ -141,12 +141,9 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
    {
       // If a field has a length of one, that value applies to both the horizontal and vertical directions.
 
-      // X
+      // X and Y
 
       this .offsetX = this ._offset [0] ?? 0;
-
-      // Y
-
       this .offsetY = this ._offset [1] ?? this .offsetX;
    },
    set_sizeUnits__ ()
@@ -186,12 +183,9 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
    {
       // If a field has a length of one, that value applies to both the horizontal and vertical directions.
 
-      // X
+      // X and Y
 
       this .sizeX = this ._size [0] ?? 0;
-
-      // Y
-
       this .sizeY = this ._size [1] ?? this .sizeX;
    },
    set_scaleMode__ ()
