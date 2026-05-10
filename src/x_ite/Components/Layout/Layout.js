@@ -80,6 +80,8 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
    },
    set_align__ ()
    {
+      // If the align field has only one value, that value shall be "CENTER".
+
       // X
 
       if (this ._align [0] === "LEFT")
@@ -93,24 +95,19 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
 
       // Y
 
-      if (this ._offsetUnits .length > 1)
-      {
-         if (this ._align [1] === "BOTTOM")
-            this .alignY = BOTTOM;
+      if (this ._align [1] === "BOTTOM")
+         this .alignY = BOTTOM;
 
-         else if (this ._align [1] === "TOP")
-            this .alignY = TOP;
+      else if (this ._align [1] === "TOP")
+         this .alignY = TOP;
 
-         else
-            this .alignY = CENTER;
-      }
       else
-      {
-         this .alignY = this .alignX;
-      }
+         this .alignY = CENTER;
    },
    set_offsetUnits__ ()
    {
+      // If a field has a length of one, that value applies to both the horizontal and vertical directions.
+
       // X
 
       if (this ._offsetUnits [0] === "FRACTION")
@@ -142,6 +139,8 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
    },
    set_offset__ ()
    {
+      // If a field has a length of one, that value applies to both the horizontal and vertical directions.
+
       // X
 
       this .offsetX = this ._offset [0] ?? 0;
@@ -152,6 +151,8 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
    },
    set_sizeUnits__ ()
    {
+      // If a field has a length of one, that value applies to both the horizontal and vertical directions.
+
       // X
 
       if (this ._sizeUnits [0] === "FRACTION")
@@ -183,6 +184,8 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
    },
    set_size__ ()
    {
+      // If a field has a length of one, that value applies to both the horizontal and vertical directions.
+
       // X
 
       this .sizeX = this ._size [0] ?? 0;
@@ -193,6 +196,8 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
    },
    set_scaleMode__ ()
    {
+      // If a field has a length of one, that value applies to both the horizontal and vertical directions.
+
       // X
 
       if (this ._scaleMode [0] === "FRACTION")
