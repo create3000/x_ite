@@ -20,11 +20,9 @@ Object .assign (X3DOptimizer .prototype,
    optimizeInterpolators: false,
    optimizeSceneGraph (nodes)
    {
-      const
-         seen         = new Set (),
-         removedNodes = [ ];
+      const removedNodes = [ ];
 
-      nodes .setValue (this .optimizeNodes (null, nodes, true, removedNodes, seen));
+      nodes .setValue (this .optimizeNodes (null, nodes, true, removedNodes, new Set ()));
 
       removedNodes
          .filter (node => node .getValue () .getCloneCount () === 0)
