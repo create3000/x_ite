@@ -82,195 +82,151 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
    {
       // X
 
-      if (this ._align .length > 0)
-      {
-         if (this ._align [0] === "LEFT")
-            this .alignX = LEFT;
+      if (this ._align [0] === "LEFT")
+         this .alignX = LEFT;
 
-         else if (this ._align [0] === "RIGHT")
-            this .alignX = RIGHT;
+      else if (this ._align [0] === "RIGHT")
+         this .alignX = RIGHT;
 
-         else
-            this .alignX = CENTER;
-      }
       else
          this .alignX = CENTER;
 
       // Y
 
-      if (this ._align .length > 1)
-      {
-         if (this ._align [1] === "BOTTOM")
-            this .alignY = BOTTOM;
+      if (this ._align [1] === "BOTTOM")
+         this .alignY = BOTTOM;
 
-         else if (this ._align [1] === "TOP")
-            this .alignY = TOP;
+      else if (this ._align [1] === "TOP")
+         this .alignY = TOP;
 
-         else
-            this .alignY = CENTER;
-      }
       else
          this .alignY = CENTER;
    },
    set_offsetUnits__ ()
-   {
-      if (this ._offsetUnits .length > 0)
+{
+      // X
+
+      if (this ._offsetUnits [0] === "FRACTION")
+         this .offsetUnitX = FRACTION;
+
+      else if (this ._offsetUnits [0] === "PIXEL")
+         this .offsetUnitX = PIXEL;
+
+      else
+         this .offsetUnitX = WORLD;
+
+      // Y
+
+      if (this ._offsetUnits .length > 1)
       {
-         // X
+         if (this ._offsetUnits [1] === "FRACTION")
+            this .offsetUnitY = FRACTION;
 
-         if (this ._offsetUnits [0] === "FRACTION")
-            this .offsetUnitX = FRACTION;
-
-         else if (this ._offsetUnits [0] === "PIXEL")
-            this .offsetUnitX = PIXEL;
+         else if (this ._offsetUnits [1] === "PIXEL")
+            this .offsetUnitY = PIXEL;
 
          else
-            this .offsetUnitX = WORLD;
-
-         // Y
-
-         if (this ._offsetUnits .length > 1)
-         {
-            if (this ._offsetUnits [1] === "FRACTION")
-               this .offsetUnitY = FRACTION;
-
-            else if (this ._offsetUnits [1] === "PIXEL")
-               this .offsetUnitY = PIXEL;
-
-            else
-               this .offsetUnitY = WORLD;
-         }
-         else
-            this .offsetUnitY = this .offsetUnitX;
+            this .offsetUnitY = WORLD;
       }
       else
       {
-         this .offsetUnitX = WORLD;
-         this .offsetUnitY = WORLD;
+         this .offsetUnitY = this .offsetUnitX;
       }
    },
    set_offset__ ()
    {
-      if (this ._offset .length > 0)
-      {
-         // X
+      // X
 
-         this .offsetX = this ._offset [0];
+      this .offsetX = this ._offset [0] ?? 0;
 
-         // Y
+      // Y
 
-         if (this ._offset .length > 1)
-            this .offsetY = this ._offset [1];
+      if (this ._offset .length > 1)
+         this .offsetY = this ._offset [1];
 
-         else
-            this .offsetY = offsetX;
-      }
       else
-      {
-         this .offsetX = 0;
-         this .offsetY = 0;
-      }
+         this .offsetY = offsetX;
    },
    set_sizeUnits__ ()
    {
-      if (this ._sizeUnits .length > 0)
+      // X
+
+      if (this ._sizeUnits [0] === "FRACTION")
+         this .sizeUnitX = FRACTION;
+
+      else if (this ._sizeUnits [0] === "PIXEL")
+         this .sizeUnitX = PIXEL;
+
+      else
+         this .sizeUnitX = WORLD;
+
+      // Y
+
+      if (this ._sizeUnits .length > 1)
       {
-         // X
+         if (this ._sizeUnits [1] === "FRACTION")
+            this .sizeUnitY = FRACTION;
 
-         if (this ._sizeUnits [0] === "FRACTION")
-            this .sizeUnitX = FRACTION;
-
-         else if (this ._sizeUnits [0] === "PIXEL")
-            this .sizeUnitX = PIXEL;
+         else if (this ._sizeUnits [1] === "PIXEL")
+            this .sizeUnitY = PIXEL;
 
          else
-            this .sizeUnitX = WORLD;
-
-         // Y
-
-         if (this ._sizeUnits .length > 1)
-         {
-            if (this ._sizeUnits [1] === "FRACTION")
-               this .sizeUnitY = FRACTION;
-
-            else if (this ._sizeUnits [1] === "PIXEL")
-               this .sizeUnitY = PIXEL;
-
-            else
-               this .sizeUnitY = WORLD;
-         }
-         else
-            this .sizeUnitY = this .sizeUnitX;
+            this .sizeUnitY = WORLD;
       }
       else
       {
-         this .sizeUnitX = WORLD;
-         this .sizeUnitY = WORLD;
+         this .sizeUnitY = this .sizeUnitX;
       }
    },
    set_size__ ()
    {
-      if (this ._size .length > 0)
-      {
-         // X
+      // X
 
-         this .sizeX = this ._size [0];
+      this .sizeX = this ._size [0] ?? 0;
 
-         // Y
+      // Y
 
-         if (this ._size .length > 1)
-            this .sizeY = this ._size [1];
+      if (this ._size .length > 1)
+         this .sizeY = this ._size [1];
 
-         else
-            this .sizeY = this .sizeX;
-      }
       else
-      {
-         this .sizeX = 0;
-         this .sizeY = 0;
-      }
+         this .sizeY = this .sizeX;
    },
    set_scaleMode__ ()
    {
-      if (this ._scaleMode .length > 0)
+      // X
+
+      if (this ._scaleMode [0] === "FRACTION")
+         this .scaleModeX = FRACTION;
+
+      else if (this ._scaleMode [0] === "PIXEL")
+         this .scaleModeX = PIXEL;
+
+      else if (this ._scaleMode [0] === "STRETCH")
+         this .scaleModeX = STRETCH;
+
+      else
+         this .scaleModeX = NONE;
+
+      // Y
+
+      if (this ._scaleMode .length > 1)
       {
-         // X
+         if (this ._scaleMode [1] === "FRACTION")
+            this .scaleModeY = FRACTION;
 
-         if (this ._scaleMode [0] === "FRACTION")
-            this .scaleModeX = FRACTION;
+         else if (this ._scaleMode [1] === "PIXEL")
+            this .scaleModeY = PIXEL;
 
-         else if (this ._scaleMode [0] === "PIXEL")
-            this .scaleModeX = PIXEL;
-
-         else if (this ._scaleMode [0] === "STRETCH")
-            this .scaleModeX = STRETCH;
+         else if (this ._scaleMode [1] === "STRETCH")
+            this .scaleModeY = STRETCH;
 
          else
-            this .scaleModeX = NONE;
-
-         // Y
-
-         if (this ._scaleMode .length > 1)
-         {
-            if (this ._scaleMode [1] === "FRACTION")
-               this .scaleModeY = FRACTION;
-
-            else if (this ._scaleMode [1] === "PIXEL")
-               this .scaleModeY = PIXEL;
-
-            else if (this ._scaleMode [1] === "STRETCH")
-               this .scaleModeY = STRETCH;
-
-            else
-               this .scaleModeY = NONE;
-         }
-         else
-            this .scaleModeY = this .scaleModeX;
+            this .scaleModeY = NONE;
       }
       else
       {
-         this .scaleModeX = NONE;
-         this .scaleModeY = NONE;
+         this .scaleModeY = this .scaleModeX;
       }
    },
    getRectangleCenter ()
