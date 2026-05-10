@@ -60,7 +60,7 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, X3DGroupingNode 
    },
    traverse (type, renderObject)
    {
-      this .viewportNode ?.push ();
+      this .viewportNode ?.push (renderObject);
 
       if (this .layoutNode)
       {
@@ -82,7 +82,7 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, X3DGroupingNode 
          X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
       }
 
-      this .viewportNode ?.pop ();
+      this .viewportNode ?.pop (renderObject);
    },
 });
 
