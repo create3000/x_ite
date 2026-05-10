@@ -2471,23 +2471,30 @@ function eventsProcessed ()
    },
    skeleton (joints, nodes)
    {
-      const children = new Set (joints .flatMap (index => this .skeletonChildren (index)));
+      const children = new Set ();
+
+      joints .forEach (index => this .skeletonChildren (index, children));
 
       return joints .filter (index => !children .has (index));
    },
-   skeletonChildren (index)
+   skeletonChildren (index, set)
    {
+      // Must use nodes from input here.
       const node = this .input .nodes [index];
 
       if (!(node instanceof Object))
-         return [ ];
+         return;
 
       const children = node .children;
 
       if (!(children instanceof Array))
-         return [ ];
+         return;
 
-      return children .concat (children .flatMap (child => this .skeletonChildren (child)));
+      for (const child of children)
+      {
+         set .add (child);
+         this .skeletonChildren (child, set);
+      }
    },
    inverseBindMatricesAccessors (inverseBindMatrices)
    {
