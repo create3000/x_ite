@@ -247,24 +247,14 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
    getOffsetUnitX ()
    {
       if (this .offsetUnitX === WORLD)
-      {
-         if (this .parent)
-            return this .parent .getOffsetUnitX ();
-
-         return FRACTION;
-      }
+         return this .parent ?.getOffsetUnitX () ?? FRACTION;
 
       return this .offsetUnitX;
    },
    getOffsetUnitY ()
    {
       if (this .offsetUnitY === WORLD)
-      {
-         if (this .parent)
-            return this .parent .getOffsetUnitY ();
-
-         return FRACTION;
-      }
+         return this .parent ?.getOffsetUnitY () ?? FRACTION;
 
       return this .offsetUnitY;
    },
@@ -279,24 +269,14 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
    getSizeUnitX ()
    {
       if (this .sizeUnitX === WORLD)
-      {
-         if (this .parent)
-            return this .parent .getSizeUnitX ();
-
-         return FRACTION;
-      }
+         return this .parent ?.getSizeUnitX () ?? FRACTION;
 
       return this .sizeUnitX;
    },
    getSizeUnitY ()
    {
       if (this .sizeUnitY === WORLD)
-      {
-         if (this .parent)
-            return this .parent .getSizeUnitY ();
-
-         return FRACTION;
-      }
+         return this .parent ?.getSizeUnitY () ?? FRACTION;
 
       return this .sizeUnitY;
    },
@@ -330,7 +310,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
    },
    transform (type, renderObject)
    {
-      const parent = this .parent = renderObject .getParentLayout ();
+      this .parent = renderObject .getParentLayout ();
 
       // Calculate rectangleSize
 
@@ -345,7 +325,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
          viewportMeter       = viewpointNode .getViewportSize (viewport, nearValue), // in meters
          viewportPixel       = this .viewportPixel,                                  // in pixels
          pixelSize           = this .pixelSize,                                      // size of one pixel in meters
-         parentRectangleSize = parent ? parent .getRectangleSize () : viewportMeter, // in meters
+         parentRectangleSize = this .parent ?.getRectangleSize () ?? viewportMeter,  // in meters
          rectangleSize       = this .rectangleSize,
          rectangleCenter     = this .rectangleCenter;
 
