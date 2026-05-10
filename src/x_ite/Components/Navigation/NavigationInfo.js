@@ -52,27 +52,15 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
    },
    getCollisionRadius ()
    {
-      if (this ._avatarSize .length > 0)
-      {
-         if (this ._avatarSize [0] > 0)
-            return this ._avatarSize [0];
-      }
-
-      return 0.25;
+      return this ._avatarSize [0] ?? 0.25;
    },
    getAvatarHeight ()
    {
-      if (this ._avatarSize .length > 1)
-         return this ._avatarSize [1];
-
-      return 1.6;
+      return this ._avatarSize [1] ?? 1.6;
    },
    getStepHeight ()
    {
-      if (this ._avatarSize .length > 2)
-         return this ._avatarSize [2];
-
-      return 0.75;
+      return this ._avatarSize [2] ?? 0.75;
    },
    getNearValue ()
    {
