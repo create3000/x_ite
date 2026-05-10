@@ -476,7 +476,9 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
             }
          }
          else
+         {
             scale .x = scale .y;
+         }
       }
       else if (this .getScaleModeY () === STRETCH)
       {
