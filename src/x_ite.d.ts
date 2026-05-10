@@ -72,6 +72,10 @@ declare namespace X3D
        */
       readonly version: string;
       /**
+       * The URL of the script that creates this browser. This property is read-only.
+       */
+      readonly scriptURL: string;
+      /**
        * If provided, the URL to the entity that wrote this browser. This property is read-only.
        */
       readonly providerURL: string;
