@@ -2574,7 +2574,7 @@ function eventsProcessed ()
       {
          const skinCoordWeight = jointNode .skinCoordWeight;
 
-         jointMatrix .set (humanoidNode ._jointBindingPositions [j] .getValue (), humanoidNode ._jointBindingRotations [j] .getValue (), humanoidNode ._jointBindingScales [j] .getValue ()) .multRight (jointNode .getValue () .getModelViewMatrix ());
+         jointMatrix .set (humanoidNode ._jointBindingPositions [j] ?.getValue (), humanoidNode ._jointBindingRotations [j] ?.getValue (), humanoidNode ._jointBindingScales [j] ?.getValue ()) .multRight (jointNode .getValue () .getModelViewMatrix ());
 
          for (const [c, index] of jointNode .skinCoordIndex .entries ())
          {

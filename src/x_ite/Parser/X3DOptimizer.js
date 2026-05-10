@@ -13,22 +13,29 @@ Object .assign (X3DOptimizer .prototype,
    optimizeInterpolators: false,
    optimizeSceneGraph (nodes)
    {
-      const removedNodes = [ ];
+      const
+         seen         = new Set (),
+         removedNodes = [ ];
 
-      nodes .setValue (this .optimizeNodes (null, nodes, true, removedNodes));
+      nodes .setValue (this .optimizeNodes (null, nodes, true, removedNodes, seen));
 
       removedNodes
          .filter (node => node .getValue () .getCloneCount () === 0)
          .forEach (node => node .dispose ());
    },
-   optimizeNodes (parent, nodes, combine, removedNodes)
+   optimizeNodes (parent, nodes, combine, removedNodes, seen)
    {
-      return Array .from (nodes) .flatMap (node => this .optimizeNode (parent, node, combine, removedNodes));
+      return Array .from (nodes) .flatMap (node => this .optimizeNode (parent, node, combine, removedNodes, seen));
    },
-   optimizeNode (parent, node, combine, removedNodes)
+   optimizeNode (parent, node, combine, removedNodes, seen)
    {
       if (!node)
          return [ ];
+
+      if (seen .has (node))
+         return node;
+
+      seen .add (node);
 
       if (this .optimizeInterpolators)
          this .removeInterpolatorsWithOnlyOneValue (node, removedNodes);
@@ -37,7 +44,7 @@ Object .assign (X3DOptimizer .prototype,
       {
          case "Transform":
          {
-            node .children = this .optimizeNodes (node, node .children, true, removedNodes);
+            node .children = this .optimizeNodes (node, node .children, true, removedNodes, seen);
 
             if (this .removeEmptyGroups)
             {
@@ -50,7 +57,7 @@ Object .assign (X3DOptimizer .prototype,
          case "Anchor":
          case "Group":
          {
-            node .children = this .optimizeNodes (node, node .children, true, removedNodes);
+            node .children = this .optimizeNodes (node, node .children, true, removedNodes, seen);
 
             return this .removeIfNoChildren (node, removedNodes);
          }
@@ -58,7 +65,7 @@ Object .assign (X3DOptimizer .prototype,
          case "LOD":
          case "Switch":
          {
-            this .optimizeNodes (node, node .children, false, removedNodes);
+            this .optimizeNodes (node, node .children, false, removedNodes, seen);
 
             return this .removeIfNoChildren (node, removedNodes);
          }
@@ -66,7 +73,7 @@ Object .assign (X3DOptimizer .prototype,
          case "HAnimSegment":
          case "HAnimSite":
          {
-            node .children = this .optimizeNodes (node, node .children, true, removedNodes);
+            node .children = this .optimizeNodes (node, node .children, true, removedNodes, seen);
 
             switch (parent ?.getNodeTypeName ())
             {
@@ -87,8 +94,8 @@ Object .assign (X3DOptimizer .prototype,
          }
          case "HAnimHumanoid":
          {
-            node .skeleton = this .optimizeNodes (node, node .skeleton, true, removedNodes);
-            node .skin     = this .optimizeNodes (node, node .skin,     true, removedNodes);
+            node .skeleton = this .optimizeNodes (node, node .skeleton, true, removedNodes, seen);
+            node .skin     = this .optimizeNodes (node, node .skin,     true, removedNodes, seen);
 
             return this .removeIfNoChildren (node, removedNodes);
          }
