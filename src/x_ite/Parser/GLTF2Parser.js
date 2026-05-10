@@ -2224,6 +2224,8 @@ function eventsProcessed ()
       {
          skeleton .humanoidNode = humanoidNode;
          skeleton .childNode    = childNode;
+
+         // Only make the first skeleton node a HAnimHumanoid node.
          break;
       }
    },
