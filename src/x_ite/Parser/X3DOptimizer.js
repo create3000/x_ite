@@ -4,9 +4,13 @@ import Matrix4      from "../../standard/Math/Numbers/Matrix4.js";
 import Box3         from "../../standard/Math/Geometry/Box3.js";
 import X3DConstants from "../Base/X3DConstants.js";
 
+const _skeleton = Symbol ();
+
 function X3DOptimizer ()
 {
-   this .inSkeleton = [ ];
+   // Private properties
+
+   this [_skeleton] = [ ];
 }
 
 Object .assign (X3DOptimizer .prototype,
@@ -43,7 +47,7 @@ Object .assign (X3DOptimizer .prototype,
             case "HAnimSegment":
             case "HAnimSite":
             {
-               if (!this .inSkeleton .at (-1))
+               if (!this [_skeleton] .at (-1))
                   return [ ];
             }
          }
@@ -91,7 +95,7 @@ Object .assign (X3DOptimizer .prototype,
          {
             node .children = this .optimizeNodes (node, node .children, true, removedNodes, seen);
 
-            if (this .inSkeleton .at (-1))
+            if (this [_skeleton] .at (-1))
             {
                return node;
             }
@@ -104,11 +108,11 @@ Object .assign (X3DOptimizer .prototype,
          }
          case "HAnimHumanoid":
          {
-            this .inSkeleton .push (true);
+            this [_skeleton] .push (true);
 
             node .skeleton = this .optimizeNodes (node, node .skeleton, true, removedNodes, seen);
 
-            this .inSkeleton .pop ();
+            this [_skeleton] .pop ();
 
             node .skin = this .optimizeNodes (node, node .skin, true, removedNodes, seen);
 
