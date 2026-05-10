@@ -2566,15 +2566,21 @@ function eventsProcessed ()
       // Determine points at binding position.
 
       const
-         skinCoord  = humanoidNode ._skinCoord,
-         points     = Array .from (skinCoord .point, p => p .getValue () .copy ()),
-         skinPoints = [ ];
+         jointBindingPositions  = humanoidNode ._jointBindingPositions,
+         jointBindingRotations  = humanoidNode ._jointBindingRotations,
+         jointBindingScales     = humanoidNode ._jointBindingScales,
+         skinCoord              = humanoidNode ._skinCoord,
+         points                 = Array .from (skinCoord .point, p => p .getValue () .copy ()),
+         skinPoints             = [ ];
 
       for (const [j, jointNode] of humanoidNode ._joints .entries ())
       {
          const skinCoordWeight = jointNode .skinCoordWeight;
 
-         jointMatrix .set (humanoidNode ._jointBindingPositions [j] ?.getValue (), humanoidNode ._jointBindingRotations [j] ?.getValue (), humanoidNode ._jointBindingScales [j] ?.getValue ()) .multRight (jointNode .getValue () .getModelViewMatrix ());
+         jointMatrix .set (jointBindingPositions [j] ?.getValue (),
+                           jointBindingRotations [j] ?.getValue (),
+                           jointBindingScales [j] ?.getValue ())
+         .multRight (jointNode .getValue () .getModelViewMatrix ());
 
          for (const [c, index] of jointNode .skinCoordIndex .entries ())
          {
