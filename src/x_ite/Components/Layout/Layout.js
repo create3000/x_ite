@@ -308,7 +308,8 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
             viewport           = renderObject .getViewVolumes () .at (-1) .getViewport (), // in pixels
             viewportMeter      = viewpointNode .getViewportSize (viewport, nearValue),     // in meters
             rectangle          = Rectangles .pop (),
-            parentRectangle    = renderObject .getRectangles () .at (-1) ?? rootRectangle .set (0, 0, ... viewportMeter), // in meters
+            parentRectangle    = renderObject .getLayoutRectangles () .at (-1)
+               ?? rootRectangle .set (0, 0, ... viewportMeter), // in meters
             modelViewMatrix    = renderObject .getModelViewMatrix ();
 
          viewportPixel .set (viewport [2], viewport [3]) .divide (contentScale); // in pixel
@@ -486,14 +487,14 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
 
          modelViewMatrix .push (matrix);
          renderObject .getLayouts () .push (this);
-         renderObject .getRectangles () .push (rectangle);
+         renderObject .getLayoutRectangles () .push (rectangle);
       };
    })(),
    pop (type, renderObject)
    {
       const modelViewMatrix = renderObject .getModelViewMatrix ();
 
-      Rectangles .push (renderObject .getRectangles () .pop ());
+      Rectangles .push (renderObject .getLayoutRectangles () .pop ());
       renderObject .getLayouts () .pop ();
       modelViewMatrix .pop ();
    },

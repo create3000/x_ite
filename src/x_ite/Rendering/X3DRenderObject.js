@@ -48,7 +48,7 @@ function X3DRenderObject (executionContext)
    this .localShadows             = [ false ];
    this .localFogs                = [ null ];
    this .layouts                  = [ ];
-   this .rectangles               = [ ];
+   this .layoutRectangles         = [ ];
    this .hAnimNode                = [ null ];
    this .invHumanoidMatrix        = new MatrixStack (Matrix4);
    this .renderedTextures         = new Set ();
@@ -308,9 +308,9 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .layouts;
    },
-   getRectangles ()
+   getLayoutRectangles ()
    {
-      return this .rectangles;
+      return this .layoutRectangles;
    },
    getHAnimNode ()
    {
