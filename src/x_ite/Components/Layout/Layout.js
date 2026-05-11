@@ -299,11 +299,13 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
 
       return function (type, renderObject)
       {
+         // Get parent layouts.
+         
          const
             parents = renderObject .getLayouts (),
             index   = parents .length - 1;
 
-         // Calculate rectangleSize
+         // Determine rectangleSize, rectangleCenter and layout matrix.
 
          const
             browser             = this .getBrowser (),
