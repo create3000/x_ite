@@ -6,8 +6,12 @@ import X3DLayoutNode        from "./X3DLayoutNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
+import Vector4              from "../../../standard/Math/Numbers/Vector4.js";
 import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
+import ObjectCache          from "../../../standard/Utility/ObjectCache.js";
+
+const Rectangles = ObjectCache (Vector4);
 
 let i = 0;
 
@@ -28,11 +32,6 @@ function Layout (executionContext)
    X3DLayoutNode .call (this, executionContext);
 
    this .addType (X3DConstants .Layout);
-
-   // Private properties
-
-   this .rectangleCenter = new Vector2 (); // Useful for tools.
-   this .rectangleSize   = new Vector2 (); // Useful for tools.
 }
 
 Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .prototype),
@@ -204,14 +203,6 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
          this .scaleModeY = this .scaleModeX;
       }
    },
-   getRectangleCenter ()
-   {
-      return this .rectangleCenter;
-   },
-   getRectangleSize ()
-   {
-      return this .rectangleSize;
-   },
    getAlignX ()
    {
       return this .alignX;
@@ -284,9 +275,10 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
 
       return this .scaleModeY;
    },
-   transform: (() =>
+   push: (() =>
    {
       const
+         rootRectangle      = new Vector4 (), // x, y, width, height
          viewportPixel      = new Vector2 (), // in pixels
          pixelSize          = new Vector2 (), // size of one pixel in meters
          translation        = new Vector3 (),
@@ -300,7 +292,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
       return function (type, renderObject)
       {
          // Get parent layouts.
-         
+
          const
             parents = renderObject .getLayouts (),
             index   = parents .length - 1;
@@ -308,16 +300,16 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
          // Determine rectangleSize, rectangleCenter and layout matrix.
 
          const
-            browser             = this .getBrowser (),
-            contentScale        = browser .getRenderingProperty ("ContentScale"),
-            navigationInfoNode  = renderObject .getNavigationInfo (),
-            viewpointNode       = renderObject .getViewpoint (),
-            nearValue           = viewpointNode .getNearDistance (navigationInfoNode),      // in meters
-            viewport            = renderObject .getViewVolumes () .at (-1) .getViewport (), // in pixels
-            viewportMeter       = viewpointNode .getViewportSize (viewport, nearValue),     // in meters
-            parentRectangleSize = parents [index] ?.getRectangleSize () ?? viewportMeter,   // in meters
-            rectangleSize       = this .rectangleSize,
-            rectangleCenter     = this .rectangleCenter;
+            browser            = this .getBrowser (),
+            contentScale       = browser .getRenderingProperty ("ContentScale"),
+            navigationInfoNode = renderObject .getNavigationInfo (),
+            viewpointNode      = renderObject .getViewpoint (),
+            nearValue          = viewpointNode .getNearDistance (navigationInfoNode),      // in meters
+            viewport           = renderObject .getViewVolumes () .at (-1) .getViewport (), // in pixels
+            viewportMeter      = viewpointNode .getViewportSize (viewport, nearValue),     // in meters
+            rectangle          = Rectangles .pop (),
+            parentRectangle    = renderObject ?.getRectangles () .at (-1) ?? rootRectangle .set (0, 0, ... viewportMeter), // in meters
+            modelViewMatrix    = renderObject .getModelViewMatrix ();
 
          viewportPixel .set (viewport [2], viewport [3]) .divide (contentScale); // in pixel
          pixelSize     .assign (viewportMeter) .divVec (viewportPixel);          // size of one pixel in meter
@@ -331,10 +323,10 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
          switch (sizeUnitX)
          {
             case FRACTION:
-               rectangleSize .x = this .sizeX * parentRectangleSize .x;
+               rectangle .z = this .sizeX * parentRectangle .z;
                break;
             case PIXEL:
-               rectangleSize .x = this .sizeX * pixelSize .x;
+               rectangle .z = this .sizeX * pixelSize .x;
                break;
             default:
                break;
@@ -343,10 +335,10 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
          switch (sizeUnitY)
          {
             case FRACTION:
-               rectangleSize .y = this .sizeY * parentRectangleSize .y;
+               rectangle .w = this .sizeY * parentRectangle .w;
                break;
             case PIXEL:
-               rectangleSize .y = this .sizeY * pixelSize .y;
+               rectangle .w = this .sizeY * pixelSize .y;
                break;
             default:
                break;
@@ -359,7 +351,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
          switch (this .getAlignX ())
          {
             case LEFT:
-               translation .x = -(parentRectangleSize .x - rectangleSize .x) / 2;
+               translation .x = -(parentRectangle .z - rectangle .z) / 2;
                break;
             case CENTER:
 
@@ -368,14 +360,14 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
 
                break;
             case RIGHT:
-               translation .x = (parentRectangleSize .x - rectangleSize .x) / 2;
+               translation .x = (parentRectangle .z - rectangle .z) / 2;
                break;
          }
 
          switch (this .getAlignY ())
          {
             case BOTTOM:
-               translation .y = -(parentRectangleSize .y - rectangleSize .y) / 2;
+               translation .y = -(parentRectangle .w - rectangle .w) / 2;
                break;
             case CENTER:
 
@@ -384,7 +376,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
 
                break;
             case TOP:
-               translation .y = (parentRectangleSize .y - rectangleSize .y) / 2;
+               translation .y = (parentRectangle .w - rectangle .w) / 2;
                break;
          }
 
@@ -395,7 +387,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
          switch (this .getOffsetUnitX (parents, index))
          {
             case FRACTION:
-               offset .x = this .offsetX * parentRectangleSize .x;
+               offset .x = this .offsetX * parentRectangle .z;
                break;
             case PIXEL:
                offset .x = this .offsetX * viewportMeter .x / viewportPixel .x;
@@ -405,7 +397,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
          switch (this .getOffsetUnitY (parents, index))
          {
             case FRACTION:
-               offset .y = this .offsetY * parentRectangleSize .y;
+               offset .y = this .offsetY * parentRectangle .w;
                break;
             case PIXEL:
                offset .y = this .offsetY * viewportMeter .y / viewportPixel .y;
@@ -418,11 +410,8 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
             scaleModeX = this .getScaleModeX (parents [index]),
             scaleModeY = this .getScaleModeY (parents [index]);
 
-         scale .set (1)
-
-         const modelViewMatrix = renderObject .getModelViewMatrix () .get ();
-
-         modelViewMatrix .get (currentTranslation, currentRotation, currentScale);
+         scale .set (1);
+         modelViewMatrix .get () .get (currentTranslation, currentRotation, currentScale);
 
          switch (scaleModeX)
          {
@@ -430,7 +419,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
                scale .x = currentScale .x;
                break;
             case FRACTION:
-               scale .x = rectangleSize .x;
+               scale .x = rectangle .z;
                break;
             case STRETCH:
                break;
@@ -445,7 +434,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
                scale .y = currentScale .y;
                break;
             case FRACTION:
-               scale .y = rectangleSize .y;
+               scale .y = rectangle .w;
                break;
             case STRETCH:
                break;
@@ -460,14 +449,14 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
          {
             if (scaleModeY === STRETCH)
             {
-               if (rectangleSize .x > rectangleSize .y)
+               if (rectangle .z > rectangle .w)
                {
-                  scale .x = rectangleSize .x;
+                  scale .x = rectangle .z;
                   scale .y = scale .x;
                }
                else
                {
-                  scale .y = rectangleSize .y;
+                  scale .y = rectangle .w;
                   scale .x = scale .y;
                }
             }
@@ -481,18 +470,33 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
             scale .y = scale .x;
          }
 
-         // Determine matrix.
+         // Determine matrix and rectangle.
 
-         rectangleCenter .assign (translation .add (offset));
+         translation .add (offset);
+
+         rectangle .x = translation .x;
+         rectangle .y = translation .y;
 
          matrix
             .set (currentTranslation, currentRotation)
             .translate (translation)
             .scale (scale);
 
-         return matrix;
+         // Push all on stacks.
+
+         modelViewMatrix .push (matrix);
+         renderObject .getLayouts () .push (this);
+         renderObject .getRectangles () .push (rectangle);
       };
    })(),
+   pop (type, renderObject)
+   {
+      const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+      Rectangles .push (renderObject .getRectangles () .pop ());
+      renderObject .getLayouts () .pop ();
+      modelViewMatrix .pop ();
+   },
 });
 
 Object .defineProperties (Layout,

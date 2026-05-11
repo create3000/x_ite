@@ -67,15 +67,12 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, X3DGroupingNode 
          const modelViewMatrix = renderObject .getModelViewMatrix ();
 
          this .modelViewMatrix .assign (modelViewMatrix .get ());
-         this .screenMatrix .assign (this .layoutNode .transform (type, renderObject));
-
-         modelViewMatrix .push (this .screenMatrix);
-         renderObject .getLayouts () .push (this .layoutNode);
+         this .layoutNode .push (type, renderObject);
+         this .screenMatrix .assign (modelViewMatrix .get ());
 
          X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 
-         renderObject .getLayouts () .pop ();
-         modelViewMatrix .pop ();
+         this .layoutNode .pop (type, renderObject);
       }
       else
       {
