@@ -308,7 +308,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
             viewport           = renderObject .getViewVolumes () .at (-1) .getViewport (), // in pixels
             viewportMeter      = viewpointNode .getViewportSize (viewport, nearValue),     // in meters
             rectangle          = Rectangles .pop (),
-            parentRectangle    = renderObject ?.getRectangles () .at (-1) ?? rootRectangle .set (0, 0, ... viewportMeter), // in meters
+            parentRectangle    = renderObject .getRectangles () .at (-1) ?? rootRectangle .set (0, 0, ... viewportMeter), // in meters
             modelViewMatrix    = renderObject .getModelViewMatrix ();
 
          viewportPixel .set (viewport [2], viewport [3]) .divide (contentScale); // in pixel
