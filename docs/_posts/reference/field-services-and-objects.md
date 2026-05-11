@@ -1181,6 +1181,8 @@ Returns an SFVec2d/f object converted to unit length.
 
 Returns an SFVec2d/f object reflected at normal.
 
+![reflect refract visualization](/assets/img/reference/reflect-refract.png){: .normal }
+
 #### **subtract** (*other: SFVec2d/f*): SFVec2d/f
 
 Returns an SFVec2d/f whose value is the passed SFVec2d/f subtracted, componentwise, from the object.
@@ -1351,6 +1353,8 @@ Returns an SFVec3d/f object converted to unit length
 #### **reflect** (*normal: : SFVec3d/f*): SFVec3d/f
 
 Returns an SFVec3d/f object reflected at normal.
+
+![reflect refract visualization](/assets/img/reference/reflect-refract.png){: .normal }
 
 #### **subtract** (*other: SFVec3d/f*): SFVec3d/f
 
@@ -1531,6 +1535,8 @@ Returns an SFVec4d/f object converted to unit length.
 #### **reflect** (*normal: : SFVec4d/f*): SFVec4d/f
 
 Returns an SFVec4d/f object reflected at normal.
+
+![reflect refract visualization](/assets/img/reference/reflect-refract.png){: .normal }
 
 #### **subtract** (*other: SFVec4d/f*): SFVec4d/f
 
