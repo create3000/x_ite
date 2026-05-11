@@ -114,7 +114,7 @@ Object .assign (Object .setPrototypeOf (X3DPointingDeviceSensorNode .prototype, 
       sensor .set (this,
                    renderObject .getModelViewMatrix  () .get (),
                    renderObject .getProjectionMatrix () .get (),
-                   renderObject .getViewVolume () .getViewport ())
+                   renderObject .getViewVolumes () .at (-1) .getViewport ());
 
       this .getBrowser () .addSensor (sensor);
 

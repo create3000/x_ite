@@ -72,7 +72,7 @@ Object .assign (Object .setPrototypeOf (VisibilitySensor .prototype, X3DEnvironm
                .set (this ._size .getValue (), this ._center .getValue ())
                .multRight (renderObject .getModelViewMatrix () .get ());
 
-            this .visible = renderObject .getViewVolume () .intersectsBox (bbox);
+            this .visible = renderObject .getViewVolumes () .at (-1) .intersectsBox (bbox);
          }
       };
    })(),

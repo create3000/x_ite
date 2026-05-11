@@ -182,10 +182,6 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .viewVolumes;
    },
-   getViewVolume ()
-   {
-      return this .viewVolumes .at (-1);
-   },
    getProjectionMatrix ()
    {
       return this .projectionMatrix;

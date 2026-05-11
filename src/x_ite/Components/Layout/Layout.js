@@ -310,10 +310,10 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
             contentScale        = browser .getRenderingProperty ("ContentScale"),
             navigationInfoNode  = renderObject .getNavigationInfo (),
             viewpointNode       = renderObject .getViewpoint (),
-            nearValue           = viewpointNode .getNearDistance (navigationInfoNode),    // in meters
-            viewport            = renderObject .getViewVolume () .getViewport (),         // in pixels
-            viewportMeter       = viewpointNode .getViewportSize (viewport, nearValue),   // in meters
-            parentRectangleSize = parents [index] ?.getRectangleSize () ?? viewportMeter, // in meters
+            nearValue           = viewpointNode .getNearDistance (navigationInfoNode),      // in meters
+            viewport            = renderObject .getViewVolumes () .at (-1) .getViewport (), // in pixels
+            viewportMeter       = viewpointNode .getViewportSize (viewport, nearValue),     // in meters
+            parentRectangleSize = parents [index] ?.getRectangleSize () ?? viewportMeter,   // in meters
             rectangleSize       = this .rectangleSize,
             rectangleCenter     = this .rectangleCenter;
 
