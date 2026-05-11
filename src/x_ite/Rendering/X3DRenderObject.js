@@ -311,10 +311,6 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .layouts;
    },
-   getParentLayout ()
-   {
-      return this .layouts .at (-1);
-   },
    getHAnimNode ()
    {
       return this .hAnimNode;

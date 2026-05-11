@@ -33,7 +33,6 @@ function Layout (executionContext)
 
    this .rectangleCenter = new Vector2 (); // Useful for tools.
    this .rectangleSize   = new Vector2 (); // Useful for tools.
-   this .matrix          = new Matrix4 ();
 }
 
 Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .prototype),
@@ -221,17 +220,17 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
    {
       return this .alignY;
    },
-   getOffsetUnitX ()
+   getOffsetUnitX (parents, index)
    {
       if (this .offsetUnitX === WORLD)
-         return this .parent ?.getOffsetUnitX () ?? FRACTION;
+         return parents [index] ?.getOffsetUnitX (parents, index - 1) ?? FRACTION;
 
       return this .offsetUnitX;
    },
-   getOffsetUnitY ()
+   getOffsetUnitY (parents, index)
    {
       if (this .offsetUnitY === WORLD)
-         return this .parent ?.getOffsetUnitY () ?? FRACTION;
+         return parents [index] ?.getOffsetUnitY (parents, index - 1) ?? FRACTION;
 
       return this .offsetUnitY;
    },
@@ -243,17 +242,17 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
    {
       return this .offsetY;
    },
-   getSizeUnitX ()
+   getSizeUnitX (parents, index)
    {
       if (this .sizeUnitX === WORLD)
-         return this .parent ?.getSizeUnitX () ?? FRACTION;
+         return parents [index] ?.getSizeUnitX (parents, index - 1) ?? FRACTION;
 
       return this .sizeUnitX;
    },
-   getSizeUnitY ()
+   getSizeUnitY (parents, index)
    {
       if (this .sizeUnitY === WORLD)
-         return this .parent ?.getSizeUnitY () ?? FRACTION;
+         return parents [index] ?.getSizeUnitY (parents, index - 1) ?? FRACTION;
 
       return this .sizeUnitY;
    },
@@ -265,9 +264,9 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
    {
       return this .sizeY;
    },
-   getScaleModeX ()
+   getScaleModeX (parent)
    {
-      if (this .parent)
+      if (parent)
          return this .scaleModeX;
 
       if (this .scaleModeX === NONE)
@@ -275,9 +274,9 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
 
       return this .scaleModeX;
    },
-   getScaleModeY ()
+   getScaleModeY (parent)
    {
-      if (this .parent)
+      if (parent)
          return this .scaleModeY;
 
       if (this .scaleModeY === NONE)
@@ -295,11 +294,14 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
          scale              = new Vector3 (),
          currentTranslation = new Vector3 (),
          currentRotation    = new Rotation4 (),
-         currentScale       = new Vector3 ();
+         currentScale       = new Vector3 (),
+         matrix             = new Matrix4 ();
 
       return function (type, renderObject)
       {
-         this .parent = renderObject .getParentLayout ();
+         const
+            parents = renderObject .getLayouts (),
+            index   = parents .length - 1;
 
          // Calculate rectangleSize
 
@@ -311,15 +313,20 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
             nearValue           = viewpointNode .getNearDistance (navigationInfoNode),  // in meters
             viewport            = renderObject .getViewVolume () .getViewport (),       // in pixels
             viewportMeter       = viewpointNode .getViewportSize (viewport, nearValue), // in meters
-            parentRectangleSize = this .parent ?.getRectangleSize () ?? viewportMeter,  // in meters
+            parentRectangleSize = parents [index] ?.getRectangleSize () ?? viewportMeter,  // in meters
             rectangleSize       = this .rectangleSize,
-            rectangleCenter     = this .rectangleCenter,
-            matrix              = this .matrix;
+            rectangleCenter     = this .rectangleCenter;
 
          viewportPixel .set (viewport [2], viewport [3]) .divide (contentScale); // in pixel
          pixelSize     .assign (viewportMeter) .divVec (viewportPixel);          // size of one pixel in meter
 
-         switch (this .getSizeUnitX ())
+         // Determine rectangle size.
+
+         const
+            sizeUnitX = this .getSizeUnitX (parents, index),
+            sizeUnitY = this .getSizeUnitY (parents, index);
+
+         switch (sizeUnitX)
          {
             case FRACTION:
                rectangleSize .x = this .sizeX * parentRectangleSize .x;
@@ -331,7 +338,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
                break;
          }
 
-         switch (this .getSizeUnitY ())
+         switch (sizeUnitY)
          {
             case FRACTION:
                rectangleSize .y = this .sizeY * parentRectangleSize .y;
@@ -343,7 +350,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
                break;
          }
 
-         // Calculate translation
+         // Determine translation.
 
          translation .set (0);
 
@@ -354,7 +361,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
                break;
             case CENTER:
 
-               if (this .getSizeUnitX () === PIXEL && viewportPixel .x & 1)
+               if (sizeUnitX === PIXEL && viewportPixel .x & 1)
                   translation .x = -pixelSize .x / 2;
 
                break;
@@ -370,7 +377,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
                break;
             case CENTER:
 
-               if (this .getSizeUnitX () === PIXEL && viewportPixel .y & 1)
+               if (sizeUnitX === PIXEL && viewportPixel .y & 1)
                   translation .y = -pixelSize .y / 2;
 
                break;
@@ -379,11 +386,11 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
                break;
          }
 
-         // Calculate offset
+         // Determine offset.
 
          offset .set (0);
 
-         switch (this .getOffsetUnitX ())
+         switch (this .getOffsetUnitX (parents, index))
          {
             case FRACTION:
                offset .x = this .offsetX * parentRectangleSize .x;
@@ -393,7 +400,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
                break;
          }
 
-         switch (this .getOffsetUnitY ())
+         switch (this .getOffsetUnitY (parents, index))
          {
             case FRACTION:
                offset .y = this .offsetY * parentRectangleSize .y;
@@ -403,7 +410,11 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
                break;
          }
 
-         // Calculate scale
+         // Determine scale.
+
+         const
+            scaleModeX = this .getScaleModeX (parents [index]),
+            scaleModeY = this .getScaleModeY (parents [index]);
 
          scale .set (1)
 
@@ -411,7 +422,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
 
          modelViewMatrix .get (currentTranslation, currentRotation, currentScale);
 
-         switch (this .getScaleModeX ())
+         switch (scaleModeX)
          {
             case NONE:
                scale .x = currentScale .x;
@@ -426,7 +437,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
                break;
          }
 
-         switch (this .getScaleModeY ())
+         switch (scaleModeY)
          {
             case NONE:
                scale .y = currentScale .y;
@@ -441,11 +452,11 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
                break;
          }
 
-         // Calculate scale for scaleMode STRETCH
+         // Determine scale for scaleMode STRETCH.
 
-         if (this .getScaleModeX () === STRETCH)
+         if (scaleModeX === STRETCH)
          {
-            if (this .getScaleModeY () === STRETCH)
+            if (scaleModeY === STRETCH)
             {
                if (rectangleSize .x > rectangleSize .y)
                {
@@ -463,12 +474,12 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
                scale .x = scale .y;
             }
          }
-         else if (this .getScaleModeY () === STRETCH)
+         else if (scaleModeY === STRETCH)
          {
             scale .y = scale .x;
          }
 
-         // Transform
+         // Determine matrix.
 
          rectangleCenter .assign (translation .add (offset));
 
