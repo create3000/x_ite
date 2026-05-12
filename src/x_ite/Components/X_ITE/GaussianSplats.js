@@ -250,7 +250,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
 
       // Textures
-      
+
       const textureUnit = browser .popTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
