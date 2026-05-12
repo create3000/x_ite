@@ -117,9 +117,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Textures
 
-      this .translationTexture = this .createTexture ("x3d_TranslationsTexture");
-
-      browser .resetTextureUnits ();
+      this .translationTexture = this .createTexture ();
 
       // Fields
 
@@ -143,20 +141,12 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
    {
       return this .numSplats;
    },
-   createTexture (uniformName)
+   createTexture ()
    {
       const
-         browser     = this .getBrowser (),
-         gl          = browser .getContext (),
-         shaderNode  = this .shaderNode,
-         texture     = gl .createTexture (),
-         textureUnit = browser .popTextureUnit ();
-
-      shaderNode .enable (gl);
-
-      gl .activeTexture (gl .TEXTURE0 + textureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, texture);
-      gl .uniform1i (shaderNode [uniformName], textureUnit);
+         browser = this .getBrowser (),
+         gl      = browser .getContext (),
+         texture = gl .createTexture ();
 
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
@@ -259,6 +249,14 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,        false, renderObject .getEyeMatrixArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
 
+      // Textures
+      
+      const textureUnit = browser .popTextureUnit ();
+
+      gl .activeTexture (gl .TEXTURE0 + textureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, this .translationTexture);
+      gl .uniform1i (shaderNode .x3d_TranslationsTexture, textureUnit);
+
       // Setup vertex attributes.
 
       if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
@@ -274,6 +272,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       }
 
       gl .drawArraysInstanced (gl .POINTS, 0, 1, this .numSplats);
+
+      browser .resetTextureUnits ();
    },
 });
 
