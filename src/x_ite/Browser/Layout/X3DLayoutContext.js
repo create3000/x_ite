@@ -42,7 +42,7 @@ Object .assign (X3DLayoutContext .prototype,
          const
             modelViewMatrix  = renderObject .getModelViewMatrix () .get (),
             projectionMatrix = renderObject .getProjectionMatrix () .get (),
-            viewport         = renderObject .getViewVolume () .getViewport ();
+            viewport         = renderObject .getViewVolumes () .at (-1) .getViewport ();
 
          // Determine screenMatrix.
          // Same as in ScreenText.

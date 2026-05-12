@@ -132,11 +132,11 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
       {
          const matrix = this .matrices [i] ??= new Matrix4 ();
 
-         matrix .set (numTranslations      ? translations      [Math .min (i, numTranslations      - 1)] .getValue () : null,
-                      numRotations         ? rotations         [Math .min (i, numRotations         - 1)] .getValue () : null,
-                      numScales            ? scales            [Math .min (i, numScales            - 1)] .getValue () : null,
-                      numScaleOrientations ? scaleOrientations [Math .min (i, numScaleOrientations - 1)] .getValue () : null,
-                      numCenters           ? centers           [Math .min (i, numCenters           - 1)] .getValue () : null);
+         matrix .set (translations      [i] ?.getValue (),
+                      rotations         [i] ?.getValue (),
+                      scales            [i] ?.getValue (),
+                      scaleOrientations [i] ?.getValue (),
+                      centers           [i] ?.getValue ());
 
          data .set (matrix, o);
          data .set (matrix .submatrix .transpose () .inverse (), o + 16);

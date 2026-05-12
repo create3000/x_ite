@@ -23,6 +23,11 @@ new SFMatrix4f (... row0, ... row1, ... row2, ... row3)
 
 These changes improve performance and align the API more closely with modern JavaScript practices, but require minor updates to existing code.
 
+### Notable Changes
+
+- [x] Fixed fatal bug in [LayoutGroup](/x_ite/components/layout/layoutgroup/) when a custom [Viewport](/x_ite/components/layering/viewport/) is used.
+- [x] Fixed fatal bug in [Layout](/x_ite/components/layout/layout/) in rare cases.
+
 ## X_ITE v14.2 Series
 
 *Leipzig, 26th April 2026:* This series introduces a breaking change where `X3DConstants.CONNECTION_ERROR` has been renamed to `X3DConstants.INITIALIZED_ERROR`, so existing code should be updated accordingly to avoid runtime issues. In addition, touch device handling has been improved when the NONE viewer is active, resulting in more consistent and reliable interaction behavior on mobile and touch-enabled devices.

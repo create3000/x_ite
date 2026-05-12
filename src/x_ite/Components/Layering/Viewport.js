@@ -31,10 +31,10 @@ Object .assign (Object .setPrototypeOf (Viewport .prototype, X3DViewportNode .pr
    },
    set_clipBoundary__ ()
    {
-      this .left   = this ._clipBoundary .length > 0 ? Algorithm .clamp (this ._clipBoundary [0], 0, 1) : 0;
-      this .right  = this ._clipBoundary .length > 1 ? Algorithm .clamp (this ._clipBoundary [1], 0, 1) : 1;
-      this .bottom = this ._clipBoundary .length > 2 ? Algorithm .clamp (this ._clipBoundary [2], 0, 1) : 0;
-      this .top    = this ._clipBoundary .length > 3 ? Algorithm .clamp (this ._clipBoundary [3], 0, 1) : 1;
+      this .left   = Algorithm .clamp (this ._clipBoundary [0] ?? 0, 0, 1);
+      this .right  = Algorithm .clamp (this ._clipBoundary [1] ?? 1, 0, 1);
+      this .bottom = Algorithm .clamp (this ._clipBoundary [2] ?? 0, 0, 1);
+      this .top    = Algorithm .clamp (this ._clipBoundary [3] ?? 1, 0, 1);
    },
    getRectangle (viewport = this .getBrowser () .getViewport ())
    {

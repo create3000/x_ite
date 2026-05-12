@@ -4,7 +4,14 @@ import Matrix4      from "../../standard/Math/Numbers/Matrix4.js";
 import Box3         from "../../standard/Math/Geometry/Box3.js";
 import X3DConstants from "../Base/X3DConstants.js";
 
-function X3DOptimizer () { }
+const _skeleton = Symbol ();
+
+function X3DOptimizer ()
+{
+   // Private properties
+
+   this [_skeleton] = [ ];
+}
 
 Object .assign (X3DOptimizer .prototype,
 {
@@ -15,20 +22,38 @@ Object .assign (X3DOptimizer .prototype,
    {
       const removedNodes = [ ];
 
-      nodes .setValue (this .optimizeNodes (null, nodes, true, removedNodes));
+      nodes .setValue (this .optimizeNodes (null, nodes, true, removedNodes, new Set ()));
 
       removedNodes
          .filter (node => node .getValue () .getCloneCount () === 0)
          .forEach (node => node .dispose ());
    },
-   optimizeNodes (parent, nodes, combine, removedNodes)
+   optimizeNodes (parent, nodes, combine, removedNodes, seen)
    {
-      return Array .from (nodes) .flatMap (node => this .optimizeNode (parent, node, combine, removedNodes));
+      return Array .from (nodes) .flatMap (node => this .optimizeNode (parent, node, combine, removedNodes, seen));
    },
-   optimizeNode (parent, node, combine, removedNodes)
+   optimizeNode (parent, node, combine, removedNodes, seen)
    {
       if (!node)
          return [ ];
+
+      if (seen .has (node))
+      {
+         switch (node .getNodeTypeName ())
+         {
+            case "HAnimJoint":
+            case "HAnimSegment":
+            case "HAnimSite":
+            {
+               if (!this [_skeleton] .at (-1))
+                  return [ ];
+            }
+         }
+
+         return node;
+      }
+
+      seen .add (node);
 
       if (this .optimizeInterpolators)
          this .removeInterpolatorsWithOnlyOneValue (node, removedNodes);
@@ -37,7 +62,7 @@ Object .assign (X3DOptimizer .prototype,
       {
          case "Transform":
          {
-            node .children = this .optimizeNodes (node, node .children, true, removedNodes);
+            node .children = this .optimizeNodes (node, node .children, true, removedNodes, seen);
 
             if (this .removeEmptyGroups)
             {
@@ -50,7 +75,7 @@ Object .assign (X3DOptimizer .prototype,
          case "Anchor":
          case "Group":
          {
-            node .children = this .optimizeNodes (node, node .children, true, removedNodes);
+            node .children = this .optimizeNodes (node, node .children, true, removedNodes, seen);
 
             return this .removeIfNoChildren (node, removedNodes);
          }
@@ -58,7 +83,7 @@ Object .assign (X3DOptimizer .prototype,
          case "LOD":
          case "Switch":
          {
-            this .optimizeNodes (node, node .children, false, removedNodes);
+            this .optimizeNodes (node, node .children, false, removedNodes, seen);
 
             return this .removeIfNoChildren (node, removedNodes);
          }
@@ -66,29 +91,28 @@ Object .assign (X3DOptimizer .prototype,
          case "HAnimSegment":
          case "HAnimSite":
          {
-            node .children = this .optimizeNodes (node, node .children, true, removedNodes);
+            node .children = this .optimizeNodes (node, node .children, true, removedNodes, seen);
 
-            switch (parent ?.getNodeTypeName ())
+            if (this [_skeleton] .at (-1))
             {
-               case "HAnimHumanoid":
-               case "HAnimJoint":
-               case "HAnimSegment":
-               case "HAnimSite":
-               {
-                  return node;
-               }
-               default:
-               {
-                  removedNodes .push (node);
+               return node;
+            }
+            else
+            {
+               removedNodes .push (node);
 
-                  return [ ];
-               }
+               return [ ];
             }
          }
          case "HAnimHumanoid":
          {
-            node .skeleton = this .optimizeNodes (node, node .skeleton, true, removedNodes);
-            node .skin     = this .optimizeNodes (node, node .skin,     true, removedNodes);
+            this [_skeleton] .push (true);
+
+            node .skeleton = this .optimizeNodes (node, node .skeleton, true, removedNodes, seen);
+
+            this [_skeleton] .pop ();
+
+            node .skin = this .optimizeNodes (node, node .skin, true, removedNodes, seen);
 
             return this .removeIfNoChildren (node, removedNodes);
          }

@@ -307,14 +307,11 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
    set_joints__ ()
    {
       const
-         jointNodes               = this .jointNodes,
-         jointBindingMatrices     = this .jointBindingMatrices,
-         jointBindingPositions    = this ._jointBindingPositions,
-         jointBindingRotations    = this ._jointBindingRotations,
-         jointBindingScales       = this ._jointBindingScales,
-         numJointBindingPositions = jointBindingPositions .length,
-         numJointBindingRotations = jointBindingRotations .length,
-         numJointBindingScales    = jointBindingScales .length;
+         jointNodes            = this .jointNodes,
+         jointBindingMatrices  = this .jointBindingMatrices,
+         jointBindingPositions = this ._jointBindingPositions,
+         jointBindingRotations = this ._jointBindingRotations,
+         jointBindingScales    = this ._jointBindingScales;
 
       for (const poseNode of this .poseNodes)
          poseNode .removeJoints (jointNodes);
@@ -344,9 +341,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
             continue;
 
          const
-            t = i < numJointBindingPositions ? jointBindingPositions [i] .getValue () : null,
-            r = i < numJointBindingRotations ? jointBindingRotations [i] .getValue () : null,
-            s = i < numJointBindingScales    ? jointBindingScales    [i] .getValue () : null;
+            t = jointBindingPositions [i] ?.getValue (),
+            r = jointBindingRotations [i] ?.getValue (),
+            s = jointBindingScales    [i] ?.getValue ();
 
          jointNodes           .push (jointNode);
          jointBindingMatrices .push (new Matrix4 () .set (t, r, s));

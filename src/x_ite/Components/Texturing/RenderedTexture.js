@@ -69,10 +69,10 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
       // Create framebuffer.
 
       const
-         width  = this ._dimensions .length > 0 ? this ._dimensions [0] : 128,
-         height = this ._dimensions .length > 1 ? this ._dimensions [1] : 128;
+         width  = this ._dimensions [0] ?? 128,
+         height = this ._dimensions [1] ?? 128;
 
-      // const components = this ._dimensions .length > 2 ? this ._dimensions [2] : 4;
+      // const components = this ._dimensions [2] ?? 4;
 
       if (width > 0 && height > 0)
       {

@@ -1,5 +1,5 @@
-/* X_ITE v15.0.0 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.0")];
+/* X_ITE v15.0.1 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.1")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -247,7 +247,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, Layout_X3DLayoutNode 
    pixelSize: new (external_X_ITE_X3D_Vector2_default()) (),
    translation: new (external_X_ITE_X3D_Vector3_default()) (),
    offset: new (external_X_ITE_X3D_Vector3_default()) (),
-   scale: new (external_X_ITE_X3D_Vector3_default()) (1),
+   scale: new (external_X_ITE_X3D_Vector3_default()) (),
    currentTranslation: new (external_X_ITE_X3D_Vector3_default()) (),
    currentRotation: new (external_X_ITE_X3D_Rotation4_default()) (),
    currentScale: new (external_X_ITE_X3D_Vector3_default()) (),
@@ -1453,7 +1453,7 @@ function ScreenGroup (executionContext)
    if (executionContext .getOuterNode () instanceof (external_X_ITE_X3D_X3DProtoDeclaration_default()))
       this .matrix = new (external_X_ITE_X3D_Matrix4_default()) ();
    else
-      this .matrix = new (external_X_ITE_X3D_Matrix4_default()) (0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0);
+      this .matrix = new (external_X_ITE_X3D_Matrix4_default()) (0);
 }
 
 Object .assign (Object .setPrototypeOf (ScreenGroup .prototype, (external_X_ITE_X3D_X3DGroupingNode_default()).prototype),

@@ -23,15 +23,23 @@ A browser-implementation specific string describing the browser. This property i
 
 A browser-implementation specific string describing the browser version. This property is read-only.
 
-<x3d-script-area name="X3D ECMAScript Example: X3DBrowser name/version">
+<x3d-script-area name="X3D ECMAScript Example: X3DBrowser properties">
 <pre>
 print (Browser .name);
 print (Browser .version);
+print (Browser .scriptURL);
+print (Browser .providerURL);
 
 // Expected output: X_ITE
 // Expected output: {{ site.x_ite_latest_version }}
+// Expected output: URL to x_ite.js
+// Expected output: URL of this website
 </pre>
 </x3d-script-area>
+
+#### **scriptURL**: string
+
+The URL of the script that creates this browser. This property is read-only.
 
 #### **providerURL**: string
 

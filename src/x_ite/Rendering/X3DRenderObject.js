@@ -48,6 +48,7 @@ function X3DRenderObject (executionContext)
    this .localShadows             = [ false ];
    this .localFogs                = [ null ];
    this .layouts                  = [ ];
+   this .layoutRectangles         = [ ];
    this .hAnimNode                = [ null ];
    this .invHumanoidMatrix        = new MatrixStack (Matrix4);
    this .renderedTextures         = new Set ();
@@ -182,10 +183,6 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .viewVolumes;
    },
-   getViewVolume ()
-   {
-      return this .viewVolumes .at (-1);
-   },
    getProjectionMatrix ()
    {
       return this .projectionMatrix;
@@ -311,9 +308,9 @@ Object .assign (X3DRenderObject .prototype,
    {
       return this .layouts;
    },
-   getParentLayout ()
+   getLayoutRectangles ()
    {
-      return this .layouts .at (-1);
+      return this .layoutRectangles;
    },
    getHAnimNode ()
    {

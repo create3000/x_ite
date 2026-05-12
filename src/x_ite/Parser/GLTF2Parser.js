@@ -2201,8 +2201,8 @@ function eventsProcessed ()
          transformNode = scene .createNode (typeName, false);
 
       node .transformNode = transformNode;
-      node .childNode     = node .transformNode;
-      node .pointers      = [node .childNode];
+      node .childNode     = transformNode;
+      node .pointers      = [transformNode];
 
       return node;
    },
@@ -2224,6 +2224,9 @@ function eventsProcessed ()
       {
          skeleton .humanoidNode = humanoidNode;
          skeleton .childNode    = childNode;
+
+         // Only make the first skeleton node a HAnimHumanoid node.
+         break;
       }
    },
    nodeChildren: (() =>
@@ -2277,12 +2280,11 @@ function eventsProcessed ()
 
          if (transformNode .getType () .at (-1) === X3DConstants .HAnimJoint)
          {
-            // Add a HAnimSegment if there are recursive skeletons.
+            // Add a HAnimSegment if there are recursive skeletons or Transform nodes as children.
 
             children = children .map (childNode =>
             {
-               if (childNode ._children .length &&
-                   childNode ._children [0] .getNodeType () .at (-1) === X3DConstants .HAnimHumanoid)
+               if (childNode .getType () .at (-1) !== X3DConstants .HAnimJoint)
                {
                   const segmentNode = scene .createNode ("HAnimSegment", false);
 
@@ -2469,13 +2471,30 @@ function eventsProcessed ()
    },
    skeleton (joints, nodes)
    {
-      const children = new Set (joints
-         .map (index => nodes [index])
-         .filter (node => node instanceof Object)
-         .filter (node => node .children instanceof Array)
-         .flatMap (node => node .children));
+      const children = new Set ();
+
+      joints .forEach (index => this .skeletonChildren (index, children));
 
       return joints .filter (index => !children .has (index));
+   },
+   skeletonChildren (index, set)
+   {
+      // Must use nodes from input here.
+      const node = this .input .nodes [index];
+
+      if (!(node instanceof Object))
+         return;
+
+      const children = node .children;
+
+      if (!(children instanceof Array))
+         return;
+
+      for (const child of children)
+      {
+         set .add (child);
+         this .skeletonChildren (child, set);
+      }
    },
    inverseBindMatricesAccessors (inverseBindMatrices)
    {
@@ -2566,15 +2585,21 @@ function eventsProcessed ()
       // Determine points at binding position.
 
       const
-         skinCoord  = humanoidNode ._skinCoord,
-         points     = Array .from (skinCoord .point, p => p .getValue () .copy ()),
-         skinPoints = [ ];
+         jointBindingPositions = humanoidNode ._jointBindingPositions,
+         jointBindingRotations = humanoidNode ._jointBindingRotations,
+         jointBindingScales    = humanoidNode ._jointBindingScales,
+         skinCoord             = humanoidNode ._skinCoord,
+         points                = Array .from (skinCoord .point, p => p .getValue () .copy ()),
+         skinPoints            = [ ];
 
       for (const [j, jointNode] of humanoidNode ._joints .entries ())
       {
          const skinCoordWeight = jointNode .skinCoordWeight;
 
-         jointMatrix .set (humanoidNode ._jointBindingPositions [j] .getValue (), humanoidNode ._jointBindingRotations [j] .getValue (), humanoidNode ._jointBindingScales [j] .getValue ()) .multRight (jointNode .getValue () .getModelViewMatrix ());
+         jointMatrix .set (jointBindingPositions [j] ?.getValue (),
+                           jointBindingRotations [j] ?.getValue (),
+                           jointBindingScales [j] ?.getValue ())
+         .multRight (jointNode .getValue () .getModelViewMatrix ());
 
          for (const [c, index] of jointNode .skinCoordIndex .entries ())
          {

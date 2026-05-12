@@ -991,6 +991,11 @@ Object .defineProperties (X3DBrowser .prototype,
       value: VERSION,
       enumerable: true,
    },
+   scriptURL:
+   {
+      get: X3DBrowser .prototype .getScriptURL,
+      enumerable: true,
+   },
    providerURL:
    {
       get: X3DBrowser .prototype .getProviderURL,
