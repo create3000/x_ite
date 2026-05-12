@@ -73,9 +73,6 @@ function GaussianSplats (executionContext)
 
    this .addType (X3DConstants .GaussianSplats);
 
-   this .addChildObjects (X3DConstants .inputOutput, "appearance", new Fields .SFNode (),
-                          X3DConstants .inputOutput, "geometry",   new Fields .SFNode ());
-
    // Units
 
    this ._translations .setUnit ("length");
@@ -195,6 +192,8 @@ Object .defineProperties (GaussianSplats,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",   new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",      new Fields .SFVec3f (-1, -1, -1)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",    new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "appearance",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",      new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "color",         new Fields .SFNode ()),
       ]),
       enumerable: true,
