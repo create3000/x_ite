@@ -15,6 +15,7 @@ const vs = () => /* glsl */ `#version 300 es
 
 precision highp float;
 precision highp int;
+precision highp sampler2D;
 
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
@@ -30,10 +31,12 @@ uniform sampler2D x3d_TranslationsTexture;
 void
 main ()
 {
+   int  t = textureSize (x3d_TranslationsTexture, 0) .x;
    vec4 p = texelFetch (x3d_TranslationsTexture, x3d_TranslationIndex, 0);
-   vec3 v = x3d_Vertex .xyz * 0.02 + p .xyz;
+   vec3 v = (x3d_Vertex .xyz + p .xyz) * 0.0 + vec3 (t == 1 ? 0 : 3, 0, 0);
 
-   gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * vec4 (v, 1.0);
+   gl_PointSize = 2.0;
+   gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * vec4 (v, 1);
 }
 `;
 
@@ -97,11 +100,14 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          browser = this .getBrowser (),
          gl      = browser .getContext ();
 
+      // Shader
+
+      this .shaderNode = browser .createShader ("GaussianSplats", "GaussianSplats", "GaussianSplats", ["X3D_INSTANCING"], ["x3d_TranslationsTexture"]);
+
       // Quad Geometry
 
       this .geometryContext = new GeometryContext ();
 
-      this .vertexCount             = 6;
       this .geometryBuffer          = gl .createBuffer ();
       this .translationsIndexBuffer = gl .createBuffer ();
       this .vertexArrayObject       = new VertexArray (gl);
@@ -111,17 +117,19 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Textures
 
-      this .translationTexture = gl .createTexture ();
+      this .translationTexture = this .createTexture ("x3d_TranslationsTexture");
 
-      // Shader
-
-      this .shaderNode = browser .createShader ("GaussianSplats", "GaussianSplats", "GaussianSplats", ["X3D_INSTANCING"], ["x3d_TranslationsTexture"]);
+      browser .resetTextureUnits ();
 
       // Fields
 
       this .node ._translations .addInterest ("set_splats__", this);
 
       this .set_splats__ ();
+   },
+   getShapeKey ()
+   {
+      return 3;
    },
    getGeometryContext ()
    {
@@ -134,6 +142,30 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
    getNumInstances ()
    {
       return this .numSplats;
+   },
+   createTexture (uniformName)
+   {
+      const
+         browser     = this .getBrowser (),
+         gl          = browser .getContext (),
+         shaderNode  = this .shaderNode,
+         texture     = gl .createTexture (),
+         textureUnit = browser .popTextureUnit ();
+
+      shaderNode .enable (gl);
+
+      gl .activeTexture (gl .TEXTURE0 + textureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, texture);
+      gl .uniform1i (shaderNode [uniformName], textureUnit);
+
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
+
+      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, 1, 1, 0, gl .RGBA, gl .FLOAT, new Float32Array (4));
+
+      return texture;
    },
    set_bbox__ ()
    {
@@ -153,7 +185,10 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
             max .max (point);
          }
 
-         this .bbox .setExtents (min, max);
+         if (numTranslations)
+            this .bbox .setExtents (min, max);
+         else
+            this .bbox .set ();
       }
       else
       {
@@ -187,6 +222,9 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
          gl .bindTexture (gl .TEXTURE_2D, this .translationTexture);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB32F, textureSize, textureSize, 0, gl .RGB, gl .FLOAT, translations);
+
+         console .log (this .translationTexture);
+         console .log (textureSize);
       }
 
       // Finish
@@ -196,6 +234,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       this .set_bbox__ ();
       this .set_objects__ ();
    },
+   displaySimple ()
+   { },
    display (gl, renderContext)
    {
       const
@@ -233,7 +273,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, 0);
       }
 
-      gl .drawArraysInstanced (gl .TRIANGLES, 0, this .vertexCount, this .numSplats);
+      gl .drawArraysInstanced (gl .POINTS, 0, 1, this .numSplats);
    },
 });
 
