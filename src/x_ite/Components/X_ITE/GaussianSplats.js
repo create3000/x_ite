@@ -1,21 +1,13 @@
-import Fields                 from "../../Fields.js";
-import X3DFieldDefinition     from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray   from "../../Base/FieldDefinitionArray.js";
-import X3DNode                from "../Core/X3DNode.js";
-import X3DChildNode           from "../Core/X3DChildNode.js";
-import X3DConstants           from "../../Base/X3DConstants.js";
-import IndexedFaceSet         from "../Geometry3D/IndexedFaceSet.js";
-import Group                  from "../Grouping/Group.js";
-import ProximitySensor        from "../EnvironmentalSensor/ProximitySensor.js";
-import TextureCoordinate      from "../Texturing/TextureCoordinate.js";
-import Coordinate             from "../Rendering/Coordinate.js";
-import Appearance             from "../Shape/Appearance.js";
-import Shape                  from "../Shape/Shape.js";
-import AlphaToCoverage        from "./AlphaToCoverage.js";
-import FloatVertexAttribute   from "../Shaders/FloatVertexAttribute.js";
-import Matrix3VertexAttribute from "../Shaders/Matrix3VertexAttribute.js";
-import Vector3                from "../../../standard/Math/Numbers/Vector3.js";
-import Matrix3                from "../../../standard/Math/Numbers/Matrix3.js";
+import Fields               from "../../Fields.js";
+import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DNode              from "../Core/X3DNode.js";
+import X3DShapeNode         from "../Shape/X3DShapeNode.js";
+import X3DConstants         from "../../Base/X3DConstants.js";
+import GeometryContext      from "../../Browser/Rendering/GeometryContext.js";
+import GeometryType         from "../../Browser/Shape/GeometryType.js";
+import VertexArray          from "../../Rendering/VertexArray.js";
+import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 
 const vs = () => /* glsl */ `#version 300 es
 
@@ -25,31 +17,12 @@ precision highp int;
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 
-in vec3 x3d_Translation;
-// in mat3 x3d_Rotation;
-in vec3 x3d_Scale;
 in vec4 x3d_Vertex;
-in vec4 x3d_Color;
-
-uniform mat3 x3d_Rotation;
-
-out vec4 color;
-out vec2 pointCoord;
 
 void
 main ()
 {
-   vec3 vertex = x3d_Vertex .xyz / x3d_Vertex .w;
-
-   pointCoord = vertex .xy;
-
-   vertex *= x3d_Scale;
-   vertex  = x3d_Rotation * vertex;
-   vertex += x3d_Translation;
-
-   color = x3d_Color;
-
-   gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * vec4 (vertex, 1.0);
+   gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * x3d_Vertex;
 }
 `;
 
@@ -58,16 +31,12 @@ const fs = () => /* glsl */ `#version 300 es
 precision highp float;
 precision highp int;
 
-in vec4 color;
-in vec2 pointCoord;
-
 out vec4 x3d_FragColor;
 
 void
 main ()
 {
-   x3d_FragColor .rgb = color .rgb;
-   x3d_FragColor .a   = smoothstep (color .a, 0.0, length (pointCoord));
+   x3d_FragColor = vec4 (1.0, 1.0, 1.0, 1.0);
 }
 `;
 
@@ -78,184 +47,135 @@ import ShaderRegistry from "../../Browser/Shaders/ShaderRegistry.js";
 ShaderRegistry .addVertex   ("GaussianSplats", vs);
 ShaderRegistry .addFragment ("GaussianSplats", fs);
 
+// p4 ------ p3
+// |       / |
+// |     /   |
+// |   /     |
+// | /       |
+// p1 ------ p2
+
+const QuadGeometry = new Float32Array ([
+   -1, -1, 0, 1,
+    1, -1, 0, 1,
+    1,  1, 0, 1,
+   -1, -1, 0, 1,
+    1,  1, 0, 1,
+   -1,  1, 0, 1,
+]);
+
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
  */
 
 function GaussianSplats (executionContext)
 {
-   X3DChildNode .call (this, executionContext);
+   X3DShapeNode .call (this, executionContext);
 
    this .addType (X3DConstants .GaussianSplats);
 
-   this .addChildObjects (X3DConstants .outputOnly, "geometry", new Fields .SFTime ());
+   this .addChildObjects (X3DConstants .inputOutput, "appearance", new Fields .SFNode (),
+                          X3DConstants .inputOutput, "geometry",   new Fields .SFNode ());
 
    // Units
 
    this ._translations .setUnit ("length");
-
-   // Private properties
-
-   this .groupNode        = new Group (executionContext);
-   this .proximitySensor  = new ProximitySensor (executionContext);
-   this .shapeNode        = new Shape (executionContext);
-   this .appearanceNode   = new Appearance (executionContext);
-   this .alphaToCoverage  = new AlphaToCoverage (executionContext);
-   this .geometryNode     = new IndexedFaceSet (executionContext);
-   this .texCoordNode     = new TextureCoordinate (executionContext);
-   this .coordNode        = new Coordinate (executionContext);
-   this .translationsNode = new FloatVertexAttribute (executionContext);
-   this .rotationsNode    = new Matrix3VertexAttribute (executionContext);
-   this .scalesNode       = new FloatVertexAttribute (executionContext);
 }
 
-Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DChildNode .prototype),
+Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DShapeNode .prototype),
 {
    initialize ()
    {
-      X3DChildNode .prototype .initialize .call (this);
+      X3DShapeNode .prototype .initialize .call (this);
 
-      // Common Fields
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
 
-      this ._pointerEvents .addFieldInterest (this .shapeNode ._pointerEvents);
-      this ._castShadow    .addFieldInterest (this .shapeNode ._castShadow);
-      this ._visible       .addFieldInterest (this .shapeNode ._visible);
-      this ._bboxDisplay   .addFieldInterest (this .shapeNode ._bboxDisplay);
-      this ._bboxSize      .addFieldInterest (this .shapeNode ._bboxSize);
-      this ._bboxCenter    .addFieldInterest (this .shapeNode ._bboxCenter);
+      this .geometryContext = new GeometryContext ();
 
-      this .shapeNode ._pointerEvents = this ._pointerEvents;
-      this .shapeNode ._castShadow    = this ._castShadow;
-      this .shapeNode ._visible       = this ._visible;
-      this .shapeNode ._bboxDisplay   = this ._bboxDisplay;
-      this .shapeNode ._bboxSize      = this ._bboxSize;
-      this .shapeNode ._bboxCenter    = this ._bboxCenter;
+      this .vertexCount       = 6;
+      this .geometryBuffer    = gl .createBuffer ();
+      this .vertexArrayObject = new VertexArray (gl);
 
-      // Proxy
+      gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
+      gl .bufferData (gl .ARRAY_BUFFER, QuadGeometry, gl .DYNAMIC_DRAW);
 
-      this .proximitySensor ._size = new Vector3 (-1, -1, -1);
-      this .proximitySensor ._orientation_changed .addInterest ("set_orientation__", this);
+      this .shaderNode = browser .createShader ("GaussianSplats", "GaussianSplats");
 
-      // Shader
+      // Fields
 
-      this .translationsNode ._name          = "x3d_Translation";
-      this .translationsNode ._numComponents = 3;
-      this .rotationsNode ._name             = "x3d_Rotation";
-      this .scalesNode ._name                = "x3d_Scale";
-      this .scalesNode ._numComponents       = 3;
-
-      this .shaderNode = this .getBrowser () .createShader ("GaussianSplats", "GaussianSplats");
-
-      this .shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_Rotation", new Fields .SFRotation ());
-      this .appearanceNode ._shaders .push (this .shaderNode);
-      this .appearanceNode ._blendMode = this .alphaToCoverage;
-      this .appearanceNode ._alphaMode = "OPAQUE";
-
-      // Geometry
-
-      this .texCoordNode ._points = [0, 1, 1, 1, 0, 0, 1, 0];
-
-      this ._color .addFieldInterest (this .geometryNode ._color);
-
-      this .geometryNode ._colorPerVertex = false;
-      this .geometryNode ._color          = this ._color;
-      this .geometryNode ._texCoord       = this .texCoordNode;
-      this .geometryNode ._coord          = this .coordNode;
-
-      this .geometryNode ._attrib .push (this .translationsNode, this .rotationsNode, this .scalesNode);
-
-      this .shapeNode ._appearance = this .appearanceNode;
-      this .shapeNode ._geometry   = this .geometryNode;
-      this .groupNode ._children   = [this .shapeNode, this .proximitySensor];
-
-      this .translationsNode .setPrivate (true);
-      this .rotationsNode    .setPrivate (true);
-      this .scalesNode       .setPrivate (true);
-      this .alphaToCoverage  .setPrivate (true);
-      this .appearanceNode   .setPrivate (true);
-      this .texCoordNode     .setPrivate (true);
-      this .coordNode        .setPrivate (true);
-      this .geometryNode     .setPrivate (true);
-      this .shapeNode        .setPrivate (true);
-      this .proximitySensor  .setPrivate (true);
-      this .groupNode        .setPrivate (true);
-
-      this .translationsNode .setup ();
-      this .rotationsNode    .setup ();
-      this .scalesNode       .setup ();
-      this .alphaToCoverage  .setup ();
-      this .appearanceNode   .setup ();
-      this .texCoordNode     .setup ();
-      this .coordNode        .setup ();
-      this .geometryNode     .setup ();
-      this .shapeNode        .setup ();
-      this .proximitySensor  .setup ();
-      this .groupNode        .setup ();
-
-      this ._translations .addInterest ("requestUpdateGeometry", this);
-      this ._rotations    .addInterest ("requestUpdateGeometry", this);
-      this ._scales       .addInterest ("requestUpdateGeometry", this);
-
-      this ._geometry .addInterest ("set_geometry__", this);
+      this ._translations .addInterest ("set_geometry__", this);
 
       this .set_geometry__ ();
    },
-   getInnerNode ()
+   getGeometryContext ()
    {
-      return this .groupNode;
+      return this .geometryContext;
    },
-   requestUpdateGeometry ()
+   getGeometryType ()
    {
-      this ._geometry = this .getBrowser () .getCurrentTime ();
+      return GeometryType .QUAD;
+   },
+   getNumInstances ()
+   {
+      return this .numSplats;
+   },
+   set_bbox__ ()
+   {
+      if (this .isDefaultBBoxSize ())
+      {
+         this .bbox .set (Vector3 .ONE, Vector3 .ZERO);
+      }
+      else
+      {
+         this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+      }
+
+      this .bboxSize   .assign (this .bbox .size);
+      this .bboxCenter .assign (this .bbox .center);
    },
    set_geometry__ ()
    {
+      console .log (this ._translations .length);
+
+      this .numSplats = 1;
+
+      this .set_bbox__ ();
+      this .set_objects__ ();
+
+      console .log (this .isVisibleObject ());
+   },
+   display (gl, renderContext)
+   {
       const
-         numTranslations = this ._translations .length,
-         translations    = [ ],
-         rotations       = [ ],
-         scales          = [ ],
-         colorIndex      = [ ],
-         texCoordIndex   = [ ],
-         coordIndex      = [ ],
-         points          = [ ],
-         matrix          = new Matrix3 ();
+         viewport   = renderContext .viewport,
+         browser    = this .getBrowser (),
+         shaderNode = this .shaderNode;
 
-      for (let t = 0, f = 0; t < numTranslations; ++ t, f += 4)
+      // Set viewport.
+
+      gl .viewport (... viewport);
+
+      // Setup shader.
+
+      shaderNode .enable (gl);
+
+      // Uniforms
+
+      const { renderObject, modelViewMatrix, localObjects } = renderContext;
+
+      gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, renderObject .getProjectionMatrixArray ());
+      gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,        false, renderObject .getEyeMatrixArray ());
+      gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
+
+      // Setup vertex attributes.
+
+      if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
       {
-         const
-            translation = this ._translations [t],
-            rotation    = this ._rotations [t],
-            scale       = this ._scales [t];
-
-         for (let q = 0; q < 4; ++ q)
-         {
-            translations .push (... translation);
-            rotations    .push (... rotation .getValue () .getMatrix (matrix));
-            scales       .push (... scale);
-         }
-
-         colorIndex .push (t, t);
-         texCoordIndex .push (0, 2, 3, -1, 0, 3, 1, -1);
-         coordIndex .push (f + 0, f + 2, f + 3, -1, f + 0, f + 3, f + 1, -1);
-         points .push (-1, 1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0); // Quad
+         shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, 0);
       }
 
-      this .translationsNode ._value = translations;
-      this .rotationsNode    ._value = rotations;
-      this .scalesNode       ._value = scales .map (v => v * 3);
-
-      this .coordNode ._point = points;
-
-      this .geometryNode ._colorIndex    = colorIndex;
-      this .geometryNode ._texCoordIndex = texCoordIndex;
-      this .geometryNode ._coordIndex    = coordIndex;
-
-      console .log (numTranslations, this .geometryNode)
-   },
-   set_orientation__ (value)
-   {
-      this .shaderNode .getUserDefinedField ("x3d_Rotation") .setValue (value);
+      gl .drawArraysInstanced (gl .TRIANGLES, 0, this .vertexCount, this .numSplats);
    },
 });
 
@@ -265,17 +185,17 @@ Object .defineProperties (GaussianSplats,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "translations",      new Fields .MFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "rotations",         new Fields .MFRotation ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "scales",            new Fields .MFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "pointerEvents",     new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "castShadow",        new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",           new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",       new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",          new Fields .SFVec3f (-1, -1, -1)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",        new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "color",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "translations",  new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "rotations",     new Fields .MFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "scales",        new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "pointerEvents", new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "castShadow",    new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",       new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",   new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",      new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",    new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "color",         new Fields .SFNode ()),
       ]),
       enumerable: true,
    },
