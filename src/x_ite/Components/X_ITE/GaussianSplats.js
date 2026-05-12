@@ -139,8 +139,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       this .set_bbox__ ();
       this .set_objects__ ();
-
-      console .log (this .isVisibleObject ());
    },
    display (gl, renderContext)
    {
