@@ -282,31 +282,28 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
             shapeNode    = shapes [i] .shapeNode,
             numInstances = shapeNode .getNumInstances ();
 
-         if (shapeNode .getType () .at (-1) === X3DConstants .ParticleSystem)
+         switch (shapeNode .getGeometryType ())
          {
-            switch (shapeNode .getGeometryType ())
+            case GeometryType .POINT:
             {
-               case GeometryType .POINT:
-               {
-                  this .primitives .points += numInstances;
-                  continue;
-               }
-               case GeometryType .LINE:
-               {
-                  this .primitives .lines += numInstances;
-                  continue;
-               }
-               case GeometryType .TRIANGLE:
-               case GeometryType .QUAD:
-               case GeometryType .SPRITE:
-               {
-                  this .primitives .triangles += numInstances * 2;
-                  continue;
-               }
-               case GeometryType .GEOMETRY:
-               {
-                  break;
-               }
+               this .primitives .points += numInstances;
+               continue;
+            }
+            case GeometryType .LINE:
+            {
+               this .primitives .lines += numInstances;
+               continue;
+            }
+            case GeometryType .TRIANGLE:
+            case GeometryType .QUAD:
+            case GeometryType .SPRITE:
+            {
+               this .primitives .triangles += numInstances * 2;
+               continue;
+            }
+            case GeometryType .GEOMETRY:
+            {
+               break;
             }
          }
 
