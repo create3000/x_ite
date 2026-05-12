@@ -303,38 +303,38 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
             }
             case GeometryType .GEOMETRY:
             {
-               break;
-            }
-         }
+               const geometryNode = shapeNode .getGeometry ();
 
-         const geometryNode = shapeNode .getGeometry ();
+               // ParticleSystem nodes may have no geometry.
+               if (!geometryNode)
+                  continue;
 
-         // ParticleSystem nodes may have no geometry.
-         if (!geometryNode)
-            continue;
+               if (!geometryNode .getExecutionContext () .getCountPrimitives ())
+                  continue;
 
-         if (!geometryNode .getExecutionContext () .getCountPrimitives ())
-            continue;
+               const vertices = geometryNode .getVertices () .length / 4 * numInstances;
 
-         const vertices = geometryNode .getVertices () .length / 4 * numInstances;
+               switch (geometryNode .getGeometryType ())
+               {
+                  case 0:
+                  {
+                     this .primitives .points += vertices;
+                     break;
+                  }
+                  case 1:
+                  {
+                     this .primitives .lines += vertices / 2;
+                     break;
+                  }
+                  case 2:
+                  case 3:
+                  {
+                     this .primitives .triangles += vertices / 3;
+                     break;
+                  }
+               }
 
-         switch (geometryNode .getGeometryType ())
-         {
-            case 0:
-            {
-               this .primitives .points += vertices;
-               break;
-            }
-            case 1:
-            {
-               this .primitives .lines += vertices / 2;
-               break;
-            }
-            case 2:
-            case 3:
-            {
-               this .primitives .triangles += vertices / 3;
-               break;
+               continue;
             }
          }
       }
