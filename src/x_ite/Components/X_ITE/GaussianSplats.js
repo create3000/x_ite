@@ -240,6 +240,10 @@ Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DChildNode 
    {
       return this .shapeNode;
    },
+   getBBox (bbox, shadows)
+   {
+      return this .shapeNode .getBBox (bbox, shadow);
+   },
    dispose ()
    {
       X3DBoundedObject .prototype .dispose .call (this);
