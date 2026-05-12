@@ -2,6 +2,7 @@ import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
+import X3DChildNode         from "../Core/X3DChildNode.js";
 import X3DShapeNode         from "../Shape/X3DShapeNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import GeometryContext      from "../../Browser/Rendering/GeometryContext.js";
@@ -47,6 +48,8 @@ import ShaderRegistry from "../../Browser/Shaders/ShaderRegistry.js";
 ShaderRegistry .addVertex   ("GaussianSplats", vs);
 ShaderRegistry .addFragment ("GaussianSplats", fs);
 
+// Quad Geometry
+
 // p4 ------ p3
 // |       / |
 // |     /   |
@@ -63,22 +66,18 @@ const QuadGeometry = new Float32Array ([
    -1,  1, 0, 1,
 ]);
 
-/**
- * THIS NODE IS STILL EXPERIMENTAL.
- */
+// Special X3DShapeNode for internal use.
 
-function GaussianSplats (executionContext)
+function GaussianSplatsShape (executionContext, node)
 {
    X3DShapeNode .call (this, executionContext);
 
-   this .addType (X3DConstants .GaussianSplats);
+   // Private Properties
 
-   // Units
-
-   this ._translations .setUnit ("length");
+   this .node = node;
 }
 
-Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DShapeNode .prototype),
+Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShapeNode .prototype),
 {
    initialize ()
    {
@@ -101,7 +100,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DShapeNode 
 
       // Fields
 
-      this ._translations .addInterest ("set_geometry__", this);
+      this .node ._translations .addInterest ("set_geometry__", this);
 
       this .set_geometry__ ();
    },
@@ -133,7 +132,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DShapeNode 
    },
    set_geometry__ ()
    {
-      console .log (this ._translations .length);
+      console .log (this .node ._translations .length);
 
       this .numSplats = 1;
 
@@ -176,6 +175,69 @@ Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DShapeNode 
    },
 });
 
+Object .defineProperties (GaussianSplatsShape,
+{
+   ... X3DNode .getStaticProperties ("GaussianSplatsShape", "X_ITE", 1, "children", "2.0"),
+   fieldDefinitions:
+   {
+      value: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "pointerEvents", new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "castShadow",    new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",       new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",   new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",      new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",    new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "appearance",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",      new Fields .SFNode ()),
+      ]),
+      enumerable: true,
+   },
+});
+
+/**
+ * THIS NODE IS STILL EXPERIMENTAL.
+ */
+
+function GaussianSplats (executionContext)
+{
+   X3DChildNode .call (this, executionContext);
+
+   this .addType (X3DConstants .GaussianSplats);
+
+   // Units
+
+   this ._translations .setUnit ("length");
+
+   // Private Properties
+
+   this .shapeNode = new GaussianSplatsShape (executionContext, this);
+}
+
+Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DChildNode .prototype),
+{
+   initialize ()
+   {
+      X3DChildNode .prototype .initialize .call (this);
+
+      this ._visible     .addFieldInterest (this .shapeNode ._visible);
+      this ._bboxDisplay .addFieldInterest (this .shapeNode ._bboxDisplay);
+      this ._bboxSize    .addFieldInterest (this .shapeNode ._bboxSize);
+      this ._bboxCenter  .addFieldInterest (this .shapeNode ._bboxCenter);
+
+      this .shapeNode ._visible     = this ._visible;
+      this .shapeNode ._bboxDisplay = this ._bboxDisplay;
+      this .shapeNode ._bboxSize    = this ._bboxSize;
+      this .shapeNode ._bboxCenter  = this ._bboxCenter;
+
+      this .shapeNode .setup ();
+   },
+   getInnerNode ()
+   {
+      return this .shapeNode;
+   },
+});
+
 Object .defineProperties (GaussianSplats,
 {
    ... X3DNode .getStaticProperties ("GaussianSplats", "X_ITE", 1, "children", "2.0"),
@@ -186,14 +248,10 @@ Object .defineProperties (GaussianSplats,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "translations",  new Fields .MFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "rotations",     new Fields .MFRotation ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "scales",        new Fields .MFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "pointerEvents", new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "castShadow",    new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",       new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",   new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",      new Fields .SFVec3f (-1, -1, -1)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",    new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "appearance",    new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",      new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "color",         new Fields .SFNode ()),
       ]),
       enumerable: true,
