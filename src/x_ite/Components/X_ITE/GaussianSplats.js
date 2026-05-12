@@ -3,6 +3,7 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DChildNode         from "../Core/X3DChildNode.js";
+import X3DBoundedObject     from "../Grouping/X3DBoundedObject.js";
 import X3DShapeNode         from "../Shape/X3DShapeNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import GeometryContext      from "../../Browser/Rendering/GeometryContext.js";
@@ -201,7 +202,8 @@ Object .defineProperties (GaussianSplatsShape,
 
 function GaussianSplats (executionContext)
 {
-   X3DChildNode .call (this, executionContext);
+   X3DChildNode     .call (this, executionContext);
+   X3DBoundedObject .call (this, executionContext);
 
    this .addType (X3DConstants .GaussianSplats);
 
@@ -215,10 +217,12 @@ function GaussianSplats (executionContext)
 }
 
 Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DChildNode .prototype),
+   X3DBoundedObject .prototype,
 {
    initialize ()
    {
-      X3DChildNode .prototype .initialize .call (this);
+      X3DChildNode     .prototype .initialize .call (this);
+      X3DBoundedObject .prototype .initialize .call (this);
 
       this ._visible     .addFieldInterest (this .shapeNode ._visible);
       this ._bboxDisplay .addFieldInterest (this .shapeNode ._bboxDisplay);
@@ -235,6 +239,11 @@ Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DChildNode 
    getInnerNode ()
    {
       return this .shapeNode;
+   },
+   dispose ()
+   {
+      X3DBoundedObject .prototype .dispose .call (this);
+      X3DChildNode     .prototype .dispose .call (this);
    },
 });
 
