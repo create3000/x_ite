@@ -17,9 +17,13 @@ precision highp float;
 precision highp int;
 precision highp sampler2D;
 
-uniform mat4 x3d_ProjectionMatrix;
-uniform mat4 x3d_ModelViewMatrix;
-uniform mat4 x3d_EyeMatrix;
+uniform ivec4 x3d_Viewport;
+uniform mat4  x3d_ProjectionMatrix;
+uniform mat4  x3d_ModelViewMatrix;
+
+#if defined (X3D_XR_SESSION)
+   uniform mat4 x3d_EyeMatrix;
+#endif
 
 in vec4 x3d_Vertex;
 in int  x3d_TranslationIndex;
@@ -31,10 +35,19 @@ uniform sampler2D x3d_TranslationsTexture;
 void
 main ()
 {
-   vec4 p = texelFetch (x3d_TranslationsTexture, x3d_TranslationIndex, 0);
-   vec3 v = x3d_Vertex .xyz * 0.01 + p .xyz;
+   vec4 tVertex = x3d_Vertex;
+   vec3 splatPosition = texelFetch (x3d_TranslationsTexture, x3d_TranslationIndex, 0) .xyz;
 
-   gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * vec4 (v, 1);
+   tVertex .xyz *= 0.01;
+   tVertex .xyz += splatPosition;
+
+   tVertex = x3d_ModelViewMatrix * tVertex;
+
+   #if defined (X3D_XR_SESSION)
+      tVertex = x3d_EyeMatrix * tVertex;
+   #endif
+
+   gl_Position = x3d_ProjectionMatrix * tVertex;
 }
 `;
 
@@ -241,6 +254,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       const { renderObject, modelViewMatrix, localObjects } = renderContext;
 
+      gl .uniform4iv (shaderNode .x3d_Viewport, renderObject .getViewportArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, renderObject .getProjectionMatrixArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,        false, renderObject .getEyeMatrixArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
