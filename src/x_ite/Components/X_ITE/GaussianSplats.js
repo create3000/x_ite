@@ -321,7 +321,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          sphericalHarmonics .set (this .node ._sphericalHarmonics0 .getValue () .subarray (0, numSplats * 3));
          sphericalHarmonics .set (this .node ._sphericalHarmonics1 .getValue () .subarray (0, numSplats * 3 * 3), textureSize * 3 * 1);
          sphericalHarmonics .set (this .node ._sphericalHarmonics2 .getValue () .subarray (0, numSplats * 3 * 5), textureSize * 3 * 4);
-         sphericalHarmonics .set (this .node ._sphericalHarmonics3 .getValue () .subarray (0, numSplats * 3 * 7), textureSize * 3 * 8);
+         sphericalHarmonics .set (this .node ._sphericalHarmonics3 .getValue () .subarray (0, numSplats * 3 * 7), textureSize * 3 * 9);
 
          gl .bindTexture (gl .TEXTURE_2D, this .positionsTexture);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB32F, textureWidth, textureWidth, 0, gl .RGB, gl .FLOAT, positions);
