@@ -28,6 +28,8 @@ uniform mat4  x3d_ModelViewMatrix;
 in vec4 x3d_Vertex;
 in int  x3d_SplatIndex;
 
+out vec4 color;
+
 uniform sampler2D x3d_PositionsTexture;
 uniform sampler2D x3d_OrientationsTexture;
 uniform sampler2D x3d_ScalesTexture;
@@ -38,6 +40,16 @@ uniform sampler2D x3d_SphericalHarmonics2Texture;
 uniform sampler2D x3d_SphericalHarmonics3Texture;
 
 #include <Utils>
+
+vec3
+convertFDC (const in vec3 f_dc)
+{
+   // https://github.com/graphdeco-inria/gaussian-splatting/issues/485
+
+   const float C0 = 0.28209479177387814; // = 1 / (2 * Math .sqrt (Math .PI))
+
+   return 0.5 + C0 * f_dc;
+}
 
 void
 main ()
@@ -55,6 +67,11 @@ main ()
    #endif
 
    gl_Position = x3d_ProjectionMatrix * tVertex;
+
+   float opacity = texelFetch (x3d_OpacitiesTexture, x3d_SplatIndex, 0) .r;
+   vec3 sh0 = convertFDC (texelFetch (x3d_SphericalHarmonics0Texture, x3d_SplatIndex, 0) .rgb);
+
+   color = vec4 (sh0, opacity);
 }
 `;
 
@@ -64,12 +81,14 @@ precision highp float;
 precision highp int;
 precision highp sampler2D;
 
+in vec4 color;
+
 out vec4 x3d_FragColor;
 
 void
 main ()
 {
-   x3d_FragColor = vec4 (1.0, 1.0, 1.0, 1.0);
+   x3d_FragColor = color;
 }
 `;
 
