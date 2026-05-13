@@ -42,6 +42,7 @@ const fs = () => /* glsl */ `#version 300 es
 
 precision highp float;
 precision highp int;
+precision highp sampler2D;
 
 out vec4 x3d_FragColor;
 
