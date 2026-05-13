@@ -31,11 +31,9 @@ uniform sampler2D x3d_TranslationsTexture;
 void
 main ()
 {
-   int  t = textureSize (x3d_TranslationsTexture, 0) .x;
    vec4 p = texelFetch (x3d_TranslationsTexture, x3d_TranslationIndex, 0);
-   vec3 v = (x3d_Vertex .xyz + p .xyz) * 0.0 + vec3 (t == 1 ? 0 : 3, 0, 0);
+   vec3 v = x3d_Vertex .xyz * 0.01 + p .xyz;
 
-   gl_PointSize = 2.0;
    gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * vec4 (v, 1);
 }
 `;
@@ -117,7 +115,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Textures
 
-      this .translationTexture = this .createTexture ();
+      this .translationsTexture = this .createTexture ();
 
       // Fields
 
@@ -148,12 +146,12 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          gl      = browser .getContext (),
          texture = gl .createTexture ();
 
+      gl .bindTexture (gl .TEXTURE_2D, texture);
+
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
-
-      gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, 1, 1, 0, gl .RGBA, gl .FLOAT, new Float32Array (4));
 
       return texture;
    },
@@ -210,11 +208,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
          translations .set (this .node ._translations .shrinkToFit ());
 
-         gl .bindTexture (gl .TEXTURE_2D, this .translationTexture);
+         gl .bindTexture (gl .TEXTURE_2D, this .translationsTexture);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB32F, textureSize, textureSize, 0, gl .RGB, gl .FLOAT, translations);
-
-         console .log (this .translationTexture);
-         console .log (textureSize);
       }
 
       // Finish
@@ -254,7 +249,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       const textureUnit = browser .popTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, this .translationTexture);
+      gl .bindTexture (gl .TEXTURE_2D, this .translationsTexture);
       gl .uniform1i (shaderNode .x3d_TranslationsTexture, textureUnit);
 
       // Setup vertex attributes.
@@ -271,7 +266,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, 0);
       }
 
-      gl .drawArraysInstanced (gl .POINTS, 0, 1, this .numSplats);
+      gl .drawArraysInstanced (gl .TRIANGLES, 0, 6, this .numSplats);
 
       browser .resetTextureUnits ();
    },
