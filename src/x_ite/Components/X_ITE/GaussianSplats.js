@@ -178,8 +178,8 @@ main ()
 
    // pow(e, pow(-3.4, 2) * -0.5) = 1/255, so 3.4 is the standard deviation in terms of the Gaussian falloff that results in a radius of 1 pixel when the variance is 1.
    // sqrt(a) and sqrt(c) are the standard deviations in x and y direction, so multiplying them with 3.4 gives us the radius in pixels where the Gaussian falloff results in 1/255 opacity.
-   vec2 quadPixelSize = vec2 (3.4 * sqrt (a), 3.4 * sqrt (c));  // screen space half quad height and width
-   vec2 quadNdcSize   = quadPixelSize / vec2 (x3d_Viewport .zw) * 2.0;  // in ndc space
+   vec2 quadPixelSize = vec2 (3.4 * sqrt (a), 3.4 * sqrt (c));         // screen space half quad height and width
+   vec2 quadNdcSize   = quadPixelSize / vec2 (x3d_Viewport .zw) * 2.0; // in ndc space
 
    clipSplatCenter .xy = clipSplatCenter .xy + x3d_Vertex .xy * quadNdcSize;
 
@@ -209,9 +209,18 @@ out vec4 x3d_FragColor;
 void
 main ()
 {
-   float alpha = 1.0 / (1.0 + exp (-color .a));
+   // Equation 4
+   float exponent = -0.5 * (conic .x * texCoord .x * texCoord .x + conic .z * texCoord .y * texCoord .y) - conic .y * texCoord .x * texCoord .y;
 
-   x3d_FragColor = vec4 (color .rgb, alpha);
+   if (exponent > 0.0)
+      discard;
+
+   float alpha = min (0.99, exp (exponent) * color .a); // opacity modulated by Gaussian falloff
+
+   if (alpha < 1.0 / 255.0)
+      discard;
+
+   x3d_FragColor = vec4 (color .rgb * alpha, alpha); // premultiplied-alpha output
 }
 `;
 
@@ -521,8 +530,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       }
 
       // TODO: sort splats.
-      gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
-      gl .blendFuncSeparate (gl .ONE, gl .ZERO, gl .ZERO, gl .ONE);
+      // gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
+      gl .blendFunc (gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
 
       gl .frontFace (gl .CCW);
       gl .enable (gl .CULL_FACE);
@@ -530,7 +539,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       gl .drawArraysInstanced (gl .TRIANGLES, 0, 6, this .numSplats);
 
       // TODO: sort splats.
-      gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
+      // gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
       gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
    },
 });
