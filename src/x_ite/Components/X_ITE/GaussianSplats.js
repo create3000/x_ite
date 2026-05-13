@@ -8,6 +8,7 @@ import X3DShapeNode         from "../Shape/X3DShapeNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import GeometryContext      from "../../Browser/Rendering/GeometryContext.js";
 import GeometryType         from "../../Browser/Shape/GeometryType.js";
+import AlphaMode            from "../../Browser/Shape/AlphaMode.js";
 import VertexArray          from "../../Rendering/VertexArray.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 
@@ -269,6 +270,11 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       this .bboxSize   .assign (this .bbox .size);
       this .bboxCenter .assign (this .bbox .center);
+   },
+   set_transparent__ ()
+   {
+      this .transparent = true;
+      this .alphaMode   = AlphaMode .BLEND;
    },
    requestRebuild ()
    {
