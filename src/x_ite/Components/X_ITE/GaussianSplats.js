@@ -119,6 +119,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          vertexShader: "GaussianSplats",
          fragmentShader: "GaussianSplats",
          options: ["X3D_INSTANCING"],
+         attributes: ["x3d_PositionIndex"],
          uniforms: ["x3d_PositionsTexture"],
       });
 
@@ -297,12 +298,10 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
       {
-         const attribute = gl .getAttribLocation (shaderNode .getProgram (), "x3d_PositionIndex");
-
          gl .bindBuffer (gl .ARRAY_BUFFER, this .positionsIndexBuffer);
-         gl .enableVertexAttribArray (attribute);
-         gl .vertexAttribIPointer (attribute, 1, gl .INT, 0, 0);
-         gl .vertexAttribDivisor (attribute, 1);
+         gl .enableVertexAttribArray (shaderNode .x3d_PositionIndex);
+         gl .vertexAttribIPointer (shaderNode .x3d_PositionIndex, 1, gl .INT, 0, 0);
+         gl .vertexAttribDivisor (shaderNode .x3d_PositionIndex, 1);
 
          shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, 0);
       }

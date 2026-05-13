@@ -15,6 +15,7 @@ function X3DProgrammableShaderObject (executionContext)
 
    // Private properties
 
+   this .attributeNames         = [ ];
    this .uniformNames           = [ ];
    this .environmentLightNodes  = [ ];
    this .lightNodes             = [ ];
@@ -39,6 +40,14 @@ Object .assign (X3DProgrammableShaderObject .prototype,
    canUserDefinedFields ()
    {
       return true;
+   },
+   getAttributeNames ()
+   {
+      return this .attributeNames;
+   },
+   setAttributeNames (value)
+   {
+      this .attributeNames = value;
    },
    getUniformNames ()
    {
@@ -283,6 +292,9 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             delete this [`${$.toLowerCaseFirst (name)}AttributeDivisor`];
          }
       }
+
+      for (const name of this .attributeNames)
+         this [name] = gl .getAttribLocation (program, name);
 
       if (this .x3d_TexCoord .length)
       {
