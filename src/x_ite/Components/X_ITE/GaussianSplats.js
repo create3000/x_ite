@@ -98,7 +98,9 @@ out vec4 x3d_FragColor;
 void
 main ()
 {
-   x3d_FragColor = color;
+   float alpha = 1.0 / (1.0 + exp (-color .a));
+
+   x3d_FragColor = vec4 (color .rgb, alpha);
 }
 `;
 

@@ -296,8 +296,8 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          node .positions           = this .points;
          node .orientations        = orientations;
          node .scales              = this .scales;
-         node .sphericalHarmonics0 = this .f_dc;
          node .opacities           = this .opacities;
+         node .sphericalHarmonics0 = this .sphericalHarmonics0;
 
          scene .rootNodes .push (node);
       }
@@ -449,10 +449,10 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       // Gaussian Splats
 
       const
-         scales      = [ ],
-         quaternions = [ ],
-         f_dc        = [ ],
-         opacities   = [ ];
+         scales              = [ ],
+         quaternions         = [ ],
+         opacities           = [ ],
+         sphericalHarmonics0 = [ ];
 
       // console .time ("vertices")
 
@@ -487,12 +487,11 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
                case "scale_0": case "scale_1": case "scale_2":
                   scales .push (Math .exp (this .value));
                   break;
-               case "f_dc_0": case "f_dc_1": case "f_dc_2":
-                  f_dc .push (this .convertColor (this .value, type));
-                  break;
                case "opacity":
-                  // https://github.com/antimatter15/splat/blob/main/convert.py
-                  opacities .push (1 / (1 + Math .exp (-this .value)));
+                  opacities .push (this .value);
+                  break;
+               case "f_dc_0": case "f_dc_1": case "f_dc_2":
+                  sphericalHarmonics0 .push (this .convertColor (this .value, type));
                   break;
             }
          }
@@ -502,15 +501,18 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       // Geometric properties
 
-      this .quaternions = quaternions;
-      this .scales      = scales;
-      this .f_dc        = f_dc;
-      this .opacities   = opacities;
-      this .alpha       = properties .some (p => p .name .match (/^(?:alpha|a)$/));
-      this .colors      = colors;
-      this .texCoords   = texCoords;
-      this .normals     = normals;
-      this .points      = points;
+      this .alpha     = properties .some (p => p .name .match (/^(?:alpha|a)$/));
+      this .colors    = colors;
+      this .texCoords = texCoords;
+      this .normals   = normals;
+      this .points    = points;
+
+      // Gaussian Splatting
+
+      this .quaternions         = quaternions;
+      this .scales              = scales;
+      this .opacities           = opacities;
+      this .sphericalHarmonics0 = sphericalHarmonics0;
    },
    parseFaces ({ count, properties })
    {
