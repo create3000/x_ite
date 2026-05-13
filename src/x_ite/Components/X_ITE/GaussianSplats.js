@@ -414,7 +414,18 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, 0);
       }
 
+      // TODO: sort splats.
+      gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
+      gl .blendFuncSeparate (gl .ONE, gl .ZERO, gl .ZERO, gl .ONE);
+
+      gl .frontFace (gl .CCW);
+      gl .enable (gl .CULL_FACE);
+
       gl .drawArraysInstanced (gl .TRIANGLES, 0, 6, this .numSplats);
+
+      // TODO: sort splats.
+      gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
+      gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
    },
 });
 
