@@ -33,6 +33,8 @@ in vec4 x3d_Vertex;
 in int  x3d_SplatIndex;
 
 out vec4 color;
+out vec2 texCoord;
+out vec3 conic;
 
 uniform sampler2D      x3d_PositionsTexture;
 uniform sampler2D      x3d_OrientationsTexture;
@@ -94,6 +96,8 @@ precision highp int;
 precision highp sampler2D;
 
 in vec4 color;
+in vec2 texCoord;
+in vec3 conic;
 
 out vec4 x3d_FragColor;
 
