@@ -17,6 +17,7 @@ const vs = () => /* glsl */ `#version 300 es
 precision highp float;
 precision highp int;
 precision highp sampler2D;
+precision highp sampler2DArray;
 
 uniform ivec4 x3d_Viewport;
 uniform mat4  x3d_ProjectionMatrix;
@@ -31,16 +32,11 @@ in int  x3d_SplatIndex;
 
 out vec4 color;
 
-uniform sampler2D x3d_PositionsTexture;
-uniform sampler2D x3d_OrientationsTexture;
-uniform sampler2D x3d_ScalesTexture;
-uniform sampler2D x3d_OpacitiesTexture;
-uniform sampler2D x3d_SphericalHarmonics0Texture;
-uniform sampler2D x3d_SphericalHarmonics1Texture;
-uniform sampler2D x3d_SphericalHarmonics2Texture;
-uniform sampler2D x3d_SphericalHarmonics3Texture;
-
-#include <Utils>
+uniform sampler2D      x3d_PositionsTexture;
+uniform sampler2D      x3d_OrientationsTexture;
+uniform sampler2D      x3d_ScalesTexture;
+uniform sampler2D      x3d_OpacitiesTexture;
+uniform sampler2DArray x3d_SphericalHarmonicsTexture;
 
 vec3
 convertFDC (const in vec3 f_dc)
@@ -55,8 +51,15 @@ convertFDC (const in vec3 f_dc)
 void
 main ()
 {
+   // Texel Coord
+
+   int   textureWidth = textureSize (x3d_PositionsTexture, 0) .x;
+   ivec2 texelCoord   = ivec2 (x3d_SplatIndex % textureWidth, x3d_SplatIndex / textureWidth);
+
+   // Position
+
    vec4 tVertex = x3d_Vertex;
-   vec3 splatPosition = texelFetch (x3d_PositionsTexture, x3d_SplatIndex, 0) .xyz;
+   vec3 splatPosition = texelFetch (x3d_PositionsTexture, texelCoord, 0) .xyz;
 
    tVertex .xyz *= 0.01;
    tVertex .xyz += splatPosition;
@@ -69,8 +72,14 @@ main ()
 
    gl_Position = x3d_ProjectionMatrix * tVertex;
 
-   float opacity = texelFetch (x3d_OpacitiesTexture, x3d_SplatIndex, 0) .r;
-   vec3 sh0 = convertFDC (texelFetch (x3d_SphericalHarmonics0Texture, x3d_SplatIndex, 0) .rgb);
+   // Color
+
+   float opacity = texelFetch (x3d_OpacitiesTexture, texelCoord, 0) .r;
+
+   // Degree 0
+   vec3 sh0 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord .xy, 0), 0) .rgb;
+
+   sh0 = convertFDC (sh0);
 
    color = vec4 (sh0, opacity);
 }
@@ -154,10 +163,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
             "x3d_OrientationsTexture",
             "x3d_ScalesTexture",
             "x3d_OpacitiesTexture",
-            "x3d_SphericalHarmonics0Texture",
-            "x3d_SphericalHarmonics1Texture",
-            "x3d_SphericalHarmonics2Texture",
-            "x3d_SphericalHarmonics3Texture",
+            "x3d_SphericalHarmonicsTexture",
          ],
       });
 
@@ -178,14 +184,11 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Textures
 
-      this .positionsTexture           = this .createTexture ("x3d_PositionsTexture");
-      this .orientationsTexture        = this .createTexture ("x3d_OrientationsTexture");
-      this .scalesTexture              = this .createTexture ("x3d_ScalesTexture");
-      this .sphericalHarmonics0Texture = this .createTexture ("x3d_SphericalHarmonics0Texture");
-      this .sphericalHarmonics1Texture = this .createTexture ("x3d_SphericalHarmonics1Texture");
-      this .sphericalHarmonics2Texture = this .createTexture ("x3d_SphericalHarmonics2Texture");
-      this .sphericalHarmonics3Texture = this .createTexture ("x3d_SphericalHarmonics3Texture");
-      this .opacitiesTexture           = this .createTexture ("x3d_OpacitiesTexture");
+      this .positionsTexture          = this .createTexture ("x3d_PositionsTexture");
+      this .orientationsTexture       = this .createTexture ("x3d_OrientationsTexture");
+      this .scalesTexture             = this .createTexture ("x3d_ScalesTexture");
+      this .sphericalHarmonicsTexture = this .createTexture ("x3d_SphericalHarmonicsTexture", gl .TEXTURE_2D_ARRAY);
+      this .opacitiesTexture          = this .createTexture ("x3d_OpacitiesTexture");
 
       browser .resetTextureUnits ();
 
@@ -219,26 +222,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
    getNumInstances ()
    {
       return this .numSplats;
-   },
-   createTexture (uniform)
-   {
-      const
-         browser = this .getBrowser (),
-         gl      = browser .getContext (),
-         texture = gl .createTexture ();
-
-      texture .textureUnit = browser .popTextureUnit ();
-
-      gl .bindTexture (gl .TEXTURE_2D, texture);
-
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
-      gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
-
-      gl .uniform1i (this .shaderNode [uniform], texture .textureUnit);
-
-      return texture;
    },
    set_bbox__ ()
    {
@@ -276,6 +259,28 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       this .transparent = true;
       this .alphaMode   = AlphaMode .BLEND;
    },
+   createTexture (uniform, target)
+   {
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext (),
+         texture = gl .createTexture ();
+
+      target ??= gl .TEXTURE_2D;
+
+      texture .textureUnit = browser .popTextureUnit ();
+
+      gl .bindTexture (target, texture);
+
+      gl .texParameteri (target, gl .TEXTURE_WRAP_S,     gl .CLAMP_TO_EDGE);
+      gl .texParameteri (target, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
+      gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+      gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
+
+      gl .uniform1i (this .shaderNode [uniform], texture .textureUnit);
+
+      return texture;
+   },
    requestRebuild ()
    {
       this ._rebuild = Date .now () / 1000;
@@ -294,53 +299,42 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Positions
 
-      const textureSize = Math .ceil (Math .sqrt (numSplats));
+      const textureWidth = Math .ceil (Math .sqrt (numSplats));
 
-      if (textureSize)
+      if (textureWidth)
       {
          const
-            positions           = new Float32Array (textureSize * textureSize * 3),
-            orientations        = new Float32Array (textureSize * textureSize * 4),
-            scales              = new Float32Array (textureSize * textureSize * 3),
-            opacities           = new Float32Array (textureSize * textureSize),
-            sphericalHarmonics0 = new Float32Array (textureSize * textureSize * 3),
-            sphericalHarmonics1 = new Float32Array (textureSize * textureSize * 3),
-            sphericalHarmonics2 = new Float32Array (textureSize * textureSize * 3),
-            sphericalHarmonics3 = new Float32Array (textureSize * textureSize * 3);
+            textureSize        = textureWidth * textureWidth,
+            positions          = new Float32Array (textureSize * 3),
+            orientations       = new Float32Array (textureSize * 4),
+            scales             = new Float32Array (textureSize * 3),
+            opacities          = new Float32Array (textureSize),
+            sphericalHarmonics = new Float32Array (textureSize * 12);
 
          positions    .set (this .node ._positions    .getValue () .subarray (0, numSplats * 3));
          orientations .set (this .node ._orientations .getValue () .subarray (0, numSplats * 4));
          scales       .set (this .node ._scales       .getValue () .subarray (0, numSplats * 3));
          opacities    .set (this .node ._opacities    .getValue () .subarray (0, numSplats));
 
-         sphericalHarmonics0 .set (this .node ._sphericalHarmonics0 .getValue () .subarray (0, numSplats * 3));
-         sphericalHarmonics1 .set (this .node ._sphericalHarmonics1 .getValue () .subarray (0, numSplats * 3));
-         sphericalHarmonics2 .set (this .node ._sphericalHarmonics2 .getValue () .subarray (0, numSplats * 3));
-         sphericalHarmonics3 .set (this .node ._sphericalHarmonics3 .getValue () .subarray (0, numSplats * 3));
+         sphericalHarmonics .set (this .node ._sphericalHarmonics0 .getValue () .subarray (0, numSplats * 3));
+         sphericalHarmonics .set (this .node ._sphericalHarmonics1 .getValue () .subarray (0, numSplats * 3), textureSize * 3);
+         sphericalHarmonics .set (this .node ._sphericalHarmonics2 .getValue () .subarray (0, numSplats * 3), textureSize * 6);
+         sphericalHarmonics .set (this .node ._sphericalHarmonics3 .getValue () .subarray (0, numSplats * 3), textureSize * 9);
 
          gl .bindTexture (gl .TEXTURE_2D, this .positionsTexture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB32F, textureSize, textureSize, 0, gl .RGB, gl .FLOAT, positions);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB32F, textureWidth, textureWidth, 0, gl .RGB, gl .FLOAT, positions);
 
          gl .bindTexture (gl .TEXTURE_2D, this .orientationsTexture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, orientations);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureWidth, textureWidth, 0, gl .RGBA, gl .FLOAT, orientations);
 
          gl .bindTexture (gl .TEXTURE_2D, this .scalesTexture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB32F, textureSize, textureSize, 0, gl .RGB, gl .FLOAT, scales);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB32F, textureWidth, textureWidth, 0, gl .RGB, gl .FLOAT, scales);
 
          gl .bindTexture (gl .TEXTURE_2D, this .opacitiesTexture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .R32F, textureSize, textureSize, 0, gl .RED, gl .FLOAT, opacities);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .R32F, textureWidth, textureWidth, 0, gl .RED, gl .FLOAT, opacities);
 
-         gl .bindTexture (gl .TEXTURE_2D, this .sphericalHarmonics0Texture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB32F, textureSize, textureSize, 0, gl .RGB, gl .FLOAT, sphericalHarmonics0);
-
-         gl .bindTexture (gl .TEXTURE_2D, this .sphericalHarmonics1Texture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB32F, textureSize, textureSize, 0, gl .RGB, gl .FLOAT, sphericalHarmonics1);
-
-         gl .bindTexture (gl .TEXTURE_2D, this .sphericalHarmonics2Texture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB32F, textureSize, textureSize, 0, gl .RGB, gl .FLOAT, sphericalHarmonics2);
-
-         gl .bindTexture (gl .TEXTURE_2D, this .sphericalHarmonics3Texture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB32F, textureSize, textureSize, 0, gl .RGB, gl .FLOAT, sphericalHarmonics3);
+         gl .bindTexture (gl .TEXTURE_2D_ARRAY, this .sphericalHarmonicsTexture);
+         gl .texImage3D (gl .TEXTURE_2D_ARRAY, 0, gl .RGB32F, textureWidth, textureWidth, 4, 0, gl .RGB, gl .FLOAT, sphericalHarmonics);
       }
 
       // Finish
@@ -390,17 +384,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       gl .activeTexture (gl .TEXTURE0 + this .opacitiesTexture .textureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .opacitiesTexture);
 
-      gl .activeTexture (gl .TEXTURE0 + this .sphericalHarmonics0Texture .textureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, this .sphericalHarmonics0Texture);
-
-      gl .activeTexture (gl .TEXTURE0 + this .sphericalHarmonics1Texture .textureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, this .sphericalHarmonics1Texture);
-
-      gl .activeTexture (gl .TEXTURE0 + this .sphericalHarmonics2Texture .textureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, this .sphericalHarmonics2Texture);
-
-      gl .activeTexture (gl .TEXTURE0 + this .sphericalHarmonics3Texture .textureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, this .sphericalHarmonics3Texture);
+      gl .activeTexture (gl .TEXTURE0 + this .sphericalHarmonicsTexture .textureUnit);
+      gl .bindTexture (gl .TEXTURE_2D_ARRAY, this .sphericalHarmonicsTexture);
 
       // Setup vertex attributes.
 
