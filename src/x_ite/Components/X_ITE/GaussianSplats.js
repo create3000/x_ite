@@ -26,7 +26,7 @@ uniform mat4  x3d_ModelViewMatrix;
 #endif
 
 in vec4 x3d_Vertex;
-in int  x3d_PositionIndex;
+in int  x3d_SplatIndex;
 
 uniform sampler2D x3d_PositionsTexture;
 
@@ -36,7 +36,7 @@ void
 main ()
 {
    vec4 tVertex = x3d_Vertex;
-   vec3 splatPosition = texelFetch (x3d_PositionsTexture, x3d_PositionIndex, 0) .xyz;
+   vec3 splatPosition = texelFetch (x3d_PositionsTexture, x3d_SplatIndex, 0) .xyz;
 
    tVertex .xyz *= 0.01;
    tVertex .xyz += splatPosition;
@@ -119,7 +119,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          vertexShader: "GaussianSplats",
          fragmentShader: "GaussianSplats",
          options: ["X3D_INSTANCING"],
-         attributes: ["x3d_PositionIndex"],
+         attributes: ["x3d_SplatIndex"],
          uniforms: ["x3d_PositionsTexture"],
       });
 
@@ -299,9 +299,9 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
       {
          gl .bindBuffer (gl .ARRAY_BUFFER, this .positionsIndexBuffer);
-         gl .enableVertexAttribArray (shaderNode .x3d_PositionIndex);
-         gl .vertexAttribIPointer (shaderNode .x3d_PositionIndex, 1, gl .INT, 0, 0);
-         gl .vertexAttribDivisor (shaderNode .x3d_PositionIndex, 1);
+         gl .enableVertexAttribArray (shaderNode .x3d_SplatIndex);
+         gl .vertexAttribIPointer (shaderNode .x3d_SplatIndex, 1, gl .INT, 0, 0);
+         gl .vertexAttribDivisor (shaderNode .x3d_SplatIndex, 1);
 
          shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, 0);
       }
