@@ -540,9 +540,9 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       this .scales              = scales;
       this .opacities           = opacities;
       this .sphericalHarmonics0 = sphericalHarmonics0;
-      this .sphericalHarmonics1 = sphericalHarmonics1 .some (s => s) ? sphericalHarmonics1 : [ ];
-      this .sphericalHarmonics2 = sphericalHarmonics2 .some (s => s) ? sphericalHarmonics2 : [ ];
-      this .sphericalHarmonics3 = sphericalHarmonics3 .some (s => s) ? sphericalHarmonics3 : [ ];
+      this .sphericalHarmonics1 = sphericalHarmonics1;
+      this .sphericalHarmonics2 = sphericalHarmonics2;
+      this .sphericalHarmonics3 = sphericalHarmonics3;
    },
    parseFaces ({ count, properties })
    {
