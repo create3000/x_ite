@@ -12,6 +12,8 @@ import AlphaMode            from "../../Browser/Shape/AlphaMode.js";
 import VertexArray          from "../../Rendering/VertexArray.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 
+// https://developer.playcanvas.com/user-manual/gaussian-splatting/formats/ply/
+
 const vs = () => /* glsl */ `#version 300 es
 
 precision highp float;
