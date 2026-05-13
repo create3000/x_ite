@@ -284,21 +284,19 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
             numQuaternions = quaternions .length,
             quaternion     = new Quaternion (),
             rotation       = new Rotation4 (),
-            rotations      = [ ];
+            orientations   = [ ];
 
          for (let i = 0; i < numQuaternions; i += 4)
          {
             quaternion .set (quaternions [i], quaternions [i + 1], quaternions [i + 2], quaternions [i + 3]);
             rotation .setQuaternion (quaternion);
-            rotations .push (... rotation);
+            orientations .push (... rotation);
          }
 
-         node .positions = this .points;
-         node .rotations = rotations;
-         node .scales    = this .scales;
-
-         if (this .colors ?.length)
-            node .color = this .createColor ();
+         node .positions    = this .points;
+         node .orientations = orientations;
+         node .scales       = this .scales;
+         node .color        = this .createColor ();
 
          scene .rootNodes .push (node);
       }
@@ -318,8 +316,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          else
             geometry .coordIndex = this .coordIndex;
 
-         if (this .colors ?.length)
-            geometry .color = this .createColor ();
+         geometry .color = this .createColor ();
 
          if (this .texCoords ?.length)
          {
@@ -378,8 +375,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
             geometry   = scene .createNode ("PointSet"),
             coordinate = scene .createNode ("Coordinate");
 
-         if (this .colors ?.length)
-            geometry .color = this .createColor ();
+         geometry .color = this .createColor ();
 
          if (hasNormals)
          {
@@ -407,6 +403,9 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    },
    createColor ()
    {
+      if (!this .colors ?.length)
+         return null;
+
       const
          alpha = this .alpha && this .colors .some ((v, i) => i % 4 === 3 && v < 1),
          color = this .getScene () .createNode (alpha ? "ColorRGBA" : "Color");
