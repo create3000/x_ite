@@ -29,6 +29,8 @@ in vec4 x3d_Vertex;
 in int  x3d_SplatIndex;
 
 uniform sampler2D x3d_PositionsTexture;
+uniform sampler2D x3d_OrientationsTexture;
+uniform sampler2D x3d_ScalesTexture;
 
 #include <Utils>
 
@@ -120,7 +122,11 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          fragmentShader: "GaussianSplats",
          options: ["X3D_INSTANCING"],
          attributes: ["x3d_SplatIndex"],
-         uniforms: ["x3d_PositionsTexture"],
+         uniforms: [
+            "x3d_PositionsTexture",
+            "x3d_OrientationsTexture",
+            "x3d_ScalesTexture",
+         ],
       });
 
       shaderNode .enable (gl);
@@ -140,13 +146,11 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Textures
 
-      this .positionsTexture    = this .createTexture ();
-      this .orientationsTexture = this .createTexture ();
-      this .scalesTexture       = this .createTexture ();
+      this .positionsTexture    = this .createTexture ("x3d_PositionsTexture");
+      this .orientationsTexture = this .createTexture ("x3d_OrientationsTexture");
+      this .scalesTexture       = this .createTexture ("x3d_ScalesTexture");
 
       browser .resetTextureUnits ();
-
-      gl .uniform1i (shaderNode .x3d_PositionsTexture, this .positionsTexture .textureUnit);
 
       // Fields
 
@@ -170,7 +174,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
    {
       return this .numSplats;
    },
-   createTexture ()
+   createTexture (uniform)
    {
       const
          browser = this .getBrowser (),
@@ -185,6 +189,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
       gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
+
+      gl .uniform1i (this .shaderNode [uniform], texture .textureUnit);
 
       return texture;
    },
@@ -293,6 +299,12 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       gl .activeTexture (gl .TEXTURE0 + this .positionsTexture .textureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .positionsTexture);
+
+      gl .activeTexture (gl .TEXTURE0 + this .orientationsTexture .textureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, this .orientationsTexture);
+
+      gl .activeTexture (gl .TEXTURE0 + this .scalesTexture .textureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, this .scalesTexture);
 
       // Setup vertex attributes.
 
