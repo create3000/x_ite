@@ -23,6 +23,7 @@ precision highp sampler2DArray;
 
 uniform ivec4 x3d_Viewport;
 uniform mat4  x3d_ProjectionMatrix;
+uniform mat4  x3d_ViewMatrix;
 uniform mat4  x3d_ModelViewMatrix;
 
 #if defined (X3D_XR_SESSION)
@@ -41,6 +42,76 @@ uniform sampler2D      x3d_OrientationsTexture;
 uniform sampler2D      x3d_ScalesTexture;
 uniform sampler2D      x3d_OpacitiesTexture;
 uniform sampler2DArray x3d_SphericalHarmonicsTexture;
+
+vec4
+quat (const in vec4 r)
+{
+   float scale = length (vec3 (r .x, r .y, r .z));
+
+   if (scale == 0.0)
+      return vec4 (0.0, 0.0, 0.0, 1.0);
+
+   // Determine quaternion.
+
+   float halfTheta = r .w / 2.0;
+   float aScale    = sin (halfTheta) / scale;
+
+   return vec4 (r .x * aScale,
+                r .y * aScale,
+                r .z * aScale,
+                cos (halfTheta));
+}
+
+mat3
+computeC (const in vec4 rotation, const in vec3 scale)
+{
+   vec4 q = quat (rotation);
+
+   float qx = q .x;
+   float qy = q .y;
+   float qz = q .z;
+   float qw = q .w;
+   float sx = scale .x;
+   float sy = scale .y;
+   float sz = scale .z;
+
+   mat3 C = mat3 (
+      sx * (1.0 - 2.0 * (qy * qy + qz * qz)),  sx * (2.0 * (qx * qy + qw * qz)),        sx * (2.0 * (qx * qz - qw * qy)),
+      sy * (2.0 * (qx * qy - qw * qz)),        sy * (1.0 - 2.0 * (qx * qx + qz * qz)),  sy * (2.0 * (qy * qz + qw * qx)),
+      sz * (2.0 * (qx * qz + qw * qy)),        sz * (2.0 * (qy * qz - qw * qx)),        sz * (1.0 - 2.0 *(qx * qx + qy * qy))
+   );
+
+   return C;
+}
+
+uniform vec2 x3d_FocalLength;
+
+vec3
+computeCameraCovariance (const in mat3 worldCovariance, const in vec3 viewSplatCenter)
+{
+   float x = viewSplatCenter .x;
+   float y = viewSplatCenter .y;
+   float z = viewSplatCenter .z;
+
+   mat3 J = mat3 (
+      x3d_FocalLength .x / z, 0.0, -(x3d_FocalLength .x * x) / (z * z),
+      0.0, x3d_FocalLength .y / z, -(x3d_FocalLength .y * y) / (z * z),
+      0.0, 0.0, 0.0
+   );
+
+   mat3 W = transpose (mat3 (x3d_ViewMatrix));
+
+   // Equation 5
+   mat3 T = W * J;
+
+   mat3 cov = transpose (T) * transpose (worldCovariance) * T;
+
+   // Low-pass filter (EWA Splatting)
+   cov [0] [0] += 0.3;
+   cov [1] [1] += 0.3;
+
+   return vec3 (cov [0] [0], cov [0] [1], cov [1] [1]);
+}
 
 vec3
 convertFDC (const in vec3 f_dc)
@@ -62,19 +133,52 @@ main ()
 
    // Position
 
-   vec4 tVertex = x3d_Vertex;
-   vec3 splatPosition = texelFetch (x3d_PositionsTexture, texelCoord, 0) .xyz;
+   vec3 splatCenter      = texelFetch (x3d_PositionsTexture, texelCoord, 0) .xyz;
+   vec4 splatOrientation = texelFetch (x3d_OrientationsTexture, texelCoord, 0);
+   vec3 splatScale       = texelFetch (x3d_ScalesTexture, texelCoord, 0) .xyz;
 
-   tVertex .xyz *= 0.01;
-   tVertex .xyz += splatPosition;
-
-   tVertex = x3d_ModelViewMatrix * tVertex;
+   vec4 viewSplatCenter = x3d_ModelViewMatrix * vec4 (splatCenter, 1.0);
 
    #if defined (X3D_XR_SESSION)
-      tVertex = x3d_EyeMatrix * tVertex;
+      viewSplatCenter = x3d_EyeMatrix * viewSplatCenter;
    #endif
 
-   gl_Position = x3d_ProjectionMatrix * tVertex;
+   vec4 clipSplatCenter = x3d_ProjectionMatrix * viewSplatCenter;
+
+   clipSplatCenter /= clipSplatCenter .w; // perspective division
+
+   mat3 C = computeC (splatOrientation, splatScale);
+   mat3 M = mat3 (x3d_ModelViewMatrix);
+
+   mat3 worldCovariance  = M * C * transpose (C) * transpose (M);
+   vec3 cameraCovariance = computeCameraCovariance (worldCovariance, viewSplatCenter .xyz);
+
+   float a = cameraCovariance .x; // Variance x
+   float b = cameraCovariance .y; // Covariance xy
+   float c = cameraCovariance .z; // Variance y
+
+   float det = (a * c - b * b);
+
+   if (det == 0.0)
+   {
+      gl_Position = vec4 (0.0);
+      return;
+   }
+
+   float detInv = 1.0 / det;
+
+   // Calculate the inverse of the covariance matrix
+   conic = vec3 (c * detInv, -b * detInv, a * detInv);
+
+   // pow(e, pow(-3.4, 2) * -0.5) = 1/255, so 3.4 is the standard deviation in terms of the Gaussian falloff that results in a radius of 1 pixel when the variance is 1.
+   // sqrt(a) and sqrt(c) are the standard deviations in x and y direction, so multiplying them with 3.4 gives us the radius in pixels where the Gaussian falloff results in 1/255 opacity.
+   vec2 quadPixelSize = vec2 (3.4 * sqrt (a), 3.4 * sqrt (c));  // screen space half quad height and width
+   vec2 quadNdcSize   = quadPixelSize / vec2 (x3d_Viewport .zw) * 2.0;  // in ndc space
+
+   clipSplatCenter .xy = clipSplatCenter .xy + x3d_Vertex .xy * quadNdcSize;
+
+   texCoord    = x3d_Vertex .xy * quadPixelSize;
+   gl_Position = clipSplatCenter;
 
    // Color
 
@@ -167,6 +271,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          options: ["X3D_INSTANCING"],
          attributes: ["x3d_SplatIndex"],
          uniforms: [
+            "x3d_FocalLength",
             "x3d_PositionsTexture",
             "x3d_OrientationsTexture",
             "x3d_ScalesTexture",
@@ -374,9 +479,16 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       const { renderObject, modelViewMatrix, localObjects } = renderContext;
 
       gl .uniform4iv (shaderNode .x3d_Viewport, renderObject .getViewportArray ());
-      gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, renderObject .getProjectionMatrixArray ());
-      gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,        false, renderObject .getEyeMatrixArray ());
-      gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
+      gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, renderObject .getProjectionMatrixArray ());
+      gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,         false, renderObject .getEyeMatrixArray ());
+      gl .uniformMatrix4fv (shaderNode .x3d_ViewMatrix,        false, renderObject .getCameraSpaceMatrixArray ());
+      gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, modelViewMatrix);
+
+      // The projection matrix stores the focal length in the first and second element of the diagonal.
+      // We need to convert from NDC space to screen space, which is done by multiplying with the framebuffer dimensions and dividing by 2, since NDC goes from -1 to 1.
+      gl .uniform2f (shaderNode .x3d_FocalLength,
+         renderObject .getProjectionMatrixArray () [0] * viewport [2] * 0.5,
+         renderObject .getProjectionMatrixArray () [5] * viewport [3] * 0.5);
 
       // Textures
 
