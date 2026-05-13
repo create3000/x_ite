@@ -114,7 +114,17 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Shader
 
-      this .shaderNode = browser .createShader ("GaussianSplats", "GaussianSplats", "GaussianSplats", ["X3D_INSTANCING"], ["x3d_PositionsTexture"]);
+      const shaderNode = browser .createShader ({
+         name: "GaussianSplats",
+         vertexShader: "GaussianSplats",
+         fragmentShader: "GaussianSplats",
+         options: ["X3D_INSTANCING"],
+         uniforms: ["x3d_PositionsTexture"],
+      });
+
+      shaderNode .enable (gl);
+
+      this .shaderNode = shaderNode;
 
       // Quad Geometry
 
@@ -129,7 +139,13 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Textures
 
-      this .positionsTexture = this .createTexture ();
+      this .positionsTexture    = this .createTexture ();
+      this .orientationsTexture = this .createTexture ();
+      this .scalesTexture       = this .createTexture ();
+
+      browser .resetTextureUnits ();
+
+      gl .uniform1i (shaderNode .x3d_PositionsTexture, this .positionsTexture .textureUnit);
 
       // Fields
 
@@ -159,6 +175,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          browser = this .getBrowser (),
          gl      = browser .getContext (),
          texture = gl .createTexture ();
+
+      texture .textureUnit = browser .popTextureUnit ();
 
       gl .bindTexture (gl .TEXTURE_2D, texture);
 
@@ -218,12 +236,23 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       if (textureSize)
       {
-         const positions = new Float32Array (textureSize * textureSize * 3);
+         const
+            positions    = new Float32Array (textureSize * textureSize * 3),
+            orientations = new Float32Array (textureSize * textureSize * 4),
+            scales       = new Float32Array (textureSize * textureSize * 3);
 
-         positions .set (this .node ._positions .shrinkToFit ());
+         positions    .set (this .node ._positions    .getValue () .subarray (0, numSplats * 3));
+         orientations .set (this .node ._orientations .getValue () .subarray (0, numSplats * 4));
+         scales       .set (this .node ._scales       .getValue () .subarray (0, numSplats * 3));
 
          gl .bindTexture (gl .TEXTURE_2D, this .positionsTexture);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB32F, textureSize, textureSize, 0, gl .RGB, gl .FLOAT, positions);
+
+         gl .bindTexture (gl .TEXTURE_2D, this .orientationsTexture);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureSize, textureSize, 0, gl .RGBA, gl .FLOAT, orientations);
+
+         gl .bindTexture (gl .TEXTURE_2D, this .scalesTexture);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB32F, textureSize, textureSize, 0, gl .RGB, gl .FLOAT, scales);
       }
 
       // Finish
@@ -261,11 +290,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Textures
 
-      const textureUnit = browser .popTextureUnit ();
-
-      gl .activeTexture (gl .TEXTURE0 + textureUnit);
+      gl .activeTexture (gl .TEXTURE0 + this .positionsTexture .textureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .positionsTexture);
-      gl .uniform1i (shaderNode .x3d_PositionsTexture, textureUnit);
 
       // Setup vertex attributes.
 
@@ -282,8 +308,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       }
 
       gl .drawArraysInstanced (gl .TRIANGLES, 0, 6, this .numSplats);
-
-      browser .resetTextureUnits ();
    },
 });
 

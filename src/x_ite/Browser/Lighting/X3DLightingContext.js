@@ -95,7 +95,23 @@ Object .assign (X3DLightingContext .prototype,
    },
    getEnvironmentTextureShader ()
    {
-      return this [_environmentTextureShader] ??= this .createShader ("EnvironmentTexture", "FullScreen", `data:x-shader/x-fragment,${Filter2FS}`, [ ], ["x3d_TextureEXT", "x3d_TextureSizeEXT", "x3d_TextureLinearEXT", "x3d_CurrentFaceEXT", "x3d_DistributionEXT", "x3d_SampleCountEXT", "x3d_RoughnessEXT", "x3d_LodBiasEXT", "x3d_IntensityEXT", "x3d_FlipEXT"]);
+      return this [_environmentTextureShader] ??= this .createShader ({
+         name: "EnvironmentTexture",
+         vertexShader: "FullScreen",
+         fragmentShader:`data:x-shader/x-fragment,${Filter2FS}`,
+         uniforms: [
+            "x3d_TextureEXT",
+            "x3d_TextureSizeEXT",
+            "x3d_TextureLinearEXT",
+            "x3d_CurrentFaceEXT",
+            "x3d_DistributionEXT",
+            "x3d_SampleCountEXT",
+            "x3d_RoughnessEXT",
+            "x3d_LodBiasEXT",
+            "x3d_IntensityEXT",
+            "x3d_FlipEXT",
+         ],
+      });
    },
    filterEnvironmentTexture ({ name, texture, distribution, sampleCount, roughness, flipX, cachedNode })
    {

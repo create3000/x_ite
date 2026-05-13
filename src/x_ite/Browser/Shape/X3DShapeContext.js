@@ -130,7 +130,7 @@ Object .assign (X3DShapeContext .prototype,
       if (instanced)
          options .push ("X3D_INSTANCING");
 
-      const uniformNames = [
+      const uniforms = [
          [
             "viewport",
             "modelViewProjectionMatrix",
@@ -161,7 +161,14 @@ Object .assign (X3DShapeContext .prototype,
       ]
       [pass];
 
-      return this .createShader (`LineTransform${instanced ? "Instanced" : ""}`, "LineTransform", "LineTransform", options, uniformNames, transformFeedbackVaryings);
+      return this .createShader ({
+         name: `LineTransform${instanced ? "Instanced" : ""}`,
+         vertexShader: "LineTransform",
+         fragmentShader: "LineTransform",
+         options,
+         uniforms,
+         transformFeedbackVaryings,
+      });
    },
    getLineTransformFeedback ()
    {

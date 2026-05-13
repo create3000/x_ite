@@ -119,7 +119,7 @@ Object .assign (X3DShadersContext .prototype,
    {
       return this [_wireframe];
    },
-   createShader (name, vs, fs = vs, options = [ ], uniformNames = [ ], transformFeedbackVaryings = [ ])
+   createShader ({ name, vertexShader: vs, fragmentShader: fs, options = [ ], uniforms = [ ], transformFeedbackVaryings = [ ]})
    {
       if (DEVELOPMENT)
          console .info (`Initializing ${name}Shader.`);
@@ -149,7 +149,7 @@ Object .assign (X3DShadersContext .prototype,
       shaderNode ._parts .push (fragmentShader);
 
       shaderNode .setName (`${name}Shader`);
-      shaderNode .setUniformNames (uniformNames);
+      shaderNode .setUniformNames (uniforms);
       shaderNode .setTransformFeedbackVaryings (transformFeedbackVaryings);
       shaderNode .setup ();
 

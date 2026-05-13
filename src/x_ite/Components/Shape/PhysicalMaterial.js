@@ -202,7 +202,13 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
       for (const extensionNode of this .extensionNodes)
          extensionNode .getShaderUniforms (uniforms);
 
-      const shaderNode = browser .createShader ("Physical", "Default", "Physical", options, uniforms);
+      const shaderNode = browser .createShader ({
+         name: "Physical",
+         vertexShader: "Default",
+         fragmentShader: "Physical",
+         options,
+         uniforms,
+      });
 
       browser .getShaders () .set (key, shaderNode);
 
