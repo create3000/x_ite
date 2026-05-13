@@ -507,7 +507,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       this .normals   = normals;
       this .points    = points;
 
-      // Gaussian Splatting
+      // Gaussian Splats
 
       this .quaternions         = quaternions;
       this .scales              = scales;
