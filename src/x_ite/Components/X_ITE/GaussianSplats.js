@@ -99,6 +99,8 @@ function GaussianSplatsShape (executionContext, node)
 {
    X3DShapeNode .call (this, executionContext);
 
+   this .addChildObjects (X3DConstants .outputOnly, "rebuild", new Fields .SFTime ());
+
    // Private Properties
 
    this .node = node;
@@ -154,9 +156,18 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Fields
 
-      this .node ._positions .addInterest ("set_splats__", this);
+      this .node ._positions           .addInterest ("requestRebuild", this);
+      this .node ._orientations        .addInterest ("requestRebuild", this);
+      this .node ._scales              .addInterest ("requestRebuild", this);
+      this .node ._sphericalHarmonics0 .addInterest ("requestRebuild", this);
+      this .node ._sphericalHarmonics1 .addInterest ("requestRebuild", this);
+      this .node ._sphericalHarmonics2 .addInterest ("requestRebuild", this);
+      this .node ._sphericalHarmonics3 .addInterest ("requestRebuild", this);
+      this .node ._opacities           .addInterest ("requestRebuild", this);
 
-      this .set_splats__ ();
+      this ._rebuild .addInterest ("rebuild", this);
+
+      this .rebuild ();
    },
    getShapeKey ()
    {
@@ -225,7 +236,11 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       this .bboxSize   .assign (this .bbox .size);
       this .bboxCenter .assign (this .bbox .center);
    },
-   set_splats__ ()
+   requestRebuild ()
+   {
+      this ._rebuild = Date .now () / 1000;
+   },
+   rebuild ()
    {
       const
          browser   = this .getBrowser (),
@@ -403,15 +418,19 @@ Object .defineProperties (GaussianSplats,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "positions",    new Fields .MFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "orientations", new Fields .MFRotation ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "scales",       new Fields .MFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",      new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",  new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",     new Fields .SFVec3f (-1, -1, -1)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",   new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "color",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",            new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "positions",           new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "orientations",        new Fields .MFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "scales",              new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "sphericalHarmonics0", new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "sphericalHarmonics1", new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "sphericalHarmonics2", new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "sphericalHarmonics3", new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "opacities",           new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",             new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",         new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",            new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",          new Fields .SFVec3f ()),
       ]),
       enumerable: true,
    },

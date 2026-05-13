@@ -293,10 +293,11 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
             orientations .push (... rotation);
          }
 
-         node .positions    = this .points;
-         node .orientations = orientations;
-         node .scales       = this .scales;
-         node .color        = this .createColor ();
+         node .positions           = this .points;
+         node .orientations        = orientations;
+         node .scales              = this .scales;
+         node .sphericalHarmonics0 = this .f_dc;
+         node .opacities           = this .opacities;
 
          scene .rootNodes .push (node);
       }
@@ -437,13 +438,21 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    },
    parseVertices ({ count, properties })
    {
+      // Geometry
+
+      const
+         colors    = [ ],
+         texCoords = [ ],
+         normals   = [ ],
+         points    = [ ];
+
+      // Gaussian Splats
+
       const
          scales      = [ ],
          quaternions = [ ],
-         colors      = [ ],
-         texCoords   = [ ],
-         normals     = [ ],
-         points      = [ ];
+         f_dc        = [ ],
+         opacities   = [ ];
 
       // console .time ("vertices")
 
@@ -458,22 +467,9 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
             switch (name)
             {
-               case "rot_0": case "rot_1": case "rot_2": case "rot_3":
-                  quaternions .push (this .value);
-                  break;
-               case "scale_0": case "scale_1": case "scale_2":
-                  scales .push (Math .exp (this .value));
-                  break;
                case "red": case "green": case "blue": case "alpha":
                case "r": case "g": case "b": case "a":
                   colors .push (this .convertColor (this .value, type));
-                  break;
-               case "f_dc_0": case "f_dc_1": case "f_dc_2":
-                  colors .push (this .convertFDC (this .convertColor (this .value, type)));
-                  break;
-               case "opacity":
-                  // https://github.com/antimatter15/splat/blob/main/convert.py
-                  colors .push (1 / (1 + Math .exp (-this .value)));
                   break;
                case "s": case "t":
                case "u": case "v":
@@ -485,6 +481,19 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
                case "x": case "y": case "z":
                   points .push (this .value);
                   break;
+               case "rot_0": case "rot_1": case "rot_2": case "rot_3":
+                  quaternions .push (this .value);
+                  break;
+               case "scale_0": case "scale_1": case "scale_2":
+                  scales .push (Math .exp (this .value));
+                  break;
+               case "f_dc_0": case "f_dc_1": case "f_dc_2":
+                  f_dc .push (this .convertColor (this .value, type));
+                  break;
+               case "opacity":
+                  // https://github.com/antimatter15/splat/blob/main/convert.py
+                  opacities .push (1 / (1 + Math .exp (-this .value)));
+                  break;
             }
          }
       }
@@ -495,7 +504,9 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       this .quaternions = quaternions;
       this .scales      = scales;
-      this .alpha       = properties .some (p => p .name .match (/^(?:alpha|a|opacity)$/));
+      this .f_dc        = f_dc;
+      this .opacities   = opacities;
+      this .alpha       = properties .some (p => p .name .match (/^(?:alpha|a)$/));
       this .colors      = colors;
       this .texCoords   = texCoords;
       this .normals     = normals;
@@ -652,14 +663,6 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          case "float64":
             return value;
       }
-   },
-   convertFDC (f_dc)
-   {
-      // https://github.com/graphdeco-inria/gaussian-splatting/issues/485
-
-      const C0 = 0.28209479177387814; // = 1 / (2 * Math .sqrt (Math .PI))
-
-      return 0.5 + C0 * f_dc;
    },
 });
 

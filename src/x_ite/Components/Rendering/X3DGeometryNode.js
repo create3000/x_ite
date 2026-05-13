@@ -29,7 +29,7 @@ function X3DGeometryNode (executionContext)
 
    this .addChildObjects (X3DConstants .outputOnly, "transparent",  new Fields .SFBool (),
                           X3DConstants .outputOnly, "bbox_changed", new Fields .SFTime (),
-                          X3DConstants .outputOnly, "rebuild",      new Fields .SFTime (Date .now () / 1000));
+                          X3DConstants .outputOnly, "rebuild",      new Fields .SFTime ());
 
    // Private members
 
