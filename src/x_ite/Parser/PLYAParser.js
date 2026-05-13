@@ -487,6 +487,8 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
                case "x": case "y": case "z":
                   points .push (this .value);
                   break;
+               // Gaussian Splats
+               // https://developer.playcanvas.com/user-manual/gaussian-splatting/formats/ply/
                case "rot_0": case "rot_1": case "rot_2": case "rot_3":
                   quaternions .push (this .value);
                   break;
