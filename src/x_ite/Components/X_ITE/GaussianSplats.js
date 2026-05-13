@@ -114,13 +114,19 @@ computeCameraCovariance (const in mat3 worldCovariance, const in vec3 viewSplatC
 }
 
 vec3
-convertFDC (const in vec3 f_dc)
+calculateSphericalHarmonics (const in ivec2 texelCoord)
 {
-   // https://github.com/graphdeco-inria/gaussian-splatting/issues/485
+   ivec3 coord = ivec3 (texelCoord, 0);
 
-   const float C0 = 0.28209479177387814; // = 1 / (2 * Math .sqrt (Math .PI))
+   // Degree 0
+   vec3 sh0    = texelFetch (x3d_SphericalHarmonicsTexture, coord, 0) .rgb;
+   vec3 result = sh0 * 0.2820947917738781; // 0.28... = 1 / (2 * sqrt (PI))
 
-   return 0.5 + C0 * f_dc;
+   //TODO
+
+   result += 0.5;
+
+   return result;
 }
 
 void
@@ -184,12 +190,7 @@ main ()
 
    float opacity = texelFetch (x3d_OpacitiesTexture, texelCoord, 0) .r;
 
-   // Degree 0
-   vec3 sh0 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord .xy, 0), 0) .rgb;
-
-   sh0 = convertFDC (sh0);
-
-   color = vec4 (sh0, opacity);
+   color = vec4 (calculateSphericalHarmonics (texelCoord), opacity);
 }
 `;
 
