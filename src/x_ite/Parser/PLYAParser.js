@@ -272,7 +272,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       const scene = this .getScene ();
 
-      if (this .quaternions ?.length && this .scales ?.length)
+      if (this .sphericalHarmonics0 ?.length)
       {
          scene .addComponent (this .getBrowser () .getComponent ("X_ITE"));
 
@@ -298,6 +298,9 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          node .scales              = this .scales;
          node .opacities           = this .opacities;
          node .sphericalHarmonics0 = this .sphericalHarmonics0;
+         node .sphericalHarmonics1 = this .sphericalHarmonics1;
+         node .sphericalHarmonics2 = this .sphericalHarmonics2;
+         node .sphericalHarmonics3 = this .sphericalHarmonics3;
 
          scene .rootNodes .push (node);
       }
@@ -452,7 +455,10 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          scales              = [ ],
          quaternions         = [ ],
          opacities           = [ ],
-         sphericalHarmonics0 = [ ];
+         sphericalHarmonics0 = [ ],
+         sphericalHarmonics1 = [ ],
+         sphericalHarmonics2 = [ ],
+         sphericalHarmonics3 = [ ];
 
       // console .time ("vertices")
 
@@ -493,6 +499,27 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
                case "f_dc_0": case "f_dc_1": case "f_dc_2":
                   sphericalHarmonics0 .push (this .convertColor (this .value, type));
                   break;
+               case "f_rest_0": case "f_rest_1": case "f_rest_2":
+               case "f_rest_3": case "f_rest_4": case "f_rest_5":
+               case "f_rest_6": case "f_rest_7": case "f_rest_8":
+                  sphericalHarmonics1 .push (this .convertColor (this .value, type));
+                  break;
+               case "f_rest_9": case "f_rest_10": case "f_rest_11":
+               case "f_rest_12": case "f_rest_13": case "f_rest_14":
+               case "f_rest_15": case "f_rest_16": case "f_rest_17":
+               case "f_rest_18": case "f_rest_19": case "f_rest_20":
+               case "f_rest_21": case "f_rest_22": case "f_rest_23":
+                  sphericalHarmonics2 .push (this .convertColor (this .value, type));
+                  break;
+               case "f_rest_24": case "f_rest_25": case "f_rest_26":
+               case "f_rest_27": case "f_rest_28": case "f_rest_29":
+               case "f_rest_30": case "f_rest_31": case "f_rest_32":
+               case "f_rest_33": case "f_rest_34": case "f_rest_35":
+               case "f_rest_36": case "f_rest_37": case "f_rest_38":
+               case "f_rest_39": case "f_rest_40": case "f_rest_41":
+               case "f_rest_42": case "f_rest_43": case "f_rest_44":
+                  sphericalHarmonics3 .push (this .convertColor (this .value, type));
+                  break;
             }
          }
       }
@@ -513,6 +540,9 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       this .scales              = scales;
       this .opacities           = opacities;
       this .sphericalHarmonics0 = sphericalHarmonics0;
+      this .sphericalHarmonics1 = sphericalHarmonics1 .some (s => s) ? sphericalHarmonics1 : [ ];
+      this .sphericalHarmonics2 = sphericalHarmonics2 .some (s => s) ? sphericalHarmonics2 : [ ];
+      this .sphericalHarmonics3 = sphericalHarmonics3 .some (s => s) ? sphericalHarmonics3 : [ ];
    },
    parseFaces ({ count, properties })
    {
