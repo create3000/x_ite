@@ -26,9 +26,9 @@ uniform mat4  x3d_ModelViewMatrix;
 #endif
 
 in vec4 x3d_Vertex;
-in int  x3d_TranslationIndex;
+in int  x3d_PositionIndex;
 
-uniform sampler2D x3d_TranslationsTexture;
+uniform sampler2D x3d_PositionsTexture;
 
 #include <Utils>
 
@@ -36,7 +36,7 @@ void
 main ()
 {
    vec4 tVertex = x3d_Vertex;
-   vec3 splatPosition = texelFetch (x3d_TranslationsTexture, x3d_TranslationIndex, 0) .xyz;
+   vec3 splatPosition = texelFetch (x3d_PositionsTexture, x3d_PositionIndex, 0) .xyz;
 
    tVertex .xyz *= 0.01;
    tVertex .xyz += splatPosition;
@@ -114,26 +114,26 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Shader
 
-      this .shaderNode = browser .createShader ("GaussianSplats", "GaussianSplats", "GaussianSplats", ["X3D_INSTANCING"], ["x3d_TranslationsTexture"]);
+      this .shaderNode = browser .createShader ("GaussianSplats", "GaussianSplats", "GaussianSplats", ["X3D_INSTANCING"], ["x3d_PositionsTexture"]);
 
       // Quad Geometry
 
       this .geometryContext = new GeometryContext ();
 
-      this .geometryBuffer          = gl .createBuffer ();
-      this .translationsIndexBuffer = gl .createBuffer ();
-      this .vertexArrayObject       = new VertexArray (gl);
+      this .geometryBuffer       = gl .createBuffer ();
+      this .positionsIndexBuffer = gl .createBuffer ();
+      this .vertexArrayObject    = new VertexArray (gl);
 
       gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
       gl .bufferData (gl .ARRAY_BUFFER, QuadGeometry, gl .DYNAMIC_DRAW);
 
       // Textures
 
-      this .translationsTexture = this .createTexture ();
+      this .positionsTexture = this .createTexture ();
 
       // Fields
 
-      this .node ._translations .addInterest ("set_splats__", this);
+      this .node ._positions .addInterest ("set_splats__", this);
 
       this .set_splats__ ();
    },
@@ -174,20 +174,20 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       if (this .isDefaultBBoxSize ())
       {
          const
-            translations    = this .node ._translations .getValue (),
-            numTranslations = this .node ._translations .length * 3,
-            min             = new Vector3 (Number .POSITIVE_INFINITY),
-            max             = new Vector3 (Number .NEGATIVE_INFINITY),
-            point           = new Vector3 ();
+            positions    = this .node ._positions .getValue (),
+            numPositions = this .node ._positions .length * 3,
+            min          = new Vector3 (Number .POSITIVE_INFINITY),
+            max          = new Vector3 (Number .NEGATIVE_INFINITY),
+            point        = new Vector3 ();
 
-         for (let i = 0; i < numTranslations; i += 3)
+         for (let i = 0; i < numPositions; i += 3)
          {
-            point .set (translations [i], translations [i + 1], translations [i + 2]);
+            point .set (positions [i], positions [i + 1], positions [i + 2]);
             min .min (point);
             max .max (point);
          }
 
-         if (numTranslations)
+         if (numPositions)
             this .bbox .setExtents (min, max);
          else
             this .bbox .set ();
@@ -205,25 +205,25 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       const
          browser   = this .getBrowser (),
          gl        = browser .getContext (),
-         numSplats = this .node ._translations .length;
+         numSplats = this .node ._positions .length;
 
       // Indices
 
-      gl .bindBuffer (gl .ARRAY_BUFFER, this .translationsIndexBuffer);
+      gl .bindBuffer (gl .ARRAY_BUFFER, this .positionsIndexBuffer);
       gl .bufferData (gl .ARRAY_BUFFER, new Int32Array (Array (numSplats) .keys ()), gl .DYNAMIC_DRAW);
 
-      // Translations
+      // Positions
 
       const textureSize = Math .ceil (Math .sqrt (numSplats));
 
       if (textureSize)
       {
-         const translations = new Float32Array (textureSize * textureSize * 3);
+         const positions = new Float32Array (textureSize * textureSize * 3);
 
-         translations .set (this .node ._translations .shrinkToFit ());
+         positions .set (this .node ._positions .shrinkToFit ());
 
-         gl .bindTexture (gl .TEXTURE_2D, this .translationsTexture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB32F, textureSize, textureSize, 0, gl .RGB, gl .FLOAT, translations);
+         gl .bindTexture (gl .TEXTURE_2D, this .positionsTexture);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB32F, textureSize, textureSize, 0, gl .RGB, gl .FLOAT, positions);
       }
 
       // Finish
@@ -264,16 +264,16 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       const textureUnit = browser .popTextureUnit ();
 
       gl .activeTexture (gl .TEXTURE0 + textureUnit);
-      gl .bindTexture (gl .TEXTURE_2D, this .translationsTexture);
-      gl .uniform1i (shaderNode .x3d_TranslationsTexture, textureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, this .positionsTexture);
+      gl .uniform1i (shaderNode .x3d_PositionsTexture, textureUnit);
 
       // Setup vertex attributes.
 
       if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
       {
-         const attribute = gl .getAttribLocation (shaderNode .getProgram (), "x3d_TranslationIndex");
+         const attribute = gl .getAttribLocation (shaderNode .getProgram (), "x3d_PositionIndex");
 
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .translationsIndexBuffer);
+         gl .bindBuffer (gl .ARRAY_BUFFER, this .positionsIndexBuffer);
          gl .enableVertexAttribArray (attribute);
          gl .vertexAttribIPointer (attribute, 1, gl .INT, 0, 0);
          gl .vertexAttribDivisor (attribute, 1);
@@ -320,7 +320,7 @@ function GaussianSplats (executionContext)
 
    // Units
 
-   this ._translations .setUnit ("length");
+   this ._positions .setUnit ("length");
 
    // Private Properties
 
@@ -368,15 +368,15 @@ Object .defineProperties (GaussianSplats,
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",      new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "translations",  new Fields .MFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "rotations",     new Fields .MFRotation ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "scales",        new Fields .MFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",       new Fields .SFBool (true)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",   new Fields .SFBool ()),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",      new Fields .SFVec3f (-1, -1, -1)),
-         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",    new Fields .SFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "color",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "positions",   new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "rotations",   new Fields .MFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "scales",      new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "color",       new Fields .SFNode ()),
       ]),
       enumerable: true,
    },

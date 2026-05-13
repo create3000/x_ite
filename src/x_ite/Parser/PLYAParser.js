@@ -293,9 +293,9 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
             rotations .push (... rotation);
          }
 
-         node .translations = this .points;
-         node .rotations    = rotations;
-         node .scales       = this .scales;
+         node .positions = this .points;
+         node .rotations = rotations;
+         node .scales    = this .scales;
 
          if (this .colors ?.length)
             node .color = this .createColor ();
