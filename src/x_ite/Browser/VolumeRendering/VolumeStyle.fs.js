@@ -16,15 +16,13 @@ const float M_PI      = 3.141592653589793;
 const float M_SQRT2   = 1.4142135623730951;
 const float M_SQRT1_2 = 0.7071067811865476;
 
-#if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
-   layout(location = 0) out vec4 x3d_FragData0;
-   layout(location = 1) out vec4 x3d_FragData1;
-#else
+#if !defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
    out vec4 x3d_FragColor;
 #endif
 
 #include <ClipPlanes>
 #include <Fog>
+#include <OIT>
 #include <Logarithmic>
 
 __VOLUME_STYLES_DEFINES__
@@ -201,14 +199,6 @@ getTextureColor (in vec3 texCoord)
    return textureColor;
 }
 
-#if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
-float
-weight (const in float z, const in float a)
-{
-   return clamp (pow (min (1.0, a * 10.0) + 0.01, 3.0) * 1e8 * pow (1.0 - z * 0.9, 3.0), 1e-2, 3e3);
-}
-#endif
-
 void
 main ()
 {
@@ -223,14 +213,7 @@ main ()
    #endif
 
    #if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
-      float a = finalColor .a;
-      float w = weight (gl_FragCoord .z, a);
-
-      finalColor .rgb *= a;
-      finalColor      *= w;
-
-      x3d_FragData0 = vec4 (finalColor .rgb, a);
-      x3d_FragData1 = vec4 (finalColor .a);
+      oit (finalColor);
    #else
       x3d_FragColor = finalColor;
    #endif
