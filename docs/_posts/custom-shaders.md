@@ -397,6 +397,11 @@ A [ComposedShader](/x_ite/components/shaders/composedshader/) defines a number o
          <td colspan="3"><hr/></td>
       </tr>
       <tr>
+         <td>in uint</td>
+         <td>x3d_CoordIndex</td>
+         <td>coordinate index of the passed vertex, this is either the value provided by the X3DGeometry node or generated</td>
+      </tr>
+      <tr>
          <td>in float</td>
          <td>x3d_FogDepth</td>
          <td>fog depth of vertex overriding Fog.visibilityRange; available if FogCoordinate is attached</td>
