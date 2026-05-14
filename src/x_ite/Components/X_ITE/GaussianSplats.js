@@ -10,6 +10,7 @@ import GeometryContext      from "../../Browser/Rendering/GeometryContext.js";
 import GeometryType         from "../../Browser/Shape/GeometryType.js";
 import AlphaMode            from "../../Browser/Shape/AlphaMode.js";
 import VertexArray          from "../../Rendering/VertexArray.js";
+import RenderPass           from "../../Rendering/RenderPass.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 
 // https://developer.playcanvas.com/user-manual/gaussian-splatting/formats/ply/
@@ -528,7 +529,11 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
    },
    getShader (renderContext)
    {
+      const { renderObject } = renderContext;
+
       let key = "";
+
+      key += renderObject .getRenderKey ();
 
       return this .shaderCache .get (key) ?? this .createShader (key, renderContext);
    },
@@ -536,7 +541,21 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
    {
       const
          browser = this .getBrowser (),
-         gl      = browser .getContext ();
+         gl      = browser .getContext (),
+         options = [ ];
+
+      // Render Object
+
+      const { renderObject } = renderContext;
+
+      if (renderObject .getLogarithmicDepthBuffer ())
+         options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
+
+      if (renderObject .getRenderPass () === RenderPass .RENDER_KEY)
+      {
+         if (renderObject .getOrderIndependentTransparency ())
+            options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
+      }
 
       // Shader
 
@@ -544,7 +563,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          name: "GaussianSplats",
          vertexShader: "GaussianSplats",
          fragmentShader: "GaussianSplats",
-         options: ["X3D_INSTANCING"],
+         options,
          attributes: ["x3d_SplatIndex"],
          uniforms: [
             "x3d_FocalLength",
