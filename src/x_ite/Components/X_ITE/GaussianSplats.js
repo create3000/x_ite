@@ -565,6 +565,9 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Render Object
 
+      if (browser .getRenderingProperty ("XRSession"))
+         options .push ("X3D_XR_SESSION");
+
       const { renderObject } = renderContext;
 
       if (renderObject .getLogarithmicDepthBuffer ())

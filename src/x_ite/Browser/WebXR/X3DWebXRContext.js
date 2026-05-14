@@ -458,6 +458,9 @@ Object .assign (X3DWebXRContext .prototype,
          {
             const frameBuffer = this .getFramebuffers () [i];
 
+            if (!frameBuffer)
+               continue;
+
             for (const { active, gamepad, matrix, hit } of this [_inputSources])
             {
                if (!active)
