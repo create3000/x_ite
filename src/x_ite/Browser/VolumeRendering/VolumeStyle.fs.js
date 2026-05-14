@@ -12,7 +12,7 @@ uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 in vec3 vertex;
 in vec4 texCoord;
 
-#if defined (X3D_FRAG_COLOR)
+#if !defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
    out vec4 x3d_FragColor;
 #endif
 

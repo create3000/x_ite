@@ -356,12 +356,12 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       {
          case AlphaMode .OPAQUE:
          {
-            options .push ("X3D_ALPHA_MODE_OPAQUE", "X3D_FRAG_COLOR");
+            options .push ("X3D_ALPHA_MODE_OPAQUE");
             break;
          }
          case AlphaMode .MASK:
          {
-            options .push ("X3D_ALPHA_MODE_MASK", "X3D_FRAG_COLOR");
+            options .push ("X3D_ALPHA_MODE_MASK");
             break;
          }
          case AlphaMode .BLEND:
@@ -372,12 +372,6 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
             {
                if (renderObject .getOrderIndependentTransparency ())
                   options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
-               else
-                  options .push ("X3D_FRAG_COLOR");
-            }
-            else
-            {
-               options .push ("X3D_FRAG_COLOR");
             }
 
             break;

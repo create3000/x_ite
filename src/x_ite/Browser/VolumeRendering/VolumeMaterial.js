@@ -48,8 +48,6 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, UnlitMaterial
 
       if (renderObject .getOrderIndependentTransparency ())
          options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
-      else
-         options .push ("X3D_FRAG_COLOR");
 
       switch (fogNode ?.getFogType ())
       {

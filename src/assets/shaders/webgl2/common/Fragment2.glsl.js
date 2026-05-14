@@ -59,7 +59,7 @@ in vec3 vertex;
    in vec3 localVertex;
 #endif
 
-#if defined (X3D_FRAG_COLOR)
+#if !defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
    out vec4 x3d_FragColor;
 #endif
 
