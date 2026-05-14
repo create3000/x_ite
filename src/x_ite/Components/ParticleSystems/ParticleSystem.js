@@ -1014,10 +1014,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
                shaderNode .enableInstanceMatrixAttribute   (gl, outputParticles, particlesStride, this .matrixOffset,   1);
 
                if (this .geometryContext .colorMaterial)
-               {
-                  shaderNode .enableColorAttribute (gl, outputParticles, particlesStride, this .colorOffset);
-                  shaderNode .colorAttributeDivisor (gl, 1);
-               }
+                  shaderNode .enableColorAttribute (gl, outputParticles, particlesStride, this .colorOffset, 1);
 
                if (this .texCoordCount)
                   shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, this .texCoordOffset);

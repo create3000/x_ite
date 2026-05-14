@@ -1097,10 +1097,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
       gl .vertexAttribDivisor (location, divisor)
    },
-   colorAttributeDivisor (gl, divisor)
-   {
-      gl .vertexAttribDivisor (this .x3d_Color, divisor);
-   },
    enableTexCoordAttribute (gl, buffers, stride, offset)
    {
       for (const [i, location] of this .x3d_TexCoord)
