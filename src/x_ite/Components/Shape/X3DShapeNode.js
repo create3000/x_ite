@@ -106,7 +106,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    setAlphaMode (value)
    {
       // Used by ParticleSystem!
-      this .alphaMode = !!value;
+      this .alphaMode = value;
    },
    getRenderPasses ()
    {
