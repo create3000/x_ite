@@ -82,7 +82,7 @@ computeC (const in vec4 rotation, const in vec3 scale)
    mat3 C = mat3 (
       sx * (1.0 - 2.0 * (qy * qy + qz * qz)),  sx * (2.0 * (qx * qy + qw * qz)),        sx * (2.0 * (qx * qz - qw * qy)),
       sy * (2.0 * (qx * qy - qw * qz)),        sy * (1.0 - 2.0 * (qx * qx + qz * qz)),  sy * (2.0 * (qy * qz + qw * qx)),
-      sz * (2.0 * (qx * qz + qw * qy)),        sz * (2.0 * (qy * qz - qw * qx)),        sz * (1.0 - 2.0 *(qx * qx + qy * qy))
+      sz * (2.0 * (qx * qz + qw * qy)),        sz * (2.0 * (qy * qz - qw * qx)),        sz * (1.0 - 2.0 * (qx * qx + qy * qy))
    );
 
    return C;
