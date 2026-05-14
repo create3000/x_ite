@@ -50,7 +50,7 @@ uniform sampler2DArray x3d_SphericalHarmonicsTexture;
 vec4
 quat (const in vec4 r)
 {
-   float scale = length (vec3 (r .x, r .y, r .z));
+   float scale = length (r .xyz);
 
    if (scale == 0.0)
       return vec4 (0.0, 0.0, 0.0, 1.0);
