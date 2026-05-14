@@ -215,7 +215,7 @@ in vec4 color;
 in vec2 texCoord;
 in vec3 conic;
 
-#if !defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
+#if defined (X3D_FRAG_COLOR)
    out vec4 x3d_FragColor;
 #endif
 
@@ -574,6 +574,12 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       {
          if (renderObject .getOrderIndependentTransparency ())
             options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
+         else
+            options .push ("X3D_FRAG_COLOR");
+      }
+      else
+      {
+         options .push ("X3D_FRAG_COLOR");
       }
 
       // Shader

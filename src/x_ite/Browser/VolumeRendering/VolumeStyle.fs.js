@@ -16,7 +16,7 @@ const float M_PI      = 3.141592653589793;
 const float M_SQRT2   = 1.4142135623730951;
 const float M_SQRT1_2 = 0.7071067811865476;
 
-#if !defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
+#if defined (X3D_FRAG_COLOR)
    out vec4 x3d_FragColor;
 #endif
 
