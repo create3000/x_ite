@@ -48,22 +48,19 @@ uniform sampler2DArray x3d_SphericalHarmonicsTexture;
 #include <Logarithmic>
 
 vec4
-quat (const in vec4 r)
+quat (const in vec4 rotation)
 {
-   float scale = length (r .xyz);
+   float scale = length (rotation .xyz);
 
    if (scale == 0.0)
       return vec4 (0.0, 0.0, 0.0, 1.0);
 
    // Determine quaternion.
 
-   float halfTheta = r .w / 2.0;
+   float halfTheta = rotation .w / 2.0;
    float aScale    = sin (halfTheta) / scale;
 
-   return vec4 (r .x * aScale,
-                r .y * aScale,
-                r .z * aScale,
-                cos (halfTheta));
+   return vec4 (rotation .xyz * aScale, cos (halfTheta));
 }
 
 mat3
