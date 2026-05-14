@@ -23,6 +23,7 @@ precision highp sampler2DArray;
 
 uniform ivec4 x3d_Viewport;
 uniform mat4  x3d_ProjectionMatrix;
+uniform mat4  x3d_CameraSpaceMatrix;
 uniform mat4  x3d_ViewMatrix;
 uniform mat4  x3d_ModelViewMatrix;
 
@@ -139,11 +140,14 @@ main ()
 
    // Position
 
+   mat4 x3d_ModelMatrix  = x3d_CameraSpaceMatrix * x3d_ModelViewMatrix;
    vec3 splatCenter      = texelFetch (x3d_PositionsTexture, texelCoord, 0) .xyz;
    vec4 splatOrientation = texelFetch (x3d_OrientationsTexture, texelCoord, 0);
    vec3 splatScale       = texelFetch (x3d_ScalesTexture, texelCoord, 0) .xyz;
 
-   vec4 viewSplatCenter = x3d_ModelViewMatrix * vec4 (splatCenter, 1.0);
+   splatCenter = (x3d_ModelMatrix * vec4 (splatCenter, 1.0)) .xyz;
+
+   vec4 viewSplatCenter = x3d_ViewMatrix * vec4 (splatCenter, 1.0);
 
    #if defined (X3D_XR_SESSION)
       viewSplatCenter = x3d_EyeMatrix * viewSplatCenter;
@@ -154,7 +158,7 @@ main ()
    clipSplatCenter /= clipSplatCenter .w; // perspective division
 
    mat3 C = computeC (splatOrientation, splatScale);
-   mat3 M = mat3 (x3d_ModelViewMatrix);
+   mat3 M = mat3 (x3d_ModelMatrix);
 
    mat3 worldCovariance  = M * C * transpose (C) * transpose (M);
    vec3 cameraCovariance = computeCameraCovariance (worldCovariance, viewSplatCenter .xyz);
@@ -491,7 +495,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       gl .uniform4iv (shaderNode .x3d_Viewport, renderObject .getViewportArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, renderObject .getProjectionMatrixArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,         false, renderObject .getEyeMatrixArray ());
-      gl .uniformMatrix4fv (shaderNode .x3d_ViewMatrix,        false, renderObject .getCameraSpaceMatrixArray ());
+      gl .uniformMatrix4fv (shaderNode .x3d_CameraSpaceMatrix, false, renderObject .getCameraSpaceMatrixArray ());
+      gl .uniformMatrix4fv (shaderNode .x3d_ViewMatrix,        false, renderObject .getViewMatrixArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, modelViewMatrix);
 
       // The projection matrix stores the focal length in the first and second element of the diagonal.
