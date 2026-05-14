@@ -59,11 +59,6 @@ in vec3 vertex;
    in vec3 localVertex;
 #endif
 
-#if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-   uniform float x3d_LogarithmicFarFactor1_2;
-   in float depth;
-#endif
-
 #if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
    layout(location = 0) out vec4 x3d_FragData0;
    layout(location = 1) out vec4 x3d_FragData1;
@@ -83,6 +78,7 @@ bool frontFacing;
 #include <Stipple>
 #include <Hatch>
 #include <Fog>
+#include <Logarithmic>
 
 vec4
 getMaterialColor (const in vec4 fragCoord);
@@ -160,8 +156,7 @@ main ()
    #endif
 
    #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-      // https://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
-      gl_FragDepth = log2 (depth) * x3d_LogarithmicFarFactor1_2;
+      logarithmic ();
    #endif
 }
 `;
