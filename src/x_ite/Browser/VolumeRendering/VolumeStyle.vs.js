@@ -17,9 +17,7 @@ in vec4 x3d_Vertex;
 out vec3 vertex;
 out vec4 texCoord;
 
-#if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-   out float depth;
-#endif
+#include <Logarithmic>
 
 void
 main ()
@@ -36,7 +34,7 @@ main ()
    gl_Position = x3d_ProjectionMatrix * position;
 
    #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-      depth = 1.0 + gl_Position .w;
+      logarithmic (gl_Position);
    #endif
 }
 `;

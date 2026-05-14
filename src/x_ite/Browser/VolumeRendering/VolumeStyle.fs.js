@@ -7,11 +7,6 @@ precision highp sampler3D;
 in vec3 vertex;
 in vec4 texCoord;
 
-#if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-   uniform float x3d_LogarithmicFarFactor1_2;
-   in float depth;
-#endif
-
 uniform sampler3D x3d_Texture3D [1];
 uniform mat3 x3d_TextureNormalMatrix;
 
@@ -30,6 +25,7 @@ const float M_SQRT1_2 = 0.7071067811865476;
 
 #include <ClipPlanes>
 #include <Fog>
+#include <Logarithmic>
 
 __VOLUME_STYLES_DEFINES__
 
@@ -240,8 +236,7 @@ main ()
    #endif
 
    #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-      // https://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
-      gl_FragDepth = log2 (depth) * x3d_LogarithmicFarFactor1_2;
+      logarithmic ();
    #endif
 }
 `;
