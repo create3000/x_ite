@@ -4,21 +4,21 @@ precision highp float;
 precision highp int;
 precision highp sampler3D;
 
-in vec3 vertex;
-in vec4 texCoord;
-
 uniform sampler3D x3d_Texture3D [1];
 uniform mat3 x3d_TextureNormalMatrix;
 
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 
-const float M_PI      = 3.141592653589793;
-const float M_SQRT2   = 1.4142135623730951;
-const float M_SQRT1_2 = 0.7071067811865476;
+in vec3 vertex;
+in vec4 texCoord;
 
 #if defined (X3D_FRAG_COLOR)
    out vec4 x3d_FragColor;
 #endif
+
+const float M_PI      = 3.141592653589793;
+const float M_SQRT2   = 1.4142135623730951;
+const float M_SQRT1_2 = 0.7071067811865476;
 
 #include <ClipPlanes>
 #include <Fog>
