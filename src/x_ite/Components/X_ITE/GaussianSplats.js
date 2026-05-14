@@ -45,6 +45,8 @@ uniform sampler2D      x3d_ScalesTexture;
 uniform sampler2D      x3d_OpacitiesTexture;
 uniform sampler2DArray x3d_SphericalHarmonicsTexture;
 
+#include <Logarithmic>
+
 vec4
 quat (const in vec4 r)
 {
@@ -191,6 +193,10 @@ main ()
    texCoord    = x3d_Vertex .xy * quadPixelSize;
    gl_Position = clipSplatCenter;
 
+   #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
+      logarithmic (gl_Position);
+   #endif
+
    // Color
 
    float opacity = texelFetch (x3d_OpacitiesTexture, texelCoord, 0) .r;
@@ -211,6 +217,8 @@ in vec3 conic;
 
 out vec4 x3d_FragColor;
 
+#include <Logarithmic>
+
 void
 main ()
 {
@@ -226,6 +234,10 @@ main ()
       discard;
 
    x3d_FragColor = vec4 (color .rgb * alpha, alpha); // premultiplied-alpha output
+
+   #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
+      logarithmic ();
+   #endif
 }
 `;
 
