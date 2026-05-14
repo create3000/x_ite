@@ -33,7 +33,7 @@ uniform mat4  x3d_ModelViewMatrix;
 #endif
 
 in vec4 x3d_Vertex;
-in int  x3d_SplatIndex;
+in uint x3d_SplatIndex;
 
 out vec4 color;
 out vec2 texCoord;
@@ -136,7 +136,7 @@ main ()
 {
    // Texel Coord
 
-   int   textureWidth = textureSize (x3d_PositionsTexture, 0) .x;
+   uint  textureWidth = uint (textureSize (x3d_PositionsTexture, 0) .x);
    ivec2 texelCoord   = ivec2 (x3d_SplatIndex % textureWidth, x3d_SplatIndex / textureWidth);
 
    // Position
@@ -402,7 +402,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       // Indices
 
       gl .bindBuffer (gl .ARRAY_BUFFER, this .positionsIndexBuffer);
-      gl .bufferData (gl .ARRAY_BUFFER, new Int32Array (Array (numSplats) .keys ()), gl .DYNAMIC_DRAW);
+      gl .bufferData (gl .ARRAY_BUFFER, new Uint32Array (Array (numSplats) .keys ()), gl .DYNAMIC_DRAW);
 
       // Positions
 
@@ -508,7 +508,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       {
          gl .bindBuffer (gl .ARRAY_BUFFER, this .positionsIndexBuffer);
          gl .enableVertexAttribArray (shaderNode .x3d_SplatIndex);
-         gl .vertexAttribIPointer (shaderNode .x3d_SplatIndex, 1, gl .INT, 0, 0);
+         gl .vertexAttribIPointer (shaderNode .x3d_SplatIndex, 1, gl .UNSIGNED_INT, 0, 0);
          gl .vertexAttribDivisor (shaderNode .x3d_SplatIndex, 1);
 
          shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, 0);
