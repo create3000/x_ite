@@ -1002,6 +1002,18 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          gl .uniform1i (location, textureUnit);
       }
    },
+   enableUintAttrib (gl, name, buffer, components, stride, offset, divisor = 0)
+   {
+      const location = gl .getAttribLocation (this .getProgram (), name);
+
+      if (location === -1)
+         return;
+
+      gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
+      gl .enableVertexAttribArray (location);
+      gl .vertexAttribIPointer (location, components, gl .UNSIGNED_INT, stride, offset);
+      gl .vertexAttribDivisor (location, divisor);
+   },
    enableFloatAttrib (gl, name, buffer, components, stride, offset, divisor = 0)
    {
       const location = gl .getAttribLocation (this .getProgram (), name);
@@ -1058,7 +1070,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
       gl .enableVertexAttribArray (location);
-      gl .vertexAttribPointer (location, 1, gl .FLOAT, false, stride, offset); // gl .UNSIGNED_INT
+      gl .vertexAttribIPointer (location, 1, gl .UNSIGNED_INT, stride, offset);
    },
    enableLineStippleAttribute (gl, buffer, stride, offset)
    {

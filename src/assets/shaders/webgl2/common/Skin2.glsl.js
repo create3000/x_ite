@@ -1,7 +1,7 @@
 export default () => /* glsl */ `
 #if defined (X3D_SKINNING)
 
-in float x3d_CoordIndex;
+in uint x3d_CoordIndex;
 
 #if X3D_NUM_JOINT_SETS > 0
    uniform sampler2D x3d_JointsTexture;

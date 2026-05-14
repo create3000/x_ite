@@ -386,9 +386,9 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          if (this .thickLinesVertexArrayObject .enable (transformShaderNode .getProgram ()))
          {
             const
-               coordIndexStride  = 2 * Float32Array .BYTES_PER_ELEMENT,
+               coordIndexStride  = 2 * Uint32Array .BYTES_PER_ELEMENT,
                coordIndexOffset0 = 0,
-               coordIndexOffset1 = 1 * Float32Array .BYTES_PER_ELEMENT,
+               coordIndexOffset1 = 1 * Uint32Array .BYTES_PER_ELEMENT,
                lengthSoFarStride = 6 * Float32Array .BYTES_PER_ELEMENT,
                lengthSoFarOffset = 5 * Float32Array .BYTES_PER_ELEMENT,
                fogDepthStride    = 2 * Float32Array .BYTES_PER_ELEMENT,
@@ -406,8 +406,8 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
             if (this .coordIndices .length)
             {
-               transformShaderNode .enableFloatAttrib (gl, "x3d_CoordIndex0", this .coordIndexBuffer, 1, coordIndexStride, coordIndexOffset0);
-               transformShaderNode .enableFloatAttrib (gl, "x3d_CoordIndex1", this .coordIndexBuffer, 1, coordIndexStride, coordIndexOffset1);
+               transformShaderNode .enableUintAttrib (gl, "x3d_CoordIndex0", this .coordIndexBuffer, 1, coordIndexStride, coordIndexOffset0);
+               transformShaderNode .enableUintAttrib (gl, "x3d_CoordIndex1", this .coordIndexBuffer, 1, coordIndexStride, coordIndexOffset1);
             }
 
             transformShaderNode .enableFloatAttrib (gl, "x3d_LengthSoFar", this .lineStippleBuffer, 1, lengthSoFarStride, lengthSoFarOffset);
@@ -559,7 +559,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             const
                stride            = 13 * Float32Array .BYTES_PER_ELEMENT,
                coordIndexOffset  = 0,
-               lineStippleOffset = 1 * Float32Array .BYTES_PER_ELEMENT,
+               lineStippleOffset = 1 * Uint32Array .BYTES_PER_ELEMENT,
                fogCoordOffset    = 4 * Float32Array .BYTES_PER_ELEMENT,
                colorOffset       = 5 * Float32Array .BYTES_PER_ELEMENT,
                vertexOffset      = 9 * Float32Array .BYTES_PER_ELEMENT;
@@ -743,9 +743,9 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             transformShaderNode0 .enableInstanceMatrixAttribute (gl, instances, instancesStride, matrixOffset, 2);
 
             const
-               coordIndexStride  = 2 * Float32Array .BYTES_PER_ELEMENT,
+               coordIndexStride  = 2 * Uint32Array .BYTES_PER_ELEMENT,
                coordIndexOffset0 = 0,
-               coordIndexOffset1 = 1 * Float32Array .BYTES_PER_ELEMENT,
+               coordIndexOffset1 = 1 * Uint32Array .BYTES_PER_ELEMENT,
                lengthSoFarStride = 6 * Float32Array .BYTES_PER_ELEMENT,
                lengthSoFarOffset = 5 * Float32Array .BYTES_PER_ELEMENT,
                fogDepthStride    = 2 * Float32Array .BYTES_PER_ELEMENT,
@@ -763,8 +763,8 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
 
             if (this .coordIndices .length)
             {
-               transformShaderNode0 .enableFloatAttrib (gl, "x3d_CoordIndex0", this .coordIndexBuffer, 1, coordIndexStride, coordIndexOffset0);
-               transformShaderNode0 .enableFloatAttrib (gl, "x3d_CoordIndex1", this .coordIndexBuffer, 1, coordIndexStride, coordIndexOffset1);
+               transformShaderNode0 .enableUintAttrib (gl, "x3d_CoordIndex0", this .coordIndexBuffer, 1, coordIndexStride, coordIndexOffset0);
+               transformShaderNode0 .enableUintAttrib (gl, "x3d_CoordIndex1", this .coordIndexBuffer, 1, coordIndexStride, coordIndexOffset1);
             }
 
             transformShaderNode0 .enableFloatAttrib (gl, "x3d_LengthSoFar", this .lineStippleBuffer, 1, lengthSoFarStride, lengthSoFarOffset);
@@ -980,7 +980,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
             const
                stride            = 13 * Float32Array .BYTES_PER_ELEMENT,
                coordIndexOffset  = 0,
-               lineStippleOffset = 1 * Float32Array .BYTES_PER_ELEMENT,
+               lineStippleOffset = 1 * Uint32Array .BYTES_PER_ELEMENT,
                fogCoordOffset    = 4 * Float32Array .BYTES_PER_ELEMENT,
                colorOffset       = 5 * Float32Array .BYTES_PER_ELEMENT,
                vertexOffset      = 9 * Float32Array .BYTES_PER_ELEMENT;
