@@ -556,6 +556,10 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          ],
       });
 
+      this .shaderCache .set (key, shaderNode);
+
+      // Static Uniforms
+
       shaderNode .enable (gl);
 
       gl .uniform1i (shaderNode .x3d_PositionsTexture,          this .positionsTexture          .textureUnit);
@@ -563,8 +567,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       gl .uniform1i (shaderNode .x3d_ScalesTexture,             this .scalesTexture             .textureUnit);
       gl .uniform1i (shaderNode .x3d_OpacitiesTexture,          this .opacitiesTexture          .textureUnit);
       gl .uniform1i (shaderNode .x3d_SphericalHarmonicsTexture, this .sphericalHarmonicsTexture .textureUnit);
-
-      this .shaderCache .set (key, shaderNode);
 
       return shaderNode;
    },
