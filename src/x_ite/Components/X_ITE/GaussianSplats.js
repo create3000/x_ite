@@ -255,6 +255,8 @@ const QuadGeometry = new Float32Array ([
 
 // Special X3DShapeNode for internal use.
 
+const ShaderCache = new WeakMap ();
+
 function GaussianSplatsShape (executionContext, node)
 {
    X3DShapeNode .call (this, executionContext);
@@ -263,7 +265,8 @@ function GaussianSplatsShape (executionContext, node)
 
    // Private Properties
 
-   this .node = node;
+   this .node        = node;
+   this .shaderCache = ShaderCache .getOrInsert (this .getBrowser (), new Map ());
 }
 
 Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShapeNode .prototype),
@@ -275,28 +278,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       const
          browser = this .getBrowser (),
          gl      = browser .getContext ();
-
-      // Shader
-
-      const shaderNode = browser .createShader ({
-         name: "GaussianSplats",
-         vertexShader: "GaussianSplats",
-         fragmentShader: "GaussianSplats",
-         options: ["X3D_INSTANCING"],
-         attributes: ["x3d_SplatIndex"],
-         uniforms: [
-            "x3d_FocalLength",
-            "x3d_PositionsTexture",
-            "x3d_OrientationsTexture",
-            "x3d_ScalesTexture",
-            "x3d_OpacitiesTexture",
-            "x3d_SphericalHarmonicsTexture",
-         ],
-      });
-
-      shaderNode .enable (gl);
-
-      this .shaderNode = shaderNode;
 
       // Quad Geometry
 
@@ -311,11 +292,11 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Textures
 
-      this .positionsTexture          = this .createTexture ("x3d_PositionsTexture");
-      this .orientationsTexture       = this .createTexture ("x3d_OrientationsTexture");
-      this .scalesTexture             = this .createTexture ("x3d_ScalesTexture");
-      this .sphericalHarmonicsTexture = this .createTexture ("x3d_SphericalHarmonicsTexture", gl .TEXTURE_2D_ARRAY);
-      this .opacitiesTexture          = this .createTexture ("x3d_OpacitiesTexture");
+      this .positionsTexture          = this .createTexture ();
+      this .orientationsTexture       = this .createTexture ();
+      this .scalesTexture             = this .createTexture ();
+      this .sphericalHarmonicsTexture = this .createTexture (gl .TEXTURE_2D_ARRAY);
+      this .opacitiesTexture          = this .createTexture ();
 
       browser .resetTextureUnits ();
 
@@ -386,7 +367,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       this .transparent = true;
       this .alphaMode   = AlphaMode .BLEND;
    },
-   createTexture (uniform, target)
+   createTexture (target)
    {
       const
          browser = this .getBrowser (),
@@ -403,8 +384,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       gl .texParameteri (target, gl .TEXTURE_WRAP_T,     gl .CLAMP_TO_EDGE);
       gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
       gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
-
-      gl .uniform1i (this .shaderNode [uniform], texture .textureUnit);
 
       return texture;
    },
@@ -478,7 +457,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       const
          viewport   = renderContext .viewport,
          browser    = this .getBrowser (),
-         shaderNode = this .shaderNode;
+         shaderNode = this .getShader (renderContext);
 
       // Set viewport.
 
@@ -546,6 +525,48 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       // TODO: sort splats.
       // gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
       gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
+   },
+   getShader (renderContext)
+   {
+      let key = "";
+
+      return this .shaderCache .get (key) ?? this .createShader (key, renderContext);
+   },
+   createShader (key, renderContext)
+   {
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
+
+      // Shader
+
+      const shaderNode = browser .createShader ({
+         name: "GaussianSplats",
+         vertexShader: "GaussianSplats",
+         fragmentShader: "GaussianSplats",
+         options: ["X3D_INSTANCING"],
+         attributes: ["x3d_SplatIndex"],
+         uniforms: [
+            "x3d_FocalLength",
+            "x3d_PositionsTexture",
+            "x3d_OrientationsTexture",
+            "x3d_ScalesTexture",
+            "x3d_OpacitiesTexture",
+            "x3d_SphericalHarmonicsTexture",
+         ],
+      });
+
+      shaderNode .enable (gl);
+
+      gl .uniform1i (shaderNode .x3d_PositionsTexture,          this .positionsTexture          .textureUnit);
+      gl .uniform1i (shaderNode .x3d_OrientationsTexture,       this .orientationsTexture       .textureUnit);
+      gl .uniform1i (shaderNode .x3d_ScalesTexture,             this .scalesTexture             .textureUnit);
+      gl .uniform1i (shaderNode .x3d_OpacitiesTexture,          this .opacitiesTexture          .textureUnit);
+      gl .uniform1i (shaderNode .x3d_SphericalHarmonicsTexture, this .sphericalHarmonicsTexture .textureUnit);
+
+      this .shaderCache .set (key, shaderNode);
+
+      return shaderNode;
    },
 });
 
