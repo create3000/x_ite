@@ -109,6 +109,7 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, X3DComposa
          }
 
          string += "\n";
+         string += "#if defined (X3D_LIGHTING)\n";
          string += "   vec3 N = surfaceNormal .xyz;\n";
          string += "   vec3 V = normalize (-vertex); // normalized vector from point on geometry to viewer's position\n";
          string += "\n";
@@ -143,6 +144,7 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, X3DComposa
          string += "\n";
          string += "      shadedColor .rgb += emissiveColor_" + this .getId () + ";\n";
          string += "   }\n";
+         string += "#endif\n";
       }
       else
       {

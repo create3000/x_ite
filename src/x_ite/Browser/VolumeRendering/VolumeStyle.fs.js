@@ -7,7 +7,9 @@ precision highp sampler3D;
 uniform sampler3D x3d_Texture3D [1];
 uniform mat3 x3d_TextureNormalMatrix;
 
-uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
+#if defined (X3D_LIGHTING)
+   uniform x3d_LightSourceParameters x3d_LightSource [X3D_NUM_LIGHTS];
+#endif
 
 in vec3 vertex;
 in vec4 texCoord;
