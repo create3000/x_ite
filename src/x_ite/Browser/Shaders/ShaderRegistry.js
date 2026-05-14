@@ -6,9 +6,10 @@ import Hatch2       from "../../../assets/shaders/webgl2/common/Hatch2.glsl.js";
 import Instancing2  from "../../../assets/shaders/webgl2/common/Instancing2.glsl.js";
 import Lighting2    from "../../../assets/shaders/webgl2/common/Lighting2.glsl.js";
 import Line22       from "../../../assets/shaders/webgl2/common/Line22.glsl.js";
-import Logarithmic2 from "../../../assets/shaders/webgl2/common/Logarithmic.js";
+import Logarithmic2 from "../../../assets/shaders/webgl2/common/Logarithmic2.js";
 import Material2    from "../../../assets/shaders/webgl2/common/Material2.glsl.js";
 import Normal2      from "../../../assets/shaders/webgl2/common/Normal2.glsl.js";
+import OIT2         from "../../../assets/shaders/webgl2/common/OIT2.js";
 import Perlin2      from "../../../assets/shaders/webgl2/common/Perlin2.glsl.js";
 import Point2       from "../../../assets/shaders/webgl2/common/Point2.glsl.js";
 import PointSize2   from "../../../assets/shaders/webgl2/common/PointSize2.glsl.js";
@@ -54,6 +55,7 @@ const ShaderRegistry = {
          Logarithmic: Logarithmic2,
          Material: Material2,
          Normal: Normal2,
+         OIT: OIT2,
          Perlin: Perlin2,
          Point: Point2,
          PointSize: PointSize2,

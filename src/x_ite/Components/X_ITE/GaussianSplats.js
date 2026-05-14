@@ -215,8 +215,11 @@ in vec4 color;
 in vec2 texCoord;
 in vec3 conic;
 
-out vec4 x3d_FragColor;
+#if !defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
+   out vec4 x3d_FragColor;
+#endif
 
+#include <OIT>
 #include <Logarithmic>
 
 void
@@ -233,7 +236,13 @@ main ()
    if (alpha < 1.0 / 255.0)
       discard;
 
-   x3d_FragColor = vec4 (color .rgb * alpha, alpha); // premultiplied-alpha output
+   vec4 finalColor = vec4 (color .rgb, alpha); // premultiplied-alpha output
+
+   #if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
+      oit (finalColor);
+   #else
+      x3d_FragColor = finalColor;
+   #endif
 
    #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
       logarithmic ();
@@ -527,8 +536,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       }
 
       // TODO: sort splats.
-      // gl .enable (gl .SAMPLE_ALPHA_TO_COVERAGE);
-      gl .blendFunc (gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
+      // gl .blendFunc (gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
 
       gl .frontFace (gl .CCW);
       gl .enable (gl .CULL_FACE);
@@ -536,8 +544,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       gl .drawArraysInstanced (gl .TRIANGLES, 0, 6, this .numSplats);
 
       // TODO: sort splats.
-      // gl .disable (gl .SAMPLE_ALPHA_TO_COVERAGE);
-      gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
+      // gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
    },
    getShader (renderContext)
    {
