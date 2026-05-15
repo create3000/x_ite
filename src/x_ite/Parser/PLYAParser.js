@@ -282,16 +282,10 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
             node           = scene .createNode ("GaussianSplats"),
             quaternions    = this .quaternions,
             numQuaternions = quaternions .length,
-            quaternion     = new Quaternion (),
-            rotation       = new Rotation4 (),
             orientations   = [ ];
 
          for (let i = 0; i < numQuaternions; i += 4)
-         {
-            quaternion .set (quaternions [i], quaternions [i + 1], quaternions [i + 2], quaternions [i + 3]);
-            rotation .setQuaternion (quaternion);
-            orientations .push (... rotation);
-         }
+            orientations .push (quaternions [i + 1], quaternions [i + 2], quaternions [i + 3], quaternions [i]);
 
          node .positions           = this .points;
          node .orientations        = orientations;

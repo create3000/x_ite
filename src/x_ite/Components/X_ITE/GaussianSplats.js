@@ -47,39 +47,30 @@ uniform sampler2DArray x3d_SphericalHarmonicsTexture;
 
 #include <Logarithmic>
 
-vec4
-quat (const in vec4 rotation)
-{
-   float scale = length (rotation .xyz);
-
-   if (scale == 0.0)
-      return vec4 (0.0, 0.0, 0.0, 1.0);
-
-   // Determine quaternion.
-
-   float halfTheta = rotation .w / 2.0;
-   float aScale    = sin (halfTheta) / scale;
-
-   return vec4 (rotation .xyz * aScale, cos (halfTheta));
-}
-
 mat3
 computeC (const in vec4 rotation, const in vec3 scale)
 {
-   vec4 q = quat (rotation);
-
-   float qx = q .x;
-   float qy = q .y;
-   float qz = q .z;
-   float qw = q .w;
+   float qx = rotation .x;
+   float qy = rotation .y;
+   float qz = rotation .z;
+   float qw = rotation .w;
    float sx = scale .x;
    float sy = scale .y;
    float sz = scale .z;
+   float a  = qy * qy;
+   float b  = qz * qz;
+   float c  = qx * qy;
+   float d  = qw * qz;
+   float e  = qx * qz;
+   float f  = qw * qy;
+   float g  = qx * qx;
+   float h  = qy * qz;
+   float i  = qw * qx;
 
    mat3 C = mat3 (
-      sx * (1.0 - 2.0 * (qy * qy + qz * qz)),  sx * (2.0 * (qx * qy + qw * qz)),        sx * (2.0 * (qx * qz - qw * qy)),
-      sy * (2.0 * (qx * qy - qw * qz)),        sy * (1.0 - 2.0 * (qx * qx + qz * qz)),  sy * (2.0 * (qy * qz + qw * qx)),
-      sz * (2.0 * (qx * qz + qw * qy)),        sz * (2.0 * (qy * qz - qw * qx)),        sz * (1.0 - 2.0 * (qx * qx + qy * qy))
+      sx * (1.0 - 2.0 * (a + b)),  sx * (2.0 * (c + d)),        sx * (2.0 * (e - f)),
+      sy * (2.0 * (c - d)),        sy * (1.0 - 2.0 * (g + b)),  sy * (2.0 * (h + i)),
+      sz * (2.0 * (e + f)),        sz * (2.0 * (h - i)),        sz * (1.0 - 2.0 * (a + g))
    );
 
    return C;
@@ -693,7 +684,7 @@ Object .defineProperties (GaussianSplats,
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",            new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "positions",           new Fields .MFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "orientations",        new Fields .MFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "orientations",        new Fields .MFVec4f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "scales",              new Fields .MFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "opacities",           new Fields .MFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "sphericalHarmonics0", new Fields .MFVec3f ()),
