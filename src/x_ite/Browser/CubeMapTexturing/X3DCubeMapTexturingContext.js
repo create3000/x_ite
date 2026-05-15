@@ -8,7 +8,12 @@ Object .assign (X3DCubeMapTexturingContext .prototype,
 {
    getPanoramaShader ()
    {
-      return this [_panoramaShader] ??= this .createShader ("Panorama", "FullScreen", `data:x-shader/x-fragment,${Panorama2FS}`, [ ], ["x3d_PanoramaTextureEXT", "x3d_CurrentFaceEXT"]);
+      return this [_panoramaShader] ??= this .createShader ({
+         name: "Panorama",
+         vertexShader: "FullScreen",
+         fragmentShader: `data:x-shader/x-fragment,${Panorama2FS}`,
+         uniforms: ["x3d_PanoramaTextureEXT", "x3d_CurrentFaceEXT"],
+      });
    },
 });
 

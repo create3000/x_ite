@@ -201,7 +201,11 @@ Object .assign (X3DRenderingContext .prototype,
    },
    getOITComposeShader ()
    {
-      return this [_composeShader] ??= this .createShader ("OITCompose", "FullScreen", "OITCompose");
+      return this [_composeShader] ??= this .createShader ({
+         name: "OITCompose",
+         vertexShader: "FullScreen",
+         fragmentShader: "OITCompose",
+      });
    },
    getDepthShader (normal, numClipPlanes, shapeNode, hAnimNode)
    {
@@ -272,7 +276,12 @@ Object .assign (X3DRenderingContext .prototype,
 
       hAnimNode ?.getShaderOptions (options);
 
-      const shaderNode = this .createShader ("Depth", "Depth", "Depth", options);
+      const shaderNode = this .createShader ({
+         name: "Depth",
+         vertexShader: "Depth",
+         fragmentShader: "Depth",
+         options,
+      });
 
       this [_depthShaders] .set (key, shaderNode);
 

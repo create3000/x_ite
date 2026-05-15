@@ -154,7 +154,12 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, X
          this .occlusionTextureNode          ?.getShaderOptions (options, "OCCLUSION");
       }
 
-      const shaderNode = browser .createShader ("SpecularGlossiness", "Default", "SpecularGlossiness", options);
+      const shaderNode = browser .createShader ({
+         name: "SpecularGlossiness",
+         vertexShader: "Default",
+         fragmentShader: "SpecularGlossiness",
+         options,
+      });
 
       browser .getShaders () .set (key, shaderNode);
 

@@ -15,30 +15,30 @@ uniform float linewidthScaleFactor1_2;
 
 in float x3d_LengthSoFar;
 
-in float x3d_CoordIndex0;
+in uint  x3d_CoordIndex0;
 in float x3d_FogDepth0;
 in vec4  x3d_Color0;
 in vec4  x3d_Vertex0;
 
-in float x3d_CoordIndex1;
+in uint  x3d_CoordIndex1;
 in float x3d_FogDepth1;
 in vec4  x3d_Color1;
 in vec4  x3d_Vertex1;
 
 // Registered in X3DShapeContext, 3 * 13 = 39 floats.
-out float coordIndex0;
+flat out uint coordIndex0;
 out vec3  lineStipple0;
 out float fogDepth0;
 out vec4  color0;
 out vec4  vertex0;
 
-out float coordIndex1;
+flat out uint coordIndex1;
 out vec3  lineStipple1;
 out float fogDepth1;
 out vec4  color1;
 out vec4  vertex1;
 
-out float coordIndex2;
+flat out uint coordIndex2;
 out vec3  lineStipple2;
 out float fogDepth2;
 out vec4  color2;

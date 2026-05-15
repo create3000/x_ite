@@ -159,11 +159,11 @@ Object .assign (Rotation4 .prototype,
 
       const
          halfTheta = Algorithm .interval (angle / 2, 0, Math .PI),
-         ascale    = Math .sin (halfTheta) / scale;
+         aScale    = Math .sin (halfTheta) / scale;
 
-      this [_quaternion] .set (x * ascale,
-                               y * ascale,
-                               z * ascale,
+      this [_quaternion] .set (x * aScale,
+                               y * aScale,
+                               z * aScale,
                                Math .cos (halfTheta));
       return this;
    },

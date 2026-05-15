@@ -59,16 +59,8 @@ in vec3 vertex;
    in vec3 localVertex;
 #endif
 
-#if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-   uniform float x3d_LogarithmicFarFactor1_2;
-   in float depth;
-#endif
-
-#if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
-   layout(location = 0) out vec4 x3d_FragData0;
-   layout(location = 1) out vec4 x3d_FragData1;
-#else
-   layout(location = 0) out vec4 x3d_FragColor;
+#if !defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
+   out vec4 x3d_FragColor;
 #endif
 
 // There is a bug with Mali GPU when gl_FrontFacing is accessed often or in a deep nested function,
@@ -83,18 +75,11 @@ bool frontFacing;
 #include <Stipple>
 #include <Hatch>
 #include <Fog>
+#include <OIT>
+#include <Logarithmic>
 
 vec4
 getMaterialColor (const in vec4 fragCoord);
-
-#if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
-// https://learnopengl.com/Guest-Articles/2020/OIT/Weighted-Blended
-float
-weight (const in float z, const in float a)
-{
-   return clamp (pow (min (1.0, a * 10.0) + 0.01, 3.0) * 1e8 * pow (1.0 - z * 0.9, 3.0), 1e-2, 3e3);
-}
-#endif
 
 void
 main ()
@@ -147,21 +132,13 @@ main ()
    #endif
 
    #if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
-      float a = finalColor .a;
-      float w = weight (gl_FragCoord .z, a);
-
-      finalColor .rgb *= a;
-      finalColor      *= w;
-
-      x3d_FragData0 = vec4 (finalColor .rgb, a);
-      x3d_FragData1 = vec4 (finalColor .a);
+      oit (finalColor);
    #else
       x3d_FragColor = finalColor;
    #endif
 
    #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-      // https://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
-      gl_FragDepth = log2 (depth) * x3d_LogarithmicFarFactor1_2;
+      logarithmic ();
    #endif
 }
 `;

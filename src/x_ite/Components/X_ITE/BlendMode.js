@@ -15,6 +15,8 @@ function BlendMode (executionContext)
 
    this .addType (X3DConstants .BlendMode);
 
+   // Private properties
+
    this .factorTypes   = new Map ();
    this .equationTypes = new Map ();
 }

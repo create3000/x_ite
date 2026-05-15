@@ -66,6 +66,7 @@ Object .assign (Object .setPrototypeOf (ToneMappedVolumeStyle .prototype, X3DCom
       string += "   vec3 coolColor = coolColor_" + this .getId () + " .rgb;\n";
       string += "   vec3 warmColor = warmColor_" + this .getId () + " .rgb;\n";
       string += "\n";
+      string += "#if defined (X3D_LIGHTING)\n";
       string += "   for (int i = 0; i < X3D_NUM_LIGHTS; ++ i)\n";
       string += "   {\n";
       string += "      x3d_LightSourceParameters light = x3d_LightSource [i];\n";
@@ -75,6 +76,7 @@ Object .assign (Object .setPrototypeOf (ToneMappedVolumeStyle .prototype, X3DCom
       string += "\n";
       string += "      toneColor += mix (warmColor .rgb, coolColor .rgb, colorFactor);\n";
       string += "   }\n";
+      string += "#endif\n";
       string += "\n";
       string += "   return vec4 (toneColor, originalColor .a);\n";
       string += "}\n";

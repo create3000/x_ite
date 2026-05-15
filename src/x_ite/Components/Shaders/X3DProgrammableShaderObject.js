@@ -15,6 +15,7 @@ function X3DProgrammableShaderObject (executionContext)
 
    // Private properties
 
+   this .attributeNames         = [ ];
    this .uniformNames           = [ ];
    this .environmentLightNodes  = [ ];
    this .lightNodes             = [ ];
@@ -39,6 +40,14 @@ Object .assign (X3DProgrammableShaderObject .prototype,
    canUserDefinedFields ()
    {
       return true;
+   },
+   getAttributeNames ()
+   {
+      return this .attributeNames;
+   },
+   setAttributeNames (value)
+   {
+      this .attributeNames = value;
    },
    getUniformNames ()
    {
@@ -280,6 +289,9 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             delete this [`${$.toLowerCaseFirst (name)}AttributeDivisor`];
          }
       }
+
+      for (const name of this .attributeNames)
+         this [name] = gl .getAttribLocation (program, name);
 
       if (this .x3d_TexCoord .length)
       {
@@ -987,6 +999,18 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          gl .uniform1i (location, textureUnit);
       }
    },
+   enableUintAttrib (gl, name, buffer, components, stride, offset, divisor = 0)
+   {
+      const location = gl .getAttribLocation (this .getProgram (), name);
+
+      if (location === -1)
+         return;
+
+      gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
+      gl .enableVertexAttribArray (location);
+      gl .vertexAttribIPointer (location, components, gl .UNSIGNED_INT, stride, offset);
+      gl .vertexAttribDivisor (location, divisor);
+   },
    enableFloatAttrib (gl, name, buffer, components, stride, offset, divisor = 0)
    {
       const location = gl .getAttribLocation (this .getProgram (), name);
@@ -1043,7 +1067,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
       gl .enableVertexAttribArray (location);
-      gl .vertexAttribPointer (location, 1, gl .FLOAT, false, stride, offset); // gl .UNSIGNED_INT
+      gl .vertexAttribIPointer (location, 1, gl .UNSIGNED_INT, stride, offset);
    },
    enableLineStippleAttribute (gl, buffer, stride, offset)
    {
@@ -1069,10 +1093,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       gl .enableVertexAttribArray (location);
       gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
       gl .vertexAttribDivisor (location, divisor)
-   },
-   colorAttributeDivisor (gl, divisor)
-   {
-      gl .vertexAttribDivisor (this .x3d_Color, divisor);
    },
    enableTexCoordAttribute (gl, buffers, stride, offset)
    {

@@ -1,22 +1,24 @@
 /* WebGL 2 */
-import ClipPlanes2 from "../../../assets/shaders/webgl2/common/ClipPlanes2.glsl.js";
-import Fog2        from "../../../assets/shaders/webgl2/common/Fog2.glsl.js";
-import Fragment2   from "../../../assets/shaders/webgl2/common/Fragment2.glsl.js";
-import Hatch2      from "../../../assets/shaders/webgl2/common/Hatch2.glsl.js";
-import Instancing2 from "../../../assets/shaders/webgl2/common/Instancing2.glsl.js";
-import Lighting2   from "../../../assets/shaders/webgl2/common/Lighting2.glsl.js";
-import Line22      from "../../../assets/shaders/webgl2/common/Line22.glsl.js";
-import Material2   from "../../../assets/shaders/webgl2/common/Material2.glsl.js";
-import Normal2     from "../../../assets/shaders/webgl2/common/Normal2.glsl.js";
-import Perlin2     from "../../../assets/shaders/webgl2/common/Perlin2.glsl.js";
-import Point2      from "../../../assets/shaders/webgl2/common/Point2.glsl.js";
-import PointSize2  from "../../../assets/shaders/webgl2/common/PointSize2.glsl.js";
-import Shadow2     from "../../../assets/shaders/webgl2/common/Shadow2.glsl.js";
-import Stipple2    from "../../../assets/shaders/webgl2/common/Stipple2.glsl.js";
-import Texture2    from "../../../assets/shaders/webgl2/common/Texture2.glsl.js";
-import Unlit2      from "../../../assets/shaders/webgl2/common/Unlit2.glsl.js";
-import Utils2      from "../../../assets/shaders/webgl2/common/Utils2.glsl.js";
-import Vertex2     from "../../../assets/shaders/webgl2/common/Vertex2.glsl.js";
+import ClipPlanes2  from "../../../assets/shaders/webgl2/common/ClipPlanes2.glsl.js";
+import Fog2         from "../../../assets/shaders/webgl2/common/Fog2.glsl.js";
+import Fragment2    from "../../../assets/shaders/webgl2/common/Fragment2.glsl.js";
+import Hatch2       from "../../../assets/shaders/webgl2/common/Hatch2.glsl.js";
+import Instancing2  from "../../../assets/shaders/webgl2/common/Instancing2.glsl.js";
+import Lighting2    from "../../../assets/shaders/webgl2/common/Lighting2.glsl.js";
+import Line22       from "../../../assets/shaders/webgl2/common/Line22.glsl.js";
+import Logarithmic2 from "../../../assets/shaders/webgl2/common/Logarithmic2.js";
+import Material2    from "../../../assets/shaders/webgl2/common/Material2.glsl.js";
+import Normal2      from "../../../assets/shaders/webgl2/common/Normal2.glsl.js";
+import OIT2         from "../../../assets/shaders/webgl2/common/OIT2.js";
+import Perlin2      from "../../../assets/shaders/webgl2/common/Perlin2.glsl.js";
+import Point2       from "../../../assets/shaders/webgl2/common/Point2.glsl.js";
+import PointSize2   from "../../../assets/shaders/webgl2/common/PointSize2.glsl.js";
+import Shadow2      from "../../../assets/shaders/webgl2/common/Shadow2.glsl.js";
+import Stipple2     from "../../../assets/shaders/webgl2/common/Stipple2.glsl.js";
+import Texture2     from "../../../assets/shaders/webgl2/common/Texture2.glsl.js";
+import Unlit2       from "../../../assets/shaders/webgl2/common/Unlit2.glsl.js";
+import Utils2       from "../../../assets/shaders/webgl2/common/Utils2.glsl.js";
+import Vertex2      from "../../../assets/shaders/webgl2/common/Vertex2.glsl.js";
 
 /* PBR 2 */
 import BRDF2         from "../../../assets/shaders/webgl2/pbr/BRDF2.glsl.js";
@@ -50,8 +52,10 @@ const ShaderRegistry = {
          Instancing: Instancing2,
          Lighting: Lighting2,
          Line2: Line22,
+         Logarithmic: Logarithmic2,
          Material: Material2,
          Normal: Normal2,
+         OIT: OIT2,
          Perlin: Perlin2,
          Point: Point2,
          PointSize: PointSize2,
@@ -90,13 +94,17 @@ const ShaderRegistry = {
          Unlit: UnlitFragment2,
       },
    },
-   addInclude: function (name, shader2)
+   addVertex: function (name, shader2)
    {
-      this .includes [2] [name] = shader2;
+      this .vertex [2] [name] = shader2;
    },
    addFragment: function (name, shader2)
    {
       this .fragment [2] [name] = shader2;
+   },
+   addInclude: function (name, shader2)
+   {
+      this .includes [2] [name] = shader2;
    },
 };
 
