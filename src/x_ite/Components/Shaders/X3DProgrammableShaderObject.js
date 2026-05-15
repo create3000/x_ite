@@ -187,16 +187,13 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       for (const materialTexture of MaterialTextures .names)
       {
-         const texture = {
+         this [materialTexture] = {
             textureTransformMapping:  gl .getUniformLocation (program, materialTexture + ".textureTransformMapping"),
             textureCoordinateMapping: gl .getUniformLocation (program, materialTexture + ".textureCoordinateMapping"),
             texture2D:                gl .getUniformLocation (program, materialTexture + ".texture2D"),
             texture3D:                gl .getUniformLocation (program, materialTexture + ".texture3D"),
             textureCube:              gl .getUniformLocation (program, materialTexture + ".textureCube"),
          };
-
-         if (texture .texture2D || texture .texture3D || texture .textureCube)
-            this [materialTexture] = texture;
       }
 
       for (let i = 0; i < maxTextures; ++ i)
