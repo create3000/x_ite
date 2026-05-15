@@ -185,7 +185,7 @@ main ()
    vec2 quadPixelSize = vec2 (3.4 * sqrt (a), 3.4 * sqrt (c));         // screen space half quad height and width
    vec2 quadNdcSize   = quadPixelSize / vec2 (x3d_Viewport .zw) * 2.0; // in ndc space
 
-   clipSplatCenter .xy = clipSplatCenter .xy + x3d_Vertex .xy * quadNdcSize;
+   clipSplatCenter .xy += x3d_Vertex .xy * quadNdcSize;
 
    texCoord    = x3d_Vertex .xy * quadPixelSize;
    gl_Position = clipSplatCenter;
