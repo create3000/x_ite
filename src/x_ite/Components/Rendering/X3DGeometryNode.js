@@ -483,6 +483,9 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       this .clear ();
       this .build ();
 
+      // Fill with zero data if not provided.
+      this .coordIndices .length ||= this .vertices .length / 4;
+
       // Shrink arrays before transferring them to graphics card.
 
       for (const attribArray of this .attribArrays)

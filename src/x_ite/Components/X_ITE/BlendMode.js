@@ -15,8 +15,6 @@ function BlendMode (executionContext)
 
    this .addType (X3DConstants .BlendMode);
 
-   this .setTransparent (true);
-
    // Private properties
 
    this .factorTypes   = new Map ();
