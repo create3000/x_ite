@@ -93,7 +93,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       await browser .loadComponents (scene);
 
-      this .processElements (this .header ([ ]))
+      this .processElements (this .header ([ ]));
 
       // Create nodes.
 
