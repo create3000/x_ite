@@ -47,6 +47,30 @@ uniform sampler2DArray x3d_SphericalHarmonicsTexture;
 
 #include <Logarithmic>
 
+const float SH_C0 = 0.28209479177387814;
+
+#ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_1
+   const float SH_C1_0 = -0.4886025119029199;
+   const float SH_C1_1 = 0.4886025119029199;
+   const float SH_C1_2 = -0.4886025119029199;
+#ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_2
+   const float SH_C2_0 = 1.0925484305920792;
+   const float SH_C2_1 = -1.0925484305920792;
+   const float SH_C2_2 = 0.31539156525252005;
+   const float SH_C2_3 = -1.0925484305920792;
+   const float SH_C2_4 = 0.5462742152960396;
+#ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_3
+   const float SH_C3_0 = -0.5900435899266435;
+   const float SH_C3_1 = 2.890611442640554;
+   const float SH_C3_2 = -0.4570457994644658;
+   const float SH_C3_3 = 0.3731763325901154;
+   const float SH_C3_4 = -0.4570457994644658;
+   const float SH_C3_5 = 1.445305721320277;
+   const float SH_C3_6 = -0.5900435899266435;
+#endif
+#endif
+#endif
+
 mat3
 computeC (const in vec4 rotation, const in vec3 scale)
 {
@@ -103,22 +127,6 @@ computeCameraCovariance (const in mat3 worldCovariance, const in vec3 viewSplatC
    cov [1] [1] += 0.3;
 
    return vec3 (cov [0] [0], cov [0] [1], cov [1] [1]);
-}
-
-vec3
-calculateSphericalHarmonics (const in ivec2 texelCoord)
-{
-   ivec3 coord = ivec3 (texelCoord, 0);
-
-   // Degree 0
-   vec3 sh0    = texelFetch (x3d_SphericalHarmonicsTexture, coord, 0) .rgb;
-   vec3 result = sh0 * 0.2820947917738781; // 0.28... = 1 / (2 * sqrt (PI))
-
-   //TODO
-
-   result += 0.5;
-
-   return result;
 }
 
 void
@@ -187,9 +195,80 @@ main ()
 
    // Color
 
+   // Fetch SH coefficients early to avoid GPU stall
+   // Degree 0
+   vec3 sh0 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 0), 0) .rgb;
+
+   #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_1
+      // Degree 1
+      vec3 sh1_0 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 1), 0) .rgb;
+      vec3 sh1_1 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 2), 0) .rgb;
+      vec3 sh1_2 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 3), 0) .rgb;
+   #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_2
+      // Degree 2
+      vec3 sh2_0 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 4), 0) .rgb;
+      vec3 sh2_1 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 5), 0) .rgb;
+      vec3 sh2_2 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 6), 0) .rgb;
+      vec3 sh2_3 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 7), 0) .rgb;
+      vec3 sh2_4 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 8), 0) .rgb;
+   #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_3
+      // Degree 3
+      vec3 sh3_0 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord,  9), 0) .rgb;
+      vec3 sh3_1 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 10), 0) .rgb;
+      vec3 sh3_2 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 11), 0) .rgb;
+      vec3 sh3_3 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 12), 0) .rgb;
+      vec3 sh3_4 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 13), 0) .rgb;
+      vec3 sh3_5 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 14), 0) .rgb;
+      vec3 sh3_6 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 15), 0) .rgb;
+   #endif
+   #endif
+   #endif
+
+   vec3 finalColor = sh0 * SH_C0;
+
+   #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_1
+      vec3 x3d_Camera = x3d_CameraSpaceMatrix [3] .xyz;
+      vec3 viewDir    = normalize (splatCenter - x3d_Camera);
+
+      float x = viewDir .x;
+      float y = viewDir .y;
+      float z = viewDir .z;
+
+      finalColor += SH_C1_0 * y * sh1_0 +
+                    SH_C1_1 * z * sh1_1 +
+                    SH_C1_2 * x * sh1_2;
+
+   #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_2
+      float xx = x * x;
+      float yy = y * y;
+      float zz = z * z;
+      float xy = x * y;
+      float yz = y * z;
+      float xz = x * z;
+
+      finalColor += SH_C2_0 * xy * sh2_0 +
+                    SH_C2_1 * yz * sh2_1 +
+                    SH_C2_2 * (2.0 * zz - xx - yy) * sh2_2 +
+                    SH_C2_3 * xz * sh2_3 +
+                    SH_C2_4 * (xx - yy) * sh2_4;
+
+   #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_3
+      finalColor += SH_C3_0 * y * (3.0 * xx - yy) * sh3_0 +
+                    SH_C3_1 * xy * z * sh3_1 +
+                    SH_C3_2 * y * (4.0 * zz - xx - yy) * sh3_2 +
+                    SH_C3_3 * z * (2.0 * zz - 3.0 * xx - 3.0 * yy) * sh3_3 +
+                    SH_C3_4 * x * (4.0 * zz - xx - yy) * sh3_4 +
+                    SH_C3_5 * z * (xx - yy) * sh3_5 +
+                    SH_C3_6 * x * (xx - 3.0 * yy) * sh3_6;
+   #endif
+   #endif
+   #endif
+
+   finalColor += 0.5;
+
    float opacity = texelFetch (x3d_OpacitiesTexture, texelCoord, 0) .r;
 
-   color = vec4 (calculateSphericalHarmonics (texelCoord), opacity);
+   color = vec4 (finalColor, opacity);
 }
 `;
 
@@ -453,6 +532,17 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          gl .texImage3D (gl .TEXTURE_2D_ARRAY, 0, gl .RGB32F, textureWidth, textureWidth, 4, 0, gl .RGB, gl .FLOAT, sphericalHarmonics);
       }
 
+
+      // Key
+
+      let key = "";
+
+      key += this .node ._sphericalHarmonics1 .length ? 1 : 0;
+      key += this .node ._sphericalHarmonics1 .length ? 1 : 0;
+      key += this .node ._sphericalHarmonics2 .length ? 1 : 0;
+
+      this .key = key;
+
       // Finish
 
       this .numSplats = numSplats;
@@ -540,6 +630,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       let key = "";
 
+      key += this .key;
       key += renderObject .getRenderKey ();
 
       return this .shaderCache .get (key) ?? this .createShader (key, renderContext);
@@ -566,6 +657,17 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          if (renderObject .getOrderIndependentTransparency ())
             options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
       }
+
+      // Spherical Harmonics
+
+      if (this .node ._sphericalHarmonics1 .length)
+         options .push ("X3D_GAUSSIAN_SPLATTING_DEGREE_1");
+
+      if (this .node ._sphericalHarmonics2 .length)
+         options .push ("X3D_GAUSSIAN_SPLATTING_DEGREE_2");
+
+      if (this .node ._sphericalHarmonics3 .length)
+         options .push ("X3D_GAUSSIAN_SPLATTING_DEGREE_3");
 
       // Shader
 
