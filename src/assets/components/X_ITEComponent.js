@@ -17,7 +17,6 @@ import SpecularMaterialExtension            from "../../x_ite/Components/X_ITE/S
 import TransmissionMaterialExtension        from "../../x_ite/Components/X_ITE/TransmissionMaterialExtension.js";
 import VolumeMaterialExtension              from "../../x_ite/Components/X_ITE/VolumeMaterialExtension.js";
 import VolumeScatterMaterialExtension       from "../../x_ite/Components/X_ITE/VolumeScatterMaterialExtension.js";
-import X3DBlendModeNode                     from "../../x_ite/Components/X_ITE/X3DBlendModeNode.js";
 import X3DMaterialExtensionNode             from "../../x_ite/Components/X_ITE/X3DMaterialExtensionNode.js";
 
 Components .add ({
@@ -44,7 +43,6 @@ Components .add ({
    ],
    abstractNodes:
    [
-      X3DBlendModeNode,
       X3DMaterialExtensionNode,
    ],
    browserContext: X3DX_ITEContext,
