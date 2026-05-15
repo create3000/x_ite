@@ -382,9 +382,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          if (!this .vertices .length)
             return;
 
-         if (this .tangents .length)
-            return;
-
          if (!MikkTSpace .isInitialized ())
          {
             return void (MikkTSpace .initialize () .then (() =>
@@ -410,10 +407,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
          this .tangents .assign (tangents);
          this .tangents .shrinkToFit ();
-
-         this .transfer ();
-         this .updateGeometryKey ();
-         this .updateRenderFunctions ();
       }
       catch (error)
       {
@@ -507,6 +500,11 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
 
       if (!this .multiTexCoords .length)
          this .generateTexCoords ();
+
+      // Generate tangents if needed.
+
+      if (!this .tangents .length)
+         this .generateTangents ();
 
       // Transfer arrays and update.
 
@@ -767,11 +765,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          renderModeNodes = appearanceNode .getRenderModes (),
          shaderNode      = appearanceNode .getShader (this, renderContext);
 
-      // Generate tangents if needed.
-
-      if (shaderNode .x3d_NormalTexture && !this .hasTangents)
-         this .generateTangents ();
-
       // Set viewport.
 
       gl .viewport (... viewport);
@@ -915,11 +908,6 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
          primitiveMode   = browser .getPrimitiveMode (gl .TRIANGLES),
          renderModeNodes = appearanceNode .getRenderModes (),
          shaderNode      = appearanceNode .getShader (this, renderContext);
-
-      // Generate tangents if needed.
-
-      if (shaderNode .x3d_NormalTexture && !this .hasTangents)
-         this .generateTangents ();
 
       // Set viewport.
 
