@@ -1020,10 +1020,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
                   shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, this .texCoordOffset);
 
                if (this .hasNormals)
-               {
-                  shaderNode .enableNormalAttribute (gl, this .geometryBuffer, 0, this .normalOffset);
-                  shaderNode .normalAttributeDivisor (gl, this .maxParticles);
-               }
+                  shaderNode .enableNormalAttribute (gl, this .geometryBuffer, 0, this .normalOffset, this .maxParticles);
 
                shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, this .verticesOffset);
             }

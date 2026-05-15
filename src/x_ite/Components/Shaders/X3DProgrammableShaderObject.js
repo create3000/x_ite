@@ -294,15 +294,9 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          this [name] = gl .getAttribLocation (program, name);
 
       if (this .x3d_TexCoord .length)
-      {
          delete this .enableTexCoordAttribute;
-         delete this .texCoordAttributeDivisor;
-      }
       else
-      {
          this .enableTexCoordAttribute  = Function .prototype;
-         this .texCoordAttributeDivisor = Function .prototype;
-      }
 
       /*
        * Fill uniforms with defaults.
@@ -1094,45 +1088,33 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
       gl .vertexAttribDivisor (location, divisor)
    },
-   enableTexCoordAttribute (gl, buffers, stride, offset)
+   enableTexCoordAttribute (gl, buffers, stride, offset, divisor = 0)
    {
       for (const [i, location] of this .x3d_TexCoord)
       {
          gl .bindBuffer (gl .ARRAY_BUFFER, buffers [i]);
          gl .enableVertexAttribArray (location);
          gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
-      }
-   },
-   texCoordAttributeDivisor (gl, divisor)
-   {
-      for (const [i, location] of this .x3d_TexCoord)
-      {
          gl .vertexAttribDivisor (location, divisor);
       }
    },
-   enableNormalAttribute (gl, buffer, stride, offset)
+   enableNormalAttribute (gl, buffer, stride, offset, divisor = 0)
    {
       const location = this .x3d_Normal;
 
       gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
       gl .enableVertexAttribArray (location);
       gl .vertexAttribPointer (location, 3, gl .FLOAT, false, stride, offset);
+      gl .vertexAttribDivisor (location, divisor);
    },
-   normalAttributeDivisor (gl, divisor)
-   {
-      gl .vertexAttribDivisor (this .x3d_Normal, divisor);
-   },
-   enableTangentAttribute (gl, buffer, stride, offset)
+   enableTangentAttribute (gl, buffer, stride, offset, divisor = 0)
    {
       const location = this .x3d_Tangent;
 
       gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
       gl .enableVertexAttribArray (location);
       gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
-   },
-   tangentAttributeDivisor (gl, divisor)
-   {
-      gl .vertexAttribDivisor (this .x3d_Tangent, divisor);
+      gl .vertexAttribDivisor (location, divisor);
    },
    enableVertexAttribute (gl, buffer, stride, offset)
    {
