@@ -1,7 +1,5 @@
 import X3DParser   from "./X3DParser.js";
 import Expressions from "./Expressions.js";
-import Quaternion  from "../../standard/Math/Numbers/Quaternion.js";
-import Rotation4   from "../../standard/Math/Numbers/Rotation4.js";
 
 /*
  *  Grammar
