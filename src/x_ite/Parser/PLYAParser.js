@@ -260,8 +260,6 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    },
    async processElements (elements)
    {
-      // console .log (elements)
-
       for (const element of elements)
          this .processElement (element);
 
@@ -346,14 +344,14 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
             const normal = scene .createNode ("Normal");
 
             if (this .mustRotateAxes)
-               this .rotateAxes (this .normals);
+               this .rotateAxes90 (this .normals);
 
             normal .vector   = this .normals;
             geometry .normal = normal;
          }
 
          if (this .mustRotateAxes)
-            this .rotateAxes (this .points);
+            this .rotateAxes90 (this .points);
 
          coordinate .point = this .points;
          geometry .coord   = coordinate;
@@ -381,14 +379,18 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
             const normal = scene .createNode ("Normal");
 
             if (this .mustRotateAxes)
-               this .rotateAxes (this .normals);
+               this .rotateAxes90 (this .normals);
+            else if (this .rotations ?.length || this .scales ?.length)
+               this .rotateAxes180 (this .normals);
 
             normal .vector   = this .normals;
             geometry .normal = normal;
          }
 
          if (this .mustRotateAxes)
-            this .rotateAxes (this .points);
+            this .rotateAxes90 (this .points);
+         else if (this .rotations ?.length || this .scales ?.length)
+            this .rotateAxes180 (this .points);
 
          coordinate .point = this .points;
          geometry .coord   = coordinate;

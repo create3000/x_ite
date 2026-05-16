@@ -181,7 +181,7 @@ Object .assign (X3DParser .prototype,
 
       nodes .length = 0;;
    },
-   rotateAxes (array)
+   rotateAxes90 (array)
    {
       // This function is for STL and PLY models.
 
@@ -192,6 +192,20 @@ Object .assign (X3DParser .prototype,
          const z = -array [i + 1];
 
          array [i + 1] = array [i + 2];
+         array [i + 2] = z;
+      }
+   },
+   rotateAxes180 (array)
+   {
+      // This function is for STL and PLY models.
+
+      const length = array .length;
+
+      for (let i = 0; i < length; i += 3)
+      {
+         const z = -array [i + 2];
+
+         array [i + 1] = -array [i + 1];
          array [i + 2] = z;
       }
    },
