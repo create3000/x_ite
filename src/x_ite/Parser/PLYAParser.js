@@ -379,8 +379,6 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
             if (this .mustRotateAxes)
                this .rotateAxes90 (this .normals);
-            else if (this .rotations ?.length || this .scales ?.length)
-               this .rotateAxes180 (this .normals);
 
             normal .vector   = this .normals;
             geometry .normal = normal;
@@ -388,8 +386,6 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
          if (this .mustRotateAxes)
             this .rotateAxes90 (this .points);
-         else if (this .rotations ?.length || this .scales ?.length)
-            this .rotateAxes180 (this .points);
 
          coordinate .point = this .points;
          geometry .coord   = coordinate;
