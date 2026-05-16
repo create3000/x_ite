@@ -145,7 +145,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
       Grammar .untilEndOfLine .parse (this);
 
       this .facets ();
-      this .rotateAxes (this .vertices);
+      this .rotateAxes90 (this .vertices);
 
       shape .appearance         = this .appearance;
       shape .geometry           = geometry;
@@ -157,7 +157,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
       {
          const normal = scene .createNode ("Normal");
 
-         this .rotateAxes (this .normals);
+         this .rotateAxes90 (this .normals);
 
          normal .vector   = this .normals;
          geometry .normal = normal;
