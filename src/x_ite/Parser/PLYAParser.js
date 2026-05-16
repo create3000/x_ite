@@ -280,8 +280,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
             numQuaternions = quaternions .length,
             orientations   = [ ];
 
-         this .rotateAxes (this .points);
-         this .rotateAxes (this .points);
+         this .rotateAxes180 (this .points);
 
          for (let i = 0; i < numQuaternions; i += 4)
             orientations .push (quaternions [i + 1], quaternions [i + 2], quaternions [i + 3], quaternions [i]);
