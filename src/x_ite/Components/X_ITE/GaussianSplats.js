@@ -71,6 +71,22 @@ const float SH_C0 = 0.28209479177387814;
 #endif
 #endif
 
+// vec4
+// quat (const in vec4 rotation)
+// {
+//    float scale = length (rotation .xyz);
+
+//    if (scale == 0.0)
+//       return vec4 (0.0, 0.0, 0.0, 1.0);
+
+//    // Determine quaternion.
+
+//    float halfTheta = rotation .w / 2.0;
+//    float aScale    = sin (halfTheta) / scale;
+
+//    return vec4 (rotation .xyz * aScale, cos (halfTheta));
+// }
+
 mat3
 computeC (const in vec4 rotation, const in vec3 scale)
 {
