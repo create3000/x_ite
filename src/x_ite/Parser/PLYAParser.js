@@ -282,7 +282,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
          this .rotateAxes180 (this .points);
 
-         // Quaternions elements must be rotated.
+         // Quaternion elements must be rotated.
          // https://www.kaggle.com/code/stpeteishii/creatures-ply-to-gaussian-splat
          for (let i = 0; i < numQuaternions; i += 4)
             orientations .push (quaternions [i + 1], quaternions [i + 2], quaternions [i + 3], quaternions [i]);
