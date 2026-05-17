@@ -1,5 +1,5 @@
-/* X_ITE v15.0.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.1")];
+/* X_ITE v15.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1156,16 +1156,14 @@ precision highp float;precision highp int;uniform mat4 x3d_ProjectionMatrix;unif
 uniform mat4 x3d_EyeMatrix;
 #endif
 in vec4 x3d_TexCoord0;in vec4 x3d_Vertex;out vec3 vertex;out vec4 texCoord;
-#if defined(X3D_LOGARITHMIC_DEPTH_BUFFER)
-out float depth;
-#endif
+#include<Logarithmic>
 void main(){vec4 position=x3d_ModelViewMatrix*x3d_Vertex;
 #if defined(X3D_XR_SESSION)
 position=x3d_EyeMatrix*position;
 #endif
 vertex=position.xyz;texCoord=x3d_TextureMatrix[0]*x3d_TexCoord0;gl_Position=x3d_ProjectionMatrix*position;
 #if defined(X3D_LOGARITHMIC_DEPTH_BUFFER)
-depth=1.+gl_Position.w;
+logarithmic(gl_Position);
 #endif
 }`
 ;
@@ -1173,18 +1171,19 @@ depth=1.+gl_Position.w;
 /* harmony default export */ const VolumeStyle_vs = (external_X_ITE_X3D_Namespace_default().add ("VolumeStyle.vs", VolumeStyle_vs_default_));
 ;// ./src/x_ite/Browser/VolumeRendering/VolumeStyle.fs.js
 const VolumeStyle_fs_default_ = /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler3D;in vec3 vertex;in vec4 texCoord;
-#if defined(X3D_LOGARITHMIC_DEPTH_BUFFER)
-uniform float x3d_LogarithmicFarFactor1_2;in float depth;
+precision highp float;precision highp int;precision highp sampler3D;uniform sampler3D x3d_Texture3D[1];uniform mat3 x3d_TextureNormalMatrix;
+#if defined(X3D_LIGHTING)
+uniform x3d_LightSourceParameters x3d_LightSource[X3D_NUM_LIGHTS];
 #endif
-uniform sampler3D x3d_Texture3D[1];uniform mat3 x3d_TextureNormalMatrix;uniform x3d_LightSourceParameters x3d_LightSource[x3d_MaxLights];const float M_PI=3.141592653589793;const float M_SQRT2=1.4142135623730951;const float M_SQRT1_2=.7071067811865476;
-#if defined(X3D_ORDER_INDEPENDENT_TRANSPARENCY)
-layout(location=0)out vec4 x3d_FragData0;layout(location=1)out vec4 x3d_FragData1;
-#else
+in vec3 vertex;in vec4 texCoord;
+#if!defined(X3D_ORDER_INDEPENDENT_TRANSPARENCY)
 out vec4 x3d_FragColor;
 #endif
+const float M_PI=3.141592653589793;const float M_SQRT2=1.4142135623730951;const float M_SQRT1_2=.7071067811865476;
 #include<ClipPlanes>
 #include<Fog>
+#include<OIT>
+#include<Logarithmic>
 __VOLUME_STYLES_DEFINES__
 #if defined(X3D_HSV)
 vec3 rgb2hsv(in vec3 color){float h=0.;float s=0.;float v=0.;float min=min(min(color.r,color.g),color.b);float max=max(max(color.r,color.g),color.b);v=max;float delta=max-min;if(max!=0.&&delta!=0.){s=delta/max;if(color.r==max)h=(color.g-color.b)/delta;else if(color.g==max)h=2.+(color.b-color.r)/delta;else h=4.+(color.r-color.g)/delta;h*=M_PI/3.;if(h<0.)h+=M_PI*2.;}else s=h=0.;return vec3(h,s,v);}vec3 hsv2rgb(in vec3 hsv){float h=hsv[0];float s=clamp(hsv[1],0.,1.);float v=clamp(hsv[2],0.,1.);if(s==0.){return vec3(v,v,v);}else{float w=(h*(180./M_PI))/60.;float i=floor(w);float f=w-i;float p=v*(1.-s);float q=v*(1.-s*f);float t=v*(1.-s*(1.-f));switch(int(i)% 6){case 0:return vec3(v,t,p);case 1:return vec3(q,v,p);case 2:return vec3(p,v,t);case 3:return vec3(p,q,v);case 4:return vec3(t,p,v);default:return vec3(v,p,q);}}return vec3(0);}vec3 mix_hsv(in vec3 a,in vec3 b,in float t){float ha=a[0];float sa=a[1];float va=a[2];float hb=b[0];float sb=b[1];float vb=b[2];if(sa==0.)ha=hb;if(sb==0.)hb=ha;float range=abs(hb-ha);if(range<=M_PI){float h=ha+t*(hb-ha);float s=sa+t*(sb-sa);float v=va+t*(vb-va);return vec3(h,s,v);}float PI2=M_PI*2.;float step=(PI2-range)*t;float h=ha<hb?ha-step:ha+step;if(h<0.)h+=PI2;else if(h>PI2)h-=PI2;float s=sa+t*(sb-sa);float v=va+t*(vb-va);return vec3(h,s,v);}
@@ -1195,11 +1194,7 @@ struct Plane3{vec3 normal;float distanceFromOrigin;};Plane3 plane3(const in vec3
 #if defined(X3D_SHADING)
 float getSpotFactor(const in float cutOffAngle,const in float beamWidth,const in vec3 L,const in vec3 d){float spotAngle=acos(clamp(dot(-L,d),-1.,1.));if(spotAngle>=cutOffAngle)return 0.;else if(spotAngle<=beamWidth)return 1.;return(spotAngle-cutOffAngle)/(beamWidth-cutOffAngle);}
 #endif
-__VOLUME_STYLES_UNIFORMS__ vec4 getTextureColor(in vec3 texCoord){if(any(greaterThan(abs(texCoord-.5),vec3(.5))))discard;vec4 textureColor=texture(x3d_Texture3D[0],texCoord);__VOLUME_STYLES_FUNCTIONS__ return textureColor;}
-#if defined(X3D_ORDER_INDEPENDENT_TRANSPARENCY)
-float weight(const in float z,const in float a){return clamp(pow(min(1.,a*10.)+.01,3.)*1e8*pow(1.-z*.9,3.),1e-2,3e3);}
-#endif
-void main(){
+__VOLUME_STYLES_UNIFORMS__ vec4 getTextureColor(in vec3 texCoord){if(any(greaterThan(abs(texCoord-.5),vec3(.5))))discard;vec4 textureColor=texture(x3d_Texture3D[0],texCoord);__VOLUME_STYLES_FUNCTIONS__ return textureColor;}void main(){
 #if defined(X3D_CLIP_PLANES)
 clip();
 #endif
@@ -1208,12 +1203,12 @@ vec4 finalColor=getTextureColor(texCoord.stp/texCoord.q);
 finalColor.rgb=getFogColor(finalColor.rgb);
 #endif
 #if defined(X3D_ORDER_INDEPENDENT_TRANSPARENCY)
-float a=finalColor.a;float w=weight(gl_FragCoord.z,a);finalColor.rgb*=a;finalColor*=w;x3d_FragData0=vec4(finalColor.rgb,a);x3d_FragData1=vec4(finalColor.a);
+oit(finalColor);
 #else
 x3d_FragColor=finalColor;
 #endif
 #if defined(X3D_LOGARITHMIC_DEPTH_BUFFER)
-gl_FragDepth=log2(depth)*x3d_LogarithmicFarFactor1_2;
+logarithmic();
 #endif
 }`
 ;
@@ -1491,9 +1486,9 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, (external_
    {
       this .volumeMaterialNode .getVolumeShaders () .clear ();
    },
-   addShaderUniformNames (uniformNames)
+   addShaderUniforms (uniforms)
    {
-      uniformNames .push ("x3d_TextureNormalMatrix");
+      uniforms .push ("x3d_TextureNormalMatrix");
    },
    getNumPlanes (quality)
    {
@@ -1905,11 +1900,11 @@ Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, VolumeR
       for (const renderStyleNode of this .renderStyleNodes)
          renderStyleNode .addShaderFields (shaderNode);
 
-      const uniformNames = [ ];
+      const uniforms = [ ];
 
-      this .addShaderUniformNames (uniformNames);
+      this .addShaderUniforms (uniforms);
 
-      shaderNode .setUniformNames (uniformNames);
+      shaderNode .setUniformNames (uniforms);
       shaderNode .setup ();
 
       return shaderNode;
@@ -2293,11 +2288,11 @@ Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, VolumeRe
             renderStyleNode .addShaderFields (shaderNode);
       }
 
-      const uniformNames = [ ];
+      const uniforms = [ ];
 
-      this .addShaderUniformNames (uniformNames);
+      this .addShaderUniforms (uniforms);
 
-      shaderNode .setUniformNames (uniformNames);
+      shaderNode .setUniformNames (uniforms);
       shaderNode .setup ();
 
       return shaderNode;
@@ -2441,6 +2436,7 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, VolumeRend
          }
 
          string += "\n";
+         string += "#if defined (X3D_LIGHTING)\n";
          string += "   vec3 N = surfaceNormal .xyz;\n";
          string += "   vec3 V = normalize (-vertex); // normalized vector from point on geometry to viewer's position\n";
          string += "\n";
@@ -2475,6 +2471,7 @@ Object .assign (Object .setPrototypeOf (ShadedVolumeStyle .prototype, VolumeRend
          string += "\n";
          string += "      shadedColor .rgb += emissiveColor_" + this .getId () + ";\n";
          string += "   }\n";
+         string += "#endif\n";
       }
       else
       {
@@ -2715,6 +2712,7 @@ Object .assign (Object .setPrototypeOf (ToneMappedVolumeStyle .prototype, Volume
       string += "   vec3 coolColor = coolColor_" + this .getId () + " .rgb;\n";
       string += "   vec3 warmColor = warmColor_" + this .getId () + " .rgb;\n";
       string += "\n";
+      string += "#if defined (X3D_LIGHTING)\n";
       string += "   for (int i = 0; i < X3D_NUM_LIGHTS; ++ i)\n";
       string += "   {\n";
       string += "      x3d_LightSourceParameters light = x3d_LightSource [i];\n";
@@ -2724,6 +2722,7 @@ Object .assign (Object .setPrototypeOf (ToneMappedVolumeStyle .prototype, Volume
       string += "\n";
       string += "      toneColor += mix (warmColor .rgb, coolColor .rgb, colorFactor);\n";
       string += "   }\n";
+      string += "#endif\n";
       string += "\n";
       string += "   return vec4 (toneColor, originalColor .a);\n";
       string += "}\n";
@@ -2880,11 +2879,11 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, VolumeRendering_X
 
       this .renderStyleNode ?.addShaderFields (shaderNode);
 
-      const uniformNames = [ ];
+      const uniforms = [ ];
 
-      this .addShaderUniformNames (uniformNames);
+      this .addShaderUniforms (uniforms);
 
-      shaderNode .setUniformNames (uniformNames);
+      shaderNode .setUniformNames (uniforms);
       shaderNode .setup ();
 
       return shaderNode;

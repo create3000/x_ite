@@ -1,5 +1,5 @@
-/* X_ITE v15.0.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.1")];
+/* X_ITE v15.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -322,6 +322,8 @@ function BlendMode (executionContext)
 
    this .addType ((external_X_ITE_X3D_X3DConstants_default()).BlendMode);
 
+   // Private properties
+
    this .factorTypes   = new Map ();
    this .equationTypes = new Map ();
 }
@@ -355,8 +357,8 @@ Object .assign (Object .setPrototypeOf (BlendMode .prototype, (external_X_ITE_X3
       this .equationTypes .set ("FUNC_ADD",              gl .FUNC_ADD);
       this .equationTypes .set ("FUNC_SUBTRACT",         gl .FUNC_SUBTRACT);
       this .equationTypes .set ("FUNC_REVERSE_SUBTRACT", gl .FUNC_REVERSE_SUBTRACT);
-      this .equationTypes .set ("MIN",                   gl .MIN || (ext && ext .MIN_EXT));
-      this .equationTypes .set ("MAX",                   gl .MAX || (ext && ext .MAX_EXT));
+      this .equationTypes .set ("MIN",                   gl .MIN ?? ext ?.MIN_EXT);
+      this .equationTypes .set ("MAX",                   gl .MAX ?? ext ?.MAX_EXT);
 
       this ._sourceColorFactor      .addInterest ("set_sourceColorFactor__",      this);
       this ._sourceAlphaFactor      .addInterest ("set_sourceAlphaFactor__",      this);
@@ -390,7 +392,7 @@ Object .assign (Object .setPrototypeOf (BlendMode .prototype, (external_X_ITE_X3
    set_destinationAlphaFactor__ ()
    {
       this .destinationAlphaFactorType = this .factorTypes .get (this ._destinationAlphaFactor .getValue ())
-      ??    this .factorTypes .get ("ONE_MINUS_SRC_ALPHA");
+         ?? this .factorTypes .get ("ONE_MINUS_SRC_ALPHA");
    },
    set_colorEquation__ ()
    {
@@ -1125,11 +1127,11 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (external_X_I
       {
          const matrix = this .matrices [i] ??= new (external_X_ITE_X3D_Matrix4_default()) ();
 
-         matrix .set (numTranslations      ? translations      [Math .min (i, numTranslations      - 1)] .getValue () : null,
-                      numRotations         ? rotations         [Math .min (i, numRotations         - 1)] .getValue () : null,
-                      numScales            ? scales            [Math .min (i, numScales            - 1)] .getValue () : null,
-                      numScaleOrientations ? scaleOrientations [Math .min (i, numScaleOrientations - 1)] .getValue () : null,
-                      numCenters           ? centers           [Math .min (i, numCenters           - 1)] .getValue () : null);
+         matrix .set (translations      [i] ?.getValue (),
+                      rotations         [i] ?.getValue (),
+                      scales            [i] ?.getValue (),
+                      scaleOrientations [i] ?.getValue (),
+                      centers           [i] ?.getValue ());
 
          data .set (matrix, o);
          data .set (matrix .submatrix .transpose () .inverse (), o + 16);
@@ -1808,7 +1810,12 @@ Object .assign (Object .setPrototypeOf (SpecularGlossinessMaterial .prototype, (
          this .occlusionTextureNode          ?.getShaderOptions (options, "OCCLUSION");
       }
 
-      const shaderNode = browser .createShader ("SpecularGlossiness", "Default", "SpecularGlossiness", options);
+      const shaderNode = browser .createShader ({
+         name: "SpecularGlossiness",
+         vertexShader: "Default",
+         fragmentShader: "SpecularGlossiness",
+         options,
+      });
 
       browser .getShaders () .set (key, shaderNode);
 

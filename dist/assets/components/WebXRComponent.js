@@ -1,5 +1,5 @@
-/* X_ITE v15.0.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.1")];
+/* X_ITE v15.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -878,6 +878,9 @@ Object .assign (X3DWebXRContext .prototype,
          for (const [i, { viewMatrix, projectionMatrix }] of pose .views .entries ())
          {
             const frameBuffer = this .getFramebuffers () [i];
+
+            if (!frameBuffer)
+               continue;
 
             for (const { active, gamepad, matrix, hit } of this [_inputSources])
             {

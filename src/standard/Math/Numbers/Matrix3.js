@@ -305,6 +305,7 @@ Object .assign (Matrix3 .prototype,
          t12 = m6 * m1,
          t14 = m6 * m4;
 
+      // Calculate the determinant.
       let d = (t4 * m8 - t6 * m5 - t8 * m8 + t10 * m2 + t12 * m5 - t14 * m2);
 
       // if (d === 0) ... determinant is zero.
