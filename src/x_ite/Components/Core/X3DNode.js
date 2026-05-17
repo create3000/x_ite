@@ -890,7 +890,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
 
       let cdata = this .getSourceText ();
 
-      if (cdata ?.length === 0 || (generator .html && this .getTypeName () !== "Script"))
+      if (cdata ?.length === 0)
          cdata = null;
 
       if (!cdata ?.some (string => string .match (/^\s*(?:data|ecmascript|javascript|vrmlscript)\:/s)))

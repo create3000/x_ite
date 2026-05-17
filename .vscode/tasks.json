@@ -1,43 +1,43 @@
 {
-    // See https://go.microsoft.com/fwlink/?LinkId=733558
-    // for the documentation about the tasks.json format
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "Make Dist",
-            "type": "shell",
-            "command": "npm run dist",
-            "problemMatcher": [],
-        },
-        {
-            "label": "Publish X_ITE",
-            "type": "shell",
-            "command": "npm run release",
-            "problemMatcher": []
-        },
-        {
-            "label": "Checkout Dist",
-            "type": "shell",
-            "command": "git checkout -- dist",
-            "problemMatcher": [],
-        },
-        {
-            "label": "Git List Untracked Files",
-            "type": "shell",
-            "command": "git ls-files --others --exclude-standard",
-            "problemMatcher": []
-        },
-        {
-            "label": "X_ITE Docs",
-            "type": "shell",
-            "command": "npm run docs",
-            "problemMatcher": [],
-            "options": {
-                "shell": {
-                    "executable": "zsh",
-                    "args": ["-c"]
-                }
-            }
+   // See https://go.microsoft.com/fwlink/?LinkId=733558
+   // for the documentation about the tasks.json format
+   "version": "2.0.0",
+   "tasks": [
+      {
+        "label": "Make Dist",
+        "type": "shell",
+        "command": "npm run dist",
+        "problemMatcher": [],
+      },
+      {
+        "label": "Publish X_ITE",
+        "type": "shell",
+        "command": "npm run release",
+        "problemMatcher": []
+      },
+      {
+        "label": "Checkout Dist",
+        "type": "shell",
+        "command": "git checkout -- dist",
+        "problemMatcher": [],
+      },
+      {
+        "label": "Git List Untracked Files",
+        "type": "shell",
+        "command": "git ls-files --others --exclude-standard",
+        "problemMatcher": []
+      },
+      {
+        "label": "X_ITE Docs",
+        "type": "shell",
+        "command": "npm run docs",
+        "problemMatcher": [],
+        "options": {
+           "shell": {
+              "executable": "zsh",
+              "args": ["-c"]
+           }
         }
-    ]
+      }
+   ]
 }

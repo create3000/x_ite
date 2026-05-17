@@ -32,14 +32,14 @@ The PlaneSensor node belongs to the [PointingDeviceSensor](/x_ite/components/ove
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFRotation | [in, out] | [axisRotation](#fields-axisRotation) | 0 0 1 0  |
+| SFRotation | [in, out] | [axisRotation](#fields-axisRotation) | 0 0 1 0 |
 | SFBool | [in, out] | [autoOffset](#fields-autoOffset) | TRUE |
-| SFVec3f | [in, out] | [offset](#fields-offset) | 0 0 0  |
-| SFVec2f | [in, out] | [minPosition](#fields-minPosition) | 0 0  |
-| SFVec2f | [in, out] | [maxPosition](#fields-maxPosition) | -1 -1  |
+| SFVec3f | [in, out] | [offset](#fields-offset) | 0 0 0 |
+| SFVec2f | [in, out] | [minPosition](#fields-minPosition) | 0 0 |
+| SFVec2f | [in, out] | [maxPosition](#fields-maxPosition) | -1 -1 |
 | SFVec3f | [out] | [trackPoint_changed](#fields-trackPoint_changed) |  |
 | SFVec3f | [out] | [translation_changed](#fields-translation_changed) |  |
 | SFBool | [out] | [isOver](#fields-isOver) |  |
@@ -166,6 +166,14 @@ Select geometry by activating the pointing device (for example, clicking the mou
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/PointingDeviceSensor/PlaneSensor/PlaneSensor.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of PlaneSensor Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/pointingDeviceSensor.html#PlaneSensor)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

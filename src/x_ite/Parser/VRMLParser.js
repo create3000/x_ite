@@ -24,65 +24,64 @@ import DEVELOPMENT               from "../DEVELOPMENT.js";
 // VRML lexical elements
 const Grammar = Expressions ({
    // General
-   Whitespaces: /[\x20\n,\t\r]+/gy,
-   Comment:     /#\/\*[\s\S]*?\*\/#|#.*?(?=[\n\r]|$)/gy,
-   Comment3_2:  /#.*?(?=[\n\r]|$)/gy,
-   Break:       /\r?\n/g,
+   Whitespaces: /[\x20\n,\t\r]+/y,
+   Comment:     /#\/\*.*?\*\/#|#[^\r\n]*(?=[\r\n]|$)/sy,
+   LineFeed:    /\n/g,
 
    // Header
-   Header:      /^#(VRML|X3D) V(.*?) (utf8)(?:[ \t]+(.*?))?[ \t]*[\n\r]/gy,
+   Header:      /^#(VRML|X3D) V(.*?) (utf8)\b(.*?)[\r\n]/y,
 
    // Keywords
-   AS:          /AS/gy,
-   COMPONENT:   /COMPONENT/gy,
-   DEF:         /DEF/gy,
-   DESCRIPTION: /DESCRIPTION/gy,
-   EXPORT:      /EXPORT/gy,
-   EXTERNPROTO: /EXTERNPROTO/gy,
-   FALSE:       /FALSE|false/gy,
-   IMPORT:      /IMPORT/gy,
-   IS:          /IS/gy,
-   META:        /META/gy,
-   NULL:        /NULL|null/gy,
-   TRUE:        /TRUE|true/gy,
-   PROFILE:     /PROFILE/gy,
-   PROTO:       /PROTO/gy,
-   ROUTE:       /ROUTE/gy,
-   TO:          /TO/gy,
-   UNIT:        /UNIT/gy,
-   USE:         /USE/gy,
+   AS:          /AS/y,
+   COMPONENT:   /COMPONENT/y,
+   DEF:         /DEF/y,
+   DESCRIPTION: /DESCRIPTION/y,
+   EXPORT:      /EXPORT/y,
+   EXTERNPROTO: /EXTERNPROTO/y,
+   FALSE:       /FALSE|false/y,
+   IMPORT:      /IMPORT/y,
+   IS:          /IS/y,
+   META:        /META/y,
+   NULL:        /NULL|null/y,
+   TRUE:        /TRUE|true/y,
+   PROFILE:     /PROFILE/y,
+   PROTO:       /PROTO/y,
+   ROUTE:       /ROUTE/y,
+   TO:          /TO/y,
+   UNIT:        /UNIT/y,
+   USE:         /USE/y,
 
    // Terminal symbols
-   OpenBrace:    /\{/gy,
-   CloseBrace:   /\}/gy,
-   OpenBracket:  /\[/gy,
-   CloseBracket: /\]/gy,
-   Period:       /\./gy,
-   Colon:        /\:/gy,
+   OpenBrace:    /\{/y,
+   CloseBrace:   /\}/y,
+   OpenBracket:  /\[/y,
+   CloseBracket: /\]/y,
+   Period:       /\./y,
+   Colon:        /\:/y,
 
-   Id: /[^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*/gy,
-   ComponentNameId: /[^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]*/gy,
+   Id: /[^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*/y,
+   ComponentNameId: /[^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]*/y,
 
-   initializeOnly: /initializeOnly/gy,
-   inputOnly:      /inputOnly/gy,
-   outputOnly:     /outputOnly/gy,
-   inputOutput:    /inputOutput/gy,
+   initializeOnly: /initializeOnly/y,
+   inputOnly:      /inputOnly/y,
+   outputOnly:     /outputOnly/y,
+   inputOutput:    /inputOutput/y,
 
-   field:        /field/gy,
-   eventIn:      /eventIn/gy,
-   eventOut:     /eventOut/gy,
-   exposedField: /exposedField/gy,
+   field:        /field/y,
+   eventIn:      /eventIn/y,
+   eventOut:     /eventOut/y,
+   exposedField: /exposedField/y,
 
-   FieldType: /[SM]F(?:Bool|ColorRGBA|Color|Double|Float|Image|Int32|Matrix3d|Matrix3f|Matrix4d|Matrix4f|Node|Rotation|String|Time|Vec2d|Vec2f|Vec3d|Vec3f|Vec4d|Vec4f)/gy,
+   FieldType: /[SM]F(?:Bool|Color(?:RGBA)?|Double|Float|Image|Int32|Matrix[34][df]|Node|Rotation|String|Time|Vec[234][df])/y,
 
    // Values
-   int32: /(?:0[xX][\da-fA-F]+)|(?:[+-]?\d+)/gy,
-   double: /[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/gy,
-   doubleQuotes: /"/gy,
-   noDoubleQuotes: /[^"]+/gy,
+   int32: /(?:0[xX][\da-fA-F]+)|(?:[+-]?\d+)/y,
+   double: /[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/y,
+   doubleQuotes: /"/y,
+   noDoubleQuotes: /[^"]+/y,
 
-   CONSTANTS: /([+-]?)\b(NAN|INFINITY|INF|PI|PI2|PI1_4|PI2_4|PI3_4|PI4_4|PI5_4|PI6_4|PI7_4|PI8_4|PI1_2|PI2_2|PI3_2|PI4_2|PI1_3|PI2_3|PI3_3|PI4_3|PI5_3|PI6_3|SQRT1_2|SQRT2)\b/igy,
-   HTMLColor: /[a-zA-Z]+|0[xX][\da-fA-F]+|rgba?\(.*?\)/gy,
+   CONSTANTS: /([+-]?)\b(NAN|INFINITY|INF|PI(?:2|1_4|2_4|3_4|4_4|5_4|6_4|7_4|8_4|1_2|2_2|3_2|4_2|1_3|2_3|3_3|4_3|5_3|6_3)?|SQRT(?:1_2|2))\b/iy,
+   HTMLColor: /0[xX][\da-fA-F]+|[a-zA-Z]+\([^\)]*\)|[a-zA-Z]+/y,
 });
 
 /*
@@ -92,11 +91,6 @@ const Grammar = Expressions ({
 function VRMLParser (scene)
 {
    X3DParser .call (this, scene, "Parser");
-
-   this .Grammar =
-   {
-      Comment: Grammar .Comment,
-   };
 }
 
 Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .prototype),
@@ -168,7 +162,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       if (this .input .match (/^#VRML V1.0/))
          return false;
 
-      return !! this .input .match (/^(?:#X3D|#VRML|(?:[\x20\n,\t\r]*|#.*?[\r\n])*(PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]*|#.*?[\r\n])\{|$))/);
+      return !! this .input .match (/^(?:#X3D|#VRML|(?:[\x20\n,\t\r]|#\/\*.*?\*\/#|#[^\r\n]*[\r\n])*(?:PROFILE|COMPONENT|META|UNIT|EXTERNPROTO|PROTO|DEF|NULL|IMPORT|EXPORT|ROUTE|\w+(?:[\x20\n,\t\r]|#\/\*.*?\*\/#|#[^\r\n]*[\r\n])*\{|$))/s);
    },
    parseIntoScene (resolve, reject)
    {
@@ -272,7 +266,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       if (this .whitespaces ())
          return true;
 
-      return this .Grammar .Comment .parse (this);
+      return Grammar .Comment .parse (this);
    },
    whitespaces ()
    {
@@ -287,7 +281,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    },
    lines (string)
    {
-      const match = string .match (Grammar .Break);
+      const match = string .match (Grammar .LineFeed);
 
       if (match)
          this .lineNumber += match .length;
@@ -361,10 +355,6 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
          this .lines (this .result [0]);
 
          this .getScene () .setSpecificationVersion (this .result [2]);
-
-         if (this .getScene () .getSpecificationVersion () <= 3.2)
-            this .Grammar .Comment = Grammar .Comment3_2;
-
          return true;
       }
 
@@ -2682,12 +2672,12 @@ Object .assign (VRMLParser .prototype,
    [X3DConstants .MFVec4f]:     VRMLParser .prototype .mfvec4Value,
 });
 
-X3DField .prototype .fromVRMLString = function (string, scene)
+X3DField .prototype .fromVRMLString = function (value, scene)
 {
    const parser = new VRMLParser (scene);
 
    parser .setUnits (!!scene);
-   parser .setInput (string);
+   parser .setInput (value);
 
    if (!parser .fieldValue (this))
       throw new Error (`Couldn't read value for field '${this .getName ()}'.`);

@@ -7,6 +7,50 @@ tags: [New, Releases]
 ---
 X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-versioning). Keep this in mind when choosing a version number.
 
+## X_ITE v15.0 Series
+
+*Leipzig, 3rd May 2026:* The 15.0 release of X_ITE introduces several breaking changes aimed at improving consistency and performance across field handling.
+
+- Out-of-range access for MF fields: Multi-value fields (MF*) derived from X3DArrayField now return undefined when accessing an index that is out of range. This behavior is now treated as a security risk to prevent unintended data access. Previously, such access could return unexpected values or behave inconsistently. Applications relying on the old behavior should add explicit set the length of the array.
+- Optimized constructors for SF and MF fields: Fields derived from X3DField now use more efficient constructors. As a result, some construction patterns have changed:
+  - `new SFRotation(matrix)` has been replaced with `SFRotation.fromMatrix(matrix)`.
+  - SFMatrix[34][df] constructors that previously accepted multiple vector arguments should now use spread syntax:
+
+```js
+new SFMatrix3f (... row0, ... row1, ... row2)
+new SFMatrix4f (... row0, ... row1, ... row2, ... row3)
+```
+
+These changes improve performance and align the API more closely with modern JavaScript practices, but require minor updates to existing code.
+
+### Notable Changes
+
+- [x] Fixed fatal bug in [LayoutGroup](/x_ite/components/layout/layoutgroup/) when a custom [Viewport](/x_ite/components/layering/viewport/) is used.
+- [x] Fixed fatal bug in [Layout](/x_ite/components/layout/layout/) in rare cases.
+
+## X_ITE v14.2 Series
+
+*Leipzig, 26th April 2026:* This series introduces a breaking change where `X3DConstants.CONNECTION_ERROR` has been renamed to `X3DConstants.INITIALIZED_ERROR`, so existing code should be updated accordingly to avoid runtime issues. In addition, touch device handling has been improved when the NONE viewer is active, resulting in more consistent and reliable interaction behavior on mobile and touch-enabled devices.
+
+### Notable Changes
+
+- [x] Breaking change: `X3DConstants.CONNECTION_ERROR` is now `X3DConstants.INITIALIZED_ERROR`. `X3DConstants.CONNECTION_ERROR` is now fired when a WebGL context lost event occurs.
+- [x] Better handling of touch devices when NONE viewer is active.
+- [x] [ScreenFontStyle](/x_ite/components/layout/screenfontstyle/) now uses content scale value to determine texture size.
+
+## X_ITE v14.1 Series
+
+*Leipzig, 22th March 2026:* This series of X_ITE comes with the new [RenderedTexture](/x_ite/components/texturing/renderedtexture/) node and improved support for [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/). Both textures can now be used everywhere where a X3DSingleTextureNode is valid, for instance as material texture, as [Appearance](/x_ite/components/shape/appearance/) texture, in custom shaders and as a texture projector texture.
+
+### Notable Changes
+
+- [x] Added new node [RenderedTexture](/x_ite/components/texturing/renderedtexture/).
+- [x] [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/) works now as material texture as well as a shader texture.
+- [x] There is now basic support for VRM models.
+- [x] glTF parser can now handle [KHR_accessor_float16](https://github.com/KhronosGroup/glTF/tree/8611bc8933493865380e68fadf555dbbc2cf1180/extensions/2.0/Khronos/KHR_accessor_float16).
+- [x] Fixed fatal bug when there is only an [EnvironmentLight](/x_ite/components/lighting/environmentlight/) with shadows enabled.
+- [x] Fixed race condition in [FontLibrary](/x_ite/components/text/fontlibrary/) and X3DFontstyleNode when an URL is loaded.
+
 ## X_ITE v14.0 Series
 
 *Leipzig, 27th January 2026:* This series of X_ITE comes with experimental support for X3D4.1, meaning that all the new features and nodes ([EnvironmentLight](/x_ite/components/lighting/environmentlight/), [HAnimPose](/x_ite/components/hanim/hanimpose/), [FontLibrary](/x_ite/components/text/fontlibrary/), [Tangent](/x_ite/components/rendering/tangent/)) are available and ready to be tested.

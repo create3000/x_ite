@@ -33,9 +33,9 @@ The DepthMode node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) com
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFVec2f | [in, out] | [polygonOffset](#fields-polygonOffset) | 0 0  |
-| SFVec2f | [in, out] | [depthRange](#fields-depthRange) | 0 1  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFVec2f | [in, out] | [polygonOffset](#fields-polygonOffset) | 0 0 |
+| SFVec2f | [in, out] | [depthRange](#fields-depthRange) | 0 1 |
 | SFBool | [in, out] | [depthTest](#fields-depthTest) | TRUE |
 | SFString | [in, out] | [depthFunction](#fields-depthFunction) | "LESS |
 | SFBool | [in, out] | [depthMask](#fields-depthMask) | TRUE |
@@ -105,6 +105,13 @@ Sets whether writing into the depth buffer is enabled or disabled.
 - [Download ZIP Archive](https://create3000.github.io/media/examples/X_ITE/DepthMode/DepthMode.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/X_ITE/DepthMode/DepthMode.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

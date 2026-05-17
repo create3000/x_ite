@@ -30,7 +30,7 @@ The SplinePositionInterpolator2D node belongs to the [Interpolation](/x_ite/comp
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFFloat | [in] | [set_fraction](#fields-set_fraction) |  |
 | SFBool | [in, out] | [closed](#fields-closed) | FALSE |
 | MFFloat | [in, out] | [key](#fields-key) | [ ] |
@@ -132,6 +132,13 @@ Nonlinearly interpolated output value computed by using current time fraction al
 ### Warning
 
 - Requires X3D `profile='Full'` or else include `<component name='Interpolation' level='4'/>`
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

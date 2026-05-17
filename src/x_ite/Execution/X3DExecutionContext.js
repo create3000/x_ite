@@ -41,7 +41,7 @@ function X3DExecutionContext (executionContext, outerNode = null, browser = exec
 
    if (executionContext)
    {
-      this ._countPrimitives .addReference (executionContext ._countPrimitives);
+      this ._countPrimitives    .addReference     (executionContext ._countPrimitives);
       this ._sceneGraph_changed .addFieldInterest (executionContext ._sceneGraph_changed);
       this ._bbox_changed       .addFieldInterest (executionContext ._bbox_changed);
    }

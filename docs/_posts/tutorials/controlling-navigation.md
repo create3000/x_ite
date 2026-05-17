@@ -51,7 +51,7 @@ A [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node selects th
 <NavigationInfo
   type='"WALK", "ANY"'
   avatarSize='0.25, 1.6, 0.75'
-  speed='1.0'
+  speed='1'
   headlight='true'/>
 ```
 
@@ -59,10 +59,10 @@ A [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node selects th
 
 ```vrml
 NavigationInfo {
-  type       [ "WALK", "ANY" ]
+  type [ "WALK", "ANY" ]
   avatarSize [ 0.25, 1.6, 0.75 ]
-  speed      1.0
-  headlight  TRUE
+  speed 1
+  headlight TRUE
 }
 ```
 

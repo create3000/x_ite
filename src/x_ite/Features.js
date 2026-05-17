@@ -84,10 +84,16 @@ const Features =
 
       window .FinalizationRegistry = class FinalizationRegistry
       {
-         register () { }
-         unregister () { }
+         register ()
+         { }
+         
+         unregister ()
+         { }
       };
    }
+
+   if (typeof Float16Array === "undefined")
+      window .Float16Array = Uint16Array;
 })();
 
 (() =>

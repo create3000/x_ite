@@ -30,7 +30,7 @@ The IntegerSequencer node belongs to the [EventUtilities](/x_ite/components/over
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFFloat | [in] | [set_fraction](#fields-set_fraction) |  |
 | SFBool | [in] | [previous](#fields-previous) |  |
 | SFBool | [in] | [next](#fields-next) |  |
@@ -137,6 +137,13 @@ Single intermittent output value determined by current key time and correspondin
 - [Download ZIP Archive](https://create3000.github.io/media/examples/EventUtilities/IntegerSequencer/IntegerSequencer.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/EventUtilities/IntegerSequencer/IntegerSequencer.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

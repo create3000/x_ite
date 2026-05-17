@@ -13,6 +13,8 @@ function FillProperties (executionContext)
 
    this .addChildObjects (X3DConstants .outputOnly, "transparent", new Fields .SFBool ());
 
+   // Private properties
+
    this .hatchColor = new Float32Array (3);
 }
 

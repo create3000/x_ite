@@ -30,7 +30,7 @@ The Matrix4VertexAttribute node belongs to the [Shaders](/x_ite/components/overv
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [ ] | [name](#fields-name) | "" |
 | MFMatrix4f | [in, out] | [value](#fields-value) | [ ] |
 {: .fields }
@@ -66,6 +66,13 @@ Required *name* for this particular VertexAttribute instance.
 #### Hint
 
 - The length of the *value* field shall be a multiple of numComponents.
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

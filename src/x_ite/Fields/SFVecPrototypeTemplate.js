@@ -1,23 +1,10 @@
-import X3DField     from "../Base/X3DField.js";
-import X3DConstants from "../Base/X3DConstants.js";
+import X3DField from "../Base/X3DField.js";
 
 function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double, properties = { })
 {
    const _formatter = double ? "DoubleFormat" : "FloatFormat";
 
-   Object .defineProperties (Constructor,
-   {
-      type:
-      {
-         value: X3DConstants [TypeName],
-         enumerable: true,
-      },
-      typeName:
-      {
-         value: TypeName,
-         enumerable: true,
-      },
-   });
+   X3DField .addStaticProperties (Constructor, TypeName);
 
    Object .assign (Object .setPrototypeOf (Constructor .prototype, X3DField .prototype),
    {
@@ -27,7 +14,7 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double, properti
       },
       copy ()
       {
-         return new (this .constructor) (this .getValue () .copy ());
+         return Constructor .fromValue (this .getValue () .copy ());
       },
       equals (vector)
       {
@@ -43,15 +30,15 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double, properti
       },
       abs ()
       {
-         return new (this .constructor) (this .getValue () .copy () .abs ());
+         return Constructor .fromValue (this .getValue () .copy () .abs ());
       },
       add (vector)
       {
-         return new (this .constructor) (this .getValue () .copy () .add (vector .getValue ()));
+         return Constructor .fromValue (this .getValue () .copy () .add (vector .getValue ()));
       },
       clamp (low, high)
       {
-         return new (this .constructor) (this .getValue () .copy () .clamp (low .getValue (), high .getValue ()));
+         return Constructor .fromValue (this .getValue () .copy () .clamp (low .getValue (), high .getValue ()));
       },
       distance (vector)
       {
@@ -59,11 +46,11 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double, properti
       },
       divide (value)
       {
-         return new (this .constructor) (this .getValue () .copy () .divide (value));
+         return Constructor .fromValue (this .getValue () .copy () .divide (+value));
       },
       divVec (vector)
       {
-         return new (this .constructor) (this .getValue () .copy () .divVec (vector .getValue ()));
+         return Constructor .fromValue (this .getValue () .copy () .divVec (vector .getValue ()));
       },
       dot (vector)
       {
@@ -71,7 +58,7 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double, properti
       },
       inverse ()
       {
-         return new (this .constructor) (this .getValue () .copy () .inverse ());
+         return Constructor .fromValue (this .getValue () .copy () .inverse ());
       },
       length ()
       {
@@ -79,35 +66,39 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double, properti
       },
       lerp (destination, t)
       {
-         return new (this .constructor) (this .getValue () .copy () .lerp (destination, t));
+         return Constructor .fromValue (this .getValue () .copy () .lerp (destination, +t));
       },
       max (vector)
       {
-         return new (this .constructor) (this .getValue () .copy () .max (vector .getValue ()));
+         return Constructor .fromValue (this .getValue () .copy () .max (vector .getValue ()));
       },
       min (vector)
       {
-         return new (this .constructor) (this .getValue () .copy () .min (vector .getValue ()));
+         return Constructor .fromValue (this .getValue () .copy () .min (vector .getValue ()));
       },
       multiply (value)
       {
-         return new (this .constructor) (this .getValue () .copy () .multiply (value));
+         return Constructor .fromValue (this .getValue () .copy () .multiply (+value));
       },
       multVec (vector)
       {
-         return new (this .constructor) (this .getValue () .copy () .multVec (vector .getValue ()));
+         return Constructor .fromValue (this .getValue () .copy () .multVec (vector .getValue ()));
       },
       negate ()
       {
-         return new (this .constructor) (this .getValue () .copy () .negate ());
+         return Constructor .fromValue (this .getValue () .copy () .negate ());
       },
-      normalize (vector)
+      normalize ()
       {
-         return new (this .constructor) (this .getValue () .copy () .normalize ());
+         return Constructor .fromValue (this .getValue () .copy () .normalize ());
+      },
+      reflect (normal)
+      {
+         return Constructor .fromValue (this .getValue () .copy () .reflect (normal .getValue ()));
       },
       subtract (vector)
       {
-         return new (this .constructor) (this .getValue () .copy () .subtract (vector .getValue ()));
+         return Constructor .fromValue (this .getValue () .copy () .subtract (vector .getValue ()));
       },
       toStream (generator)
       {
@@ -226,10 +217,35 @@ function SFVecPrototypeTemplate (Constructor, TypeName, Vector, double, properti
       ["w", Object .assign ({ enumerable: true }, w)],
    ];
 
-   indices .length = Vector .prototype .length;
-   props   .length = Vector .prototype .length;
+   const constants = [
+      "X_AXIS",
+      "Y_AXIS",
+      "Z_AXIS",
+      "W_AXIS",
+   ];
+
+   const negatives = [
+      "NEGATIVE_X_AXIS",
+      "NEGATIVE_Y_AXIS",
+      "NEGATIVE_Z_AXIS",
+      "NEGATIVE_W_AXIS",
+   ];
+
+   indices   .length = Vector .prototype .length;
+   props     .length = Vector .prototype .length;
+   constants .length = Vector .prototype .length;
+   negatives .length = Vector .prototype .length;
 
    Object .defineProperties (Constructor .prototype, Object .fromEntries (indices .concat (props)));
+
+   Object .defineProperties (Constructor, Object .fromEntries ([
+      "ONE",
+      "NEGATIVE_ONE",
+      "ZERO",
+      ... constants,
+      ... negatives,
+   ]
+   .map (key => [key, { value: Constructor .fromValue (Vector [key]), enumerable: true }])));
 
    return Constructor;
 }

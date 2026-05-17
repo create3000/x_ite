@@ -29,25 +29,25 @@ The GeoElevationGrid node belongs to the [Geospatial](/x_ite/components/overview
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFNode | [ ] | [geoOrigin](#fields-geoOrigin) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFNode | [ ] | [geoOrigin](#fields-geoOrigin) | NULL |
 | MFString | [ ] | [geoSystem](#fields-geoSystem) | [ "GD", "WE" ] |
 | MFDouble | [in] | [set_height](#fields-set_height) |  |
-| SFVec3d | [ ] | [geoGridOrigin](#fields-geoGridOrigin) | 0 0 0  |
-| SFInt32 | [ ] | [xDimension](#fields-xDimension) | 0  |
-| SFInt32 | [ ] | [zDimension](#fields-zDimension) | 0  |
-| SFDouble | [ ] | [xSpacing](#fields-xSpacing) | 1  |
-| SFDouble | [ ] | [zSpacing](#fields-zSpacing) | 1  |
-| SFFloat | [in, out] | [yScale](#fields-yScale) | 1  |
+| SFVec3d | [ ] | [geoGridOrigin](#fields-geoGridOrigin) | 0 0 0 |
+| SFInt32 | [ ] | [xDimension](#fields-xDimension) | 0 |
+| SFInt32 | [ ] | [zDimension](#fields-zDimension) | 0 |
+| SFDouble | [ ] | [xSpacing](#fields-xSpacing) | 1 |
+| SFDouble | [ ] | [zSpacing](#fields-zSpacing) | 1 |
+| SFFloat | [in, out] | [yScale](#fields-yScale) | 1 |
 | SFBool | [ ] | [solid](#fields-solid) | TRUE |
 | SFBool | [ ] | [ccw](#fields-ccw) | TRUE |
-| SFDouble | [ ] | [creaseAngle](#fields-creaseAngle) | 0  |
+| SFDouble | [ ] | [creaseAngle](#fields-creaseAngle) | 0 |
 | SFBool | [ ] | [colorPerVertex](#fields-colorPerVertex) | TRUE |
 | SFBool | [ ] | [normalPerVertex](#fields-normalPerVertex) | TRUE |
-| SFNode | [in, out] | [color](#fields-color) | NULL  |
-| SFNode | [in, out] | [texCoord](#fields-texCoord) | NULL  |
-| SFNode | [in, out] | [tangent](#fields-tangent) | NULL  |
-| SFNode | [in, out] | [normal](#fields-normal) | NULL  |
+| SFNode | [in, out] | [color](#fields-color) | NULL |
+| SFNode | [in, out] | [texCoord](#fields-texCoord) | NULL |
+| SFNode | [in, out] | [tangent](#fields-tangent) | NULL |
+| SFNode | [in, out] | [normal](#fields-normal) | NULL |
 | MFDouble | [ ] | [height](#fields-height) | [ 0, 0 ] |
 {: .fields }
 
@@ -289,6 +289,13 @@ Contains xDimension rows * zDimension columns floating-point values for elevatio
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Geospatial/GeoElevationGrid/GeoElevationGrid.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Geospatial/GeoElevationGrid/GeoElevationGrid.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

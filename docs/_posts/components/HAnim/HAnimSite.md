@@ -33,18 +33,18 @@ The HAnimSite node belongs to the [HAnim](/x_ite/components/overview/#hanim) com
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFString | [in, out] | [name](#fields-name) | "" |
-| SFVec3f | [in, out] | [translation](#fields-translation) | 0 0 0  |
-| SFRotation | [in, out] | [rotation](#fields-rotation) | 0 0 1 0  |
-| SFVec3f | [in, out] | [scale](#fields-scale) | 1 1 1  |
-| SFRotation | [in, out] | [scaleOrientation](#fields-scaleOrientation) | 0 0 1 0  |
-| SFVec3f | [in, out] | [center](#fields-center) | 0 0 0  |
+| SFVec3f | [in, out] | [translation](#fields-translation) | 0 0 0 |
+| SFRotation | [in, out] | [rotation](#fields-rotation) | 0 0 1 0 |
+| SFVec3f | [in, out] | [scale](#fields-scale) | 1 1 1 |
+| SFRotation | [in, out] | [scaleOrientation](#fields-scaleOrientation) | 0 0 1 0 |
+| SFVec3f | [in, out] | [center](#fields-center) | 0 0 0 |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
 | MFNode | [in] | [addChildren](#fields-addChildren) |  |
 | MFNode | [in] | [removeChildren](#fields-removeChildren) |  |
 | MFNode | [in, out] | [children](#fields-children) | [ ] |
@@ -209,6 +209,13 @@ Grouping nodes contain an ordered list of *children* nodes.
 - Requires X3D `profile='Full'` or else include `<component name='HAnim' level='1'/>`
 - For X3D3 HAnim1, previous spelling of component name was 'H-Anim' (including hyphen).
 - The number of contained \<HAnimSite USE='*' `containerField='sites,` skeleton or viewpoints'/\> nodes at top level of [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) needs to match the number of corresponding HAnimSite node instances found within the preceding skeleton hierarchy.
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

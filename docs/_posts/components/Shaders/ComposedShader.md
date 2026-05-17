@@ -33,11 +33,11 @@ The ComposedShader node belongs to the [Shaders](/x_ite/components/overview/#sha
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in] | [activate](#fields-activate) |  |
 | SFBool | [out] | [isSelected](#fields-isSelected) |  |
 | SFBool | [out] | [isValid](#fields-isValid) |  |
-| SFString | [ ] | [language](#fields-language) | ""  |
+| SFString | [ ] | [language](#fields-language) | "" |
 | MFNode | [in, out] | [parts](#fields-parts) | [ ] |
 {: .fields }
 
@@ -111,6 +111,13 @@ ComposedShader can contain multiple [ShaderPart](/x_ite/components/shaders/shade
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Shaders/ComposedShader/ComposedShader.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Shaders/ComposedShader/ComposedShader.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

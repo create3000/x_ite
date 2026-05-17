@@ -31,21 +31,21 @@ The OrthoViewpoint node belongs to the [Navigation](/x_ite/components/overview/#
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in] | [set_bind](#fields-set_bind) |  |
 | SFString | [in, out] | [description](#fields-description) | "" |
-| SFVec3f | [in, out] | [position](#fields-position) | 0 0 10  |
-| SFRotation | [in, out] | [orientation](#fields-orientation) | 0 0 1 0  |
-| SFVec3f | [in, out] | [centerOfRotation](#fields-centerOfRotation) | 0 0 0  |
-| SFVec4f | [in, out] | [fieldOfView](#fields-fieldOfView) | -1 -1 1 1  |
-| SFFloat | [in, out] | [nearDistance](#fields-nearDistance) | -1  |
-| SFFloat | [in, out] | [farDistance](#fields-farDistance) | -1  |
+| SFVec3f | [in, out] | [position](#fields-position) | 0 0 10 |
+| SFRotation | [in, out] | [orientation](#fields-orientation) | 0 0 1 0 |
+| SFVec3f | [in, out] | [centerOfRotation](#fields-centerOfRotation) | 0 0 0 |
+| SFVec4f | [in, out] | [fieldOfView](#fields-fieldOfView) | -1 -1 1 1 |
+| SFFloat | [in, out] | [nearDistance](#fields-nearDistance) | -1 |
+| SFFloat | [in, out] | [farDistance](#fields-farDistance) | -1 |
 | SFBool | [in, out] | [viewAll](#fields-viewAll) | FALSE |
 | SFBool | [in, out] | [jump](#fields-jump) | TRUE |
 | SFBool | [in, out] | [retainUserOffsets](#fields-retainUserOffsets) | FALSE |
 | SFBool | [out] | [isBound](#fields-isBound) |  |
 | SFTime | [out] | [bindTime](#fields-bindTime) |  |
-| SFNode | [in, out] | [navigationInfo](#fields-navigationInfo) | NULL  |
+| SFNode | [in, out] | [navigationInfo](#fields-navigationInfo) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -245,6 +245,13 @@ The *navigationInfo* field defines a dedicated [NavigationInfo](/x_ite/component
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Navigation/OrthoViewpoint/OrthoViewpoint.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Navigation/OrthoViewpoint/OrthoViewpoint.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

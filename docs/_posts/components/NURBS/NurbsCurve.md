@@ -30,13 +30,13 @@ The NurbsCurve node belongs to the [NURBS](/x_ite/components/overview/#nurbs) co
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFInt32 | [in, out] | [tessellation](#fields-tessellation) | 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFInt32 | [in, out] | [tessellation](#fields-tessellation) | 0 |
 | SFBool | [ ] | [closed](#fields-closed) | FALSE |
-| SFInt32 | [ ] | [order](#fields-order) | 3  |
+| SFInt32 | [ ] | [order](#fields-order) | 3 |
 | MFDouble | [ ] | [knot](#fields-knot) | [ ] |
 | MFDouble | [in, out] | [weight](#fields-weight) | [ ] |
-| SFNode | [in, out] | [controlPoint](#fields-controlPoint) | NULL  |
+| SFNode | [in, out] | [controlPoint](#fields-controlPoint) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -93,6 +93,13 @@ Optional single contained [Coordinate](/x_ite/components/rendering/coordinate/) 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/NURBS/NurbsCurve/NurbsCurve.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/NURBS/NurbsCurve/NurbsCurve.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

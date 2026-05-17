@@ -33,15 +33,21 @@ Object .assign (TextureProjectorParallelContainer .prototype,
 {
    set (lightNode, groupNode, modelViewMatrix)
    {
-      this .browser   = lightNode .getBrowser ();
-      this .lightNode = lightNode;
-      this .global    = lightNode .getGlobal ();
+      this .browser           = lightNode .getBrowser ();
+      this .lightNode         = lightNode;
+      this .global            = lightNode .getGlobal ();
+      this .shadowMapRendered = false;
 
       this .modelViewMatrix .push (modelViewMatrix);
       this .textureMatrix .assign (lightNode .getTexture () .getMatrix ());
    },
    renderShadowMap (renderObject)
    {
+      if (this .shadowMapRendered)
+         return;
+
+      this .shadowMapRendered = true;
+
       const
          lightNode             = this .lightNode,
          cameraSpaceMatrix     = renderObject .getCameraSpaceMatrixArray (),

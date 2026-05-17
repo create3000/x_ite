@@ -19,6 +19,8 @@ function TwoSidedMaterial (executionContext)
 
    this .addType (X3DConstants .TwoSidedMaterial);
 
+   // Private properties
+
    this .diffuseColorArray  = new Float32Array (3);
    this .specularColorArray = new Float32Array (3);
    this .emissiveColorArray = new Float32Array (3);

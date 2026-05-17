@@ -133,41 +133,142 @@ None
 
 ### Methods
 
-#### **getType** (): number
-
-Returns one of the **Field Type Constants** from [X3DConstants](/x_ite/reference/constants-services/#field-type-constants) object.
-
-#### **getTypeName** (): string
-
-Returns the field type name.
-
 #### **copy** (): X3DField
 
 Returns a copy of this X3DField.
 
-#### **equals** (*field: X3DField*): boolean
+<x3d-script-area name="X3D ECMAScript Example: X3DField copy">
+<pre>
+const field = new SFVec3f (2, 4, 8);
+const copy  = field .copy ();
 
-Returns true if the passed SF* or MF* *field* of the same type is equals to this object, otherwise false.
-
-<!--
-#### **addFieldCallback** (*key: any, callback: (value: any) => void*): void
-
-Adds a field callback function, if external browser interface is used. *key* is a custom key of any type associated with the *callback*, this key can later be used to remove the callback. The callback is called when the field has been changed.
-
-The callback has a signature of `function (value)`, where value is the current value of the field.
-
-#### **removeFieldCallback** (*key: any*): void
-
-Removes a field callback function associated with *key*.
--->
+print (copy .equals (field));
+print (copy !== field);
+print (copy);
+// Expected output: true
+// Expected output: true
+// Expected output: 2 4 8
+</pre>
+</x3d-script-area>
 
 #### **dispose** (): void
 
 Disposes this X3DField. The object can then no longer be used.
 
+#### **equals** (*field: X3DField*): boolean
+
+Returns `true` if the value of the passed SF* or MF* *field* of the same type is equals to this object, otherwise `false`.
+
+#### **fromString** (*value: string, scene?: X3DScene*): void
+
+Set the value from a string. If an X3DScene is provided, units are respected and necessary conversions are performed. The string can be any legal value as produced by the `toString()` function.
+
+#### **fromVRMLString** (*value: string, scene?: X3DScene*): void
+
+Set the value from a VRML string. If an X3DScene is provided, units are respected and necessary conversions are performed. The string can be any legal value as produced by the `toVRMLString()` function.
+
+<x3d-script-area name="X3D ECMAScript Example: X3DField fromVRMLString">
+<pre>
+const field = new MFInt32 ();
+
+field .fromVRMLString ("[ 0, 1, -1, 2147483647, -2147483648, 42 ]");
+
+print (field .toVRMLString ({ style: "COMPACT" }));
+// Expected output: [ 0, 1, -1, 2147483647, -2147483648, 42 ]
+</pre>
+</x3d-script-area>
+
+#### **fromXMLString** (*value: string, scene?: X3DScene*): void
+
+Set the value from a XML string. If an X3DScene is provided, units are respected and necessary conversions are performed. The string can be any legal value as produced by the `toXMLString()` function.
+
+#### **fromJSONString** (*value: string, scene?: X3DScene*): void
+
+Set the value from a JSON string. If an X3DScene is provided, units are respected and necessary conversions are performed. The string can be any legal value as produced by the `toJSONString()` function.
+
+#### **getType** (): number
+
+Returns one of the **Field Type Constants** from [X3DConstants](/x_ite/reference/constants-services/#field-type-constants) object.
+
+<x3d-script-area name="X3D ECMAScript Example: X3DField getType">
+<pre>
+const field = new MFBool ();
+
+print (field instanceof MFBool);
+print (field .getType () === X3DConstants .MFBool);
+print (field .getTypeName ());
+// Expected output: true
+// Expected output: true
+// Expected output: MFBool
+</pre>
+</x3d-script-area>
+
+#### **getTypeName** (): string
+
+Returns the field type name.
+
+#### **toString** (*options?: Options*): string
+
+Returns a string that, if parsed as the value of an X3DField field with `fromString`, will produce this field. Actually, this function is the same as `toVRMLString`, except for SFNode and MFNode, which produce a limited representation of the field.
+
+#### **toVRMLString** (*options?: Options*): string
+
+Returns the X3D VRML-encoded string that, if parsed as the value of an X3DField field with `fromVRMLString`, will produce this field.
+
+For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
+
+#### **toXMLString** (*options?: Options*): string
+
+Returns the X3D XML-encoded string that, if parsed as the value of an X3DField field with `fromXMLString`, will produce this field.
+
+For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
+
+#### **toJSONString** (*options?: Options*): string
+
+Returns the X3D JSON-encoded string that, if parsed as the value of an X3DField field with `fromJSONString`, will produce this field.
+
+For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
+
 ## SFColor Object
 
 The SFColor object corresponds to an X3D SFColor field.
+
+### Static Properties
+
+#### **BLACK**: SFColor
+
+Returns a black color. This property is read-only.
+
+#### **WHITE**: SFColor
+
+Returns a white color. This property is read-only.
+
+### Static Methods
+
+#### **fromHSV** (*h: number, s: number, v: number*): SFColor
+
+Creates a SFColor object from a HSV color value; *h* is the hue, *s* is the saturation and *v* is the value component of the HSV color.
+
+The saturation and value component must be in the range [0,1], and the hue component must be in the range [0,2π].
+
+#### **fromString** (*value: string*): SFColor
+
+Creates a SFColor object from string. *value* can be any valid X3D or CSS color value. Hex values must start with `0x`.
+
+<x3d-script-area name="X3D ECMAScript Example: SFColor fromString">
+<pre>
+const red   = SFColor .fromString ("crimson");
+const green = SFColor .fromString ("0x3b8c36");
+const blue  = SFColor .fromString ("rgb(47, 129, 247)");
+
+print (red);
+print (green);
+print (blue);
+// Expected output: 0.8627451 0.07843137 0.2352941
+// Expected output: 0.2313725 0.5490196 0.2117647
+// Expected output: 0.1843137 0.5058824 0.9686275
+</pre>
+</x3d-script-area>
 
 ### Instance Creation Method(s)
 
@@ -245,6 +346,47 @@ Linearly interpolates in HSV space between source color and destination color by
 
 The SFColorRGBA object corresponds to an X3D SFColorRGBA field.
 
+### Static Properties
+
+#### **BLACK**: SFColorRGBA
+
+Returns a black color. This property is read-only.
+
+#### **TRANSPARENT**: SFColorRGBA
+
+Returns a fully transparent color. This property is read-only.
+
+#### **WHITE**: SFColorRGBA
+
+Returns a white color. This property is read-only.
+
+### Static Methods
+
+#### **fromHSVA** (*h: number, s: number, v: number, a: number = 1*): SFColorRGBA
+
+Creates a SFColorRGBA object from a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and *a* is the alpha component of the HSVA color.
+
+The saturation, value and alpha component must be in the range [0,1], and the hue component must be in the range [0,2π].
+
+<x3d-script-area name="X3D ECMAScript Example: SFColorRGBA fromHSVA">
+<pre>
+const red   = SFColorRGBA .fromHSVA (6.073745, 0.9090909, 0.8627450, 1);
+const green = SFColorRGBA .fromHSVA (2.033511, 0.6142857, 0.5490196, 1);
+const blue  = SFColorRGBA .fromHSVA (3.759439, 0.8097165, 0.9686274, 1);
+
+print (red);
+print (green);
+print (blue);
+// Expected output: 0.862745 0.07843137 0.2352947 1
+// Expected output: 0.2313727 0.5490196 0.2117647 1
+// Expected output: 0.1843138 0.5058825 0.9686274 1
+</pre>
+</x3d-script-area>
+
+#### **fromString** (*value: string*): SFColorRGBA
+
+Creates a SFColorRGBA object from string. *value* can be any valid X3D or CSS color value. Hex values must start with `0x`.
+
 ### Instance Creation Method(s)
 
 #### *sfColorRGBAObjectName* = new **SFColorRGBA** ()
@@ -293,7 +435,7 @@ Alpha component of the color.
 
 Returns an array with the components of the color's HSVA value.
 
-#### **setHSVA** (*h: number, s: number, v: number, a: number*): void
+#### **setHSVA** (*h: number, s: number, v: number, a: number = 1*): void
 
 Sets a HSVA color value; *h* is the hue, *s* is the saturation, *v* is the value and *a* is the alpha component of the HSVA color.
 
@@ -401,15 +543,21 @@ None
 
 The SFMatrix3d/f object provides many useful methods for performing manipulations on 3×3 matrices.
 
+### Static Properties
+
+#### **IDENTITY**: SFMatrix3d/f
+
+Returns the identity matrix. This property is read-only.
+
+#### **ZERO**: SFMatrix3d/f
+
+Returns the zero matrix. This property is read-only.
+
 ### Instance Creation Method(s)
 
 #### *sfMatrix3d/fObjectName* = new **SFMatrix3d/f** ()
 
 A new matrix initialized with the identity matrix is created and returned.
-
-#### *sfMatrix3d/fObjectName* = new **SFMatrix3d/f** (*r1: SFVec3d/f, r2: SFVec3d/f, r3: SFVec3d/f*)
-
-A new matrix initialized with the vectors in *r1* through *r3* of type SFVec3d/f is created and returned.
 
 #### *sfMatrix3d/fObjectName* = new **SFMatrix3d/f** (*f11: number, f12: number, f13: number, f21: number, f22: number, f23: number, f31: number, f32: number, f33: number*)
 
@@ -525,15 +673,21 @@ Returns a SFMatrix3d/f whose value is the object skewed by the passed *angle* (i
 
 The SFMatrix4d/f object provides many useful methods for performing manipulations on 4×4 matrices.
 
+### Static Properties
+
+#### **IDENTITY**: SFMatrix4d/f
+
+Returns the identity matrix. This property is read-only.
+
+#### **ZERO**: SFMatrix4d/f
+
+Returns the zero matrix. This property is read-only.
+
 ### Instance Creation Method(s)
 
 #### *sfMatrix4d/fObjectName* = new **SFMatrix4d/f** ()
 
 A new matrix initialized with the identity matrix is created and returned.
-
-#### *sfMatrix4d/fObjectName* = new **SFMatrix4d/f** (*r1: SFVec4d/f, r2: SFVec4d/f, r3: SFVec4d/f, r4: SFVec4d/f*)
-
-A new matrix initialized with the vectors in *r1* through *r4* of type SFVec4d/f is created and returned.
 
 #### *sfMatrix4d/fObjectName* = new **SFMatrix4d/f** (*f11: number, f12: number, f13: number, f14: number, f21: number, f22: number, f23: number, f24: number, f31: number, f32: number, f33: number, f34: number, f41: number, f42: number, f43: number, f44: number*)
 
@@ -706,27 +860,53 @@ Returns the node type name.
 
 Removes a field callback function associated with *key* and *name* from the field.
 
-#### **toVRMLString** (options?: Options): string
+#### **toVRMLString** (*options?: Options*): string
 
-Returns the X3D VRML-encoded string that, if parsed as the value of an SFNode field, will produce this node.
-
-For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
-
-#### **toXMLString** (options?: Options): string
-
-Returns the X3D XML-encoded string that, if parsed as the value of an SFNode field, will produce this node.
+Returns the X3D VRML-encoded string that, if parsed as the value of a SFNode field, will produce this node.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
-#### **toJSONString** (options?: Options): string
+#### **toXMLString** (*options?: Options*): string
 
-Returns the X3D JSON-encoded string that, if parsed as the value of an SFNode field, will produce this node.
+Returns the X3D XML-encoded string that, if parsed as the value of a SFNode field, will produce this node.
+
+For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
+
+#### **toJSONString** (*options?: Options*): string
+
+Returns the X3D JSON-encoded string that, if parsed as the value of a SFNode field, will produce this node.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
 ## SFRotation Object
 
 The SFRotation object corresponds to an X3D SFRotation field.
+
+### Static Properties
+
+#### **IDENTITY**: SFRotation
+
+Returns the identity rotation. This property is read-only.
+
+### Static Methods
+
+#### **fromMatrix** (*matrix: SFMatrix3d/f*): SFRotation
+
+*matrix* is an SFMatrix3d/f rotation matrix object whose value is converted into an SFRotation object.
+
+<x3d-script-area name="X3D ECMAScript Example: SFRotation fromMatrix">
+<pre>
+const matrix   = new SFMatrix3f (0, 1, 0, 0, 0, 1, 1, 0, 0);
+const rotation = SFRotation .fromMatrix (matrix);
+
+print (rotation);
+// Expected output: 0.577350269189626 0.577350269189626 0.577350269189626 2.0943951023932
+</pre>
+</x3d-script-area>
+
+#### **fromQuaternion** (*x: number, y: number, z: number, w: number*): SFRotation
+
+`x`, `y`, `z`, `w` is a quaternion whose value is converted into an SFRotation object.
 
 ### Instance Creation Method(s)
 
@@ -758,10 +938,6 @@ print (rotation);
 // Expected output: 0 1 0 1.5707963267949
 </pre>
 </x3d-script-area>
-
-#### *sfRotationObjectName* = new **SFRotation** (*matrix: SFMatrix3d/f*)
-
-*matrix* is an SFMatrix3d/f rotation matrix object whose value is converted into an SFRotation object.
 
 ### Iterator
 
@@ -851,13 +1027,43 @@ Set the value of this rotation to the quaternion passed in *x, y, z, w*.
 
 Returns a SFRotation whose value is the spherical linear interpolation between this object's rotation and *destRotation* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's rotation. For *t* = 1, the value is *destRotation*.
 
-#### **straighten** (*upVector?: SFVec3d/f = new SFVec3f (0, 1, 0)*): SFRotation
+#### **straighten** (*upVector: SFVec3d/f = new SFVec3f (0, 1, 0)*): SFRotation
 
 Straightens the rotation so that the x-axis of the resulting rotation is parallel to the plane spawned by upVector. The default  value for *upVector* is the y-axis.
 
 ## SFVec2d/SFVec2f Object
 
 The SFVec2d/f object corresponds to an X3D SFVec2d/f field.
+
+### Static Properties
+
+#### **ZERO**: SFVec2d/f
+
+Returns a vector with all elements set to 0. This property is read-only.
+
+#### **ONE**: SFVec2d/f
+
+Returns a vector with all elements set to 1. This property is read-only.
+
+#### **X_AXIS**: SFVec2d/f
+
+Returns the x-axis vector. This property is read-only.
+
+#### **Y_AXIS**: SFVec2d/f
+
+Returns the y-axis vector. This property is read-only.
+
+#### **NEGATIVE_ONE**: SFVec2d/f
+
+Returns a vector with all elements set to -1. This property is read-only.
+
+#### **NEGATIVE_X_AXIS**: SFVec2d/f
+
+Returns the negative x-axis vector. This property is read-only.
+
+#### **NEGATIVE_Y_AXIS**: SFVec2d/f
+
+Returns the negative y-axis vector. This property is read-only.
 
 ### Instance Creation Method(s)
 
@@ -969,7 +1175,13 @@ Returns an SFVec2d/f whose value is the componentwise negation of the object.
 
 #### **normalize** (): SFVec2d/f
 
-Returns an SFVec2d/f of object converted to unit length.
+Returns an SFVec2d/f object converted to unit length.
+
+#### **reflect** (*normal: : SFVec2d/f*): SFVec2d/f
+
+Returns an SFVec2d/f object reflected at normal.
+
+![reflect refract visualization](/assets/img/reference/reflect-refract.avif){: .normal .w-50 }
 
 #### **subtract** (*other: SFVec2d/f*): SFVec2d/f
 
@@ -978,6 +1190,44 @@ Returns an SFVec2d/f whose value is the passed SFVec2d/f subtracted, componentwi
 ## SFVec3d/SFVec3f Object
 
 The SFVec3d/f object corresponds to an X3D SFVec3d/f field.
+
+### Static Properties
+
+#### **ZERO**: SFVec3d/f
+
+Returns a vector with all elements set to 0. This property is read-only.
+
+#### **ONE**: SFVec3d/f
+
+Returns a vector with all elements set to 1. This property is read-only.
+
+#### **X_AXIS**: SFVec3d/f
+
+Returns the x-axis vector. This property is read-only.
+
+#### **Y_AXIS**: SFVec3d/f
+
+Returns the y-axis vector. This property is read-only.
+
+#### **Z_AXIS**: SFVec3d/f
+
+Returns the z-axis vector. This property is read-only.
+
+#### **NEGATIVE_ONE**: SFVec3d/f
+
+Returns a vector with all elements set to -1. This property is read-only.
+
+#### **NEGATIVE_X_AXIS**: SFVec3d/f
+
+Returns the negative x-axis vector. This property is read-only.
+
+#### **NEGATIVE_Y_AXIS**: SFVec3d/f
+
+Returns the negative y-axis vector. This property is read-only.
+
+#### **NEGATIVE_Z_AXIS**: SFVec3d/f
+
+Returns the negative z-axis vector. This property is read-only.
 
 ### Instance Creation Method(s)
 
@@ -1098,7 +1348,13 @@ Returns an SFVec3d/f whose value is the componentwise negation of the object.
 
 #### **normalize** (): SFVec3d/f
 
-Returns an SFVec3d/f of object converted to unit length
+Returns an SFVec3d/f object converted to unit length
+
+#### **reflect** (*normal: : SFVec3d/f*): SFVec3d/f
+
+Returns an SFVec3d/f object reflected at normal.
+
+![reflect refract visualization](/assets/img/reference/reflect-refract.avif){: .normal .w-50 }
 
 #### **subtract** (*other: SFVec3d/f*): SFVec3d/f
 
@@ -1107,6 +1363,52 @@ Returns an SFVec3d/f whose value is the passed SFVec3d/f subtracted, componentwi
 ## SFVec4d/SFVec4d/f Object
 
 The SFVec4d/f object corresponds to an X3D SFVec4d/f field.
+
+### Static Properties
+
+#### **ZERO**: SFVec4d/f
+
+Returns a vector with all elements set to 0. This property is read-only.
+
+#### **ONE**: SFVec4d/f
+
+Returns a vector with all elements set to 1. This property is read-only.
+
+#### **X_AXIS**: SFVec4d/f
+
+Returns the x-axis vector. This property is read-only.
+
+#### **Y_AXIS**: SFVec4d/f
+
+Returns the y-axis vector. This property is read-only.
+
+#### **Z_AXIS**: SFVec4d/f
+
+Returns the z-axis vector. This property is read-only.
+
+#### **W_AXIS**: SFVec4d/f
+
+Returns the w-axis vector. This property is read-only.
+
+#### **NEGATIVE_ONE**: SFVec4d/f
+
+Returns a vector with all elements set to -1. This property is read-only.
+
+#### **NEGATIVE_X_AXIS**: SFVec4d/f
+
+Returns the negative x-axis vector. This property is read-only.
+
+#### **NEGATIVE_Y_AXIS**: SFVec4d/f
+
+Returns the negative y-axis vector. This property is read-only.
+
+#### **NEGATIVE_Z_AXIS**: SFVec4d/f
+
+Returns the negative z-axis vector. This property is read-only.
+
+#### **NEGATIVE_W_AXIS**: SFVec4d/f
+
+Returns the negative w-axis vector. This property is read-only.
 
 ### Instance Creation Method(s)
 
@@ -1228,7 +1530,13 @@ Returns an SFVec4d/f whose value is the componentwise negation of the object.
 
 #### **normalize** (): SFVec4d/f
 
-Returns an SFVec4d/f of object converted to unit length.
+Returns an SFVec4d/f object converted to unit length.
+
+#### **reflect** (*normal: : SFVec4d/f*): SFVec4d/f
+
+Returns an SFVec4d/f object reflected at normal.
+
+![reflect refract visualization](/assets/img/reference/reflect-refract.avif){: .normal .w-50 }
 
 #### **subtract** (*other: SFVec4d/f*): SFVec4d/f
 
@@ -1268,7 +1576,7 @@ An integer containing the number of elements in the array. Assigning an integer 
 
 #### **equals** (*array: X3DArrayField*): boolean
 
-Returns true if the passed MF* *array* of the same type is equals to this object, otherwise false.
+Returns `true` if the passed MF* *array* of the same type is equals to this object, otherwise `false`.
 
 #### Other Array functions
 
@@ -1470,19 +1778,19 @@ An integer containing the number of elements in the array. Assigning an integer 
 
 ### Methods
 
-#### **toVRMLString** (\[options\]): string <small><span class="blue">non-standard</span></small>
+#### **toVRMLString** (\[options\]): string <small class="blue">non-standard</small>
 
 Returns the X3D VRML-encoded string that, if parsed as the value of an MFNode field, will produce these nodes.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
-#### **toXMLString** (\[options\]): string <small><span class="blue">non-standard</span></small>
+#### **toXMLString** (\[options\]): string <small class="blue">non-standard</small>
 
 Returns the X3D XML-encoded string that, if parsed as the value of an MFNode field, will produce these nodes.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
-#### **toJSONString** (\[options\]): string <small><span class="blue">non-standard</span></small>
+#### **toJSONString** (\[options\]): string <small class="blue">non-standard</small>
 
 Returns the X3D JSON-encoded string that, if parsed as the value of an MFNode field, will produce these nodes.
 

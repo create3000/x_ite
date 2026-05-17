@@ -22,8 +22,6 @@ Object .assign (Object .setPrototypeOf (RenderingProperties .prototype, X3DBaseN
 
       const browser = this .getBrowser ();
 
-      this ._ContentScale .addInterest ("set_contentScale__", this);
-
       this ._MaxTextureSize       = browser .getMaxTextureSize ();
       this ._TextureUnits         = browser .getMaxCombinedTextureUnits ();
       this ._MaxLights            = browser .getMaxLights ();
@@ -32,9 +30,9 @@ Object .assign (Object .setPrototypeOf (RenderingProperties .prototype, X3DBaseN
       this ._MaxAnisotropicDegree = browser .getMaxAnisotropicDegree ();
       this ._MaxSamples           = browser .getMaxSamples ();
 
-      this .set_contentScale__ ();
+      this .set_pixelsPerPoint__ ();
    },
-   set_contentScale__ ()
+   set_pixelsPerPoint__ ()
    {
       const
          inches         = $("<div></div>") .hide () .css ("height", "10in") .appendTo ($("body")),
@@ -42,8 +40,8 @@ Object .assign (Object .setPrototypeOf (RenderingProperties .prototype, X3DBaseN
 
       inches .remove ();
 
-      this ._PixelsPerPoint = pixelsPerPoint * this ._ContentScale .getValue ();
-   }
+      this ._PixelsPerPoint = pixelsPerPoint;
+   },
 });
 
 Object .defineProperties (RenderingProperties,

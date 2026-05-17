@@ -266,11 +266,11 @@ Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, X3DVolu
       for (const renderStyleNode of this .renderStyleNodes)
          renderStyleNode .addShaderFields (shaderNode);
 
-      const uniformNames = [ ];
+      const uniforms = [ ];
 
-      this .addShaderUniformNames (uniformNames);
+      this .addShaderUniforms (uniforms);
 
-      shaderNode .setUniformNames (uniformNames);
+      shaderNode .setUniformNames (uniforms);
       shaderNode .setup ();
 
       return shaderNode;

@@ -7,58 +7,67 @@ const
 
 const handler =
 {
-   get (target, key)
+   get (target, key, receiver)
    {
-      const value = target [key];
-
-      if (value !== undefined)
-         return value;
-
       if (typeof key === "string")
       {
          const index = +key;
 
          if (Number .isInteger (index))
             return target [_array] [index];
-
-         return;
       }
-   },
-   set (target, key, value)
-   {
-      if (target [key] === undefined)
-         return false;
 
-      target [key] = value;
-      return true;
+      return Reflect .get (target, key, receiver);
+   },
+   set (target, key, value, receiver)
+   {
+      if (typeof key === "string")
+      {
+         const index = +key;
+
+         if (Number .isInteger (index))
+            return false;
+      }
+
+      return Reflect .set (target, key, value, receiver);
    },
    has (target, key)
    {
-      if (Number .isInteger (+key))
-         return key < target [_array] .length;
+      if (typeof key === "string")
+      {
+         const index = +key;
 
-      return key in target;
+         if (Number .isInteger (index))
+            return index < target [_array] .length;
+      }
+
+      return Reflect .has (target, key);
    },
    ownKeys (target)
    {
-      return Object .keys (target [_array]);
+      return Object .keys (target [_array]) .concat (Reflect .ownKeys (target));
    },
    getOwnPropertyDescriptor (target, key)
    {
-      if (typeof key !== "string")
-         return;
-
-      const index = +key;
-
-      if (Number .isInteger (index) && index < target [_array] .length)
+      if (typeof key === "string")
       {
-         const propertyDescriptor = Object .getOwnPropertyDescriptor (target [_array], key);
+         const index = +key;
 
-         if (propertyDescriptor)
-            propertyDescriptor .writable = false;
+         if (Number .isInteger (index))
+         {
+            if (index < target [_array] .length)
+            {
+               const propertyDescriptor = Object .getOwnPropertyDescriptor (target [_array], key);
 
-         return propertyDescriptor;
+               if (propertyDescriptor)
+                  propertyDescriptor .writable = false;
+
+               return propertyDescriptor;
+            }
+         }
       }
+
+      return Reflect .getOwnPropertyDescriptor (target, key);
    },
 };
 

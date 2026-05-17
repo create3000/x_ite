@@ -31,17 +31,17 @@ The OscillatorSource node belongs to the [Sound](/x_ite/components/overview/#sou
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFFloat | [in, out] | [gain](#fields-gain) | 1  |
-| SFFloat | [in, out] | [detune](#fields-detune) | 0  |
-| SFFloat | [in, out] | [frequency](#fields-frequency) | 440  |
-| SFNode | [in, out] | [periodicWave](#fields-periodicWave) | NULL  |
-| SFTime | [in, out] | [startTime](#fields-startTime) | 0  |
-| SFTime | [in, out] | [resumeTime](#fields-resumeTime) | 0  |
-| SFTime | [in, out] | [pauseTime](#fields-pauseTime) | 0  |
-| SFTime | [in, out] | [stopTime](#fields-stopTime) | 0  |
+| SFFloat | [in, out] | [gain](#fields-gain) | 1 |
+| SFFloat | [in, out] | [detune](#fields-detune) | 0 |
+| SFFloat | [in, out] | [frequency](#fields-frequency) | 440 |
+| SFNode | [in, out] | [periodicWave](#fields-periodicWave) | NULL |
+| SFTime | [in, out] | [startTime](#fields-startTime) | 0 |
+| SFTime | [in, out] | [resumeTime](#fields-resumeTime) | 0 |
+| SFTime | [in, out] | [pauseTime](#fields-pauseTime) | 0 |
+| SFTime | [in, out] | [stopTime](#fields-stopTime) | 0 |
 | SFBool | [out] | [isPaused](#fields-isPaused) |  |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFTime | [out] | [elapsedTime](#fields-elapsedTime) |  |
@@ -185,6 +185,13 @@ Current elapsed time since [AudioClip](/x_ite/components/sound/audioclip/) activ
 ### Hint
 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#OscillatorNode)
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

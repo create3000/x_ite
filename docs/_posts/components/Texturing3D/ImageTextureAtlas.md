@@ -38,19 +38,19 @@ The ImageTextureAtlas node belongs to the **Texturing3D** component and its defa
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [load](#fields-load) | TRUE |
 | MFString | [in, out] | [url](#fields-url) | [ ] |
-| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0  |
-| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600  |
-| SFInt32 | [in, out] | [slicesOverX](#fields-slicesOverX) | 0  |
-| SFInt32 | [in, out] | [slicesOverY](#fields-slicesOverY) | 0  |
-| SFInt32 | [in, out] | [numberOfSlices](#fields-numberOfSlices) | 0  |
+| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0 |
+| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600 |
+| SFInt32 | [in, out] | [slicesOverX](#fields-slicesOverX) | 0 |
+| SFInt32 | [in, out] | [slicesOverY](#fields-slicesOverY) | 0 |
+| SFInt32 | [in, out] | [numberOfSlices](#fields-numberOfSlices) | 0 |
 | SFBool | [ ] | [repeatS](#fields-repeatS) | FALSE |
 | SFBool | [ ] | [repeatT](#fields-repeatT) | FALSE |
 | SFBool | [ ] | [repeatR](#fields-repeatR) | FALSE |
-| SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL  |
+| SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -185,6 +185,13 @@ An example image could look like this:
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Texturing3D/ImageTextureAtlas/ImageTextureAtlas.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Texturing3D/ImageTextureAtlas/ImageTextureAtlas.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

@@ -19,6 +19,7 @@ Object .assign (Object .setPrototypeOf (ScreenFontStyle .prototype, X3DFontStyle
    {
       X3DFontStyleNode .prototype .initialize .call (this);
 
+      // Trigger requestRebuild of text geometry when ContentScale changes.
       this .getBrowser () .getRenderingProperties () ._ContentScale .addInterest ("addNodeEvent", this);
    },
    createTextGeometry (text)
@@ -27,7 +28,7 @@ Object .assign (Object .setPrototypeOf (ScreenFontStyle .prototype, X3DFontStyle
    },
    getScale ()
    {
-      return this ._pointSize .getValue () * this .getBrowser () .getRenderingProperty ("PixelsPerPoint");
+      return this ._pointSize .getValue () * this .getBrowser () .getRenderingProperty ("PixelsPerPoint") * this .getContentScale ();
    },
    getContentScale ()
    {

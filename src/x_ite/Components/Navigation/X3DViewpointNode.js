@@ -243,13 +243,13 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    {
       this .farDistance = value;
    },
-   getProjectionMatrix (renderObject)
+   getProjectionMatrix (renderObject, viewport)
    {
       const navigationInfoNode = renderObject .getNavigationInfo ();
 
       return this .getProjectionMatrixWithLimits (this .getNearDistance (navigationInfoNode),
                                                   this .getFarDistance (navigationInfoNode),
-                                                  renderObject .getLayer () .getViewport () .getRectangle ());
+                                                  viewport ?? renderObject .getLayer () .getViewport () .getRectangle ());
    },
    getCameraSpaceMatrix ()
    {

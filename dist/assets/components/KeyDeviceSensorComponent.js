@@ -1,5 +1,5 @@
-/* X_ITE v14.0.8 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-14.0.8")];
+/* X_ITE v15.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -200,9 +200,12 @@ Object .assign (Object .setPrototypeOf (X3DKeyDeviceSensorNode .prototype, (exte
 
       this .release ();
    },
-   keydown () { },
-   keyup () { },
-   release () { },
+   keydown ()
+   { },
+   keyup ()
+   { },
+   release ()
+   { },
 });
 
 Object .defineProperties (X3DKeyDeviceSensorNode, external_X_ITE_X3D_X3DNode_default().getStaticProperties ("X3DKeyDeviceSensorNode", "KeyDeviceSensor", 1));

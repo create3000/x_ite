@@ -34,39 +34,39 @@ The ReceiverPdu node belongs to the [DIS](/x_ite/components/overview/#dis) compo
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFString | [in, out] | [address](#fields-address) | "localhost" |
-| SFInt32 | [in, out] | [applicationID](#fields-applicationID) | 0  |
-| SFInt32 | [in, out] | [entityID](#fields-entityID) | 0  |
+| SFInt32 | [in, out] | [applicationID](#fields-applicationID) | 0 |
+| SFInt32 | [in, out] | [entityID](#fields-entityID) | 0 |
 | SFString | [in, out] | [multicastRelayHost](#fields-multicastRelayHost) | "" |
-| SFInt32 | [in, out] | [multicastRelayPort](#fields-multicastRelayPort) | 0  |
-| SFString | [in, out] | [networkMode](#fields-networkMode) | "standAlone"  |
-| SFInt32 | [in, out] | [port](#fields-port) | 0  |
-| SFInt32 | [in, out] | [radioID](#fields-radioID) | 0  |
-| SFTime | [in, out] | [readInterval](#fields-readInterval) | 0.1  |
-| SFFloat | [in, out] | [receivedPower](#fields-receivedPower) | 0  |
-| SFInt32 | [in, out] | [receiverState](#fields-receiverState) | 0  |
+| SFInt32 | [in, out] | [multicastRelayPort](#fields-multicastRelayPort) | 0 |
+| SFString | [in, out] | [networkMode](#fields-networkMode) | "standAlone" |
+| SFInt32 | [in, out] | [port](#fields-port) | 0 |
+| SFInt32 | [in, out] | [radioID](#fields-radioID) | 0 |
+| SFTime | [in, out] | [readInterval](#fields-readInterval) | 0.1 |
+| SFFloat | [in, out] | [receivedPower](#fields-receivedPower) | 0 |
+| SFInt32 | [in, out] | [receiverState](#fields-receiverState) | 0 |
 | SFBool | [in, out] | [rtpHeaderExpected](#fields-rtpHeaderExpected) | FALSE |
-| SFInt32 | [in, out] | [siteID](#fields-siteID) | 0  |
-| SFInt32 | [in, out] | [transmitterApplicationID](#fields-transmitterApplicationID) | 0  |
-| SFInt32 | [in, out] | [transmitterEntityID](#fields-transmitterEntityID) | 0  |
-| SFInt32 | [in, out] | [transmitterRadioID](#fields-transmitterRadioID) | 0  |
-| SFInt32 | [in, out] | [transmitterSiteID](#fields-transmitterSiteID) | 0  |
-| SFInt32 | [in, out] | [whichGeometry](#fields-whichGeometry) | 1  |
-| SFTime | [in, out] | [writeInterval](#fields-writeInterval) | 1  |
+| SFInt32 | [in, out] | [siteID](#fields-siteID) | 0 |
+| SFInt32 | [in, out] | [transmitterApplicationID](#fields-transmitterApplicationID) | 0 |
+| SFInt32 | [in, out] | [transmitterEntityID](#fields-transmitterEntityID) | 0 |
+| SFInt32 | [in, out] | [transmitterRadioID](#fields-transmitterRadioID) | 0 |
+| SFInt32 | [in, out] | [transmitterSiteID](#fields-transmitterSiteID) | 0 |
+| SFInt32 | [in, out] | [whichGeometry](#fields-whichGeometry) | 1 |
+| SFTime | [in, out] | [writeInterval](#fields-writeInterval) | 1 |
 | SFBool | [out] | [isNetworkReader](#fields-isNetworkReader) |  |
 | SFBool | [out] | [isNetworkWriter](#fields-isNetworkWriter) |  |
 | SFBool | [out] | [isRtpHeaderHeard](#fields-isRtpHeaderHeard) |  |
 | SFBool | [out] | [isStandAlone](#fields-isStandAlone) |  |
 | SFTime | [out] | [timestamp](#fields-timestamp) |  |
-| SFVec3d | [in, out] | [geoCoords](#fields-geoCoords) | 0 0 0  |
+| SFVec3d | [in, out] | [geoCoords](#fields-geoCoords) | 0 0 0 |
 | MFString | [ ] | [geoSystem](#fields-geoSystem) | [ "GD", "WE" ] |
 {: .fields }
 
@@ -336,6 +336,13 @@ Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Tr
 ### Warning
 
 - Requires X3D `profile='Full'` or else include `<component name='DIS' level='1'/>`
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

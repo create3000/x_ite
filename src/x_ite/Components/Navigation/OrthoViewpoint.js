@@ -7,6 +7,7 @@ import ScalarInterpolator   from "../Interpolation/ScalarInterpolator.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Camera               from "../../../standard/Math/Geometry/Camera.js";
 import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
+import Vector4              from "../../../standard/Math/Numbers/Vector4.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
 function OrthoViewpoint (executionContext)
@@ -137,12 +138,12 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    },
    getFieldOfView ()
    {
-      return [
+      return new Vector4 (
          this .getMinimumX (),
          this .getMinimumY (),
          this .getMaximumX (),
          this .getMaximumY (),
-      ];
+      );
    },
    setFieldOfView (value)
    {
@@ -150,19 +151,16 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    },
    getUserFieldOfView ()
    {
-      return [
+      return new Vector4 (
          this .getUserMinimumX (),
          this .getUserMinimumY (),
          this .getUserMaximumX (),
          this .getUserMaximumY (),
-      ];
+      );
    },
    getMinimumX ()
    {
-      if (this .getExecutionContext () .getSpecificationVersion () <= 4.0)
-         return this ._fieldOfView .length > 0 ? this ._fieldOfView [0] : -1;
-      else
-         return this ._fieldOfView [0];
+      return this ._fieldOfView [0] ?? -1;
    },
    getUserMinimumX ()
    {
@@ -170,10 +168,7 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    },
    getMinimumY ()
    {
-      if (this .getExecutionContext () .getSpecificationVersion () <= 4.0)
-         return this ._fieldOfView .length > 1 ? this ._fieldOfView [1] : -1;
-      else
-         return this ._fieldOfView [1];
+      return this ._fieldOfView [1] ?? -1;
    },
    getUserMinimumY ()
    {
@@ -181,10 +176,7 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    },
    getMaximumX ()
    {
-      if (this .getExecutionContext () .getSpecificationVersion () <= 4.0)
-         return this ._fieldOfView .length > 2 ? this ._fieldOfView [2] : 1;
-      else
-         return this ._fieldOfView [2];
+      return this ._fieldOfView [2] ?? 1;
    },
    getUserMaximumX ()
    {
@@ -192,10 +184,7 @@ Object .assign (Object .setPrototypeOf (OrthoViewpoint .prototype, X3DViewpointN
    },
    getMaximumY ()
    {
-      if (this .getExecutionContext () .getSpecificationVersion () <= 4.0)
-         return this ._fieldOfView .length > 3 ? this ._fieldOfView [3] : 1;
-      else
-         return this ._fieldOfView [3];
+      return this ._fieldOfView [3] ?? 1;
    },
    getUserMaximumY ()
    {

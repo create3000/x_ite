@@ -31,14 +31,14 @@ The VolumePickSensor node belongs to the [Picking](/x_ite/components/overview/#p
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| MFString | [in, out] | [objectType](#fields-objectType) | "ALL"  |
+| MFString | [in, out] | [objectType](#fields-objectType) | "ALL" |
 | SFString | [in, out] | [matchCriterion](#fields-matchCriterion) | "MATCH |
-| SFString | [ ] | [intersectionType](#fields-intersectionType) | "BOUNDS"  |
-| SFString | [ ] | [sortOrder](#fields-sortOrder) | "CLOSEST"  |
-| SFNode | [in, out] | [pickingGeometry](#fields-pickingGeometry) | NULL  |
+| SFString | [ ] | [intersectionType](#fields-intersectionType) | "BOUNDS" |
+| SFString | [ ] | [sortOrder](#fields-sortOrder) | "CLOSEST" |
+| SFNode | [in, out] | [pickingGeometry](#fields-pickingGeometry) | NULL |
 | MFNode | [in, out] | [pickTarget](#fields-pickTarget) | [ ] |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | MFNode | [out] | [pickedGeometry](#fields-pickedGeometry) |  |
@@ -152,6 +152,13 @@ Output event containing the node or nodes that have been found to intersect with
 
 - PickingGeometry volume is defined by the convex hull of the enclosing planes of the provided X3DGeometryNode. If the provided volume is not manifold, pick results are undefined.
 - Order of contained nodes is significant, single pickingGeometry node must precede pickTarget node array.
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

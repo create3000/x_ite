@@ -29,7 +29,7 @@ The Polyline2D node belongs to the [Geometry2D](/x_ite/components/overview/#geom
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFVec2f | [ ] | [lineSegments](#fields-lineSegments) | [ ] |
 {: .fields }
 
@@ -77,6 +77,13 @@ Coordinates of vertices connected into contiguous Polyline2D.
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Geometry2D/Polyline2D/Polyline2D.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Geometry2D/Polyline2D/Polyline2D.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

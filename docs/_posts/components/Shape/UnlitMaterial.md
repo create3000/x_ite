@@ -31,14 +31,14 @@ The UnlitMaterial node belongs to the [Shape](/x_ite/components/overview/#shape)
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFColor | [in, out] | [emissiveColor](#fields-emissiveColor) | 1 1 1  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFColor | [in, out] | [emissiveColor](#fields-emissiveColor) | 1 1 1 |
 | SFString | [in, out] | [emissiveTextureMapping](#fields-emissiveTextureMapping) | "" |
-| SFNode | [in, out] | [emissiveTexture](#fields-emissiveTexture) | NULL  |
-| SFFloat | [in, out] | [normalScale](#fields-normalScale) | 1  |
+| SFNode | [in, out] | [emissiveTexture](#fields-emissiveTexture) | NULL |
+| SFFloat | [in, out] | [normalScale](#fields-normalScale) | 1 |
 | SFString | [in, out] | [normalTextureMapping](#fields-normalTextureMapping) | "" |
-| SFNode | [in, out] | [normalTexture](#fields-normalTexture) | NULL  |
-| SFFloat | [in, out] | [transparency](#fields-transparency) | 0  |
+| SFNode | [in, out] | [normalTexture](#fields-normalTexture) | NULL |
+| SFFloat | [in, out] | [transparency](#fields-transparency) | 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -134,7 +134,7 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 ### Hints
 
 - [These capabilities match glTF 2.0 rendering](https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html#materials)
-- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding material.
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding material.
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 - [X3D Example Archives, Basic, Universal Media Materials](https://www.web3d.org/x3d/content/examples/Basic/UniversalMediaMaterials)
@@ -144,6 +144,13 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 - [Physically based rendering (PBR)](https://en.wikipedia.org/wiki/Physically_based_rendering)
 - [Non-photorealistic rendering (NPR)](https://en.wikipedia.org/wiki/Non-photorealistic_rendering)
 - [Cel shading (toon shading)](https://en.wikipedia.org/wiki/Cel_shading)
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

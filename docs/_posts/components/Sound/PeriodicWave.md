@@ -30,10 +30,10 @@ The PeriodicWave node belongs to the [Sound](/x_ite/components/overview/#sound) 
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFString | [in, out] | [type](#fields-type) | "SQUARE"  |
+| SFString | [in, out] | [type](#fields-type) | "SQUARE" |
 | MFFloat | [in, out] | [optionsReal](#fields-optionsReal) | [ ] |
 | MFFloat | [in, out] | [optionsImag](#fields-optionsImag) | [ ] |
 {: .fields }
@@ -93,6 +93,13 @@ Imaginary coefficients for defining a waveform.
 ### Hint
 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#PeriodicWave)
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

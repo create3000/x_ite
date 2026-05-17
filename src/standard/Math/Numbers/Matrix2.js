@@ -1,16 +1,11 @@
 import Vector2 from "./Vector2.js";
 
-function Matrix2 (... args)
+function Matrix2 (m00 = 1, m01 = 0, m10 = 0, m11 = m00)
 {
-   if (args .length)
-   {
-      for (let i = 0; i < 4; ++ i)
-         this [i] = args [i];
-   }
-   else
-   {
-      this .identity ();
-   }
+   this [0] = m00;
+   this [1] = m01;
+   this [2] = m10;
+   this [3] = m11;
 }
 
 Object .assign (Matrix2 .prototype,
@@ -38,10 +33,13 @@ Object .assign (Matrix2 .prototype,
    },
    equals (matrix)
    {
-      return this [0] === matrix [0] &&
-             this [1] === matrix [1] &&
-             this [2] === matrix [2] &&
-             this [3] === matrix [3];
+      for (let i = 0; i < 4; ++ i)
+      {
+         if (this [i] !== matrix [i])
+            return false;
+      }
+
+      return true;
    },
    set1 (r, c, value)
    {
@@ -92,16 +90,19 @@ Object .assign (Matrix2 .prototype,
    },
    inverse ()
    {
-      const
-         { 0: A, 1: B, 2: C, 3: D } = this,
-         d = A * D - B * C;
+      const { 0: A, 1: B, 2: C, 3: D } = this;
+
+      // Calculate the determinant.
+      let d = A * D - B * C;
 
       // if (d === 0) ... determinant is zero.
 
-      this [0] =  D / d;
-      this [1] = -B / d;
-      this [2] = -C / d;
-      this [3] =  A / d;
+      d = 1 / d;
+
+      this [0] =  D * d;
+      this [1] = -B * d;
+      this [2] = -C * d;
+      this [3] =  A * d;
 
       return this;
    },
@@ -231,6 +232,7 @@ Object .defineProperties (Matrix2 .prototype,
 
 Object .assign (Matrix2,
 {
+   ZERO: Object .freeze (new Matrix2 (0)),
    IDENTITY: Object .freeze (new Matrix2 ()),
 });
 

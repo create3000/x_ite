@@ -29,20 +29,20 @@ The Appearance node belongs to the [Shape](/x_ite/components/overview/#shape) co
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFString | [in, out] | [alphaMode](#fields-alphaMode) | "AUTO"  |
-| SFFloat | [in, out] | [alphaCutoff](#fields-alphaCutoff) | 0.5  |
-| SFNode | [in, out] | [acousticProperties](#fields-acousticProperties) | NULL  |
-| SFNode | [in, out] | [pointProperties](#fields-pointProperties) | NULL  |
-| SFNode | [in, out] | [lineProperties](#fields-lineProperties) | NULL  |
-| SFNode | [in, out] | [fillProperties](#fields-fillProperties) | NULL  |
-| SFNode | [in, out] | [material](#fields-material) | NULL  |
-| SFNode | [in, out] | [backMaterial](#fields-backMaterial) | NULL  |
-| SFNode | [in, out] | [texture](#fields-texture) | NULL  |
-| SFNode | [in, out] | [textureTransform](#fields-textureTransform) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFString | [in, out] | [alphaMode](#fields-alphaMode) | "AUTO" |
+| SFFloat | [in, out] | [alphaCutoff](#fields-alphaCutoff) | 0.5 |
+| SFNode | [in, out] | [acousticProperties](#fields-acousticProperties) | NULL |
+| SFNode | [in, out] | [pointProperties](#fields-pointProperties) | NULL |
+| SFNode | [in, out] | [lineProperties](#fields-lineProperties) | NULL |
+| SFNode | [in, out] | [fillProperties](#fields-fillProperties) | NULL |
+| SFNode | [in, out] | [material](#fields-material) | NULL |
+| SFNode | [in, out] | [backMaterial](#fields-backMaterial) | NULL |
+| SFNode | [in, out] | [texture](#fields-texture) | NULL |
+| SFNode | [in, out] | [textureTransform](#fields-textureTransform) | NULL |
 | MFNode | [in, out] | [shaders](#fields-shaders) | [ ] |
-| SFNode | [in, out] | [blendMode](#fields-blendMode) | NULL  |
-| SFNode | [in, out] | [depthMode](#fields-depthMode) | NULL  |
+| SFNode | [in, out] | [blendMode](#fields-blendMode) | NULL |
+| SFNode | [in, out] | [depthMode](#fields-depthMode) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -174,6 +174,14 @@ Single contained [DepthMode](../../x-ite/depthmode) node that defines depth mode
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Shape/Appearance/Appearance.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of Appearance Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Appearance)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

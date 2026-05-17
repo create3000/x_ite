@@ -5,6 +5,7 @@ import X3DNode              from "../Core/X3DNode.js";
 import X3DPickSensorNode    from "./X3DPickSensorNode.js";
 import X3DGeometryNode      from "../Rendering/X3DGeometryNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import X3DCast              from "../../Base/X3DCast.js";
 import IntersectionType     from "../../Browser/Picking/IntersectionType.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Vector4              from "../../../standard/Math/Numbers/Vector4.js";
@@ -31,31 +32,8 @@ Object .assign (Object .setPrototypeOf (LinePickSensor .prototype, X3DPickSensor
    },
    set_pickingGeometry__ ()
    {
-      this .pickingGeometryNode = null;
-
-      try
-      {
-         const
-            node = this ._pickingGeometry .getValue () .getInnerNode (),
-            type = node .getType ();
-
-         for (let t = type .length - 1; t >= 0; -- t)
-         {
-            switch (type [t])
-            {
-               case X3DConstants .IndexedLineSet:
-               case X3DConstants .LineSet:
-               {
-                  this .pickingGeometryNode = node;
-                  break;
-               }
-               default:
-                  continue;
-            }
-         }
-      }
-      catch
-      { }
+      this .pickingGeometryNode = X3DCast (X3DConstants .IndexedLineSet, this ._pickingGeometry)
+         ?? X3DCast (X3DConstants .LineSet, this ._pickingGeometry);
    },
    process: (() =>
    {

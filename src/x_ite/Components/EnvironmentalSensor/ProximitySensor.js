@@ -138,9 +138,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
    })(),
    traverse: (() =>
    {
-      const
-         invModelViewMatrix = new Matrix4 (),
-         infinity           = new Vector3 (-1);
+      const invModelViewMatrix = new Matrix4 ();
 
       return function (type, renderObject)
       {
@@ -159,7 +157,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
                if (this .inside)
                   return;
 
-               if (this ._size .getValue () .equals (infinity))
+               if (this ._size .getValue () .equals (Vector3 .NEGATIVE_ONE))
                {
                   this .inside = true;
                }

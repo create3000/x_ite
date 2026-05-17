@@ -30,7 +30,7 @@ The MultiTextureTransform node belongs to the [Texturing](/x_ite/components/over
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFNode | [in, out] | [textureTransform](#fields-textureTransform) | [ ] |
 {: .fields }
 
@@ -61,7 +61,7 @@ Zero or more contained [TextureTransform](/x_ite/components/texturing/texturetra
 
 ### Hints
 
-- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding MultiTextureTransform.
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding MultiTextureTransform.
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
 - Multitexturing is accomplished using [MultiTexture](/x_ite/components/texturing/multitexture/), [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) and MultiTextureTransform nodes.
 - [X3D Texturing component Figure 18.2 Lightmap example](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texturing.html#f-Lightmapexample)
@@ -71,6 +71,13 @@ Zero or more contained [TextureTransform](/x_ite/components/texturing/texturetra
 
 - The number of textures to be blended may have a significant impact on performance, depending on available graphics hardware capabilities.
 - MultiTextureTransform may not contain another MultiTextureTransform node.
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

@@ -29,10 +29,10 @@ The LineProperties node belongs to the [Shape](/x_ite/components/overview/#shape
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [applied](#fields-applied) | TRUE |
-| SFInt32 | [in, out] | [linetype](#fields-linetype) | 1  |
-| SFFloat | [in, out] | [linewidthScaleFactor](#fields-linewidthScaleFactor) | 0  |
+| SFInt32 | [in, out] | [linetype](#fields-linetype) | 1 |
+| SFFloat | [in, out] | [linewidthScaleFactor](#fields-linewidthScaleFactor) | 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -83,6 +83,13 @@ Whether or not LineProperties are *applied* to associated geometry.
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Shape/LineProperties/LineProperties.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Shape/LineProperties/LineProperties.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

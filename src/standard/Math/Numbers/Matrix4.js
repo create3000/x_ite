@@ -5,17 +5,27 @@ import Rotation4           from "./Rotation4.js";
 import Matrix3             from "./Matrix3.js";
 import eigen_decomposition from "../Algorithms/eigen_decomposition.js";
 
-function Matrix4 (... args)
+function Matrix4 (m00 = 1, m01 = 0,   m02 = 0,   m03 = 0,
+                  m10 = 0, m11 = m00, m12 = 0,   m13 = 0,
+                  m20 = 0, m21 = 0,   m22 = m11, m23 = 0,
+                  m30 = 0, m31 = 0,   m32 = 0,   m33 = m22)
 {
-   if (args .length)
-   {
-      for (let i = 0; i < 16; ++ i)
-         this [i] = args [i];
-   }
-   else
-   {
-      this .identity ();
-   }
+   this [ 0] = m00;
+   this [ 1] = m01;
+   this [ 2] = m02;
+   this [ 3] = m03;
+   this [ 4] = m10;
+   this [ 5] = m11;
+   this [ 6] = m12;
+   this [ 7] = m13;
+   this [ 8] = m20;
+   this [ 9] = m21;
+   this [10] = m22;
+   this [11] = m23;
+   this [12] = m30;
+   this [13] = m31;
+   this [14] = m32;
+   this [15] = m33;
 }
 
 Object .assign (Matrix4 .prototype,
@@ -43,22 +53,13 @@ Object .assign (Matrix4 .prototype,
    },
    equals (matrix)
    {
-      return this [ 0] === matrix [ 0] &&
-             this [ 1] === matrix [ 1] &&
-             this [ 2] === matrix [ 2] &&
-             this [ 3] === matrix [ 3] &&
-             this [ 4] === matrix [ 4] &&
-             this [ 5] === matrix [ 5] &&
-             this [ 6] === matrix [ 6] &&
-             this [ 7] === matrix [ 7] &&
-             this [ 8] === matrix [ 8] &&
-             this [ 9] === matrix [ 9] &&
-             this [10] === matrix [10] &&
-             this [11] === matrix [11] &&
-             this [12] === matrix [12] &&
-             this [13] === matrix [13] &&
-             this [14] === matrix [14] &&
-             this [15] === matrix [15];
+      for (let i = 0; i < 16; ++ i)
+      {
+         if (this [i] !== matrix [i])
+            return false;
+      }
+
+      return true;
    },
    set1 (r, c, value)
    {
@@ -324,25 +325,22 @@ Object .assign (Matrix4 .prototype,
    {
       const
          { 0: m00, 1: m01, 2: m02, 3: m03, 4: m04, 5: m05, 6: m06, 7: m07,
-           8: m08, 9: m09, 10: m10, 11: m11, 12: m12, 13: m13, 14: m14, 15: m15 } = this,
-         b = m10 * m15,
-         c = m14 * m11,
-         d = m06 * m15,
-         e = m14 * m07,
-         f = m06 * m11,
-         g = m10 * m07,
-         h = m02 * m15,
-         i = m14 * m03,
-         j = m02 * m11,
-         o = m10 * m03,
-         r = m02 * m07,
-         x = m06 * m03,
-         H = b * m05 + e * m09 + f * m13 - (c * m05) - (d * m09) - (g * m13),
-         I = c * m01 + h * m09 + o * m13 - (b * m01) - (i * m09) - (j * m13),
-         J = d * m01 + i * m05 + r * m13 - (e * m01) - (h * m05) - (x * m13),
-         K = g * m01 + j * m05 + x * m09 - (f * m01) - (o * m05) - (r * m09);
+           8: m08, 9: m09, 10: m10, 11: m11, 12: m12, 13: m13, 14: m14, 15: m15 } = this;
 
-      return m00 * H + m04 * I + m08 * J + m12 * K;
+      const
+         b0 = m00 * m05 - m01 * m04,
+         b1 = m00 * m06 - m02 * m04,
+         b2 = m01 * m06 - m02 * m05,
+         b3 = m08 * m13 - m09 * m12,
+         b4 = m08 * m14 - m10 * m12,
+         b5 = m09 * m14 - m10 * m13,
+         b6 = m00 * b5 - m01 * b4 + m02 * b3,
+         b7 = m04 * b5 - m05 * b4 + m06 * b3,
+         b8 = m08 * b2 - m09 * b1 + m10 * b0,
+         b9 = m12 * b2 - m13 * b1 + m14 * b0;
+
+      // Calculate the determinant.
+      return m07 * b6 - m03 * b7 + m15 * b8 - m11 * b9;
    },
    transpose ()
    {
@@ -359,62 +357,47 @@ Object .assign (Matrix4 .prototype,
    },
    inverse ()
    {
-      // Complexity 43 +, 40 -, 140 *. 1 /
-
       const
          { 0: m00, 1: m01, 2: m02, 3: m03, 4: m04, 5: m05, 6: m06, 7: m07,
-           8: m08, 9: m09, 10: m10, 11: m11, 12: m12, 13: m13, 14: m14, 15: m15 } = this,
-         b = m10 * m15,
-         c = m14 * m11,
-         d = m06 * m15,
-         e = m14 * m07,
-         f = m06 * m11,
-         g = m10 * m07,
-         h = m02 * m15,
-         i = m14 * m03,
-         j = m02 * m11,
-         o = m10 * m03,
-         r = m02 * m07,
-         x = m06 * m03,
-         t = m08 * m13,
-         p = m12 * m09,
-         v = m04 * m13,
-         s = m12 * m05,
-         y = m04 * m09,
-         z = m08 * m05,
-         A = m00 * m13,
-         C = m12 * m01,
-         D = m00 * m09,
-         E = m08 * m01,
-         F = m00 * m05,
-         G = m04 * m01,
-         H = b * m05 + e * m09 + f * m13 - ((c * m05) + (d * m09) + (g * m13)),
-         I = c * m01 + h * m09 + o * m13 - ((b * m01) + (i * m09) + (j * m13)),
-         J = d * m01 + i * m05 + r * m13 - ((e * m01) + (h * m05) + (x * m13)),
-         K = g * m01 + j * m05 + x * m09 - ((f * m01) + (o * m05) + (r * m09));
+           8: m08, 9: m09, 10: m10, 11: m11, 12: m12, 13: m13, 14: m14, 15: m15 } = this;
 
-      let B = m00 * H + m04 * I + m08 * J + m12 * K;
+      const
+         b00 = m00 * m05 - m01 * m04,
+         b01 = m00 * m06 - m02 * m04,
+         b02 = m00 * m07 - m03 * m04,
+         b03 = m01 * m06 - m02 * m05,
+         b04 = m01 * m07 - m03 * m05,
+         b05 = m02 * m07 - m03 * m06,
+         b06 = m08 * m13 - m09 * m12,
+         b07 = m08 * m14 - m10 * m12,
+         b08 = m08 * m15 - m11 * m12,
+         b09 = m09 * m14 - m10 * m13,
+         b10 = m09 * m15 - m11 * m13,
+         b11 = m10 * m15 - m11 * m14;
 
-      // if (B === 0) ... determinant is zero.
+      // Calculate the determinant.
+      let d = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
 
-      B = 1 / B;
+      // if (d === 0) ... determinant is zero.
 
-      this [ 0] = B * H;
-      this [ 1] = B * I;
-      this [ 2] = B * J;
-      this [ 3] = B * K;
-      this [ 4] = B * (c * m04 + d * m08 + g * m12 - (b * m04) - (e * m08) - (f * m12));
-      this [ 5] = B * (b * m00 + i * m08 + j * m12 - (c * m00) - (h * m08) - (o * m12));
-      this [ 6] = B * (e * m00 + h * m04 + x * m12 - (d * m00) - (i * m04) - (r * m12));
-      this [ 7] = B * (f * m00 + o * m04 + r * m08 - (g * m00) - (j * m04) - (x * m08));
-      this [ 8] = B * (t * m07 + s * m11 + y * m15 - (p * m07) - (v * m11) - (z * m15));
-      this [ 9] = B * (p * m03 + A * m11 + E * m15 - (t * m03) - (C * m11) - (D * m15));
-      this [10] = B * (v * m03 + C * m07 + F * m15 - (s * m03) - (A * m07) - (G * m15));
-      this [11] = B * (z * m03 + D * m07 + G * m11 - (y * m03) - (E * m07) - (F * m11));
-      this [12] = B * (v * m10 + z * m14 + p * m06 - (y * m14) - (t * m06) - (s * m10));
-      this [13] = B * (D * m14 + t * m02 + C * m10 - (A * m10) - (E * m14) - (p * m02));
-      this [14] = B * (A * m06 + G * m14 + s * m02 - (F * m14) - (v * m02) - (C * m06));
-      this [15] = B * (F * m10 + y * m02 + E * m06 - (D * m06) - (G * m10) - (z * m02));
+      d = 1 / d;
+
+      this [ 0] = (m05 * b11 - m06 * b10 + m07 * b09) * d;
+      this [ 1] = (m02 * b10 - m01 * b11 - m03 * b09) * d;
+      this [ 2] = (m13 * b05 - m14 * b04 + m15 * b03) * d;
+      this [ 3] = (m10 * b04 - m09 * b05 - m11 * b03) * d;
+      this [ 4] = (m06 * b08 - m04 * b11 - m07 * b07) * d;
+      this [ 5] = (m00 * b11 - m02 * b08 + m03 * b07) * d;
+      this [ 6] = (m14 * b02 - m12 * b05 - m15 * b01) * d;
+      this [ 7] = (m08 * b05 - m10 * b02 + m11 * b01) * d;
+      this [ 8] = (m04 * b10 - m05 * b08 + m07 * b06) * d;
+      this [ 9] = (m01 * b08 - m00 * b10 - m03 * b06) * d;
+      this [10] = (m12 * b04 - m13 * b02 + m15 * b00) * d;
+      this [11] = (m09 * b02 - m08 * b04 - m11 * b00) * d;
+      this [12] = (m05 * b07 - m04 * b09 - m06 * b06) * d;
+      this [13] = (m00 * b09 - m01 * b07 + m02 * b06) * d;
+      this [14] = (m13 * b01 - m12 * b03 - m14 * b00) * d;
+      this [15] = (m08 * b03 - m09 * b01 + m10 * b00) * d;
 
       return this;
    },
@@ -717,6 +700,7 @@ Object .defineProperties (Matrix4 .prototype,
 
 Object .assign (Matrix4,
 {
+   ZERO: Object .freeze (new Matrix4 (0)),
    IDENTITY: Object .freeze (new Matrix4 ()),
    fromRotation (rotation)
    {

@@ -22,7 +22,7 @@ A [WorldInfo](/x_ite/components/core/worldinfo/) node provides title and descrip
 ```x3d
 <WorldInfo
     title='Our Masterpiece'
-    info='"License GPLv3, https://www.gnu.org/licenses/gpl-3.0.en.html"'/>
+    info='"License GPLv3, https://www.gnu.org/licenses/gpl-3.en.html"'/>
 ```
 
 ### Classic VRML Encoding
@@ -30,7 +30,7 @@ A [WorldInfo](/x_ite/components/core/worldinfo/) node provides title and descrip
 ```vrml
 WorldInfo {
   title "Our Masterpiece"
-  info  [ "License GPLv3, https://www.gnu.org/licenses/gpl-3.0.en.html" ]
+  info [ "License GPLv3, https://www.gnu.org/licenses/gpl-3.en.html" ]
 }
 ```
 

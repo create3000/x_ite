@@ -31,21 +31,21 @@ The NurbsPatchSurface node belongs to the [NURBS](/x_ite/components/overview/#nu
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFInt32 | [in, out] | [uTessellation](#fields-uTessellation) | 0  |
-| SFInt32 | [in, out] | [vTessellation](#fields-vTessellation) | 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFInt32 | [in, out] | [uTessellation](#fields-uTessellation) | 0 |
+| SFInt32 | [in, out] | [vTessellation](#fields-vTessellation) | 0 |
 | SFBool | [ ] | [solid](#fields-solid) | TRUE |
 | SFBool | [ ] | [uClosed](#fields-uClosed) | FALSE |
 | SFBool | [ ] | [vClosed](#fields-vClosed) | FALSE |
-| SFInt32 | [ ] | [uOrder](#fields-uOrder) | 3  |
-| SFInt32 | [ ] | [vOrder](#fields-vOrder) | 3  |
-| SFInt32 | [ ] | [uDimension](#fields-uDimension) | 0  |
-| SFInt32 | [ ] | [vDimension](#fields-vDimension) | 0  |
+| SFInt32 | [ ] | [uOrder](#fields-uOrder) | 3 |
+| SFInt32 | [ ] | [vOrder](#fields-vOrder) | 3 |
+| SFInt32 | [ ] | [uDimension](#fields-uDimension) | 0 |
+| SFInt32 | [ ] | [vDimension](#fields-vDimension) | 0 |
 | MFDouble | [ ] | [uKnot](#fields-uKnot) | [ ] |
 | MFDouble | [ ] | [vKnot](#fields-vKnot) | [ ] |
 | MFDouble | [in, out] | [weight](#fields-weight) | [ ] |
-| SFNode | [in, out] | [texCoord](#fields-texCoord) | NULL  |
-| SFNode | [in, out] | [controlPoint](#fields-controlPoint) | NULL  |
+| SFNode | [in, out] | [texCoord](#fields-texCoord) | NULL |
+| SFNode | [in, out] | [controlPoint](#fields-controlPoint) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -146,6 +146,13 @@ Optional single contained [Coordinate](/x_ite/components/rendering/coordinate/) 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/NURBS/NurbsPatchSurface/NurbsPatchSurface.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/NURBS/NurbsPatchSurface/NurbsPatchSurface.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

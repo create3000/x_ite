@@ -4,13 +4,14 @@ import PixelTexture    from "../../Components/Texturing/PixelTexture.js";
 import Vector3         from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
 import Box3            from "../../../standard/Math/Geometry/Box3.js";
-import Algorithm       from "../../../standard/Math/Algorithm.js";
 
 function ScreenText (text, fontStyle)
 {
    X3DTextGeometry .call (this, text, fontStyle);
 
    text .setTransparent (true);
+
+   // Private properties
 
    this .textureNode = new PixelTexture (text .getExecutionContext ());
    this .context     = document .createElement ("canvas") .getContext ("2d", { willReadFrequently: true });
@@ -30,20 +31,21 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
    {
       return this .textureNode;
    },
-   update: (() =>
+   configure: (() =>
    {
       const
          min = new Vector3 (),
-         max = new Vector3 (1, 1, 0);
+         max = new Vector3 ();
 
       return function ()
       {
-         X3DTextGeometry .prototype .update .call (this);
+         X3DTextGeometry .prototype .configure .call (this);
 
          const
-            fontStyle = this .getFontStyle (),
-            text      = this .getText (),
-            offset    = 1; // For antialiasing border on bottom and right side
+            fontStyle    = this .getFontStyle (),
+            text         = this .getText (),
+            contentScale = fontStyle .getContentScale (),
+            offset       = 1; // For antialiasing border on bottom and right side
 
          text ._textBounds .x = Math .ceil (text ._textBounds .x) + offset;
          text ._textBounds .y = Math .ceil (text ._textBounds .y) + offset;
@@ -87,17 +89,30 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
                break;
          }
 
-         text ._origin .x = min .x;
-         text ._origin .y = max .y;
-
          this .getBBox () .setExtents (min, max);
+
+         this .matrix .assign (Matrix4 .ZERO);
+
+         // Scale origin, text and line bounds by contentScale.
+
+         text ._origin .x = min .x / contentScale;
+         text ._origin .y = max .y / contentScale;
+
+         text ._textBounds .x /= contentScale;
+         text ._textBounds .y /= contentScale;
+
+         for (const lineBound of text ._lineBounds)
+         {
+            lineBound .x /= contentScale;
+            lineBound .y /= contentScale;
+         }
       };
    })(),
    build: (() =>
    {
       const
          min = new Vector3 (),
-         max = new Vector3 (1, 1, 0);
+         max = new Vector3 ();
 
       return function ()
       {
@@ -120,6 +135,7 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
             texCoordArray  = text .getTexCoords (),
             normalArray    = text .getNormals (),
             vertexArray    = text .getVertices (),
+            contentScale   = fontStyle .getContentScale (),
             canvas         = this .context .canvas,
             cx             = this .context;
 
@@ -130,6 +146,13 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
          // Triangle one and two.
 
          this .getBBox () .getExtents (min, max);
+
+         texCoordArray .push (0, 0, 0, 1,
+                              1, 0, 0, 1,
+                              1, 1, 0, 1,
+                              0, 0, 0, 1,
+                              1, 1, 0, 1,
+                              0, 1, 0, 1);
 
          normalArray .push (0, 0, 1,
                             0, 0, 1,
@@ -147,26 +170,12 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
 
          // Generate texture.
 
-         const
-            width  = text ._textBounds .x,
-            height = text ._textBounds .y;
+         const [width, height] = text ._textBounds;
 
          // Scale canvas.
 
-         canvas .width  = Algorithm .nextPowerOfTwo (width),
-         canvas .height = Algorithm .nextPowerOfTwo (height);
-
-         const
-            w = width  / canvas .width,
-            h = height / canvas .height,
-            y = 1 - h;
-
-         texCoordArray .push (0, y, 0, 1,
-                              w, y, 0, 1,
-                              w, 1, 0, 1,
-                              0, y, 0, 1,
-                              w, 1, 0, 1,
-                              0, 1, 0, 1);
+         canvas .width  = width  * contentScale;
+         canvas .height = height * contentScale;
 
          // Setup canvas.
 
@@ -182,17 +191,20 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
 
          if (fontStyle ._horizontal .getValue ())
          {
-            for (let l = 0, length = glyphs .length; l < length; ++ l)
+            const numLines = glyphs .length;
+
+            for (let l = 0; l < numLines; ++ l)
             {
                const
                   line        = glyphs [l],
                   translation = translations [l],
                   charSpacing = charSpacings [l],
-                  scale       = scales [l];
+                  scale       = scales [l],
+                  numGlyphs   = line .length;
 
                let advanceWidth = 0;
 
-               for (let g = 0, gl = line .length; g < gl; ++ g)
+               for (let g = 0; g < numGlyphs; ++ g)
                {
                   const
                      glyph = line [g],
@@ -284,10 +296,8 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
 
       cx .beginPath ();
 
-      for (let i = 0, cl = commands .length; i < cl; ++ i)
+      for (const command of commands)
       {
-         const command = commands [i];
-
          switch (command .type)
          {
             case "M": // Start
@@ -336,22 +346,33 @@ Object .assign (Object .setPrototypeOf (ScreenText .prototype, X3DTextGeometry .
    },
    traverseBefore: (() =>
    {
-      const bbox = new Box3 ();
+      const
+         bbox   = new Box3 (),
+         matrix = new Matrix4 ();
 
-      return function (type, renderObject)
+      return function (type, renderObject, shapeNode)
       {
-         this .getBrowser () .getScreenScaleMatrix (renderObject, this .matrix, 1, true);
+         this .getBrowser () .getScreenScaleMatrix (renderObject, matrix, 1, true);
 
          const modelViewMatrix = renderObject .getModelViewMatrix ();
 
          modelViewMatrix .push ();
-         modelViewMatrix .multLeft (this .matrix);
+         modelViewMatrix .multLeft (matrix);
+
+         if (matrix .equals (this .matrix))
+            return;
+
+         this .matrix .assign (matrix);
 
          // Update Text bbox.
 
          bbox .assign (this .getBBox ()) .multRight (this .matrix);
 
          this .getText () .setBBox (bbox);
+
+         // Immediately update X3DShapeNode bbox.
+
+         shapeNode .set_bbox__ ();
       };
    })(),
    traverseAfter (type, renderObject)

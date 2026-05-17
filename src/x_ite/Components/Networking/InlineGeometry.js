@@ -1,6 +1,7 @@
 import Fields               from "../../Fields.js";
 import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
+import X3DChildObject       from "../../Base/X3DChildObject.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DGeometryNode      from "../Rendering/X3DGeometryNode.js";
 import X3DLineGeometryNode  from "../Rendering/X3DLineGeometryNode.js";
@@ -29,7 +30,47 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
       X3DGeometryNode .prototype .initialize .call (this);
       X3DUrlObject    .prototype .initialize .call (this);
 
+      this ._solid  .addInterest ("set_solid__",  this);
+      this ._smooth .addInterest ("set_smooth__", this);
+
       this .requestImmediateLoad () .catch (Function .prototype);
+   },
+   set_solid__ ()
+   {
+      if (!this .geometryNode)
+         return;
+
+      if (this .geometryNode .getGeometryType () < 2)
+         return;
+
+      this .geometryNode ._solid = this ._solid;
+   },
+   set_smooth__ ()
+   {
+      if (!this .geometryNode)
+         return;
+
+      if (this .geometryNode .getGeometryType () < 2)
+         return;
+
+      const smooth = this ._smooth .getValue ();
+
+      if (this .geometryNode ._creaseAngle)
+      {
+         const creaseAngle = smooth ? Math .PI : 0;
+
+         if (this .geometryNode ._creaseAngle .equals (creaseAngle))
+            return;
+
+         this .geometryNode ._creaseAngle = creaseAngle;
+      }
+      else if (this .geometryNode ._normal && !this .geometryNode ._normal .getValue ())
+      {
+         if (this .geometryNode ._normalPerVertex .equals (smooth))
+            return;
+
+         this .geometryNode ._normalPerVertex = smooth;
+      }
    },
    unloadData ()
    {
@@ -48,9 +89,6 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
    setInternalScene (scene)
    {
       // Remove old scene.
-
-      this .geometryNode ?.removeInterest ("requestRebuild", this);
-      this .geometryNode ?._transparent .removeFieldInterest (this ._transparent);
 
       if (!this .scene ?.cache)
          this .scene ?.dispose ();
@@ -75,8 +113,8 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
          this .scene .setExecutionContext (scene .cache ? browser .getDefaultScene () : this .getExecutionContext ());
          this .scene .setLive (true);
 
-         this .geometryNode .addInterest ("requestRebuild", this);
-         this .geometryNode ._transparent .addFieldInterest (this ._transparent);
+         this .set_solid__ ();
+         this .set_smooth__ ();
 
          this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
@@ -87,18 +125,21 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
          this .setLoadState (X3DConstants .FAILED_STATE);
       }
 
-      this .requestRebuild ();
+      X3DChildObject .prototype .addEvent .call (this);
    },
    getInternalScene ()
    {
-      ///  Returns the internal X3DScene of this inline, that is loaded from the url given.
+      ///  Returns the internal X3DScene of this InlineGeometry node, that is loaded from the url given.
       ///  If the load field was false, null is returned.
 
       return this .scene;
    },
-   getGeometry ()
+   getInnerNode ()
    {
-      return this .geometryNode;
+      if (this .geometryNode)
+         return this .geometryNode;
+
+      throw new Error ("Geometry node not available.");
    },
    getGeometryFromArray (nodes)
    {
@@ -146,33 +187,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
       }
    },
    build ()
-   {
-      const { geometryNode } = this;
-
-      if (!geometryNode)
-         return;
-
-      this .setTextureCoordinate (geometryNode .getTextureCoordinate ());
-
-      this .getCoordIndices ()   .assign (geometryNode .getCoordIndices ());
-      this .getAttribs ()        .push (... geometryNode .getAttribs ());
-      this .getFogDepths ()      .assign (geometryNode .getFogDepths ());
-      this .getColors ()         .assign (geometryNode .getColors ());
-      this .getMultiTexCoords () .push (... geometryNode .getMultiTexCoords ());
-      this .getTexCoords ()      .assign (geometryNode .getTexCoords ());
-      this .getTangents ()       .assign (geometryNode .getTangents ());
-      this .getNormals ()        .assign (geometryNode .getNormals ());
-      this .getVertices ()       .assign (geometryNode .getVertices ());
-
-      this .getMin () .assign (geometryNode .getMin ());
-      this .getMax () .assign (geometryNode .getMax ());
-
-      this .setGeometryType (geometryNode .getGeometryType ());
-      this .setTransparent (geometryNode .isTransparent ());
-      this .setSolid (geometryNode .isSolid ());
-      this .setCCW (geometryNode .getCCW ());
-      this .setBase (geometryNode);
-   },
+   { },
    dispose ()
    {
       X3DUrlObject    .prototype .dispose .call (this);
@@ -192,6 +207,8 @@ Object .defineProperties (InlineGeometry,
          new X3DFieldDefinition (X3DConstants .inputOutput, "url",                  new Fields .MFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime (0)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "solid",                new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "smooth",               new Fields .SFBool (true)),
       ]),
       enumerable: true,
    },

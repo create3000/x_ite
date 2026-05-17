@@ -8,8 +8,10 @@ function X3DMetadataObject (executionContext)
 
 Object .assign (X3DMetadataObject .prototype,
 {
-   initialize () { },
-   dispose () { },
+   initialize ()
+   { },
+   dispose ()
+   { },
 });
 
 Object .defineProperties (X3DMetadataObject, X3DNode .getStaticProperties ("X3DMetadataObject", "Core", 1));

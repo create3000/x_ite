@@ -29,11 +29,11 @@ The PointProperties node belongs to the [Shape](/x_ite/components/overview/#shap
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFFloat | [in, out] | [pointSizeScaleFactor](#fields-pointSizeScaleFactor) | 1  |
-| SFFloat | [in, out] | [pointSizeMinValue](#fields-pointSizeMinValue) | 1  |
-| SFFloat | [in, out] | [pointSizeMaxValue](#fields-pointSizeMaxValue) | 1  |
-| SFVec3f | [in, out] | [attenuation](#fields-attenuation) | 1 0 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFFloat | [in, out] | [pointSizeScaleFactor](#fields-pointSizeScaleFactor) | 1 |
+| SFFloat | [in, out] | [pointSizeMinValue](#fields-pointSizeMinValue) | 1 |
+| SFFloat | [in, out] | [pointSizeMaxValue](#fields-pointSizeMaxValue) | 1 |
+| SFVec3f | [in, out] | [attenuation](#fields-attenuation) | 1 0 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -91,6 +91,13 @@ Are set to default values if undefined. Together these parameters define *attenu
 ### Warning
 
 - Requires X3D `profile='Full'` or else include `<component name='Shape' level='5'/>`
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

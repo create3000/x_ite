@@ -56,7 +56,12 @@ Object .assign (Object .setPrototypeOf (UnlitMaterial .prototype, X3DOneSidedMat
 
       options .push ("X3D_UNLIT_MATERIAL");
 
-      const shaderNode = browser .createShader ("Unlit", "Default", "Unlit", options);
+      const shaderNode = browser .createShader ({
+         name: "Unlit",
+         vertexShader: "Default",
+         fragmentShader: "Unlit",
+         options,
+      });
 
       browser .getShaders () .set (key, shaderNode);
 
@@ -82,13 +87,5 @@ Object .defineProperties (UnlitMaterial,
       enumerable: true,
    },
 });
-
-for (const index of Object .values (UnlitMaterial .prototype .getTextureIndices ()))
-{
-   UnlitMaterial .prototype [`setTexture${index}`] = function (index, textureNode)
-   {
-      this .setTexture (index, textureNode);
-   };
-}
 
 export default UnlitMaterial;

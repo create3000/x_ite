@@ -92,7 +92,7 @@ function ConcreteNode (node)
 
    // Generate class
 
-   const string = `   /** ${node .InterfaceDefinition .appinfo} */
+   const string = `   /** ${(node .InterfaceDefinition .appinfo ?? "") .replace (/"&#34;|&#34;"|&#34;/g, '"')} */
    interface ${node .name}Proxy${inheritance ? ` extends ${inheritance}`: ""}
    {
 ${properties}
@@ -112,7 +112,7 @@ function FieldDescription (field)
 
    strings .push (` This field is of access type '${field .accessType}' and type ${type}.`);
 
-   return strings .join ("\n       *");
+   return strings .join ("\n       *") .replace (/"&#34;|&#34;"|&#34;/g, '"');
 }
 
 function FieldAccessType (field)
@@ -181,7 +181,7 @@ function FieldType (field)
                .flatMap (e => e .value .split (/\s*,\s*|\s+/))
                .filter (unique)
                .map (v => `"${v .replace (/["']/g, "")}"`)
-               .join (" | ")}>`;
+               .join (" | ") .replace (/"&#34;|&#34;"|&#34;/g, '"')}>`;
          }
 
          return field .type;

@@ -33,16 +33,16 @@ The SegmentedVolumeData node belongs to the [VolumeRendering](/x_ite/components/
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFVec3f | [in, out] | [dimensions](#fields-dimensions) | 1 1 1  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFVec3f | [in, out] | [dimensions](#fields-dimensions) | 1 1 1 |
 | MFBool | [in, out] | [segmentEnabled](#fields-segmentEnabled) | [ ] |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
-| SFNode | [in, out] | [segmentIdentifiers](#fields-segmentIdentifiers) | NULL  |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
+| SFNode | [in, out] | [segmentIdentifiers](#fields-segmentIdentifiers) | NULL |
 | MFNode | [in, out] | [renderStyle](#fields-renderStyle) | [ ] |
-| SFNode | [in, out] | [voxels](#fields-voxels) | NULL  |
+| SFNode | [in, out] | [voxels](#fields-voxels) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -157,6 +157,13 @@ Optional single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/component
 - [Download ZIP Archive](https://create3000.github.io/media/examples/VolumeRendering/SegmentedVolumeData/SegmentedVolumeData.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/VolumeRendering/SegmentedVolumeData/SegmentedVolumeData.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

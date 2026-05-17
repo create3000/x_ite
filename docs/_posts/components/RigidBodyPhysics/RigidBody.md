@@ -31,7 +31,7 @@ The RigidBody node belongs to the [RigidBodyPhysics](/x_ite/components/overview/
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFBool | [in, out] | [fixed](#fields-fixed) | FALSE |
 | SFVec3f | [in, out] | [position](#fields-position) | 0 0 0  |
@@ -39,25 +39,25 @@ The RigidBody node belongs to the [RigidBodyPhysics](/x_ite/components/overview/
 | SFVec3f | [in, out] | [linearVelocity](#fields-linearVelocity) | 0 0 0  |
 | SFVec3f | [in, out] | [angularVelocity](#fields-angularVelocity) | 0 0 0  |
 | SFBool | [in, out] | [useFiniteRotation](#fields-useFiniteRotation) | FALSE |
-| SFVec3f | [in, out] | [finiteRotationAxis](#fields-finiteRotationAxis) | 0 1 0  |
+| SFVec3f | [in, out] | [finiteRotationAxis](#fields-finiteRotationAxis) | 0 1 0 |
 | SFBool | [in, out] | [autoDamp](#fields-autoDamp) | FALSE |
-| SFFloat | [in, out] | [linearDampingFactor](#fields-linearDampingFactor) | 0.001  |
-| SFFloat | [in, out] | [angularDampingFactor](#fields-angularDampingFactor) | 0.001  |
-| SFFloat | [in, out] | [mass](#fields-mass) | 1  |
-| SFVec3f | [in, out] | [centerOfMass](#fields-centerOfMass) | 0 0 0  |
-| SFMatrix3f | [in, out] | [inertia](#fields-inertia) | 1 0 0 0 1 0 0 0 1  |
-| SFNode | [in, out] | [massDensityModel](#fields-massDensityModel) | NULL  |
+| SFFloat | [in, out] | [linearDampingFactor](#fields-linearDampingFactor) | 0.001 |
+| SFFloat | [in, out] | [angularDampingFactor](#fields-angularDampingFactor) | 0.001 |
+| SFFloat | [in, out] | [mass](#fields-mass) | 1 |
+| SFVec3f | [in, out] | [centerOfMass](#fields-centerOfMass) | 0 0 0 |
+| SFMatrix3f | [in, out] | [inertia](#fields-inertia) | 1 0 0 0 1 0 0 0 1 |
+| SFNode | [in, out] | [massDensityModel](#fields-massDensityModel) | NULL |
 | SFBool | [in, out] | [useGlobalGravity](#fields-useGlobalGravity) | TRUE |
 | MFVec3f | [in, out] | [forces](#fields-forces) | [ ] |
 | MFVec3f | [in, out] | [torques](#fields-torques) | [ ] |
 | SFBool | [in, out] | [autoDisable](#fields-autoDisable) | FALSE |
-| SFTime | [in, out] | [disableTime](#fields-disableTime) | 0  |
-| SFFloat | [in, out] | [disableLinearSpeed](#fields-disableLinearSpeed) | 0  |
-| SFFloat | [in, out] | [disableAngularSpeed](#fields-disableAngularSpeed) | 0  |
+| SFTime | [in, out] | [disableTime](#fields-disableTime) | 0 |
+| SFFloat | [in, out] | [disableLinearSpeed](#fields-disableLinearSpeed) | 0 |
+| SFFloat | [in, out] | [disableAngularSpeed](#fields-disableAngularSpeed) | 0 |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
 | MFNode | [in, out] | [geometry](#fields-geometry) | [ ] |
 {: .fields }
 
@@ -296,6 +296,13 @@ Input/Output field *scale*.
 - [Download ZIP Archive](https://create3000.github.io/media/examples/RigidBodyPhysics/RigidBody/RigidBody.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/RigidBodyPhysics/RigidBody/RigidBody.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

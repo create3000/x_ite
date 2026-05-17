@@ -214,7 +214,7 @@ A [PlaneSensor](/x_ite/components/pointingdevicesensor/planesensor/) node senses
 ```vrml
 Transform {
   children [
-    DEF Mover  PlaneSensor { }
+    DEF Mover PlaneSensor { }
     DEF MoveMe Transform { ... }
   ]
 }

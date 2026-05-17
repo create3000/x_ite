@@ -30,15 +30,15 @@ The NavigationInfo node belongs to the [Navigation](/x_ite/components/overview/#
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in] | [set_bind](#fields-set_bind) |  |
 | MFString | [in, out] | [type](#fields-type) | [ "EXAMINE", "ANY" ] |
 | MFFloat | [in, out] | [avatarSize](#fields-avatarSize) | [ 0.25, 1.6, 0.75 ] |
-| SFFloat | [in, out] | [speed](#fields-speed) | 1  |
+| SFFloat | [in, out] | [speed](#fields-speed) | 1 |
 | SFBool | [in, out] | [headlight](#fields-headlight) | TRUE |
-| SFFloat | [in, out] | [visibilityLimit](#fields-visibilityLimit) | 0  |
-| MFString | [in, out] | [transitionType](#fields-transitionType) | "LINEAR"  |
-| SFTime | [in, out] | [transitionTime](#fields-transitionTime) | 1  |
+| SFFloat | [in, out] | [visibilityLimit](#fields-visibilityLimit) | 0 |
+| MFString | [in, out] | [transitionType](#fields-transitionType) | "LINEAR" |
+| SFTime | [in, out] | [transitionTime](#fields-transitionTime) | 1 |
 | SFBool | [out] | [transitionComplete](#fields-transitionComplete) |  |
 | SFBool | [out] | [isBound](#fields-isBound) |  |
 | SFTime | [out] | [bindTime](#fields-bindTime) |  |
@@ -211,7 +211,15 @@ Event sent reporting timestamp when node becomes active/inactive.
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Navigation/NavigationInfo/NavigationInfo.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of NavigationInfo Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/navigation.html#NavigationInfo)
 - [How to Navigate in a Scene](/x_ite/tutorials/how-to-navigate-in-a-scene/)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

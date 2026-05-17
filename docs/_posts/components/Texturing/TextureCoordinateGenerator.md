@@ -31,9 +31,9 @@ The TextureCoordinateGenerator node belongs to the [Texturing](/x_ite/components
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [mapping](#fields-mapping) | "" |
-| SFString | [in, out] | [mode](#fields-mode) | "SPHERE"  |
+| SFString | [in, out] | [mode](#fields-mode) | "SPHERE" |
 | MFFloat | [in, out] | [parameter](#fields-parameter) | [ ] |
 {: .fields }
 
@@ -80,6 +80,13 @@ Parameter field defines the algorithm used to compute texture coordinates.
 - Add [Shape](/x_ite/components/shape/shape/) and then polygonal/planar geometry before adding TextureCoordinateGenerator.
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
 - [X3D Texturing component Figure 18.1, Texture map coordinate system](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texturing.html#f-TextureMapCoordSystem)
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

@@ -3,17 +3,19 @@ import Vector3             from "./Vector3.js";
 import Matrix2             from "./Matrix2.js";
 import eigen_decomposition from "../Algorithms/eigen_decomposition.js";
 
-function Matrix3 (... args)
+function Matrix3 (m00 = 1, m01 = 0,   m02 = 0,
+                  m10 = 0, m11 = m00, m12 = 0,
+                  m20 = 0, m21 = 0,   m22 = m11)
 {
-   if (args .length)
-   {
-      for (let i = 0; i < 9; ++ i)
-         this [i] = args [i];
-   }
-   else
-   {
-      this .identity ();
-   }
+   this [0] = m00;
+   this [1] = m01;
+   this [2] = m02;
+   this [3] = m10;
+   this [4] = m11;
+   this [5] = m12;
+   this [6] = m20;
+   this [7] = m21;
+   this [8] = m22;
 }
 
 Object .assign (Matrix3 .prototype,
@@ -41,15 +43,13 @@ Object .assign (Matrix3 .prototype,
    },
    equals (matrix)
    {
-      return this [0] === matrix [0] &&
-             this [1] === matrix [1] &&
-             this [2] === matrix [2] &&
-             this [3] === matrix [3] &&
-             this [4] === matrix [4] &&
-             this [5] === matrix [5] &&
-             this [6] === matrix [6] &&
-             this [7] === matrix [7] &&
-             this [8] === matrix [8];
+      for (let i = 0; i < 9; ++ i)
+      {
+         if (this [i] !== matrix [i])
+            return false;
+      }
+
+      return true;
    },
    set1 (r, c, value)
    {
@@ -305,6 +305,7 @@ Object .assign (Matrix3 .prototype,
          t12 = m6 * m1,
          t14 = m6 * m4;
 
+      // Calculate the determinant.
       let d = (t4 * m8 - t6 * m5 - t8 * m8 + t10 * m2 + t12 * m5 - t14 * m2);
 
       // if (d === 0) ... determinant is zero.
@@ -587,6 +588,7 @@ Object .defineProperties (Matrix3 .prototype,
 
 Object .assign (Matrix3,
 {
+   ZERO: Object .freeze (new Matrix3 (0)),
    IDENTITY: Object .freeze (new Matrix3 ()),
    fromRotation (rotation)
    {

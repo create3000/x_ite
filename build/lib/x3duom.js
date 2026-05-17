@@ -28,6 +28,9 @@ function xml (string)
    const parser = new XMLParser ({
       ignoreAttributes: false,
       attributeNamePrefix: "",
+      processEntities: {
+         maxTotalExpansions: 10_000,
+      },
    });
 
    return parser .parse (string);
@@ -52,8 +55,11 @@ function uniqueMerge (value, index, array)
 
 function merge (target = { }, source = { })
 {
-   for (const key of Object .keys (source))
+   for (const key of Object .getOwnPropertyNames (source))
    {
+      if (key === "__proto__" || key === "constructor")
+         continue;
+
       if (Array .isArray (target [key]))
          target [key] .push (... (Array .isArray (source [key]) ? source [key] : [source [key]]));
       else if (source [key] instanceof Object)

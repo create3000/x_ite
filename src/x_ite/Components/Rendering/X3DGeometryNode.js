@@ -29,7 +29,7 @@ function X3DGeometryNode (executionContext)
 
    this .addChildObjects (X3DConstants .outputOnly, "transparent",  new Fields .SFBool (),
                           X3DConstants .outputOnly, "bbox_changed", new Fields .SFTime (),
-                          X3DConstants .outputOnly, "rebuild",      new Fields .SFTime (Date .now () / 1000));
+                          X3DConstants .outputOnly, "rebuild",      new Fields .SFTime ());
 
    // Private members
 
@@ -43,7 +43,7 @@ function X3DGeometryNode (executionContext)
    this .attribArrays             = [ ];
    this .textureCoordinateMapping = new Map ();
    this .multiTexCoords           = [ ];
-   this .coordIndices             = X3DGeometryNode .createArray ();
+   this .coordIndices             = X3DGeometryNode .createArray (Uint32Array);
    this .texCoords                = X3DGeometryNode .createArray ();
    this .fogDepths                = X3DGeometryNode .createArray ();
    this .colors                   = X3DGeometryNode .createArray ();
@@ -59,7 +59,16 @@ function X3DGeometryNode (executionContext)
 
 class GeometryArray extends Array
 {
-   #typedArray = new Float32Array ();
+   #Type;
+   #typedArray;
+
+   constructor (Type = Float32Array)
+   {
+      super ();
+
+      this .#Type       = Type;
+      this .#typedArray = new Type ();
+   }
 
    assign (value)
    {
@@ -81,7 +90,7 @@ class GeometryArray extends Array
       if (this .length === this .#typedArray .length)
          this .#typedArray .set (this);
       else
-         this .#typedArray = new Float32Array (this);
+         this .#typedArray = new (this .#Type) (this);
 
       return this .#typedArray;
    }
@@ -91,11 +100,11 @@ Object .defineProperty (X3DGeometryNode, "createArray",
 {
    // Function to select ether Array or MFFloat for color/normal/vertex arrays.
    // Array version runs faster, see BeyondGermany and TreasureIsland.
-   value ()
+   value (Type)
    {
       // return new Fields .MFFloat ();
 
-      return new GeometryArray ();
+      return new GeometryArray (Type);
    },
 })
 
@@ -466,6 +475,9 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    {
       this .clear ();
       this .build ();
+
+      // Fill with zero data if not provided.
+      this .coordIndices .length ||= this .vertices .length / 4;
 
       // Shrink arrays before transferring them to graphics card.
 

@@ -12,14 +12,16 @@ function X3DMaterialNode (executionContext)
 
    this .addType (X3DConstants .X3DMaterialNode);
 
-   this .addChildObjects (X3DConstants .outputOnly, "transparent",   new Fields .SFBool (),
-                          X3DConstants .outputOnly, "transmission",  new Fields .SFBool (),
-                          X3DConstants .outputOnly, "volumeScatter", new Fields .SFBool ());
+   this .addChildObjects (X3DConstants .outputOnly, "transparent",      new Fields .SFBool (),
+                          X3DConstants .outputOnly, "transmission",     new Fields .SFBool (),
+                          X3DConstants .outputOnly, "volumeScatter",    new Fields .SFBool (),
+                          X3DConstants .outputOnly, "renderedTextures", new Fields .SFTime ());
 
    // Private properties
 
-   this .textureBits = new BitSet ();
-   this .shaderNodes = this .getBrowser () .getShaders ();
+   this .textureBits      = new BitSet ();
+   this .renderedTextures = [ ];
+   this .shaderNodes      = this .getBrowser () .getShaders ();
 }
 
 Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanceChildNode .prototype),
@@ -55,16 +57,24 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
    {
       return this ._volumeScatter .getValue ();
    },
-   setTexture (index, textureNode)
+   addTexture (index, textureNode)
    {
       index *= 4;
 
       this .textureBits .remove (index, 0xf);
       this .textureBits .add (index, textureNode ?.getTextureBits () ?? 0);
+
+      this .renderedTextures [index] = textureNode ?.isRenderedTexture () ? textureNode : undefined;
+
+      this ._renderedTextures = this .getBrowser () .getCurrentTime ();
    },
    getTextureBits ()
    {
       return this .textureBits;
+   },
+   getRenderedTextures ()
+   {
+      return this .renderedTextures;
    },
    getShader (geometryContext, renderContext)
    {
@@ -165,9 +175,6 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
          this .addRenderOptions (options, renderObject, shapeNode .getAlphaMode ());
 
-         if (renderContext .shadows || renderObject .getGlobalShadows () .at (-1))
-            options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
-
          switch (fogNode ?.getFogType ())
          {
             case 1:
@@ -199,6 +206,9 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          {
             options .push ("X3D_LIGHTING")
             options .push (`X3D_NUM_LIGHTS ${Math .min (numLights, browser .getMaxLights ())}`);
+
+            if (renderContext .shadows || renderObject .getGlobalShadows () .at (-1))
+               options .push ("X3D_SHADOWS", "X3D_PCF_FILTERING");
          }
 
          if (numEnvironmentLights && geometryContext .hasNormals)
@@ -261,15 +271,20 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          {
             if (+appearanceNode .getTextureBits () && !this .getBaseTexture ())
             {
-               const textureNode = appearanceNode .getTexture ();
+               const
+                  textureNode  = appearanceNode .getTexture (),
+                  textureCount = textureNode .getCount ();
 
-               options .push ("X3D_TEXTURE");
-               options .push (`X3D_NUM_TEXTURES ${textureNode .getCount ()}`);
+               if (textureCount)
+               {
+                  options .push ("X3D_TEXTURE");
+                  options .push (`X3D_NUM_TEXTURES ${textureCount}`);
 
-               if (textureNode .getType () .includes (X3DConstants .MultiTexture))
-                  options .push ("X3D_MULTI_TEXTURING");
+                  if (textureNode .getType () .includes (X3DConstants .MultiTexture))
+                     options .push ("X3D_MULTI_TEXTURING");
 
-               textureNode .getShaderOptions (options);
+                  textureNode .getShaderOptions (options);
+               }
             }
 
             options .push (`X3D_NUM_TEXTURE_TRANSFORMS ${appearanceNode .getTextureTransformMapping () .size || 1}`);

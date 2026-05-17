@@ -28,18 +28,18 @@ The TextureProperties node belongs to the [Texturing](/x_ite/components/overview
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFColorRGBA | [in, out] | [borderColor](#fields-borderColor) | 0 0 0 0  |
-| SFInt32 | [in, out] | [borderWidth](#fields-borderWidth) | 0  |
-| SFFloat | [in, out] | [anisotropicDegree](#fields-anisotropicDegree) | 1  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFColorRGBA | [in, out] | [borderColor](#fields-borderColor) | 0 0 0 0 |
+| SFInt32 | [in, out] | [borderWidth](#fields-borderWidth) | 0 |
+| SFFloat | [in, out] | [anisotropicDegree](#fields-anisotropicDegree) | 1 |
 | SFBool | [ ] | [generateMipMaps](#fields-generateMipMaps) | FALSE |
-| SFString | [in, out] | [minificationFilter](#fields-minificationFilter) | "DEFAULT"  |
-| SFString | [in, out] | [magnificationFilter](#fields-magnificationFilter) | "DEFAULT"  |
-| SFString | [in, out] | [boundaryModeS](#fields-boundaryModeS) | "REPEAT"  |
-| SFString | [in, out] | [boundaryModeT](#fields-boundaryModeT) | "REPEAT"  |
-| SFString | [in, out] | [boundaryModeR](#fields-boundaryModeR) | "REPEAT"  |
-| SFString | [in, out] | [textureCompression](#fields-textureCompression) | "DEFAULT"  |
-| SFFloat | [in, out] | [texturePriority](#fields-texturePriority) | 0  |
+| SFString | [in, out] | [minificationFilter](#fields-minificationFilter) | "DEFAULT" |
+| SFString | [in, out] | [magnificationFilter](#fields-magnificationFilter) | "DEFAULT" |
+| SFString | [in, out] | [boundaryModeS](#fields-boundaryModeS) | "REPEAT" |
+| SFString | [in, out] | [boundaryModeT](#fields-boundaryModeT) | "REPEAT" |
+| SFString | [in, out] | [boundaryModeR](#fields-boundaryModeR) | "REPEAT" |
+| SFString | [in, out] | [textureCompression](#fields-textureCompression) | "DEFAULT" |
+| SFFloat | [in, out] | [texturePriority](#fields-texturePriority) | 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -184,6 +184,13 @@ Determines whether MIPMAPs are generated for texture images.
 ### Warning
 
 - Requires X3D `profile='Full'` or else include `<component name='Shape' level='2'/>`
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

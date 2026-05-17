@@ -1,9 +1,8 @@
-import X3DField     from "../Base/X3DField.js";
-import ArrayFields  from "./ArrayFields.js";
-import X3DConstants from "../Base/X3DConstants.js";
-import Algorithm    from "../../standard/Math/Algorithm.js";
+import X3DField    from "../Base/X3DField.js";
+import ArrayFields from "./ArrayFields.js";
+import Algorithm   from "../../standard/Math/Algorithm.js";
 
-const MFInt32 = ArrayFields .MFInt32;
+const { MFInt32 } = ArrayFields;
 
 /*
  *  Image
@@ -15,16 +14,15 @@ function Image (width, height, comp, array)
    this .height = Math .max (height|0, 0);
    this .comp   = Algorithm .clamp (comp|0, 0, 4);
    this .array  = new MFInt32 ();
-   this .array .setValue (array);
+
+   if (array)
+      this .array .setValue (array);
+
    this .array .length = this .width * this .height;
 }
 
 Object .assign (Image .prototype,
 {
-   copy ()
-   {
-      return new Image (this .width, this .height, this .comp, this .array);
-   },
    equals (image)
    {
       return this .width  === image .width &&
@@ -37,49 +35,40 @@ Object .assign (Image .prototype,
       this .width  = image .width;
       this .height = image .height;
       this .comp   = image .comp;
+
       this .array .assign (image .array);
-   },
-   set (width, height, comp, array)
-   {
-      this .width  = width|0;
-      this .height = height|0;
-      this .comp   = comp|0;
-      this .array .assign (array);
-   },
-   setWidth (value)
-   {
-      this .width = Math .max (value|0, 0);
-      this .array .length = this .width * this .height;
    },
    getWidth ()
    {
       return this .width;
    },
-   setHeight (value)
+   setWidth (value)
    {
-      this .height = Math .max (value|0, 0);
-      this .array .length = this .width * this .height;
+      this .width = Math .max (value|0, 0);
    },
    getHeight ()
    {
       return this .height;
    },
-   setComp (value)
+   setHeight (value)
    {
-      this .comp = Algorithm .clamp (value|0, 0, 4);
+      this .height = Math .max (value|0, 0);
    },
    getComp ()
    {
       return this .comp;
    },
-   setArray (value)
+   setComp (value)
    {
-      this .array .setValue (value);
-      this .array .length = this .width * this .height;
+      this .comp = Algorithm .clamp (value|0, 0, 4);
    },
    getArray ()
    {
       return this .array;
+   },
+   setArray (value)
+   {
+      this .array .setValue (value);
    },
 });
 
@@ -87,42 +76,15 @@ Object .assign (Image .prototype,
  *  SFImage
  */
 
-const _set_size = Symbol ();
-
-function SFImage (width, height, comp, array)
+function SFImage (width = 0, height = 0, comp = 0, array)
 {
-   switch (arguments .length)
-   {
-      case 0:
-         X3DField .call (this, new Image (0, 0, 0, new MFInt32 ()));
-         break;
-
-      case 1:
-         X3DField .call (this, arguments [0]);
-         break;
-
-      case 3:
-         X3DField .call (this, new Image (width, height, comp, new MFInt32 ()));
-         break;
-
-      case 4:
-         X3DField .call (this, new Image (width, height, comp, array));
-         break;
-
-      default:
-         throw new Error ("Invalid arguments.");
-   }
+   X3DField .call (this, new Image (width, height, comp, array));
 
    this .getValue () .getArray () .addParent (this);
-   this .addInterest (_set_size, this);
 }
 
 Object .assign (Object .setPrototypeOf (SFImage .prototype, X3DField .prototype),
 {
-   [_set_size] ()
-   {
-      this .getValue () .getArray () .length = this .width * this .height;
-   },
    *[Symbol .iterator] ()
    {
       yield  this .width;
@@ -130,9 +92,18 @@ Object .assign (Object .setPrototypeOf (SFImage .prototype, X3DField .prototype)
       yield  this .comp;
       yield* this .array;
    },
+   addEvent ()
+   {
+      const size = this .width * this .height;
+
+      if (this .array .length !== size)
+         this .array .length = size;
+
+      X3DField .prototype .addEvent .call (this);
+   },
    copy ()
    {
-      return new SFImage (this .getValue () .copy ());
+      return new SFImage (this .width, this .height, this .comp, this .array);
    },
    equals (image)
    {
@@ -303,7 +274,6 @@ const array = {
    set (value)
    {
       this .getValue () .setArray (value);
-      this .addEvent ();
    },
 };
 
@@ -317,18 +287,6 @@ Object .defineProperties (SFImage .prototype,
    array:  Object .assign ({ enumerable: true }, array),
 });
 
-Object .defineProperties (SFImage,
-{
-   type:
-   {
-      value: X3DConstants .SFImage,
-      enumerable: true,
-   },
-   typeName:
-   {
-      value: "SFImage",
-      enumerable: true,
-   },
-});
+X3DField .addStaticProperties (SFImage, "SFImage");
 
 export default SFImage;

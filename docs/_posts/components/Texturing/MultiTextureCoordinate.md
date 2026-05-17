@@ -30,7 +30,7 @@ The MultiTextureCoordinate node belongs to the [Texturing](/x_ite/components/ove
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFNode | [in, out] | [texCoord](#fields-texCoord) | [ ] |
 {: .fields }
 
@@ -66,6 +66,13 @@ Zero or more contained [TextureCoordinate](/x_ite/components/texturing/textureco
 
 - The number of textures to be blended may have a significant impact on performance, depending on available graphics hardware capabilities.
 - MultiTextureCoordinate may not contain another MultiTextureCoordinate node.
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

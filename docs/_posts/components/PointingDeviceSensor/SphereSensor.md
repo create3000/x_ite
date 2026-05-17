@@ -32,11 +32,11 @@ The SphereSensor node belongs to the [PointingDeviceSensor](/x_ite/components/ov
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFBool | [in, out] | [autoOffset](#fields-autoOffset) | TRUE |
-| SFRotation | [in, out] | [offset](#fields-offset) | 0 1 0 0  |
+| SFRotation | [in, out] | [offset](#fields-offset) | 0 1 0 0 |
 | SFVec3f | [out] | [trackPoint_changed](#fields-trackPoint_changed) |  |
 | SFRotation | [out] | [rotation_changed](#fields-rotation_changed) |  |
 | SFBool | [out] | [isOver](#fields-isOver) |  |
@@ -128,6 +128,14 @@ Select geometry by activating the pointing device (for example, clicking the mou
 - [X3D Architecture 20.2.2 Drag sensors](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/pointingDeviceSensor.html#DragSensors)
 - [X3D Architecture 20.2.3 Activating and manipulating pointing device sensors](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/pointingDeviceSensor.html#Activatingandmanipulating)
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of SphereSensor Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/pointingDeviceSensor.html#SphereSensor)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

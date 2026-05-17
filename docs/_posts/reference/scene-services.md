@@ -305,7 +305,7 @@ Creates or updates the exported node *exportedName.*
 
 Removes the exported node *exportedName.*
 
-#### **toVRMLString** (options?: Options): string <small><span class="blue">non-standard</span></small>
+#### **toVRMLString** (*options?: Options*): string <small class="blue">non-standard</small>
 
 Returns the X3D VRML-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, will produce this scene.
 
@@ -313,13 +313,14 @@ Returns the X3D VRML-encoded string that, if parsed as the value of `createX3DFr
 
 An object with one or more of these properties:
 
-* **style:** string, output style, one of: **"TIDY"**, "COMPACT", "SMALL", "CLEAN"
-* **indent:** string, initial indent, default: "" (empty string)
-* **indentChar:** string, indentation char(s) for each level, default: "  " (two spaces)
-* **precision:** integer, float precision, default: 7
-* **doublePrecision:** integer, double precision, default: 15
-* **html:** boolean, HTML style, default: false
-* **closingTags:** boolean, use closing tags, default: false
+* **style:** string, output style, one of: `"TIDY"`, "COMPACT", "SMALL", "CLEAN"
+* **indent:** string, initial indent, default: `""` (empty string)
+* **indentChar:** string, indentation char(s) for each level, default: `"  "` (two spaces)
+* **precision:** integer, float precision, default: `7`
+* **doublePrecision:** integer, double precision, default: `15`
+* **html:** boolean, HTML style, default: `false`; if this is `true`, then `closingTags` is automatically set to `true` as well
+* **closingTags:** boolean, use closing tags, default: `false`
+* **scene:** X3DScene, this is either this scene or can be a custom scene
 
 <x3d-script-area name="X3D ECMAScript Example: X3DScene toVRMLString">
 <pre>
@@ -336,13 +337,13 @@ print (scene .toVRMLString ());
 </pre>
 </x3d-script-area>
 
-#### **toXMLString** (options?: Options): string <small><span class="blue">non-standard</span></small>
+#### **toXMLString** (*options?: Options*): string <small class="blue">non-standard</small>
 
 Returns the X3D XML-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, will produce this scene.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
-#### **toJSONString** (options?: Options): string <small><span class="blue">non-standard</span></small>
+#### **toJSONString** (*options?: Options*): string <small class="blue">non-standard</small>
 
 Returns the X3D JSON-encoded string that, if parsed as the value of `createX3DFromString ()` of X3DBrowser, will produce this scene.
 

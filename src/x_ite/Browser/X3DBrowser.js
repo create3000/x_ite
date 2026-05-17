@@ -75,6 +75,11 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       X3DBrowserContext .prototype .initialize .call (this);
 
+      this .getCanvas () .on ("webglcontextlost", event =>
+      {
+         this .callBrowserCallbacks (X3DConstants .CONNECTION_ERROR);
+      });
+
       const scene = new X3DScene (this);
 
       scene .setup ();
@@ -616,7 +621,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
                }
                else
                {
-                  this .callBrowserCallbacks (X3DConstants .CONNECTION_ERROR);
+                  this .callBrowserCallbacks (X3DConstants .INITIALIZED_ERROR);
                   this .callBrowserEventHandler ("error");
 
                   setTimeout (() =>
@@ -959,6 +964,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    {
       this .currentScene .toJSONStream (generator);
    },
+   loseContext ()
+   {
+      this .getContext () .getExtension ("WEBGL_lose_context") .loseContext ();
+   },
    dispose ()
    {
       this [_DOMIntegration] .dispose ();
@@ -980,6 +989,11 @@ Object .defineProperties (X3DBrowser .prototype,
    version:
    {
       value: VERSION,
+      enumerable: true,
+   },
+   scriptURL:
+   {
+      get: X3DBrowser .prototype .getScriptURL,
       enumerable: true,
    },
    providerURL:

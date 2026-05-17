@@ -3,7 +3,7 @@ title: Browser Services
 date: 2022-11-28
 nav: reference
 categories: [Reference]
-tags: [Browser, X3DBrowser, ECMAScript, Javascript]
+tags: [Browser, X3DBrowser, ECMAScript, Javascript, glTF, VRML]
 ---
 ## Browser Object
 
@@ -23,15 +23,23 @@ A browser-implementation specific string describing the browser. This property i
 
 A browser-implementation specific string describing the browser version. This property is read-only.
 
-<x3d-script-area name="X3D ECMAScript Example: X3DBrowser name/version">
+<x3d-script-area name="X3D ECMAScript Example: X3DBrowser properties">
 <pre>
 print (Browser .name);
 print (Browser .version);
+print (Browser .scriptURL);
+print (Browser .providerURL);
 
 // Expected output: X_ITE
 // Expected output: {{ site.x_ite_latest_version }}
+// Expected output: URL to x_ite.js
+// Expected output: URL of this website
 </pre>
 </x3d-script-area>
+
+#### **scriptURL**: string
+
+The URL of the script that creates this browser. This property is read-only.
 
 #### **providerURL**: string
 
@@ -205,57 +213,16 @@ Returns a browser property with the corresponding *name*.
 
 ##### Browser Properties
 
-<table>
-   <thead>
-      <tr>
-         <th>Name</th>
-         <th>Type</th>
-         <th>Description</th>
-      </tr>
-   </thead>
-   <tbody>
-      <tr>
-         <td>ABSTRACT_NODES</td>
-         <td>Boolean</td>
-         <td>The browser implementation supports the ability to describe each node type with interfaces that correspond to the abstract node types as defined in ISO/IEC 19775-1 in addition to the basic requirement to support the X3DBaseNode abstract type. This indicates that the browser supports at least Conformance Level 2.</td>
-      </tr>
-      <tr>
-         <td>CONCRETE_NODES</td>
-         <td>Boolean</td>
-         <td>The browser implementation supports the ability to describe each node type with interfaces that correspond to the concrete node types as defined in ISO/IEC 19775-1 in addition to the requirement to support all of the abstract types. This indicates that the browser supports at least Conformance Level 3.</td>
-      </tr>
-      <tr>
-         <td>EXTERNAL_INTERACTIONS</td>
-         <td>Boolean</td>
-         <td>This browser supports the additional services required by external interfaces. A browser provided to user code in internal interactions does not set this property.</td>
-      </tr>
-      <tr>
-         <td>PROTOTYPE_CREATE</td>
-         <td>Boolean</td>
-         <td>The browser implementation supports the ability to dynamically create PROTO and EXTERNPROTO representations through service requests. The basic service capability only allows the ability to create instances of predefined PROTO structures read from a file format.</td>
-      </tr>
-      <tr>
-         <td>DOM_IMPORT</td>
-         <td>Boolean</td>
-         <td>The browser implementation supports the importDocument service request.</td>
-      </tr>
-      <tr>
-         <td>XML_ENCODING</td>
-         <td>Boolean</td>
-         <td>The browser supports XML as a file format encoding.</td>
-      </tr>
-      <tr>
-         <td>CLASSIC_VRML_ENCODING</td>
-         <td>Boolean</td>
-         <td>The browser supports the Classic VRML encoding.</td>
-      </tr>
-      <tr>
-         <td>BINARY_ENCODING</td>
-         <td>Boolean</td>
-         <td>The browser supports the binary file format encoding.</td>
-      </tr>
-   </tbody>
-</table>
+| Name | Type | Description |
+|------|------|-------------|
+| ABSTRACT_NODES | Boolean | The browser implementation supports the ability to describe each node type with interfaces that correspond to the abstract node types as defined in ISO/IEC 19775-1 in addition to the basic requirement to support the X3DBaseNode abstract type. This indicates that the browser supports at least Conformance Level 2. |
+| CONCRETE_NODES | Boolean | The browser implementation supports the ability to describe each node type with interfaces that correspond to the concrete node types as defined in ISO/IEC 19775-1 in addition to the requirement to support all of the abstract types. This indicates that the browser supports at least Conformance Level 3. |
+| EXTERNAL_INTERACTIONS | Boolean | This browser supports the additional services required by external interfaces. A browser provided to user code in internal interactions does not set this property. |
+| PROTOTYPE_CREATE | Boolean | The browser implementation supports the ability to dynamically create PROTO and EXTERNPROTO representations through service requests. The basic service capability only allows the ability to create instances of predefined PROTO structures read from a file format. |
+| DOM_IMPORT | Boolean | The browser implementation supports the importDocument service request. |
+| XML_ENCODING | Boolean | The browser supports XML as a file format encoding. |
+| CLASSIC_VRML_ENCODING | Boolean | The browser supports the Classic VRML encoding. |
+| BINARY_ENCODING | Boolean | The browser supports the binary file format encoding. |
 
 #### **getBrowserOption** (*name: string*): any
 
@@ -273,210 +240,40 @@ print (Browser .getBrowserOption ("TextCompression"));
 
 ##### Browser Options
 
-<table>
-   <thead>
-      <tr>
-         <th>Name</th>
-         <th>Description</th>
-         <th>Type / valid range</th>
-         <th>Default</th>
-      </tr>
-   </thead>
-   <tbody>
-      <tr>
-         <td>Antialiased</td>
-         <td>Render using hardware antialiasing if available.</td>
-         <td>Boolean</td>
-         <td>false</td>
-      </tr>
-      <tr>
-         <td>Dashboard</td>
-         <td>Display browser navigation user interface.</td>
-         <td>Boolean</td>
-         <td>true</td>
-      </tr>
-      <tr>
-         <td>Rubberband</td>
-         <td>Display a rubberband line when walk or fly.</td>
-         <td>Boolean</td>
-         <td>true</td>
-      </tr>
-      <tr>
-         <td>EnableInlineViewpoints</td>
-         <td>Viewpoints from Inline nodes are included in list of viewpoints if made available by the Inline node.</td>
-         <td>Boolean</td>
-         <td>true</td>
-      </tr>
-      <tr>
-         <td>MotionBlur</td>
-         <td>Render animations with motion blur.</td>
-         <td>Boolean</td>
-         <td>false</td>
-      </tr>
-      <tr>
-         <td>PrimitiveQuality</td>
-         <td>Render quality (tesselation level) for Box, Cone, Cylinder, Sphere.</td>
-         <td>LOW, MEDIUM, HIGH</td>
-         <td>MEDIUM</td>
-      </tr>
-      <tr>
-         <td>QualityWhenMoving</td>
-         <td>Render quality while camera is moving.</td>
-         <td>LOW, MEDIUM, HIGH, SAME (as while stationary)</td>
-         <td>SAME</td>
-      </tr>
-      <tr>
-         <td>Shading</td>
-         <td>Specify shading mode for all objects.</td>
-         <td>POINT, WIREFRAME, FLAT, GOURAUD, PHONG</td>
-         <td>GOURAUD</td>
-      </tr>
-      <tr>
-         <td>SplashScreen</td>
-         <td>Display browser splash screen on startup.</td>
-         <td>Boolean</td>
-         <td>true</td>
-      </tr>
-      <tr>
-         <td>TextureQuality</td>
-         <td>Quality of texture map display.</td>
-         <td>LOW, MEDIUM, HIGH</td>
-         <td>MEDIUM</td>
-      </tr>
-      <tr>
-         <td>AutoUpdate</td>
-         <td>Whether the update control of the browser should be done automatically or not. If true, animations will be disabled if the &lt;x3d-canvas&gt; element is not visible. <small class="blue">non-standard</small></td>
-         <td>Boolean</td>
-         <td>false</td>
-      </tr>
-      <tr>
-         <td>Cache</td>
-         <td>Whether or not files should be cached. <small class="blue">non-standard</small></td>
-         <td>Boolean</td>
-         <td>true</td>
-      </tr>
-      <tr>
-         <td>ColorSpace</td>
-         <td>The color space in which colors are defined and color calculations take place. <small class="blue">non-standard</small></td>
-         <td>SRGB, LINEAR_WHEN_PHYSICAL_MATERIAL, LINEAR</td>
-         <td>LINEAR_WHEN_PHYSICAL_MATERIAL</td>
-      </tr>
-      <tr>
-         <td>ContentScale</td>
-         <td>Factor with which the internal canvas size should be scaled. If set to -1, window.devicePixelRatio is used. <small class="blue">non-standard</small></td>
-         <td>Float</td>
-         <td>1</td>
-      </tr>
-      <tr>
-         <td>ContextMenu</td>
-         <td>Whether or not the context menu can be displayed. <small class="blue">non-standard</small></td>
-         <td>Boolean</td>
-         <td>true</td>
-      </tr>
-      <tr>
-         <td>Debug</td>
-         <td>Whether or not debug message should be printed into the console. <small class="blue">non-standard</small></td>
-         <td>Boolean</td>
-         <td>false</td>
-      </tr>
-      <tr>
-         <td>DisplayColorSpace</td>
-         <td>The color space which is used for the framebuffer and when textures are converted. You may want to set the <code>ColorSpace</code> option to <code>LINEAR</code> if you use <code>DISPLAY_P3</code>. <small class="blue">non-standard</small></td>
-         <td>SRGB, DISPLAY_P3</td>
-         <td>SRGB</td>
-      </tr>
-      <tr>
-         <td>Exposure</td>
-         <td>The exposure of an image describes the amount of light that is captured. <small class="blue">non-standard</small></td>
-         <td>Float</td>
-         <td>1</td>
-      </tr>
-      <tr>
-         <td>Gravity</td>
-         <td>Default is gravity of Earth. <small class="blue">non-standard</small></td>
-         <td>Float</td>
-         <td>9.80665</td>
-      </tr>
-      <tr>
-         <td>LoadUrlObjects</td>
-         <td>Wether X3DUrlObject nodes should be loaded. <small class="blue">non-standard</small></td>
-         <td>Boolean</td>
-         <td>true</td>
-      </tr>
-      <tr>
-         <td>LogarithmicDepthBuffer</td>
-         <td>Whether to use a logarithmic depth buffer. It may be necessary to use this if dealing with huge differences in scale in a single scene. It is automatically enabled if a GeoViewpoint node is bound. <small class="blue">non-standard</small></td>
-         <td>Boolean</td>
-         <td>false</td>
-      </tr>
-      <tr>
-         <td>MaximumFrameRate</td>
-         <td>Caps the rendering frequency to reduce CPU usage and improve overall browser responsiveness. Animations will run at this controlled maximum FPS instead of the full device refresh rate. <small class="blue">non-standard</small></td>
-         <td>Float</td>
-         <td>80</td>
-      </tr>
-      <tr>
-         <td>Multisampling</td>
-         <td>Number of samples used for multisampling. <small class="blue">non-standard</small></td>
-         <td>Integer</td>
-         <td>4</td>
-      </tr>
-      <tr>
-         <td>Mute</td>
-         <td>Whether to mute all audio. <small class="blue">non-standard</small></td>
-         <td>Boolean</td>
-         <td>false</td>
-      </tr>
-      <tr>
-         <td>Notifications</td>
-         <td>Whether or not notifications should be displayed. <small class="blue">non-standard</small></td>
-         <td>Boolean</td>
-         <td>true</td>
-      </tr>
-      <tr>
-         <td>OrderIndependentTransparency</td>
-         <td>Whether to use order independent transparency rendering technique. <small class="blue">non-standard</small></td>
-         <td>Boolean</td>
-         <td>false</td>
-      </tr>
-      <tr>
-         <td>StraightenHorizon</td>
-         <td>Whether the Examine Viewer should straighten the horizon when navigating. <small class="blue">non-standard</small></td>
-         <td>Boolean</td>
-         <td>true</td>
-      </tr>
-      <tr>
-         <td>TextCompression</td>
-         <td>Controls how Text.<em>length</em> and Text.<em>maxExtent</em> are handled. Either by adjusting char spacing or by scaling text letters. <small class="blue">non-standard</small></td>
-         <td>CHAR_SPACING, SCALING</td>
-         <td>CHAR_SPACING</td>
-      </tr>
-      <tr>
-         <td>Timings</td>
-         <td>Whether browser timings should be displayed. <small class="blue">non-standard</small></td>
-         <td>Boolean</td>
-         <td>false</td>
-      </tr>
-      <tr>
-         <td>ToneMapping</td>
-         <td>Whether tone mapping should be applied. <small class="blue">non-standard</small></td>
-         <td>NONE, ACES_NARKOWICZ, ACES_HILL, ACES_HILL_EXPOSURE_BOOST, KHR_PBR_NEUTRAL</td>
-         <td>KHR_PBR_NEUTRAL</td>
-      </tr>
-      <tr>
-         <td>WallFriction</td>
-         <td>Defines how strongly the avatar resists sliding along walls during collisions, where 0 means no resistance (very slippery) and 1 means maximum resistance (no sliding). <small class="blue">non-standard</small></td>
-         <td>Float</td>
-         <td>0</td>
-      </tr>
-      <tr>
-         <td>XRSessionMode</td>
-         <td>A String defining the XR session mode. If the value is NONE, no XR button is displayed and all attempts to start a session are ignored. See also <a href="https://developer.mozilla.org/en-US/docs/Web/API/XRSystem/requestSession#parameters" target="blank">XRSystem.requestSession</a>. <small class="blue">non-standard</small></td>
-         <td>NONE, IMMERSIVE_AR, IMMERSIVE_VR, INLINE</td>
-         <td>IMMERSIVE_VR</td>
-      </tr>
-   </tbody>
-</table>
+| Name | Description | Type / Valid Range | Default |
+|------|-------------|--------------------|---------|
+| Antialiased | Render using hardware antialiasing if available. | Boolean | false |
+| Dashboard | Display browser navigation user interface. | Boolean | true |
+| Rubberband | Display a rubberband line when walk or fly. | Boolean | true |
+| EnableInlineViewpoints | Viewpoints from Inline nodes are included in list of viewpoints if made available by the Inline node. | Boolean | true |
+| MotionBlur | Render animations with motion blur. | Boolean | false |
+| PrimitiveQuality | Render quality (tesselation level) for Box, Cone, Cylinder, Sphere. | LOW, MEDIUM, HIGH | MEDIUM |
+| QualityWhenMoving | Render quality while camera is moving. | LOW, MEDIUM, HIGH, SAME (as while stationary) | SAME |
+| Shading | Specify shading mode for all objects. | POINT, WIREFRAME, FLAT, GOURAUD, PHONG | GOURAUD |
+| SplashScreen | Display browser splash screen on startup. | Boolean | true |
+| TextureQuality | Quality of texture map display. | LOW, MEDIUM, HIGH | MEDIUM |
+| AutoUpdate | Whether the update control of the browser should be done automatically or not. If true, animations will be disabled if the &lt;x3d-canvas&gt; element is not visible. <small class="blue">non-standard</small> | Boolean | false |
+| Cache | Whether or not files should be cached. <small class="blue">non-standard</small> | Boolean | true |
+| ColorSpace | The color space in which colors are defined and color calculations take place. <small class="blue">non-standard</small> | SRGB, LINEAR_WHEN_PHYSICAL_MATERIAL, LINEAR | LINEAR_WHEN_PHYSICAL_MATERIAL |
+| ContentScale | Factor with which the internal canvas size should be scaled. If set to -1, window.devicePixelRatio is used. <small class="blue">non-standard</small> | Float | 1 |
+| ContextMenu | Whether or not the context menu can be displayed. <small class="blue">non-standard</small> | Boolean | true |
+| Debug | Whether or not debug message should be printed into the console. <small class="blue">non-standard</small> | Boolean | false |
+| DisplayColorSpace | The color space which is used for the framebuffer and when textures are converted. You may want to set the `ColorSpace` option to `LINEAR` if you use `DISPLAY_P3`. <small class="blue">non-standard</small> | SRGB, DISPLAY_P3 | SRGB |
+| Exposure | The exposure of an image describes the amount of light that is captured. <small class="blue">non-standard</small> | Float | 1 |
+| Gravity | Default is gravity of Earth. <small class="blue">non-standard</small> | Float | 9.80665 |
+| LoadUrlObjects | Wether X3DUrlObject nodes should be loaded. <small class="blue">non-standard</small> | Boolean | true |
+| LogarithmicDepthBuffer | Whether to use a logarithmic depth buffer. It may be necessary to use this if dealing with huge differences in scale in a single scene. It is automatically enabled if a GeoViewpoint node is bound. <small class="blue">non-standard</small> | Boolean | false |
+| MaximumFrameRate | Caps the rendering frequency to reduce CPU usage and improve overall browser responsiveness. Animations will run at this controlled maximum FPS instead of the full device refresh rate. <small class="blue">non-standard</small> | Float | 80 |
+| Multisampling | Number of samples used for multisampling. <small class="blue">non-standard</small> | Integer | 4 |
+| Mute | Whether to mute all audio. <small class="blue">non-standard</small> | Boolean | false |
+| Notifications | Whether or not notifications should be displayed. <small class="blue">non-standard</small> | Boolean | true |
+| OrderIndependentTransparency | Whether to use order independent transparency rendering technique. <small class="blue">non-standard</small> | Boolean | false |
+| StraightenHorizon | Whether the Examine Viewer should straighten the horizon when navigating. <small class="blue">non-standard</small> | Boolean | true |
+| TextCompression | Controls how Text.*length* and Text.*maxExtent* are handled. Either by adjusting char spacing or by scaling text letters. <small class="blue">non-standard</small> | CHAR_SPACING, SCALING | CHAR_SPACING |
+| Timings | Whether browser timings should be displayed. <small class="blue">non-standard</small> | Boolean | false |
+| ToneMapping | Whether tone mapping should be applied. <small class="blue">non-standard</small> | NONE, ACES_NARKOWICZ, ACES_HILL, ACES_HILL_EXPOSURE_BOOST, KHR_PBR_NEUTRAL | KHR_PBR_NEUTRAL |
+| WallFriction | Defines how strongly the avatar resists sliding along walls during collisions, where 0 means no resistance (very slippery) and 1 means maximum resistance (no sliding). <small class="blue">non-standard</small> | Float | 0 |
+| XRSessionMode | A String defining the XR session mode. If the value is NONE, no XR button is displayed and all attempts to start a session are ignored. See also [XRSystem.requestSession](https://developer.mozilla.org/en-US/docs/Web/API/XRSystem/requestSession#parameters). <small class="blue">non-standard</small> | NONE, IMMERSIVE_AR, IMMERSIVE_VR, INLINE | IMMERSIVE_VR |
 
 #### **setBrowserOption** (*name: string, value: any*): void
 
@@ -508,87 +305,22 @@ print (Browser .getRenderingProperty ("ContentScale"));
 
 ##### Rendering Properties
 
-<table>
-   <thead>
-      <tr>
-         <th>Name</th>
-         <th>Type</th>
-         <th>Description</th>
-      </tr>
-   </thead>
-   <tbody>
-      <tr>
-         <td>Shading</td>
-         <td>POINT, WIREFRAME, FLAT, GOURAUD, PHONG</td>
-         <td>The type of shading algorithm in use. Typical values are Flat, Gouraud, Phong, Wireframe, Point.</td>
-      </tr>
-      <tr>
-         <td>MaxTextureSize</td>
-         <td>Integer</td>
-         <td>The maximum texture size supported.</td>
-      </tr>
-      <tr>
-         <td>TextureUnits</td>
-         <td>Integer</td>
-         <td>The number of texture units supported for doing multitexture.</td>
-      </tr>
-      <tr>
-         <td>MaxLights</td>
-         <td>Integer</td>
-         <td>The maximum number of lights supported.</td>
-      </tr>
-      <tr>
-         <td>Antialiased</td>
-         <td>Boolean</td>
-         <td>True or false if the rendering is currently anti-aliased or not.</td>
-      </tr>
-      <tr>
-         <td>ColorDepth</td>
-         <td>Integer</td>
-         <td>The number of bits of color depth supported by the screen. Allows for optimized selection of textures, particularly for lower color depth screen capabilities.</td>
-      </tr>
-      <tr>
-         <td>TextureMemory</td>
-         <td>Float</td>
-         <td>The amount of memory in megabytes available for textures to be placed on the video card.</td>
-      </tr>
-      <tr>
-         <td>ContentScale</td>
-         <td>Boolean</td>
-         <td>Currently used factor to scale content. <small class="blue">non-standard</small></td>
-      </tr>
-      <tr>
-         <td>LogarithmicDepthBuffer</td>
-         <td>Boolean</td>
-         <td>True or false if the logarithmic depth buffer is currently enabled or not. <small class="blue">non-standard</small></td>
-      </tr>
-      <tr>
-         <td>MaxAnisotropicDegree</td>
-         <td>Float</td>
-         <td>The maximum number of available anisotropy. <small class="blue">non-standard</small></td>
-      </tr>
-      <tr>
-         <td>MaxSamples</td>
-         <td>Integer</td>
-         <td>The maximum number of samples supported for doing multisampling. <small class="blue">non-standard</small></td>
-      </tr>
-      <tr>
-         <td>Multisampling</td>
-         <td>Integer</td>
-         <td>Number of samples currently used by multisampling. <small class="blue">non-standard</small></td>
-      </tr>
-      <tr>
-         <td>PixelsPerPoint</td>
-         <td>Float</td>
-         <td>Number of pixels per point. <small class="blue">non-standard</small></td>
-      </tr>
-      <tr>
-         <td>XRSession</td>
-         <td>Boolean</td>
-         <td>True if a WebXR session is active, otherwise false. <small class="blue">non-standard</small></td>
-      </tr>
-   </tbody>
-</table>
+| Name | Type | Description |
+|------|------|-------------|
+| Shading | POINT, WIREFRAME, FLAT, GOURAUD, PHONG | The type of shading algorithm in use. Typical values are Flat, Gouraud, Phong, Wireframe, Point. |
+| MaxTextureSize | Integer | The maximum texture size supported. |
+| TextureUnits | Integer | The number of texture units supported for doing multitexture. |
+| MaxLights | Integer | The maximum number of lights supported. |
+| Antialiased | Boolean | `true` or `false` if the rendering is currently anti-aliased or not. |
+| ColorDepth | Integer | The number of bits of color depth supported by the screen. Allows for optimized selection of textures, particularly for lower color depth screen capabilities. |
+| TextureMemory | Float | The amount of memory in megabytes available for textures to be placed on the video card. |
+| ContentScale | Boolean | Currently used factor to scale content. <small class="blue">non-standard</small> |
+| LogarithmicDepthBuffer | Boolean | `true` or `false` if the logarithmic depth buffer is currently enabled or not. <small class="blue">non-standard</small> |
+| MaxAnisotropicDegree | Float | The maximum number of available anisotropy. <small class="blue">non-standard</small> |
+| MaxSamples | Integer | The maximum number of samples supported for doing multisampling. <small class="blue">non-standard</small> |
+| Multisampling | Integer | Number of samples currently used by multisampling. <small class="blue">non-standard</small> |
+| PixelsPerPoint | Float | Number of [pixels](https://developer.mozilla.org/en-US/docs/Glossary/CSS_pixel) per point. <small class="blue">non-standard</small> |
+| XRSession | Boolean | `true` if a WebXR session is active, otherwise `false`. <small class="blue">non-standard</small> |
 
 <!--
 #### **addRenderingPropertyCallback** (*key: any, name: string, callback: (value: unknown) => void*): void
@@ -613,17 +345,46 @@ Adds a browser *callback* function associated with *key,* where *key* can be of 
 
 | Event                           | Description                           |
 |---------------------------------|---------------------------------------|
-| X3DConstants .CONNECTION_ERROR  | Fired when scene could not be loaded. |
+| X3DConstants .CONNECTION_ERROR  | Fired when WebGL context is lost.     |
 | X3DConstants .BROWSER_EVENT     | not used                              |
 | X3DConstants .INITIALIZED_EVENT | Fired after scene is loaded.          |
 | X3DConstants .SHUTDOWN_EVENT    | Fired before scene is unloaded.       |
-| X3DConstants .INITIALIZED_ERROR | not used                              |
+| X3DConstants .INITIALIZED_ERROR | Fired when scene could not be loaded. |
+
+<x3d-script-area name="X3D ECMAScript Example: X3DBrowser addBrowserCallback" style="height: 630px">
+<pre>
+const canvas  = X3D .createBrowser ();
+const browser = canvas .browser;
+
+browser .addBrowserCallback ("check", X3D .X3DConstants .INITIALIZED_EVENT, () =>
+{
+  console .log ("Scene is loaded.");
+});
+
+await browser .loadURL (new X3D .MFString (`data:model/x3d+vrml,
+#X3D V{{ site.x3d_latest_version }} utf8
+
+PROFILE Interchange
+
+Shape {
+  appearance Appearance {
+    material Material { }
+  }
+  geometry Box { }
+}`));
+
+console .log ("The scene is loaded here as well.");
+
+// Expected output: Scene is loaded.
+// Expected output: The scene is loaded here as well.
+</pre>
+</x3d-script-area>
 
 #### **removeBrowserCallback** (*key: any, event?: number*): void
 
 Removes a browser callback function associated with *key* and *event*. If *event* is omitted, all callbacks associated with key will be removed.
 
-#### **viewAll** (*[layer?: X3DLayerNode,] transitionTime?: number = 1*): void <small><span class="blue">non-standard</span></small>
+#### **viewAll** (*[layer?: X3DLayerNode,] transitionTime: number = 1*): void <small class="blue">non-standard</small>
 
 Modifies the current view to show the entire visible scene within *transitionTime* seconds. If *layer* is omitted, the active layer is used.
 
@@ -647,7 +408,7 @@ Changes the bound viewpoint node to the last viewpoint in the list of user viewp
 
 Changes the bound viewpoint node to the viewpoint named *name*. The viewpoint must be available in *layer*. If *layer* is omitted, the active layer is used.
 
-#### **setCursors** (*cursorTypes: CursorTypes*): void <small><span class="blue">non-standard</span></small>
+#### **setCursors** (*cursorTypes: CursorTypes*): void <small class="blue">non-standard</small>
 
 Changes the default cursor images to the ones specified in *cursorTypes*. You can omit properties if you want to use the default cursor image for this action. The values can be any valid CSS cursor.
 
@@ -667,7 +428,7 @@ type CursorTypes = {
 
 * [CSS cursor](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/cursor)
 
-#### **constrainTranslation** (*[layer: X3DLayerNode,] translation: SFVec3d | SFVec3f*): SFVec3f <small><span class="blue">non-standard</span></small>
+#### **constrainTranslation** (*[layer: X3DLayerNode,] translation: SFVec3d | SFVec3f*): SFVec3f <small class="blue">non-standard</small>
 
 Constrains a *translation*, which should be added to the position of the active viewpoint, to a possible value that avatar can move to. If the avatar reaches or intersects with an obstacle the translation is either constrained to slide along the wall or to stop. If *layer* is omitted, the active layer is used.
 
@@ -677,7 +438,7 @@ const constrained = Browser .constrainTranslation (translation);
 viewpoint .position = viewpoint .position .add (constrained);
 ```
 
-#### **getClosestObject** (*[layer: X3DLayerNode,] direction: SFVec3d | SFVec3f*): ClosestObject <small><span class="blue">non-standard</span></small>
+#### **getClosestObject** (*[layer: X3DLayerNode,] direction: SFVec3d | SFVec3f*): ClosestObject <small class="blue">non-standard</small>
 
 Returns the closest collidable object when looked in *direction*, measured from the active viewpoint position. The maximum detection radius is `2 * avatarHeight` (where *avatarHeight* is the second value of [NavigationInfo](/x_ite/components/navigation/navigationinfo/) *avatarSize*). Compare *distance* with *collisionRadius* (first value of [NavigationInfo](/x_ite/components/navigation/navigationinfo/) *avatarSize*) to detect if a collision with an object occurs. If *layer* is omitted, the active layer is used.
 
@@ -690,6 +451,10 @@ type ClosestObject = {
    normal: SFVec3f | null,
 };
 ```
+
+#### **loseContext** (): void <small class="blue">non-standard</small>
+
+Loses the WebGL context.
 
 #### **beginUpdate** (): void
 
@@ -710,10 +475,12 @@ Prints *objects* to the browser's console, inserting a newline character after t
 <x3d-script-area name="X3D ECMAScript Example: X3DBrowser println">
 <pre>
 Browser .println ("Debug output ...");
-Browser .println ("comes here.");
+Browser .println ("comes here:");
+Browser .println (new SFVec3f (1, 2, 3));
 
 // Expected output: Debug output ...
-// Expected output: comes here.
+// Expected output: comes here:
+// Expected output: 1 2 3
 </pre>
 </x3d-script-area>
 

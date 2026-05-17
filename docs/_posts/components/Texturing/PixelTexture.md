@@ -32,12 +32,12 @@ The PixelTexture node belongs to the [Texturing](/x_ite/components/overview/#tex
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFImage | [in, out] | [image](#fields-image) | 0 0 0 |
 | SFBool | [ ] | [repeatS](#fields-repeatS) | TRUE |
 | SFBool | [ ] | [repeatT](#fields-repeatT) | TRUE |
-| SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL  |
+| SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -61,7 +61,7 @@ Author-provided prose that describes intended purpose of the url asset.
 ### SFImage [in, out] **image** 0 0 0
 {: #fields-image }
 
-Defines *image*: width, height, number_of_components per each pixel value, and list of pixel_values. Note that width and height are pixel count, and allowed values for RGBA number_of_components in each pixel value are 1 (intensity), 2 (intensity alpha), 3 (red green blue), 4 (red green blue alpha-opacity).
+Defines *image*: width, height, number_of_components per each pixel value, and list of pixel_values. Note that width and height are pixel count, and allowed values for RGBA number_of_components in each pixel value are 1 (intensity), 2 (intensity alpha), 3 (RGB red green blue), 4 (RGBA red green blue alpha-opacity).
 
 #### Hints
 
@@ -95,7 +95,7 @@ Optional single contained [TextureProperties](/x_ite/components/texturing/textur
 - This is a good way to bundle image(s) into a single scene file, avoiding multiple downloads.
 - [X3D-Edit includes PixelTexture image-conversion import capabilities.](https://www.web3d.org/x3d/tools/X3D-Edit/images/PixelTextureImportImage.png)
 - Can contain a single [TextureProperties](/x_ite/components/texturing/textureproperties/) node.
-- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
 - [X3D Scene Authoring Hints, Images and Videos](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Images)
 - If a texture is opaque, omitting values in the alpha channel can help avoid rendering artifacts related to transparency.
 - Texture coordinates are reapplied (or else recomputed if textureTransform field initially NULL) whenever the corresponding vertex-based geometry changes.
@@ -117,6 +117,14 @@ Optional single contained [TextureProperties](/x_ite/components/texturing/textur
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Texturing/PixelTexture/PixelTexture.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of PixelTexture Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#PixelTexture)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

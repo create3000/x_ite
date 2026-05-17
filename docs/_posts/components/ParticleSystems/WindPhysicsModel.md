@@ -29,12 +29,12 @@ The WindPhysicsModel node belongs to the [ParticleSystems](/x_ite/components/ove
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFVec3f | [in, out] | [direction](#fields-direction) | 1 0 0  |
-| SFFloat | [in, out] | [speed](#fields-speed) | 0.1  |
-| SFFloat | [in, out] | [gustiness](#fields-gustiness) | 0.1  |
-| SFFloat | [in, out] | [turbulence](#fields-turbulence) | 0  |
+| SFVec3f | [in, out] | [direction](#fields-direction) | 1 0 0 |
+| SFFloat | [in, out] | [speed](#fields-speed) | 0.1 |
+| SFFloat | [in, out] | [gustiness](#fields-gustiness) | 0.1 |
+| SFFloat | [in, out] | [turbulence](#fields-turbulence) | 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -88,6 +88,13 @@ Initial linear *speed* (default is m/s) imparted to all particles along their di
 - [Download ZIP Archive](https://create3000.github.io/media/examples/ParticleSystems/WindPhysicsModel/WindPhysicsModel.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/ParticleSystems/WindPhysicsModel/WindPhysicsModel.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

@@ -85,8 +85,8 @@ A [Material](/x_ite/components/shape/material/) node controls shape material att
   <Appearance>
     <Material
         diffuseColor='0.8 0.8 0.8'
-        emissiveColor='0.0 0.0 0.0'
-        transparency='0.0'/>
+        emissiveColor='0 0 0'
+        transparency='0'/>
   </Appearance>
   <!-- geometry ... -->
 </Shape>
@@ -98,9 +98,9 @@ A [Material](/x_ite/components/shape/material/) node controls shape material att
 Shape {
   appearance Appearance {
     material Material {
-      diffuseColor  0.8 0.8 0.8
-      emissiveColor 0.0 0.0 0.0
-      transparency  0.0
+      diffuseColor 0.8 0.8 0.8
+      emissiveColor 0 0 0
+      transparency 0
     }
   }
   geometry ...
@@ -112,14 +112,14 @@ Shape {
 Colors specify:
 
 - A mixture of red, green, and blue light
-- Values between 0.0 (none) and 1.0 (lots)
+- Values between 0 (none) and 1 (lots)
 
 | Color  | Red | Green | Blue | Result      |
 |--------|-----|-------|------|-------------|
-| White  | 1.0 | 1.0   | 1.0  | ![white][]  |
-| Red    | 1.0 | 0.0   | 0.0  | ![red][]    |
-| Yellow | 1.0 | 1.0   | 0.0  | ![yellow][] |
-| Cyan   | 0.0 | 1.0   | 1.0  | ![cyan][]   |
+| White  | 1   | 1     | 1    | ![white][]  |
+| Red    | 1   | 0     | 0    | ![red][]    |
+| Yellow | 1   | 1     | 0    | ![yellow][] |
+| Cyan   | 0   | 1     | 1    | ![cyan][]   |
 | Brown  | 0.5 | 0.2   | 0    | ![brown][]  |
 
   [white]: https://via.placeholder.com/15/ffffff/ffffff
@@ -145,11 +145,11 @@ A [Material](/x_ite/components/shape/material/) node also controls shape shinine
   <Appearance>
     <Material
         diffuseColor='0.2 0.2 0.2'
-        emissiveColor='0.0 0.0 0.8'
+        emissiveColor='0 0 0.8'
         transparency='0.25'/>
   </Appearance>
   <Box
-      size='2.0 4.0 0.3'/>
+      size='2 4 0.3'/>
 </Shape>
 <!-- ... -->
 ```
@@ -160,13 +160,13 @@ A [Material](/x_ite/components/shape/material/) node also controls shape shinine
 Shape {
   appearance Appearance {
     material Material {
-      diffuseColor  0.2 0.2 0.2
-      emissiveColor 0.0 0.0 0.8
-      transparency  0.25
+      diffuseColor 0.2 0.2 0.2
+      emissiveColor 0 0 0.8
+      transparency 0.25
     }
   }
   geometry Box {
-    size 2.0 4.0 0.3
+    size 2 4 0.3
   }
 }
 ...

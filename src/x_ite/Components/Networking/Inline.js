@@ -91,14 +91,14 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
       {
          this .groupNode ._children .length = 0;
 
-         this .setLoadState (X3DConstants .NOT_STARTED_STATE);
+         this .setLoadState (X3DConstants .FAILED_STATE);
       }
 
       this .getBrowser () .addBrowserEvent ();
    },
    getInternalScene ()
    {
-      ///  Returns the internal X3DScene of this inline, that is loaded from the url given.
+      ///  Returns the internal X3DScene of this Inline node, that is loaded from the url given.
       ///  If the load field was false an empty scene is returned.  This empty scene is the same for all Inline
       ///  nodes (due to performance reasons).
 
@@ -154,7 +154,7 @@ Object .assign (Object .setPrototypeOf (Inline .prototype, X3DChildNode .prototy
                      const browser = this .getBrowser ();
 
                      for (let i = 0; i < numLocalObjects; ++ i)
-                        browser .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
+                        browser .getLocalObjects () .add (renderObject .getLocalObjects () .pop ());
                   }
                   else
                   {

@@ -30,13 +30,13 @@ The CollisionSensor node belongs to the [RigidBodyPhysics](/x_ite/components/ove
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | MFNode | [out] | [intersections](#fields-intersections) |  |
 | MFNode | [out] | [contacts](#fields-contacts) |  |
-| SFNode | [in, out] | [collider](#fields-collider) | NULL  |
+| SFNode | [in, out] | [collider](#fields-collider) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -94,6 +94,13 @@ The *collider* field specifies a [CollisionCollection](/x_ite/components/rigidbo
 - CollisionSensor also has output events: [CollidableOffset](/x_ite/components/rigidbodyphysics/collidableoffset/) and [CollidableShape](/x_ite/components/rigidbodyphysics/collidableshape/) nodes (`containerField='intersections'),` [Contact](/x_ite/components/rigidbodyphysics/contact/) nodes (`containerField='contacts').`
 - [Event timing details are explained in X3D Specification 4.4.8.3 Execution model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/concepts.html#ExecutionModel)
 - Content must be visible to be collidable and to be pickable.
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

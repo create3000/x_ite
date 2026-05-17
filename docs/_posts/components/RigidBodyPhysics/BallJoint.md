@@ -29,13 +29,13 @@ The BallJoint node belongs to the [RigidBodyPhysics](/x_ite/components/overview/
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| MFString | [in, out] | [forceOutput](#fields-forceOutput) | "NONE"  |
-| SFVec3f | [in, out] | [anchorPoint](#fields-anchorPoint) | 0 0 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| MFString | [in, out] | [forceOutput](#fields-forceOutput) | "NONE" |
+| SFVec3f | [in, out] | [anchorPoint](#fields-anchorPoint) | 0 0 0 |
 | SFVec3f | [out] | [body1AnchorPoint](#fields-body1AnchorPoint) |  |
 | SFVec3f | [out] | [body2AnchorPoint](#fields-body2AnchorPoint) |  |
-| SFNode | [in, out] | [body1](#fields-body1) | NULL  |
-| SFNode | [in, out] | [body2](#fields-body2) | NULL  |
+| SFNode | [in, out] | [body1](#fields-body1) | NULL |
+| SFNode | [in, out] | [body2](#fields-body2) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -108,6 +108,13 @@ The body1 and *body2* fields indicate the two [RigidBody](/x_ite/components/rigi
 - [Download ZIP Archive](https://create3000.github.io/media/examples/RigidBodyPhysics/BallJoint/BallJoint.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/RigidBodyPhysics/BallJoint/BallJoint.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

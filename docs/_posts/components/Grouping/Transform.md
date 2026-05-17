@@ -33,16 +33,16 @@ The Transform node belongs to the [Grouping](/x_ite/components/overview/#groupin
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFVec3f | [in, out] | [translation](#fields-translation) | 0 0 0  |
-| SFRotation | [in, out] | [rotation](#fields-rotation) | 0 0 1 0  |
-| SFVec3f | [in, out] | [scale](#fields-scale) | 1 1 1  |
-| SFRotation | [in, out] | [scaleOrientation](#fields-scaleOrientation) | 0 0 1 0  |
-| SFVec3f | [in, out] | [center](#fields-center) | 0 0 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFVec3f | [in, out] | [translation](#fields-translation) | 0 0 0 |
+| SFRotation | [in, out] | [rotation](#fields-rotation) | 0 0 1 0 |
+| SFVec3f | [in, out] | [scale](#fields-scale) | 1 1 1 |
+| SFRotation | [in, out] | [scaleOrientation](#fields-scaleOrientation) | 0 0 1 0 |
+| SFVec3f | [in, out] | [center](#fields-center) | 0 0 0 |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
 | MFNode | [in] | [addChildren](#fields-addChildren) |  |
 | MFNode | [in] | [removeChildren](#fields-removeChildren) |  |
 | MFNode | [in, out] | [children](#fields-children) | [ ] |
@@ -195,6 +195,14 @@ Grouping nodes contain an ordered list of *children* nodes.
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Grouping/Transform/Transform.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of Transform Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/grouping.html#Transform)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

@@ -75,13 +75,12 @@ Object .assign (Object .setPrototypeOf (Text .prototype, X3DGeometryNode .protot
    build ()
    {
       this .textGeometry .update ();
-      this .textGeometry .build ();
 
       this .setSolid (this ._solid .getValue ());
    },
-   traverseBefore (type, renderObject)
+   traverseBefore (type, renderObject, shapeNode)
    {
-      this .textGeometry .traverseBefore ?.(type, renderObject);
+      this .textGeometry .traverseBefore ?.(type, renderObject, shapeNode);
    },
    traverseAfter (type, renderObject)
    {

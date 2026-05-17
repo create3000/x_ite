@@ -124,7 +124,7 @@ Shape {
     material Material { }
   }
   geometry Cylinder {
-    height 2.0
+    height 2
     radius 1.5
   }
 }
@@ -184,7 +184,7 @@ Shape {
     material Material { }
   }
   geometry Box {
-    size 1.0 1.0 1.0
+    size 1 1 1
   }
 }
 

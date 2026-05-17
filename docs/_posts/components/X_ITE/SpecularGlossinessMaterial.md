@@ -37,24 +37,24 @@ The SpecularGlossinessMaterial node belongs to the [X_ITE](/x_ite/components/ove
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFColor | [in, out] | [diffuseColor](#fields-diffuseColor) | 1 1 1  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFColor | [in, out] | [diffuseColor](#fields-diffuseColor) | 1 1 1 |
 | SFString | [in, out] | [diffuseTextureMapping](#fields-diffuseTextureMapping) | "" |
-| SFNode | [in, out] | [diffuseTexture](#fields-diffuseTexture) | NULL  |
-| SFColor | [in, out] | [specularColor](#fields-specularColor) | 1 1 1  |
-| SFFloat | [in, out] | [glossiness](#fields-glossiness) | 1  |
+| SFNode | [in, out] | [diffuseTexture](#fields-diffuseTexture) | NULL |
+| SFColor | [in, out] | [specularColor](#fields-specularColor) | 1 1 1 |
+| SFFloat | [in, out] | [glossiness](#fields-glossiness) | 1 |
 | SFString | [in, out] | [specularGlossinessTextureMapping](#fields-specularGlossinessTextureMapping) | "" |
-| SFNode | [in, out] | [specularGlossinessTexture](#fields-specularGlossinessTexture) | NULL  |
-| SFColor | [in, out] | [emissiveColor](#fields-emissiveColor) | 0 0 0  |
+| SFNode | [in, out] | [specularGlossinessTexture](#fields-specularGlossinessTexture) | NULL |
+| SFColor | [in, out] | [emissiveColor](#fields-emissiveColor) | 0 0 0 |
 | SFString | [in, out] | [emissiveTextureMapping](#fields-emissiveTextureMapping) | "" |
-| SFNode | [in, out] | [emissiveTexture](#fields-emissiveTexture) | NULL  |
-| SFFloat | [in, out] | [occlusionStrength](#fields-occlusionStrength) | 1  |
+| SFNode | [in, out] | [emissiveTexture](#fields-emissiveTexture) | NULL |
+| SFFloat | [in, out] | [occlusionStrength](#fields-occlusionStrength) | 1 |
 | SFString | [in, out] | [occlusionTextureMapping](#fields-occlusionTextureMapping) | "" |
-| SFNode | [in, out] | [occlusionTexture](#fields-occlusionTexture) | NULL  |
-| SFFloat | [in, out] | [normalScale](#fields-normalScale) | 1  |
+| SFNode | [in, out] | [occlusionTexture](#fields-occlusionTexture) | NULL |
+| SFFloat | [in, out] | [normalScale](#fields-normalScale) | 1 |
 | SFString | [in, out] | [normalTextureMapping](#fields-normalTextureMapping) | "" |
-| SFNode | [in, out] | [normalTexture](#fields-normalTexture) | NULL  |
-| SFFloat | [in, out] | [transparency](#fields-transparency) | 0  |
+| SFNode | [in, out] | [normalTexture](#fields-normalTexture) | NULL |
+| SFFloat | [in, out] | [transparency](#fields-transparency) | 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -219,6 +219,13 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 ## Example
 
 - [View »Spec Gloss Vs Metal Rough« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=SpecGlossVsMetalRough)
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

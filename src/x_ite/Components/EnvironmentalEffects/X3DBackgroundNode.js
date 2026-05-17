@@ -108,11 +108,11 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
    },
    set_texture__ (index, textureNode)
    {
-      this .textureNodes [index] ?.removeInterest (`set_loadState${index}__`, this);
+      this .textureNodes [index] ?.removeInterest ("set_loadState__", this);
 
       this .textureNodes [index] = textureNode;
 
-      textureNode ?.addInterest (`set_loadState${index}__`, this, index, textureNode);
+      textureNode ?.addInterest ("set_loadState__", this, index, textureNode);
 
       this .set_loadState__ (index, textureNode);
    },
@@ -602,13 +602,5 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
 });
 
 Object .defineProperties (X3DBackgroundNode, X3DNode .getStaticProperties ("X3DBackgroundNode", "EnvironmentalEffects", 1));
-
-for (let index = 0; index < 6; ++ index)
-{
-   X3DBackgroundNode .prototype [`set_loadState${index}__`] = function (index, textureNode)
-   {
-      this .set_loadState__ (index, textureNode);
-   };
-}
 
 export default X3DBackgroundNode;

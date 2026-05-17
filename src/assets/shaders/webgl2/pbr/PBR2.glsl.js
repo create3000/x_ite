@@ -3,8 +3,8 @@ export default () => /* glsl */ `
 // Original source code from:
 // https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/pbr.frag
 
-#pragma X3D include "../common/Fragment.glsl"
-#pragma X3D include "../common/Shadow.glsl"
+#include <Fragment>
+#include <Shadow>
 
 #if defined (X3D_TRANSMISSION_MATERIAL_EXT) || defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
    uniform ivec4 x3d_Viewport;
@@ -33,14 +33,14 @@ eye (const in mat4 modelViewMatrix)
 
 uniform x3d_PhysicalMaterialParameters x3d_Material;
 
-#pragma X3D include "BRDF.glsl"
-#pragma X3D include "MaterialInfo.glsl"
-#pragma X3D include "Punctual.glsl"
-#pragma X3D include "IBL.glsl"
-#pragma X3D include "Iridescence.glsl"
+#include <BRDF>
+#include <MaterialInfo>
+#include <Punctual>
+#include <IBL>
+#include <Iridescence>
 
 #if defined (X3D_VOLUME_SCATTER_PASS)
-#pragma X3D include "Scatter.glsl"
+#include <Scatter>
 #else
 vec4
 getMaterialColor (const in vec4 fragCoord)
@@ -114,6 +114,10 @@ getMaterialColor (const in vec4 fragCoord)
       materialInfo = getDiffuseTransmissionInfo (materialInfo);
    #endif
 
+   #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
+      materialInfo = getVolumeScatterInfo (materialInfo);
+   #endif
+
    #if defined (X3D_ANISOTROPY_MATERIAL_EXT)
       materialInfo = getAnisotropyInfo (materialInfo, normalInfo);
    #endif
@@ -163,7 +167,7 @@ getMaterialColor (const in vec4 fragCoord)
 
    #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
       // Used for weighting absorption and scattering.
-      vec3 singleScatter = multiToSingleScatter ();
+      vec3 singleScatter = multiToSingleScatter (materialInfo .multiscatterColor);
    #endif
 
    #if defined (X3D_CLEARCOAT_MATERIAL_EXT)
@@ -243,13 +247,12 @@ getMaterialColor (const in vec4 fragCoord)
       color = mix (f_dielectric_brdf_ibl, f_metal_brdf_ibl, materialInfo .metallic);
       color = f_sheen + color * albedoSheenScaling;
       color = mix (color, clearcoat_brdf, clearcoatFactor * clearcoatFresnel);
-   #endif
 
-   // Holger: moved occlusion out of IBL.
-   #if defined (X3D_OCCLUSION_TEXTURE)
-      float ao = getOcclusionFactor ();
+      #if defined (X3D_OCCLUSION_TEXTURE)
+         float ao = getOcclusionFactor ();
 
-      color *= 1.0 + x3d_Material .occlusionStrength * (ao - 1.0);
+         color *= 1.0 + x3d_Material .occlusionStrength * (ao - 1.0);
+      #endif
    #endif
 
    f_diffuse             = vec3 (0.0);
@@ -294,10 +297,6 @@ getMaterialColor (const in vec4 fragCoord)
          // Calculation of analytical light
          // https://github.com/KhronosGroup/glTF/tree/master/specification/2.0#acknowledgments AppendixB
          vec3 lightIntensity = getLightIntensity (light, l, distanceToLight);
-
-         #if defined (X3D_SHADOWS)
-            lightIntensity = mix (lightIntensity, light .shadowColor, getShadowIntensity (i, light));
-         #endif
 
          vec3  l_diffuse             = lightIntensity * NdotL * BRDF_lambertian (baseColor .rgb);
          vec3  l_specular_dielectric = vec3 (0.0);
@@ -386,14 +385,19 @@ getMaterialColor (const in vec4 fragCoord)
 
          l_color = l_sheen + l_color * l_albedoSheenScaling;
          l_color = mix (l_color, l_clearcoat_brdf, clearcoatFactor * clearcoatFresnel);
-         color  += l_color;
+
+         #if defined (X3D_SHADOWS)
+            l_color = mix (l_color, light .shadowColor, getShadowIntensity (i, light));
+         #endif
+
+         color += l_color;
       }
    }
    #endif
 
    #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
       // Subsurface scattering is calculated based on fresnel weighted diffuse terms.
-      vec3 l_color = getSubsurfaceScattering (vertex, x3d_ProjectionMatrix, materialInfo .attenuationDistance, materialInfo .diffuseTransmissionColorFactor, fragCoord);
+      vec3 l_color = getSubsurfaceScattering (vertex, x3d_ProjectionMatrix, materialInfo .attenuationDistance, materialInfo .diffuseTransmissionColorFactor, materialInfo .multiscatterColor, fragCoord);
 
       color += l_color * (1.0 - materialInfo .metallic) * (1.0 - clearcoatFactor * clearcoatFresnel) * (1.0 - materialInfo .iridescenceFactor) * (1.0 - materialInfo .transmissionFactor);
    #endif

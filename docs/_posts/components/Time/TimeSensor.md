@@ -33,15 +33,15 @@ The TimeSensor node belongs to the [Time](/x_ite/components/overview/#time) comp
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFTime | [in, out] | [cycleInterval](#fields-cycleInterval) | 1  |
+| SFTime | [in, out] | [cycleInterval](#fields-cycleInterval) | 1 |
 | SFBool | [in, out] | [loop](#fields-loop) | FALSE |
-| SFTime | [in, out] | [startTime](#fields-startTime) | 0  |
-| SFTime | [in, out] | [resumeTime](#fields-resumeTime) | 0  |
-| SFTime | [in, out] | [pauseTime](#fields-pauseTime) | 0  |
-| SFTime | [in, out] | [stopTime](#fields-stopTime) | 0  |
+| SFTime | [in, out] | [startTime](#fields-startTime) | 0 |
+| SFTime | [in, out] | [resumeTime](#fields-resumeTime) | 0 |
+| SFTime | [in, out] | [pauseTime](#fields-pauseTime) | 0 |
+| SFTime | [in, out] | [stopTime](#fields-stopTime) | 0 |
 | SFBool | [out] | [isPaused](#fields-isPaused) |  |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFTime | [out] | [cycleTime](#fields-cycleTime) |  |
@@ -225,6 +225,14 @@ Time continuously sends the absolute *time* (value 0.0 matches 1 January 1970) i
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Time/TimeSensor/TimeSensor.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of TimeSensor Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/time.html#TimeSensor)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

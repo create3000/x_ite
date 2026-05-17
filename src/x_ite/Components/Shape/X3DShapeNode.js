@@ -106,7 +106,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    setAlphaMode (value)
    {
       // Used by ParticleSystem!
-      this .alphaMode = !!value;
+      this .alphaMode = value;
    },
    getRenderPasses ()
    {
@@ -267,7 +267,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
          return;
 
       // Needed for geometry primitives, Text with ScreenFontStyle and tools.
-      geometryContext .traverseBefore ?.(type, renderObject);
+      geometryContext .traverseBefore ?.(type, renderObject, this);
 
       switch (type)
       {
@@ -286,14 +286,15 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
             renderObject .addCollisionShape (this);
             break;
          }
+         case TraverseType .DEPTH:
          case TraverseType .SHADOW:
          {
-            renderObject .addShadowShape (this);
+            renderObject .addDepthShape (this);
             break;
          }
          case TraverseType .DISPLAY:
          {
-            // X3DAppearanceNode traverse is needed for GeneratedCubeMapTexture.
+            // X3DAppearanceNode traverse is needed for rendered textures.
 
             if (renderObject .addDisplayShape (this))
                this .appearanceNode .traverse (type, renderObject);
@@ -303,7 +304,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
       }
 
       // Needed for geometry primitives, Text with ScreenFontStyle and tools.
-      geometryContext .traverseAfter ?.(type, renderObject);
+      geometryContext .traverseAfter ?.(type, renderObject, this);
    },
    picking (renderObject)
    {

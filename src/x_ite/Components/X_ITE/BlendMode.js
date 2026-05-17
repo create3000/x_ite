@@ -15,6 +15,8 @@ function BlendMode (executionContext)
 
    this .addType (X3DConstants .BlendMode);
 
+   // Private properties
+
    this .factorTypes   = new Map ();
    this .equationTypes = new Map ();
 }
@@ -48,8 +50,8 @@ Object .assign (Object .setPrototypeOf (BlendMode .prototype, X3DAppearanceChild
       this .equationTypes .set ("FUNC_ADD",              gl .FUNC_ADD);
       this .equationTypes .set ("FUNC_SUBTRACT",         gl .FUNC_SUBTRACT);
       this .equationTypes .set ("FUNC_REVERSE_SUBTRACT", gl .FUNC_REVERSE_SUBTRACT);
-      this .equationTypes .set ("MIN",                   gl .MIN || (ext && ext .MIN_EXT));
-      this .equationTypes .set ("MAX",                   gl .MAX || (ext && ext .MAX_EXT));
+      this .equationTypes .set ("MIN",                   gl .MIN ?? ext ?.MIN_EXT);
+      this .equationTypes .set ("MAX",                   gl .MAX ?? ext ?.MAX_EXT);
 
       this ._sourceColorFactor      .addInterest ("set_sourceColorFactor__",      this);
       this ._sourceAlphaFactor      .addInterest ("set_sourceAlphaFactor__",      this);
@@ -83,7 +85,7 @@ Object .assign (Object .setPrototypeOf (BlendMode .prototype, X3DAppearanceChild
    set_destinationAlphaFactor__ ()
    {
       this .destinationAlphaFactorType = this .factorTypes .get (this ._destinationAlphaFactor .getValue ())
-      ??    this .factorTypes .get ("ONE_MINUS_SRC_ALPHA");
+         ?? this .factorTypes .get ("ONE_MINUS_SRC_ALPHA");
    },
    set_colorEquation__ ()
    {

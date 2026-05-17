@@ -146,9 +146,9 @@ Object .assign (Object .setPrototypeOf (X3DVolumeDataNode .prototype, X3DChildNo
    {
       this .volumeMaterialNode .getVolumeShaders () .clear ();
    },
-   addShaderUniformNames (uniformNames)
+   addShaderUniforms (uniforms)
    {
-      uniformNames .push ("x3d_TextureNormalMatrix");
+      uniforms .push ("x3d_TextureNormalMatrix");
    },
    getNumPlanes (quality)
    {

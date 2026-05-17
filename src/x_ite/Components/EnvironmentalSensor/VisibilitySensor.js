@@ -53,9 +53,7 @@ Object .assign (Object .setPrototypeOf (VisibilitySensor .prototype, X3DEnvironm
    },
    traverse: (() =>
    {
-      const
-         bbox     = new Box3 (),
-         infinity = new Vector3 (-1);
+      const bbox = new Box3 ();
 
       return function (type, renderObject)
       {
@@ -64,7 +62,7 @@ Object .assign (Object .setPrototypeOf (VisibilitySensor .prototype, X3DEnvironm
          if (this .visible)
             return;
 
-         if (this ._size .getValue () .equals (infinity))
+         if (this ._size .getValue () .equals (Vector3 .NEGATIVE_ONE))
          {
             this .visible = true;
          }
@@ -74,7 +72,7 @@ Object .assign (Object .setPrototypeOf (VisibilitySensor .prototype, X3DEnvironm
                .set (this ._size .getValue (), this ._center .getValue ())
                .multRight (renderObject .getModelViewMatrix () .get ());
 
-            this .visible = renderObject .getViewVolume () .intersectsBox (bbox);
+            this .visible = renderObject .getViewVolumes () .at (-1) .intersectsBox (bbox);
          }
       };
    })(),
