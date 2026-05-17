@@ -85,45 +85,45 @@ Object .assign (Matrix4 .prototype,
          {
             case 1:
             {
-               if (translation && !translation .equals (Vector3 .ZERO))
+               if (translation ?.equals (Vector3 .ZERO) === false)
                   this .translate (translation);
 
                break;
             }
             case 2:
             {
-               if (translation && !translation .equals (Vector3 .ZERO))
+               if (translation ?.equals (Vector3 .ZERO) === false)
                   this .translate (translation);
 
-               if (rotation && !rotation .equals (Rotation4 .IDENTITY))
+               if (rotation ?.equals (Rotation4 .IDENTITY) === false)
                   this .rotate (rotation);
 
                break;
             }
             case 3:
             {
-               if (translation && !translation .equals (Vector3 .ZERO))
+               if (translation ?.equals (Vector3 .ZERO) === false)
                   this .translate (translation);
 
-               if (rotation && !rotation .equals (Rotation4 .IDENTITY))
+               if (rotation ?.equals (Rotation4 .IDENTITY) === false)
                   this .rotate (rotation);
 
-               if (scale && !scale .equals (Vector3 .ONE))
+               if (scale ?.equals (Vector3 .ONE) === false)
                   this .scale (scale);
 
                break;
             }
             case 4:
             {
-               if (translation && !translation .equals (Vector3 .ZERO))
+               if (translation ?.equals (Vector3 .ZERO) === false)
                   this .translate (translation);
 
-               if (rotation && !rotation .equals (Rotation4 .IDENTITY))
+               if (rotation ?.equals (Rotation4 .IDENTITY) === false)
                   this .rotate (rotation);
 
-               if (scale && !scale .equals (Vector3 .ONE))
+               if (scale ?.equals (Vector3 .ONE) === false)
                {
-                  if (scaleOrientation && !scaleOrientation .equals (Rotation4 .IDENTITY))
+                  if (scaleOrientation ?.equals (Rotation4 .IDENTITY) === false)
                   {
                      this .rotate (scaleOrientation);
                      this .scale (scale);
@@ -140,20 +140,20 @@ Object .assign (Matrix4 .prototype,
             case 5:
             {
                // P' = T * C * R * SR * S * -SR * -C * P
-               if (translation && !translation .equals (Vector3 .ZERO))
+               if (translation ?.equals (Vector3 .ZERO) === false)
                   this .translate (translation);
 
-               const hasCenter = center && !center .equals (Vector3 .ZERO);
+               const hasCenter = center ?.equals (Vector3 .ZERO) === false;
 
                if (hasCenter)
                   this .translate (center);
 
-               if (rotation && !rotation .equals (Rotation4 .IDENTITY))
+               if (rotation ?.equals (Rotation4 .IDENTITY) === false)
                   this .rotate (rotation);
 
-               if (scale && !scale .equals (Vector3 .ONE))
+               if (scale ?.equals (Vector3 .ONE) === false)
                {
-                  if (scaleOrientation && !scaleOrientation .equals (Rotation4 .IDENTITY))
+                  if (scaleOrientation ?.equals (Rotation4 .IDENTITY) === false)
                   {
                      this .rotate (scaleOrientation);
                      this .scale (scale);
