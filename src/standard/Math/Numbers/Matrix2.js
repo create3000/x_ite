@@ -90,16 +90,19 @@ Object .assign (Matrix2 .prototype,
    },
    inverse ()
    {
-      const
-         { 0: A, 1: B, 2: C, 3: D } = this,
-         d = A * D - B * C;
+      const { 0: A, 1: B, 2: C, 3: D } = this;
+
+      // Calculate the determinant.
+      let d = A * D - B * C;
 
       // if (d === 0) ... determinant is zero.
 
-      this [0] =  D / d;
-      this [1] = -B / d;
-      this [2] = -C / d;
-      this [3] =  A / d;
+      d = 1 / d;
+
+      this [0] =  D * d;
+      this [1] = -B * d;
+      this [2] = -C * d;
+      this [3] =  A * d;
 
       return this;
    },

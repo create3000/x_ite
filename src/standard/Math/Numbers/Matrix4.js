@@ -375,25 +375,29 @@ Object .assign (Matrix4 .prototype,
          b10 = m09 * m15 - m11 * m13,
          b11 = m10 * m15 - m11 * m14;
 
-      // Calculate the determinant
-      const det = 1 / (b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06);
+      // Calculate the determinant.
+      let d = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
 
-      this [ 0] = (m05 * b11 - m06 * b10 + m07 * b09) * det;
-      this [ 1] = (m02 * b10 - m01 * b11 - m03 * b09) * det;
-      this [ 2] = (m13 * b05 - m14 * b04 + m15 * b03) * det;
-      this [ 3] = (m10 * b04 - m09 * b05 - m11 * b03) * det;
-      this [ 4] = (m06 * b08 - m04 * b11 - m07 * b07) * det;
-      this [ 5] = (m00 * b11 - m02 * b08 + m03 * b07) * det;
-      this [ 6] = (m14 * b02 - m12 * b05 - m15 * b01) * det;
-      this [ 7] = (m08 * b05 - m10 * b02 + m11 * b01) * det;
-      this [ 8] = (m04 * b10 - m05 * b08 + m07 * b06) * det;
-      this [ 9] = (m01 * b08 - m00 * b10 - m03 * b06) * det;
-      this [10] = (m12 * b04 - m13 * b02 + m15 * b00) * det;
-      this [11] = (m09 * b02 - m08 * b04 - m11 * b00) * det;
-      this [12] = (m05 * b07 - m04 * b09 - m06 * b06) * det;
-      this [13] = (m00 * b09 - m01 * b07 + m02 * b06) * det;
-      this [14] = (m13 * b01 - m12 * b03 - m14 * b00) * det;
-      this [15] = (m08 * b03 - m09 * b01 + m10 * b00) * det;
+      // if (d === 0) ... determinant is zero.
+
+      d = 1 / d;
+
+      this [ 0] = (m05 * b11 - m06 * b10 + m07 * b09) * d;
+      this [ 1] = (m02 * b10 - m01 * b11 - m03 * b09) * d;
+      this [ 2] = (m13 * b05 - m14 * b04 + m15 * b03) * d;
+      this [ 3] = (m10 * b04 - m09 * b05 - m11 * b03) * d;
+      this [ 4] = (m06 * b08 - m04 * b11 - m07 * b07) * d;
+      this [ 5] = (m00 * b11 - m02 * b08 + m03 * b07) * d;
+      this [ 6] = (m14 * b02 - m12 * b05 - m15 * b01) * d;
+      this [ 7] = (m08 * b05 - m10 * b02 + m11 * b01) * d;
+      this [ 8] = (m04 * b10 - m05 * b08 + m07 * b06) * d;
+      this [ 9] = (m01 * b08 - m00 * b10 - m03 * b06) * d;
+      this [10] = (m12 * b04 - m13 * b02 + m15 * b00) * d;
+      this [11] = (m09 * b02 - m08 * b04 - m11 * b00) * d;
+      this [12] = (m05 * b07 - m04 * b09 - m06 * b06) * d;
+      this [13] = (m00 * b09 - m01 * b07 + m02 * b06) * d;
+      this [14] = (m13 * b01 - m12 * b03 - m14 * b00) * d;
+      this [15] = (m08 * b03 - m09 * b01 + m10 * b00) * d;
 
       return this;
    },
