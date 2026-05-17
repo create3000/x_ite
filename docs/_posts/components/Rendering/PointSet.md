@@ -29,13 +29,13 @@ The PointSet node belongs to the [Rendering](/x_ite/components/overview/#renderi
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFNode | [in, out] | [attrib](#fields-attrib) | [ ] |
-| SFNode | [in, out] | [fogCoord](#fields-fogCoord) | NULL  |
-| SFNode | [in, out] | [color](#fields-color) | NULL  |
-| SFNode | [in, out] | [tangent](#fields-tangent) | NULL  |
-| SFNode | [in, out] | [normal](#fields-normal) | NULL  |
-| SFNode | [in, out] | [coord](#fields-coord) | NULL  |
+| SFNode | [in, out] | [fogCoord](#fields-fogCoord) | NULL |
+| SFNode | [in, out] | [color](#fields-color) | NULL |
+| SFNode | [in, out] | [tangent](#fields-tangent) | NULL |
+| SFNode | [in, out] | [normal](#fields-normal) | NULL |
+| SFNode | [in, out] | [coord](#fields-coord) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -112,6 +112,14 @@ Optional single contained [Coordinate](/x_ite/components/rendering/coordinate/) 
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Rendering/PointSet/PointSet.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of PointSet Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#PointSet)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

@@ -32,14 +32,14 @@ The SpecularMaterialExtension node belongs to the [X_ITE](/x_ite/components/over
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFFloat | [in, out] | [specular](#fields-specular) | 1  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFFloat | [in, out] | [specular](#fields-specular) | 1 |
 | SFString | [in, out] | [specularTextureMapping](#fields-specularTextureMapping) | "" |
-| SFNode | [in, out] | [specularTexture](#fields-specularTexture) | NULL  |
-| SFColor | [in, out] | [specularColor](#fields-specularColor) | 1 1 1  |
-| SFFloat | [in, out] | [specularStrength](#fields-specularStrength) | 1  |
+| SFNode | [in, out] | [specularTexture](#fields-specularTexture) | NULL |
+| SFColor | [in, out] | [specularColor](#fields-specularColor) | 1 1 1 |
+| SFFloat | [in, out] | [specularStrength](#fields-specularStrength) | 1 |
 | SFString | [in, out] | [specularColorTextureMapping](#fields-specularColorTextureMapping) | "" |
-| SFNode | [in, out] | [specularColorTexture](#fields-specularColorTexture) | NULL  |
+| SFNode | [in, out] | [specularColorTexture](#fields-specularColorTexture) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -89,6 +89,13 @@ A texture that defines the F0 color of the specular reflection, stored in the RG
 ## Example
 
 - [View »Specular Silk Pouf« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=SpecularSilkPouf)
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

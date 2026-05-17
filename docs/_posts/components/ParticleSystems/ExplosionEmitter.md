@@ -29,13 +29,13 @@ The ExplosionEmitter node belongs to the [ParticleSystems](/x_ite/components/ove
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [on](#fields-on) | TRUE |
-| SFVec3f | [in, out] | [position](#fields-position) | 0 0 0  |
-| SFFloat | [in, out] | [speed](#fields-speed) | 0  |
-| SFFloat | [in, out] | [variation](#fields-variation) | 0.25  |
-| SFFloat | [in, out] | [mass](#fields-mass) | 0  |
-| SFFloat | [in, out] | [surfaceArea](#fields-surfaceArea) | 0  |
+| SFVec3f | [in, out] | [position](#fields-position) | 0 0 0 |
+| SFFloat | [in, out] | [speed](#fields-speed) | 0 |
+| SFFloat | [in, out] | [variation](#fields-variation) | 0.25 |
+| SFFloat | [in, out] | [mass](#fields-mass) | 0 |
+| SFFloat | [in, out] | [surfaceArea](#fields-surfaceArea) | 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -101,6 +101,13 @@ Particle surface area in area base units (default is meters squared). Surface ar
 - [Download ZIP Archive](https://create3000.github.io/media/examples/ParticleSystems/ExplosionEmitter/ExplosionEmitter.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/ParticleSystems/ExplosionEmitter/ExplosionEmitter.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

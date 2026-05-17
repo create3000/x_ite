@@ -7,7 +7,7 @@ tags: [Viewpoint]
 ---
 ## Motivation
 
-- By default, the viewer enters a world at (0.0, 0.0, 10.0)
+- By default, the viewer enters a world at (0, 0, 10)
 - You can provide your own preferred view points
   - Select the entry point position
   - Select favorite views for the viewer
@@ -31,8 +31,8 @@ A [Viewpoint](/x_ite/components/navigation/viewpoint/) node specifies a named vi
 
 ```x3d
 <Viewpoint
-    position='0.0 0.0 10.0'
-    orientation='0.0 0.0 1.0 0.0'
+    position='0 0 10'
+    orientation='0 0 1 0'
     fieldOfView='0.785'
     description='Entry View'/>
 ```
@@ -41,8 +41,8 @@ A [Viewpoint](/x_ite/components/navigation/viewpoint/) node specifies a named vi
 
 ```vrml
 Viewpoint {
-  position  0.0 0.0 10.0
-  orientation 0.0 0.0 1.0 0.0
+  position 0 0 10
+  orientation 0 0 1 0
   fieldOfView 0.785
   description "Entry View"
 }

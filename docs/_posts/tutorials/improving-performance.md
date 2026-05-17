@@ -117,7 +117,7 @@ function initialize ()
 
 function set_whichChoice (value)
 {
-  group .whichChoice = value
+  group .whichChoice = value;
 }
 ]]>
         </Script>

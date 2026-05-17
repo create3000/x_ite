@@ -33,19 +33,19 @@ The DISEntityTypeMapping node belongs to the [DIS](/x_ite/components/overview/#d
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [load](#fields-load) | TRUE |
 | MFString | [in, out] | [url](#fields-url) | [ ] |
-| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0  |
-| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600  |
-| SFInt32 | [ ] | [category](#fields-category) | 0  |
-| SFInt32 | [ ] | [country](#fields-country) | 0  |
-| SFInt32 | [ ] | [domain](#fields-domain) | 0  |
-| SFInt32 | [ ] | [extra](#fields-extra) | 0  |
-| SFInt32 | [ ] | [kind](#fields-kind) | 0  |
-| SFInt32 | [ ] | [specific](#fields-specific) | 0  |
-| SFInt32 | [ ] | [subcategory](#fields-subcategory) | 0  |
+| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0 |
+| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600 |
+| SFInt32 | [ ] | [category](#fields-category) | 0 |
+| SFInt32 | [ ] | [country](#fields-country) | 0 |
+| SFInt32 | [ ] | [domain](#fields-domain) | 0 |
+| SFInt32 | [ ] | [extra](#fields-extra) | 0 |
+| SFInt32 | [ ] | [kind](#fields-kind) | 0 |
+| SFInt32 | [ ] | [specific](#fields-specific) | 0 |
+| SFInt32 | [ ] | [subcategory](#fields-subcategory) | 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -169,6 +169,13 @@ Integer enumerations value for particular *subcategory* to which an entity belon
 ### Warning
 
 - Requires X3D `profile='Full'` or else include `<component name='DIS' level='2'/>`
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

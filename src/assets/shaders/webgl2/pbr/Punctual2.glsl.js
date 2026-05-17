@@ -15,7 +15,7 @@ applyIorToRoughness (const in float roughness, const in float ior)
 
 #if defined (X3D_LIGHTING)
 
-#pragma X3D include "../common/Lighting.glsl"
+#include <Lighting>
 
 // https://github.com/KhronosGroup/glTF/blob/master/extensions/2.0/Khronos/KHR_lights_punctual/README.md#range-property
 float
@@ -148,5 +148,5 @@ getVolumeTransmissionRay (const in vec3 n, const in vec3 v, const in float thick
 }
 #endif
 
-#pragma X3D include "SubsurfaceScattering.glsl"
+#include <SubsurfaceScattering>
 `;

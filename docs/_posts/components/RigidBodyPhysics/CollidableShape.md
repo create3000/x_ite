@@ -33,7 +33,7 @@ The CollidableShape node belongs to the [RigidBodyPhysics](/x_ite/components/ove
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFVec3f | [in, out] | [translation](#fields-translation) | 0 0 0  |
 | SFRotation | [in, out] | [rotation](#fields-rotation) | 0 0 1 0  |
@@ -41,9 +41,9 @@ The CollidableShape node belongs to the [RigidBodyPhysics](/x_ite/components/ove
 | SFBool | [in, out] | [convexHull](#fields-convexHull) | FALSE  |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
-| SFNode | [ ] | [shape](#fields-shape) | NULL  |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
+| SFNode | [ ] | [shape](#fields-shape) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -155,6 +155,13 @@ The *shape* field provides a geometry proxy for specifying which geometry best r
 - [Download ZIP Archive](https://create3000.github.io/media/examples/RigidBodyPhysics/CollidableShape/CollidableShape.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/RigidBodyPhysics/CollidableShape/CollidableShape.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

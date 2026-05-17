@@ -90,16 +90,13 @@ out vec3 vertex;
    out vec3 localVertex;
 #endif
 
-#if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-   out float depth;
-#endif
-
 // Main
 
-#pragma X3D include "Utils.glsl"
-#pragma X3D include "Skin.glsl"
-#pragma X3D include "Instancing.glsl"
-#pragma X3D include "PointSize.glsl"
+#include <Utils>
+#include <Skin>
+#include <Instancing>
+#include <PointSize>
+#include <Logarithmic>
 
 void
 main ()
@@ -182,7 +179,7 @@ main ()
    gl_Position = x3d_ProjectionMatrix * tVertex;
 
    #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-      depth = 1.0 + gl_Position .w;
+      logarithmic (gl_Position);
    #endif
 }
 `;

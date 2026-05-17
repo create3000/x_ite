@@ -370,13 +370,23 @@ A [ComposedShader](/x_ite/components/shaders/composedshader/) defines a number o
       </tr>
       <tr>
          <td>uniform mat4</td>
-         <td>x3d_ModelViewMatrix</td>
-         <td>this is the product of object's transformation matrix and the inverse x3d_CameraSpaceMatrix</td>
+         <td>x3d_EyeMatrix</td>
+         <td>if a WebXR session is active it contains the position of the current eye. Do <code class="language-plaintext highlighter-rouge">x3d_EyeMatrix * x3d_ModelViewMatrix * x3d_Vertex</code></td>
       </tr>
       <tr>
          <td>uniform mat4</td>
-         <td>x3d_EyeMatrix</td>
-         <td>if a WebXR session is active it contains the position of the current eye. Do <code class="language-plaintext highlighter-rouge">x3d_EyeMatrix * x3d_ModelViewMatrix * x3d_Vertex</code></td>
+         <td>x3d_CameraSpaceMatrix</td>
+         <td>transformation matrix of the camera</td>
+      </tr>
+      <tr>
+         <td>uniform mat4</td>
+         <td>x3d_ViewMatrix</td>
+         <td>view matrix of the camera, this is the inverse of x3d_CameraSpaceMatrix</td>
+      </tr>
+      <tr>
+         <td>uniform mat4</td>
+         <td>x3d_ModelViewMatrix</td>
+         <td>this is the product of object's transformation matrix and the inverse x3d_CameraSpaceMatrix</td>
       </tr>
       <tr>
          <td>uniform mat3</td>
@@ -389,12 +399,12 @@ A [ComposedShader](/x_ite/components/shaders/composedshader/) defines a number o
          <td>object's texture transform matrix defined by nodes derived from X3DTextureTransformNode</td>
       </tr>
       <tr>
-         <td>uniform mat4</td>
-         <td>x3d_CameraSpaceMatrix</td>
-         <td>transformation matrix of the camera</td>
+         <td colspan="3"><hr/></td>
       </tr>
       <tr>
-         <td colspan="3"><hr/></td>
+         <td>in uint</td>
+         <td>x3d_CoordIndex</td>
+         <td>coordinate index of the passed vertex, this is either the value provided by the X3DGeometry node or generated</td>
       </tr>
       <tr>
          <td>in float</td>

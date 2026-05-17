@@ -431,7 +431,6 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    set_physics__ ()
    {
       const
-         physics                  = this ._physics .getValue (),
          forcePhysicsModelNodes   = this .forcePhysicsModelNodes,
          boundedPhysicsModelNodes = this .boundedPhysicsModelNodes;
 
@@ -444,12 +443,12 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
       forcePhysicsModelNodes   .length = 0;
       boundedPhysicsModelNodes .length = 0;
 
-      for (let i = 0, length = physics .length; i < length; ++ i)
+      for (const node of this ._physics)
       {
          try
          {
             const
-               innerNode = physics [i] .getValue () .getInnerNode (),
+               innerNode = node .getValue () .getInnerNode (),
                type      = innerNode .getType ();
 
             for (let t = type .length - 1; t >= 0; -- t)
@@ -1015,19 +1014,13 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
                shaderNode .enableInstanceMatrixAttribute   (gl, outputParticles, particlesStride, this .matrixOffset,   1);
 
                if (this .geometryContext .colorMaterial)
-               {
-                  shaderNode .enableColorAttribute (gl, outputParticles, particlesStride, this .colorOffset);
-                  shaderNode .colorAttributeDivisor (gl, 1);
-               }
+                  shaderNode .enableColorAttribute (gl, outputParticles, particlesStride, this .colorOffset, 1);
 
                if (this .texCoordCount)
                   shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, this .texCoordOffset);
 
                if (this .hasNormals)
-               {
-                  shaderNode .enableNormalAttribute (gl, this .geometryBuffer, 0, this .normalOffset);
-                  shaderNode .normalAttributeDivisor (gl, this .maxParticles);
-               }
+                  shaderNode .enableNormalAttribute (gl, this .geometryBuffer, 0, this .normalOffset, this .maxParticles);
 
                shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, this .verticesOffset);
             }

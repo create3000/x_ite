@@ -30,16 +30,16 @@ The BlendedVolumeStyle node belongs to the [VolumeRendering](/x_ite/components/o
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFFloat | [in, out] | [weightConstant1](#fields-weightConstant1) | 0.5  |
-| SFFloat | [in, out] | [weightConstant2](#fields-weightConstant2) | 0.5  |
-| SFString | [in, out] | [weightFunction1](#fields-weightFunction1) | "CONSTANT"  |
-| SFString | [in, out] | [weightFunction2](#fields-weightFunction2) | "CONSTANT"  |
-| SFNode | [in, out] | [weightTransferFunction1](#fields-weightTransferFunction1) | NULL  |
-| SFNode | [in, out] | [weightTransferFunction2](#fields-weightTransferFunction2) | NULL  |
-| SFNode | [in, out] | [renderStyle](#fields-renderStyle) | NULL  |
-| SFNode | [in, out] | [voxels](#fields-voxels) | NULL  |
+| SFFloat | [in, out] | [weightConstant1](#fields-weightConstant1) | 0.5 |
+| SFFloat | [in, out] | [weightConstant2](#fields-weightConstant2) | 0.5 |
+| SFString | [in, out] | [weightFunction1](#fields-weightFunction1) | "CONSTANT" |
+| SFString | [in, out] | [weightFunction2](#fields-weightFunction2) | "CONSTANT" |
+| SFNode | [in, out] | [weightTransferFunction1](#fields-weightTransferFunction1) | NULL |
+| SFNode | [in, out] | [weightTransferFunction2](#fields-weightTransferFunction2) | NULL |
+| SFNode | [in, out] | [renderStyle](#fields-renderStyle) | NULL |
+| SFNode | [in, out] | [voxels](#fields-voxels) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -131,6 +131,13 @@ Optional single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/component
 ### Warning
 
 - Requires X3D `profile='Full'` or else include `<component name='VolumeRendering' level='3'/>`
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

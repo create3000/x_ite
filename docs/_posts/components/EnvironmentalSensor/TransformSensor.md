@@ -31,17 +31,17 @@ The TransformSensor node belongs to the [EnvironmentalSensor](/x_ite/components/
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFVec3f | [in, out] | [size](#fields-size) | 0 0 0  |
-| SFVec3f | [in, out] | [center](#fields-center) | 0 0 0  |
+| SFVec3f | [in, out] | [size](#fields-size) | 0 0 0 |
+| SFVec3f | [in, out] | [center](#fields-center) | 0 0 0 |
 | SFTime | [out] | [enterTime](#fields-enterTime) |  |
 | SFTime | [out] | [exitTime](#fields-exitTime) |  |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFVec3f | [out] | [position_changed](#fields-position_changed) |  |
 | SFRotation | [out] | [orientation_changed](#fields-orientation_changed) |  |
-| SFNode | [in, out] | [targetObject](#fields-targetObject) | NULL  |
+| SFNode | [in, out] | [targetObject](#fields-targetObject) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -149,6 +149,13 @@ Sends rotation event relative to center whenever the target object is contained 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/EnvironmentalSensor/TransformSensor/TransformSensor.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/EnvironmentalSensor/TransformSensor/TransformSensor.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

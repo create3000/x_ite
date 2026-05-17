@@ -17,26 +17,7 @@ function Layer (executionContext)
    this .addType (X3DConstants .Layer);
 }
 
-Object .assign (Object .setPrototypeOf (Layer .prototype, X3DLayerNode .prototype),
-{
-   initialize ()
-   {
-      X3DLayerNode .prototype .initialize .call (this);
-
-      const groupNode = this .getGroups () ._children [0] .getValue ();
-
-      this ._addChildren    .addFieldInterest (groupNode ._addChildren);
-      this ._removeChildren .addFieldInterest (groupNode ._removeChildren);
-      this ._children       .addFieldInterest (groupNode ._children);
-
-      groupNode ._children = this ._children;
-
-      groupNode .setPrivate (true);
-      groupNode .setup ();
-
-      this .getGroups () .setup ();
-   },
-});
+Object .setPrototypeOf (Layer .prototype, X3DLayerNode .prototype);
 
 Object .defineProperties (Layer,
 {

@@ -15,37 +15,37 @@ import DEVELOPMENT  from "../DEVELOPMENT.js";
 // Lexical elements
 const Grammar = Expressions ({
    // General
-   whitespaces: /[\x20\n\t\r,]+/gy,
-   whitespacesNoLineTerminator: /[\x20\t]+/gy,
-   comment: /#.*?(?=[\n\r]|$)/gy,
-   untilEndOfLine: /[^\r\n]+/gy,
+   whitespaces: /[\x20\n\t\r,]+/y,
+   whitespacesNoLineTerminator: /[\x20\t]+/y,
+   comment: /#[^\r\n]*(?=[\r\n]|$)/y,
+   untilEndOfLine: /[^\r\n]+/y,
 
    // Keywords
-   mtllib: /\bmtllib\b/gy,
-   usemtl: /\busemtl\b/gy,
-   newmtl: /\bnewmtl\b/gy,
-   Ka: /\bKa\b/gy,
-   Kd: /\bKd\b/gy,
-   Ks: /\bKs\b/gy,
-   Ns: /\bNs\b/gy,
-   d: /\bd\b/gy,
-   Tr: /\bTr\b/gy,
-   illum: /\billum\b/gy,
-   map_Kd: /\bmap_Kd\b/gy,
-   o: /\bo\b/gy,
-   v: /\bv\b/gy,
-   vt: /\bvt\b/gy,
-   vn: /\bvn\b/gy,
-   g: /\bg\b/gy,
-   s: /\bs\b/gy,
-   off: /\boff\b/gy,
-   f: /\bf\b/gy,
-   slash: /\//gy,
+   mtllib: /\bmtllib\b/y,
+   usemtl: /\busemtl\b/y,
+   newmtl: /\bnewmtl\b/y,
+   Ka: /\bKa\b/y,
+   Kd: /\bKd\b/y,
+   Ks: /\bKs\b/y,
+   Ns: /\bNs\b/y,
+   d: /\bd\b/y,
+   Tr: /\bTr\b/y,
+   illum: /\billum\b/y,
+   map_Kd: /\bmap_Kd\b/y,
+   o: /\bo\b/y,
+   v: /\bv\b/y,
+   vt: /\bvt\b/y,
+   vn: /\bvn\b/y,
+   g: /\bg\b/y,
+   s: /\bs\b/y,
+   off: /\boff\b/y,
+   f: /\bf\b/y,
+   slash: /\//y,
 
    // Values
-   int32:  /(?:0[xX][\da-fA-F]+)|(?:[+-]?\d+)/gy,
-   double: /[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/gy,
-   constants: /([+-])((?:NAN|INF|INFINITY))/igy,
+   int32:  /(?:0[xX][\da-fA-F]+)|(?:[+-]?\d+)/y,
+   double: /[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/y,
+   constants: /([+-])((?:NAN|INF|INFINITY))/iy,
 });
 
 /*
@@ -94,7 +94,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
       if (typeof this .input !== "string")
          return false;
 
-      return !! this .input .match (/^(?:[\x20\n\t\r]+|#.*?[\r\n])*\b(?:mtllib|usemtl|o|g|s|vt|vn|v|f)\b/);
+      return !! this .input .match (/^(?:[\x20\n\t\r]|#[^\r\n]*[\r\n])*\b(?:mtllib|usemtl|o|g|s|vt|vn|v|f)\b/);
    },
    parseIntoScene (resolve, reject)
    {
@@ -117,7 +117,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
       // Init nodes.
 
-      this .object   = scene .createNode ("Transform");
+      this .object   = scene .createNode ("Group");
       this .group    = scene .createNode ("Group");
       this .material = this .createDefaultMaterial ();
       this .color    = scene .createNode ("Color");
@@ -334,7 +334,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
 
             if (this .group .children .length)
             {
-               this .object = scene .createNode("Transform");
+               this .object = scene .createNode ("Group");
                this .group  = scene .createNode ("Group");
 
                this .object .children .push (this .group);

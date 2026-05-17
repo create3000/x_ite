@@ -29,12 +29,12 @@ The DISEntityManager node belongs to the [DIS](/x_ite/components/overview/#dis) 
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [address](#fields-address) | "localhost" |
-| SFInt32 | [in, out] | [applicationID](#fields-applicationID) | 0  |
+| SFInt32 | [in, out] | [applicationID](#fields-applicationID) | 0 |
 | MFNode | [in, out] | [children](#fields-children) | [ ] |
-| SFInt32 | [in, out] | [port](#fields-port) | 0  |
-| SFInt32 | [in, out] | [siteID](#fields-siteID) | 0  |
+| SFInt32 | [in, out] | [port](#fields-port) | 0 |
+| SFInt32 | [in, out] | [siteID](#fields-siteID) | 0 |
 | MFNode | [out] | [addedEntities](#fields-addedEntities) |  |
 | MFNode | [out] | [removedEntities](#fields-removedEntities) |  |
 {: .fields }
@@ -112,6 +112,13 @@ Simulation/exercise *siteID* of the participating LAN or organization.
 
 - ['children' field originally named 'mapping' in X3Dv3.](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 - Requires X3D `profile='Full'` or else include `<component name='DIS' level='2'/>`
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

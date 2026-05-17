@@ -33,20 +33,20 @@ The TwoSidedMaterial node belongs to the [Shape](/x_ite/components/overview/#sha
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [separateBackColor](#fields-separateBackColor) | FALSE |
-| SFFloat | [in, out] | [ambientIntensity](#fields-ambientIntensity) | 0.2  |
-| SFColor | [in, out] | [diffuseColor](#fields-diffuseColor) | 0.8 0.8 0.8  |
-| SFColor | [in, out] | [specularColor](#fields-specularColor) | 0 0 0  |
-| SFColor | [in, out] | [emissiveColor](#fields-emissiveColor) | 0 0 0  |
-| SFFloat | [in, out] | [shininess](#fields-shininess) | 0.2  |
-| SFFloat | [in, out] | [transparency](#fields-transparency) | 0  |
-| SFFloat | [in, out] | [backAmbientIntensity](#fields-backAmbientIntensity) | 0.2  |
-| SFColor | [in, out] | [backDiffuseColor](#fields-backDiffuseColor) | 0.8 0.8 0.8  |
-| SFColor | [in, out] | [backSpecularColor](#fields-backSpecularColor) | 0 0 0  |
-| SFColor | [in, out] | [backEmissiveColor](#fields-backEmissiveColor) | 0 0 0  |
-| SFFloat | [in, out] | [backShininess](#fields-backShininess) | 0.2  |
-| SFFloat | [in, out] | [backTransparency](#fields-backTransparency) | 0  |
+| SFFloat | [in, out] | [ambientIntensity](#fields-ambientIntensity) | 0.2 |
+| SFColor | [in, out] | [diffuseColor](#fields-diffuseColor) | 0.8 0.8 0.8 |
+| SFColor | [in, out] | [specularColor](#fields-specularColor) | 0 0 0 |
+| SFColor | [in, out] | [emissiveColor](#fields-emissiveColor) | 0 0 0 |
+| SFFloat | [in, out] | [shininess](#fields-shininess) | 0.2 |
+| SFFloat | [in, out] | [transparency](#fields-transparency) | 0 |
+| SFFloat | [in, out] | [backAmbientIntensity](#fields-backAmbientIntensity) | 0.2 |
+| SFColor | [in, out] | [backDiffuseColor](#fields-backDiffuseColor) | 0.8 0.8 0.8 |
+| SFColor | [in, out] | [backSpecularColor](#fields-backSpecularColor) | 0 0 0 |
+| SFColor | [in, out] | [backEmissiveColor](#fields-backEmissiveColor) | 0 0 0 |
+| SFFloat | [in, out] | [backShininess](#fields-backShininess) | 0.2 |
+| SFFloat | [in, out] | [backTransparency](#fields-backTransparency) | 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -191,7 +191,7 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 
 ### Hints
 
-- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding material.
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding material.
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 - [X3D Architecture 12.2.3 Two-sided materials](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/shape.html#TwoSidedMaterials)
@@ -212,6 +212,13 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Shape/TwoSidedMaterial/TwoSidedMaterial.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Shape/TwoSidedMaterial/TwoSidedMaterial.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

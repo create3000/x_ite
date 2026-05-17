@@ -36,10 +36,10 @@ out vec3 normal;
    out vec2       midPoint;
 #endif
 
-#pragma X3D include "common/Utils.glsl"
-#pragma X3D include "common/Skin.glsl"
-#pragma X3D include "common/Instancing.glsl"
-#pragma X3D include "common/PointSize.glsl"
+#include <Utils>
+#include <Skin>
+#include <Instancing>
+#include <PointSize>
 
 void
 main ()

@@ -35,12 +35,14 @@ The InlineGeometry node belongs to the [Networking](/x_ite/components/overview/#
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [load](#fields-load) | TRUE |
 | MFString | [in, out] | [url](#fields-url) | [ ] |
-| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0  |
-| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600  |
+| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0 |
+| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600 |
+| SFBool | [in, out] | [solid](#fields-solid) | FALSE |
+| SFBool | [in, out] | [smooth](#fields-smooth) | TRUE |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -119,25 +121,49 @@ Address of X3D world to load [Inline](/x_ite/components/networking/inline/) with
 
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
+### SFBool [in, out] **solid** FALSE
+{: #fields-solid }
+
+Setting *solid* true means draw only one side of polygons (backface culling on), setting *solid* false means draw both sides of polygons (backface culling off).
+
+#### Hints
+
+- Mnemonic "this geometry is *solid* like a brick" (you don't render the inside of a brick).
+- If in doubt, use *solid*='false' for maximum visibility.
+- AccessType relaxed to inputOutput in order to support animation and visualization.
+- For InlineGeometry, the default value of *solid* is FALSE since most usages of retrieved meshes need two-sided rendering.
+
+#### Warnings
+
+- Default value true can completely hide geometry if viewed from wrong side!
+- *solid* false not supported in VRML97.
+
+### SFBool [in, out] **smooth** TRUE
+{: #fields-smooth }
+
+The *smooth* field provides a hint to the browser whether *smooth* rendering is preferred for a retrieved polygonal mesh.
+
 ## Supported File Formats
 
-| Encoding         | File Extension | MIME Type       | Comment                         |
-|------------------|----------------|-----------------|---------------------------------|
-| X3D XML          | .x3d, .x3dz    | model/x3d+xml   | [X3D Encoding: XML][1]          |
-| X3D JSON         | .x3dj, .x3djz  | model/x3d+json  | [X3D Encoding: JSON][2]         |
-| X3D Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml  | [X3D Encoding: Classic VRML][3] |
-| VRML 2.0         | .wrl, .wrz     | model/vrml      | [VRML Specification][4]         |
-| glTF             | .gltf, .glb    | model/gltf+json | [glTF Support][5]               |
-| Wavefront OBJ    | .obj           | model/obj       |                                 |
-| STL              | .stl           | model/stl       | ASCII & Binary                  |
-| PLY              | .ply           | model/ply       | ASCII & Binary                  |
-| SVG Document     | .svg, .svgz    | image/svg+xml   |                                 |
+| Encoding         | File Extension | MIME Type         | Comment                         |
+|------------------|----------------|-------------------|---------------------------------|
+| X3D XML          | .x3d, .x3dz    | model/x3d+xml     | [X3D Encoding: XML][1]          |
+| X3D JSON         | .x3dj, .x3djz  | model/x3d+json    | [X3D Encoding: JSON][2]         |
+| X3D Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml    | [X3D Encoding: Classic VRML][3] |
+| VRML 2.0         | .wrl, .wrz     | model/vrml        | [X_ITE VRML Viewer][4]                |
+| glTF             | .gltf, .glb    | model/gltf+json   | [glTF Support][5]               |
+| VRM              | .vrm           | model/vrm         | [About VRM][6]                  |
+| Wavefront OBJ    | .obj           | model/obj         |                                 |
+| STL              | .stl           | model/stl         | ASCII & Binary                  |
+| PLY              | .ply           | model/ply         | ASCII & Binary                  |
+| SVG Document     | .svg, .svgz    | image/svg+xml     |                                 |
 
   [1]: https://www.web3d.org/documents/specifications/19776-1/V3.3/index.html
   [2]: https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19776-5v4.0-WD1/Part05/X3D_JSON.html
   [3]: https://www.web3d.org/documents/specifications/19776-2/V3.3/index.html
-  [4]: https://www.web3d.org/documents/specifications/14772/V2.0/
+  [4]: /x_ite/features/#vrml-viewer
   [5]: /x_ite/features/#gltf-support
+  [6]: https://vrm.dev/en/vrm/vrm_about/
 
 >**Tip:** All files can be compressed using GZip compression (usually denoted by a 'z' at the end of the filename suffix). This saves bandwidth and speeds up download time.
 {: .prompt-tip }
@@ -159,6 +185,13 @@ Address of X3D world to load [Inline](/x_ite/components/networking/inline/) with
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Networking/InlineGeometry/InlineGeometry.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Networking/InlineGeometry/InlineGeometry.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

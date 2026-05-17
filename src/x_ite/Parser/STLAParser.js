@@ -12,26 +12,26 @@ import Color3      from "../../standard/Math/Numbers/Color3.js";
 // Lexical elements
 const Grammar = Expressions ({
    // General
-   whitespaces: /[\x20\n\t\r,]+/gy,
-   whitespacesNoLineTerminator: /[\x20\t]+/gy,
-   comment: /;.*?(?=[\n\r]|$)/gy,
-   untilEndOfLine: /[^\r\n]+/gy,
+   whitespaces: /[\x20\n\t\r,]+/y,
+   whitespacesNoLineTerminator: /[\x20\t]+/y,
+   comment: /;[^\r\n]*(?=[\r\n]|$)/y,
+   untilEndOfLine: /[^\r\n]+/y,
 
    // Keywords
-   solid: /\bsolid\b/gy,
-   facet: /\bfacet\b/gy,
-   normal: /\bnormal\b/gy,
-   outer: /\bouter\b/gy,
-   loop: /\bloop\b/gy,
-   vertex: /\bvertex\b/gy,
-   endloop: /\bendloop\b/gy,
-   endfacet: /\bendfacet\b/gy,
-   endsolid: /\bendsolid\b/gy,
+   solid: /\bsolid\b/y,
+   facet: /\bfacet\b/y,
+   normal: /\bnormal\b/y,
+   outer: /\bouter\b/y,
+   loop: /\bloop\b/y,
+   vertex: /\bvertex\b/y,
+   endloop: /\bendloop\b/y,
+   endfacet: /\bendfacet\b/y,
+   endsolid: /\bendsolid\b/y,
 
    // Values
-   name: /\w+/gy,
-   double: /[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/gy,
-   constants: /([+-])((?:NAN|INF|INFINITY))/igy,
+   name: /\w+/y,
+   double: /[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/y,
+   constants: /([+-])((?:NAN|INF|INFINITY))/iy,
 });
 
 /*
@@ -63,7 +63,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
       if (typeof this .input !== "string")
          return false;
 
-      return !! this .input .match (/^(?:[\x20\n\t\r]+|;.*?[\r\n])*\bsolid\b.*?\bendsolid\b/s);
+      return !! this .input .match (/^(?:[\x20\n\t\r]|;[^\r\n]*[\r\n])*\bsolid\b.*?\bendsolid\b/s);
    },
    parseIntoScene (resolve, reject)
    {
@@ -145,7 +145,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
       Grammar .untilEndOfLine .parse (this);
 
       this .facets ();
-      this .rotateAxes (this .vertices);
+      this .rotateAxes90 (this .vertices);
 
       shape .appearance         = this .appearance;
       shape .geometry           = geometry;
@@ -157,7 +157,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
       {
          const normal = scene .createNode ("Normal");
 
-         this .rotateAxes (this .normals);
+         this .rotateAxes90 (this .normals);
 
          normal .vector   = this .normals;
          geometry .normal = normal;

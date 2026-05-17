@@ -29,12 +29,12 @@ The ViewpointGroup node belongs to the [Navigation](/x_ite/components/overview/#
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [displayed](#fields-displayed) | TRUE |
 | SFBool | [in, out] | [retainUserOffsets](#fields-retainUserOffsets) | FALSE |
-| SFVec3f | [in, out] | [size](#fields-size) | 0 0 0  |
-| SFVec3f | [in, out] | [center](#fields-center) | 0 0 0  |
+| SFVec3f | [in, out] | [size](#fields-size) | 0 0 0 |
+| SFVec3f | [in, out] | [center](#fields-center) | 0 0 0 |
 | MFNode | [in, out] | [children](#fields-children) | [ ] |
 {: .fields }
 
@@ -103,6 +103,13 @@ ViewpointGroup contains [Viewpoint](/x_ite/components/navigation/viewpoint/), [O
 - Use ViewpointGroup as parent for [Viewpoint](/x_ite/components/navigation/viewpoint/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) and other ViewpointGroup nodes to constrain location proximity where contained viewpoints are available to user.
 - ViewpointGroup and [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) require Navigation component level 3, which is higher than CADInterchange profile.
 - [Viewpoint](/x_ite/components/navigation/viewpoint/) and ViewpointGroup descriptions together build simple menu/submenu lists for simple user navigation. ViewpointGroup is not an X3DGroupingNode, and can only contain a Metadata* node, [Viewpoint](/x_ite/components/navigation/viewpoint/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) and other ViewpointGroup nodes.
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

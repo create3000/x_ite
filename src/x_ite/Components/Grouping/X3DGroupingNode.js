@@ -489,6 +489,13 @@ Object .assign (Object .setPrototypeOf (X3DGroupingNode .prototype, X3DChildNode
 
             return;
          }
+         case TraverseType .DEPTH:
+         {
+            for (const visibleObject of this .visibleObjects)
+               visibleObject .traverse (type, renderObject);
+
+            return;
+         }
          case TraverseType .SHADOW:
          {
             // Nodes that are not visible do not cast shadows.

@@ -41,6 +41,10 @@ Object .assign (X3DNetworkingContext .prototype,
    {
       this ._loadCount .addInterest (_set_loadCount, this);
    },
+   getScriptURL ()
+   {
+      return URLs .getScriptURL ();
+   },
    getProviderURL ()
    {
       return URLs .getProviderURL ();

@@ -29,13 +29,13 @@ The AcousticProperties node belongs to the [Shape](/x_ite/components/overview/#s
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFFloat | [in, out] | [diffuse](#fields-diffuse) | 0  |
-| SFFloat | [in, out] | [specular](#fields-specular) | 0  |
-| SFFloat | [in, out] | [refraction](#fields-refraction) | 0  |
-| SFFloat | [in, out] | [absorption](#fields-absorption) | 0  |
+| SFFloat | [in, out] | [diffuse](#fields-diffuse) | 0 |
+| SFFloat | [in, out] | [specular](#fields-specular) | 0 |
+| SFFloat | [in, out] | [refraction](#fields-refraction) | 0 |
+| SFFloat | [in, out] | [absorption](#fields-absorption) | 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -92,6 +92,13 @@ Specifies the sound *absorption* coefficient of a surface, meaning the ratio of 
 - AcousticProperties must have a parent [Appearance](/x_ite/components/shape/appearance/) node, and only affects geometry within the same [Shape](/x_ite/components/shape/shape/).
 - Proxy geometry for acoustic response can be far simpler than geometry needed for visual rendering.
 - [X3D Architecture Figure 16.2 Sound Propagation Phenomena](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#f-SoundPropagationPhenomena)
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

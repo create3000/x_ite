@@ -29,23 +29,23 @@ The ElevationGrid node belongs to the [Geometry3D](/x_ite/components/overview/#g
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFFloat | [in] | [set_height](#fields-set_height) |  |
-| SFInt32 | [ ] | [xDimension](#fields-xDimension) | 0  |
-| SFInt32 | [ ] | [zDimension](#fields-zDimension) | 0  |
-| SFFloat | [ ] | [xSpacing](#fields-xSpacing) | 1  |
-| SFFloat | [ ] | [zSpacing](#fields-zSpacing) | 1  |
+| SFInt32 | [ ] | [xDimension](#fields-xDimension) | 0 |
+| SFInt32 | [ ] | [zDimension](#fields-zDimension) | 0 |
+| SFFloat | [ ] | [xSpacing](#fields-xSpacing) | 1 |
+| SFFloat | [ ] | [zSpacing](#fields-zSpacing) | 1 |
 | SFBool | [ ] | [solid](#fields-solid) | TRUE |
 | SFBool | [ ] | [ccw](#fields-ccw) | TRUE |
-| SFFloat | [ ] | [creaseAngle](#fields-creaseAngle) | 0  |
+| SFFloat | [ ] | [creaseAngle](#fields-creaseAngle) | 0 |
 | SFBool | [ ] | [colorPerVertex](#fields-colorPerVertex) | TRUE |
 | SFBool | [ ] | [normalPerVertex](#fields-normalPerVertex) | TRUE |
 | MFNode | [in, out] | [attrib](#fields-attrib) | [ ] |
-| SFNode | [in, out] | [fogCoord](#fields-fogCoord) | NULL  |
-| SFNode | [in, out] | [color](#fields-color) | NULL  |
-| SFNode | [in, out] | [texCoord](#fields-texCoord) | NULL  |
-| SFNode | [in, out] | [tangent](#fields-tangent) | NULL  |
-| SFNode | [in, out] | [normal](#fields-normal) | NULL  |
+| SFNode | [in, out] | [fogCoord](#fields-fogCoord) | NULL |
+| SFNode | [in, out] | [color](#fields-color) | NULL |
+| SFNode | [in, out] | [texCoord](#fields-texCoord) | NULL |
+| SFNode | [in, out] | [tangent](#fields-tangent) | NULL |
+| SFNode | [in, out] | [normal](#fields-normal) | NULL |
 | MFFloat | [ ] | [height](#fields-height) | [ ] |
 {: .fields }
 
@@ -253,6 +253,14 @@ Grid array of *height* vertices with upward direction along +Y axis, with xDimen
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Geometry3D/ElevationGrid/ElevationGrid.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of ElevationGrid Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#ElevationGrid)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

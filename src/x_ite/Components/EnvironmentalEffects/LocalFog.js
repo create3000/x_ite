@@ -36,7 +36,7 @@ Object .assign (Object .setPrototypeOf (LocalFog .prototype, X3DChildNode .proto
    pop (renderObject)
    {
       if (this ._enabled .getValue () && this .getFogType ())
-         this .getBrowser () .getLocalObjects () .push (renderObject .getLocalFogs () .pop ());
+         this .getBrowser () .getLocalObjects () .add (renderObject .getLocalFogs () .pop ());
    },
    dispose ()
    {

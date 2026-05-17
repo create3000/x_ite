@@ -1,54 +1,31 @@
-import X3DField     from "../Base/X3DField.js";
-import SFVec3       from "./SFVec3.js";
-import SFMatrix3    from "./SFMatrix3.js";
-import Rotation4    from "../../standard/Math/Numbers/Rotation4.js";
-import X3DConstants from "../Base/X3DConstants.js";
-import Quaternion   from "../../standard/Math/Numbers/Quaternion.js";
+import X3DField   from "../Base/X3DField.js";
+import SFVec3     from "./SFVec3.js";
+import SFMatrix3  from "./SFMatrix3.js";
+import Rotation4  from "../../standard/Math/Numbers/Rotation4.js";
+import Quaternion from "../../standard/Math/Numbers/Quaternion.js";
 
 const
-   SFVec3d    = SFVec3 .SFVec3d,
-   SFVec3f    = SFVec3 .SFVec3f,
-   SFMatrix3d = SFMatrix3 .SFMatrix3d,
-   SFMatrix3f = SFMatrix3 .SFMatrix3f;
+   { SFVec3d, SFVec3f } = SFVec3,
+   { SFMatrix3f }       = SFMatrix3;
 
-function SFRotation (x, y, z, angle)
+function SFRotation (x = 0, y = 0, z = 1, angle = 0)
 {
-   switch (arguments .length)
+   if ((x instanceof SFVec3f) || (x instanceof SFVec3d))
    {
-      case 0:
+      if ((y instanceof SFVec3f) || (y instanceof SFVec3d))
       {
-         X3DField .call (this, new Rotation4 ());
-         break;
+         // new SFRotation (fromVector: SFVec3d | SFVec3f, toVector: SFVec3d | SFVec3f)
+         X3DField .call (this, new Rotation4 (x .getValue (), y .getValue ()));
       }
-      case 1:
+      else
       {
-         if ((arguments [0] instanceof SFMatrix3d) || (arguments [0] instanceof SFMatrix3f))
-         {
-            X3DField .call (this, new Rotation4 () .setMatrix (arguments [0] .getValue ()));
-            break;
-         }
-
-         X3DField .call (this, arguments [0]);
-         break;
+         // new SFRotation (axis: SFVec3d | SFVec3f, angle: number)
+         X3DField .call (this, new Rotation4 (x .getValue (), +y));
       }
-      case 2:
-      {
-         if ((arguments [1] instanceof SFVec3d) || (arguments [1] instanceof SFVec3f))
-         {
-            X3DField .call (this, new Rotation4 (arguments [0] .getValue (), arguments [1] .getValue ()));
-            break;
-         }
-
-         X3DField .call (this, new Rotation4 (arguments [0] .getValue (), +arguments [1]));
-         break;
-      }
-      case 4:
-      {
-         X3DField .call (this, new Rotation4 (+x, +y, +z, +angle));
-         break;
-      }
-      default:
-         throw new Error ("Invalid arguments.");
+   }
+   else
+   {
+      X3DField .call (this, new Rotation4 (+x, +y, +z, +angle));
    }
 }
 
@@ -60,7 +37,7 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
    },
    copy ()
    {
-      return new SFRotation (this .getValue () .copy ());
+      return SFRotation .fromValue (this .getValue () .copy ());
    },
    equals (rotation)
    {
@@ -74,34 +51,24 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
    {
       this .getValue () .assign (value);
    },
+   getAxis ()
+   {
+      return SFVec3f .fromValue (this .getValue () .getAxis ());
+   },
    setAxis (vector)
    {
       this .getValue () .setAxis (vector .getValue ());
       this .addEvent ();
    },
-   getAxis ()
+   getMatrix ()
    {
-      return new SFVec3f (this .getValue () .getAxis ());
+      return SFMatrix3f .fromValue (this .getValue () .getMatrix ());
    },
    setMatrix (matrix)
    {
       this .getValue () .setMatrix (matrix .getValue ());
       this .addEvent ();
    },
-   getMatrix ()
-   {
-      return new SFMatrix3f (this .getValue () .getMatrix ());
-   },
-   setQuaternion: (() =>
-   {
-      const q = new Quaternion ();
-
-      return function (x, y, z, w)
-      {
-         this .getValue () .setQuaternion (q .set (x, y, z, w));
-         this .addEvent ();
-      };
-   })(),
    getQuaternion: (() =>
    {
       const q = new Quaternion ();
@@ -111,25 +78,35 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
          return [... this .getValue () .getQuaternion (q)];
       };
    })(),
+   setQuaternion: (() =>
+   {
+      const q = new Quaternion ();
+
+      return function (x, y, z, w)
+      {
+         this .getValue () .setQuaternion (q .set (+x, +y, +z, +w));
+         this .addEvent ();
+      };
+   })(),
    inverse ()
    {
-      return new SFRotation (this .getValue () .copy () .inverse ());
+      return SFRotation .fromValue (this .getValue () .copy () .inverse ());
    },
    multiply (rotation)
    {
-      return new SFRotation (this .getValue () .copy () .multRight (rotation .getValue ()));
+      return SFRotation .fromValue (this .getValue () .copy () .multRight (rotation .getValue ()));
    },
    multVec (vector)
    {
-      return new (vector .constructor) (this .getValue () .multVecRot (vector .getValue () .copy ()));
+      return vector .constructor .fromValue (this .getValue () .multVecRot (vector .getValue () .copy ()));
    },
    slerp (rotation, t)
    {
-      return new SFRotation (this .getValue () .copy () .slerp (rotation .getValue (), t));
+      return SFRotation .fromValue (this .getValue () .copy () .slerp (rotation .getValue (), t));
    },
    straighten (upVector)
    {
-      return new SFRotation (this .getValue () .copy () .straighten (upVector ?.getValue ()));
+      return SFRotation .fromValue (this .getValue () .copy () .straighten (upVector ?.getValue ()));
    },
    toStream (generator)
    {
@@ -241,17 +218,36 @@ Object .defineProperties (SFRotation .prototype,
    angle: Object .assign ({ enumerable: true }, angle),
 });
 
+X3DField .addStaticProperties (SFRotation, "SFRotation");
+
 Object .defineProperties (SFRotation,
 {
-   type:
+   IDENTITY:
    {
-      value: X3DConstants .SFRotation,
+      value: SFRotation .fromValue (Rotation4 .IDENTITY),
       enumerable: true,
    },
-   typeName:
+   fromMatrix:
    {
-      value: "SFRotation",
-      enumerable: true,
+      value (matrix)
+      {
+         const rotation = new this ();
+
+         rotation .setMatrix (matrix);
+
+         return rotation;
+      },
+   },
+   fromQuaternion:
+   {
+      value (x, y, z, w)
+      {
+         const rotation = new this ();
+
+         rotation .setQuaternion (+x, +y, +z, +w);
+
+         return rotation;
+      },
    },
 });
 

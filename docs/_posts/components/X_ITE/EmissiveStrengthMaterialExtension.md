@@ -32,8 +32,8 @@ The EmissiveStrengthMaterialExtension node belongs to the [X_ITE](/x_ite/compone
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFFloat | [in, out] | [emissiveStrength](#fields-emissiveStrength) | 1  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFFloat | [in, out] | [emissiveStrength](#fields-emissiveStrength) | 1 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -53,6 +53,13 @@ The strength adjustment to be multiplied with the material's *emissiveColor* val
 ## Example
 
 - [View »Emissive Strength Test« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=EmissiveStrengthTest)
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

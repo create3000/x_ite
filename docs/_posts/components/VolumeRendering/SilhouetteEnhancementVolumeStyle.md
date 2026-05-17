@@ -30,12 +30,12 @@ The SilhouetteEnhancementVolumeStyle node belongs to the [VolumeRendering](/x_it
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFFloat | [in, out] | [silhouetteRetainedOpacity](#fields-silhouetteRetainedOpacity) | 1  |
-| SFFloat | [in, out] | [silhouetteBoundaryOpacity](#fields-silhouetteBoundaryOpacity) | 0  |
-| SFFloat | [in, out] | [silhouetteSharpness](#fields-silhouetteSharpness) | 0.5  |
-| SFNode | [in, out] | [surfaceNormals](#fields-surfaceNormals) | NULL  |
+| SFFloat | [in, out] | [silhouetteRetainedOpacity](#fields-silhouetteRetainedOpacity) | 1 |
+| SFFloat | [in, out] | [silhouetteBoundaryOpacity](#fields-silhouetteBoundaryOpacity) | 0 |
+| SFFloat | [in, out] | [silhouetteSharpness](#fields-silhouetteSharpness) | 0.5 |
+| SFNode | [in, out] | [surfaceNormals](#fields-surfaceNormals) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -81,6 +81,13 @@ The *surfaceNormals* field contains a 3D texture with at least three component v
 ### Warning
 
 - Requires X3D `profile='Full'` or else include `<component name='VolumeRendering' level='2'/>`
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

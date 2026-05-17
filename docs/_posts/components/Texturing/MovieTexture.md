@@ -35,28 +35,28 @@ The MovieTexture node belongs to the [Texturing](/x_ite/components/overview/#tex
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFBool | [in, out] | [load](#fields-load) | TRUE |
 | MFString | [in, out] | [url](#fields-url) | [ ] |
-| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0  |
-| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600  |
-| SFFloat | [in, out] | [gain](#fields-gain) | 1  |
-| SFFloat | [in, out] | [pitch](#fields-pitch) | 1  |
-| SFFloat | [in, out] | [speed](#fields-speed) | 1  |
+| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0 |
+| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600 |
+| SFFloat | [in, out] | [gain](#fields-gain) | 1 |
+| SFFloat | [in, out] | [pitch](#fields-pitch) | 1 |
+| SFFloat | [in, out] | [speed](#fields-speed) | 1 |
 | SFBool | [in, out] | [loop](#fields-loop) | FALSE |
-| SFTime | [in, out] | [startTime](#fields-startTime) | 0  |
-| SFTime | [in, out] | [resumeTime](#fields-resumeTime) | 0  |
-| SFTime | [in, out] | [pauseTime](#fields-pauseTime) | 0  |
-| SFTime | [in, out] | [stopTime](#fields-stopTime) | 0  |
+| SFTime | [in, out] | [startTime](#fields-startTime) | 0 |
+| SFTime | [in, out] | [resumeTime](#fields-resumeTime) | 0 |
+| SFTime | [in, out] | [pauseTime](#fields-pauseTime) | 0 |
+| SFTime | [in, out] | [stopTime](#fields-stopTime) | 0 |
 | SFBool | [out] | [isPaused](#fields-isPaused) |  |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFTime | [out] | [elapsedTime](#fields-elapsedTime) |  |
 | SFTime | [out] | [duration_changed](#fields-duration_changed) |  |
 | SFBool | [ ] | [repeatS](#fields-repeatS) | TRUE |
 | SFBool | [ ] | [repeatT](#fields-repeatT) | TRUE |
-| SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL  |
+| SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -304,7 +304,7 @@ Any video file format supported by the web browser, but at least:
 ### Hints
 
 - Can contain a single [TextureProperties](/x_ite/components/texturing/textureproperties/) node.
-- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
 - Provide a [Viewpoint](/x_ite/components/navigation/viewpoint/) that allows a clear view of the MovieTexture so that users can easily see all details.
 - Utilize DEF/USE references for multiple copies of a single MovieTexture video file in order to avoid multiple-download delays, reduce memory requirements, and maintain synchronization.
 - Authors can provide multiple video formats for the same video track, with each source address listed separately in the url field.
@@ -329,6 +329,14 @@ Any video file format supported by the web browser, but at least:
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Texturing/MovieTexture/MovieTexture.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of MovieTexture Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/texturing.html#MovieTexture)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

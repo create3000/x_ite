@@ -16,7 +16,7 @@ timezone: Europe/Berlin
 
 title: X_ITE X3D Browser # the main title
 
-tagline: Ready for X3Dv4 and WebXR! # it will display as the sub-title
+tagline: Ready for X3Dv4.1 and WebXR! # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
   X_ITE X3D Browser and VRML Viewer, view and manipulate X3D, VRML, glTF and other 3D sources in HTML.
@@ -24,14 +24,14 @@ description: >- # used by seo meta and the atom feed
 x3d_latest_version: 4.1 # x3d latest version
 
 # x_ite settings
-x_ite_teaser: shader-dots
-x_ite_latest_version: 14.0.8 # x_ite latest version
-x_ite_compressed_size: 296 # size in kb
-x_ite_js_integrity: sha384-yQZodJTwOFg8Y46w7CKG+rpnY5264rXAso7BvVRsWCkqV9nLqDLDoAvvBQ9JT1Dj
-x_ite_min_js_integrity: sha384-/kW7xc3lr3wQP0LXBTZa+v74YgAdC4/W6tKjisao4VrxPtGfrCAsBFEhL4TAXpia
-x_ite_mjs_integrity: sha384-arOIHcggookeGyzHuwC9ftxeG1fZ0LPUryP7nre0USGQ34yKXYPcFGzXzejB6bNi
-x_ite_min_mjs_integrity: sha384-jNDfcA+TVyDZ6uqxLdFLu2jjQkc2/vgo0NLyee8hIH6BafIgz7osJwJ/vEkNNxmc
-x_ite_css_integrity: sha384-4UqLOxOPD0GkePfEZq5M7+b7zsN5ishlXRgr+K1wmvkr05gGpHNqhiy7J8waOYFo
+x_ite_teaser: stars-dance-in-galaxy
+x_ite_latest_version: 15.0.2 # x_ite latest version
+x_ite_compressed_size: 299 # size in kb
+x_ite_js_integrity: sha384-4bICsqrnbVZCzbJV5jO2DZXt6+XLsNzCEg+C09QrIfMhGO1CC0dTXdMBd5aH1JB6
+x_ite_min_js_integrity: sha384-6H0Ei5MOZtafOrdr9CaO3ouprSNzEgwwjO+Mg3QO8wWlMQKrV+tNFRZS2SxjMu7y
+x_ite_mjs_integrity: sha384-WvhmaRAwUKNuBnbbsZLL/a4+ihmEfBxlf1/mTyQ1vElHTc1FHoZm1bOKhA9uQWQi
+x_ite_min_mjs_integrity: sha384-ZZ5zW8Jl0dIpgwVAvUhCO6zoCP0KL31mE8OiRN+8TFs3C0HWg+xtWG36UB9OvTrz
+x_ite_css_integrity: sha384-CV/E+CUsDIuNlEfYZHCJkUJo7fEnvvLeWvOU91XKE2efZLHKvg+qzgmkabwpaZu8
 
 # Fill in the protocol & hostname for your site.
 # e.g. 'https://username.github.io', note that it does not end with a '/'.

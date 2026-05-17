@@ -31,7 +31,7 @@ The Background node belongs to the [EnvironmentalEffects](/x_ite/components/over
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in] | [set_bind](#fields-set_bind) |  |
 | MFString | [in, out] | [frontUrl](#fields-frontUrl) | [ ] |
 | MFString | [in, out] | [backUrl](#fields-backUrl) | [ ] |
@@ -40,10 +40,10 @@ The Background node belongs to the [EnvironmentalEffects](/x_ite/components/over
 | MFString | [in, out] | [topUrl](#fields-topUrl) | [ ] |
 | MFString | [in, out] | [bottomUrl](#fields-bottomUrl) | [ ] |
 | MFFloat | [in, out] | [skyAngle](#fields-skyAngle) | [ ] |
-| MFColor | [in, out] | [skyColor](#fields-skyColor) | 0 0 0  |
+| MFColor | [in, out] | [skyColor](#fields-skyColor) | 0 0 0 |
 | MFFloat | [in, out] | [groundAngle](#fields-groundAngle) | [ ] |
 | MFColor | [in, out] | [groundColor](#fields-groundColor) | [ ] |
-| SFFloat | [in, out] | [transparency](#fields-transparency) | 0  |
+| SFFloat | [in, out] | [transparency](#fields-transparency) | 0 |
 | SFBool | [out] | [isBound](#fields-isBound) |  |
 | SFTime | [out] | [bindTime](#fields-bindTime) |  |
 {: .fields }
@@ -279,6 +279,14 @@ Event sent when node becomes active/inactive.
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/EnvironmentalEffects/Background/Background.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of Background Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/environmentalEffects.html#Background)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

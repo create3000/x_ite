@@ -30,7 +30,7 @@ The WorldInfo node belongs to the [Core](/x_ite/components/overview/#core) compo
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [title](#fields-title) | "" |
 | MFString | [in, out] | [info](#fields-info) | [ ] |
 {: .fields }
@@ -71,6 +71,14 @@ Additional information about this model.
 - [WorldInfo is part of Core component and Core profile.](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#t-CoresupportLevels)
 - [X3D for Web Authors, Chapter 15, Metadata Information](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter15-Metadata/Chapter15-MetadataInformation.html)
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of WorldInfo Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/core.html#WorldInfo)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

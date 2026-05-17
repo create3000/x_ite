@@ -12,6 +12,8 @@ function TextureCoordinateGenerator (executionContext)
 
    this .addType (X3DConstants .TextureCoordinateGenerator);
 
+   // Private properties
+
    this .mode      = ModeType .SPHERE;
    this .parameter = new Float32Array (6);
 }

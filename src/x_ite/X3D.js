@@ -114,7 +114,7 @@ Namespace, Namespace .Fields,
    */
    require (path)
    {
-      return Namespace [path .match (/([^\/]+)$/) ?.[1]];
+      return Namespace [path .match (/([^\/]{1,256})$/) ?.[1]];
    },
    noConflict: (() =>
    {

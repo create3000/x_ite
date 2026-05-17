@@ -102,7 +102,7 @@ Translation positions a coordinate system in X, Y, and Z.
 ```x3d
 <!-- X Y Z -->
 <Transform
-    translation='2.0 0.0 0.0'>
+    translation='2 0 0'>
   <!-- children ... -->
 </Transform>
 ```
@@ -112,7 +112,7 @@ Translation positions a coordinate system in X, Y, and Z.
 ```vrml
 Transform {
   # X Y Z
-  translation 2.0 0.0 0.0
+  translation 2 0 0
   children [ ... ]
 }
 ```
@@ -122,14 +122,14 @@ Transform {
 Rotation orients a coordinate system about a rotation axis by a rotation angle
 
 - Angles are measured in radians
-- radians = degrees / 180.0 \* 3.1415927
+- radians = degrees / 180 \* 3.1415927
 
 ### XML Encoding
 
 ```x3d
 <!-- X Y Z Angle -->
 <Transform
-    rotation='0.0 0.0 1.0 0.52'>
+    rotation='0 0 1 0.52'>
   <!-- children ... -->
 </Transform>
 ```
@@ -139,7 +139,7 @@ Rotation orients a coordinate system about a rotation axis by a rotation angle
 ```vrml
 Transform {
   # X Y Z Angle
-  rotation 0.0 0.0 1.0 0.52
+  rotation 0 0 1 0.52
   children [ ... ]
 }
 ```
@@ -153,9 +153,9 @@ Typical rotations are about the X, Y, or Z axes:
 
 | Rotate about | Axis        |
 |--------------|-------------|
-| X-Axis       | 1.0 0.0 0.0 |
-| Y-Axis       | 0.0 1.0 0.0 |
-| Z-Axis       | 0.0 0.0 1.0 |
+| X-Axis       | 1 0 0       |
+| Y-Axis       | 0 1 0       |
+| Z-Axis       | 0 0 1       |
 
 ## Using the Right-Hand Rule
 
@@ -201,8 +201,8 @@ Scale, Rotate, and Translate a coordinate system, one after the other.
 
 ```x3d
 <Transform
-    translation='2.0 0.0 0.0'
-    rotation='0.0 0.0 1.0 0.52'
+    translation='2 0 0'
+    rotation='0 0 1 0.52'
     scale='0.5 0.5 0.5'>
   <!-- children ... -->
 </Transform>
@@ -212,8 +212,8 @@ Scale, Rotate, and Translate a coordinate system, one after the other.
 
 ```vrml
 Transform {
-  translation 2.0 0.0 0.0
-  rotation 0.0 0.0 1.0 0.52
+  translation 2 0 0
+  rotation 0 0 1 0.52
   scale 0.5 0.5 0.5
   children [ ... ]
 }
@@ -230,14 +230,14 @@ Read operations bottom-up:
 
 ```x3d
 <Transform
-    translation='-2.0 3.0 0.0'>
+    translation='-2 3 0'>
   <Shape>
     <Appearance>
       <Material/>
     </Appearance>
     <Cylinder
         radius='0.3'
-        height='6.0'
+        height='6'
         top='false'>
   </Shape>
 </Transform>
@@ -248,7 +248,7 @@ Read operations bottom-up:
 
 ```vrml
 Transform {
-  translation -2.0 3.0 0.0
+  translation -2 3 0
   children [
     Shape {
       appearance Appearance {
@@ -256,7 +256,7 @@ Transform {
       }
       geometry Cylinder {
         radius 0.3
-        height 6.0
+        height 6
         top FALSE
       }
     }

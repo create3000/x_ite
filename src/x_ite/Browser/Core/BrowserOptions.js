@@ -302,11 +302,14 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
 
       this .removeUpdateContentScale ?.();
 
-      this .removeUpdateContentScale = function () { media .removeEventListener ("change", update) };
+      this .removeUpdateContentScale = () =>
+      {
+         visualViewport .removeEventListener ("resize", update);
+         media          .removeEventListener ("change", update);
+      };
 
-      media .addEventListener ("change", update);
-
-      browser .getRenderingProperties () ._ContentScale = window .devicePixelRatio;
+      visualViewport .addEventListener ("resize", update);
+      media          .addEventListener ("change", update);
 
       browser .reshape ();
    },

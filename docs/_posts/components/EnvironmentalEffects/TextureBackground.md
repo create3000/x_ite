@@ -31,21 +31,21 @@ The TextureBackground node belongs to the [EnvironmentalEffects](/x_ite/componen
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in] | [set_bind](#fields-set_bind) |  |
 | MFFloat | [in, out] | [skyAngle](#fields-skyAngle) | [ ] |
-| MFColor | [in, out] | [skyColor](#fields-skyColor) | 0 0 0  |
+| MFColor | [in, out] | [skyColor](#fields-skyColor) | 0 0 0 |
 | MFFloat | [in, out] | [groundAngle](#fields-groundAngle) | [ ] |
 | MFColor | [in, out] | [groundColor](#fields-groundColor) | [ ] |
-| SFFloat | [in, out] | [transparency](#fields-transparency) | 0  |
+| SFFloat | [in, out] | [transparency](#fields-transparency) | 0 |
 | SFBool | [out] | [isBound](#fields-isBound) |  |
 | SFTime | [out] | [bindTime](#fields-bindTime) |  |
-| SFNode | [in, out] | [frontTexture](#fields-frontTexture) | NULL  |
-| SFNode | [in, out] | [backTexture](#fields-backTexture) | NULL  |
-| SFNode | [in, out] | [leftTexture](#fields-leftTexture) | NULL  |
-| SFNode | [in, out] | [rightTexture](#fields-rightTexture) | NULL  |
-| SFNode | [in, out] | [topTexture](#fields-topTexture) | NULL  |
-| SFNode | [in, out] | [bottomTexture](#fields-bottomTexture) | NULL  |
+| SFNode | [in, out] | [frontTexture](#fields-frontTexture) | NULL |
+| SFNode | [in, out] | [backTexture](#fields-backTexture) | NULL |
+| SFNode | [in, out] | [leftTexture](#fields-leftTexture) | NULL |
+| SFNode | [in, out] | [rightTexture](#fields-rightTexture) | NULL |
+| SFNode | [in, out] | [topTexture](#fields-topTexture) | NULL |
+| SFNode | [in, out] | [bottomTexture](#fields-bottomTexture) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -232,6 +232,13 @@ Parent TextureBackground element can contain up to six image nodes ([ImageTextur
 - [Download ZIP Archive](https://create3000.github.io/media/examples/EnvironmentalEffects/TextureBackground/TextureBackground.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/EnvironmentalEffects/TextureBackground/TextureBackground.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

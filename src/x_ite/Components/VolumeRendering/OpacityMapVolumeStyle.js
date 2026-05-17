@@ -25,13 +25,9 @@ Object .assign (Object .setPrototypeOf (OpacityMapVolumeStyle .prototype, X3DCom
    },
    set_transferFunction__ ()
    {
-      this .transferFunctionNode = X3DCast (X3DConstants .X3DTexture2DNode, this ._transferFunction);
-
-      if (! this .transferFunctionNode)
-         this .transferFunctionNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._transferFunction);
-
-      if (! this .transferFunctionNode)
-         this .transferFunctionNode = this .getBrowser () .getDefaultTransferFunction ();
+      this .transferFunctionNode = X3DCast (X3DConstants .X3DTexture2DNode, this ._transferFunction)
+         ?? X3DCast (X3DConstants .X3DTexture3DNode, this ._transferFunction)
+         ?? this .getBrowser () .getDefaultTransferFunction ();
    },
    addShaderFields (shaderNode)
    {

@@ -13,7 +13,7 @@ tags: [DirectionalLight, Lighting, VRML]
 
 ## Overview
 
-DirectionalLight defines parallel light rays that illuminate geometric shapes. Lighting illuminates all geometry except lines and points. By default, light scope only illuminates peer geometry and children nodes within the scene graph hierarchy. No source location is needed since rays are parallel from an infinitely distant source. DirectionalLight nodes do not attenuate with distance. Lights have no visible shape themselves and lighting effects continue through any intermediate geometry.
+DirectionalLight defines parallel light rays that illuminate geometric shapes. X3D lights illuminate all geometry except lines and points. By default, light scope only illuminates peer geometry and children nodes within the scene graph hierarchy. No source location is needed since rays are parallel from an infinitely distant source. DirectionalLight intensity does not attenuate with distance.
 
 The DirectionalLight node belongs to the [Lighting](/x_ite/components/overview/#lighting) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
@@ -30,18 +30,18 @@ The DirectionalLight node belongs to the [Lighting](/x_ite/components/overview/#
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [global](#fields-global) | FALSE |
 | SFBool | [in, out] | [on](#fields-on) | TRUE |
-| SFColor | [in, out] | [color](#fields-color) | 1 1 1  |
-| SFFloat | [in, out] | [intensity](#fields-intensity) | 1  |
-| SFFloat | [in, out] | [ambientIntensity](#fields-ambientIntensity) | 0  |
-| SFVec3f | [in, out] | [direction](#fields-direction) | 0 0 -1  |
+| SFColor | [in, out] | [color](#fields-color) | 1 1 1 |
+| SFFloat | [in, out] | [intensity](#fields-intensity) | 1 |
+| SFFloat | [in, out] | [ambientIntensity](#fields-ambientIntensity) | 0 |
+| SFVec3f | [in, out] | [direction](#fields-direction) | 0 0 -1 |
 | SFBool | [in, out] | [shadows](#fields-shadows) | FALSE |
-| SFColor | [in, out] | [shadowColor](#fields-shadowColor) | 0 0 0  |
-| SFFloat | [in, out] | [shadowIntensity](#fields-shadowIntensity) | 1  |
-| SFFloat | [in, out] | [shadowBias](#fields-shadowBias) | 0.005  |
-| SFInt32 | [ ] | [shadowMapSize](#fields-shadowMapSize) | 1024  |
+| SFColor | [in, out] | [shadowColor](#fields-shadowColor) | 0 0 0 |
+| SFFloat | [in, out] | [shadowIntensity](#fields-shadowIntensity) | 1 |
+| SFFloat | [in, out] | [shadowBias](#fields-shadowBias) | 0.005 |
+| SFInt32 | [ ] | [shadowMapSize](#fields-shadowMapSize) | 1024 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -132,6 +132,7 @@ Size of the shadow map in pixels, must be power of two.
 
 ### Hints
 
+- Lights have no visible shape themselves and lighting effects continue through any intermediate geometry.
 - Animate direction to simulate time-of-day sunlight effects.
 - The bound [NavigationInfo](/x_ite/components/navigation/navigationinfo/) controls whether the user headlight is enabled on/off.
 - In Interchange profile light might not be scoped by parent [Group](/x_ite/components/grouping/group/) or [Transform](/x_ite/components/grouping/transform/).
@@ -146,6 +147,14 @@ Size of the shadow map in pixels, must be power of two.
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Lighting/DirectionalLight/DirectionalLight.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of DirectionalLight Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/lighting.html#DirectionalLight)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

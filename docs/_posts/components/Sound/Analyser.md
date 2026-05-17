@@ -31,27 +31,27 @@ The Analyser node belongs to the [Sound](/x_ite/components/overview/#sound) comp
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFInt32 | [in, out] | [fftSize](#fields-fftSize) | 2048  |
-| SFFloat | [in, out] | [minDecibels](#fields-minDecibels) | -100  |
-| SFFloat | [in, out] | [maxDecibels](#fields-maxDecibels) | -30  |
+| SFInt32 | [in, out] | [fftSize](#fields-fftSize) | 2048 |
+| SFFloat | [in, out] | [minDecibels](#fields-minDecibels) | -100 |
+| SFFloat | [in, out] | [maxDecibels](#fields-maxDecibels) | -30 |
 | SFFloat | [in, out] | [smoothingTimeConstant](#fields-smoothingTimeConstant) | 0.8 |
-| SFInt32 | [out] | [frequencyBinCount](#fields-frequencyBinCount) | 1024  |
+| SFInt32 | [out] | [frequencyBinCount](#fields-frequencyBinCount) | 1024 |
 | MFInt32 | [out] | [byteFrequencyData](#fields-byteFrequencyData) |  |
 | MFInt32 | [out] | [byteTimeDomainData](#fields-byteTimeDomainData) |  |
 | MFFloat | [out] | [floatFrequencyData](#fields-floatFrequencyData) |  |
 | MFFloat | [out] | [floatTimeDomainData](#fields-floatTimeDomainData) |  |
-| SFFloat | [in, out] | [gain](#fields-gain) | 1  |
-| SFTime | [in, out] | [tailTime](#fields-tailTime) | 0  |
+| SFFloat | [in, out] | [gain](#fields-gain) | 1 |
+| SFTime | [in, out] | [tailTime](#fields-tailTime) | 0 |
 | SFInt32 | [in, out] | [channelCount](#fields-channelCount) |  |
-| SFString | [in, out] | [channelCountMode](#fields-channelCountMode) | "MAX"  |
-| SFString | [in, out] | [channelInterpretation](#fields-channelInterpretation) | "SPEAKERS"  |
-| SFTime | [in, out] | [startTime](#fields-startTime) | 0  |
-| SFTime | [in, out] | [resumeTime](#fields-resumeTime) | 0  |
-| SFTime | [in, out] | [pauseTime](#fields-pauseTime) | 0  |
-| SFTime | [in, out] | [stopTime](#fields-stopTime) | 0  |
+| SFString | [in, out] | [channelCountMode](#fields-channelCountMode) | "MAX" |
+| SFString | [in, out] | [channelInterpretation](#fields-channelInterpretation) | "SPEAKERS" |
+| SFTime | [in, out] | [startTime](#fields-startTime) | 0 |
+| SFTime | [in, out] | [resumeTime](#fields-resumeTime) | 0 |
+| SFTime | [in, out] | [pauseTime](#fields-pauseTime) | 0 |
+| SFTime | [in, out] | [stopTime](#fields-stopTime) | 0 |
 | SFBool | [out] | [isPaused](#fields-isPaused) |  |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFTime | [out] | [elapsedTime](#fields-elapsedTime) |  |
@@ -142,7 +142,11 @@ The *gain* value only affects analysis, not output signal. The *gain* field is a
 ### SFTime [in, out] **tailTime** 0 <small>[0,∞)</small>
 {: #fields-tailTime }
 
-]
+*tailTime* is duration of time that a node continues to provide output signal after the input signal becomes silent.
+
+#### Hint
+
+- *tailTime* always has a value of zero for Analyser.
 
 ### SFInt32 [in, out] **channelCount**
 {: #fields-channelCount }
@@ -261,6 +265,13 @@ The *children* field specifies audio-graph sound sources providing input signals
 ### Hint
 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#AnalyserNode)
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

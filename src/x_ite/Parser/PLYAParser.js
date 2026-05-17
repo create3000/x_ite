@@ -8,25 +8,25 @@ import Expressions from "./Expressions.js";
 // Lexical elements
 const Grammar = Expressions ({
    // General
-   whitespaces: /[\x20\n\t\r,]+/gy,
-   whitespacesNoLineTerminator: /[\x20\t]+/gy,
-   untilEndOfLine: /[^\r\n]+/gy,
-   line: /.*?\r?\n/gy,
+   whitespaces: /[\x20\n\t\r,]+/y,
+   whitespacesNoLineTerminator: /[\x20\t]+/y,
+   untilEndOfLine: /[^\r\n]+/y,
+   line: /[^\r\n]*\r?\n/y,
 
    // Keywords
-   ply: /ply/gy,
-   format: /format ascii 1.0/gy,
-   comment: /\bcomment\b/gy,
-   element: /\belement\b/gy,
-   elementName: /\b\S+\b/gy,
-   property: /\bproperty\b/gy,
-   propertyList: /\blist\b/gy,
-   propertyType: /\b(?:char|uchar|short|ushort|int|uint|float|double|int8|uint8|int16|uint16|int32|uint32|float32|float64)\b/gy,
-   propertyName: /\b\S+\b/gy,
-   endHeader: /\bend_header\b/gy,
+   ply: /ply/y,
+   format: /format ascii 1.0/y,
+   comment: /\bcomment\b/y,
+   element: /\belement\b/y,
+   elementName: /\b\S+\b/y,
+   property: /\bproperty\b/y,
+   propertyList: /\blist\b/y,
+   propertyType: /\b(?:char|uchar|short|ushort|int|uint|float|double|int8|uint8|int16|uint16|int32|uint32|float32|float64)\b/y,
+   propertyName: /\b\S+\b/y,
+   endHeader: /\bend_header\b/y,
 
-   double: /[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/gy,
-   int32:  /(?:0[xX][\da-fA-F]+)|(?:[+-]?\d+)/gy,
+   double: /[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/y,
+   int32:  /(?:0[xX][\da-fA-F]+)|(?:[+-]?\d+)/y,
 });
 
 /*
@@ -93,7 +93,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       await browser .loadComponents (scene);
 
-      this .processElements (this .header ([ ]))
+      this .processElements (this .header ([ ]));
 
       // Create nodes.
 
@@ -120,7 +120,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
          this .comments .push (value);
 
-         this .mustRotateAxes ||= !! value .match (/Blender|Artec/i);
+         this .mustRotateAxes ||= !! value .match (/\b(?:Blender|Artec|Polycam)\b/i);
 
          return true;
       }
@@ -260,8 +260,6 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    },
    processElements (elements)
    {
-      // console .log (elements)
-
       for (const element of elements)
          this .processElement (element);
 
@@ -325,14 +323,14 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
             const normal = scene .createNode ("Normal");
 
             if (this .mustRotateAxes)
-               this .rotateAxes (this .normals);
+               this .rotateAxes90 (this .normals);
 
             normal .vector   = this .normals;
             geometry .normal = normal;
          }
 
          if (this .mustRotateAxes)
-            this .rotateAxes (this .points);
+            this .rotateAxes90 (this .points);
 
          coordinate .point = this .points;
          geometry .coord   = coordinate;
@@ -368,14 +366,18 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
             const normal = scene .createNode ("Normal");
 
             if (this .mustRotateAxes)
-               this .rotateAxes (this .normals);
+               this .rotateAxes90 (this .normals);
+            else if (this .rotations ?.length || this .scales ?.length)
+               this .rotateAxes180 (this .normals);
 
             normal .vector   = this .normals;
             geometry .normal = normal;
          }
 
          if (this .mustRotateAxes)
-            this .rotateAxes (this .points);
+            this .rotateAxes90 (this .points);
+         else if (this .rotations ?.length || this .scales ?.length)
+            this .rotateAxes180 (this .points);
 
          coordinate .point = this .points;
          geometry .coord   = coordinate;
@@ -630,7 +632,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    {
       // https://github.com/graphdeco-inria/gaussian-splatting/issues/485
 
-      const C0 = 0.28209479177387814;
+      const C0 = 0.28209479177387814; // = 1 / (2 * Math .sqrt (Math .PI))
 
       return 0.5 + C0 * f_dc;
    },

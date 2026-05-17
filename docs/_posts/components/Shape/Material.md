@@ -31,29 +31,29 @@ The Material node belongs to the [Shape](/x_ite/components/overview/#shape) comp
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFFloat | [in, out] | [ambientIntensity](#fields-ambientIntensity) | 0.2  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFFloat | [in, out] | [ambientIntensity](#fields-ambientIntensity) | 0.2 |
 | SFString | [in, out] | [ambientTextureMapping](#fields-ambientTextureMapping) | "" |
-| SFNode | [in, out] | [ambientTexture](#fields-ambientTexture) | NULL  |
-| SFColor | [in, out] | [diffuseColor](#fields-diffuseColor) | 0.8 0.8 0.8  |
+| SFNode | [in, out] | [ambientTexture](#fields-ambientTexture) | NULL |
+| SFColor | [in, out] | [diffuseColor](#fields-diffuseColor) | 0.8 0.8 0.8 |
 | SFString | [in, out] | [diffuseTextureMapping](#fields-diffuseTextureMapping) | "" |
-| SFNode | [in, out] | [diffuseTexture](#fields-diffuseTexture) | NULL  |
-| SFColor | [in, out] | [specularColor](#fields-specularColor) | 0 0 0  |
+| SFNode | [in, out] | [diffuseTexture](#fields-diffuseTexture) | NULL |
+| SFColor | [in, out] | [specularColor](#fields-specularColor) | 0 0 0 |
 | SFString | [in, out] | [specularTextureMapping](#fields-specularTextureMapping) | "" |
-| SFNode | [in, out] | [specularTexture](#fields-specularTexture) | NULL  |
-| SFColor | [in, out] | [emissiveColor](#fields-emissiveColor) | 0 0 0  |
+| SFNode | [in, out] | [specularTexture](#fields-specularTexture) | NULL |
+| SFColor | [in, out] | [emissiveColor](#fields-emissiveColor) | 0 0 0 |
 | SFString | [in, out] | [emissiveTextureMapping](#fields-emissiveTextureMapping) | "" |
-| SFNode | [in, out] | [emissiveTexture](#fields-emissiveTexture) | NULL  |
-| SFFloat | [in, out] | [shininess](#fields-shininess) | 0.2  |
+| SFNode | [in, out] | [emissiveTexture](#fields-emissiveTexture) | NULL |
+| SFFloat | [in, out] | [shininess](#fields-shininess) | 0.2 |
 | SFString | [in, out] | [shininessTextureMapping](#fields-shininessTextureMapping) | "" |
-| SFNode | [in, out] | [shininessTexture](#fields-shininessTexture) | NULL  |
-| SFFloat | [in, out] | [occlusionStrength](#fields-occlusionStrength) | 1  |
+| SFNode | [in, out] | [shininessTexture](#fields-shininessTexture) | NULL |
+| SFFloat | [in, out] | [occlusionStrength](#fields-occlusionStrength) | 1 |
 | SFString | [in, out] | [occlusionTextureMapping](#fields-occlusionTextureMapping) | "" |
-| SFNode | [in, out] | [occlusionTexture](#fields-occlusionTexture) | NULL  |
-| SFFloat | [in, out] | [normalScale](#fields-normalScale) | 1  |
+| SFNode | [in, out] | [occlusionTexture](#fields-occlusionTexture) | NULL |
+| SFFloat | [in, out] | [normalScale](#fields-normalScale) | 1 |
 | SFString | [in, out] | [normalTextureMapping](#fields-normalTextureMapping) | "" |
-| SFNode | [in, out] | [normalTexture](#fields-normalTexture) | NULL  |
-| SFFloat | [in, out] | [transparency](#fields-transparency) | 0  |
+| SFNode | [in, out] | [normalTexture](#fields-normalTexture) | NULL |
+| SFFloat | [in, out] | [transparency](#fields-transparency) | 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -304,7 +304,7 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 
 ### Hints
 
-- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding material.
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding material.
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 - [X3D Example Archives, Basic, Universal Media Materials](https://www.web3d.org/x3d/content/examples/Basic/UniversalMediaMaterials)
@@ -323,6 +323,14 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Shape/Material/Material.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of Material Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/shape.html#Material)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

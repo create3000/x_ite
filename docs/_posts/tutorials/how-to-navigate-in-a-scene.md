@@ -9,22 +9,22 @@ There are various types of viewers available to navigate in an X3D scene to move
 
 Each of them allow you to navigate in a scene in a different manner:
 
-![examine](https://create3000.github.io/media/tutorials/images/examine.png){: .normal }
+![examine](https://create3000.github.io/media/tutorials/images/examine.avif){: .normal }
 Examine Viewer
 
-![walk](https://create3000.github.io/media/tutorials/images/walk.png){: .normal }
+![walk](https://create3000.github.io/media/tutorials/images/walk.avif){: .normal }
 Walk Viewer
 
-![fly](https://create3000.github.io/media/tutorials/images/fly.png){: .normal }
+![fly](https://create3000.github.io/media/tutorials/images/fly.avif){: .normal }
 Fly Viewer
 
-![plane](https://create3000.github.io/media/tutorials/images/plane.png){: .normal }
+![plane](https://create3000.github.io/media/tutorials/images/plane.avif){: .normal }
 Plane Viewer
 
-![lookat](https://create3000.github.io/media/tutorials/images/lookat.png){: .normal }
+![lookat](https://create3000.github.io/media/tutorials/images/lookat.avif){: .normal }
 Look At Viewer
 
-![none](https://create3000.github.io/media/tutorials/images/none.png){: .normal }
+![none](https://create3000.github.io/media/tutorials/images/none.avif){: .normal }
 None Viewer
 
 You can choose a viewer from the available viewers in the viewer menu of the context menu. Not all viewers have to be available at the same time. **Note:** This is controlled by the X3D author by setting the *type* field of a [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node.
@@ -36,7 +36,7 @@ You can choose a viewer from the available viewers in the viewer menu of the con
 
 The Examine Viewer uses a virtual sphere metaphor — the scene is contained inside a sphere that the camera moves around:
 
-![virtual sphere](https://create3000.github.io/media/tutorials/images/virtual-sphere.png){: .normal .w-50 }
+![virtual sphere](https://create3000.github.io/media/tutorials/images/virtual-sphere.avif){: .normal .w-50 }
 
 As a result, it seems like the Examine Viewer treats all the objects in your scene as a single, grouped object.
 

@@ -22,28 +22,28 @@ import MatrixStack  from "../../standard/Math/Utility/MatrixStack.js";
 // Lexical elements
 const Grammar = Expressions ({
    // General
-   whitespaces: /[\x20\n\t\r]+/gy,
-   comma: /,/gy,
-   openParenthesis: /\(/gy,
-   closeParenthesis: /\)/gy,
+   whitespaces: /[\x20\n\t\r]+/y,
+   comma: /,/y,
+   openParenthesis: /\(/y,
+   closeParenthesis: /\)/y,
 
    // Units
-   length: /em|ex|px|in|cm|mm|pt|pc|%/gy,
-   percent: /%/gy,
+   length: /em|ex|px|in|cm|mm|pt|pc|%/y,
+   percent: /%/y,
 
    // Values
-   int32: /(?:0[xX][\da-fA-F]+)|(?:[+-]?\d+)/gy,
-   double: /[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/gy,
-   constants: /([+-])((?:NAN|INF|INFINITY))/igy,
-   matrix: /matrix/gy,
-   translate: /translate/gy,
-   rotate: /rotate/gy,
-   scale: /scale/gy,
-   skewX: /skewX/gy,
-   skewY: /skewY/gy,
-   color: /[a-zA-Z]+|#[\da-fA-F]+|rgba?\(.*?\)/gy,
-   url: /url\("?(.*?)"?\)/gy,
-   path: /[mMlLhHvVqQtTcCsSaAzZ]/gy,
+   int32: /(?:0[xX][\da-fA-F]+)|(?:[+-]?\d+)/y,
+   double: /[+-]?(?:(?:(?:\d*\.\d+)|(?:\d+(?:\.)?))(?:[eE][+-]?\d+)?)/y,
+   constants: /([+-])((?:NAN|INF|INFINITY))/iy,
+   matrix: /matrix/y,
+   translate: /translate/y,
+   rotate: /rotate/y,
+   scale: /scale/y,
+   skewX: /skewX/y,
+   skewY: /skewY/y,
+   color: /#[\da-fA-F]+|[a-zA-Z]+\([^\)]*\)|[a-zA-Z]+/y,
+   url: /url\("?(.*?)"?\)/y,
+   path: /[mMlLhHvVqQtTcCsSaAzZ]/y,
 });
 
 /*
@@ -280,12 +280,12 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       viewpoint .position         = new Vector3 (x, y, 10);
       viewpoint .centerOfRotation = new Vector3 (x, y, 0);
 
-      viewpoint .fieldOfView = [
+      viewpoint .fieldOfView = new Vector4 (
          -width  / 2 * PIXEL,
          -height / 2 * PIXEL,
           width  / 2 * PIXEL,
           height / 2 * PIXEL,
-      ];
+      );
 
       scene .getRootNodes () .push (viewpoint);
 
@@ -2490,7 +2490,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          matrix           = Matrix4 .fromMatrix3 (m),
          translation      = new Vector3 (),
          rotation         = new Rotation4 (),
-         scale            = new Vector3 (1),
+         scale            = new Vector3 (),
          scaleOrientation = new Rotation4 ();
 
       matrix .get (translation, rotation, scale, scaleOrientation);

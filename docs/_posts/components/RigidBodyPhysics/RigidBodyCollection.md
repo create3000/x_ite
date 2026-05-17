@@ -32,25 +32,25 @@ The RigidBodyCollection node belongs to the [RigidBodyPhysics](/x_ite/components
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFNode | [in] | [set_contacts](#fields-set_contacts) |  |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFBool | [in, out] | [preferAccuracy](#fields-preferAccuracy) | FALSE |
-| SFFloat | [in, out] | [errorCorrection](#fields-errorCorrection) | 0.8  |
-| SFInt32 | [in, out] | [iterations](#fields-iterations) | 10  |
-| SFVec3f | [in, out] | [gravity](#fields-gravity) | 0 -9.8 0  |
-| SFFloat | [in, out] | [constantForceMix](#fields-constantForceMix) | 0.0001  |
-| SFFloat | [in, out] | [maxCorrectionSpeed](#fields-maxCorrectionSpeed) | -1  |
-| SFFloat | [in, out] | [contactSurfaceThickness](#fields-contactSurfaceThickness) | 0  |
+| SFFloat | [in, out] | [errorCorrection](#fields-errorCorrection) | 0.8 |
+| SFInt32 | [in, out] | [iterations](#fields-iterations) | 10 |
+| SFVec3f | [in, out] | [gravity](#fields-gravity) | 0 -9.8 0 |
+| SFFloat | [in, out] | [constantForceMix](#fields-constantForceMix) | 0.0001 |
+| SFFloat | [in, out] | [maxCorrectionSpeed](#fields-maxCorrectionSpeed) | -1 |
+| SFFloat | [in, out] | [contactSurfaceThickness](#fields-contactSurfaceThickness) | 0 |
 | SFBool | [in, out] | [autoDisable](#fields-autoDisable) | FALSE |
-| SFTime | [in, out] | [disableTime](#fields-disableTime) | 0  |
-| SFFloat | [in, out] | [disableLinearSpeed](#fields-disableLinearSpeed) | 0  |
-| SFFloat | [in, out] | [disableAngularSpeed](#fields-disableAngularSpeed) | 0  |
+| SFTime | [in, out] | [disableTime](#fields-disableTime) | 0 |
+| SFFloat | [in, out] | [disableLinearSpeed](#fields-disableLinearSpeed) | 0 |
+| SFFloat | [in, out] | [disableAngularSpeed](#fields-disableAngularSpeed) | 0 |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
-| SFNode | [ ] | [collider](#fields-collider) | NULL  |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
+| SFNode | [ ] | [collider](#fields-collider) | NULL |
 | MFNode | [in, out] | [bodies](#fields-bodies) | [ ] |
 | MFNode | [in, out] | [joints](#fields-joints) | [ ] |
 {: .fields }
@@ -223,6 +223,13 @@ The *joints* field is used to register all *joints* between bodies contained in 
 - [Download ZIP Archive](https://create3000.github.io/media/examples/RigidBodyPhysics/RigidBodyCollection/RigidBodyCollection.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/RigidBodyPhysics/RigidBodyCollection/RigidBodyCollection.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

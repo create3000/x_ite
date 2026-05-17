@@ -6,8 +6,12 @@ import X3DLayoutNode        from "./X3DLayoutNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Vector2              from "../../../standard/Math/Numbers/Vector2.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
+import Vector4              from "../../../standard/Math/Numbers/Vector4.js";
 import Rotation4            from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
+import ObjectCache          from "../../../standard/Utility/ObjectCache.js";
+
+const Rectangles = ObjectCache (Vector4);
 
 let i = 0;
 
@@ -28,48 +32,20 @@ function Layout (executionContext)
    X3DLayoutNode .call (this, executionContext);
 
    this .addType (X3DConstants .Layout);
-
-   // Private properties
-
-   this .alignX          = CENTER;
-   this .alignY          = CENTER;
-   this .offsetUnitX     = WORLD;
-   this .offsetUnitY     = WORLD;
-   this .offsetX         = 0;
-   this .offsetY         = 0;
-   this .sizeUnitX       = WORLD;
-   this .sizeUnitY       = WORLD;
-   this .sizeX           = 1;
-   this .sizeY           = 1;
-   this .scaleModeX      = NONE;
-   this .scaleModeY      = NONE;
-   this .parent          = null;
-   this .rectangleCenter = new Vector2 ();
-   this .rectangleSize   = new Vector2 ();
-   this .matrix          = new Matrix4 ();
 }
 
 Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .prototype),
 {
-   viewportPixel: new Vector2 (),
-   pixelSize: new Vector2 (),
-   translation: new Vector3 (),
-   offset: new Vector3 (),
-   scale: new Vector3 (1),
-   currentTranslation: new Vector3 (),
-   currentRotation: new Rotation4 (),
-   currentScale: new Vector3 (),
-   modelViewMatrix: new Matrix4 (),
    initialize ()
    {
       X3DLayoutNode .prototype .initialize .call (this);
 
-      this ._align       .addInterest ("set_align__", this);
+      this ._align       .addInterest ("set_align__",       this);
       this ._offsetUnits .addInterest ("set_offsetUnits__", this);
-      this ._offset      .addInterest ("set_offset__", this);
-      this ._sizeUnits   .addInterest ("set_sizeUnits__", this);
-      this ._size        .addInterest ("set_size__", this);
-      this ._scaleMode   .addInterest ("set_scaleMode__", this);
+      this ._offset      .addInterest ("set_offset__",      this);
+      this ._sizeUnits   .addInterest ("set_sizeUnits__",   this);
+      this ._size        .addInterest ("set_size__",        this);
+      this ._scaleMode   .addInterest ("set_scaleMode__",   this);
 
       this .set_align__ ();
       this .set_offsetUnits__ ();
@@ -80,206 +56,152 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
    },
    set_align__ ()
    {
+      // If the align field has only one value, that value shall be "CENTER".
+
       // X
 
-      if (this ._align .length > 0)
-      {
-         if (this ._align [0] === "LEFT")
-            this .alignX = LEFT;
+      if (this ._align [0] === "LEFT")
+         this .alignX = LEFT;
 
-         else if (this ._align [0] === "RIGHT")
-            this .alignX = RIGHT;
+      else if (this ._align [0] === "RIGHT")
+         this .alignX = RIGHT;
 
-         else
-            this .alignX = CENTER;
-      }
       else
          this .alignX = CENTER;
 
       // Y
 
-      if (this ._align .length > 1)
-      {
-         if (this ._align [1] === "BOTTOM")
-            this .alignY = BOTTOM;
+      if (this ._align [1] === "BOTTOM")
+         this .alignY = BOTTOM;
 
-         else if (this ._align [1] === "TOP")
-            this .alignY = TOP;
+      else if (this ._align [1] === "TOP")
+         this .alignY = TOP;
 
-         else
-            this .alignY = CENTER;
-      }
       else
          this .alignY = CENTER;
    },
    set_offsetUnits__ ()
    {
-      if (this ._offsetUnits .length > 0)
+      // If a field has a length of one, that value applies to both the horizontal and vertical directions.
+
+      // X
+
+      if (this ._offsetUnits [0] === "FRACTION")
+         this .offsetUnitX = FRACTION;
+
+      else if (this ._offsetUnits [0] === "PIXEL")
+         this .offsetUnitX = PIXEL;
+
+      else
+         this .offsetUnitX = WORLD;
+
+      // Y
+
+      if (this ._offsetUnits .length > 1)
       {
-         // X
+         if (this ._offsetUnits [1] === "FRACTION")
+            this .offsetUnitY = FRACTION;
 
-         if (this ._offsetUnits [0] === "FRACTION")
-            this .offsetUnitX = FRACTION;
-
-         else if (this ._offsetUnits [0] === "PIXEL")
-            this .offsetUnitX = PIXEL;
+         else if (this ._offsetUnits [1] === "PIXEL")
+            this .offsetUnitY = PIXEL;
 
          else
-            this .offsetUnitX = WORLD;
-
-         // Y
-
-         if (this ._offsetUnits .length > 1)
-         {
-            if (this ._offsetUnits [1] === "FRACTION")
-               this .offsetUnitY = FRACTION;
-
-            else if (this ._offsetUnits [1] === "PIXEL")
-               this .offsetUnitY = PIXEL;
-
-            else
-               this .offsetUnitY = WORLD;
-         }
-         else
-            this .offsetUnitY = this .offsetUnitX;
+            this .offsetUnitY = WORLD;
       }
       else
       {
-         this .offsetUnitX = WORLD;
-         this .offsetUnitY = WORLD;
+         this .offsetUnitY = this .offsetUnitX;
       }
    },
    set_offset__ ()
    {
-      if (this ._offset .length > 0)
-      {
-         // X
+      // If a field has a length of one, that value applies to both the horizontal and vertical directions.
 
-         this .offsetX = this ._offset [0];
+      // X and Y
 
-         // Y
-
-         if (this ._offset .length > 1)
-            this .offsetY = this ._offset [1];
-
-         else
-            this .offsetY = offsetX;
-      }
-      else
-      {
-         this .offsetX = 0;
-         this .offsetY = 0;
-      }
+      this .offsetX = this ._offset [0] ?? 0;
+      this .offsetY = this ._offset [1] ?? this .offsetX;
    },
    set_sizeUnits__ ()
    {
-      if (this ._sizeUnits .length > 0)
+      // If a field has a length of one, that value applies to both the horizontal and vertical directions.
+
+      // X
+
+      if (this ._sizeUnits [0] === "FRACTION")
+         this .sizeUnitX = FRACTION;
+
+      else if (this ._sizeUnits [0] === "PIXEL")
+         this .sizeUnitX = PIXEL;
+
+      else
+         this .sizeUnitX = WORLD;
+
+      // Y
+
+      if (this ._sizeUnits .length > 1)
       {
-         // X
+         if (this ._sizeUnits [1] === "FRACTION")
+            this .sizeUnitY = FRACTION;
 
-         if (this ._sizeUnits [0] === "FRACTION")
-            this .sizeUnitX = FRACTION;
-
-         else if (this ._sizeUnits [0] === "PIXEL")
-            this .sizeUnitX = PIXEL;
+         else if (this ._sizeUnits [1] === "PIXEL")
+            this .sizeUnitY = PIXEL;
 
          else
-            this .sizeUnitX = WORLD;
-
-         // Y
-
-         if (this ._sizeUnits .length > 1)
-         {
-            if (this ._sizeUnits [1] === "FRACTION")
-               this .sizeUnitY = FRACTION;
-
-            else if (this ._sizeUnits [1] === "PIXEL")
-               this .sizeUnitY = PIXEL;
-
-            else
-               this .sizeUnitY = WORLD;
-         }
-         else
-            this .sizeUnitY = this .sizeUnitX;
+            this .sizeUnitY = WORLD;
       }
       else
       {
-         this .sizeUnitX = WORLD;
-         this .sizeUnitY = WORLD;
+         this .sizeUnitY = this .sizeUnitX;
       }
    },
    set_size__ ()
    {
-      if (this ._size .length > 0)
-      {
-         // X
+      // If a field has a length of one, that value applies to both the horizontal and vertical directions.
 
-         this .sizeX = this ._size [0];
+      // X and Y
 
-         // Y
-
-         if (this ._size .length > 1)
-            this .sizeY = this ._size [1];
-
-         else
-            this .sizeY = this .sizeX;
-      }
-      else
-      {
-         this .sizeX = 0;
-         this .sizeY = 0;
-      }
+      this .sizeX = this ._size [0] ?? 0;
+      this .sizeY = this ._size [1] ?? this .sizeX;
    },
    set_scaleMode__ ()
    {
-      if (this ._scaleMode .length > 0)
+      // If a field has a length of one, that value applies to both the horizontal and vertical directions.
+
+      // X
+
+      if (this ._scaleMode [0] === "FRACTION")
+         this .scaleModeX = FRACTION;
+
+      else if (this ._scaleMode [0] === "PIXEL")
+         this .scaleModeX = PIXEL;
+
+      else if (this ._scaleMode [0] === "STRETCH")
+         this .scaleModeX = STRETCH;
+
+      else
+         this .scaleModeX = NONE;
+
+      // Y
+
+      if (this ._scaleMode .length > 1)
       {
-         // X
+         if (this ._scaleMode [1] === "FRACTION")
+            this .scaleModeY = FRACTION;
 
-         if (this ._scaleMode [0] === "FRACTION")
-            this .scaleModeX = FRACTION;
+         else if (this ._scaleMode [1] === "PIXEL")
+            this .scaleModeY = PIXEL;
 
-         else if (this ._scaleMode [0] === "PIXEL")
-            this .scaleModeX = PIXEL;
-
-         else if (this ._scaleMode [0] === "STRETCH")
-            this .scaleModeX = STRETCH;
+         else if (this ._scaleMode [1] === "STRETCH")
+            this .scaleModeY = STRETCH;
 
          else
-            this .scaleModeX = NONE;
-
-         // Y
-
-         if (this ._scaleMode .length > 1)
-         {
-            if (this ._scaleMode [1] === "FRACTION")
-               this .scaleModeY = FRACTION;
-
-            else if (this ._scaleMode [1] === "PIXEL")
-               this .scaleModeY = PIXEL;
-
-            else if (this ._scaleMode [1] === "STRETCH")
-               this .scaleModeY = STRETCH;
-
-            else
-               this .scaleModeY = NONE;
-         }
-         else
-            this .scaleModeY = this .scaleModeX;
+            this .scaleModeY = NONE;
       }
       else
       {
-         this .scaleModeX = NONE;
-         this .scaleModeY = NONE;
+         this .scaleModeY = this .scaleModeX;
       }
-   },
-   getRectangleCenter ()
-   {
-      return this .rectangleCenter;
-   },
-   getRectangleSize ()
-   {
-      return this .rectangleSize;
    },
    getAlignX ()
    {
@@ -289,27 +211,17 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
    {
       return this .alignY;
    },
-   getOffsetUnitX ()
+   getOffsetUnitX (parents, index)
    {
       if (this .offsetUnitX === WORLD)
-      {
-         if (this .parent)
-            return this .parent .getOffsetUnitX ();
-
-         return FRACTION;
-      }
+         return parents [index] ?.getOffsetUnitX (parents, index - 1) ?? FRACTION;
 
       return this .offsetUnitX;
    },
-   getOffsetUnitY ()
+   getOffsetUnitY (parents, index)
    {
       if (this .offsetUnitY === WORLD)
-      {
-         if (this .parent)
-            return this .parent .getOffsetUnitY ();
-
-         return FRACTION;
-      }
+         return parents [index] ?.getOffsetUnitY (parents, index - 1) ?? FRACTION;
 
       return this .offsetUnitY;
    },
@@ -321,27 +233,17 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
    {
       return this .offsetY;
    },
-   getSizeUnitX ()
+   getSizeUnitX (parents, index)
    {
       if (this .sizeUnitX === WORLD)
-      {
-         if (this .parent)
-            return this .parent .getSizeUnitX ();
-
-         return FRACTION;
-      }
+         return parents [index] ?.getSizeUnitX (parents, index - 1) ?? FRACTION;
 
       return this .sizeUnitX;
    },
-   getSizeUnitY ()
+   getSizeUnitY (parents, index)
    {
       if (this .sizeUnitY === WORLD)
-      {
-         if (this .parent)
-            return this .parent .getSizeUnitY ();
-
-         return FRACTION;
-      }
+         return parents [index] ?.getSizeUnitY (parents, index - 1) ?? FRACTION;
 
       return this .sizeUnitY;
    },
@@ -353,9 +255,9 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
    {
       return this .sizeY;
    },
-   getScaleModeX ()
+   getScaleModeX (parent)
    {
-      if (this .parent)
+      if (parent)
          return this .scaleModeX;
 
       if (this .scaleModeX === NONE)
@@ -363,9 +265,9 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
 
       return this .scaleModeX;
    },
-   getScaleModeY ()
+   getScaleModeY (parent)
    {
-      if (this .parent)
+      if (parent)
          return this .scaleModeY;
 
       if (this .scaleModeY === NONE)
@@ -373,188 +275,228 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
 
       return this .scaleModeY;
    },
-   transform (type, renderObject)
+   push: (() =>
    {
-      const parent = this .parent = renderObject .getParentLayout ();
-
-      // Calculate rectangleSize
-
       const
-         browser             = this .getBrowser (),
-         contentScale        = browser .getRenderingProperty ("ContentScale"),
-         matrix              = this .matrix,
-         navigationInfoNode  = renderObject .getNavigationInfo (),
-         viewpointNode       = renderObject .getViewpoint (),
-         nearValue           = viewpointNode .getNearDistance (navigationInfoNode),  // in meters
-         viewport            = renderObject .getViewVolume () .getViewport (),       // in pixels
-         viewportMeter       = viewpointNode .getViewportSize (viewport, nearValue), // in meters
-         viewportPixel       = this .viewportPixel,                                  // in pixels
-         pixelSize           = this .pixelSize,                                      // size of one pixel in meters
-         parentRectangleSize = parent ? parent .getRectangleSize () : viewportMeter, // in meters
-         rectangleSize       = this .rectangleSize,
-         rectangleCenter     = this .rectangleCenter;
+         rootRectangle      = new Vector4 (), // x, y, width, height
+         viewportPixel      = new Vector2 (), // in pixels
+         pixelSize          = new Vector2 (), // size of one pixel in meters
+         translation        = new Vector3 (),
+         offset             = new Vector3 (),
+         scale              = new Vector3 (),
+         currentTranslation = new Vector3 (),
+         currentRotation    = new Rotation4 (),
+         currentScale       = new Vector3 (),
+         matrix             = new Matrix4 ();
 
-      viewportPixel .set (viewport [2], viewport [3]) .divide (contentScale); // in pixel
-      pixelSize     .assign (viewportMeter) .divVec (viewportPixel);          // size of one pixel in meter
-
-      switch (this .getSizeUnitX ())
+      return function (type, renderObject)
       {
-         case FRACTION:
-            rectangleSize .x = this .sizeX * parentRectangleSize .x;
-            break;
-         case PIXEL:
-            rectangleSize .x = this .sizeX * pixelSize .x;
-            break;
-         default:
-            break;
-      }
+         // Get parent layouts.
 
-      switch (this .getSizeUnitY ())
-      {
-         case FRACTION:
-            rectangleSize .y = this .sizeY * parentRectangleSize .y;
-            break;
-         case PIXEL:
-            rectangleSize .y = this .sizeY * pixelSize .y;
-            break;
-         default:
-            break;
-      }
+         const
+            parents = renderObject .getLayouts (),
+            index   = parents .length - 1;
 
-      // Calculate translation
+         // Determine rectangleSize, rectangleCenter and layout matrix.
 
-      const translation = this .translation .set (0);
+         const
+            browser            = this .getBrowser (),
+            contentScale       = browser .getRenderingProperty ("ContentScale"),
+            navigationInfoNode = renderObject .getNavigationInfo (),
+            viewpointNode      = renderObject .getViewpoint (),
+            nearValue          = viewpointNode .getNearDistance (navigationInfoNode),      // in meters
+            viewport           = renderObject .getViewVolumes () .at (-1) .getViewport (), // in pixels
+            viewportMeter      = viewpointNode .getViewportSize (viewport, nearValue),     // in meters
+            rectangle          = Rectangles .pop (),
+            parentRectangle    = renderObject .getLayoutRectangles () .at (-1)
+               ?? rootRectangle .set (0, 0, ... viewportMeter), // in meters
+            modelViewMatrix    = renderObject .getModelViewMatrix ();
 
-      switch (this .getAlignX ())
-      {
-         case LEFT:
-            translation .x = -(parentRectangleSize .x - rectangleSize .x) / 2;
-            break;
-         case CENTER:
+         viewportPixel .set (viewport [2], viewport [3]) .divide (contentScale); // in pixel
+         pixelSize     .assign (viewportMeter) .divVec (viewportPixel);          // size of one pixel in meter
 
-            if (this .getSizeUnitX () === PIXEL && viewportPixel .x & 1)
-               translation .x = -pixelSize .x / 2;
+         // Determine rectangle size.
 
-            break;
-         case RIGHT:
-            translation .x = (parentRectangleSize .x - rectangleSize .x) / 2;
-            break;
-      }
+         const
+            sizeUnitX = this .getSizeUnitX (parents, index),
+            sizeUnitY = this .getSizeUnitY (parents, index);
 
-      switch (this .getAlignY ())
-      {
-         case BOTTOM:
-            translation .y = -(parentRectangleSize .y - rectangleSize .y) / 2;
-            break;
-         case CENTER:
-
-            if (this .getSizeUnitX () === PIXEL && viewportPixel .y & 1)
-               translation .y = -pixelSize .y / 2;
-
-            break;
-         case TOP:
-            translation .y = (parentRectangleSize .y - rectangleSize .y) / 2;
-            break;
-      }
-
-      // Calculate offset
-
-      const offset = this .offset .set (0);
-
-      switch (this .getOffsetUnitX ())
-      {
-         case FRACTION:
-            offset .x = this .offsetX * parentRectangleSize .x;
-            break;
-         case PIXEL:
-            offset .x = this .offsetX * viewportMeter .x / viewportPixel .x;
-            break;
-      }
-
-      switch (this .getOffsetUnitY ())
-      {
-         case FRACTION:
-            offset .y = this .offsetY * parentRectangleSize .y;
-            break;
-         case PIXEL:
-            offset .y = this .offsetY * viewportMeter .y / viewportPixel .y;
-            break;
-      }
-
-      // Calculate scale
-
-      const
-         scale              = this .scale .set (1),
-         currentTranslation = this .currentTranslation,
-         currentRotation    = this .currentRotation,
-         currentScale       = this .currentScale;
-
-      const modelViewMatrix = renderObject .getModelViewMatrix () .get ();
-
-      modelViewMatrix .get (currentTranslation, currentRotation, currentScale);
-
-      switch (this .getScaleModeX ())
-      {
-         case NONE:
-            scale .x = currentScale .x;
-            break;
-         case FRACTION:
-            scale .x = rectangleSize .x;
-            break;
-         case STRETCH:
-            break;
-         case PIXEL:
-            scale .x = viewportMeter .x / viewportPixel .x;
-            break;
-      }
-
-      switch (this .getScaleModeY ())
-      {
-         case NONE:
-            scale .y = currentScale .y;
-            break;
-         case FRACTION:
-            scale .y = rectangleSize .y;
-            break;
-         case STRETCH:
-            break;
-         case PIXEL:
-            scale .y = viewportMeter .y / viewportPixel .y;
-            break;
-      }
-
-      // Calculate scale for scaleMode STRETCH
-
-      if (this .getScaleModeX () === STRETCH)
-      {
-         if (this .getScaleModeY () === STRETCH)
+         switch (sizeUnitX)
          {
-            if (rectangleSize .x > rectangleSize .y)
+            case FRACTION:
+               rectangle .z = this .sizeX * parentRectangle .z;
+               break;
+            case PIXEL:
+               rectangle .z = this .sizeX * pixelSize .x;
+               break;
+            default:
+               break;
+         }
+
+         switch (sizeUnitY)
+         {
+            case FRACTION:
+               rectangle .w = this .sizeY * parentRectangle .w;
+               break;
+            case PIXEL:
+               rectangle .w = this .sizeY * pixelSize .y;
+               break;
+            default:
+               break;
+         }
+
+         // Determine translation.
+
+         translation .set (0);
+
+         switch (this .getAlignX ())
+         {
+            case LEFT:
+               translation .x = -(parentRectangle .z - rectangle .z) / 2;
+               break;
+            case CENTER:
+
+               if (sizeUnitX === PIXEL && viewportPixel .x & 1)
+                  translation .x = -pixelSize .x / 2;
+
+               break;
+            case RIGHT:
+               translation .x = (parentRectangle .z - rectangle .z) / 2;
+               break;
+         }
+
+         switch (this .getAlignY ())
+         {
+            case BOTTOM:
+               translation .y = -(parentRectangle .w - rectangle .w) / 2;
+               break;
+            case CENTER:
+
+               if (sizeUnitX === PIXEL && viewportPixel .y & 1)
+                  translation .y = -pixelSize .y / 2;
+
+               break;
+            case TOP:
+               translation .y = (parentRectangle .w - rectangle .w) / 2;
+               break;
+         }
+
+         // Determine offset.
+
+         offset .set (0);
+
+         switch (this .getOffsetUnitX (parents, index))
+         {
+            case FRACTION:
+               offset .x = this .offsetX * parentRectangle .z;
+               break;
+            case PIXEL:
+               offset .x = this .offsetX * viewportMeter .x / viewportPixel .x;
+               break;
+         }
+
+         switch (this .getOffsetUnitY (parents, index))
+         {
+            case FRACTION:
+               offset .y = this .offsetY * parentRectangle .w;
+               break;
+            case PIXEL:
+               offset .y = this .offsetY * viewportMeter .y / viewportPixel .y;
+               break;
+         }
+
+         // Determine scale.
+
+         const
+            scaleModeX = this .getScaleModeX (parents [index]),
+            scaleModeY = this .getScaleModeY (parents [index]);
+
+         scale .set (1);
+         modelViewMatrix .get () .get (currentTranslation, currentRotation, currentScale);
+
+         switch (scaleModeX)
+         {
+            case NONE:
+               scale .x = currentScale .x;
+               break;
+            case FRACTION:
+               scale .x = rectangle .z;
+               break;
+            case STRETCH:
+               break;
+            case PIXEL:
+               scale .x = viewportMeter .x / viewportPixel .x;
+               break;
+         }
+
+         switch (scaleModeY)
+         {
+            case NONE:
+               scale .y = currentScale .y;
+               break;
+            case FRACTION:
+               scale .y = rectangle .w;
+               break;
+            case STRETCH:
+               break;
+            case PIXEL:
+               scale .y = viewportMeter .y / viewportPixel .y;
+               break;
+         }
+
+         // Determine scale for scaleMode STRETCH.
+
+         if (scaleModeX === STRETCH)
+         {
+            if (scaleModeY === STRETCH)
             {
-               scale .x = rectangleSize .x;
-               scale .y = scale .x;
+               if (rectangle .z > rectangle .w)
+               {
+                  scale .x = rectangle .z;
+                  scale .y = scale .x;
+               }
+               else
+               {
+                  scale .y = rectangle .w;
+                  scale .x = scale .y;
+               }
             }
             else
             {
-               scale .y = rectangleSize .y;
                scale .x = scale .y;
             }
          }
-         else
-            scale .x = scale .y;
-      }
-      else if (this .getScaleModeY () === STRETCH)
-         scale .y = scale .x;
+         else if (scaleModeY === STRETCH)
+         {
+            scale .y = scale .x;
+         }
 
-      // Transform
+         // Determine matrix and rectangle.
 
-      rectangleCenter .assign (translation .add (offset));
+         translation .add (offset);
 
-      matrix .set (currentTranslation, currentRotation);
-      matrix .translate (translation);
-      matrix .scale (scale);
+         rectangle .x = translation .x;
+         rectangle .y = translation .y;
 
-      return matrix;
+         matrix
+            .set (currentTranslation, currentRotation)
+            .translate (translation)
+            .scale (scale);
+
+         // Push all on stacks.
+
+         modelViewMatrix .push (matrix);
+         renderObject .getLayouts () .push (this);
+         renderObject .getLayoutRectangles () .push (rectangle);
+      };
+   })(),
+   pop (type, renderObject)
+   {
+      const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+      Rectangles .push (renderObject .getLayoutRectangles () .pop ());
+      renderObject .getLayouts () .pop ();
+      modelViewMatrix .pop ();
    },
 });
 

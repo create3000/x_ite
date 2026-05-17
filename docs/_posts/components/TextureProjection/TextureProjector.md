@@ -31,26 +31,26 @@ The TextureProjector node belongs to the [TextureProjection](/x_ite/components/o
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [global](#fields-global) | TRUE |
 | SFBool | [in, out] | [on](#fields-on) | TRUE |
-| SFColor | [in, out] | [color](#fields-color) | 1 1 1  |
-| SFFloat | [in, out] | [intensity](#fields-intensity) | 1  |
-| SFFloat | [in, out] | [ambientIntensity](#fields-ambientIntensity) | 0  |
-| SFVec3f | [in, out] | [location](#fields-location) | 0 0 0  |
-| SFVec3f | [in, out] | [direction](#fields-direction) | 0 0 1  |
-| SFVec3f | [in, out] | [upVector](#fields-upVector) | 0 1 0  |
-| SFFloat | [in, out] | [fieldOfView](#fields-fieldOfView) | π/4  |
-| SFFloat | [in, out] | [nearDistance](#fields-nearDistance) | -1  |
-| SFFloat | [in, out] | [farDistance](#fields-farDistance) | -1  |
+| SFColor | [in, out] | [color](#fields-color) | 1 1 1 |
+| SFFloat | [in, out] | [intensity](#fields-intensity) | 1 |
+| SFFloat | [in, out] | [ambientIntensity](#fields-ambientIntensity) | 0 |
+| SFVec3f | [in, out] | [location](#fields-location) | 0 0 0 |
+| SFVec3f | [in, out] | [direction](#fields-direction) | 0 0 1 |
+| SFVec3f | [in, out] | [upVector](#fields-upVector) | 0 1 0 |
+| SFFloat | [in, out] | [fieldOfView](#fields-fieldOfView) | π/4 |
+| SFFloat | [in, out] | [nearDistance](#fields-nearDistance) | -1 |
+| SFFloat | [in, out] | [farDistance](#fields-farDistance) | -1 |
 | SFFloat | [out] | [aspectRatio](#fields-aspectRatio) |  |
-| SFNode | [in, out] | [texture](#fields-texture) | NULL  |
+| SFNode | [in, out] | [texture](#fields-texture) | NULL |
 | SFBool | [in, out] | [shadows](#fields-shadows) | FALSE |
-| SFColor | [in, out] | [shadowColor](#fields-shadowColor) | 0 0 0  |
-| SFFloat | [in, out] | [shadowIntensity](#fields-shadowIntensity) | 1  |
-| SFFloat | [in, out] | [shadowBias](#fields-shadowBias) | 0.005  |
-| SFInt32 | [ ] | [shadowMapSize](#fields-shadowMapSize) | 1024  |
+| SFColor | [in, out] | [shadowColor](#fields-shadowColor) | 0 0 0 |
+| SFFloat | [in, out] | [shadowIntensity](#fields-shadowIntensity) | 1 |
+| SFFloat | [in, out] | [shadowBias](#fields-shadowBias) | 0.005 |
+| SFInt32 | [ ] | [shadowMapSize](#fields-shadowMapSize) | 1024 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -207,6 +207,13 @@ Size of the shadow map in pixels, must be power of two.
 - [Download ZIP Archive](https://create3000.github.io/media/examples/TextureProjection/TextureProjector/TextureProjector.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/TextureProjection/TextureProjector/TextureProjector.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

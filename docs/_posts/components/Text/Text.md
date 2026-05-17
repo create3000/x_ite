@@ -29,15 +29,15 @@ The Text node belongs to the [Text](/x_ite/components/overview/#text) component 
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFString | [in, out] | [string](#fields-string) | [ ] |
 | MFFloat | [in, out] | [length](#fields-length) | [ ] |
-| SFFloat | [in, out] | [maxExtent](#fields-maxExtent) | 0  |
+| SFFloat | [in, out] | [maxExtent](#fields-maxExtent) | 0 |
 | SFBool | [ ] | [solid](#fields-solid) | FALSE |
 | SFVec3f | [out] | [origin](#fields-origin) |  |
 | SFVec2f | [out] | [textBounds](#fields-textBounds) |  |
 | MFVec2f | [out] | [lineBounds](#fields-lineBounds) |  |
-| SFNode | [in, out] | [fontStyle](#fields-fontStyle) | NULL  |
+| SFNode | [in, out] | [fontStyle](#fields-fontStyle) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -147,7 +147,15 @@ The *fontStyle* field can contain a [FontStyle](/x_ite/components/text/fontstyle
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Text/Text/Text.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of Text Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/text.html#Text)
 - [Browser option »TextCompression«](/x_ite/reference/browser-services/#browser-options)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

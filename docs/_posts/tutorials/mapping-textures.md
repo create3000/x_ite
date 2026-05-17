@@ -186,9 +186,9 @@ A [MovieTexture](/x_ite/components/texturing/movietexture/) node selects a textu
     <MovieTexture
         url='"movie.mp4"'
         loop='true'
-        speed='1.0'
-        startTime='0.0'
-        stopTime='0.0'/>
+        speed='1'
+        startTime='0'
+        stopTime='0'/>
   </Appearance>
   <!-- geometry ... -->
 </Shape>
@@ -203,9 +203,9 @@ Shape {
     texture MovieTexture {
       url "movie.mp4"
       loop TRUE
-      speed 1.0
-      startTime 0.0
-      stopTime 0.0
+      speed 1
+      startTime 0
+      stopTime 0
     }
   }
   geometry ...

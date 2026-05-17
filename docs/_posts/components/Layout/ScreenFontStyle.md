@@ -29,16 +29,16 @@ The ScreenFontStyle node belongs to the [Layout](/x_ite/components/overview/#lay
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [language](#fields-language) | "" |
-| MFString | [in, out] | [family](#fields-family) | "SERIF"  |
-| SFString | [in, out] | [style](#fields-style) | "PLAIN"  |
-| SFFloat | [in, out] | [pointSize](#fields-pointSize) | 12  |
-| SFFloat | [in, out] | [spacing](#fields-spacing) | 1  |
+| MFString | [in, out] | [family](#fields-family) | "SERIF" |
+| SFString | [in, out] | [style](#fields-style) | "PLAIN" |
+| SFFloat | [in, out] | [pointSize](#fields-pointSize) | 12 |
+| SFFloat | [in, out] | [spacing](#fields-spacing) | 1 |
 | SFBool | [in, out] | [horizontal](#fields-horizontal) | TRUE |
 | SFBool | [in, out] | [leftToRight](#fields-leftToRight) | TRUE |
 | SFBool | [in, out] | [topToBottom](#fields-topToBottom) | TRUE |
-| MFString | [in, out] | [justify](#fields-justify) | "BEGIN"  |
+| MFString | [in, out] | [justify](#fields-justify) | "BEGIN" |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -193,6 +193,13 @@ The *justify* field determines horizontal and vertical alignment of text layout,
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Layout/ScreenFontStyle/ScreenFontStyle.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Layout/ScreenFontStyle/ScreenFontStyle.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

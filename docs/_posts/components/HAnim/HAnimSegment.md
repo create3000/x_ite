@@ -33,18 +33,18 @@ The HAnimSegment node belongs to the [HAnim](/x_ite/components/overview/#hanim) 
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFString | [in, out] | [name](#fields-name) | "" |
-| SFFloat | [in, out] | [mass](#fields-mass) | 0  |
-| SFVec3f | [in, out] | [centerOfMass](#fields-centerOfMass) | 0 0 0  |
+| SFFloat | [in, out] | [mass](#fields-mass) | 0 |
+| SFVec3f | [in, out] | [centerOfMass](#fields-centerOfMass) | 0 0 0 |
 | MFFloat | [in, out] | [momentsOfInertia](#fields-momentsOfInertia) | [ 0, 0, 0, 0, 0, 0, 0, 0, 0 ] |
 | MFNode | [in, out] | [displacers](#fields-displacers) | [ ] |
-| SFNode | [in, out] | [coord](#fields-coord) | NULL  |
+| SFNode | [in, out] | [coord](#fields-coord) | NULL |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
 | MFNode | [in] | [addChildren](#fields-addChildren) |  |
 | MFNode | [in] | [removeChildren](#fields-removeChildren) |  |
 | MFNode | [in, out] | [children](#fields-children) | [ ] |
@@ -205,6 +205,13 @@ Grouping nodes contain an ordered list of *children* nodes.
 - Requires X3D `profile='Full'` or else include `<component name='HAnim' level='1'/>`
 - For X3D3 HAnim1, previous spelling of component name was 'H-Anim' (including hyphen).
 - The number of contained \<HAnimSegment USE='*' `containerField='segments'/>` nodes at top level of [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) needs to match the number of corresponding [HAnimJoint](/x_ite/components/hanim/hanimjoint/) node instances found within the preceding skeleton hierarchy.
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

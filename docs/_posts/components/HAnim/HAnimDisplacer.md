@@ -29,10 +29,10 @@ The HAnimDisplacer node belongs to the [HAnim](/x_ite/components/overview/#hanim
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFString | [in, out] | [name](#fields-name) | "" |
-| SFFloat | [in, out] | [weight](#fields-weight) | 0  |
+| SFFloat | [in, out] | [weight](#fields-weight) | 0 |
 | MFInt32 | [in, out] | [coordIndex](#fields-coordIndex) | [ ] |
 | MFVec3f | [in, out] | [displacements](#fields-displacements) | [ ] |
 {: .fields }
@@ -119,6 +119,13 @@ Defines index values into the parent [HAnimSegment](/x_ite/components/hanim/hani
 - Index values for [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skin [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), skinCoord and skinNormal nodes must all be consistently defined together with [HAnimJoint](/x_ite/components/hanim/hanimjoint/) [HAnimSegment](/x_ite/components/hanim/hanimsegment/) and HAnimDisplacer nodes for proper skin animation.
 - Requires X3D `profile='Full'` or else include `<component name='HAnim' level='1'/>`
 - For X3D3 HAnim1, previous spelling of component name was 'H-Anim' (including hyphen).
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

@@ -31,24 +31,24 @@ The PhysicalMaterial node belongs to the [Shape](/x_ite/components/overview/#sha
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFColor | [in, out] | [baseColor](#fields-baseColor) | 1 1 1  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFColor | [in, out] | [baseColor](#fields-baseColor) | 1 1 1 |
 | SFString | [in, out] | [baseTextureMapping](#fields-baseTextureMapping) | "" |
-| SFNode | [in, out] | [baseTexture](#fields-baseTexture) | NULL  |
-| SFColor | [in, out] | [emissiveColor](#fields-emissiveColor) | 0 0 0  |
+| SFNode | [in, out] | [baseTexture](#fields-baseTexture) | NULL |
+| SFColor | [in, out] | [emissiveColor](#fields-emissiveColor) | 0 0 0 |
 | SFString | [in, out] | [emissiveTextureMapping](#fields-emissiveTextureMapping) | "" |
-| SFNode | [in, out] | [emissiveTexture](#fields-emissiveTexture) | NULL  |
-| SFFloat | [in, out] | [metallic](#fields-metallic) | 1  |
-| SFFloat | [in, out] | [roughness](#fields-roughness) | 1  |
+| SFNode | [in, out] | [emissiveTexture](#fields-emissiveTexture) | NULL |
+| SFFloat | [in, out] | [metallic](#fields-metallic) | 1 |
+| SFFloat | [in, out] | [roughness](#fields-roughness) | 1 |
 | SFString | [in, out] | [metallicRoughnessTextureMapping](#fields-metallicRoughnessTextureMapping) | "" |
-| SFNode | [in, out] | [metallicRoughnessTexture](#fields-metallicRoughnessTexture) | NULL  |
-| SFFloat | [in, out] | [occlusionStrength](#fields-occlusionStrength) | 1  |
+| SFNode | [in, out] | [metallicRoughnessTexture](#fields-metallicRoughnessTexture) | NULL |
+| SFFloat | [in, out] | [occlusionStrength](#fields-occlusionStrength) | 1 |
 | SFString | [in, out] | [occlusionTextureMapping](#fields-occlusionTextureMapping) | "" |
-| SFNode | [in, out] | [occlusionTexture](#fields-occlusionTexture) | NULL  |
-| SFFloat | [in, out] | [normalScale](#fields-normalScale) | 1  |
+| SFNode | [in, out] | [occlusionTexture](#fields-occlusionTexture) | NULL |
+| SFFloat | [in, out] | [normalScale](#fields-normalScale) | 1 |
 | SFString | [in, out] | [normalTextureMapping](#fields-normalTextureMapping) | "" |
-| SFNode | [in, out] | [normalTexture](#fields-normalTexture) | NULL  |
-| SFFloat | [in, out] | [transparency](#fields-transparency) | 0  |
+| SFNode | [in, out] | [normalTexture](#fields-normalTexture) | NULL |
+| SFFloat | [in, out] | [transparency](#fields-transparency) | 0 |
 | MFNode | [in, out] | [extensions](#fields-extensions) | [ ] |
 {: .fields }
 
@@ -241,7 +241,7 @@ Input/Output field *extensions*.
 ### Hints
 
 - [These capabilities match glTF 2.0 rendering](https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html#materials)
-- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding material.
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding material.
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
 - [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 - [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/lighting.html#Lightingmodel)
@@ -256,6 +256,13 @@ Input/Output field *extensions*.
 ## Example
 
 - [View »Damaged Helmet« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=DamagedHelmet)
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

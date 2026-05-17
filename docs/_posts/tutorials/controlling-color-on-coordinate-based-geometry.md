@@ -18,14 +18,14 @@ A [Color](/x_ite/components/rendering/color/) node contains a list of RGB values
 
 ```x3d
 <Color
-    color='1.0 0.0 0.0, ...'/>
+    color='1 0 0, ...'/>
 ```
 
 ### Classic VRML Encoding
 
 ```vrml
 Color {
-  color [ 1.0 0.0 0.0, ... ]
+  color [ 1 0 0, ... ]
 }
 ```
 
@@ -109,10 +109,10 @@ Shape {
 
 ## Controlling color binding for line sets
 
-The *colorPerVertex* field controls how color indexes are used:
+The *colorPerVertex* field controls how color indices are used:
 
-- **FALSE:** one color index to each line (ending at -1 coordinate indexes)
-- **TRUE:** one color index to each coordinate index of each line (including -1 coordinate indexes)
+- **FALSE:** one color index to each line (ending at -1 coordinate indices)
+- **TRUE:** one color index to each coordinate index of each line (including -1 coordinate indices)
 
 ## Syntax: IndexedFaceSet
 
@@ -164,10 +164,10 @@ Shape {
 
 ## Controlling color binding for face sets
 
-The *colorPerVertex* field controls how color indexes are used (similar to line sets):
+The *colorPerVertex* field controls how color indices are used (similar to line sets):
 
-- **FALSE:** one color index to each face (ending at -1 coordinate indexes)
-- **TRUE:** one color index to each coordinate index of each face (including -1 coordinate indexes)
+- **FALSE:** one color index to each face (ending at -1 coordinate indices)
+- **TRUE:** one color index to each coordinate index of each face (including -1 coordinate indices)
 
 ## Syntax: ElevationGrid
 
@@ -207,7 +207,7 @@ Shape {
 
 ## Controlling color binding for elevation grids
 
-The *colorPerVertex* field controls how color indexes are used (similar to line and face sets):
+The *colorPerVertex* field controls how color indices are used (similar to line and face sets):
 
 - **FALSE:** one color to each grid square
 - **TRUE:** one color to each height for each grid square
@@ -217,7 +217,7 @@ The *colorPerVertex* field controls how color indexes are used (similar to line 
 The [Color](/x_ite/components/rendering/color/) node lists colors to use for parts of a shape:
 
 - Used as the value of the color field
-- Color indexes select colors to use
+- Color indices select colors to use
 - Colors override [Material](/x_ite/components/shape/material/) node
 
 The *colorPerVertex* field selects color per line/face/grid square or color per coordinate.

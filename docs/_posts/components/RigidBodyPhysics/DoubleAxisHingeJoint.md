@@ -29,22 +29,22 @@ The DoubleAxisHingeJoint node belongs to the [RigidBodyPhysics](/x_ite/component
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| MFString | [in, out] | [forceOutput](#fields-forceOutput) | "NONE"  |
-| SFVec3f | [in, out] | [anchorPoint](#fields-anchorPoint) | 0 0 0  |
-| SFVec3f | [in, out] | [axis1](#fields-axis1) | 1 0 0  |
-| SFVec3f | [in, out] | [axis2](#fields-axis2) | 0 1 0  |
-| SFFloat | [in, out] | [minAngle1](#fields-minAngle1) | -π  |
-| SFFloat | [in, out] | [maxAngle1](#fields-maxAngle1) | π  |
-| SFFloat | [in, out] | [desiredAngularVelocity1](#fields-desiredAngularVelocity1) | 0  |
-| SFFloat | [in, out] | [desiredAngularVelocity2](#fields-desiredAngularVelocity2) | 0  |
-| SFFloat | [in, out] | [maxTorque1](#fields-maxTorque1) | 0  |
-| SFFloat | [in, out] | [maxTorque2](#fields-maxTorque2) | 0  |
-| SFFloat | [in, out] | [stop1Bounce](#fields-stop1Bounce) | 0  |
-| SFFloat | [in, out] | [stop1ConstantForceMix](#fields-stop1ConstantForceMix) | 0.001  |
-| SFFloat | [in, out] | [stop1ErrorCorrection](#fields-stop1ErrorCorrection) | 0.8  |
-| SFFloat | [in, out] | [suspensionForce](#fields-suspensionForce) | 0  |
-| SFFloat | [in, out] | [suspensionErrorCorrection](#fields-suspensionErrorCorrection) | 0.8  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| MFString | [in, out] | [forceOutput](#fields-forceOutput) | "NONE" |
+| SFVec3f | [in, out] | [anchorPoint](#fields-anchorPoint) | 0 0 0 |
+| SFVec3f | [in, out] | [axis1](#fields-axis1) | 1 0 0 |
+| SFVec3f | [in, out] | [axis2](#fields-axis2) | 0 1 0 |
+| SFFloat | [in, out] | [minAngle1](#fields-minAngle1) | -π |
+| SFFloat | [in, out] | [maxAngle1](#fields-maxAngle1) | π |
+| SFFloat | [in, out] | [desiredAngularVelocity1](#fields-desiredAngularVelocity1) | 0 |
+| SFFloat | [in, out] | [desiredAngularVelocity2](#fields-desiredAngularVelocity2) | 0 |
+| SFFloat | [in, out] | [maxTorque1](#fields-maxTorque1) | 0 |
+| SFFloat | [in, out] | [maxTorque2](#fields-maxTorque2) | 0 |
+| SFFloat | [in, out] | [stop1Bounce](#fields-stop1Bounce) | 0 |
+| SFFloat | [in, out] | [stop1ConstantForceMix](#fields-stop1ConstantForceMix) | 0.001 |
+| SFFloat | [in, out] | [stop1ErrorCorrection](#fields-stop1ErrorCorrection) | 0.8 |
+| SFFloat | [in, out] | [suspensionForce](#fields-suspensionForce) | 0 |
+| SFFloat | [in, out] | [suspensionErrorCorrection](#fields-suspensionErrorCorrection) | 0.8 |
 | SFVec3f | [out] | [body1AnchorPoint](#fields-body1AnchorPoint) |  |
 | SFVec3f | [out] | [body2AnchorPoint](#fields-body2AnchorPoint) |  |
 | SFVec3f | [out] | [body1Axis](#fields-body1Axis) |  |
@@ -53,8 +53,8 @@ The DoubleAxisHingeJoint node belongs to the [RigidBodyPhysics](/x_ite/component
 | SFFloat | [out] | [hinge2Angle](#fields-hinge2Angle) |  |
 | SFFloat | [out] | [hinge1AngleRate](#fields-hinge1AngleRate) |  |
 | SFFloat | [out] | [hinge2AngleRate](#fields-hinge2AngleRate) |  |
-| SFNode | [in, out] | [body1](#fields-body1) | NULL  |
-| SFNode | [in, out] | [body2](#fields-body2) | NULL  |
+| SFNode | [in, out] | [body1](#fields-body1) | NULL |
+| SFNode | [in, out] | [body2](#fields-body2) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -251,6 +251,13 @@ The body1 and *body2* fields indicate the two [RigidBody](/x_ite/components/rigi
 ### Hint
 
 - RigidBodyPhysics component, level 2.
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

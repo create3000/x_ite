@@ -22,8 +22,8 @@ layout(location = 0) out vec4 x3d_FragData0;
    layout(location = 1) out vec4 x3d_FragData1;
 #endif
 
-#pragma X3D include "common/ClipPlanes.glsl"
-#pragma X3D include "common/Point.glsl"
+#include <ClipPlanes>
+#include <Point>
 
 void
 main ()
@@ -43,7 +43,7 @@ main ()
       x3d_FragData0 = vec4 (gl_FragCoord .z, vec3 (x3d_Id)); // depth, id
       x3d_FragData1 = vec4 (normal, float (gl_FrontFacing)); // local normal, front face
    #else
-      x3d_FragData0 = vec4 (gl_FragCoord .z); // depth
+      x3d_FragData0 = vec4 (vec3 (gl_FragCoord .z), 1.0); // depth
    #endif
 }
 `;

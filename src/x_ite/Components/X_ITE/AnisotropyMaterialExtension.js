@@ -66,7 +66,7 @@ Object .assign (Object .setPrototypeOf (AnisotropyMaterialExtension .prototype, 
    {
       this .anisotropyTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._anisotropyTexture);
 
-      this .setTexture (0, this .anisotropyTextureNode);
+      this .addTexture (0, this .anisotropyTextureNode);
    },
    getExtensionKey ()
    {

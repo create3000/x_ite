@@ -72,10 +72,10 @@ A Script node also declares the program script interface:
 
 ```vrml
 DEF Bouncer Script {
-  initializeOnly  SFFloat bounceHeight 3.0
-  inputOnly       SFFloat set_fraction
-  outputOnly      SFVec3f value_changed
-  inputOutput     SFBool  enabled TRUE
+  initializeOnly SFFloat bounceHeight 3
+  inputOnly      SFFloat set_fraction
+  outputOnly     SFVec3f value_changed
+  inputOutput    SFBool  enabled TRUE
 }
 ```
 
@@ -110,10 +110,10 @@ DEF Clock TimeSensor { ... }
 DEF Ball Transform { ... }
 
 DEF Bouncer Script {
-  initializeOnly  SFFloat bounceHeight 3.0
-  inputOnly       SFFloat set_fraction
-  outputOnly      SFVec3f value_changed
-  inputOutput     SFBool  enabled TRUE
+  initializeOnly SFFloat bounceHeight 3
+  inputOnly      SFFloat set_fraction
+  outputOnly     SFVec3f value_changed
+  inputOutput    SFBool  enabled TRUE
   url "ecmascript: ..."
 }
 

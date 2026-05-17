@@ -1,3 +1,4 @@
+import Fields           from "../../Fields.js";
 import X3DNode          from "../Core/X3DNode.js";
 import X3DConstants     from "../../Base/X3DConstants.js";
 import X3DCast          from "../../Base/X3DCast.js";
@@ -10,8 +11,12 @@ function X3DProgrammableShaderObject (executionContext)
 {
    this .addType (X3DConstants .X3DProgrammableShaderObject);
 
-   this .uniformNames = [ ];
+   this .addChildObjects (X3DConstants .outputOnly, "renderedTextures", new Fields .SFTime ());
 
+   // Private properties
+
+   this .attributeNames         = [ ];
+   this .uniformNames           = [ ];
    this .environmentLightNodes  = [ ];
    this .lightNodes             = [ ];
    this .textureProjectorNodes  = [ ];
@@ -35,6 +40,14 @@ Object .assign (X3DProgrammableShaderObject .prototype,
    canUserDefinedFields ()
    {
       return true;
+   },
+   getAttributeNames ()
+   {
+      return this .attributeNames;
+   },
+   setAttributeNames (value)
+   {
+      this .attributeNames = value;
    },
    getUniformNames ()
    {
@@ -277,16 +290,13 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          }
       }
 
+      for (const name of this .attributeNames)
+         this [name] = gl .getAttribLocation (program, name);
+
       if (this .x3d_TexCoord .length)
-      {
          delete this .enableTexCoordAttribute;
-         delete this .texCoordAttributeDivisor;
-      }
       else
-      {
          this .enableTexCoordAttribute  = Function .prototype;
-         this .texCoordAttributeDivisor = Function .prototype;
-      }
 
       /*
        * Fill uniforms with defaults.
@@ -398,7 +408,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             }
             case X3DConstants .SFImage:
             {
-               location .array  = new Int32Array (3 + field .array .length);
+               location .array   = new Int32Array (3 + field .array .length);
                location .uniform = gl .uniform1iv;
                break;
             }
@@ -594,12 +604,12 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             }
             case X3DConstants .SFNode:
             {
-               const texture = X3DCast (X3DConstants .X3DTextureNode, field);
+               const textureNode = X3DCast (X3DConstants .X3DTextureNode, field);
 
-               if (texture)
+               if (textureNode)
                {
-                  location .name    = field .getName ();
-                  location .texture = texture;
+                  location .name        = field .getName ();
+                  location .textureNode = textureNode;
 
                   this .textures .add (location);
                }
@@ -608,6 +618,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                   this .textures .delete (location);
                }
 
+               this ._renderedTextures = this .getBrowser () .getCurrentTime ();
                return;
             }
             case X3DConstants .SFRotation:
@@ -700,12 +711,12 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
                for (let i = 0; i < fieldLength; ++ i)
                {
-                  const texture = X3DCast (X3DConstants .X3DTextureNode, field [i]);
+                  const textureNode = X3DCast (X3DConstants .X3DTextureNode, field [i]);
 
-                  if (texture)
+                  if (textureNode)
                   {
-                     locations [i] .name    = field .getName ();
-                     locations [i] .texture = texture;
+                     locations [i] .name        = field .getName ();
+                     locations [i] .textureNode = textureNode;
 
                      this .textures .add (locations [i]);
                   }
@@ -715,6 +726,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                   }
                }
 
+               this ._renderedTextures = this .getBrowser () .getCurrentTime ();
                return;
             }
             case X3DConstants .MFRotation:
@@ -788,6 +800,14 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
          if (!location)
             return i;
+      }
+   },
+   getRenderedTextures (renderedTextures)
+   {
+      for (const { textureNode } of this .textures)
+      {
+         if (textureNode .isRenderedTexture ())
+            renderedTextures .add (textureNode);
       }
    },
    hasFog (fogNode)
@@ -959,7 +979,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       for (const location of this .textures)
       {
          const
-            texture     = location .texture,
+            texture     = location .textureNode,
             textureUnit = this .getBrowser () .popTextureUnit ();
 
          if (textureUnit === undefined)
@@ -972,6 +992,18 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          gl .bindTexture (texture .getTarget (), texture .getTexture ());
          gl .uniform1i (location, textureUnit);
       }
+   },
+   enableUintAttrib (gl, name, buffer, components, stride, offset, divisor = 0)
+   {
+      const location = gl .getAttribLocation (this .getProgram (), name);
+
+      if (location === -1)
+         return;
+
+      gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
+      gl .enableVertexAttribArray (location);
+      gl .vertexAttribIPointer (location, components, gl .UNSIGNED_INT, stride, offset);
+      gl .vertexAttribDivisor (location, divisor);
    },
    enableFloatAttrib (gl, name, buffer, components, stride, offset, divisor = 0)
    {
@@ -1029,7 +1061,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
       gl .enableVertexAttribArray (location);
-      gl .vertexAttribPointer (location, 1, gl .FLOAT, false, stride, offset); // gl .UNSIGNED_INT
+      gl .vertexAttribIPointer (location, 1, gl .UNSIGNED_INT, stride, offset);
    },
    enableLineStippleAttribute (gl, buffer, stride, offset)
    {
@@ -1056,49 +1088,33 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
       gl .vertexAttribDivisor (location, divisor)
    },
-   colorAttributeDivisor (gl, divisor)
-   {
-      gl .vertexAttribDivisor (this .x3d_Color, divisor);
-   },
-   enableTexCoordAttribute (gl, buffers, stride, offset)
+   enableTexCoordAttribute (gl, buffers, stride, offset, divisor = 0)
    {
       for (const [i, location] of this .x3d_TexCoord)
       {
          gl .bindBuffer (gl .ARRAY_BUFFER, buffers [i]);
          gl .enableVertexAttribArray (location);
          gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
-      }
-   },
-   texCoordAttributeDivisor (gl, divisor)
-   {
-      for (const [i, location] of this .x3d_TexCoord)
-      {
          gl .vertexAttribDivisor (location, divisor);
       }
    },
-   enableNormalAttribute (gl, buffer, stride, offset)
+   enableNormalAttribute (gl, buffer, stride, offset, divisor = 0)
    {
       const location = this .x3d_Normal;
 
       gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
       gl .enableVertexAttribArray (location);
       gl .vertexAttribPointer (location, 3, gl .FLOAT, false, stride, offset);
+      gl .vertexAttribDivisor (location, divisor);
    },
-   normalAttributeDivisor (gl, divisor)
-   {
-      gl .vertexAttribDivisor (this .x3d_Normal, divisor);
-   },
-   enableTangentAttribute (gl, buffer, stride, offset)
+   enableTangentAttribute (gl, buffer, stride, offset, divisor = 0)
    {
       const location = this .x3d_Tangent;
 
       gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
       gl .enableVertexAttribArray (location);
       gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
-   },
-   tangentAttributeDivisor (gl, divisor)
-   {
-      gl .vertexAttribDivisor (this .x3d_Tangent, divisor);
+      gl .vertexAttribDivisor (location, divisor);
    },
    enableVertexAttribute (gl, buffer, stride, offset)
    {

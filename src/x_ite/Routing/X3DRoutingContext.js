@@ -16,7 +16,8 @@ function X3DRoutingContext ()
 
 Object .assign (X3DRoutingContext .prototype,
 {
-   initialize () { },
+   initialize ()
+   { },
    addTaintedField (field, event)
    {
       this [_taintedFields] .push (field, event);
@@ -72,7 +73,8 @@ Object .assign (X3DRoutingContext .prototype,
 
       this [_active] = false;
    },
-   dispose () { },
+   dispose ()
+   { },
 });
 
 export default X3DRoutingContext;

@@ -32,12 +32,12 @@ The LocalFog node belongs to the [EnvironmentalEffects](/x_ite/components/overvi
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFString | [in, out] | [fogType](#fields-fogType) | "LINEAR"  |
-| SFColor | [in, out] | [color](#fields-color) | 1 1 1  |
-| SFFloat | [in, out] | [visibilityStart](#fields-visibilityStart) | 0  |
-| SFFloat | [in, out] | [visibilityRange](#fields-visibilityRange) | 0  |
+| SFString | [in, out] | [fogType](#fields-fogType) | "LINEAR" |
+| SFColor | [in, out] | [color](#fields-color) | 1 1 1 |
+| SFFloat | [in, out] | [visibilityStart](#fields-visibilityStart) | 0 |
+| SFFloat | [in, out] | [visibilityRange](#fields-visibilityRange) | 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -112,6 +112,13 @@ Distance in meters where objects are totally obscured by the fog, using local co
 - [Download ZIP Archive](https://create3000.github.io/media/examples/EnvironmentalEffects/LocalFog/LocalFog.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/EnvironmentalEffects/LocalFog/LocalFog.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

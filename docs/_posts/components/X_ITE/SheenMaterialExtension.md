@@ -32,13 +32,13 @@ The SheenMaterialExtension node belongs to the [X_ITE](/x_ite/components/overvie
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFColor | [in, out] | [sheenColor](#fields-sheenColor) | 0 0 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFColor | [in, out] | [sheenColor](#fields-sheenColor) | 0 0 0 |
 | SFString | [in, out] | [sheenColorTextureMapping](#fields-sheenColorTextureMapping) | "" |
-| SFNode | [in, out] | [sheenColorTexture](#fields-sheenColorTexture) | NULL  |
-| SFFloat | [in, out] | [sheenRoughness](#fields-sheenRoughness) | 0  |
+| SFNode | [in, out] | [sheenColorTexture](#fields-sheenColorTexture) | NULL |
+| SFFloat | [in, out] | [sheenRoughness](#fields-sheenRoughness) | 0 |
 | SFString | [in, out] | [sheenRoughnessTextureMapping](#fields-sheenRoughnessTextureMapping) | "" |
-| SFNode | [in, out] | [sheenRoughnessTexture](#fields-sheenRoughnessTexture) | NULL  |
+| SFNode | [in, out] | [sheenRoughnessTexture](#fields-sheenRoughnessTexture) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -83,6 +83,13 @@ The sheen roughness (Alpha) texture, stored in the alpha (A) channel.
 ## Example
 
 - [View »Sheen Cloth« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=SheenCloth)
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

@@ -48,14 +48,14 @@ A Normal node contains a list of normal vectors that override use of a crease an
 
 ```x3d
 <Normal
-    vector='0.0 1.0 0.0, ...'/>
+    vector='0 1 0, ...'/>
 ```
 
 ### Classic VRML Encoding
 
 ```vrml
 Normal {
-  vector [ 0.0 1.0 0.0, ... ]
+  vector [ 0 1 0, ... ]
 }
 ```
 
@@ -111,10 +111,10 @@ Shape {
 
 ## Controlling normal binding for face sets
 
-The *normalPerVertex* field controls how normal indexes are used
+The *normalPerVertex* field controls how normal indices are used
 
-- **FALSE:** one normal index to each face (ending at -1 coordinate indexes)
-- **TRUE:** one normal index to each coordinate index of each face (including -1 coordinate indexes)
+- **FALSE:** one normal index to each face (ending at -1 coordinate indices)
+- **TRUE:** one normal index to each coordinate index of each face (including -1 coordinate indices)
 
 ## Syntax: ElevationGrid
 
@@ -152,7 +152,7 @@ Shape {
 
 ## Controlling normal binding for elevation grids
 
-The *normalPerVertex* field controls how normal indexes are used (similar to face sets):
+The *normalPerVertex* field controls how normal indices are used (similar to face sets):
 
 - **FALSE:** one normal to each grid square
 - **TRUE:** one normal to each height for each grid square
@@ -169,16 +169,16 @@ A [NormalInterpolator](/x_ite/components/interpolation/normalinterpolator/) node
 
 ```x3d
 <NormalInterpolator
-    key='0.0, ...'
-    keyValue='0.0 1.0 1.0, ...'/>
+    key='0, ...'
+    keyValue='0 1 1, ...'/>
 ```
 
 ### Classic VRML Encoding
 
 ```vrml
 NormalInterpolator {
-  key [ 0.0, ... ]
-  keyValue [ 0.0 1.0 1.0, ... ]
+  key [ 0, ... ]
+  keyValue [ 0 1 1, ... ]
 }
 ```
 
@@ -189,7 +189,7 @@ Typically route into a [Normal](/x_ite/components/rendering/normal/) node's set\
 - The *creaseAngle* field controls faceted or smooth shading
 - The [Normal](/x_ite/components/rendering/normal/) node lists normal vectors to use for parts of a shape
   - Used as the value of the normal field
-  - Normal indexes select normals to use
+  - Normal indices select normals to use
 - Normals override *creaseAngle* value
 - The *normalPerVertex* field selects normal per face/grid square or normal per coordinate
 - The [NormalInterpolator](/x_ite/components/interpolation/normalinterpolator/) node converts times to normals

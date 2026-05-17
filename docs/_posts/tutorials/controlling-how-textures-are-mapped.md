@@ -32,24 +32,24 @@ Texture images (the dough) are in a texture coordinate system:
 
 ## Specifying texture coordinates
 
-Texture coordinates and texture coordinate indexes specify a texture piece shape (the cookie cutter):
+Texture coordinates and texture coordinate indices specify a texture piece shape (the cookie cutter):
 
-|                        | Coordinates                     |
-|------------------------|---------------------------------|
-| ![Texture Mapping 1][] | 0.0 0.0 1.0 0.0 1.0 1.0 0.0 1.0 |
+| Texture Space          | Coordinates        |
+|------------------------|--------------------|
+| ![Texture Mapping 1][] | 0 0, 1 0, 1 1, 0 1 |
 
-  [Texture Mapping 1]: https://create3000.github.io/media/tutorials/images/texture-mapping-1.png
+  [Texture Mapping 1]: https://create3000.github.io/media/tutorials/images/texture-mapping-1.avif
 
 ## Applying texture transforms
 
 Texture transforms translate, rotate, and scale the texture coordinates (placing the cookie cutter):
 
-|                        |                        |
+| Translation            | Rotation               |
 |------------------------|------------------------|
 | ![Texture Mapping 2][] | ![Texture Mapping 3][] |
 
-  [Texture Mapping 2]: https://create3000.github.io/media/tutorials/images/texture-mapping-2.png
-  [Texture Mapping 3]: https://create3000.github.io/media/tutorials/images/texture-mapping-3.png
+  [Texture Mapping 2]: https://create3000.github.io/media/tutorials/images/texture-mapping-2.avif
+  [Texture Mapping 3]: https://create3000.github.io/media/tutorials/images/texture-mapping-3.avif
 
 ## Texturing a face
 
@@ -59,12 +59,12 @@ Bind the texture to a face (stretch the cookie and stick it):
 |---------------|---------------|
 | ![Cookie 1][] | ![Cookie 2][] |
 
-  [Cookie 1]: https://create3000.github.io/media/tutorials/images/cookie-1.png
-  [Cookie 2]: https://create3000.github.io/media/tutorials/images/cookie-2.png
+  [Cookie 1]: https://create3000.github.io/media/tutorials/images/cookie-1.avif
+  [Cookie 2]: https://create3000.github.io/media/tutorials/images/cookie-2.avif
 
 ## Working through the texturing process
 
-- Select piece with texture coordinates and indexes
+- Select piece with texture coordinates and indices
   - Create a cookie cutter
 - Transform the texture coordinates
   - Position and orient the cookie cutter
@@ -132,7 +132,7 @@ Shape {
 An [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) geometry node creates terrains:
 
 - *texCoord* - specify texture pieces
-- Automatically generated texture coordinate indexes
+- Automatically generated texture coordinate indices
 
 ### XML Encoding
 
@@ -206,9 +206,9 @@ A [TextureTransform](/x_ite/components/texturing/texturetransform/) node transfo
     <Material ... />
     <ImageTexture ... />
     <TextureTransform
-        translation='0.0 0.0'
-        rotation='0.0'
-        scale='1.0 1.0'/>
+        translation='0 0'
+        rotation='0'
+        scale='1 1'/>
   </Appearance>
   <!-- geometry ... -->
 </Shape>
@@ -222,9 +222,9 @@ Shape {
     material Material { ... }
     texture ImageTexture { ... }
     textureTransform TextureTransform {
-      translation 0.0 0.0
-      rotation    0.0
-      scale       1.0 1.0
+      translation 0 0
+      rotation 0
+      scale 1 1
     }
   }
   geometry ...
@@ -243,7 +243,7 @@ Scale, Rotate, and Translate a texture cookie cutter one after the other:
     <Material ... />
     <ImageTexture ... />
     <TextureTransform
-        translation='0.0 0.0'
+        translation='0 0'
         rotation='0.785'
         scale='8.5 8.5'/>
   </Appearance>
@@ -259,9 +259,9 @@ Shape {
     material Material { ... }
     texture ImageTexture { ... }
     textureTransform TextureTransform {
-      translation 0.0 0.0
-      rotation    0.785
-      scale       8.5 8.5
+      translation 0 0
+      rotation 0.785
+      scale 8.5 8.5
     }
   }
   geometry ...
@@ -277,6 +277,6 @@ Read texture transform operations top-down:
 ## Summary
 
 - Texture images are in a texture coordinate system
-- Texture coordinates and indexes describe a texture cookie cutter
+- Texture coordinates and indices describe a texture cookie cutter
 - Texture transforms translate, rotate, and scale place the cookie cutter
-- Texture indexes bind the cut-out cookie texture to a face on a shape
+- Texture indices bind the cut-out cookie texture to a face on a shape

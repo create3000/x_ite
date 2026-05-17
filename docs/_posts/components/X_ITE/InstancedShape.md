@@ -36,20 +36,20 @@ The InstancedShape node belongs to the [X_ITE](/x_ite/components/overview/#x_ite
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFVec3f | [in, out] | [translations](#fields-translations) | [ ] |
 | MFRotation | [in, out] | [rotations](#fields-rotations) | [ ] |
 | MFVec3f | [in, out] | [scales](#fields-scales) | [ ] |
 | MFRotation | [in, out] | [scaleOrientations](#fields-scaleOrientations) | [ ] |
 | MFVec3f | [in, out] | [centers](#fields-centers) | [ ] |
-| SFBool | [in, out] | [pointerEvents](#fields-pointerEvents) | TRUE  |
+| SFBool | [in, out] | [pointerEvents](#fields-pointerEvents) | TRUE |
 | SFBool | [in, out] | [castShadow](#fields-castShadow) | TRUE |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
-| SFNode | [in, out] | [appearance](#fields-appearance) | NULL  |
-| SFNode | [in, out] | [geometry](#fields-geometry) | NULL  |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
+| SFNode | [in, out] | [appearance](#fields-appearance) | NULL |
+| SFNode | [in, out] | [geometry](#fields-geometry) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -89,7 +89,7 @@ Input/Output field *centers*.
 ### SFBool [in, out] **pointerEvents** TRUE <small class="blue">non-standard</small>
 {: #fields-pointerEvents }
 
-*pointerEvents* defines whether this InstancedShape becomes target for pointer events. A value of `FALSE` makes this InstancedShape node invisible during pointer picking.
+The *pointerEvents* field defines whether this InstancedShape becomes target for pointer events. A value of `FALSE` makes this InstancedShape node invisible during pointer picking.
 
 ### SFBool [in, out] **castShadow** TRUE
 {: #fields-castShadow }
@@ -168,6 +168,13 @@ Input/Output field *geometry*.
 - [Download ZIP Archive](https://create3000.github.io/media/examples/X_ITE/InstancedShape/InstancedShape.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/X_ITE/InstancedShape/InstancedShape.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

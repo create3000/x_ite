@@ -94,9 +94,9 @@ The [Transform](/x_ite/components/grouping/transform/) group node creates a grou
 
 ```x3d
 <Transform
-    translation='0.0 0.0 0.0'
-    rotation='0.0 1.0 0.0 0.0'
-    scale='1.0 1.0 1.0'>
+    translation='0 0 0'
+    rotation='0 1 0 0'
+    scale='1 1 1'>
   <!-- children ... -->
 </Transform>
 ```
@@ -105,9 +105,9 @@ The [Transform](/x_ite/components/grouping/transform/) group node creates a grou
 
 ```vrml
 Transform {
-  translation 0.0 0.0 0.0
-  rotation 0.0 1.0 0.0 0.0
-  scale 1.0 1.0 1.0
+  translation 0 0 0
+  rotation 0 1 0 0
+  scale 1 1 1
   children [ ... ]
 }
 ```
@@ -123,7 +123,7 @@ The [Billboard](/x_ite/components/navigation/billboard/) group node creates a gr
 
 ```x3d
 <Billboard
-    axisOfRotation='0.0 1.0 0.0'>
+    axisOfRotation='0 1 0'>
   <!-- children ... -->
 </Billboard>
 ```
@@ -132,7 +132,7 @@ The [Billboard](/x_ite/components/navigation/billboard/) group node creates a gr
 
 ```vrml
 Billboard {
-  axisOfRotation 0.0 1.0 0.0
+  axisOfRotation 0 1 0
   children [ ... ]
 }
 ```
@@ -156,10 +156,10 @@ Billboard {
 
 | Rotate about | Axis        |
 |--------------|-------------|
-| X-Axis       | 1.0 0.0 0.0 |
-| Y-Axis       | 0.0 1.0 0.0 |
-| Z-Axis       | 0.0 0.0 1.0 |
-| Any Axis     | 0.0 0.0 0.0 |
+| X-Axis       | 1 0 0       |
+| Y-Axis       | 0 1 0       |
+| Z-Axis       | 0 0 1       |
+| Any Axis     | 0 0 0       |
 
 ## A sample billboard group
 
@@ -168,7 +168,7 @@ Billboard {
 ```x3d
 <!-- Y-axis -->
 <Billboard
-    axisOfRotation='0.0 1.0 0.0'>
+    axisOfRotation='0 1 0'>
   <Shape><!-- ... --></Shape>
   <Shape><!-- ... --></Shape>
   <Shape><!-- ... --></Shape>
@@ -181,7 +181,7 @@ Billboard {
 ```vrml
 Billboard {
   # Y-axis
-  axisOfRotation 0.0 1.0 0.0
+  axisOfRotation 0 1 0
   children [
     Shape { ... }
     Shape { ... }
@@ -230,7 +230,7 @@ An [Inline](/x_ite/components/networking/inline/) node creates a special group f
 
 ```x3d
 <Inline
-  url='"table.wrl"'/>
+    url='"table.wrl"'/>
 ```
 
 ### Classic VRML Encoding

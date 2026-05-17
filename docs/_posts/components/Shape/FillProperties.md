@@ -29,11 +29,11 @@ The FillProperties node belongs to the [Shape](/x_ite/components/overview/#shape
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [filled](#fields-filled) | TRUE |
 | SFBool | [in, out] | [hatched](#fields-hatched) | TRUE |
-| SFInt32 | [in, out] | [hatchStyle](#fields-hatchStyle) | 1  |
-| SFColor | [in, out] | [hatchColor](#fields-hatchColor) | 1 1 1  |
+| SFInt32 | [in, out] | [hatchStyle](#fields-hatchStyle) | 1 |
+| SFColor | [in, out] | [hatchColor](#fields-hatchColor) | 1 1 1 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -88,6 +88,13 @@ Whether or not associated geometry is *hatched*.
 - [Download ZIP Archive](https://create3000.github.io/media/examples/Shape/FillProperties/FillProperties.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Shape/FillProperties/FillProperties.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

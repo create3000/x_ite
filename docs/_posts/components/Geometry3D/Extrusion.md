@@ -29,7 +29,7 @@ The Extrusion node belongs to the [Geometry3D](/x_ite/components/overview/#geome
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFVec2f | [in] | [set_crossSection](#fields-set_crossSection) |  |
 | MFRotation | [in] | [set_orientation](#fields-set_orientation) |  |
 | MFVec2f | [in] | [set_scale](#fields-set_scale) |  |
@@ -39,10 +39,10 @@ The Extrusion node belongs to the [Geometry3D](/x_ite/components/overview/#geome
 | SFBool | [ ] | [solid](#fields-solid) | TRUE |
 | SFBool | [ ] | [ccw](#fields-ccw) | TRUE |
 | SFBool | [ ] | [convex](#fields-convex) | TRUE |
-| SFFloat | [ ] | [creaseAngle](#fields-creaseAngle) | 0  |
+| SFFloat | [ ] | [creaseAngle](#fields-creaseAngle) | 0 |
 | MFVec2f | [ ] | [crossSection](#fields-crossSection) | [ 1 1, 1 -1, -1 -1, -1 1, 1 1 ] |
-| MFRotation | [ ] | [orientation](#fields-orientation) | 0 0 1 0  |
-| MFVec2f | [ ] | [scale](#fields-scale) | 1 1  |
+| MFRotation | [ ] | [orientation](#fields-orientation) | 0 0 1 0 |
+| MFVec2f | [ ] | [scale](#fields-scale) | 1 1 |
 | MFVec3f | [ ] | [spine](#fields-spine) | [ 0 0 0, 0 1 0 ] |
 {: .fields }
 
@@ -264,6 +264,14 @@ The *spine* array defines a center-line sequence of 3D points that define a piec
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Geometry3D/Extrusion/Extrusion.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of Extrusion Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/geometry3D.html#Extrusion)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

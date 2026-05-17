@@ -135,7 +135,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
 
       const handler =
       {
-         get (target, key)
+         get (target, key, receiver)
          {
             switch (key)
             {
@@ -144,7 +144,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
                case "currentScene":
                   return getScriptNode () .getExecutionContext ();
                default:
-                  return target [key];
+                  return Reflect .get (target, key, receiver);
             }
          },
       };
@@ -158,7 +158,7 @@ Object .assign (Object .setPrototypeOf (Script .prototype, X3DScriptNode .protot
          node .fromString (vrmlSyntax, getScriptNode () .getExecutionContext ());
 
          if (node .getValue ())
-            return node;
+            return SFNodeCache .get (node .getValue ());
 
          throw new Error ("SFNode.new: invalid argument.");
       }

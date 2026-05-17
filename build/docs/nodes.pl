@@ -357,12 +357,11 @@ sub fields_list {
    {
       $name = $field -> [1];
 
-      if ($file =~ m/###\s*(\w+)\s+(\[.*?\])\s+\*\*$name\*\*[ ]*(\[.*?\]|[ a-zA-Z\-+\d\."\/π]*).*?\n/)
-      {
-         $text = "| $1 | $2 | [$name](#fields-$name) | $3 |";
+      next unless $file =~ m/###\s*(\w+)\s+(\[.*?\])\s+\*\*$name\*\*[ ]*(\[.*?\]|[ a-zA-Z\-+\d\."\/π]*).*?\n/;
 
-         $fields -> {$name} = $text;
-      }
+      $text = "| $1 | $2 | [$name](#fields-$name) | " . trim ($3) . " |";
+
+      $fields -> {$name} = $text;
    }
 
    $string = "";
@@ -376,6 +375,8 @@ sub fields_list {
 
    return $file;
 }
+
+sub trim { my $s = shift; $s =~ s/^\s+|\s+$//g; return $s };
 
 $json   = `cat ../media/docs/examples/config.json`;
 $config = parse_json ($json);
@@ -568,7 +569,7 @@ sub update_field {
 
 sub reorder_sections {
    $file     = shift;
-   @sections = ("Overview", "Hierarchy", "Fields", "Supported File Formats", "Advice", "X_ITE", "Example", "See Also");
+   @sections = ("Overview", "Hierarchy", "Fields", "Supported File Formats", "Advice", "X_ITE", "Example", "Browser Compatibility", "See Also");
    $sections = { };
 
    foreach $s (@sections)

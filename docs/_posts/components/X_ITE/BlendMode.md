@@ -33,8 +33,8 @@ The BlendMode node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) com
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFColorRGBA | [in, out] | [blendColor](#fields-blendColor) | 0 0 0 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFColorRGBA | [in, out] | [blendColor](#fields-blendColor) | 0 0 0 0 |
 | SFString | [in, out] | [sourceColorFactor](#fields-sourceColorFactor) | "SRC |
 | SFString | [in, out] | [sourceAlphaFactor](#fields-sourceAlphaFactor) | "ONE" |
 | SFString | [in, out] | [destinationColorFactor](#fields-destinationColorFactor) | "ONE |
@@ -121,6 +121,13 @@ Specifies the alpha blend equation, how the alpha component of the source and de
 - [Download ZIP Archive](https://create3000.github.io/media/examples/X_ITE/BlendMode/BlendMode.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/X_ITE/BlendMode/BlendMode.x3d)
 {: .example-links }
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

@@ -100,7 +100,7 @@ SupportedProfiles .add ("Immersive",
       getComponent ("EnvironmentalEffects", 2),
       getComponent ("EnvironmentalSensor", 2),
       getComponent ("EventUtilities", 1),
-      getComponent ("Geometry2D", 2),
+      getComponent ("Geometry2D", 1),
       getComponent ("Geometry3D", 4),
       getComponent ("Grouping", 2),
       getComponent ("Interpolation", 2),
@@ -169,7 +169,7 @@ SupportedProfiles .add ("MedicalInterchange",
       getComponent ("EnvironmentalEffects", 1),
       getComponent ("EventUtilities", 1),
       getComponent ("Geometry2D", 2),
-      getComponent ("Geometry3D", 3),
+      getComponent ("Geometry3D", 2),
       getComponent ("Grouping", 3),
       getComponent ("Interpolation", 2),
       getComponent ("Lighting", 1),
@@ -185,14 +185,14 @@ SupportedProfiles .add ("MedicalInterchange",
    ],
 });
 
-SupportedProfiles .add ("MPEG-4",
+SupportedProfiles .add ("MPEG4Interactive",
 {
    title: "MPEG-4 interactive",
    components: [
       getComponent ("Core", 1),
       getComponent ("EnvironmentalEffects", 1),
       getComponent ("EnvironmentalSensor", 1),
-      getComponent ("Geometry3D", 3),
+      getComponent ("Geometry3D", 2),
       getComponent ("Grouping", 2),
       getComponent ("Interpolation", 2),
       getComponent ("Lighting", 2),
@@ -205,5 +205,7 @@ SupportedProfiles .add ("MPEG-4",
       getComponent ("Time", 1),
    ],
 });
+
+SupportedProfiles .alias ("MPEG-4", SupportedProfiles .get ("MPEG4Interactive"));
 
 export default SupportedProfiles;

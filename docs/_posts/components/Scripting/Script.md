@@ -33,12 +33,12 @@ The Script node belongs to the [Scripting](/x_ite/components/overview/#scripting
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [load](#fields-load) | TRUE |
 | MFString | [in, out] | [url](#fields-url) | [ ] |
-| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0  |
-| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600  |
+| SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0 |
+| SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600 |
 | SFBool | [ ] | [directOutput](#fields-directOutput) | FALSE |
 | SFBool | [ ] | [mustEvaluate](#fields-mustEvaluate) | FALSE |
 {: .fields }
@@ -155,7 +155,15 @@ If *mustEvaluate* false, then the X3D player may delay sending input events to S
 
 - Strict order is required for contained constructs: first field declarations (if any), then IS/connect statements (if any), and finally CDATA source-code block.
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of Script Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/scripting.html#Script)
 - [Script Node Authoring Interface](/x_ite/reference/script-node-authoring-interface/)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

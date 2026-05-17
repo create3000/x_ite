@@ -118,7 +118,8 @@ Object .assign (X3DFogObject .prototype,
 
       this .set_fogType__ ();
    },
-   dispose () { },
+   dispose ()
+   { },
 });
 
 Object .defineProperties (X3DFogObject, X3DNode .getStaticProperties ("X3DFogObject", "EnvironmentalEffects", 1));

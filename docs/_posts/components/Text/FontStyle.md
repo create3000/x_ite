@@ -29,16 +29,16 @@ The FontStyle node belongs to the [Text](/x_ite/components/overview/#text) compo
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [language](#fields-language) | "" |
-| MFString | [in, out] | [family](#fields-family) | "SERIF"  |
-| SFString | [in, out] | [style](#fields-style) | "PLAIN"  |
-| SFFloat | [in, out] | [size](#fields-size) | 1  |
-| SFFloat | [in, out] | [spacing](#fields-spacing) | 1  |
+| MFString | [in, out] | [family](#fields-family) | "SERIF" |
+| SFString | [in, out] | [style](#fields-style) | "PLAIN" |
+| SFFloat | [in, out] | [size](#fields-size) | 1 |
+| SFFloat | [in, out] | [spacing](#fields-spacing) | 1 |
 | SFBool | [in, out] | [horizontal](#fields-horizontal) | TRUE |
 | SFBool | [in, out] | [leftToRight](#fields-leftToRight) | TRUE |
 | SFBool | [in, out] | [topToBottom](#fields-topToBottom) | TRUE |
-| MFString | [in, out] | [justify](#fields-justify) | "BEGIN"  |
+| MFString | [in, out] | [justify](#fields-justify) | "BEGIN" |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -197,6 +197,14 @@ The *justify* field determines horizontal and vertical alignment of text layout,
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Text/FontStyle/FontStyle.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of FontStyle Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/text.html#FontStyle)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

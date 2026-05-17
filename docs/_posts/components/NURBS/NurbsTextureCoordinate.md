@@ -28,11 +28,11 @@ The NurbsTextureCoordinate node belongs to the [NURBS](/x_ite/components/overvie
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFInt32 | [ ] | [uOrder](#fields-uOrder) | 3  |
-| SFInt32 | [ ] | [vOrder](#fields-vOrder) | 3  |
-| SFInt32 | [ ] | [uDimension](#fields-uDimension) | 0  |
-| SFInt32 | [ ] | [vDimension](#fields-vDimension) | 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFInt32 | [ ] | [uOrder](#fields-uOrder) | 3 |
+| SFInt32 | [ ] | [vOrder](#fields-vOrder) | 3 |
+| SFInt32 | [ ] | [uDimension](#fields-uDimension) | 0 |
+| SFInt32 | [ ] | [vDimension](#fields-vDimension) | 0 |
 | MFDouble | [ ] | [uKnot](#fields-uKnot) | [ ] |
 | MFDouble | [ ] | [vKnot](#fields-vKnot) | [ ] |
 | MFDouble | [in, out] | [weight](#fields-weight) | [ ] |
@@ -97,6 +97,13 @@ Output values for linear interpolation, each corresponding to knots.
 ### Hint
 
 - The SFNode controlPoint field can contain a single [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node.
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

@@ -33,14 +33,14 @@ The GeoLocation node belongs to the [Geospatial](/x_ite/components/overview/#geo
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFNode | [ ] | [geoOrigin](#fields-geoOrigin) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFNode | [ ] | [geoOrigin](#fields-geoOrigin) | NULL |
 | MFString | [ ] | [geoSystem](#fields-geoSystem) | [ "GD", "WE" ] |
-| SFVec3d | [in, out] | [geoCoords](#fields-geoCoords) | 0 0 0  |
+| SFVec3d | [in, out] | [geoCoords](#fields-geoCoords) | 0 0 0 |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0  |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
 | MFNode | [in] | [addChildren](#fields-addChildren) |  |
 | MFNode | [in] | [removeChildren](#fields-removeChildren) |  |
 | MFNode | [in, out] | [children](#fields-children) | [ ] |
@@ -171,6 +171,13 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 - Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
 - Avoid having GeoLocation or [GeoTransform](/x_ite/components/geospatial/geotransform/) as a parent or ancestor node of each other, since multiple geospatial transformations then occur with unpredictable results.
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

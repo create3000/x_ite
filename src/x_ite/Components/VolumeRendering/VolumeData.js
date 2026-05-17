@@ -111,11 +111,11 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, X3DVolumeDataNode
 
       this .renderStyleNode ?.addShaderFields (shaderNode);
 
-      const uniformNames = [ ];
+      const uniforms = [ ];
 
-      this .addShaderUniformNames (uniformNames);
+      this .addShaderUniforms (uniforms);
 
-      shaderNode .setUniformNames (uniformNames);
+      shaderNode .setUniformNames (uniforms);
       shaderNode .setup ();
 
       return shaderNode;

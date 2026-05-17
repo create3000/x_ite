@@ -32,10 +32,10 @@ The TransmissionMaterialExtension node belongs to the [X_ITE](/x_ite/components/
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
-| SFFloat | [in, out] | [transmission](#fields-transmission) | 0  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFFloat | [in, out] | [transmission](#fields-transmission) | 0 |
 | SFString | [in, out] | [transmissionTextureMapping](#fields-transmissionTextureMapping) | "" |
-| SFNode | [in, out] | [transmissionTexture](#fields-transmissionTexture) | NULL  |
+| SFNode | [in, out] | [transmissionTexture](#fields-transmissionTexture) | NULL |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -65,6 +65,13 @@ A texture that defines the transmission percentage of the surface, stored in the
 ## Example
 
 - [View »Transmission Test« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=/TransmissionTest/)
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

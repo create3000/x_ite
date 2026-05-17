@@ -88,15 +88,15 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    },
    set_ambientTexture__ ()
    {
-      const index = this .getTextureIndices () .AMBIENT_TEXTURE
+      const index = this .getTextureIndices () .AMBIENT_TEXTURE;
 
-      this .ambientTextureNode ?._linear .removeInterest (`setTexture${index}`, this);
+      this .ambientTextureNode ?._linear .removeInterest ("addTexture", this);
 
       this .ambientTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._ambientTexture);
 
-      this .ambientTextureNode ?._linear .addInterest (`setTexture${index}`, this, index, this .ambientTextureNode);
+      this .ambientTextureNode ?._linear .addInterest ("addTexture", this, index, this .ambientTextureNode);
 
-      this .setTexture (index, this .ambientTextureNode);
+      this .addTexture (index, this .ambientTextureNode);
    },
    set_diffuseColor__ ()
    {
@@ -108,19 +108,19 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
 
       if (this .diffuseTextureNode)
       {
-         this .diffuseTextureNode ._transparent .removeInterest ("set_transparent__",  this);
-         this .diffuseTextureNode ._linear      .removeInterest (`setTexture${index}`, this);
+         this .diffuseTextureNode ._transparent .removeInterest ("set_transparent__", this);
+         this .diffuseTextureNode ._linear      .removeInterest ("addTexture",        this);
       }
 
       this .diffuseTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._diffuseTexture);
 
       if (this .diffuseTextureNode)
       {
-         this .diffuseTextureNode ._transparent .addInterest ("set_transparent__",  this);
-         this .diffuseTextureNode ._linear      .addInterest (`setTexture${index}`, this, index, this .diffuseTextureNode);
+         this .diffuseTextureNode ._transparent .addInterest ("set_transparent__", this);
+         this .diffuseTextureNode ._linear      .addInterest ("addTexture",        this, index, this .diffuseTextureNode);
       }
 
-      this .setTexture (index, this .diffuseTextureNode);
+      this .addTexture (index, this .diffuseTextureNode);
    },
    set_specularColor__ ()
    {
@@ -130,13 +130,13 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    {
       const index = this .getTextureIndices () .SPECULAR_TEXTURE;
 
-      this .specularTextureNode ?._linear .removeInterest (`setTexture${index}`, this);
+      this .specularTextureNode ?._linear .removeInterest ("addTexture", this);
 
       this .specularTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._specularTexture);
 
-      this .specularTextureNode ?._linear .addInterest (`setTexture${index}`, this, index, this .specularTextureNode);
+      this .specularTextureNode ?._linear .addInterest ("addTexture", this, index, this .specularTextureNode);
 
-      this .setTexture (index, this .specularTextureNode);
+      this .addTexture (index, this .specularTextureNode);
    },
    set_shininess__ ()
    {
@@ -146,7 +146,7 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    {
       this .shininessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._shininessTexture);
 
-      this .setTexture (this .getTextureIndices () .SHININESS_TEXTURE, this .shininessTextureNode);
+      this .addTexture (this .getTextureIndices () .SHININESS_TEXTURE, this .shininessTextureNode);
    },
    set_occlusionStrength__ ()
    {
@@ -156,7 +156,7 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
    {
       this .occlusionTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._occlusionTexture);
 
-      this .setTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
+      this .addTexture (this .getTextureIndices () .OCCLUSION_TEXTURE, this .occlusionTextureNode);
    },
    createShader (key, geometryContext, renderContext)
    {
@@ -183,14 +183,26 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
             {
                options .push ("X3D_GOURAUD_MATERIAL");
 
-               shaderNode = browser .createShader ("Gouraud", "Default", "Material", options);
+               shaderNode = browser .createShader ({
+                  name: "Gouraud",
+                  vertexShader: "Default",
+                  fragmentShader: "Material",
+                  options,
+               });
+
                break;
             }
             case 2:
             {
                options .push ("X3D_PHONG_MATERIAL");
 
-               shaderNode = browser .createShader ("Phong", "Default", "Material", options);
+               shaderNode = browser .createShader ({
+                  name: "Phong",
+                  vertexShader: "Default",
+                  fragmentShader: "Material",
+                  options,
+               });
+
                break;
             }
          }
@@ -201,7 +213,12 @@ Object .assign (Object .setPrototypeOf (Material .prototype, X3DOneSidedMaterial
 
          options .push ("X3D_UNLIT_MATERIAL");
 
-         shaderNode = browser .createShader ("Unlit", "Default", "Unlit", options);
+         shaderNode = browser .createShader ({
+            name: "Unlit",
+            vertexShader: "Default",
+            fragmentShader: "Unlit",
+            options,
+         });
       }
 
       browser .getShaders () .set (key, shaderNode);
@@ -301,13 +318,5 @@ Object .defineProperties (Material,
       enumerable: true,
    },
 });
-
-for (const index of Object .values (Material .prototype .getTextureIndices ()))
-{
-   Material .prototype [`setTexture${index}`] = function (index, textureNode)
-   {
-      this .setTexture (index, textureNode);
-   };
-}
 
 export default Material;

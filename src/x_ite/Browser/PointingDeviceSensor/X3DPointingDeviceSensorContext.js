@@ -447,7 +447,12 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       hAnimNode ?.getShaderOptions (options);
 
-      const shaderNode = this .createShader ("Pointing", "Pointing", "Pointing", options);
+      const shaderNode = this .createShader ({
+         name: "Pointing",
+         vertexShader: "Pointing",
+         fragmentShader: "Pointing",
+         options,
+      });
 
       this [_pointingShaders] .set (key, shaderNode);
 

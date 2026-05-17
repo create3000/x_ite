@@ -32,12 +32,12 @@ The HAnimPose node belongs to the [HAnim](/x_ite/components/overview/#hanim) com
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFString | [in, out] | [name](#fields-name) | "" |
-| SFInt32 | [in, out] | [loa](#fields-loa) | -1  |
+| SFInt32 | [in, out] | [loa](#fields-loa) | -1 |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFFloat | [in, out] | [transitionDuration](#fields-transitionDuration) | 0  |
+| SFFloat | [in, out] | [transitionDuration](#fields-transitionDuration) | 0 |
 | SFBool | [in] | [resetAllJoints](#fields-resetAllJoints) |  |
 | SFBool | [in] | [commencePose](#fields-commencePose) |  |
 | SFTime | [in] | [set_startTime](#fields-set_startTime) |  |
@@ -87,7 +87,7 @@ Enables/disables node operation.
 ### SFFloat [in, out] **transitionDuration** 0 <small>(0,∞)</small>
 {: #fields-transitionDuration }
 
-Duration in seconds for a pose transition.
+Duration in seconds for animating a pose transition.
 
 ### SFBool [in] **resetAllJoints**
 {: #fields-resetAllJoints }
@@ -150,6 +150,13 @@ The *children* field lists all [HAnimJoint](/x_ite/components/hanim/hanimjoint/)
 
 - [HAnim Architecture draft version 2.1, clause 4.10.3 Poses](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-1/ISO-IEC19774-1v2.1/ISO-IEC19774-1v2.1-WD/Architecture/concepts.html#Poses)
 - [HAnim Architecture draft version 2.1, 6.5 Pose](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-1/ISO-IEC19774-1v2.1/ISO-IEC19774-1v2.1-WD/Architecture/ObjectInterfaces.html#Pose)
+
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
+{: .browser-compatibility }
 
 ## See Also
 

@@ -13,7 +13,7 @@ tags: [PointLight, Lighting, VRML]
 
 ## Overview
 
-PointLight is a single light source that illuminates outwards in all directions. Lighting illuminates all geometry except lines and points. By default, light scope only illuminates peer geometry and children nodes within the scene graph hierarchy.
+PointLight is a single light source that illuminates outwards in all directions. X3D lights illuminate all geometry except lines and points. By default, light scope only illuminates peer geometry and children nodes within the scene graph hierarchy.
 
 The PointLight node belongs to the [Lighting](/x_ite/components/overview/#lighting) component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
@@ -30,20 +30,20 @@ The PointLight node belongs to the [Lighting](/x_ite/components/overview/#lighti
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFBool | [in, out] | [global](#fields-global) | TRUE |
 | SFBool | [in, out] | [on](#fields-on) | TRUE |
-| SFColor | [in, out] | [color](#fields-color) | 1 1 1  |
-| SFFloat | [in, out] | [intensity](#fields-intensity) | 1  |
-| SFFloat | [in, out] | [ambientIntensity](#fields-ambientIntensity) | 0  |
-| SFVec3f | [in, out] | [attenuation](#fields-attenuation) | 1 0 0  |
-| SFVec3f | [in, out] | [location](#fields-location) | 0 0 0  |
-| SFFloat | [in, out] | [radius](#fields-radius) | 100  |
+| SFColor | [in, out] | [color](#fields-color) | 1 1 1 |
+| SFFloat | [in, out] | [intensity](#fields-intensity) | 1 |
+| SFFloat | [in, out] | [ambientIntensity](#fields-ambientIntensity) | 0 |
+| SFVec3f | [in, out] | [attenuation](#fields-attenuation) | 1 0 0 |
+| SFVec3f | [in, out] | [location](#fields-location) | 0 0 0 |
+| SFFloat | [in, out] | [radius](#fields-radius) | 100 |
 | SFBool | [in, out] | [shadows](#fields-shadows) | FALSE |
-| SFColor | [in, out] | [shadowColor](#fields-shadowColor) | 0 0 0  |
-| SFFloat | [in, out] | [shadowIntensity](#fields-shadowIntensity) | 1  |
-| SFFloat | [in, out] | [shadowBias](#fields-shadowBias) | 0.005  |
-| SFInt32 | [ ] | [shadowMapSize](#fields-shadowMapSize) | 1024  |
+| SFColor | [in, out] | [shadowColor](#fields-shadowColor) | 0 0 0 |
+| SFFloat | [in, out] | [shadowIntensity](#fields-shadowIntensity) | 1 |
+| SFFloat | [in, out] | [shadowBias](#fields-shadowBias) | 0.005 |
+| SFInt32 | [ ] | [shadowMapSize](#fields-shadowMapSize) | 1024 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -153,6 +153,14 @@ Size of the shadow map in pixels, must be power of two.
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Lighting/PointLight/PointLight.x3d)
 {: .example-links }
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of PointLight Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/lighting.html#PointLight)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

@@ -17,7 +17,7 @@ Object .assign (Object .setPrototypeOf (JSONGenerator .prototype, X3DGenerator .
          "\"": "\\\"",
       };
 
-      const regex = /([\\\t\n\r"])/g;
+      const regex = /([\\\t\r\n"])/g;
 
       return function (string)
       {

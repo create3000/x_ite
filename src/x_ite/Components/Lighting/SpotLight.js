@@ -3,7 +3,6 @@ import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
 import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DLightNode         from "./X3DLightNode.js";
-import X3DGroupingNode      from "../Grouping/X3DGroupingNode.js";
 import TraverseType         from "../../Rendering/TraverseType.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import Box3                 from "../../../standard/Math/Geometry/Box3.js";
@@ -48,29 +47,28 @@ Object .assign (SpotLightContainer .prototype,
    {
       const shadowMapSize = lightNode .getShadowMapSize ();
 
-      this .browser   = lightNode .getBrowser ();
-      this .lightNode = lightNode;
-      this .groupNode = groupNode;
-      this .global    = lightNode .getGlobal ();
-
-      this .matrixArray .set (modelViewMatrix .submatrix .inverse ());
+      this .browser           = lightNode .getBrowser ();
+      this .lightNode         = lightNode;
+      this .groupNode         = groupNode;
+      this .global            = lightNode .getGlobal ();
+      this .shadowMapRendered = false;
 
       this .modelViewMatrix .push (modelViewMatrix);
 
       // Get shadow buffer from browser.
 
-      if (lightNode .getShadowIntensity () > 0 && shadowMapSize > 0)
-      {
+      if (lightNode .getShadowIntensity () && shadowMapSize)
          this .shadowBuffer = this .browser .popShadowBuffer (shadowMapSize);
-
-         if (!this .shadowBuffer)
-            console .warn ("Couldn't create shadow buffer.");
-      }
    },
    renderShadowMap (renderObject)
    {
       if (!this .shadowBuffer)
          return;
+
+      if (this .shadowMapRendered)
+         return;
+
+      this .shadowMapRendered = true;
 
       const
          lightNode            = this .lightNode,
@@ -102,7 +100,7 @@ Object .assign (SpotLightContainer .prototype,
       renderObject .getProjectionMatrix () .push (projectionMatrix);
       renderObject .getModelViewMatrix  () .push (invLightSpaceMatrix);
 
-      renderObject .render (TraverseType .SHADOW, X3DGroupingNode .prototype .traverse, this .groupNode);
+      renderObject .render (TraverseType .SHADOW, this .groupNode .traverse, this .groupNode);
 
       renderObject .getModelViewMatrix  () .pop ();
       renderObject .getProjectionMatrix () .pop ();
@@ -118,6 +116,8 @@ Object .assign (SpotLightContainer .prototype,
       const
          lightNode       = this .lightNode,
          modelViewMatrix = this .modelViewMatrix .get ();
+
+      this .matrixArray .set (modelViewMatrix .submatrix .inverse ());
 
       modelViewMatrix .multVecMatrix (this .location  .assign (lightNode ._location  .getValue ()));
       modelViewMatrix .multDirMatrix (this .direction .assign (lightNode ._direction .getValue ())) .normalize ();

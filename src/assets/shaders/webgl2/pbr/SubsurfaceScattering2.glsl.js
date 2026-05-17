@@ -4,13 +4,12 @@ export default () => /* glsl */ `
 // https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/punctual.glsl
 
 #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
-uniform vec3  x3d_MultiscatterColorEXT;
 
 // glTF specification for converting multi-scatter color to single scatter color.
 vec3
-multiToSingleScatter ()
+multiToSingleScatter (const in vec3 multiscatterColor)
 {
-   vec3 s = 4.09712 + 4.20863 * x3d_MultiscatterColorEXT - sqrt (9.59217 + (41.6808 + 17.7126 * x3d_MultiscatterColorEXT) * x3d_MultiscatterColorEXT);
+   vec3 s = 4.09712 + 4.20863 * multiscatterColor - sqrt (9.59217 + (41.6808 + 17.7126 * multiscatterColor) * multiscatterColor);
 
    return 1.0 - s * s;
 }
@@ -47,9 +46,9 @@ burley_eval (const in vec3 d, const in float r)
 }
 
 vec3
-getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in float attenuationDistance, const in vec3 diffuseColor, const in vec4 fragCoord)
+getSubsurfaceScattering (const in vec3 vertex, const in mat4 projectionMatrix, const in float attenuationDistance, const in vec3 diffuseColor, const in vec3 multiscatterColor, const in vec4 fragCoord)
 {
-   vec3  scatterDistance     = attenuationDistance * x3d_MultiscatterColorEXT; // Scale the attenuation distance by the multi-scatter color.
+   vec3  scatterDistance     = attenuationDistance * multiscatterColor; // Scale the attenuation distance by the multi-scatter color.
    float maxColor            = max3 (scatterDistance);
    vec3  vMaxColor           = max (vec3 (maxColor), vec3 (0.00001));
    vec2  texelSize           = 1.0 / vec2 (x3d_Viewport .zw);

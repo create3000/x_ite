@@ -282,62 +282,59 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
             shapeNode    = shapes [i] .shapeNode,
             numInstances = shapeNode .getNumInstances ();
 
-         if (shapeNode .getType () .at (-1) === X3DConstants .ParticleSystem)
+         switch (shapeNode .getGeometryType ())
          {
-            switch (shapeNode .getGeometryType ())
+            case GeometryType .POINT:
             {
-               case GeometryType .POINT:
-               {
-                  this .primitives .points += numInstances;
-                  continue;
-               }
-               case GeometryType .LINE:
-               {
-                  this .primitives .lines += numInstances;
-                  continue;
-               }
-               case GeometryType .TRIANGLE:
-               case GeometryType .QUAD:
-               case GeometryType .SPRITE:
-               {
-                  this .primitives .triangles += numInstances * 2;
-                  continue;
-               }
-               case GeometryType .GEOMETRY:
-               {
-                  break;
-               }
+               this .primitives .points += numInstances;
+               continue;
             }
-         }
-
-         const geometryNode = shapeNode .getGeometry ();
-
-         // ParticleSystem nodes may have no geometry.
-         if (!geometryNode)
-            continue;
-
-         if (!geometryNode .getExecutionContext () .getCountPrimitives ())
-            continue;
-
-         const vertices = geometryNode .getVertices () .length / 4 * numInstances;
-
-         switch (geometryNode .getGeometryType ())
-         {
-            case 0:
+            case GeometryType .LINE:
             {
-               this .primitives .points += vertices;
-               break;
+               this .primitives .lines += numInstances;
+               continue;
             }
-            case 1:
+            case GeometryType .TRIANGLE:
+            case GeometryType .QUAD:
+            case GeometryType .SPRITE:
             {
-               this .primitives .lines += vertices / 2;
-               break;
+               this .primitives .triangles += numInstances * 2;
+               continue;
             }
-            case 2:
-            case 3:
+            case GeometryType .GEOMETRY:
             {
-               this .primitives .triangles += vertices / 3;
-               break;
+               const geometryNode = shapeNode .getGeometry ();
+
+               // ParticleSystem nodes may have no geometry.
+               if (!geometryNode)
+                  continue;
+
+               if (!geometryNode .getExecutionContext () .getCountPrimitives ())
+                  continue;
+
+               const vertices = geometryNode .getVertices () .length / 4 * numInstances;
+
+               switch (geometryNode .getGeometryType ())
+               {
+                  case 0:
+                  {
+                     this .primitives .points += vertices;
+                     break;
+                  }
+                  case 1:
+                  {
+                     this .primitives .lines += vertices / 2;
+                     break;
+                  }
+                  case 2:
+                  case 3:
+                  {
+                     this .primitives .triangles += vertices / 3;
+                     break;
+                  }
+               }
+
+               continue;
             }
          }
       }

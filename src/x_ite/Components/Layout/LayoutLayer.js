@@ -21,22 +21,14 @@ Object .assign (Object .setPrototypeOf (LayoutLayer .prototype, X3DLayerNode .pr
 {
    initialize ()
    {
+      const groupNode = this .getGroup ();
+
+      this ._layout .addFieldInterest (groupNode ._layout);
+
+      groupNode ._layout = this ._layout;
+
+      // Call super at end!
       X3DLayerNode .prototype .initialize .call (this);
-
-      const groupNode = this .getGroups () ._children [0] .getValue ();
-
-      this ._layout         .addFieldInterest (groupNode ._layout);
-      this ._addChildren    .addFieldInterest (groupNode ._addChildren);
-      this ._removeChildren .addFieldInterest (groupNode ._removeChildren);
-      this ._children       .addFieldInterest (groupNode ._children);
-
-      groupNode ._layout   = this ._layout;
-      groupNode ._children = this ._children;
-
-      groupNode .setPrivate (true);
-      groupNode .setup ();
-
-      this .getGroups () .setup ();
    },
 });
 

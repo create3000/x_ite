@@ -65,7 +65,7 @@ Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype,
    {
       this .iridescenceTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._iridescenceTexture);
 
-      this .setTexture (0, this .iridescenceTextureNode);
+      this .addTexture (0, this .iridescenceTextureNode);
    },
    set_iridescenceIndexOfRefraction__ ()
    {
@@ -83,7 +83,7 @@ Object .assign (Object .setPrototypeOf (IridescenceMaterialExtension .prototype,
    {
       this .iridescenceThicknessTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._iridescenceThicknessTexture);
 
-      this .setTexture (1, this .iridescenceThicknessTextureNode);
+      this .addTexture (1, this .iridescenceThicknessTextureNode);
    },
    getExtensionKey ()
    {

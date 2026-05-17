@@ -30,7 +30,7 @@ The Normal node belongs to the [Rendering](/x_ite/components/overview/#rendering
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
-| SFNode | [in, out] | [metadata](#fields-metadata) | NULL  |
+| SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | MFVec3f | [in, out] | [vector](#fields-vector) | [ ] |
 {: .fields }
 
@@ -66,6 +66,14 @@ Set of unit-length normal vectors, corresponding to indexed polygons or vertices
 
 - Adding normal values to a model might significantly increase file size. Testing can help determine proper tradeoffs between file size, network transmission delays and initial rendering speed.
 
+## Browser Compatibility
+
+| Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
+|--------------------|---------|-------------------|----------|-------|
+| <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> |
+{: .browser-compatibility }
+
 ## See Also
 
 - [X3D Specification of Normal Node](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/rendering.html#Normal)
+- [X_ITE VRML Viewer](/x_ite/features/#vrml-viewer)

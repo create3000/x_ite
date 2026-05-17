@@ -15,6 +15,10 @@ function MultiTexture (executionContext)
 
    this .addType (X3DConstants .MultiTexture);
 
+   this .addChildObjects (X3DConstants .outputOnly, "renderedTextures", new Fields .SFTime ());
+
+   // Private properties
+
    const browser = this .getBrowser ();
 
    this .maxTextures  = browser .getMaxTextures ()
@@ -213,6 +217,8 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
 
       for (const textureNode of this .textureNodes)
          textureNode ._linear .addInterest ("addNodeEvent", this);
+
+      this ._renderedTextures = this .getBrowser () .getCurrentTime ();
    },
    updateTextureBits (textureBits)
    {
@@ -226,6 +232,14 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
 
       textureBits .set (maxTextures * 2, 1);
    },
+   getRenderedTextures (renderedTextures)
+   {
+      for (const textureNode of this .textureNodes)
+      {
+         if (textureNode .isRenderedTexture ())
+            renderedTextures .add (textureNode);
+      }
+   },
    getShaderOptions (options)
    {
       const
@@ -234,11 +248,6 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
 
       for (let i = 0; i < channels; ++ i)
          textureNodes [i] .getShaderOptions (options, i);
-   },
-   traverse (type, renderObject)
-   {
-      for (const textureNode of this .textureNodes)
-         textureNode .traverse (type, renderObject);
    },
    setShaderUniforms (gl, uniformStruct, shaderObject)
    {

@@ -16,6 +16,11 @@ function FontLibrary (executionContext)
    X3DUrlObject .call (this, executionContext);
 
    this .addType (X3DConstants .FontLibrary);
+
+   // Private properties
+
+   this .loadCounter = 0;
+   this .loadCount   = -1;
 }
 
 Object .assign (Object .setPrototypeOf (FontLibrary .prototype, X3DChildNode .prototype),
@@ -44,27 +49,35 @@ Object .assign (Object .setPrototypeOf (FontLibrary .prototype, X3DChildNode .pr
    },
    async loadData ()
    {
+      // Prevent race condition when this function is called multiple times.
+
+      const count = ++ this .loadCounter;
+
+      // Load font.
+
       const
          browser          = this .getBrowser (),
          executionContext = this .getExecutionContext (),
          fileURLs         = Array .from (this ._url) .map (fileURL => new URL (fileURL, executionContext .getBaseURL ()));
 
-      this .font = null;
+      let font;
 
       for (const fileURL of fileURLs)
       {
-         this .font = await browser .loadFont (fileURL, this .getCache ());
+         font = await browser .loadFont (fileURL, this .getCache ());
 
-         if (!this .font)
-            continue;
-
-         this .set_family__ ();
-
-         this .setLoadState (X3DConstants .COMPLETE_STATE);
-         return;
+         if (font)
+            break;
       }
 
-      this .setLoadState (X3DConstants .FAILED_STATE);
+      if (count < this .loadCount)
+         return;
+
+      this .loadCount = count;
+      this .font      = font;
+
+      this .set_family__ ();
+      this .setLoadState (font ? X3DConstants .COMPLETE_STATE : X3DConstants .FAILED_STATE);
    },
    dispose ()
    {

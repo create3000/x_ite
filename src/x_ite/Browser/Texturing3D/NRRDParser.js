@@ -4,10 +4,10 @@ import $           from "../../../lib/jquery.js";
 // Grammar
 
 const Grammar = Expressions ({
-   NRRD: /^NRRD(\d+)\n/gy,
-   field: /([\w\s]+):\s*(.+?)\n/gy,
-   comment: /#[^\n]*\n/gy,
-   newLine: /\n/gy,
+   NRRD: /^NRRD(\d+)\n/y,
+   field: /([\w\s]+):\s*(.+?)\n/y,
+   comment: /#[^\n]*\n/y,
+   newLine: /\n/y,
 });
 
 // Parser
@@ -166,7 +166,7 @@ Object .assign (NRRDParser .prototype,
    getSizes (value)
    {
       const
-         num   = /\s*(\d+)/gy,
+         num   = /\s*(\d+)/y,
          sizes = [ ];
 
       let result;
