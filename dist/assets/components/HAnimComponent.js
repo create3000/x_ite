@@ -1,5 +1,5 @@
-/* X_ITE v15.0.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.1")];
+/* X_ITE v15.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -135,7 +135,7 @@ var external_X_ITE_X3D_ShaderRegistry_default = /*#__PURE__*/__webpack_require__
 ;// ./src/assets/shaders/webgl2/common/Skin2.glsl.js
 const Skin2_glsl_default_ = () => /* glsl */ `
 #if defined(X3D_SKINNING)
-in float x3d_CoordIndex;
+in uint x3d_CoordIndex;
 #if X3D_NUM_JOINT_SETS>0
 uniform sampler2D x3d_JointsTexture;
 #endif
@@ -503,14 +503,11 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
    set_joints__ ()
    {
       const
-         jointNodes               = this .jointNodes,
-         jointBindingMatrices     = this .jointBindingMatrices,
-         jointBindingPositions    = this ._jointBindingPositions,
-         jointBindingRotations    = this ._jointBindingRotations,
-         jointBindingScales       = this ._jointBindingScales,
-         numJointBindingPositions = jointBindingPositions .length,
-         numJointBindingRotations = jointBindingRotations .length,
-         numJointBindingScales    = jointBindingScales .length;
+         jointNodes            = this .jointNodes,
+         jointBindingMatrices  = this .jointBindingMatrices,
+         jointBindingPositions = this ._jointBindingPositions,
+         jointBindingRotations = this ._jointBindingRotations,
+         jointBindingScales    = this ._jointBindingScales;
 
       for (const poseNode of this .poseNodes)
          poseNode .removeJoints (jointNodes);
@@ -540,9 +537,9 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
             continue;
 
          const
-            t = i < numJointBindingPositions ? jointBindingPositions [i] .getValue () : null,
-            r = i < numJointBindingRotations ? jointBindingRotations [i] .getValue () : null,
-            s = i < numJointBindingScales    ? jointBindingScales    [i] .getValue () : null;
+            t = jointBindingPositions [i] ?.getValue (),
+            r = jointBindingRotations [i] ?.getValue (),
+            s = jointBindingScales    [i] ?.getValue ();
 
          jointNodes           .push (jointNode);
          jointBindingMatrices .push (new (external_X_ITE_X3D_Matrix4_default()) () .set (t, r, s));

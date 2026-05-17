@@ -1,5 +1,5 @@
-/* X_ITE v15.0.1 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.1")];
+/* X_ITE v15.0.2 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.2")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -2508,19 +2508,13 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
                shaderNode .enableInstanceMatrixAttribute   (gl, outputParticles, particlesStride, this .matrixOffset,   1);
 
                if (this .geometryContext .colorMaterial)
-               {
-                  shaderNode .enableColorAttribute (gl, outputParticles, particlesStride, this .colorOffset);
-                  shaderNode .colorAttributeDivisor (gl, 1);
-               }
+                  shaderNode .enableColorAttribute (gl, outputParticles, particlesStride, this .colorOffset, 1);
 
                if (this .texCoordCount)
                   shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, 0, this .texCoordOffset);
 
                if (this .hasNormals)
-               {
-                  shaderNode .enableNormalAttribute (gl, this .geometryBuffer, 0, this .normalOffset);
-                  shaderNode .normalAttributeDivisor (gl, this .maxParticles);
-               }
+                  shaderNode .enableNormalAttribute (gl, this .geometryBuffer, 0, this .normalOffset, this .maxParticles);
 
                shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, this .verticesOffset);
             }
