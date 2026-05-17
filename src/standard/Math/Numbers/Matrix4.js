@@ -339,7 +339,7 @@ Object .assign (Matrix4 .prototype,
          b8 = m08 * b2 - m09 * b1 + m10 * b0,
          b9 = m12 * b2 - m13 * b1 + m14 * b0;
 
-      // Calculate the determinant
+      // Calculate the determinant.
       return m07 * b6 - m03 * b7 + m15 * b8 - m11 * b9;
    },
    transpose ()
