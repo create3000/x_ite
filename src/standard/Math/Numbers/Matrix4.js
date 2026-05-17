@@ -378,7 +378,7 @@ Object .assign (Matrix4 .prototype,
       // Calculate the determinant.
       let d = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
 
-      if (d === 0)
+      if (!d)
          return this .assign (Matrix4 .ZERO);
 
       d = 1 / d;

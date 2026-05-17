@@ -95,7 +95,7 @@ Object .assign (Matrix2 .prototype,
       // Calculate the determinant.
       let d = A * D - B * C;
 
-      if (d === 0)
+      if (!d)
          return this .assign (Matrix2 .ZERO);
 
       d = 1 / d;
