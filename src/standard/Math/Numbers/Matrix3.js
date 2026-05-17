@@ -180,7 +180,7 @@ Object .assign (Matrix3 .prototype,
          {
             case 1:
             {
-               translation .set (this [6], this [7]);
+               translation ?.set (this [6], this [7]);
                break;
             }
             case 2:

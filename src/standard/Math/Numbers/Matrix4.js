@@ -192,7 +192,7 @@ Object .assign (Matrix4 .prototype,
          {
             case 1:
             {
-               translation .set (this [12], this [13], this [14]);
+               translation ?.set (this [12], this [13], this [14]);
                break;
             }
             case 2:
