@@ -2,11 +2,11 @@ import Matrix4 from "../Numbers/Matrix4.js";
 import Vector3 from "../Numbers/Vector3.js";
 import SAT     from "../Algorithms/SAT.js";
 
-function Box3 (... args) /* size, center */
+function Box3 (size, center)
 {
    this .matrix = new Matrix4 ();
 
-   this .set (... args);
+   this .set (size, center);
 }
 
 Object .assign (Box3 .prototype,
@@ -35,29 +35,19 @@ Object .assign (Box3 .prototype,
    },
    set (size, center)
    {
-      switch (arguments .length)
+      if (size && center)
       {
-         case 0:
-         {
-            this .matrix .assign (Matrix4 .ZERO);
-
-            return this;
-         }
-         case 2:
-         {
-            this .matrix .set (size .x / 2, 0, 0, 0,
-                               0, size .y / 2, 0, 0,
-                               0, 0, size .z / 2, 0,
-                               center .x, center .y, center .z, 1);
-
-            return this;
-         }
-         // case 3:
-         // {
-         //    console .trace ()
-         //    return this .setExtents (arguments [0], arguments [1]);
-         // }
+         this .matrix .set (size .x / 2, 0, 0, 0,
+                              0, size .y / 2, 0, 0,
+                              0, 0, size .z / 2, 0,
+                              center .x, center .y, center .z, 1);
       }
+      else
+      {
+         this .matrix .assign (Matrix4 .ZERO);
+      }
+
+      return this;
    },
    setExtents (min, max)
    {
