@@ -33,15 +33,13 @@ Object .assign (Object .setPrototypeOf (BlendedVolumeStyle .prototype, X3DCompos
    {
       X3DComposableVolumeRenderStyleNode .prototype .addVolumeData .call (this, volumeDataNode);
 
-      if (this .renderStyleNode)
-         this .renderStyleNode .addVolumeData (volumeDataNode);
+      this .renderStyleNode ?.addVolumeData (volumeDataNode);
    },
    removeVolumeData (volumeDataNode)
    {
       X3DComposableVolumeRenderStyleNode .prototype .removeVolumeData .call (this, volumeDataNode);
 
-      if (this .renderStyleNode)
-         this .renderStyleNode .removeVolumeData (volumeDataNode);
+      this .renderStyleNode ?.removeVolumeData (volumeDataNode);
    },
    set_weightTransferFunction1__ ()
    {
@@ -96,8 +94,11 @@ Object .assign (Object .setPrototypeOf (BlendedVolumeStyle .prototype, X3DCompos
 
       this .getBrowser () .getDefaultBlendedVolumeStyle () .addShaderFields (shaderNode);
 
-      if (this .renderStyleNode)
-         this .renderStyleNode .addShaderFields (shaderNode);
+      this .renderStyleNode ?.addShaderFields (shaderNode);
+   },
+   getDefines (defines)
+   {
+      this .renderStyleNode ?.getDefines (defines);
    },
    getUniformsText ()
    {
