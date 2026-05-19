@@ -92,6 +92,8 @@ Object .assign (Matrix4 .prototype,
       this [13] = m31;
       this [14] = m32;
       this [15] = m33;
+
+      return this;
    },
    getTransform: (() =>
    {
@@ -110,6 +112,8 @@ Object .assign (Matrix4 .prototype,
          {
             this .factor (translation, rotation, scale, scaleOrientation);
          }
+
+         return this;
       };
    })(),
    setTransform: (() =>
@@ -150,6 +154,8 @@ Object .assign (Matrix4 .prototype,
 
          if (hasCenter)
             this .translate (invCenter .assign (center) .negate ());
+
+         return this;
       };
    })(),
    setRotation (rotation)

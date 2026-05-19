@@ -74,6 +74,8 @@ Object .assign (Matrix3 .prototype,
       this [6] = m20;
       this [7] = m21;
       this [8] = m22;
+
+      return this;
    },
    getTransform: (() =>
    {
@@ -92,6 +94,8 @@ Object .assign (Matrix3 .prototype,
          {
             this .factor (translation, rotation, scale, scaleOrientation);
          }
+
+         return this;
       };
    })(),
    setTransform: (() =>

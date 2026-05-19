@@ -615,10 +615,10 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    },
    update ()
    {
-      this .cameraSpaceMatrix .set (this .getUserPosition (),
-                                    this .getUserOrientation (),
-                                    this ._scaleOffset .getValue (),
-                                    this ._scaleOrientationOffset .getValue ());
+      this .cameraSpaceMatrix .setTransform (this .getUserPosition (),
+                                             this .getUserOrientation (),
+                                             this ._scaleOffset .getValue (),
+                                             this ._scaleOrientationOffset .getValue ());
 
       this .cameraSpaceMatrix .multRight (this .modelMatrix);
 
