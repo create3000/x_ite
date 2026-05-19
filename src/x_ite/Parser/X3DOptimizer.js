@@ -266,17 +266,17 @@ Object .assign (X3DOptimizer .prototype,
          nodeMatrix       = new Matrix4 (),
          childMatrix      = new Matrix4 ();
 
-      nodeMatrix .set (node .translation .getValue (),
-                       node .rotation .getValue (),
-                       node .scale .getValue (),
-                       node .scaleOrientation .getValue (),
-                       node .center .getValue ());
+      nodeMatrix .setTransform (node .translation .getValue (),
+                                node .rotation .getValue (),
+                                node .scale .getValue (),
+                                node .scaleOrientation .getValue (),
+                                node .center .getValue ());
 
-      childMatrix .set (child .translation .getValue (),
-                        child .rotation .getValue (),
-                        child .scale .getValue (),
-                        child .scaleOrientation .getValue (),
-                        child .center .getValue ());
+      childMatrix .setTransform (child .translation .getValue (),
+                                 child .rotation .getValue (),
+                                 child .scale .getValue (),
+                                 child .scaleOrientation .getValue (),
+                                 child .center .getValue ());
 
       nodeMatrix .multLeft (childMatrix);
 
@@ -304,11 +304,11 @@ Object .assign (X3DOptimizer .prototype,
 
       const nodeMatrix = new Matrix4 ();
 
-      nodeMatrix .set (node .translation .getValue (),
-                       node .rotation .getValue (),
-                       node .scale .getValue (),
-                       node .scaleOrientation .getValue (),
-                       node .center .getValue ());
+      nodeMatrix .setTransform (node .translation .getValue (),
+                                node .rotation .getValue (),
+                                node .scale .getValue (),
+                                node .scaleOrientation .getValue (),
+                                node .center .getValue ());
 
       if (child .location)
          child .location = nodeMatrix .multVecMatrix (child .location .getValue ());
@@ -330,14 +330,14 @@ Object .assign (X3DOptimizer .prototype,
          translation     = new Vector3 (),
          rotation        = new Rotation4 ();
 
-      nodeMatrix .set (node .translation .getValue (),
-                       node .rotation .getValue (),
-                       node .scale .getValue (),
-                       node .scaleOrientation .getValue (),
-                       node .center .getValue ());
+      nodeMatrix .setTransform (node .translation .getValue (),
+                                node .rotation .getValue (),
+                                node .scale .getValue (),
+                                node .scaleOrientation .getValue (),
+                                node .center .getValue ());
 
-      viewpointMatrix .set (child .position .getValue (),
-                            child .orientation .getValue ());
+      viewpointMatrix .setTransform (child .position .getValue (),
+                                     child .orientation .getValue ());
 
       viewpointMatrix
          .multRight (nodeMatrix)

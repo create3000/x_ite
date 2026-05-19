@@ -479,7 +479,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
          rectangle .y = translation .y;
 
          matrix
-            .set (currentTranslation, currentRotation)
+            .setTransform (currentTranslation, currentRotation)
             .translate (translation)
             .scale (scale);
 

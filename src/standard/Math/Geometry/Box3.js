@@ -6,7 +6,7 @@ function Box3 (... args) /* size, center */
 {
    this .matrix = new Matrix4 ();
 
-   this .set (... arguments);
+   this .set (... args);
 }
 
 Object .assign (Box3 .prototype,

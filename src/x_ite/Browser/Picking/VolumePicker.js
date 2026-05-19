@@ -112,7 +112,7 @@ Object .assign (VolumePicker .prototype,
       {
          const t = transform || T;
 
-         m .set (translation, rotation);
+         m .setTransform (translation, rotation);
 
          o .setValue (m [12], m [13], m [14]);
 

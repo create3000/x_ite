@@ -32,7 +32,7 @@ function SFMatrix3Template (TypeName, double)
                args .pop ();
             }
 
-            this .getValue () .set (... args);
+            this .getValue () .setTransform (... args);
 
             args .length = 0;
          };

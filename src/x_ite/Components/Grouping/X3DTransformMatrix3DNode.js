@@ -71,7 +71,7 @@ Object .assign (Object .setPrototypeOf (X3DTransformMatrix3DNode .prototype, X3D
       }
       else
       {
-         this .matrix .set (t, r, s, so, c);
+         this .matrix .setTransform (t, r, s, so, c);
 
          delete this .getBBox;
          delete this .traverse;

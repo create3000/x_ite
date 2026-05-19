@@ -194,10 +194,10 @@ Object .assign (Matrix3 .prototype,
             {
                if (center)
                {
-                  m .set (c .assign (center) .negate ());
+                  m .setTransform (c .assign (center) .negate ());
                   m .multLeft (this);
                   m .translate (center);
-                  m .get (translation, rotation, scale, scaleOrientation);
+                  m .getTransform (translation, rotation, scale, scaleOrientation);
                }
                else
                {
