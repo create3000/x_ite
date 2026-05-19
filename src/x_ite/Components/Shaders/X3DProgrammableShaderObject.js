@@ -855,7 +855,9 @@ Object .assign (X3DProgrammableShaderObject .prototype,
    },
    setUniforms: (() =>
    {
-      const normalMatrix = new Float32Array (9);
+      const
+         normalMatrix      = new Matrix3 (),
+         normalMatrixArray = new Float32Array (9);
 
       return function (gl, renderContext, geometryContext, front = true)
       {
@@ -929,9 +931,9 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             normalMatrix [1] = modelViewMatrix [4]; normalMatrix [4] = modelViewMatrix [5]; normalMatrix [7] = modelViewMatrix [ 6];
             normalMatrix [2] = modelViewMatrix [8]; normalMatrix [5] = modelViewMatrix [9]; normalMatrix [8] = modelViewMatrix [10];
 
-            Matrix3 .prototype .inverse .call (normalMatrix);
+            normalMatrixArray .set (normalMatrix .inverse ());
 
-            gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, normalMatrix);
+            gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, normalMatrixArray);
          }
 
          // Fog
