@@ -166,13 +166,6 @@ Object .assign (Matrix2 .prototype,
          return vector;
       }
    },
-   identity ()
-   {
-      this [0] = 1;
-      this [1] = 0;
-      this [2] = 0;
-      this [3] = 1;
-   },
    toString ()
    {
       return Array .prototype .join .call (this, " ");

@@ -496,15 +496,6 @@ Object .assign (Matrix4 .prototype,
 
       return vector;
    },
-   identity ()
-   {
-      this [ 0] = 1; this [ 1] = 0; this [ 2] = 0; this [ 3] = 0;
-      this [ 4] = 0; this [ 5] = 1; this [ 6] = 0; this [ 7] = 0;
-      this [ 8] = 0; this [ 9] = 0; this [10] = 1; this [11] = 0;
-      this [12] = 0; this [13] = 0; this [14] = 0; this [15] = 1;
-
-      return this;
-   },
    translate (translation)
    {
       const { x, y, z } = translation;

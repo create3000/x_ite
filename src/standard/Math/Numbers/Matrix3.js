@@ -383,14 +383,6 @@ Object .assign (Matrix3 .prototype,
 
       return vector;
    },
-   identity ()
-   {
-      this [0] = 1; this [1] = 0; this [2] = 0;
-      this [3] = 0; this [4] = 1; this [5] = 0;
-      this [6] = 0; this [7] = 0; this [8] = 1;
-
-      return this;
-   },
    translate (translation)
    {
       const { x, y } = translation;
