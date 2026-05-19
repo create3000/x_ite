@@ -500,9 +500,9 @@ Object .assign (Matrix4 .prototype,
    {
       const { x, y, z } = translation;
 
-      this [12] += this [ 0] * x + this [ 4] * y + this [ 8] * z;
-      this [13] += this [ 1] * x + this [ 5] * y + this [ 9] * z;
-      this [14] += this [ 2] * x + this [ 6] * y + this [10] * z;
+      this [12] += this [0] * x + this [4] * y + this [ 8] * z;
+      this [13] += this [1] * x + this [5] * y + this [ 9] * z;
+      this [14] += this [2] * x + this [6] * y + this [10] * z;
 
       return this;
    },
