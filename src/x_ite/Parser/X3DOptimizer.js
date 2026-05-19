@@ -280,7 +280,7 @@ Object .assign (X3DOptimizer .prototype,
 
       nodeMatrix .multLeft (childMatrix);
 
-      nodeMatrix .get (translation, rotation, scale, scaleOrientation, child .center .getValue ());
+      nodeMatrix .getTransform (translation, rotation, scale, scaleOrientation, child .center .getValue ());
 
       child .translation      = translation;
       child .rotation         = rotation;
@@ -341,7 +341,7 @@ Object .assign (X3DOptimizer .prototype,
 
       viewpointMatrix
          .multRight (nodeMatrix)
-         .get (translation, rotation);
+         .getTransform (translation, rotation);
 
       child .position         = translation;
       child .orientation      = rotation;

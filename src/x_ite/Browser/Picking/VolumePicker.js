@@ -58,7 +58,7 @@ Object .assign (VolumePicker .prototype,
 
          if (childShape .getNumChildShapes ())
          {
-            matrix .get (translation, rotation, scale);
+            matrix .getTransform (translation, rotation, scale);
 
             s .setValue (scale .x, scale .y, scale .z);
 

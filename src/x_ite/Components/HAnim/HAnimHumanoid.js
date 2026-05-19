@@ -346,7 +346,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
             s = jointBindingScales    [i] ?.getValue ();
 
          jointNodes           .push (jointNode);
-         jointBindingMatrices .push (new Matrix4 () .set (t, r, s));
+         jointBindingMatrices .push (new Matrix4 () .setTransform (t, r, s));
       }
 
       for (const jointNode of jointNodes)

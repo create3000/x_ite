@@ -82,7 +82,7 @@ Object .assign (Object .setPrototypeOf (ListenerPointSource .prototype, X3DSound
             .assign (renderObject .getModelViewMatrix () .get ())
             .translate (this ._position .getValue ())
             .rotate (this ._orientation .getValue ())
-            .get (position, orientation);
+            .getTransform (position, orientation);
 
          orientation .multVecRot (forwardVector .assign (Vector3 .Z_AXIS) .negate ()) .normalize ();
          orientation .multVecRot (upVector .assign (Vector3 .Y_AXIS)) .normalize ();

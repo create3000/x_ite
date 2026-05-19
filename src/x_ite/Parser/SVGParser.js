@@ -2493,7 +2493,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
          scale            = new Vector3 (),
          scaleOrientation = new Rotation4 ();
 
-      matrix .get (translation, rotation, scale, scaleOrientation);
+      matrix .getTransform (translation, rotation, scale, scaleOrientation);
 
       transformNode .translation      = translation;
       transformNode .rotation         = rotation;

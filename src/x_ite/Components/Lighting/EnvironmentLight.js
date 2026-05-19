@@ -38,7 +38,7 @@ Object .assign (EnvironmentLightContainer .prototype,
    { },
    setGlobalVariables (renderObject)
    {
-      this .modelViewMatrix .get () .get (null, this .rotation);
+      this .modelViewMatrix .get () .getTransform (null, this .rotation);
 
       this .rotation
          .multLeft (this .lightNode ._rotation .getValue ())
