@@ -210,6 +210,9 @@ Object .assign (Matrix4 .prototype,
          // (1) Get translation.
          translation ?.set (this [12], this [13], this [14]);
 
+         if (!(rotation || scale || scaleOrientation))
+            return;
+
          // (2) Create 3x3 matrix.
          const a = this .submatrix;
 
