@@ -16,27 +16,6 @@ function SFMatrix3Template (TypeName, double)
 
    return SFMatrixPrototypeTemplate (SFMatrix3, TypeName, Matrix3, double,
    {
-      setTransform: (() =>
-      {
-         const args = [ ];
-
-         return function (translation, rotation, scale, scaleOrientation, center)
-         {
-            args .push (translation ?.getValue (), +rotation, scale ?.getValue (), +scaleOrientation, center ?.getValue ());
-
-            for (let i = args .length - 1; i > -1; -- i)
-            {
-               if (args [i])
-                  break;
-
-               args .pop ();
-            }
-
-            this .getValue () .setTransform (... args);
-
-            args .length = 0;
-         };
-      })(),
       rotate (rotation)
       {
          return SFMatrix3 .fromValue (this .getValue () .copy () .rotate (+rotation));
