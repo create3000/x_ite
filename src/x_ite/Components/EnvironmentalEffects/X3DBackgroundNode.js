@@ -463,7 +463,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          modelViewMatrix .assign (this .modelMatrix);
          modelViewMatrix .multRight (renderObject .getViewMatrix () .get ());
          modelViewMatrix .getTransform (null, rotation);
-         modelViewMatrix .identity ();
+         modelViewMatrix .set ();
          modelViewMatrix .rotate (rotation);
          modelViewMatrix .scale (scale .set (far, far, far));
 

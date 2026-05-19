@@ -61,152 +61,77 @@ Object .assign (Matrix3 .prototype,
    {
       return this [r * this .order + c];
    },
-   set: (() =>
+   set (m00 = 1, m01 = 0,   m02 = 0,
+        m10 = 0, m11 = m00, m12 = 0,
+        m20 = 0, m21 = 0,   m22 = m11)
    {
-      const invCenter = new Vector2 ();
-
-      return function (translation, rotation, scale, scaleOrientation, center)
-      {
-         this .identity ();
-
-         switch (arguments .length)
-         {
-            case 1:
-            {
-               if (translation ?.equals (Vector2 .ZERO) === false)
-                  this .translate (translation);
-
-               break;
-            }
-            case 2:
-            {
-               if (translation ?.equals (Vector2 .ZERO) === false)
-                  this .translate (translation);
-
-               if (rotation)
-                  this .rotate (rotation);
-
-               break;
-            }
-            case 3:
-            {
-               if (translation ?.equals (Vector2 .ZERO) === false)
-                  this .translate (translation);
-
-               if (rotation)
-                  this .rotate (rotation);
-
-               if (scale ?.equals (Vector2 .ONE) === false)
-                  this .scale  (scale);
-
-               break;
-            }
-            case 4:
-            {
-               if (translation ?.equals (Vector2 .ZERO) === false)
-                  this .translate (translation);
-
-               if (rotation)
-                  this .rotate (rotation);
-
-               if (scale ?.equals (Vector2 .ONE) === false)
-               {
-                  if (scaleOrientation)
-                  {
-                     this .rotate (scaleOrientation);
-                     this .scale (scale);
-                     this .rotate (-scaleOrientation);
-                  }
-                  else
-                  {
-                     this .scale (scale);
-                  }
-               }
-
-               break;
-            }
-            case 5:
-            {
-               // P' = T * C * R * SR * S * -SR * -C * P
-               if (translation ?.equals (Vector2 .ZERO) === false)
-                  this .translate (translation);
-
-               const hasCenter = center ?.equals (Vector2 .ZERO) === false;
-
-               if (hasCenter)
-                  this .translate (center);
-
-               if (rotation)
-                  this .rotate (rotation);
-
-               if (scale ?.equals (Vector2 .ONE) === false)
-               {
-                  if (scaleOrientation)
-                  {
-                     this .rotate (scaleOrientation);
-                     this .scale (scale);
-                     this .rotate (-scaleOrientation);
-                  }
-                  else
-                  {
-                     this .scale (scale);
-                  }
-               }
-
-               if (hasCenter)
-                  this .translate (invCenter .assign (center) .negate ());
-
-               break;
-            }
-            case 9:
-            {
-               for (let i = 0; i < 9; ++ i)
-                  this [i] = arguments [i];
-
-               break;
-            }
-         }
-
-         return this;
-      };
-   })(),
-   get: (() =>
+      this [0] = m00;
+      this [1] = m01;
+      this [2] = m02;
+      this [3] = m10;
+      this [4] = m11;
+      this [5] = m12;
+      this [6] = m20;
+      this [7] = m21;
+      this [8] = m22;
+   },
+   getTransform: (() =>
    {
       const c = new Vector2 ();
 
       return function (translation, rotation, scale, scaleOrientation, center)
       {
-         switch (arguments .length)
+         if (center)
          {
-            case 1:
-            {
-               translation ?.set (this [6], this [7]);
-               break;
-            }
-            case 2:
-            case 3:
-            case 4:
-            {
-               this .factor (translation, rotation, scale, scaleOrientation);
-               break;
-            }
-            case 5:
-            {
-               if (center)
-               {
-                  m .setTransform (c .assign (center) .negate ());
-                  m .multLeft (this);
-                  m .translate (center);
-                  m .getTransform (translation, rotation, scale, scaleOrientation);
-               }
-               else
-               {
-                  this .factor (translation, rotation, scale, scaleOrientation);
-               }
+            m .setTransform (c .assign (center) .negate ());
+            m .multLeft (this);
+            m .translate (center);
+            m .getTransform (translation, rotation, scale, scaleOrientation);
+         }
+         else
+         {
+            this .factor (translation, rotation, scale, scaleOrientation);
+         }
+      };
+   })(),
+   setTransform: (() =>
+   {
+      const invCenter = new Vector2 ();
 
-               break;
+      return function (translation, rotation, scale, scaleOrientation, center)
+      {
+         this .set ();
+
+         // P' = T * C * R * SR * S * -SR * -C * P
+         if (translation ?.equals (Vector2 .ZERO) === false)
+            this .translate (translation);
+
+         const hasCenter = center ?.equals (Vector2 .ZERO) === false;
+
+         if (hasCenter)
+            this .translate (center);
+
+         if (rotation)
+            this .rotate (rotation);
+
+         if (scale ?.equals (Vector2 .ONE) === false)
+         {
+            if (scaleOrientation)
+            {
+               this .rotate (scaleOrientation);
+               this .scale (scale);
+               this .rotate (-scaleOrientation);
+            }
+            else
+            {
+               this .scale (scale);
             }
          }
+
+         if (hasCenter)
+            this .translate (invCenter .assign (center) .negate ());
+
+         return this;
       };
    })(),
    factor: (() =>

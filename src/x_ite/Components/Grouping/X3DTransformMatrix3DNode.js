@@ -37,7 +37,7 @@ Object .assign (Object .setPrototypeOf (X3DTransformMatrix3DNode .prototype, X3D
    {
       if (matrix .equals (Matrix4 .IDENTITY))
       {
-         this .matrix .identity ();
+         this .matrix .set ();
 
          if (this .isDefaultBBoxSize ())
             this .getBBox = this .getSubBBox;
@@ -60,7 +60,7 @@ Object .assign (Object .setPrototypeOf (X3DTransformMatrix3DNode .prototype, X3D
    {
       if (t .equals (Vector3 .ZERO) && r .equals (Rotation4 .IDENTITY) && s .equals (Vector3 .ONE))
       {
-         this .matrix .identity ();
+         this .matrix .set ();
 
          if (this .isDefaultBBoxSize ())
             this .getBBox = this .getSubBBox;

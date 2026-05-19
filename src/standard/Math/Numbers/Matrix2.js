@@ -49,25 +49,12 @@ Object .assign (Matrix2 .prototype,
    {
       return this [r * this .order + c];
    },
-   set ()
+   set (m00 = 1, m01 = 0, m10 = 0, m11 = m00)
    {
-      switch (arguments .length)
-      {
-         case 0:
-         {
-            this .identity ();
-            break;
-         }
-         case 4:
-         {
-            for (let i = 0; i < 4; ++ i)
-               this [i] = arguments [i];
-
-            break;
-         }
-      }
-
-      return this;
+      this [0] = m00;
+      this [1] = m01;
+      this [2] = m10;
+      this [3] = m11;
    },
    determinant1 ()
    {

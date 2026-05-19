@@ -1091,7 +1091,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       {
          default: // pad
          {
-            g .spreadMatrix .identity ();
+            g .spreadMatrix .set ();
 
             for (const [o, c, a] of g .stops)
                gradient .addColorStop (o, this .cssColor (c, a));

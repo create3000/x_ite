@@ -46,7 +46,7 @@ class MatrixStack extends Array
 
    identity ()
    {
-      this [this .#top] .identity ();
+      this [this .#top] .set ();
    }
 
    inverse ()
