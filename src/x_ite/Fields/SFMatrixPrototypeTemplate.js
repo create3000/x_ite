@@ -30,7 +30,11 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
       },
       setTransform (translation, rotation, scale, scaleOrientation, center)
       {
-         this .getValue () .setTransform (translation, rotation, scale, scaleOrientation, center);
+         this .getValue () .setTransform (translation      ?.getValue (),
+                                          rotation         ?.getValue (),
+                                          scale            ?.getValue (),
+                                          scaleOrientation ?.getValue (),
+                                          center           ?.getValue ());
       },
       getTransform (translation, rotation, scale, scaleOrientation, center)
       {

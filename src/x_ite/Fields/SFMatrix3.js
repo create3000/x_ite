@@ -16,6 +16,14 @@ function SFMatrix3Template (TypeName, double)
 
    return SFMatrixPrototypeTemplate (SFMatrix3, TypeName, Matrix3, double,
    {
+      setTransform (translation, rotation, scale, scaleOrientation, center)
+      {
+         this .getValue () .setTransform (translation ?.getValue (),
+                                          rotation,
+                                          scale ?.getValue (),
+                                          scaleOrientation,
+                                          center ?.getValue ());
+      },
       rotate (rotation)
       {
          return SFMatrix3 .fromValue (this .getValue () .copy () .rotate (+rotation));
