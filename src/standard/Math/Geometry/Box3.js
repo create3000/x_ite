@@ -38,9 +38,9 @@ Object .assign (Box3 .prototype,
       if (size && center)
       {
          this .matrix .set (size .x / 2, 0, 0, 0,
-                              0, size .y / 2, 0, 0,
-                              0, 0, size .z / 2, 0,
-                              center .x, center .y, center .z, 1);
+                            0, size .y / 2, 0, 0,
+                            0, 0, size .z / 2, 0,
+                            center .x, center .y, center .z, 1);
       }
       else
       {
