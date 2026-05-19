@@ -634,6 +634,10 @@ Object .assign (Matrix4,
 {
    ZERO: Object .freeze (new Matrix4 (0)),
    IDENTITY: Object .freeze (new Matrix4 ()),
+   fromTransform (translation, rotation, scale, scaleOrientation, center)
+   {
+      return Object .create (this .prototype) .setTransform (translation, rotation, scale, scaleOrientation, center);
+   },
    fromRotation (rotation)
    {
       return Object .create (this .prototype) .setQuaternion (rotation .getQuaternion (q));

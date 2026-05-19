@@ -515,6 +515,10 @@ Object .assign (Matrix3,
 {
    ZERO: Object .freeze (new Matrix3 (0)),
    IDENTITY: Object .freeze (new Matrix3 ()),
+   fromTransform (translation, rotation, scale, scaleOrientation, center)
+   {
+      return Object .create (this .prototype) .setTransform (translation, rotation, scale, scaleOrientation, center);
+   },
    fromRotation (rotation)
    {
       const
