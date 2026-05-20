@@ -88,8 +88,7 @@ Object .assign (Object .setPrototypeOf (ShaderPart .prototype, X3DNode .prototyp
    },
    loadData ()
    {
-      new FileLoader (this) .loadDocument (this ._url,
-      function (data, url)
+      new FileLoader (this) .loadDocument (this ._url, (data, url) =>
       {
          if (data === null)
          {
@@ -138,8 +137,7 @@ Object .assign (Object .setPrototypeOf (ShaderPart .prototype, X3DNode .prototyp
 
             this .setLoadState (X3DConstants .COMPLETE_STATE);
          }
-      }
-      .bind (this));
+      });
    },
    dispose ()
    {
