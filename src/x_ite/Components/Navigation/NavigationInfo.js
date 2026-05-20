@@ -209,13 +209,12 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
    },
    set_avatarSize__ ()
    {
-      this .collisionRadius = Math .max (this ._avatarSize [0] ?? 0.25, 0);
+      const collisionRadius = Math .max (this ._avatarSize [0] ?? 0.25, 0);
+
+      this .collisionRadius = collisionRadius;
       this .avatarHeight    = Math .max (this ._avatarSize [1] ?? 1.6, 0);
       this .stepHeight      = Math .max (this ._avatarSize [2] ?? 0.75, 0);
-
-      const nearValue = Math .max (this ._avatarSize [0] ?? 0.25, 0);
-
-      this .nearValue = nearValue === 0 ? 0.125 : nearValue / 2;
+      this .nearValue       = collisionRadius === 0 ? 0.125 : collisionRadius / 2;
    },
    set_headlight__ ()
    {
