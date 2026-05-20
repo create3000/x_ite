@@ -52,21 +52,21 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
    },
    getCollisionRadius ()
    {
-      return this ._avatarSize [0] ?? 0.25;
+      return Math .max (this ._avatarSize [0] ?? 0.25, 0);
    },
    getAvatarHeight ()
    {
-      return this ._avatarSize [1] ?? 1.6;
+      return Math .max (this ._avatarSize [1] ?? 1.6, 0);
    },
    getStepHeight ()
    {
-      return this ._avatarSize [2] ?? 0.75;
+      return Math .max (this ._avatarSize [2] ?? 0.75, 0);
    },
    getNearValue ()
    {
-      const nearValue = this .getCollisionRadius ();
+      const nearValue = Math .max (this ._avatarSize [0] ?? 0.25, 0);
 
-      return nearValue === 0 ? 1e-5 : nearValue / 2;
+      return nearValue === 0 ? 0.125 : nearValue / 2;
    },
    getFarValue ()
    {
