@@ -925,7 +925,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
          // Normal matrix
 
-         if (geometryContext .hasNormals)
+         if (this .x3d_NormalMatrix)
          {
             // Set matrix and transpose it.
             normalMatrix [0] = modelViewMatrix [0]; normalMatrix [3] = modelViewMatrix [1]; normalMatrix [6] = modelViewMatrix [ 2];
