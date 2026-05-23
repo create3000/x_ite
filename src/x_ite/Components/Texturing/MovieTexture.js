@@ -162,11 +162,11 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
 
          this .clearTimeout ();
 
-         this ._duration_changed = video .duration;
-         video .currentFrame     = video;
+         video .currentFrame = video;
 
          this .setMediaElement (video);
          this .setTextureData (width, height, true, false, video);
+         this .updateOutputs (width, height, 3, video .duration);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
 
          this .set_speed__ ();
@@ -183,10 +183,11 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       {
          GifMedia (gif, this);
 
-         this ._duration_changed = gif .duration;
+         const { width, height } = gif .get_canvas ();
 
          this .setMediaElement (gif);
-         this .setTextureData (gif .get_canvas () .width, gif .get_canvas () .height, true, false, gif .get_frames () [0] .data);
+         this .setTextureData (width, height, true, false, gif .get_frames () [0] .data);
+         this .updateOutputs (width, height, 4, gif .duration);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
 
          this .set_speed__ ();
@@ -203,10 +204,11 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       {
          await PNGMedia (apng, this);
 
-         this ._duration_changed = apng .duration;
+         const { width, height, duration, currentFrame } = apng;
 
          this .setMediaElement (apng);
-         this .setTextureData (apng .width, apng .height, true, false, apng .currentFrame);
+         this .setTextureData (width, height, true, false, currentFrame);
+         this .updateOutputs (width, height, 4, duration);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
 
          this .set_speed__ ();
@@ -216,6 +218,13 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
          // Catch security error from cross origin requests.
          this .setError ({ type: error .message });
       }
+   },
+   updateOutputs (width, height, colorDepth, duration)
+   {
+      this ._width            = width;
+      this ._height           = height;
+      this ._colorDepth       = colorDepth;
+      this ._duration_changed = duration;
    },
    set_gain__ ()
    {
@@ -285,6 +294,10 @@ Object .defineProperties (MovieTexture,
          new X3DFieldDefinition (X3DConstants .outputOnly,     "isPaused",             new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",             new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "elapsedTime",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "width",                new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "height",               new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "colorDepth",           new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "hasSound",             new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "duration_changed",     new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool (true)),

@@ -109,12 +109,14 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
       try
       {
+         const { baseWidth, baseHeight, numComponents } = texture;
+
          this .setTexture (texture);
          this .setTransparent (false);
-         this .setWidth (texture .baseWidth);
-         this .setHeight (texture .baseHeight);
-         this .updateTextureParameters (texture .baseWidth, texture .baseHeight, texture .numComponents);
-         this .updateOutputs ();
+         this .setWidth (baseWidth);
+         this .setHeight (baseHeight);
+         this .updateTextureParameters ();
+         this .updateOutputs (baseWidth, baseHeight, numComponents);
 
          this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
