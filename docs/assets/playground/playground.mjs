@@ -228,6 +228,7 @@ class Playground
          ".obj",
          ".stl",
          ".ply",
+         ".off",
          ".svg",
          ".svgz",
       ];
@@ -243,7 +244,7 @@ class Playground
          .appendTo (toolbar);
 
       $("<button></button>")
-         .attr ("title", "Open a file (X3D, VRML, glTF (GLB), VRM, OBJ, STL, PLY, SVG).")
+         .attr ("title", "Open a file (X3D, VRML, glTF (GLB), VRM, OBJ, STL, PLY, OFF, SVG).")
          .addClass ("material-symbols-outlined")
          .text ("file_open")
          .on ("click", () =>
