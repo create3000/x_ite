@@ -44,9 +44,11 @@ The RenderedTexture node belongs to the [Texturing](/x_ite/components/overview/#
 | SFBool | [in, out] | [replaceImage](#fields-replaceImage) | TRUE |
 | SFInt32 | [in, out] | [maximumNumberFrames](#fields-maximumNumberFrames) | 1000 |
 | MFString | [in, out] | [url](#fields-url) | [ ] |
-| SFString | [in, out] | [update](#fields-update) | "NONE" |
+| SFBool | [in, out] | [singleFrame](#fields-singleFrame) | TRUE |
 | SFTime | [in, out] | [updateInterval](#fields-updateInterval) | 0.1 |
-| MFInt32 | [in, out] | [dimensions](#fields-dimensions) | [ 128, 128, 4 ] |
+| SFInt32 | [in, out] | [width](#fields-width) | 128 |
+| SFInt32 | [in, out] | [height](#fields-height) | 128 |
+| SFInt32 | [in, out] | [colorDepth](#fields-colorDepth) | 4 |
 | SFBool | [in, out] | [depthMap](#fields-depthMap) | FALSE |
 | SFBool | [ ] | [repeatS](#fields-repeatS) | TRUE |
 | SFBool | [ ] | [repeatT](#fields-repeatT) | TRUE |
@@ -106,7 +108,7 @@ The *url* field typically defines a relative address to a file name that can be 
 - Direct or indirect recursion by [Inline](/x_ite/components/networking/inline/) and/or ExternProtoDeclare *url* reloading is a security error.
 
 ### SFBool [in, out] **singleFrame** TRUE
-{: #fields-update }
+{: #fields-singleFrame }
 
 *singleFrame* controls when the next texture is captured.
 
