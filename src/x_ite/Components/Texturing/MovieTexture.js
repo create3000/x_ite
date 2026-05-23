@@ -78,9 +78,9 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       if (this .urlStack .length === 0)
       {
          this .video .off ("abort error suspend stalled loadeddata");
-         this ._duration_changed = -1;
          this .setMediaElement (null);
          this .clearTexture ();
+         this .updateOutputs (0, 0, 0, -1);
          this .setLoadState (X3DConstants .FAILED_STATE);
          return;
       }
