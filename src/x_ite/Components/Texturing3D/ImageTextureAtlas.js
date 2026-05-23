@@ -141,6 +141,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
          this .setHeight (height);
          this .setDepth (depth);
          this .updateTextureParameters ();
+         this .updateOutputs (width, height, depth, transparent ? 4 : 3);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
       catch (error)
@@ -151,6 +152,13 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
          // Catch security error from cross origin requests.
          this .setError ({ type: error .message });
       }
+   },
+   updateOutputs (width, height, depth, colorDepth)
+   {
+      this ._width      = width;
+      this ._height     = height;
+      this ._depth      = depth;
+      this ._colorDepth = colorDepth;
    },
    dispose ()
    {
@@ -174,6 +182,10 @@ Object .defineProperties (ImageTextureAtlas,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "slicesOverX",          new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "slicesOverY",          new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "numberOfSlices",       new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "width",                new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "height",               new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "depth",                new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "colorDepth",           new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",              new Fields .SFBool ()),
