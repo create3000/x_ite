@@ -47,6 +47,10 @@ The ImageTextureAtlas node belongs to the **Texturing3D** component and its defa
 | SFInt32 | [in, out] | [slicesOverX](#fields-slicesOverX) | 0 |
 | SFInt32 | [in, out] | [slicesOverY](#fields-slicesOverY) | 0 |
 | SFInt32 | [in, out] | [numberOfSlices](#fields-numberOfSlices) | 0 |
+| SFInt32 | [out] | [width](#fields-width) |  |
+| SFInt32 | [out] | [height](#fields-height) |  |
+| SFInt32 | [out] | [depth](#fields-depth) |  |
+| SFInt32 | [out] | [colorDepth](#fields-colorDepth) |  |
 | SFBool | [ ] | [repeatS](#fields-repeatS) | FALSE |
 | SFBool | [ ] | [repeatT](#fields-repeatT) | FALSE |
 | SFBool | [ ] | [repeatR](#fields-repeatR) | FALSE |
@@ -138,6 +142,26 @@ Number of images in y direction.
 {: #fields-numberOfSlices }
 
 Total number of images.
+
+### SFInt32 [out] **width**
+{: #fields-width }
+
+Output field *width*.
+
+### SFInt32 [out] **height**
+{: #fields-height }
+
+Output field *height*.
+
+### SFInt32 [out] **depth**
+{: #fields-depth }
+
+Output field *depth*.
+
+### SFInt32 [out] **colorDepth**
+{: #fields-colorDepth }
+
+Output field *colorDepth*.
 
 ### SFBool [ ] **repeatS** FALSE
 {: #fields-repeatS }

@@ -41,6 +41,10 @@ The ImageTexture3D node belongs to the [Texturing3D](/x_ite/components/overview/
 | MFString | [in, out] | [url](#fields-url) | [ ] |
 | SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0 |
 | SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600 |
+| SFInt32 | [out] | [width](#fields-width) |  |
+| SFInt32 | [out] | [height](#fields-height) |  |
+| SFInt32 | [out] | [depth](#fields-depth) |  |
+| SFInt32 | [out] | [colorDepth](#fields-colorDepth) |  |
 | SFBool | [ ] | [repeatS](#fields-repeatS) | FALSE |
 | SFBool | [ ] | [repeatT](#fields-repeatT) | FALSE |
 | SFBool | [ ] | [repeatR](#fields-repeatR) | FALSE |
@@ -117,6 +121,26 @@ Location and filename of image. Multiple locations are more reliable, and includ
 #### Warning
 
 - Automatically reloading content has security considerations and needs to be considered carefully.
+
+### SFInt32 [out] **width**
+{: #fields-width }
+
+Output field *width*.
+
+### SFInt32 [out] **height**
+{: #fields-height }
+
+Output field *height*.
+
+### SFInt32 [out] **depth**
+{: #fields-depth }
+
+Output field *depth*.
+
+### SFInt32 [out] **colorDepth**
+{: #fields-colorDepth }
+
+Output field *colorDepth*.
 
 ### SFBool [ ] **repeatS** FALSE
 {: #fields-repeatS }
