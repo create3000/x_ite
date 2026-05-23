@@ -364,6 +364,7 @@ X_ITE can load several file formats, either directly as the source of the \<x3d-
 | Wavefront OBJ    | .obj           | model/obj         |                                 |
 | STL              | .stl           | model/stl         | ASCII & Binary                  |
 | PLY              | .ply           | model/ply         | ASCII & Binary                  |
+| OFF              | .off           | model/off         | [As Extension][7]               |
 | SVG Document     | .svg, .svgz    | image/svg+xml     |                                 |
 
   [1]: https://www.web3d.org/documents/specifications/19776-1/V3.3/index.html
@@ -372,6 +373,7 @@ X_ITE can load several file formats, either directly as the source of the \<x3d-
   [4]: /x_ite/features/#vrml-viewer
   [5]: /x_ite/features/#gltf-support
   [6]: https://vrm.dev/en/vrm/vrm_about/
+  [7]: https://www.npmjs.com/package/x_ite-off-parser
 
 All files can be compressed using GZip compression (usually denoted by a 'z' at the end of the filename suffix). This saves bandwidth and speeds up download time.
 

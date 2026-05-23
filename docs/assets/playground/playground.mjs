@@ -1,3 +1,5 @@
+import "https://cdn.jsdelivr.net/npm/x_ite-off-parser@1.0.2/dist/x_ite-off-parser.js";
+
 const MONACO_VERSION = $(`script[src*="monaco-editor"]`) .attr ("src") .match (/\/monaco-editor(@?.*?)\//) [1];
 
 class Playground

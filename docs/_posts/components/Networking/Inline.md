@@ -179,12 +179,13 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 | X3D XML          | .x3d, .x3dz    | model/x3d+xml     | [X3D Encoding: XML][1]          |
 | X3D JSON         | .x3dj, .x3djz  | model/x3d+json    | [X3D Encoding: JSON][2]         |
 | X3D Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml    | [X3D Encoding: Classic VRML][3] |
-| VRML 2.0         | .wrl, .wrz     | model/vrml        | [X_ITE VRML Viewer][4]                |
+| VRML 2.0         | .wrl, .wrz     | model/vrml        | [VRML Viewer][4]                |
 | glTF             | .gltf, .glb    | model/gltf+json   | [glTF Support][5]               |
 | VRM              | .vrm           | model/vrm         | [About VRM][6]                  |
 | Wavefront OBJ    | .obj           | model/obj         |                                 |
 | STL              | .stl           | model/stl         | ASCII & Binary                  |
 | PLY              | .ply           | model/ply         | ASCII & Binary                  |
+| OFF              | .off           | model/off         | [As Extension][7]               |
 | SVG Document     | .svg, .svgz    | image/svg+xml     |                                 |
 
   [1]: https://www.web3d.org/documents/specifications/19776-1/V3.3/index.html
@@ -193,6 +194,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
   [4]: /x_ite/features/#vrml-viewer
   [5]: /x_ite/features/#gltf-support
   [6]: https://vrm.dev/en/vrm/vrm_about/
+  [7]: https://www.npmjs.com/package/x_ite-off-parser
 
 >**Tip:** All files can be compressed using GZip compression (usually denoted by a 'z' at the end of the filename suffix). This saves bandwidth and speeds up download time.
 {: .prompt-tip }

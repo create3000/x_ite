@@ -191,7 +191,6 @@ monaco: true
 }
 </style>
 
-<script defer src="https://cdn.jsdelivr.net/npm/x_ite-off-parser@1.0.2/dist/x_ite-off-parser.js"></script>
 <script type="module" src="../assets/playground/playground.mjs"></script>
 
 <div class="playground">
