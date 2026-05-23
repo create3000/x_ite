@@ -51,6 +51,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
       if (this .urlStack .length === 0)
       {
          this .clearTexture ();
+         this .updateOutputs (0, 0, 0, 0);
          this .setLoadState (X3DConstants .FAILED_STATE);
          return;
       }
