@@ -40,10 +40,13 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
       X3DTexture2DNode   .prototype .initialize .call (this);
       X3DUrlOutputObject .prototype .initialize .call (this);
 
-      this ._dimensions .addInterest ("set_dimensions__", this);
-      this ._depthMap   .addInterest ("set_depthMap__",   this);
-      this ._children   .addInterest ("set_children__",   this);
+      this ._singleFrame .addInterest ("set_singleFrame__", this);
+      this ._width       .addInterest ("set_dimensions__",  this);
+      this ._height      .addInterest ("set_dimensions__",  this);
+      this ._depthMap    .addInterest ("set_depthMap__",    this);
+      this ._children    .addInterest ("set_children__",    this);
 
+      this .set_singleFrame__ ();
       this .set_dimensions__ ();
       this .set_depthMap__ ();
       this .set_children__ ();
@@ -62,6 +65,10 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
    {
       return this ._loadState .getValue ();
    },
+   set_singleFrame__ ()
+   {
+      this .update = true;
+   },
    set_dimensions__ ()
    {
       const browser = this .getBrowser ();
@@ -69,10 +76,10 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
       // Create framebuffer.
 
       const
-         width  = this ._dimensions [0] ?? 128,
-         height = this ._dimensions [1] ?? 128;
+         width  = Math .max (this ._width .getValue (), 0),
+         height = Math .max (this ._height .getValue (), 0);
 
-      // const components = this ._dimensions [2] ?? 4;
+      // const components = this ._colorDepth .getValue ();
 
       if (width > 0 && height > 0)
       {
@@ -156,7 +163,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
       if (!this .frameBuffer)
          return;
 
-      if (this ._update .getValue () === "NONE")
+      if (!this .update)
          return;
 
       if (Date .now () - this .lastUpdate < this ._updateInterval .getValue () * 1000)
@@ -258,8 +265,8 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
 
          this .updateTextureParameters ();
 
-         if (this ._update .equals ("NEXT_FRAME_ONLY"))
-            this ._update = "NONE";
+         if (this ._singleFrame .getValue ())
+            this .update = false;
       };
    })(),
    dispose ()
@@ -281,9 +288,11 @@ Object .defineProperties (RenderedTexture,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "replaceImage",        new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "maximumNumberFrames", new Fields .SFInt32 (1000)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                 new Fields .MFString ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "update",              new Fields .SFString ("NONE")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "singleFrame",         new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "updateInterval",      new Fields .SFTime (0.1)),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "dimensions",          new Fields .MFInt32 (128, 128, 4)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "width",               new Fields .SFInt32 (128)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "height",              new Fields .SFInt32 (128)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "colorDepth",          new Fields .SFInt32 (4)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "depthMap",            new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",             new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",             new Fields .SFBool (true)),
