@@ -1,5 +1,5 @@
-/* X_ITE v15.0.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.2")];
+/* X_ITE v15.0.3 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -406,15 +406,13 @@ Object .assign (Object .setPrototypeOf (BlendedVolumeStyle .prototype, VolumeRen
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .addVolumeData .call (this, volumeDataNode);
 
-      if (this .renderStyleNode)
-         this .renderStyleNode .addVolumeData (volumeDataNode);
+      this .renderStyleNode ?.addVolumeData (volumeDataNode);
    },
    removeVolumeData (volumeDataNode)
    {
       VolumeRendering_X3DComposableVolumeRenderStyleNode .prototype .removeVolumeData .call (this, volumeDataNode);
 
-      if (this .renderStyleNode)
-         this .renderStyleNode .removeVolumeData (volumeDataNode);
+      this .renderStyleNode ?.removeVolumeData (volumeDataNode);
    },
    set_weightTransferFunction1__ ()
    {
@@ -469,8 +467,11 @@ Object .assign (Object .setPrototypeOf (BlendedVolumeStyle .prototype, VolumeRen
 
       this .getBrowser () .getDefaultBlendedVolumeStyle () .addShaderFields (shaderNode);
 
-      if (this .renderStyleNode)
-         this .renderStyleNode .addShaderFields (shaderNode);
+      this .renderStyleNode ?.addShaderFields (shaderNode);
+   },
+   getDefines (defines)
+   {
+      this .renderStyleNode ?.getDefines (defines);
    },
    getUniformsText ()
    {

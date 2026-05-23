@@ -1,9 +1,9 @@
-/* X_ITE v15.0.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.2")];
+/* X_ITE v15.0.3 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 18
+/***/ 343
 (module, __unused_webpack_exports, __webpack_require__) {
 
 var __webpack_dirname__ = "/";
@@ -40,7 +40,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ },
 
-/***/ 948
+/***/ 849
 (module, __unused_webpack_exports, __webpack_require__) {
 
 var __webpack_dirname__ = "/";
@@ -77,7 +77,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ },
 
-/***/ 560
+/***/ 901
 (module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4035,7 +4035,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ },
 
-/***/ 196
+/***/ 369
 (module) {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -7179,10 +7179,10 @@ var Decoder = class _Decoder {
 const external_X_ITE_X3D_DEVELOPMENT_namespaceObject = __X_ITE_X3D__ .DEVELOPMENT;
 var external_X_ITE_X3D_DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_DEVELOPMENT_namespaceObject);
 ;// ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(560);
-/* provided dependency */ var jpegDecode = __webpack_require__(196);
-/* provided dependency */ var CharLS = __webpack_require__(18);
-/* provided dependency */ var OpenJPEG = __webpack_require__(948);
+/* provided dependency */ var dicomParser = __webpack_require__(901);
+/* provided dependency */ var jpegDecode = __webpack_require__(369);
+/* provided dependency */ var CharLS = __webpack_require__(343);
+/* provided dependency */ var OpenJPEG = __webpack_require__(849);
 
 
 
@@ -9027,7 +9027,7 @@ Object .assign (Object .setPrototypeOf (TextureTransform3D .prototype, (external
             center      = this ._center .getValue (),
             matrix4     = this .matrix;
 
-         matrix4 .identity ();
+         matrix4 .set ();
 
          if (!center .equals ((external_X_ITE_X3D_Vector3_default()).ZERO))
             matrix4 .translate (vector .assign (center) .negate ());

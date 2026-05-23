@@ -1,5 +1,5 @@
-/* X_ITE v15.0.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.2")];
+/* X_ITE v15.0.3 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1136,7 +1136,7 @@ Object .assign (VolumePicker .prototype,
 
          if (childShape .getNumChildShapes ())
          {
-            matrix .get (translation, rotation, scale);
+            matrix .getTransform (translation, rotation, scale);
 
             s .setValue (scale .x, scale .y, scale .z);
 
@@ -1190,7 +1190,7 @@ Object .assign (VolumePicker .prototype,
       {
          const t = transform || T;
 
-         m .set (translation, rotation);
+         m .setTransform (translation, rotation);
 
          o .setValue (m [12], m [13], m [14]);
 
@@ -1379,7 +1379,7 @@ Object .assign (Object .setPrototypeOf (PointPickSensor .prototype, Picking_X3DP
                   {
                      pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
 
-                     modelMatrix .get (translation, rotation, scale);
+                     modelMatrix .getTransform (translation, rotation, scale);
 
                      picker .getTransform (translation, rotation, transform);
                      localScaling .setValue (scale .x, scale .y, scale .z);
