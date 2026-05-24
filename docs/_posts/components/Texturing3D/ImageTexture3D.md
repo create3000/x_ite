@@ -164,11 +164,13 @@ Optional single contained [TextureProperties](/x_ite/components/texturing/textur
 
 ## Supported File Formats
 
-| Encoding | File Extension  | MIME Type   | Comment    |
-|----------|-----------------|-------------|------------|
-| KTX2     | .ktx2, .ktx2.gz | image/ktx2  | TEXTURE_3D |
-| DICOM    | .dcm            | image/dicom |            |
-| NRRD     | .nrrd, .nrrd.gz | image/nrrd  |            |
+| Encoding | File Extension  | MIME Type   | Comment                     |
+|----------|-----------------|-------------|-----------------------------|
+| KTX2     | .ktx2, .ktx2.gz | image/ktx2  | TEXTURE_3D                  |
+| DICOM    | .dcm            | image/dicom |                             |
+| NRRD     | .nrrd, .nrrd.gz | image/nrrd  | [Nearly Raw Raster Data][1] |
+
+  [1]: https://teem.sourceforge.net/nrrd
 
 ## Advice
 
