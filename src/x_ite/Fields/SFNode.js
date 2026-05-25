@@ -246,17 +246,29 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
    /**
    * @deprecated Returns the corresponding X3DField object associated with *name*. Use sfnode.{fieldName} syntax.
    */
-   getField (name)
+   getField: (() =>
    {
-      const
-         target = this [_target],
-         node   = target .getValue ();
+      let warn = true;
 
-      if (node)
-         return node .getField (name);
+      return function (name)
+      {
+         if (warn)
+         {
+            warn = false;
 
-      throw new Error ("SFNode is disposed.")
-   },
+            console .warn ("Use of sfnode.getField(name) is depreciated. Use sfnode.{fieldName} syntax or sfnode.addFieldCallback(key, fieldName, callback).");
+         }
+
+         const
+            target = this [_target],
+            node   = target .getValue ();
+
+         if (node)
+            return node .getField (name);
+
+         throw new Error ("SFNode is disposed.")
+      };
+   })(),
    addFieldCallback (... args)
    {
       const target = this [_target];
