@@ -50,9 +50,9 @@ The RenderedTexture node belongs to the [Texturing](/x_ite/components/overview/#
 | SFInt32 | [in, out] | [height](#fields-height) | 128 |
 | SFInt32 | [in, out] | [colorDepth](#fields-colorDepth) | 4 |
 | SFBool | [in, out] | [depthMap](#fields-depthMap) | FALSE |
+| SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFBool | [ ] | [repeatS](#fields-repeatS) | TRUE |
 | SFBool | [ ] | [repeatT](#fields-repeatT) | TRUE |
-| SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL |
 | MFNode | [in, out] | [children](#fields-children) | [ ] |
 {: .fields }
@@ -137,6 +137,11 @@ Sets colorDepth of the rendered texture.
 
 Indicates that a generated texture contains a depth buffer for the image, instead of a color buffer. Depth maps have a single component in each pixel of the output image.
 
+### SFBool [out] **isActive** <small class="red">not supported</small>
+{: #fields-isActive }
+
+Provides a TRUE event when the data output process becomes active, and a FALSE event when the data output process is stopped.
+
 ### SFBool [ ] **repeatS** TRUE
 {: #fields-repeatS }
 
@@ -146,11 +151,6 @@ Whether to repeat texture along S axis horizontally from left to right.
 {: #fields-repeatT }
 
 Whether to repeat texture along T axis vertically from top to bottom.
-
-### SFBool [out] **isActive** <small class="red">not supported</small>
-{: #fields-isActive }
-
-Provides a TRUE event when the data output process becomes active, and a FALSE event when the data output process is stopped.
 
 ### SFNode [ ] **textureProperties** NULL <small>[TextureProperties]</small>
 {: #fields-textureProperties }
