@@ -38,7 +38,7 @@ Object .assign (Object .setPrototypeOf (X3DBBoxNode .prototype, X3DChildNode .pr
             bboxSize   = bbox .size .max (max),
             bboxCenter = bbox .center;
 
-         return matrix .set (bboxCenter, null, bboxSize);
+         return matrix .setTransform (bboxCenter, null, bboxSize);
       };
    })(),
    getShapes (shapes, parentModelMatrix)

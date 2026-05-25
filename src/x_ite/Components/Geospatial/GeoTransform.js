@@ -41,10 +41,10 @@ Object .assign (Object .setPrototypeOf (GeoTransform .prototype, X3DTransformMat
       {
          this .getLocationMatrix (this ._geoCenter .getValue (), locationMatrix);
 
-         matrix .set (this ._translation        .getValue (),
-                        this ._rotation         .getValue (),
-                        this ._scale            .getValue (),
-                        this ._scaleOrientation .getValue ());
+         matrix .setTransform (this ._translation      .getValue (),
+                               this ._rotation         .getValue (),
+                               this ._scale            .getValue (),
+                               this ._scaleOrientation .getValue ());
 
          this .setMatrix (matrix .multRight (locationMatrix) .multLeft (locationMatrix .inverse ()));
       };

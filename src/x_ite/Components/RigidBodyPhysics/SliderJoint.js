@@ -68,8 +68,8 @@ Object .assign (Object .setPrototypeOf (SliderJoint .prototype, X3DRigidJointNod
 
          axisRotation .setFromToVec (Vector3 .X_AXIS, this ._axis .getValue ());
 
-         matrixA .set (this .getBody1 () ._position .getValue (), this .getBody1 () ._orientation .getValue () .copy () .multRight (axisRotation));
-         matrixB .set (this .getBody1 () ._position .getValue (), this .getBody1 () ._orientation .getValue () .copy () .multRight (axisRotation));
+         matrixA .setTransform (this .getBody1 () ._position .getValue (), this .getBody1 () ._orientation .getValue () .copy () .multRight (axisRotation));
+         matrixB .setTransform (this .getBody1 () ._position .getValue (), this .getBody1 () ._orientation .getValue () .copy () .multRight (axisRotation));
 
          origin .setValue (matrixA [12], matrixA [13], matrixA [14]);
 

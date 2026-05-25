@@ -57,6 +57,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
       if (this .urlStack .length === 0)
       {
          this .clearTexture ();
+         this .updateOutputs (0, 0, 0);
          this .setLoadState (X3DConstants .FAILED_STATE);
          return;
       }
@@ -109,11 +110,14 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
       try
       {
+         const { baseWidth, baseHeight, numComponents } = texture;
+
          this .setTexture (texture);
          this .setTransparent (false);
-         this .setWidth (texture .baseWidth);
-         this .setHeight (texture .baseHeight);
+         this .setWidth (baseWidth);
+         this .setHeight (baseHeight);
          this .updateTextureParameters ();
+         this .updateOutputs (baseWidth, baseHeight, numComponents);
 
          this .setLoadState (X3DConstants .COMPLETE_STATE);
       }
@@ -141,6 +145,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
          this .setTextureData (width, height, this ._colorSpaceConversion .getValue (), this .isTransparent (), image);
          this .setTransparent (this .isImageTransparent (this .getTextureData (this .getTexture (), width, height)));
+         this .updateOutputs (width, height, this .isTransparent () ? 4 : 3);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
          this .addNodeEvent ();
       }
@@ -149,6 +154,12 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          // Catch security error from cross origin requests.
          this .setError ({ type: error .message });
       }
+   },
+   updateOutputs (width, height, colorDepth)
+   {
+      this ._width      = width;
+      this ._height     = height;
+      this ._colorDepth = colorDepth;
    },
    dispose ()
    {
@@ -170,6 +181,9 @@ Object .defineProperties (ImageTexture,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime (0)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "colorSpaceConversion", new Fields .SFBool (true)), // experimental
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "width",                new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "height",               new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "colorDepth",           new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),

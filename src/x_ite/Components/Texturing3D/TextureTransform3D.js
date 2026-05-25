@@ -40,7 +40,7 @@ Object .assign (Object .setPrototypeOf (TextureTransform3D .prototype, X3DSingle
             center      = this ._center .getValue (),
             matrix4     = this .matrix;
 
-         matrix4 .identity ();
+         matrix4 .set ();
 
          if (!center .equals (Vector3 .ZERO))
             matrix4 .translate (vector .assign (center) .negate ());

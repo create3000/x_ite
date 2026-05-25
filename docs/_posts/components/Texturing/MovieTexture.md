@@ -53,6 +53,10 @@ The MovieTexture node belongs to the [Texturing](/x_ite/components/overview/#tex
 | SFBool | [out] | [isPaused](#fields-isPaused) |  |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFTime | [out] | [elapsedTime](#fields-elapsedTime) |  |
+| SFInt32 | [out] | [width](#fields-width) |  |
+| SFInt32 | [out] | [height](#fields-height) |  |
+| SFInt32 | [out] | [colorDepth](#fields-colorDepth) |  |
+| SFBool | [out] | [hasSound](#fields-hasSound) |  |
 | SFTime | [out] | [duration_changed](#fields-duration_changed) |  |
 | SFBool | [ ] | [repeatS](#fields-repeatS) | TRUE |
 | SFBool | [ ] | [repeatT](#fields-repeatT) | TRUE |
@@ -253,6 +257,26 @@ Current elapsed time since MovieTexture activated/running, cumulative in seconds
 
 - Not supported in VRML97.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
+### SFInt32 [out] **width**
+{: #fields-width }
+
+Output field *width*.
+
+### SFInt32 [out] **height**
+{: #fields-height }
+
+Output field *height*.
+
+### SFInt32 [out] **colorDepth**
+{: #fields-colorDepth }
+
+Output field *colorDepth*.
+
+### SFBool [out] **hasSound**
+{: #fields-hasSound }
+
+Output field *hasSound*.
 
 ### SFTime [out] **duration_changed**
 {: #fields-duration_changed }

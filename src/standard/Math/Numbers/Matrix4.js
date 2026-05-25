@@ -71,7 +71,52 @@ Object .assign (Matrix4 .prototype,
    {
       return this [r * this .order + c];
    },
-   set: (() =>
+   set (m00 = 1, m01 = 0,   m02 = 0,   m03 = 0,
+        m10 = 0, m11 = m00, m12 = 0,   m13 = 0,
+        m20 = 0, m21 = 0,   m22 = m11, m23 = 0,
+        m30 = 0, m31 = 0,   m32 = 0,   m33 = m22)
+   {
+      this [ 0] = m00;
+      this [ 1] = m01;
+      this [ 2] = m02;
+      this [ 3] = m03;
+      this [ 4] = m10;
+      this [ 5] = m11;
+      this [ 6] = m12;
+      this [ 7] = m13;
+      this [ 8] = m20;
+      this [ 9] = m21;
+      this [10] = m22;
+      this [11] = m23;
+      this [12] = m30;
+      this [13] = m31;
+      this [14] = m32;
+      this [15] = m33;
+
+      return this;
+   },
+   getTransform: (() =>
+   {
+      const c = new Vector3 ();
+
+      return function (translation, rotation, scale, scaleOrientation, center)
+      {
+         if (center)
+         {
+            m .setTransform (c .assign (center) .negate ());
+            m .multLeft (this);
+            m .translate (center);
+            m .getTransform (translation, rotation, scale, scaleOrientation);
+         }
+         else
+         {
+            this .factor (translation, rotation, scale, scaleOrientation);
+         }
+
+         return this;
+      };
+   })(),
+   setTransform: (() =>
    {
       const
          invScaleOrientation = new Rotation4 (),
@@ -79,146 +124,38 @@ Object .assign (Matrix4 .prototype,
 
       return function (translation, rotation, scale, scaleOrientation, center)
       {
-         this .identity ();
+         this .set ();
 
-         switch (arguments .length)
+         // P' = T * C * R * SR * S * -SR * -C * P
+         if (translation ?.equals (Vector3 .ZERO) === false)
+            this .translate (translation);
+
+         const hasCenter = center ?.equals (Vector3 .ZERO) === false;
+
+         if (hasCenter)
+            this .translate (center);
+
+         if (rotation ?.equals (Rotation4 .IDENTITY) === false)
+            this .rotate (rotation);
+
+         if (scale ?.equals (Vector3 .ONE) === false)
          {
-            case 1:
+            if (scaleOrientation ?.equals (Rotation4 .IDENTITY) === false)
             {
-               if (translation && !translation .equals (Vector3 .ZERO))
-                  this .translate (translation);
-
-               break;
+               this .rotate (scaleOrientation);
+               this .scale (scale);
+               this .rotate (invScaleOrientation .assign (scaleOrientation) .inverse ());
             }
-            case 2:
+            else
             {
-               if (translation && !translation .equals (Vector3 .ZERO))
-                  this .translate (translation);
-
-               if (rotation && !rotation .equals (Rotation4 .IDENTITY))
-                  this .rotate (rotation);
-
-               break;
-            }
-            case 3:
-            {
-               if (translation && !translation .equals (Vector3 .ZERO))
-                  this .translate (translation);
-
-               if (rotation && !rotation .equals (Rotation4 .IDENTITY))
-                  this .rotate (rotation);
-
-               if (scale && !scale .equals (Vector3 .ONE))
-                  this .scale (scale);
-
-               break;
-            }
-            case 4:
-            {
-               if (translation && !translation .equals (Vector3 .ZERO))
-                  this .translate (translation);
-
-               if (rotation && !rotation .equals (Rotation4 .IDENTITY))
-                  this .rotate (rotation);
-
-               if (scale && !scale .equals (Vector3 .ONE))
-               {
-                  if (scaleOrientation && !scaleOrientation .equals (Rotation4 .IDENTITY))
-                  {
-                     this .rotate (scaleOrientation);
-                     this .scale (scale);
-                     this .rotate (invScaleOrientation .assign (scaleOrientation) .inverse ());
-                  }
-                  else
-                  {
-                     this .scale (scale);
-                  }
-               }
-
-               break;
-            }
-            case 5:
-            {
-               // P' = T * C * R * SR * S * -SR * -C * P
-               if (translation && !translation .equals (Vector3 .ZERO))
-                  this .translate (translation);
-
-               const hasCenter = center && !center .equals (Vector3 .ZERO);
-
-               if (hasCenter)
-                  this .translate (center);
-
-               if (rotation && !rotation .equals (Rotation4 .IDENTITY))
-                  this .rotate (rotation);
-
-               if (scale && !scale .equals (Vector3 .ONE))
-               {
-                  if (scaleOrientation && !scaleOrientation .equals (Rotation4 .IDENTITY))
-                  {
-                     this .rotate (scaleOrientation);
-                     this .scale (scale);
-                     this .rotate (invScaleOrientation .assign (scaleOrientation) .inverse ());
-                  }
-                  else
-                  {
-                     this .scale (scale);
-                  }
-               }
-
-               if (hasCenter)
-                  this .translate (invCenter .assign (center) .negate ());
-
-               break;
-            }
-            case 16:
-            {
-               for (let i = 0; i < 16; ++ i)
-                  this [i] = arguments [i];
-
-               break;
+               this .scale (scale);
             }
          }
+
+         if (hasCenter)
+            this .translate (invCenter .assign (center) .negate ());
 
          return this;
-      };
-   })(),
-   get: (() =>
-   {
-      const c = new Vector3 ();
-
-      return function (translation, rotation, scale, scaleOrientation, center)
-      {
-         switch (arguments .length)
-         {
-            case 1:
-            {
-               translation .set (this [12], this [13], this [14]);
-               break;
-            }
-            case 2:
-            case 3:
-            case 4:
-            {
-               this .factor (translation, rotation, scale, scaleOrientation);
-               break;
-            }
-            case 5:
-            {
-               if (center)
-               {
-                  m .set (c .assign (center) .negate ());
-                  m .multLeft (this);
-                  m .translate (center);
-                  m .get (translation, rotation, scale, scaleOrientation);
-               }
-               else
-               {
-                  this .factor (translation, rotation, scale, scaleOrientation);
-               }
-
-               break;
-            }
-         }
       };
    })(),
    setRotation (rotation)
@@ -272,6 +209,9 @@ Object .assign (Matrix4 .prototype,
       {
          // (1) Get translation.
          translation ?.set (this [12], this [13], this [14]);
+
+         if (!(rotation || scale || scaleOrientation))
+            return;
 
          // (2) Create 3x3 matrix.
          const a = this .submatrix;
@@ -378,7 +318,8 @@ Object .assign (Matrix4 .prototype,
       // Calculate the determinant.
       let d = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
 
-      // if (d === 0) ... determinant is zero.
+      if (!d)
+         return this .assign (Matrix4 .ZERO);
 
       d = 1 / d;
 
@@ -555,22 +496,13 @@ Object .assign (Matrix4 .prototype,
 
       return vector;
    },
-   identity ()
-   {
-      this [ 0] = 1; this [ 1] = 0; this [ 2] = 0; this [ 3] = 0;
-      this [ 4] = 0; this [ 5] = 1; this [ 6] = 0; this [ 7] = 0;
-      this [ 8] = 0; this [ 9] = 0; this [10] = 1; this [11] = 0;
-      this [12] = 0; this [13] = 0; this [14] = 0; this [15] = 1;
-
-      return this;
-   },
    translate (translation)
    {
       const { x, y, z } = translation;
 
-      this [12] += this [ 0] * x + this [ 4] * y + this [ 8] * z;
-      this [13] += this [ 1] * x + this [ 5] * y + this [ 9] * z;
-      this [14] += this [ 2] * x + this [ 6] * y + this [10] * z;
+      this [12] += this [0] * x + this [4] * y + this [ 8] * z;
+      this [13] += this [1] * x + this [5] * y + this [ 9] * z;
+      this [14] += this [2] * x + this [6] * y + this [10] * z;
 
       return this;
    },
@@ -702,6 +634,10 @@ Object .assign (Matrix4,
 {
    ZERO: Object .freeze (new Matrix4 (0)),
    IDENTITY: Object .freeze (new Matrix4 ()),
+   fromTransform (translation, rotation, scale, scaleOrientation, center)
+   {
+      return Object .create (this .prototype) .setTransform (translation, rotation, scale, scaleOrientation, center);
+   },
    fromRotation (rotation)
    {
       return Object .create (this .prototype) .setQuaternion (rotation .getQuaternion (q));

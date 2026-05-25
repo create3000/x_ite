@@ -28,61 +28,27 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
       {
          this .getValue () .assign (value);
       },
-      setTransform: (() =>
+      setTransform (translation, rotation, scale, scaleOrientation, center)
       {
-         const args = [ ];
-
-         return function (translation, rotation, scale, scaleOrientation, center)
-         {
-            args .push (translation      ?.getValue (),
-                        rotation         ?.getValue (),
-                        scale            ?.getValue (),
-                        scaleOrientation ?.getValue (),
-                        center           ?.getValue ());
-
-            for (let i = args .length - 1; i > -1; -- i)
-            {
-               if (args [i])
-                  break;
-
-               args .pop ();
-            }
-
-            this .getValue () .set (... args);
-
-            args .length = 0;
-         };
-      })(),
-      getTransform: (() =>
+         this .getValue () .setTransform (translation      ?.getValue (),
+                                          rotation         ?.getValue (),
+                                          scale            ?.getValue (),
+                                          scaleOrientation ?.getValue (),
+                                          center           ?.getValue ());
+      },
+      getTransform (translation, rotation, scale, scaleOrientation, center)
       {
-         const args = [ ];
+         this .getValue () .getTransform (translation      ?.getValue (),
+                                          rotation         ?.getValue (),
+                                          scale            ?.getValue (),
+                                          scaleOrientation ?.getValue (),
+                                          center           ?.getValue ());
 
-         return function (translation, rotation, scale, scaleOrientation, center)
-         {
-            args .push (translation      ?.getValue (),
-                        rotation         ?.getValue (),
-                        scale            ?.getValue (),
-                        scaleOrientation ?.getValue (),
-                        center           ?.getValue ());
-
-            for (let i = args .length - 1; i > -1; -- i)
-            {
-               if (args [i])
-                  break;
-
-               args .pop ();
-            }
-
-            this .getValue () .get (... args);
-
-            translation      ?.addEvent ();
-            rotation         ?.addEvent ();
-            scale            ?.addEvent ();
-            scaleOrientation ?.addEvent ();
-
-            args .length = 0;
-         };
-      })(),
+         translation      ?.addEvent ();
+         rotation         ?.addEvent ();
+         scale            ?.addEvent ();
+         scaleOrientation ?.addEvent ();
+      },
       determinant ()
       {
          return this .getValue () .determinant ();

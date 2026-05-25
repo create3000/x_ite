@@ -1,5 +1,5 @@
-/* X_ITE v15.0.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.2")];
+/* X_ITE v15.0.3 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
@@ -245,13 +245,15 @@ Object .assign (Object .setPrototypeOf (X3DRigidJointNode .prototype, (external_
    },
    initialize1 ()
    {
-      this .initialInverseMatrix1 .set (this .bodyNode1 ._position .getValue (), this .bodyNode1 ._orientation .getValue ());
-      this .initialInverseMatrix1 .inverse ();
+      this .initialInverseMatrix1
+         .setTransform (this .bodyNode1 ._position .getValue (), this .bodyNode1 ._orientation .getValue ())
+         .inverse ();
    },
    initialize2 ()
    {
-      this .initialInverseMatrix2 .set (this .bodyNode2 ._position .getValue (), this .bodyNode2 ._orientation .getValue ());
-      this .initialInverseMatrix2 .inverse ();
+      this .initialInverseMatrix2
+         .setTransform (this .bodyNode2 ._position .getValue (), this .bodyNode2 ._orientation .getValue ())
+         .inverse ();
    },
    update1 ()
    { },
@@ -741,8 +743,8 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, (exte
    { },
    eventsProcessed ()
    {
-      this .matrix .set (this ._translation .getValue (),
-                         this ._rotation    .getValue ());
+      this .matrix .setTransform (this ._translation .getValue (),
+                                  this ._rotation    .getValue ());
 
       if (this .compoundShape .getNumChildShapes ())
          this .compoundShape .updateChildTransform (0, this .getLocalTransform (), true);
@@ -2023,7 +2025,7 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
             const lastAngle  = this ._hinge1Angle .getValue ();
 
             difference .assign (this .getInitialInverseMatrix1 ()) .multRight (this .getBody1 () .getMatrix ());
-            difference .get (null, rotation);
+            difference .getTransform (null, rotation);
 
             this ._hinge1Angle = rotation .angle;
 
@@ -2053,7 +2055,7 @@ Object .assign (Object .setPrototypeOf (DoubleAxisHingeJoint .prototype, RigidBo
             const lastAngle  = this ._hinge2Angle .getValue ();
 
             difference .assign (this .getInitialInverseMatrix2 ()) .multRight (this .getBody2 () .getMatrix ());
-            difference .get (null, rotation);
+            difference .getTransform (null, rotation);
 
             this ._hinge2Angle = rotation .angle;
 
@@ -2322,7 +2324,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, (external_X_ITE_X3
       {
          const m = this .matrix;
 
-         m .set (this ._position .getValue (), this ._orientation .getValue ());
+         m .setTransform (this ._position .getValue (), this ._orientation .getValue ());
 
          //t .setFromOpenGLMatrix (m);
 
@@ -3177,7 +3179,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, RigidBo
             const lastAngle  = this ._angle .getValue ();
 
             difference .assign (this .getInitialInverseMatrix2 ()) .multRight (this .getBody2 () .getMatrix ());
-            difference .get (null, rotation);
+            difference .getTransform (null, rotation);
 
             this ._angle = rotation .angle;
 
@@ -3288,8 +3290,8 @@ Object .assign (Object .setPrototypeOf (SliderJoint .prototype, RigidBodyPhysics
 
          axisRotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).X_AXIS, this ._axis .getValue ());
 
-         matrixA .set (this .getBody1 () ._position .getValue (), this .getBody1 () ._orientation .getValue () .copy () .multRight (axisRotation));
-         matrixB .set (this .getBody1 () ._position .getValue (), this .getBody1 () ._orientation .getValue () .copy () .multRight (axisRotation));
+         matrixA .setTransform (this .getBody1 () ._position .getValue (), this .getBody1 () ._orientation .getValue () .copy () .multRight (axisRotation));
+         matrixB .setTransform (this .getBody1 () ._position .getValue (), this .getBody1 () ._orientation .getValue () .copy () .multRight (axisRotation));
 
          origin .setValue (matrixA [12], matrixA [13], matrixA [14]);
 

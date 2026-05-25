@@ -1,5 +1,5 @@
-/* X_ITE v15.0.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.2")];
+/* X_ITE v15.0.3 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -610,7 +610,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, Layout_X3DLayoutNode 
             scaleModeY = this .getScaleModeY (parents [index]);
 
          scale .set (1);
-         modelViewMatrix .get () .get (currentTranslation, currentRotation, currentScale);
+         modelViewMatrix .get () .getTransform (currentTranslation, currentRotation, currentScale);
 
          switch (scaleModeX)
          {
@@ -677,7 +677,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, Layout_X3DLayoutNode 
          rectangle .y = translation .y;
 
          matrix
-            .set (currentTranslation, currentRotation)
+            .setTransform (currentTranslation, currentRotation)
             .translate (translation)
             .scale (scale);
 
@@ -785,7 +785,7 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, (external_X_ITE_
       if (this .layoutNode)
          return this .matrix .assign (this .modelViewMatrix) .inverse () .multLeft (this .screenMatrix);
 
-      return this .matrix .identity ();
+      return this .matrix .set ();
    },
    traverse (type, renderObject)
    {

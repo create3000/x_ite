@@ -2323,7 +2323,7 @@ function eventsProcessed ()
 
             if (this .vectorValue (node .matrix, matrix))
             {
-               matrix .get (translation, rotation, scale, scaleOrientation);
+               matrix .getTransform (translation, rotation, scale, scaleOrientation);
 
                transformNode ._translation      = translation;
                transformNode ._rotation         = rotation;
@@ -2551,7 +2551,7 @@ function eventsProcessed ()
             if (!jointNode)
                continue;
 
-            inverseBindMatrix .get (translation, rotation, scale);
+            inverseBindMatrix .getTransform (translation, rotation, scale);
 
             humanoidNode ._joints                .push (jointNode);
             humanoidNode ._jointBindingPositions .push (translation);
@@ -2596,9 +2596,9 @@ function eventsProcessed ()
       {
          const skinCoordWeight = jointNode .skinCoordWeight;
 
-         jointMatrix .set (jointBindingPositions [j] ?.getValue (),
-                           jointBindingRotations [j] ?.getValue (),
-                           jointBindingScales [j] ?.getValue ())
+         jointMatrix .setTransform (jointBindingPositions [j] ?.getValue (),
+                                    jointBindingRotations [j] ?.getValue (),
+                                    jointBindingScales [j] ?.getValue ())
          .multRight (jointNode .getValue () .getModelViewMatrix ());
 
          for (const [c, index] of jointNode .skinCoordIndex .entries ())

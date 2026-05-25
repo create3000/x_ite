@@ -426,7 +426,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       {
          const differenceMatrix = this .modelMatrix .copy () .multRight (fromViewpointNode .getViewMatrix ()) .inverse ();
 
-         differenceMatrix .get (position, orientation, scale, scaleOrientation);
+         differenceMatrix .getTransform (position, orientation, scale, scaleOrientation);
 
          position .subtract (this .getPosition ());
          orientation .multLeft (this .getOrientation () .copy () .inverse ());
@@ -615,10 +615,10 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    },
    update ()
    {
-      this .cameraSpaceMatrix .set (this .getUserPosition (),
-                                    this .getUserOrientation (),
-                                    this ._scaleOffset .getValue (),
-                                    this ._scaleOrientationOffset .getValue ());
+      this .cameraSpaceMatrix .setTransform (this .getUserPosition (),
+                                             this .getUserOrientation (),
+                                             this ._scaleOffset .getValue (),
+                                             this ._scaleOrientationOffset .getValue ());
 
       this .cameraSpaceMatrix .multRight (this .modelMatrix);
 

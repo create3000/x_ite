@@ -57,42 +57,37 @@ function X3DGeometryNode (executionContext)
    this .planes                   = Array .from ({ length: 5 }, () => new Plane3 ()); // For LinePickSensor
 }
 
-class GeometryArray extends Array
+class GeometryArray
 {
-   #Type;
-   #typedArray;
-
-   constructor (Type = Float32Array)
+   static create (Type = Float32Array)
    {
-      super ();
+      let typedArray = new Type ();
 
-      this .#Type       = Type;
-      this .#typedArray = new Type ();
-   }
+      return Object .assign ([ ],
+      {
+         assign (value)
+         {
+            const length = value .length;
 
-   assign (value)
-   {
-      const length = value .length;
+            this .length = length;
 
-      this .length = length;
+            for (let i = 0; i < length; ++ i)
+               this [i] = value [i];
+         },
+         getValue ()
+         {
+            return typedArray;
+         },
+         shrinkToFit ()
+         {
+            if (this .length === typedArray .length)
+               typedArray .set (this);
+            else
+               typedArray = new Type (this);
 
-      for (let i = 0; i < length; ++ i)
-         this [i] = value [i];
-   }
-
-   getValue ()
-   {
-      return this .#typedArray;
-   }
-
-   shrinkToFit ()
-   {
-      if (this .length === this .#typedArray .length)
-         this .#typedArray .set (this);
-      else
-         this .#typedArray = new (this .#Type) (this);
-
-      return this .#typedArray;
+            return typedArray;
+         },
+      });
    }
 }
 
@@ -104,7 +99,7 @@ Object .defineProperty (X3DGeometryNode, "createArray",
    {
       // return new Fields .MFFloat ();
 
-      return new GeometryArray (Type);
+      return GeometryArray .create (Type);
    },
 })
 

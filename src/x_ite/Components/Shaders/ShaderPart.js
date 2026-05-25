@@ -88,8 +88,7 @@ Object .assign (Object .setPrototypeOf (ShaderPart .prototype, X3DNode .prototyp
    },
    loadData ()
    {
-      new FileLoader (this) .loadDocument (this ._url,
-      function (data, url)
+      new FileLoader (this) .loadDocument (this ._url, (data, url) =>
       {
          if (data === null)
          {
@@ -124,22 +123,23 @@ Object .assign (Object .setPrototypeOf (ShaderPart .prototype, X3DNode .prototyp
 
                if (match)
                {
-                  const fileName = shaderCompiler .getSourceFileName (match [1]) || url || this .getExecutionContext () .getWorldURL ();
+                  const fileName = shaderCompiler .getSourceFileName (match [1])
+                     || url
+                     || this .getExecutionContext () .getWorldURL ();
 
-                  throw new Error ("Error in " + typeName + " '" + name + "' in URL '" + fileName + "', line " + match [2] + ", " + log);
+                  throw new Error (`Error in ${typeName} '${name}' in URL '${fileName}', line ${match [2]}, ${log}`);
                }
                else
                {
                   const fileName = url || this .getExecutionContext () .getWorldURL ();
 
-                  throw new Error ("Error in " + typeName + " '" + name + "' in URL '" + fileName + "', " + log);
+                  throw new Error (`Error in ${typeName} '${name}' in URL '${fileName}', ${log}`);
                }
             }
 
             this .setLoadState (X3DConstants .COMPLETE_STATE);
          }
-      }
-      .bind (this));
+      });
    },
    dispose ()
    {

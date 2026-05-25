@@ -135,13 +135,15 @@ Object .assign (Object .setPrototypeOf (X3DRigidJointNode .prototype, X3DNode .p
    },
    initialize1 ()
    {
-      this .initialInverseMatrix1 .set (this .bodyNode1 ._position .getValue (), this .bodyNode1 ._orientation .getValue ());
-      this .initialInverseMatrix1 .inverse ();
+      this .initialInverseMatrix1
+         .setTransform (this .bodyNode1 ._position .getValue (), this .bodyNode1 ._orientation .getValue ())
+         .inverse ();
    },
    initialize2 ()
    {
-      this .initialInverseMatrix2 .set (this .bodyNode2 ._position .getValue (), this .bodyNode2 ._orientation .getValue ());
-      this .initialInverseMatrix2 .inverse ();
+      this .initialInverseMatrix2
+         .setTransform (this .bodyNode2 ._position .getValue (), this .bodyNode2 ._orientation .getValue ())
+         .inverse ();
    },
    update1 ()
    { },

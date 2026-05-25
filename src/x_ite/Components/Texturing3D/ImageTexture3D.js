@@ -55,8 +55,9 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
          if (data === null)
          {
             // No URL could be loaded.
-            this .setLoadState (X3DConstants .FAILED_STATE);
             this .clearTexture ();
+            this .updateOutputs (0, 0, 0, 0);
+            this .setLoadState (X3DConstants .FAILED_STATE);
          }
          else if (data instanceof ArrayBuffer)
          {
@@ -77,11 +78,14 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
 
             if (nrrd .nrrd)
             {
-               const
-                  internalType = this .getInternalType (nrrd .components),
-                  transparent  = !(nrrd .components & 1);
+               const { width, height, depth, components, data } = nrrd;
 
-               this .setTextureData (nrrd .width, nrrd .height, nrrd .depth, transparent, internalType, nrrd .data);
+               const
+                  internalType = this .getInternalType (components),
+                  transparent  = !(components & 1);
+
+               this .setTextureData (width, height, depth, transparent, internalType, data);
+               this .updateOutputs (width, height, depth, components);
                this .setLoadState (X3DConstants .COMPLETE_STATE);
                return;
             }
@@ -90,11 +94,14 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
 
             if (dicom .dicom)
             {
-               const
-                  internalType = this .getInternalType (dicom .components),
-                  transparent  = !(dicom .components & 1);
+               const { width, height, depth, components, data } = dicom;
 
-               this .setTextureData (dicom .width, dicom .height, dicom .depth, transparent, internalType, dicom .data);
+               const
+                  internalType = this .getInternalType (components),
+                  transparent  = !(components & 1);
+
+               this .setTextureData (width, height, depth, transparent, internalType, data);
+               this .updateOutputs (width, height, depth, components);
                this .setLoadState (X3DConstants .COMPLETE_STATE);
                return;
             }
@@ -114,14 +121,24 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
             console .info (`Done loading image texture 3D '${decodeURI (URL)}'.`);
       }
 
+      const { baseWidth, baseHeight, baseDepth, numComponents } = texture;
+
       this .setTexture (texture);
       this .setTransparent (false);
-      this .setWidth (texture .baseWidth);
-      this .setHeight (texture .baseHeight);
-      this .setDepth (texture .baseDepth); // TODO: Always 1
+      this .setWidth (baseWidth);
+      this .setHeight (baseHeight);
+      this .setDepth (baseDepth); // TODO: Always 1
       this .updateTextureParameters ();
+      this .updateOutputs (baseWidth, baseHeight, baseDepth, numComponents);
 
       this .setLoadState (X3DConstants .COMPLETE_STATE);
+   },
+   updateOutputs (width, height, depth, colorDepth)
+   {
+      this ._width      = width;
+      this ._height     = height;
+      this ._depth      = depth;
+      this ._colorDepth = colorDepth;
    },
    dispose ()
    {
@@ -142,6 +159,10 @@ Object .defineProperties (ImageTexture3D,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime (0)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "width",                new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "height",               new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "depth",                new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "colorDepth",           new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",              new Fields .SFBool ()),

@@ -1,3 +1,5 @@
+import "https://cdn.jsdelivr.net/npm/x_ite-off-parser@1.0.5/dist/x_ite-off-parser.min.js";
+
 $("#drop-zone") .on ("dragover", event =>
 {
    event .stopPropagation ();
@@ -32,6 +34,7 @@ $("#open-files a") .on ("click", event =>
       ".obj",
       ".stl",
       ".ply",
+      ".off",
       ".svg",
       ".svgz",
    ];

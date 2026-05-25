@@ -1,3 +1,5 @@
+import "https://cdn.jsdelivr.net/npm/x_ite-off-parser@1.0.5/dist/x_ite-off-parser.min.js";
+
 const MONACO_VERSION = $(`script[src*="monaco-editor"]`) .attr ("src") .match (/\/monaco-editor(@?.*?)\//) [1];
 
 class Playground
@@ -228,6 +230,7 @@ class Playground
          ".obj",
          ".stl",
          ".ply",
+         ".off",
          ".svg",
          ".svgz",
       ];
@@ -243,7 +246,7 @@ class Playground
          .appendTo (toolbar);
 
       $("<button></button>")
-         .attr ("title", "Open a file (X3D, VRML, glTF (GLB), VRM, OBJ, STL, PLY, SVG).")
+         .attr ("title", "Open a file (X3D, VRML, glTF (GLB), VRM, OBJ, STL, PLY, OFF, SVG).")
          .addClass ("material-symbols-outlined")
          .text ("file_open")
          .on ("click", () =>

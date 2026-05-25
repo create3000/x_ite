@@ -42,6 +42,9 @@ The ImageTexture node belongs to the [Texturing](/x_ite/components/overview/#tex
 | SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0 |
 | SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600 |
 | SFBool | [ ] | [colorSpaceConversion](#fields-colorSpaceConversion) | TRUE |
+| SFInt32 | [out] | [width](#fields-width) |  |
+| SFInt32 | [out] | [height](#fields-height) |  |
+| SFInt32 | [out] | [colorDepth](#fields-colorDepth) |  |
 | SFBool | [ ] | [repeatS](#fields-repeatS) | TRUE |
 | SFBool | [ ] | [repeatT](#fields-repeatT) | TRUE |
 | SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL |
@@ -122,6 +125,21 @@ Location and filename of image. Multiple locations are more reliable, and includ
 {: #fields-colorSpaceConversion }
 
 Field *colorSpaceConversion*.
+
+### SFInt32 [out] **width**
+{: #fields-width }
+
+Output field *width*.
+
+### SFInt32 [out] **height**
+{: #fields-height }
+
+Output field *height*.
+
+### SFInt32 [out] **colorDepth**
+{: #fields-colorDepth }
+
+Output field *colorDepth*.
 
 ### SFBool [ ] **repeatS** TRUE
 {: #fields-repeatS }

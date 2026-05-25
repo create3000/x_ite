@@ -126,7 +126,7 @@ Object .assign (Object .setPrototypeOf (RigidBody .prototype, X3DNode .prototype
       {
          const m = this .matrix;
 
-         m .set (this ._position .getValue (), this ._orientation .getValue ());
+         m .setTransform (this ._position .getValue (), this ._orientation .getValue ());
 
          //t .setFromOpenGLMatrix (m);
 

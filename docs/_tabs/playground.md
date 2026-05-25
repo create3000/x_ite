@@ -191,7 +191,6 @@ monaco: true
 }
 </style>
 
-<!-- Also change version in playground.js! -->
 <script type="module" src="../assets/playground/playground.mjs"></script>
 
 <div class="playground">

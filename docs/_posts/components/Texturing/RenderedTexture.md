@@ -44,9 +44,11 @@ The RenderedTexture node belongs to the [Texturing](/x_ite/components/overview/#
 | SFBool | [in, out] | [replaceImage](#fields-replaceImage) | TRUE |
 | SFInt32 | [in, out] | [maximumNumberFrames](#fields-maximumNumberFrames) | 1000 |
 | MFString | [in, out] | [url](#fields-url) | [ ] |
-| SFString | [in, out] | [update](#fields-update) | "NONE" |
+| SFBool | [in, out] | [singleFrame](#fields-singleFrame) | TRUE |
 | SFTime | [in, out] | [updateInterval](#fields-updateInterval) | 0.1 |
-| MFInt32 | [in, out] | [dimensions](#fields-dimensions) | [ 128, 128, 4 ] |
+| SFInt32 | [in, out] | [width](#fields-width) | 128 |
+| SFInt32 | [in, out] | [height](#fields-height) | 128 |
+| SFInt32 | [in, out] | [colorDepth](#fields-colorDepth) | 4 |
 | SFBool | [in, out] | [depthMap](#fields-depthMap) | FALSE |
 | SFBool | [ ] | [repeatS](#fields-repeatS) | TRUE |
 | SFBool | [ ] | [repeatT](#fields-repeatT) | TRUE |
@@ -105,29 +107,30 @@ The *url* field typically defines a relative address to a file name that can be 
 - Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https *url* addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
 - Direct or indirect recursion by [Inline](/x_ite/components/networking/inline/) and/or ExternProtoDeclare *url* reloading is a security error.
 
-### SFString [in, out] **update** "NONE" <small>["NONE"|"NEXT_FRAME_ONLY"|"ALWAYS"]</small>
-{: #fields-update }
+### SFBool [in, out] **singleFrame** TRUE
+{: #fields-singleFrame }
 
-*update* controls when the next texture is captured.
-
-#### Warnings
-
-- An object trying to render itself in the scene graph can cause infinite loops.
-- Do not wrap extra quotation marks around these SFString enumeration values, since "quotation" "marks" are only used for MFString values.
+*singleFrame* controls when the next texture is captured.
 
 ### SFTime [in, out] **updateInterval** 0.1 <small>[0,∞)</small>
 {: #fields-updateInterval }
 
 Indicates time intervals between render captures when the update field is "ALWAYS". A value of 0 indicates full frame rate for render captures.
 
-### MFInt32 [in, out] **dimensions** [ 128, 128, 4 ] <small>[0,∞)</small>
-{: #fields-dimensions }
+### SFInt32 [in, out] **width** 128 <small>[0,∞)</small>
+{: #fields-width }
 
-Sets values for width, height, and number of color components [1..4] for the rendered texture.
+Sets width of the rendered texture.
 
-#### Hint
+### SFInt32 [in, out] **height** 128 <small>[0,∞)</small>
+{: #fields-height }
 
-- Components in each pixel value are 1 (intensity), 2 (intensity alpha), 3 (RGB red green blue), 4 (RGBA red green blue alpha-opacity).
+Sets height of the rendered texture.
+
+### SFInt32 [in, out] **colorDepth** 4 <small>[1..4]</small>
+{: #fields-colorDepth }
+
+Sets colorDepth of the rendered texture.
 
 ### SFBool [in, out] **depthMap** FALSE
 {: #fields-depthMap }

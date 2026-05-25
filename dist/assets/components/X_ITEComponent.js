@@ -1,5 +1,5 @@
-/* X_ITE v15.0.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.2")];
+/* X_ITE v15.0.3 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1127,11 +1127,11 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (external_X_I
       {
          const matrix = this .matrices [i] ??= new (external_X_ITE_X3D_Matrix4_default()) ();
 
-         matrix .set (translations      [i] ?.getValue (),
-                      rotations         [i] ?.getValue (),
-                      scales            [i] ?.getValue (),
-                      scaleOrientations [i] ?.getValue (),
-                      centers           [i] ?.getValue ());
+         matrix .setTransform (translations      [Math .min (i, numTranslations      - 1)] ?.getValue (),
+                               rotations         [Math .min (i, numRotations         - 1)] ?.getValue (),
+                               scales            [Math .min (i, numScales            - 1)] ?.getValue (),
+                               scaleOrientations [Math .min (i, numScaleOrientations - 1)] ?.getValue (),
+                               centers           [Math .min (i, numCenters           - 1)] ?.getValue ());
 
          data .set (matrix, o);
          data .set (matrix .submatrix .transpose () .inverse (), o + 16);

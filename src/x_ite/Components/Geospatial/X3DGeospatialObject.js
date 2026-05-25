@@ -96,9 +96,9 @@ Object .assign (X3DGeospatialObject .prototype,
          z .normalize ();
 
          this .originMatrix .set (x .x, x .y, x .z, 0,
-                                    y .x, y .y, y .z, 0,
-                                    z .x, z .y, z .z, 0,
-                                    t .x, t .y, t .z, 1);
+                                  y .x, y .y, y .z, 0,
+                                  z .x, z .y, z .z, 0,
+                                  t .x, t .y, t .z, 1);
 
          this .invOriginMatrix .assign (this .originMatrix) .inverse ();
       }
