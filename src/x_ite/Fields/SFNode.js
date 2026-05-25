@@ -290,7 +290,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
       {
          case 1:
          {
-            const key = [args];
+            const [key] = args;
 
             return X3DField .prototype .removeFieldCallback .call (target, key);
          }
