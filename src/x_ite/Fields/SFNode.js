@@ -256,7 +256,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
          {
             warn = false;
 
-            console .warn ("Use of sfnode.getField(name) is depreciated. Use sfnode.{fieldName} syntax or sfnode.addFieldCallback(key, fieldName, callback).");
+            console .warn ("The use of sfnode.getField(name) is deprecated. Instead, use the sfnode.{fieldName} syntax or sfnode.addFieldCallback(key, fieldName, callback).");
          }
 
          const
