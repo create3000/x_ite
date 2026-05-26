@@ -94,9 +94,6 @@ computeC (const in vec4 rotation, const in vec3 scale)
    float qy = rotation .y;
    float qz = rotation .z;
    float qw = rotation .w;
-   float sx = scale .x;
-   float sy = scale .y;
-   float sz = scale .z;
    float a  = qy * qy;
    float b  = qz * qz;
    float c  = qx * qy;
@@ -107,13 +104,19 @@ computeC (const in vec4 rotation, const in vec3 scale)
    float h  = qy * qz;
    float i  = qw * qx;
 
-   mat3 C = mat3 (
-      sx * (1.0 - 2.0 * (a + b)),  sx * (2.0 * (c + d)),        sx * (2.0 * (e - f)),
-      sy * (2.0 * (c - d)),        sy * (1.0 - 2.0 * (g + b)),  sy * (2.0 * (h + i)),
-      sz * (2.0 * (e + f)),        sz * (2.0 * (h - i)),        sz * (1.0 - 2.0 * (a + g))
+   mat3 R = mat3 (
+      1.0 - 2.0 * (a + b),  2.0 * (c + d),        2.0 * (e - f),
+      2.0 * (c - d),        1.0 - 2.0 * (g + b),  2.0 * (h + i),
+      2.0 * (e + f),        2.0 * (h - i),        1.0 - 2.0 * (a + g)
    );
 
-   return C;
+   mat3 S = mat3 (0.0);
+
+   S [0] [0] = scale .x;
+   S [1] [1] = scale .y;
+   S [2] [2] = scale .z;
+
+   return S * R;
 }
 
 uniform vec2 x3d_FocalLength;
