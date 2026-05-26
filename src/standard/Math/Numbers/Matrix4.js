@@ -166,27 +166,27 @@ Object .assign (Matrix4 .prototype,
    {
       const
          { x, y, z, w } = quaternion,
-         A = y * y,
-         B = z * z,
-         C = x * y,
-         D = z * w,
-         E = z * x,
-         F = y * w,
-         G = x * x,
-         H = y * z,
-         I = x * w;
+         a = y * y,
+         b = z * z,
+         c = x * y,
+         d = z * w,
+         e = z * x,
+         f = y * w,
+         g = x * x,
+         h = y * z,
+         i = x * w;
 
-      this [0]  = 1 - 2 * (A + B);
-      this [1]  = 2 * (C + D);
-      this [2]  = 2 * (E - F);
+      this [0]  = 1 - 2 * (a + b);
+      this [1]  = 2 * (c + d);
+      this [2]  = 2 * (e - f);
       this [3]  = 0;
-      this [4]  = 2 * (C - D);
-      this [5]  = 1 - 2 * (B + G);
-      this [6]  = 2 * (H + I);
+      this [4]  = 2 * (c - d);
+      this [5]  = 1 - 2 * (b + g);
+      this [6]  = 2 * (h + i);
       this [7]  = 0;
-      this [8]  = 2 * (E + F);
-      this [9]  = 2 * (H - I);
-      this [10] = 1 - 2 * (A + G);
+      this [8]  = 2 * (e + f);
+      this [9]  = 2 * (h - i);
+      this [10] = 1 - 2 * (a + g);
       this [11] = 0;
       this [12] = 0;
       this [13] = 0;
