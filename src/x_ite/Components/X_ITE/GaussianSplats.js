@@ -95,28 +95,28 @@ computeC (const in vec4 rotation, const in vec3 scale)
    float qz = rotation .z;
    float qw = rotation .w;
 
-   float A = qy * qy;
-   float B = qz * qz;
-   float C = qx * qy;
-   float D = qz * qw;
-   float E = qz * qx;
-   float F = qy * qw;
-   float G = qx * qx;
-   float H = qy * qz;
-   float I = qx * qw;
+   float a = qy * qy;
+   float b = qz * qz;
+   float c = qx * qy;
+   float d = qz * qw;
+   float e = qz * qx;
+   float f = qy * qw;
+   float g = qx * qx;
+   float h = qy * qz;
+   float i = qx * qw;
 
    mat3 R = mat3 (
-      1.0 - 2.0 * (A + B),
-      2.0 * (C + D),
-      2.0 * (E - F),
+      1.0 - 2.0 * (a + b),
+      2.0 * (c + d),
+      2.0 * (e - f),
 
-      2.0 * (C - D),
-      1.0 - 2.0 * (B + G),
-      2.0 * (H + I),
+      2.0 * (c - d),
+      1.0 - 2.0 * (b + g),
+      2.0 * (h + i),
 
-      2.0 * (E + F),
-      2.0 * (H - I),
-      1.0 - 2.0 * (A + G)
+      2.0 * (e + f),
+      2.0 * (h - i),
+      1.0 - 2.0 * (a + g)
    );
 
    mat3 S = mat3 (0.0);
