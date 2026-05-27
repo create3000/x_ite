@@ -803,7 +803,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       this .sortWorker .postMessage ({
          type: "init",
-         positions: this .node ._positions .getValue (),
+         positions: this .node ._positions .getValue () .subarray (0, this .numSplats * 3),
          splatCount: this .numSplats,
       });
 
