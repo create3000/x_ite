@@ -47,8 +47,6 @@ uniform sampler2D      x3d_ScalesTexture;
 uniform sampler2D      x3d_OpacitiesTexture;
 uniform sampler2DArray x3d_SphericalHarmonicsTexture;
 
-uniform vec2 x3d_FocalLength;
-
 #include <Logarithmic>
 
 const float SH_C0 = 0.28209479177387814;
@@ -342,7 +340,6 @@ main ()
    if (alpha < 1.0 / 255.0)
       discard;
 
-   vec4 finalColor = vec4 (color .rgb * alpha, alpha); // premultiplied-alpha output
    vec4 finalColor = vec4 (color .rgb * alpha, alpha); // premultiplied-alpha output
 
    #if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
@@ -727,7 +724,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
             "x3d_ScalesTexture",
             "x3d_OpacitiesTexture",
             "x3d_SphericalHarmonicsTexture",
-            "x3d_FocalLength",
             "x3d_FocalLength",
          ],
       });
