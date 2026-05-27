@@ -754,20 +754,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          browser = this .getBrowser (),
          gl      = browser .getContext ();
 
-      const
-         numSplats      = this .numSplats,
-         positionsArray = new Float32Array (numSplats * 4),
-         positions      = this .node ._positions .getValue (),
-         numPositions   = numSplats * 3;
-
-      for (let p = 0, a = 0; p < numPositions; p += 3, a += 4)
-      {
-         positionsArray [a + 0] = positions [p + 0];
-         positionsArray [a + 1] = positions [p + 1];
-         positionsArray [a + 2] = positions [p + 2];
-         positionsArray [a + 3] = 1.0;
-      }
-
       this .sortWorker .onmessage = event =>
       {
          // console .log (event .data .type);
@@ -812,10 +798,11 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Transfer positions buffer to the worker (zero-copy).
 
-      this .sortWorker .postMessage ({ type: "init", posOp: positionsArray, splatCount: numSplats },
-      [
-         positionsArray .buffer,
-      ]);
+      this .sortWorker .postMessage ({
+         type: "init",
+         positions: this .node ._positions .getValue (),
+         splatCount: this .numSplats,
+      });
 
       this .sortPending = true;
    },
