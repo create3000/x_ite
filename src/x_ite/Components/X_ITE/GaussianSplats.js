@@ -192,7 +192,7 @@ main ()
 
    clipSplatCenter /= clipSplatCenter .w; // perspective division
 
-   mat3 C = computeC (splatOrientation, splatScale);
+   mat3 C = computeC (normalize (splatOrientation), splatScale);
    mat3 M = mat3 (x3d_ModelMatrix);
 
    mat3 worldCovariance  = M * C * transpose (C) * transpose (M);
