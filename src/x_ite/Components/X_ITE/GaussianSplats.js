@@ -265,7 +265,7 @@ main ()
    vec3 finalColor = sh0 * SH_C0;
 
    #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_1
-      vec3 x3d_Camera = x3d_ModelViewMatrix [3] .xyz;
+      vec3 x3d_Camera = inverse (x3d_ModelViewMatrix) [3] .xyz;
       vec3 viewDir    = normalize (splatCenter .xyz - x3d_Camera);
 
       float x = viewDir .x;
