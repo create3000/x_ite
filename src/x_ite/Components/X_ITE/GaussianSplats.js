@@ -304,7 +304,6 @@ main ()
 
    finalColor += 0.5;
 
-
    color = vec4 (finalColor, opacity);
 }
 `;
@@ -340,7 +339,7 @@ main ()
    if (alpha < 1.0 / 255.0)
       discard;
 
-   vec4 finalColor = vec4 (color .rgb, alpha); // premultiplied-alpha output
+   vec4 finalColor = vec4 (color .rgb * alpha, alpha); // premultiplied-alpha output
 
    #if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
       oit (finalColor);
@@ -650,15 +649,14 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       }
 
       // TODO: sort splats.
-      // gl .blendFunc (gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
 
+      gl .blendFunc (gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
       gl .frontFace (gl .CCW);
       gl .enable (gl .CULL_FACE);
 
       gl .drawArraysInstanced (gl .TRIANGLES, 0, 6, this .numSplats);
 
-      // TODO: sort splats.
-      // gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
+      gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
    },
    getShader (renderContext)
    {
