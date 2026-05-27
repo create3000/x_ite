@@ -648,6 +648,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       gl .enable (gl .CULL_FACE);
 
       gl .drawArraysInstanced (gl .TRIANGLES, 0, 6, this .numSplats);
+
       gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
    },
    getShader (renderContext)
