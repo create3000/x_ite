@@ -140,9 +140,15 @@ computeCameraCovariance (const in mat3 worldCovariance, const in vec3 viewSplatC
    float z = viewSplatCenter .z;
 
    mat3 J = mat3 (
-      x3d_FocalLength .x / z, 0.0, -(x3d_FocalLength .x * x) / (z * z),
-      0.0, x3d_FocalLength .y / z, -(x3d_FocalLength .y * y) / (z * z),
-      0.0, 0.0, 0.0
+      x3d_FocalLength .x / z,
+      0.0,
+      -(x3d_FocalLength .x * x) / (z * z),
+      0.0,
+      x3d_FocalLength .y / z,
+      -(x3d_FocalLength .y * y) / (z * z),
+      0.0,
+      0.0,
+      0.0
    );
 
    mat3 W = transpose (mat3 (x3d_ViewMatrix));
