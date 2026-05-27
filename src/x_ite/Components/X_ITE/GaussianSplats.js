@@ -25,7 +25,6 @@ precision highp sampler2DArray;
 uniform ivec4 x3d_Viewport;
 uniform mat4  x3d_ProjectionMatrix;
 uniform mat4  x3d_CameraSpaceMatrix;
-uniform mat4  x3d_ViewMatrix;
 uniform mat4  x3d_ModelViewMatrix;
 
 #if defined (X3D_XR_SESSION)
@@ -44,6 +43,8 @@ uniform sampler2D      x3d_OrientationsTexture;
 uniform sampler2D      x3d_ScalesTexture;
 uniform sampler2D      x3d_OpacitiesTexture;
 uniform sampler2DArray x3d_SphericalHarmonicsTexture;
+
+uniform vec2 x3d_FocalLength;
 
 #include <Logarithmic>
 
@@ -88,7 +89,7 @@ const float SH_C0 = 0.28209479177387814;
 // }
 
 mat3
-computeC (const in vec4 rotation, const in vec3 scale)
+computeCov3D (const in vec4 rotation, const in vec3 scale)
 {
    float qx = rotation .x;
    float qy = rotation .y;
@@ -125,32 +126,38 @@ computeC (const in vec4 rotation, const in vec3 scale)
    S [1] [1] = scale .y;
    S [2] [2] = scale .z;
 
-   return S * R;
+   mat3 M     = S * R;
+   mat3 Sigma = transpose (M) * M;
+
+   return Sigma;
 }
 
-uniform vec2 x3d_FocalLength;
-
 vec3
-computeCameraCovariance (const in mat3 worldCovariance, const in vec3 viewSplatCenter)
+computeCov2D (const in vec4 viewSplatCenter, const in mat3 cov3D, const in mat4 modelViewMatrix)
 {
    float x = viewSplatCenter .x;
    float y = viewSplatCenter .y;
    float z = viewSplatCenter .z;
 
    mat3 J = mat3 (
-      x3d_FocalLength .x / z, 0.0, -(x3d_FocalLength .x * x) / (z * z),
-      0.0, x3d_FocalLength .y / z, -(x3d_FocalLength .y * y) / (z * z),
-      0.0, 0.0, 0.0
+      x3d_FocalLength .x / z,
+      0.0,
+      -(x3d_FocalLength .x * x) / (z * z),
+      0.0,
+      x3d_FocalLength .y / z,
+      -(x3d_FocalLength .y * y) / (z * z),
+      0.0,
+      0.0,
+      0.0
    );
 
-   mat3 W = transpose (mat3 (x3d_ViewMatrix));
-
-   // Equation 5
+   mat3 W = transpose (mat3 (modelViewMatrix));
    mat3 T = W * J;
 
-   mat3 cov = transpose (T) * transpose (worldCovariance) * T;
+   mat3 cov = transpose (T) * transpose (cov3D) * T;
 
-   // Low-pass filter (EWA Splatting)
+   // Apply low-pass filter: every Gaussian should be at least
+   // one pixel wide/high. Discard 3rd row and column.
    cov [0] [0] += 0.3;
    cov [1] [1] += 0.3;
 
@@ -167,32 +174,35 @@ main ()
 
    // Position
 
-   mat4 x3d_ModelMatrix  = x3d_CameraSpaceMatrix * x3d_ModelViewMatrix;
-   vec3 splatCenter      = texelFetch (x3d_PositionsTexture, texelCoord, 0) .xyz;
-   vec4 splatOrientation = texelFetch (x3d_OrientationsTexture, texelCoord, 0);
-   vec3 splatScale       = texelFetch (x3d_ScalesTexture, texelCoord, 0) .xyz;
-
-   splatCenter = (x3d_ModelMatrix * vec4 (splatCenter, 1.0)) .xyz;
-
-   vec4 viewSplatCenter = x3d_ViewMatrix * vec4 (splatCenter, 1.0);
+   vec4 splatCenter     = vec4 (texelFetch (x3d_PositionsTexture, texelCoord, 0) .xyz, 1.0);
+   vec4 viewSplatCenter = x3d_ModelViewMatrix * splatCenter; // g_pos_view
 
    #if defined (X3D_XR_SESSION)
       viewSplatCenter = x3d_EyeMatrix * viewSplatCenter;
    #endif
 
-   vec4 clipSplatCenter = x3d_ProjectionMatrix * viewSplatCenter;
+   vec4 clipSplatCenter = x3d_ProjectionMatrix * viewSplatCenter; // g_pos_screen
 
-   clipSplatCenter /= clipSplatCenter .w; // perspective division
+   clipSplatCenter   /= clipSplatCenter .w; // perspective division
+   clipSplatCenter .w = 1.0;
 
-   mat3 C = computeC (splatOrientation, splatScale);
-   mat3 M = mat3 (x3d_ModelMatrix);
+   // Early Culling
+	if (any (greaterThan (abs (clipSplatCenter .xyz), vec3 (1.3))))
+	{
+		gl_Position = vec4 (-100.0, -100.0, -100.0, 1.0);
+		return;
+	}
 
-   mat3 worldCovariance  = M * C * transpose (C) * transpose (M);
-   vec3 cameraCovariance = computeCameraCovariance (worldCovariance, viewSplatCenter .xyz);
+   vec4  splatOrientation = texelFetch (x3d_OrientationsTexture, texelCoord, 0);
+   vec3  splatScale       = texelFetch (x3d_ScalesTexture, texelCoord, 0) .xyz;
+   float opacity          = texelFetch (x3d_OpacitiesTexture, texelCoord, 0) .r;
 
-   float a = cameraCovariance .x; // Variance x
-   float b = cameraCovariance .y; // Covariance xy
-   float c = cameraCovariance .z; // Variance y
+   mat3 cov3d = computeCov3D (splatOrientation, splatScale);
+   vec3 cov2d = computeCov2D (viewSplatCenter, cov3d, x3d_ModelViewMatrix);
+
+   float a = cov2d .x; // Variance x
+   float b = cov2d .y; // Covariance xy
+   float c = cov2d .z; // Variance y
 
    float det = (a * c - b * b);
 
@@ -204,7 +214,7 @@ main ()
 
    float detInv = 1.0 / det;
 
-   // Calculate the inverse of the covariance matrix
+   // Calculate the inverse of the covariance matrix.
    conic = vec3 (c * detInv, -b * detInv, a * detInv);
 
    // pow(e, pow(-3.4, 2) * -0.5) = 1/255, so 3.4 is the standard deviation in terms of the Gaussian falloff that results in a radius of 1 pixel when the variance is 1.
@@ -255,8 +265,8 @@ main ()
    vec3 finalColor = sh0 * SH_C0;
 
    #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_1
-      vec3 x3d_Camera = x3d_CameraSpaceMatrix [3] .xyz;
-      vec3 viewDir    = normalize (splatCenter - x3d_Camera);
+      vec3 x3d_Camera = x3d_ModelViewMatrix [3] .xyz;
+      vec3 viewDir    = normalize (splatCenter .xyz - x3d_Camera);
 
       float x = viewDir .x;
       float y = viewDir .y;
@@ -294,7 +304,6 @@ main ()
 
    finalColor += 0.5;
 
-   float opacity = texelFetch (x3d_OpacitiesTexture, texelCoord, 0) .r;
 
    color = vec4 (finalColor, opacity);
 }
@@ -603,7 +612,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, renderObject .getProjectionMatrixArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,         false, renderObject .getEyeMatrixArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_CameraSpaceMatrix, false, renderObject .getCameraSpaceMatrixArray ());
-      gl .uniformMatrix4fv (shaderNode .x3d_ViewMatrix,        false, renderObject .getViewMatrixArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, modelViewMatrix);
 
       // The projection matrix stores the focal length in the first and second element of the diagonal.
