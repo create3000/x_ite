@@ -29,11 +29,18 @@ uniform mat4  x3d_ProjectionMatrix;
 uniform mat4  x3d_CameraSpaceMatrix;
 uniform mat4  x3d_ViewMatrix;
 uniform mat4  x3d_ModelViewMatrix;
-uniform vec2  x3d_FocalLength;
 
 #if defined (X3D_XR_SESSION)
    uniform mat4 x3d_EyeMatrix;
 #endif
+
+uniform vec2 x3d_FocalLength;
+
+uniform sampler2D      x3d_PositionsTexture;
+uniform sampler2D      x3d_OrientationsTexture;
+uniform sampler2D      x3d_ScalesTexture;
+uniform sampler2D      x3d_OpacitiesTexture;
+uniform sampler2DArray x3d_SphericalHarmonicsTexture;
 
 in vec4 x3d_Vertex;
 in uint x3d_SplatIndex;
@@ -41,12 +48,6 @@ in uint x3d_SplatIndex;
 out vec4 color;
 out vec2 texCoord;
 out vec3 conic;
-
-uniform sampler2D      x3d_PositionsTexture;
-uniform sampler2D      x3d_OrientationsTexture;
-uniform sampler2D      x3d_ScalesTexture;
-uniform sampler2D      x3d_OpacitiesTexture;
-uniform sampler2DArray x3d_SphericalHarmonicsTexture;
 
 #include <Logarithmic>
 
