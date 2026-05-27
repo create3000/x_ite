@@ -198,7 +198,7 @@ main ()
    vec3  splatScale       = texelFetch (x3d_ScalesTexture, texelCoord, 0) .xyz;
    float opacity          = texelFetch (x3d_OpacitiesTexture, texelCoord, 0) .r;
 
-   mat3 cov3d = computeCov3D (splatOrientation, splatScale);
+   mat3 cov3d = computeCov3D (normalize (splatOrientation), splatScale);
    vec3 cov2d = computeCov2D (viewSplatCenter, cov3d, x3d_ModelViewMatrix);
 
    float a = cov2d .x; // Variance x
