@@ -184,8 +184,7 @@ main ()
 
    vec4 clipSplatCenter = x3d_ProjectionMatrix * viewSplatCenter;
 
-   clipSplatCenter   /= clipSplatCenter .w; // perspective division
-   clipSplatCenter .w = 1.0;
+   clipSplatCenter /= clipSplatCenter .w; // perspective division
 
    mat3 C = computeC (splatOrientation, splatScale);
    mat3 M = mat3 (x3d_ModelMatrix);
