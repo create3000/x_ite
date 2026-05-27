@@ -490,7 +490,8 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
                   scales .push (Math .exp (this .value));
                   break;
                case "opacity":
-                  opacities .push (this .value);
+                  // https://github.com/antimatter15/splat/blob/main/convert.py
+                  opacities .push (1 / (1 + Math .exp (-this .value)));
                   break;
                case "f_dc_0": case "f_dc_1": case "f_dc_2":
                   sphericalHarmonics0 .push (this .convertColor (this .value, type));
