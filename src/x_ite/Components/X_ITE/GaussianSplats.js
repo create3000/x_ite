@@ -189,7 +189,7 @@ main ()
    // Early Culling
 	if (any (greaterThan (abs (clipSplatCenter .xyz), vec3 (1.3))))
 	{
-		gl_Position = vec4 (-100.0, -100.0, -100.0, 1.0);
+		gl_Position = vec4 (0.0);
 		return;
 	}
 
@@ -714,12 +714,12 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          options,
          attributes: ["x3d_SplatIndex"],
          uniforms: [
-            "x3d_FocalLength",
             "x3d_PositionsTexture",
             "x3d_OrientationsTexture",
             "x3d_ScalesTexture",
             "x3d_OpacitiesTexture",
             "x3d_SphericalHarmonicsTexture",
+            "x3d_FocalLength",
          ],
       });
 
