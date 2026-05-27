@@ -185,8 +185,7 @@ main ()
 
    vec4 clipSplatCenter = x3d_ProjectionMatrix * viewSplatCenter; // g_pos_screen
 
-   clipSplatCenter   /= clipSplatCenter .w; // perspective division
-   clipSplatCenter .w = 1.0;
+   clipSplatCenter /= clipSplatCenter .w; // perspective division
 
    // Early Culling
 	if (any (greaterThan (abs (clipSplatCenter .xyz), vec3 (1.3))))
