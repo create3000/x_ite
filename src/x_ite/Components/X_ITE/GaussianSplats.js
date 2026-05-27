@@ -27,6 +27,7 @@ uniform mat4  x3d_ProjectionMatrix;
 uniform mat4  x3d_CameraSpaceMatrix;
 uniform mat4  x3d_ViewMatrix;
 uniform mat4  x3d_ModelViewMatrix;
+uniform vec2  x3d_FocalLength;
 
 #if defined (X3D_XR_SESSION)
    uniform mat4 x3d_EyeMatrix;
@@ -127,8 +128,6 @@ computeC (const in vec4 rotation, const in vec3 scale)
 
    return S * R;
 }
-
-uniform vec2 x3d_FocalLength;
 
 vec3
 computeCameraCovariance (const in mat3 worldCovariance, const in vec3 viewSplatCenter)
@@ -706,12 +705,12 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          options,
          attributes: ["x3d_SplatIndex"],
          uniforms: [
-            "x3d_FocalLength",
             "x3d_PositionsTexture",
             "x3d_OrientationsTexture",
             "x3d_ScalesTexture",
             "x3d_OpacitiesTexture",
             "x3d_SphericalHarmonicsTexture",
+            "x3d_FocalLength",
          ],
       });
 
