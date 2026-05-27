@@ -799,7 +799,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          this .sortPending = false;
       };
 
-      // Transfer positions buffer to the worker (zero-copy).
+      // Transfer positions buffer to the worker.
 
       this .sortWorker .postMessage ({
          type: "init",
