@@ -59,7 +59,7 @@ let N = 0;
 /** Align a byte offset up to 16-byte boundary. */
 const align16 = (b) => (b + 15) & ~15;
 
-// ── Initialisation ────────────────────────────────────────────────────────────
+// ── Initialization ────────────────────────────────────────────────────────────
 
 async function init ({ positions, splatCount })
 {
