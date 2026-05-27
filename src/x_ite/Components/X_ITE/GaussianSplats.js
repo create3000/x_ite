@@ -6,12 +6,14 @@ import X3DChildNode         from "../Core/X3DChildNode.js";
 import X3DBoundedObject     from "../Grouping/X3DBoundedObject.js";
 import X3DShapeNode         from "../Shape/X3DShapeNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import URLs                 from "../../Browser/Networking/URLs.js";
 import GeometryContext      from "../../Browser/Rendering/GeometryContext.js";
 import GeometryType         from "../../Browser/Shape/GeometryType.js";
 import AlphaMode            from "../../Browser/Shape/AlphaMode.js";
 import VertexArray          from "../../Rendering/VertexArray.js";
 import RenderPass           from "../../Rendering/RenderPass.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
+import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
 // https://developer.playcanvas.com/user-manual/gaussian-splatting/formats/ply/
 
@@ -382,8 +384,10 @@ function GaussianSplatsShape (executionContext, node)
 
    // Private Properties
 
-   this .node        = node;
-   this .shaderCache = ShaderCache .getOrInsert (this .getBrowser (), new Map ());
+   this .node              = node;
+   this .shaderCache       = ShaderCache .getOrInsert (this .getBrowser (), new Map ());
+   this .currentViewMatrix = new Float32Array (16);
+   this .sortViewMatrix    = new Float32Array (16);
 }
 
 Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShapeNode .prototype),
@@ -569,11 +573,14 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       key += this .node ._sphericalHarmonics1 .length ? 1 : 0;
       key += this .node ._sphericalHarmonics2 .length ? 1 : 0;
 
-      this .key = key;
+      this .key       = key;
+      this .numSplats = numSplats;
+
+      // Sort Worker
+
+      this .initSortWorker ();
 
       // Finish
-
-      this .numSplats = numSplats;
 
       this .set_bbox__ ();
       this .set_objects__ ();
@@ -641,7 +648,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, 0);
       }
 
-      // TODO: sort splats.
+      // Sort splats.
+      this .sortIndices (renderObject .getViewMatrixArray ());
 
       gl .blendFunc (gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
       gl .frontFace (gl .CCW);
@@ -727,6 +735,100 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       gl .uniform1i (shaderNode .x3d_SphericalHarmonicsTexture, this .sphericalHarmonicsTexture .textureUnit);
 
       return shaderNode;
+   },
+   initSortWorker ()
+   {
+      this .sortWorker ?.terminate ();
+
+      const url = URLs .getLibraryURL ("mkkellogg-sort.worker.js");
+
+      this .sortWorker = new Worker (url, { type: "module" });
+
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
+
+      const
+         numSplats      = this .numSplats,
+         positionsArray = new Float32Array (numSplats * 4),
+         positions      = this .node ._positions .getValue (),
+         numPositions   = numSplats * 3;
+
+      for (let p = 0, a = 0; p < numPositions; p += 3, a += 4)
+      {
+         positionsArray [a + 0] = positions [p + 0];
+         positionsArray [a + 1] = positions [p + 1];
+         positionsArray [a + 2] = positions [p + 2];
+         positionsArray [a + 3] = 1.0;
+      }
+
+      this .sortWorker .onmessage = event =>
+      {
+         // console .log (event .data .type);
+
+         switch (event .data .type)
+         {
+            case "ready":
+            {
+               this .sortPending = false;
+
+               this .sortViewMatrix .fill (0);
+
+               browser .addBrowserEvent ();
+               break;
+            }
+            case "sorted":
+            {
+               this .sortPending = false;
+
+               gl .bindBuffer (gl .ARRAY_BUFFER, this .positionsIndexBuffer);
+               gl .bufferData (gl .ARRAY_BUFFER, event .data .indices, gl .DYNAMIC_DRAW);
+
+               browser .addBrowserEvent ();
+               break;
+            }
+            case "error":
+            {
+               console .error ("Sort worker error:", event .data .message);
+
+               this .sortPending = false;
+               break;
+            }
+         }
+      };
+
+      this .sortWorker .onerror = error =>
+      {
+         console .error (error);
+
+         this .sortPending = false;
+      };
+
+      // Transfer positions buffer to the worker (zero-copy).
+
+      this .sortWorker .postMessage ({ type: "init", posOp: positionsArray, splatCount: numSplats },
+      [
+         positionsArray .buffer,
+      ]);
+
+      this .sortPending = true;
+   },
+   sortIndices (viewMatrix)
+   {
+      this .currentViewMatrix .set (viewMatrix);
+
+      if (this .sortPending)
+         return;
+
+      if (Matrix4 .prototype .equals .call (this .currentViewMatrix, this .sortViewMatrix))
+         return;
+
+      this .sortViewMatrix .set (viewMatrix);
+
+      this .sortWorker .postMessage ({
+         type: "sort",
+         viewMatrix: this .sortViewMatrix,
+      });
    },
 });
 
