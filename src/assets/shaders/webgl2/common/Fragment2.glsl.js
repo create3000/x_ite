@@ -5,10 +5,6 @@ export default () => /* glsl */ `
    uniform float x3d_AlphaCutoff;
 #endif
 
-#if defined (X3D_FOG) && defined (X3D_FOG_COORDS)
-   in float fogDepth;
-#endif
-
 #if defined (X3D_COLOR_MATERIAL)
    in vec4 color;
 #endif
