@@ -26,7 +26,6 @@ precision highp sampler2DArray;
 
 uniform ivec4 x3d_Viewport;
 uniform mat4  x3d_ProjectionMatrix;
-uniform mat4  x3d_CameraSpaceMatrix;
 uniform mat4  x3d_ModelViewMatrix;
 
 #if defined (X3D_XR_SESSION)
@@ -177,11 +176,8 @@ main ()
 
    // Position
 
-   mat4 x3d_ModelMatrix = x3d_CameraSpaceMatrix * x3d_ModelViewMatrix;
    vec4 splatCenter     = vec4 (texelFetch (x3d_PositionsTexture, texelCoord, 0) .xyz, 1.0);
    vec4 viewSplatCenter = x3d_ModelViewMatrix * splatCenter; // g_pos_view
-
-   splatCenter = x3d_ModelMatrix * splatCenter;
 
    #if defined (X3D_XR_SESSION)
       viewSplatCenter = x3d_EyeMatrix * viewSplatCenter;
@@ -279,7 +275,7 @@ main ()
    vec3 finalColor = sh0 * SH_C0;
 
    #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_1
-      vec3 x3d_Camera = x3d_CameraSpaceMatrix [3] .xyz;
+      vec3 x3d_Camera = inverse (x3d_ModelViewMatrix) [3] .xyz;
       vec3 viewDir    = normalize (splatCenter .xyz - x3d_Camera); // local-frame direction
 
       float x = viewDir .x;
@@ -644,7 +640,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       gl .uniform4iv (shaderNode .x3d_Viewport, renderObject .getViewportArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, projectionMatrixArray);
       gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,         false, renderObject .getEyeMatrixArray ());
-      gl .uniformMatrix4fv (shaderNode .x3d_CameraSpaceMatrix, false, renderObject .getCameraSpaceMatrixArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, modelViewMatrix);
 
       // The projection matrix stores the focal length in the first and second element of the diagonal.
