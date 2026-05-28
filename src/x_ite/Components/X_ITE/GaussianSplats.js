@@ -280,7 +280,7 @@ main ()
 
    #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_1
       vec3 x3d_Camera = x3d_CameraSpaceMatrix [3] .xyz;
-      vec3 viewDir    = normalize (splatCenter .xyz - x3d_Camera);
+      vec3 viewDir    = normalize (splatCenter .xyz - x3d_Camera); // local-frame direction
 
       float x = viewDir .x;
       float y = viewDir .y;
