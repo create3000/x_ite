@@ -1,7 +1,8 @@
 export default () => /* glsl */ `
 #if defined (X3D_FOG)
 #if defined (X3D_VERTEX_SHADER) && defined (X3D_FOG_COORDS)
-in  float x3d_FogDepth;
+in float x3d_FogDepth;
+
 out float fogDepth;
 
 void
