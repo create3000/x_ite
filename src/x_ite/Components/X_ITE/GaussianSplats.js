@@ -343,7 +343,7 @@ main ()
    if (alpha < 1.0 / 255.0)
       discard;
 
-   vec4 finalColor = vec4 (color .rgb * alpha, alpha); // premultiplied-alpha output
+   vec4 finalColor = vec4 (color .rgb, alpha); // premultiplied-alpha output
 
    #if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
       oit (finalColor);
@@ -615,9 +615,10 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       // Uniforms
 
       const { renderObject, modelViewMatrix, localObjects } = renderContext;
+      const projectionMatrixArray = renderObject .getProjectionMatrixArray ();
 
       gl .uniform4iv (shaderNode .x3d_Viewport, renderObject .getViewportArray ());
-      gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, renderObject .getProjectionMatrixArray ());
+      gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, projectionMatrixArray);
       gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,         false, renderObject .getEyeMatrixArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_CameraSpaceMatrix, false, renderObject .getCameraSpaceMatrixArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, modelViewMatrix);
@@ -625,8 +626,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       // The projection matrix stores the focal length in the first and second element of the diagonal.
       // We need to convert from NDC space to screen space, which is done by multiplying with the framebuffer dimensions and dividing by 2, since NDC goes from -1 to 1.
       gl .uniform2f (shaderNode .x3d_FocalLength,
-         renderObject .getProjectionMatrixArray () [0] * viewport [2] * 0.5,
-         renderObject .getProjectionMatrixArray () [5] * viewport [3] * 0.5);
+         projectionMatrixArray [0] * viewport [2] * 0.5,
+         projectionMatrixArray [5] * viewport [3] * 0.5);
 
       // Textures
 
@@ -660,13 +661,13 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       // Sort splats.
       this .sortIndices (renderObject .getViewMatrixArray ());
 
-      gl .blendFunc (gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
+      // gl .blendFunc (gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
       gl .frontFace (gl .CCW);
       gl .enable (gl .CULL_FACE);
 
       gl .drawArraysInstanced (gl .TRIANGLES, 0, 6, this .numSplats);
 
-      gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
+      // gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
    },
    getShader (renderContext)
    {
