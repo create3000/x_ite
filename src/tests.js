@@ -445,7 +445,7 @@ const X_ITE_TESTS = [
    { path: "Sound/Sound.x3d" },
    { path: "Sound/StreamAudioSource.x3d" },
    { component: "Splats" },
-   { path: "Splats/cactus.ply" },
+   { path: "Splats/cactus_splat3_30kSteps_142k_splats.ply" },
    { path: "Splats/unitCube-ascii.ply" },
    { component: "Text" },
    { path: "Text/charcodes.x3d" },
