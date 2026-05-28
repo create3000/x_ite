@@ -229,6 +229,15 @@ main ()
 
    clipSplatCenter .xy += x3d_Vertex .xy * quadNdcSize;
 
+   // Discard too large splats that would cover the entire screen
+   float minScreen   = float (min (x3d_Viewport .z, x3d_Viewport .w));
+   float maxQuadSize = max (quadPixelSize .x, quadPixelSize .y);
+   if (maxQuadSize > minScreen)
+   {
+      gl_Position = vec4 (0.0);
+      return;
+   }
+
    texCoord    = x3d_Vertex .xy * quadPixelSize;
    gl_Position = clipSplatCenter;
 
