@@ -48,6 +48,7 @@ out vec4 color;
 out vec2 texCoord;
 out vec3 conic;
 
+#include <Fog>
 #include <Logarithmic>
 
 const float SH_C0 = 0.28209479177387814;
@@ -309,6 +310,10 @@ main ()
    finalColor += 0.5;
 
    color = vec4 (finalColor, opacity);
+
+   #if defined (X3D_FOG) && defined (X3D_FOG_COORDS)
+      fog ();
+   #endif
 }
 `;
 
@@ -326,6 +331,8 @@ in vec3 conic;
    out vec4 x3d_FragColor;
 #endif
 
+#include <ToneMapping>
+#include <Fog>
 #include <OIT>
 #include <Logarithmic>
 
@@ -344,6 +351,14 @@ main ()
       discard;
 
    vec4 finalColor = vec4 (color .rgb, alpha); // premultiplied-alpha output
+
+   #if defined (X3D_FOG)
+      finalColor .rgb = getFogColor (finalColor .rgb);
+   #endif
+
+   #if !defined (X3D_LINEAR_OUTPUT)
+      finalColor .rgb = toneMap (finalColor .rgb);
+   #endif
 
    #if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
       oit (finalColor);
@@ -671,12 +686,13 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
    },
    getShader (renderContext)
    {
-      const { renderObject } = renderContext;
+      const { renderObject, fogNode } = renderContext;
 
       let key = "";
 
       key += this .key;
       key += renderObject .getRenderKey ();
+      key += fogNode ?.getFogType () ?? 0;
 
       return this .shaderCache .get (key) ?? this .createShader (key, renderContext);
    },
@@ -692,7 +708,32 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       if (browser .getRenderingProperty ("XRSession"))
          options .push ("X3D_XR_SESSION");
 
-      const { renderObject } = renderContext;
+      switch (browser .getBrowserOption ("ColorSpace") .toUpperCase ())
+      {
+         case "SRGB":
+            options .push ("X3D_COLORSPACE_SRGB");
+            break;
+         case "LINEAR":
+            options .push ("X3D_COLORSPACE_LINEAR");
+            break;
+         default: // LINEAR_WHEN_PHYSICAL_MATERIAL
+            options .push ("X3D_COLORSPACE_SRGB");
+            break;
+      }
+
+      switch (browser .getBrowserOption ("ToneMapping") .toUpperCase ())
+      {
+         default: // NONE
+            break;
+         case "ACES_NARKOWICZ":
+         case "ACES_HILL":
+         case "ACES_HILL_EXPOSURE_BOOST":
+         case "KHR_PBR_NEUTRAL":
+            options .push (`X3D_TONEMAP_${browser .getBrowserOption ("ToneMapping") .toUpperCase ()}`);
+            break;
+      }
+
+      const { renderObject, fogNode } = renderContext;
 
       if (renderObject .getLogarithmicDepthBuffer ())
          options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
@@ -701,6 +742,18 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       {
          if (renderObject .getOrderIndependentTransparency ())
             options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
+      }
+
+      // Fog
+
+      switch (fogNode ?.getFogType ())
+      {
+         case 1:
+            options .push ("X3D_FOG", "X3D_FOG_LINEAR");
+            break;
+         case 2:
+            options .push ("X3D_FOG", "X3D_FOG_EXPONENTIAL");
+            break;
       }
 
       // Spherical Harmonics
