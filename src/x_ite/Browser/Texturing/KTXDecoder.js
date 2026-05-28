@@ -27,7 +27,7 @@ export default class KTXDecoder
             astcSupported  = !!gl .getExtension ("WEBGL_compressed_texture_astc"),
             etcSupported   = !!gl .getExtension ("WEBGL_compressed_texture_etc1"),
             dxtSupported   = !!gl .getExtension ("WEBGL_compressed_texture_s3tc"),
-            bptcSupported  = !!gl .getExtension ("EXT_texture_compression_bptc"),
+            // bptcSupported  = !!gl .getExtension ("EXT_texture_compression_bptc"),
             pvrtcSupported = !!gl .getExtension ("WEBGL_compressed_texture_pvrtc") || !!gl .getExtension ("WEBKIT_WEBGL_compressed_texture_pvrtc");
 
          let format;
