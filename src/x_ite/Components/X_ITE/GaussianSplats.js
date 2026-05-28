@@ -98,28 +98,28 @@ computeCov3D (const in vec4 rotation, const in vec3 scale)
    float qz = rotation .z;
    float qw = rotation .w;
 
-   float a = qy * qy;
-   float b = qz * qz;
-   float c = qx * qy;
-   float d = qz * qw;
-   float e = qz * qx;
-   float f = qy * qw;
-   float g = qx * qx;
-   float h = qy * qz;
-   float i = qx * qw;
+   float yy = qy * qy;
+   float zz = qz * qz;
+   float xy = qx * qy;
+   float zw = qz * qw;
+   float xz = qx * qz;
+   float yw = qy * qw;
+   float xx = qx * qx;
+   float yz = qy * qz;
+   float xw = qx * qw;
 
    mat3 R = mat3 (
-      1.0 - 2.0 * (a + b),
-      2.0 * (c + d),
-      2.0 * (e - f),
+      1.0 - 2.0 * (yy + zz),
+      2.0 * (xy + zw),
+      2.0 * (xz - yw),
 
-      2.0 * (c - d),
-      1.0 - 2.0 * (b + g),
-      2.0 * (h + i),
+      2.0 * (xy - zw),
+      1.0 - 2.0 * (zz + xx),
+      2.0 * (yz + xw),
 
-      2.0 * (e + f),
-      2.0 * (h - i),
-      1.0 - 2.0 * (a + g)
+      2.0 * (xz + yw),
+      2.0 * (yz - xw),
+      1.0 - 2.0 * (yy + xx)
    );
 
    mat3 S = mat3 (0.0);
