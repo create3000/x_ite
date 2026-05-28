@@ -176,8 +176,8 @@ main ()
 
    // Position
 
-   vec4 splatCenter     = vec4 (texelFetch (x3d_PositionsTexture, texelCoord, 0) .xyz, 1.0);
-   vec4 viewSplatCenter = x3d_ModelViewMatrix * splatCenter; // g_pos_view
+   vec3 splatCenter     = texelFetch (x3d_PositionsTexture, texelCoord, 0) .xyz;
+   vec4 viewSplatCenter = x3d_ModelViewMatrix * vec4 (splatCenter, 1.0); // g_pos_view
 
    #if defined (X3D_XR_SESSION)
       viewSplatCenter = x3d_EyeMatrix * viewSplatCenter;
@@ -277,7 +277,7 @@ main ()
 
    #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_1
       vec3 x3d_Camera = inverse (x3d_ModelViewMatrix) [3] .xyz;
-      vec3 viewDir    = normalize (splatCenter .xyz - x3d_Camera); // local-frame direction
+      vec3 viewDir    = normalize (splatCenter - x3d_Camera); // local-frame direction
 
       float x = viewDir .x;
       float y = viewDir .y;
