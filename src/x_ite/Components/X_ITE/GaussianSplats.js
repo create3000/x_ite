@@ -159,7 +159,8 @@ computeCov2D (const in vec3 viewSplatCenter, const in mat3 cov3D)
    mat3 W = transpose (mat3 (x3d_ModelViewMatrix));
    mat3 T = W * J;
 
-   mat3 cov = transpose (T) * transpose (cov3D) * T;
+   // Covariance is symmetric, so transpose would have no effect.
+   mat3 cov = transpose (T) * cov3D * T;
 
    // Apply low-pass filter: every Gaussian should be at least
    // one pixel wide/high. Discard 3rd row and column.
