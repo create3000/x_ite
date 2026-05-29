@@ -283,9 +283,7 @@ main ()
       float y = viewDir .y;
       float z = viewDir .z;
 
-      finalColor += SH_C1_0 * y * sh1_0 +
-                    SH_C1_1 * z * sh1_1 +
-                    SH_C1_2 * x * sh1_2;
+      finalColor += SH_C1_1 * (-y * sh1_0 + z * sh1_1 - x * sh1_2);
 
    #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_2
       float xx = x * x;
