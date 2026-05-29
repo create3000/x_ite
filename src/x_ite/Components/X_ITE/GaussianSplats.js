@@ -296,7 +296,7 @@ main ()
 
    // pow(e, pow(-3.4, 2) * -0.5) = 1/255, so 3.4 is the standard deviation in terms of the Gaussian falloff that results in a radius of 1 pixel when the variance is 1.
    // sqrt(a) and sqrt(c) are the standard deviations in x and y direction, so multiplying them with 3.4 gives us the radius in pixels where the Gaussian falloff results in 1/255 opacity.
-   vec2 quadPixelSize = vec2 (3.4 * sqrt (a), 3.4 * sqrt (c));         // screen space half quad height and width
+   vec2 quadPixelSize = 3.4 * sqrt (vec2 (a, c)); // screen space half quad height and width
    vec2 quadNdcSize   = quadPixelSize / vec2 (x3d_Viewport .zw) * 2.0; // in ndc space
 
    clipSplatCenter .xy += x3d_Vertex .xy * quadNdcSize;
