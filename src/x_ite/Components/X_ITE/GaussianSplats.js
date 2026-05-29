@@ -169,6 +169,81 @@ computeCov2D (const in vec4 viewSplatCenter, const in mat3 cov3D, const in mat4 
    return vec3 (cov [0] [0], cov [0] [1], cov [1] [1]);
 }
 
+vec3
+computeColorFromSH (const in ivec2 texelCoord, const in vec3 splatCenter)
+{
+   // Fetch SH coefficients early to avoid GPU stall
+   // Degree 0
+   vec3 sh0 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 0), 0) .rgb;
+
+   #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_1
+      // Degree 1
+      vec3 sh1_0 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 1), 0) .rgb;
+      vec3 sh1_1 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 2), 0) .rgb;
+      vec3 sh1_2 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 3), 0) .rgb;
+   #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_2
+      // Degree 2
+      vec3 sh2_0 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 4), 0) .rgb;
+      vec3 sh2_1 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 5), 0) .rgb;
+      vec3 sh2_2 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 6), 0) .rgb;
+      vec3 sh2_3 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 7), 0) .rgb;
+      vec3 sh2_4 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 8), 0) .rgb;
+   #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_3
+      // Degree 3
+      vec3 sh3_0 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord,  9), 0) .rgb;
+      vec3 sh3_1 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 10), 0) .rgb;
+      vec3 sh3_2 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 11), 0) .rgb;
+      vec3 sh3_3 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 12), 0) .rgb;
+      vec3 sh3_4 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 13), 0) .rgb;
+      vec3 sh3_5 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 14), 0) .rgb;
+      vec3 sh3_6 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 15), 0) .rgb;
+   #endif
+   #endif
+   #endif
+
+   vec3 color = sh0 * SH_C0;
+
+   #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_1
+      vec3 x3d_Camera = inverse (x3d_ModelViewMatrix) [3] .xyz;
+      vec3 viewDir    = normalize (splatCenter - x3d_Camera); // local-frame direction
+
+      float x = viewDir .x;
+      float y = viewDir .y;
+      float z = viewDir .z;
+
+      color += SH_C1_1 * (-y * sh1_0 + z * sh1_1 - x * sh1_2);
+
+   #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_2
+      float xx = x * x;
+      float yy = y * y;
+      float zz = z * z;
+      float xy = x * y;
+      float yz = y * z;
+      float xz = x * z;
+
+      color += SH_C2_0 * xy * sh2_0 +
+               SH_C2_1 * yz * sh2_1 +
+               SH_C2_2 * (2.0 * zz - xx - yy) * sh2_2 +
+               SH_C2_3 * xz * sh2_3 +
+               SH_C2_4 * (xx - yy) * sh2_4;
+
+   #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_3
+      color += SH_C3_0 * y * (3.0 * xx - yy) * sh3_0 +
+               SH_C3_1 * xy * z * sh3_1 +
+               SH_C3_2 * y * (4.0 * zz - xx - yy) * sh3_2 +
+               SH_C3_3 * z * (2.0 * zz - 3.0 * xx - 3.0 * yy) * sh3_3 +
+               SH_C3_4 * x * (4.0 * zz - xx - yy) * sh3_4 +
+               SH_C3_5 * z * (xx - yy) * sh3_5 +
+               SH_C3_6 * x * (xx - 3.0 * yy) * sh3_6;
+   #endif
+   #endif
+   #endif
+
+   color += 0.5;
+
+   return color;
+}
+
 void
 main ()
 {
@@ -247,76 +322,7 @@ main ()
 
    // Color
 
-   // Fetch SH coefficients early to avoid GPU stall
-   // Degree 0
-   vec3 sh0 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 0), 0) .rgb;
-
-   #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_1
-      // Degree 1
-      vec3 sh1_0 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 1), 0) .rgb;
-      vec3 sh1_1 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 2), 0) .rgb;
-      vec3 sh1_2 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 3), 0) .rgb;
-   #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_2
-      // Degree 2
-      vec3 sh2_0 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 4), 0) .rgb;
-      vec3 sh2_1 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 5), 0) .rgb;
-      vec3 sh2_2 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 6), 0) .rgb;
-      vec3 sh2_3 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 7), 0) .rgb;
-      vec3 sh2_4 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 8), 0) .rgb;
-   #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_3
-      // Degree 3
-      vec3 sh3_0 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord,  9), 0) .rgb;
-      vec3 sh3_1 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 10), 0) .rgb;
-      vec3 sh3_2 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 11), 0) .rgb;
-      vec3 sh3_3 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 12), 0) .rgb;
-      vec3 sh3_4 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 13), 0) .rgb;
-      vec3 sh3_5 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 14), 0) .rgb;
-      vec3 sh3_6 = texelFetch (x3d_SphericalHarmonicsTexture, ivec3 (texelCoord, 15), 0) .rgb;
-   #endif
-   #endif
-   #endif
-
-   vec3 finalColor = sh0 * SH_C0;
-
-   #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_1
-      vec3 x3d_Camera = inverse (x3d_ModelViewMatrix) [3] .xyz;
-      vec3 viewDir    = normalize (splatCenter - x3d_Camera); // local-frame direction
-
-      float x = viewDir .x;
-      float y = viewDir .y;
-      float z = viewDir .z;
-
-      finalColor += SH_C1_1 * (-y * sh1_0 + z * sh1_1 - x * sh1_2);
-
-   #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_2
-      float xx = x * x;
-      float yy = y * y;
-      float zz = z * z;
-      float xy = x * y;
-      float yz = y * z;
-      float xz = x * z;
-
-      finalColor += SH_C2_0 * xy * sh2_0 +
-                    SH_C2_1 * yz * sh2_1 +
-                    SH_C2_2 * (2.0 * zz - xx - yy) * sh2_2 +
-                    SH_C2_3 * xz * sh2_3 +
-                    SH_C2_4 * (xx - yy) * sh2_4;
-
-   #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_3
-      finalColor += SH_C3_0 * y * (3.0 * xx - yy) * sh3_0 +
-                    SH_C3_1 * xy * z * sh3_1 +
-                    SH_C3_2 * y * (4.0 * zz - xx - yy) * sh3_2 +
-                    SH_C3_3 * z * (2.0 * zz - 3.0 * xx - 3.0 * yy) * sh3_3 +
-                    SH_C3_4 * x * (4.0 * zz - xx - yy) * sh3_4 +
-                    SH_C3_5 * z * (xx - yy) * sh3_5 +
-                    SH_C3_6 * x * (xx - 3.0 * yy) * sh3_6;
-   #endif
-   #endif
-   #endif
-
-   finalColor += 0.5;
-
-   color = vec4 (finalColor, opacity);
+   color = vec4 (computeColorFromSH (texelCoord, splatCenter), opacity);
 
    #if defined (X3D_FOG) && defined (X3D_FOG_COORDS)
       fog ();
