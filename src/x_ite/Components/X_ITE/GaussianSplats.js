@@ -131,6 +131,7 @@ computeCov3D (const in vec4 rotation, const in vec3 scale)
    mat3 M     = S * R;
    mat3 Sigma = transpose (M) * M;
 
+   // Covariance is symmetric.
    return Sigma;
 }
 
