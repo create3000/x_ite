@@ -136,7 +136,7 @@ computeCov3D (const in vec4 rotation, const in vec3 scale)
 }
 
 vec3
-computeCov2D (const in vec4 viewSplatCenter, const in mat3 cov3D)
+computeCov2D (const in vec3 viewSplatCenter, const in mat3 cov3D)
 {
    float x = viewSplatCenter .x;
    float y = viewSplatCenter .y;
@@ -277,7 +277,7 @@ main ()
    float opacity          = texelFetch (x3d_OpacitiesTexture, texelCoord, 0) .r;
 
    mat3 cov3d = computeCov3D (normalize (splatOrientation), splatScale);
-   vec3 cov2d = computeCov2D (viewSplatCenter, cov3d);
+   vec3 cov2d = computeCov2D (viewSplatCenter .xyz / viewSplatCenter .w, cov3d);
 
    float a = cov2d .x; // Variance x
    float b = cov2d .y; // Covariance xy
@@ -291,10 +291,8 @@ main ()
       return;
    }
 
-   float detInv = 1.0 / det;
-
    // Calculate the inverse of the covariance matrix.
-   conic = vec3 (c, -b, a) * detInv;
+   conic = vec3 (c, -b, a) / det;
 
    // pow(e, pow(-3.4, 2) * -0.5) = 1/255, so 3.4 is the standard deviation in terms of the Gaussian falloff that results in a radius of 1 pixel when the variance is 1.
    // sqrt(a) and sqrt(c) are the standard deviations in x and y direction, so multiplying them with 3.4 gives us the radius in pixels where the Gaussian falloff results in 1/255 opacity.
