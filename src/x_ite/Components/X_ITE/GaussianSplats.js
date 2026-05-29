@@ -421,10 +421,10 @@ function GaussianSplatsShape (executionContext, node)
 
    // Private Properties
 
-   this .node              = node;
-   this .shaderCache       = ShaderCache .getOrInsert (this .getBrowser (), new Map ());
-   this .currentViewMatrix = new Float32Array (16);
-   this .sortViewMatrix    = new Float32Array (16);
+   this .node                   = node;
+   this .shaderCache            = ShaderCache .getOrInsert (this .getBrowser (), new Map ());
+   this .currentModelViewMatrix = new Float32Array (16);
+   this .sortModelViewMatrix    = new Float32Array (16);
 }
 
 Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShapeNode .prototype),
@@ -441,9 +441,9 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       this .geometryContext = new GeometryContext ();
 
-      this .geometryBuffer       = gl .createBuffer ();
-      this .positionsIndexBuffer = gl .createBuffer ();
-      this .vertexArrayObject    = new VertexArray (gl);
+      this .geometryBuffer    = gl .createBuffer ();
+      this .splatsIndexBuffer = gl .createBuffer ();
+      this .vertexArrayObject = new VertexArray (gl);
 
       gl .bindBuffer (gl .ARRAY_BUFFER, this .geometryBuffer);
       gl .bufferData (gl .ARRAY_BUFFER, QuadGeometry, gl .DYNAMIC_DRAW);
@@ -558,7 +558,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Indices
 
-      gl .bindBuffer (gl .ARRAY_BUFFER, this .positionsIndexBuffer);
+      gl .bindBuffer (gl .ARRAY_BUFFER, this .splatsIndexBuffer);
       gl .bufferData (gl .ARRAY_BUFFER, new Uint32Array (Array (numSplats) .keys ()), gl .DYNAMIC_DRAW);
 
       // Positions
@@ -645,9 +645,9 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       const projectionMatrixArray = renderObject .getProjectionMatrixArray ();
 
       gl .uniform4iv (shaderNode .x3d_Viewport, renderObject .getViewportArray ());
-      gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, projectionMatrixArray);
-      gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,         false, renderObject .getEyeMatrixArray ());
-      gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, modelViewMatrix);
+      gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
+      gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,        false, renderObject .getEyeMatrixArray ());
+      gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
 
       // The projection matrix stores the focal length in the first and second element of the diagonal.
       // We need to convert from NDC space to screen space, which is done by multiplying with the framebuffer dimensions and dividing by 2, since NDC goes from -1 to 1.
@@ -676,7 +676,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
       {
-         gl .bindBuffer (gl .ARRAY_BUFFER, this .positionsIndexBuffer);
+         gl .bindBuffer (gl .ARRAY_BUFFER, this .splatsIndexBuffer);
          gl .enableVertexAttribArray (shaderNode .x3d_SplatIndex);
          gl .vertexAttribIPointer (shaderNode .x3d_SplatIndex, 1, gl .UNSIGNED_INT, 0, 0);
          gl .vertexAttribDivisor (shaderNode .x3d_SplatIndex, 1);
@@ -685,7 +685,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       }
 
       // Sort splats.
-      this .sortIndices (renderObject .getViewMatrixArray ());
+      this .sortIndices (modelViewMatrix);
 
       // gl .blendFunc (gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
       gl .frontFace (gl .CCW);
@@ -832,7 +832,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
             {
                this .sortPending = false;
 
-               this .sortViewMatrix .fill (0);
+               this .sortModelViewMatrix .fill (0);
 
                browser .addBrowserEvent ();
                break;
@@ -841,7 +841,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
             {
                this .sortPending = false;
 
-               gl .bindBuffer (gl .ARRAY_BUFFER, this .positionsIndexBuffer);
+               gl .bindBuffer (gl .ARRAY_BUFFER, this .splatsIndexBuffer);
                gl .bufferData (gl .ARRAY_BUFFER, event .data .indices, gl .DYNAMIC_DRAW);
 
                browser .addBrowserEvent ();
@@ -876,19 +876,19 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
    },
    sortIndices (viewMatrix)
    {
-      this .currentViewMatrix .set (viewMatrix);
+      this .currentModelViewMatrix .set (viewMatrix);
 
       if (this .sortPending)
          return;
 
-      if (Matrix4 .prototype .equals .call (this .currentViewMatrix, this .sortViewMatrix))
+      if (Matrix4 .prototype .equals .call (this .currentModelViewMatrix, this .sortModelViewMatrix))
          return;
 
-      this .sortViewMatrix .set (viewMatrix);
+      this .sortModelViewMatrix .set (viewMatrix);
 
       this .sortWorker .postMessage ({
          type: "sort",
-         viewMatrix: this .sortViewMatrix,
+         viewMatrix: this .sortModelViewMatrix,
       });
    },
 });
