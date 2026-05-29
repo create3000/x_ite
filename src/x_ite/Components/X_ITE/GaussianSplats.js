@@ -361,7 +361,7 @@ main ()
    if (alpha < 1.0 / 255.0)
       discard;
 
-   vec4 finalColor = vec4 (color .rgb, alpha); // premultiplied-alpha output
+   vec4 finalColor = vec4 (color .rgb, alpha);
 
    #if defined (X3D_FOG)
       finalColor .rgb = getFogColor (finalColor .rgb);
