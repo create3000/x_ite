@@ -141,13 +141,15 @@ computeCov2D (const in vec4 viewSplatCenter, const in mat3 cov3D, const in mat4 
    float y = viewSplatCenter .y;
    float z = viewSplatCenter .z;
 
+   float zz = z * z;
+
    mat3 J = mat3 (
       x3d_FocalLength .x / z,
       0.0,
-      -(x3d_FocalLength .x * x) / (z * z),
+      -(x3d_FocalLength .x * x) / zz,
       0.0,
       x3d_FocalLength .y / z,
-      -(x3d_FocalLength .y * y) / (z * z),
+      -(x3d_FocalLength .y * y) / zz,
       0.0,
       0.0,
       0.0
