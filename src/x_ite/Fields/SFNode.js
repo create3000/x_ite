@@ -256,7 +256,11 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
          {
             warn = false;
 
-            console .warn ("The use of sfnode.getField(name) is deprecated. Future versions of X_ITE may remove this feature. Instead, use the sfnode.{fieldName} syntax or sfnode.addFieldCallback(key, fieldName, callback).");
+            const target = { };
+
+            Error .captureStackTrace (target, this .getField);
+
+            console .warn ("The use of sfnode.getField(name) is deprecated. Future versions of X_ITE may remove this feature. Instead, use the sfnode.{fieldName} syntax or sfnode.addFieldCallback(key, fieldName, callback).", target .stack);
          }
 
          const
