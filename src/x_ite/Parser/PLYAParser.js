@@ -501,7 +501,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
                case "f_rest_6": case "f_rest_7": case "f_rest_8":
                   sphericalHarmonics1 .push (this .convertColor (this .value, type));
                   break;
-               case "f_rest_9": case "f_rest_10": case "f_rest_11":
+               case "f_rest_9":  case "f_rest_10": case "f_rest_11":
                case "f_rest_12": case "f_rest_13": case "f_rest_14":
                case "f_rest_15": case "f_rest_16": case "f_rest_17":
                case "f_rest_18": case "f_rest_19": case "f_rest_20":
