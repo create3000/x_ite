@@ -218,7 +218,7 @@ main ()
    float detInv = 1.0 / det;
 
    // Calculate the inverse of the covariance matrix.
-   conic = vec3 (c * detInv, -b * detInv, a * detInv);
+   conic = vec3 (c, -b, a) * detInv;
 
    // pow(e, pow(-3.4, 2) * -0.5) = 1/255, so 3.4 is the standard deviation in terms of the Gaussian falloff that results in a radius of 1 pixel when the variance is 1.
    // sqrt(a) and sqrt(c) are the standard deviations in x and y direction, so multiplying them with 3.4 gives us the radius in pixels where the Gaussian falloff results in 1/255 opacity.
