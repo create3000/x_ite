@@ -136,7 +136,7 @@ computeCov3D (const in vec4 rotation, const in vec3 scale)
 }
 
 vec3
-computeCov2D (const in vec4 viewSplatCenter, const in mat3 cov3D, const in mat4 modelViewMatrix)
+computeCov2D (const in vec4 viewSplatCenter, const in mat3 cov3D)
 {
    float x = viewSplatCenter .x;
    float y = viewSplatCenter .y;
@@ -156,7 +156,7 @@ computeCov2D (const in vec4 viewSplatCenter, const in mat3 cov3D, const in mat4 
       0.0
    );
 
-   mat3 W = transpose (mat3 (modelViewMatrix));
+   mat3 W = transpose (mat3 (x3d_ModelViewMatrix));
    mat3 T = W * J;
 
    mat3 cov = transpose (T) * transpose (cov3D) * T;
@@ -277,7 +277,7 @@ main ()
    float opacity          = texelFetch (x3d_OpacitiesTexture, texelCoord, 0) .r;
 
    mat3 cov3d = computeCov3D (normalize (splatOrientation), splatScale);
-   vec3 cov2d = computeCov2D (viewSplatCenter, cov3d, x3d_ModelViewMatrix);
+   vec3 cov2d = computeCov2D (viewSplatCenter, cov3d);
 
    float a = cov2d .x; // Variance x
    float b = cov2d .y; // Covariance xy
