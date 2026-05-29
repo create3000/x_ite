@@ -122,11 +122,7 @@ computeCov3D (const in vec4 rotation, const in vec3 scale)
       1.0 - 2.0 * (yy + xx)
    );
 
-   mat3 S = mat3 (1.0);
-
-   S [0] [0] = scale .x;
-   S [1] [1] = scale .y;
-   S [2] [2] = scale .z;
+   mat3 S = mat3 (scale .x, 0.0, 0.0, 0.0, scale .y, 0.0, 0.0, 0.0, scale .z);
 
    mat3 M     = S * R;
    mat3 Sigma = transpose (M) * M;
