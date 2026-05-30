@@ -269,7 +269,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       const scene = this .getScene ();
 
-      if (this .sphericalHarmonics0 ?.length)
+      if (this .sphericalHarmonics0)
       {
          scene .addComponent (this .getBrowser () .getComponent ("X_ITE"));
 
@@ -531,34 +531,37 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       this .normals   = normals;
       this .points    = points;
 
-      // Gaussian Splats
-      // https://github.com/javagl/JSplat/blob/41706e0a54372a8ae2e4b474d3a39e19337e42c2/jsplat-io-ply/src/main/java/de/javagl/jsplat/io/ply/PlySplatReader.java#L121
-
-      const
-         numSplats      = points .length / 3,
-         shDegree       = this .getSphericalHarmonicsDegree (rest),
-         shDimensions_1 = this .getDimensionsForDegree (shDegree) - 1,
-         shs            = Array .from ({ length: 15 }, () => [ ]);
-
-      for (let d = 0; d < shDimensions_1; ++ d)
+      if (sh0 .length)
       {
+         // Gaussian Splats
+         // https://github.com/javagl/JSplat/blob/41706e0a54372a8ae2e4b474d3a39e19337e42c2/jsplat-io-ply/src/main/java/de/javagl/jsplat/io/ply/PlySplatReader.java#L121
+
          const
-            rx = rest [shDimensions_1 * 0 + d],
-            ry = rest [shDimensions_1 * 1 + d],
-            rz = rest [shDimensions_1 * 2 + d],
-            sh = shs [d];
+            numSplats      = points .length / 3,
+            shDegree       = this .getSphericalHarmonicsDegree (rest),
+            shDimensions_1 = this .getDimensionsForDegree (shDegree) - 1,
+            shs            = Array .from ({ length: 15 }, () => [ ]);
 
-         for (let s = 0; s < numSplats; ++ s)
-            sh .push (rx [s], ry [s], rz [s]);
+         for (let d = 0; d < shDimensions_1; ++ d)
+         {
+            const
+               rx = rest [shDimensions_1 * 0 + d],
+               ry = rest [shDimensions_1 * 1 + d],
+               rz = rest [shDimensions_1 * 2 + d],
+               sh = shs [d];
+
+            for (let s = 0; s < numSplats; ++ s)
+               sh .push (rx [s], ry [s], rz [s]);
+         }
+
+         this .quaternions         = quaternions;
+         this .scales              = scales;
+         this .opacities           = opacities;
+         this .sphericalHarmonics0 = sh0;
+         this .sphericalHarmonics1 = shs [0] .concat (shs [1], shs [2]);
+         this .sphericalHarmonics2 = shs [3] .concat (shs [4], shs [5], shs [6], shs [7]);
+         this .sphericalHarmonics3 = shs [8] .concat (shs [9], shs [10], shs [11], shs [12], shs [13], shs [14]);
       }
-
-      this .quaternions         = quaternions;
-      this .scales              = scales;
-      this .opacities           = opacities;
-      this .sphericalHarmonics0 = sh0;
-      this .sphericalHarmonics1 = shs [0] .concat (shs [1], shs [2]);
-      this .sphericalHarmonics2 = shs [3] .concat (shs [4], shs [5], shs [6], shs [7]);
-      this .sphericalHarmonics3 = shs [8] .concat (shs [9], shs [10], shs [11], shs [12], shs [13], shs [14]);
    },
    getSphericalHarmonicsDegree (rest)
    {
