@@ -539,18 +539,18 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          // https://github.com/javagl/JSplat/blob/41706e0a54372a8ae2e4b474d3a39e19337e42c2/jsplat-io-ply/src/main/java/de/javagl/jsplat/io/ply/PlySplatReader.java#L121
 
          const
-            numSplats      = points .length / 3,
-            shDegree       = this .getSphericalHarmonicsDegree (rest),
-            shDimensions_1 = this .getDimensionsForDegree (shDegree) - 1,
-            shDimensions_2 = shDimensions_1 * 2,
-            shs            = Array .from ({ length: 15 }, () => [ ]);
+            numSplats     = points .length / 3,
+            shDegree      = this .getSphericalHarmonicsDegree (rest),
+            shDimensions1 = this .getDimensionsForDegree (shDegree) - 1,
+            shDimensions2 = shDimensions1 * 2,
+            shs           = Array .from ({ length: 15 }, () => [ ]);
 
-         for (let d = 0; d < shDimensions_1; ++ d)
+         for (let d = 0; d < shDimensions1; ++ d)
          {
             const
                rx = rest [d],
-               ry = rest [shDimensions_1 + d],
-               rz = rest [shDimensions_2 + d],
+               ry = rest [shDimensions1 + d],
+               rz = rest [shDimensions2 + d],
                sh = shs [d];
 
             for (let s = 0; s < numSplats; ++ s)
