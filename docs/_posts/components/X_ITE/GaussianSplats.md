@@ -1,6 +1,6 @@
 ---
 title: GaussianSplats
-date: 2023-01-07
+date: 2026-05-30
 nav: components-X_ITE
 categories: [components, X_ITE]
 tags: [GaussianSplats, X_ITE]
