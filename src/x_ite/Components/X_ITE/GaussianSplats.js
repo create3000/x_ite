@@ -19,10 +19,10 @@ import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
 const vs = () => /* glsl */ `#version 300 es
 
-precision highp float;
 precision highp int;
-precision highp sampler2D;
-precision highp sampler2DArray;
+precision mediump float;
+precision mediump sampler2D;
+precision mediump sampler2DArray;
 
 uniform ivec4 x3d_Viewport;
 uniform mat4  x3d_ProjectionMatrix;
@@ -328,9 +328,9 @@ main ()
 
 const fs = () => /* glsl */ `#version 300 es
 
-precision highp float;
 precision highp int;
-precision highp sampler2D;
+precision mediump float;
+precision mediump sampler2D;
 
 in vec4 color;
 in vec2 texCoord;
