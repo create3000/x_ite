@@ -283,7 +283,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
             orientations   = [ ];
 
          // Quaternion elements must be rotated from wxyz to xyzw,
-         // and quaternion must be inverted for some reason.
+         // and we have to take the inverse of the Quaternion for some reason.
          // https://www.kaggle.com/code/stpeteishii/creatures-ply-to-gaussian-splat
          for (let i = 0; i < numQuaternions; i += 4)
             orientations .push (quaternions [i + 1], quaternions [i + 2], quaternions [i + 3], -quaternions [i]);
