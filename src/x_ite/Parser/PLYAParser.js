@@ -1,6 +1,6 @@
 import X3DParser   from "./X3DParser.js";
 import Expressions from "./Expressions.js";
-import Algorithm from "../../standard/Math/Algorithm.js";
+import Rotation4   from "../../standard/Math/Numbers/Rotation4.js";
 
 /*
  *  Grammar
@@ -276,29 +276,31 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          await this .getBrowser () .loadComponents (scene);
 
          const
-            node           = scene .createNode ("GaussianSplats"),
+            transform      = scene .createNode ("Transform"),
+            gaussianSplats = scene .createNode ("GaussianSplats"),
             quaternions    = this .quaternions,
             numQuaternions = quaternions .length,
             orientations   = [ ];
 
-         this .rotateAxes180 (this .points);
-
          // Quaternion elements must be rotated from wxyz to xyzw,
-         // and quaternion must be rotated by 180 degrees about x-axis.
+         // and quaternion w component must be negate for some reasons.
          // https://www.kaggle.com/code/stpeteishii/creatures-ply-to-gaussian-splat
          for (let i = 0; i < numQuaternions; i += 4)
-            orientations .push (quaternions [i + 1], -quaternions [i + 2], -quaternions [i + 3], -quaternions [i]);
+            orientations .push (quaternions [i + 1], quaternions [i + 2], quaternions [i + 3], -quaternions [i]);
 
-         node .positions           = this .points;
-         node .orientations        = orientations;
-         node .scales              = this .scales;
-         node .opacities           = this .opacities;
-         node .sphericalHarmonics0 = this .sphericalHarmonics0;
-         node .sphericalHarmonics1 = this .sphericalHarmonics1;
-         node .sphericalHarmonics2 = this .sphericalHarmonics2;
-         node .sphericalHarmonics3 = this .sphericalHarmonics3;
+         gaussianSplats .positions           = this .points;
+         gaussianSplats .orientations        = orientations;
+         gaussianSplats .scales              = this .scales;
+         gaussianSplats .opacities           = this .opacities;
+         gaussianSplats .sphericalHarmonics0 = this .sphericalHarmonics0;
+         gaussianSplats .sphericalHarmonics1 = this .sphericalHarmonics1;
+         gaussianSplats .sphericalHarmonics2 = this .sphericalHarmonics2;
+         gaussianSplats .sphericalHarmonics3 = this .sphericalHarmonics3;
 
-         scene .rootNodes .push (node);
+         transform .rotation = new Rotation4 (1, 0, 0, Math .PI);
+         transform .children .push (gaussianSplats);
+
+         scene .rootNodes .push (transform);
       }
       else if (this .coordIndex) // IndexedFaceSet
       {
