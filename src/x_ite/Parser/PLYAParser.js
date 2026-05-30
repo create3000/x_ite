@@ -451,7 +451,8 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          quaternions = [ ],
          opacities   = [ ],
          sh0         = [ ], // Degree 0
-         rest        = Array .from ({ length: 45 }, () => [ ]);
+         rest        = Array .from ({ length: 45 }, () => [ ]),
+         restIndex   = new Map (Array .from ({ length: 45 }, (v, i) => [`f_rest_${i}`, i]));
 
       // console .time ("vertices")
 
@@ -512,7 +513,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
                case "f_rest_36": case "f_rest_37": case "f_rest_38":
                case "f_rest_39": case "f_rest_40": case "f_rest_41":
                case "f_rest_42": case "f_rest_43": case "f_rest_44":
-                  rest [name .slice (7)] .push (this .convertColor (this .value, type));
+                  rest [restIndex .get (name)] .push (this .convertColor (this .value, type));
                   break;
             }
          }
