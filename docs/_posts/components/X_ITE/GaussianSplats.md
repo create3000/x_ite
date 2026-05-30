@@ -41,14 +41,14 @@ The GaussianSplats node belongs to the [X_ITE](/x_ite/components/overview/#x_ite
 | MFVec4f | [in, out] | [orientations](#fields-orientations) | [ ] |
 | MFVec3f | [in, out] | [scales](#fields-scales) | [ ] |
 | MFFloat | [in, out] | [opacities](#fields-opacities) | [ ] |
-| MFVec3f | [in, out] | [sphericalHarmonics0](#fields-sphericalHarmonics0) |  |
-| MFVec3f | [in, out] | [sphericalHarmonics1](#fields-sphericalHarmonics1) |  |
-| MFVec3f | [in, out] | [sphericalHarmonics2](#fields-sphericalHarmonics2) |  |
-| MFVec3f | [in, out] | [sphericalHarmonics3](#fields-sphericalHarmonics3) |  |
-| SFBool | [in, out] | [visible](#fields-visible) |  |
-| SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) |  |
-| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) |  |
-| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) |  |
+| MFVec3f | [in, out] | [sphericalHarmonics0](#fields-sphericalHarmonics0) | [ ] |
+| MFVec3f | [in, out] | [sphericalHarmonics1](#fields-sphericalHarmonics1) | [ ] |
+| MFVec3f | [in, out] | [sphericalHarmonics2](#fields-sphericalHarmonics2) | [ ] |
+| MFVec3f | [in, out] | [sphericalHarmonics3](#fields-sphericalHarmonics3) | [ ] |
+| SFBool | [in, out] | [visible](#fields-visible) | TRUE |
+| SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
+| SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
+| SFVec3f | [ ] | [bboxCenter](#fields-bboxCenter) | 0 0 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -63,7 +63,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### SFString [in, out] **colorSpace** "SRGB_REC709_DISPLAY"
 {: #fields-colorSpace }
 
-Specifies the colorspace. It must be on of:
+Specifies the colorspace. It must be one of:
 
 - SRGB_REC709_DISPLAY
 - X3D_COLORSPACE_LINEAR
