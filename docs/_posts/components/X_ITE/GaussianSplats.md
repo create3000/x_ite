@@ -1,21 +1,21 @@
 ---
-title: DispersionMaterialExtension
-date: 2024-06-12
+title: GaussianSplats
+date: 2023-01-07
 nav: components-X_ITE
 categories: [components, X_ITE]
-tags: [DispersionMaterialExtension, X_ITE]
+tags: [GaussianSplats, X_ITE]
 ---
 <style>
 .post h3 {
-   word-spacing: 0.2em;
+  word-spacing: 0.2em;
 }
 </style>
 
 ## Overview
 
-DispersionMaterialExtension is an extension for the [PhysicalMaterial](../../shape/physicalmaterial/) and [SpecularGlossinessMaterial](../specularglossinessmaterial/) nodes. For this node to have an effect, add an [EnvironmentLight](../../lighting/environmentlight) node.
+The GaussianSplats node adds basic support for storing 3D Gaussian splats in X3D files.
 
-The DispersionMaterialExtension node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and requires at least support level **1,** its default container field is *extensions.* It is available in X_ITE.
+The GaussianSplats node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and its default container field is *children.* It is available in X_ITE.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
@@ -24,16 +24,19 @@ The DispersionMaterialExtension node belongs to the [X_ITE](/x_ite/components/ov
 
 ```
 + X3DNode
-  + X3DMaterialExtensionNode
-    + DispersionMaterialExtension
+  + X3DChildNode
+    + X3DChildNode
+      + GaussianSplats (*X3DBoundedObject)
 ```
+
+\* Derived from multiple interfaces.
+{: .small }
 
 ## Fields
 
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
-| SFFloat | [in, out] | [dispersion](#fields-dispersion) | 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -45,15 +48,6 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
-### SFFloat [in, out] **dispersion** 0 <small>[0,∞)</small>
-{: #fields-dispersion }
-
-The strength of the dispersion effect, specified as 20/Abbe number.
-
-## Example
-
-- [View »Dispersion Test« in glTF Sample Viewer](/x_ite/laboratory/gltf-sample-viewer/?url=DispersionTest)
-
 ## Browser Compatibility
 
 | Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
@@ -63,4 +57,4 @@ The strength of the dispersion effect, specified as 20/Abbe number.
 
 ## See Also
 
-- [Khronos glTF Specification of the KHR_materials_dispersion Extension](https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_materials_dispersion)
+- [Khronos glTF Specification of the KHR_gaussian_splatting Extension](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_gaussian_splatting/README.md)
