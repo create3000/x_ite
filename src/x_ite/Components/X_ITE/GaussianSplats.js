@@ -463,6 +463,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Fields
 
+      this .node ._colorSpace          .addInterest ("set_key__",      this);
       this .node ._positions           .addInterest ("requestRebuild", this);
       this .node ._orientations        .addInterest ("requestRebuild", this);
       this .node ._scales              .addInterest ("requestRebuild", this);
@@ -491,6 +492,26 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
    getNumInstances ()
    {
       return this .numSplats;
+   },
+   set_key__ ()
+   {
+      let key = "";
+
+      key += this .node ._sphericalHarmonics1 .length ? 1 : 0;
+      key += this .node ._sphericalHarmonics2 .length ? 1 : 0;
+      key += this .node ._sphericalHarmonics3 .length ? 1 : 0;
+
+      switch (this .node ._colorSpace .getValue ())
+      {
+         case "LIN_REC709_DISPLAY":
+            key += 1;
+            break;
+         default: // "SRGB_REC709_DISPLAY"
+            key += 0;
+            break;
+      }
+
+      this .key = key;
    },
    set_bbox__ ()
    {
@@ -610,16 +631,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          gl .texImage3D (gl .TEXTURE_2D_ARRAY, 0, gl .RGB32F, textureWidth, textureWidth, 4, 0, gl .RGB, gl .FLOAT, sphericalHarmonics);
       }
 
-
-      // Key
-
-      let key = "";
-
-      key += this .node ._sphericalHarmonics1 .length ? 1 : 0;
-      key += this .node ._sphericalHarmonics2 .length ? 1 : 0;
-      key += this .node ._sphericalHarmonics3 .length ? 1 : 0;
-
-      this .key       = key;
       this .numSplats = numSplats;
 
       // Sort Worker
@@ -628,6 +639,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Finish
 
+      this .set_key__ ();
       this .set_bbox__ ();
       this .set_objects__ ();
    },
@@ -728,15 +740,12 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       if (browser .getRenderingProperty ("XRSession"))
          options .push ("X3D_XR_SESSION");
 
-      switch (browser .getBrowserOption ("ColorSpace") .toUpperCase ())
+      switch (this .node ._colorSpace .getValue ())
       {
-         case "SRGB":
-            options .push ("X3D_COLORSPACE_SRGB");
-            break;
-         case "LINEAR":
+         case "LIN_REC709_DISPLAY":
             options .push ("X3D_COLORSPACE_LINEAR");
             break;
-         default: // LINEAR_WHEN_PHYSICAL_MATERIAL
+         default: // "SRGB_REC709_DISPLAY"
             options .push ("X3D_COLORSPACE_SRGB");
             break;
       }
