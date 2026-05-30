@@ -15,7 +15,7 @@ import RenderPass           from "../../Rendering/RenderPass.js";
 import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
-// https://developer.playcanvas.com/user-manual/gaussian-splatting/formats/ply/
+// https://github.com/javagl/JSplat/blob/41706e0a54372a8ae2e4b474d3a39e19337e42c2/jsplat-viewer-lwjgl/src/main/resources/vertexShaderSource.glsl
 
 const vs = () => /* glsl */ `#version 300 es
 
@@ -325,6 +325,8 @@ main ()
    #endif
 }
 `;
+
+// https://github.com/javagl/JSplat/blob/41706e0a54372a8ae2e4b474d3a39e19337e42c2/jsplat-viewer-lwjgl/src/main/resources/fragmentShaderSource.glsl
 
 const fs = () => /* glsl */ `#version 300 es
 
