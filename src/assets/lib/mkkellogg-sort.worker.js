@@ -36,7 +36,7 @@
 
 // Resolve the WASM URL relative to this worker file, compatible with both
 // Rollup (import.meta.url is the worker script URL at runtime) and dev servers.
-const wasmUrl = new URL("./sorter_no_simd_non_shared.wasm", import.meta.url).href;
+const wasmUrl = new URL ("./sorter_no_simd_non_shared.wasm", import .meta .url) .href;
 
 // ── Constants ──────────────────────────────────────────────────────────────────
 

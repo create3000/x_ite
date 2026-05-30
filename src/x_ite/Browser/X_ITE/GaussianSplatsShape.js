@@ -828,11 +828,21 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
    },
    initSortWorker ()
    {
+      // Terminate existing worker.
+
       this .sortWorker ?.terminate ();
 
-      const url = URLs .getLibraryURL ("mkkellogg-sort.worker.js");
+      // Load worker.
+
+      const
+         content = `import "${URLs .getLibraryURL ("mkkellogg-sort.worker.js")}";`,
+         url     = URL .createObjectURL (new Blob ([content], { type: "text/javascript" }));
 
       this .sortWorker = new Worker (url, { type: "module" });
+
+      URL .revokeObjectURL (url);
+
+      // Connect events.
 
       const
          browser = this .getBrowser (),
