@@ -144,9 +144,11 @@ computeCov2D (const in vec3 viewSplatCenter, const in mat3 cov3D)
       x3d_FocalLength .x / z,
       0.0,
       -(x3d_FocalLength .x * x) / zz,
+
       0.0,
       x3d_FocalLength .y / z,
       -(x3d_FocalLength .y * y) / zz,
+
       0.0,
       0.0,
       0.0
