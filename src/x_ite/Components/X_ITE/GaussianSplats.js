@@ -93,10 +93,11 @@ const float SH_C0 = 0.28209479177387814;
 mat3
 computeCov3D (const in vec4 rotation, const in vec3 scale)
 {
-   float qx = rotation .x;
-   float qy = rotation .y;
-   float qz = rotation .z;
-   float qw = rotation .w;
+   // We have to take the inverse of the Quaternion for some reason.
+   float qx =  rotation .x;
+   float qy =  rotation .y;
+   float qz =  rotation .z;
+   float qw = -rotation .w;
 
    float yy = qy * qy;
    float zz = qz * qz;
@@ -983,6 +984,7 @@ Object .defineProperties (GaussianSplats,
    {
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",            new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "colorSpace",          new Fields .SFString ("SRGB_REC709_DISPLAY")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "positions",           new Fields .MFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "orientations",        new Fields .MFVec4f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "scales",              new Fields .MFVec3f ()),
