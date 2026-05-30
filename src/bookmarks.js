@@ -22,6 +22,7 @@ Object .assign (Bookmarks .prototype,
                path      = bookmark .path;
 
             let element;
+
             if (test)
             {
                element = $('<span/>')
@@ -35,7 +36,7 @@ Object .assign (Bookmarks .prototype,
             }
             else if (path)
             {
-               if (!path .match (/\.(?:x3d|x3dz|x3dv|x3dvz|x3dj|x3djz|wrl|wrz)$/))
+               if (!path .match (/\.(?:x3d|x3dz|x3dv|x3dvz|x3dj|x3djz|wrl|wrz|ply)$/))
                   continue;
 
                const

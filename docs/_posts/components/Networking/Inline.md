@@ -184,8 +184,8 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 | VRM              | .vrm           | model/vrm         | [About VRM][6]                  |
 | Wavefront OBJ    | .obj           | model/obj         |                                 |
 | STL              | .stl           | model/stl         | ASCII & Binary                  |
-| PLY              | .ply           | model/ply         | ASCII & Binary                  |
-| OFF              | .off           | model/off         | [As Extension][7]               |
+| PLY              | .ply           | model/ply         | ASCII & Binary, [3DGS][7]       |
+| OFF              | .off           | model/off         | [As Extension][8]               |
 | SVG Document     | .svg, .svgz    | image/svg+xml     |                                 |
 
   [1]: https://www.web3d.org/documents/specifications/19776-1/V3.3/index.html
@@ -194,7 +194,8 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
   [4]: /x_ite/features/#vrml-viewer
   [5]: /x_ite/features/#gltf-support
   [6]: https://vrm.dev/en/vrm/vrm_about/
-  [7]: https://www.npmjs.com/package/x_ite-off-parser
+  [7]: https://en.wikipedia.org/wiki/Gaussian_splatting
+  [8]: https://www.npmjs.com/package/x_ite-off-parser
 
 >**Tip:** All files can be compressed using GZip compression (usually denoted by a 'z' at the end of the filename suffix). This saves bandwidth and speeds up download time.
 {: .prompt-tip }

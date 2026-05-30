@@ -550,6 +550,7 @@ Highest supported level: **1**
 - [DiffuseTransmissionMaterialExtension](/x_ite/components/x-ite/diffusetransmissionmaterialextension/) <small class="blue">experimental</small>
 - [DispersionMaterialExtension](/x_ite/components/x-ite/dispersionmaterialextension/) <small class="blue">experimental</small>
 - [EmissiveStrengthMaterialExtension](/x_ite/components/x-ite/emissivestrengthmaterialextension/) <small class="blue">experimental</small>
+- [GaussianSplats](/x_ite/components/x-ite/gaussiansplats/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/x-ite/gaussiansplats/#example) <small class="blue">experimental</small>
 - [InstancedShape](/x_ite/components/x-ite/instancedshape/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/x-ite/instancedshape/#example) <small class="blue">experimental</small>
 - [IORMaterialExtension](/x_ite/components/x-ite/iormaterialextension/) <small class="blue">experimental</small>
 - [IridescenceMaterialExtension](/x_ite/components/x-ite/iridescencematerialextension/) <small class="blue">experimental</small>

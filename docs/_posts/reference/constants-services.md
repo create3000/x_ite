@@ -177,6 +177,7 @@ All concrete node types from *AcousticProperties, Analyser, …* to *WorldInfo.*
 - FontStyle
 - ForcePhysicsModel
 - Gain
+- GaussianSplats
 - GeneratedCubeMapTexture
 - GeoCoordinate
 - GeoElevationGrid

@@ -53,7 +53,7 @@ EOT
 
 sub tests
 {
-   my @files = sort { "\U$a" cmp "\U$b" } grep !m|/\.|, `find /Volumes/Home/Projekte/Library/Tests -type f -name "*.x3d" -o -name "*.x3dz" -o -name "*.x3dj" -o -name "*.x3djz" -o -name "*.x3dv" -o -name "*.x3dvz" -o -name "*.wrl"`;
+   my @files = sort { "\U$a" cmp "\U$b" } grep !m|/\.|, `find /Volumes/Home/Projekte/Library/Tests -type f -name "*.x3d" -o -name "*.x3dz" -o -name "*.x3dj" -o -name "*.x3djz" -o -name "*.x3dv" -o -name "*.x3dvz" -o -name "*.wrl" -o -name "*.ply"`;
 
    chomp @files;
 

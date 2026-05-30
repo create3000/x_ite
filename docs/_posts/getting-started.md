@@ -247,6 +247,7 @@ That's wonderful! Your support is important to keep X_ITE maintained, independen
 [![VolumeData](https://create3000.github.io/media/examples/VolumeRendering/VolumeData/screenshot-small.avif){: width="110" height="62" }](https://create3000.github.io/media/examples/VolumeRendering/VolumeData/VolumeData.x3d){: title="VolumeRendering » VolumeData" componentName="VolumeRendering" typeName="VolumeData" doc="true" buttonsPosition="br" }
 [![BlendMode](https://create3000.github.io/media/examples/X_ITE/BlendMode/screenshot-small.avif){: width="110" height="62" }](https://create3000.github.io/media/examples/X_ITE/BlendMode/BlendMode.x3d){: title="X_ITE » BlendMode" componentName="X_ITE" typeName="BlendMode" doc="true" buttonsPosition="br" }
 [![DepthMode](https://create3000.github.io/media/examples/X_ITE/DepthMode/screenshot-small.avif){: width="110" height="62" }](https://create3000.github.io/media/examples/X_ITE/DepthMode/DepthMode.x3d){: title="X_ITE » DepthMode" componentName="X_ITE" typeName="DepthMode" doc="true" buttonsPosition="br" }
+[![GaussianSplats](https://create3000.github.io/media/examples/X_ITE/GaussianSplats/screenshot-small.avif){: width="110" height="62" }](https://create3000.github.io/media/examples/X_ITE/GaussianSplats/GaussianSplats.x3d){: title="X_ITE » GaussianSplats" componentName="X_ITE" typeName="GaussianSplats" doc="true" buttonsPosition="br" }
 [![InstancedShape](https://create3000.github.io/media/examples/X_ITE/InstancedShape/screenshot-small.avif){: width="110" height="62" }](https://create3000.github.io/media/examples/X_ITE/InstancedShape/InstancedShape.x3d){: title="X_ITE » InstancedShape" componentName="X_ITE" typeName="InstancedShape" doc="true" buttonsPosition="br" }
 {: .examples }
 
@@ -363,8 +364,8 @@ X_ITE can load several file formats, either directly as the source of the \<x3d-
 | VRM              | .vrm           | model/vrm         | [About VRM][6]                  |
 | Wavefront OBJ    | .obj           | model/obj         |                                 |
 | STL              | .stl           | model/stl         | ASCII & Binary                  |
-| PLY              | .ply           | model/ply         | ASCII & Binary                  |
-| OFF              | .off           | model/off         | [As Extension][7]               |
+| PLY              | .ply           | model/ply         | ASCII & Binary, [3DGS][7]       |
+| OFF              | .off           | model/off         | [As Extension][8]               |
 | SVG Document     | .svg, .svgz    | image/svg+xml     |                                 |
 
   [1]: https://www.web3d.org/documents/specifications/19776-1/V3.3/index.html
@@ -373,7 +374,8 @@ X_ITE can load several file formats, either directly as the source of the \<x3d-
   [4]: /x_ite/features/#vrml-viewer
   [5]: /x_ite/features/#gltf-support
   [6]: https://vrm.dev/en/vrm/vrm_about/
-  [7]: https://www.npmjs.com/package/x_ite-off-parser
+  [7]: https://en.wikipedia.org/wiki/Gaussian_splatting
+  [8]: https://www.npmjs.com/package/x_ite-off-parser
 
 All files can be compressed using GZip compression (usually denoted by a 'z' at the end of the filename suffix). This saves bandwidth and speeds up download time.
 

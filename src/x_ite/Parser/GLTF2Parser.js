@@ -270,6 +270,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_transmission":
             case "KHR_materials_volume_scatter":
             case "KHR_materials_volume":
+            case "KHR_gaussian_splatting":
             {
                components .push (browser .getComponent ("X_ITE", 1));
                break;
@@ -1792,6 +1793,9 @@ function eventsProcessed ()
       this .attributesObject (primitive .attributes);
       this .targetsArray     (primitive .targets);
 
+      if (primitive .extensions ?.KHR_gaussian_splatting)
+         return this .khrGaussianSplatting (primitive, shapeNodes);
+
       primitive .indices  = this .accessors [primitive .indices];
       primitive .material = this .materials [primitive .material];
 
@@ -1802,6 +1806,50 @@ function eventsProcessed ()
          variantsNode = this .khrMaterialsVariantsExtension (primitive .extensions ?.KHR_materials_variants, shapeNode);
 
       shapeNodes .push (primitive .shapeNode = variantsNode ?? shapeNode);
+   },
+   khrGaussianSplatting (primitive, shapeNodes)
+   {
+      const
+         scene                  = this .getScene (),
+         gaussianSplats         = scene .createNode ("GaussianSplats", false),
+         KHR_gaussian_splatting = primitive .extensions ?.KHR_gaussian_splatting,
+         attributes             = primitive .attributes;
+
+      gaussianSplats ._colorSpace == String (KHR_gaussian_splatting .colorSpace) .toUpperCase ();
+
+      gaussianSplats ._positions    = attributes ?.POSITION ?.array ?? [ ];
+      gaussianSplats ._orientations = attributes ?.["KHR_gaussian_splatting:ROTATION"] ?.array ?? [ ];
+      gaussianSplats ._scales       = attributes ?.["KHR_gaussian_splatting:SCALE"]    ?.array ?? [ ];
+      gaussianSplats ._opacities    = attributes ?.["KHR_gaussian_splatting:OPACITY"]  ?.array ?? [ ];
+
+      const numSplats = gaussianSplats ._positions .length;
+
+      // Degree 0
+
+      gaussianSplats ._sphericalHarmonics0 = attributes ?.["KHR_gaussian_splatting:SH_DEGREE_0_COEF_0"] ?.array ?? [ ];
+
+      // Degree 1
+
+      for (const [degree, dimensions] of [1, 3, 5, 7] .entries ())
+      {
+         const sh = Array .from ({ length: dimensions }, (_, coef) => attributes ?.[`KHR_gaussian_splatting:SH_DEGREE_${degree}_COEF_${coef}`] ?.array);
+
+         if (!sh .every (array => array))
+            break;
+
+         const field = gaussianSplats .getField (`sphericalHarmonics${degree}`);
+
+         field .length = numSplats * dimensions;
+
+         const value = field .getValue ();
+
+         for (const [position, array] of sh .entries ())
+            value .set (numSplats * (3 * position), array .subarray (0, numSplats * 3));
+      }
+
+      gaussianSplats .setup ();
+
+      shapeNodes .push (primitive .shapeNode = gaussianSplats);
    },
    attributesObject (attributes)
    {
