@@ -150,6 +150,16 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#BoundingBoxes)
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
+## Example
+
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/X_ITE/GaussianSplats/GaussianSplats.x3d" contentScale="auto" update="auto">
+  <img src="https://create3000.github.io/media/examples/X_ITE/GaussianSplats/screenshot.avif" alt="GaussianSplats"/>
+</x3d-canvas>
+
+- [Download ZIP Archive](https://create3000.github.io/media/examples/X_ITE/GaussianSplats/GaussianSplats.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/X_ITE/GaussianSplats/GaussianSplats.x3d)
+{: .example-links }
+
 ## Browser Compatibility
 
 | Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |
