@@ -447,13 +447,11 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       // Gaussian Splats
 
       const
-         scales              = [ ],
-         quaternions         = [ ],
-         opacities           = [ ],
-         sphericalHarmonics0 = [ ],
-         sphericalHarmonics1 = [ ],
-         sphericalHarmonics2 = [ ],
-         sphericalHarmonics3 = [ ];
+         scales      = [ ],
+         quaternions = [ ],
+         opacities   = [ ],
+         sh0         = [ ], // Degree 0
+         rest        = Array .from ({ length: 45 }, () => [ ]);
 
       // console .time ("vertices")
 
@@ -494,21 +492,19 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
                   // https://github.com/antimatter15/splat/blob/main/convert.py
                   opacities .push (1 / (1 + Math .exp (-this .value)));
                   break;
+               // Degree 0
                case "f_dc_0": case "f_dc_1": case "f_dc_2":
-                  sphericalHarmonics0 .push (this .convertColor (this .value, type));
+                  sh0 .push (this .convertColor (this .value, type));
                   break;
-               case "f_rest_0": case "f_rest_1": case "f_rest_2":
-               case "f_rest_3": case "f_rest_4": case "f_rest_5":
-               case "f_rest_6": case "f_rest_7": case "f_rest_8":
-                  sphericalHarmonics1 .push (this .convertColor (this .value, type));
-                  break;
+               // Degree 1,2,3
+               case "f_rest_0":  case "f_rest_1":  case "f_rest_2":
+               case "f_rest_3":  case "f_rest_4":  case "f_rest_5":
+               case "f_rest_6":  case "f_rest_7":  case "f_rest_8":
                case "f_rest_9":  case "f_rest_10": case "f_rest_11":
                case "f_rest_12": case "f_rest_13": case "f_rest_14":
                case "f_rest_15": case "f_rest_16": case "f_rest_17":
                case "f_rest_18": case "f_rest_19": case "f_rest_20":
                case "f_rest_21": case "f_rest_22": case "f_rest_23":
-                  sphericalHarmonics2 .push (this .convertColor (this .value, type));
-                  break;
                case "f_rest_24": case "f_rest_25": case "f_rest_26":
                case "f_rest_27": case "f_rest_28": case "f_rest_29":
                case "f_rest_30": case "f_rest_31": case "f_rest_32":
@@ -516,7 +512,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
                case "f_rest_36": case "f_rest_37": case "f_rest_38":
                case "f_rest_39": case "f_rest_40": case "f_rest_41":
                case "f_rest_42": case "f_rest_43": case "f_rest_44":
-                  sphericalHarmonics3 .push (this .convertColor (this .value, type));
+                  rest [name .slice (7)] .push (this .convertColor (this .value, type));
                   break;
             }
          }
@@ -533,14 +529,51 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       this .points    = points;
 
       // Gaussian Splats
+      // https://github.com/javagl/JSplat/blob/41706e0a54372a8ae2e4b474d3a39e19337e42c2/jsplat-io-ply/src/main/java/de/javagl/jsplat/io/ply/PlySplatReader.java#L121
+
+      const
+         numSplats    = points .length / 3,
+         shDegree     = this .getSphericalHarmonicsDegree (rest),
+         shDimensions = this .getDimensionsForDegree (shDegree),
+         shs          = Array .from ({ length: 15 }, () => [ ]);
+
+      for (let d = 0; d < shDimensions - 1; ++ d)
+      {
+         const
+            sd = d + 1,
+            rx = rest [(shDimensions - 1) * 0 + d],
+            ry = rest [(shDimensions - 1) * 1 + d],
+            rz = rest [(shDimensions - 1) * 2 + d],
+            sh = shs [d];
+
+         for (let s = 0; s < numSplats; ++ s)
+            sh .push (rx [s], ry [s], rz [s]);
+      }
 
       this .quaternions         = quaternions;
       this .scales              = scales;
       this .opacities           = opacities;
-      this .sphericalHarmonics0 = sphericalHarmonics0;
-      this .sphericalHarmonics1 = sphericalHarmonics1;
-      this .sphericalHarmonics2 = sphericalHarmonics2;
-      this .sphericalHarmonics3 = sphericalHarmonics3;
+      this .sphericalHarmonics0 = sh0;
+      this .sphericalHarmonics1 = shs [0] .concat (shs [1], shs [2]);
+      this .sphericalHarmonics2 = shs [3] .concat (shs [4], shs [5], shs [6], shs [7]);
+      this .sphericalHarmonics3 = shs [8] .concat (shs [9], shs [10], shs [11], shs [12], shs [13], shs [14]);
+   },
+   getSphericalHarmonicsDegree (rest)
+   {
+      if (rest [44] .length)
+         return 3;
+
+      if (rest [23] .length)
+         return 2;
+
+      if (rest [8] .length)
+         return 1;
+
+      return 0;
+   },
+   getDimensionsForDegree (shDegree)
+   {
+      return (shDegree + 1) ** 2;
    },
    parseFaces ({ count, properties })
    {

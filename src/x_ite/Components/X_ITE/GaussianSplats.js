@@ -603,8 +603,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       let key = "";
 
       key += this .node ._sphericalHarmonics1 .length ? 1 : 0;
-      key += this .node ._sphericalHarmonics1 .length ? 1 : 0;
       key += this .node ._sphericalHarmonics2 .length ? 1 : 0;
+      key += this .node ._sphericalHarmonics3 .length ? 1 : 0;
 
       this .key       = key;
       this .numSplats = numSplats;
