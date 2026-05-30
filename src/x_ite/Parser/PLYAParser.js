@@ -1,5 +1,6 @@
 import X3DParser   from "./X3DParser.js";
 import Expressions from "./Expressions.js";
+import Algorithm from "../../standard/Math/Algorithm.js";
 
 /*
  *  Grammar
@@ -486,11 +487,12 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
                case "rot_0": case "rot_1": case "rot_2": case "rot_3":
                   quaternions .push (this .value);
                   break;
+               // https://github.com/javagl/JSplat/blob/41706e0a54372a8ae2e4b474d3a39e19337e42c2/jsplat-io-gsplat/src/main/java/de/javagl/jsplat/io/gsplat/GsplatSplatWriter.java#L106
                case "scale_0": case "scale_1": case "scale_2":
                   scales .push (Math .exp (this .value));
                   break;
                case "opacity":
-                  // https://github.com/antimatter15/splat/blob/main/convert.py
+                  // https://github.com/javagl/JSplat/blob/41706e0a54372a8ae2e4b474d3a39e19337e42c2/jsplat/src/main/java/de/javagl/jsplat/Splats.java#L244
                   opacities .push (1 / (1 + Math .exp (-this .value)));
                   break;
                // Degree 0
