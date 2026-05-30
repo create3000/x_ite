@@ -66,7 +66,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 The color space of the reconstructed color values. It must be one of:
 
 - SRGB_REC709_DISPLAY
-- X3D_COLORSPACE_LINEAR
+- LIN_REC709_DISPLAY
 
 ### MFVec3f [in, out] **positions** [ ] <small>(-∞,∞)</small>
 {: #fields-positions }
