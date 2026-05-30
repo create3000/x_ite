@@ -542,14 +542,15 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
             numSplats      = points .length / 3,
             shDegree       = this .getSphericalHarmonicsDegree (rest),
             shDimensions_1 = this .getDimensionsForDegree (shDegree) - 1,
+            shDimensions_2 = shDimensions_1 * 2,
             shs            = Array .from ({ length: 15 }, () => [ ]);
 
          for (let d = 0; d < shDimensions_1; ++ d)
          {
             const
-               rx = rest [shDimensions_1 * 0 + d],
-               ry = rest [shDimensions_1 * 1 + d],
-               rz = rest [shDimensions_1 * 2 + d],
+               rx = rest [d],
+               ry = rest [shDimensions_1 + d],
+               rz = rest [shDimensions_2 + d],
                sh = shs [d];
 
             for (let s = 0; s < numSplats; ++ s)
