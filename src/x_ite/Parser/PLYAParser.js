@@ -543,7 +543,6 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
       for (let d = 0; d < shDimensions_1; ++ d)
       {
          const
-            sd = d + 1,
             rx = rest [shDimensions_1 * 0 + d],
             ry = rest [shDimensions_1 * 1 + d],
             rz = rest [shDimensions_1 * 2 + d],
