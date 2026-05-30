@@ -273,6 +273,7 @@ main ()
    vec3  splatScale       = texelFetch (x3d_ScalesTexture, texelCoord, 0) .xyz;
    float opacity          = texelFetch (x3d_OpacitiesTexture, texelCoord, 0) .r;
 
+   // Orientation Quaternion must be normalized.
    mat3 cov3d = computeCov3D (normalize (splatOrientation), splatScale);
    vec3 cov2d = computeCov2D (viewSplatCenter .xyz / viewSplatCenter .w, cov3d);
 
