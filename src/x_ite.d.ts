@@ -16014,6 +16014,12 @@ declare namespace X3D
        */
       children: MFNode <X3DChildNodeProxy>;
       /**
+       * Sets color depth of the rendered texture.
+       *
+       * This field is of access type 'inputOutput' and type SFInt32.
+       */
+      colorDepth: number;
+      /**
        * The generated texture will contain the depth buffer of the image (instead of the color buffer as usual).
        *
        * This field is of access type 'initializeOnly' and type SFBool.
@@ -16026,17 +16032,17 @@ declare namespace X3D
        */
       description: string;
       /**
-       * Sets the width, height, color components (and number of MRTs).
-       *
-       * This field is of access type 'inputOutput' and type MFInt32.
-       */
-      dimensions: MFInt32;
-      /**
        * The enabled field either enables or disables data output processing by the node.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
       enabled: boolean;
+      /**
+       * Sets height of the rendered texture.
+       *
+       * This field is of access type 'inputOutput' and type SFInt32.
+       */
+      height: number;
       /**
        * The isActive field provides a TRUE event when node data output becomes active, and a FALSE event when node data output is stopped.
        *
@@ -16074,17 +16080,17 @@ declare namespace X3D
        */
       replaceImage: boolean;
       /**
+       * singleFrame controls when the next texture is captured.
+       *
+       * This field is of access type 'initializeOnly' and type SFBool.
+       */
+      singleFrame: boolean;
+      /**
        * Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images.
        *
        * This field is of access type 'initializeOnly' and type SFNode.
        */
       textureProperties: TexturePropertiesProxy | null;
-      /**
-       * update controls regeneration of the texture.
-       *
-       * This field is of access type 'inputOutput' and type SFString.
-       */
-      update: "NONE" | "NEXT_FRAME_ONLY" | "ALWAYS";
       /**
        * The updateInterval field indicates time intervals between render captures when update is "ALWAYS". A value of 0 indicates full frame rate.
        *
@@ -16097,6 +16103,12 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type MFString.
        */
       url: MFString;
+      /**
+       * Sets width of the rendered texture.
+       *
+       * This field is of access type 'inputOutput' and type SFInt32.
+       */
+      width: number;
    }
 
    /** RigidBody describes a collection of shapes with a mass distribution that is affected by the physics model. */

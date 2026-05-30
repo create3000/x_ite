@@ -1532,18 +1532,11 @@
           accessType="inputOutput"
           inheritedFrom="X3DNode"
           description="The style attribute on each X3D node and statement provides an inline block of CSS source for element styling, reserved for use by Cascading Style Sheets (CSS) and XML stylesheets."/>
-        <field name="update"
-          type="SFString"
-          accessType="inputOutput"
-          default="NONE"
-          additionalEnumerationValuesAllowed="false"
-          simpleType="generatedCubeMapTextureUpdateChoices"
-          baseType="xs:NMTOKEN"
-          description="update controls regeneration of the texture.">
-            <enumeration value="NONE" appinfo="no further texture updates are rendered."/>
-            <enumeration value="NEXT_FRAME_ONLY" appinfo="render texture once at end of frame."/>
-            <enumeration value="ALWAYS" appinfo="texture to be rendered every frame."/>
-        </field>
+        <field name="singleFrame"
+          type="SFBool"
+          accessType="initializeOnly"
+          default="true"
+          description="singleFrame controls when the next texture is captured."/>
         <field name="updateInterval"
           type="SFTime"
           accessType="inputOutput"
@@ -1556,10 +1549,25 @@
           default="1000"
           minInclusive="0"
           description="The maximumNumberFrames field indicates the maximum number of frames that can be saved for a single series of image captures. A value of 0 indicates no limit."/>
-        <field name="dimensions"
-          type="MFInt32"
+        <field name="width"
+          type="SFInt32"
           accessType="inputOutput"
-          description="Sets the width, height, color components (and number of MRTs)."/>
+          default="128"
+          minInclusive="0"
+          description="Sets width of the rendered texture."/>
+        <field name="height"
+          type="SFInt32"
+          accessType="inputOutput"
+          default="128"
+          minInclusive="0"
+          description="Sets height of the rendered texture."/>
+        <field name="colorDepth"
+          type="SFInt32"
+          accessType="inputOutput"
+          default="4"
+          minInclusive="1"
+          maxInclusive="4"
+          description="Sets color depth of the rendered texture."/>
         <field name="depthMap"
           type="SFBool"
           accessType="initializeOnly"
