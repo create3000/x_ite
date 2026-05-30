@@ -35,7 +35,7 @@ The PrimitivePickSensor node belongs to the [Picking](/x_ite/components/overview
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | MFString | [in, out] | [objectType](#fields-objectType) | "ALL" |
-| SFString | [in, out] | [matchCriterion](#fields-matchCriterion) | "MATCH |
+| SFString | [in, out] | [matchCriterion](#fields-matchCriterion) | "MATCH_ANY" |
 | SFString | [ ] | [intersectionType](#fields-intersectionType) | "BOUNDS" |
 | SFString | [ ] | [sortOrder](#fields-sortOrder) | "CLOSEST" |
 | SFNode | [in, out] | [pickingGeometry](#fields-pickingGeometry) | NULL |

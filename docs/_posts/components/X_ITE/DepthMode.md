@@ -37,7 +37,7 @@ The DepthMode node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) com
 | SFVec2f | [in, out] | [polygonOffset](#fields-polygonOffset) | 0 0 |
 | SFVec2f | [in, out] | [depthRange](#fields-depthRange) | 0 1 |
 | SFBool | [in, out] | [depthTest](#fields-depthTest) | TRUE |
-| SFString | [in, out] | [depthFunction](#fields-depthFunction) | "LESS |
+| SFString | [in, out] | [depthFunction](#fields-depthFunction) | "LESS_EQUAL" |
 | SFBool | [in, out] | [depthMask](#fields-depthMask) | TRUE |
 {: .fields }
 
