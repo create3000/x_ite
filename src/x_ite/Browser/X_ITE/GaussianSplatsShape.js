@@ -647,7 +647,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
    {
       const
          viewport   = renderContext .viewport,
-         browser    = this .getBrowser (),
          shaderNode = this .getShader (renderContext);
 
       // Set viewport.
@@ -660,7 +659,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Uniforms
 
-      const { renderObject, modelViewMatrix, localObjects } = renderContext;
+      const { renderObject, modelViewMatrix } = renderContext;
       const projectionMatrixArray = renderObject .getProjectionMatrixArray ();
 
       gl .uniform4iv (shaderNode .x3d_Viewport, renderObject .getViewportArray ());

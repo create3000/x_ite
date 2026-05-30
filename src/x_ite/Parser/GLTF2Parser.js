@@ -1815,7 +1815,7 @@ function eventsProcessed ()
          KHR_gaussian_splatting = primitive .extensions ?.KHR_gaussian_splatting,
          attributes             = primitive .attributes;
 
-      gaussianSplats ._colorSpace == String (KHR_gaussian_splatting .colorSpace) .toUpperCase ();
+      gaussianSplats ._colorSpace = String (KHR_gaussian_splatting ?.colorSpace ?? "SRGB_REC709_DISPLAY") .toUpperCase ();
 
       gaussianSplats ._positions    = attributes ?.POSITION ?.array ?? [ ];
       gaussianSplats ._orientations = attributes ?.["KHR_gaussian_splatting:ROTATION"] ?.array ?? [ ];
