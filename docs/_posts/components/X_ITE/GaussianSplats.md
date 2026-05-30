@@ -36,7 +36,7 @@ The GaussianSplats node belongs to the [X_ITE](/x_ite/components/overview/#x_ite
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
-| SFString | [in, out] | [colorSpace](#fields-colorSpace) | "SRGB |
+| SFString | [in, out] | [colorSpace](#fields-colorSpace) | "SRGB_REC709_DISPLAY" |
 | MFVec3f | [in, out] | [positions](#fields-positions) | [ ] |
 | MFVec4f | [in, out] | [orientations](#fields-orientations) | [ ] |
 | MFVec3f | [in, out] | [scales](#fields-scales) | [ ] |

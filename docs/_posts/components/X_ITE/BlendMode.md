@@ -35,12 +35,12 @@ The BlendMode node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) com
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFColorRGBA | [in, out] | [blendColor](#fields-blendColor) | 0 0 0 0 |
-| SFString | [in, out] | [sourceColorFactor](#fields-sourceColorFactor) | "SRC |
+| SFString | [in, out] | [sourceColorFactor](#fields-sourceColorFactor) | "SRC_ALPHA" |
 | SFString | [in, out] | [sourceAlphaFactor](#fields-sourceAlphaFactor) | "ONE" |
-| SFString | [in, out] | [destinationColorFactor](#fields-destinationColorFactor) | "ONE |
-| SFString | [in, out] | [destinationAlphaFactor](#fields-destinationAlphaFactor) | "ONE |
-| SFString | [in, out] | [colorEquation](#fields-colorEquation) | "FUNC |
-| SFString | [in, out] | [alphaEquation](#fields-alphaEquation) | "FUNC |
+| SFString | [in, out] | [destinationColorFactor](#fields-destinationColorFactor) | "ONE_MINUS_SRC_ALPHA" |
+| SFString | [in, out] | [destinationAlphaFactor](#fields-destinationAlphaFactor) | "ONE_MINUS_SRC_ALPHA" |
+| SFString | [in, out] | [colorEquation](#fields-colorEquation) | "FUNC_ADD" |
+| SFString | [in, out] | [alphaEquation](#fields-alphaEquation) | "FUNC_ADD" |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
