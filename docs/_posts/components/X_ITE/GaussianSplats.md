@@ -63,7 +63,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### SFString [in, out] **colorSpace** "SRGB_REC709_DISPLAY"
 {: #fields-colorSpace }
 
-Specifies the colorspace. It must be one of:
+The color space of the reconstructed color values. It must be one of:
 
 - SRGB_REC709_DISPLAY
 - X3D_COLORSPACE_LINEAR
