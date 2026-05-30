@@ -1834,17 +1834,17 @@ function eventsProcessed ()
       {
          const sh = Array .from ({ length: dimensions }, (_, coef) => attributes ?.[`KHR_gaussian_splatting:SH_DEGREE_${degree}_COEF_${coef}`] ?.array);
 
-         if (sh .every (array => array))
-         {
-            const field = gaussianSplats .getField (`sphericalHarmonics${degree}`);
+         if (!sh .every (array => array))
+            break;
 
-            field .length = numSplats * dimensions;
+         const field = gaussianSplats .getField (`sphericalHarmonics${degree}`);
 
-            const value = field .getValue ();
+         field .length = numSplats * dimensions;
 
-            for (const [position, array] of sh .entries ())
-               value .set (numSplats * (3 * position), array .subarray (0, numSplats * 3));
-         }
+         const value = field .getValue ();
+
+         for (const [position, array] of sh .entries ())
+            value .set (numSplats * (3 * position), array .subarray (0, numSplats * 3));
       }
 
       gaussianSplats .setup ();
