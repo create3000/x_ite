@@ -1,5 +1,6 @@
 export default () => /* glsl */ `#version 300 es
 
+precision highp int;
 precision highp float;
 
 #if defined (X3D_PASS_0)

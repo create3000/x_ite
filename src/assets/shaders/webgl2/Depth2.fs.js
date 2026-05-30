@@ -1,7 +1,7 @@
 export default () => /* glsl */ `#version 300 es
 
-precision highp float;
 precision highp int;
+precision highp float;
 precision highp sampler2D;
 
 uniform int x3d_Id;
