@@ -97,7 +97,7 @@ Specifies how the alpha destination blending factors are computed.
 ### SFString [in, out] **colorEquation** "FUNC_ADD"
 {: #fields-colorEquation }
 
-Specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be:
+Specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be on of:
 
 - FUNC_ADD
 - FUNC_SUBTRACT
@@ -106,7 +106,7 @@ Specifies the RGB blend equation, how the red, green, and blue components of the
 ### SFString [in, out] **alphaEquation** "FUNC_ADD"
 {: #fields-alphaEquation }
 
-Specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be:
+Specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be on of:
 
 - FUNC_ADD
 - FUNC_SUBTRACT
