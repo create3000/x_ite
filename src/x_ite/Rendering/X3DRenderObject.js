@@ -1336,4 +1336,6 @@ function assign (lhs, rhs)
    lhs .length = length;
 }
 
+X3DRenderObject .assign = assign;
+
 export default X3DRenderObject;

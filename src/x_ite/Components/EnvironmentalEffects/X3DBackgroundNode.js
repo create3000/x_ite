@@ -13,6 +13,7 @@ import Rotation4       from "../../../standard/Math/Numbers/Rotation4.js";
 import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
 import Algorithm       from "../../../standard/Math/Algorithm.js";
 import BitSet          from "../../../standard/Utility/BitSet.js";
+import X3DRenderObject from "../../Rendering/X3DRenderObject.js";
 
 function X3DBackgroundNode (executionContext)
 {
@@ -32,14 +33,14 @@ function X3DBackgroundNode (executionContext)
    // Private properties
 
    this .modelMatrix      = new Matrix4 ();
-   this .clipPlanes       = [ ];
+   this .localObjects     = [ ];
+   this .localObjectsKeys = [ ];
    this .colors           = [ ];
    this .sphere           = [ ];
    this .textureNodes     = new Array (6);
    this .textureBits      = new BitSet ();
-   this .sphereContext    = new GeometryContext ({ colorMaterial: true });
-   this .texturesContext  = new GeometryContext ({ localObjectsKeys: this .sphereContext .localObjectsKeys });
-   this .localObjectsKeys = this .sphereContext .localObjectsKeys;
+   this .sphereContext    = new GeometryContext ({ colorMaterial: true, localObjectsKeys: this .localObjectsKeys });
+   this .texturesContext  = new GeometryContext ({ localObjectsKeys: this .localObjectsKeys });
 
    this [RenderPass .RENDER_KEY]         = this;
    this [RenderPass .TRANSMISSION_KEY]   = this;
@@ -394,22 +395,9 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
          }
          case TraverseType .DISPLAY:
          {
-            const
-               localObjects     = renderObject .getLocalObjects (),
-               clipPlanes       = this .clipPlanes,
-               localObjectsKeys = this .localObjectsKeys;
-
-            let c = 0;
-
-            for (const localObject of localObjects)
-            {
-               if (localObject .isClipPlane)
-                  clipPlanes [c ++] = localObject;
-            }
-
-            clipPlanes       .length = c;
-            localObjectsKeys .length = c;
-            localObjectsKeys .fill (0);
+            // Handle ClipPane nodes.
+            X3DRenderObject .assign (this .localObjects,     renderObject .getLocalObjects ());
+            X3DRenderObject .assign (this .localObjectsKeys, renderObject .getLocalObjectsKeys ());
             return;
          }
       }
@@ -508,7 +496,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
       const shaderNode = browser .getDefaultMaterial () .getShader (sphereContext);
 
       shaderNode .enable (gl);
-      shaderNode .setClipPlanes (gl, this .clipPlanes, renderObject);
+      shaderNode .setClipPlanes (gl, this .localObjects, renderObject);
 
       // Uniforms
 
@@ -561,7 +549,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
             const shaderNode = browser .getDefaultMaterial () .getShader (texturesContext);
 
             shaderNode .enable (gl);
-            shaderNode .setClipPlanes (gl, this .clipPlanes, renderObject);
+            shaderNode .setClipPlanes (gl, this .localObjects, renderObject);
 
             // Set uniforms.
 
