@@ -684,7 +684,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          projectionMatrixArray = renderObject .getProjectionMatrixArray (),
          clipPlanes            = this .getClipPlanes (localObjects);
 
-      // Set ClipPlanes.
+      // Set ClipPlane nodes.
 
       shaderNode .setClipPlanes (gl, clipPlanes, renderObject);
 
