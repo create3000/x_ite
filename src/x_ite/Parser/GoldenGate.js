@@ -114,13 +114,39 @@ class GoldenGate extends X3DParser
          switch (encoding)
          {
             case "STRING":
-               return $.decodeText (x3dSyntax);
+            {
+               const string = $.decodeText (x3dSyntax);;
+
+               if (x3dSyntax instanceof ArrayBuffer)
+               {
+                  if (x3dSyntax .byteLength && !string .length)
+                     return undefined;
+               }
+
+               return string;
+            }
             case "XML":
-               return $.parseXML (this .getInput ("STRING", x3dSyntax));
+            {
+               const string = this .getInput ("STRING", x3dSyntax);
+
+               if (string === undefined)
+                  return undefined;
+
+               return $.parseXML (string);
+            }
             case "JSON":
-               return JSON .parse (this .getInput ("STRING", x3dSyntax));
+            {
+               const string = this .getInput ("STRING", x3dSyntax);
+
+               if (string === undefined)
+                  return undefined;
+
+               return JSON .parse (string);
+            }
             case "ARRAY_BUFFER":
+            {
                return x3dSyntax instanceof ArrayBuffer ? x3dSyntax : undefined;
+            }
          }
       }
       catch
