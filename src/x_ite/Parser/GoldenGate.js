@@ -129,19 +129,13 @@ class GoldenGate extends X3DParser
             {
                const string = this .getInput ("STRING", x3dSyntax);
 
-               if (string === undefined)
-                  return undefined;
-
-               return $.parseXML (string);
+               return string === undefined ? undefined : $.parseXML (string);
             }
             case "JSON":
             {
                const string = this .getInput ("STRING", x3dSyntax);
 
-               if (string === undefined)
-                  return undefined;
-
-               return JSON .parse (string);
+               return string === undefined ? undefined : JSON .parse (string);
             }
             case "ARRAY_BUFFER":
             {
