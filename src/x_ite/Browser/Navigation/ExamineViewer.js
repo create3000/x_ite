@@ -230,7 +230,11 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
       this .disconnect ();
-      this .lookAtBBox (x, y, this .getStraightenHorizon ());
+
+      if (this .getBrowser () .getAltKey ())
+         this .lookAtPoint (x, y, this .getStraightenHorizon ());
+      else
+         this .lookAtBBox (x, y, this .getStraightenHorizon ());
    },
    mousemove (event)
    {

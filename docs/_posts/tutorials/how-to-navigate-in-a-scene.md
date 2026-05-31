@@ -42,7 +42,7 @@ As a result, it seems like the Examine Viewer treats all the objects in your sce
 
 >**Tricks:**
 - You can spin the camera around an object when in examine mode by dragging and letting go. Click in the scene to stop the spin.
-- Double click an object to move quickly toward it. Double click again to seek toward a different object or point.
+- Double click an object to move quickly toward it. Double click again to seek toward a different object or point. Hold down the <kbd>Alt-or-Option</kbd> to seek to a certain point.
 {: .prompt-tip }
 
 ### Viewer Controls
