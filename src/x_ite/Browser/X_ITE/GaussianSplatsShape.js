@@ -412,8 +412,6 @@ const QuadGeometry = new Float32Array ([
 
 // Special X3DShapeNode for internal use.
 
-const ShaderCache = new WeakMap ();
-
 function GaussianSplatsShape (executionContext, node)
 {
    X3DShapeNode .call (this, executionContext);
@@ -423,7 +421,7 @@ function GaussianSplatsShape (executionContext, node)
    // Private Properties
 
    this .node                   = node;
-   this .shaderCache            = ShaderCache .getOrInsert (this .getBrowser (), new Map ());
+   this .shaderCache            = this .getBrowser () .getShaders ();
    this .currentModelViewMatrix = new Float32Array (16);
    this .sortModelViewMatrix    = new Float32Array (16);
 }
@@ -493,7 +491,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
    },
    set_key__ ()
    {
-      let key = "";
+      let key = "GS.";
 
       key += this .node ._sphericalHarmonics1 .length ? 1 : 0;
       key += this .node ._sphericalHarmonics2 .length ? 1 : 0;
