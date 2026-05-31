@@ -1824,7 +1824,7 @@ function eventsProcessed ()
 
       const numSplats = gaussianSplats ._positions .length;
 
-      // Degree 0,1,2,3
+      // Degrees 0,1,2,3
 
       for (const [degree, dimensions] of [1, 3, 5, 7] .entries ())
       {
