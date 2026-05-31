@@ -1822,9 +1822,9 @@ function eventsProcessed ()
       gaussianSplats ._scales       = attributes ?.["KHR_gaussian_splatting:SCALE"]    ?.array ?? [ ];
       gaussianSplats ._opacities    = attributes ?.["KHR_gaussian_splatting:OPACITY"]  ?.array ?? [ ];
 
-      const numSplats = gaussianSplats ._positions .length;
-
       // Degrees 0,1,2,3
+
+      const numSplats = gaussianSplats ._positions .length;
 
       for (const [degree, dimensions] of [1, 3, 5, 7] .entries ())
       {
