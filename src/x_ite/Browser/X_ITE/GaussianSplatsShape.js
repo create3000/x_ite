@@ -884,6 +884,9 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
    },
    initSortWorker ()
    {
+      if (!this .getBrowser () .getBrowserOption ("LoadUrlObjects"))
+         return;
+
       // Terminate existing worker.
 
       this .sortWorker ?.terminate ();
@@ -968,7 +971,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       this .sortModelViewMatrix .set (viewMatrix);
 
-      this .sortWorker .postMessage ({
+      this .sortWorker ?.postMessage ({
          type: "sort",
          viewMatrix: this .sortModelViewMatrix,
       });
