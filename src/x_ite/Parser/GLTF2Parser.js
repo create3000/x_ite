@@ -1824,11 +1824,7 @@ function eventsProcessed ()
 
       const numSplats = gaussianSplats ._positions .length;
 
-      // Degree 0
-
-      gaussianSplats ._sphericalHarmonics0 = attributes ?.["KHR_gaussian_splatting:SH_DEGREE_0_COEF_0"] ?.array ?? [ ];
-
-      // Degree 1
+      // Degree 0,1,2,3
 
       for (const [degree, dimensions] of [1, 3, 5, 7] .entries ())
       {
@@ -1844,7 +1840,7 @@ function eventsProcessed ()
          const value = field .getValue ();
 
          for (const [position, array] of sh .entries ())
-            value .set (numSplats * (3 * position), array .subarray (0, numSplats * 3));
+            value .set (array .subarray (0, numSplats * 3), numSplats * (3 * position));
       }
 
       gaussianSplats .setup ();
