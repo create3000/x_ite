@@ -17,6 +17,7 @@ Although this is an initial implementation, it already provides a solid foundati
 
 ### Notable Changes
 
+- [x] Support for Gaussian splatting.
 - [x] You can now hold down the <kbd>Alt-or-Option</kbd> key to move to a certain point when you double click an object when the Examine viewer is active.
 
 ## X_ITE v15.0 Series
