@@ -575,7 +575,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       target ??= gl .TEXTURE_2D;
 
-      texture .textureUnit = browser .popTextureUnit ();
+      if (texture instanceof Object) // Needed for x_ite-node.
+         texture .textureUnit = browser .popTextureUnit ();
 
       gl .bindTexture (target, texture);
 
