@@ -15,6 +15,10 @@ In addition to PLY files, X_ITE now supports the glTF extension [KHR_gaussian_sp
 
 Although this is an initial implementation, it already provides a solid foundation for exploring highly detailed real-world captures and next-generation rendering workflows directly within X_ITE. Further enhancements and optimizations are planned for future releases.
 
+### Notable Changes
+
+- [x] You can now hold down the <kbd>Alt-or-Option</kbd> key to move to a certain point when you double click an object when the Examine viewer is active.
+
 ## X_ITE v15.0 Series
 
 *Leipzig, 3rd May 2026:* The 15.0 release of X_ITE introduces several breaking changes aimed at improving consistency and performance across field handling.
