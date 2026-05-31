@@ -602,16 +602,17 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          scales       .set (this .node ._scales       .getValue () .subarray (0, numSplats * 3));
          opacities    .set (this .node ._opacities    .getValue () .subarray (0, numSplats));
 
-         sphericalHarmonics .set (this .node ._sphericalHarmonics0 .getValue () .subarray (0, numSplats * 3));
+         let offset = 0;
 
-         for (let d = 0; d < 3; ++ d)
-            sphericalHarmonics .set (this .node ._sphericalHarmonics1 .getValue () .subarray (numSplats * 3 * d, numSplats * 3 * (d + 1)), textureSize * 3 * (d + 1));
+         for (const [degree, dimensions] of [1, 3, 5, 7] .entries ())
+         {
+            const value = this .node .getField (`sphericalHarmonics${degree}`) .getValue ();
 
-         for (let d = 0; d < 5; ++ d)
-            sphericalHarmonics .set (this .node ._sphericalHarmonics2 .getValue () .subarray (numSplats * 3 * d, numSplats * 3 * (d + 1)), textureSize * 3 * (d + 4));
+            for (let d = 0; d < dimensions; ++ d)
+               sphericalHarmonics .set (value .subarray (numSplats * 3 * d, numSplats * 3 * (d + 1)), textureSize * 3 * (d + offset));
 
-         for (let d = 0; d < 7; ++ d)
-            sphericalHarmonics .set (this .node ._sphericalHarmonics3 .getValue () .subarray (numSplats * 3 * d, numSplats * 3 * (d + 1)), textureSize * 3 * (d + 9));
+            offset += dimensions;
+         }
 
          gl .bindTexture (gl .TEXTURE_2D, this .positionsTexture);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB32F, textureWidth, textureWidth, 0, gl .RGB, gl .FLOAT, positions);
