@@ -45,6 +45,10 @@ out vec4 color;
 out vec2 texCoord;
 out vec3 conic;
 
+#if defined (X3D_CLIP_PLANES)
+   out vec3 vertex;
+#endif
+
 #include <Fog>
 #include <Logarithmic>
 
@@ -314,6 +318,12 @@ main ()
    texCoord    = x3d_Vertex .xy * quadPixelSize;
    gl_Position = clipSplatCenter;
 
+   #if defined (X3D_CLIP_PLANES)
+      vec4 invClipSplatCenter = inverse (x3d_ProjectionMatrix) * clipSplatCenter;
+
+      vertex = invClipSplatCenter .xyz / invClipSplatCenter .w;
+   #endif
+
    #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
       logarithmic (gl_Position);
    #endif
@@ -340,11 +350,16 @@ in vec4 color;
 in vec2 texCoord;
 in vec3 conic;
 
+#if defined (X3D_CLIP_PLANES)
+   in vec3 vertex;
+#endif
+
 #if !defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
    out vec4 x3d_FragColor;
 #endif
 
 #include <ToneMapping>
+#include <ClipPlanes>
 #include <Fog>
 #include <OIT>
 #include <Logarithmic>
@@ -352,6 +367,10 @@ in vec3 conic;
 void
 main ()
 {
+   #if defined (X3D_CLIP_PLANES)
+      clip ();
+   #endif
+
    // Equation 4
    float exponent = -0.5 * (conic .x * texCoord .x * texCoord .x + conic .z * texCoord .y * texCoord .y) - conic .y * texCoord .x * texCoord .y;
 
@@ -424,6 +443,7 @@ function GaussianSplatsShape (executionContext, node)
    this .shaderCache            = this .getBrowser () .getShaders ();
    this .currentModelViewMatrix = new Float32Array (16);
    this .sortModelViewMatrix    = new Float32Array (16);
+   this .clipPlanes             = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShapeNode .prototype),
@@ -658,8 +678,17 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Uniforms
 
-      const { renderObject, modelViewMatrix } = renderContext;
-      const projectionMatrixArray = renderObject .getProjectionMatrixArray ();
+      const { renderObject, modelViewMatrix, localObjects } = renderContext;
+
+      const
+         projectionMatrixArray = renderObject .getProjectionMatrixArray (),
+         clipPlanes            = this .getClipPlanes (localObjects);
+
+      // Set ClipPlanes.
+
+      shaderNode .setClipPlanes (gl, clipPlanes, renderObject);
+
+      // Set matrices.
 
       gl .uniform4iv (shaderNode .x3d_Viewport, renderObject .getViewportArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
@@ -672,7 +701,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          projectionMatrixArray [0] * viewport [2] * 0.5,
          projectionMatrixArray [5] * viewport [3] * 0.5);
 
-      // Textures
+      // Set textures.
 
       gl .activeTexture (gl .TEXTURE0 + this .positionsTexture .textureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .positionsTexture);
@@ -712,15 +741,32 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
    },
+   getClipPlanes (localObjects)
+   {
+      const clipPlanes = this .clipPlanes;
+
+      let c = 0;
+
+      for (const localObject of localObjects)
+      {
+         if (localObject .isClipPlane)
+            clipPlanes [c ++] = localObject;
+      }
+
+      clipPlanes .length = c;
+
+      return clipPlanes;
+   },
    getShader (renderContext)
    {
-      const { renderObject, fogNode } = renderContext;
+      const { renderObject, fogNode, localObjectsKeys } = renderContext;
 
       let key = "";
 
       key += this .key;
       key += renderObject .getRenderKey ();
       key += fogNode ?.getFogType () ?? 0;
+      key += localObjectsKeys .join (""); // ClipPlane
 
       return this .shaderCache .get (key) ?? this .createShader (key, renderContext);
    },
@@ -758,7 +804,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
             break;
       }
 
-      const { renderObject, fogNode } = renderContext;
+      const { renderObject, fogNode, localObjectsKeys } = renderContext;
 
       if (renderObject .getLogarithmicDepthBuffer ())
          options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
@@ -767,6 +813,16 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       {
          if (renderObject .getOrderIndependentTransparency ())
             options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
+      }
+
+      // Clip Planes
+
+      const numClipPlanes = localObjectsKeys .reduce ((a, k) => a + (k === 0), 0);
+
+      if (numClipPlanes)
+      {
+         options .push ("X3D_CLIP_PLANES")
+         options .push (`X3D_NUM_CLIP_PLANES ${Math .min (numClipPlanes, browser .getMaxClipPlanes ())}`);
       }
 
       // Fog
