@@ -681,14 +681,11 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       // Uniforms
 
       const { renderObject, modelViewMatrix, localObjects } = renderContext;
-
-      const
-         projectionMatrixArray = renderObject .getProjectionMatrixArray (),
-         clipPlanes            = this .getClipPlanes (localObjects);
+      const projectionMatrixArray = renderObject .getProjectionMatrixArray ();
 
       // Set ClipPlane nodes.
 
-      shaderNode .setClipPlanes (gl, clipPlanes, renderObject);
+      shaderNode .setClipPlanes (gl, localObjects, renderObject);
 
       // Set matrices.
 
@@ -742,22 +739,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       gl .drawArraysInstanced (gl .TRIANGLES, 0, 6, this .numSplats);
 
       // gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
-   },
-   getClipPlanes (localObjects)
-   {
-      const clipPlanes = this .clipPlanes;
-
-      let c = 0;
-
-      for (const localObject of localObjects)
-      {
-         if (localObject .isClipPlane)
-            clipPlanes [c ++] = localObject;
-      }
-
-      clipPlanes .length = c;
-
-      return clipPlanes;
    },
    getShader (renderContext)
    {
