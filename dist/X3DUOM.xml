@@ -445,7 +445,7 @@
           type="SFString"
           accessType="inputOutput"
           default="FUNC_ADD"
-          description="Specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be:
+          description="Specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be one of:
 - FUNC_ADD
 - FUNC_SUBTRACT
 - FUNC_REVERSE_SUBTRACT"
@@ -458,7 +458,7 @@
           type="SFString"
           accessType="inputOutput"
           default="FUNC_ADD"
-          description="Specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be:
+          description="Specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be one of:
 - FUNC_ADD
 - FUNC_SUBTRACT
 - FUNC_REVERSE_SUBTRACT"
@@ -748,6 +748,86 @@
           acceptableNodeTypes="X3DGeometryNode"
           description="Input/Output field geometry."/>
         <containerField default="extensions" type="xs:NMTOKEN" />
+      </InterfaceDefinition>
+    </ConcreteNode>
+
+    <ConcreteNode name="GaussianSplats">
+      <InterfaceDefinition
+        specificationUrl="https://create3000.github.io/x_ite/components/x-ite/gaussiansplats"
+        appinfo="The GaussianSplats node adds basic support for storing 3D Gaussian splats in X3D files.">
+        <componentInfo name="X_ITE" level="1"/>
+        <Inheritance baseType="X3DChildNode"/>
+        <AdditionalInheritance baseType="X3DBoundedObject"/>
+        <field name="metadata"
+          type="SFNode"
+          accessType="inputOutput"
+          default="NULL"
+          acceptableNodeTypes="X3DMetadataObject"
+          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."/>
+        <field name="colorSpace"
+          type="SFString"
+          accessType="inputOutput"
+          default="SRGB_REC709_DISPLAY"
+          description="The color space of the reconstructed color values. It must be one of:
+
+- SRGB_REC709_DISPLAY
+- LIN_REC709_DISPLAY">
+          <enumeration value="SRGB_REC709_DISPLAY"/>
+          <enumeration value="LIN_REC709_DISPLAY"/>
+        </field>
+        <field name="positions"
+          type="MFVec3f"
+          accessType="inputOutput"
+          description="Input/Output field positions."/>
+        <field name="orientations"
+          type="MFVec4f"
+          accessType="inputOutput"
+          description="Input/Output field orientations."/>
+        <field name="scales"
+          type="MFVec3f"
+          accessType="inputOutput"
+          description="Input/Output field scales."/>
+        <field name="opacities"
+          type="MFFloat"
+          accessType="inputOutput"
+          description="Input/Output field opacities."/>
+        <field name="sphericalHarmonics0"
+          type="MFVec3f"
+          accessType="inputOutput"
+          description="Input/Output field spherical harmonics coefficients."/>
+        <field name="sphericalHarmonics1"
+          type="MFVec3f"
+          accessType="inputOutput"
+          description="Input/Output field spherical harmonics coefficients."/>
+        <field name="sphericalHarmonics2"
+          type="MFVec3f"
+          accessType="inputOutput"
+          description="Input/Output field spherical harmonics coefficients."/>
+        <field name="sphericalHarmonics3"
+          type="MFVec3f"
+          accessType="inputOutput"
+          description="Input/Output field spherical harmonics coefficients."/>
+        <field name="visible"
+          type="SFBool"
+          accessType="inputOutput"
+          default="TRUE"
+          description="Whether or not renderable content within this node is visually displayed."/>
+        <field name="bboxDisplay"
+          type="SFBool"
+          accessType="inputOutput"
+          default="FALSE"
+          description="Whether to display bounding box for associated geometry, aligned with world coordinates."/>
+        <field name="bboxSize"
+          type="SFVec3f"
+          accessType="initializeOnly"
+          default="-1 -1 -1"
+          minInclusive="0"
+          description="Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint."/>
+        <field name="bboxCenter"
+          type="SFVec3f"
+          accessType="initializeOnly"
+          default="0 0 0"
+          description="Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system."/>
       </InterfaceDefinition>
     </ConcreteNode>
 
@@ -1532,18 +1612,11 @@
           accessType="inputOutput"
           inheritedFrom="X3DNode"
           description="The style attribute on each X3D node and statement provides an inline block of CSS source for element styling, reserved for use by Cascading Style Sheets (CSS) and XML stylesheets."/>
-        <field name="update"
-          type="SFString"
-          accessType="inputOutput"
-          default="NONE"
-          additionalEnumerationValuesAllowed="false"
-          simpleType="generatedCubeMapTextureUpdateChoices"
-          baseType="xs:NMTOKEN"
-          description="update controls regeneration of the texture.">
-            <enumeration value="NONE" appinfo="no further texture updates are rendered."/>
-            <enumeration value="NEXT_FRAME_ONLY" appinfo="render texture once at end of frame."/>
-            <enumeration value="ALWAYS" appinfo="texture to be rendered every frame."/>
-        </field>
+        <field name="singleFrame"
+          type="SFBool"
+          accessType="initializeOnly"
+          default="true"
+          description="singleFrame controls when the next texture is captured."/>
         <field name="updateInterval"
           type="SFTime"
           accessType="inputOutput"
@@ -1556,10 +1629,25 @@
           default="1000"
           minInclusive="0"
           description="The maximumNumberFrames field indicates the maximum number of frames that can be saved for a single series of image captures. A value of 0 indicates no limit."/>
-        <field name="dimensions"
-          type="MFInt32"
+        <field name="width"
+          type="SFInt32"
           accessType="inputOutput"
-          description="Sets the width, height, color components (and number of MRTs)."/>
+          default="128"
+          minInclusive="0"
+          description="Sets width of the rendered texture."/>
+        <field name="height"
+          type="SFInt32"
+          accessType="inputOutput"
+          default="128"
+          minInclusive="0"
+          description="Sets height of the rendered texture."/>
+        <field name="colorDepth"
+          type="SFInt32"
+          accessType="inputOutput"
+          default="4"
+          minInclusive="1"
+          maxInclusive="4"
+          description="Sets color depth of the rendered texture."/>
         <field name="depthMap"
           type="SFBool"
           accessType="initializeOnly"
