@@ -95,7 +95,8 @@ const float SH_C0 = 0.28209479177387814;
 mat3
 computeCov3D (const in vec4 rotation, const in vec3 scale)
 {
-   // We have to take the inverse of the Quaternion for some reason.
+   // We have to take the inverse of the quaternion, because
+   // the implementation of quat to mat3 differs from ours.
    float qx =  rotation .x;
    float qy =  rotation .y;
    float qz =  rotation .z;
