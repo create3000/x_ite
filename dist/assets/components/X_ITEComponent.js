@@ -1,4 +1,4 @@
-/* X_ITE v15.1.0 */
+/* X_ITE v15.1.1 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -1040,6 +1040,9 @@ precision highp int;precision highp float;precision highp sampler2D;precision hi
 uniform mat4 x3d_EyeMatrix;
 #endif
 uniform vec2 x3d_FocalLength;uniform sampler2D x3d_PositionsTexture;uniform sampler2D x3d_OrientationsTexture;uniform sampler2D x3d_ScalesTexture;uniform sampler2D x3d_OpacitiesTexture;uniform sampler2DArray x3d_SphericalHarmonicsTexture;in vec4 x3d_Vertex;in uint x3d_SplatIndex;out vec4 color;out vec2 texCoord;out vec3 conic;
+#if defined(X3D_CLIP_PLANES)
+out vec3 vertex;
+#endif
 #include<Fog>
 #include<Logarithmic>
 const float SH_C0=.28209479177387814;
@@ -1077,6 +1080,9 @@ color+=.5;return color;}void main(){uint textureWidth=uint(textureSize(x3d_Posit
 viewSplatCenter=x3d_EyeMatrix*viewSplatCenter;
 #endif
 vec4 clipSplatCenter=x3d_ProjectionMatrix*viewSplatCenter;clipSplatCenter/=clipSplatCenter.w;if(any(greaterThan(abs(clipSplatCenter.xyz),vec3(1.3)))){gl_Position=vec4(0);return;}vec4 splatOrientation=texelFetch(x3d_OrientationsTexture,texelCoord,0);vec3 splatScale=texelFetch(x3d_ScalesTexture,texelCoord,0).xyz;float opacity=texelFetch(x3d_OpacitiesTexture,texelCoord,0).r;mat3 cov3d=computeCov3D(normalize(splatOrientation),splatScale);vec3 cov2d=computeCov2D(viewSplatCenter.xyz/viewSplatCenter.w,cov3d);float a=cov2d.x;float b=cov2d.y;float c=cov2d.z;float det=(a*c-b*b);if(det==0.){gl_Position=vec4(0);return;}conic=vec3(c,-b,a)/det;vec2 quadPixelSize=3.4*sqrt(vec2(a,c));vec2 quadNdcSize=quadPixelSize/vec2(x3d_Viewport.zw)*2.;clipSplatCenter.xy+=x3d_Vertex.xy*quadNdcSize;float minScreen=float(min(x3d_Viewport.z,x3d_Viewport.w));float maxQuadSize=max(quadPixelSize.x,quadPixelSize.y);if(maxQuadSize>minScreen){gl_Position=vec4(0);return;}texCoord=x3d_Vertex.xy*quadPixelSize;gl_Position=clipSplatCenter;
+#if defined(X3D_CLIP_PLANES)
+vec4 invClipSplatCenter=inverse(x3d_ProjectionMatrix)*clipSplatCenter;vertex=invClipSplatCenter.xyz/invClipSplatCenter.w;
+#endif
 #if defined(X3D_LOGARITHMIC_DEPTH_BUFFER)
 logarithmic(gl_Position);
 #endif
@@ -1090,14 +1096,22 @@ fog();
 
 const fs = () => /* glsl */ `#version 300 es
 precision highp int;precision highp float;precision highp sampler2D;in vec4 color;in vec2 texCoord;in vec3 conic;
+#if defined(X3D_CLIP_PLANES)
+in vec3 vertex;
+#endif
 #if!defined(X3D_ORDER_INDEPENDENT_TRANSPARENCY)
 out vec4 x3d_FragColor;
 #endif
 #include<ToneMapping>
+#include<ClipPlanes>
 #include<Fog>
 #include<OIT>
 #include<Logarithmic>
-void main(){float exponent=-.5*(conic.x*texCoord.x*texCoord.x+conic.z*texCoord.y*texCoord.y)-conic.y*texCoord.x*texCoord.y;if(exponent>0.)discard;float alpha=min(.99,exp(exponent)*color.a);if(alpha<1./255.)discard;vec4 finalColor=vec4(color.rgb,alpha);
+void main(){
+#if defined(X3D_CLIP_PLANES)
+clip();
+#endif
+float exponent=-.5*(conic.x*texCoord.x*texCoord.x+conic.z*texCoord.y*texCoord.y)-conic.y*texCoord.x*texCoord.y;if(exponent>0.)discard;float alpha=min(.99,exp(exponent)*color.a);if(alpha<1./255.)discard;vec4 finalColor=vec4(color.rgb,alpha);
 #if defined(X3D_FOG)
 finalColor.rgb=getFogColor(finalColor.rgb);
 #endif
@@ -1141,8 +1155,6 @@ const QuadGeometry = new Float32Array ([
 
 // Special X3DShapeNode for internal use.
 
-const ShaderCache = new WeakMap ();
-
 function GaussianSplatsShape (executionContext, node)
 {
    external_X_ITE_X3D_X3DShapeNode_default().call (this, executionContext);
@@ -1152,9 +1164,10 @@ function GaussianSplatsShape (executionContext, node)
    // Private Properties
 
    this .node                   = node;
-   this .shaderCache            = ShaderCache .getOrInsert (this .getBrowser (), new Map ());
+   this .shaderCache            = this .getBrowser () .getShaders ();
    this .currentModelViewMatrix = new Float32Array (16);
    this .sortModelViewMatrix    = new Float32Array (16);
+   this .clipPlanes             = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (external_X_ITE_X3D_X3DShapeNode_default()).prototype),
@@ -1222,7 +1235,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
    },
    set_key__ ()
    {
-      let key = "";
+      let key = "GS.";
 
       key += this .node ._sphericalHarmonics1 .length ? 1 : 0;
       key += this .node ._sphericalHarmonics2 .length ? 1 : 0;
@@ -1285,7 +1298,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
 
       target ??= gl .TEXTURE_2D;
 
-      texture .textureUnit = browser .popTextureUnit ();
+      if (texture instanceof Object) // Needed for x_ite-node.
+         texture .textureUnit = browser .popTextureUnit ();
 
       gl .bindTexture (target, texture);
 
@@ -1331,16 +1345,17 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
          scales       .set (this .node ._scales       .getValue () .subarray (0, numSplats * 3));
          opacities    .set (this .node ._opacities    .getValue () .subarray (0, numSplats));
 
-         sphericalHarmonics .set (this .node ._sphericalHarmonics0 .getValue () .subarray (0, numSplats * 3));
+         let offset = 0;
 
-         for (let d = 0; d < 3; ++ d)
-            sphericalHarmonics .set (this .node ._sphericalHarmonics1 .getValue () .subarray (numSplats * 3 * d, numSplats * 3 * (d + 1)), textureSize * 3 * (d + 1));
+         for (const [degree, dimensions] of [1, 3, 5, 7] .entries ())
+         {
+            const value = this .node .getField (`sphericalHarmonics${degree}`) .getValue ();
 
-         for (let d = 0; d < 5; ++ d)
-            sphericalHarmonics .set (this .node ._sphericalHarmonics2 .getValue () .subarray (numSplats * 3 * d, numSplats * 3 * (d + 1)), textureSize * 3 * (d + 4));
+            for (let d = 0; d < dimensions; ++ d)
+               sphericalHarmonics .set (value .subarray (numSplats * 3 * d, numSplats * 3 * (d + 1)), textureSize * 3 * (d + offset));
 
-         for (let d = 0; d < 7; ++ d)
-            sphericalHarmonics .set (this .node ._sphericalHarmonics3 .getValue () .subarray (numSplats * 3 * d, numSplats * 3 * (d + 1)), textureSize * 3 * (d + 9));
+            offset += dimensions;
+         }
 
          gl .bindTexture (gl .TEXTURE_2D, this .positionsTexture);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB32F, textureWidth, textureWidth, 0, gl .RGB, gl .FLOAT, positions);
@@ -1388,8 +1403,17 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
 
       // Uniforms
 
-      const { renderObject, modelViewMatrix } = renderContext;
-      const projectionMatrixArray = renderObject .getProjectionMatrixArray ();
+      const { renderObject, modelViewMatrix, localObjects } = renderContext;
+
+      const
+         projectionMatrixArray = renderObject .getProjectionMatrixArray (),
+         clipPlanes            = this .getClipPlanes (localObjects);
+
+      // Set ClipPlane nodes.
+
+      shaderNode .setClipPlanes (gl, clipPlanes, renderObject);
+
+      // Set matrices.
 
       gl .uniform4iv (shaderNode .x3d_Viewport, renderObject .getViewportArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
@@ -1402,7 +1426,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
          projectionMatrixArray [0] * viewport [2] * 0.5,
          projectionMatrixArray [5] * viewport [3] * 0.5);
 
-      // Textures
+      // Set textures.
 
       gl .activeTexture (gl .TEXTURE0 + this .positionsTexture .textureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .positionsTexture);
@@ -1442,15 +1466,32 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
 
       // gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
    },
+   getClipPlanes (localObjects)
+   {
+      const clipPlanes = this .clipPlanes;
+
+      let c = 0;
+
+      for (const localObject of localObjects)
+      {
+         if (localObject .isClipPlane)
+            clipPlanes [c ++] = localObject;
+      }
+
+      clipPlanes .length = c;
+
+      return clipPlanes;
+   },
    getShader (renderContext)
    {
-      const { renderObject, fogNode } = renderContext;
+      const { renderObject, fogNode, localObjectsKeys } = renderContext;
 
       let key = "";
 
       key += this .key;
       key += renderObject .getRenderKey ();
       key += fogNode ?.getFogType () ?? 0;
+      key += localObjectsKeys .join (""); // ClipPlane
 
       return this .shaderCache .get (key) ?? this .createShader (key, renderContext);
    },
@@ -1488,7 +1529,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
             break;
       }
 
-      const { renderObject, fogNode } = renderContext;
+      const { renderObject, fogNode, localObjectsKeys } = renderContext;
 
       if (renderObject .getLogarithmicDepthBuffer ())
          options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
@@ -1497,6 +1538,16 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
       {
          if (renderObject .getOrderIndependentTransparency ())
             options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
+      }
+
+      // Clip Planes
+
+      const numClipPlanes = localObjectsKeys .reduce ((a, k) => a + (k === 0), 0);
+
+      if (numClipPlanes)
+      {
+         options .push ("X3D_CLIP_PLANES")
+         options .push (`X3D_NUM_CLIP_PLANES ${Math .min (numClipPlanes, browser .getMaxClipPlanes ())}`);
       }
 
       // Fog
