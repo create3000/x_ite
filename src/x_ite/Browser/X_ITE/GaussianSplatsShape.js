@@ -695,7 +695,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
 
       // The projection matrix stores the focal length in the first and second element of the diagonal.
-      // We need to convert from NDC space to screen space, which is done by multiplying with the framebuffer dimensions and dividing by 2, since NDC goes from -1 to 1.
+      // We need to convert from NDC space to screen space, which is done by multiplying with the
+      // framebuffer dimensions and dividing by 2, since NDC goes from -1 to 1.
       gl .uniform2f (shaderNode .x3d_FocalLength,
          projectionMatrixArray [0] * viewport [2] * 0.5,
          projectionMatrixArray [5] * viewport [3] * 0.5);
