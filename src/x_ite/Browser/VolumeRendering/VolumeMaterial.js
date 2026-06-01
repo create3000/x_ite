@@ -37,76 +37,7 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, UnlitMaterial
    {
       const
          browser = this .getBrowser (),
-         options = [ ];
-
-      // Render Object
-
-      if (browser .getRenderingProperty ("XRSession"))
-         options .push ("X3D_XR_SESSION");
-
-      switch (browser .getBrowserOption ("ColorSpace") .toUpperCase ())
-      {
-         case "SRGB":
-            options .push ("X3D_COLORSPACE_SRGB");
-            break;
-         case "LINEAR":
-            options .push ("X3D_COLORSPACE_LINEAR");
-            break;
-         default: // LINEAR_WHEN_PHYSICAL_MATERIAL
-            options .push ("X3D_COLORSPACE_SRGB");
-            break;
-      }
-
-      switch (browser .getBrowserOption ("ToneMapping") .toUpperCase ())
-      {
-         default: // NONE
-            break;
-         case "ACES_NARKOWICZ":
-         case "ACES_HILL":
-         case "ACES_HILL_EXPOSURE_BOOST":
-         case "KHR_PBR_NEUTRAL":
-            options .push (`X3D_TONEMAP_${browser .getBrowserOption ("ToneMapping") .toUpperCase ()}`);
-            break;
-      }
-
-      const { renderObject, fogNode, localObjectsKeys } = renderContext;
-
-      const objectsKeys = localObjectsKeys .concat (renderObject .getGlobalLightsKeys ());
-
-      if (renderObject .getLogarithmicDepthBuffer ())
-         options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
-
-      if (renderObject .getRenderPass () === RenderPass .RENDER_KEY)
-      {
-         if (renderObject .getOrderIndependentTransparency ())
-            options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
-      }
-
-      const
-         numClipPlanes = objectsKeys .reduce ((a, c) => a + (c === 0), 0),
-         numLights     = objectsKeys .reduce ((a, c) => a + (c === 1), 0);
-
-      if (numClipPlanes)
-      {
-         options .push ("X3D_CLIP_PLANES")
-         options .push (`X3D_NUM_CLIP_PLANES ${Math .min (numClipPlanes, browser .getMaxClipPlanes ())}`);
-      }
-
-      if (numLights)
-      {
-         options .push ("X3D_LIGHTING")
-         options .push (`X3D_NUM_LIGHTS ${Math .min (numLights, browser .getMaxLights ())}`);
-      }
-
-      switch (fogNode ?.getFogType ())
-      {
-         case 1:
-            options .push ("X3D_FOG", "X3D_FOG_LINEAR");
-            break;
-         case 2:
-            options .push ("X3D_FOG", "X3D_FOG_EXPONENTIAL");
-            break;
-      }
+         options = this .getShaderOptions (geometryContext, renderContext);
 
       const shaderNode = this .volumeDataNode .createShader (options, vs, fs);
 
