@@ -211,6 +211,9 @@ main ()
 
    vec4 finalColor = getTextureColor (texCoord .stp / texCoord .q);
 
+   if (finalColor .a < 1.0 / 255.0)
+      discard;
+
    #if defined (X3D_FOG)
       finalColor .rgb = getFogColor (finalColor .rgb);
    #endif

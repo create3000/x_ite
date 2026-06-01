@@ -23,6 +23,8 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, UnlitMaterial
 
       let key = "VS";
 
+      key += this .getId (); // TODO: this .volumeDataNode .getKey ();
+      key += ".";
       key += renderObject .getRenderKey ();
       key += fogNode ?.getFogType () ?? 0;
       key += ".";
