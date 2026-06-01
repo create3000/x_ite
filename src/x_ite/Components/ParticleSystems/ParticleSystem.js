@@ -208,32 +208,34 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    },
    set_bbox__ ()
    {
+      const bbox = this .bbox;
+
       if (this .isDefaultBBoxSize ())
       {
          if (this .boundedPhysicsModelNodes .length)
          {
-            this .bbox .set ();
+            bbox .set ();
 
             for (const boundedPhysicsModelNode of this .boundedPhysicsModelNodes)
             {
-               const bbox = boundedPhysicsModelNode .getBBox ();
+               const subBBox = boundedPhysicsModelNode .getBBox ();
 
-               if (bbox)
-                  this .bbox .add (bbox);
+               if (subBBox)
+                  bbox .add (subBBox);
             }
          }
          else
          {
-            this .emitterNode ?.getBBox (this .bbox, this);
+            this .emitterNode ?.getBBox (bbox, this);
          }
       }
       else
       {
-         this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+         bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
       }
 
-      this .getBBoxSize ()   .assign (this .bbox .size);
-      this .getBBoxCenter () .assign (this .bbox .center);
+      this .getBBoxSize ()   .assign (bbox .size);
+      this .getBBoxCenter () .assign (bbox .center);
    },
    set_transparent__ ()
    {
