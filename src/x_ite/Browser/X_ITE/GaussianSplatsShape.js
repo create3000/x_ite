@@ -293,7 +293,7 @@ main ()
    float c = cov2d .z; // Variance y
 
    // Invert covariance (EWA algorithm)
-   float det = (a * c - b * b);
+   float det = dot (vec2 (a, -b), vec2 (c, b));
 
    if (det == 0.0)
    {
