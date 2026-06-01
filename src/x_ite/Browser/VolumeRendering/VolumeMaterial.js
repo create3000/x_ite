@@ -1,4 +1,5 @@
 import UnlitMaterial from "../../Components/Shape/UnlitMaterial.js";
+import RenderPass    from "../../Rendering/RenderPass.js";
 import vs            from "./VolumeStyle.vs.js";
 import fs            from "./VolumeStyle.fs.js";
 
@@ -7,7 +8,7 @@ function VolumeMaterial (executionContext, volumeDataNode)
    UnlitMaterial .call (this, executionContext);
 
    this .volumeDataNode    = volumeDataNode;
-   this .volumeShaderNodes = new Map ();
+   this .volumeShaderNodes = this .getBrowser () .getShaders ();
 }
 
 Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, UnlitMaterial .prototype),
@@ -20,7 +21,7 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, UnlitMaterial
    {
       const { renderObject, fogNode, localObjectsKeys } = renderContext;
 
-      let key = "";
+      let key = "VS";
 
       key += renderObject .getRenderKey ();
       key += fogNode ?.getFogType () ?? 0;
@@ -36,27 +37,46 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, UnlitMaterial
          browser = this .getBrowser (),
          options = [ ];
 
-      const { renderObject, fogNode, localObjectsKeys } = renderContext;
-
-      const objectsKeys = localObjectsKeys .concat (renderObject .getGlobalLightsKeys ());
+      // Render Object
 
       if (browser .getRenderingProperty ("XRSession"))
          options .push ("X3D_XR_SESSION");
 
+      switch (browser .getBrowserOption ("ToneMapping") .toUpperCase ())
+      {
+         default: // NONE
+            break;
+         case "ACES_NARKOWICZ":
+         case "ACES_HILL":
+         case "ACES_HILL_EXPOSURE_BOOST":
+         case "KHR_PBR_NEUTRAL":
+            options .push (`X3D_TONEMAP_${browser .getBrowserOption ("ToneMapping") .toUpperCase ()}`);
+            break;
+      }
+
+      switch (browser .getBrowserOption ("ToneMapping") .toUpperCase ())
+      {
+         default: // NONE
+            break;
+         case "ACES_NARKOWICZ":
+         case "ACES_HILL":
+         case "ACES_HILL_EXPOSURE_BOOST":
+         case "KHR_PBR_NEUTRAL":
+            options .push (`X3D_TONEMAP_${browser .getBrowserOption ("ToneMapping") .toUpperCase ()}`);
+            break;
+      }
+
+      const { renderObject, fogNode, localObjectsKeys } = renderContext;
+
+      const objectsKeys = localObjectsKeys .concat (renderObject .getGlobalLightsKeys ());
+
       if (renderObject .getLogarithmicDepthBuffer ())
          options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
 
-      if (renderObject .getOrderIndependentTransparency ())
-         options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
-
-      switch (fogNode ?.getFogType ())
+      if (renderObject .getRenderPass () === RenderPass .RENDER_KEY)
       {
-         case 1:
-            options .push ("X3D_FOG", "X3D_FOG_LINEAR");
-            break;
-         case 2:
-            options .push ("X3D_FOG", "X3D_FOG_EXPONENTIAL");
-            break;
+         if (renderObject .getOrderIndependentTransparency ())
+            options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
       }
 
       const
@@ -73,6 +93,16 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, UnlitMaterial
       {
          options .push ("X3D_LIGHTING")
          options .push (`X3D_NUM_LIGHTS ${Math .min (numLights, browser .getMaxLights ())}`);
+      }
+
+      switch (fogNode ?.getFogType ())
+      {
+         case 1:
+            options .push ("X3D_FOG", "X3D_FOG_LINEAR");
+            break;
+         case 2:
+            options .push ("X3D_FOG", "X3D_FOG_EXPONENTIAL");
+            break;
       }
 
       const shaderNode = this .volumeDataNode .createShader (options, vs, fs);

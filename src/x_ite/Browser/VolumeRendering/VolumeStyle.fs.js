@@ -22,6 +22,7 @@ const float M_PI      = 3.141592653589793;
 const float M_SQRT2   = 1.4142135623730951;
 const float M_SQRT1_2 = 0.7071067811865476;
 
+#include <ToneMapping>
 #include <ClipPlanes>
 #include <Fog>
 #include <OIT>
@@ -212,6 +213,10 @@ main ()
 
    #if defined (X3D_FOG)
       finalColor .rgb = getFogColor (finalColor .rgb);
+   #endif
+
+   #if !defined (X3D_LINEAR_OUTPUT)
+      finalColor .rgb = toneMap (finalColor .rgb);
    #endif
 
    #if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
