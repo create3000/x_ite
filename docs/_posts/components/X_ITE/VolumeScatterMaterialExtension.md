@@ -33,9 +33,9 @@ The VolumeScatterMaterialExtension node belongs to the [X_ITE](/x_ite/components
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
-| SFFloat | [in, out] | [scatterStrength](#fields-scatterStrength) |  |
-| SFString | [in, out] | [scatterStrengthTextureMapping](#fields-scatterStrengthTextureMapping) |  |
-| SFNode | [in, out] | [scatterStrengthTexture](#fields-scatterStrengthTexture) |  |
+| SFFloat | [in, out] | [scatterStrength](#fields-scatterStrength) | 0 |
+| SFString | [in, out] | [scatterStrengthTextureMapping](#fields-scatterStrengthTextureMapping) | "" |
+| SFNode | [in, out] | [scatterStrengthTexture](#fields-scatterStrengthTexture) | NULL |
 | SFColor | [in, out] | [multiscatterColor](#fields-multiscatterColor) | 0 0 0 |
 | SFString | [in, out] | [multiscatterColorTextureMapping](#fields-multiscatterColorTextureMapping) | "" |
 | SFNode | [in, out] | [multiscatterColorTexture](#fields-multiscatterColorTexture) | NULL |
@@ -51,12 +51,12 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
 
-### SFFloat [in, out] **scatterStrength** <small>[0,1]</small>
+### SFFloat [in, out] **scatterStrength** 0 <small>[0,1]</small>
 {: #fields-scatterStrength }
 
 The strength of the scattering effect. Range is [0, 1]. At 0, scattering is disabled; at 1, scattering is fully applied.
 
-### SFString [in, out] **scatterStrengthTextureMapping** "
+### SFString [in, out] **scatterStrengthTextureMapping** ""
 {: #fields-scatterStrengthTextureMapping }
 
 Input/Output field *scatterStrengthTextureMapping*.
