@@ -36,10 +36,10 @@ The VolumeScatterMaterialExtension node belongs to the [X_ITE](/x_ite/components
 | SFFloat | [in, out] | [scatterStrength](#fields-scatterStrength) | 0 |
 | SFString | [in, out] | [scatterStrengthTextureMapping](#fields-scatterStrengthTextureMapping) | "" |
 | SFNode | [in, out] | [scatterStrengthTexture](#fields-scatterStrengthTexture) | NULL |
+| SFFloat | [in, out] | [scatterAnisotropy](#fields-scatterAnisotropy) | 0 |
 | SFColor | [in, out] | [multiscatterColor](#fields-multiscatterColor) | 0 0 0 |
 | SFString | [in, out] | [multiscatterColorTextureMapping](#fields-multiscatterColorTextureMapping) | "" |
 | SFNode | [in, out] | [multiscatterColorTexture](#fields-multiscatterColorTexture) | NULL |
-| SFFloat | [in, out] | [scatterAnisotropy](#fields-scatterAnisotropy) | 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -66,6 +66,11 @@ Input/Output field *scatterStrengthTextureMapping*.
 
 A texture that defines the per-texel scatter strength, stored in the alpha (A) channel. Will be multiplied by *scatterStrength*.
 
+### SFFloat [in, out] **scatterAnisotropy** 0 <small>[-1,1]</small>
+{: #fields-scatterAnisotropy }
+
+The anisotropy of scatter events. Range is [-1, 1]. Positive values represent forward scattering; negative values represent backward scattering.
+
 ### SFColor [in, out] **multiscatterColor** 0 0 0 <small>[0,1]</small>
 {: #fields-multiscatterColor }
 
@@ -80,11 +85,6 @@ Input/Output field *multiscatterColorTextureMapping*.
 {: #fields-multiscatterColorTexture }
 
 A texture that defines the multi-scatter color, stored in the RGB channels and encoded in sRGB. This will be multiplied by the *multiscatterColor*.
-
-### SFFloat [in, out] **scatterAnisotropy** 0 <small>[-1,1]</small>
-{: #fields-scatterAnisotropy }
-
-The anisotropy of scatter events. Range is [-1, 1]. Positive values represent forward scattering; negative values represent backward scattering.
 
 ## Example
 

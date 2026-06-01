@@ -57,9 +57,9 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
 
       this .set_scatterStrength__ ();
       this .set_scatterStrengthTexture__ ();
+      this .set_scatterAnisotropy__ ();
       this .set_multiscatterColor__ ();
       this .set_multiscatterColorTexture__ ();
-      this .set_scatterAnisotropy__ ();
    },
    set_scatterStrength__ ()
    {
@@ -71,6 +71,10 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
 
       this .addTexture (0, this .scatterStrengthTextureNode);
    },
+   set_scatterAnisotropy__ ()
+   {
+      this .scatterAnisotropy = Algorithm .clamp (this ._scatterAnisotropy .getValue (), -1, 1);
+   },
    set_multiscatterColor__ ()
    {
       this .multiscatterColorArray .set (this ._multiscatterColor .getValue ());
@@ -80,10 +84,6 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
       this .multiscatterColorTextureNode = X3DCast (X3DConstants .X3DSingleTextureNode, this ._multiscatterColorTexture);
 
       this .addTexture (1, this .multiscatterColorTextureNode);
-   },
-   set_scatterAnisotropy__ ()
-   {
-      this .scatterAnisotropy = Algorithm .clamp (this ._scatterAnisotropy .getValue (), -1, 1);
    },
    getExtensionKey ()
    {
@@ -106,8 +106,8 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
    {
       uniforms .push ("x3d_ScatterMaterialIdEXT");
       uniforms .push ("x3d_ScatterStrengthEXT");
-      uniforms .push ("x3d_MultiscatterColorEXT");
       uniforms .push ("x3d_ScatterAnisotropyEXT");
+      uniforms .push ("x3d_MultiscatterColorEXT");
       uniforms .push ("x3d_ScatterSamplesEXT");
       uniforms .push ("x3d_ScatterMinRadiusEXT");
       uniforms .push ("x3d_ScatterSamplerEXT");
@@ -132,13 +132,13 @@ Object .assign (Object .setPrototypeOf (VolumeScatterMaterialExtension .prototyp
       if (shaderObject .volumeScatterPass)
       {
          gl .uniform1f  (shaderObject .x3d_ScatterMaterialIdEXT, browser .getShapeId ());
-         gl .uniform1f  (shaderObject .x3d_ScatterStrengthEXT,   this .scatterStrength);
          gl .uniform3fv (shaderObject .x3d_MultiscatterColorEXT, this .multiscatterColorArray);
          return;
       }
 
-      gl .uniform3fv (shaderObject .x3d_MultiscatterColorEXT, this .multiscatterColorArray);
+      gl .uniform1f  (shaderObject .x3d_ScatterStrengthEXT,   this .scatterStrength);
       gl .uniform1f  (shaderObject .x3d_ScatterAnisotropyEXT, this .scatterAnisotropy);
+      gl .uniform3fv (shaderObject .x3d_MultiscatterColorEXT, this .multiscatterColorArray);
       gl .uniform3fv (shaderObject .x3d_ScatterSamplesEXT,    ScatterSamples .SCATTER_SAMPLES);
       gl .uniform1f  (shaderObject .x3d_ScatterMinRadiusEXT,  ScatterSamples .SCATTER_MIN_RADIUS);
 
@@ -171,10 +171,10 @@ Object .defineProperties (VolumeScatterMaterialExtension,
          new X3DFieldDefinition (X3DConstants .inputOutput, "scatterStrength",                 new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "scatterStrengthTextureMapping",   new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "scatterStrengthTexture",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "scatterAnisotropy",               new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "multiscatterColor",               new Fields .SFColor ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "multiscatterColorTextureMapping", new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "multiscatterColorTexture",        new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput, "scatterAnisotropy",               new Fields .SFFloat ()),
       ]),
       enumerable: true,
    },

@@ -1239,6 +1239,13 @@
           default="NULL"
           acceptableNodeTypes="X3DMetadataObject"
           description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."/>
+        <field name="scatterAnisotropy"
+          type="SFFloat"
+          accessType="inputOutput"
+          default="0"
+          minInclusive="-1"
+          maxInclusive="1"
+          description="The anisotropy of scatter events. Range is [-1, 1]. Positive values represent forward scattering; negative values represent backward scattering."/>
         <field name="scatterStrength"
           type="SFFloat"
           accessType="inputOutput"
@@ -1275,13 +1282,6 @@
           default="NULL"
           acceptableNodeTypes="X3DSingleTextureNode"
           description="A texture that defines the multi-scatter color, stored in the RGB channels and encoded in sRGB. This will be multiplied by the *multiscatterColor*."/>
-        <field name="scatterAnisotropy"
-          type="SFFloat"
-          accessType="inputOutput"
-          default="0"
-          minInclusive="-1"
-          maxInclusive="1"
-          description="The anisotropy of scatter events. Range is [-1, 1]. Positive values represent forward scattering; negative values represent backward scattering."/>
         <containerField default="extensions" type="xs:NMTOKEN" />
       </InterfaceDefinition>
     </ConcreteNode>
