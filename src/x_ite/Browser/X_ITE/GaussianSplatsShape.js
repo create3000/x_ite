@@ -511,7 +511,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
    },
    getGeometryType ()
    {
-      return GeometryType .QUAD;
+      return GeometryType .POINT;
    },
    getNumInstances ()
    {
