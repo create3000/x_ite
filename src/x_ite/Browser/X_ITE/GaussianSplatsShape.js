@@ -561,9 +561,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       this .bboxCenter .assign (this .bbox .center);
    },
    set_geometry__ ()
-   {
-      this .set_objects__ ();
-   },
+   { },
    set_transparent__ ()
    {
       this .transparent = true;

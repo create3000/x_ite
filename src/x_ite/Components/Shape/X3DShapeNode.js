@@ -66,7 +66,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, X3DChildNode .p
    },
    isEnabled ()
    {
-      return this .getNumInstances () && (this .geometryNode || this .getGeometryType () !== GeometryType .GEOMETRY);
+      return !!(this .getNumInstances () && (this .geometryNode || this .getGeometryType () !== GeometryType .GEOMETRY));
    },
    getBBox (bbox, shadows)
    {
