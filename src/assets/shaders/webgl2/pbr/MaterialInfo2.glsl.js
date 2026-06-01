@@ -228,20 +228,20 @@ getDiffuseTransmissionInfo (in MaterialInfo info)
 
 #if defined (X3D_VOLUME_SCATTER_MATERIAL_EXT)
 
-${MaterialTextures .texture ("x3d_ScatterTextureEXT", "a", "linear")}
+${MaterialTextures .texture ("x3d_ScatterStrengthTextureEXT", "a", "linear")}
 ${MaterialTextures .texture ("x3d_MultiscatterColorTextureEXT", "rgb", "linear")}
 
-uniform float x3d_ScatterEXT;
+uniform float x3d_ScatterStrengthEXT;
 uniform vec3 x3d_MultiscatterColorEXT;
 
 MaterialInfo
 getVolumeScatterInfo (in MaterialInfo info)
 {
    // TODO: use scatter.
-   float scatter = x3d_ScatterEXT;
+   float scatterStrength = x3d_ScatterStrengthEXT;
 
-   #if defined (X3D_SCATTER_TEXTURE_EXT)
-      scatter *= getScatterTextureEXT ();
+   #if defined (X3D_SCATTER_STRENGTH_TEXTURE_EXT)
+      scatterStrength *= getScatterStrengthTextureEXT ();
    #endif
 
    info .multiscatterColor = x3d_MultiscatterColorEXT;
