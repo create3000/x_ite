@@ -318,7 +318,7 @@ main ()
    float minScreen   = float (min (x3d_Viewport .z, x3d_Viewport .w));
    float maxQuadSize = max (quadPixelSize .x, quadPixelSize .y);
 
-   if (maxQuadSize > minScreen * 0.5)
+   if (maxQuadSize > minScreen)
    {
       gl_Position = vec4 (0.0);
       return;
