@@ -1826,6 +1826,18 @@ function eventsProcessed ()
       gaussianSplats ._scales       = attributes ?.["KHR_gaussian_splatting:SCALE"]    ?.array ?? [ ];
       gaussianSplats ._opacities    = attributes ?.["KHR_gaussian_splatting:OPACITY"]  ?.array ?? [ ];
 
+      const
+         min    = new Vector3 (),
+         max    = new Vector3 (),
+         hasMin = this .vectorValue (attributes ?.POSITION ?.min, min),
+         hasMax = this .vectorValue (attributes ?.POSITION ?.max, max);
+
+      if (hasMin && hasMax)
+      {
+         gaussianSplats ._bboxSize   = max .copy () .subtract (min),
+         gaussianSplats ._bboxCenter = min .copy () .add (max) .divide (2);
+      }
+
       // Degrees 0,1,2,3
 
       const numSplats = gaussianSplats ._positions .length;
