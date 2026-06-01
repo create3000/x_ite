@@ -17,6 +17,8 @@ Although this is an initial implementation, it already provides a solid foundati
 
 ### Examples
 
+![Amethyst 3DGS](/assets/img/whats-new/amethyst.avif){: .normal .w-50 }![Cactus 3DGS](/assets/img/whats-new/cactus.avif){: .normal .w-50 }
+
 - [PLY example](/x_ite/components/x-ite/gaussiansplats/#example)
 - [glTF example](/x_ite/laboratory/gltf-sample-viewer/?url=https://create3000.github.io/media/glTF/Cactus/Cactus.glb)
 
