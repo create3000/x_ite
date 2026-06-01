@@ -1239,13 +1239,31 @@
           default="NULL"
           acceptableNodeTypes="X3DMetadataObject"
           description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."/>
+        <field name="scatterStrength"
+          type="SFFloat"
+          accessType="inputOutput"
+          default="0"
+          minInclusive="0"
+          maxInclusive="1"
+          description="The strength of the scattering effect. Range is [0, 1]. At 0, scattering is disabled; at 1, scattering is fully applied."/>
+        <field name="scatterStrengthTextureMapping"
+          type="SFString"
+          accessType="inputOutput"
+          default=""
+          description="Input/Output field multiscatterColorTextureMapping."/>
+        <field name="scatterStrengthTexture"
+          type="SFNode"
+          accessType="inputOutput"
+          default="NULL"
+          acceptableNodeTypes="X3DSingleTextureNode"
+          description="A texture that defines the per-texel scatter strength, stored in the alpha (A) channel. Will be multiplied by *scatterStrength*."/>
         <field name="multiscatterColor"
           type="SFColor"
           accessType="inputOutput"
           default="0 0 0"
           minInclusive="0"
           maxInclusive="1"
-          description="The multi-scatter albedo."/>
+          description="The multi-scatter color. In volumetric mode, this is the multi-scatter albedo. In thin-walled mode, this is a surface tint applied to transmitted light.."/>
         <field name="multiscatterColorTextureMapping"
           type="SFString"
           accessType="inputOutput"
@@ -1256,14 +1274,14 @@
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DSingleTextureNode"
-          description="A surface texture that defines the multi-scatter albedo at the volume's entry point. Stored in the RGB channels and encoded in sRGB. This will be multiplied by the multiscatterColorFactor."/>
+          description="A texture that defines the multi-scatter color, stored in the RGB channels and encoded in sRGB. This will be multiplied by the *multiscatterColor*."/>
         <field name="scatterAnisotropy"
           type="SFFloat"
           accessType="inputOutput"
           default="0"
           minInclusive="-1"
           maxInclusive="1"
-          description="The anisotropy of scatter events. Range is [-1, 1]."/>
+          description="The anisotropy of scatter events. Range is [-1, 1]. Positive values represent forward scattering; negative values represent backward scattering."/>
         <containerField default="extensions" type="xs:NMTOKEN" />
       </InterfaceDefinition>
     </ConcreteNode>
