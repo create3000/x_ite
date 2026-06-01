@@ -33,10 +33,13 @@ The VolumeScatterMaterialExtension node belongs to the [X_ITE](/x_ite/components
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
+| SFFloat | [in, out] | [scatter](#fields-scatter) |  |
+| SFString | [in, out] | [scatterTextureMapping](#fields-scatterTextureMapping) |  |
+| SFNode | [in, out] | [scatterTexture](#fields-scatterTexture) |  |
+| SFFloat | [in, out] | [scatterAnisotropy](#fields-scatterAnisotropy) | 0 |
 | SFColor | [in, out] | [multiscatterColor](#fields-multiscatterColor) | 0 0 0 |
 | SFString | [in, out] | [multiscatterColorTextureMapping](#fields-multiscatterColorTextureMapping) | "" |
 | SFNode | [in, out] | [multiscatterColorTexture](#fields-multiscatterColorTexture) | NULL |
-| SFFloat | [in, out] | [scatterAnisotropy](#fields-scatterAnisotropy) | 0 |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -47,6 +50,26 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 #### Hint
 
 - [X3D Architecture 7.2.4 Metadata](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#Metadata)
+
+### SFFloat [in, out] **scatter** 0 <small>[0,1]</small>
+{: #fields-scatter }
+
+Input/Output field *scatter*.
+
+### SFString [in, out] **scatterTextureMapping** ""
+{: #fields-scatterTextureMapping }
+
+Input/Output field *scatterTextureMapping*.
+
+### SFNode [in, out] **scatterTexture** NULL <small>[X3DSingleTextureNode]</small>
+{: #fields-scatterTexture }
+
+Input/Output field *scatterTexture*.
+
+### SFFloat [in, out] **scatterAnisotropy** 0 <small>[-1,1]</small>
+{: #fields-scatterAnisotropy }
+
+The anisotropy of scatter events. Range is [-1, 1].
 
 ### SFColor [in, out] **multiscatterColor** 0 0 0 <small>[0,1]</small>
 {: #fields-multiscatterColor }
@@ -62,11 +85,6 @@ Input/Output field *multiscatterColorTextureMapping*.
 {: #fields-multiscatterColorTexture }
 
 A surface texture that defines the multi-scatter albedo at the volume's entry point. Stored in the RGB channels and encoded in sRGB. This will be multiplied by the *multiscatterColorFactor*.
-
-### SFFloat [in, out] **scatterAnisotropy** 0 <small>[-1,1]</small>
-{: #fields-scatterAnisotropy }
-
-The anisotropy of scatter events. Range is [-1, 1].
 
 ## Example
 

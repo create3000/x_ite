@@ -1574,6 +1574,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const extension = this .getScene () .createNode ("VolumeScatterMaterialExtension", false);
 
+      extension ._scatter               = this .numberValue (KHR_materials_volume_scatter .scatterFactor, 0);
+      extension ._scatterTexture        = this .textureInfo (KHR_materials_volume_scatter .scatterTexture);
+      extension ._scatterTextureMapping = this .textureMapping (KHR_materials_volume_scatter .scatterTexture);
+
       const multiscatterColor = new Color3 ();
 
       if (this .vectorValue (KHR_materials_volume_scatter .multiscatterColorFactor, multiscatterColor))
