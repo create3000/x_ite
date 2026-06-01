@@ -115,11 +115,13 @@ getMaterialColor (const in vec4 fragCoord)
          albedoSheenScaling = 1.0 - max3 (materialInfo .sheenColorFactor) * albedoSheenScalingLUT (NdotV, materialInfo .sheenRoughnessFactor);
       #endif
 
-      // Calculate fresnel mix for IBL
+      #if defined (X3D_USE_IBL)
+         // Calculate fresnel mix for IBL
 
-      vec3 f_dielectric_fresnel_ibl = getIBLGGXFresnel (n, v, materialInfo .perceptualRoughness, materialInfo .f0_dielectric, materialInfo .specularWeight);
+         vec3 f_dielectric_fresnel_ibl = getIBLGGXFresnel (n, v, materialInfo .perceptualRoughness, materialInfo .f0_dielectric, materialInfo .specularWeight);
 
-      frontColor += mix (f_diffuse, f_specular_dielectric, f_dielectric_fresnel_ibl) * albedoSheenScaling;
+         frontColor += mix (f_diffuse, f_specular_dielectric, f_dielectric_fresnel_ibl) * albedoSheenScaling;
+      #endif
    #endif
 
    #if defined (X3D_LIGHTING)
