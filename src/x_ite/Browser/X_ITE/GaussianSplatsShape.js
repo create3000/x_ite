@@ -557,15 +557,15 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
       }
 
-      this .bboxSize   .assign (this .bbox .size);
-      this .bboxCenter .assign (this .bbox .center);
+      this .getBBoxSize ()   .assign (this .bbox .size);
+      this .getBBoxCenter () .assign (this .bbox .center);
    },
    set_geometry__ ()
    { },
    set_transparent__ ()
    {
-      this .transparent = true;
-      this .alphaMode   = AlphaMode .BLEND;
+      this .setTransparent (true);
+      this .setAlphaMode (AlphaMode .BLEND);
    },
    createTexture (target)
    {
