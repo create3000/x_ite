@@ -1062,18 +1062,17 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       for (const [key, extension] of Object .entries (extensions))
       {
+         if (!this .extensions .has (key))
+            continue;
+
          switch (key)
          {
             case "KHR_texture_basisu":
             // case "EXT_texture_astc":
             case "EXT_texture_avif":
             case "EXT_texture_webp":
-            {
-               if (this .extensions .has (key))
-                  images .push (this .images [extension ?.source]);
-
+               images .push (this .images [extension ?.source]);
                break;
-            }
          }
       }
    },
