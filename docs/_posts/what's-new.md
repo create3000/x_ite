@@ -15,6 +15,11 @@ In addition to PLY files, X_ITE now supports the glTF extension [KHR_gaussian_sp
 
 Although this is an initial implementation, it already provides a solid foundation for exploring highly detailed real-world captures and next-generation rendering workflows directly within X_ITE. Further enhancements and optimizations are planned for future releases.
 
+### Examples
+
+- [PLY example](/x_ite/components/x-ite/gaussiansplats/#example)
+- [glTF example](/x_ite/laboratory/gltf-sample-viewer/?url=https://create3000.github.io/media/glTF/Cactus/Cactus.glb)
+
 ### Notable Changes
 
 - [x] Support for 3D Gaussian splatting.

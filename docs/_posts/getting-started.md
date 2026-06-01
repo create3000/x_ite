@@ -7,6 +7,9 @@ tags: [Getting Started, X3D, VRML, glTF, Viewer]
 permalink: /
 ---
 
+>**New:** Comes now with [Gaussian spatting](/x_ite/what-s-new/#x_ite-v151-series) support.
+{: .prompt-tip }
+
 [![npm Version](https://img.shields.io/npm/v/x_ite)](https://www.npmjs.com/package/x_ite){: .badge-link }
 [![Build Size](https://img.shields.io/bundlephobia/minzip/x_ite)](https://bundlephobia.com/package/x_ite){: .badge-link }
 [![jsDelivr Hits](https://data.jsdelivr.com/v1/package/npm/x_ite/badge?style=rounded)](https://create3000.github.io/jsdelivr-download-stats/?username=create3000&repository=x_ite){: .badge-link }
