@@ -53,10 +53,11 @@ let memBuf = null;   // WebAssembly.Memory
 // Byte offsets (set during init)
 let pIndexes = 0, pCenters = 0, pMappedDist = 0, pFrequencies = 0, pMVP = 0, pIndexesOut = 0;
 let N = 0;
+let uv, fv;
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
-/** Align a byte offset up to 16-byte boundary. */
+// Align a byte offset up to 16-byte boundary.
 const align16 = (b) => (b + 15) & ~15;
 
 // ── Initialization ────────────────────────────────────────────────────────────
@@ -77,7 +78,7 @@ async function init ({ positions, splatCount })
 
    N = splatCount;
 
-   // Layout each buffer (byte offsets in WebAssembly.Memory)
+   // Layout each buffer (byte offsets in WebAssembly.Memory).
    let off = HEADER_PAGES * PAGE_BYTES;
 
    pIndexes     = off; off = align16 (off + N * 4);              // Uint32[N]
@@ -87,8 +88,9 @@ async function init ({ positions, splatCount })
    pMVP         = off; off = align16 (off + 16 * 4);             // Float32[16]
    pIndexesOut  = off; off = align16 (off + N * 4);              // Uint32[N]
 
-   const totalBytes = off;
-   const pages      = Math .ceil (totalBytes / PAGE_BYTES) + 2; // +2 for safety
+   const
+      totalBytes = off,
+      pages      = Math .ceil (totalBytes / PAGE_BYTES) + 2; // +2 for safety
 
    memBuf = new WebAssembly .Memory ({ initial: pages, maximum: pages + 4 });
 
@@ -116,16 +118,17 @@ async function init ({ positions, splatCount })
 
    // Populate centres (stride-4): Float32 (x, y, z, opacity) — raw positions.
 
-   const fv = new Float32Array (memBuf .buffer);
+   fv = new Float32Array (memBuf .buffer);
 
    fv .set (posOp .subarray (0, N * 4), pCenters >> 2);
 
-   // Initialize indexes 0..N-1
+   // Initialize indexes 0..N-1.
 
-   const uv = new Uint32Array (memBuf .buffer);
+   uv = new Uint32Array (memBuf .buffer);
 
-   for (let i = 0; i < N; i++)
-      uv [(pIndexes >> 2) + i] = i;
+   uv .set (Array .from ({ length: N }, (_, i) => i), pIndexes >> 2);
+
+   // Send ready.
 
    self .postMessage ({ type: "ready" });
 }
@@ -134,10 +137,6 @@ async function init ({ positions, splatCount })
 
 function sort ({ viewMatrix })
 {
-   const
-      uv = new Uint32Array (memBuf .buffer),
-      fv = new Float32Array (memBuf .buffer);
-
    // Reset frequencies histogram to zero
    uv .fill (0, pFrequencies >> 2, (pFrequencies >> 2) + DIST_MAP_RANGE);
 
@@ -172,9 +171,9 @@ function sort ({ viewMatrix })
       0, 0, 0,
    );
 
-   const out = new Uint32Array (uv .subarray (pIndexesOut >> 2, (pIndexesOut >> 2) + N));
+   const out = uv .subarray (pIndexesOut >> 2, (pIndexesOut >> 2) + N);
 
-   self .postMessage ({ type: "sorted", indices: out }, [out .buffer]);
+   self .postMessage ({ type: "sorted", indices: out });
 }
 
 // ── Message dispatcher ────────────────────────────────────────────────────────
