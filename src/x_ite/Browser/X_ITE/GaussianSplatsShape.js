@@ -276,7 +276,7 @@ main ()
    // Early Culling
 	if (any (greaterThan (abs (clipSplatCenter .xyz), vec3 (1.3))))
 	{
-		gl_Position = vec4 (0.0);
+		gl_Position = vec4 (0.0, 0.0, 2.0, 1.0);
 		return;
 	}
 
@@ -297,7 +297,7 @@ main ()
 
    if (det == 0.0)
    {
-      gl_Position = vec4 (0.0);
+      gl_Position = vec4 (0.0, 0.0, 2.0, 1.0);
       return;
    }
 
@@ -320,7 +320,7 @@ main ()
 
    if (maxQuadSize > minScreen)
    {
-      gl_Position = vec4 (0.0);
+      gl_Position = vec4 (0.0, 0.0, 2.0, 1.0);
       return;
    }
 
