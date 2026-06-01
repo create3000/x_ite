@@ -802,6 +802,20 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       const { renderObject, fogNode, localObjectsKeys } = renderContext;
 
+      switch (renderObject .getRenderPass ())
+      {
+         case RenderPass .VOLUME_SCATTER_KEY:
+         {
+            options .push ("X3D_VOLUME_SCATTER_PASS", "X3D_LINEAR_OUTPUT");
+            break;
+         }
+         case RenderPass .TRANSMISSION_KEY:
+         {
+            options .push ("X3D_TRANSMISSION_PASS", "X3D_LINEAR_OUTPUT");
+            break;
+         }
+      }
+
       if (renderObject .getLogarithmicDepthBuffer ())
          options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
 
