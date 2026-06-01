@@ -232,8 +232,8 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
       }
 
-      this .bboxSize   .assign (this .bbox .size);
-      this .bboxCenter .assign (this .bbox .center);
+      this .getBBoxSize ()   .assign (this .bbox .size);
+      this .getBBoxCenter () .assign (this .bbox .center);
    },
    set_transparent__ ()
    {
