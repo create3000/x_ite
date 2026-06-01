@@ -42,15 +42,16 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, UnlitMaterial
       if (browser .getRenderingProperty ("XRSession"))
          options .push ("X3D_XR_SESSION");
 
-      switch (browser .getBrowserOption ("ToneMapping") .toUpperCase ())
+      switch (browser .getBrowserOption ("ColorSpace") .toUpperCase ())
       {
-         default: // NONE
+         case "SRGB":
+            options .push ("X3D_COLORSPACE_SRGB");
             break;
-         case "ACES_NARKOWICZ":
-         case "ACES_HILL":
-         case "ACES_HILL_EXPOSURE_BOOST":
-         case "KHR_PBR_NEUTRAL":
-            options .push (`X3D_TONEMAP_${browser .getBrowserOption ("ToneMapping") .toUpperCase ()}`);
+         case "LINEAR":
+            options .push ("X3D_COLORSPACE_LINEAR");
+            break;
+         default: // LINEAR_WHEN_PHYSICAL_MATERIAL
+            options .push ("X3D_COLORSPACE_SRGB");
             break;
       }
 
