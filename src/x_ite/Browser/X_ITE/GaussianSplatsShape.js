@@ -531,6 +531,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
    },
    set_bbox__ ()
    {
+      const bbox = this .bbox;
+
       if (this .isDefaultBBoxSize ())
       {
          const
@@ -548,17 +550,17 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          }
 
          if (numPositions)
-            this .bbox .setExtents (min, max);
+            bbox .setExtents (min, max);
          else
-            this .bbox .set ();
+            bbox .set ();
       }
       else
       {
-         this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+         bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
       }
 
-      this .getBBoxSize ()   .assign (this .bbox .size);
-      this .getBBoxCenter () .assign (this .bbox .center);
+      this .getBBoxSize ()   .assign (bbox .size);
+      this .getBBoxCenter () .assign (bbox .center);
    },
    set_geometry__ ()
    { },
