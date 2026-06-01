@@ -532,7 +532,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
    },
    set_bbox__ ()
    {
-      if (this .node .isDefaultBBoxSize ())
+      if (this .isDefaultBBoxSize ())
       {
          const
             positions    = this .node ._positions .getValue (),
@@ -555,12 +555,14 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       }
       else
       {
-         this .bbox .set (this .node ._bboxSize .getValue (), this .node ._bboxCenter .getValue ());
+         this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
       }
 
       this .bboxSize   .assign (this .bbox .size);
       this .bboxCenter .assign (this .bbox .center);
    },
+   set_geometry__ ()
+   { },
    set_transparent__ ()
    {
       this .transparent = true;
