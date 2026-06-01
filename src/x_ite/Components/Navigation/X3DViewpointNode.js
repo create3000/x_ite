@@ -467,9 +467,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       this .getCameraSpaceMatrix () .multVecMatrix (point);
       this .getModelMatrix () .copy () .inverse () .multVecMatrix (point);
 
-      const minDistance = this .getNearDistance (layerNode .getNavigationInfo ()) * 2;
-
-      this .lookAt (layerNode, point, minDistance, transitionTime, factor, straighten);
+      this .lookAt (layerNode, point, 0.61803, transitionTime, factor, straighten);
    },
    lookAtBBox (layerNode, bbox, transitionTime = 1, factor = 1, straighten = false)
    {
