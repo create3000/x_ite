@@ -73,33 +73,35 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
    },
    set_bbox__: (() =>
    {
-      const bbox = new Box3 ();
+      const subBBox = new Box3 ();
 
       return function ()
       {
+         const bbox = this .bbox;
+
          if (this .isDefaultBBoxSize ())
          {
             if (this .getGeometry ())
             {
-               this .bbox .set ();
+               bbox .set ();
 
                const geometryBBox = this .getGeometry () .getBBox ();
 
                for (const matrix of this .matrices)
-                  this .bbox .add (bbox .assign (geometryBBox) .multRight (matrix));
+                  bbox .add (subBBox .assign (geometryBBox) .multRight (matrix));
             }
             else
             {
-               this .bbox .set ();
+               bbox .set ();
             }
          }
          else
          {
-            this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+            bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
          }
 
-         this .getBBoxSize ()   .assign (this .bbox .size);
-         this .getBBoxCenter () .assign (this .bbox .center);
+         this .getBBoxSize ()   .assign (bbox .size);
+         this .getBBoxCenter () .assign (bbox .center);
       };
    })(),
    set_transform__ ()
