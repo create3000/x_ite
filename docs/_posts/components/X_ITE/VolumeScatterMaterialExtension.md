@@ -33,9 +33,9 @@ The VolumeScatterMaterialExtension node belongs to the [X_ITE](/x_ite/components
 | Type | Access Type | Name | Default Value |
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
-| SFFloat | [in, out] | [scatter](#fields-scatter) |  |
-| SFString | [in, out] | [scatterTextureMapping](#fields-scatterTextureMapping) |  |
-| SFNode | [in, out] | [scatterTexture](#fields-scatterTexture) |  |
+| SFFloat | [in, out] | [scatter](#fields-scatter) | 0 |
+| SFString | [in, out] | [scatterTextureMapping](#fields-scatterTextureMapping) | "" |
+| SFNode | [in, out] | [scatterTexture](#fields-scatterTexture) | NULL |
 | SFFloat | [in, out] | [scatterAnisotropy](#fields-scatterAnisotropy) | 0 |
 | SFColor | [in, out] | [multiscatterColor](#fields-multiscatterColor) | 0 0 0 |
 | SFString | [in, out] | [multiscatterColorTextureMapping](#fields-multiscatterColorTextureMapping) | "" |
