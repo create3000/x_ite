@@ -92,7 +92,7 @@ const float SH_C0 = 0.28209479177387814;
 
 //    // Determine quaternion.
 
-//    float halfTheta = rotation .w / 2.0;
+//    float halfTheta = rotation .w * 0.5;
 //    float aScale    = sin (halfTheta) / scale;
 
 //    return vec4 (rotation .xyz * aScale, cos (halfTheta));
