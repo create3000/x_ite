@@ -9,9 +9,9 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 ## X_ITE v15.1 Series
 
-*Leipzig, 31st May 2026:* The 15.1 release of X_ITE comes now with basic support for 3D Gaussian splatting, bringing a modern point-based rendering technique to the X3D ecosystem. To make working with Gaussian splats straightforward and fully integrated into X3D scenes, this release introduces the new [GaussianSplats](/x_ite/components/x-ite/gaussiansplats/) node. It enables the loading and rendering of Gaussian Splat datasets while leveraging X_ITE's existing scene graph architecture.
+*Leipzig, 31st May 2026:* The 15.1 release of X_ITE comes now with basic support for 3D Gaussian Splatting, bringing a modern point-based rendering technique to the X3D ecosystem. To make working with Gaussian Splats straightforward and fully integrated into X3D scenes, this release introduces the new [GaussianSplats](/x_ite/components/x-ite/gaussiansplats/) node. It enables the loading and rendering of Gaussian Splat datasets while leveraging X_ITE's existing scene graph architecture.
 
-In addition to PLY files, X_ITE now supports the glTF extension [KHR_gaussian_splatting](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_gaussian_splatting/README.md), allowing Gaussian splat assets stored in glTF files to be loaded and displayed directly. This provides compatibility with the emerging open standard for Gaussian splatting content and facilitates interoperability with content creation tools and pipelines that adopt the KHR_gaussian_splatting extension.
+In addition to PLY files, X_ITE now supports the glTF extension [KHR_gaussian_splatting](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_gaussian_splatting/README.md), allowing Gaussian Splat assets stored in glTF files to be loaded and displayed directly. This provides compatibility with the emerging open standard for Gaussian Splatting content and facilitates interoperability with content creation tools and pipelines that adopt the KHR_gaussian_splatting extension.
 
 Although this is an initial implementation, it already provides a solid foundation for exploring highly detailed real-world captures and next-generation rendering workflows directly within X_ITE. Further enhancements and optimizations are planned for future releases.
 
@@ -22,7 +22,7 @@ Although this is an initial implementation, it already provides a solid foundati
 
 ### Notable Changes
 
-- [x] Support for 3D Gaussian splatting.
+- [x] Support for 3D Gaussian Splatting.
 - [x] You can now hold down the <kbd>Alt-or-Option</kbd> key to move to a certain point when you double click an object when the Examine viewer is active.
 
 ## X_ITE v15.0 Series
