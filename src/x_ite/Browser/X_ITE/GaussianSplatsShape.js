@@ -512,7 +512,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
    },
    set_key__ ()
    {
-      let key = "GS.";
+      let key = "GS";
 
       key += this .node ._sphericalHarmonics1 .length ? 1 : 0;
       key += this .node ._sphericalHarmonics2 .length ? 1 : 0;
