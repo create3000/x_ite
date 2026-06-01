@@ -86,7 +86,7 @@ const Features =
       {
          register ()
          { }
-         
+
          unregister ()
          { }
       };

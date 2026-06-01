@@ -32,11 +32,12 @@ uniform mat4  x3d_ModelViewMatrix;
 
 uniform vec2 x3d_FocalLength;
 
-uniform sampler2D      x3d_PositionsTexture;
-uniform sampler2D      x3d_OrientationsTexture;
-uniform sampler2D      x3d_ScalesTexture;
-uniform sampler2D      x3d_OpacitiesTexture;
-uniform sampler2DArray x3d_SphericalHarmonicsTexture;
+uniform sampler2D x3d_PositionsTexture;
+uniform sampler2D x3d_OrientationsTexture;
+uniform sampler2D x3d_ScalesTexture;
+
+uniform mediump sampler2D      x3d_OpacitiesTexture;
+uniform mediump sampler2DArray x3d_SphericalHarmonicsTexture;
 
 in vec4 x3d_Vertex;
 in uint x3d_SplatIndex;
@@ -654,10 +655,10 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB32F, textureWidth, textureWidth, 0, gl .RGB, gl .FLOAT, scales);
 
          gl .bindTexture (gl .TEXTURE_2D, this .opacitiesTexture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .R32F, textureWidth, textureWidth, 0, gl .RED, gl .FLOAT, opacities);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .R16F, textureWidth, textureWidth, 0, gl .RED, gl .FLOAT, opacities);
 
          gl .bindTexture (gl .TEXTURE_2D_ARRAY, this .sphericalHarmonicsTexture);
-         gl .texImage3D (gl .TEXTURE_2D_ARRAY, 0, gl .RGB32F, textureWidth, textureWidth, 4, 0, gl .RGB, gl .FLOAT, sphericalHarmonics);
+         gl .texImage3D (gl .TEXTURE_2D_ARRAY, 0, gl .RGB16F, textureWidth, textureWidth, 4, 0, gl .RGB, gl .FLOAT, sphericalHarmonics);
       }
 
       this .numSplats = numSplats;
