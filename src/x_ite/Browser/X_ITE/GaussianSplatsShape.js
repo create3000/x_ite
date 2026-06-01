@@ -900,7 +900,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
                this .sortPending = false;
 
                this .sortModelViewMatrix .fill (0);
-
                browser .addBrowserEvent ();
                break;
             }
