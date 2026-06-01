@@ -467,7 +467,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       this .getCameraSpaceMatrix () .multVecMatrix (point);
       this .getModelMatrix () .copy () .inverse () .multVecMatrix (point);
 
-      this .lookAt (layerNode, point, 0.61803, transitionTime, factor, straighten);
+      this .lookAt (layerNode, point, 0.5, transitionTime, factor, straighten);
    },
    lookAtBBox (layerNode, bbox, transitionTime = 1, factor = 1, straighten = false)
    {
