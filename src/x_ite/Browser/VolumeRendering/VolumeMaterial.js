@@ -21,7 +21,7 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, UnlitMaterial
    {
       const { renderObject, fogNode, localObjectsKeys } = renderContext;
 
-      let key = "VS";
+      let key = "VD";
 
       key += this .getId (); // TODO: this .volumeDataNode .getKey ();
       key += ".";
