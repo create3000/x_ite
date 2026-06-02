@@ -8688,25 +8688,97 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
-      sphericalHarmonics0: MFVec3f;
+      sphericalHarmonicsDegree0Coef0: MFVec3f;
       /**
        * Input/Output field spherical harmonics coefficients.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
-      sphericalHarmonics1: MFVec3f;
+      sphericalHarmonicsDegree1Coef0: MFVec3f;
       /**
        * Input/Output field spherical harmonics coefficients.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
-      sphericalHarmonics2: MFVec3f;
+      sphericalHarmonicsDegree1Coef1: MFVec3f;
       /**
        * Input/Output field spherical harmonics coefficients.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
-      sphericalHarmonics3: MFVec3f;
+      sphericalHarmonicsDegree1Coef2: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree2Coef0: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree2Coef1: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree2Coef2: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree2Coef3: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree2Coef4: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree3Coef0: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree3Coef1: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree3Coef2: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree3Coef3: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree3Coef4: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree3Coef5: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree3Coef6: MFVec3f;
       /**
        * Whether or not renderable content within this node is visually displayed.
        *
