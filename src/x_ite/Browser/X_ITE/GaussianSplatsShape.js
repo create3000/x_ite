@@ -438,6 +438,8 @@ const QuadGeometry = new Float32Array ([
 
 // Special X3DShapeNode for internal use.
 
+const SH_DIMENSIONS = [1, 3, 5, 7];
+
 function GaussianSplatsShape (executionContext, node)
 {
    X3DShapeNode .call (this, executionContext);
@@ -491,7 +493,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       this .node ._scales       .addInterest ("requestRebuild", this);
       this .node ._opacities    .addInterest ("requestRebuild", this);
 
-      for (const [degree, dimensions] of [1, 3, 5, 7] .entries ())
+      for (const [degree, dimensions] of SH_DIMENSIONS .entries ())
       {
          for (let coef = 0; coef < dimensions; ++ coef)
             this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .addInterest ("requestRebuild", this);
@@ -521,7 +523,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
    {
       let key = "GS";
 
-      for (const [degree, dimensions] of [1, 3, 5, 7] .entries ())
+      for (const [degree, dimensions] of SH_DIMENSIONS .entries ())
       {
          const coefs = Array .from ({ length: dimensions }, (_, coef) => this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .length) .every (length => length);
 
@@ -640,7 +642,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
          let offset = 0;
 
-         for (const [degree, dimensions] of [1, 3, 5, 7] .entries ())
+         for (const [degree, dimensions] of SH_DIMENSIONS .entries ())
          {
             for (let coef = 0; coef < dimensions; ++ coef)
             {
@@ -796,7 +798,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Spherical Harmonics
 
-      for (const [degree, dimensions] of [1, 3, 5, 7] .entries ())
+      for (const [degree, dimensions] of SH_DIMENSIONS .entries ())
       {
          const coefs = Array .from ({ length: dimensions }, (_, coef) => this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .length) .every (length => length);
 
