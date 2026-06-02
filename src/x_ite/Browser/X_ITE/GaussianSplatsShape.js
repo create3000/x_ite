@@ -485,15 +485,17 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Fields
 
-      this .node ._colorSpace          .addInterest ("set_key__",      this);
-      this .node ._positions           .addInterest ("requestRebuild", this);
-      this .node ._orientations        .addInterest ("requestRebuild", this);
-      this .node ._scales              .addInterest ("requestRebuild", this);
-      this .node ._sphericalHarmonics0 .addInterest ("requestRebuild", this);
-      this .node ._sphericalHarmonics1 .addInterest ("requestRebuild", this);
-      this .node ._sphericalHarmonics2 .addInterest ("requestRebuild", this);
-      this .node ._sphericalHarmonics3 .addInterest ("requestRebuild", this);
-      this .node ._opacities           .addInterest ("requestRebuild", this);
+      this .node ._colorSpace   .addInterest ("set_key__",      this);
+      this .node ._positions    .addInterest ("requestRebuild", this);
+      this .node ._orientations .addInterest ("requestRebuild", this);
+      this .node ._scales       .addInterest ("requestRebuild", this);
+      this .node ._opacities    .addInterest ("requestRebuild", this);
+
+      for (const [degree, dimensions] of [1, 3, 5, 7] .entries ())
+      {
+         for (let coef = 0; coef < dimensions; ++ coef)
+            this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .addInterest ("requestRebuild", this);
+      }
 
       this ._rebuild .addInterest ("rebuild", this);
 
@@ -519,9 +521,12 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
    {
       let key = "GS";
 
-      key += this .node ._sphericalHarmonics1 .length ? 1 : 0;
-      key += this .node ._sphericalHarmonics2 .length ? 1 : 0;
-      key += this .node ._sphericalHarmonics3 .length ? 1 : 0;
+      for (const [degree, dimensions] of [1, 3, 5, 7] .entries ())
+      {
+         const coefs = Array .from ({ length: dimensions }, (_, coef) => this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .length) .every (length => length);
+
+         key += coefs ? 1 : 0;
+      }
 
       switch (this .node ._colorSpace .getValue ())
       {
@@ -631,16 +636,20 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          scales       .set (this .node ._scales       .getValue () .subarray (0, numSplats * 3));
          opacities    .set (this .node ._opacities    .getValue () .subarray (0, numSplats));
 
+         // Degree 0,1,2,3
+
          let offset = 0;
 
          for (const [degree, dimensions] of [1, 3, 5, 7] .entries ())
          {
-            const value = this .node .getField (`sphericalHarmonics${degree}`) .getValue ();
+            for (let coef = 0; coef < dimensions; ++ coef)
+            {
+               const value = this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .getValue ();
 
-            for (let d = 0; d < dimensions; ++ d)
-               sphericalHarmonics .set (value .subarray (numSplats * 3 * d, numSplats * 3 * (d + 1)), textureSize * 3 * (d + offset));
+               sphericalHarmonics .set (value .subarray (0, numSplats * 3), offset);
 
-            offset += dimensions;
+               offset += textureSize * 3;
+            }
          }
 
          gl .bindTexture (gl .TEXTURE_2D, this .positionsTexture);
@@ -787,14 +796,15 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Spherical Harmonics
 
-      if (this .node ._sphericalHarmonics1 .length)
-         options .push ("X3D_GAUSSIAN_SPLATTING_DEGREE_1");
+      for (const [degree, dimensions] of [1, 3, 5, 7] .entries ())
+      {
+         const coefs = Array .from ({ length: dimensions }, (_, coef) => this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .length) .every (length => length);
 
-      if (this .node ._sphericalHarmonics2 .length)
-         options .push ("X3D_GAUSSIAN_SPLATTING_DEGREE_2");
+         if (!coefs)
+            break;
 
-      if (this .node ._sphericalHarmonics3 .length)
-         options .push ("X3D_GAUSSIAN_SPLATTING_DEGREE_3");
+         options .push (`X3D_GAUSSIAN_SPLATTING_DEGREE_${degree}`);
+      }
 
       // Shader
 

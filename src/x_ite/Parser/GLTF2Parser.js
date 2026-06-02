@@ -1828,23 +1828,16 @@ function eventsProcessed ()
 
       // Degrees 0,1,2,3
 
-      const numSplats = gaussianSplats ._positions .length;
-
       for (const [degree, dimensions] of [1, 3, 5, 7] .entries ())
       {
-         const sh = Array .from ({ length: dimensions }, (_, coef) => attributes ?.[`KHR_gaussian_splatting:SH_DEGREE_${degree}_COEF_${coef}`] ?.array);
+         for (let coef = 0; coef < dimensions; ++ coef)
+         {
+            const
+               field = gaussianSplats .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`),
+               value = attributes ?.[`KHR_gaussian_splatting:SH_DEGREE_${degree}_COEF_${coef}`] ?.array ?? [ ];
 
-         if (!sh .every (array => array))
-            break;
-
-         const field = gaussianSplats .getField (`sphericalHarmonics${degree}`);
-
-         field .length = numSplats * dimensions;
-
-         const value = field .getValue ();
-
-         for (const [position, array] of sh .entries ())
-            value .set (array .subarray (0, numSplats * 3), numSplats * (3 * position));
+            field .setValue (value);
+         }
       }
 
       // Bounding Box

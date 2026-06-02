@@ -269,7 +269,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       const scene = this .getScene ();
 
-      if (this .sphericalHarmonics0)
+      if (this .sphericalHarmonics)
       {
          scene .addComponent (this .getBrowser () .getComponent ("X_ITE"));
 
@@ -291,10 +291,18 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          gaussianSplats .orientations        = orientations;
          gaussianSplats .scales              = this .scales;
          gaussianSplats .opacities           = this .opacities;
-         gaussianSplats .sphericalHarmonics0 = this .sphericalHarmonics0;
-         gaussianSplats .sphericalHarmonics1 = this .sphericalHarmonics1;
-         gaussianSplats .sphericalHarmonics2 = this .sphericalHarmonics2;
-         gaussianSplats .sphericalHarmonics3 = this .sphericalHarmonics3;
+
+         // Degrees 0,1,2,3
+
+         let i = 0;
+
+         for (const [degree, dimensions] of [1, 3, 5, 7] .entries ())
+         {
+            for (let coef = 0; coef < dimensions; ++ coef)
+            {
+               gaussianSplats [`sphericalHarmonicsDegree${degree}Coef${coef}`] = this .sphericalHarmonics [i ++];
+            }
+         }
 
          transform .rotation = new Rotation4 (1, 0, 0, Math .PI);
          transform .children .push (gaussianSplats);
@@ -556,13 +564,12 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
                sh .push (rx [s], ry [s], rz [s]);
          }
 
-         this .quaternions         = quaternions;
-         this .scales              = scales;
-         this .opacities           = opacities;
-         this .sphericalHarmonics0 = sh0;
-         this .sphericalHarmonics1 = shs [0] .concat (shs [1], shs [2]);
-         this .sphericalHarmonics2 = shs [3] .concat (shs [4], shs [5], shs [6], shs [7]);
-         this .sphericalHarmonics3 = shs [8] .concat (shs [9], shs [10], shs [11], shs [12], shs [13], shs [14]);
+         shs .unshift (sh0);
+
+         this .quaternions        = quaternions;
+         this .scales             = scales;
+         this .opacities          = opacities;
+         this .sphericalHarmonics = shs;
       }
    },
    getSphericalHarmonicsDegree (rest)
