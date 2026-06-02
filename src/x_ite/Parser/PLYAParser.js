@@ -287,10 +287,10 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          for (let i = 0; i < numQuaternions; i += 4)
             orientations .push (quaternions [i + 1], quaternions [i + 2], quaternions [i + 3], quaternions [i]);
 
-         gaussianSplats .positions           = this .points;
-         gaussianSplats .orientations        = orientations;
-         gaussianSplats .scales              = this .scales;
-         gaussianSplats .opacities           = this .opacities;
+         gaussianSplats .positions    = this .points;
+         gaussianSplats .orientations = orientations;
+         gaussianSplats .scales       = this .scales;
+         gaussianSplats .opacities    = this .opacities;
 
          // Degrees 0,1,2,3
 
