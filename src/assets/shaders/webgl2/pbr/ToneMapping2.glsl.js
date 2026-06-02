@@ -1,5 +1,4 @@
 export default () => /* glsl */ `
-
 // Original source code from:
 // https://github.com/KhronosGroup/glTF-Sample-Renderer/blob/main/source/Renderer/shaders/tonemapping.glsl
 
@@ -34,6 +33,17 @@ sRGBToLinear (const in vec4 color)
    return vec4 (sRGBToLinear (color .rgb), color .a);
 }
 
+#if defined (X3D_LINEAR_OUTPUT)
+vec3
+toneMap (in vec3 color)
+{
+   #if defined (X3D_COLORSPACE_SRGB)
+      color = sRGBToLinear (color);
+   #endif
+
+   return color;
+}
+#else
 #if defined (X3D_TONEMAP_ACES_NARKOWICZ)
 // ACES tone map (faster approximation)
 // see: https://knarkowicz.wordpress.com/2016/01/06/aces-filmic-tone-mapping-curve/
@@ -159,4 +169,5 @@ toneMap (in vec3 color)
 
    return color;
 }
+#endif
 `;
