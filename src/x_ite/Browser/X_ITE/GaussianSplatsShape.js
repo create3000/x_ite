@@ -418,6 +418,10 @@ import ShaderRegistry from "../Shaders/ShaderRegistry.js";
 ShaderRegistry .addVertex   ("GaussianSplats", vs);
 ShaderRegistry .addFragment ("GaussianSplats", fs);
 
+// Spherical Harmonics Counts
+
+const SH_DIMENSIONS = [1, 3, 5, 7];
+
 // Quad Geometry
 
 // p4 ------ p3
@@ -437,8 +441,6 @@ const QuadGeometry = new Float32Array ([
 ]);
 
 // Special X3DShapeNode for internal use.
-
-const SH_DIMENSIONS = [1, 3, 5, 7];
 
 function GaussianSplatsShape (executionContext, node)
 {
