@@ -625,7 +625,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
             orientations       = new Float32Array (textureSize * 4),
             scales             = new Float32Array (textureSize * 3),
             opacities          = new Float32Array (textureSize),
-            sphericalHarmonics = new Float32Array (textureSize * 16 * 3);
+            sphericalHarmonics = new Float32Array (textureSize * 3 * 16);
 
          positions    .set (this .node ._positions    .getValue () .subarray (0, numSplats * 3));
          orientations .set (this .node ._orientations .getValue () .subarray (0, numSplats * 4));
@@ -657,7 +657,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .R16F, textureWidth, textureWidth, 0, gl .RED, gl .FLOAT, opacities);
 
          gl .bindTexture (gl .TEXTURE_2D_ARRAY, this .sphericalHarmonicsTexture);
-         gl .texImage3D (gl .TEXTURE_2D_ARRAY, 0, gl .RGB16F, textureWidth, textureWidth, 4, 0, gl .RGB, gl .FLOAT, sphericalHarmonics);
+         gl .texImage3D (gl .TEXTURE_2D_ARRAY, 0, gl .RGB32F, textureWidth, textureWidth, 16, 0, gl .RGB, gl .FLOAT, sphericalHarmonics);
       }
 
       this .numSplats = numSplats;
