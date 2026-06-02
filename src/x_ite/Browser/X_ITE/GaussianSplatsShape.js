@@ -527,7 +527,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       for (const [degree, dimensions] of SH_DIMENSIONS .entries ())
       {
-         const coefs = Array .from ({ length: dimensions }, (_, coef) => this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .length) .every (length => length);
+         const coefs = Array .from ({ length: dimensions }, (_, coef) => this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .length) .some (length => length);
 
          key += coefs ? 1 : 0;
       }
@@ -802,7 +802,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       for (const [degree, dimensions] of SH_DIMENSIONS .entries ())
       {
-         const coefs = Array .from ({ length: dimensions }, (_, coef) => this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .length) .every (length => length);
+         const coefs = Array .from ({ length: dimensions }, (_, coef) => this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .length) .some (length => length);
 
          if (!coefs)
             break;
