@@ -41,10 +41,22 @@ The GaussianSplats node belongs to the [X_ITE](/x_ite/components/overview/#x_ite
 | MFVec4f | [in, out] | [orientations](#fields-orientations) | [ ] |
 | MFVec3f | [in, out] | [scales](#fields-scales) | [ ] |
 | MFFloat | [in, out] | [opacities](#fields-opacities) | [ ] |
-| MFVec3f | [in, out] | [sphericalHarmonics0](#fields-sphericalHarmonics0) | [ ] |
-| MFVec3f | [in, out] | [sphericalHarmonics1](#fields-sphericalHarmonics1) | [ ] |
-| MFVec3f | [in, out] | [sphericalHarmonics2](#fields-sphericalHarmonics2) | [ ] |
-| MFVec3f | [in, out] | [sphericalHarmonics3](#fields-sphericalHarmonics3) | [ ] |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree0Coef0](#fields-sphericalHarmonicsDegree0Coef0) |  |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree1Coef0](#fields-sphericalHarmonicsDegree1Coef0) |  |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree1Coef1](#fields-sphericalHarmonicsDegree1Coef1) |  |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree1Coef2](#fields-sphericalHarmonicsDegree1Coef2) |  |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree2Coef0](#fields-sphericalHarmonicsDegree2Coef0) |  |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree2Coef1](#fields-sphericalHarmonicsDegree2Coef1) |  |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree2Coef2](#fields-sphericalHarmonicsDegree2Coef2) |  |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree2Coef3](#fields-sphericalHarmonicsDegree2Coef3) |  |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree2Coef4](#fields-sphericalHarmonicsDegree2Coef4) |  |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree3Coef0](#fields-sphericalHarmonicsDegree3Coef0) |  |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree3Coef1](#fields-sphericalHarmonicsDegree3Coef1) |  |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree3Coef2](#fields-sphericalHarmonicsDegree3Coef2) |  |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree3Coef3](#fields-sphericalHarmonicsDegree3Coef3) |  |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree3Coef4](#fields-sphericalHarmonicsDegree3Coef4) |  |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree3Coef5](#fields-sphericalHarmonicsDegree3Coef5) |  |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree3Coef6](#fields-sphericalHarmonicsDegree3Coef6) |  |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
 | SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
@@ -88,25 +100,85 @@ Input/Output field *scales*.
 
 Input/Output field *opacities*.
 
-### MFVec3f [in, out] **sphericalHarmonics0** [ ] <small>(-∞,∞)</small>
-{: #fields-sphericalHarmonics0 }
+### MFVec3f [in, out] **sphericalHarmonicsDegree0Coef0** [ ] <small>(-∞,∞)</small>
+{: #fields-sphericalHarmonicsDegree0Coef0 }
 
-Input/Output field *sphericalHarmonics0*.
+Input/Output field *sphericalHarmonicsDegree0Coef0*.
 
-### MFVec3f [in, out] **sphericalHarmonics1** [ ] <small>(-∞,∞)</small>
-{: #fields-sphericalHarmonics1 }
+### MFVec3f [in, out] **sphericalHarmonicsDegree1Coef0** [ ] <small>(-∞,∞)</small>
+{: #fields-sphericalHarmonicsDegree1Coef0 }
 
-Input/Output field *sphericalHarmonics1*.
+Input/Output field *sphericalHarmonicsDegree1Coef0*.
 
-### MFVec3f [in, out] **sphericalHarmonics2** [ ] <small>(-∞,∞)</small>
-{: #fields-sphericalHarmonics2 }
+### MFVec3f [in, out] **sphericalHarmonicsDegree1Coef1** [ ] <small>(-∞,∞)</small>
+{: #fields-sphericalHarmonicsDegree1Coef1 }
 
-Input/Output field *sphericalHarmonics2*.
+Input/Output field *sphericalHarmonicsDegree1Coef1*.
 
-### MFVec3f [in, out] **sphericalHarmonics3** [ ] <small>(-∞,∞)</small>
-{: #fields-sphericalHarmonics3 }
+### MFVec3f [in, out] **sphericalHarmonicsDegree1Coef2** [ ] <small>(-∞,∞)</small>
+{: #fields-sphericalHarmonicsDegree1Coef2 }
 
-Input/Output field *sphericalHarmonics3*.
+Input/Output field *sphericalHarmonicsDegree1Coef2*.
+
+### MFVec3f [in, out] **sphericalHarmonicsDegree2Coef0** [ ] <small>(-∞,∞)</small>
+{: #fields-sphericalHarmonicsDegree2Coef0 }
+
+Input/Output field *sphericalHarmonicsDegree2Coef0*.
+
+### MFVec3f [in, out] **sphericalHarmonicsDegree2Coef1** [ ] <small>(-∞,∞)</small>
+{: #fields-sphericalHarmonicsDegree2Coef1 }
+
+Input/Output field *sphericalHarmonicsDegree2Coef1*.
+
+### MFVec3f [in, out] **sphericalHarmonicsDegree2Coef2** [ ] <small>(-∞,∞)</small>
+{: #fields-sphericalHarmonicsDegree2Coef2 }
+
+Input/Output field *sphericalHarmonicsDegree2Coef2*.
+
+### MFVec3f [in, out] **sphericalHarmonicsDegree2Coef3** [ ] <small>(-∞,∞)</small>
+{: #fields-sphericalHarmonicsDegree2Coef3 }
+
+Input/Output field *sphericalHarmonicsDegree2Coef3*.
+
+### MFVec3f [in, out] **sphericalHarmonicsDegree2Coef4** [ ] <small>(-∞,∞)</small>
+{: #fields-sphericalHarmonicsDegree2Coef4 }
+
+Input/Output field *sphericalHarmonicsDegree2Coef4*.
+
+### MFVec3f [in, out] **sphericalHarmonicsDegree3Coef0** [ ] <small>(-∞,∞)</small>
+{: #fields-sphericalHarmonicsDegree3Coef0 }
+
+Input/Output field *sphericalHarmonicsDegree3Coef0*.
+
+### MFVec3f [in, out] **sphericalHarmonicsDegree3Coef1** [ ] <small>(-∞,∞)</small>
+{: #fields-sphericalHarmonicsDegree3Coef1 }
+
+Input/Output field *sphericalHarmonicsDegree3Coef1*.
+
+### MFVec3f [in, out] **sphericalHarmonicsDegree3Coef2** [ ] <small>(-∞,∞)</small>
+{: #fields-sphericalHarmonicsDegree3Coef2 }
+
+Input/Output field *sphericalHarmonicsDegree3Coef2*.
+
+### MFVec3f [in, out] **sphericalHarmonicsDegree3Coef3** [ ] <small>(-∞,∞)</small>
+{: #fields-sphericalHarmonicsDegree3Coef3 }
+
+Input/Output field *sphericalHarmonicsDegree3Coef3*.
+
+### MFVec3f [in, out] **sphericalHarmonicsDegree3Coef4** [ ] <small>(-∞,∞)</small>
+{: #fields-sphericalHarmonicsDegree3Coef4 }
+
+Input/Output field *sphericalHarmonicsDegree3Coef4*.
+
+### MFVec3f [in, out] **sphericalHarmonicsDegree3Coef5** [ ] <small>(-∞,∞)</small>
+{: #fields-sphericalHarmonicsDegree3Coef5 }
+
+Input/Output field *sphericalHarmonicsDegree3Coef5*.
+
+### MFVec3f [in, out] **sphericalHarmonicsDegree3Coef6** [ ] <small>(-∞,∞)</small>
+{: #fields-sphericalHarmonicsDegree3Coef6 }
+
+Input/Output field *sphericalHarmonicsDegree3Coef6*.
 
 ### SFBool [in, out] **visible** TRUE
 {: #fields-visible }
@@ -149,6 +221,26 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
 - [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#BoundingBoxes)
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
+
+###  [] **sphericalHarmonics0** [ ] <small>(-∞,∞)</small>
+{: #fields-sphericalHarmonics0 }
+
+Input/Output field *sphericalHarmonics0*.
+
+###  [] **sphericalHarmonics1** [ ] <small>(-∞,∞)</small>
+{: #fields-sphericalHarmonics1 }
+
+Input/Output field *sphericalHarmonics1*.
+
+###  [] **sphericalHarmonics2** [ ] <small>(-∞,∞)</small>
+{: #fields-sphericalHarmonics2 }
+
+Input/Output field *sphericalHarmonics2*.
+
+###  [] **sphericalHarmonics3** [ ] <small>(-∞,∞)</small>
+{: #fields-sphericalHarmonics3 }
+
+Input/Output field *sphericalHarmonics3*.
 
 ## Example
 
