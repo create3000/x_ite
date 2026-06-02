@@ -102,7 +102,7 @@ async function init ({ positions, splatCount })
 
       ({ instance } = await WebAssembly .instantiateStreaming (response, { env: { memory: memBuf } }));
    }
-   catch (error)
+   catch
    {
       // Fallback: fetch as ArrayBuffer (needed when streaming isn't available).
 
