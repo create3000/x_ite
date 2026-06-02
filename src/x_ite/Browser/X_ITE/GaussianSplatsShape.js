@@ -771,12 +771,10 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       const
          browser = this .getBrowser (),
          gl      = browser .getContext (),
-         options = [ ];
+         options = browser .getDefaultMaterial () .getShaderOptions (this .geometryContext, renderContext)
+            .filter (option => !option .startsWith ("X3D_COLORSPACE_"));
 
-      // Render Object
-
-      if (browser .getRenderingProperty ("XRSession"))
-         options .push ("X3D_XR_SESSION");
+      // Color Space
 
       switch (this .node ._colorSpace .getValue ())
       {
@@ -785,65 +783,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
             break;
          default: // "SRGB_REC709_DISPLAY"
             options .push ("X3D_COLORSPACE_SRGB");
-            break;
-      }
-
-      switch (browser .getBrowserOption ("ToneMapping") .toUpperCase ())
-      {
-         default: // NONE
-            break;
-         case "ACES_NARKOWICZ":
-         case "ACES_HILL":
-         case "ACES_HILL_EXPOSURE_BOOST":
-         case "KHR_PBR_NEUTRAL":
-            options .push (`X3D_TONEMAP_${browser .getBrowserOption ("ToneMapping") .toUpperCase ()}`);
-            break;
-      }
-
-      const { renderObject, fogNode, localObjectsKeys } = renderContext;
-
-      switch (renderObject .getRenderPass ())
-      {
-         case RenderPass .VOLUME_SCATTER_KEY:
-         {
-            options .push ("X3D_VOLUME_SCATTER_PASS", "X3D_LINEAR_OUTPUT");
-            break;
-         }
-         case RenderPass .TRANSMISSION_KEY:
-         {
-            options .push ("X3D_TRANSMISSION_PASS", "X3D_LINEAR_OUTPUT");
-            break;
-         }
-      }
-
-      if (renderObject .getLogarithmicDepthBuffer ())
-         options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
-
-      if (renderObject .getRenderPass () === RenderPass .RENDER_KEY)
-      {
-         if (renderObject .getOrderIndependentTransparency ())
-            options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
-      }
-
-      // Clip Planes
-
-      const numClipPlanes = localObjectsKeys .reduce ((a, k) => a + (k === 0), 0);
-
-      if (numClipPlanes)
-      {
-         options .push ("X3D_CLIP_PLANES")
-         options .push (`X3D_NUM_CLIP_PLANES ${Math .min (numClipPlanes, browser .getMaxClipPlanes ())}`);
-      }
-
-      // Fog
-
-      switch (fogNode ?.getFogType ())
-      {
-         case 1:
-            options .push ("X3D_FOG", "X3D_FOG_LINEAR");
-            break;
-         case 2:
-            options .push ("X3D_FOG", "X3D_FOG_EXPONENTIAL");
             break;
       }
 
