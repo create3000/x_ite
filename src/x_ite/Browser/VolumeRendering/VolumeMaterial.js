@@ -1,5 +1,4 @@
 import UnlitMaterial from "../../Components/Shape/UnlitMaterial.js";
-import RenderPass    from "../../Rendering/RenderPass.js";
 import vs            from "./VolumeStyle.vs.js";
 import fs            from "./VolumeStyle.fs.js";
 
@@ -36,10 +35,8 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, UnlitMaterial
    createShader (key, geometryContext, renderContext)
    {
       const
-         browser = this .getBrowser (),
-         options = this .getShaderOptions (geometryContext, renderContext);
-
-      const shaderNode = this .volumeDataNode .createShader (options, vs, fs);
+         options    = this .getShaderOptions (geometryContext, renderContext),
+         shaderNode = this .volumeDataNode .createShader (options, vs, fs);
 
       this .volumeShaderNodes .set (key, shaderNode);
 
