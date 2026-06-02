@@ -687,8 +687,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       // Setup shader.
 
       shaderNode .enable (gl);
-
-      shaderNode .fogNode = null;
+      shaderNode .hasFog (null);
 
       // Uniforms
 
