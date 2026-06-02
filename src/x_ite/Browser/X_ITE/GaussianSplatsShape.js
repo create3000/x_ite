@@ -47,7 +47,7 @@ out vec4 color;
 out vec2 texCoord;
 out vec3 conic;
 
-#if defined (X3D_CLIP_PLANES)
+#if defined (X3D_CLIP_PLANES) || defined (X3D_FOG)
    out vec3 vertex;
 #endif
 
@@ -328,7 +328,7 @@ main ()
    texCoord    = x3d_Vertex .xy * quadPixelSize;
    gl_Position = clipSplatCenter;
 
-   #if defined (X3D_CLIP_PLANES)
+   #if defined (X3D_CLIP_PLANES) || defined (X3D_FOG)
       vec4 invClipSplatCenter = inverse (x3d_ProjectionMatrix) * clipSplatCenter;
 
       vertex = invClipSplatCenter .xyz / invClipSplatCenter .w;
@@ -360,7 +360,7 @@ in vec4 color;
 in vec2 texCoord;
 in vec3 conic;
 
-#if defined (X3D_CLIP_PLANES)
+#if defined (X3D_CLIP_PLANES) || defined (X3D_FOG)
    in vec3 vertex;
 #endif
 
@@ -688,14 +688,17 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       shaderNode .enable (gl);
 
+      shaderNode .fogNode = null;
+
       // Uniforms
 
-      const { renderObject, modelViewMatrix, localObjects } = renderContext;
+      const { renderObject, modelViewMatrix, localObjects, fogNode } = renderContext;
       const projectionMatrixArray = renderObject .getProjectionMatrixArray ();
 
       // Set ClipPlane nodes.
 
       shaderNode .setClipPlanes (gl, localObjects, renderObject);
+      fogNode ?.setShaderUniforms (gl, shaderNode);
 
       // Set matrices.
 
