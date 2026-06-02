@@ -2709,7 +2709,7 @@ function eventsProcessed ()
                return;
             }
 
-            // Proceed with next case:
+            // falls through
          }
          default:
          {

@@ -69,7 +69,7 @@ Object .assign (Object .setPrototypeOf (Viewport .prototype, X3DViewportNode .pr
                      return;
                }
 
-               // Proceed with next case:
+               // falls through
             }
             default:
             {
