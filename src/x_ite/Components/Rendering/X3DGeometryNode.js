@@ -540,50 +540,63 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       this .normals        .length = 0;
       this .vertices       .length = 0;
    },
-   updateBBox: (() =>
+   updateBBox ()
    {
-      const point = new Vector3 ();
+      // Determine bbox.
 
-      return function ()
+      const
+         vertices    = this .vertices .getValue (),
+         numVertices = vertices .length,
+         min         = this .min,
+         max         = this .max;
+
+      if (numVertices)
       {
-         // Determine bbox.
-
-         const
-            vertices    = this .vertices .getValue (),
-            numVertices = vertices .length,
-            min         = this .min,
-            max         = this .max;
-
-         if (numVertices)
+         if (min .x === Number .POSITIVE_INFINITY)
          {
-            if (min .x === Number .POSITIVE_INFINITY)
+            let minX = Number .POSITIVE_INFINITY;
+            let minY = Number .POSITIVE_INFINITY;
+            let minZ = Number .POSITIVE_INFINITY;
+
+            let maxX = Number .NEGATIVE_INFINITY;
+            let maxY = Number .NEGATIVE_INFINITY;
+            let maxZ = Number .NEGATIVE_INFINITY;
+
+            for (let i = 0; i < numVertices; i += 4)
             {
-               for (let i = 0; i < numVertices; i += 4)
-               {
-                  const { [i]: v1, [i + 1]: v2, [i + 2]: v3 } = vertices;
+               const
+                  x = vertices [i],
+                  y = vertices [i + 1],
+                  z = vertices [i + 2];
 
-                  point .set (v1, v2, v3);
+               if (x < minX) minX = x;
+               if (y < minY) minY = y;
+               if (z < minZ) minZ = z;
 
-                  min .min (point);
-                  max .max (point);
-               }
+               if (x > maxX) maxX = x;
+               if (y > maxY) maxY = y;
+               if (z > maxZ) maxZ = z;
             }
 
-            this .bbox .setExtents (min, max);
+            this .bbox .setExtents (min .set (minX, minY, minZ), max .set (maxX, maxY, maxZ));
          }
          else
          {
-            this .bbox .setExtents (min .set (0), max .set (0));
+            this .bbox .setExtents (min, max);
          }
+      }
+      else
+      {
+         this .bbox .setExtents (min .set (0), max .set (0));
+      }
 
-         for (let i = 0; i < 5; ++ i)
-            this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
+      for (let i = 0; i < 5; ++ i)
+         this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
 
-         this ._bbox_changed .addEvent ();
+      this ._bbox_changed .addEvent ();
 
-         this .getExecutionContext () ._bbox_changed = Date .now () / 1000;
-      };
-   })(),
+      this .getExecutionContext () ._bbox_changed = Date .now () / 1000;
+   },
    transfer ()
    {
       const gl = this .getBrowser () .getContext ();
