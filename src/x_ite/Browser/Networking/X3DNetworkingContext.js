@@ -116,6 +116,7 @@ Object .assign (X3DNetworkingContext .prototype,
    removeLoadingObject (object)
    {
       this [_loadingObjects] .delete (object);
+      this [_loadFractions]  .delete (object);
 
       this ._loadCount = this [_loadingObjects] .size;
    },
@@ -139,6 +140,9 @@ Object .assign (X3DNetworkingContext .prototype,
    {
       this [_loadFractions] .set (object, fractions);
       this [_set_loadCount] ();
+
+      if (fractions === 1)
+         this [_loadFractions] .delete (object);
    },
    [_set_loadCount] ()
    {
