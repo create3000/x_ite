@@ -2,6 +2,7 @@ import X3DParser    from "./X3DParser.js";
 import X3DOptimizer from "./X3DOptimizer.js";
 import Fields       from "../Fields.js";
 import X3DConstants from "../Base/X3DConstants.js";
+import FileLoader   from "../InputOutput/FileLoader.js";
 import URLs         from "../Browser/Networking/URLs.js";
 import Layer        from "../Components/Layering/Layer.js";
 import TraverseType from "../Rendering/TraverseType.js";
@@ -599,13 +600,15 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!buffer .uri)
          return this .buffers [i];
 
-      const
-         url         = new URL (buffer .uri, this .getScene () .getBaseURL ()),
-         response    = await fetch (url),
-         blob        = await response .blob (),
-         arrayBuffer = await blob .arrayBuffer ();
+      this .getBrowser () .addLoadingObject (buffer);
 
-      return $.ungzip (arrayBuffer);
+      const
+         url         = new Fields .MFString (new URL (buffer .uri, this .getScene () .getBaseURL ())),
+         arrayBuffer = await FileLoader .loadDocument (this .getBrowser () .getWorld (), url);
+
+      this .getBrowser () .removeLoadingObject (buffer);
+
+      return arrayBuffer;
    },
    bufferViewsArray (bufferViews)
    {

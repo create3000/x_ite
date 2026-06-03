@@ -27,6 +27,16 @@ function FileLoader (node, cacheScene = false)
 Object .assign (FileLoader,
 {
    sceneCache: new Map (),
+   loadDocument (node, url)
+   {
+      return new Promise ((resolve, reject) => new FileLoader (node) .loadDocument (url, (data, url) =>
+      {
+         if (data)
+            resolve (data, url);
+         else
+            reject ();
+      }));
+   }
 });
 
 Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .prototype),
