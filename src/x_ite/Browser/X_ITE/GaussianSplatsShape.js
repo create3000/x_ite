@@ -485,6 +485,12 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       this .sphericalHarmonicsTexture = this .createTexture (gl .TEXTURE_2D_ARRAY);
       this .opacitiesTexture          = this .createTexture ();
 
+      this .positionsTextureUnit          = browser .popTextureUnit ();
+      this .orientationsTextureUnit       = browser .popTextureUnit ();
+      this .scalesTextureUnit             = browser .popTextureUnit ();
+      this .sphericalHarmonicsTextureUnit = browser .popTextureUnit ();
+      this .opacitiesTextureUnit          = browser .popTextureUnit ();
+
       browser .resetTextureUnits ();
 
       // Fields
@@ -592,9 +598,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          texture = gl .createTexture ();
 
       target ??= gl .TEXTURE_2D;
-
-      if (texture instanceof Object) // Needed for x_ite-node.
-         texture .textureUnit = browser .popTextureUnit ();
 
       gl .bindTexture (target, texture);
 
@@ -727,19 +730,19 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Set textures.
 
-      gl .activeTexture (gl .TEXTURE0 + this .positionsTexture .textureUnit);
+      gl .activeTexture (gl .TEXTURE0 + this .positionsTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .positionsTexture);
 
-      gl .activeTexture (gl .TEXTURE0 + this .orientationsTexture .textureUnit);
+      gl .activeTexture (gl .TEXTURE0 + this .orientationsTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .orientationsTexture);
 
-      gl .activeTexture (gl .TEXTURE0 + this .scalesTexture .textureUnit);
+      gl .activeTexture (gl .TEXTURE0 + this .scalesTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .scalesTexture);
 
-      gl .activeTexture (gl .TEXTURE0 + this .opacitiesTexture .textureUnit);
+      gl .activeTexture (gl .TEXTURE0 + this .opacitiesTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D, this .opacitiesTexture);
 
-      gl .activeTexture (gl .TEXTURE0 + this .sphericalHarmonicsTexture .textureUnit);
+      gl .activeTexture (gl .TEXTURE0 + this .sphericalHarmonicsTextureUnit);
       gl .bindTexture (gl .TEXTURE_2D_ARRAY, this .sphericalHarmonicsTexture);
 
       // Setup vertex attributes.
@@ -834,11 +837,11 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       shaderNode .enable (gl);
 
-      gl .uniform1i (shaderNode .x3d_PositionsTexture,          this .positionsTexture          .textureUnit);
-      gl .uniform1i (shaderNode .x3d_OrientationsTexture,       this .orientationsTexture       .textureUnit);
-      gl .uniform1i (shaderNode .x3d_ScalesTexture,             this .scalesTexture             .textureUnit);
-      gl .uniform1i (shaderNode .x3d_OpacitiesTexture,          this .opacitiesTexture          .textureUnit);
-      gl .uniform1i (shaderNode .x3d_SphericalHarmonicsTexture, this .sphericalHarmonicsTexture .textureUnit);
+      gl .uniform1i (shaderNode .x3d_PositionsTexture,          this .positionsTextureUnit);
+      gl .uniform1i (shaderNode .x3d_OrientationsTexture,       this .orientationsTextureUnit);
+      gl .uniform1i (shaderNode .x3d_ScalesTexture,             this .scalesTextureUnit);
+      gl .uniform1i (shaderNode .x3d_OpacitiesTexture,          this .opacitiesTextureUnit);
+      gl .uniform1i (shaderNode .x3d_SphericalHarmonicsTexture, this .sphericalHarmonicsTextureUnit);
 
       return shaderNode;
    },
