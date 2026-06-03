@@ -456,20 +456,18 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       {
          // console .log (event .data .type);
 
+         this .sortPending = false;
+
          switch (event .data .type)
          {
             case "ready":
             {
-               this .sortPending = false;
-
                this .sortModelViewMatrix .fill (0);
                browser .addBrowserEvent ();
                break;
             }
             case "sorted":
             {
-               this .sortPending = false;
-
                gl .bindBuffer (gl .ARRAY_BUFFER, this .splatsIndexBuffer);
                gl .bufferData (gl .ARRAY_BUFFER, event .data .indices, gl .DYNAMIC_DRAW);
 
@@ -478,8 +476,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
             }
             case "error":
             {
-               this .sortPending = false;
-
                console .error ("Sort worker error:", event .data .message);
                break;
             }
