@@ -64,7 +64,7 @@ Object .assign (Object .setPrototypeOf (FontLibrary .prototype, X3DChildNode .pr
 
       for (const fileURL of fileURLs)
       {
-         font = await browser .loadFont (fileURL, this .getCache ());
+         font = await browser .loadFont (fileURL, this);
 
          if (font)
             break;
