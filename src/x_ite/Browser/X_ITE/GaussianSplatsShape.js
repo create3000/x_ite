@@ -14,11 +14,11 @@ import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 // Register shaders.
 
 import ShaderRegistry from "../Shaders/ShaderRegistry.js";
-import vs             from "./GaussianSplats.vs.js";
-import fs             from "./GaussianSplats.fs.js";
+import VertexShader   from "./GaussianSplats.vs.js";
+import FragmentShader from "./GaussianSplats.fs.js";
 
-ShaderRegistry .addVertex   ("GaussianSplats", vs);
-ShaderRegistry .addFragment ("GaussianSplats", fs);
+ShaderRegistry .addVertex   ("GaussianSplats", VertexShader);
+ShaderRegistry .addFragment ("GaussianSplats", FragmentShader);
 
 // Spherical Harmonics Counts
 
