@@ -9,7 +9,7 @@ const
    _loadingDisplay = Symbol (),
    _loadingTotal   = Symbol (),
    _loadingObjects = Symbol (),
-   _loading        = Symbol (),
+   _browserLoading = Symbol (),
    _set_loadCount  = Symbol (),
    _loadFractions  = Symbol (),
    _defaultScene   = Symbol ();
@@ -30,7 +30,7 @@ function X3DNetworkingContext ()
    this .addChildObjects (X3DConstants .outputOnly, "loadCount", new Fields .SFInt32 ());
 
    this [_baseURL]        = getBaseURI (this .getElement ());
-   this [_loading]        = false;
+   this [_browserLoading] = false;
    this [_loadingDisplay] = 0;
    this [_loadingTotal]   = 0;
    this [_loadingObjects] = new Set ();
@@ -65,11 +65,11 @@ Object .assign (X3DNetworkingContext .prototype,
    },
    getBrowserLoading ()
    {
-      return this [_loading];
+      return this [_browserLoading];
    },
    setBrowserLoading (value)
    {
-      this [_loading] = value;
+      this [_browserLoading] = value;
 
       if (value)
       {
@@ -94,7 +94,7 @@ Object .assign (X3DNetworkingContext .prototype,
             // Defer until promises are resolved.
             setTimeout (() =>
             {
-               if (!this [_loading])
+               if (!this [_browserLoading])
                   this .getSplashScreen () .addClass ("x_ite-private-fade-out-splash-screen");
             });
          }
@@ -137,6 +137,9 @@ Object .assign (X3DNetworkingContext .prototype,
    },
    setLoadingFractions (object, fractions)
    {
+      if (!this [_browserLoading])
+         return;
+
       // Let fractions go from 1 to 0.
       this [_loadFractions] .set (object, 1 - fractions);
       this [_set_loadCount] ();
@@ -147,7 +150,7 @@ Object .assign (X3DNetworkingContext .prototype,
 
       let string;
 
-      if (this ._loadCount .getValue () || this [_loading])
+      if (this ._loadCount .getValue () || this [_browserLoading])
       {
          string = ((loadingDisplay || 1) === 1
             ? _ ("Loading %1 file")
@@ -160,7 +163,7 @@ Object .assign (X3DNetworkingContext .prototype,
 
       this .updateCursor ();
 
-      if (this [_loading])
+      if (this [_browserLoading])
       {
          const live = Array .from (this [_loadFractions] .values ())
             .reduce ((p, c) => p + c, 0);
