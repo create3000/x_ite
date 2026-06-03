@@ -600,13 +600,13 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!buffer .uri)
          return this .buffers [i];
 
-      this .getBrowser () .addLoadingObject (buffer);
+      this .getScene () .addLoadingObject (buffer);
 
       const
          url         = new Fields .MFString (new URL (buffer .uri, this .getScene () .getBaseURL ())),
          arrayBuffer = await FileLoader .loadDocument (this .getBrowser () .getWorld (), url);
 
-      this .getBrowser () .removeLoadingObject (buffer);
+      this .getScene () .removeLoadingObject (buffer);
 
       return arrayBuffer;
    },
