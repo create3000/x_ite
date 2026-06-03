@@ -131,7 +131,7 @@ Object .assign (X3DNetworkingContext .prototype,
       this [_loadingTotal]   = 0;
 
       this [_loadingObjects] .clear ();
-      this [_loadFractions] .clear ();
+      this [_loadFractions]  .clear ();
 
       for (const object of this .getPrivateScene () .getLoadingObjects ())
          this .addLoadingObject (object);
@@ -162,11 +162,11 @@ Object .assign (X3DNetworkingContext .prototype,
 
       if (this [_loading])
       {
-         const live = Array .from (this [_loadFractions] .values ())
+         const live = this [_loadFractions] .size - Array .from (this [_loadFractions] .values ())
             .reduce ((p, c) => p + c, 0);
 
-         // Let the live loading fraction be half of the count.
-         const fractions = 1 - (this ._loadCount .getValue () - live / 2) / this [_loadingTotal];
+         // Let the live loading fractions be half of the count.
+         const fractions = 1 - (this ._loadCount .getValue () + live) / (this [_loadingTotal] + this [_loadFractions] .size);
 
          this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (string);
          this .getSplashScreen () .find (".x_ite-private-progressbar div")
