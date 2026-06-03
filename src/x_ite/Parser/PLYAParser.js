@@ -444,6 +444,8 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    },
    parseVertices ({ count, properties })
    {
+      // console .time ("vertices");
+
       // Geometry
 
       const
@@ -459,10 +461,8 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          quaternions = [ ],
          opacities   = [ ],
          sh0         = [ ], // Degree 0
-         rest        = Array .from ({ length: 45 }, () => [ ]),
+         rest        = Array .from ({ length: 45 }, () => [ ]), // Degree 1,2,3
          restIndex   = new Map (Array .from ({ length: 45 }, (v, i) => [`f_rest_${i}`, i]));
-
-      // console .time ("vertices")
 
       for (let i = 0; i < count; ++ i)
       {
@@ -528,7 +528,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          }
       }
 
-      // console .timeEnd ("vertices")
+      // console .timeEnd ("vertices");
 
       // Geometric properties
 
