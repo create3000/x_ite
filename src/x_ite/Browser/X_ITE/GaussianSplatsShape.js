@@ -201,6 +201,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          gl        = browser .getContext (),
          numSplats = this .node ._positions .length;
 
+      this .numSplats = numSplats;
+
       // Indices
 
       gl .bindBuffer (gl .ARRAY_BUFFER, this .splatsIndexBuffer);
@@ -256,8 +258,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          gl .bindTexture (gl .TEXTURE_2D_ARRAY, this .sphericalHarmonicsTexture);
          gl .texImage3D (gl .TEXTURE_2D_ARRAY, 0, gl .RGB16F, textureWidth, textureWidth, 16, 0, gl .RGB, gl .FLOAT, sphericalHarmonics);
       }
-
-      this .numSplats = numSplats;
 
       // Sort Worker
 
