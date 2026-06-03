@@ -33,8 +33,8 @@ Object .assign (FileLoader,
       {
          if (data)
             resolve (data, url);
-         else
-            reject ();
+
+         reject ();
       }));
    }
 });
