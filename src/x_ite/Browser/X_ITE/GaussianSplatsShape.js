@@ -23,7 +23,7 @@ ShaderRegistry .addFragment ("GaussianSplats", fs);
 
 // Spherical Harmonics Counts
 
-const SH_DIMENSIONS = [1, 3, 5, 7];
+const SH_COEFS = [1, 3, 5, 7];
 
 // Quad Geometry
 
@@ -104,7 +104,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       this .node ._scales       .addInterest ("requestRebuild", this);
       this .node ._opacities    .addInterest ("requestRebuild", this);
 
-      for (const [degree, coefs] of SH_DIMENSIONS .entries ())
+      for (const [degree, coefs] of SH_COEFS .entries ())
       {
          for (let coef = 0; coef < coefs; ++ coef)
             this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .addInterest ("requestRebuild", this);
@@ -134,7 +134,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
    {
       let key = "GS";
 
-      for (const [degree, coefs] of SH_DIMENSIONS .entries ())
+      for (const [degree, coefs] of SH_COEFS .entries ())
       {
          const filled = Array .from ({ length: coefs }, (_, coef) => this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .length) .some (length => length);
 
@@ -250,7 +250,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
          let offset = 0;
 
-         for (const [degree, coefs] of SH_DIMENSIONS .entries ())
+         for (const [degree, coefs] of SH_COEFS .entries ())
          {
             for (let coef = 0; coef < coefs; ++ coef)
             {
@@ -406,7 +406,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Spherical Harmonics
 
-      for (const [degree, coefs] of SH_DIMENSIONS .entries ())
+      for (const [degree, coefs] of SH_COEFS .entries ())
       {
          const filled = Array .from ({ length: coefs }, (_, coef) => this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .length) .some (length => length);
 
