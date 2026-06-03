@@ -68,12 +68,12 @@ async function init ({ positions, splatCount })
       posOp      = new Float32Array (splatCount * 4),
       numPositions = splatCount * 3;
 
-   for (let p = 0, a = 0; p < numPositions; p += 3, a += 4)
+   for (let p = 0, a = 0; p < numPositions;)
    {
-      posOp [a + 0] = positions [p + 0];
-      posOp [a + 1] = positions [p + 1];
-      posOp [a + 2] = positions [p + 2];
-      posOp [a + 3] = 1.0;
+      posOp [a ++] = positions [p ++];
+      posOp [a ++] = positions [p ++];
+      posOp [a ++] = positions [p ++];
+      posOp [a ++] = 1.0;
    }
 
    N = splatCount;
