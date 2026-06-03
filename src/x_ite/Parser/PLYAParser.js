@@ -299,9 +299,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          for (const [degree, coefs] of [1, 3, 5, 7] .entries ())
          {
             for (let coef = 0; coef < coefs; ++ coef)
-            {
                gaussianSplats [`sphericalHarmonicsDegree${degree}Coef${coef}`] = this .sphericalHarmonics [i ++];
-            }
          }
 
          transform .rotation = new Rotation4 (1, 0, 0, Math .PI);
