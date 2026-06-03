@@ -272,13 +272,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
    { },
    display (gl, renderContext)
    {
-      const
-         viewport   = renderContext .viewport,
-         shaderNode = this .getShader (renderContext);
-
-      // Set viewport.
-
-      gl .viewport (... viewport);
+      const shaderNode = this .getShader (renderContext);
 
       // Setup shader.
 
@@ -287,7 +281,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Uniforms
 
-      const { renderObject, modelViewMatrix, localObjects, fogNode } = renderContext;
+      const { renderObject, viewport, modelViewMatrix, localObjects, fogNode } = renderContext;
       const projectionMatrixArray = renderObject .getProjectionMatrixArray ();
 
       // Set ClipPlane nodes.
@@ -295,8 +289,9 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       shaderNode .setClipPlanes (gl, localObjects, renderObject);
       fogNode ?.setShaderUniforms (gl, shaderNode);
 
-      // Set matrices.
+      // Set viewport and matrices.
 
+      gl .viewport (... viewport);
       gl .uniform4iv (shaderNode .x3d_Viewport, renderObject .getViewportArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
       gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,        false, renderObject .getEyeMatrixArray ());
