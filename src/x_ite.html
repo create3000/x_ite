@@ -135,10 +135,10 @@ bookmarks .setup (X_ITE_EXAMPLES, X_ITE_TESTS);
 
 const a = $(`a[href="${localStorage ["Bookmarks.url"]}"]`);
 
-// if (a .length)
-//    a .trigger ("click");
-// else
-//    loadURL (localStorage ["Bookmarks.url"] || "https://create3000.github.io/media/x_ite/info/info.x3d");
+if (a .length)
+   a .trigger ("click");
+else
+   loadURL (localStorage ["Bookmarks.url"] || "https://create3000.github.io/media/x_ite/info/info.x3d");
 
 //
 
