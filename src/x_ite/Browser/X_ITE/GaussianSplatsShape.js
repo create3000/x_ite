@@ -478,9 +478,9 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
             }
             case "error":
             {
-               console .error ("Sort worker error:", event .data .message);
-
                this .sortPending = false;
+
+               console .error ("Sort worker error:", event .data .message);
                break;
             }
          }
@@ -519,6 +519,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          type: "sort",
          viewMatrix: this .sortModelViewMatrix,
       });
+
+      this .sortPending = true;
    },
 });
 
