@@ -158,13 +158,9 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       const bbox = this .bbox;
 
       if (this .isDefaultBBoxSize ())
-      {
          bbox .setArray (this .node ._positions .shrinkToFit (), 3);
-      }
       else
-      {
          bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
-      }
 
       this .getBBoxSize ()   .assign (bbox .size);
       this .getBBoxCenter () .assign (bbox .center);
