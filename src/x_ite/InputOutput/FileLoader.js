@@ -258,10 +258,9 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       // Load URL async:
 
       const
-         options       = { cache: this .node .getCache () ? "default" : "reload", signal: this .controller .signal },
-         response      = this .checkResponse (await fetch (this .URL, options)),
-         mimeType      = response .headers .get ("Content-Type") ?.replace (/;.*$/, ""),
-         contentLength = parseInt (response .headers .get ("x-file-size")) || parseInt (response .headers .get ("content-length"));
+         options  = { cache: this .node .getCache () ? "default" : "reload", signal: this .controller .signal },
+         response = this .checkResponse (await fetch (this .URL, options)),
+         mimeType = response .headers .get ("Content-Type") ?.replace (/;.*$/, "");
 
       if (this .foreign)
       {
@@ -270,6 +269,8 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          if (foreignMimeType .has (mimeType))
             return this .foreign (this .URL .href, this .target);
       }
+
+      const contentLength = +response .headers .get ("x-file-size") || +response .headers .get ("content-length");
 
       let arrayBuffer;
 
