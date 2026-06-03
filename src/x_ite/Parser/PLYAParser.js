@@ -296,9 +296,9 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
          let i = 0;
 
-         for (const [degree, dimensions] of [1, 3, 5, 7] .entries ())
+         for (const [degree, coefs] of [1, 3, 5, 7] .entries ())
          {
-            for (let coef = 0; coef < dimensions; ++ coef)
+            for (let coef = 0; coef < coefs; ++ coef)
             {
                gaussianSplats [`sphericalHarmonicsDegree${degree}Coef${coef}`] = this .sphericalHarmonics [i ++];
             }
