@@ -1828,9 +1828,9 @@ function eventsProcessed ()
 
       // Degrees 0,1,2,3
 
-      for (const [degree, dimensions] of [1, 3, 5, 7] .entries ())
+      for (const [degree, coefs] of [1, 3, 5, 7] .entries ())
       {
-         for (let coef = 0; coef < dimensions; ++ coef)
+         for (let coef = 0; coef < coefs; ++ coef)
          {
             const
                field = gaussianSplats .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`),
