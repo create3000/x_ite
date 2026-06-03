@@ -9,7 +9,6 @@ import GeometryContext      from "../Rendering/GeometryContext.js";
 import GeometryType         from "../Shape/GeometryType.js";
 import AlphaMode            from "../Shape/AlphaMode.js";
 import VertexArray          from "../../Rendering/VertexArray.js";
-import Vector3              from "../../../standard/Math/Numbers/Vector3.js";
 import Matrix4              from "../../../standard/Math/Numbers/Matrix4.js";
 
 // Register shaders.
