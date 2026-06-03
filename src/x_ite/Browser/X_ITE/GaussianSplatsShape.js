@@ -17,8 +17,8 @@ import ShaderRegistry from "../Shaders/ShaderRegistry.js";
 import VertexShader   from "./GaussianSplats.vs.js";
 import FragmentShader from "./GaussianSplats.fs.js";
 
-ShaderRegistry .addVertex   ("GaussianSplats", VertexShader);
-ShaderRegistry .addFragment ("GaussianSplats", FragmentShader);
+ShaderRegistry .addVertexShader   ("GaussianSplats", VertexShader);
+ShaderRegistry .addFragmentShader ("GaussianSplats", FragmentShader);
 
 // Spherical Harmonics Counts
 
