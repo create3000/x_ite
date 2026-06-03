@@ -111,6 +111,66 @@ Object .assign (Box3 .prototype,
          max .max (p1, p2, p3, p4);
       };
    })(),
+   setPoints: (() =>
+   {
+      const
+         min = new Vector3 (),
+         max = new Vector3 ();
+
+      return function  (points)
+      {
+            min .set (Number .POSITIVE_INFINITY),
+            max .set (Number .NEGATIVE_INFINITY);
+
+         for (const point of points)
+         {
+            min .min (point);
+            max .max (point);
+         }
+
+         return this .setExtents (min, max);
+      };
+   })(),
+   setArray: (() =>
+   {
+      const
+         min = new Vector3 (),
+         max = new Vector3 ();
+
+      return function (array, stride = 3)
+      {
+         const length = array .length;
+
+         if (!length)
+            return this .set ();
+
+         let minX = Number .POSITIVE_INFINITY;
+         let minY = Number .POSITIVE_INFINITY;
+         let minZ = Number .POSITIVE_INFINITY;
+
+         let maxX = Number .NEGATIVE_INFINITY;
+         let maxY = Number .NEGATIVE_INFINITY;
+         let maxZ = Number .NEGATIVE_INFINITY;
+
+         for (let i = 0; i < length; i += stride)
+         {
+            const
+               x = array [i],
+               y = array [i + 1],
+               z = array [i + 2];
+
+            if (x < minX) minX = x;
+            if (y < minY) minY = y;
+            if (z < minZ) minZ = z;
+
+            if (x > maxX) maxX = x;
+            if (y > maxY) maxY = y;
+            if (z > maxZ) maxZ = z;
+         }
+
+         return this .setExtents (min .set (minX, minY, minZ), max .set (maxX, maxY, maxZ));
+      };
+   })(),
    getPoints: (() =>
    {
       const
@@ -475,17 +535,11 @@ Object .assign (Box3,
    },
    fromPoints (points)
    {
-      const
-         min = new Vector3 (Number .POSITIVE_INFINITY),
-         max = new Vector3 (Number .NEGATIVE_INFINITY);
-
-      for (const point of points)
-      {
-         min .min (point);
-         max .max (point);
-      }
-
-      return new Box3 () .setExtents (min, max);
+      return new Box3 () .setPoints (points);
+   },
+   fromArray (array, stride = 3)
+   {
+      return new Box3 () .setArray (array, stride);
    },
 });
 

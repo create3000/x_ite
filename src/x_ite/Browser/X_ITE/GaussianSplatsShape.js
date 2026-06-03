@@ -159,38 +159,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       if (this .isDefaultBBoxSize ())
       {
-         const
-            positions    = this .node ._positions .getValue (),
-            numPositions = this .node ._positions .length * 3;
-
-         let minX = Number .POSITIVE_INFINITY;
-         let minY = Number .POSITIVE_INFINITY;
-         let minZ = Number .POSITIVE_INFINITY;
-
-         let maxX = Number .NEGATIVE_INFINITY;
-         let maxY = Number .NEGATIVE_INFINITY;
-         let maxZ = Number .NEGATIVE_INFINITY;
-
-         for (let i = 0; i < numPositions; i += 3)
-         {
-            const
-               x = positions [i],
-               y = positions [i + 1],
-               z = positions [i + 2];
-
-            if (x < minX) minX = x;
-            if (y < minY) minY = y;
-            if (z < minZ) minZ = z;
-
-            if (x > maxX) maxX = x;
-            if (y > maxY) maxY = y;
-            if (z > maxZ) maxZ = z;
-         }
-
-         if (numPositions)
-            bbox .setExtents (new Vector3 (minX, minY, minZ), new Vector3 (maxX, maxY, maxZ));
-         else
-            bbox .set ();
+         bbox .setArray (this .node ._positions .shrinkToFit (), 3);
       }
       else
       {

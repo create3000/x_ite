@@ -554,31 +554,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       {
          if (min .x === Number .POSITIVE_INFINITY)
          {
-            let minX = Number .POSITIVE_INFINITY;
-            let minY = Number .POSITIVE_INFINITY;
-            let minZ = Number .POSITIVE_INFINITY;
-
-            let maxX = Number .NEGATIVE_INFINITY;
-            let maxY = Number .NEGATIVE_INFINITY;
-            let maxZ = Number .NEGATIVE_INFINITY;
-
-            for (let i = 0; i < numVertices; i += 4)
-            {
-               const
-                  x = vertices [i],
-                  y = vertices [i + 1],
-                  z = vertices [i + 2];
-
-               if (x < minX) minX = x;
-               if (y < minY) minY = y;
-               if (z < minZ) minZ = z;
-
-               if (x > maxX) maxX = x;
-               if (y > maxY) maxY = y;
-               if (z > maxZ) maxZ = z;
-            }
-
-            this .bbox .setExtents (min .set (minX, minY, minZ), max .set (maxX, maxY, maxZ));
+            this .bbox .setArray (vertices, 4) .getExtents (min, max);
          }
          else
          {
