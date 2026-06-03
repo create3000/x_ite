@@ -175,7 +175,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
          if (result && result [3] !== "base64")
          {
-            // const mimeType = result [1] || "text/plain"";
+            // const mimeType = result [1] || "text/plain"";
 
             let data = url .substring (result [0] .length);
 
@@ -248,9 +248,10 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       // Load URL async:
 
       const
-         options  = { cache: this .node .getCache () ? "default" : "reload", signal: this .controller .signal },
-         response = this .checkResponse (await fetch (this .URL, options)),
-         mimeType = response .headers .get ("content-type") ?.replace (/;.*$/, "");
+         options       = { cache: this .node .getCache () ? "default" : "reload", signal: this .controller .signal },
+         response      = this .checkResponse (await fetch (this .URL, options)),
+         mimeType      = response .headers .get ("Content-Type") ?.replace (/;.*$/, ""),
+         contentLength = parseInt (response .headers .get ("x-file-size")) || parseInt (response .headers .get ("content-length"));
 
       if (this .foreign)
       {
@@ -260,7 +261,40 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
             return this .foreign (this .URL .href, this .target);
       }
 
-      await this .callback ($.ungzip (await response .arrayBuffer ()), this .URL);
+      let arrayBuffer;
+
+      if (contentLength)
+      {
+         const
+            browser = this .browser,
+            reader  = response .body .getReader (),
+            values  = [ ];
+
+         let loadedBytes = 0;
+
+         for (;;)
+         {
+            const { done, value } = await reader .read ();
+
+            if (done)
+               break;
+
+            values .push (value)
+
+            // We count decompressed bytes, but loadedBytes can be number of compressed bytes.
+            loadedBytes += value .byteLength;
+
+            browser .setLoadingFractions (this, Math .min (loadedBytes / contentLength, 1));
+         }
+
+         arrayBuffer = await new Blob (values) .arrayBuffer ();
+      }
+      else
+      {
+         arrayBuffer = await response .arrayBuffer ()
+      }
+
+      await this .callback ($.ungzip (arrayBuffer), this .URL);
    },
    checkResponse (response)
    {

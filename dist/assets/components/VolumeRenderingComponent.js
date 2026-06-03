@@ -1157,6 +1157,7 @@ precision highp float;precision highp int;uniform mat4 x3d_ProjectionMatrix;unif
 uniform mat4 x3d_EyeMatrix;
 #endif
 in vec4 x3d_TexCoord0;in vec4 x3d_Vertex;out vec3 vertex;out vec4 texCoord;
+#include<Fog>
 #include<Logarithmic>
 void main(){vec4 position=x3d_ModelViewMatrix*x3d_Vertex;
 #if defined(X3D_XR_SESSION)
@@ -1165,6 +1166,9 @@ position=x3d_EyeMatrix*position;
 vertex=position.xyz;texCoord=x3d_TextureMatrix[0]*x3d_TexCoord0;gl_Position=x3d_ProjectionMatrix*position;
 #if defined(X3D_LOGARITHMIC_DEPTH_BUFFER)
 logarithmic(gl_Position);
+#endif
+#if defined(X3D_FOG)&&defined(X3D_FOG_COORDS)
+fog();
 #endif
 }`
 ;
@@ -1181,6 +1185,7 @@ in vec3 vertex;in vec4 texCoord;
 out vec4 x3d_FragColor;
 #endif
 const float M_PI=3.141592653589793;const float M_SQRT2=1.4142135623730951;const float M_SQRT1_2=.7071067811865476;
+#include<ToneMapping>
 #include<ClipPlanes>
 #include<Fog>
 #include<OIT>
@@ -1199,10 +1204,11 @@ __VOLUME_STYLES_UNIFORMS__ vec4 getTextureColor(in vec3 texCoord){if(any(greater
 #if defined(X3D_CLIP_PLANES)
 clip();
 #endif
-vec4 finalColor=getTextureColor(texCoord.stp/texCoord.q);
+vec4 finalColor=getTextureColor(texCoord.stp/texCoord.q);if(finalColor.a<1./255.)discard;
 #if defined(X3D_FOG)
 finalColor.rgb=getFogColor(finalColor.rgb);
 #endif
+finalColor.rgb=toneMap(finalColor.rgb);
 #if defined(X3D_ORDER_INDEPENDENT_TRANSPARENCY)
 oit(finalColor);
 #else
@@ -1225,7 +1231,7 @@ function VolumeMaterial (executionContext, volumeDataNode)
    external_X_ITE_X3D_UnlitMaterial_default().call (this, executionContext);
 
    this .volumeDataNode    = volumeDataNode;
-   this .volumeShaderNodes = new Map ();
+   this .volumeShaderNodes = this .getBrowser () .getShaders ();
 }
 
 Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, (external_X_ITE_X3D_UnlitMaterial_default()).prototype),
@@ -1238,8 +1244,10 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, (external_X_I
    {
       const { renderObject, fogNode, localObjectsKeys } = renderContext;
 
-      let key = "";
+      let key = "VD";
 
+      key += this .getId (); // TODO: this .volumeDataNode .getKey ();
+      key += ".";
       key += renderObject .getRenderKey ();
       key += fogNode ?.getFogType () ?? 0;
       key += ".";
@@ -1251,49 +1259,8 @@ Object .assign (Object .setPrototypeOf (VolumeMaterial .prototype, (external_X_I
    createShader (key, geometryContext, renderContext)
    {
       const
-         browser = this .getBrowser (),
-         options = [ ];
-
-      const { renderObject, fogNode, localObjectsKeys } = renderContext;
-
-      const objectsKeys = localObjectsKeys .concat (renderObject .getGlobalLightsKeys ());
-
-      if (browser .getRenderingProperty ("XRSession"))
-         options .push ("X3D_XR_SESSION");
-
-      if (renderObject .getLogarithmicDepthBuffer ())
-         options .push ("X3D_LOGARITHMIC_DEPTH_BUFFER");
-
-      if (renderObject .getOrderIndependentTransparency ())
-         options .push ("X3D_ORDER_INDEPENDENT_TRANSPARENCY");
-
-      switch (fogNode ?.getFogType ())
-      {
-         case 1:
-            options .push ("X3D_FOG", "X3D_FOG_LINEAR");
-            break;
-         case 2:
-            options .push ("X3D_FOG", "X3D_FOG_EXPONENTIAL");
-            break;
-      }
-
-      const
-         numClipPlanes = objectsKeys .reduce ((a, c) => a + (c === 0), 0),
-         numLights     = objectsKeys .reduce ((a, c) => a + (c === 1), 0);
-
-      if (numClipPlanes)
-      {
-         options .push ("X3D_CLIP_PLANES")
-         options .push (`X3D_NUM_CLIP_PLANES ${Math .min (numClipPlanes, browser .getMaxClipPlanes ())}`);
-      }
-
-      if (numLights)
-      {
-         options .push ("X3D_LIGHTING")
-         options .push (`X3D_NUM_LIGHTS ${Math .min (numLights, browser .getMaxLights ())}`);
-      }
-
-      const shaderNode = this .volumeDataNode .createShader (options, VolumeStyle_vs, VolumeStyle_fs);
+         options    = this .getShaderOptions (geometryContext, renderContext),
+         shaderNode = this .volumeDataNode .createShader (options, VolumeStyle_vs, VolumeStyle_fs);
 
       this .volumeShaderNodes .set (key, shaderNode);
 

@@ -11,6 +11,7 @@ const
    _loadingObjects = Symbol (),
    _loading        = Symbol (),
    _set_loadCount  = Symbol (),
+   _loadFractions  = Symbol (),
    _defaultScene   = Symbol ();
 
 function getBaseURI (element)
@@ -29,10 +30,11 @@ function X3DNetworkingContext ()
    this .addChildObjects (X3DConstants .outputOnly, "loadCount", new Fields .SFInt32 ());
 
    this [_baseURL]        = getBaseURI (this .getElement ());
+   this [_loading]        = false;
    this [_loadingDisplay] = 0;
    this [_loadingTotal]   = 0;
    this [_loadingObjects] = new Set ();
-   this [_loading]        = false;
+   this [_loadFractions]  = new Map ();
 }
 
 Object .assign (X3DNetworkingContext .prototype,
@@ -128,9 +130,18 @@ Object .assign (X3DNetworkingContext .prototype,
       this [_loadingTotal]   = 0;
 
       this [_loadingObjects] .clear ();
+      this [_loadFractions] .clear ();
 
       for (const object of this .getPrivateScene () .getLoadingObjects ())
          this .addLoadingObject (object);
+   },
+   setLoadingFractions (object, fractions)
+   {
+      this [_loadFractions] .set (object, fractions);
+      this [_set_loadCount] ();
+
+      if (fractions === 1)
+         this [_loadFractions] .delete (object);
    },
    [_set_loadCount] ()
    {
@@ -153,9 +164,15 @@ Object .assign (X3DNetworkingContext .prototype,
 
       if (this [_loading])
       {
+         const live = Array .from (this [_loadFractions] .values ())
+            .reduce ((p, c) => p + c, 0);
+
+         // Let the live loading fraction be half of the count.
+         const fractions = 1 - (this ._loadCount .getValue () - live / 2) / this [_loadingTotal];
+
          this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (string);
          this .getSplashScreen () .find (".x_ite-private-progressbar div")
-            .css ("width", (100 - 100 * this ._loadCount .getValue () / this [_loadingTotal]) + "%");
+            .css ("width", `${100 * fractions}%`);
       }
       else
       {

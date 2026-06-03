@@ -8688,25 +8688,97 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
-      sphericalHarmonics0: MFVec3f;
+      sphericalHarmonicsDegree0Coef0: MFVec3f;
       /**
        * Input/Output field spherical harmonics coefficients.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
-      sphericalHarmonics1: MFVec3f;
+      sphericalHarmonicsDegree1Coef0: MFVec3f;
       /**
        * Input/Output field spherical harmonics coefficients.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
-      sphericalHarmonics2: MFVec3f;
+      sphericalHarmonicsDegree1Coef1: MFVec3f;
       /**
        * Input/Output field spherical harmonics coefficients.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
-      sphericalHarmonics3: MFVec3f;
+      sphericalHarmonicsDegree1Coef2: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree2Coef0: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree2Coef1: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree2Coef2: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree2Coef3: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree2Coef4: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree3Coef0: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree3Coef1: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree3Coef2: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree3Coef3: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree3Coef4: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree3Coef5: MFVec3f;
+      /**
+       * Input/Output field spherical harmonics coefficients.
+       *
+       * This field is of access type 'inputOutput' and type MFVec3f.
+       */
+      sphericalHarmonicsDegree3Coef6: MFVec3f;
       /**
        * Whether or not renderable content within this node is visually displayed.
        *
@@ -21151,13 +21223,13 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * The multi-scatter albedo.
+       * The multi-scatter color. In volumetric mode, this is the multi-scatter albedo. In thin-walled mode, this is a surface tint applied to transmitted light..
        *
        * This field is of access type 'inputOutput' and type SFColor.
        */
       multiscatterColor: SFColor;
       /**
-       * A surface texture that defines the multi-scatter albedo at the volume's entry point. Stored in the RGB channels and encoded in sRGB. This will be multiplied by the multiscatterColorFactor.
+       * A texture that defines the multi-scatter color, stored in the RGB channels and encoded in sRGB. This will be multiplied by the *multiscatterColor*.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -21169,11 +21241,29 @@ declare namespace X3D
        */
       multiscatterColorTextureMapping: string;
       /**
-       * The anisotropy of scatter events. Range is [-1, 1].
+       * The anisotropy of scatter events. Range is [-1, 1]. Positive values represent forward scattering; negative values represent backward scattering.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
       scatterAnisotropy: number;
+      /**
+       * The strength of the scattering effect. Range is [0, 1]. At 0, scattering is disabled; at 1, scattering is fully applied.
+       *
+       * This field is of access type 'inputOutput' and type SFFloat.
+       */
+      scatterStrength: number;
+      /**
+       * A texture that defines the per-texel scatter strength, stored in the alpha (A) channel. Will be multiplied by *scatterStrength*.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      scatterStrengthTexture: X3DSingleTextureNodeProxy | null;
+      /**
+       * Input/Output field multiscatterColorTextureMapping.
+       *
+       * This field is of access type 'inputOutput' and type SFString.
+       */
+      scatterStrengthTextureMapping: string;
    }
 
    /** WaveShaper node represents a nonlinear distorter that applies a wave-shaping distortion curve to the signal. */

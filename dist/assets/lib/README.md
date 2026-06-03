@@ -21,3 +21,7 @@
 ## meshoptimizer
 
 * https://github.com/zeux/meshoptimizer/blob/master/js/meshopt_decoder.mjs
+
+## mkkellogg-sort.worker.js
+
+* https://github.com/mkkellogg/GaussianSplats3D/tree/main/src/worker

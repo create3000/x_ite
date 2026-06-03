@@ -262,7 +262,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (external_
          {
             this .pickedTargetsSorter .sort (0, pickedTargets .length);
 
-            // Proceed with next case:
+            // falls through
          }
          case Picking_SortOrder .ANY:
          {
@@ -283,7 +283,7 @@ Object .assign (Object .setPrototypeOf (X3DPickSensorNode .prototype, (external_
          {
             this .pickedTargetsSorter .sort (0, pickedTargets .length);
 
-            // Proceed with next case:
+            // falls through
          }
          case Picking_SortOrder .ALL:
          {
