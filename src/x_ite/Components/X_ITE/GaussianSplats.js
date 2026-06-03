@@ -37,6 +37,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DChildNode 
 
       this ._visible     .addFieldInterest (this .shapeNode ._visible);
       this ._bboxDisplay .addFieldInterest (this .shapeNode ._bboxDisplay);
+      this ._bboxSize    .addFieldInterest (this .shapeNode ._bboxSize);
+      this ._bboxCenter  .addFieldInterest (this .shapeNode ._bboxCenter);
 
       this .shapeNode ._visible     = this ._visible;
       this .shapeNode ._bboxDisplay = this ._bboxDisplay;
