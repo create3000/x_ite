@@ -137,7 +137,8 @@ Object .assign (X3DNetworkingContext .prototype,
    },
    setLoadingFractions (object, fractions)
    {
-      this [_loadFractions] .set (object, fractions);
+      // Let fractions go from 1 to 0.
+      this [_loadFractions] .set (object, 1 - fractions);
       this [_set_loadCount] ();
    },
    [_set_loadCount] ()
@@ -161,7 +162,7 @@ Object .assign (X3DNetworkingContext .prototype,
 
       if (this [_loading])
       {
-         const live = this [_loadFractions] .size - Array .from (this [_loadFractions] .values ())
+         const live = Array .from (this [_loadFractions] .values ())
             .reduce ((p, c) => p + c, 0);
 
          // Let the live loading fractions be half of the count.
