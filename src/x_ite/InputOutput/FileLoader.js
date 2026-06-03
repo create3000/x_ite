@@ -10,12 +10,13 @@ const foreignMimeType = new Set ([
    "application/xhtml+xml",
 ])
 
-function FileLoader (node, cacheScene = false)
+function FileLoader (node, { cacheScene = false, dataAsString = true } = { })
 {
    X3DObject .call (this);
 
    this .node             = node;
    this .cacheScene       = cacheScene;
+   this .dataAsString     = dataAsString;
    this .browser          = node .getBrowser ();
    this .executionContext = node .getExecutionContext ();
    this .target           = "";
@@ -180,6 +181,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       this .URL = new URL (url, this .getBaseURL ());
 
       // Data URL:
+      if (this .dataAsString)
       {
          const result = url .match (/^\s*data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s);
 

@@ -5,6 +5,7 @@ import X3DNode              from "../Core/X3DNode.js";
 import X3DTexture2DNode     from "./X3DTexture2DNode.js";
 import X3DUrlObject         from "../Networking/X3DUrlObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import FileLoader           from "../../InputOutput/FileLoader.js";
 import DEVELOPMENT          from "../../DEVELOPMENT.js";
 
 function ImageTexture (executionContext)
@@ -62,33 +63,44 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          return;
       }
 
-      // Get URL.
-
-      this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
-
-      if (this .URL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .URL .href .match (/^data:image\/ktx2[;,]/))
+      new FileLoader (this, { dataAsString: false }) .loadDocument ([this .urlStack .shift ()], (data, url) =>
       {
-         this .setLinear (true);
-         this .setMipMaps (false);
+         this .URL = new URL (url);
 
-         this .getBrowser () .getKTXDecoder ()
-            .then (decoder => decoder .loadKTXFromURL (this .URL, this .getCache ()))
-            .then (texture => this .setKTXTexture (texture))
-            .catch (error => this .setError ({ type: error .message }));
-      }
-      else
-      {
-         this .setLinear (false);
-         this .setMipMaps (true);
-
-         if (this .URL .protocol !== "data:")
+         if (data === null)
          {
-            if (!this .getCache ())
-               this .URL .searchParams .set ("_", Date .now ());
+            // No URL could be loaded.
+            this .clearTexture ();
+            this .updateOutputs (0, 0, 0);
+            this .setLoadState (X3DConstants .FAILED_STATE);
          }
+         else if (data instanceof ArrayBuffer)
+         {
+            if (this .URL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .URL .href .match (/^data:image\/ktx2[;,]/))
+            {
+               this .setLinear (true);
+               this .setMipMaps (false);
 
-         this .image .attr ("src", this .URL);
-      }
+               this .getBrowser () .getKTXDecoder ()
+                  .then (decoder => decoder .loadKTXFromBuffer (data))
+                  .then (texture => this .setKTXTexture (texture))
+                  .catch (error => this .setError ({ type: error .message }));
+            }
+            else
+            {
+               this .setLinear (false);
+               this .setMipMaps (true);
+
+               this .objectURL = URL .createObjectURL (new Blob ([data]));
+
+               this .image .attr ("src", this .objectURL);
+            }
+         }
+         else
+         {
+            throw new Error ("ImageTexture: no suitable file type handler found.");
+         }
+      });
    },
    setError (event)
    {
@@ -148,6 +160,8 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          this .updateOutputs (width, height, this .isTransparent () ? 4 : 3);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
          this .addNodeEvent ();
+
+         URL .revokeObjectURL (this .objectURL);
       }
       catch (error)
       {
