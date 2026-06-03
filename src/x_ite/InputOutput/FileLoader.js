@@ -295,7 +295,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
             // We count decompressed bytes, but loadedBytes can be number of compressed bytes.
             loadedBytes += value .byteLength;
 
-            browser .setLoadingFractions (this, Math .min (loadedBytes / contentLength, 1));
+            browser .setLoadingFractions (this .node, Math .min (loadedBytes / contentLength, 1));
          }
 
          arrayBuffer = await new Blob (values) .arrayBuffer ();

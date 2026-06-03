@@ -1,20 +1,21 @@
-import X3DParser    from "./X3DParser.js";
-import X3DOptimizer from "./X3DOptimizer.js";
-import Fields       from "../Fields.js";
-import X3DConstants from "../Base/X3DConstants.js";
-import FileLoader   from "../InputOutput/FileLoader.js";
-import URLs         from "../Browser/Networking/URLs.js";
-import Layer        from "../Components/Layering/Layer.js";
-import TraverseType from "../Rendering/TraverseType.js";
-import Algorithm    from "../../standard/Math/Algorithm.js";
-import Vector2      from "../../standard/Math/Numbers/Vector2.js";
-import Vector3      from "../../standard/Math/Numbers/Vector3.js";
-import Quaternion   from "../../standard/Math/Numbers/Quaternion.js";
-import Rotation4    from "../../standard/Math/Numbers/Rotation4.js";
-import Matrix4      from "../../standard/Math/Numbers/Matrix4.js";
-import Color3       from "../../standard/Math/Numbers/Color3.js";
-import Color4       from "../../standard/Math/Numbers/Color4.js";
-import Box3         from "../../standard/Math/Geometry/Box3.js";
+import X3DParser     from "./X3DParser.js";
+import X3DOptimizer  from "./X3DOptimizer.js";
+import Fields        from "../Fields.js";
+import X3DConstants  from "../Base/X3DConstants.js";
+import FileLoader    from "../InputOutput/FileLoader.js";
+import LoadingObject from "../InputOutput/LoadingObject.js";
+import URLs          from "../Browser/Networking/URLs.js";
+import Layer         from "../Components/Layering/Layer.js";
+import TraverseType  from "../Rendering/TraverseType.js";
+import Algorithm     from "../../standard/Math/Algorithm.js";
+import Vector2       from "../../standard/Math/Numbers/Vector2.js";
+import Vector3       from "../../standard/Math/Numbers/Vector3.js";
+import Quaternion    from "../../standard/Math/Numbers/Quaternion.js";
+import Rotation4     from "../../standard/Math/Numbers/Rotation4.js";
+import Matrix4       from "../../standard/Math/Numbers/Matrix4.js";
+import Color3        from "../../standard/Math/Numbers/Color3.js";
+import Color4        from "../../standard/Math/Numbers/Color4.js";
+import Box3          from "../../standard/Math/Geometry/Box3.js";
 
 // https://registry.khronos.org/glTF/specs/2.0/glTF-2.0.html
 // https://github.com/KhronosGroup/glTF-Sample-Assets
@@ -600,13 +601,15 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!buffer .uri)
          return this .buffers [i];
 
-      this .getBrowser () .addLoadingObject (buffer);
+      const loadingObject = new LoadingObject (this .getScene ());
+
+      this .getBrowser () .addLoadingObject (loadingObject);
 
       const
          url         = new Fields .MFString (new URL (buffer .uri, this .getScene () .getBaseURL ())),
-         arrayBuffer = await FileLoader .loadDocument (this .getBrowser () .getWorld (), url);
+         arrayBuffer = await FileLoader .loadDocument (loadingObject, url);
 
-      this .getBrowser () .removeLoadingObject (buffer);
+      this .getBrowser () .removeLoadingObject (loadingObject);
 
       return arrayBuffer;
    },
