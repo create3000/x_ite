@@ -9,6 +9,11 @@ class LoadingObject
       this .#executionContext = executionContext;
    }
 
+   getTypeName ()
+   {
+      return this .#executionContext .getTypeName ();
+   }
+
    getBrowser ()
    {
       return this .#browser;

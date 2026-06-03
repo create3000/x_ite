@@ -15,6 +15,7 @@ import ConcreteNodes        from "../Configuration/ConcreteNodes.js";
 import FieldTypes           from "../Configuration/FieldTypes.js";
 import X3DScene             from "../Execution/X3DScene.js";
 import FileLoader           from "../InputOutput/FileLoader.js";
+import LoadingObject        from "../InputOutput/LoadingObject.js";
 import XMLParser            from "../Parser/XMLParser.js";
 import JSONParser           from "../Parser/JSONParser.js";
 import X3DCast              from "../Base/X3DCast.js";
@@ -466,40 +467,63 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    createVrmlFromString (vrmlSyntax)
    {
       const
-         external     = this .isExternal (),
-         currentScene = this .currentScene,
-         worldURL     = external ? this .getBaseURL () : currentScene .getWorldURL (),
-         fileLoader   = new FileLoader (this .getScriptNode () ?? this .getWorld ()),
-         scene        = fileLoader .createX3DFromString (worldURL, `#VRML V2.0 utf8\n\n${vrmlSyntax}`);
+         external      = this .isExternal (),
+         currentScene  = this .currentScene,
+         world         = this .getScriptNode () ?? this .getWorld (),
+         worldURL      = external ? this .getBaseURL () : currentScene .getWorldURL (),
+         loadingObject = new LoadingObject (world .getExecutionContext ()),
+         fileLoader    = new FileLoader (loadingObject);
 
-      if (!external)
-         scene .setExecutionContext (currentScene);
+      try
+      {
+         this .addLoadingObject (loadingObject);
 
-      scene .setLive (true);
+         const scene = fileLoader .createX3DFromString (worldURL, `#VRML V2.0 utf8\n\n${vrmlSyntax}`);
 
-      return scene .rootNodes;
+         if (!external)
+            scene .setExecutionContext (currentScene);
+
+         scene .setLive (true);
+
+         return scene .rootNodes;
+      }
+      finally
+      {
+         this .removeLoadingObject (loadingObject);
+      }
    },
    async createX3DFromString (x3dSyntax)
    {
       x3dSyntax = String (x3dSyntax);
 
       const
-         external     = this .isExternal (),
-         currentScene = this .currentScene,
-         worldURL     = external ? this .getBaseURL () : currentScene .getWorldURL (),
-         fileLoader   = new FileLoader (this .getScriptNode () ?? this .getWorld ());
+         external      = this .isExternal (),
+         world         = this .getScriptNode () ?? this .getWorld (),
+         currentScene  = this .currentScene,
+         worldURL      = external ? this .getBaseURL () : currentScene .getWorldURL (),
+         loadingObject = new LoadingObject (world .getExecutionContext ()),
+         fileLoader    = new FileLoader (loadingObject);
 
-      const scene = await new Promise ((resolve, reject) =>
+      try
       {
-         fileLoader .createX3DFromString (worldURL, x3dSyntax, resolve, reject);
-      });
+         this .addLoadingObject (loadingObject);
 
-      if (!external)
-         scene .setExecutionContext (currentScene);
+         const scene = await new Promise ((resolve, reject) =>
+         {
+            fileLoader .createX3DFromString (worldURL, x3dSyntax, resolve, reject);
+         });
 
-      scene .setLive (true);
+         if (!external)
+            scene .setExecutionContext (currentScene);
 
-      return scene;
+         scene .setLive (true);
+
+         return scene;
+      }
+      finally
+      {
+         this .removeLoadingObject (loadingObject);
+      }
    },
    createVrmlFromURL (url, node, event)
    {
@@ -521,15 +545,17 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          throw new Error (`Browser.createVrmlFromURL: event named '${event}' must be of type MFNode.`);
 
       const
-         currentScene = this .currentScene,
-         external     = this .isExternal (),
-         fileLoader   = new FileLoader (this .getScriptNode () ?? this .getWorld ());
+         currentScene  = this .currentScene,
+         world         = this .getScriptNode () ?? this .getWorld (),
+         external      = this .isExternal (),
+         loadingObject = new LoadingObject (world .getExecutionContext ()),
+         fileLoader    = new FileLoader (loadingObject);
 
-      this .addLoadingObject (fileLoader);
+      this .addLoadingObject (loadingObject);
 
       fileLoader .createX3DFromURL (url, null, scene =>
       {
-         this .removeLoadingObject (fileLoader);
+         this .removeLoadingObject (loadingObject);
 
          if (!scene)
             return;
@@ -558,15 +584,17 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       return new Promise ((resolve, reject) =>
       {
          const
-            currentScene = this .currentScene,
-            external     = this .isExternal (),
-            fileLoader   = new FileLoader (this .getScriptNode () ?? this .getWorld ());
+            currentScene  = this .currentScene,
+            world         = this .getScriptNode () ?? this .getWorld (),
+            external      = this .isExternal (),
+            loadingObject = new LoadingObject (world .getExecutionContext ()),
+            fileLoader    = new FileLoader (loadingObject);
 
-         this .addLoadingObject (fileLoader);
+         this .addLoadingObject (loadingObject);
 
          fileLoader .createX3DFromURL (url, null, scene =>
          {
-            this .removeLoadingObject (fileLoader);
+            this .removeLoadingObject (loadingObject);
 
             if (scene)
             {
@@ -596,7 +624,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
          // Start loading.
 
-         const fileLoader = new FileLoader (this .getScriptNode () ?? this .getWorld ());
+         const
+            world         = this .getScriptNode () ?? this .getWorld (),
+            loadingObject = new LoadingObject (world .getExecutionContext ()),
+            fileLoader    = new FileLoader (loadingObject);
 
          fileLoader .createX3DFromURL (url, parameter, scene =>
          {
@@ -604,7 +635,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
             if (this [_fileLoader] !== fileLoader)
             {
-               this .removeLoadingObject (fileLoader);
+               this .removeLoadingObject (loadingObject);
                reject (new Error ("Loading of X3D file aborted."));
             }
             else
@@ -617,7 +648,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
                   this .addLoadingObject (this); // Prevent resetLoadCount.
                   this .replaceWorld (scene) .then (resolve) .catch (reject);
                   this .removeLoadingObject (this);
-                  this .removeLoadingObject (fileLoader);
+                  this .removeLoadingObject (loadingObject);
                }
                else
                {
@@ -640,7 +671,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
             fileLoader .ready = true;
 
             this .changeViewpoint (fragment);
-            this .removeLoadingObject (fileLoader);
+            this .removeLoadingObject (loadingObject);
 
             resolve ();
          },
@@ -653,7 +684,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
             else
                location = url;
 
-            this .removeLoadingObject (fileLoader);
+            this .removeLoadingObject (loadingObject);
 
             resolve ();
          });
@@ -661,9 +692,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
          if (!fileLoader .ready)
          {
             this [_fileLoader] ?.abort ();
+            this [_fileLoader] = fileLoader;
 
             this .setBrowserLoading (true);
-            this .addLoadingObject (this [_fileLoader] = fileLoader);
+            this .addLoadingObject (loadingObject);
          }
       });
    },
