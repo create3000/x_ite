@@ -50,7 +50,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
    },
    loadData ()
    {
-      new FileLoader (this) .loadDocument (this ._url, (data, URL) =>
+      new FileLoader (this, { dataAsString: false }) .loadDocument (this ._url, (data, URL) =>
       {
          if (data === null)
          {
