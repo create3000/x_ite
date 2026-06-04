@@ -60,7 +60,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          return;
       }
 
-      new FileLoader (this, { dataAsString: false }) .loadDocument ([this .urlStack .shift ()], (data, url) =>
+      new FileLoader (this, { dataAsString: false }) .loadDocument ([this .urlStack .shift ()], (data, fileURL) =>
       {
          if (data === null)
          {
@@ -68,7 +68,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          }
          else if (data instanceof ArrayBuffer)
          {
-            this .fileURL = new URL (url);
+            this .fileURL = new URL (fileURL);
 
             if (this .fileURL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .fileURL .href .match (/^data:image\/ktx2[;,]/))
             {

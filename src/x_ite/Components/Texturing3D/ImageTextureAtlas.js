@@ -4,6 +4,7 @@ import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
 import X3DNode              from "../Core/X3DNode.js";
 import X3DTexture3DNode     from "./X3DTexture3DNode.js";
 import X3DUrlObject         from "../Networking/X3DUrlObject.js";
+import FileLoader           from "../../InputOutput/FileLoader.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 import DEVELOPMENT          from "../../DEVELOPMENT.js";
 
@@ -56,22 +57,35 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
          return;
       }
 
-      // Get URL.
-
-      this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
-
-      if (this .URL .protocol !== "data:")
+      new FileLoader (this, { dataAsString: false }) .loadDocument ([this .urlStack .shift ()], (data, fileURL) =>
       {
-         if (!this .getCache ())
-            this .URL .searchParams .set ("_", Date .now ());
-      }
+         if (data === null)
+         {
+            this .loadNext ();
+         }
+         else if (data instanceof ArrayBuffer)
+         {
+            this .fileURL = new URL (fileURL);
 
-      this .image .attr ("src", this .URL);
+            this .setLinear (false);
+            this .setMipMaps (true);
+
+            this .objectURL = URL .createObjectURL (new Blob ([data]));
+
+            this .image .attr ("src", this .objectURL);
+         }
+         else
+         {
+            throw new Error ("ImageTexture: no suitable file type handler found.");
+         }
+      });
    },
    setError (event)
    {
-      if (this .URL .protocol !== "data:")
-         console .warn (`Error loading image '${decodeURI (this .URL)}':`, event .type);
+      if (this .fileURL .protocol !== "data:")
+         console .warn (`Error loading image '${decodeURI (this .fileURL)}':`, event .type);
+
+      URL .revokeObjectURL (this .objectURL);
 
       this .loadNext ();
    },
@@ -79,8 +93,8 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
    {
       if (DEVELOPMENT)
       {
-         if (this .URL .protocol !== "data:")
-            console .info (`Done loading image '${decodeURI (this .URL)}'.`);
+         if (this .fileURL .protocol !== "data:")
+            console .info (`Done loading image '${decodeURI (this .fileURL)}'.`);
       }
 
       try
@@ -152,6 +166,10 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
 
          // Catch security error from cross origin requests.
          this .setError ({ type: error .message });
+      }
+      finally
+      {
+         URL .revokeObjectURL (this .objectURL);
       }
    },
    updateOutputs (width, height, depth, colorDepth)

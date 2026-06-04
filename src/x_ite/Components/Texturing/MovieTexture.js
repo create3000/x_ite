@@ -5,6 +5,7 @@ import X3DNode              from "../Core/X3DNode.js";
 import X3DTexture2DNode     from "./X3DTexture2DNode.js";
 import X3DSoundSourceNode   from "../Sound/X3DSoundSourceNode.js";
 import X3DUrlObject         from "../Networking/X3DUrlObject.js";
+import FileLoader           from "../../InputOutput/FileLoader.js";
 import GifMedia             from "../../Browser/Texturing/GifMedia.js";
 import PNGMedia             from "../../Browser/Texturing/PNGMedia.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
@@ -87,42 +88,69 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
 
       // Get URL.
 
-      this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
+      this .fileURL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
 
-      if (this .URL .protocol !== "data:")
+      if (this .fileURL .pathname .endsWith (".gif") || this .fileURL .href .match (/^data:image\/gif/))
       {
-         if (!this .getCache ())
-            this .URL .searchParams .set ("_", Date .now ());
+         new FileLoader (this, { dataAsString: false }) .loadDocument ([this .fileURL], async (data, fileURL) =>
+         {
+            if (data === null)
+            {
+               this .loadNext ();
+            }
+            else if (data instanceof ArrayBuffer)
+            {
+               this .fileURL = new URL (fileURL);
+
+               const
+                  img = $("<img></img>") .appendTo ($("<div></div>")),
+                  gif = new SuperGif ({ gif: img [0], on_error: type => this .setError ({ type }) });
+
+               gif .load_raw (new Uint8Array (data), () => this .setGif (gif));
+            }
+            else
+            {
+               throw new Error ("MovieTexture: no suitable file type handler found.");
+            }
+         });
       }
-
-      if (this .URL .pathname .endsWith (".gif"))
+      else if (this .fileURL .pathname .endsWith (".png") || this .fileURL .href .match (/^data:image\/png/))
       {
-         const
-            img = $("<img></img>") .appendTo ($("<div></div>")),
-            gif = new SuperGif ({ gif: img [0], on_error: type => this .setError ({ type }) });
+         new FileLoader (this, { dataAsString: false }) .loadDocument ([this .fileURL], async (data, fileURL) =>
+         {
+            if (data === null)
+            {
+               this .loadNext ();
+            }
+            else if (data instanceof ArrayBuffer)
+            {
+               this .fileURL = new URL (fileURL);
 
-         gif .load_url (this .URL, () => this .setGif (gif));
+               const
+                  parseAPNG = DEVELOPMENT ? window ["apng-js"] .default : APNG .default,
+                  apng      = await parseAPNG (data);
 
-         // this .setTimeout ({ type: "timeout" });
-      }
-      else if (this .URL .pathname .endsWith (".png"))
-      {
-         const parseAPNG = DEVELOPMENT ? window ["apng-js"] .default : APNG .default;
-
-         fetch (this .URL, { cache: this .getCache () ? "default" : "reload" })
-            .then (response => response .arrayBuffer ())
-            .then (arrayBuffer => parseAPNG (arrayBuffer))
-            .then (apng => this .setAPNG (apng))
-            .catch (error => this .setError ({ type: error .message}));
-
+               this .setAPNG (apng);
+            }
+            else
+            {
+               throw new Error ("MovieTexture: no suitable file type handler found.");
+            }
+         });
       }
       else
       {
+         if (this .fileURL .protocol !== "data:")
+         {
+            if (!this .getCache ())
+               this .fileURL .searchParams .set ("_", Date .now ());
+         }
+
          this .video
             .on ("abort error", this .setError .bind (this))
             .on ("suspend stalled", this .setTimeout .bind (this))
             .on ("loadeddata", this .setVideo .bind (this))
-            .attr ("src", this .URL)
+            .attr ("src", this .fileURL)
             .get (0) .load ();
       }
    },
@@ -138,8 +166,8 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
    },
    setError (event)
    {
-      if (this .URL .protocol !== "data:")
-         console .warn (`Error loading movie '${decodeURI (this .URL)}':`, event .type);
+      if (this .fileURL .protocol !== "data:")
+         console .warn (`Error loading movie '${decodeURI (this .fileURL)}':`, event .type);
 
       this .loadNext ();
    },
@@ -149,8 +177,8 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
       {
          if (DEVELOPMENT)
          {
-            if (this .URL .protocol !== "data:")
-               console .info (`Done loading movie '${decodeURI (this .URL)}'.`);
+            if (this .fileURL .protocol !== "data:")
+               console .info (`Done loading movie '${decodeURI (this .fileURL)}'.`);
          }
 
          const

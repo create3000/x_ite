@@ -88,7 +88,7 @@ Object .assign (Object .setPrototypeOf (ShaderPart .prototype, X3DNode .prototyp
    },
    loadData ()
    {
-      new FileLoader (this) .loadDocument (this ._url, (data, url) =>
+      new FileLoader (this) .loadDocument (this ._url, (data, fileURL) =>
       {
          if (data === null)
          {
@@ -124,14 +124,14 @@ Object .assign (Object .setPrototypeOf (ShaderPart .prototype, X3DNode .prototyp
                if (match)
                {
                   const fileName = shaderCompiler .getSourceFileName (match [1])
-                     || url
+                     || fileURL
                      || this .getExecutionContext () .getWorldURL ();
 
                   throw new Error (`Error in ${typeName} '${name}' in URL '${fileName}', line ${match [2]}, ${log}`);
                }
                else
                {
-                  const fileName = url || this .getExecutionContext () .getWorldURL ();
+                  const fileName = fileURL || this .getExecutionContext () .getWorldURL ();
 
                   throw new Error (`Error in ${typeName} '${name}' in URL '${fileName}', ${log}`);
                }
