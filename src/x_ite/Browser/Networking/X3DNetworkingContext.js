@@ -165,11 +165,11 @@ Object .assign (X3DNetworkingContext .prototype,
 
       if (this [_browserLoading])
       {
-         const live = Array .from (this [_loadFractions] .values ())
+         const loadFractions = Array .from (this [_loadFractions] .values ())
             .reduce ((p, c) => p + c, 0);
 
-         // Let the live loading fractions be half of the count.
-         const fractions = 1 - (this ._loadCount .getValue () + live) / (this [_loadingTotal] + this [_loadFractions] .size);
+         // Let the loading fractions 2/3 of the count.
+         const fractions = 1 - (this ._loadCount .getValue () + loadFractions * 2) / (this [_loadingTotal] + this [_loadFractions] .size * 2);
 
          this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (string);
          this .getSplashScreen () .find (".x_ite-private-progressbar div")
