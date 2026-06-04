@@ -421,7 +421,7 @@ baseURL
 : A String value containing the URL against which relative URLs are resolved. By default, this is the address of the web page itself. Although this feature is rarely needed, it can be useful when loading a `data:` or `blob:` URL with the *src* attribute, or with `Browser.loadURL`, or when using `Browser.createX3DFromString`. The value of *baseURL* will only be used with the external browser.
 
 cache
-: A Boolean value (`true` or `false`) to indicate whether files transferred over the internet should be cached on the local computer. The default value for the *cache* attribute is `true`. It works by appending "_={timestamp}" to the GET parameters of every request.
+: A Boolean value (`true` or `false`) to indicate whether files transferred over the internet should be cached on the local computer. The default value for the *cache* attribute is `true`.
 
 colorSpace
 : A String value that specifies the color space in which colors are defined and color calculations take place. The default value for the *colorSpace* attribute is `LINEAR_WHEN_PHYSICAL_MATERIAL`. For a list of possible values see [browser options](/x_ite/reference/browser-services/#browser-options).
