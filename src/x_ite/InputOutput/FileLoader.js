@@ -337,7 +337,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    },
    printError (error)
    {
-      const typeName = this .node instanceof X3DWorld ? "" : ` of ${this .node .getTypeName ()}`;
+      const typeName = this .node instanceof X3DWorld ? "" : ` for ${this .node .getTypeName ()}`;
 
       if (this .URL .protocol === "data:")
          console .error (`Couldn't load data URL${typeName}.`);
