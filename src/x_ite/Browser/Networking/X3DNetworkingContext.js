@@ -168,8 +168,9 @@ Object .assign (X3DNetworkingContext .prototype,
          const loadFractions = Array .from (this [_loadFractions] .values ())
             .reduce ((p, c) => p + c, 0);
 
-         // Let the loading fractions 2/3 of the count.
-         const fractions = 1 - (this ._loadCount .getValue () + loadFractions * 2) / (this [_loadingTotal] + this [_loadFractions] .size * 2);
+         // Let the loading fractions 1/2 of the count.
+         const fractions = 1 - (this ._loadCount .getValue () + loadFractions)
+            / (this [_loadingTotal] + this [_loadFractions] .size);
 
          this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (string);
          this .getSplashScreen () .find (".x_ite-private-progressbar div")
