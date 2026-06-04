@@ -101,6 +101,8 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       if (this .fileURL .protocol !== "data:")
          console .warn (`Error loading image '${decodeURI (this .fileURL)}':`, event .type);
 
+      URL .revokeObjectURL (this .objectURL);
+
       this .loadNext ();
    },
    setKTXTexture (texture)

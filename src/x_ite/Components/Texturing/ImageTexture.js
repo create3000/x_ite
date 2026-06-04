@@ -104,6 +104,8 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
       if (this .fileURL .protocol !== "data:")
          console .warn (`Error loading image '${decodeURI (this .fileURL)}:'`, event .type);
 
+      URL .revokeObjectURL (this .objectURL);
+
       this .loadNext ();
    },
    setKTXTexture (texture)
