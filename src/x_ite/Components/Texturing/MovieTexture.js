@@ -90,7 +90,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
 
       this .fileURL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
 
-      if (this .fileURL .pathname .endsWith (".gif") || this .fileURL .href .match (/^data:image\/gif/))
+      if (this .fileURL .pathname .endsWith (".gif") || this .fileURL .href .match (/^data:image\/gif[;,]/))
       {
          new FileLoader (this, { dataAsString: false }) .loadDocument ([this .fileURL], async (data, fileURL) =>
          {
@@ -114,7 +114,7 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, X3DTexture2DNod
             }
          });
       }
-      else if (this .fileURL .pathname .endsWith (".png") || this .fileURL .href .match (/^data:image\/png/))
+      else if (this .fileURL .pathname .endsWith (".png") || this .fileURL .href .match (/^data:image\/png[;,]/))
       {
          new FileLoader (this, { dataAsString: false }) .loadDocument ([this .fileURL], async (data, fileURL) =>
          {
