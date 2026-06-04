@@ -276,7 +276,8 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    },
    async getBlob (response)
    {
-      const contentLength = +response .headers .get ("x-file-size") || +response .headers .get ("content-length");
+      const contentLength = parseInt (response .headers .get ("x-file-size"))
+         || parseInt (response .headers .get ("content-length"));
 
       if (contentLength)
       {
