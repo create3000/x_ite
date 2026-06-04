@@ -260,7 +260,7 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
             url         = new URL (path, scene .getBaseURL ()),
             response    = await fetch (url),
             arrayBuffer = await response .arrayBuffer (),
-            input       = $.decodeText ($.ungzip (arrayBuffer)),
+            input       = $.decodeText (await $.gunzip (arrayBuffer)),
             parser      = new MaterialParser (scene, input);
 
          parser .parse ();

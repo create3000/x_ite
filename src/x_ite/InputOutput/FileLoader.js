@@ -307,7 +307,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          arrayBuffer = await response .arrayBuffer ()
       }
 
-      await this .callback ($.ungzip (arrayBuffer), this .fileURL);
+      await this .callback (await $.gunzip (arrayBuffer), this .fileURL);
    },
    checkResponse (response)
    {

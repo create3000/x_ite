@@ -31,13 +31,17 @@ Object .assign ($,
             console .error (error);
       }
    },
-   ungzip (arrayBuffer)
+   async gunzip (arrayBuffer)
    {
       try
       {
-         return pako .ungzip (arrayBuffer, { to: "raw" }) .buffer;
+         const
+            inputStream  = new Blob ([arrayBuffer]) .stream (),
+            outputStream = inputStream .pipeThrough (new DecompressionStream ("gzip"));
+
+         return await new Response (outputStream) .arrayBuffer ();
       }
-      catch (exception)
+      catch
       {
          return arrayBuffer;
       }

@@ -50,7 +50,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
    },
    loadData ()
    {
-      new FileLoader (this, { dataAsString: false }) .loadDocument (this ._url, (data, fileURL) =>
+      new FileLoader (this, { dataAsString: false }) .loadDocument (this ._url, async (data, fileURL) =>
       {
          if (data === null)
          {
@@ -74,7 +74,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
             this .setLinear (false);
             this .setMipMaps (true);
 
-            const nrrd = new NRRDParser () .parse (data);
+            const nrrd = await new NRRDParser () .parse (data);
 
             if (nrrd .nrrd)
             {

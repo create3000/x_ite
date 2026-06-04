@@ -92,7 +92,7 @@ export default class KTXDecoder
       await this .initialized;
 
       const
-         data         = new Uint8Array ($.ungzip (arrayBuffer)),
+         data         = new Uint8Array (await $.gunzip (arrayBuffer)),
          ktxTexture   = new this .libktx .ktxTexture (data),
          uploadResult = this .transcode (ktxTexture),
          texture      = uploadResult .object;
