@@ -49,7 +49,7 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
    {
       this .unloadData ();
 
-      new FileLoader (this) .loadDocument (this ._url, async (data, URL) =>
+      new FileLoader (this, { dataAsString: false }) .loadDocument (this ._url, async (data, fileURL) =>
       {
          if (data === null)
          {
@@ -64,9 +64,13 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, X3DSoundSourceNode
 
             if (DEVELOPMENT)
             {
-               if (URL .protocol !== "data:")
-                  console .info (`Done loading audio '${decodeURI (URL)}'.`);
+               if (fileURL .protocol !== "data:")
+                  console .info (`Done loading audio '${decodeURI (fileURL)}'.`);
             }
+         }
+         else
+         {
+            throw new Error ("AudioClip: no suitable file type handler found.");
          }
       });
    },
