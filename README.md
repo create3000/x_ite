@@ -24,6 +24,7 @@ X_ITE needs your support. If you become a [Patreon](https://patreon.com/X_ITE), 
 * [DOM Integration](https://create3000.github.io/x_ite/dom-integration)
 * [Custom Shaders](https://create3000.github.io/x_ite/custom-shaders)
 * [glTF Sample Viewer](https://create3000.github.io/x_ite/laboratory/gltf-sample-viewer/)
+* [X_ITE VRML Viewer](https://create3000.github.io/x_ite/features/#vrml-viewer)
 
 ## Using X_ITE with a CDN
 
