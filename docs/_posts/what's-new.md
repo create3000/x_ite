@@ -27,6 +27,7 @@ Although this is an initial implementation, it already provides a solid foundati
 - [x] Support for 3D Gaussian Splatting.
 - [x] You can now hold down the <kbd>Alt-or-Option</kbd> key to move to a certain point when you double click an object while the Examine viewer is active.
 - [x] The splash screen shows now download progress of all media (3D files, images, sound and more).
+- [x] Removed pako dependency in favour of build-in DecompressionStream.
 
 ## X_ITE v15.0 Series
 
