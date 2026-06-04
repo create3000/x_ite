@@ -272,9 +272,9 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
             return this .foreign (this .fileURL .href, this .target);
       }
 
-      await this .callback (await $.gunzip (await this .getArrayBuffer (response)), this .fileURL);
+      await this .callback (await $.gunzip (await this .getBlob (response)), this .fileURL);
    },
-   async getArrayBuffer (response)
+   async getBlob (response)
    {
       const contentLength = +response .headers .get ("x-file-size") || +response .headers .get ("content-length");
 
@@ -302,11 +302,11 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
             browser .setLoadingFractions (this .node, Math .min (loadedBytes / contentLength, 1));
          }
 
-         return await new Blob (values) .arrayBuffer ();
+         return await new Blob (values);
       }
       else
       {
-         return await response .arrayBuffer ()
+         return await response .blob ()
       }
    },
    checkResponse (response)

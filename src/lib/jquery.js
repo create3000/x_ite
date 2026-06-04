@@ -31,19 +31,25 @@ Object .assign ($,
             console .error (error);
       }
    },
-   async gunzip (arrayBuffer)
+   /**
+    * Decompresses an ArrayBuffer or Blob and returns an ArrayBuffer.
+    *
+    * @param {ArrayBuffer | Blob} data
+    * @returns ArrayBuffer
+    */
+   async gunzip (data)
    {
       try
       {
          const
-            inputStream  = new Blob ([arrayBuffer]) .stream (),
+            inputStream  = data instanceof Blob ? data .stream () : new Blob ([data]) .stream (),
             outputStream = inputStream .pipeThrough (new DecompressionStream ("gzip"));
 
          return await new Response (outputStream) .arrayBuffer ();
       }
       catch
       {
-         return arrayBuffer;
+         return data instanceof Blob ? await data .arrayBuffer () : data;
       }
    },
 });
