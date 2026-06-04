@@ -604,7 +604,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const
          url         = new Fields .MFString (new URL (buffer .uri, this .getScene () .getBaseURL ())),
-         arrayBuffer = await FileLoader .loadDocument (this .getBrowser () .getWorld (), url);
+         arrayBuffer = await FileLoader .loadDocument (this .getBrowser () .getWorld (), url, { dataAsString: false });
 
       this .getScene () .removeLoadingObject (buffer);
 
