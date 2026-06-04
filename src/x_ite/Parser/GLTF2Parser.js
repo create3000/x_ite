@@ -600,6 +600,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!buffer .uri)
          return this .buffers [i];
 
+      buffer .isPrivate = () => false;
+
       this .getScene () .addLoadingObject (buffer);
 
       const
