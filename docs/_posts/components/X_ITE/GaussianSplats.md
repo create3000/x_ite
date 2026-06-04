@@ -41,22 +41,22 @@ The GaussianSplats node belongs to the [X_ITE](/x_ite/components/overview/#x_ite
 | MFVec4f | [in, out] | [orientations](#fields-orientations) | [ ] |
 | MFVec3f | [in, out] | [scales](#fields-scales) | [ ] |
 | MFFloat | [in, out] | [opacities](#fields-opacities) | [ ] |
-| MFVec3f | [in, out] | [sphericalHarmonicsDegree0Coef0](#fields-sphericalHarmonicsDegree0Coef0) |  |
-| MFVec3f | [in, out] | [sphericalHarmonicsDegree1Coef0](#fields-sphericalHarmonicsDegree1Coef0) |  |
-| MFVec3f | [in, out] | [sphericalHarmonicsDegree1Coef1](#fields-sphericalHarmonicsDegree1Coef1) |  |
-| MFVec3f | [in, out] | [sphericalHarmonicsDegree1Coef2](#fields-sphericalHarmonicsDegree1Coef2) |  |
-| MFVec3f | [in, out] | [sphericalHarmonicsDegree2Coef0](#fields-sphericalHarmonicsDegree2Coef0) |  |
-| MFVec3f | [in, out] | [sphericalHarmonicsDegree2Coef1](#fields-sphericalHarmonicsDegree2Coef1) |  |
-| MFVec3f | [in, out] | [sphericalHarmonicsDegree2Coef2](#fields-sphericalHarmonicsDegree2Coef2) |  |
-| MFVec3f | [in, out] | [sphericalHarmonicsDegree2Coef3](#fields-sphericalHarmonicsDegree2Coef3) |  |
-| MFVec3f | [in, out] | [sphericalHarmonicsDegree2Coef4](#fields-sphericalHarmonicsDegree2Coef4) |  |
-| MFVec3f | [in, out] | [sphericalHarmonicsDegree3Coef0](#fields-sphericalHarmonicsDegree3Coef0) |  |
-| MFVec3f | [in, out] | [sphericalHarmonicsDegree3Coef1](#fields-sphericalHarmonicsDegree3Coef1) |  |
-| MFVec3f | [in, out] | [sphericalHarmonicsDegree3Coef2](#fields-sphericalHarmonicsDegree3Coef2) |  |
-| MFVec3f | [in, out] | [sphericalHarmonicsDegree3Coef3](#fields-sphericalHarmonicsDegree3Coef3) |  |
-| MFVec3f | [in, out] | [sphericalHarmonicsDegree3Coef4](#fields-sphericalHarmonicsDegree3Coef4) |  |
-| MFVec3f | [in, out] | [sphericalHarmonicsDegree3Coef5](#fields-sphericalHarmonicsDegree3Coef5) |  |
-| MFVec3f | [in, out] | [sphericalHarmonicsDegree3Coef6](#fields-sphericalHarmonicsDegree3Coef6) |  |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree0Coef0](#fields-sphericalHarmonicsDegree0Coef0) | [ ] |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree1Coef0](#fields-sphericalHarmonicsDegree1Coef0) | [ ] |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree1Coef1](#fields-sphericalHarmonicsDegree1Coef1) | [ ] |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree1Coef2](#fields-sphericalHarmonicsDegree1Coef2) | [ ] |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree2Coef0](#fields-sphericalHarmonicsDegree2Coef0) | [ ] |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree2Coef1](#fields-sphericalHarmonicsDegree2Coef1) | [ ] |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree2Coef2](#fields-sphericalHarmonicsDegree2Coef2) | [ ] |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree2Coef3](#fields-sphericalHarmonicsDegree2Coef3) | [ ] |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree2Coef4](#fields-sphericalHarmonicsDegree2Coef4) | [ ] |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree3Coef0](#fields-sphericalHarmonicsDegree3Coef0) | [ ] |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree3Coef1](#fields-sphericalHarmonicsDegree3Coef1) | [ ] |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree3Coef2](#fields-sphericalHarmonicsDegree3Coef2) | [ ] |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree3Coef3](#fields-sphericalHarmonicsDegree3Coef3) | [ ] |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree3Coef4](#fields-sphericalHarmonicsDegree3Coef4) | [ ] |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree3Coef5](#fields-sphericalHarmonicsDegree3Coef5) | [ ] |
+| MFVec3f | [in, out] | [sphericalHarmonicsDegree3Coef6](#fields-sphericalHarmonicsDegree3Coef6) | [ ] |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
 | SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
