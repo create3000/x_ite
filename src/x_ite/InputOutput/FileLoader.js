@@ -295,7 +295,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
             if (done)
                break;
 
-            values .push (value)
+            values .push (value);
 
             // We count decompressed bytes, but loadedBytes can be number of compressed bytes.
             loadedBytes += value .byteLength;
@@ -307,7 +307,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       }
       else
       {
-         return await response .blob ()
+         return await response .blob ();
       }
    },
    checkResponse (response)
