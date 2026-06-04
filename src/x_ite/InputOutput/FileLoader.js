@@ -42,6 +42,11 @@ Object .assign (FileLoader,
 
 Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .prototype),
 {
+   isPrivate ()
+   {
+      // Don't count for loading objects.
+      return true;
+   },
    abort ()
    {
       this .url .length = 0;
