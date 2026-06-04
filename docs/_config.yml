@@ -19,7 +19,7 @@ title: X_ITE X3D Browser # the main title
 tagline: Ready for X3Dv4.1 and WebXR! # it will display as the sub-title
 
 description: >- # used by seo meta and the atom feed
-  X_ITE X3D Browser and VRML Viewer, view and manipulate X3D, VRML, glTF and other 3D sources in HTML.
+  X_ITE X3D Browser and VRML Viewer — View and Manipulate X3D, VRML, glTF and Other 3D Sources in HTML
 
 x3d_latest_version: 4.1 # x3d latest version
 
