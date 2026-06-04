@@ -87,6 +87,8 @@ Object .assign (X3DNetworkingContext .prototype,
       }
       else
       {
+         this .resetLoadCount ();
+
          if (this .getBrowserOption ("SplashScreen"))
          {
             this .getCanvas () .show ();
