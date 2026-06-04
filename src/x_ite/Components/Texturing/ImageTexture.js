@@ -65,18 +65,15 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
       new FileLoader (this, { dataAsString: false }) .loadDocument ([this .urlStack .shift ()], (data, url) =>
       {
-         this .URL = new URL (url);
-
          if (data === null)
          {
-            // No URL could be loaded.
-            this .clearTexture ();
-            this .updateOutputs (0, 0, 0);
-            this .setLoadState (X3DConstants .FAILED_STATE);
+            this .loadNext ();
          }
          else if (data instanceof ArrayBuffer)
          {
-            if (this .URL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .URL .href .match (/^data:image\/ktx2[;,]/))
+            this .fileURL = new URL (url);
+
+            if (this .fileURL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .fileURL .href .match (/^data:image\/ktx2[;,]/))
             {
                this .setLinear (true);
                this .setMipMaps (false);
@@ -104,8 +101,8 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
    },
    setError (event)
    {
-      if (this .URL .protocol !== "data:")
-         console .warn (`Error loading image '${decodeURI (this .URL)}:'`, event .type);
+      if (this .fileURL .protocol !== "data:")
+         console .warn (`Error loading image '${decodeURI (this .fileURL)}:'`, event .type);
 
       this .loadNext ();
    },
@@ -116,8 +113,8 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
 
       if (DEVELOPMENT)
       {
-         if (this .URL .protocol !== "data:")
-            console .info (`Done loading image texture '${decodeURI (this .URL)}'.`);
+         if (this .fileURL .protocol !== "data:")
+            console .info (`Done loading image texture '${decodeURI (this .fileURL)}'.`);
       }
 
       try
@@ -143,8 +140,8 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
    {
       if (DEVELOPMENT)
       {
-         if (this .URL .protocol !== "data:")
-            console .info (`Done loading image texture '${decodeURI (this .URL)}'.`);
+         if (this .fileURL .protocol !== "data:")
+            console .info (`Done loading image texture '${decodeURI (this .fileURL)}'.`);
       }
 
       try
@@ -160,13 +157,15 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, X3DTexture2DNod
          this .updateOutputs (width, height, this .isTransparent () ? 4 : 3);
          this .setLoadState (X3DConstants .COMPLETE_STATE);
          this .addNodeEvent ();
-
-         URL .revokeObjectURL (this .objectURL);
       }
       catch (error)
       {
          // Catch security error from cross origin requests.
          this .setError ({ type: error .message });
+      }
+      finally
+      {
+         URL .revokeObjectURL (this .objectURL);
       }
    },
    updateOutputs (width, height, colorDepth)

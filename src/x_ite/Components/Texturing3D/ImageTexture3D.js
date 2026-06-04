@@ -50,7 +50,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
    },
    loadData ()
    {
-      new FileLoader (this, { dataAsString: false }) .loadDocument (this ._url, (data, URL) =>
+      new FileLoader (this, { dataAsString: false }) .loadDocument (this ._url, (data, fileURL) =>
       {
          if (data === null)
          {
@@ -61,14 +61,14 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
          }
          else if (data instanceof ArrayBuffer)
          {
-            if (URL .pathname .match (/\.ktx2?(?:\.gz)?$/) || URL .href .match (/^data:image\/ktx2[;,]/))
+            if (fileURL .pathname .match (/\.ktx2?(?:\.gz)?$/) || fileURL .href .match (/^data:image\/ktx2[;,]/))
             {
                this .setLinear (true);
                this .setMipMaps (false);
 
                return this .getBrowser () .getKTXDecoder ()
                   .then (decoder => decoder .loadKTXFromBuffer (data))
-                  .then (texture => this .setKTXTexture (texture, URL));
+                  .then (texture => this .setKTXTexture (texture, fileURL));
             }
 
             this .setLinear (false);
@@ -110,15 +110,15 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, X3DTexture3DN
          }
       });
    },
-   setKTXTexture (texture, URL)
+   setKTXTexture (texture, fileURL)
    {
       if (texture .target !== this .getTarget ())
          throw new Error ("Invalid KTX texture target, must be 'TEXTURE_3D'.");
 
       if (DEVELOPMENT)
       {
-         if (URL .protocol !== "data:")
-            console .info (`Done loading image texture 3D '${decodeURI (URL)}'.`);
+         if (fileURL .protocol !== "data:")
+            console .info (`Done loading image texture 3D '${decodeURI (fileURL)}'.`);
       }
 
       const { baseWidth, baseHeight, baseDepth, numComponents } = texture;

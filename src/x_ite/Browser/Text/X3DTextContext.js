@@ -42,12 +42,10 @@ Object .assign (X3DTextContext .prototype,
 
       if (!promise)
       {
-         promise = new Promise (async (resolve, reject) =>
+         promise = new Promise ((resolve, reject) =>
          {
-            new FileLoader (node, { dataAsString: false }) .loadDocument ([fileURL], async (data, url) =>
+            new FileLoader (node, { dataAsString: false }) .loadDocument ([fileURL], async data =>
             {
-               this .URL = new URL (url);
-
                if (data === null)
                {
                   if (fileURL .protocol !== "data:")

@@ -5,6 +5,7 @@ import X3DNode                   from "../Core/X3DNode.js";
 import X3DEnvironmentTextureNode from "./X3DEnvironmentTextureNode.js";
 import X3DUrlObject              from "../Networking/X3DUrlObject.js";
 import X3DConstants              from "../../Base/X3DConstants.js";
+import FileLoader                from "../../InputOutput/FileLoader.js";
 import Vector2                   from "../../../standard/Math/Numbers/Vector2.js";
 import DEVELOPMENT               from "../../DEVELOPMENT.js";
 
@@ -59,38 +60,46 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          return;
       }
 
-      // Get URL.
-
-      this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
-
-      if (this .URL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .URL .href .match (/^data:image\/ktx2[;,]/))
+      new FileLoader (this, { dataAsString: false }) .loadDocument ([this .urlStack .shift ()], (data, url) =>
       {
-         this .setLinear (true);
-         this .setMipMaps (false);
-
-         this .getBrowser () .getKTXDecoder ()
-            .then (decoder => decoder .loadKTXFromURL (this .URL, this .getCache ()))
-            .then (texture => this .setKTXTexture (texture))
-            .catch (error => this .setError ({ type: error .message }));
-      }
-      else
-      {
-         this .setLinear (false);
-         this .setMipMaps (true);
-
-         if (this .URL .protocol !== "data:")
+         if (data === null)
          {
-            if (!this .getCache ())
-               this .URL .searchParams .set ("_", Date .now ());
+            this .loadNext ();
          }
+         else if (data instanceof ArrayBuffer)
+         {
+            this .fileURL = new URL (url);
 
-         this .image .attr ("src", this .URL);
-      }
+            if (this .fileURL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .fileURL .href .match (/^data:image\/ktx2[;,]/))
+            {
+               this .setLinear (true);
+               this .setMipMaps (false);
+
+               this .getBrowser () .getKTXDecoder ()
+                  .then (decoder => decoder .loadKTXFromBuffer (data))
+                  .then (texture => this .setKTXTexture (texture))
+                  .catch (error => this .setError ({ type: error .message }));
+            }
+            else
+            {
+               this .setLinear (false);
+               this .setMipMaps (true);
+
+               this .objectURL = URL .createObjectURL (new Blob ([data]));
+
+               this .image .attr ("src", this .objectURL);
+            }
+         }
+         else
+         {
+            throw new Error ("ImageTexture: no suitable file type handler found.");
+         }
+      });
    },
    setError (event)
    {
-      if (this .URL .protocol !== "data:")
-         console .warn (`Error loading image '${decodeURI (this .URL)}':`, event .type);
+      if (this .fileURL .protocol !== "data:")
+         console .warn (`Error loading image '${decodeURI (this .fileURL)}':`, event .type);
 
       this .loadNext ();
    },
@@ -101,8 +110,8 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
       if (DEVELOPMENT)
       {
-         if (this .URL .protocol !== "data:")
-            console .info (`Done loading image cube map texture '${decodeURI (this .URL)}'.`);
+         if (this .fileURL .protocol !== "data:")
+            console .info (`Done loading image cube map texture '${decodeURI (this .fileURL)}'.`);
       }
 
       try
@@ -125,8 +134,8 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
    {
       if (DEVELOPMENT)
       {
-         if (this .URL .protocol !== "data:")
-            console .info (`Done loading image cube map texture '${decodeURI (this .URL)}'.`);
+         if (this .fileURL .protocol !== "data:")
+            console .info (`Done loading image cube map texture '${decodeURI (this .fileURL)}'.`);
       }
 
       try
@@ -155,6 +164,10 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       {
          // Catch security error from cross origin requests.
          this .setError ({ type: error .message });
+      }
+      finally
+      {
+         URL .revokeObjectURL (this .objectURL);
       }
    },
    imageToCubeMap (texture, width, height)
