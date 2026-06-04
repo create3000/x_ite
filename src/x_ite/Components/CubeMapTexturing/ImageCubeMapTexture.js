@@ -70,7 +70,7 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
          {
             this .fileURL = new URL (fileURL);
 
-            if (this .fileURL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .fileURL .href .match (/^data:image\/ktx2[;,]/))
+            if (this .fileURL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .fileURL .href .match (/^\s*data:image\/ktx2[;,]/s))
             {
                this .setLinear (true);
                this .setMipMaps (false);
