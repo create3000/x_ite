@@ -1,4 +1,4 @@
-/* X_ITE v15.1.1 */
+/* X_ITE v15.1.2 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -736,6 +736,9 @@ const GeneratedCubeMapTexture_default_ = GeneratedCubeMapTexture;
 ;// external "__X_ITE_X3D__ .X3DUrlObject"
 const external_X_ITE_X3D_X3DUrlObject_namespaceObject = __X_ITE_X3D__ .X3DUrlObject;
 var external_X_ITE_X3D_X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DUrlObject_namespaceObject);
+;// external "__X_ITE_X3D__ .FileLoader"
+const external_X_ITE_X3D_FileLoader_namespaceObject = __X_ITE_X3D__ .FileLoader;
+var external_X_ITE_X3D_FileLoader_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FileLoader_namespaceObject);
 ;// external "__X_ITE_X3D__ .Vector2"
 const external_X_ITE_X3D_Vector2_namespaceObject = __X_ITE_X3D__ .Vector2;
 var external_X_ITE_X3D_Vector2_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector2_namespaceObject);
@@ -744,6 +747,7 @@ const external_X_ITE_X3D_DEVELOPMENT_namespaceObject = __X_ITE_X3D__ .DEVELOPMEN
 var external_X_ITE_X3D_DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_DEVELOPMENT_namespaceObject);
 ;// ./src/x_ite/Components/CubeMapTexturing/ImageCubeMapTexture.js
 /* provided dependency */ var $ = __webpack_require__(254);
+
 
 
 
@@ -805,38 +809,48 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
          return;
       }
 
-      // Get URL.
-
-      this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
-
-      if (this .URL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .URL .href .match (/^data:image\/ktx2[;,]/))
+      new (external_X_ITE_X3D_FileLoader_default()) (this, { dataAsString: false }) .loadDocument ([this .urlStack .shift ()], (data, fileURL) =>
       {
-         this .setLinear (true);
-         this .setMipMaps (false);
-
-         this .getBrowser () .getKTXDecoder ()
-            .then (decoder => decoder .loadKTXFromURL (this .URL, this .getCache ()))
-            .then (texture => this .setKTXTexture (texture))
-            .catch (error => this .setError ({ type: error .message }));
-      }
-      else
-      {
-         this .setLinear (false);
-         this .setMipMaps (true);
-
-         if (this .URL .protocol !== "data:")
+         if (data === null)
          {
-            if (!this .getCache ())
-               this .URL .searchParams .set ("_", Date .now ());
+            this .loadNext ();
          }
+         else if (data instanceof ArrayBuffer)
+         {
+            this .fileURL = new URL (fileURL);
 
-         this .image .attr ("src", this .URL);
-      }
+            if (this .fileURL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .fileURL .href .match (/^\s*data:image\/ktx2[;,]/s))
+            {
+               this .setLinear (true);
+               this .setMipMaps (false);
+
+               this .getBrowser () .getKTXDecoder ()
+                  .then (decoder => decoder .loadKTXFromBuffer (data))
+                  .then (texture => this .setKTXTexture (texture))
+                  .catch (error => this .setError ({ type: error .message }));
+            }
+            else
+            {
+               this .setLinear (false);
+               this .setMipMaps (true);
+
+               this .objectURL = URL .createObjectURL (new Blob ([data]));
+
+               this .image .attr ("src", this .objectURL);
+            }
+         }
+         else
+         {
+            throw new Error ("ImageTexture: no suitable file type handler found.");
+         }
+      });
    },
    setError (event)
    {
-      if (this .URL .protocol !== "data:")
-         console .warn (`Error loading image '${decodeURI (this .URL)}':`, event .type);
+      if (this .fileURL .protocol !== "data:")
+         console .warn (`Error loading image '${decodeURI (this .fileURL)}':`, event .type);
+
+      URL .revokeObjectURL (this .objectURL);
 
       this .loadNext ();
    },
@@ -847,8 +861,8 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
 
       if ((external_X_ITE_X3D_DEVELOPMENT_default()))
       {
-         if (this .URL .protocol !== "data:")
-            console .info (`Done loading image cube map texture '${decodeURI (this .URL)}'.`);
+         if (this .fileURL .protocol !== "data:")
+            console .info (`Done loading image cube map texture '${decodeURI (this .fileURL)}'.`);
       }
 
       try
@@ -871,8 +885,8 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
    {
       if ((external_X_ITE_X3D_DEVELOPMENT_default()))
       {
-         if (this .URL .protocol !== "data:")
-            console .info (`Done loading image cube map texture '${decodeURI (this .URL)}'.`);
+         if (this .fileURL .protocol !== "data:")
+            console .info (`Done loading image cube map texture '${decodeURI (this .fileURL)}'.`);
       }
 
       try
@@ -901,6 +915,10 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
       {
          // Catch security error from cross origin requests.
          this .setError ({ type: error .message });
+      }
+      finally
+      {
+         URL .revokeObjectURL (this .objectURL);
       }
    },
    imageToCubeMap (texture, width, height)

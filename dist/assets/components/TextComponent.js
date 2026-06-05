@@ -1,4 +1,4 @@
-/* X_ITE v15.1.1 */
+/* X_ITE v15.1.2 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -202,6 +202,10 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
          ? this .getAlignment (1, minorNormal)
          : minorNormal ? Text_TextAlignment .FIRST : Text_TextAlignment .END;
    },
+   getCache ()
+   {
+      return true;
+   },
    getAllowEmptyUrl ()
    {
       return true;
@@ -285,7 +289,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
 
          if (defaultFont)
          {
-            font = await browser .loadFont (new URL (defaultFont), true);
+            font = await browser .loadFont (new URL (defaultFont), this);
 
             if (font)
                break;
@@ -307,7 +311,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, (external_X
             if (executionContext .getSpecificationVersion () >= 4.1)
                console .warn (`Loading a font file via family field is deprecated, please use new FontLibrary node instead.`);
 
-            font = await browser .loadFont (fileURL, this .getCache ());
+            font = await browser .loadFont (fileURL, this);
 
             if (font)
                break;
@@ -1468,7 +1472,7 @@ Object .assign (Object .setPrototypeOf (FontLibrary .prototype, (external_X_ITE_
 
       for (const fileURL of fileURLs)
       {
-         font = await browser .loadFont (fileURL, this .getCache ());
+         font = await browser .loadFont (fileURL, this);
 
          if (font)
             break;
@@ -17846,10 +17850,14 @@ function loadSync() {
 }
 
 
+;// external "__X_ITE_X3D__ .FileLoader"
+const external_X_ITE_X3D_FileLoader_namespaceObject = __X_ITE_X3D__ .FileLoader;
+var external_X_ITE_X3D_FileLoader_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FileLoader_namespaceObject);
 ;// external "__X_ITE_X3D__ .DEVELOPMENT"
 const external_X_ITE_X3D_DEVELOPMENT_namespaceObject = __X_ITE_X3D__ .DEVELOPMENT;
 var external_X_ITE_X3D_DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_DEVELOPMENT_namespaceObject);
 ;// ./src/x_ite/Browser/Text/X3DTextContext.js
+
 
 
 
@@ -17887,41 +17895,42 @@ Object .assign (X3DTextContext .prototype,
     * @param {boolean} cache
     * @returns Promise<OpenType.Font>
     */
-   loadFont (fileURL, cache = true)
+   loadFont (fileURL, node)
    {
-      let promise = cache ? this [_fontCache] .get (fileURL .href) : null;
+      let promise = node .getCache () ? this [_fontCache] .get (fileURL .href) : null;
 
       if (!promise)
       {
-         promise = new Promise (async (resolve, reject) =>
+         promise = new Promise ((resolve, reject) =>
          {
-            try
+            new (external_X_ITE_X3D_FileLoader_default()) (node, { dataAsString: false }) .loadDocument ([fileURL], async data =>
             {
-               const response = await fetch (fileURL, { cache: cache ? "default" : "reload" });
-
-               if (!response .ok)
-                  throw new Error (response .statusText || response .status);
-
-               const
-                  arrayBuffer  = await response .arrayBuffer (),
-                  decompressed = await this .decompressFont (arrayBuffer),
-                  font         = parseBuffer (decompressed);
-
-               if ((external_X_ITE_X3D_DEVELOPMENT_default()))
+               if (data === null)
                {
                   if (fileURL .protocol !== "data:")
-                     console .info (`Done loading font '${decodeURI (fileURL)}'.`);
+                     console .warn (`Error loading font '${decodeURI (fileURL)}':`);
+
+                  resolve (null);
                }
+               else if (data instanceof ArrayBuffer)
+               {
+                  const
+                     decompressed = await this .decompressFont (data),
+                     font         = parseBuffer (decompressed);
 
-               resolve (font);
-            }
-            catch (error)
-            {
-               if (fileURL .protocol !== "data:")
-                  console .warn (`Error loading font '${decodeURI (fileURL)}':`, error);
+                  if ((external_X_ITE_X3D_DEVELOPMENT_default()))
+                  {
+                     if (fileURL .protocol !== "data:")
+                        console .info (`Done loading font '${decodeURI (fileURL)}'.`);
+                  }
 
-               resolve (null);
-            }
+                  resolve (font);
+               }
+               else
+               {
+                  throw new Error (`${node .getTypeName ()}: no suitable file type handler found.`);
+               }
+            });
          });
 
          if (!fileURL .search)

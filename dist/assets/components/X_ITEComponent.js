@@ -1,4 +1,4 @@
-/* X_ITE v15.1.1 */
+/* X_ITE v15.1.2 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -1004,8 +1004,6 @@ var external_X_ITE_X3D_AlphaMode_default = /*#__PURE__*/__webpack_require__.n(ex
 ;// external "__X_ITE_X3D__ .VertexArray"
 const external_X_ITE_X3D_VertexArray_namespaceObject = __X_ITE_X3D__ .VertexArray;
 var external_X_ITE_X3D_VertexArray_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_VertexArray_namespaceObject);
-;// external "__X_ITE_X3D__ .Vector3"
-const external_X_ITE_X3D_Vector3_namespaceObject = __X_ITE_X3D__ .Vector3;
 ;// external "__X_ITE_X3D__ .Matrix4"
 const external_X_ITE_X3D_Matrix4_namespaceObject = __X_ITE_X3D__ .Matrix4;
 var external_X_ITE_X3D_Matrix4_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Matrix4_namespaceObject);
@@ -1133,15 +1131,14 @@ const GaussianSplats_fs_default_ = fs;
 
 
 
-
 // Register shaders.
 
 
 
 
 
-external_X_ITE_X3D_ShaderRegistry_default().addVertex   ("GaussianSplats", GaussianSplats_vs);
-external_X_ITE_X3D_ShaderRegistry_default().addFragment ("GaussianSplats", GaussianSplats_fs);
+external_X_ITE_X3D_ShaderRegistry_default().addVertexShader   ("GaussianSplats", GaussianSplats_vs);
+external_X_ITE_X3D_ShaderRegistry_default().addFragmentShader ("GaussianSplats", GaussianSplats_fs);
 
 // Spherical Harmonics Counts
 
@@ -1395,13 +1392,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
    { },
    display (gl, renderContext)
    {
-      const
-         viewport   = renderContext .viewport,
-         shaderNode = this .getShader (renderContext);
-
-      // Set viewport.
-
-      gl .viewport (... viewport);
+      const shaderNode = this .getShader (renderContext);
 
       // Setup shader.
 
@@ -1410,7 +1401,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
 
       // Uniforms
 
-      const { renderObject, modelViewMatrix, localObjects, fogNode } = renderContext;
+      const { renderObject, viewport, modelViewMatrix, localObjects, fogNode } = renderContext;
       const projectionMatrixArray = renderObject .getProjectionMatrixArray ();
 
       // Set ClipPlane nodes.
@@ -1418,8 +1409,9 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
       shaderNode .setClipPlanes (gl, localObjects, renderObject);
       fogNode ?.setShaderUniforms (gl, shaderNode);
 
-      // Set matrices.
+      // Set viewport and matrices.
 
+      gl .viewport (... viewport);
       gl .uniform4iv (shaderNode .x3d_Viewport, renderObject .getViewportArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
       gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,        false, renderObject .getEyeMatrixArray ());
@@ -1578,20 +1570,18 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
       {
          // console .log (event .data .type);
 
+         this .sortPending = false;
+
          switch (event .data .type)
          {
             case "ready":
             {
-               this .sortPending = false;
-
                this .sortModelViewMatrix .fill (0);
                browser .addBrowserEvent ();
                break;
             }
             case "sorted":
             {
-               this .sortPending = false;
-
                gl .bindBuffer (gl .ARRAY_BUFFER, this .splatsIndexBuffer);
                gl .bufferData (gl .ARRAY_BUFFER, event .data .indices, gl .DYNAMIC_DRAW);
 
@@ -1601,8 +1591,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
             case "error":
             {
                console .error ("Sort worker error:", event .data .message);
-
-               this .sortPending = false;
                break;
             }
          }
@@ -1641,6 +1629,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
          type: "sort",
          viewMatrix: this .sortModelViewMatrix,
       });
+
+      this .sortPending = true;
    },
 });
 
@@ -2073,7 +2063,7 @@ X_ITE_ExtensionKeys .add ("IRIDESCENCE_MATERIAL_EXTENSION");
 
 
 
-external_X_ITE_X3D_ShaderRegistry_default().addInclude ("Iridescence", Iridescence2_glsl);
+external_X_ITE_X3D_ShaderRegistry_default().addIncludeFile ("Iridescence", Iridescence2_glsl);
 
 // Register textures.
 
@@ -2453,8 +2443,8 @@ precision highp int;precision highp float;precision highp sampler2D;precision hi
 
 
 
-external_X_ITE_X3D_ShaderRegistry_default().addInclude  ("SpecularGlossiness", SpecularGlossiness2_glsl);
-external_X_ITE_X3D_ShaderRegistry_default().addFragment ("SpecularGlossiness", SpecularGlossiness2_fs);
+external_X_ITE_X3D_ShaderRegistry_default().addIncludeFile    ("SpecularGlossiness", SpecularGlossiness2_glsl);
+external_X_ITE_X3D_ShaderRegistry_default().addFragmentShader ("SpecularGlossiness", SpecularGlossiness2_fs);
 
 // Register textures.
 
@@ -3291,8 +3281,8 @@ external_X_ITE_X3D_MaterialTextures_default().add ("x3d_MultiscatterColorTexture
 
 
 
-external_X_ITE_X3D_ShaderRegistry_default().addInclude ("Scatter",              Scatter2_glsl);
-external_X_ITE_X3D_ShaderRegistry_default().addInclude ("SubsurfaceScattering", SubsurfaceScattering2_glsl);
+external_X_ITE_X3D_ShaderRegistry_default().addIncludeFile ("Scatter",              Scatter2_glsl);
+external_X_ITE_X3D_ShaderRegistry_default().addIncludeFile ("SubsurfaceScattering", SubsurfaceScattering2_glsl);
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.

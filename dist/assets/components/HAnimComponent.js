@@ -1,4 +1,4 @@
-/* X_ITE v15.1.1 */
+/* X_ITE v15.1.2 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -213,7 +213,7 @@ return skin;}
 
 
 
-external_X_ITE_X3D_ShaderRegistry_default().addInclude ("Skin", Skin2_glsl);
+external_X_ITE_X3D_ShaderRegistry_default().addIncludeFile ("Skin", Skin2_glsl);
 
 /**
  * HAnimHumanoid
