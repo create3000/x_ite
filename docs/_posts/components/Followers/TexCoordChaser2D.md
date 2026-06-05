@@ -13,7 +13,7 @@ tags: [TexCoordChaser2D, Followers]
 
 ## Overview
 
-TexCoordChaser2D generates a series of single floating-point values that progressively change from initial value to destination value.
+**TexCoordChaser2D** generates a series of single floating-point values that progressively change from initial value to destination value.
 
 The TexCoordChaser2D node belongs to the [Followers](/x_ite/components/overview/#followers) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.3 or higher.
 

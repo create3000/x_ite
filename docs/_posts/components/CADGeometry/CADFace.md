@@ -13,7 +13,7 @@ tags: [CADFace, CADGeometry]
 
 ## Overview
 
-CADFace holds geometry representing one face in a Computer-Aided Design (CAD) CADPart. CADFace can only contain a single Shape or LOD node (with `containerField='shape').`
+**CADFace** holds geometry representing one face in a Computer-Aided Design (CAD) [CADPart](/x_ite/components/cadgeometry/cadpart/). **CADFace** can only contain a single [Shape](/x_ite/components/shape/shape/) or [LOD](/x_ite/components/navigation/lod/) node (with `containerField='shape').`
 
 The CADFace node belongs to the [CADGeometry](/x_ite/components/overview/#cadgeometry) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.1 or higher.
 

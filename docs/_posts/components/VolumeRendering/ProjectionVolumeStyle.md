@@ -13,7 +13,7 @@ tags: [ProjectionVolumeStyle, VolumeRendering]
 
 ## Overview
 
-ProjectionVolumeStyle uses voxel data to directly generate output color.
+**ProjectionVolumeStyle** uses voxel data to directly generate output color.
 
 The ProjectionVolumeStyle node belongs to the [VolumeRendering](/x_ite/components/overview/#volumerendering) component and requires at least support level **2,** its default container field is *renderStyle.* It is available from X3D version 3.3 or higher.
 

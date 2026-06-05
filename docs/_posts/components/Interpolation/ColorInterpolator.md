@@ -13,7 +13,7 @@ tags: [ColorInterpolator, Interpolation, VRML]
 
 ## Overview
 
-ColorInterpolator generates a range of color values. Authors can ROUTE value_changed output events to various color fields of Material or Color nodes.
+**ColorInterpolator** generates a range of color values. Authors can ROUTE value_changed output events to various color fields of [Material](/x_ite/components/shape/material/) or [Color](/x_ite/components/rendering/color/) nodes.
 
 The ColorInterpolator node belongs to the [Interpolation](/x_ite/components/overview/#interpolation) component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 

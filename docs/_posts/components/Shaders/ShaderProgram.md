@@ -13,7 +13,7 @@ tags: [ShaderProgram, Shaders]
 
 ## Overview
 
-ShaderProgram is contained by ProgramShader and provides the source and interface to a self-contained program that occupies one part of the rendering process: either a vertex or fragment shader.
+**ShaderProgram** is contained by [ProgramShader](/x_ite/components/shaders/programshader/) and provides the source and interface to a self-contained program that occupies one part of the rendering process: either a vertex or fragment shader.
 
 The ShaderProgram node belongs to the [Shaders](/x_ite/components/overview/#shaders) component and requires at least support level **1,** its default container field is *programs.* It is available from X3D version 3.0 or higher.
 

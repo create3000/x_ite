@@ -13,7 +13,7 @@ tags: [Group, Grouping, VRML]
 
 ## Overview
 
-Group is a Grouping node that can contain most nodes.
+**Group** is a **Group**ing node that can contain most nodes.
 
 The Group node belongs to the [Grouping](/x_ite/components/overview/#grouping) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 

@@ -13,7 +13,7 @@ tags: [FontLibrary, Text]
 
 ## Overview
 
-FontLibrary can load additional fonts for use by Text and FontStyle nodes.
+**FontLibrary** can load additional fonts for use by [Text](/x_ite/components/text/text/) and [FontStyle](/x_ite/components/text/fontstyle/) nodes.
 
 The FontLibrary node belongs to the [Text](/x_ite/components/overview/#text) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 4.1 or higher.
 

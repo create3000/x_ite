@@ -13,7 +13,7 @@ tags: [SpatialSound, Sound]
 
 ## Overview
 
-The SpatialSound node controls the 3D spatialization of sound playback by a child AudioClip or MovieTexture node. Sound intensity includes stereo support, varying according to user location and view direction in the scene.
+The **SpatialSound** node controls the 3D spatialization of sound playback by a child [AudioClip](/x_ite/components/sound/audioclip/) or [MovieTexture](/x_ite/components/texturing/movietexture/) node. [Sound](/x_ite/components/sound/sound/) intensity includes stereo support, varying according to user location and view direction in the scene.
 
 The SpatialSound node belongs to the [Sound](/x_ite/components/overview/#sound) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
 

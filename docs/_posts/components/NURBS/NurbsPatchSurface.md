@@ -13,7 +13,7 @@ tags: [NurbsPatchSurface, NURBS]
 
 ## Overview
 
-NurbsPatchSurface defines a contiguous 3D Non-Uniform Rational B-Spline (NURBS) surface.
+**NurbsPatchSurface** defines a contiguous 3D Non-Uniform Rational B-Spline (NURBS) surface.
 
 The NurbsPatchSurface node belongs to the [NURBS](/x_ite/components/overview/#nurbs) component and requires at least support level **1,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 

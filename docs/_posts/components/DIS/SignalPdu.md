@@ -13,7 +13,7 @@ tags: [SignalPdu, DIS]
 
 ## Overview
 
-SignalPdu is a networked Protocol Data Unit (PDU) information node that communicates the transmission of voice, audio or other data modeled in a simulation.
+**SignalPdu** is a networked Protocol Data Unit (PDU) information node that communicates the transmission of voice, audio or other data modeled in a simulation.
 
 The SignalPdu node belongs to the [DIS](/x_ite/components/overview/#dis) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 

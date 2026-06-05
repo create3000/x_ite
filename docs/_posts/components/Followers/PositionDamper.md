@@ -13,7 +13,7 @@ tags: [PositionDamper, Followers]
 
 ## Overview
 
-PositionDamper generates a series of position values that progressively change from initial value to destination value.
+**PositionDamper** generates a series of position values that progressively change from initial value to destination value.
 
 The PositionDamper node belongs to the [Followers](/x_ite/components/overview/#followers) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 

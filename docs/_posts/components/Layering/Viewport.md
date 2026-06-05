@@ -13,7 +13,7 @@ tags: [Viewport, Layering]
 
 ## Overview
 
-Viewport is a Grouping node that can contain most nodes. Viewport specifies a set of rectangular clip boundaries against which the children nodes are clipped as they are rendered.
+**Viewport** is a Grouping node that can contain most nodes. **Viewport** specifies a set of rectangular clip boundaries against which the children nodes are clipped as they are rendered.
 
 The Viewport node belongs to the [Layering](/x_ite/components/overview/#layering) component and requires at least support level **1,** its default container field is *viewport.* It is available from X3D version 3.2 or higher.
 

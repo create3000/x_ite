@@ -13,7 +13,7 @@ tags: [MultiTextureTransform, Texturing]
 
 ## Overview
 
-MultiTextureTransform contains multiple TextureTransform nodes, each provided for use by corresponding ImageTexture MovieTexture or PixelTexture nodes within a sibling MultiTexture node.
+**MultiTextureTransform** contains multiple [TextureTransform](/x_ite/components/texturing/texturetransform/) nodes, each provided for use by corresponding [ImageTexture](/x_ite/components/texturing/imagetexture/) [MovieTexture](/x_ite/components/texturing/movietexture/) or [PixelTexture](/x_ite/components/texturing/pixeltexture/) nodes within a sibling [MultiTexture](/x_ite/components/texturing/multitexture/) node.
 
 The MultiTextureTransform node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **2,** its default container field is *textureTransform.* It is available from X3D version 3.0 or higher.
 

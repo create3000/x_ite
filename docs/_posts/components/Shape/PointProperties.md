@@ -13,7 +13,7 @@ tags: [PointProperties, Shape]
 
 ## Overview
 
-PointProperties allows precise fine-grained control over the rendering style of PointSet node points inside the same Shape.
+**PointProperties** allows precise fine-grained control over the rendering style of [PointSet](/x_ite/components/rendering/pointset/) node points inside the same [Shape](/x_ite/components/shape/shape/).
 
 The PointProperties node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **5,** its default container field is *pointProperties.* It is available from X3D version 4.0 or higher.
 

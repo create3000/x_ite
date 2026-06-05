@@ -13,7 +13,7 @@ tags: [ForcePhysicsModel, ParticleSystems]
 
 ## Overview
 
-ForcePhysicsModel applies a constant force value to the particles.
+**ForcePhysicsModel** applies a constant force value to the particles.
 
 The ForcePhysicsModel node belongs to the [ParticleSystems](/x_ite/components/overview/#particlesystems) component and requires at least support level **1,** its default container field is *physics.* It is available from X3D version 3.2 or higher.
 

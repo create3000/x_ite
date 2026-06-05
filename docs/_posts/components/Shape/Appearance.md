@@ -13,7 +13,7 @@ tags: [Appearance, Shape, VRML]
 
 ## Overview
 
-Appearance specifies the visual properties of geometry by containing the Material, ImageTexture/MovieTexture/PixelTexture, FillProperties, LineProperties, programmable shader nodes (ComposedShader, PackagedShader, ProgramShader) and TextureTransform nodes.
+**Appearance** specifies the visual properties of geometry by containing the [Material](/x_ite/components/shape/material/), [ImageTexture](/x_ite/components/texturing/imagetexture/)/[MovieTexture](/x_ite/components/texturing/movietexture/)/[PixelTexture](/x_ite/components/texturing/pixeltexture/), [FillProperties](/x_ite/components/shape/fillproperties/), [LineProperties](/x_ite/components/shape/lineproperties/), programmable shader nodes ([ComposedShader](/x_ite/components/shaders/composedshader/), [PackagedShader](/x_ite/components/shaders/packagedshader/), [ProgramShader](/x_ite/components/shaders/programshader/)) and [TextureTransform](/x_ite/components/texturing/texturetransform/) nodes.
 
 The Appearance node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **1,** its default container field is *appearance.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 

@@ -13,7 +13,7 @@ tags: [BooleanToggle, EventUtilities]
 
 ## Overview
 
-BooleanToggle maintains state and negates output when a true input is provided.
+**BooleanToggle** maintains state and negates output when a true input is provided.
 
 The BooleanToggle node belongs to the [EventUtilities](/x_ite/components/overview/#eventutilities) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 

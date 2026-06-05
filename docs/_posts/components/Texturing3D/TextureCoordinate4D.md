@@ -13,7 +13,7 @@ tags: [TextureCoordinate4D, Texturing3D]
 
 ## Overview
 
-TextureCoordinate4D specifies a set of 4D (homogeneous 3D) texture coordinates used by vertex-based geometry nodes (such as IndexedFaceSet or ElevationGrid) to map 3D textures to vertices.
+**TextureCoordinate4D** specifies a set of 4D (homogeneous 3D) texture coordinates used by vertex-based geometry nodes (such as [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) or [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/)) to map 3D textures to vertices.
 
 The TextureCoordinate4D node belongs to the [Texturing3D](/x_ite/components/overview/#texturing3d) component and requires at least support level **1,** its default container field is *texCoord.* It is available from X3D version 3.1 or higher.
 

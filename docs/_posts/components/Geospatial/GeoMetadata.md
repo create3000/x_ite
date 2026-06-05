@@ -13,7 +13,7 @@ tags: [GeoMetadata, Geospatial]
 
 ## Overview
 
-GeoMetadata includes a generic subset of metadata about the geographic data.
+**GeoMetadata** includes a generic subset of metadata about the geographic data.
 
 The GeoMetadata node belongs to the [Geospatial](/x_ite/components/overview/#geospatial) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 

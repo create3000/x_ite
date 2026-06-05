@@ -13,7 +13,7 @@ tags: [CollisionCollection, RigidBodyPhysics]
 
 ## Overview
 
-CollisionCollection holds a collection of objects that can be managed as a single entity for resolution of inter-object collisions.
+**CollisionCollection** holds a collection of objects that can be managed as a single entity for resolution of inter-object collisions.
 
 The CollisionCollection node belongs to the [RigidBodyPhysics](/x_ite/components/overview/#rigidbodyphysics) component and requires at least support level **1,** its default container field is *collider.* It is available from X3D version 3.2 or higher.
 

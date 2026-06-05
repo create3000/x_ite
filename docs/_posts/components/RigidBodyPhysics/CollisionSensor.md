@@ -13,7 +13,7 @@ tags: [CollisionSensor, RigidBodyPhysics]
 
 ## Overview
 
-CollisionSensor generates collision-detection events.
+**CollisionSensor** generates collision-detection events.
 
 The CollisionSensor node belongs to the [RigidBodyPhysics](/x_ite/components/overview/#rigidbodyphysics) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 

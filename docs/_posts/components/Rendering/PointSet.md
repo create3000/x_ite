@@ -13,7 +13,7 @@ tags: [PointSet, Rendering, VRML]
 
 ## Overview
 
-PointSet is a node that contains a set of colored 3D points, represented by contained Color or ColorRGBA and Coordinate or CoordinateDouble nodes.
+**PointSet** is a node that contains a set of colored 3D points, represented by contained [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) and [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) nodes.
 
 The PointSet node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **1,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 

@@ -13,7 +13,7 @@ tags: [MetadataFloat, Core]
 
 ## Overview
 
-MetadataFloat contains a typed list of values providing metadata information about its parent node. Further information about this specific Metadata* node may be provided by a single child Metadata* node with `containerField='metadata'.`
+**MetadataFloat** contains a typed list of values providing metadata information about its parent node. Further information about this specific Metadata* node may be provided by a single child Metadata* node with `containerField='metadata'.`
 
 The MetadataFloat node belongs to the [Core](/x_ite/components/overview/#core) component and requires at least support level **1,** its default container field is *value.* It is available from X3D version 3.0 or higher.
 

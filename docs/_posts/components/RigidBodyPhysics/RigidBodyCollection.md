@@ -13,7 +13,7 @@ tags: [RigidBodyCollection, RigidBodyPhysics]
 
 ## Overview
 
-RigidBodyCollection represents a system of bodies that interact within a single physics model.
+**RigidBodyCollection** represents a system of bodies that interact within a single physics model.
 
 The RigidBodyCollection node belongs to the [RigidBodyPhysics](/x_ite/components/overview/#rigidbodyphysics) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 

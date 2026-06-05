@@ -13,7 +13,7 @@ tags: [MovieTexture, Texturing, VRML]
 
 ## Overview
 
-MovieTexture applies a 2D movie image to surface geometry, or provides audio for a Sound node. First define as texture, then USE as Sound source to see it/hear it/save memory. Texture maps have a 2D coordinate system (s, t) horizontal and vertical, with (s, t) texture-coordinate values in range [0.0, 1.0] for opposite corners of the image.
+**MovieTexture** applies a 2D movie image to surface geometry, or provides audio for a [Sound](/x_ite/components/sound/sound/) node. First define as texture, then USE as [Sound](/x_ite/components/sound/sound/) source to see it/hear it/save memory. Texture maps have a 2D coordinate system (s, t) horizontal and vertical, with (s, t) texture-coordinate values in range [0.0, 1.0] for opposite corners of the image.
 
 The MovieTexture node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **3,** its default container field is *texture.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 

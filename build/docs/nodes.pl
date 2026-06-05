@@ -115,6 +115,18 @@ sub link_nodes {
    return @lines;
 }
 
+sub strong_type_name {
+   $typeName = shift;
+   @lines    = @_;
+
+   foreach $line (@lines)
+   {
+      $line =~ s/$typeName/**$typeName**/g;
+   }
+
+   return @lines;
+}
+
 sub update_node {
    $typeName      = shift;
    $componentName = shift;
@@ -189,10 +201,11 @@ sub update_node {
    s/(:|\s*at)\]/]/sgo foreach @hints;
    s/(:|\s*at)\]/]/sgo foreach @warnings;
 
-   @hints    = fix_links @hints;
-   @warnings = fix_links @warnings;
-   @hints    = link_nodes $typeName, @hints;
-   @warnings = link_nodes $typeName, @warnings;
+   @hints       = fix_links @hints;
+   @warnings    = fix_links @warnings;
+   @description = strong_type_name $typeName, link_nodes $typeName, @description;
+   @hints       = link_nodes $typeName, @hints;
+   @warnings    = link_nodes $typeName, @warnings;
 
    # Overview
 

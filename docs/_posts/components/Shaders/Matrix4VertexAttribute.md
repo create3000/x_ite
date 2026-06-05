@@ -13,7 +13,7 @@ tags: [Matrix4VertexAttribute, Shaders]
 
 ## Overview
 
-Matrix4VertexAttribute defines a set of per-vertex 4x4 matrix attributes.
+**Matrix4VertexAttribute** defines a set of per-vertex 4x4 matrix attributes.
 
 The Matrix4VertexAttribute node belongs to the [Shaders](/x_ite/components/overview/#shaders) component and requires at least support level **1,** its default container field is *attrib.* It is available from X3D version 3.0 or higher.
 

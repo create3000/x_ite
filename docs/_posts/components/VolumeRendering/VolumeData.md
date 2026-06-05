@@ -13,7 +13,7 @@ tags: [VolumeData, VolumeRendering]
 
 ## Overview
 
-VolumeData displays a simple non-segmented voxel dataset with a single RenderStyle node.
+**VolumeData** displays a simple non-segmented voxel dataset with a single RenderStyle node.
 
 The VolumeData node belongs to the [VolumeRendering](/x_ite/components/overview/#volumerendering) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.3 or higher.
 

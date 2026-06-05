@@ -13,7 +13,7 @@ tags: [ComposedTexture3D, Texturing3D]
 
 ## Overview
 
-ComposedTexture3D defines a 3D image-based texture map as a collection of 2D texture sources at various depths.
+**ComposedTexture3D** defines a 3D image-based texture map as a collection of 2D texture sources at various depths.
 
 The ComposedTexture3D node belongs to the [Texturing3D](/x_ite/components/overview/#texturing3d) component and requires at least support level **1,** its default container field is *texture.* It is available from X3D version 3.1 or higher.
 

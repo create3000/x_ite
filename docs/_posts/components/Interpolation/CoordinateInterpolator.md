@@ -13,7 +13,7 @@ tags: [CoordinateInterpolator, Interpolation, VRML]
 
 ## Overview
 
-CoordinateInterpolator linearly interpolates among a list of 3-tuple MFVec3f arrays, producing a single MFVec3f array that is fractional average between two nearest arrays in the list. Authors can ROUTE value_changed output events (an array of 3-tuple SFVec3f values) to a Coordinate node's point field, or to another MFVec3f field.
+**CoordinateInterpolator** linearly interpolates among a list of 3-tuple MFVec3f arrays, producing a single MFVec3f array that is fractional average between two nearest arrays in the list. Authors can ROUTE value_changed output events (an array of 3-tuple SFVec3f values) to a [Coordinate](/x_ite/components/rendering/coordinate/) node's point field, or to another MFVec3f field.
 
 The CoordinateInterpolator node belongs to the [Interpolation](/x_ite/components/overview/#interpolation) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 

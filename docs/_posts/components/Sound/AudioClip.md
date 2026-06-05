@@ -13,7 +13,7 @@ tags: [AudioClip, Sound, VRML]
 
 ## Overview
 
-AudioClip provides audio data used by parent Sound nodes.
+**AudioClip** provides audio data used by parent [Sound](/x_ite/components/sound/sound/) nodes.
 
 The AudioClip node belongs to the [Sound](/x_ite/components/overview/#sound) component and requires at least support level **1,** its default container field is *source.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 

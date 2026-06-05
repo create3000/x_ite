@@ -13,7 +13,7 @@ tags: [SilhouetteEnhancementVolumeStyle, VolumeRendering]
 
 ## Overview
 
-SilhouetteEnhancementVolumeStyle specifies that volumetric data is rendered with silhouette enhancement.
+**SilhouetteEnhancementVolumeStyle** specifies that volumetric data is rendered with silhouette enhancement.
 
 The SilhouetteEnhancementVolumeStyle node belongs to the [VolumeRendering](/x_ite/components/overview/#volumerendering) component and requires at least support level **2,** its default container field is *renderStyle.* It is available from X3D version 3.3 or higher.
 

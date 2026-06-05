@@ -13,7 +13,7 @@ tags: [AcousticProperties, Shape]
 
 ## Overview
 
-AcousticProperties specifies the interaction of sound waves with characteristics of geometric objects in the scene. Acoustic coefficient values are expected to fully account for physical and structural characteristics of associated geometry such as width, height, thickness, shape, softness and/or hardness, and density variations.
+**AcousticProperties** specifies the interaction of sound waves with characteristics of geometric objects in the scene. Acoustic coefficient values are expected to fully account for physical and structural characteristics of associated geometry such as width, height, thickness, shape, softness and/or hardness, and density variations.
 
 The AcousticProperties node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **5,** its default container field is *acousticProperties.* It is available from X3D version 4.0 or higher.
 
