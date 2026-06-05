@@ -124,7 +124,7 @@ Optional single contained *geometry* node that is rendered according to correspo
 
 ### Hints
 
-- [**Shape**](https://en.wikipedia.org/wiki/**Shape**)
+- [**Shape**](https://en.wikipedia.org/wiki/Shape)
 - The **Shape** design pattern to collect appearance and geometry together is fundamentally the same for many types of 3D graphics software and hardware.
 - For advanced extensibility, authors can substitute a type-matched ProtoInstance node (with correct containerField value) for contained node content.
 - [X3D Architecture 12.2.1 **Shape** nodes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/shape.html#Shapenodes)

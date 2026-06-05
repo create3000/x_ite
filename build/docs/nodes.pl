@@ -121,7 +121,7 @@ sub strong_type_name {
 
    foreach $line (@lines)
    {
-      $line =~ s/\b$typeName\b/**$typeName**/g;
+      $line =~ s/(?<!\/)\b($typeName[,.:;]?)\b/**$1**/g;
    }
 
    return @lines;

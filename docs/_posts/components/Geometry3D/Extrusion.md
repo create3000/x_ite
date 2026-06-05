@@ -247,7 +247,7 @@ The *spine* array defines a center-line sequence of 3D points that define a piec
 
 ### Hints
 
-- [**Extrusion**](https://en.wikipedia.org/wiki/**Extrusion**)
+- [**Extrusion**](https://en.wikipedia.org/wiki/Extrusion)
 - Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 
 ### Warning

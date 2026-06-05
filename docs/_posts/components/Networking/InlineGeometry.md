@@ -177,7 +177,7 @@ The *smooth* field provides a hint to the browser whether *smooth* rendering is 
 
 - [Wikipedia, STL (Standard Triangle Language or Standard Tessellation Language)](https://en.wikipedia.org/wiki/STL_(file_format))
 - [Wikipedia, PLY (Polygon File Format or Stanford Triangle Format)](https://en.wikipedia.org/wiki/PLY_(file_format))
-- [Example](https://create3000.github.io/x_ite/playground/?url=https://create3000.github.io/media/examples/Networking/**InlineGeometry**/**InlineGeometry**.x3d)
+- [Example](https://create3000.github.io/x_ite/playground/?url=https://create3000.github.io/media/examples/Networking/InlineGeometry/InlineGeometry.x3d)
 
 ## Example
 

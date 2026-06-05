@@ -76,7 +76,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 
 ### Hints
 
-- [**Sphere**](https://en.wikipedia.org/wiki/**Sphere**)
+- [**Sphere**](https://en.wikipedia.org/wiki/Sphere)
 - Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 
 ## Example

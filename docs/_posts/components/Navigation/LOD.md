@@ -162,7 +162,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 - [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) and [Viewpoint](/x_ite/components/navigation/viewpoint/) share the same binding stack, so no more than one of these nodes can be bound and active at a given time.
 - Security mechanisms such as encryption and authentication can be applied to high levels of detail, allowing authors to protect intellectual property at high resolution for authorized users while still rendering simple unrestricted models for other users.
 - Apply `containerField='shape'` if parent node is [CADFace](/x_ite/components/cadgeometry/cadface/).
-- [ConformanceNist X3D Examples Archive](https://www.web3d.org/x3d/content/examples/ConformanceNist/SpecialGroups/**LOD**)
+- [ConformanceNist X3D Examples Archive](https://www.web3d.org/x3d/content/examples/ConformanceNist/SpecialGroups/LOD)
 
 ### Warnings
 
