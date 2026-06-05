@@ -8660,121 +8660,121 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * Input/Output field opacities.
+       * The opacity of a Gaussian splat is defined by the *opacities* field. It stores a normalized linear value between 0.0 (transparent) and 1.0 (opaque). Out-of-range values are invalid.
        *
        * This field is of access type 'inputOutput' and type MFFloat.
        */
       opacities: MFFloat;
       /**
-       * Input/Output field orientations.
+       * The *orientations* field values correspond to the orientation of those axes in local space. Orientation values are stored as unit quaternions in the usual glTF order.
        *
        * This field is of access type 'inputOutput' and type MFVec4f.
        */
       orientations: MFVec4f;
       /**
-       * Input/Output field positions.
+       * The mean vector for the Gaussian splat is provided by the *positions* of the mesh primitive. This defines the center of the Gaussian splat ellipsoid in local space. The effective global mean vector for the Gaussian splat is derived from the *positions* field value and the global transformation matrix of the X3D node that instantiates the mesh containing the splat primitive as defined in the glTF specification.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       positions: MFVec3f;
       /**
-       * Input/Output field scales.
+       * The *scales* field values correspond to the spread of the Gaussian along its local principal axes. Scale values are linear and MUST NOT be negative.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       scales: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The *sphericalHarmonicsDegree0Coef0* field semantic provides the diffuse component coefficients for the spherical harmonics. The zeroth-order spherical harmonic coefficients are always required.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree0Coef0: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree1Coef0: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree1Coef1: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree1Coef2: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree2Coef0: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree2Coef1: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree2Coef2: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree2Coef3: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree2Coef4: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree3Coef0: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree3Coef1: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree3Coef2: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree3Coef3: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree3Coef4: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree3Coef5: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
