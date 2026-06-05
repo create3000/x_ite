@@ -83,27 +83,27 @@ The color space of the reconstructed color values. It must be one of:
 ### MFVec3f [in, out] **positions** [ ] <small>(-∞,∞)</small>
 {: #fields-positions }
 
-Input/Output field *positions*.
+The mean vector for the Gaussian splat is provided by the *positions* of the mesh primitive. This defines the center of the Gaussian splat ellipsoid in local space. The effective global mean vector for the Gaussian splat is derived from the *positions* field value and the global transformation matrix of the X3D node that instantiates the mesh containing the splat primitive as defined in the glTF specification.
 
 ### MFVec4f [in, out] **orientations** [ ] <small>[-1,1]</small>
 {: #fields-orientations }
 
-Input/Output field *orientations*.
+The *orientations* field values correspond to the orientation of those axes in local space. Orientation values are stored as unit quaternions in the usual glTF order.
 
 ### MFVec3f [in, out] **scales** [ ] <small>(-∞,∞)</small>
 {: #fields-scales }
 
-Input/Output field *scales*.
+The *scales* field values correspond to the spread of the Gaussian along its local principal axes. Scale values are linear and MUST NOT be negative.
 
 ### MFFloat [in, out] **opacities** [ ] <small>[0,1]</small>
 {: #fields-opacities }
 
-Input/Output field *opacities*.
+The opacity of a Gaussian splat is defined by the *opacities* field. It stores a normalized linear value between 0.0 (transparent) and 1.0 (opaque). Out-of-range values are invalid.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree0Coef0** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree0Coef0 }
 
-Input/Output field *sphericalHarmonicsDegree0Coef0*.
+The sphericalHarmonicsDegree0Coef0 field semantic provides the diffuse component coefficients for the spherical harmonics. The zeroth-order spherical harmonic coefficients are always required.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree1Coef0** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree1Coef0 }
