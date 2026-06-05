@@ -13,9 +13,9 @@ tags: [GaussianSplats, X_ITE]
 
 ## Overview
 
-The GaussianSplats node adds basic support for storing 3D Gaussian splats in X3D files.
+The **GaussianSplats* node adds basic support for storing 3D Gaussian splats in X3D files.
 
-The GaussianSplats node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and its default container field is *children.* It is available in X_ITE.
+The **GaussianSplats** node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and its default container field is *children.* It is available in X_ITE.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }

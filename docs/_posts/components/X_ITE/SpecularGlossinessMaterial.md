@@ -13,9 +13,9 @@ tags: [SpecularGlossinessMaterial, X_ITE]
 
 ## Overview
 
-SpecularGlossinessMaterial specifies surface rendering properties for associated geometry nodes. Material attributes are used by the X3D lighting equations during rendering.
+**SpecularGlossinessMaterial** specifies surface rendering properties for associated geometry nodes. Material attributes are used by the X3D lighting equations during rendering.
 
-The SpecularGlossinessMaterial node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and requires at least support level **1,** its default container field is *material.* It is available in X_ITE.
+The **SpecularGlossinessMaterial** node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and requires at least support level **1,** its default container field is *material.* It is available in X_ITE.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
