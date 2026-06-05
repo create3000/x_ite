@@ -13,7 +13,7 @@ tags: [InstancedShape, X_ITE]
 
 ## Overview
 
-**InstancedShape** can appear under any grouping node. **InstancedShape** can contain an Appearance node and a geometry node (for example one of the primitives Box Cone Cylinder Sphere Text, one of ElevationGrid Extrusion IndexedFaceSet IndexedLineSet LineSet PointSet, or one of the other geometry nodes) and this geometry node is instantiated as often as transformations are provided.
+**InstancedShape** can appear under any grouping node. **InstancedShape** can contain an Appearance node and a geometry node (for example one of the primitives [Box](/x_ite/components/geometry3d/box/), [Cone](/x_ite/components/geometry3d/cone/), [Cylinder](/x_ite/components/geometry3d/cylinder/), [Sphere](/x_ite/components/geometry3d/sphere/), [Text](/x_ite/components/text/text/), one of [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/), [Extrusion](/x_ite/components/geometry3d/extrusion/), [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), [IndexedLineSet](/x_ite/components/rendering/indexedlineset/), [LineSet](/x_ite/components/rendering/lineset/) [PointSet](/x_ite/components/rendering/pointset/), or one of the other geometry nodes) and this geometry node is instantiated as often as transformations are provided.
 
 The **InstancedShape** node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and its default container field is *children.* It is available in X_ITE.
 
