@@ -103,7 +103,7 @@ The opacity of a Gaussian splat is defined by the *opacities* field. It stores a
 ### MFVec3f [in, out] **sphericalHarmonicsDegree0Coef0** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree0Coef0 }
 
-The sphericalHarmonicsDegree0Coef0 field semantic provides the diffuse component coefficients for the spherical harmonics. The zeroth-order spherical harmonic coefficients are always required.
+The *sphericalHarmonicsDegree0Coef0* field semantic provides the diffuse component coefficients for the spherical harmonics. The zeroth-order spherical harmonic coefficients are always required.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree1Coef0** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree1Coef0 }
