@@ -84,7 +84,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 #### Hints
 
 - Negative *gain* factors negate the input signal.
-- [BiquadFilter type field affects functionality of multiple filter parameters](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#t-BiquadFilterTypeEnumerations)
+- [**BiquadFilter** type field affects functionality of multiple filter parameters](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#t-BiquadFilterTypeEnumerations)
 
 #### Warning
 
@@ -109,12 +109,12 @@ The *detune* field, measured in cents, modulates the speed at which the the audi
 ### SFString [in, out] **type** "LOWPASS" <small>["LOWPASS", "HIGHPASS", "BANDPASS", "LOWSHELF", "HIGHSHELF", "PEAKING", "NOTCH", "ALLPASS"]</small>
 {: #fields-type }
 
-*type* selects which BiquadFilter algorithm is used.
+*type* selects which **BiquadFilter** algorithm is used.
 
 #### Hints
 
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#enumdef-biquadfiltertype)
-- [BiquadFilter *type* field affects functionality of multiple filter parameters](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#t-BiquadFilterTypeEnumerations)
+- [**BiquadFilter** *type* field affects functionality of multiple filter parameters](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#t-BiquadFilterTypeEnumerations)
 - [Active filter overview](https://en.wikipedia.org/wiki/Active_filter)
 - [LOWPASS](https://en.wikipedia.org/wiki/Low-pass_filter)
 - [HIGHPASS](https://en.wikipedia.org/wiki/High-pass_filter)
@@ -131,7 +131,7 @@ The *detune* field, measured in cents, modulates the speed at which the the audi
 #### Hints
 
 - [Wikipedia Hertz](https://en.wikipedia.org/wiki/Hertz)
-- [BiquadFilter type field affects functionality of multiple filter parameters](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#t-BiquadFilterTypeEnumerations)
+- [**BiquadFilter** type field affects functionality of multiple filter parameters](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#t-BiquadFilterTypeEnumerations)
 
 ### SFFloat [in, out] **qualityFactor** 1 <small>[0,∞)</small>
 {: #fields-qualityFactor }
@@ -141,7 +141,7 @@ The *detune* field, measured in cents, modulates the speed at which the the audi
 #### Hints
 
 - [Wikipedia Q factor](https://en.wikipedia.org/wiki/Q_factor)
-- [BiquadFilter type field affects functionality of multiple filter parameters](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#t-BiquadFilterTypeEnumerations)
+- [**BiquadFilter** type field affects functionality of multiple filter parameters](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#t-BiquadFilterTypeEnumerations)
 - [Mozilla Developers Network (MDN)](https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode/Q)
 
 ### SFInt32 [in, out] **channelCount**
@@ -260,7 +260,7 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 ### Hints
 
-- [BiquadFilter type field affects functionality of multiple filter parameters](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#t-BiquadFilterTypeEnumerations)
+- [**BiquadFilter** type field affects functionality of multiple filter parameters](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#t-BiquadFilterTypeEnumerations)
 - [W3C Web Audio API](https://www.w3.org/TR/webaudio/#BiquadFilterNode)
 - [Active filter overview](https://en.wikipedia.org/wiki/Active_filter)
 

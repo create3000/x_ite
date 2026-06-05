@@ -121,14 +121,14 @@ The *summary* string array contains a set of keyword/value pairs, with each keyw
 
 #### Hints
 
-- Example `<GeoMetadata summary=' "title" "San Francisco, California USA" '/>`.
-- [Table 25.5, GeoMetadata keywords and values](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/geospatial.html#t-keywordsandvalues)
+- Example `<**GeoMetadata** summary=' "title" "San Francisco, California USA" '/>`.
+- [Table 25.5, **GeoMetadata** keywords and values](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/geospatial.html#t-keywordsandvalues)
 - There should always be an even (or zero) number of strings to match key-value paired strings.
 
 ### MFNode [in, out] **data** [ ]
 {: #fields-data }
 
-#IMPLIED] DEF list of all nodes that implement this *data*. If no specific geospatial nodes are identified, then this GeoMetadata node pertains to entire scene.
+#IMPLIED] DEF list of all nodes that implement this *data*. If no specific geospatial nodes are identified, then this **GeoMetadata** node pertains to entire scene.
 
 ## Advice
 

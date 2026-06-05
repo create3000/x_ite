@@ -149,13 +149,13 @@ The *language* field indicates to the X3D player which shading *language* is use
 
 ### Hints
 
-- PackagedShader contains field declarations and then corresponding IS/connect statements (if any).
+- **PackagedShader** contains field declarations and then corresponding IS/connect statements (if any).
 - Apply default `containerField='shaders'` when parent node is [Appearance](/x_ite/components/shape/appearance/).
 - [When parent node is LoadSensor, apply `containerField='children'` (X3Dv4) or `containerField='watchList'` (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 
 ### Warning
 
-- PackagedShader does not contain CDATA section of plain-text source code.
+- **PackagedShader** does not contain CDATA section of plain-text source code.
 
 ## Browser Compatibility
 

@@ -51,7 +51,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### Warning
 
-- ContourPolyline2D is not a renderable geometry node.
+- **ContourPolyline2D** is not a renderable geometry node.
 
 ## Browser Compatibility
 

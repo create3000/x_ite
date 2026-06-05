@@ -63,7 +63,7 @@ Pairs of 2D (s,t) texture coordinates, either in range [0,1] or higher if repeat
 
 ### Hints
 
-- Add [Shape](/x_ite/components/shape/shape/) and then polygonal/planar geometry before adding TextureCoordinate.
+- Add [Shape](/x_ite/components/shape/shape/) and then polygonal/planar geometry before adding **TextureCoordinate**.
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
 - [X3D Texturing component Figure 18.1, Texture map coordinate system](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texturing.html#f-TextureMapCoordSystem)
 

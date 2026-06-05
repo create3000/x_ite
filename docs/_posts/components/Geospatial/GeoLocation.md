@@ -165,12 +165,12 @@ Grouping nodes contain an ordered list of *children* nodes.
 ### Hints
 
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/GeospatialComponentX3dEarth.pdf)
-- GeoLocation adjusts orientation of children models appropriately: +Y axis is up direction for that local area (i.e. normal to tangent plane on the geospatial ellipsoid), -Z axis points towards north pole, and +X axis points east.
+- **GeoLocation** adjusts orientation of children models appropriately: +Y axis is up direction for that local area (i.e. normal to tangent plane on the geospatial ellipsoid), -Z axis points towards north pole, and +X axis points east.
 
 ### Warnings
 
 - Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
-- Avoid having GeoLocation or [GeoTransform](/x_ite/components/geospatial/geotransform/) as a parent or ancestor node of each other, since multiple geospatial transformations then occur with unpredictable results.
+- Avoid having **GeoLocation** or [GeoTransform](/x_ite/components/geospatial/geotransform/) as a parent or ancestor node of each other, since multiple geospatial transformations then occur with unpredictable results.
 
 ## Browser Compatibility
 

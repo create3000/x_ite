@@ -74,21 +74,21 @@ Defines absolute geographic location (and implicit local coordinate frame).
 ### SFBool [ ] **rotateYUp** FALSE
 {: #fields-rotateYUp }
 
-Whether to rotate coordinates of nodes using this GeoOrigin so that local-up direction aligns with VRML Y axis *rotateYUp* false means local up-direction is relative to planet surface *rotateYUp* true allows proper operation of [NavigationInfo](/x_ite/components/navigation/navigationinfo/) modes FLY, WALK.
+Whether to rotate coordinates of nodes using this **GeoOrigin** so that local-up direction aligns with VRML Y axis *rotateYUp* false means local up-direction is relative to planet surface *rotateYUp* true allows proper operation of [NavigationInfo](/x_ite/components/navigation/navigationinfo/) modes FLY, WALK.
 
 ## Advice
 
 ### Hints
 
-- Only one geospatial coordinate system is allowed per scene, thus DEF-ing and later USE-ing only one GeoOrigin node per scene is recommended.
+- Only one geospatial coordinate system is allowed per scene, thus DEF-ing and later USE-ing only one **GeoOrigin** node per scene is recommended.
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/GeospatialComponentX3dEarth.pdf)
-- GeoOrigin is likely to be restored in X3D v4.0 for special use on devices with limited floating-point resolution.
+- **GeoOrigin** is likely to be restored in X3D v4.0 for special use on devices with limited floating-point resolution.
 - [X3D Architecture 25.2.5 Dealing with high-precision coordinates](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/geospatial.html#high-precisioncoords)
 
 ### Warnings
 
 - Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
-- GeoOrigin is deprecated, discouraged and not legal in X3D v3.3. GeoOrigin can be ignored in X3D v3.2 and below.
+- **GeoOrigin** is deprecated, discouraged and not legal in X3D v3.3. **GeoOrigin** can be ignored in X3D v3.2 and below.
 - XML validation requires placement as first child node following contained metadata nodes (if any).
 
 ## Browser Compatibility

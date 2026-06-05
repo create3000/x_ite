@@ -103,7 +103,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 #### Warning
 
-- StaticGroup does not support inputOnly MFNode fields addChildren or removeChildren.
+- **StaticGroup** does not support inputOnly MFNode fields addChildren or removeChildren.
 
 ## Advice
 

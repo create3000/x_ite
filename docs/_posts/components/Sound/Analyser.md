@@ -146,7 +146,7 @@ The *gain* value only affects analysis, not output signal. The *gain* field is a
 
 #### Hint
 
-- *tailTime* always has a value of zero for Analyser.
+- *tailTime* always has a value of zero for **Analyser**.
 
 ### SFInt32 [in, out] **channelCount**
 {: #fields-channelCount }

@@ -120,7 +120,7 @@ Contained *texture* nodes ([ImageTexture](/x_ite/components/texturing/imagetextu
 
 #### Warning
 
-- MultiTexture may not contain another MultiTexture node.
+- **MultiTexture** may not contain another **MultiTexture** node.
 
 ## Advice
 
@@ -128,16 +128,16 @@ Contained *texture* nodes ([ImageTexture](/x_ite/components/texturing/imagetextu
 
 - Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
-- Multitexturing is accomplished using MultiTexture, [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) and [MultiTextureTransform](/x_ite/components/texturing/multitexturetransform/) nodes.
+- Multitexturing is accomplished using **MultiTexture**, [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) and [MultiTextureTransform](/x_ite/components/texturing/multitexturetransform/) nodes.
 - Texture coordinates are reapplied (or else recomputed if textureTransform field initially NULL) whenever the corresponding vertex-based geometry changes.
 - [X3D Texturing component Figure 18.2 Lightmap example](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texturing.html#f-Lightmapexample)
 - [X3D Texturing component Table 18.2: Comparison of single texture and multitexture attributes](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texturing.html#t-SingleAndMultitextureAttrs)
-- MultiTexture does not need to be included in [LoadSensor](/x_ite/components/networking/loadsensor/) watchList since any child [ImageTexture](/x_ite/components/texturing/imagetexture/) and [MovieTexture](/x_ite/components/texturing/movietexture/) nodes of interest can be handled separately.
+- **MultiTexture** does not need to be included in [LoadSensor](/x_ite/components/networking/loadsensor/) watchList since any child [ImageTexture](/x_ite/components/texturing/imagetexture/) and [MovieTexture](/x_ite/components/texturing/movietexture/) nodes of interest can be handled separately.
 
 ### Warnings
 
 - The number of textures to be blended may have a significant impact on performance, depending on available graphics hardware capabilities.
-- MultiTexture may not contain another MultiTexture node.
+- **MultiTexture** may not contain another **MultiTexture** node.
 
 ## Example
 

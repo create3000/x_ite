@@ -64,7 +64,7 @@ Set of x-y-z-w orthogonal *vector* values for a surface, applied either per-vert
 ### Hints
 
 - [Normal vectors perpendicular to 3D surface](https://en.wikipedia.org/wiki/Normal_(geometry))
-- [Tangent plane](https://en.wikipedia.org/wiki/Tangent)
+- [**Tangent** plane](https://en.wikipedia.org/wiki/**Tangent**)
 
 ## Browser Compatibility
 

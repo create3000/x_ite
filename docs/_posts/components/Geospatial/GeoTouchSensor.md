@@ -128,7 +128,7 @@ Output event containing 3D point on surface of underlying geometry, given in geo
 ### SFVec3d [out] **hitGeoCoord_changed**
 {: #fields-hitGeoCoord_changed }
 
-Output event containing 3D point on surface of underlying geometry, given in GeoTouchSensor's local coordinate system.
+Output event containing 3D point on surface of underlying geometry, given in **GeoTouchSensor**'s local coordinate system.
 
 #### Warning
 

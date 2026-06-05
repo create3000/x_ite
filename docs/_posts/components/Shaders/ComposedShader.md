@@ -89,18 +89,18 @@ The *language* field indicates to the X3D player which shading *language* is use
 ### MFNode [in, out] **parts** [ ] <small>[ShaderPart]</small>
 {: #fields-parts }
 
-ComposedShader can contain multiple [ShaderPart](/x_ite/components/shaders/shaderpart/) nodes in the *parts* field.
+**ComposedShader** can contain multiple [ShaderPart](/x_ite/components/shaders/shaderpart/) nodes in the *parts* field.
 
 ## Advice
 
 ### Hints
 
-- ComposedShader contains field declarations and then corresponding IS/connect statements (if any), followed by Metadata* nodes (if any), then \<[ShaderPart](/x_ite/components/shaders/shaderpart/) `containerField='parts'/>` nodes.
+- **ComposedShader** contains field declarations and then corresponding IS/connect statements (if any), followed by Metadata* nodes (if any), then \<[ShaderPart](/x_ite/components/shaders/shaderpart/) `containerField='parts'/>` nodes.
 - Apply default `containerField='shaders'` when parent node is [Appearance](/x_ite/components/shape/appearance/).
 
 ### Warning
 
-- ComposedShader does not contain CDATA section of plain-text source code. All source programs are contained in child [ShaderPart](/x_ite/components/shaders/shaderpart/) nodes.
+- **ComposedShader** does not contain CDATA section of plain-text source code. All source programs are contained in child [ShaderPart](/x_ite/components/shaders/shaderpart/) nodes.
 
 ## Example
 

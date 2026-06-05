@@ -333,7 +333,7 @@ Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Tr
 
 ### Hints
 
-- SignalPdu packets use the IEEE Distributed Interactive Simulation (DIS) protocol.
+- **SignalPdu** packets use the IEEE Distributed Interactive Simulation (DIS) protocol.
 - [X3D Developers Guide on DIS](https://www.web3d.org/x3d/content/examples/X3dDevelopersGuide.htmll#DIS)
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/DistributedInteractiveSimulation.pdf)
 

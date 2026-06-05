@@ -124,7 +124,7 @@ Coordinates for the geometry used as the emitting volume.
 
 ### Hint
 
-- Otherwise, a VolumeEmitter node acts like a [PolylineEmitter](/x_ite/components/particlesystems/polylineemitter/) node.
+- Otherwise, a **VolumeEmitter** node acts like a [PolylineEmitter](/x_ite/components/particlesystems/polylineemitter/) node.
 
 ## Example
 

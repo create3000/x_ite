@@ -77,7 +77,7 @@ Parameter field defines the algorithm used to compute texture coordinates.
 
 ### Hints
 
-- Add [Shape](/x_ite/components/shape/shape/) and then polygonal/planar geometry before adding TextureCoordinateGenerator.
+- Add [Shape](/x_ite/components/shape/shape/) and then polygonal/planar geometry before adding **TextureCoordinateGenerator**.
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
 - [X3D Texturing component Figure 18.1, Texture map coordinate system](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texturing.html#f-TextureMapCoordSystem)
 

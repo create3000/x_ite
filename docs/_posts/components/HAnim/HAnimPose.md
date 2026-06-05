@@ -67,7 +67,7 @@ Author-provided prose that describes intended purpose of this node.
 ### SFString [in, out] **name** ""
 {: #fields-name }
 
-Unique *name* attribute must be defined so that HAnimPose node can be identified at run time for animation purposes.
+Unique *name* attribute must be defined so that **HAnimPose** node can be identified at run time for animation purposes.
 
 ### SFInt32 [in, out] **loa** -1 <small>[-1,4]</small>
 {: #fields-loa }
@@ -142,7 +142,7 @@ The *children* field lists all [HAnimJoint](/x_ite/components/hanim/hanimjoint/)
 #### Warnings
 
 - These nodes must be independent of [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skeleton joints, do not re-USE any skeleton [HAnimJoint](/x_ite/components/hanim/hanimjoint/) nodes.
-- No other node types are allowed in the HAnimPose *children* field.
+- No other node types are allowed in the **HAnimPose** *children* field.
 
 ## Advice
 

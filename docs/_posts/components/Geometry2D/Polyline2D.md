@@ -45,7 +45,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### MFVec2f [ ] **lineSegments** [ ] <small>(-∞,∞)</small>
 {: #fields-lineSegments }
 
-Coordinates of vertices connected into contiguous Polyline2D.
+Coordinates of vertices connected into contiguous **Polyline2D**.
 
 #### Hint
 

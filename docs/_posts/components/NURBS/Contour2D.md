@@ -66,11 +66,11 @@ The *children* form a closed loop with first point of first child repeated as la
 
 ### Hint
 
-- Contour2D is used as the trimmingContour field of the [NurbsTrimmedSurface](/x_ite/components/nurbs/nurbstrimmedsurface/) node.
+- **Contour2D** is used as the trimmingContour field of the [NurbsTrimmedSurface](/x_ite/components/nurbs/nurbstrimmedsurface/) node.
 
 ### Warning
 
-- Contour2D is not a renderable geometry node.
+- **Contour2D** is not a renderable geometry node.
 
 ## Browser Compatibility
 

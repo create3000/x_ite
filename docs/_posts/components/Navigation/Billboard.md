@@ -130,12 +130,12 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ### Hints
 
-- Put Billboard as close to the geometry as possible, nested inside [Transform](/x_ite/components/grouping/transform/) for local coordinate system.
+- Put **Billboard** as close to the geometry as possible, nested inside [Transform](/x_ite/components/grouping/transform/) for local coordinate system.
 - Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 
 ### Warning
 
-- Don't put [Viewpoint](/x_ite/components/navigation/viewpoint/) inside a Billboard.
+- Don't put [Viewpoint](/x_ite/components/navigation/viewpoint/) inside a **Billboard**.
 
 ## Example
 

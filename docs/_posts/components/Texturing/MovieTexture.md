@@ -168,7 +168,7 @@ Factor for how fast the movie (or soundtrack) is played.
 
 #### Hints
 
-- A MovieTexture node shall display frame 0 if *speed* = 0.
+- A **MovieTexture** node shall display frame 0 if *speed* = 0.
 - A negative *speed* value sets the movie to play in reverse.
 
 ### SFBool [in, out] **loop** FALSE
@@ -188,7 +188,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 ### SFTime [in, out] **resumeTime** 0 <small>(-∞,∞)</small>
 {: #fields-resumeTime }
 
-When *resumeTime* becomes \<= time now, isPaused becomes false and MovieTexture becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When *resumeTime* becomes \<= time now, isPaused becomes false and **MovieTexture** becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
@@ -201,7 +201,7 @@ When *resumeTime* becomes \<= time now, isPaused becomes false and MovieTexture 
 ### SFTime [in, out] **pauseTime** 0 <small>(-∞,∞)</small>
 {: #fields-pauseTime }
 
-When time now \>= *pauseTime*, isPaused becomes true and MovieTexture becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When time now \>= *pauseTime*, isPaused becomes true and **MovieTexture** becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
@@ -228,7 +228,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 ### SFBool [out] **isPaused**
 {: #fields-isPaused }
 
-*isPaused* true/false events are sent when MovieTexture is paused/resumed.
+*isPaused* true/false events are sent when **MovieTexture** is paused/resumed.
 
 #### Warnings
 
@@ -247,7 +247,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 ### SFTime [out] **elapsedTime**
 {: #fields-elapsedTime }
 
-Current elapsed time since MovieTexture activated/running, cumulative in seconds, and not counting any paused time.
+Current elapsed time since **MovieTexture** activated/running, cumulative in seconds, and not counting any paused time.
 
 #### Hint
 
@@ -329,8 +329,8 @@ Any video file format supported by the web browser, but at least:
 
 - Can contain a single [TextureProperties](/x_ite/components/texturing/textureproperties/) node.
 - Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
-- Provide a [Viewpoint](/x_ite/components/navigation/viewpoint/) that allows a clear view of the MovieTexture so that users can easily see all details.
-- Utilize DEF/USE references for multiple copies of a single MovieTexture video file in order to avoid multiple-download delays, reduce memory requirements, and maintain synchronization.
+- Provide a [Viewpoint](/x_ite/components/navigation/viewpoint/) that allows a clear view of the **MovieTexture** so that users can easily see all details.
+- Utilize DEF/USE references for multiple copies of a single **MovieTexture** video file in order to avoid multiple-download delays, reduce memory requirements, and maintain synchronization.
 - Authors can provide multiple video formats for the same video track, with each source address listed separately in the url field.
 - Player support for MPEG-1 video format is required, other formats are optional.
 - Texture coordinates are reapplied (or else recomputed if textureTransform field initially NULL) whenever the corresponding vertex-based geometry changes.
@@ -341,7 +341,7 @@ Any video file format supported by the web browser, but at least:
 
 ### Warning
 
-- MovieTexture has `containerField='texture'` when parent is an [Appearance](/x_ite/components/shape/appearance/) node, otherwise `containerField='source'` when parent is a [Sound](/x_ite/components/sound/sound/) node.
+- **MovieTexture** has `containerField='texture'` when parent is an [Appearance](/x_ite/components/shape/appearance/) node, otherwise `containerField='source'` when parent is a [Sound](/x_ite/components/sound/sound/) node.
 
 ## Example
 

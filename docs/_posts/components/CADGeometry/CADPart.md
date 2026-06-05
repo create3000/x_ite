@@ -185,7 +185,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ### Hints
 
-- CADPart is often a child of [CADAssembly](/x_ite/components/cadgeometry/cadassembly/) node.
+- **CADPart** is often a child of [CADAssembly](/x_ite/components/cadgeometry/cadassembly/) node.
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/ComputerAidedDesignInterchangeProfile.pdf)
 
 ### Warning

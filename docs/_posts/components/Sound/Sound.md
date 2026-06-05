@@ -142,11 +142,11 @@ Player hint [0,1] if needed to choose which sounds to play.
 ### SFNode [in, out] **source** NULL <small>[X3DSoundSourceNode]</small>
 {: #fields-source }
 
-Sound *source* for the Sound node, either an [AudioClip](/x_ite/components/sound/audioclip/) node or a [MovieTexture](/x_ite/components/texturing/movietexture/) node.
+**Sound** *source* for the **Sound** node, either an [AudioClip](/x_ite/components/sound/audioclip/) node or a [MovieTexture](/x_ite/components/texturing/movietexture/) node.
 
 #### Warning
 
-- If *source* field is not specified, the Sound node does not emit audio.
+- If *source* field is not specified, the **Sound** node does not emit audio.
 
 ### MFNode [in, out] **children** [ ] <small>[X3DSoundChannelNode,X3DSoundProcessingNode,X3DSoundSourceNode]</small>
 {: #fields-children }
@@ -158,7 +158,7 @@ Input/Output field *children*.
 ### Hints
 
 - If the audio source is stereo or multi-channel, channel separation is retained during playback.
-- [X3D Sound component Figure 16.2 Sound Node Geometry](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#f-Soundnodegeometry)
+- [X3D **Sound** component Figure 16.2 **Sound** Node Geometry](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#f-Soundnodegeometry)
 - [X3D Scene Authoring Hints:Audio](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Audio)
 - [Wikipedia 3D sound localization](https://en.wikipedia.org/wiki/3D_sound_localization)
 

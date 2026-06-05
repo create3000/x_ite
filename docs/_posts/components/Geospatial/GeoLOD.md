@@ -194,7 +194,7 @@ Geometry for the root tile.
 ### MFNode [out] **children**
 {: #fields-children }
 
-The outputOnly *children* field exposes a portion of the scene graph for the currently loaded set of nodes. The value returned as an event is an MFNode containing the currently selected tile. This will either be the node specified by the rootNode field or the nodes specified by the child1Url, child2Url, child3Url, and child4Url fields. The GeoLOD node shall generate a new *children* output event each time the scene graph is changed (EXAMPLE whenever nodes are loaded or unloaded).
+The outputOnly *children* field exposes a portion of the scene graph for the currently loaded set of nodes. The value returned as an event is an MFNode containing the currently selected tile. This will either be the node specified by the rootNode field or the nodes specified by the child1Url, child2Url, child3Url, and child4Url fields. The **GeoLOD** node shall generate a new *children* output event each time the scene graph is changed (EXAMPLE whenever nodes are loaded or unloaded).
 
 #### Warning
 
@@ -212,7 +212,7 @@ The outputOnly *children* field exposes a portion of the scene graph for the cur
 
 - Do not use rootUrl and rootNode simultaneously, since each specifies the root tile.
 - Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
-- Nested [LOD](/x_ite/components/navigation/lod/) (and/or GeoLOD) nodes with overlapping range intervals can lead to unexpected or undefined behavior.
+- Nested [LOD](/x_ite/components/navigation/lod/) (and/or **GeoLOD**) nodes with overlapping range intervals can lead to unexpected or undefined behavior.
 
 ## Example
 

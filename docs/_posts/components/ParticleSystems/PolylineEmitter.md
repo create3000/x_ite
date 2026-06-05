@@ -107,7 +107,7 @@ Particle surface area in area base units (default is meters squared). Surface ar
 
 #### Warnings
 
-- If no coordinates are available, PolylineEmitter acts like a point source located at local origin.
+- If no coordinates are available, **PolylineEmitter** acts like a point source located at local origin.
 - *coordIndex* is required in order to connect contained coordinate point values.
 
 ### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
@@ -117,13 +117,13 @@ Coordinates for the line along which particles are randomly generated.
 
 #### Warning
 
-- If no coordinates are available, PolylineEmitter acts like a point source located at local origin.
+- If no coordinates are available, **PolylineEmitter** acts like a point source located at local origin.
 
 ## Advice
 
 ### Hint
 
-- If no coordinates are available, PolylineEmitter acts like a point source located at local origin.
+- If no coordinates are available, **PolylineEmitter** acts like a point source located at local origin.
 
 ## Example
 

@@ -128,7 +128,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 #### Hints
 
 - ConeOuterAngle value is greater than or equal to *coneInnerAngle*.
-- [X3D4 Architecture Figure 16.3, SpatialSound Panning Gain Relationships](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#f-AudioPannerListenerRelationships)
+- [X3D4 Architecture Figure 16.3, **SpatialSound** Panning Gain Relationships](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#f-AudioPannerListenerRelationships)
 
 ### SFFloat [in, out] **coneOuterAngle** 6.2832 <small>[0,2π]</small>
 {: #fields-coneOuterAngle }
@@ -138,7 +138,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 #### Hints
 
 - *coneOuterAngle* value is greater than or equal to coneInnerAngle.
-- [X3D4 Architecture Figure 16.3, SpatialSound Panning Gain Relationships](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#f-AudioPannerListenerRelationships)
+- [X3D4 Architecture Figure 16.3, **SpatialSound** Panning Gain Relationships](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/sound.html#f-AudioPannerListenerRelationships)
 
 ### SFString [in, out] **distanceModel** "INVERSE" <small>["LINEAR" "INVERSE" "EXPONENTIAL"]</small>
 {: #fields-distanceModel }
@@ -175,7 +175,7 @@ The *gain* field is a factor that represents the amount of linear amplification 
 ### SFBool [in, out] **enableHRTF** FALSE
 {: #fields-enableHRTF }
 
-*enableHRTF* enables/disables Head Related Transfer Function (HRTF) auralization, if available. SpatialSound enabledHRTF=true corresponds to panningModelType HRTF, enabledHRTF=false corresponds to panningModelType equalpower.
+*enableHRTF* enables/disables Head Related Transfer Function (HRTF) auralization, if available. **SpatialSound** enabledHRTF=true corresponds to panningModelType HRTF, enabledHRTF=false corresponds to panningModelType equalpower.
 
 #### Hints
 

@@ -86,7 +86,7 @@ The *language* field indicates to the X3D player which shading *language* is use
 ### MFNode [in, out] **programs** [ ] <small>[ShaderProgram]</small>
 {: #fields-programs }
 
-ProgramShader contains zero or more [ShaderProgram](/x_ite/components/shaders/shaderprogram/) node instances. In general, only two [ShaderProgram](/x_ite/components/shaders/shaderprogram/) instances are needed: one each for vertex and fragment processing.
+**ProgramShader** contains zero or more [ShaderProgram](/x_ite/components/shaders/shaderprogram/) node instances. In general, only two [ShaderProgram](/x_ite/components/shaders/shaderprogram/) instances are needed: one each for vertex and fragment processing.
 
 #### Hint
 
@@ -100,7 +100,7 @@ ProgramShader contains zero or more [ShaderProgram](/x_ite/components/shaders/sh
 
 ### Warning
 
-- ProgramShader contains no field declarations and no plain-text CDATA block source code.
+- **ProgramShader** contains no field declarations and no plain-text CDATA block source code.
 
 ## Browser Compatibility
 

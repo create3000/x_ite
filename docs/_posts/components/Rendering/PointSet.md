@@ -96,7 +96,7 @@ Optional single contained [Coordinate](/x_ite/components/rendering/coordinate/) 
 - [Point (geometry)](https://en.wikipedia.org/wiki/Point_(geometry))
 - Either values in a contained [Color](/x_ite/components/rendering/color/) node, or else [Material](/x_ite/components/shape/material/) emissiveColor in corresponding [Appearance](/x_ite/components/shape/appearance/) node, are used for rendering lines and points.
 - Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
-- Each point is displayed independently, no other PointSet attributes for rendering are provided.
+- Each point is displayed independently, no other **PointSet** attributes for rendering are provided.
 
 ### Warning
 

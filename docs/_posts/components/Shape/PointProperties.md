@@ -86,7 +86,7 @@ Are set to default values if undefined. Together these parameters define *attenu
 ### Hints
 
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
-- When an X3DTextureNode is defined in the same [Appearance](/x_ite/components/shape/appearance/) instance as PointProperties node, the points of a [PointSet](/x_ite/components/rendering/pointset/) shall be displayed as point sprites using the given texture(s).
+- When an X3DTextureNode is defined in the same [Appearance](/x_ite/components/shape/appearance/) instance as **PointProperties** node, the points of a [PointSet](/x_ite/components/rendering/pointset/) shall be displayed as point sprites using the given texture(s).
 
 ### Warning
 

@@ -85,7 +85,7 @@ The *layers* list defines a list of [Layer](/x_ite/components/layering/layer/) n
 
 ### Warning
 
-- Only one LayerSet node is allowed in a scene, and it shall be a root node at the top of the scene graph.
+- Only one **LayerSet** node is allowed in a scene, and it shall be a root node at the top of the scene graph.
 
 ## Example
 

@@ -119,7 +119,7 @@ Number of elements in the height array along east-west X direction.
 
 #### Warning
 
-- *xDimension* \< 2 means that GeoElevationGrid contains no quadrilaterals.
+- *xDimension* \< 2 means that **GeoElevationGrid** contains no quadrilaterals.
 
 ### SFInt32 [ ] **zDimension** 0 <small>(0,∞)</small>
 {: #fields-zDimension }
@@ -132,7 +132,7 @@ Number of elements in the height array along north-south Z direction.
 
 #### Warning
 
-- *zDimension* \< 2 means that GeoElevationGrid contains no quadrilaterals.
+- *zDimension* \< 2 means that **GeoElevationGrid** contains no quadrilaterals.
 
 ### SFDouble [ ] **xSpacing** 1 <small>[0,∞)</small>
 {: #fields-xSpacing }
@@ -270,7 +270,7 @@ Contains xDimension rows * zDimension columns floating-point values for elevatio
 
 - The height array defines (xDimension-1)*(zDimension-1) quadrilaterals.
 - Positive direction for normal of each triangle is on same side of the quadrilateral. Triangles are defined either counterclockwise or clockwise depending on value of ccw field.
-- GeoElevationGrid can contain [GeoOrigin](/x_ite/components/geospatial/geoorigin/), [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/), [Normal](/x_ite/components/rendering/normal/) and [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/) nodes.
+- **GeoElevationGrid** can contain [GeoOrigin](/x_ite/components/geospatial/geoorigin/), [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/), [Normal](/x_ite/components/rendering/normal/) and [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/) nodes.
 - Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/GeospatialComponentX3dEarth.pdf)
 
@@ -278,7 +278,7 @@ Contains xDimension rows * zDimension columns floating-point values for elevatio
 
 - Generated quadrilaterals can be nonplanar. Tessellation splits quadrilaterals into triangles along seam starting at initial vertex of the quadrilateral and proceeding to opposite vertex.
 - Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='1'/>`
-- Avoid having [GeoLocation](/x_ite/components/geospatial/geolocation/) or [GeoTransform](/x_ite/components/geospatial/geotransform/) as a parent or ancestor node of GeoElevationGrid, since multiple geospatial transformations then occur with unpredictable results.
+- Avoid having [GeoLocation](/x_ite/components/geospatial/geolocation/) or [GeoTransform](/x_ite/components/geospatial/geotransform/) as a parent or ancestor node of **GeoElevationGrid**, since multiple geospatial transformations then occur with unpredictable results.
 
 ## Example
 

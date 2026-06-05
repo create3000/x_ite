@@ -113,7 +113,7 @@ Optional single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/component
 
 ### Hint
 
-- VolumeData can contain a single Texture3D node with `containerField='voxels'` and a single RenderStyle node.
+- **VolumeData** can contain a single Texture3D node with `containerField='voxels'` and a single RenderStyle node.
 
 ### Warning
 

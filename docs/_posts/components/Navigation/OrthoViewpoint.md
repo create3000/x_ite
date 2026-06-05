@@ -85,7 +85,7 @@ Sending event *set_bind*=true makes this node active. Sending event *set_bind*=f
 
 #### Warning
 
-- Without *description*, this OrthoViewpoint is unlikely to appear on browser [Viewpoint](/x_ite/components/navigation/viewpoint/) menus.
+- Without *description*, this **OrthoViewpoint** is unlikely to appear on browser [Viewpoint](/x_ite/components/navigation/viewpoint/) menus.
 
 ### SFVec3f [in, out] **position** 0 0 10 <small>(-∞,∞)</small>
 {: #fields-position }
@@ -124,8 +124,8 @@ Minimum and maximum extents of view in units of local coordinate system. Small f
 #### Warnings
 
 - Minimum corner values must remain less than maximum corner values.
-- If provided, OrthoViewpoint *fieldOfView* has exactly four numeric values, otherwise results are undefined.
-- OrthoViewpoint *fieldOfView* has type MFFloat for backwards compatibility (even though SFVec4f is stricter and more correct to prevent modeling errors)
+- If provided, **OrthoViewpoint** *fieldOfView* has exactly four numeric values, otherwise results are undefined.
+- **OrthoViewpoint** *fieldOfView* has type MFFloat for backwards compatibility (even though SFVec4f is stricter and more correct to prevent modeling errors)
 
 ### SFFloat [in, out] **nearDistance** -1 <small>-1 or (0,∞)</small>
 {: #fields-nearDistance }
@@ -225,16 +225,16 @@ The *navigationInfo* field defines a dedicated [NavigationInfo](/x_ite/component
 
 ### Hints
 
-- [Background](/x_ite/components/environmentaleffects/background/), [Fog](/x_ite/components/environmentaleffects/fog/), [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/), [NavigationInfo](/x_ite/components/navigation/navigationinfo/), OrthoViewpoint, [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/) and [Viewpoint](/x_ite/components/navigation/viewpoint/) are bindable nodes, meaning that no more than one of each node type can be active at a given time.
-- [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) OrthoViewpoint and [Viewpoint](/x_ite/components/navigation/viewpoint/) share the same binding stack, so no more than one of these nodes can be bound and active at a given time.
+- [Background](/x_ite/components/environmentaleffects/background/), [Fog](/x_ite/components/environmentaleffects/fog/), [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/), [NavigationInfo](/x_ite/components/navigation/navigationinfo/), **OrthoViewpoint**, [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/) and [Viewpoint](/x_ite/components/navigation/viewpoint/) are bindable nodes, meaning that no more than one of each node type can be active at a given time.
+- [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) **OrthoViewpoint** and [Viewpoint](/x_ite/components/navigation/viewpoint/) share the same binding stack, so no more than one of these nodes can be bound and active at a given time.
 - Regardless of viewpoint jump value at bind time, the relative viewing transformation between user's view and defined position/orientation is stored for later use when un-jumping (returning to the viewpoint when subsequent viewpoint is unbound).
 - Customizable design pattern for dedicated [Viewpoint](/x_ite/components/navigation/viewpoint/)/[NavigationInfo](/x_ite/components/navigation/navigationinfo/) pair: \<[Viewpoint](/x_ite/components/navigation/viewpoint/) DEF='SpecialView'/\> \<[NavigationInfo](/x_ite/components/navigation/navigationinfo/) DEF='SpecialNav'/\> \<ROUTE fromNode='SpecialView' fromField='isBound' toNode='SpecialNav' toField='set_bind'/\>
 - [X3D Scene Authoring Hints, Viewpoints](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Viewpoints)
 
 ### Warnings
 
-- Results are undefined if a bindable node ([Background](/x_ite/components/environmentaleffects/background/), [Fog](/x_ite/components/environmentaleffects/fog/), [NavigationInfo](/x_ite/components/navigation/navigationinfo/), OrthoViewpoint, [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/), [Viewpoint](/x_ite/components/navigation/viewpoint/)) is a contained descendant node of either [LOD](/x_ite/components/navigation/lod/) or [Switch](/x_ite/components/grouping/switch/). Avoid this authoring pattern.
-- Do not include [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) OrthoViewpoint or [Viewpoint](/x_ite/components/navigation/viewpoint/) as a child of [LOD](/x_ite/components/navigation/lod/) or [Switch](/x_ite/components/grouping/switch/), instead use [ViewpointGroup](/x_ite/components/navigation/viewpointgroup/) as parent to constrain location proximity where the viewpoint is available to user.
+- Results are undefined if a bindable node ([Background](/x_ite/components/environmentaleffects/background/), [Fog](/x_ite/components/environmentaleffects/fog/), [NavigationInfo](/x_ite/components/navigation/navigationinfo/), **OrthoViewpoint**, [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/), [Viewpoint](/x_ite/components/navigation/viewpoint/)) is a contained descendant node of either [LOD](/x_ite/components/navigation/lod/) or [Switch](/x_ite/components/grouping/switch/). Avoid this authoring pattern.
+- Do not include [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) **OrthoViewpoint** or [Viewpoint](/x_ite/components/navigation/viewpoint/) as a child of [LOD](/x_ite/components/navigation/lod/) or [Switch](/x_ite/components/grouping/switch/), instead use [ViewpointGroup](/x_ite/components/navigation/viewpointgroup/) as parent to constrain location proximity where the viewpoint is available to user.
 
 ## Example
 

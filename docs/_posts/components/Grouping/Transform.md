@@ -176,14 +176,14 @@ Grouping nodes contain an ordered list of *children* nodes.
 - Best authoring approach is to keep +Y axis pointing towards local up direction, supporting scene composability and effective navigation response (which is based on gravity direction).
 - Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 - Translation/rotation/scaling field attributes can be defined in any order in the scene. The applied order of translation/rotation/scaling transformation-matrix operations remains consistent.
-- Authors can modify order of translation/rotation/scaling operations by splitting them into separate nested parent/child Transform nodes.
+- Authors can modify order of translation/rotation/scaling operations by splitting them into separate nested parent/child **Transform** nodes.
 - [X3D Scene Authoring Hints, Coordinate Systems](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#CoordinateSystems)
 - [X3D Scene Authoring Hints, Scale Factors and Unit Conversions](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Scale)
 - Apply `containerField='shape'` if parent node is [CADFace](/x_ite/components/cadgeometry/cadface/).
 
 ### Warning
 
-- Transform contained by [CADFace](/x_ite/components/cadgeometry/cadface/) can only hold a single [LOD](/x_ite/components/navigation/lod/) or [Shape](/x_ite/components/shape/shape/) node.
+- **Transform** contained by [CADFace](/x_ite/components/cadgeometry/cadface/) can only hold a single [LOD](/x_ite/components/navigation/lod/) or [Shape](/x_ite/components/shape/shape/) node.
 
 ## Example
 

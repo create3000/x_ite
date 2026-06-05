@@ -131,7 +131,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 - Mnemonic "this geometry is *solid* like a brick" (you don't render the inside of a brick).
 - If in doubt, use *solid*='false' for maximum visibility.
 - AccessType relaxed to inputOutput in order to support animation and visualization.
-- For InlineGeometry, the default value of *solid* is FALSE since most usages of retrieved meshes need two-sided rendering.
+- For **InlineGeometry**, the default value of *solid* is FALSE since most usages of retrieved meshes need two-sided rendering.
 
 #### Warnings
 
@@ -177,7 +177,7 @@ The *smooth* field provides a hint to the browser whether *smooth* rendering is 
 
 - [Wikipedia, STL (Standard Triangle Language or Standard Tessellation Language)](https://en.wikipedia.org/wiki/STL_(file_format))
 - [Wikipedia, PLY (Polygon File Format or Stanford Triangle Format)](https://en.wikipedia.org/wiki/PLY_(file_format))
-- [Example](https://create3000.github.io/x_ite/playground/?url=https://create3000.github.io/media/examples/Networking/InlineGeometry/InlineGeometry.x3d)
+- [Example](https://create3000.github.io/x_ite/playground/?url=https://create3000.github.io/media/examples/Networking/**InlineGeometry**/**InlineGeometry**.x3d)
 
 ## Example
 

@@ -68,7 +68,7 @@ Receiving event *set_bind*=true activates and binds this node at the top of the 
 ### SFString [in, out] **fogType** "LINEAR" <small>["LINEAR"|"EXPONENTIAL"]</small>
 {: #fields-fogType }
 
-Specifies algorithm for rate of increasing Fog, either LINEAR or EXPONENTIAL.
+Specifies algorithm for rate of increasing **Fog**, either LINEAR or EXPONENTIAL.
 
 #### Hint
 
@@ -81,7 +81,7 @@ Specifies algorithm for rate of increasing Fog, either LINEAR or EXPONENTIAL.
 ### SFColor [in, out] **color** 1 1 1 <small>[0,1]</small>
 {: #fields-color }
 
-Fog *color*.
+**Fog** *color*.
 
 #### Hints
 
@@ -100,7 +100,7 @@ Distance in meters where objects are totally obscured by the fog, using local co
 
 #### Hint
 
-- *visibilityRange* 0 disables Fog.
+- *visibilityRange* 0 disables **Fog**.
 
 ### SFBool [out] **isBound**
 {: #fields-isBound }
@@ -128,11 +128,11 @@ Event sent reporting timestamp when node becomes active/inactive.
 
 ### Hint
 
-- [Background](/x_ite/components/environmentaleffects/background/), Fog, [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/), [NavigationInfo](/x_ite/components/navigation/navigationinfo/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/) and [Viewpoint](/x_ite/components/navigation/viewpoint/) are bindable nodes, meaning that no more than one of each node type can be active at a given time.
+- [Background](/x_ite/components/environmentaleffects/background/), **Fog**, [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/), [NavigationInfo](/x_ite/components/navigation/navigationinfo/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/) and [Viewpoint](/x_ite/components/navigation/viewpoint/) are bindable nodes, meaning that no more than one of each node type can be active at a given time.
 
 ### Warning
 
-- Results are undefined if a bindable node ([Background](/x_ite/components/environmentaleffects/background/), Fog, [NavigationInfo](/x_ite/components/navigation/navigationinfo/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/), [Viewpoint](/x_ite/components/navigation/viewpoint/)) is a contained descendant node of either [LOD](/x_ite/components/navigation/lod/) or [Switch](/x_ite/components/grouping/switch/). Avoid this authoring pattern.
+- Results are undefined if a bindable node ([Background](/x_ite/components/environmentaleffects/background/), **Fog**, [NavigationInfo](/x_ite/components/navigation/navigationinfo/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/), [Viewpoint](/x_ite/components/navigation/viewpoint/)) is a contained descendant node of either [LOD](/x_ite/components/navigation/lod/) or [Switch](/x_ite/components/grouping/switch/). Avoid this authoring pattern.
 
 ## Example
 

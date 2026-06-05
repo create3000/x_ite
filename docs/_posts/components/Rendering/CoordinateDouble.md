@@ -52,7 +52,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 ### Warning
 
-- CoordinateDouble requires Rendering component level 1, otherwise Full profile.
+- **CoordinateDouble** requires Rendering component level 1, otherwise Full profile.
 
 ## Browser Compatibility
 

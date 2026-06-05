@@ -552,7 +552,7 @@ Seconds between read updates, 0 means no reading.
 ### SFRotation [in, out] **rotation** 0 0 1 0 <small>[-1,1] or (-∞,∞)</small>
 {: #fields-rotation }
 
-Orientation of children relative to local coordinate system, usually read from (or written to) remote, networked EspduTransform nodes.
+Orientation of children relative to local coordinate system, usually read from (or written to) remote, networked **EspduTransform** nodes.
 
 ### SFVec3f [in, out] **scale** 1 1 1 <small>(-∞,∞)</small>
 {: #fields-scale }
@@ -572,7 +572,7 @@ Simulation/exercise *siteID* of the participating LAN or organization.
 ### SFVec3f [in, out] **translation** 0 0 0 <small>(-∞,∞)</small>
 {: #fields-translation }
 
-Position of children relative to local coordinate system, usually read from (or written to) remote, networked EspduTransform nodes.
+Position of children relative to local coordinate system, usually read from (or written to) remote, networked **EspduTransform** nodes.
 
 ### SFInt32 [in, out] **warhead** 0 <small>[0,65535]</small>
 {: #fields-warhead }

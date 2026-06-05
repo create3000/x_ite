@@ -135,7 +135,7 @@ Minimum and maximum extents of projection texture in units of local coordinate s
 #### Warnings
 
 - Minimum corner values must remain less than maximum corner values.
-- This field differs for TextureProjectorParallel and [TextureProjector](/x_ite/components/textureprojection/textureprojector/).
+- This field differs for **TextureProjectorParallel** and [TextureProjector](/x_ite/components/textureprojection/textureprojector/).
 
 ### SFFloat [in, out] **nearDistance** -1 <small>-1 or (0,∞)</small>
 {: #fields-nearDistance }
@@ -200,7 +200,7 @@ Size of the shadow map in pixels, must be power of two.
 
 ### Hints
 
-- [Specification errata corrections](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/textureProjection.html#TextureProjectorParallel)
+- [Specification errata corrections](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/textureProjection.html#**TextureProjectorParallel**)
 - [Diagram](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Images/ptmparallel2.png)
 
 ## Browser Compatibility

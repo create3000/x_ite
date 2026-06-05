@@ -130,7 +130,7 @@ Preferred minimum viewing angle for this projection in radians, providing minimu
 
 #### Warning
 
-- This field differs for [TextureProjectorParallel](/x_ite/components/textureprojection/textureprojectorparallel/) and TextureProjector.
+- This field differs for [TextureProjectorParallel](/x_ite/components/textureprojection/textureprojectorparallel/) and **TextureProjector**.
 
 ### SFFloat [in, out] **nearDistance** -1 <small>-1 or (0,∞)</small>
 {: #fields-nearDistance }
@@ -195,7 +195,7 @@ Size of the shadow map in pixels, must be power of two.
 
 ### Hints
 
-- [Specification errata corrections](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/textureProjection.html#TextureProjector)
+- [Specification errata corrections](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/textureProjection.html#**TextureProjector**)
 - [Diagram](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Images/ptmperspective2.png)
 
 ## Example

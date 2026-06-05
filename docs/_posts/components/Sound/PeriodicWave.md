@@ -92,7 +92,7 @@ Imaginary coefficients for defining a waveform.
 
 ### Hint
 
-- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#PeriodicWave)
+- [W3C Web Audio API](https://www.w3.org/TR/webaudio/#**PeriodicWave**)
 
 ## Browser Compatibility
 

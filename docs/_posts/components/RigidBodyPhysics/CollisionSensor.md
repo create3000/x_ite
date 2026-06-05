@@ -91,7 +91,7 @@ The *collider* field specifies a [CollisionCollection](/x_ite/components/rigidbo
 ### Hints
 
 - Contains [CollisionCollection](/x_ite/components/rigidbodyphysics/collisioncollection/) node (`containerField='collider').`
-- CollisionSensor also has output events: [CollidableOffset](/x_ite/components/rigidbodyphysics/collidableoffset/) and [CollidableShape](/x_ite/components/rigidbodyphysics/collidableshape/) nodes (`containerField='intersections'),` [Contact](/x_ite/components/rigidbodyphysics/contact/) nodes (`containerField='contacts').`
+- **CollisionSensor** also has output events: [CollidableOffset](/x_ite/components/rigidbodyphysics/collidableoffset/) and [CollidableShape](/x_ite/components/rigidbodyphysics/collidableshape/) nodes (`containerField='intersections'),` [Contact](/x_ite/components/rigidbodyphysics/contact/) nodes (`containerField='contacts').`
 - [Event timing details are explained in X3D Specification 4.4.8.3 Execution model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/concepts.html#ExecutionModel)
 - Content must be visible to be collidable and to be pickable.
 

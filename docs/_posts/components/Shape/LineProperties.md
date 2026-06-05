@@ -47,7 +47,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### SFBool [in, out] **applied** TRUE
 {: #fields-applied }
 
-Whether or not LineProperties are *applied* to associated geometry.
+Whether or not **LineProperties** are *applied* to associated geometry.
 
 ### SFInt32 [in, out] **linetype** 1 <small>[1,∞)</small>
 {: #fields-linetype }
@@ -68,7 +68,7 @@ Whether or not LineProperties are *applied* to associated geometry.
 ### Hints
 
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
-- [LineProperties illustration model](https://X3dGraphics.com/examples/X3dForWebAuthors/Chapter05AppearanceMaterialTextures/LinePropertiesExampleIndex.html)
+- [**LineProperties** illustration model](https://X3dGraphics.com/examples/X3dForWebAuthors/Chapter05AppearanceMaterialTextures/LinePropertiesExampleIndex.html)
 
 ### Warning
 

@@ -81,7 +81,7 @@ Vector assigning relative *weight* value to each control point.
 
 ### Warning
 
-- NurbsCurve2D is not a renderable geometry node.
+- **NurbsCurve2D** is not a renderable geometry node.
 
 ## Browser Compatibility
 

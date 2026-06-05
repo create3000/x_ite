@@ -121,7 +121,7 @@ sub strong_type_name {
 
    foreach $line (@lines)
    {
-      $line =~ s/$typeName/**$typeName**/g;
+      $line =~ s/\b$typeName\b/**$typeName**/g;
    }
 
    return @lines;
@@ -204,8 +204,8 @@ sub update_node {
    @hints       = fix_links @hints;
    @warnings    = fix_links @warnings;
    @description = strong_type_name $typeName, link_nodes $typeName, @description;
-   @hints       = link_nodes $typeName, @hints;
-   @warnings    = link_nodes $typeName, @warnings;
+   @hints       = strong_type_name $typeName, link_nodes $typeName, @hints;
+   @warnings    = strong_type_name $typeName, link_nodes $typeName, @warnings;
 
    # Overview
 
@@ -518,9 +518,9 @@ sub update_field {
 
       @hints       = fix_links @hints;
       @warnings    = fix_links @warnings;
-      @description = link_nodes $typeName, @description;
-      @hints       = link_nodes $typeName, @hints;
-      @warnings    = link_nodes $typeName, @warnings;
+      @description = strong_type_name $typeName, link_nodes $typeName, @description;
+      @hints       = strong_type_name $typeName, link_nodes $typeName, @hints;
+      @warnings    = strong_type_name $typeName, link_nodes $typeName, @warnings;
    }
    else
    {

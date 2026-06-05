@@ -103,7 +103,7 @@ Simulation/exercise *siteID* of the participating LAN or organization.
 
 ### Hints
 
-- DISEntityManager contains [DISEntityTypeMapping](/x_ite/components/dis/disentitytypemapping/) nodes.
+- **DISEntityManager** contains [DISEntityTypeMapping](/x_ite/components/dis/disentitytypemapping/) nodes.
 - DisEntityManager ESPDU packets use the IEEE Distributed Interactive Simulation (DIS) protocol.
 - [X3D Developers Guide on DIS](https://www.web3d.org/x3d/content/examples/X3dDevelopersGuide.htmll#DIS)
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/DistributedInteractiveSimulation.pdf)

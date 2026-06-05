@@ -125,16 +125,16 @@ Location and filename of shader. Multiple locations are more reliable, and inclu
 
 ### Hints
 
-- ShaderPart can contain a CDATA block of plain-text source code.
+- **ShaderPart** can contain a CDATA block of plain-text source code.
 - Embedded ecmascript: source can also be contained in the sourceCode pseudo-field without escape characters, equivalent to last entry in the url list, when using other API codebases and file encodings.
 - Insert an XML Character Data (CDATA) block within the [Script](/x_ite/components/scripting/script/) node to contain source code embedded within an X3D scene, avoiding the need for escape characters.
 - A contained XML Character Data (CDATA) block for source code protects whitespace, line breaks, and literal characters (such as &amp; for ampersand character, \< for less-than-sign character, and \> for greater-than-sign character) from unintended escape-character modifications by XML parsers.
-- ShaderPart subprograms are written in the same language, which is specified in the parent [ComposedShader](/x_ite/components/shaders/composedshader/) node.
+- **ShaderPart** subprograms are written in the same language, which is specified in the parent [ComposedShader](/x_ite/components/shaders/composedshader/) node.
 - [When parent node is LoadSensor, apply `containerField='children'` (X3Dv4) or `containerField='watchList'` (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 
 ### Warnings
 
-- ShaderPart contains no field declarations.
+- **ShaderPart** contains no field declarations.
 - Strict order is required for contained constructs: first field declarations (if any), then IS/connect statements (if any), and finally CDATA source-code block.
 
 ## Example

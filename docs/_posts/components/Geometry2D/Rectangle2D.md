@@ -46,7 +46,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### SFVec2f [ ] **size** 2 2 <small>(0,∞)</small>
 {: #fields-size }
 
-2D dimensions of Rectangle2D.
+2D dimensions of **Rectangle2D**.
 
 #### Hint
 

@@ -160,7 +160,7 @@ Event sent when node becomes active/inactive.
 ### SFNode [in, out] **frontTexture** NULL <small>[X3DTexture2DNode,MultiTexture]</small>
 {: #fields-frontTexture }
 
-Parent TextureBackground element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/) [MultiTexture](/x_ite/components/texturing/multitexture/)).
+Parent **TextureBackground** element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/) [MultiTexture](/x_ite/components/texturing/multitexture/)).
 
 #### Warning
 
@@ -169,7 +169,7 @@ Parent TextureBackground element can contain up to six image nodes ([ImageTextur
 ### SFNode [in, out] **backTexture** NULL <small>[X3DTexture2DNode,MultiTexture]</small>
 {: #fields-backTexture }
 
-Parent TextureBackground element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/) [MultiTexture](/x_ite/components/texturing/multitexture/)).
+Parent **TextureBackground** element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/) [MultiTexture](/x_ite/components/texturing/multitexture/)).
 
 #### Warning
 
@@ -178,7 +178,7 @@ Parent TextureBackground element can contain up to six image nodes ([ImageTextur
 ### SFNode [in, out] **leftTexture** NULL <small>[X3DTexture2DNode,MultiTexture]</small>
 {: #fields-leftTexture }
 
-Parent TextureBackground element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/) [MultiTexture](/x_ite/components/texturing/multitexture/)).
+Parent **TextureBackground** element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/) [MultiTexture](/x_ite/components/texturing/multitexture/)).
 
 #### Warning
 
@@ -187,7 +187,7 @@ Parent TextureBackground element can contain up to six image nodes ([ImageTextur
 ### SFNode [in, out] **rightTexture** NULL <small>[X3DTexture2DNode,MultiTexture]</small>
 {: #fields-rightTexture }
 
-Parent TextureBackground element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/) [MultiTexture](/x_ite/components/texturing/multitexture/)).
+Parent **TextureBackground** element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/) [MultiTexture](/x_ite/components/texturing/multitexture/)).
 
 #### Warning
 
@@ -196,7 +196,7 @@ Parent TextureBackground element can contain up to six image nodes ([ImageTextur
 ### SFNode [in, out] **topTexture** NULL <small>[X3DTexture2DNode,MultiTexture]</small>
 {: #fields-topTexture }
 
-Parent TextureBackground element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/) [MultiTexture](/x_ite/components/texturing/multitexture/)).
+Parent **TextureBackground** element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/) [MultiTexture](/x_ite/components/texturing/multitexture/)).
 
 #### Warning
 
@@ -205,7 +205,7 @@ Parent TextureBackground element can contain up to six image nodes ([ImageTextur
 ### SFNode [in, out] **bottomTexture** NULL <small>[X3DTexture2DNode,MultiTexture]</small>
 {: #fields-bottomTexture }
 
-Parent TextureBackground element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/) [MultiTexture](/x_ite/components/texturing/multitexture/)).
+Parent **TextureBackground** element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/) [MultiTexture](/x_ite/components/texturing/multitexture/)).
 
 #### Warning
 
@@ -215,12 +215,12 @@ Parent TextureBackground element can contain up to six image nodes ([ImageTextur
 
 ### Hints
 
-- [Background](/x_ite/components/environmentaleffects/background/), [Fog](/x_ite/components/environmentaleffects/fog/), [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/), [NavigationInfo](/x_ite/components/navigation/navigationinfo/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), TextureBackground and [Viewpoint](/x_ite/components/navigation/viewpoint/) are bindable nodes, meaning that no more than one of each node type can be active at a given time.
+- [Background](/x_ite/components/environmentaleffects/background/), [Fog](/x_ite/components/environmentaleffects/fog/), [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/), [NavigationInfo](/x_ite/components/navigation/navigationinfo/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), **TextureBackground** and [Viewpoint](/x_ite/components/navigation/viewpoint/) are bindable nodes, meaning that no more than one of each node type can be active at a given time.
 - Authors can have [LoadSensor](/x_ite/components/networking/loadsensor/) nodes receive notifications and send reporting events when background texture node(s) are loaded.
 
 ### Warnings
 
-- Results are undefined if a bindable node ([Background](/x_ite/components/environmentaleffects/background/), [Fog](/x_ite/components/environmentaleffects/fog/), [NavigationInfo](/x_ite/components/navigation/navigationinfo/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), TextureBackground, [Viewpoint](/x_ite/components/navigation/viewpoint/)) is a contained descendant node of either [LOD](/x_ite/components/navigation/lod/) or [Switch](/x_ite/components/grouping/switch/). Avoid this authoring pattern.
+- Results are undefined if a bindable node ([Background](/x_ite/components/environmentaleffects/background/), [Fog](/x_ite/components/environmentaleffects/fog/), [NavigationInfo](/x_ite/components/navigation/navigationinfo/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), **TextureBackground**, [Viewpoint](/x_ite/components/navigation/viewpoint/)) is a contained descendant node of either [LOD](/x_ite/components/navigation/lod/) or [Switch](/x_ite/components/grouping/switch/). Avoid this authoring pattern.
 - Each of the child [ImageTexture](/x_ite/components/texturing/imagetexture/) or [PixelTexture](/x_ite/components/texturing/pixeltexture/) nodes must have unique containerField values for backTexture, bottomTexture, frontTexture, leftTexture, rightTexture, or topTexture.
 
 ## Example

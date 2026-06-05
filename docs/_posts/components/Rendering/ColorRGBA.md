@@ -50,7 +50,7 @@ The *color* field defines an array of 4-tuple RGBA colors.
 
 #### Warning
 
-- ColorRGBA requires Rendering component level 3 (alpha fully supported), Rendering component level 1 (alpha optional), otherwise Full profile.
+- **ColorRGBA** requires Rendering component level 3 (alpha fully supported), Rendering component level 1 (alpha optional), otherwise Full profile.
 
 ## Advice
 
@@ -62,7 +62,7 @@ The *color* field defines an array of 4-tuple RGBA colors.
 
 ### Warning
 
-- ColorRGBA requires Rendering component level 3 (alpha fully supported), Rendering component level 1 (alpha optional), otherwise Full profile.
+- **ColorRGBA** requires Rendering component level 3 (alpha fully supported), Rendering component level 1 (alpha optional), otherwise Full profile.
 
 ## Example
 

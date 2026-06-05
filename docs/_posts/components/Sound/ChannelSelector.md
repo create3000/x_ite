@@ -127,7 +127,7 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 ### Hint
 
-- ChannelSelector is a utility node to complement [ChannelSplitter](/x_ite/components/sound/channelsplitter/).
+- **ChannelSelector** is a utility node to complement [ChannelSplitter](/x_ite/components/sound/channelsplitter/).
 
 ## Browser Compatibility
 

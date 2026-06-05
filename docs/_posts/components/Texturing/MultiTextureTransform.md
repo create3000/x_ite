@@ -55,22 +55,22 @@ Zero or more contained [TextureTransform](/x_ite/components/texturing/texturetra
 
 #### Warning
 
-- MultiTextureTransform may not contain another MultiTextureTransform node.
+- **MultiTextureTransform** may not contain another **MultiTextureTransform** node.
 
 ## Advice
 
 ### Hints
 
-- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding MultiTextureTransform.
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding **MultiTextureTransform**.
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
-- Multitexturing is accomplished using [MultiTexture](/x_ite/components/texturing/multitexture/), [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) and MultiTextureTransform nodes.
+- Multitexturing is accomplished using [MultiTexture](/x_ite/components/texturing/multitexture/), [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) and **MultiTextureTransform** nodes.
 - [X3D Texturing component Figure 18.2 Lightmap example](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texturing.html#f-Lightmapexample)
 - [X3D Texturing component Table 18.2: Comparison of single texture and multitexture attributes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texturing.html#t-SingleAndMultitextureAttrs)
 
 ### Warnings
 
 - The number of textures to be blended may have a significant impact on performance, depending on available graphics hardware capabilities.
-- MultiTextureTransform may not contain another MultiTextureTransform node.
+- **MultiTextureTransform** may not contain another **MultiTextureTransform** node.
 
 ## Browser Compatibility
 

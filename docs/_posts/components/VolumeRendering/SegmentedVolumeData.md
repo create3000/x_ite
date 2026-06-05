@@ -141,8 +141,8 @@ Optional single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/component
 
 ### Hints
 
-- SegmentedVolumeData can contain a single [ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/) or [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/) node with `containerField='segmentIdentifiers'` and another with `containerField='voxels'.`
-- SegmentedVolumeData can contain multiple RenderStyle nodes.
+- **SegmentedVolumeData** can contain a single [ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/) or [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/) node with `containerField='segmentIdentifiers'` and another with `containerField='voxels'.`
+- **SegmentedVolumeData** can contain multiple RenderStyle nodes.
 
 ### Warning
 

@@ -66,7 +66,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 #### Warning
 
-- The order of initial values in [PixelTexture](/x_ite/components/texturing/pixeltexture/) and PixelTexture3D *image* arrays are different.
+- The order of initial values in [PixelTexture](/x_ite/components/texturing/pixeltexture/) and **PixelTexture3D** *image* arrays are different.
 
 ### SFBool [ ] **repeatS** FALSE
 {: #fields-repeatS }

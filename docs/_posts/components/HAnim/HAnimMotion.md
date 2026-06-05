@@ -72,7 +72,7 @@ Author-provided prose that describes intended purpose of this node.
 ### SFString [in, out] **name** ""
 {: #fields-name }
 
-Unique *name* attribute must be defined so that HAnimMotion node can be identified at run time for animation purposes.
+Unique *name* attribute must be defined so that **HAnimMotion** node can be identified at run time for animation purposes.
 
 ### SFInt32 [in, out] **loa** -1 <small>[-1,4]</small>
 {: #fields-loa }
@@ -170,7 +170,7 @@ Send *previous* output value in values array, using/updating various frame value
 
 #### Hint
 
-- Note that setting *frameIncrement* to 0 prevents automatic advancement of frameIndex and pauses animation of HAnimMotion node.
+- Note that setting *frameIncrement* to 0 prevents automatic advancement of frameIndex and pauses animation of **HAnimMotion** node.
 
 ### SFInt32 [in, out] **startFrame** 0 <small>[0,∞)</small>
 {: #fields-startFrame }

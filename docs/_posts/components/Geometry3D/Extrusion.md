@@ -58,7 +58,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### MFVec2f [in] **set_crossSection** <small>(-∞,∞)</small>
 {: #fields-set_crossSection }
 
-The *crossSection* array defines a silhouette outline of the outer Extrusion surface. *crossSection* is an ordered set of 2D points that draw a piecewise-linear curve which is extruded to form a series of connected vertices.
+The *crossSection* array defines a silhouette outline of the outer **Extrusion** surface. *crossSection* is an ordered set of 2D points that draw a piecewise-linear curve which is extruded to form a series of connected vertices.
 
 #### Hint
 
@@ -191,7 +191,7 @@ The *convex* field is a hint to renderers whether all polygons in a shape are *c
 ### MFVec2f [ ] **crossSection** [ 1 1, 1 -1, -1 -1, -1 1, 1 1 ] <small>(-∞,∞)</small>
 {: #fields-crossSection }
 
-The *crossSection* array defines a silhouette outline of the outer Extrusion surface. *crossSection* is an ordered set of 2D points that draw a piecewise-linear curve which is extruded to form a series of connected vertices.
+The *crossSection* array defines a silhouette outline of the outer **Extrusion** surface. *crossSection* is an ordered set of 2D points that draw a piecewise-linear curve which is extruded to form a series of connected vertices.
 
 #### Hints
 
@@ -247,7 +247,7 @@ The *spine* array defines a center-line sequence of 3D points that define a piec
 
 ### Hints
 
-- [Extrusion](https://en.wikipedia.org/wiki/Extrusion)
+- [**Extrusion**](https://en.wikipedia.org/wiki/**Extrusion**)
 - Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 
 ### Warning

@@ -40,7 +40,7 @@ The **MetadataBoolean** node belongs to the [Core](/x_ite/components/overview/#c
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 {: #fields-metadata }
 
-Information about this node can be contained in a MetadataBoolean, [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a **MetadataBoolean**, [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 

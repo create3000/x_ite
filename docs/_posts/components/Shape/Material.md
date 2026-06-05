@@ -265,7 +265,7 @@ When applying occlusionStrength for this material node, the contained texture pr
 
 #### Hints
 
-- *normalScale* only affects computation of normalTexture modulations that affect lighting of characteristics of the parent Material and has no relation to normal vectors defined by corresponding geometry.
+- *normalScale* only affects computation of normalTexture modulations that affect lighting of characteristics of the parent **Material** and has no relation to normal vectors defined by corresponding geometry.
 - [NormalTexture techniques apply Bump mapping](https://en.wikipedia.org/wiki/Bump_mapping)
 
 ### SFString [in, out] **normalTextureMapping** ""

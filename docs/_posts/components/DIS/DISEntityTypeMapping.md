@@ -160,7 +160,7 @@ Integer enumerations value for particular *subcategory* to which an entity belon
 ### Hints
 
 - Values set to zero are wildcards, matching any received value.
-- DISEntityTypeMapping is contained by a parent [DISEntityManager](/x_ite/components/dis/disentitymanager/) node.
+- **DISEntityTypeMapping** is contained by a parent [DISEntityManager](/x_ite/components/dis/disentitymanager/) node.
 - DisEntityManager ESPDU packets use the IEEE Distributed Interactive Simulation (DIS) protocol.
 - [X3D Developers Guide on DIS](https://www.web3d.org/x3d/content/examples/X3dDevelopersGuide.htmll#DIS)
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/DistributedInteractiveSimulation.pdf)

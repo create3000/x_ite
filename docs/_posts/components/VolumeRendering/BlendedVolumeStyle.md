@@ -126,7 +126,7 @@ Optional single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/component
 
 ### Hint
 
-- BlendedVolumeStyle can contain just one each of following: VolumeStyle node with `containerField='renderStyle',` Texture3D node with `containerField='voxels',` Texture2D node with `containerField='weightTransferFunction1'` and Texture2D node with `containerField='weightTransferFunction2'.`
+- **BlendedVolumeStyle** can contain just one each of following: VolumeStyle node with `containerField='renderStyle',` Texture3D node with `containerField='voxels',` Texture2D node with `containerField='weightTransferFunction1'` and Texture2D node with `containerField='weightTransferFunction2'.`
 
 ### Warning
 

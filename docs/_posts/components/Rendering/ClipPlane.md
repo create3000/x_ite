@@ -67,7 +67,7 @@ If (a,b,c,d) is the *plane*, with the first three components being a normalized 
 
 ### Hint
 
-- ClipPlane nodes only affect peer and descendant nodes, thus a parent grouping node can limit its effect.
+- **ClipPlane** nodes only affect peer and descendant nodes, thus a parent grouping node can limit its effect.
 
 ### Warning
 

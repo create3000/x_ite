@@ -66,7 +66,7 @@ Author-provided prose that describes intended purpose of the url asset.
 ### SFBool [in, out] **global** FALSE
 {: #fields-global }
 
-The *global* field controls potential external scoping effects of lights found within an Inline scene. Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
+The *global* field controls potential external scoping effects of lights found within an **Inline** scene. Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
 
 #### Hint
 
@@ -79,13 +79,13 @@ The *global* field controls potential external scoping effects of lights found w
 
 #### Hints
 
-- Allows author to design when Inline loading occurs via user interaction, event chains or scripting.
+- Allows author to design when **Inline** loading occurs via user interaction, event chains or scripting.
 - Use a separate [LoadSensor](/x_ite/components/networking/loadsensor/) node to detect when loading is complete.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 {: #fields-url }
 
-Address of X3D world to load Inline with current scene, retrieved either from local system or an online address. Browser support for X3D model support can include allowed file formats for XML .x3d, ClassicVRML .x3dv, X3D Binary .x3db, X3D JSON .json, and Virtual Reality Modeling Language (VRML97) .wrl.
+Address of X3D world to load **Inline** with current scene, retrieved either from local system or an online address. Browser support for X3D model support can include allowed file formats for XML .x3d, ClassicVRML .x3dv, X3D Binary .x3db, X3D JSON .json, and Virtual Reality Modeling Language (VRML97) .wrl.
 
 #### Hints
 
@@ -101,7 +101,7 @@ Address of X3D world to load Inline with current scene, retrieved either from lo
 
 - [GlTF support requires X3D version='4.0' and `profile='Full'` or else `<component name='Networking' level='4'/>` `<component name='Shape' level='4'/>` `<component name='Lighting' level='4'/>`](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/networking.html#t-supportLevels)
 - Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https *url* addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
-- Direct or indirect recursion by Inline and/or ExternProtoDeclare *url* reloading is a security error.
+- Direct or indirect recursion by **Inline** and/or ExternProtoDeclare *url* reloading is a security error.
 
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
 {: #fields-autoRefresh }
@@ -219,9 +219,9 @@ Load the scene using `Browser.createX3DFromURL`, then access the [TimeSensor](/x
 ### Hints
 
 - [X3D version='4.0' support includes .gltf and .glb](https://www.khronos.org/gltf) https://en.wikipedia.org/wiki/glTF
-- You cannot ROUTE values directly into an Inline node, use IMPORT/EXPORT declarations instead.
-- Inline EXPORT example:https://www.web3d.org/x3d/content/examples/Basic/X3dSpecifications/InlineExportIndex.html
-- Inline IMPORT example:https://www.web3d.org/x3d/content/examples/Basic/X3dSpecifications/InlineImportIndex.html
+- You cannot ROUTE values directly into an **Inline** node, use IMPORT/EXPORT declarations instead.
+- **Inline** EXPORT example:https://www.web3d.org/x3d/content/examples/Basic/X3dSpecifications/InlineExportIndex.html
+- **Inline** IMPORT example:https://www.web3d.org/x3d/content/examples/Basic/X3dSpecifications/InlineImportIndex.html
 - [X3D Scene Authoring Hints, Inlines and Prototypes](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#InlinesPrototypes)
 - [When parent node is LoadSensor, apply `containerField='children'` (X3Dv4) or `containerField='watchList'` (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 

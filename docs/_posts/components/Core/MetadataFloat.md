@@ -40,7 +40,7 @@ The **MetadataFloat** node belongs to the [Core](/x_ite/components/overview/#cor
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 {: #fields-metadata }
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), MetadataFloat, [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), **MetadataFloat**, [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 
@@ -83,7 +83,7 @@ The *value* attribute is a strictly typed data array providing relevant metadata
 - [Each of the Metadata nodes are allowed as top-level root nodes in a scene, if doing that be sure to explicitly define `containerField='metadata'.`](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-DIS/Part01/concepts.html#Rootnodes)
 - If present, an IS statement is the first child within any other node.
 - An IS statement precedes any sibling Metadata* node, which in turn precedes any other sibling nodes.
-- The choice of [MetadataDouble](/x_ite/components/core/metadatadouble/) versus MetadataFloat usually depends on the relevant tool utilizing the value, or else the relevant metadata reference defining the value.
+- The choice of [MetadataDouble](/x_ite/components/core/metadatadouble/) versus **MetadataFloat** usually depends on the relevant tool utilizing the value, or else the relevant metadata reference defining the value.
 - Comments are not readable when a model file is loaded for viewing, but [WorldInfo](/x_ite/components/core/worldinfo/) and Metadata* nodes are persistent and inspectable at run time.
 - [X3D for Web Authors, Chapter 15, Metadata Information](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter15-Metadata/Chapter15-MetadataInformation.html)
 

@@ -149,9 +149,9 @@ Optional single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/component
 
 ### Hints
 
-- IsoSurfaceVolumeData can contain a single Texture3D node with `containerField='gradients'` that is used to provide explicit per-voxel gradient direction information for determining surface boundaries, rather than having values implicitly calculated by the implementation.
-- IsoSurfaceVolumeData can contain another Texture3D node with `containerField='voxels'` containing voxel data.
-- IsoSurfaceVolumeData can contain multiple VolumeStyle nodes.
+- **IsoSurfaceVolumeData** can contain a single Texture3D node with `containerField='gradients'` that is used to provide explicit per-voxel gradient direction information for determining surface boundaries, rather than having values implicitly calculated by the implementation.
+- **IsoSurfaceVolumeData** can contain another Texture3D node with `containerField='voxels'` containing voxel data.
+- **IsoSurfaceVolumeData** can contain multiple VolumeStyle nodes.
 
 ### Warnings
 

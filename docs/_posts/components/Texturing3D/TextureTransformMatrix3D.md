@@ -64,7 +64,7 @@ The *mapping* label identifies which texture coordinates and transformations are
 ### Hints
 
 - Order of operations is translation, rotation about center, non-uniform scale about center.
-- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding TextureTransformMatrix3D.
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding **TextureTransformMatrix3D**.
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
 
 ### Warnings

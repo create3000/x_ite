@@ -46,7 +46,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### MFVec2f [in, out] **vertices** [ ] <small>(-∞,∞)</small>
 {: #fields-vertices }
 
-2D coordinates of TriangleSet2D *vertices*.
+2D coordinates of **TriangleSet2D** *vertices*.
 
 #### Hint
 

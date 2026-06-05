@@ -201,7 +201,7 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 
 - Requires X3D `profile='Full'` or else include `<component name='Shape' level='4'/>`
 - Corresponding geometry within the parent [Shape](/x_ite/components/shape/shape/) must have solid='false' for two-sided rendering, otherwise no reverse-side back geometry is displayed.
-- X3D4 Architecture has deprecated TwoSidedMaterial, preferring use of child backMaterial node in parent [Appearance](/x_ite/components/shape/appearance/).
+- X3D4 Architecture has deprecated **TwoSidedMaterial**, preferring use of child backMaterial node in parent [Appearance](/x_ite/components/shape/appearance/).
 
 ## Example
 

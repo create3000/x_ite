@@ -138,7 +138,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 ### SFNode [ ] **proxy** NULL <small>[X3DChildNode]</small>
 {: #fields-proxy }
 
-The *proxy* node is used as a substitute for Collision children during collision detection, simplifying collision-intersection computations.
+The *proxy* node is used as a substitute for **Collision** children during collision detection, simplifying collision-intersection computations.
 
 #### Hint
 
@@ -175,7 +175,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ### Hints
 
-- Collision can contain a single proxy child node for substitute collision-detection geometry. Improve run-time performance by using proxy with simpler contact-calculation geometry.
+- **Collision** can contain a single proxy child node for substitute collision-detection geometry. Improve run-time performance by using proxy with simpler contact-calculation geometry.
 - Proxy shapes are not rendered and remain invisible.
 - Apply `containerField='proxy'` to uniquely identify the proxy child [Shape](/x_ite/components/shape/shape/) or grouping node.
 - [NavigationInfo](/x_ite/components/navigation/navigationinfo/) types '"WALK" "FLY"' support camera-to-object collision detection.

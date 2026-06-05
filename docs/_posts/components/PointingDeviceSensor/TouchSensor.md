@@ -88,7 +88,7 @@ When pointing device selects geometry, send event containing surface normal vect
 ### SFVec3f [out] **hitPoint_changed**
 {: #fields-hitPoint_changed }
 
-When pointing device selects geometry, send event containing 3D point on surface of underlying geometry, as measured in reference frame for TouchSensor's local coordinate system.
+When pointing device selects geometry, send event containing 3D point on surface of underlying geometry, as measured in reference frame for **TouchSensor**'s local coordinate system.
 
 #### Warning
 

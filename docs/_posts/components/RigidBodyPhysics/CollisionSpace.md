@@ -114,7 +114,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 ### MFNode [in, out] **collidables** [ ] <small>[X3DNBodyCollisionSpaceNode,X3DNBodyCollidableNode]</small>
 {: #fields-collidables }
 
-Collection of collidable objects as well as nested CollisionSpace collections
+Collection of collidable objects as well as nested **CollisionSpace** collections
 
 ## Advice
 

@@ -79,7 +79,7 @@ Whether or not renderable content within this node is visually displayed.
 
 #### Warning
 
-- CADLayer *visible* field had type MFBool in X3Dv3, thus is not backwards compatible.
+- **CADLayer** *visible* field had type MFBool in X3Dv3, thus is not backwards compatible.
 
 ### SFBool [in, out] **bboxDisplay** FALSE
 {: #fields-bboxDisplay }

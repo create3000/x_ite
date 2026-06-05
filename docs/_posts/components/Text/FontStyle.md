@@ -13,7 +13,7 @@ tags: [FontStyle, Text, VRML]
 
 ## Overview
 
-**FontStyle** is an X3D**FontStyle**Node that defines the size, family, justification, and other styles used by [Text](/x_ite/components/text/text/) nodes.
+**FontStyle** is an X3DFontStyleNode that defines the size, family, justification, and other styles used by [Text](/x_ite/components/text/text/) nodes.
 
 The **FontStyle** node belongs to the [Text](/x_ite/components/overview/#text) component and requires at least support level **1,** its default container field is *fontStyle.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
@@ -183,7 +183,7 @@ The *justify* field determines horizontal and vertical alignment of text layout,
 - Full Internationalization (i18n) and Localization (l10n) features are available for any written language.
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes.
 - [Supports supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
-- First add a [Text](/x_ite/components/text/text/) node as a parent node for FontStyle.
+- First add a [Text](/x_ite/components/text/text/) node as a parent node for **FontStyle**.
 - [Wikipedia](https://en.wikipedia.org/wiki/Font)
 - [Wikipedia](https://en.wikipedia.org/wiki/Typeface)
 

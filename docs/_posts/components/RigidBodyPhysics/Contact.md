@@ -74,7 +74,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### MFString [in, out] **appliedParameters** "BOUNCE"
 {: #fields-appliedParameters }
 
-Default global parameters for collision outputs of rigid body physics system. Contact node can override parent [CollisionCollection](/x_ite/components/rigidbodyphysics/collisioncollection/) node. Selectable values for array: "BOUNCE" "USER_FRICTION" "FRICTION_COEFFICIENT_2" "ERROR_REDUCTION" "CONSTANT_FORCE" "SPEED_1" "SPEED_2" "SLIP_1" "SLIP_2".
+Default global parameters for collision outputs of rigid body physics system. **Contact** node can override parent [CollisionCollection](/x_ite/components/rigidbodyphysics/collisioncollection/) node. Selectable values for array: "BOUNCE" "USER_FRICTION" "FRICTION_COEFFICIENT_2" "ERROR_REDUCTION" "CONSTANT_FORCE" "SPEED_1" "SPEED_2" "SLIP_1" "SLIP_2".
 
 #### Hint
 
@@ -148,11 +148,11 @@ The body1 and *body2* fields specify two top-level nodes that should be evaluate
 
 ### Hint
 
-- Each Contact node contains two [RigidBody](/x_ite/components/rigidbodyphysics/rigidbody/) nodes (`containerField='body1'` and `containerField='body2')` as well as two [CollidableShape](/x_ite/components/rigidbodyphysics/collidableshape/) or [CollidableOffset](/x_ite/components/rigidbodyphysics/collidableoffset/) nodes (`containerField='geometry1'` and `containerField='geometry2').`
+- Each **Contact** node contains two [RigidBody](/x_ite/components/rigidbodyphysics/rigidbody/) nodes (`containerField='body1'` and `containerField='body2')` as well as two [CollidableShape](/x_ite/components/rigidbodyphysics/collidableshape/) or [CollidableOffset](/x_ite/components/rigidbodyphysics/collidableoffset/) nodes (`containerField='geometry1'` and `containerField='geometry2').`
 
 ### Warning
 
-- Contact nodes are transient and can only occur at run time. It is an error to define this transient node in an X3D file.
+- **Contact** nodes are transient and can only occur at run time. It is an error to define this transient node in an X3D file.
 
 ## Browser Compatibility
 
