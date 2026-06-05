@@ -222,26 +222,6 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#BoundingBoxes)
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
 
-###  [] **sphericalHarmonics0** [ ] <small>(-∞,∞)</small>
-{: #fields-sphericalHarmonics0 }
-
-Input/Output field *sphericalHarmonics0*.
-
-###  [] **sphericalHarmonics1** [ ] <small>(-∞,∞)</small>
-{: #fields-sphericalHarmonics1 }
-
-Input/Output field *sphericalHarmonics1*.
-
-###  [] **sphericalHarmonics2** [ ] <small>(-∞,∞)</small>
-{: #fields-sphericalHarmonics2 }
-
-Input/Output field *sphericalHarmonics2*.
-
-###  [] **sphericalHarmonics3** [ ] <small>(-∞,∞)</small>
-{: #fields-sphericalHarmonics3 }
-
-Input/Output field *sphericalHarmonics3*.
-
 ## Example
 
 <x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/X_ITE/GaussianSplats/GaussianSplats.x3d" contentScale="auto" update="auto">
