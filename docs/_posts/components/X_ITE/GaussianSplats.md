@@ -108,77 +108,79 @@ The *sphericalHarmonicsDegree0Coef0* field semantic provides the diffuse compone
 ### MFVec3f [in, out] **sphericalHarmonicsDegree1Coef0** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree1Coef0 }
 
+The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
+
 Input/Output field *sphericalHarmonicsDegree1Coef0*.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree1Coef1** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree1Coef1 }
 
-Input/Output field *sphericalHarmonicsDegree1Coef1*.
+The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree1Coef2** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree1Coef2 }
 
-Input/Output field *sphericalHarmonicsDegree1Coef2*.
+The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree2Coef0** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree2Coef0 }
 
-Input/Output field *sphericalHarmonicsDegree2Coef0*.
+The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree2Coef1** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree2Coef1 }
 
-Input/Output field *sphericalHarmonicsDegree2Coef1*.
+The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree2Coef2** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree2Coef2 }
 
-Input/Output field *sphericalHarmonicsDegree2Coef2*.
+The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree2Coef3** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree2Coef3 }
 
-Input/Output field *sphericalHarmonicsDegree2Coef3*.
+The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree2Coef4** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree2Coef4 }
 
-Input/Output field *sphericalHarmonicsDegree2Coef4*.
+The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree3Coef0** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree3Coef0 }
 
-Input/Output field *sphericalHarmonicsDegree3Coef0*.
+The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree3Coef1** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree3Coef1 }
 
-Input/Output field *sphericalHarmonicsDegree3Coef1*.
+The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree3Coef2** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree3Coef2 }
 
-Input/Output field *sphericalHarmonicsDegree3Coef2*.
+The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree3Coef3** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree3Coef3 }
 
-Input/Output field *sphericalHarmonicsDegree3Coef3*.
+The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree3Coef4** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree3Coef4 }
 
-Input/Output field *sphericalHarmonicsDegree3Coef4*.
+The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree3Coef5** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree3Coef5 }
 
-Input/Output field *sphericalHarmonicsDegree3Coef5*.
+The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree3Coef6** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree3Coef6 }
 
-Input/Output field *sphericalHarmonicsDegree3Coef6*.
+The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### SFBool [in, out] **visible** TRUE
 {: #fields-visible }
