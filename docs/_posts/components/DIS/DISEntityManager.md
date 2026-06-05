@@ -15,7 +15,7 @@ tags: [DISEntityManager, DIS]
 
 **DISEntityManager** notifies a scene when new DIS ESPDU entities arrive or current entities leave. **DISEntityManager** may contain any number of [DISEntityTypeMapping](/x_ite/components/dis/disentitytypemapping/) nodes that provide a best-match X3D model to incoming entity type values. For each new DIS entity, **DISEntityManager** thus produces a new [EspduTransform](/x_ite/components/dis/espdutransform/) node that contains a corresponding X3D model.
 
-The DISEntityManager node belongs to the [DIS](/x_ite/components/overview/#dis) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The **DISEntityManager** node belongs to the [DIS](/x_ite/components/overview/#dis) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

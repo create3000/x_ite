@@ -15,7 +15,7 @@ tags: [InlineGeometry, Networking, glTF]
 
 **InlineGeometry** loads geometry from an external file. The result provides a polygonal mesh, set of lines, point cloud, parametric surface, or other geometry. Supported formats are browser dependent and can include STL and PLY mesh files.
 
-The InlineGeometry node belongs to the [Networking](/x_ite/components/overview/#networking) component and requires at least support level **4,** its default container field is *geometry.* It is available from X3D version 4.1 or higher.
+The **InlineGeometry** node belongs to the [Networking](/x_ite/components/overview/#networking) component and requires at least support level **4,** its default container field is *geometry.* It is available from X3D version 4.1 or higher.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }

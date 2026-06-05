@@ -15,7 +15,7 @@ tags: [PhysicalMaterial, Shape]
 
 **PhysicalMaterial** specifies Physically Based Rendering (PBR) properties for associated geometry. **PhysicalMaterial** attributes are used by the X3D lighting equations for advanced high-fidelity rendering.
 
-The PhysicalMaterial node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **2,** its default container field is *material.* It is available from X3D version 4.0 or higher.
+The **PhysicalMaterial** node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **2,** its default container field is *material.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 

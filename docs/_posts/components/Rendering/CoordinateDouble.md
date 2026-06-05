@@ -15,7 +15,7 @@ tags: [CoordinateDouble, Rendering]
 
 **CoordinateDouble** builds geometry by defining a set of 3D coordinate (triplet) point values. **CoordinateDouble** is used by [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), [IndexedLineSet](/x_ite/components/rendering/indexedlineset/), [LineSet](/x_ite/components/rendering/lineset/), [PointSet](/x_ite/components/rendering/pointset/), Triangle* and IndexedTriangle* nodes. **CoordinateDouble** is also used by [NurbsPositionInterpolator](/x_ite/components/nurbs/nurbspositioninterpolator/) and [NurbsOrientationInterpolator](/x_ite/components/nurbs/nurbsorientationinterpolator/).
 
-The CoordinateDouble node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **1,** its default container field is *coord.* It is available from X3D version 3.0 or higher.
+The **CoordinateDouble** node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **1,** its default container field is *coord.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

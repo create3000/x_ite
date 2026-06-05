@@ -15,7 +15,7 @@ tags: [HAnimSegment, HAnim]
 
 **HAnimSegment** node contains [Shape](/x_ite/components/shape/shape/) geometry for each body segment, providing a visual representation of the skeleton segment. Parent/child translation and rotation relationships are defined in ancestor/descendant **HAnimSegment** nodes. **HAnimSegment** contains [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) with `containerField='coord',` [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/) with `containerField='displacers'` and [Shape](/x_ite/components/shape/shape/) or grouping nodes with `containerField='children'.`
 
-The HAnimSegment node belongs to the [HAnim](/x_ite/components/overview/#hanim) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The **HAnimSegment** node belongs to the [HAnim](/x_ite/components/overview/#hanim) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

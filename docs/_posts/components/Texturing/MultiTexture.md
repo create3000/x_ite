@@ -15,7 +15,7 @@ tags: [MultiTexture, Texturing]
 
 **MultiTexture** applies several individual textures to a single geometry node, enabling a variety of visual effects that include light mapping and environment mapping. **MultiTexture** can contain zero or more [ImageTexture](/x_ite/components/texturing/imagetexture/), [MovieTexture](/x_ite/components/texturing/movietexture/), [PixelTexture](/x_ite/components/texturing/pixeltexture/), [ComposedCubeMapTexture](/x_ite/components/cubemaptexturing/composedcubemaptexture/), [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/), [ImageCubeMapTexture](/x_ite/components/cubemaptexturing/imagecubemaptexture/), [ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/), and [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/) nodes. Texture maps have a 2D coordinate system (s, t) horizontal and vertical, with (s, t) texture-coordinate values in range [0.0, 1.0] for opposite corners of the image.
 
-The MultiTexture node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **2,** its default container field is *texture.* It is available from X3D version 3.0 or higher.
+The **MultiTexture** node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **2,** its default container field is *texture.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

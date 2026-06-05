@@ -15,7 +15,7 @@ tags: [ColorRGBA, Rendering]
 
 **ColorRGBA** node defines a set of RGBA color values that apply either to a sibling [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node, or else to a parent [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) node. **ColorRGBA** is only used by [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/), [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), [IndexedLineSet](/x_ite/components/rendering/indexedlineset/), [LineSet](/x_ite/components/rendering/lineset/), [PointSet](/x_ite/components/rendering/pointset/), Triangle* and IndexedTriangle* nodes.
 
-The ColorRGBA node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **1,** its default container field is *color.* It is available from X3D version 3.0 or higher.
+The **ColorRGBA** node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **1,** its default container field is *color.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

@@ -15,7 +15,7 @@ tags: [FontStyle, Text, VRML]
 
 **FontStyle** is an X3D**FontStyle**Node that defines the size, family, justification, and other styles used by [Text](/x_ite/components/text/text/) nodes.
 
-The FontStyle node belongs to the [Text](/x_ite/components/overview/#text) component and requires at least support level **1,** its default container field is *fontStyle.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **FontStyle** node belongs to the [Text](/x_ite/components/overview/#text) component and requires at least support level **1,** its default container field is *fontStyle.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

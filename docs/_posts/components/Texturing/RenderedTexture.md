@@ -15,7 +15,7 @@ tags: [RenderedTexture, Texturing]
 
 **RenderedTexture** is a texture node that renders the view from a local viewpoint or separate scene into an offscreen buffer, producing an image or depth map that can be rendered from model geometry in real time. The output renderings can optionally be saved via the url field as a local file or a stream source. **RenderedTexture** enables effects such as dynamic reflections, live video screens, or portal views by continuously updating the texture based on the rendered content. **RenderedTexture** creates a 2D-image texture map using a numeric array of pixel values. Texture maps have a 2D coordinate system (s, t) horizontal and vertical, with (s, t) texture-coordinate values in range [0.0, 1.0] for opposite corners of the image.
 
-The RenderedTexture node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **4,** its default container field is *texture.* It is available from X3D version 4.1 or higher.
+The **RenderedTexture** node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **4,** its default container field is *texture.* It is available from X3D version 4.1 or higher.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }

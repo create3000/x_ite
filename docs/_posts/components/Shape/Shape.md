@@ -15,7 +15,7 @@ tags: [Shape, Shape, VRML]
 
 **Shape** can appear under any grouping node. **Shape** can contain an [Appearance](/x_ite/components/shape/appearance/) node and a geometry node (for example one of the primitives [Box](/x_ite/components/geometry3d/box/) [Cone](/x_ite/components/geometry3d/cone/) [Cylinder](/x_ite/components/geometry3d/cylinder/) [Sphere](/x_ite/components/geometry3d/sphere/) [Text](/x_ite/components/text/text/), one of [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) [Extrusion](/x_ite/components/geometry3d/extrusion/) [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) [IndexedLineSet](/x_ite/components/rendering/indexedlineset/) [LineSet](/x_ite/components/rendering/lineset/) [PointSet](/x_ite/components/rendering/pointset/), or one of the other geometry nodes).
 
-The Shape node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **Shape** node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

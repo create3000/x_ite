@@ -15,7 +15,7 @@ tags: [IndexedLineSet, Rendering, VRML]
 
 **IndexedLineSet** defines polyline segments using index lists corresponding to vertex coordinates. **IndexedLineSet** is a geometry node that can contain a [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node and optionally a [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) node.
 
-The IndexedLineSet node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **1,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **IndexedLineSet** node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **1,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

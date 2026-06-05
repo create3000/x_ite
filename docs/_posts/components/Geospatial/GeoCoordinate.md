@@ -15,7 +15,7 @@ tags: [GeoCoordinate, Geospatial]
 
 **GeoCoordinate** builds geometry as a set of geographic 3D coordinates. These are transformed into a geocentric, curved-earth representation. **GeoCoordinate** is only used by [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), [IndexedLineSet](/x_ite/components/rendering/indexedlineset/), [LineSet](/x_ite/components/rendering/lineset/) and [PointSet](/x_ite/components/rendering/pointset/). **GeoCoordinate** can contain a [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node.
 
-The GeoCoordinate node belongs to the [Geospatial](/x_ite/components/overview/#geospatial) component and requires at least support level **1,** its default container field is *coord.* It is available from X3D version 3.0 or higher.
+The **GeoCoordinate** node belongs to the [Geospatial](/x_ite/components/overview/#geospatial) component and requires at least support level **1,** its default container field is *coord.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

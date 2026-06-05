@@ -15,7 +15,7 @@ tags: [UnlitMaterial, Shape]
 
 **UnlitMaterial** specifies surface rendering properties for associated geometry that is unaffected by scene lighting. [Material](/x_ite/components/shape/material/) attributes are used by the X3D lighting equations during rendering.
 
-The UnlitMaterial node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **1,** its default container field is *material.* It is available from X3D version 4.0 or higher.
+The **UnlitMaterial** node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **1,** its default container field is *material.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 
