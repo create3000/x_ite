@@ -195,7 +195,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       this .specularTexture ?.removeInterest ("generateTextures", this);
 
       this .specularTexture  = X3DCast (X3DConstants .X3DEnvironmentTextureNode, this ._specularTexture);
-      this .traverseSpecular = this .specularTexture ?.getType () .includes (X3DConstants .GeneratedCubeMapTexture);
+      this .traverseSpecular = this .specularTexture ?.isRenderedTexture ();
 
       if (this .traverseSpecular)
          this .specularTexture .addUpdateCallback (this, () => this .generateTextures ());
@@ -299,13 +299,18 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
       if (!renderObject .isIndependent ())
          return;
 
+      if (!this .traverseSpecular)
+         return;
+
+      if (this .specularTexture ._update .getValue () === "NONE")
+         return;
+
       const modelViewMatrix = renderObject .getModelViewMatrix ();
 
       modelViewMatrix .push ();
       modelViewMatrix .translate (this ._origin .getValue ());
 
-      if (this .traverseSpecular && this .specularTexture ._update .getValue () !== "NONE")
-         this .specularTexture .traverse (type, renderObject);
+      this .specularTexture .traverse (type, renderObject);
 
       modelViewMatrix .pop ();
    },
