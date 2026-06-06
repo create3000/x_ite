@@ -116,6 +116,11 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture
          this .updateTextureParameters ();
       }
    },
+   getRenderedTextures (renderedTextures)
+   {
+      for (const textureNode of this .textureNodes)
+         renderedTextures .add (X3DCast (X3DConstants .RenderedTexture, textureNode));
+   },
 });
 
 Object .defineProperties (ComposedTexture3D,
