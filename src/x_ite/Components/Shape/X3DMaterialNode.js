@@ -19,9 +19,9 @@ function X3DMaterialNode (executionContext)
 
    // Private properties
 
-   this .textureBits      = new BitSet ();
-   this .renderedTextures = [ ];
-   this .shaderNodes      = this .getBrowser () .getShaders ();
+   this .textureBits  = new BitSet ();
+   this .textureNodes = [ ];
+   this .shaderNodes  = this .getBrowser () .getShaders ();
 }
 
 Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanceChildNode .prototype),
@@ -61,7 +61,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
    {
       // Collect rendered textures.
 
-      this .renderedTextures [index] = textureNode ?.isRenderedTexture () ? textureNode : undefined;
+      this .textureNodes [index] = textureNode;
 
       this ._renderedTextures = this .getBrowser () .getCurrentTime ();
 
@@ -78,8 +78,8 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
    },
    getRenderedTextures (renderedTextures)
    {
-      for (const textureNode of this .renderedTextures)
-         renderedTextures .add (textureNode);
+      for (const textureNode of this .textureNodes)
+         textureNode ?.getRenderedTextures (renderedTextures);
    },
    getShader (geometryContext, renderContext)
    {

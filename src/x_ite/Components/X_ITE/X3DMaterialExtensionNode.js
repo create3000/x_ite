@@ -13,8 +13,8 @@ function X3DMaterialExtensionNode (executionContext)
 
    // Private properties
 
-   this .textureBits      = new BitSet ();
-   this .renderedTextures = [ ];
+   this .textureBits  = new BitSet ();
+   this .textureNodes = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (X3DMaterialExtensionNode .prototype, X3DNode .prototype),
@@ -23,7 +23,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialExtensionNode .prototype, X3D
    {
       // Collect rendered textures.
 
-      this .renderedTextures [index] = textureNode ?.isRenderedTexture () ? textureNode : undefined;
+      this .textureNodes [index] = textureNode;
 
       this ._renderedTextures = this .getBrowser () .getCurrentTime ();
 
@@ -40,8 +40,8 @@ Object .assign (Object .setPrototypeOf (X3DMaterialExtensionNode .prototype, X3D
    },
    getRenderedTextures (renderedTextures)
    {
-      for (const textureNode of this .renderedTextures)
-         renderedTextures .add (textureNode);
+      for (const textureNode of this .textureNodes)
+         textureNode ?.getRenderedTextures (renderedTextures);
    },
 });
 
