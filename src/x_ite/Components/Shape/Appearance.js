@@ -395,8 +395,6 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
 
       this .textureNode ?.getRenderedTextures (renderedTextures);
       this .shaderNode  ?.getRenderedTextures (renderedTextures);
-
-      renderedTextures .delete (undefined);
    },
    traverse (type, renderObject)
    {
