@@ -200,7 +200,7 @@ Size of the shadow map in pixels, must be power of two.
 
 ### Hints
 
-- [Specification errata corrections](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/textureProjection.html#**TextureProjectorParallel**)
+- [Specification errata corrections](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Part01/components/textureProjection.html#TextureProjectorParallel)
 - [Diagram](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4.1-CD/Images/ptmparallel2.png)
 
 ## Browser Compatibility

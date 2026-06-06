@@ -53,7 +53,7 @@ The *color* field defines an array of 3-tuple RGB colors.
 ### Hints
 
 - Colors are often controlled by [Material](/x_ite/components/shape/material/) instead.
-- [X3D Scene Authoring Hints, **Color**](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#**Color**)
+- [X3D Scene Authoring Hints, **Color**](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
 ## Example
 
