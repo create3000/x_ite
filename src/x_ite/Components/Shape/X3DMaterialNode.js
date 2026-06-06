@@ -59,7 +59,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
    },
    addTexture (index, textureNode)
    {
-      // Collect rendered textures.
+      // Collect textures.
 
       this .textureNodes [index] = textureNode;
 

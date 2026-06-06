@@ -21,7 +21,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialExtensionNode .prototype, X3D
 {
    addTexture (index, textureNode)
    {
-      // Collect rendered textures.
+      // Collect textures.
 
       this .textureNodes [index] = textureNode;
 
