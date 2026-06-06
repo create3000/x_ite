@@ -88,10 +88,7 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
       return false;
    },
    getRenderedTextures (renderedTextures)
-   {
-      if (this .isRenderedTexture ())
-         renderedTextures .add (this);
-   },
+   { },
    isImageTransparent (data)
    {
       const length = data .length;

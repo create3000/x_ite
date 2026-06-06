@@ -49,6 +49,10 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
    {
       return true;
    },
+   getRenderedTextures (renderedTextures)
+   {
+      renderedTextures .add (this);
+   },
    addUpdateCallback (key, callback)
    {
       this .updateCallbacks .set (key, callback);

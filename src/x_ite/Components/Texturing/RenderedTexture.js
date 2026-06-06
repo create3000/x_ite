@@ -61,6 +61,10 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
    {
       return true;
    },
+   getRenderedTextures (renderedTextures)
+   {
+      renderedTextures .add (this);
+   },
    checkLoadState ()
    {
       return this ._loadState .getValue ();
