@@ -119,7 +119,10 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture
    getRenderedTextures (renderedTextures)
    {
       for (const textureNode of this .textureNodes)
-         renderedTextures .add (X3DCast (X3DConstants .RenderedTexture, textureNode));
+      {
+         if (textureNode .isRenderedTexture ())
+            renderedTextures .add (textureNode);
+      }
    },
 });
 
