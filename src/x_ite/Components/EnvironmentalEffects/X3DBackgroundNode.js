@@ -107,6 +107,10 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
    {
       return this .renderPassNodes;
    },
+   getTextureNodes ()
+   {
+      return this .textureNodes;
+   },
    set_texture__ (index, textureNode)
    {
       this .textureNodes [index] ?.removeInterest ("set_loadState__", this);
