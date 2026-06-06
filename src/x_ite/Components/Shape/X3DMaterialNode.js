@@ -76,9 +76,10 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
    {
       return this .textureBits;
    },
-   getRenderedTextures ()
+   getRenderedTextures (renderedTextures)
    {
-      return this .renderedTextures;
+      for (const textureNode of this .renderedTextures)
+         renderedTextures .add (textureNode);
    },
    getShader (geometryContext, renderContext)
    {
