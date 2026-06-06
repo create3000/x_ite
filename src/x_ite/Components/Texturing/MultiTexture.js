@@ -235,10 +235,7 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, X3DTextureNode 
    getRenderedTextures (renderedTextures)
    {
       for (const textureNode of this .textureNodes)
-      {
-         if (textureNode .isRenderedTexture ())
-            renderedTextures .add (textureNode);
-      }
+         textureNode .getRenderedTextures (renderedTextures);
    },
    getShaderOptions (options)
    {

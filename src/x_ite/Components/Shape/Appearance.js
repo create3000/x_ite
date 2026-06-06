@@ -400,7 +400,6 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, X3DAppearanceNode
       this .shaderNode  ?.getRenderedTextures (renderedTextures);
 
       renderedTextures .delete (undefined);
-      renderedTextures .delete (null);
    },
    traverse (type, renderObject)
    {

@@ -171,10 +171,7 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEn
    getRenderedTextures (renderedTextures)
    {
       for (const textureNode of this .textureNodes)
-      {
-         if (textureNode ?.isRenderedTexture ())
-            renderedTextures .add (textureNode);
-      }
+         textureNode ?.getRenderedTextures (renderedTextures);
    },
 });
 
