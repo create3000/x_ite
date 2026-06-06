@@ -21,14 +21,18 @@ Object .assign (Object .setPrototypeOf (X3DMaterialExtensionNode .prototype, X3D
 {
    addTexture (index, textureNode)
    {
-      index *= 4;
-
-      this .textureBits .remove (index, 0xf);
-      this .textureBits .add (index, textureNode ?.getTextureBits () ?? 0);
+      // Collect rendered textures.
 
       this .renderedTextures [index] = textureNode ?.isRenderedTexture () ? textureNode : undefined;
 
       this ._renderedTextures = this .getBrowser () .getCurrentTime ();
+
+      // Set texture bits.
+
+      index *= 4;
+
+      this .textureBits .remove (index, 0xf);
+      this .textureBits .add (index, textureNode ?.getTextureBits () ?? 0);
    },
    getTextureBits ()
    {
