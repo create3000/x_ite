@@ -296,13 +296,13 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, X3DLightNod
    },
    traverse (type, renderObject)
    {
-      if (!renderObject .isIndependent ())
-         return;
-
       if (!this .traverseSpecular)
          return;
 
       if (this .specularTexture ._update .getValue () === "NONE")
+         return;
+
+      if (!renderObject .isIndependent ())
          return;
 
       const modelViewMatrix = renderObject .getModelViewMatrix ();
