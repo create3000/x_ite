@@ -805,10 +805,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
    getRenderedTextures (renderedTextures)
    {
       for (const { textureNode } of this .textures)
-      {
-         if (textureNode .isRenderedTexture ())
-            renderedTextures .add (textureNode);
-      }
+         textureNode .getRenderedTextures (renderedTextures);
    },
    hasFog (fogNode)
    {
