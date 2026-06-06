@@ -47,10 +47,7 @@ Object .assign (Object .setPrototypeOf (TextureBackground .prototype, X3DBackgro
          return;
 
       for (const textureNode of this .getTextureNodes ())
-      {
-         if (textureNode ?.isRenderedTexture ())
-            textureNode .traverse (type, renderObject);
-      }
+         textureNode ?.traverse (type, renderObject);
    },
 });
 
