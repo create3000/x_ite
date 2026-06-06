@@ -83,6 +83,15 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, X3DText
       // Normally the identity matrix or a flipY matrix.
       return this .matrix;
    },
+   isRenderedTexture ()
+   {
+      return false;
+   },
+   getRenderedTextures (renderedTextures)
+   {
+      if (this .isRenderedTexture ())
+         renderedTextures .add (this);
+   },
    isImageTransparent (data)
    {
       const length = data .length;
