@@ -278,7 +278,7 @@ Object .assign (X3DRenderingContext .prototype,
 
       hAnimNode ?.getShaderOptions (options);
 
-      const shaderNode = this .createShader ({
+      const shaderNode = shapeNode .createDepthShader ?.(options) ?? this .createShader ({
          name: "Depth",
          vertexShader: "Depth",
          fragmentShader: "Depth",

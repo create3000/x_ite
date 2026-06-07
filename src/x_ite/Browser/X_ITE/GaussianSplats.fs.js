@@ -25,6 +25,14 @@ in vec3 conic;
    layout(location = 0) out vec4 x3d_FragData0;
    layout(location = 1) out vec4 x3d_FragData1;
    layout(location = 2) out vec4 x3d_FragData2;
+#elif defined (X3D_DEPTH_PASS)
+   uniform int x3d_Id;
+
+   layout(location = 0) out vec4 x3d_FragData0;
+
+   #if defined (X3D_NORMAL_BUFFER)
+      layout(location = 1) out vec4 x3d_FragData1;
+   #endif
 #else
    #if !defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
       out vec4 x3d_FragColor;
@@ -59,6 +67,16 @@ main ()
       x3d_FragData0 = vec4 (vertex, x3d_Id);
       x3d_FragData1 = vec4 (0.0, 0.0, 1.0, 0.0);
       x3d_FragData2 = vec4 (texCoord, 0.0, 1.0);
+   #elif defined (X3D_DEPTH_PASS)
+      if (alpha < 1.0 / 255.0)
+         discard;
+
+      #if defined (X3D_NORMAL_BUFFER)
+         x3d_FragData0 = vec4 (gl_FragCoord .z, vec3 (x3d_Id)); // depth, id
+         x3d_FragData1 = vec4 (0.0, 0.0, 1.0, float (gl_FrontFacing)); // local normal, front face
+      #else
+         x3d_FragData0 = vec4 (vec3 (gl_FragCoord .z), 1.0); // depth
+      #endif
    #else
       if (alpha < 1.0 / 255.0)
          discard;

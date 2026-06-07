@@ -50,6 +50,8 @@ function GaussianSplatsShape (executionContext, node)
 
    this .addChildObjects (X3DConstants .outputOnly, "rebuild", new Fields .SFTime ());
 
+   this .setShadowObject (false);
+
    // Private Properties
 
    this .node                   = node;
@@ -171,6 +173,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       this .setTransparent (true);
       this .setAlphaMode (AlphaMode .BLEND);
    },
+   set_shadowObject__ ()
+   { },
    createTexture (target)
    {
       const
@@ -503,6 +507,10 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       gl .uniform1i (shaderNode .x3d_OpacitiesTexture,    this .opacitiesTextureUnit);
 
       return shaderNode;
+   },
+   createDepthShader (options)
+   {
+      return this .createPointingShader (options);
    },
    initSortWorker ()
    {

@@ -662,9 +662,10 @@ Object .assign (X3DRenderObject .prototype,
          {
             const renderContext = {
                renderObject: this,
-               modelViewMatrix: new Float32Array (16),
-               collisions: [ ],
+               viewport: new Vector4 (),
                clipPlanes: [ ],
+               collisions: [ ],
+               modelViewMatrix: new Float32Array (16),
                get renderContext () { return this; },
             };
 
@@ -673,6 +674,7 @@ Object .assign (X3DRenderObject .prototype,
 
          const renderContext = this .collisionShapes [num];
 
+         renderContext .viewport .assign (viewVolume .getViewport ());
          renderContext .modelViewMatrix .set (modelViewMatrix);
          renderContext .hAnimNode = this .hAnimNode .at (-1);
          renderContext .shapeNode = shapeNode;
@@ -711,9 +713,9 @@ Object .assign (X3DRenderObject .prototype,
          {
             const renderContext = {
                renderObject: this,
-               modelViewMatrix: new Float32Array (16),
                viewport: new Vector4 (),
                clipPlanes: [ ],
+               modelViewMatrix: new Float32Array (16),
                get renderContext () { return this; },
             };
 
@@ -779,8 +781,8 @@ Object .assign (X3DRenderObject .prototype,
 
          this .renderPasses |= shapeNode .getRenderPasses ();
 
-         renderContext .modelViewMatrix .set (modelViewMatrix);
          renderContext .viewport .assign (viewVolume .getViewport ());
+         renderContext .modelViewMatrix .set (modelViewMatrix);
 
          renderContext .shadows        = this .localShadows .at (-1);
          renderContext .fogNode        = this .localFogs .at (-1);
@@ -801,8 +803,8 @@ Object .assign (X3DRenderObject .prototype,
       return {
          renderObject: this,
          transparent: transparent,
-         modelViewMatrix: new Float32Array (16),
          viewport: new Vector4 (),
+         modelViewMatrix: new Float32Array (16),
          localObjects: [ ],
          localObjectsKeys: [ ], // [clip planes, lights]
          get renderContext () { return this; },
