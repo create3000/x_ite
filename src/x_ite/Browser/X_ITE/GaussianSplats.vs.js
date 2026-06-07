@@ -23,18 +23,25 @@ uniform sampler2D x3d_PositionsTexture;
 uniform sampler2D x3d_OrientationsTexture;
 uniform sampler2D x3d_ScalesTexture;
 
-uniform mediump sampler2D      x3d_OpacitiesTexture;
-uniform mediump sampler2DArray x3d_SphericalHarmonicsTexture;
+uniform mediump sampler2D x3d_OpacitiesTexture;
+
+#if !defined (X3D_POINTING_PASS) && !defined (X3D_DEPTH_PASS)
+   uniform mediump sampler2DArray x3d_SphericalHarmonicsTexture;
+#endif
 
 in vec4 x3d_Vertex;
 in uint x3d_SplatIndex;
 
 out vec4 color;
-out vec2 texCoord;
+out vec2 coordXY;
 out vec3 conic;
 
-#if defined (X3D_CLIP_PLANES) || defined (X3D_FOG)
+#if defined (X3D_CLIP_PLANES) || defined (X3D_FOG) || defined (X3D_POINTING_PASS)
    out vec3 vertex;
+#endif
+
+#if defined (X3D_POINTING_PASS)
+   out vec2 texCoord;
 #endif
 
 #include <Fog>
@@ -165,6 +172,7 @@ computeCov2D (const in vec3 viewSplatCenter, const in mat3 cov3D)
    return vec3 (cov [0] [0], cov [0] [1], cov [1] [1]);
 }
 
+#if !defined (X3D_POINTING_PASS) && !defined (X3D_DEPTH_PASS)
 vec3
 computeColorFromSH (const in ivec2 texelCoord, const in vec3 splatCenter)
 {
@@ -238,6 +246,7 @@ computeColorFromSH (const in ivec2 texelCoord, const in vec3 splatCenter)
 
    return color;
 }
+#endif
 
 void
 main ()
@@ -311,13 +320,17 @@ main ()
       return;
    }
 
-   texCoord    = x3d_Vertex .xy * quadPixelSize;
+   coordXY     = x3d_Vertex .xy * quadPixelSize;
    gl_Position = clipSplatCenter;
 
-   #if defined (X3D_CLIP_PLANES) || defined (X3D_FOG)
+   #if defined (X3D_CLIP_PLANES) || defined (X3D_FOG) || defined (X3D_POINTING_PASS)
       vec4 invClipSplatCenter = inverse (x3d_ProjectionMatrix) * clipSplatCenter;
 
       vertex = invClipSplatCenter .xyz / invClipSplatCenter .w;
+   #endif
+
+   #if defined (X3D_POINTING_PASS)
+      texCoord = (x3d_Vertex .xy + 1.0) / 2.0;
    #endif
 
    #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
@@ -326,7 +339,11 @@ main ()
 
    // Color
 
-   color = vec4 (computeColorFromSH (texelCoord, splatCenter), opacity);
+   #if !defined (X3D_POINTING_PASS) && !defined (X3D_DEPTH_PASS)
+      color = vec4 (computeColorFromSH (texelCoord, splatCenter), opacity);
+   #else
+      color = vec4 (vec3 (0.0), opacity);
+   #endif
 
    #if defined (X3D_FOG) && defined (X3D_FOG_COORDS)
       fog ();

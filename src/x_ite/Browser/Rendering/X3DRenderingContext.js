@@ -244,6 +244,8 @@ Object .assign (X3DRenderingContext .prototype,
          geometryContext = shapeNode .getGeometryContext (),
          options         = [ ];
 
+      options .push ("X3D_DEPTH_PASS");
+
       if (normal)
       {
          options .push ("X3D_NORMAL_BUFFER");

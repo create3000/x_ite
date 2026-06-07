@@ -268,8 +268,50 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       this .set_bbox__ ();
       this .set_objects__ ();
    },
-   displaySimple ()
-   { },
+   displaySimple (gl, renderContext, shaderNode)
+   {
+      // Uniforms
+
+      const { renderObject, viewport } = renderContext;
+      const projectionMatrixArray = renderObject .getProjectionMatrixArray ();
+
+      gl .uniform4iv (shaderNode .x3d_Viewport, renderObject .getViewportArray ());
+
+      // The projection matrix stores the focal length in the first and second element of the diagonal.
+      // We need to convert from NDC space to screen space, which is done by multiplying with the
+      // framebuffer dimensions and dividing by 2, since NDC goes from -1 to 1.
+      gl .uniform2f (shaderNode .x3d_FocalLength,
+         projectionMatrixArray [0] * viewport [2] * 0.5,
+         projectionMatrixArray [5] * viewport [3] * 0.5);
+
+      // Set textures.
+
+      gl .activeTexture (gl .TEXTURE0 + this .positionsTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, this .positionsTexture);
+
+      gl .activeTexture (gl .TEXTURE0 + this .orientationsTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, this .orientationsTexture);
+
+      gl .activeTexture (gl .TEXTURE0 + this .scalesTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, this .scalesTexture);
+
+      gl .activeTexture (gl .TEXTURE0 + this .opacitiesTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, this .opacitiesTexture);
+
+      // Setup vertex attributes.
+
+      if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
+      {
+         gl .bindBuffer (gl .ARRAY_BUFFER, this .splatsIndexBuffer);
+         gl .enableVertexAttribArray (shaderNode .x3d_SplatIndex);
+         gl .vertexAttribIPointer (shaderNode .x3d_SplatIndex, 1, gl .UNSIGNED_INT, 0, 0);
+         gl .vertexAttribDivisor (shaderNode .x3d_SplatIndex, 1);
+
+         shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, 0);
+      }
+
+      gl .drawArraysInstanced (gl .TRIANGLES, 0, 6, this .numSplats);
+   },
    display (gl, renderContext)
    {
       const shaderNode = this .getShader (renderContext);
@@ -418,6 +460,40 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       gl .uniform1i (shaderNode .x3d_ScalesTexture,             this .scalesTextureUnit);
       gl .uniform1i (shaderNode .x3d_OpacitiesTexture,          this .opacitiesTextureUnit);
       gl .uniform1i (shaderNode .x3d_SphericalHarmonicsTexture, this .sphericalHarmonicsTextureUnit);
+
+      return shaderNode;
+   },
+   createPointingShader (options)
+   {
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
+
+      // Shader
+
+      const shaderNode = browser .createShader ({
+         name: "GaussianSplatsPointing",
+         vertexShader: "GaussianSplats",
+         fragmentShader: "GaussianSplats",
+         options,
+         attributes: ["x3d_SplatIndex"],
+         uniforms: [
+            "x3d_PositionsTexture",
+            "x3d_OrientationsTexture",
+            "x3d_ScalesTexture",
+            "x3d_OpacitiesTexture",
+            "x3d_FocalLength",
+         ],
+      });
+
+      // Static Uniforms
+
+      shaderNode .enable (gl);
+
+      gl .uniform1i (shaderNode .x3d_PositionsTexture,    this .positionsTextureUnit);
+      gl .uniform1i (shaderNode .x3d_OrientationsTexture, this .orientationsTextureUnit);
+      gl .uniform1i (shaderNode .x3d_ScalesTexture,       this .scalesTextureUnit);
+      gl .uniform1i (shaderNode .x3d_OpacitiesTexture,    this .opacitiesTextureUnit);
 
       return shaderNode;
    },

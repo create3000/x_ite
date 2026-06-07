@@ -8,15 +8,27 @@ precision highp float;
 precision highp sampler2D;
 
 in vec4 color;
-in vec2 texCoord;
+in vec2 coordXY;
 in vec3 conic;
 
-#if defined (X3D_CLIP_PLANES) || defined (X3D_FOG)
+#if defined (X3D_CLIP_PLANES) || defined (X3D_FOG) || defined (X3D_POINTING_PASS)
    in vec3 vertex;
 #endif
 
-#if !defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
-   out vec4 x3d_FragColor;
+#if defined (X3D_POINTING_PASS)
+   in vec2 texCoord;
+#endif
+
+#if defined (X3D_POINTING_PASS)
+   uniform float x3d_Id;
+
+   layout(location = 0) out vec4 x3d_FragData0;
+   layout(location = 1) out vec4 x3d_FragData1;
+   layout(location = 2) out vec4 x3d_FragData2;
+#else
+   #if !defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
+      out vec4 x3d_FragColor;
+   #endif
 #endif
 
 #include <ToneMapping>
@@ -33,32 +45,41 @@ main ()
    #endif
 
    // Equation 4
-   float exponent = -0.5 * (conic .x * texCoord .x * texCoord .x + conic .z * texCoord .y * texCoord .y) - conic .y * texCoord .x * texCoord .y;
+   float exponent = -0.5 * (conic .x * coordXY .x * coordXY .x + conic .z * coordXY .y * coordXY .y) - conic .y * coordXY .x * coordXY .y;
 
    if (exponent > 0.0)
       discard;
 
    float alpha = min (0.99, exp (exponent) * color .a); // opacity modulated by Gaussian falloff
 
-   if (alpha < 1.0 / 255.0)
-      discard;
+   #if defined (X3D_POINTING_PASS)
+      if (alpha < 64.0 / 255.0)
+         discard;
 
-   vec4 finalColor = vec4 (color .rgb, alpha);
-
-   #if defined (X3D_FOG)
-      finalColor .rgb = getFogColor (finalColor .rgb);
-   #endif
-
-   finalColor .rgb = toneMap (finalColor .rgb);
-
-   #if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
-      oit (finalColor);
+      x3d_FragData0 = vec4 (vertex, x3d_Id);
+      x3d_FragData1 = vec4 (0.0, 0.0, 1.0, 0.0);
+      x3d_FragData2 = vec4 (texCoord, 0.0, 1.0);
    #else
-      x3d_FragColor = finalColor;
-   #endif
+      if (alpha < 1.0 / 255.0)
+         discard;
 
-   #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
-      logarithmic ();
+      vec4 finalColor = vec4 (color .rgb, alpha);
+
+      #if defined (X3D_FOG)
+         finalColor .rgb = getFogColor (finalColor .rgb);
+      #endif
+
+      finalColor .rgb = toneMap (finalColor .rgb);
+
+      #if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
+         oit (finalColor);
+      #else
+         x3d_FragColor = finalColor;
+      #endif
+
+      #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
+         logarithmic ();
+      #endif
    #endif
 }
 `;
