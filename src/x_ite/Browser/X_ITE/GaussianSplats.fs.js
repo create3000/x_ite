@@ -68,7 +68,7 @@ main ()
       x3d_FragData1 = vec4 (0.0, 0.0, 1.0, 0.0);
       x3d_FragData2 = vec4 (texCoord, 0.0, 1.0);
    #elif defined (X3D_DEPTH_PASS)
-      if (alpha < 1.0 / 255.0)
+      if (alpha < 32.0 / 255.0)
          discard;
 
       #if defined (X3D_NORMAL_BUFFER)
