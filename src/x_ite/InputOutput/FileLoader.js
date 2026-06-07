@@ -284,36 +284,32 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       const contentLength = parseInt (response .headers .get ("x-file-size"))
          || parseInt (response .headers .get ("content-length"));
 
-      if (contentLength)
-      {
-         const
-            browser = this .browser,
-            reader  = response .body .getReader (),
-            values  = [ ];
-
-         let loadedBytes = 0;
-
-         for (;;)
-         {
-            const { done, value } = await reader .read ();
-
-            if (done)
-               break;
-
-            values .push (value);
-
-            // We count decompressed bytes, but loadedBytes can be number of compressed bytes.
-            loadedBytes += value .byteLength;
-
-            browser .setLoadingFractions (this .node, Math .min (loadedBytes / contentLength, 1));
-         }
-
-         return await new Blob (values);
-      }
-      else
-      {
+      if (!contentLength)
          return await response .blob ();
+
+      const
+         browser = this .browser,
+         reader  = response .body .getReader (),
+         values  = [ ];
+
+      let loadedBytes = 0;
+
+      for (;;)
+      {
+         const { done, value } = await reader .read ();
+
+         if (done)
+            break;
+
+         values .push (value);
+
+         // We count decompressed bytes, but loadedBytes can be number of compressed bytes.
+         loadedBytes += value .byteLength;
+
+         browser .setLoadingFractions (this .node, Math .min (loadedBytes / contentLength, 1));
       }
+
+      return await new Blob (values);
    },
    checkResponse (response)
    {
