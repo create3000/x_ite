@@ -893,7 +893,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             this .numTextureProjectors = 0;
 
             this .environmentLightNodes .length = 0;
-            this .lightNodes .length            = 0;
+            this .lightNodes            .length = 0;
             this .textureProjectorNodes .length = 0;
 
             for (const globalLights of renderObject .getGlobalLights ())
