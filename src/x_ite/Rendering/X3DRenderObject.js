@@ -1079,7 +1079,7 @@ Object .assign (X3DRenderObject .prototype,
       for (let s = 0; s < numShapes; ++ s)
       {
          const
-            { renderContext, clipPlanes, viewport, modelViewMatrix, shapeNode, hAnimNode } = shapes [s],
+            { renderContext, clipPlanes, modelViewMatrix, shapeNode, hAnimNode } = shapes [s],
             appearanceNode      = shapeNode .getAppearance (),
             geometryContext     = shapeNode .getGeometryContext (),
             stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
