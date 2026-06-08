@@ -158,8 +158,9 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
          const
             dependentRenderer  = this .dependentRenderers .get (renderObject),
             browser            = this .getBrowser (),
-            layer              = renderObject .getLayer (),
             gl                 = browser .getContext (),
+            layer              = renderObject .getLayer (),
+            viewport           = this .viewport,
             background         = dependentRenderer .getBackground (),
             navigationInfoNode = dependentRenderer .getNavigationInfo (),
             viewpointNode      = dependentRenderer .getViewpoint (),
@@ -174,7 +175,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
          this .setTransparent (background .isTransparent ());
 
          dependentRenderer .setFramebuffer (this .frameBuffer);
-         dependentRenderer .getViewVolumes () .push (viewVolume .set (projectionMatrix, this .viewport, this .viewport));
+         dependentRenderer .getViewVolumes () .push (viewVolume .set (projectionMatrix, viewport, viewport));
          dependentRenderer .getProjectionMatrix () .push (projectionMatrix);
 
          gl .bindTexture (this .getTarget (), this .getTexture ());
@@ -183,8 +184,8 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
 
          for (let i = 0; i < 6; ++ i)
          {
-            gl .viewport (... this .viewport);
-            gl .scissor (... this .viewport);
+            gl .viewport (... viewport);
+            gl .scissor (... viewport);
             gl .clearColor (0, 0, 0, 0);
             gl .clear (gl .COLOR_BUFFER_BIT); // Always clear, X3DBackground could be transparent!
 
