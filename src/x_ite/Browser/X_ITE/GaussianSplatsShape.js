@@ -173,8 +173,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       this .setTransparent (true);
       this .setAlphaMode (AlphaMode .BLEND);
    },
-   // set_shadowObject__ ()
-   // { },
+   set_shadowObject__ ()
+   { },
    createTexture (target)
    {
       const
@@ -274,7 +274,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
    },
    displaySimple (gl, renderContext, shaderNode)
    {
-      // Uniforms
+      // Set uniforms.
 
       const { renderObject, viewport } = renderContext;
       const projectionMatrixArray = renderObject .getProjectionMatrixArray ();
@@ -325,7 +325,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       shaderNode .enable (gl);
       shaderNode .hasFog (null);
 
-      // Uniforms
+      // Set uniforms.
 
       const { renderObject, viewport, modelViewMatrix, localObjects, fogNode } = renderContext;
       const projectionMatrixArray = renderObject .getProjectionMatrixArray ();
