@@ -818,12 +818,7 @@ Object .assign (X3DRenderObject .prototype,
 
       projectionMatrixArray .set (this .getProjectionMatrix () .get ());
 
-      // Configure viewport and framebuffer.
-
-      gl .viewport (viewport .x - x,
-                    viewport .y - y,
-                    viewport .z,
-                    viewport .w);
+      // Configure framebuffer.
 
       gl .clear (gl .DEPTH_BUFFER_BIT);
 
