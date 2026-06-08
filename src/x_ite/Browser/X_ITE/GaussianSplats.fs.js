@@ -64,9 +64,9 @@ main ()
       discard;
 
    #if defined (X3D_POINTING_PASS)
-      x3d_FragData0 = vec4 (vertex, x3d_Id);
-      x3d_FragData1 = vec4 (0.0, 0.0, 1.0, 0.0);
-      x3d_FragData2 = vec4 (texCoord, 0.0, 1.0);
+      x3d_FragData0 = vec4 (vertex, x3d_Id);     // vertex
+      x3d_FragData1 = vec4 (0.0, 0.0, 1.0, 0.0); // normal
+      x3d_FragData2 = vec4 (texCoord, 0.0, 1.0); // texCoord
    #elif defined (X3D_DEPTH_PASS)
       #if defined (X3D_NORMAL_BUFFER)
          x3d_FragData0 = vec4 (gl_FragCoord .z, vec3 (x3d_Id)); // depth, id
