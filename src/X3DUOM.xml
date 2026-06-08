@@ -855,6 +855,16 @@
           type="MFVec3f"
           accessType="inputOutput"
           description="The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined"/>
+        <field name="pointerEvents"
+          type="SFBool"
+          accessType="inputOutput"
+          default="TRUE"
+          description="The pointerEvents field defines whether this GaussianSplats becomes target for pointer events."/>
+        <field name="castShadow"
+          type="SFBool"
+          accessType="inputOutput"
+          default="TRUE"
+          description="Input/Output field castShadow."/>
         <field name="visible"
           type="SFBool"
           accessType="inputOutput"
@@ -885,7 +895,7 @@
           type="SFBool"
           accessType="inputOutput"
           default="TRUE"
-          description="The pointerEvents field defines whether this Layer becomes target for pointer events."/>
+          description="The pointerEvents field defines whether this Layer node becomes target for pointer events."/>
       </InterfaceDefinition>
     </ConcreteNode>
 
@@ -895,7 +905,7 @@
           type="SFBool"
           accessType="inputOutput"
           default="TRUE"
-          description="The pointerEvents field defines whether this LayoutLayer becomes target for pointer events."/>
+          description="The pointerEvents field defines whether this LayoutLayer node becomes target for pointer events."/>
       </InterfaceDefinition>
     </ConcreteNode>
 

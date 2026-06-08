@@ -8647,6 +8647,12 @@ declare namespace X3D
        */
       bboxSize: SFVec3f;
       /**
+       * Input/Output field castShadow.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      castShadow: boolean;
+      /**
        * The color space of the reconstructed color values. It must be one of:
 , SRGB_REC709_DISPLAY, LIN_REC709_DISPLAY
        *
@@ -8671,6 +8677,12 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type MFVec4f.
        */
       orientations: MFVec4f;
+      /**
+       * The pointerEvents field defines whether this InstancedShape becomes target for pointer events.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      pointerEvents: boolean;
       /**
        * The mean vector for the Gaussian splat is provided by the positions of the mesh primitive. This defines the center of the Gaussian splat ellipsoid in local space. The effective global mean vector for the Gaussian splat is derived from the positions field value and the global transformation matrix of the X3D node that instantiates the mesh containing the splat primitive as defined in the glTF specification.
        *
