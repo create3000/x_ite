@@ -737,7 +737,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    display (gl, renderContext)
    {
       const
-         { viewport, appearanceNode, modelViewMatrix } = renderContext,
+         { viewport, modelViewMatrix, appearanceNode } = renderContext,
          browser         = this .getBrowser (),
          primitiveMode   = browser .getPrimitiveMode (gl .TRIANGLES),
          renderModeNodes = appearanceNode .getRenderModes (),
@@ -881,7 +881,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    displayInstanced (gl, renderContext, shapeNode)
    {
       const
-         { viewport, appearanceNode, modelViewMatrix } = renderContext,
+         { viewport, modelViewMatrix, appearanceNode } = renderContext,
          browser         = this .getBrowser (),
          primitiveMode   = browser .getPrimitiveMode (gl .TRIANGLES),
          renderModeNodes = appearanceNode .getRenderModes (),

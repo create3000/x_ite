@@ -861,7 +861,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
       return function (gl, renderContext, geometryContext, front = true)
       {
-         const { renderObject, fogNode, appearanceNode, hAnimNode, modelViewMatrix, textureNode: geometryTextureNode, localObjects } = renderContext;
+         const { renderObject, viewport, modelViewMatrix, fogNode, appearanceNode, hAnimNode, textureNode: geometryTextureNode, localObjects } = renderContext;
 
          const
             stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
@@ -874,10 +874,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          if (this .renderCount !== renderCount)
          {
             this .renderCount = renderCount;
-
-            // Set viewport.
-
-            gl .uniform4iv (this .x3d_Viewport, renderObject .getViewportArray ());
 
             // Set projection matrix.
 
@@ -918,6 +914,10 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (viewpointNode .getFarDistance (navigationInfoNode) + 1));
             }
          }
+
+         // Set viewport.
+
+         gl .uniform4i (this .x3d_Viewport, ... viewport);
 
          // Model view matrix
 

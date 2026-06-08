@@ -29,7 +29,6 @@ function X3DRenderObject (executionContext)
    this .modelViewMatrix          = new MatrixStack (Matrix4);
    this .viewMatrix               = new MatrixStack (Matrix4);
    this .cameraSpaceMatrix        = new MatrixStack (Matrix4);
-   this .viewportArray            = new Int32Array (4);
    this .projectionMatrixArray    = new Float32Array (16);
    this .eyeMatrixArray           = new Float32Array (16);
    this .viewMatrixArray          = new Float32Array (16);
@@ -202,10 +201,6 @@ Object .assign (X3DRenderObject .prototype,
    getCameraSpaceMatrix ()
    {
       return this .cameraSpaceMatrix;
-   },
-   getViewportArray ()
-   {
-      return this .viewportArray;
    },
    getProjectionMatrixArray ()
    {
@@ -623,8 +618,8 @@ Object .assign (X3DRenderObject .prototype,
 
          const renderContext = this .pointingShapes [num];
 
-         renderContext .modelViewMatrix .set (modelViewMatrix);
          renderContext .viewport .assign (viewVolume .getViewport ());
+         renderContext .modelViewMatrix .set (modelViewMatrix);
          renderContext .hAnimNode = this .hAnimNode .at (-1);
          renderContext .shapeNode = shapeNode;
 
@@ -724,8 +719,8 @@ Object .assign (X3DRenderObject .prototype,
 
          const renderContext = this .depthShapes [num];
 
-         renderContext .modelViewMatrix .set (modelViewMatrix);
          renderContext .viewport .assign (viewVolume .getViewport ());
+         renderContext .modelViewMatrix .set (modelViewMatrix);
          renderContext .hAnimNode = this .hAnimNode .at (-1);
          renderContext .shapeNode = shapeNode;
 
@@ -840,7 +835,7 @@ Object .assign (X3DRenderObject .prototype,
       for (let s = 0; s < numShapes; ++ s)
       {
          const
-            { renderContext, modelViewMatrix, viewport, shapeNode, hAnimNode, clipPlanes } = shapes [s],
+            { renderContext, viewport, modelViewMatrix, shapeNode, hAnimNode, clipPlanes } = shapes [s],
             appearanceNode      = shapeNode .getAppearance (),
             geometryContext     = shapeNode .getGeometryContext (),
             depthModeNode       = appearanceNode .getDepthMode (),
@@ -849,9 +844,9 @@ Object .assign (X3DRenderObject .prototype,
             id                  = browser .addPointingShape (renderContext);
 
          gl .viewport (viewport .x - x,
-                        viewport .y - y,
-                        viewport .z,
-                        viewport .w);
+                       viewport .y - y,
+                       viewport .z,
+                       viewport .w);
 
          // Draw shape.
 
@@ -1084,13 +1079,13 @@ Object .assign (X3DRenderObject .prototype,
       for (let s = 0; s < numShapes; ++ s)
       {
          const
-            { renderContext, clipPlanes, modelViewMatrix, shapeNode, hAnimNode } = shapes [s],
+            { renderContext, clipPlanes, viewport, modelViewMatrix, shapeNode, hAnimNode } = shapes [s],
             appearanceNode      = shapeNode .getAppearance (),
             geometryContext     = shapeNode .getGeometryContext (),
             stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
             shaderNode          = browser .getDepthShader (normal, clipPlanes .length, shapeNode, hAnimNode);
 
-         // Cannot change viewport here, because the viewport is special here.
+         gl .viewport (... viewport);
 
          // Draw
 
@@ -1142,7 +1137,6 @@ Object .assign (X3DRenderObject .prototype,
 
       // Set matrices after shadows or other renderings.
 
-      this .viewportArray          .set (viewport);
       this .viewMatrixArray        .set (this .getViewMatrix () .get ());
       this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
 
