@@ -135,7 +135,9 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       for (const [degree, coefs] of SH_COEFS .entries ())
       {
-         const filled = Array .from ({ length: coefs }, (_, coef) => this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .length) .some (length => length);
+         // Spherical harmonic degrees MUST NOT be partially defined, that is, either all
+         // coefficients for a given degree and all lower degrees MUST be defined or none.
+         const filled = Array .from ({ length: coefs }, (_, coef) => this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .length) .every (length => length);
 
          key += filled ? 1 : 0;
       }
@@ -423,7 +425,9 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       for (const [degree, coefs] of SH_COEFS .entries ())
       {
-         const filled = Array .from ({ length: coefs }, (_, coef) => this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .length) .some (length => length);
+         // Spherical harmonic degrees MUST NOT be partially defined, that is, either all
+         // coefficients for a given degree and all lower degrees MUST be defined or none.
+         const filled = Array .from ({ length: coefs }, (_, coef) => this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .length) .every (length => length);
 
          if (!filled)
             break;
