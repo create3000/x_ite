@@ -58,6 +58,7 @@ The **GaussianSplats** node belongs to the [X_ITE](/x_ite/components/overview/#x
 | MFVec3f | [in, out] | [sphericalHarmonicsDegree3Coef5](#fields-sphericalHarmonicsDegree3Coef5) | [ ] |
 | MFVec3f | [in, out] | [sphericalHarmonicsDegree3Coef6](#fields-sphericalHarmonicsDegree3Coef6) | [ ] |
 | SFBool | [in, out] | [pointerEvents](#fields-pointerEvents) | TRUE |
+| SFBool | [in, out] | [castShadow](#fields-castShadow) |  |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
 | SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
@@ -187,6 +188,11 @@ The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than ze
 {: #fields-pointerEvents }
 
 The *pointerEvents* field defines whether this InstancedShape becomes target for pointer events. A value of `FALSE` makes this InstancedShape node invisible during pointer picking.
+
+### SFBool [in, out] **castShadow**
+{: #fields-castShadow }
+
+Input/Output field *castShadow*.
 
 ### SFBool [in, out] **visible** TRUE
 {: #fields-visible }
