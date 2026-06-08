@@ -818,15 +818,12 @@ Object .assign (X3DRenderObject .prototype,
 
       projectionMatrixArray .set (this .getProjectionMatrix () .get ());
 
-      // Configure viewport and background.
+      // Configure viewport and framebuffer.
 
       gl .viewport (viewport .x - x,
                     viewport .y - y,
                     viewport .z,
                     viewport .w);
-
-      gl .enable (gl .SCISSOR_TEST);
-      gl .scissor (0, 0, 1, 1);
 
       gl .clear (gl .DEPTH_BUFFER_BIT);
 
@@ -868,8 +865,6 @@ Object .assign (X3DRenderObject .prototype,
          depthModeNode ?.disable (gl);
          browser .resetTextureUnits ();
       }
-
-      gl .disable (gl .SCISSOR_TEST);
    },
    collide: (() =>
    {
