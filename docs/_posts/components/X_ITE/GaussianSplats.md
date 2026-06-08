@@ -189,7 +189,7 @@ The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than ze
 
 The *pointerEvents* field defines whether this InstancedShape becomes target for pointer events. A value of `FALSE` makes this InstancedShape node invisible during pointer picking.
 
-### SFBool [in, out] **castShadow**
+### SFBool [in, out] **castShadow** TRUE
 {: #fields-castShadow }
 
 Input/Output field *castShadow*.
