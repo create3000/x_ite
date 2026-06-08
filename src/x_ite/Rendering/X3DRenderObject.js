@@ -816,13 +816,11 @@ Object .assign (X3DRenderObject .prototype,
          browser               = this .getBrowser (),
          gl                    = browser .getContext (),
          viewport              = this .viewVolumes .at (-1) .getViewport (),
-         viewportArray         = this .viewportArray,
          projectionMatrixArray = this .projectionMatrixArray,
          { x, y }              = browser .getPointer ();
 
       // Configure depth shaders.
 
-      viewportArray         .set (viewport);
       projectionMatrixArray .set (this .getProjectionMatrix () .get ());
 
       // Configure viewport and background.
@@ -1065,12 +1063,10 @@ Object .assign (X3DRenderObject .prototype,
          browser               = this .getBrowser (),
          gl                    = browser .getContext (),
          viewport              = this .viewVolumes .at (-1) .getViewport (),
-         viewportArray         = this .viewportArray,
          projectionMatrixArray = this .projectionMatrixArray;
 
       // Configure depth shaders.
 
-      viewportArray         .set (viewport);
       projectionMatrixArray .set (this .getProjectionMatrix () .get ());
 
       // Configure viewport and background

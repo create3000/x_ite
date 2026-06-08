@@ -60,17 +60,14 @@ main ()
 
    float alpha = min (0.99, exp (exponent) * color .a); // opacity modulated by Gaussian falloff
 
-   #if defined (X3D_POINTING_PASS)
-      if (alpha < 64.0 / 255.0)
-         discard;
+   if (alpha < 1.0 / 255.0)
+      discard;
 
+   #if defined (X3D_POINTING_PASS)
       x3d_FragData0 = vec4 (vertex, x3d_Id);
       x3d_FragData1 = vec4 (0.0, 0.0, 1.0, 0.0);
       x3d_FragData2 = vec4 (texCoord, 0.0, 1.0);
    #elif defined (X3D_DEPTH_PASS)
-      if (alpha < 16.0 / 255.0)
-         discard;
-
       #if defined (X3D_NORMAL_BUFFER)
          x3d_FragData0 = vec4 (gl_FragCoord .z, vec3 (x3d_Id)); // depth, id
          x3d_FragData1 = vec4 (0.0, 0.0, 1.0, float (gl_FrontFacing)); // local normal, front face
@@ -78,9 +75,6 @@ main ()
          x3d_FragData0 = vec4 (vec3 (gl_FragCoord .z), 1.0); // depth
       #endif
    #else
-      if (alpha < 1.0 / 255.0)
-         discard;
-
       vec4 finalColor = vec4 (color .rgb, alpha);
 
       #if defined (X3D_FOG)

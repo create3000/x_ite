@@ -275,7 +275,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       const { renderObject, viewport } = renderContext;
       const projectionMatrixArray = renderObject .getProjectionMatrixArray ();
 
-      gl .uniform4iv (shaderNode .x3d_Viewport, renderObject .getViewportArray ());
+      gl .uniform4i (shaderNode .x3d_Viewport, ... viewport);
 
       // The projection matrix stores the focal length in the first and second element of the diagonal.
       // We need to convert from NDC space to screen space, which is done by multiplying with the
