@@ -36,6 +36,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DChildNode 
       X3DBoundedObject .prototype .initialize .call (this);
 
       this ._pointerEvents .addFieldInterest (this .shapeNode ._pointerEvents);
+      this ._castShadow    .addFieldInterest (this .shapeNode ._castShadow);
       this ._visible       .addFieldInterest (this .shapeNode ._visible);
       this ._bboxDisplay   .addFieldInterest (this .shapeNode ._bboxDisplay);
       this ._bboxSize      .addFieldInterest (this .shapeNode ._bboxSize);
@@ -93,6 +94,7 @@ Object .defineProperties (GaussianSplats,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "sphericalHarmonicsDegree3Coef5", new Fields .MFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "sphericalHarmonicsDegree3Coef6", new Fields .MFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "pointerEvents",                  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "castShadow",                     new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",                        new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",                    new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",                       new Fields .SFVec3f (-1, -1, -1)),

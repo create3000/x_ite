@@ -173,8 +173,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       this .setTransparent (true);
       this .setAlphaMode (AlphaMode .BLEND);
    },
-   set_shadowObject__ ()
-   { },
    createTexture (target)
    {
       const
