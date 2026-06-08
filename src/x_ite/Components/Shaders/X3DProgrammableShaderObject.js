@@ -919,11 +919,11 @@ Object .assign (X3DProgrammableShaderObject .prototype,
 
          gl .uniform4i (this .x3d_Viewport, ... viewport);
 
-         // Model view matrix
+         // Set model view matrix.
 
          gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
 
-         // Normal matrix
+         // Set normal matrix if needed.
 
          if (this .x3d_NormalMatrix)
          {
