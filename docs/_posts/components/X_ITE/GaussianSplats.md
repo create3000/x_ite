@@ -58,7 +58,7 @@ The **GaussianSplats** node belongs to the [X_ITE](/x_ite/components/overview/#x
 | MFVec3f | [in, out] | [sphericalHarmonicsDegree3Coef5](#fields-sphericalHarmonicsDegree3Coef5) | [ ] |
 | MFVec3f | [in, out] | [sphericalHarmonicsDegree3Coef6](#fields-sphericalHarmonicsDegree3Coef6) | [ ] |
 | SFBool | [in, out] | [pointerEvents](#fields-pointerEvents) | TRUE |
-| SFBool | [in, out] | [castShadow](#fields-castShadow) |  |
+| SFBool | [in, out] | [castShadow](#fields-castShadow) | TRUE |
 | SFBool | [in, out] | [visible](#fields-visible) | TRUE |
 | SFBool | [in, out] | [bboxDisplay](#fields-bboxDisplay) | FALSE |
 | SFVec3f | [ ] | [bboxSize](#fields-bboxSize) | -1 -1 -1 |
