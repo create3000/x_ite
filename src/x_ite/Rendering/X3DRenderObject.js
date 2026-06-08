@@ -825,7 +825,6 @@ Object .assign (X3DRenderObject .prototype,
                     viewport .z,
                     viewport .w);
 
-      gl .scissor (0, 0, 1, 1);
       gl .clear (gl .DEPTH_BUFFER_BIT);
 
       // Render all objects.
@@ -1067,7 +1066,6 @@ Object .assign (X3DRenderObject .prototype,
       // Configure viewport and background
 
       gl .viewport (... viewport);
-      gl .scissor (... viewport);
 
       gl .clearColor (... this .depthClearColor);
       gl .clear (gl .COLOR_BUFFER_BIT | gl .DEPTH_BUFFER_BIT);
@@ -1272,7 +1270,6 @@ Object .assign (X3DRenderObject .prototype,
       // Configure viewport and background.
 
       gl .viewport (... viewport);
-      gl .scissor (... viewport);
 
       // Draw background.
 

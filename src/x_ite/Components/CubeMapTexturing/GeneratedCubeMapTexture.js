@@ -185,7 +185,6 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
          for (let i = 0; i < 6; ++ i)
          {
             gl .viewport (... viewport);
-            gl .scissor (... viewport);
             gl .clearColor (0, 0, 0, 0);
             gl .clear (gl .COLOR_BUFFER_BIT); // Always clear, X3DBackground could be transparent!
 

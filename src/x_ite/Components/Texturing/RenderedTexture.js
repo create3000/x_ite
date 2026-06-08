@@ -222,7 +222,6 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
          this .frameBuffer .bind ();
 
          gl .viewport (... this .viewport);
-         gl .scissor (... this .viewport);
          gl .clearColor (0, 0, 0, 0);
          gl .clear (gl .COLOR_BUFFER_BIT);
 

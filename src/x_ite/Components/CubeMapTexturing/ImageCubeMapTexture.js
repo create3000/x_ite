@@ -288,7 +288,6 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
 
       gl .bindFramebuffer (gl .FRAMEBUFFER, framebuffer);
       gl .viewport (0, 0, size, size);
-      gl .scissor (0, 0, size, size);
       gl .disable (gl .DEPTH_TEST);
       gl .enable (gl .CULL_FACE);
       gl .frontFace (gl .CCW);
