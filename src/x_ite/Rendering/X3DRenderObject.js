@@ -825,6 +825,9 @@ Object .assign (X3DRenderObject .prototype,
                     viewport .z,
                     viewport .w);
 
+      gl .enable (gl .SCISSOR_TEST);
+      gl .scissor (0, 0, 1, 1);
+
       gl .clear (gl .DEPTH_BUFFER_BIT);
 
       // Render all objects.
@@ -865,6 +868,8 @@ Object .assign (X3DRenderObject .prototype,
          depthModeNode ?.disable (gl);
          browser .resetTextureUnits ();
       }
+
+      gl .disable (gl .SCISSOR_TEST);
    },
    collide: (() =>
    {
