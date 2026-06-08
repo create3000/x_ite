@@ -810,7 +810,6 @@ Object .assign (X3DRenderObject .prototype,
       const
          browser               = this .getBrowser (),
          gl                    = browser .getContext (),
-         viewport              = this .viewVolumes .at (-1) .getViewport (),
          projectionMatrixArray = this .projectionMatrixArray,
          { x, y }              = browser .getPointer ();
 
