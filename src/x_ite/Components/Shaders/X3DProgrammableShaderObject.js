@@ -444,13 +444,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                location .uniform = gl .uniform3f;
                break;
             }
-            case X3DConstants .SFColor:
-            case X3DConstants .SFVec3d:
-            case X3DConstants .SFVec3f:
-            {
-               location .uniform = gl .uniform3f;
-               break;
-            }
             case X3DConstants .SFColorRGBA:
             case X3DConstants .SFVec4d:
             case X3DConstants .SFVec4f:
