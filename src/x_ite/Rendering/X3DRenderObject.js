@@ -1085,7 +1085,8 @@ Object .assign (X3DRenderObject .prototype,
             stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
             shaderNode          = browser .getDepthShader (normal, clipPlanes .length, shapeNode, hAnimNode);
 
-         gl .viewport (... viewport);
+         // Cannot change viewport here, because the viewport is special here.
+         // gl .viewport (... viewport);
 
          // Draw
 
