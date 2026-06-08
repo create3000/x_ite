@@ -117,7 +117,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
    },
    getShapeKey ()
    {
-      return 3;
+      return this .key;
    },
    getGeometryContext ()
    {
@@ -173,8 +173,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       this .setTransparent (true);
       this .setAlphaMode (AlphaMode .BLEND);
    },
-   set_shadowObject__ ()
-   { },
+   // set_shadowObject__ ()
+   // { },
    createTexture (target)
    {
       const
@@ -277,16 +277,9 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       // Uniforms
 
       const { renderObject, viewport } = renderContext;
+      const projectionMatrixArray = renderObject .getProjectionMatrixArray ();
 
-      const
-         viewportArray         = renderObject .getViewportArray (),
-         projectionMatrixArray = renderObject .getProjectionMatrixArray ();
-
-      // Gaussian splats only need viewport width and heigh.
-
-      viewportArray .set (viewport);
-
-      gl .uniform4iv (shaderNode .x3d_Viewport, viewportArray);
+      gl .uniform4iv (shaderNode .x3d_Viewport, renderObject .getViewportArray ());
 
       // The projection matrix stores the focal length in the first and second element of the diagonal.
       // We need to convert from NDC space to screen space, which is done by multiplying with the
