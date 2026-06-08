@@ -50,8 +50,6 @@ function GaussianSplatsShape (executionContext, node)
 
    this .addChildObjects (X3DConstants .outputOnly, "rebuild", new Fields .SFTime ());
 
-   this .setShadowObject (false);
-
    // Private Properties
 
    this .node                   = node;

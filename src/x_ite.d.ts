@@ -8678,7 +8678,7 @@ declare namespace X3D
        */
       orientations: MFVec4f;
       /**
-       * The pointerEvents field defines whether this InstancedShape becomes target for pointer events.
+       * The pointerEvents field defines whether this GaussianSplats becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -11727,7 +11727,7 @@ declare namespace X3D
        */
       pickable: boolean;
       /**
-       * The pointerEvents field defines whether this Layer becomes target for pointer events.
+       * The pointerEvents field defines whether this Layer node becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -11925,7 +11925,7 @@ declare namespace X3D
        */
       pickable: boolean;
       /**
-       * The pointerEvents field defines whether this LayoutLayer becomes target for pointer events.
+       * The pointerEvents field defines whether this LayoutLayer node becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
