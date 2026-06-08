@@ -1107,19 +1107,19 @@ Object .assign (X3DRenderObject .prototype,
    draw ()
    {
       const
-         browser                  = this .getBrowser (),
-         gl                       = browser .getContext (),
-         pose                     = browser .getPose (),
-         framebuffers             = this .getFramebuffers (),
-         numFramebuffers          = framebuffers .length,
-         viewport                 = this .viewVolumes .at (-1) .getViewport (),
-         lights                   = this .lights,
-         globalLightsKeys         = this .globalLightsKeys,
-         globalLightsKey          = globalLightsKeys .join (""),
-         globalLights             = this .globalLights,
-         renderedTextures         = this .renderedTextures,
-         globalShadows            = this .globalShadows,
-         headlight                = this .getNavigationInfo () ._headlight .getValue ();
+         browser          = this .getBrowser (),
+         gl               = browser .getContext (),
+         pose             = browser .getPose (),
+         framebuffers     = this .getFramebuffers (),
+         numFramebuffers  = framebuffers .length,
+         viewport         = this .viewVolumes .at (-1) .getViewport (),
+         lights           = this .lights,
+         globalLightsKeys = this .globalLightsKeys,
+         globalLightsKey  = globalLightsKeys .join (""),
+         globalLights     = this .globalLights,
+         renderedTextures = this .renderedTextures,
+         globalShadows    = this .globalShadows,
+         headlight        = this .getNavigationInfo () ._headlight .getValue ();
 
       // PREPARATIONS
 
