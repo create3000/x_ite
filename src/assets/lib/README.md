@@ -1,6 +1,6 @@
 # References
 
-## glTF Sample Viewer
+## Look Up Table Images
 
 * https://github.com/KhronosGroup/glTF-Sample-Viewer
 * https://github.com/KhronosGroup/glTF-Sample-Viewer/blob/main/assets/images/lut_charlie.png
