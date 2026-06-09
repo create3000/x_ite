@@ -52,6 +52,8 @@ function ClipPlane (executionContext)
 
    this .addType (X3DConstants .ClipPlane);
 
+   // Private properties
+
    this .enabled = false;
    this .plane   = new Vector4 ();
 }

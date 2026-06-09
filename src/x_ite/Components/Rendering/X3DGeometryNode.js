@@ -31,7 +31,7 @@ function X3DGeometryNode (executionContext)
                           X3DConstants .outputOnly, "bbox_changed", new Fields .SFTime (),
                           X3DConstants .outputOnly, "rebuild",      new Fields .SFTime ());
 
-   // Private members
+   // Private properties
 
    this .min                      = new Vector3 ();
    this .max                      = new Vector3 ();

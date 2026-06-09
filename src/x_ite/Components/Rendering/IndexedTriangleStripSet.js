@@ -11,6 +11,8 @@ function IndexedTriangleStripSet (executionContext)
 
    this .addType (X3DConstants .IndexedTriangleStripSet);
 
+   // Private properties
+
    this .triangleIndex = [ ];
 }
 

@@ -19,6 +19,8 @@ function X3DLineGeometryNode (executionContext)
    if (!this .getExecutionContext ())
       X3DGeometryNode .call (this, executionContext);
 
+   // Private properties
+
    const
       browser = this .getBrowser (),
       gl      = browser .getContext ();

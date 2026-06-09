@@ -11,6 +11,8 @@ function TriangleFanSet (executionContext)
 
    this .addType (X3DConstants .TriangleFanSet);
 
+   // Private properties
+
    this .triangleIndex = [ ];
 }
 
