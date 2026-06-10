@@ -185,7 +185,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 | Wavefront OBJ    | .obj           | model/obj         |                                 |
 | STL              | .stl           | model/stl         | ASCII & Binary                  |
 | PLY              | .ply           | model/ply         | ASCII & Binary, [3DGS][7]       |
-| OFF              | .off           | model/off         | [As Extension][8]               |
+| OFF              | .off           | model/off         | [By Using an Extension][8]      |
 | SVG Document     | .svg, .svgz    | image/svg+xml     |                                 |
 
   [1]: https://www.web3d.org/documents/specifications/19776-1/V3.3/index.html
@@ -212,7 +212,7 @@ You can then import these [TimeSensor](/x_ite/components/time/timesensor/) nodes
 
 #### The second method involves doing it programmatically:
 
-Load the scene using `Browser.createX3DFromURL(...)`, then access the [TimeSensor](/x_ite/components/time/timesensor/) nodes using [`scene.getExportedNode(...)`](/x_ite/reference/scene-services/#getexportednode-exportedname-string-sfnode).
+Load the scene using [`Browser.createX3DFromURL(...)`](/x_ite/reference/browser-services/#createx3dfromurl-url-mfstring-promisex3dscene), then access the [TimeSensor](/x_ite/components/time/timesensor/) nodes using [`scene.getExportedNode(...)`](/x_ite/reference/scene-services/#getexportednode-exportedname-string-sfnode).
 
 ## Advice
 

@@ -156,7 +156,7 @@ The *smooth* field provides a hint to the browser whether *smooth* rendering is 
 | Wavefront OBJ    | .obj           | model/obj         |                                 |
 | STL              | .stl           | model/stl         | ASCII & Binary                  |
 | PLY              | .ply           | model/ply         | ASCII & Binary, [3DGS][7]       |
-| OFF              | .off           | model/off         | [As Extension][8]               |
+| OFF              | .off           | model/off         | [By Using an Extension][8]      |
 | SVG Document     | .svg, .svgz    | image/svg+xml     |                                 |
 
   [1]: https://www.web3d.org/documents/specifications/19776-1/V3.3/index.html
