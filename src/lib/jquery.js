@@ -39,10 +39,16 @@ Object .assign ($,
     */
    async gunzip (data)
    {
+      const
+         blob  = data instanceof Blob ? data : new Blob ([data]),
+         magic = await blob .slice (0, 2) .arrayBuffer ();
+
+      if (!$.isGzip (magic))
+         return await blob .arrayBuffer ();
+
       try
       {
          const
-            blob         = data instanceof Blob ? data : new Blob ([data]),
             inputStream  = blob .stream (),
             outputStream = inputStream .pipeThrough (new DecompressionStream ("gzip"));
 
@@ -50,8 +56,17 @@ Object .assign ($,
       }
       catch
       {
-         return data instanceof Blob ? await data .arrayBuffer () : data;
+         return await blob .arrayBuffer ();
       }
+   },
+   isGzip (arrayBuffer)
+   {
+      if (arrayBuffer .byteLength < 2)
+         return false;
+
+      const bytes = new Uint8Array (arrayBuffer);
+
+      return bytes [0] === 0x1f && bytes [1] === 0x8b;
    },
 });
 
