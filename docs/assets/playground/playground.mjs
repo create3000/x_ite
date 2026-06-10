@@ -1,4 +1,4 @@
-import "https://cdn.jsdelivr.net/npm/x_ite-off-parser@1.0.5/dist/x_ite-off-parser.min.js";
+import "https://cdn.jsdelivr.net/npm/x_ite-off-parser@1.0.6/dist/x_ite-off-parser.min.js";
 
 const MONACO_VERSION = $(`script[src*="monaco-editor"]`) .attr ("src") .match (/\/monaco-editor(@?.*?)\//) [1];
 
