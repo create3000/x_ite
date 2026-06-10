@@ -167,8 +167,7 @@ Object .assign (X3DNetworkingContext .prototype,
 
       if (this [_browserLoading])
       {
-         const loadFractions = Array .from (this [_loadFractions] .values ())
-            .reduce ((p, c) => p + c, 0);
+         const loadFractions = Math .sumPrecise (this [_loadFractions] .values ());
 
          // Let the loading fractions 1/2 of the count.
          const fractions = 1 - (this ._loadCount .getValue () + loadFractions)
