@@ -42,7 +42,8 @@ Object .assign ($,
       try
       {
          const
-            inputStream  = data instanceof Blob ? data .stream () : new Blob ([data]) .stream (),
+            blob         = data instanceof Blob ? data : new Blob ([data]),
+            inputStream  = blob .stream (),
             outputStream = inputStream .pipeThrough (new DecompressionStream ("gzip"));
 
          return await new Response (outputStream) .arrayBuffer ();
