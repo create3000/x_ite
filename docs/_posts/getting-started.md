@@ -380,7 +380,7 @@ X_ITE can load several file formats, either directly as the source of the \<x3d-
   [7]: https://en.wikipedia.org/wiki/Gaussian_splatting
   [8]: https://www.npmjs.com/package/x_ite-off-parser
 
-All files can be compressed using GZip compression (usually denoted by a 'z' at the end of the filename suffix). This saves bandwidth and speeds up download time.
+All files, including media files, can be compressed using GZip compression (usually denoted by a `z` at the end of the filename suffix or by appending `.gz`). This saves bandwidth and speeds up download times.
 
 If you have an own web-server see: [how to configure your web-server.](/x_ite/how-to-configure-your-web-server/) If you are looking for an online X3D file format converter [see here](/x_ite/laboratory/x3d-file-converter/).
 

@@ -197,7 +197,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
   [7]: https://en.wikipedia.org/wiki/Gaussian_splatting
   [8]: https://www.npmjs.com/package/x_ite-off-parser
 
->**Tip:** All files can be compressed using GZip compression (usually denoted by a 'z' at the end of the filename suffix). This saves bandwidth and speeds up download time.
+>**Tip:** All files, including media files, can be compressed using GZip compression (usually denoted by a `z` at the end of the filename suffix or by appending `.gz`). This saves bandwidth and speeds up download times.
 {: .prompt-tip }
 
 ### About Special Exported Nodes
@@ -208,7 +208,7 @@ The easiest way to see what has been exported is to use [Sunrize](/sunrize/) and
 
 If you have animations, then a [TimeSensor](/x_ite/components/time/timesensor/) named *Timer1*, *Timer2*, and so on is exported for each animation. Additionally, a [Group](/x_ite/components/grouping/group/) named *Animations* is exported.
 
-You can then import these [TimeSensor](/x_ite/components/time/timesensor/) nodes into the parent file using an [IMPORT statement](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#IMPORTStatement).
+You can then import these [TimeSensor](/x_ite/components/time/timesensor/) nodes into the parent file using an [IMPORT statement](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#IMPORTStatement) and connect routes from and to the imported nodes.
 
 #### The second method involves doing it programmatically:
 

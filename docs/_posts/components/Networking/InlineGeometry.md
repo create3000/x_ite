@@ -168,7 +168,7 @@ The *smooth* field provides a hint to the browser whether *smooth* rendering is 
   [7]: https://en.wikipedia.org/wiki/Gaussian_splatting
   [8]: https://www.npmjs.com/package/x_ite-off-parser
 
->**Tip:** All files can be compressed using GZip compression (usually denoted by a 'z' at the end of the filename suffix). This saves bandwidth and speeds up download time.
+>**Tip:** All files, including media files, can be compressed using GZip compression (usually denoted by a `z` at the end of the filename suffix or by appending `.gz`). This saves bandwidth and speeds up download times.
 {: .prompt-tip }
 
 ## Advice
