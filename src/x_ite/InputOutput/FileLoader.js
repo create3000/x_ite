@@ -185,7 +185,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
       this .fileURL = new URL (url, this .getBaseURL ());
 
-      // Data URL:
+      // Handle data URLs that are not base64 decoded here:
       if (this .dataAsString)
       {
          const result = url .match (/^\s*data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s);

@@ -79,7 +79,7 @@ Object .assign (Object .setPrototypeOf (ShaderPart .prototype, X3DNode .prototyp
 
       return function ()
       {
-         return shaderTypes .get (this ._type .getValue ()) || "VERTEX_SHADER";
+         return shaderTypes .get (this ._type .getValue ()) ?? "VERTEX_SHADER";
       };
    })(),
    unloadData ()
