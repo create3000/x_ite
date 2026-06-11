@@ -18,13 +18,10 @@ function Rotation4 (x, y, z, angle)
    this [_z]     = 1;
    this [_angle] = 0;
 
+   this [_quaternion] = new Quaternion ();
+
    switch (arguments .length)
    {
-      case 0:
-      {
-         this [_quaternion] = new Quaternion ();
-         return;
-      }
       case 1:
       {
          this .setQuaternion (arguments [0]);
@@ -32,11 +29,7 @@ function Rotation4 (x, y, z, angle)
       }
       case 2:
       {
-         const
-            arg0 = arguments [0],
-            arg1 = arguments [1];
-
-         this [_quaternion] = new Quaternion ();
+         const [arg0, arg1] = arguments;
 
          if (arg1 instanceof Vector3)
             return this .setFromToVec (arg0, arg1);
@@ -50,7 +43,6 @@ function Rotation4 (x, y, z, angle)
       }
       case 4:
       {
-         this [_quaternion] = new Quaternion ();
          this .set (x, y, z, angle);
          return;
       }
