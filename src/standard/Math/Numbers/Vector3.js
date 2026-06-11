@@ -122,11 +122,11 @@ Object .assign (Vector3 .prototype,
    {
       let { x, y, z } = this;
 
-      for (const { x: maxX, y: maxY, z: maxZ } of args)
+      for (const { x: argX, y: argY, z: argZ } of args)
       {
-         x = Math .max (x, maxX);
-         y = Math .max (y, maxY);
-         z = Math .max (z, maxZ);
+         x = Math .max (x, argX);
+         y = Math .max (y, argY);
+         z = Math .max (z, argZ);
       }
 
       this .x = x;
@@ -138,11 +138,11 @@ Object .assign (Vector3 .prototype,
    {
       let { x, y, z } = this;
 
-      for (const { x: minX, y: minY, z: minZ } of args)
+      for (const { x: argX, y: argY, z: argZ } of args)
       {
-         x = Math .min (x, minX);
-         y = Math .min (y, minY);
-         z = Math .min (z, minZ);
+         x = Math .min (x, argX);
+         y = Math .min (y, argY);
+         z = Math .min (z, argZ);
       }
 
       this .x = x;
