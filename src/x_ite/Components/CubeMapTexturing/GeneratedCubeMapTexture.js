@@ -245,8 +245,11 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
    {
       X3DEnvironmentTextureNode .prototype .setShaderUniforms .call (this, gl, channel);
 
-      if (this .textureRenderingPass)
-         gl .viewport (0, 0, 0, 0); // Hide object by making viewport zero size.
+      if (!this .textureRenderingPass)
+         return;
+
+      // Hide object by making scissor zero size.
+      gl .scissor (0, 0, 0, 0);
    },
 });
 
