@@ -15,12 +15,12 @@ function SFRotation (x = 0, y = 0, z = 1, angle = 0)
       if ((y instanceof SFVec3f) || (y instanceof SFVec3d))
       {
          // new SFRotation (fromVector: SFVec3d | SFVec3f, toVector: SFVec3d | SFVec3f)
-         X3DField .call (this, new Rotation4 (x .getValue (), y .getValue ()));
+         X3DField .call (this, Rotation4 .fromVectors (x .getValue (), y .getValue ()));
       }
       else
       {
          // new SFRotation (axis: SFVec3d | SFVec3f, angle: number)
-         X3DField .call (this, new Rotation4 (x .getValue (), +y));
+         X3DField .call (this, new Rotation4 (... x, +y));
       }
    }
    else

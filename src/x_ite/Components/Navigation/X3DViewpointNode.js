@@ -499,7 +499,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
          translation = this ._positionOffset .getValue () .copy () .lerp (offset, factor),
          direction   = this .getPosition () .copy () .add (translation) .subtract (point);
 
-      let rotation = this ._orientationOffset .getValue () .copy () .multRight (new Rotation4 (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, 1)), direction));
+      let rotation = this ._orientationOffset .getValue () .copy () .multRight (Rotation4 .fromVectors (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, 1)), direction));
 
       if (straighten)
       {

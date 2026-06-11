@@ -630,7 +630,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             const
                userCenterOfRotation = viewpoint .getUserCenterOfRotation (),
                fraction             = this .timeSensor ._fraction_changed .getValue (),
-               rotation             = new Rotation4 (this .axis, 2 * Math .PI * fraction),
+               rotation             = new Rotation4 (... this .axis, 2 * Math .PI * fraction),
                userPosition         = rotation .multVecRot (direction .assign (this .direction)) .add (userCenterOfRotation),
                lookAtRotation       = viewpoint .getLookAtRotation (userPosition, viewpoint .getUserCenterOfRotation ());
 

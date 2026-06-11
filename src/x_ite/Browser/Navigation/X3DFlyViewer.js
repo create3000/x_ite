@@ -445,7 +445,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          speedFactor *= dt;
 
          const
-            orientation = viewpoint .getUserOrientation () .multRight (new Rotation4 (viewpoint .getUserOrientation () .multVecRot (axis .assign (Vector3 .Y_AXIS)), upVector)),
+            orientation = viewpoint .getUserOrientation () .multRight (Rotation4 .fromVectors (viewpoint .getUserOrientation () .multVecRot (axis .assign (Vector3 .Y_AXIS)), upVector)),
             translation = orientation .multVecRot (direction .multiply (speedFactor)),
             constrained = this .getActiveLayer () .constrainTranslation (translation);
 
