@@ -79,17 +79,17 @@ async function init ({ positions, splatCount })
    N = splatCount;
 
    // Layout each buffer (byte offsets in WebAssembly.Memory).
-   let off = HEADER_PAGES * PAGE_BYTES;
+   let offset = HEADER_PAGES * PAGE_BYTES;
 
-   pIndexes     = off; off = align16 (off + N * 4);              // Uint32[N]
-   pCenters     = off; off = align16 (off + N * 4 * 4);          // Float32[N*4]
-   pMappedDist  = off; off = align16 (off + N * 4);              // Int32[N]
-   pFrequencies = off; off = align16 (off + DIST_MAP_RANGE * 4); // Uint32[32768]
-   pMVP         = off; off = align16 (off + 16 * 4);             // Float32[16]
-   pIndexesOut  = off; off = align16 (off + N * 4);              // Uint32[N]
+   pIndexes     = offset; offset = align16 (offset + N * 4);              // Uint32[N]
+   pCenters     = offset; offset = align16 (offset + N * 4 * 4);          // Float32[N*4]
+   pMappedDist  = offset; offset = align16 (offset + N * 4);              // Int32[N]
+   pFrequencies = offset; offset = align16 (offset + DIST_MAP_RANGE * 4); // Uint32[32768]
+   pMVP         = offset; offset = align16 (offset + 16 * 4);             // Float32[16]
+   pIndexesOut  = offset; offset = align16 (offset + N * 4);              // Uint32[N]
 
    const
-      totalBytes = off,
+      totalBytes = offset,
       pages      = Math .ceil (totalBytes / PAGE_BYTES) + 2; // +2 for safety
 
    memBuf = new WebAssembly .Memory ({ initial: pages, maximum: pages + 4 });
