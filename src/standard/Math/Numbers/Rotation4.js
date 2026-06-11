@@ -120,7 +120,7 @@ Object .assign (Rotation4 .prototype,
          return this;
       }
 
-      // Calculate quaternion
+      // Determine quaternion.
 
       const
          halfTheta = Algorithm .interval (angle / 2, 0, Math .PI),
