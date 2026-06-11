@@ -973,7 +973,7 @@ A number corresponding to the angle of the rotation (in radians).
 
 ### Methods
 
-#### **getAxis** (): number
+#### **getAxis** (): SFVec3f
 
 Returns the axis of rotation as an SFVec3f object.
 
