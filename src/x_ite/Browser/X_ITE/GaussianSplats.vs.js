@@ -269,12 +269,12 @@ main ()
 
    clipSplatCenter /= clipSplatCenter .w; // perspective division
 
-   // Early Culling
-	if (any (greaterThan (abs (clipSplatCenter .xyz), vec3 (1.3))))
-	{
-		gl_Position = vec4 (0.0, 0.0, 2.0, 1.0);
-		return;
-	}
+   // // Early Culling
+	// if (any (greaterThan (abs (clipSplatCenter .xyz), vec3 (1.3))))
+	// {
+	// 	gl_Position = vec4 (0.0, 0.0, 2.0, 1.0);
+	// 	return;
+	// }
 
    vec4  splatOrientation = texelFetch (x3d_OrientationsTexture, texelCoord, 0);
    vec3  splatScale       = texelFetch (x3d_ScalesTexture, texelCoord, 0) .xyz;
@@ -314,7 +314,7 @@ main ()
    float minScreen   = float (min (x3d_Viewport .z, x3d_Viewport .w));
    float maxQuadSize = max (quadPixelSize .x, quadPixelSize .y);
 
-   if (maxQuadSize > minScreen)
+   if (maxQuadSize > minScreen * 0.5)
    {
       gl_Position = vec4 (0.0, 0.0, 2.0, 1.0);
       return;

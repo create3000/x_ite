@@ -41,7 +41,7 @@ const wasmUrl = new URL ("./sorter_no_simd_non_shared.wasm", import .meta .url) 
 
 // ── Constants ──────────────────────────────────────────────────────────────────
 
-const DIST_MAP_RANGE = 32768;
+const DIST_MAP_RANGE = 1 << 20;  // Sort precision
 const HEADER_PAGES   = 1;        // reserve 1 WASM page (64 KiB) for internal use
 const PAGE_BYTES     = 65536;
 
