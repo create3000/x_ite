@@ -330,6 +330,9 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       const { renderObject, viewport, modelViewMatrix, localObjects, fogNode } = renderContext;
       const projectionMatrixArray = renderObject .getProjectionMatrixArray ();
 
+      // Sort splats.
+      this .sortIndices (modelViewMatrix);
+
       // Set ClipPlane nodes.
 
       shaderNode .setClipPlanes (gl, localObjects, renderObject);
@@ -379,9 +382,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
          shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, 0);
       }
-
-      // Sort splats.
-      this .sortIndices (modelViewMatrix);
 
       // gl .blendFunc (gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
       gl .frontFace (gl .CCW);
