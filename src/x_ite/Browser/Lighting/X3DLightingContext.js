@@ -191,6 +191,7 @@ Object .assign (X3DLightingContext .prototype,
          // Generate images.
 
          gl .viewport (0, 0, mipSize, mipSize);
+         gl .scissor  (0, 0, mipSize, mipSize);
 
          for (let i = 0; i < 6; ++ i)
          {

@@ -338,6 +338,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       // Set viewport and matrices.
 
       gl .viewport (... viewport);
+      gl .scissor (... viewport);
       gl .uniform4i (shaderNode .x3d_Viewport, ... viewport);
       gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
       gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,        false, renderObject .getEyeMatrixArray ());

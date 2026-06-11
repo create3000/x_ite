@@ -983,6 +983,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
             // Set viewport.
 
             gl .viewport (... viewport);
+            gl .scissor (... viewport);
 
             // Enable render mode nodes.
 

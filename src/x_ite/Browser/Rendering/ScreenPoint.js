@@ -75,6 +75,7 @@ Object .assign (ScreenPoint .prototype,
          // Set viewport.
 
          gl .viewport (... viewport);
+         gl .scissor (... viewport);
          gl .blendFuncSeparate (gl .SRC_ALPHA, gl .ONE_MINUS_SRC_ALPHA, gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
 
          // Apply screen scale to matrix.

@@ -746,6 +746,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       // Set viewport.
 
       gl .viewport (... viewport);
+      gl .scissor (... viewport);
 
       // Enable render mode nodes.
 
@@ -890,6 +891,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       // Set viewport.
 
       gl .viewport (... viewport);
+      gl .scissor (... viewport);
 
       // Enable render mode nodes.
 

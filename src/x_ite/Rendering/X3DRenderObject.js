@@ -819,6 +819,7 @@ Object .assign (X3DRenderObject .prototype,
 
       // Configure framebuffer.
 
+      gl .scissor (0, 0, 1, 1);
       gl .clear (gl .DEPTH_BUFFER_BIT);
 
       // Render all objects.
@@ -1057,13 +1058,10 @@ Object .assign (X3DRenderObject .prototype,
 
       projectionMatrixArray .set (this .getProjectionMatrix () .get ());
 
-      // Configure viewport and background
-      // Must use SCISSOR_TEST for PointLight, because there are six different
-      // images on the framebuffer.
+      // Configure viewport and background.
 
-      gl .enable (gl .SCISSOR_TEST);
-      gl .scissor (... viewport);
       gl .viewport (... viewport);
+      gl .scissor (... viewport);
 
       gl .clearColor (... this .depthClearColor);
       gl .clear (gl .COLOR_BUFFER_BIT | gl .DEPTH_BUFFER_BIT);
@@ -1099,8 +1097,6 @@ Object .assign (X3DRenderObject .prototype,
          shapeNode .displaySimple (gl, renderContext, shaderNode);
          browser .resetTextureUnits ();
       }
-
-      gl .disable (gl .SCISSOR_TEST)
    },
    draw ()
    {
@@ -1270,6 +1266,7 @@ Object .assign (X3DRenderObject .prototype,
       // Configure viewport and background.
 
       gl .viewport (... viewport);
+      gl .scissor (... viewport);
 
       // Draw background.
 

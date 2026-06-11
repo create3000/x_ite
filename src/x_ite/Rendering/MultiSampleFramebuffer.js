@@ -244,6 +244,7 @@ Object .assign (MultiSampleFramebuffer .prototype,
       gl .bindFramebuffer (gl .FRAMEBUFFER, frameBuffer);
 
       gl .viewport (0, 0, width, height);
+      gl .scissor  (0, 0, width, height);
       gl .clearColor (0, 0, 0, 0);
       gl .clear (gl .COLOR_BUFFER_BIT);
    },
@@ -266,6 +267,7 @@ Object .assign (MultiSampleFramebuffer .prototype,
 
       // Reset viewport before blit, otherwise only last layer size is used.
       gl .viewport (0, 0, width, height);
+      gl .scissor  (0, 0, width, height);
 
       if (samples)
       {
@@ -309,6 +311,7 @@ Object .assign (MultiSampleFramebuffer .prototype,
 
       // Reset viewport before blit, otherwise only last layer size is used.
       gl .viewport (0, 0, x + width, y + height);
+      gl .scissor  (0, 0, x + width, y + height);
 
       gl .bindFramebuffer (gl .READ_FRAMEBUFFER, frameBuffer);
       gl .bindFramebuffer (gl .DRAW_FRAMEBUFFER, auxBuffer ?? browser .getDefaultFramebuffer ());
