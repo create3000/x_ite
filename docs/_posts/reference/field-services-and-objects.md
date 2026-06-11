@@ -1027,7 +1027,7 @@ Set the value of this rotation to the quaternion passed in *x, y, z, w*.
 
 Returns a SFRotation whose value is the spherical linear interpolation between this object's rotation and *destRotation* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's rotation. For *t* = 1, the value is *destRotation*.
 
-#### **straighten** (*upVector: SFVec3d/f = new SFVec3f (0, 1, 0)*): SFRotation
+#### **straighten** (*upVector: SFVec3d/f = SFVec3f.Y_AXIS*): SFRotation
 
 Straightens the rotation so that the x-axis of the resulting rotation is parallel to the plane spawned by upVector. The default  value for *upVector* is the y-axis.
 
