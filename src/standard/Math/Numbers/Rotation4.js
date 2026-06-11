@@ -27,8 +27,7 @@ function Rotation4 (x, y, z, angle)
       }
       case 1:
       {
-         this [_quaternion] = arguments [0];
-         this .update ();
+         this .setQuaternion (arguments [0]);
          return;
       }
       case 2:
