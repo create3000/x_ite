@@ -138,6 +138,13 @@ computeCov3D (const in vec4 rotation, const in vec3 scale)
 vec3
 computeCov2D (const in vec3 viewSplatCenter, const in mat3 cov3D)
 {
+   // https://github.com/mkkellogg/GaussianSplats3D/blob/eb2fc4593e3ea5e75388296fcdde2459542d1290/src/splatmesh/SplatMaterial3D.js#L114
+   // // If a OrthoViewpoint is used, we need something like this for J:
+   // // Since the projection is linear, we don't need an approximation.
+   // mat3 J = mat3 (orthoZoom, 0.0, 0.0,
+   //                0.0, orthoZoom, 0.0,
+   //                0.0, 0.0, 0.0);
+
    float x = viewSplatCenter .x;
    float y = viewSplatCenter .y;
    float z = viewSplatCenter .z;
