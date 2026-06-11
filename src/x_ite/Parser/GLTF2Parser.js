@@ -377,7 +377,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       lightNode ._intensity = this .numberValue (light .intensity, 1);
 
       if (this .vectorValue (lightNode .rotation, quaternion))
-         lightNode ._rotation = new Rotation4 (0, 0, 1, Math .PI) .multRight (new Rotation4 (quaternion));
+         lightNode ._rotation = new Rotation4 (0, 0, 1, Math .PI) .multRight (Rotation4 .fromQuaternion (quaternion));
       else
          lightNode ._rotation = new Rotation4 (0, 0, 1, Math .PI);
 
@@ -3024,10 +3024,10 @@ function eventsProcessed ()
 
          for (let i = 0; i < length; i += 4)
          {
-            instancedShapeNode ._rotations .push (new Rotation4 (new Quaternion (rotationArray [i + 0],
-                                                                                 rotationArray [i + 1],
-                                                                                 rotationArray [i + 2],
-                                                                                 rotationArray [i + 3])));
+            instancedShapeNode ._rotations .push (Rotation4 .fromQuaternion (new Quaternion (rotationArray [i + 0],
+                                                                                             rotationArray [i + 1],
+                                                                                             rotationArray [i + 2],
+                                                                                             rotationArray [i + 3])));
          }
       }
 
@@ -4154,21 +4154,21 @@ function eventsProcessed ()
 
             // KeyValue
 
-            interpolatorNode ._keyValue .push (new Rotation4 (new Quaternion (keyValues [0],
-                                                                              keyValues [1],
-                                                                              keyValues [2],
-                                                                              keyValues [3])));
+            interpolatorNode ._keyValue .push (Rotation4 .fromQuaternion (new Quaternion (keyValues [0],
+                                                                                          keyValues [1],
+                                                                                          keyValues [2],
+                                                                                          keyValues [3])));
 
             for (let i = 0, length = keyValues .length - 4; i < length; i += 4)
             {
-               interpolatorNode ._keyValue .push (new Rotation4 (new Quaternion (keyValues [i + 0],
-                                                                                 keyValues [i + 1],
-                                                                                 keyValues [i + 2],
-                                                                                 keyValues [i + 3])),
-                                                  new Rotation4 (new Quaternion (keyValues [i + 4],
-                                                                                 keyValues [i + 5],
-                                                                                 keyValues [i + 6],
-                                                                                 keyValues [i + 7])));
+               interpolatorNode ._keyValue .push (Rotation4 .fromQuaternion (new Quaternion (keyValues [i + 0],
+                                                                                             keyValues [i + 1],
+                                                                                             keyValues [i + 2],
+                                                                                             keyValues [i + 3])),
+                                                  Rotation4 .fromQuaternion (new Quaternion (keyValues [i + 4],
+                                                                                             keyValues [i + 5],
+                                                                                             keyValues [i + 6],
+                                                                                             keyValues [i + 7])));
             }
 
             // Finish
@@ -4184,10 +4184,10 @@ function eventsProcessed ()
 
             for (let i = 0, length = keyValues .length; i < length; i += 4)
             {
-               interpolatorNode ._keyValue .push (new Rotation4 (new Quaternion (keyValues [i + 0],
-                                                                                 keyValues [i + 1],
-                                                                                 keyValues [i + 2],
-                                                                                 keyValues [i + 3])));
+               interpolatorNode ._keyValue .push (Rotation4 .fromQuaternion (new Quaternion (keyValues [i + 0],
+                                                                                             keyValues [i + 1],
+                                                                                             keyValues [i + 2],
+                                                                                             keyValues [i + 3])));
             }
 
             interpolatorNode .setup ();
@@ -4215,7 +4215,7 @@ function eventsProcessed ()
                const q = this .cubicSplineVector (t, times, quaternions) .normalize ();
 
                interpolatorNode ._key      .push (t / cycleInterval);
-               interpolatorNode ._keyValue .push (new Rotation4 (q));
+               interpolatorNode ._keyValue .push (Rotation4 .fromQuaternion (q));
             }
 
             interpolatorNode .setup ();
