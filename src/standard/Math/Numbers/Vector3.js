@@ -118,11 +118,11 @@ Object .assign (Vector3 .prototype,
       this .z = z + t * (dZ - z);
       return this;
    },
-   max (vector)
+   max (... args)
    {
       let { x, y, z } = this;
 
-      for (const { x: maxX, y: maxY, z: maxZ } of arguments)
+      for (const { x: maxX, y: maxY, z: maxZ } of args)
       {
          x = Math .max (x, maxX);
          y = Math .max (y, maxY);
@@ -134,11 +134,11 @@ Object .assign (Vector3 .prototype,
       this .z = z;
       return this;
    },
-   min (vector)
+   min (... args)
    {
       let { x, y, z } = this;
 
-      for (const { x: minX, y: minY, z: minZ } of arguments)
+      for (const { x: minX, y: minY, z: minZ } of args)
       {
          x = Math .min (x, minX);
          y = Math .min (y, minY);
