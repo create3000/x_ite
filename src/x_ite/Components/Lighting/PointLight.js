@@ -107,7 +107,7 @@ Object .assign (PointLightContainer .prototype,
          const
             v                = viewports [i],
             viewport         = this .viewport .set (v [0] * shadowMapSize, v [1] * shadowMapSize, v [2] * shadowMapSize, v [3] * shadowMapSize),
-            projectionMatrix = Camera .perspective2 (Algorithm .radians (90), 0.125, 10000, viewport [2], viewport [3], this .projectionMatrix); // Use higher far value for better precision.
+            projectionMatrix = Camera .perspective2 (Algorithm .radians (90), 0.125, 10_000, viewport [2], viewport [3], this .projectionMatrix); // Use higher far value for better precision.
 
          renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
          renderObject .getProjectionMatrix () .push (this .projectionMatrix);
