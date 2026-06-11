@@ -73,7 +73,7 @@ Object .assign (Object .setPrototypeOf (NurbsOrientationInterpolator .prototype,
 
          this .derivative (direction, u);
 
-         this ._value_changed = rotation .setFromToVec (Vector3 .Z_AXIS, direction);
+         this ._value_changed = rotation .setVectors (Vector3 .Z_AXIS, direction);
       };
    })(),
 });

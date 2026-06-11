@@ -136,7 +136,7 @@ Object .assign (Rotation4 .prototype,
    {
       return this .set (axis .x, axis .y, axis .z, angle);
    },
-   setFromToVec: (() =>
+   setVectors: (() =>
    {
       const
          from = new Vector3 (),
@@ -317,7 +317,7 @@ Object .assign (Rotation4 .prototype,
          }
          else
          {
-            rotation .setFromToVec (localXAxis, newXAxis);
+            rotation .setVectors (localXAxis, newXAxis);
 
             return this .multRight (rotation);
          }
@@ -414,7 +414,7 @@ Object .assign (Rotation4,
    IDENTITY: Object .freeze (new Rotation4 ()),
    fromVectors (fromVec, toVec)
    {
-      return new Rotation4 () .setFromToVec (fromVec, toVec);
+      return new Rotation4 () .setVectors (fromVec, toVec);
    },
    fromQuaternion (quaternion)
    {

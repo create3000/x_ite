@@ -462,7 +462,7 @@ Object .assign (X3DRenderObject .prototype,
             .multRight (viewpointNode .getOrientation ());
 
          rotation
-            .setFromToVec (Vector3 .NEGATIVE_Z_AXIS, direction)
+            .setVectors (Vector3 .NEGATIVE_Z_AXIS, direction)
             .multRight (localOrientation);
 
          viewpointNode .straightenHorizon (rotation);
@@ -981,7 +981,7 @@ Object .assign (X3DRenderObject .prototype,
 
          const
             upVector = viewpointNode .getUpVector (),
-            down     = rotation .setFromToVec (Vector3 .Z_AXIS, upVector);
+            down     = rotation .setVectors (Vector3 .Z_AXIS, upVector);
 
          viewProjectionMatrix
             .assign (viewpointNode .getModelMatrix ())
@@ -1003,7 +1003,7 @@ Object .assign (X3DRenderObject .prototype,
 
          distance -= avatarHeight;
 
-         const up = rotation .setFromToVec (Vector3 .Y_AXIS, upVector);
+         const up = rotation .setVectors (Vector3 .Y_AXIS, upVector);
 
          if (distance > 0)
          {

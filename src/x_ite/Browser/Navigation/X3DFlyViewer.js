@@ -369,9 +369,9 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          // Rubberband values
 
          if (this .direction .z > 0)
-            rubberBandRotation .setFromToVec (this .direction, axis .set (0, 0, 1));
+            rubberBandRotation .setVectors (this .direction, axis .set (0, 0, 1));
          else
-            rubberBandRotation .setFromToVec (axis .set (0, 0, -1), this .direction);
+            rubberBandRotation .setVectors (axis .set (0, 0, -1), this .direction);
 
          const rubberBandLength = this .direction .norm ();
 
@@ -531,7 +531,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          if (this .orientationChaser ._isActive .getValue () && this .orientationChaser ._value_changed .hasInterest ("set_orientationOffset__", this))
          {
             userOrientation
-               .setFromToVec (toVector, fromVector)
+               .setVectors (toVector, fromVector)
                .multRight (viewpoint .getOrientation ())
                .multRight (this .orientationChaser ._set_destination .getValue ());
 
@@ -545,7 +545,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, X3DViewer .prot
          else
          {
             userOrientation
-               .setFromToVec (toVector, fromVector)
+               .setVectors (toVector, fromVector)
                .multRight (viewpoint .getUserOrientation ());
 
             if (this .getStraightenHorizon ())
