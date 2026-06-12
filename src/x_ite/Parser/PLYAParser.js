@@ -479,8 +479,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
                case "r": case "g": case "b": case "a":
                   colors .push (this .convertColor (this .value, type));
                   break;
-               case "s": case "t":
-               case "u": case "v":
+               case "s": case "t": case "u": case "v":
                   texCoords .push (this .value);
                   break;
                case "nx": case "ny": case "nz":
