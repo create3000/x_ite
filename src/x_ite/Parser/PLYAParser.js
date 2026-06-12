@@ -504,7 +504,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
                   break;
                // Degree 0
                case "f_dc_0": case "f_dc_1": case "f_dc_2":
-                  sh0 .push (this .convertColor (this .value, type));
+                  sh0 .push (this .value);
                   break;
                // Degree 1,2,3
                case "f_rest_0":  case "f_rest_1":  case "f_rest_2":
@@ -522,7 +522,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
                case "f_rest_36": case "f_rest_37": case "f_rest_38":
                case "f_rest_39": case "f_rest_40": case "f_rest_41":
                case "f_rest_42": case "f_rest_43": case "f_rest_44":
-                  rest [restIndex .get (name)] .push (this .convertColor (this .value, type));
+                  rest [restIndex .get (name)] .push (this .value);
                   break;
             }
          }
