@@ -124,6 +124,8 @@ async function convert (encoding, files)
          scene .setMetaData ("modified", new Date () .toUTCString ());
 
          link (mimeType, file .name .replace (/\.[^.]+$/, "") + extension, output (scene, encoding, file .name));
+
+         URL .revokeObjectURL (url);
       }
       catch (error)
       {

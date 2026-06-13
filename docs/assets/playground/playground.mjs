@@ -148,13 +148,19 @@ class Playground
 
       fileReader .addEventListener ("load", async () =>
       {
-         await this .browser .loadURL (new X3D .MFString (fileReader .result)) .catch (Function .prototype);
+         const
+            blob = new Blob ([fileReader .result], { type: "application/octet-stream" }),
+            url  = URL .createObjectURL (blob);
+
+         await this .browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
+
+         URL .revokeObjectURL (url);
 
          this .model .setValue (this .browser .currentScene .toXMLString ());
          this .updateLanguage ("XML");
       });
 
-      fileReader .readAsDataURL (file);
+      fileReader .readAsArrayBuffer (file);
    }
 
    async applyChanges ()
