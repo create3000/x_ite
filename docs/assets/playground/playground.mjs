@@ -231,6 +231,7 @@ class Playground
          ".obj",
          ".stl",
          ".ply",
+         ".spz",
          ".off",
          ".svg",
          ".svgz",

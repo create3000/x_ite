@@ -35,6 +35,7 @@ $("#open-files a") .on ("click", event =>
       ".obj",
       ".stl",
       ".ply",
+      ".spz",
       ".off",
       ".svg",
       ".svgz",
