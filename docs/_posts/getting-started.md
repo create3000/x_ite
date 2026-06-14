@@ -24,7 +24,7 @@ permalink: /
 [![DeepScan Grade](https://deepscan.io/api/teams/23540/projects/26814/branches/855447/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=23540&pid=26814&bid=855447){: .badge-link }
 -->
 
-<script defer src="https://cdn.jsdelivr.net/npm/x_ite-spz-parser@1.0.10/dist/x_ite-spz-parser.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite-spz-parser@1.0.11/dist/x_ite-spz-parser.min.js"></script>
 
 <x3d-canvas
     class="teaser shadow"
