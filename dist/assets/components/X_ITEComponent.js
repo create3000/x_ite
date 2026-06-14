@@ -1,4 +1,4 @@
-/* X_ITE v15.1.2 */
+/* X_ITE v15.1.3 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -122,30 +122,35 @@ function X3DMaterialExtensionNode (executionContext)
 
    // Private properties
 
-   this .textureBits      = new (external_X_ITE_X3D_BitSet_default()) ();
-   this .renderedTextures = [ ];
+   this .textureBits  = new (external_X_ITE_X3D_BitSet_default()) ();
+   this .textureNodes = [ ];
 }
 
 Object .assign (Object .setPrototypeOf (X3DMaterialExtensionNode .prototype, (external_X_ITE_X3D_X3DNode_default()).prototype),
 {
    addTexture (index, textureNode)
    {
+      // Collect textures.
+
+      this .textureNodes [index] = textureNode;
+
+      this ._renderedTextures = this .getBrowser () .getCurrentTime ();
+
+      // Set texture bits.
+
       index *= 4;
 
       this .textureBits .remove (index, 0xf);
       this .textureBits .add (index, textureNode ?.getTextureBits () ?? 0);
-
-      this .renderedTextures [index] = textureNode ?.isRenderedTexture () ? textureNode : undefined;
-
-      this ._renderedTextures = this .getBrowser () .getCurrentTime ();
    },
    getTextureBits ()
    {
       return this .textureBits;
    },
-   getRenderedTextures ()
+   getRenderedTextures (renderedTextures)
    {
-      return this .renderedTextures;
+      for (const textureNode of this .textureNodes)
+         textureNode ?.getRenderedTextures (renderedTextures);
    },
 });
 
@@ -1020,9 +1025,16 @@ precision highp int;precision highp float;precision highp sampler2D;precision hi
 #if defined(X3D_XR_SESSION)
 uniform mat4 x3d_EyeMatrix;
 #endif
-uniform vec2 x3d_FocalLength;uniform sampler2D x3d_PositionsTexture;uniform sampler2D x3d_OrientationsTexture;uniform sampler2D x3d_ScalesTexture;uniform mediump sampler2D x3d_OpacitiesTexture;uniform mediump sampler2DArray x3d_SphericalHarmonicsTexture;in vec4 x3d_Vertex;in uint x3d_SplatIndex;out vec4 color;out vec2 texCoord;out vec3 conic;
-#if defined(X3D_CLIP_PLANES)||defined(X3D_FOG)
+uniform vec2 x3d_FocalLength;uniform sampler2D x3d_PositionsTexture;uniform sampler2D x3d_OrientationsTexture;uniform sampler2D x3d_ScalesTexture;uniform mediump sampler2D x3d_OpacitiesTexture;
+#if!defined(X3D_POINTING_PASS)&&!defined(X3D_DEPTH_PASS)
+uniform mediump sampler2DArray x3d_SphericalHarmonicsTexture;
+#endif
+in vec4 x3d_Vertex;in uint x3d_SplatIndex;out vec4 color;out vec2 coordXY;out vec3 conic;
+#if defined(X3D_CLIP_PLANES)||defined(X3D_FOG)||defined(X3D_POINTING_PASS)
 out vec3 vertex;
+#endif
+#if defined(X3D_POINTING_PASS)
+out vec2 texCoord;
 #endif
 #include<Fog>
 #include<Logarithmic>
@@ -1036,7 +1048,9 @@ const float SH_C3_0=-.5900435899266435;const float SH_C3_1=2.890611442640554;con
 #endif
 #endif
 #endif
-mat3 computeCov3D(const in vec4 rotation,const in vec3 scale){float qx=rotation.x;float qy=rotation.y;float qz=rotation.z;float qw=-rotation.w;float yy=qy*qy;float zz=qz*qz;float xy=qx*qy;float zw=qz*qw;float xz=qx*qz;float yw=qy*qw;float xx=qx*qx;float yz=qy*qz;float xw=qx*qw;mat3 R=mat3(1.-2.*(yy+zz),2.*(xy+zw),2.*(xz-yw),2.*(xy-zw),1.-2.*(zz+xx),2.*(yz+xw),2.*(xz+yw),2.*(yz-xw),1.-2.*(yy+xx));mat3 S=mat3(scale.x,0.,0.,0.,scale.y,0.,0.,0.,scale.z);mat3 M=S*R;mat3 Sigma=transpose(M)*M;return Sigma;}vec3 computeCov2D(const in vec3 viewSplatCenter,const in mat3 cov3D){float x=viewSplatCenter.x;float y=viewSplatCenter.y;float z=viewSplatCenter.z;float zz=z*z;mat3 J=mat3(x3d_FocalLength.x/z,0.,-(x3d_FocalLength.x*x)/zz,0.,x3d_FocalLength.y/z,-(x3d_FocalLength.y*y)/zz,0.,0.,0.);mat3 W=transpose(mat3(x3d_ModelViewMatrix));mat3 T=W*J;mat3 cov=transpose(T)*cov3D*T;cov[0][0]+=.3;cov[1][1]+=.3;return vec3(cov[0][0],cov[0][1],cov[1][1]);}vec3 computeColorFromSH(const in ivec2 texelCoord,const in vec3 splatCenter){vec3 sh0=texelFetch(x3d_SphericalHarmonicsTexture,ivec3(texelCoord,0),0).rgb;
+mat3 computeCov3D(const in vec4 rotation,const in vec3 scale){float qx=rotation.x;float qy=rotation.y;float qz=rotation.z;float qw=-rotation.w;float yy=qy*qy;float zz=qz*qz;float xy=qx*qy;float zw=qz*qw;float xz=qx*qz;float yw=qy*qw;float xx=qx*qx;float yz=qy*qz;float xw=qx*qw;mat3 R=mat3(1.-2.*(yy+zz),2.*(xy+zw),2.*(xz-yw),2.*(xy-zw),1.-2.*(zz+xx),2.*(yz+xw),2.*(xz+yw),2.*(yz-xw),1.-2.*(yy+xx));mat3 S=mat3(scale.x,0.,0.,0.,scale.y,0.,0.,0.,scale.z);mat3 M=S*R;mat3 Sigma=transpose(M)*M;return Sigma;}vec3 computeCov2D(const in vec3 viewSplatCenter,const in mat3 cov3D){float x=viewSplatCenter.x;float y=viewSplatCenter.y;float z=viewSplatCenter.z;float zz=z*z;mat3 J=mat3(x3d_FocalLength.x/z,0.,-(x3d_FocalLength.x*x)/zz,0.,x3d_FocalLength.y/z,-(x3d_FocalLength.y*y)/zz,0.,0.,0.);mat3 W=transpose(mat3(x3d_ModelViewMatrix));mat3 T=W*J;mat3 cov=transpose(T)*cov3D*T;cov[0][0]+=.3;cov[1][1]+=.3;return vec3(cov[0][0],cov[0][1],cov[1][1]);}
+#if!defined(X3D_POINTING_PASS)&&!defined(X3D_DEPTH_PASS)
+vec3 computeColorFromSH(const in ivec2 texelCoord,const in vec3 splatCenter){vec3 sh0=texelFetch(x3d_SphericalHarmonicsTexture,ivec3(texelCoord,0),0).rgb;
 #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_1
 vec3 sh1_0=texelFetch(x3d_SphericalHarmonicsTexture,ivec3(texelCoord,1),0).rgb;vec3 sh1_1=texelFetch(x3d_SphericalHarmonicsTexture,ivec3(texelCoord,2),0).rgb;vec3 sh1_2=texelFetch(x3d_SphericalHarmonicsTexture,ivec3(texelCoord,3),0).rgb;
 #ifdef X3D_GAUSSIAN_SPLATTING_DEGREE_2
@@ -1056,18 +1070,27 @@ color+=SH_C3_0*y*(3.*xx-yy)*sh3_0+SH_C3_1*xy*z*sh3_1+SH_C3_2*y*(4.*zz-xx-yy)*sh3
 #endif
 #endif
 #endif
-color+=.5;return color;}void main(){uint textureWidth=uint(textureSize(x3d_PositionsTexture,0).x);ivec2 texelCoord=ivec2(x3d_SplatIndex % textureWidth,x3d_SplatIndex/textureWidth);vec3 splatCenter=texelFetch(x3d_PositionsTexture,texelCoord,0).xyz;vec4 viewSplatCenter=x3d_ModelViewMatrix*vec4(splatCenter,1.);
+color+=.5;return color;}
+#endif
+void main(){uint textureWidth=uint(textureSize(x3d_PositionsTexture,0).x);ivec2 texelCoord=ivec2(x3d_SplatIndex % textureWidth,x3d_SplatIndex/textureWidth);vec3 splatCenter=texelFetch(x3d_PositionsTexture,texelCoord,0).xyz;vec4 viewSplatCenter=x3d_ModelViewMatrix*vec4(splatCenter,1.);
 #if defined(X3D_XR_SESSION)
 viewSplatCenter=x3d_EyeMatrix*viewSplatCenter;
 #endif
-vec4 clipSplatCenter=x3d_ProjectionMatrix*viewSplatCenter;clipSplatCenter/=clipSplatCenter.w;if(any(greaterThan(abs(clipSplatCenter.xyz),vec3(1.3)))){gl_Position=vec4(0.,0.,2.,1.);return;}vec4 splatOrientation=texelFetch(x3d_OrientationsTexture,texelCoord,0);vec3 splatScale=texelFetch(x3d_ScalesTexture,texelCoord,0).xyz;float opacity=texelFetch(x3d_OpacitiesTexture,texelCoord,0).r;mat3 cov3d=computeCov3D(normalize(splatOrientation),splatScale);vec3 cov2d=computeCov2D(viewSplatCenter.xyz/viewSplatCenter.w,cov3d);float a=cov2d.x;float b=cov2d.y;float c=cov2d.z;float det=a*c-b*b;if(det==0.){gl_Position=vec4(0.,0.,2.,1.);return;}conic=vec3(c,-b,a)/det;vec2 quadPixelSize=SPLAT_SIGMA*sqrt(vec2(a,c));vec2 quadNdcSize=quadPixelSize/vec2(x3d_Viewport.zw)*2.;clipSplatCenter.xy+=x3d_Vertex.xy*quadNdcSize;float minScreen=float(min(x3d_Viewport.z,x3d_Viewport.w));float maxQuadSize=max(quadPixelSize.x,quadPixelSize.y);if(maxQuadSize>minScreen){gl_Position=vec4(0.,0.,2.,1.);return;}texCoord=x3d_Vertex.xy*quadPixelSize;gl_Position=clipSplatCenter;
-#if defined(X3D_CLIP_PLANES)||defined(X3D_FOG)
+vec4 clipSplatCenter=x3d_ProjectionMatrix*viewSplatCenter;clipSplatCenter/=clipSplatCenter.w;if(any(greaterThan(abs(clipSplatCenter.xyz),vec3(1.3)))){gl_Position=vec4(0.,0.,2.,1.);return;}vec4 splatOrientation=texelFetch(x3d_OrientationsTexture,texelCoord,0);vec3 splatScale=texelFetch(x3d_ScalesTexture,texelCoord,0).xyz;float opacity=texelFetch(x3d_OpacitiesTexture,texelCoord,0).r;mat3 cov3d=computeCov3D(normalize(splatOrientation),splatScale);vec3 cov2d=computeCov2D(viewSplatCenter.xyz/viewSplatCenter.w,cov3d);float a=cov2d.x;float b=cov2d.y;float c=cov2d.z;float det=a*c-b*b;if(det==0.){gl_Position=vec4(0.,0.,2.,1.);return;}conic=vec3(c,-b,a)/det;vec2 quadPixelSize=SPLAT_SIGMA*sqrt(vec2(a,c));vec2 quadNdcSize=quadPixelSize/vec2(x3d_Viewport.zw)*2.;clipSplatCenter.xy+=x3d_Vertex.xy*quadNdcSize;float minScreen=float(min(x3d_Viewport.z,x3d_Viewport.w));float maxQuadSize=max(quadPixelSize.x,quadPixelSize.y);if(maxQuadSize>minScreen){gl_Position=vec4(0.,0.,2.,1.);return;}coordXY=x3d_Vertex.xy*quadPixelSize;gl_Position=clipSplatCenter;
+#if defined(X3D_CLIP_PLANES)||defined(X3D_FOG)||defined(X3D_POINTING_PASS)
 vec4 invClipSplatCenter=inverse(x3d_ProjectionMatrix)*clipSplatCenter;vertex=invClipSplatCenter.xyz/invClipSplatCenter.w;
+#endif
+#if defined(X3D_POINTING_PASS)
+texCoord=(x3d_Vertex.xy+1.)/2.;
 #endif
 #if defined(X3D_LOGARITHMIC_DEPTH_BUFFER)
 logarithmic(gl_Position);
 #endif
+#if!defined(X3D_POINTING_PASS)&&!defined(X3D_DEPTH_PASS)
 color=vec4(computeColorFromSH(texelCoord,splatCenter),opacity);
+#else
+color=vec4(vec3(0),opacity);
+#endif
 #if defined(X3D_FOG)&&defined(X3D_FOG_COORDS)
 fog();
 #endif
@@ -1082,12 +1105,24 @@ const GaussianSplats_vs_default_ = vs;
 // https://github.com/javagl/JSplat/blob/41706e0a54372a8ae2e4b474d3a39e19337e42c2/jsplat-viewer-lwjgl/src/main/resources/fragmentShaderSource.glsl
 
 const fs = () => /* glsl */ `#version 300 es
-precision highp int;precision highp float;precision highp sampler2D;in vec4 color;in vec2 texCoord;in vec3 conic;
-#if defined(X3D_CLIP_PLANES)||defined(X3D_FOG)
+precision highp int;precision highp float;precision highp sampler2D;in vec4 color;in vec2 coordXY;in vec3 conic;
+#if defined(X3D_CLIP_PLANES)||defined(X3D_FOG)||defined(X3D_POINTING_PASS)
 in vec3 vertex;
 #endif
+#if defined(X3D_POINTING_PASS)
+in vec2 texCoord;
+#endif
+#if defined(X3D_POINTING_PASS)
+uniform float x3d_Id;layout(location=0)out vec4 x3d_FragData0;layout(location=1)out vec4 x3d_FragData1;layout(location=2)out vec4 x3d_FragData2;
+#elif defined(X3D_DEPTH_PASS)
+uniform int x3d_Id;layout(location=0)out vec4 x3d_FragData0;
+#if defined(X3D_NORMAL_BUFFER)
+layout(location=1)out vec4 x3d_FragData1;
+#endif
+#else
 #if!defined(X3D_ORDER_INDEPENDENT_TRANSPARENCY)
 out vec4 x3d_FragColor;
+#endif
 #endif
 #include<ToneMapping>
 #include<ClipPlanes>
@@ -1098,7 +1133,17 @@ void main(){
 #if defined(X3D_CLIP_PLANES)
 clip();
 #endif
-float exponent=-.5*(conic.x*texCoord.x*texCoord.x+conic.z*texCoord.y*texCoord.y)-conic.y*texCoord.x*texCoord.y;if(exponent>0.)discard;float alpha=min(.99,exp(exponent)*color.a);if(alpha<1./255.)discard;vec4 finalColor=vec4(color.rgb,alpha);
+float exponent=-.5*(conic.x*coordXY.x*coordXY.x+conic.z*coordXY.y*coordXY.y)-conic.y*coordXY.x*coordXY.y;if(exponent>0.)discard;float alpha=min(.99,exp(exponent)*color.a);if(alpha<1./255.)discard;
+#if defined(X3D_POINTING_PASS)
+x3d_FragData0=vec4(vertex,x3d_Id);x3d_FragData1=vec4(0.,0.,1.,0.);x3d_FragData2=vec4(texCoord,0.,1.);
+#elif defined(X3D_DEPTH_PASS)
+#if defined(X3D_NORMAL_BUFFER)
+x3d_FragData0=vec4(gl_FragCoord.z,vec3(x3d_Id));x3d_FragData1=vec4(0.,0.,1.,float(gl_FrontFacing));
+#else
+x3d_FragData0=vec4(vec3(gl_FragCoord.z),1.);
+#endif
+#else
+vec4 finalColor=vec4(color.rgb,alpha);
 #if defined(X3D_FOG)
 finalColor.rgb=getFogColor(finalColor.rgb);
 #endif
@@ -1110,6 +1155,7 @@ x3d_FragColor=finalColor;
 #endif
 #if defined(X3D_LOGARITHMIC_DEPTH_BUFFER)
 logarithmic();
+#endif
 #endif
 }`
 
@@ -1235,7 +1281,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
    },
    getShapeKey ()
    {
-      return 3;
+      return this .key;
    },
    getGeometryContext ()
    {
@@ -1253,12 +1299,16 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
    {
       let key = "GS";
 
-      for (const [degree, coefs] of SH_COEFS .entries ())
+      this .degrees = SH_COEFS .map ((coefs, degree) =>
       {
-         const filled = Array .from ({ length: coefs }, (_, coef) => this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .length) .some (length => length);
+         // Spherical harmonic degrees MUST NOT be partially defined, that is, either all
+         // coefficients for a given degree and all lower degrees MUST be defined or none.
+         const filled = Array .from ({ length: coefs }, (_, coef) => this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .length) .every (length => length);
 
-         key += filled ? 1 : 0;
-      }
+         return filled ? 1 : 0;
+      });
+
+      key += this .degrees .join ("");
 
       switch (this .node ._colorSpace .getValue ())
       {
@@ -1388,8 +1438,50 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
       this .set_bbox__ ();
       this .set_objects__ ();
    },
-   displaySimple ()
-   { },
+   displaySimple (gl, renderContext, shaderNode)
+   {
+      // Set uniforms.
+
+      const { renderObject, viewport } = renderContext;
+      const projectionMatrixArray = renderObject .getProjectionMatrixArray ();
+
+      gl .uniform4i (shaderNode .x3d_Viewport, ... viewport);
+
+      // The projection matrix stores the focal length in the first and second element of the diagonal.
+      // We need to convert from NDC space to screen space, which is done by multiplying with the
+      // framebuffer dimensions and dividing by 2, since NDC goes from -1 to 1.
+      gl .uniform2f (shaderNode .x3d_FocalLength,
+         projectionMatrixArray [0] * viewport [2] * 0.5,
+         projectionMatrixArray [5] * viewport [3] * 0.5);
+
+      // Set textures.
+
+      gl .activeTexture (gl .TEXTURE0 + this .positionsTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, this .positionsTexture);
+
+      gl .activeTexture (gl .TEXTURE0 + this .orientationsTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, this .orientationsTexture);
+
+      gl .activeTexture (gl .TEXTURE0 + this .scalesTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, this .scalesTexture);
+
+      gl .activeTexture (gl .TEXTURE0 + this .opacitiesTextureUnit);
+      gl .bindTexture (gl .TEXTURE_2D, this .opacitiesTexture);
+
+      // Setup vertex attributes.
+
+      if (this .vertexArrayObject .enable (shaderNode .getProgram ()))
+      {
+         gl .bindBuffer (gl .ARRAY_BUFFER, this .splatsIndexBuffer);
+         gl .enableVertexAttribArray (shaderNode .x3d_SplatIndex);
+         gl .vertexAttribIPointer (shaderNode .x3d_SplatIndex, 1, gl .UNSIGNED_INT, 0, 0);
+         gl .vertexAttribDivisor (shaderNode .x3d_SplatIndex, 1);
+
+         shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, 0);
+      }
+
+      gl .drawArraysInstanced (gl .TRIANGLES, 0, 6, this .numSplats);
+   },
    display (gl, renderContext)
    {
       const shaderNode = this .getShader (renderContext);
@@ -1399,10 +1491,13 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
       shaderNode .enable (gl);
       shaderNode .hasFog (null);
 
-      // Uniforms
+      // Set uniforms.
 
       const { renderObject, viewport, modelViewMatrix, localObjects, fogNode } = renderContext;
       const projectionMatrixArray = renderObject .getProjectionMatrixArray ();
+
+      // Sort splats.
+      this .sortIndices (modelViewMatrix);
 
       // Set ClipPlane nodes.
 
@@ -1412,7 +1507,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
       // Set viewport and matrices.
 
       gl .viewport (... viewport);
-      gl .uniform4iv (shaderNode .x3d_Viewport, renderObject .getViewportArray ());
+      gl .scissor (... viewport);
+      gl .uniform4i (shaderNode .x3d_Viewport, ... viewport);
       gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
       gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,        false, renderObject .getEyeMatrixArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
@@ -1452,9 +1548,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
 
          shaderNode .enableVertexAttribute (gl, this .geometryBuffer, 0, 0);
       }
-
-      // Sort splats.
-      this .sortIndices (modelViewMatrix);
 
       // gl .blendFunc (gl .ONE, gl .ONE_MINUS_SRC_ALPHA);
       gl .frontFace (gl .CCW);
@@ -1499,10 +1592,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
 
       // Spherical Harmonics
 
-      for (const [degree, coefs] of SH_COEFS .entries ())
+      for (const [degree, filled] of this .degrees .entries ())
       {
-         const filled = Array .from ({ length: coefs }, (_, coef) => this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .length) .some (length => length);
-
          if (!filled)
             break;
 
@@ -1540,6 +1631,44 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
       gl .uniform1i (shaderNode .x3d_SphericalHarmonicsTexture, this .sphericalHarmonicsTextureUnit);
 
       return shaderNode;
+   },
+   createPointingShader (options)
+   {
+      const
+         browser = this .getBrowser (),
+         gl      = browser .getContext ();
+
+      // Shader
+
+      const shaderNode = browser .createShader ({
+         name: "GaussianSplatsPointing",
+         vertexShader: "GaussianSplats",
+         fragmentShader: "GaussianSplats",
+         options,
+         attributes: ["x3d_SplatIndex"],
+         uniforms: [
+            "x3d_PositionsTexture",
+            "x3d_OrientationsTexture",
+            "x3d_ScalesTexture",
+            "x3d_OpacitiesTexture",
+            "x3d_FocalLength",
+         ],
+      });
+
+      // Static Uniforms
+
+      shaderNode .enable (gl);
+
+      gl .uniform1i (shaderNode .x3d_PositionsTexture,    this .positionsTextureUnit);
+      gl .uniform1i (shaderNode .x3d_OrientationsTexture, this .orientationsTextureUnit);
+      gl .uniform1i (shaderNode .x3d_ScalesTexture,       this .scalesTextureUnit);
+      gl .uniform1i (shaderNode .x3d_OpacitiesTexture,    this .opacitiesTextureUnit);
+
+      return shaderNode;
+   },
+   createDepthShader (options)
+   {
+      return this .createPointingShader (options);
    },
    initSortWorker ()
    {
@@ -1696,15 +1825,20 @@ Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, (external_X_I
       external_X_ITE_X3D_X3DChildNode_default().prototype .initialize .call (this);
       external_X_ITE_X3D_X3DBoundedObject_default().prototype .initialize .call (this);
 
-      this ._visible     .addFieldInterest (this .shapeNode ._visible);
-      this ._bboxDisplay .addFieldInterest (this .shapeNode ._bboxDisplay);
-      this ._bboxSize    .addFieldInterest (this .shapeNode ._bboxSize);
-      this ._bboxCenter  .addFieldInterest (this .shapeNode ._bboxCenter);
+      this ._pointerEvents .addFieldInterest (this .shapeNode ._pointerEvents);
+      this ._castShadow    .addFieldInterest (this .shapeNode ._castShadow);
+      this ._hidden        .addFieldInterest (this .shapeNode ._hidden);
+      this ._visible       .addFieldInterest (this .shapeNode ._visible);
+      this ._bboxDisplay   .addFieldInterest (this .shapeNode ._bboxDisplay);
+      this ._bboxSize      .addFieldInterest (this .shapeNode ._bboxSize);
+      this ._bboxCenter    .addFieldInterest (this .shapeNode ._bboxCenter);
 
-      this .shapeNode ._visible     = this ._visible;
-      this .shapeNode ._bboxDisplay = this ._bboxDisplay;
-      this .shapeNode ._bboxSize    = this ._bboxSize;
-      this .shapeNode ._bboxCenter  = this ._bboxCenter;
+      this .shapeNode ._pointerEvents = this ._pointerEvents;
+      this .shapeNode ._hidden        = this ._hidden;
+      this .shapeNode ._visible       = this ._visible;
+      this .shapeNode ._bboxDisplay   = this ._bboxDisplay;
+      this .shapeNode ._bboxSize      = this ._bboxSize;
+      this .shapeNode ._bboxCenter    = this ._bboxCenter;
 
       this .shapeNode .setup ();
    },
@@ -1751,6 +1885,8 @@ Object .defineProperties (GaussianSplats,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "sphericalHarmonicsDegree3Coef4", new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "sphericalHarmonicsDegree3Coef5", new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "sphericalHarmonicsDegree3Coef6", new (external_X_ITE_X3D_Fields_default()).MFVec3f ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "pointerEvents",                  new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "castShadow",                     new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "visible",                        new (external_X_ITE_X3D_Fields_default()).SFBool (true)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "bboxDisplay",                    new (external_X_ITE_X3D_Fields_default()).SFBool ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "bboxSize",                       new (external_X_ITE_X3D_Fields_default()).SFVec3f (-1, -1, -1)),

@@ -8647,6 +8647,12 @@ declare namespace X3D
        */
       bboxSize: SFVec3f;
       /**
+       * Input/Output field castShadow.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      castShadow: boolean;
+      /**
        * The color space of the reconstructed color values. It must be one of:
 , SRGB_REC709_DISPLAY, LIN_REC709_DISPLAY
        *
@@ -8660,121 +8666,127 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * Input/Output field opacities.
+       * The opacity of a Gaussian splat is defined by the opacities field. It stores a normalized linear value between 0.0 (transparent) and 1.0 (opaque). Out-of-range values are invalid.
        *
        * This field is of access type 'inputOutput' and type MFFloat.
        */
       opacities: MFFloat;
       /**
-       * Input/Output field orientations.
+       * The orientations field values correspond to the orientation of those axes in local space. Orientation values are stored as unit quaternions in the usual glTF order.
        *
        * This field is of access type 'inputOutput' and type MFVec4f.
        */
       orientations: MFVec4f;
       /**
-       * Input/Output field positions.
+       * The pointerEvents field defines whether this GaussianSplats becomes target for pointer events.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      pointerEvents: boolean;
+      /**
+       * The mean vector for the Gaussian splat is provided by the positions of the mesh primitive. This defines the center of the Gaussian splat ellipsoid in local space. The effective global mean vector for the Gaussian splat is derived from the positions field value and the global transformation matrix of the X3D node that instantiates the mesh containing the splat primitive as defined in the glTF specification.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       positions: MFVec3f;
       /**
-       * Input/Output field scales.
+       * The scales field values correspond to the spread of the Gaussian along its local principal axes. Scale values are linear and MUST NOT be negative.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       scales: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The sphericalHarmonicsDegree0Coef0 field semantic provides the diffuse component coefficients for the spherical harmonics. The zeroth-order spherical harmonic coefficients are always required.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree0Coef0: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree1Coef0: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree1Coef1: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree1Coef2: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree2Coef0: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree2Coef1: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree2Coef2: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree2Coef3: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree2Coef4: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree3Coef0: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree3Coef1: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree3Coef2: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree3Coef3: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree3Coef4: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree3Coef5: MFVec3f;
       /**
-       * Input/Output field spherical harmonics coefficients.
+       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
@@ -11715,7 +11727,7 @@ declare namespace X3D
        */
       pickable: boolean;
       /**
-       * The pointerEvents field defines whether this Layer becomes target for pointer events.
+       * The pointerEvents field defines whether this Layer node becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -11913,7 +11925,7 @@ declare namespace X3D
        */
       pickable: boolean;
       /**
-       * The pointerEvents field defines whether this LayoutLayer becomes target for pointer events.
+       * The pointerEvents field defines whether this LayoutLayer node becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -21229,7 +21241,7 @@ declare namespace X3D
        */
       multiscatterColor: SFColor;
       /**
-       * A texture that defines the multi-scatter color, stored in the RGB channels and encoded in sRGB. This will be multiplied by the *multiscatterColor*.
+       * A texture that defines the multi-scatter color, stored in the RGB channels and encoded in sRGB. This will be multiplied by the multiscatterColor.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -21253,7 +21265,7 @@ declare namespace X3D
        */
       scatterStrength: number;
       /**
-       * A texture that defines the per-texel scatter strength, stored in the alpha (A) channel. Will be multiplied by *scatterStrength*.
+       * A texture that defines the per-texel scatter strength, stored in the alpha (A) channel. Will be multiplied by scatterStrength.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */

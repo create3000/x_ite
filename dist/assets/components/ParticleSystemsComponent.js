@@ -1,4 +1,4 @@
-/* X_ITE v15.1.2 */
+/* X_ITE v15.1.3 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -2477,6 +2477,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
             // Set viewport.
 
             gl .viewport (... viewport);
+            gl .scissor (... viewport);
 
             // Enable render mode nodes.
 

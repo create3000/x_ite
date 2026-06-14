@@ -1,4 +1,4 @@
-/* X_ITE v15.1.2 */
+/* X_ITE v15.1.3 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -1673,10 +1673,7 @@ Object .assign (Object .setPrototypeOf (IsoSurfaceVolumeData .prototype, VolumeR
    {
       this .voxelsNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture3DNode, this ._voxels);
 
-      if (this .voxelsNode)
-         this .getAppearance () ._texture = this ._voxels;
-      else
-         this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels ();
+      this .getAppearance () ._texture = this .voxelsNode ?? this .getBrowser () .getDefaultVoxels ();
    },
    createShader (options, vs, fs)
    {
@@ -2153,10 +2150,7 @@ Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, VolumeRe
    {
       this .voxelsNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture3DNode, this ._voxels);
 
-      if (this .voxelsNode)
-         this .getAppearance () ._texture = this ._voxels;
-      else
-         this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels ();
+      this .getAppearance () ._texture = this .voxelsNode ?? this .getBrowser () .getDefaultVoxels ();
    },
    createShader (options, vs, fs)
    {
@@ -2786,10 +2780,7 @@ Object .assign (Object .setPrototypeOf (VolumeData .prototype, VolumeRendering_X
    {
       this .voxelsNode = external_X_ITE_X3D_X3DCast_default() ((external_X_ITE_X3D_X3DConstants_default()).X3DTexture3DNode, this ._voxels);
 
-      if (this .voxelsNode)
-         this .getAppearance () ._texture = this ._voxels;
-      else
-         this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels ();
+      this .getAppearance () ._texture = this .voxelsNode ?? this .getBrowser () .getDefaultVoxels ();
    },
    createShader (options, vs, fs)
    {

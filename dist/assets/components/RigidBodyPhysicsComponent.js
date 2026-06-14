@@ -1,4 +1,4 @@
-/* X_ITE v15.1.2 */
+/* X_ITE v15.1.3 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
@@ -3288,7 +3288,7 @@ Object .assign (Object .setPrototypeOf (SliderJoint .prototype, RigidBodyPhysics
          if (this .getBody2 () .getCollection () !== this .getCollection ())
             return;
 
-         axisRotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).X_AXIS, this ._axis .getValue ());
+         axisRotation .setVectors ((external_X_ITE_X3D_Vector3_default()).X_AXIS, this ._axis .getValue ());
 
          matrixA .setTransform (this .getBody1 () ._position .getValue (), this .getBody1 () ._orientation .getValue () .copy () .multRight (axisRotation));
          matrixB .setTransform (this .getBody1 () ._position .getValue (), this .getBody1 () ._orientation .getValue () .copy () .multRight (axisRotation));
