@@ -20,9 +20,9 @@ uniform mat4  x3d_ModelViewMatrix;
 uniform vec2 x3d_FocalLength;
 
 uniform sampler2D x3d_PositionsTexture;
-uniform sampler2D x3d_OrientationsTexture;
 uniform sampler2D x3d_ScalesTexture;
 
+uniform mediump sampler2D x3d_OrientationsTexture;
 uniform mediump sampler2D x3d_OpacitiesTexture;
 
 #if !defined (X3D_POINTING_PASS) && !defined (X3D_DEPTH_PASS)

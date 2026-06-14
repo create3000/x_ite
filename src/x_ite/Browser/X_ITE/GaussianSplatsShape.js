@@ -250,7 +250,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB32F, textureWidth, textureWidth, 0, gl .RGB, gl .FLOAT, positions);
 
          gl .bindTexture (gl .TEXTURE_2D, this .orientationsTexture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureWidth, textureWidth, 0, gl .RGBA, gl .FLOAT, orientations);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA16F, textureWidth, textureWidth, 0, gl .RGBA, gl .FLOAT, orientations);
 
          gl .bindTexture (gl .TEXTURE_2D, this .scalesTexture);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB32F, textureWidth, textureWidth, 0, gl .RGB, gl .FLOAT, scales);
