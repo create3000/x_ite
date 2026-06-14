@@ -20,6 +20,7 @@ Although this is an initial implementation, it already provides a solid foundati
 ![Amethyst 3DGS](/assets/img/whats-new/amethyst.avif){: .normal .w-50 }![Cactus 3DGS](/assets/img/whats-new/cactus.avif){: .normal .w-50 }
 
 - Show [PLY example](/x_ite/components/x-ite/gaussiansplats/#example) with X_ITE.
+- Show [SPZ example](/x_ite/playground/?url=https://create3000.github.io/media/examples/Core/SPZ/SPZ.x3d) with X_ITE.
 - Show [glTF example](/x_ite/laboratory/gltf-sample-viewer/?url=https://create3000.github.io/media/glTF/Cactus/Cactus.glb) with X_ITE.
 
 ### Notable Changes
