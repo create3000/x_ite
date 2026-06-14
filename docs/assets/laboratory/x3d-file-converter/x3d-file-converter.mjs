@@ -1,4 +1,4 @@
-import "https://cdn.jsdelivr.net/npm/x_ite-spz-parser@1.0.8/dist/x_ite-spz-parser.min.js";
+import "https://cdn.jsdelivr.net/npm/x_ite-spz-parser@1.0.9/dist/x_ite-spz-parser.min.js";
 import "https://cdn.jsdelivr.net/npm/x_ite-off-parser@1.0.7/dist/x_ite-off-parser.min.js";
 
 $("#drop-zone") .on ("dragover", event =>
