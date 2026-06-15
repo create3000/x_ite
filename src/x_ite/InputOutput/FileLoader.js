@@ -284,7 +284,8 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       const contentLength = parseInt (response .headers .get ("x-file-size"))
          || parseInt (response .headers .get ("content-length"));
 
-      if (!contentLength)
+      // Check getReader because x_ite-node has no getReader.
+      if (!contentLength || !response .body .getReader)
          return await response .blob ();
 
       const
