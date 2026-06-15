@@ -42,7 +42,7 @@ Object .assign ($,
       // The Blob can be from another context and therefore `data instanceof Blob` can fail.
 
       const
-         blob  = Object .prototype .toString .call (data) === "[object Blob]" ? data : new Blob ([data]),
+         blob  = data [Symbol .toStringTag] === "Blob" ? data : new Blob ([data]),
          magic = await blob .slice (0, 2) .arrayBuffer ();
 
       if (!$.isGzip (magic))
