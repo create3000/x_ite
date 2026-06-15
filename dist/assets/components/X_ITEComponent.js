@@ -1,4 +1,4 @@
-/* X_ITE v15.1.3 */
+/* X_ITE v15.1.4 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -1025,7 +1025,7 @@ precision highp int;precision highp float;precision highp sampler2D;precision hi
 #if defined(X3D_XR_SESSION)
 uniform mat4 x3d_EyeMatrix;
 #endif
-uniform vec2 x3d_FocalLength;uniform sampler2D x3d_PositionsTexture;uniform sampler2D x3d_OrientationsTexture;uniform sampler2D x3d_ScalesTexture;uniform mediump sampler2D x3d_OpacitiesTexture;
+uniform vec2 x3d_FocalLength;uniform sampler2D x3d_PositionsTexture;uniform sampler2D x3d_ScalesTexture;uniform mediump sampler2D x3d_OrientationsTexture;uniform mediump sampler2D x3d_OpacitiesTexture;
 #if!defined(X3D_POINTING_PASS)&&!defined(X3D_DEPTH_PASS)
 uniform mediump sampler2DArray x3d_SphericalHarmonicsTexture;
 #endif
@@ -1416,7 +1416,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB32F, textureWidth, textureWidth, 0, gl .RGB, gl .FLOAT, positions);
 
          gl .bindTexture (gl .TEXTURE_2D, this .orientationsTexture);
-         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA32F, textureWidth, textureWidth, 0, gl .RGBA, gl .FLOAT, orientations);
+         gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGBA16F, textureWidth, textureWidth, 0, gl .RGBA, gl .FLOAT, orientations);
 
          gl .bindTexture (gl .TEXTURE_2D, this .scalesTexture);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .RGB32F, textureWidth, textureWidth, 0, gl .RGB, gl .FLOAT, scales);
