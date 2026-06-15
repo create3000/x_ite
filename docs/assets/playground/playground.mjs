@@ -1,3 +1,4 @@
+import "https://cdn.jsdelivr.net/npm/x_ite-sog-parser@1.0.2/dist/x_ite-sog-parser-2.min.js";
 import "https://cdn.jsdelivr.net/npm/x_ite-spz-parser@1.1.1/dist/x_ite-spz-parser-4.min.js";
 import "https://cdn.jsdelivr.net/npm/x_ite-spz-parser@1.1.1/dist/x_ite-spz-parser-123.min.js";
 import "https://cdn.jsdelivr.net/npm/x_ite-off-parser@1.0.7/dist/x_ite-off-parser.min.js";
@@ -238,6 +239,7 @@ class Playground
          ".obj",
          ".stl",
          ".ply",
+         ".sog",
          ".spz",
          ".off",
          ".svg",
@@ -255,7 +257,7 @@ class Playground
          .appendTo (toolbar);
 
       $("<button></button>")
-         .attr ("title", "Open a file (X3D, VRML, glTF (GLB), VRM, OBJ, STL, PLY, SPZ, OFF, SVG).")
+         .attr ("title", "Open a file (X3D, VRML, glTF (GLB), VRM, OBJ, STL, PLY, SOG, SPZ, OFF, SVG).")
          .addClass ("material-symbols-outlined")
          .text ("file_open")
          .on ("click", () =>

@@ -156,8 +156,9 @@ The *smooth* field provides a hint to the browser whether *smooth* rendering is 
 | Wavefront OBJ    | .obj           | model/obj         |                                 |
 | STL              | .stl           | model/stl         | ASCII & Binary                  |
 | PLY              | .ply           | model/ply         | ASCII & Binary, [3DGS][7]       |
-| SPZ              | .spz           | model/spz         | [By Using an Extension][8]      |
-| OFF              | .off           | model/off         | [By Using an Extension][9]      |
+| SOG              | .sog           | model/sog         | [By Using an Extension][8]      |
+| SPZ              | .spz           | model/spz         | [By Using an Extension][9]      |
+| OFF              | .off           | model/off         | [By Using an Extension][10]     |
 | SVG Document     | .svg, .svgz    | image/svg+xml     |                                 |
 
   [1]: https://www.web3d.org/documents/specifications/19776-1/V3.3/index.html
@@ -167,8 +168,9 @@ The *smooth* field provides a hint to the browser whether *smooth* rendering is 
   [5]: /x_ite/features/#gltf-support
   [6]: https://vrm.dev/en/vrm/vrm_about/
   [7]: https://en.wikipedia.org/wiki/Gaussian_splatting
-  [8]: https://www.npmjs.com/package/x_ite-spz-parser
-  [9]: https://www.npmjs.com/package/x_ite-off-parser
+  [8]: https://www.npmjs.com/package/x_ite-sog-parser
+  [9]: https://www.npmjs.com/package/x_ite-spz-parser
+  [10]: https://www.npmjs.com/package/x_ite-off-parser
 
 >**Tip:** All files, including media files, can be compressed using GZip compression (usually denoted by a `z` at the end of the filename suffix or by appending `.gz`). This saves bandwidth and speeds up download times.
 {: .prompt-tip }

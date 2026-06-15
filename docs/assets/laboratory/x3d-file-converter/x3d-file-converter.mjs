@@ -1,3 +1,4 @@
+import "https://cdn.jsdelivr.net/npm/x_ite-sog-parser@1.0.2/dist/x_ite-sog-parser-2.min.js";
 import "https://cdn.jsdelivr.net/npm/x_ite-spz-parser@1.1.1/dist/x_ite-spz-parser-4.min.js";
 import "https://cdn.jsdelivr.net/npm/x_ite-spz-parser@1.1.1/dist/x_ite-spz-parser-123.min.js";
 import "https://cdn.jsdelivr.net/npm/x_ite-off-parser@1.0.7/dist/x_ite-off-parser.min.js";
@@ -36,6 +37,7 @@ $("#open-files a") .on ("click", event =>
       ".obj",
       ".stl",
       ".ply",
+      ".sog",
       ".spz",
       ".off",
       ".svg",
