@@ -17,9 +17,10 @@ Although this is an initial implementation, it already provides a solid foundati
 
 ### Examples
 
-![Amethyst 3DGS](/assets/img/whats-new/amethyst.avif){: .normal .w-50 }![Cactus 3DGS](/assets/img/whats-new/cactus.avif){: .normal .w-50 }
+![Amethyst 3DGS](/assets/img/whats-new/amethyst.avif){: .normal .w-25 }![Spring 3DGS](/assets/img/whats-new/spring.avif){: .normal .w-25 }![Student Room 3DGS](/assets/img/whats-new/student-room.avif){: .normal .w-25 }![Cactus 3DGS](/assets/img/whats-new/cactus.avif){: .normal .w-25 }
 
 - Show [PLY example](/x_ite/components/x-ite/gaussiansplats/#example) with X_ITE.
+- Show [SOG example](/x_ite/playground/?url=https://create3000.github.io/media/examples/Core/SOG/SOG.x3d) with X_ITE.
 - Show [SPZ example](/x_ite/playground/?url=https://create3000.github.io/media/examples/Core/SPZ/SPZ.x3d) with X_ITE.
 - Show [glTF example](/x_ite/laboratory/gltf-sample-viewer/?url=https://create3000.github.io/media/glTF/Cactus/Cactus.glb) with X_ITE.
 

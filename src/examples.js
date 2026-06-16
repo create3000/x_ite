@@ -2,6 +2,7 @@ const X_ITE_EXAMPLES = [
    { component: "CADGeometry", test: "QuadSet" },
    { component: "Core", test: "glTF" },
    { component: "Core", test: "OBJ", buttonsPosition: "tr" },
+   { component: "Core", test: "SOG" },
    { component: "Core", test: "SPZ" },
    { component: "Core", test: "STL", buttonsPosition: "tr" },
    { component: "CubeMapTexturing", test: "ComposedCubeMapTexture" },
