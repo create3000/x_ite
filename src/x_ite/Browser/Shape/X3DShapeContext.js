@@ -78,8 +78,11 @@ Object .assign (X3DShapeContext .prototype,
       {
          const linetypeTextures = new ImageTexture (this .getPrivateScene ());
 
-         linetypeTextures ._url [0]           = URLs .getLinetypeURL ();
-         linetypeTextures ._textureProperties = this .getLineFillTextureProperties ();
+         if (this .getBrowserOption ("LoadUrlObjects"))
+         {
+            linetypeTextures ._url [0]           = URLs .getLinetypeURL ();
+            linetypeTextures ._textureProperties = this .getLineFillTextureProperties ();
+         }
 
          linetypeTextures .setup ();
 
@@ -92,8 +95,11 @@ Object .assign (X3DShapeContext .prototype,
       {
          const hatchStyleTexture = new ImageTexture (this .getPrivateScene ());
 
-         hatchStyleTexture ._url [0]           = URLs .getHatchingURL (index);
-         hatchStyleTexture ._textureProperties = this .getLineFillTextureProperties ();
+         if (this .getBrowserOption ("LoadUrlObjects"))
+         {
+            hatchStyleTexture ._url [0]           = URLs .getHatchingURL (index);
+            hatchStyleTexture ._textureProperties = this .getLineFillTextureProperties ();
+         }
 
          hatchStyleTexture .setup ();
 
