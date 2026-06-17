@@ -92,7 +92,7 @@ The mean vector for the Gaussian splat is provided by the *positions* of the mes
 
 The *orientations* field values correspond to the orientation of those axes in local space. Orientation values are stored as unit quaternions in the usual glTF order (x,y,z,w).
 
-### MFVec3f [in, out] **scales** [ ] <small>(-∞,∞)</small>
+### MFVec3f [in, out] **scales** [ ] <small>[0,∞)</small>
 {: #fields-scales }
 
 The *scales* field values correspond to the spread of the Gaussian along its local principal axes. Scale values are linear and MUST NOT be negative.
