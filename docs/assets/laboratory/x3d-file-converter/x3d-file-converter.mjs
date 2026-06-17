@@ -1,7 +1,7 @@
-import "https://cdn.jsdelivr.net/npm/x_ite-sog-parser@1.0.4/dist/x_ite-sog-parser-2.min.js";
-import "https://cdn.jsdelivr.net/npm/x_ite-spz-parser@1.1.4/dist/x_ite-spz-parser-4.min.js";
-import "https://cdn.jsdelivr.net/npm/x_ite-spz-parser@1.1.4/dist/x_ite-spz-parser-123.min.js";
-import "https://cdn.jsdelivr.net/npm/x_ite-off-parser@1.0.8/dist/x_ite-off-parser.min.js";
+import "https://cdn.jsdelivr.net/npm/x_ite-sog-parser@latest/dist/x_ite-sog-parser-2.min.js";
+import "https://cdn.jsdelivr.net/npm/x_ite-spz-parser@latest/dist/x_ite-spz-parser-4.min.js";
+import "https://cdn.jsdelivr.net/npm/x_ite-spz-parser@latest/dist/x_ite-spz-parser-123.min.js";
+import "https://cdn.jsdelivr.net/npm/x_ite-off-parser@latest/dist/x_ite-off-parser.min.js";
 
 $("#drop-zone") .on ("dragover", event =>
 {
