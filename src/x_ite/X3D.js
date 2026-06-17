@@ -160,4 +160,7 @@ Namespace, Namespace .Fields,
    [Symbol .toStringTag]: "X3D",
 });
 
+for (const extension of (window [Symbol .for ("X_ITE.extensions")] ??= [ ]))
+   extension (X3D);
+
 export default X3D;

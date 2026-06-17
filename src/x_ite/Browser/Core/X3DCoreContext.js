@@ -322,21 +322,6 @@ Object .assign (X3DCoreContext .prototype,
             this .setBrowserOption ("Exposure", newValue);
             break;
          }
-         case "extensions":
-         {
-            if (newValue|0)
-               break;
-
-            const element = this .getElement ();
-
-            if (element .attr ("src"))
-               this .attributeChangedCallback ("src", element .attr ("src"), element .attr ("src"));
-
-            if (element .attr ("url"))
-               this .attributeChangedCallback ("url", element .attr ("url"), element .attr ("url"));
-
-            break;
-         }
          case "logarithmicdepthbuffer":
          {
             this .setBrowserOption ("LogarithmicDepthBuffer", this .parseBooleanAttribute (newValue) ?? false);
@@ -349,7 +334,7 @@ Object .assign (X3DCoreContext .prototype,
          }
          case "multisampling":
          {
-            this .setBrowserOption ("Multisampling", newValue);
+            this .setBrowserOption ("Multisampling", samples);
             break;
          }
          case "notifications":
@@ -393,9 +378,6 @@ Object .assign (X3DCoreContext .prototype,
          }
          case "src":
          {
-            if (this .getElement () .attr ("extensions")|0)
-               break;
-
             if (newValue)
             {
                this .loadURL (new Fields .MFString (newValue))
@@ -439,9 +421,6 @@ Object .assign (X3DCoreContext .prototype,
          }
          case "url":
          {
-            if (this .getElement () .attr ("extensions")|0)
-               break;
-
             if (newValue)
             {
                this .loadURL (this .parseUrlAttribute (newValue))
@@ -476,7 +455,7 @@ Object .assign (X3DCoreContext .prototype,
 
          return url;
       }
-      catch
+      catch (error)
       {
          throw new Error ("Couldn't parse url attribute.");
       }

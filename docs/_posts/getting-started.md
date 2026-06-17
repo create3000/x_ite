@@ -450,9 +450,6 @@ displayColorSpace
 exposure
 : A Float value that describes the amount of light that is captured. The default value for the *exposure* attribute is `1`.
 
-extensions
-: An Integer value that specifies how many X_ITE extensions have been included. Each extension included should decrement this count. When the count reaches `0`, the canvas knows that all extensions have been loaded and will start loading the file in the `src` or `url` attribute.
-
 logarithmicDepthBuffer
 : A Boolean value (`true` or `false`) to indicate whether logarithmic depth buffer rendering technique should be used. The default value for the *logarithmicDepthBuffer* attribute is `false`.
 
