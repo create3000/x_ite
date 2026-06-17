@@ -324,10 +324,10 @@ Object .assign (X3DCoreContext .prototype,
          }
          case "extensions":
          {
-            const element = this .getElement ();
-
-            if (element .attr ("extensions")|0)
+            if (newValue|0)
                break;
+
+            const element = this .getElement ();
 
             if (element .attr ("src"))
                this .attributeChangedCallback ("src", element .attr ("src"), element .attr ("src"));
