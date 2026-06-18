@@ -26,9 +26,13 @@ function html ()
       integrity="sha384-tcspKDb5tWvyRCOWzevlAeQgHeEzYdUHJpcgnIhcP9w4CnfD7DLAcS+k9QzLbRJO"
       crossorigin="anonymous"></script>`;
 
+   const extensions = `<script src="https://cdn.jsdelivr.net/npm/x_ite-sog-parser@latest/dist/x_ite-sog-parser-2.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/x_ite-spz-parser@latest/dist/x_ite-spz-parser-4.js"></script>`;
+
    systemSync (`cp src/x_ite.html x_ite.min.html`);
    systemSync (`perl -p0i -e 's|\\s*<!-- X_ITE START.*?X_ITE END -->|\\n|sg'  x_ite.min.html`);
    systemSync (`perl -p0i -e 's|<!-- JQUERY -->|${jquery}|sg'                 x_ite.min.html`);
+   systemSync (`perl -p0i -e 's|<!-- Extensions -->|${extensions}|sg'          x_ite.min.html`);
    systemSync (`perl -p0i -e 's|"./x_ite.js"|"./dist/x_ite.min.mjs"|sg'       x_ite.min.html`);
    systemSync (`perl -p0i -e 's|"x_ite.js"|"dist/x_ite.min.js"|sg'            x_ite.min.html`);
    systemSync (`perl -p0i -e 's|\\.\\./x_ite.min.html|src/x_ite.html|sg'      x_ite.min.html`);
