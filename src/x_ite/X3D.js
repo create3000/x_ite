@@ -160,14 +160,21 @@ Namespace, Namespace .Fields,
    [Symbol .toStringTag]: "X3D",
 });
 
-// Activate extensions:
-
-const extensions = window [Symbol .for ("X_ITE.extensions")];
-
-if (Array .isArray (extensions))
+function activateExtensions (X3D)
 {
-   for (const extension of extensions)
-      extension (X3D);
+   const
+      _extensions = Symbol .for ("X_ITE.extensions"),
+      extensions  = window [_extensions];
+
+   if (Array .isArray (extensions))
+   {
+      for (const extension of extensions)
+         extension (X3D);
+   }
+
+   delete window [_extensions];
 }
+
+activateExtensions (X3D);
 
 export default X3D;
