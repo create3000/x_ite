@@ -30,8 +30,6 @@ import X3DProtoDeclarationNode     from "./Prototype/X3DProtoDeclarationNode.js"
 import RouteArray                  from "./Routing/RouteArray.js";
 import X3DRoute                    from "./Routing/X3DRoute.js";
 import X3DConstants                from "./Base/X3DConstants.js";
-import X3DParser                   from "./Parser/X3DParser.js";
-import GoldenGate                  from "./Parser/GoldenGate.js";
 
 import "./SUPPORTED_VERSIONS.js";
 import "./Features.js";
@@ -109,9 +107,6 @@ Namespace, Namespace .Fields,
    X3DArrayField,
 
    ... Fields,
-
-   X3DParser,
-   GoldenGate,
 },
 {
    /**
@@ -159,22 +154,5 @@ Namespace, Namespace .Fields,
    },
    [Symbol .toStringTag]: "X3D",
 });
-
-function activateExtensions (X3D)
-{
-   const
-      _extensions = Symbol .for ("X_ITE.extensions"),
-      extensions  = window [_extensions];
-
-   if (Array .isArray (extensions))
-   {
-      for (const extension of extensions)
-         extension (X3D);
-   }
-
-   delete window [_extensions];
-}
-
-activateExtensions (X3D);
 
 export default X3D;
