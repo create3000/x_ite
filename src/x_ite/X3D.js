@@ -167,7 +167,7 @@ const extensions = window [Symbol .for ("X_ITE.extensions")];
 if (Array .isArray (extensions))
 {
    for (const extension of extensions)
-      await extension (X3D);
+      extension (X3D);
 }
 
 export default X3D;
