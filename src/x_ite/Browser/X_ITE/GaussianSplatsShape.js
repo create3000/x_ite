@@ -433,7 +433,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Spherical Harmonics
 
-      for (let degree = 0; degree < this .degrees; ++ degree)
+      for (let degree = 0; degree <= this .degrees; ++ degree)
          options .push (`X3D_GAUSSIAN_SPLATTING_DEGREE_${degree}`);
 
       // Shader
