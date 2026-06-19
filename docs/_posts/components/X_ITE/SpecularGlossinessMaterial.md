@@ -21,7 +21,7 @@ The **SpecularGlossinessMaterial** node belongs to the [X_ITE](/x_ite/components
 {: .prompt-info }
 
 >**Deprecated:** This node is **deprecated** as of X3D version 4.0. Future versions of the standard may remove this node.
-{: .prompt-danger }
+{: .prompt-warning }
 
 ## Hierarchy
 

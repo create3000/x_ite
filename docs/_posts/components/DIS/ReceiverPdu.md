@@ -17,7 +17,7 @@ tags: [ReceiverPdu, DIS]
 
 The **ReceiverPdu** node belongs to the [DIS](/x_ite/components/overview/#dis) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
->**Not Supported:** This node is **not supported** in X_ITE.
+>**Not Supported:** This node is **not supported** by X_ITE.
 {: .prompt-danger }
 
 ## Hierarchy

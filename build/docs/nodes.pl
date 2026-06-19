@@ -240,8 +240,8 @@ sub update_node {
    $string .= "\n";
    $string .= "\n";
    $string .= ">**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.\n{: .prompt-info }\n\n" if $experimental;
-   $string .= ">**Deprecated:** This node is **deprecated** as of X3D version $deprecated. Future versions of the standard may remove this node.\n{: .prompt-danger }\n\n" if $deprecated;
-   $string .= ">**Not Supported:** This node is **not supported** in X_ITE.\n{: .prompt-danger }\n\n" if $notSupported;
+   $string .= ">**Deprecated:** This node is **deprecated** as of X3D version $deprecated. Future versions of the standard may remove this node.\n{: .prompt-warning }\n\n" if $deprecated;
+   $string .= ">**Not Supported:** This node is **not supported** by X_ITE.\n{: .prompt-danger }\n\n" if $notSupported;
 
    $file =~ s/(## Overview\n).*?\n(?=##\s+)/$1$string/s;
 

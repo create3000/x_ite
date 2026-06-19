@@ -17,7 +17,7 @@ tags: [StreamAudioDestination, Sound]
 
 The **StreamAudioDestination** node belongs to the [Sound](/x_ite/components/overview/#sound) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
 
->**Not Supported:** This node is **not supported** in X_ITE.
+>**Not Supported:** This node is **not supported** by X_ITE.
 {: .prompt-danger }
 
 ## Hierarchy

@@ -18,7 +18,7 @@ tags: [TwoSidedMaterial, Shape]
 The **TwoSidedMaterial** node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **4,** its default container field is *material.* It is available from X3D version 3.2 or higher.
 
 >**Deprecated:** This node is **deprecated** as of X3D version 4.0. Future versions of the standard may remove this node.
-{: .prompt-danger }
+{: .prompt-warning }
 
 ## Hierarchy
 
