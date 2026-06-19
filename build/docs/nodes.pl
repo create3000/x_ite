@@ -64,17 +64,19 @@ sub node {
    $file   = fields_list ($typeName, $componentName, $file);
    $file   = update_example ($typeName, $componentName, $file);
    @fields = map { /\*\*(.*?)\*\*/o; $_ = $1 } $file =~ /###\s*[SM]F\w+.*/go;
+   $source = `cat $cwd/src/x_ite/Components/$componentName/$typeName.js`;
 
    if (grep /^$typeName$/, @tooltips)
    {
-      $source = `cat $cwd/src/x_ite/Components/$componentName/$typeName.js`;
-
       @node = @tooltips [(first_index { /^$typeName$/ } @tooltips) .. $#tooltips];
       @node = @node [0 .. (first_index { /^$/ } @node)];
-
-      $file = update_node ($typeName, $componentName, \@node, $file, $source);
+   }
+   else
+   {
+      @node = ();
    }
 
+   $file = update_node ($typeName, $componentName, \@node, $file, $source);
    $file = update_field ($typeName, $_, \@node, $file, $source) foreach @fields;
    $file = reorder_sections ($file);
 
@@ -221,8 +223,9 @@ sub update_node {
    }
    else
    {
+      $file =~ /## Overview\s+(.*?)\n/s;
       $string .= "\n";
-      $string .= "$typeName ...";
+      $string .= "$1";
       $string .= "\n";
       $string .= "\n";
    }

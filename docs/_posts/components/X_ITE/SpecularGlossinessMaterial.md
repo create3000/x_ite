@@ -15,12 +15,9 @@ tags: [SpecularGlossinessMaterial, X_ITE]
 
 **SpecularGlossinessMaterial** specifies surface rendering properties for associated geometry nodes. Material attributes are used by the X3D lighting equations during rendering.
 
-The **SpecularGlossinessMaterial** node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and requires at least support level **1,** its default container field is *material.* It is available in X_ITE.
+The **SpecularGlossinessMaterial** node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and requires at least support level **1,** its default container field is *material.* It is available from X3D version 4.0 or higher.
 
->**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
-{: .prompt-info }
-
->**Deprecated:** This node is **deprecated** as of X3D version 4.0. Future versions of the standard may remove this node. Please use [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/) instead.
+>**Deprecated:** This node is **deprecated** as of X3D version 4.0. Future versions of the standard may remove this node.
 {: .prompt-danger }
 
 ## Hierarchy
@@ -202,19 +199,6 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 #### Hint
 
 - *transparency* \< .5 opaque, *transparency* \> .5 transparent.
-
-## Advice
-
-### Hints
-
-- Insert [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding material.
-- DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
-- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
-- [X3D Example Archives, Basic, Universal Media Materials](https://www.web3d.org/x3d/content/examples/Basic/UniversalMediaMaterials)
-- [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/lighting.html#Lightingmodel)
-- [Rendering](https://en.wikipedia.org/wiki/Rendering_(computer_graphics))
-- [3D rendering](https://en.wikipedia.org/wiki/3D_rendering)
-- [Physically based rendering (PBR)](https://en.wikipedia.org/wiki/Physically_based_rendering)
 
 ## Example
 
