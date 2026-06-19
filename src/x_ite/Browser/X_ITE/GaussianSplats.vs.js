@@ -345,10 +345,10 @@ main ()
 
    // Color
 
-   #if !defined (X3D_POINTING_PASS) && !defined (X3D_DEPTH_PASS)
-      color = vec4 (computeColorFromSH (texelCoord, splatCenter), opacity);
-   #else
+   #if defined (X3D_POINTING_PASS) || defined (X3D_DEPTH_PASS)
       color = vec4 (vec3 (0.0), opacity);
+   #else
+      color = vec4 (computeColorFromSH (texelCoord, splatCenter), opacity);
    #endif
 
    #if defined (X3D_FOG) && defined (X3D_FOG_COORDS)
