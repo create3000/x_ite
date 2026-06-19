@@ -8641,13 +8641,13 @@ declare namespace X3D
        */
       bboxDisplay: boolean;
       /**
-       * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
+       * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
        *
        * This field is of access type 'initializeOnly' and type SFVec3f.
        */
       bboxSize: SFVec3f;
       /**
-       * Input/Output field castShadow.
+       * castShadow defines whether this Shape casts shadows as produced by lighting nodes.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -11328,13 +11328,13 @@ declare namespace X3D
        */
       bboxDisplay: boolean;
       /**
-       * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
+       * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
        *
        * This field is of access type 'initializeOnly' and type SFVec3f.
        */
       bboxSize: SFVec3f;
       /**
-       * Input/Output field castShadow.
+       * castShadow defines whether this Shape casts shadows as produced by lighting nodes.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
