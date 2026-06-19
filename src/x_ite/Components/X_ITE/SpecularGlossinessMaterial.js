@@ -23,6 +23,7 @@ import MaterialTextures from "../../../assets/shaders/MaterialTextures.js";
 MaterialTextures .add ("x3d_SpecularGlossinessTexture");
 
 /**
+ * THIS NODE IS STILL EXPERIMENTAL.
  * THIS NODE IS DEPRECIATED SINCE X3D VERSION 4.0.
  */
 

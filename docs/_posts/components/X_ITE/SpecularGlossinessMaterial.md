@@ -17,6 +17,9 @@ tags: [SpecularGlossinessMaterial, X_ITE]
 
 The **SpecularGlossinessMaterial** node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and requires at least support level **1,** its default container field is *material.* It is available from X3D version 4.0 or higher.
 
+>**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
+{: .prompt-info }
+
 >**Deprecated:** This node is **deprecated** as of X3D version 4.0. Future versions of the standard may remove this node.
 {: .prompt-danger }
 
