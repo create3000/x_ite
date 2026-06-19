@@ -74,7 +74,7 @@ Author-provided prose that describes intended purpose of this node.
 
 Unique *name* attribute must be defined so that **HAnimMotion** node can be identified at run time for animation purposes.
 
-### SFInt32 [in, out] **loa** -1 <small>[-1,4]</small>
+### SFInt32 [in, out] **loa** -1 <small>[-1,5]</small>
 {: #fields-loa }
 
 Level Of Articulation 0..4 indicates complexity and detail of joints for given humanoid skeletal hierarchy.

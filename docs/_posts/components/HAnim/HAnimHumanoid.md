@@ -133,7 +133,7 @@ Models sharing a common skeletal configuration can share animations and binding 
 
 - [A value of 'BASIC' conforms to restrictive skeletal model in X3D Humanoid Animation (HAnim) Specification, Part 1 Architecture, 4.8 Modelling of humanoids](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#ModellingOfHumanoids)
 
-### SFInt32 [in, out] **loa** -1 <small>[-1,∞)</small>
+### SFInt32 [in, out] **loa** -1 <small>[-1,5]</small>
 {: #fields-loa }
 
 Level Of Articulation 0..4 indicates complexity and detail of joints for given humanoid skeletal hierarchy.
