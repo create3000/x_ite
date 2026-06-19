@@ -74,7 +74,7 @@ Input/Output field *rotations*.
 ### MFVec3f [in, out] **scales** [ ] <small>(-∞,∞)</small>
 {: #fields-scales }
 
-The values in the *scales* field correspond to the spread of the Gaussian along its local principal axes. Scale values are linear and nonnegative.
+Input/Output field *scales*.
 
 ### MFRotation [in, out] **scaleOrientations** [ ] <small>(-∞,∞) or [-1,1]</small>
 {: #fields-scaleOrientations }
@@ -89,16 +89,12 @@ Input/Output field *centers*.
 ### SFBool [in, out] **pointerEvents** TRUE <small class="blue">non-standard</small>
 {: #fields-pointerEvents }
 
-Indicates whether this instanced shape is a target for pointer events, if FALSE then it is ignored during pointer picking.
+The *pointerEvents* field defines whether this InstancedShape becomes target for pointer events. A value of `FALSE` makes this InstancedShape node invisible during pointer picking.
 
 ### SFBool [in, out] **castShadow** TRUE
 {: #fields-castShadow }
 
-*castShadow* defines whether this [GaussianSplats](/x_ite/components/x_ite/gaussiansplats/) node casts shadows as produced by lighting nodes.
-
-#### Hint
-
-- If the visible field is FALSE, then the [GaussianSplats](/x_ite/components/x_ite/gaussiansplats/) node does not cast any shadows.
+Input/Output field *castShadow*.
 
 ### SFBool [in, out] **visible** TRUE
 {: #fields-visible }
