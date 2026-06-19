@@ -15,7 +15,7 @@ tags: [GaussianSplats, X_ITE]
 
 The **GaussianSplats** node adds basic support for direct real-time radiance field rendering of volume data without converting into surface or line primitives.
 
-The **GaussianSplats** node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **GaussianSplats** node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 4.1 or higher.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }

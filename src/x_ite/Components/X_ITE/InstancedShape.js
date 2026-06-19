@@ -164,7 +164,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
 
 Object .defineProperties (InstancedShape,
 {
-   ... X3DNode .getStaticProperties ("InstancedShape", "X_ITE", 1, "children", "2.0"),
+   ... X3DNode .getStaticProperties ("InstancedShape", "X_ITE", 1, "children", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

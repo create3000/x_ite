@@ -69,7 +69,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DChildNode 
 
 Object .defineProperties (GaussianSplats,
 {
-   ... X3DNode .getStaticProperties ("GaussianSplats", "X_ITE", 1, "children", "2.0"),
+   ... X3DNode .getStaticProperties ("GaussianSplats", "X_ITE", 1, "children", "4.1"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
