@@ -66,6 +66,10 @@ Set of x-y-z-w orthogonal *vector* values for a surface, applied either per-vert
 - [Normal vectors perpendicular to 3D surface](https://en.wikipedia.org/wiki/Normal_(geometry))
 - [**Tangent** plane](https://en.wikipedia.org/wiki/Tangent)
 
+### Warning
+
+- X3D Architecture version 4.1 draft is experimental and not fully implemented.
+
 ## Browser Compatibility
 
 | Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |

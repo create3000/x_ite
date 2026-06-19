@@ -282,6 +282,10 @@ Optional single contained [TextureCoordinate](/x_ite/components/texturing/textur
 
 Optional single contained [Tangent](/x_ite/components/rendering/tangent/) node that defines a set of 3D surface-normal vectors that apply either to a sibling [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node. [Tangent](/x_ite/components/rendering/tangent/) values are perpendicular directions that are used per-polygon or per-vertex when computing lighting and shading for advanced physically based rendering (PBR) effects.
 
+#### Warning
+
+- X3D Architecture version 4.1 draft is experimental and not fully implemented.
+
 ### SFNode [in, out] **normal** NULL <small>[X3DNormalNode]</small>
 {: #fields-normal }
 

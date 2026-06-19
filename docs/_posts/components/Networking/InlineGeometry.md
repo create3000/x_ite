@@ -183,6 +183,10 @@ The *smooth* field provides a hint to the browser whether *smooth* rendering is 
 - [Wikipedia, PLY (Polygon File Format or Stanford Triangle Format)](https://en.wikipedia.org/wiki/PLY_(file_format))
 - [Example](https://create3000.github.io/x_ite/playground/?url=https://create3000.github.io/media/examples/Networking/InlineGeometry/InlineGeometry.x3d)
 
+### Warning
+
+- X3D Architecture version 4.1 draft is experimental and not fully implemented.
+
 ## Example
 
 <x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/Networking/InlineGeometry/InlineGeometry.x3d" contentScale="auto" update="auto">

@@ -341,9 +341,10 @@ List of [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes containing [Viewpo
 
 Contains zero or more [HAnimPose](/x_ite/components/hanim/hanimpose/) nodes that can animate the **HAnimHumanoid**.
 
-#### Warning
+#### Warnings
 
 - No other node types are allowed in **HAnimHumanoid** with this containerField.
+- X3D Architecture version 4.1 draft is experimental and not fully implemented.
 
 ### MFBool [in, out] **motionsEnabled** [ ]
 {: #fields-motionsEnabled }

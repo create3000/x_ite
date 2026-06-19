@@ -17,6 +17,9 @@ tags: [PackagedShader, Shaders]
 
 The **PackagedShader** node belongs to the [Shaders](/x_ite/components/overview/#shaders) component and requires at least support level **1,** its default container field is *shaders.* It is available from X3D version 3.0 or higher.
 
+>**Not Supported:** This node is **not supported** in X_ITE.
+{: .prompt-danger }
+
 ## Hierarchy
 
 ```

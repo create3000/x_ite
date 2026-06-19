@@ -175,6 +175,10 @@ Size of the shadow map in pixels, must be power of two.
 - The bound [NavigationInfo](/x_ite/components/navigation/navigationinfo/) controls whether the user headlight is enabled on/off.
 - [Wikipedia Cube mapping](https://en.wikipedia.org/wiki/Cube_mapping)
 
+### Warning
+
+- X3D Architecture version 4.1 draft is experimental and not fully implemented.
+
 ## X_ITE
 
 - Most scenes with [PhysicalMaterial](/x_ite/components/shape/physicalmaterial/) require an EnvironmentLight node.

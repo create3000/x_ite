@@ -192,12 +192,7 @@ When applying occlusionStrength for this material node, the contained texture pr
 ### SFFloat [in, out] **normalScale** 1 <small>[0,∞)</small>
 {: #fields-normalScale }
 
-*normalScale* controls the degree to which normalTexture RGB values apply XYZ-normal bump mapping to pixels in the parent material.
-
-#### Hints
-
-- *normalScale* only affects computation of normalTexture modulations that affect lighting of characteristics of the parent [Material](/x_ite/components/shape/material/) and has no relation to normal vectors defined by corresponding geometry.
-- [NormalTexture techniques apply Bump mapping](https://en.wikipedia.org/wiki/Bump_mapping)
+]
 
 ### SFString [in, out] **normalTextureMapping** ""
 {: #fields-normalTextureMapping }

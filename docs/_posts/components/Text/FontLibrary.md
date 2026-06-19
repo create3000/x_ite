@@ -136,6 +136,10 @@ It is possible to specify in the *url* field one or more URLs of a custom font f
 - [Wikipedia](https://en.wikipedia.org/wiki/Typeface)
 - [Open-source font libraries](https://fonts.google.com) and https://fontlibrary.org
 
+### Warning
+
+- X3D Architecture version 4.1 draft is experimental and not fully implemented.
+
 ## Browser Compatibility
 
 | Castle Game Engine | FreeWRL | X_ITE X3D Browser | X3D-Edit | X3DOM |

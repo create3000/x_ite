@@ -17,6 +17,9 @@ tags: [DISEntityTypeMapping, DIS]
 
 The **DISEntityTypeMapping** node belongs to the [DIS](/x_ite/components/overview/#dis) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
+>**Not Supported:** This node is **not supported** in X_ITE.
+{: .prompt-danger }
+
 ## Hierarchy
 
 ```

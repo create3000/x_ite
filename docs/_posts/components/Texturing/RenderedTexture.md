@@ -110,7 +110,7 @@ The *url* field typically defines a relative address to a file name that can be 
 ### SFBool [in, out] **singleFrame** TRUE
 {: #fields-singleFrame }
 
-*singleFrame* controls when the next texture is captured.
+If TRUE only a single image is captured, otherwise continuous updates are captured.
 
 ### SFTime [in, out] **updateInterval** 0.1 <small>[0,∞)</small>
 {: #fields-updateInterval }
@@ -120,17 +120,21 @@ Indicates time intervals between render captures when the update field is "ALWAY
 ### SFInt32 [in, out] **width** 128 <small>[0,∞)</small>
 {: #fields-width }
 
-Sets width of the rendered texture.
+Image height in pixels.
 
 ### SFInt32 [in, out] **height** 128 <small>[0,∞)</small>
 {: #fields-height }
 
-Sets height of the rendered texture.
+Image *height* in pixels.
 
 ### SFInt32 [in, out] **colorDepth** 4 <small>[1..4]</small>
 {: #fields-colorDepth }
 
-Sets colorDepth of the rendered texture.
+Number of color components for the rendered texture.
+
+#### Hint
+
+- Components in each pixel value are 1 (intensity), 2 (intensity alpha), 3 (RGB red green blue), 4 (RGBA red green blue alpha-opacity).
 
 ### SFBool [in, out] **depthMap** FALSE
 {: #fields-depthMap }
@@ -179,6 +183,7 @@ The *children* field can include a single specific viewpoint from which to rende
 
 - Aggregate file size can grow dramatically.
 - See [ComposedCubeMapTexture](/x_ite/components/cubemaptexturing/composedcubemaptexture/) and [TextureBackground](/x_ite/components/environmentaleffects/texturebackground/) for special containerField values.
+- X3D Architecture version 4.1 draft is experimental and not fully implemented.
 
 ## Example
 

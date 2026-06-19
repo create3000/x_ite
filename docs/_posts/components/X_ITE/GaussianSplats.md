@@ -13,9 +13,9 @@ tags: [GaussianSplats, X_ITE]
 
 ## Overview
 
-The **GaussianSplats** node adds basic support for storing 3D Gaussian splats in X3D files.
+The **GaussianSplats** node adds basic support for direct real-time radiance field rendering of volume data without converting into surface or line primitives.
 
-The **GaussianSplats** node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and its default container field is *children.* It is available in X_ITE.
+The **GaussianSplats** node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
@@ -77,10 +77,12 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### SFString [in, out] **colorSpace** "SRGB_REC709_DISPLAY"
 {: #fields-colorSpace }
 
-The color space of the reconstructed color values. It must be one of:
+The color space of the reconstructed color values, either SRGB_REC709_DISPLAY or LIN_REC709_DISPLAY
 
-- SRGB_REC709_DISPLAY
-- LIN_REC709_DISPLAY
+#### Hints
+
+- [For details see](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_gaussian_splatting/README.md#color-space)
+- [ASWF Color Interop Forum Recommendation, Color Space Encodings for Displays](https://github.com/AcademySoftwareFoundation/ColorInterop/blob/main/Recommendations/02_DisplayColorSpaces/DisplayColorSpaces.md)
 
 ### MFVec3f [in, out] **positions** [ ] <small>(-∞,∞)</small>
 {: #fields-positions }
@@ -95,104 +97,166 @@ The *orientations* field values correspond to the orientation of those axes in l
 ### MFVec3f [in, out] **scales** [ ] <small>[0,∞)</small>
 {: #fields-scales }
 
-The *scales* field values correspond to the spread of the Gaussian along its local principal axes. Scale values are linear and MUST NOT be negative.
+The values in the *scales* field correspond to the spread of the Gaussian along its local principal axes. Scale values are linear and nonnegative.
 
 ### MFFloat [in, out] **opacities** [ ] <small>[0,1]</small>
 {: #fields-opacities }
 
-The opacity of a Gaussian splat is defined by the *opacities* field. It stores a normalized linear value between 0.0 (transparent) and 1.0 (opaque). Out-of-range values are invalid.
+The opacity of a Gaussian splat is defined by the *opacities* field. It stores a normalized linear value between 0.0 (transparent) and 1.0 (opaque).
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree0Coef0** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree0Coef0 }
 
-The *sphericalHarmonicsDegree0Coef0* field semantic provides the diffuse component coefficients for the spherical harmonics. The zeroth-order spherical harmonic coefficients are always required.
+Spherical harmonics data.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree1Coef0** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree1Coef0 }
 
-The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
+Spherical harmonics data.
 
-Input/Output field *sphericalHarmonicsDegree1Coef0*.
+#### Warning
+
+- To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree1Coef1** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree1Coef1 }
 
-The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
+Spherical harmonics data.
+
+#### Warning
+
+- To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree1Coef2** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree1Coef2 }
 
-The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
+Spherical harmonics data.
+
+#### Warning
+
+- To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree2Coef0** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree2Coef0 }
 
-The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
+Spherical harmonics data.
+
+#### Warning
+
+- To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree2Coef1** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree2Coef1 }
 
-The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
+Spherical harmonics data.
+
+#### Warning
+
+- To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree2Coef2** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree2Coef2 }
 
-The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
+Spherical harmonics data.
+
+#### Warning
+
+- To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree2Coef3** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree2Coef3 }
 
-The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
+Spherical harmonics data.
+
+#### Warning
+
+- To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree2Coef4** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree2Coef4 }
 
-The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
+Spherical harmonics data.
+
+#### Warning
+
+- To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree3Coef0** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree3Coef0 }
 
-The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
+Spherical harmonics data.
+
+#### Warning
+
+- To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree3Coef1** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree3Coef1 }
 
-The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
+Spherical harmonics data.
+
+#### Warning
+
+- To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree3Coef2** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree3Coef2 }
 
-The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
+Spherical harmonics data.
+
+#### Warning
+
+- To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree3Coef3** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree3Coef3 }
 
-The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
+Spherical harmonics data.
+
+#### Warning
+
+- To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree3Coef4** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree3Coef4 }
 
-The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
+Spherical harmonics data.
+
+#### Warning
+
+- To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree3Coef5** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree3Coef5 }
 
-The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
+Spherical harmonics data.
+
+#### Warning
+
+- To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree3Coef6** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree3Coef6 }
 
-The *sphericalHarmonicsDegree**D**Coef**C*** fields where *D* is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined.
+Spherical harmonics data.
+
+#### Warning
+
+- To use higher degrees of spherical harmonics the lower degrees MUST be defined.
 
 ### SFBool [in, out] **pointerEvents** TRUE <small class="blue">non-standard</small>
 {: #fields-pointerEvents }
 
-The *pointerEvents* field defines whether this InstancedShape becomes target for pointer events. A value of `FALSE` makes this InstancedShape node invisible during pointer picking.
+Indicates whether this instanced shape is a target for pointer events, if FALSE then it is ignored during pointer picking.
 
 ### SFBool [in, out] **castShadow** TRUE
 {: #fields-castShadow }
 
-Input/Output field *castShadow*.
+*castShadow* defines whether this **GaussianSplats** node casts shadows as produced by lighting nodes.
+
+#### Hint
+
+- If the visible field is FALSE, then the **GaussianSplats** node does not cast any shadows.
 
 ### SFBool [in, out] **visible** TRUE
 {: #fields-visible }
@@ -235,6 +299,19 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - Precomputation and inclusion of bounding box information can speed up the initialization of large detailed models, with a corresponding cost of increased file size.
 - [X3D Architecture, 10.2.2 Bounding boxes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#BoundingBoxes)
 - [X3D Architecture, 10.3.1 X3DBoundedObject](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#X3DBoundedObject)
+
+## Advice
+
+### Hints
+
+- [Wikipedia Gaussian splatting](https://en.wikipedia.org/wiki/Gaussian_splatting)
+- [Khronos glTF 2.0 extension KHR_gaussian_splatting](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_gaussian_splatting/README.md)
+- For advanced extensibility, authors can substitute a type-matched ProtoInstance node (with correct containerField value) for contained node content.
+
+### Warnings
+
+- X3D Architecture version 4.1 draft is experimental and not fully implemented.
+- X3D Architecture version 4.1 draft is experimental and not fully implemented.
 
 ## Example
 

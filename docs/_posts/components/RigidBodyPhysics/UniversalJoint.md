@@ -17,6 +17,9 @@ tags: [UniversalJoint, RigidBodyPhysics]
 
 The **UniversalJoint** node belongs to the [RigidBodyPhysics](/x_ite/components/overview/#rigidbodyphysics) component and requires at least support level **2,** its default container field is *joints.* It is available from X3D version 3.2 or higher.
 
+>**Not Supported:** This node is **not supported** in X_ITE.
+{: .prompt-danger }
+
 ## Hierarchy
 
 ```
