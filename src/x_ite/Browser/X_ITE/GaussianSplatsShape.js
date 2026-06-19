@@ -133,16 +133,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
    {
       let key = "GS";
 
-      this .degrees = SH_COEFS .map ((coefs, degree) =>
-      {
-         // Spherical harmonic degrees MUST NOT be partially defined, that is, either all
-         // coefficients for a given degree and all lower degrees MUST be defined or none.
-         const filled = Array .from ({ length: coefs }, (_, coef) => this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .length) .every (length => length);
-
-         return filled ? 1 : 0;
-      });
-
-      key += this .degrees .join ("");
+      key += this .degrees;
 
       switch (this .node ._colorSpace .getValue ())
       {
@@ -260,6 +251,22 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
          gl .bindTexture (gl .TEXTURE_2D_ARRAY, this .sphericalHarmonicsTexture);
          gl .texImage3D (gl .TEXTURE_2D_ARRAY, 0, gl .RGB16F, textureWidth, textureWidth, 16, 0, gl .RGB, gl .FLOAT, sphericalHarmonics);
+      }
+
+      // Degrees
+
+      this .degrees = -1;
+
+      for (const [degree, coefs] of SH_COEFS .entries ())
+      {
+         // Spherical harmonic degrees MUST NOT be partially defined, that is, either all
+         // coefficients for a given degree and all lower degrees MUST be defined or none.
+         const filled = Array .from ({ length: coefs }, (_, coef) => this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .length) .every (length => length);
+
+         if (!filled)
+            break;
+
+         ++ this .degrees;
       }
 
       // Sort Worker
@@ -426,13 +433,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       // Spherical Harmonics
 
-      for (const [degree, filled] of this .degrees .entries ())
-      {
-         if (!filled)
-            break;
-
+      for (let degree = 0; degree < this .degrees; ++ degree)
          options .push (`X3D_GAUSSIAN_SPLATTING_DEGREE_${degree}`);
-      }
 
       // Shader
 
