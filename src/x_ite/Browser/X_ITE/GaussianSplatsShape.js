@@ -213,20 +213,42 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
             positions          = new Float32Array (textureSize * 3),
             orientations       = new Float32Array (textureSize * 4),
             scales             = new Float32Array (textureSize * 3),
-            opacities          = new Float32Array (textureSize),
-            sphericalHarmonics = new Float32Array (textureSize * 3 * 16);
+            opacities          = new Float32Array (textureSize);
 
          positions    .set (this .node ._positions    .getValue () .subarray (0, numSplats * 3));
          orientations .set (this .node ._orientations .getValue () .subarray (0, numSplats * 4));
          scales       .set (this .node ._scales       .getValue () .subarray (0, numSplats * 3));
          opacities    .set (this .node ._opacities    .getValue () .subarray (0, numSplats));
 
+         // Degrees
+
+         this .degrees = -1;
+
+         for (const [degree, coefs] of SH_COEFS .entries ())
+         {
+            // Spherical harmonic degrees MUST NOT be partially defined, that is, either all
+            // coefficients for a given degree and all lower degrees MUST be defined or none.
+            const filled = Array .from ({ length: coefs }, (_, coef) => this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .length) .every (length => length);
+
+            if (!filled)
+               break;
+
+            ++ this .degrees;
+         }
+
          // Degree 0,1,2,3
+
+         const
+            dimensions         = (this .degrees + 1) ** 2,
+            sphericalHarmonics = new Float32Array (textureSize * 3 * dimensions);
 
          let offset = 0;
 
          for (const [degree, coefs] of SH_COEFS .entries ())
          {
+            if (degree > this .degrees)
+               break;
+
             for (let coef = 0; coef < coefs; ++ coef)
             {
                const value = this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .getValue ();
@@ -249,24 +271,11 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
          gl .bindTexture (gl .TEXTURE_2D, this .opacitiesTexture);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .R16F, textureWidth, textureWidth, 0, gl .RED, gl .FLOAT, opacities);
 
-         gl .bindTexture (gl .TEXTURE_2D_ARRAY, this .sphericalHarmonicsTexture);
-         gl .texImage3D (gl .TEXTURE_2D_ARRAY, 0, gl .RGB16F, textureWidth, textureWidth, 16, 0, gl .RGB, gl .FLOAT, sphericalHarmonics);
-      }
-
-      // Degrees
-
-      this .degrees = -1;
-
-      for (const [degree, coefs] of SH_COEFS .entries ())
-      {
-         // Spherical harmonic degrees MUST NOT be partially defined, that is, either all
-         // coefficients for a given degree and all lower degrees MUST be defined or none.
-         const filled = Array .from ({ length: coefs }, (_, coef) => this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .length) .every (length => length);
-
-         if (!filled)
-            break;
-
-         ++ this .degrees;
+         if (dimensions)
+         {
+            gl .bindTexture (gl .TEXTURE_2D_ARRAY, this .sphericalHarmonicsTexture);
+            gl .texImage3D (gl .TEXTURE_2D_ARRAY, 0, gl .RGB16F, textureWidth, textureWidth, dimensions, 0, gl .RGB, gl .FLOAT, sphericalHarmonics);
+         }
       }
 
       // Sort Worker
