@@ -368,7 +368,7 @@ const ArrayFields =
    MFMatrix4f:   TypedArrayTemplate ("MFMatrix4f",   SFMatrix4f,   SFMatrix4f,   Float32Array, 16, Matrix4 .IDENTITY),
    MFNode,
    MFQuaternion: TypedArrayTemplate ("MFQuaternion", SFQuaternion, SFQuaternion, Float64Array, 4,  Quaternion .IDENTITY),
-   MFRotation:   TypedArrayTemplate ("MFRotation",   SFRotation,   SFRotation,   Float64Array, 4,  Rotation4 .IDENTITY),
+   MFRotation:   TypedArrayTemplate ("MFRotation",   SFRotation,   SFRotation,   Float64Array, 4,  Rotation4  .IDENTITY),
    MFString,
    MFTime:       TypedArrayTemplate ("MFTime",       SFTime,       Value,        Float64Array, 1,  -1),
    MFVec2d:      TypedArrayTemplate ("MFVec2d",      SFVec2d,      SFVec2d,      Float64Array, 2),
