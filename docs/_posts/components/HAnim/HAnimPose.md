@@ -84,7 +84,7 @@ Level Of Articulation 0..4 indicates complexity and detail of joints for given h
 
 Enables/disables node operation.
 
-### SFFloat [in, out] **transitionDuration** 0 <small>(0,∞)</small>
+### SFTime [in, out] **transitionDuration** 0 <small>(0,∞)</small>
 {: #fields-transitionDuration }
 
 Duration in seconds for animating a pose transition.

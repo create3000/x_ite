@@ -42,7 +42,7 @@ The **RenderedTexture** node belongs to the [Texturing](/x_ite/components/overvi
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | SFBool | [in, out] | [replaceImage](#fields-replaceImage) | TRUE |
-| SFInt32 | [in, out] | [maximumNumberFrames](#fields-maximumNumberFrames) | 1000 |
+| SFInt32 | [in, out] | [maxNumberFrames](#fields-maxNumberFrames) | 1000 |
 | MFString | [in, out] | [url](#fields-url) | [ ] |
 | SFBool | [in, out] | [singleFrame](#fields-singleFrame) | TRUE |
 | SFTime | [in, out] | [updateInterval](#fields-updateInterval) | 0.1 |
@@ -85,8 +85,8 @@ Enables/disables node operation.
 
 Whether only a single updated image file or multiple image files can be saved.
 
-### SFInt32 [in, out] **maximumNumberFrames** 1000 <small>[0,∞)</small>
-{: #fields-maximumNumberFrames }
+### SFInt32 [in, out] **maxNumberFrames** 1000 <small>[0,∞)</small>
+{: #fields-maxNumberFrames }
 
 Indicates the maximum number of independent frame files (or movie frames) that can be saved for a single series of image captures. A value of 0 indicates no limit.
 
