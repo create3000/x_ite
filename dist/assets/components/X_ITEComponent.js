@@ -1,4 +1,4 @@
-/* X_ITE v15.1.6 */
+/* X_ITE v15.1.7 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -1086,10 +1086,10 @@ texCoord=(x3d_Vertex.xy+1.)/2.;
 #if defined(X3D_LOGARITHMIC_DEPTH_BUFFER)
 logarithmic(gl_Position);
 #endif
-#if!defined(X3D_POINTING_PASS)&&!defined(X3D_DEPTH_PASS)
-color=vec4(computeColorFromSH(texelCoord,splatCenter),opacity);
-#else
+#if defined(X3D_POINTING_PASS)||defined(X3D_DEPTH_PASS)
 color=vec4(vec3(0),opacity);
+#else
+color=vec4(computeColorFromSH(texelCoord,splatCenter),opacity);
 #endif
 #if defined(X3D_FOG)&&defined(X3D_FOG_COORDS)
 fog();
@@ -1299,16 +1299,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
    {
       let key = "GS";
 
-      this .degrees = SH_COEFS .map ((coefs, degree) =>
-      {
-         // Spherical harmonic degrees MUST NOT be partially defined, that is, either all
-         // coefficients for a given degree and all lower degrees MUST be defined or none.
-         const filled = Array .from ({ length: coefs }, (_, coef) => this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .length) .every (length => length);
-
-         return filled ? 1 : 0;
-      });
-
-      key += this .degrees .join ("");
+      key += this .degrees;
 
       switch (this .node ._colorSpace .getValue ())
       {
@@ -1388,20 +1379,42 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
             positions          = new Float32Array (textureSize * 3),
             orientations       = new Float32Array (textureSize * 4),
             scales             = new Float32Array (textureSize * 3),
-            opacities          = new Float32Array (textureSize),
-            sphericalHarmonics = new Float32Array (textureSize * 3 * 16);
+            opacities          = new Float32Array (textureSize);
 
          positions    .set (this .node ._positions    .getValue () .subarray (0, numSplats * 3));
          orientations .set (this .node ._orientations .getValue () .subarray (0, numSplats * 4));
          scales       .set (this .node ._scales       .getValue () .subarray (0, numSplats * 3));
          opacities    .set (this .node ._opacities    .getValue () .subarray (0, numSplats));
 
+         // Degrees
+
+         this .degrees = -1;
+
+         for (const [degree, coefs] of SH_COEFS .entries ())
+         {
+            // Spherical harmonic degrees MUST NOT be partially defined, that is, either all
+            // coefficients for a given degree and all lower degrees MUST be defined or none.
+            const filled = Array .from ({ length: coefs }, (_, coef) => this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .length) .every (length => length);
+
+            if (!filled)
+               break;
+
+            ++ this .degrees;
+         }
+
          // Degree 0,1,2,3
+
+         const
+            dimensions         = (this .degrees + 1) ** 2,
+            sphericalHarmonics = new Float32Array (textureSize * 3 * dimensions);
 
          let offset = 0;
 
          for (const [degree, coefs] of SH_COEFS .entries ())
          {
+            if (degree > this .degrees)
+               break;
+
             for (let coef = 0; coef < coefs; ++ coef)
             {
                const value = this .node .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`) .getValue ();
@@ -1424,8 +1437,11 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
          gl .bindTexture (gl .TEXTURE_2D, this .opacitiesTexture);
          gl .texImage2D (gl .TEXTURE_2D, 0, gl .R16F, textureWidth, textureWidth, 0, gl .RED, gl .FLOAT, opacities);
 
-         gl .bindTexture (gl .TEXTURE_2D_ARRAY, this .sphericalHarmonicsTexture);
-         gl .texImage3D (gl .TEXTURE_2D_ARRAY, 0, gl .RGB16F, textureWidth, textureWidth, 16, 0, gl .RGB, gl .FLOAT, sphericalHarmonics);
+         if (dimensions)
+         {
+            gl .bindTexture (gl .TEXTURE_2D_ARRAY, this .sphericalHarmonicsTexture);
+            gl .texImage3D (gl .TEXTURE_2D_ARRAY, 0, gl .RGB16F, textureWidth, textureWidth, dimensions, 0, gl .RGB, gl .FLOAT, sphericalHarmonics);
+         }
       }
 
       // Sort Worker
@@ -1592,13 +1608,8 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, (externa
 
       // Spherical Harmonics
 
-      for (const [degree, filled] of this .degrees .entries ())
-      {
-         if (!filled)
-            break;
-
+      for (let degree = 0; degree <= this .degrees; ++ degree)
          options .push (`X3D_GAUSSIAN_SPLATTING_DEGREE_${degree}`);
-      }
 
       // Shader
 
@@ -1859,7 +1870,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, (external_X_I
 
 Object .defineProperties (GaussianSplats,
 {
-   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("GaussianSplats", "X_ITE", 1, "children", "2.0"),
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("GaussianSplats", "X_ITE", 1, "children", "4.1"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -2070,7 +2081,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, (external_X_I
 
 Object .defineProperties (InstancedShape,
 {
-   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("InstancedShape", "X_ITE", 1, "children", "2.0"),
+   ... external_X_ITE_X3D_X3DNode_default().getStaticProperties ("InstancedShape", "X_ITE", 1, "children", "4.0"),
    fieldDefinitions:
    {
       value: new (external_X_ITE_X3D_FieldDefinitionArray_default()) ([
@@ -2589,6 +2600,7 @@ external_X_ITE_X3D_ShaderRegistry_default().addFragmentShader ("SpecularGlossine
 external_X_ITE_X3D_MaterialTextures_default().add ("x3d_SpecularGlossinessTexture");
 
 /**
+ * THIS NODE IS STILL EXPERIMENTAL.
  * THIS NODE IS DEPRECIATED SINCE X3D VERSION 4.0.
  */
 

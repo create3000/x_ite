@@ -174,6 +174,7 @@ All concrete node types from *AcousticProperties, Analyser, …* to *WorldInfo.*
 - FloatVertexAttribute
 - Fog
 - FogCoordinate
+- FontLibrary
 - FontStyle
 - ForcePhysicsModel
 - Gain
@@ -195,6 +196,7 @@ All concrete node types from *AcousticProperties, Analyser, …* to *WorldInfo.*
 - HAnimHumanoid
 - HAnimJoint
 - HAnimMotion
+- HAnimPose
 - HAnimSegment
 - HAnimSite
 - ImageCubeMapTexture
@@ -442,6 +444,7 @@ All abstract node types from *X3DAppearanceChildNode, X3DAppearanceNode,* … to
 - X3DSoundProcessingNode
 - X3DSoundSourceNode
 - X3DStatement
+- X3DTangentNode
 - X3DTexture2DNode
 - X3DTexture3DNode
 - X3DTextureCoordinateNode

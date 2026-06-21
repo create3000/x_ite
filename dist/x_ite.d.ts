@@ -1278,6 +1278,7 @@ declare namespace X3D
       readonly FloatVertexAttribute: number;
       readonly Fog: number;
       readonly FogCoordinate: number;
+      readonly FontLibrary: number;
       readonly FontStyle: number;
       readonly ForcePhysicsModel: number;
       readonly Gain: number;
@@ -1299,6 +1300,7 @@ declare namespace X3D
       readonly HAnimHumanoid: number;
       readonly HAnimJoint: number;
       readonly HAnimMotion: number;
+      readonly HAnimPose: number;
       readonly HAnimSegment: number;
       readonly HAnimSite: number;
       readonly ImageCubeMapTexture: number;
@@ -1544,6 +1546,7 @@ declare namespace X3D
       readonly X3DSoundProcessingNode: number;
       readonly X3DSoundSourceNode: number;
       readonly X3DStatement: number;
+      readonly X3DTangentNode: number;
       readonly X3DTexture2DNode: number;
       readonly X3DTexture3DNode: number;
       readonly X3DTextureCoordinateNode: number;
@@ -7518,11 +7521,11 @@ declare namespace X3D
       metadata: X3DMetadataObjectProxy | null;
    }
 
-   /** EnvironmentLight ... This node only affects the PhysicalMaterial and SpecularGlossinessMaterial nodes. */
+   /** EnvironmentLight node uses an environment map to represent incident illumination around a point, and can be used to show reflections of distant objects. */
    interface EnvironmentLightProxy extends X3DLightNodeProxy
    {
       /**
-       * Brightness of ambient (nondirectional background) emission from the light. Interchange profile
+       * Brightness of ambient (nondirectional background) emission from the light.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -7534,19 +7537,19 @@ declare namespace X3D
        */
       color: SFColor;
       /**
-       * Input/Output field diffuseCoefficients.
+       * diffuseCoefficients field provides a 3 x 9 array of float values providing spherical harmonic coefficients for low-frequency characteristics of the environment map to produce an irradiance map corresponding to glTF irradianceCoefficients field.
        *
        * This field is of access type 'inputOutput' and type MFFloat.
        */
       diffuseCoefficients: MFFloat;
       /**
-       * Input/Output field diffuseTexture.
+       * diffuseTexture defines explicit precomputed X3DEnvironmentTextureNode (ComposedCubeMapTexture, GeneratedCubeMapTexture, ImageCubeMapTexture) nodes as the image source for the EnvironmentLight.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
       diffuseTexture: X3DEnvironmentTextureNodeProxy | null;
       /**
-       * Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
+       * global field affects the scope of lighting effects produced by the EnvironmentLight node, and has no effect on the computation of environment textures.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -7570,7 +7573,13 @@ declare namespace X3D
        */
       on: boolean;
       /**
-       * Input/Output field rotation.
+       * origin defines the relative position for observing the surrounding scene to create an environment texture.
+       *
+       * This field is of access type 'inputOutput' and type SFVec3f.
+       */
+      origin: SFVec3f;
+      /**
+       * rotation field represents the overall rotation of the IBL environment.
        *
        * This field is of access type 'inputOutput' and type SFRotation.
        */
@@ -7588,7 +7597,7 @@ declare namespace X3D
        */
       shadows: boolean;
       /**
-       * Input/Output field specularTexture.
+       * specularTexture defines explicit precomputed X3DEnvironmentTextureNode (ComposedCubeMapTexture, GeneratedCubeMapTexture, ImageCubeMapTexture) nodes as the image source for the EnvironmentLight.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -8436,6 +8445,53 @@ declare namespace X3D
       metadata: X3DMetadataObjectProxy | null;
    }
 
+   /** FontLibrary can load additional fonts for use by Text and FontStyle nodes. */
+   interface FontLibraryProxy extends X3DChildNodeProxy, X3DUrlObjectProxy
+   {
+      /**
+       * The [autoRefresh field has no effect, Anchor operation is only triggered by user selection.
+       *
+       * This field is of access type 'inputOutput' and type SFTime.
+       */
+      autoRefresh: number;
+      /**
+       * The [autoRefreshTimeLimit field has no effect, Anchor operation is only triggered by user selection.
+       *
+       * This field is of access type 'inputOutput' and type SFTime.
+       */
+      autoRefreshTimeLimit: number;
+      /**
+       * Author-provided prose that describes intended purpose of the url asset.
+       *
+       * This field is of access type 'inputOutput' and type SFString.
+       */
+      description: string;
+      /**
+       * Array of quoted font family names in preference order, browsers use the first supported family.
+       *
+       * This field is of access type 'inputOutput' and type MFString.
+       */
+      family: MFString <"SANS" | "SERIF" | "TYPEWRITER">;
+      /**
+       * The load field has no effect, Anchor operation is only triggered by user selection.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      load: boolean;
+      /**
+       * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      metadata: X3DMetadataObjectProxy | null;
+      /**
+       * Address of replacement world, or #ViewpointDEFName within the current scene, or alternate Web resource, activated by the user selecting Shape geometry within the Anchor children nodes.
+       *
+       * This field is of access type 'inputOutput' and type MFString.
+       */
+      url: MFString;
+   }
+
    /** FontStyle is an X3DFontStyleNode that defines the size, family, justification, and other styles used by Text nodes. */
    interface FontStyleProxy extends X3DFontStyleNodeProxy
    {
@@ -8625,7 +8681,7 @@ declare namespace X3D
       tailTime: number;
    }
 
-   /** The GaussianSplats node adds basic support for storing 3D Gaussian splats in X3D files. */
+   /** The GaussianSplats node adds basic support for direct real-time radiance field rendering of volume data without converting into surface or line primitives. */
    interface GaussianSplatsProxy extends X3DChildNodeProxy, X3DBoundedObjectProxy
    {
       /**
@@ -8641,20 +8697,19 @@ declare namespace X3D
        */
       bboxDisplay: boolean;
       /**
-       * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
+       * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
        *
        * This field is of access type 'initializeOnly' and type SFVec3f.
        */
       bboxSize: SFVec3f;
       /**
-       * Input/Output field castShadow.
+       * castShadow defines whether this GaussianSplats node casts shadows as produced by lighting nodes.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
       castShadow: boolean;
       /**
-       * The color space of the reconstructed color values. It must be one of:
-, SRGB_REC709_DISPLAY, LIN_REC709_DISPLAY
+       * The color space of the reconstructed color values, either SRGB_REC709_DISPLAY or LIN_REC709_DISPLAY Hint: for details see https://github.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -8666,127 +8721,127 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * The opacity of a Gaussian splat is defined by the opacities field. It stores a normalized linear value between 0.0 (transparent) and 1.0 (opaque). Out-of-range values are invalid.
+       * The opacity of a Gaussian splat is defined by the opacities field.
        *
        * This field is of access type 'inputOutput' and type MFFloat.
        */
       opacities: MFFloat;
       /**
-       * The orientations field values correspond to the orientation of those axes in local space. Orientation values are stored as unit quaternions in the usual glTF order.
+       * The orientations field values correspond to the orientation of those axes in local space.
        *
-       * This field is of access type 'inputOutput' and type MFVec4f.
+       * This field is of access type 'inputOutput' and type MFQuaternion.
        */
-      orientations: MFVec4f;
+      orientations: MFQuaternion;
       /**
-       * The pointerEvents field defines whether this GaussianSplats becomes target for pointer events.
+       * indicates whether this instanced shape is a target for pointer events, if FALSE then it is ignored during pointer picking.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
       pointerEvents: boolean;
       /**
-       * The mean vector for the Gaussian splat is provided by the positions of the mesh primitive. This defines the center of the Gaussian splat ellipsoid in local space. The effective global mean vector for the Gaussian splat is derived from the positions field value and the global transformation matrix of the X3D node that instantiates the mesh containing the splat primitive as defined in the glTF specification.
+       * The mean vector for the Gaussian splat is provided by the positions of the mesh primitive.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       positions: MFVec3f;
       /**
-       * The scales field values correspond to the spread of the Gaussian along its local principal axes. Scale values are linear and MUST NOT be negative.
+       * The values in the scales field correspond to the spread of the Gaussian along its local principal axes.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       scales: MFVec3f;
       /**
-       * The sphericalHarmonicsDegree0Coef0 field semantic provides the diffuse component coefficients for the spherical harmonics. The zeroth-order spherical harmonic coefficients are always required.
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree0Coef0: MFVec3f;
       /**
-       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree1Coef0: MFVec3f;
       /**
-       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree1Coef1: MFVec3f;
       /**
-       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree1Coef2: MFVec3f;
       /**
-       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree2Coef0: MFVec3f;
       /**
-       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree2Coef1: MFVec3f;
       /**
-       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree2Coef2: MFVec3f;
       /**
-       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree2Coef3: MFVec3f;
       /**
-       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree2Coef4: MFVec3f;
       /**
-       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree3Coef0: MFVec3f;
       /**
-       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree3Coef1: MFVec3f;
       /**
-       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree3Coef2: MFVec3f;
       /**
-       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree3Coef3: MFVec3f;
       /**
-       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree3Coef4: MFVec3f;
       /**
-       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
       sphericalHarmonicsDegree3Coef5: MFVec3f;
       /**
-       * The sphericalHarmonicsDegreeDCoefC fields where D is greater than zero hold the higher degrees of spherical harmonics data. To use higher degrees of spherical harmonics the lower degrees MUST be defined
+       * spherical harmonics data.
        *
        * This field is of access type 'inputOutput' and type MFVec3f.
        */
@@ -9791,6 +9846,12 @@ declare namespace X3D
        */
       center: SFVec3f;
       /**
+       * Contains zero or more HAnimPose nodes that can animate the HAnimHumanoid.
+       *
+       * This field is of access type 'inputOutput' and type MFNode.
+       */
+      children: MFNode <HAnimPoseProxy>;
+      /**
        * Author-provided prose that describes intended purpose of this node.
        *
        * This field is of access type 'inputOutput' and type SFString.
@@ -9939,7 +10000,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
-      version: "2.0";
+      version: "2.0" | "2.1";
       /**
        * List of HAnimSite nodes containing Viewpoint nodes that appear in the skeleton model, usually as USE node references.
        *
@@ -10212,6 +10273,83 @@ declare namespace X3D
       values: MFFloat;
    }
 
+   /** HAnimPose nodes support setting HAnimJoint values in a corresponding HAnimHumanoid skeleton. */
+   interface HAnimPoseProxy extends X3DChildNodeProxy
+   {
+      /**
+       * The children field lists all HAnimJoint nodes making up this pose.
+       *
+       * This field is of access type 'inputOutput' and type MFNode.
+       */
+      children: MFNode <HAnimJointProxy>;
+      /**
+       * commencePose is an input boolean event that triggers the animation of Joint values to achieve the pose.
+       *
+       * This field is of access type 'inputOnly' and type SFBool.
+       */
+      commencePose: boolean;
+      /**
+       * Author-provided prose that describes intended purpose of this node.
+       *
+       * This field is of access type 'inputOutput' and type SFString.
+       */
+      description: string;
+      /**
+       * Enables/disables node operation.
+       *
+       * This field is of access type 'inputOutput' and type SFBool.
+       */
+      enabled: boolean;
+      /**
+       * isActive true/false events are sent when pose animation starts/stops.
+       *
+       * This field is of access type 'outputOnly' and type SFBool.
+       */
+      readonly isActive: boolean;
+      /**
+       * Level Of Articulation 0.
+       *
+       * This field is of access type 'inputOutput' and type SFInt32.
+       */
+      loa: number;
+      /**
+       * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      metadata: X3DMetadataObjectProxy | null;
+      /**
+       * Unique name attribute must be defined so that HAnimPose node can be identified at run time for animation purposes.
+       *
+       * This field is of access type 'inputOutput' and type SFString.
+       */
+      name: string;
+      /**
+       * resetAllJoints is an input boolean event that zeroes all Joint objects in the skeleton field to their default values, matching the default binding pose (i.
+       *
+       * This field is of access type 'inputOnly' and type SFBool.
+       */
+      resetAllJoints: boolean;
+      /**
+       * setting fraction in range [0,1] provides an input event that allows gradual change of each joint in the pose, where 0 indicates no change and 1 indicates fully changed.
+       *
+       * This field is of access type 'inputOnly' and type SFTime.
+       */
+      set_fraction: number;
+      /**
+       * set_startTime is an input event that commences the animation of Joint objects in the parent Humanoid object.
+       *
+       * This field is of access type 'inputOnly' and type SFTime.
+       */
+      set_startTime: number;
+      /**
+       * Duration in seconds for animating a pose transition.
+       *
+       * This field is of access type 'inputOutput' and type SFTime.
+       */
+      transitionDuration: number;
+   }
+
    /** HAnimSegment node contains Shape geometry for each body segment, providing a visual representation of the skeleton segment. */
    interface HAnimSegmentProxy extends X3DGroupingNodeProxy
    {
@@ -10457,11 +10595,19 @@ declare namespace X3D
        */
       autoRefreshTimeLimit: number;
       /**
+       * This field is of access type 'outputOnly' and type SFInt32.
+       */
+      readonly colorDepth: number;
+      /**
        * Author-provided prose that describes intended purpose of the url asset.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
       description: string;
+      /**
+       * This field is of access type 'outputOnly' and type SFInt32.
+       */
+      readonly height: number;
       /**
        * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
@@ -10498,6 +10644,10 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type MFString.
        */
       url: MFString;
+      /**
+       * This field is of access type 'outputOnly' and type SFInt32.
+       */
+      readonly width: number;
    }
 
    /** ImageTexture3D defines a 3D image-based texture map by specifying a single image file that contains complete 3D data. */
@@ -10516,11 +10666,23 @@ declare namespace X3D
        */
       autoRefreshTimeLimit: number;
       /**
+       * This field is of access type 'outputOnly' and type SFInt32.
+       */
+      readonly colorDepth: number;
+      /**
+       * This field is of access type 'outputOnly' and type SFInt32.
+       */
+      readonly depth: number;
+      /**
        * Author-provided prose that describes intended purpose of the url asset.
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
       description: string;
+      /**
+       * This field is of access type 'outputOnly' and type SFInt32.
+       */
+      readonly height: number;
       /**
        * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
@@ -10563,6 +10725,10 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type MFString.
        */
       url: MFString;
+      /**
+       * This field is of access type 'outputOnly' and type SFInt32.
+       */
+      readonly width: number;
    }
 
    /** ImageTextureAtlas defines a 3D image-based texture map by specifying a single image file that contains slices for complete 3D data. */
@@ -10766,11 +10932,11 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       * Optional single contained Tangent node that defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -10938,11 +11104,11 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       * Optional single contained Tangent node that defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -11027,11 +11193,11 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       * Optional single contained Tangent node that defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -11116,11 +11282,11 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       * Optional single contained Tangent node that defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -11205,11 +11371,11 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       * Optional single contained Tangent node that defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -11289,21 +11455,57 @@ declare namespace X3D
       visible: boolean;
    }
 
-   /**  */
+   /** InlineGeometry loads geometry from an external file. */
    interface InlineGeometryProxy extends X3DGeometryNodeProxy, X3DUrlObjectProxy
    {
       /**
-       * The smooth field provides a hint to the browser whether smooth rendering is preferred for a retrieved polygonal mesh.
+       * autoRefresh defines interval in seconds before automatic reload of current url asset is performed.
+       *
+       * This field is of access type 'inputOutput' and type SFTime.
+       */
+      autoRefresh: number;
+      /**
+       * autoRefreshTimeLimit defines maximum duration that automatic refresh activity can occur.
+       *
+       * This field is of access type 'inputOutput' and type SFTime.
+       */
+      autoRefreshTimeLimit: number;
+      /**
+       * Author-provided prose that describes intended purpose of the url asset.
+       *
+       * This field is of access type 'inputOutput' and type SFString.
+       */
+      description: string;
+      /**
+       * load=true means load immediately, load=false means defer loading or else unload a previously loaded asset.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
+      load: boolean;
+      /**
+       * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      metadata: X3DMetadataObjectProxy | null;
+      /**
+       * The smooth field provides a hint to the browser whether smooth rendering is preferred for a retrieved polygonal mesh.
+       *
+       * This field is of access type 'initializeOnly' and type SFBool.
+       */
       smooth: boolean;
       /**
-       * For InlineGeometry, the default value of solid is FALSE since most usages of retrieved meshes need two-sided rendering. Authors have the option to change this value for single-sided rendering.
+       * Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
       solid: boolean;
+      /**
+       * Address of X3D world to load Inline with current scene, retrieved either from local system or an online address.
+       *
+       * This field is of access type 'inputOutput' and type MFString.
+       */
+      url: MFString;
    }
 
    /** InstancedShape can appear under any grouping node. InstancedShape can contain an Appearance node and a geometry node (for example one of the primitives Box Cone Cylinder Sphere Text, one of ElevationGrid Extrusion IndexedFaceSet IndexedLineSet LineSet PointSet, or one of the other geometry nodes) and this geometry node is instantiated as often as transformations are provided. */
@@ -11328,13 +11530,13 @@ declare namespace X3D
        */
       bboxDisplay: boolean;
       /**
-       * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
+       * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
        *
        * This field is of access type 'initializeOnly' and type SFVec3f.
        */
       bboxSize: SFVec3f;
       /**
-       * Input/Output field castShadow.
+       * castShadow defines whether this Shape casts shadows as produced by lighting nodes.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -13016,6 +13218,10 @@ declare namespace X3D
        */
       autoRefreshTimeLimit: number;
       /**
+       * This field is of access type 'outputOnly' and type SFInt32.
+       */
+      readonly colorDepth: number;
+      /**
        * Author-provided prose that describes intended purpose of the url asset.
        *
        * This field is of access type 'inputOutput' and type SFString.
@@ -13045,6 +13251,14 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type SFFloat.
        */
       gain: number;
+      /**
+       * This field is of access type 'outputOnly' and type SFInt32.
+       */
+      readonly hasSound: number;
+      /**
+       * This field is of access type 'outputOnly' and type SFInt32.
+       */
+      readonly height: number;
       /**
        * isActive true/false events are sent when playback starts/stops.
        *
@@ -13135,6 +13349,10 @@ declare namespace X3D
        * This field is of access type 'inputOutput' and type MFString.
        */
       url: MFString;
+      /**
+       * This field is of access type 'outputOnly' and type SFInt32.
+       */
+      readonly width: number;
    }
 
    /** MultiTexture applies several individual textures to a single geometry node, enabling a variety of visual effects that include light mapping and environment mapping. */
@@ -15934,11 +16152,11 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       * Optional single contained Tangent node that defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -16179,25 +16397,19 @@ declare namespace X3D
       solid: boolean;
    }
 
-   /** A RenderedTexture is a texture node that renders a separate scene or viewpoint into an offscreen buffer, producing an image that can be applied to geometry in real time. */
+   /** RenderedTexture is a texture node that renders the view from a local viewpoint or separate scene into an offscreen buffer, producing an image or depth map that can be rendered from model geometry in real time. */
    interface RenderedTextureProxy extends X3DTexture2DNodeProxy, X3DUrlOutputObjectProxy
    {
       /**
-       * Sets a separate, potentially independent, subscene. If the value is NULL the current scene is used.
-       *
-       * This field is of access type 'inputOutput' and type MFNode.
-       */
-      children: MFNode <X3DChildNodeProxy>;
-      /**
-       * Sets color depth of the rendered texture.
+       * number of color components for the rendered texture.
        *
        * This field is of access type 'inputOutput' and type SFInt32.
        */
       colorDepth: number;
       /**
-       * The generated texture will contain the depth buffer of the image (instead of the color buffer as usual).
+       * indicates that a generated texture contains a depth buffer for the image, instead of a color buffer.
        *
-       * This field is of access type 'initializeOnly' and type SFBool.
+       * This field is of access type 'inputOutput' and type SFBool.
        */
       depthMap: boolean;
       /**
@@ -16207,29 +16419,23 @@ declare namespace X3D
        */
       description: string;
       /**
-       * The enabled field either enables or disables data output processing by the node.
+       * image height in pixels.
        *
-       * This field is of access type 'inputOutput' and type SFBool.
-       */
-      enabled: boolean;
-      /**
-       * Sets height of the rendered texture.
-       *
-       * This field is of access type 'inputOutput' and type SFInt32.
+       * This field is of access type 'initializeOnly' and type SFInt32.
        */
       height: number;
       /**
-       * The isActive field provides a TRUE event when node data output becomes active, and a FALSE event when node data output is stopped.
+       * provides a TRUE event when the data output process becomes active, and a FALSE event when the data output process is stopped.
        *
        * This field is of access type 'outputOnly' and type SFBool.
        */
       readonly isActive: boolean;
       /**
-       * The maximumNumberFrames field indicates the maximum number of frames that can be saved for a single series of image captures. A value of 0 indicates no limit.
+       * indicates the maximum number of independent frame files (or movie frames) that can be saved for a single series of image captures.
        *
        * This field is of access type 'inputOutput' and type SFInt32.
        */
-      maximumNumberFrames: number;
+      maxNumberFrames: number;
       /**
        * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
        *
@@ -16249,15 +16455,15 @@ declare namespace X3D
        */
       repeatT: boolean;
       /**
-       * The replaceImage field defines whether only a single updated image file or multiple image files can be saved.
+       * Whether only a single updated image file or multiple image files can be saved.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
       replaceImage: boolean;
       /**
-       * singleFrame controls when the next texture is captured.
+       * if TRUE only a single image is captured, otherwise continuous updates are captured.
        *
-       * This field is of access type 'initializeOnly' and type SFBool.
+       * This field is of access type 'inputOutput' and type SFBool.
        */
       singleFrame: boolean;
       /**
@@ -16267,19 +16473,23 @@ declare namespace X3D
        */
       textureProperties: TexturePropertiesProxy | null;
       /**
-       * The updateInterval field indicates time intervals between render captures when update is "ALWAYS". A value of 0 indicates full frame rate.
+       * This field is of access type 'inputOutput' and type SFString.
+       */
+      update: "NONE" | "NEXT_FRAME_ONLY" | "ALWAYS";
+      /**
+       * indicates time intervals between render captures when the update field is "ALWAYS".
        *
        * This field is of access type 'inputOutput' and type SFTime.
        */
       updateInterval: number;
       /**
-       * Values in the url field typically defines a relative address to a file name that can be used for storing one or more rendered textures.
+       * The url field typically defines a relative address to a file name that can be used for storing one or more rendered textures, and can also provide a destination for output of successive image files as a video file or video stream.
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
       url: MFString;
       /**
-       * Sets width of the rendered texture.
+       * image height in pixels.
        *
        * This field is of access type 'inputOutput' and type SFInt32.
        */
@@ -18759,8 +18969,8 @@ declare namespace X3D
       whichChoice: number;
    }
 
-   /** Tangent. */
-   interface TangentProxy extends X3DGeometricPropertyNodeProxy
+   /** Tangent defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node, or else to a parent ElevationGrid node. */
+   interface TangentProxy extends X3DTangentNodeProxy
    {
       /**
        * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
@@ -18769,7 +18979,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * A unit XYZ vector defining a tangent direction on the surface, and a W component whose sign value (-1 or +1) indicates the handedness of the tangent base.
+       * set of x-y-z-w orthogonal vector values for a surface, applied either per-vertex or per-face to a mesh.
        *
        * This field is of access type 'inputOutput' and type MFVec4f.
        */
@@ -20308,11 +20518,11 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       * Optional single contained Tangent node that defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -20385,11 +20595,11 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       * Optional single contained Tangent node that defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -20491,11 +20701,11 @@ declare namespace X3D
        */
       stripCount: MFInt32;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       * Optional single contained Tangent node that defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -21648,11 +21858,9 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
-       *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -22797,6 +23005,15 @@ declare namespace X3D
 
    }
 
+   /** Base type for all tangent node types in X3D. */
+   interface X3DTangentNodeProxy extends X3DGeometricPropertyNodeProxy
+   {
+      /**
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      metadata: X3DMetadataObjectProxy | null;
+   }
+
    /** Base type for all nodes which specify 2D sources for texture images. */
    interface X3DTexture2DNodeProxy extends X3DSingleTextureNodeProxy
    {
@@ -23055,30 +23272,10 @@ declare namespace X3D
       url: MFString;
    }
 
-   /**  */
+   /** X3DUrlOutputObject indicates that a node publish data on the local file system or to a network address. */
    interface X3DUrlOutputObjectProxy extends SFNode
    {
       /**
-       * Author-provided prose that describes intended purpose of the url asset.
-       *
-       * This field is of access type 'inputOutput' and type SFString.
-       */
-      description: string;
-      /**
-       * The enabled field either enables or disables data output processing by the node.
-       *
-       * This field is of access type 'inputOutput' and type SFBool.
-       */
-      enabled: boolean;
-      /**
-       * The isActive field provides a TRUE event when node data output becomes active, and a FALSE event when node data output is stopped.
-       *
-       * This field is of access type 'outputOnly' and type SFBool.
-       */
-      readonly isActive: boolean;
-      /**
-       * Values in the url field typically defines a relative address to a file name that can be used for storing one or more rendered textures.
-       *
        * This field is of access type 'inputOutput' and type MFString.
        */
       url: MFString;
@@ -23315,6 +23512,7 @@ declare namespace X3D
       FloatVertexAttribute: FloatVertexAttributeProxy,
       Fog: FogProxy,
       FogCoordinate: FogCoordinateProxy,
+      FontLibrary: FontLibraryProxy,
       FontStyle: FontStyleProxy,
       ForcePhysicsModel: ForcePhysicsModelProxy,
       Gain: GainProxy,
@@ -23336,6 +23534,7 @@ declare namespace X3D
       HAnimHumanoid: HAnimHumanoidProxy,
       HAnimJoint: HAnimJointProxy,
       HAnimMotion: HAnimMotionProxy,
+      HAnimPose: HAnimPoseProxy,
       HAnimSegment: HAnimSegmentProxy,
       HAnimSite: HAnimSiteProxy,
       ImageCubeMapTexture: ImageCubeMapTextureProxy,

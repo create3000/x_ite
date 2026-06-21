@@ -59,7 +59,7 @@ Single or multiple *string* values to present as **Text**. Each value in the *st
 - MFString arrays can have multiple values, so separate each individual *string* by quote marks.
 - Strings can contain quote marks by first escaping them with a backslash example: "say \"hello\" please"
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
-- [Supports supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n) [Example](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter02-GeometryPrimitives/TextIndex.html) [Example](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter02-GeometryPrimitives/TextSpecialCharactersIndex.html)
+- [Supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n) [Example](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter02-GeometryPrimitives/TextIndex.html) [Example](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter02-GeometryPrimitives/TextSpecialCharactersIndex.html)
 
 ### MFFloat [in, out] **length** [ ] <small>[0,∞)</small>
 {: #fields-length }
@@ -129,7 +129,7 @@ The *fontStyle* field can contain a [FontStyle](/x_ite/components/text/fontstyle
 
 - [String (computer science)](https://en.wikipedia.org/wiki/String_(computer_science))
 - Full Internationalization (i18n) and Localization (l10n) features are available for any written language.
-- [Supports supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
+- [Supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
 - Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 - For advanced extensibility, authors can substitute a type-matched ProtoInstance node (with correct containerField value) for contained node content.
 

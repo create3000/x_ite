@@ -63,22 +63,12 @@ Author-provided prose that describes intended purpose of the url asset.
 ### SFString [in, out] **family** ""
 {: #fields-family }
 
-Array of quoted font *family* names in preference order, browsers use the first supported *family*.
+The *family* field provides an identifying alias for the font in the associated file, if that file only contains a single font *family* (possibly with multiple styles). This field provides a reference label for the *family* field in a corresponding [FontStyle](/x_ite/components/text/fontstyle/) or [ScreenFontStyle](/x_ite/components/layout/screenfontstyle/) node. If no *family* field is provided, the X3D browser can look inside the font file to determine the *family* name of each associated font.
 
 #### Hints
 
-- Example *family* array might be "Times" "SERIF"
-- Values with guaranteed support include "SERIF" "SANS" "TYPEWRITER".
-- SERIF and SANS are variable-width fonts (for example, Times Roman and Arial).
-- TYPEWRITER is a fixed-width font (for example, Courier).
-- MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
-- [See 15.2.2.2 Font *family* and style](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/text.html#Fontfamilyandstyle) for details.
-- [Supports supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
-- AccessType relaxed to inputOutput in order to support animation and user accessibility.
-
-#### Warning
-
-- Font *family* support often varies.
+- This approach for *family* field is similar to how CSS can identify a font *family* associated with a font file for corresponding use in an HTML page.
+- [Supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
 
 ### SFBool [in, out] **load** TRUE
 {: #fields-load }
@@ -131,7 +121,7 @@ It is possible to specify in the *url* field one or more URLs of a custom font f
 ### Hints
 
 - Full Internationalization (i18n) and Localization (l10n) features are available for any written language.
-- [Supports supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
+- [Supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
 - [Wikipedia](https://en.wikipedia.org/wiki/Font)
 - [Wikipedia](https://en.wikipedia.org/wiki/Typeface)
 - [Open-source font libraries](https://fonts.google.com) and https://fontlibrary.org

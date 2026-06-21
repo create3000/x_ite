@@ -247,7 +247,7 @@ Spherical harmonics data.
 ### SFBool [in, out] **pointerEvents** TRUE <small class="blue">non-standard</small>
 {: #fields-pointerEvents }
 
-Indicates whether this instanced shape is a target for pointer events, if FALSE then it is ignored during pointer picking.
+Indicates whether this **GaussianSplats** node is a target for pointer events, if FALSE then it is ignored during pointer picking.
 
 ### SFBool [in, out] **castShadow** TRUE
 {: #fields-castShadow }

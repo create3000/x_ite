@@ -42,7 +42,7 @@ Of course, [all other X3D profiles](/x_ite/profiles/overview/) can also be used,
 
 This section documents all nodes supported by X_ITE.
 
-X_ITE supports a limited number of nodes defined by the X3D specification. Currently 247 out of 260 nodes (95%) are implemented. The implementation of these nodes is complete in the sense that the nodes support all the fields and functions required for that implementation, unless otherwise specified.
+X_ITE supports a limited number of nodes defined by the X3D specification. Currently 246 out of 259 nodes (95%) are implemented. The implementation of these nodes is complete in the sense that the nodes support all the fields and functions required for that implementation, unless otherwise specified.
 
 <!--
 Missing Nodes:
