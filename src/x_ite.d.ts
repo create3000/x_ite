@@ -1156,6 +1156,7 @@ declare namespace X3D
       readonly SFMatrix4d: number;
       readonly SFMatrix4f: number;
       readonly SFNode: number;
+      readonly SFQuaternion: number;
       readonly SFRotation: number;
       readonly SFString: number;
       readonly SFTime: number;
@@ -1178,6 +1179,7 @@ declare namespace X3D
       readonly MFMatrix4d: number;
       readonly MFMatrix4f: number;
       readonly MFNode: number;
+      readonly MFQuaternion: number;
       readonly MFRotation: number;
       readonly MFString: number;
       readonly MFTime: number;
@@ -2272,6 +2274,88 @@ declare namespace X3D
    /**
     * The SFRotation object corresponds to an X3D SFRotation field.
     */
+   class SFQuaternion extends X3DField
+   {
+      static readonly type: number;
+      static readonly typeName: "SFQuaternion";
+      static readonly IDENTITY: SFQuaternion;
+
+      // /**
+      //  * *matrix* is an SFMatrix3d/f rotation matrix object whose value is converted into an SFQuaternion object.
+      //  */
+      // static fromMatrix (matrix: SFMatrix3d | SFMatrix3f): SFQuaternion;
+
+      /**
+       * A new rotation initialized with the identity rotation is created and returned.
+       */
+      constructor ();
+      /**
+       * *x*, *y*, and *z* are the imaginary parts of the quaternion.
+       * *w* is the real part of the quaternion.
+       */
+      constructor (x: number, y: number, z: number, w: number);
+
+      /**
+       * Returns the first value of the imaginary part of the quaternion.
+       */
+      x: number;
+      /**
+       * Returns the second value of the imaginary part of the quaternion.
+       */
+      y: number;
+      /**
+       * Returns the third value of the imaginary part of the quaternion.
+       */
+      z: number;
+      /**
+       * A number corresponding to the real part of the quaternion.
+       */
+      w: number;
+
+      [Symbol .iterator](): IterableIterator <number>;
+      [index: number]: number;
+
+      // /**
+      //  * Returns the rotation matrix as an SFMatrix3f object.
+      //  */
+      // getMatrix (): SFMatrix3f;
+      /**
+       * Returns the dot product of this quaternion and SFQuaternion *other*.
+       */
+      dot (quaternion: SFQuaternion): number;
+      /**
+       * Returns the underlying quaternion as Array with the four values [x, y, z, w].
+       */
+      inverse (): SFQuaternion;
+      /**
+       * Returns the geometric length of this vector.
+       */
+      length (): number;
+      /**
+       * Returns an SFQuaternion whose value is the object multiplied by the passed SFQuaternion.
+       */
+      multiply (rotation: SFQuaternion): SFQuaternion;
+      // /**
+      //  * Returns a SFVec3d/f whose value is the SFVec3d/f *vec* multiplied by the matrix corresponding to this object's rotation.
+      //  */
+      // multVec <T extends SFVec3d | SFVec3f> (vector: T): T;
+      // /**
+      //  * Set the axis of rotation to the vector passed in *vec*.
+      //  */
+      // setMatrix (matrix: SFMatrix3d | SFMatrix3f): void;
+      /**
+       * Returns an SFQuaternion object converted to unit length.
+       */
+      normalize (): SFQuaternion;
+      /**
+       * Set the value of this rotation to the quaternion passed in *x, y, z, w*.
+       */
+      slerp (destination: SFQuaternion, t: number): SFQuaternion;
+   }
+
+   /**
+    * The SFRotation object corresponds to an X3D SFRotation field.
+    */
    class SFRotation extends X3DField
    {
       static readonly type: number;
@@ -2993,6 +3077,15 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFNode";
+   }
+
+   /**
+    * The MFQuaternion object corresponds to an X3D MFQuaternion field. It is used to store a one-dimensional array of SFQuaternion objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfQuaternionObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFQuaternion (0, 0, 0, 1)`.
+    */
+   class MFQuaternion extends X3DArrayField <SFQuaternion>
+   {
+      static readonly type: number;
+      static readonly typeName: "MFQuaternion";
    }
 
    /**

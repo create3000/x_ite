@@ -31,15 +31,15 @@ Object .assign (Object .setPrototypeOf (SFQuaternion .prototype, X3DField .proto
    {
       this .getValue () .assign (value);
    },
-   getMatrix ()
-   {
-      return SFMatrix3f .fromValue (this .getValue () .getMatrix ());
-   },
-   setMatrix (matrix)
-   {
-      this .getValue () .setMatrix (matrix .getValue ());
-      this .addEvent ();
-   },
+   // getMatrix ()
+   // {
+   //    return SFMatrix3f .fromValue (this .getValue () .getMatrix ());
+   // },
+   // setMatrix (matrix)
+   // {
+   //    this .getValue () .setMatrix (matrix .getValue ());
+   //    this .addEvent ();
+   // },
    dot (quaternion)
    {
       return this .getValue () .dot (quaternion);
@@ -52,10 +52,10 @@ Object .assign (Object .setPrototypeOf (SFQuaternion .prototype, X3DField .proto
    {
       return this .getValue () .norm ();
    },
-   // multiply (quaternion)
-   // {
-   //    return SFQuaternion .fromValue (this .getValue () .copy () .multRight (quaternion .getValue ()));
-   // },
+   multiply (quaternion)
+   {
+      return SFQuaternion .fromValue (this .getValue () .copy () .multRight (quaternion .getValue ()));
+   },
    // multVec (vector)
    // {
    //    return vector .constructor .fromValue (this .getValue () .multVecQuat (vector .getValue () .copy ()));
@@ -64,10 +64,10 @@ Object .assign (Object .setPrototypeOf (SFQuaternion .prototype, X3DField .proto
    {
       return SFQuaternion .fromValue (this .getValue () .copy () .normalize ());
    },
-   // slerp (quaternion, t)
-   // {
-   //    return SFQuaternion .fromValue (this .getValue () .copy () .slerp (quaternion .getValue (), t));
-   // },
+   slerp (quaternion, t)
+   {
+      return SFQuaternion .fromValue (this .getValue () .copy () .slerp (quaternion .getValue (), t));
+   },
    toStream (generator)
    {
       const { x, y, z, w } = this .getValue ();
@@ -187,17 +187,17 @@ Object .defineProperties (SFQuaternion,
       value: SFQuaternion .fromValue (Quaternion .IDENTITY),
       enumerable: true,
    },
-   fromMatrix:
-   {
-      value (matrix)
-      {
-         const quaternion = new this ();
+   // fromMatrix:
+   // {
+   //    value (matrix)
+   //    {
+   //       const quaternion = new this ();
 
-         quaternion .setMatrix (matrix);
+   //       quaternion .setMatrix (matrix);
 
-         return quaternion;
-      },
-   },
+   //       return quaternion;
+   //    },
+   // },
 });
 
 export default SFQuaternion;

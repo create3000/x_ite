@@ -890,7 +890,7 @@ The SFQuaternion object corresponds to an X3D SFQuaternion field.
 
 Returns the identity quaternion. This property is read-only.
 
-### Static Methods
+<!-- ### Static Methods
 
 #### **fromMatrix** (*matrix: SFMatrix3d/f*): SFQuaternion
 
@@ -906,7 +906,7 @@ print (quaternion .length ());
 // Expected output: 0.5 0.5 0.5 0.5
 // Expected output: 1
 </pre>
-</x3d-script-area>
+</x3d-script-area> -->
 
 ### Instance Creation Method(s)
 
@@ -953,9 +953,54 @@ A number corresponding to the real part of the quaternion.
 
 ### Methods
 
+<!-- #### **getMatrix** (): SFMatrix3f
+
+Returns the rotation matrix as an SFMatrix3f object. -->
+
+#### **dot** (*other: SFQuaternion*): number
+
+Returns the dot product of this quaternion and SSFQuaternion *other*.
+
+#### **inverse** (): SFQuaternion
+
+Returns a SFQuaternion object whose value is the inverse of this object's quaternion.
+
 #### **length** (): number
 
 Returns the geometric length of this quaternion.
+
+#### **multiply** *(rotation: SFQuaternion*): SFQuaternion
+
+Returns an SFQuaternion whose value is the object multiplied by the passed SFQuaternion.
+
+<!-- #### **multVec** (*vec: SFVec3d/f*): SFVec3d/f
+
+Returns a SFVec3f whose value is the SFVec3f *vec* multiplied by the matrix corresponding to this object's rotation. -->
+<!--
+#### **setMatrix** (*matrix: SFMatrix3d/f*): void
+
+Set the value of this rotation to the rotation matrix passed in *matrix*. -->
+
+#### **normalize** (): SFQuaternion
+
+Returns an SFQuaternion object converted to unit length.
+
+<x3d-script-area name="X3D ECMAScript Example: SFQuaternion fromMatrix">
+<pre>
+const
+  quaternion = new SFQuaternion (2, 2, 2, 2),
+  normalized = quaternion .normalize ();
+
+print (normalized);
+print (normalized .length ());
+// Expected output: 0.5 0.5 0.5 0.5
+// Expected output: 1
+</pre>
+</x3d-script-area>
+
+#### **slerp** (*destQuaternion: SFQuaternion, t: number*): SFQuaternion
+
+Returns a SFQuaternion whose value is the spherical linear interpolation between this object's quaternion and *destQuaternion* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's quaternion. For *t* = 1, the value is *destQuaternion*.
 
 ## SFRotation Object
 
