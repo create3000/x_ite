@@ -634,6 +634,7 @@ const
    t1 = new Quaternion (),
    t2 = new Quaternion (),
    t3 = new Quaternion (),
+   e  = new Quaternion (),
    m  = new Matrix3 ();
 
 export default Quaternion;
