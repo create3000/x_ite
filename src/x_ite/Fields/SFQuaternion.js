@@ -19,9 +19,9 @@ Object .assign (Object .setPrototypeOf (SFQuaternion .prototype, X3DField .proto
    {
       return SFQuaternion .fromValue (this .getValue () .copy ());
    },
-   equals (rotation)
+   equals (quaternion)
    {
-      return this .getValue () .equals (rotation .getValue ());
+      return this .getValue () .equals (quaternion .getValue ());
    },
    isDefaultValue ()
    {
@@ -40,6 +40,10 @@ Object .assign (Object .setPrototypeOf (SFQuaternion .prototype, X3DField .proto
       this .getValue () .setMatrix (matrix .getValue ());
       this .addEvent ();
    },
+   dot (quaternion)
+   {
+      return this .getValue () .dot (quaternion);
+   },
    inverse ()
    {
       return SFQuaternion .fromValue (this .getValue () .copy () .inverse ());
@@ -48,18 +52,22 @@ Object .assign (Object .setPrototypeOf (SFQuaternion .prototype, X3DField .proto
    {
       return this .getValue () .norm ();
    },
-   multiply (rotation)
+   // multiply (quaternion)
+   // {
+   //    return SFQuaternion .fromValue (this .getValue () .copy () .multRight (quaternion .getValue ()));
+   // },
+   // multVec (vector)
+   // {
+   //    return vector .constructor .fromValue (this .getValue () .multVecQuat (vector .getValue () .copy ()));
+   // },
+   normalize ()
    {
-      return SFQuaternion .fromValue (this .getValue () .copy () .multRight (rotation .getValue ()));
+      return SFQuaternion .fromValue (this .getValue () .copy () .normalize ());
    },
-   multVec (vector)
-   {
-      return vector .constructor .fromValue (this .getValue () .multVecQuat (vector .getValue () .copy ()));
-   },
-   slerp (rotation, t)
-   {
-      return SFQuaternion .fromValue (this .getValue () .copy () .slerp (rotation .getValue (), t));
-   },
+   // slerp (quaternion, t)
+   // {
+   //    return SFQuaternion .fromValue (this .getValue () .copy () .slerp (quaternion .getValue (), t));
+   // },
    toStream (generator)
    {
       const { x, y, z, w } = this .getValue ();
@@ -183,11 +191,11 @@ Object .defineProperties (SFQuaternion,
    {
       value (matrix)
       {
-         const rotation = new this ();
+         const quaternion = new this ();
 
-         rotation .setMatrix (matrix);
+         quaternion .setMatrix (matrix);
 
-         return rotation;
+         return quaternion;
       },
    },
 });
