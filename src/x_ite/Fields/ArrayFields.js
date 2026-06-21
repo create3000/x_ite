@@ -5,6 +5,7 @@ import SFImage             from "./SFImage.js";
 import SFMatrix3           from "./SFMatrix3.js";
 import SFMatrix4           from "./SFMatrix4.js";
 import SFNode              from "./SFNode.js";
+import SFQuaternion        from "./SFQuaternion.js";
 import SFRotation          from "./SFRotation.js";
 import SFVec2              from "./SFVec2.js";
 import SFVec3              from "./SFVec3.js";
@@ -14,6 +15,7 @@ import X3DObjectArrayField from "../Base/X3DObjectArrayField.js";
 import X3DTypedArrayField  from "../Base/X3DTypedArrayField.js";
 import Matrix3             from "../../standard/Math/Numbers/Matrix3.js";
 import Matrix4             from "../../standard/Math/Numbers/Matrix4.js";
+import Quaternion          from "../../standard/Math/Numbers/Quaternion.js";
 import Rotation4           from "../../standard/Math/Numbers/Rotation4.js";
 import Vector4             from "../../standard/Math/Numbers/Vector4.js";
 
@@ -353,27 +355,28 @@ const Value = value => value;
 
 const ArrayFields =
 {
-   MFBool:      TypedArrayTemplate ("MFBool",      SFBool,      Boolean,     Uint8Array,   1),
-   MFColor:     TypedArrayTemplate ("MFColor",     SFColor,     SFColor,     Float32Array, 3),
-   MFColorRGBA: TypedArrayTemplate ("MFColorRGBA", SFColorRGBA, SFColorRGBA, Float32Array, 4),
-   MFDouble:    TypedArrayTemplate ("MFDouble",    SFDouble,    Value,       Float64Array, 1),
-   MFFloat:     TypedArrayTemplate ("MFFloat",     SFFloat,     Value,       Float32Array, 1),
-   MFImage:     MFImage,
-   MFInt32:     TypedArrayTemplate ("MFInt32",     SFInt32,     Value,       Int32Array,   1),
-   MFMatrix3d:  TypedArrayTemplate ("MFMatrix3d",  SFMatrix3d,  SFMatrix3d,  Float64Array, 9,  Matrix3 .IDENTITY),
-   MFMatrix3f:  TypedArrayTemplate ("MFMatrix3f",  SFMatrix3f,  SFMatrix3f,  Float32Array, 9,  Matrix3 .IDENTITY),
-   MFMatrix4d:  TypedArrayTemplate ("MFMatrix4d",  SFMatrix4d,  SFMatrix4d,  Float64Array, 16, Matrix4 .IDENTITY),
-   MFMatrix4f:  TypedArrayTemplate ("MFMatrix4f",  SFMatrix4f,  SFMatrix4f,  Float32Array, 16, Matrix4 .IDENTITY),
-   MFNode:      MFNode,
-   MFRotation:  TypedArrayTemplate ("MFRotation",  SFRotation,  SFRotation,  Float64Array, 4,  Rotation4 .IDENTITY),
-   MFString:    MFString,
-   MFTime:      TypedArrayTemplate ("MFTime",      SFTime,      Value,       Float64Array, 1,  -1),
-   MFVec2d:     TypedArrayTemplate ("MFVec2d",     SFVec2d,     SFVec2d,     Float64Array, 2),
-   MFVec2f:     TypedArrayTemplate ("MFVec2f",     SFVec2f,     SFVec2f,     Float32Array, 2),
-   MFVec3d:     TypedArrayTemplate ("MFVec3d",     SFVec3d,     SFVec3d,     Float64Array, 3),
-   MFVec3f:     TypedArrayTemplate ("MFVec3f",     SFVec3f,     SFVec3f,     Float32Array, 3),
-   MFVec4d:     TypedArrayTemplate ("MFVec4d",     SFVec4d,     SFVec4d,     Float64Array, 4,  Vector4 .W_AXIS),
-   MFVec4f:     TypedArrayTemplate ("MFVec4f",     SFVec4f,     SFVec4f,     Float32Array, 4,  Vector4 .W_AXIS),
+   MFBool:       TypedArrayTemplate ("MFBool",       SFBool,       Boolean,      Uint8Array,   1),
+   MFColor:      TypedArrayTemplate ("MFColor",      SFColor,      SFColor,      Float32Array, 3),
+   MFColorRGBA:  TypedArrayTemplate ("MFColorRGBA",  SFColorRGBA,  SFColorRGBA,  Float32Array, 4),
+   MFDouble:     TypedArrayTemplate ("MFDouble",     SFDouble,     Value,        Float64Array, 1),
+   MFFloat:      TypedArrayTemplate ("MFFloat",      SFFloat,      Value,        Float32Array, 1),
+   MFImage,
+   MFInt32:      TypedArrayTemplate ("MFInt32",      SFInt32,      Value,        Int32Array,   1),
+   MFMatrix3d:   TypedArrayTemplate ("MFMatrix3d",   SFMatrix3d,   SFMatrix3d,   Float64Array, 9,  Matrix3 .IDENTITY),
+   MFMatrix3f:   TypedArrayTemplate ("MFMatrix3f",   SFMatrix3f,   SFMatrix3f,   Float32Array, 9,  Matrix3 .IDENTITY),
+   MFMatrix4d:   TypedArrayTemplate ("MFMatrix4d",   SFMatrix4d,   SFMatrix4d,   Float64Array, 16, Matrix4 .IDENTITY),
+   MFMatrix4f:   TypedArrayTemplate ("MFMatrix4f",   SFMatrix4f,   SFMatrix4f,   Float32Array, 16, Matrix4 .IDENTITY),
+   MFNode,
+   MFQuaternion: TypedArrayTemplate ("MFQuaternion", SFQuaternion, SFQuaternion, Float64Array, 4,  Quaternion .IDENTITY),
+   MFRotation:   TypedArrayTemplate ("MFRotation",   SFRotation,   SFRotation,   Float64Array, 4,  Rotation4 .IDENTITY),
+   MFString,
+   MFTime:       TypedArrayTemplate ("MFTime",       SFTime,       Value,        Float64Array, 1,  -1),
+   MFVec2d:      TypedArrayTemplate ("MFVec2d",      SFVec2d,      SFVec2d,      Float64Array, 2),
+   MFVec2f:      TypedArrayTemplate ("MFVec2f",      SFVec2f,      SFVec2f,      Float32Array, 2),
+   MFVec3d:      TypedArrayTemplate ("MFVec3d",      SFVec3d,      SFVec3d,      Float64Array, 3),
+   MFVec3f:      TypedArrayTemplate ("MFVec3f",      SFVec3f,      SFVec3f,      Float32Array, 3),
+   MFVec4d:      TypedArrayTemplate ("MFVec4d",      SFVec4d,      SFVec4d,      Float64Array, 4,  Vector4 .W_AXIS),
+   MFVec4f:      TypedArrayTemplate ("MFVec4f",      SFVec4f,      SFVec4f,      Float32Array, 4,  Vector4 .W_AXIS),
 };
 
 export default ArrayFields;
