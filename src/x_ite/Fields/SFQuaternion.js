@@ -44,6 +44,10 @@ Object .assign (Object .setPrototypeOf (SFQuaternion .prototype, X3DField .proto
    {
       return SFQuaternion .fromValue (this .getValue () .copy () .inverse ());
    },
+   length ()
+   {
+      return this .getValue () .norm ();
+   },
    multiply (rotation)
    {
       return SFQuaternion .fromValue (this .getValue () .copy () .multRight (rotation .getValue ()));

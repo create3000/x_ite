@@ -88,6 +88,7 @@ Almost all read-only functions known from JavaScript [Array](https://developer.m
   + SFMatrix4d
   + SFMatrix4f
   + SFNode
+  + SFQuaternion
   + SFRotation
   + SFVec2d
   + SFVec2f
@@ -109,6 +110,7 @@ Almost all read-only functions known from JavaScript [Array](https://developer.m
     + MFMatrix4d
     + MFMatrix4f
     + MFNode
+    + MFQuaternion
     + MFRotation
     + MFString
     + MFVec2d
@@ -877,6 +879,83 @@ For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmls
 Returns the X3D JSON-encoded string that, if parsed as the value of a SFNode field, will produce this node.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
+
+## SFQuaternion Object
+
+The SFQuaternion object corresponds to an X3D SFQuaternion field.
+
+### Static Properties
+
+#### **IDENTITY**: SFQuaternion
+
+Returns the identity quaternion. This property is read-only.
+
+### Static Methods
+
+#### **fromMatrix** (*matrix: SFMatrix3d/f*): SFQuaternion
+
+*matrix* is an SFMatrix3d/f rotation matrix object whose value is converted into an SFQuaternion object.
+
+<x3d-script-area name="X3D ECMAScript Example: SFQuaternion fromMatrix">
+<pre>
+const matrix     = new SFMatrix3f (0, 1, 0, 0, 0, 1, 1, 0, 0);
+const quaternion = SFQuaternion .fromMatrix (matrix);
+
+print (quaternion);
+print (quaternion .length ());
+// Expected output: 0.5 0.5 0.5 0.5
+// Expected output: 1
+</pre>
+</x3d-script-area>
+
+### Instance Creation Method(s)
+
+#### *sfQuaternionObjectName* = new **SFQuaternion** ()
+
+A new rotation initialized with the identity rotation is created and returned.
+
+#### *sfQuaternionObjectName* = new **SFQuaternion** (*x: number, y: number, z: number, w: number*)
+
+*x*, *y*, and *z* are the imaginary parts of the quaternion.
+*w* is the real part of the quaternion. All values are scalar.
+
+### Iterator
+
+The `[@@iterator]()` method of SFQuaternion instances implements the iterable protocol and allows SFQuaternion objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
+
+```js
+const copy = new SFQuaternion (... quaternion); // Copy using spread syntax.
+```
+
+### Properties
+
+Each component of the quaternion can be accessed using the `x`, `y`, `z` and `w` properties or using the standard C-style dereferencing operator (e.g. `sfQuaternionObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<4).
+
+#### **x**: number
+{: .writable }
+
+Returns the first value of the imaginary part.
+
+#### **y**: number
+{: .writable }
+
+Returns the second value of the imaginary part.
+
+#### **z**: number
+{: .writable }
+
+Returns the third value of the imaginary part.
+
+#### **w**: number
+{: .writable }
+
+A number corresponding to the real part of the quaternion.
+
+### Methods
+
+#### **length** (): number
+
+Returns the geometric length of this quaternion.
 
 ## SFRotation Object
 
@@ -1796,13 +1875,35 @@ Returns the X3D JSON-encoded string that, if parsed as the value of an MFNode fi
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
+## MFQuaternion Object
+
+The MFQuaternion object corresponds to an X3D MFQuaternion field. It is used to store a one-dimensional array of SFQuaternion objects.
+
+### Instance Creation Method(s)
+
+#### *mfQuaternionObjectName* = new **MFQuaternion** (*... values: SFQuaternion []*)
+
+The creation method can be passed 0 or more SFQuaternion-valued expressions to initialize the elements of the array.
+
+### Properties
+
+Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. `mfQuaternionObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFQuaternion (0, 0, 0, 1)`.
+
+#### **length**: number
+
+An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
+
+### Methods
+
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
+
 ## MFRotation Object
 
 The MFRotation object corresponds to an X3D MFRotation field. It is used to store a one-dimensional array of SFRotation objects.
 
 ### Instance Creation Method(s)
 
-#### *mfRotationObjectName* = new **MFRotation**  (*... values: SFRotation []*)
+#### *mfRotationObjectName* = new **MFRotation** (*... values: SFRotation []*)
 
 The creation method can be passed 0 or more SFRotation-valued expressions to initialize the elements of the array.
 
