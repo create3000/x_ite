@@ -2280,10 +2280,10 @@ declare namespace X3D
       static readonly typeName: "SFQuaternion";
       static readonly IDENTITY: SFQuaternion;
 
-      // /**
-      //  * *matrix* is an SFMatrix3d/f rotation matrix object whose value is converted into an SFQuaternion object.
-      //  */
-      // static fromMatrix (matrix: SFMatrix3d | SFMatrix3f): SFQuaternion;
+      /**
+       * *matrix* is an SFMatrix3d/f rotation matrix object whose value is converted into an SFQuaternion object.
+       */
+      static fromMatrix (matrix: SFMatrix3d | SFMatrix3f): SFQuaternion;
 
       /**
        * A new rotation initialized with the identity rotation is created and returned.
@@ -2315,10 +2315,10 @@ declare namespace X3D
       [Symbol .iterator](): IterableIterator <number>;
       [index: number]: number;
 
-      // /**
-      //  * Returns the rotation matrix as an SFMatrix3f object.
-      //  */
-      // getMatrix (): SFMatrix3f;
+      /**
+       * Returns the rotation matrix as an SFMatrix3f object.
+       */
+      getMatrix (): SFMatrix3f;
       /**
        * Returns the dot product of this quaternion and SFQuaternion *other*.
        */
@@ -2334,21 +2334,21 @@ declare namespace X3D
       /**
        * Returns an SFQuaternion whose value is the object multiplied by the passed SFQuaternion.
        */
-      multiply (rotation: SFQuaternion): SFQuaternion;
-      // /**
-      //  * Returns a SFVec3d/f whose value is the SFVec3d/f *vec* multiplied by the matrix corresponding to this object's rotation.
-      //  */
-      // multVec <T extends SFVec3d | SFVec3f> (vector: T): T;
-      // /**
-      //  * Set the axis of rotation to the vector passed in *vec*.
-      //  */
-      // setMatrix (matrix: SFMatrix3d | SFMatrix3f): void;
+      multiply (quaternion: SFQuaternion): SFQuaternion;
+      /**
+       * Returns a SFVec3d/f whose value is the SFVec3d/f *vec* multiplied by the matrix corresponding to this object's rotation.
+       */
+      multVec <T extends SFVec3d | SFVec3f> (vector: T): T;
+      /**
+       * Set the value of this quaternion to the rotation matrix passed in *matrix*.
+       */
+      setMatrix (matrix: SFMatrix3d | SFMatrix3f): void;
       /**
        * Returns an SFQuaternion object converted to unit length.
        */
       normalize (): SFQuaternion;
       /**
-       * Set the value of this rotation to the quaternion passed in *x, y, z, w*.
+       * Returns a SFQuaternion whose value is the spherical linear interpolation between this object's quaternion and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's quaternion. For *t* = 1, the value is *destination*.
        */
       slerp (destination: SFQuaternion, t: number): SFQuaternion;
    }
@@ -2447,7 +2447,7 @@ declare namespace X3D
        */
       setQuaternion (x: number, y: number, z: number, w: number): void;
       /**
-       * Returns a SFRotation whose value is the spherical linear interpolation between this object's rotation and *destRotation* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's rotation. For *t* = 1, the value is *destRotation*.
+       * Returns a SFRotation whose value is the spherical linear interpolation between this object's rotation and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's rotation. For *t* = 1, the value is *destination*.
        */
       slerp (destination: SFRotation, t: number): SFRotation;
       /**
@@ -2549,7 +2549,7 @@ declare namespace X3D
        */
       length (): number;
       /**
-       * Returns a SFVec2d/f whose value is the linear interpolation between this object's vector and *destVector* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
+       * Returns a SFVec2d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
        */
       lerp (destination: this, t: number): this;
       /**
@@ -2691,7 +2691,7 @@ declare namespace X3D
        */
       length (): number;
       /**
-       * Returns a SFVec3d/f whose value is the linear interpolation between this object's vector and *destVector* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
+       * Returns a SFVec3d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
        */
       lerp (destination: this, t: number): this;
       /**
@@ -2837,7 +2837,7 @@ declare namespace X3D
        */
       length (): number;
       /**
-       * Returns a SFVec4d/f whose value is the linear interpolation between this object's vector and *destVector* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
+       * Returns a SFVec4d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
        */
       lerp (destination: this, t: number): this;
       /**

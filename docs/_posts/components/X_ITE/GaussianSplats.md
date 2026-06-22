@@ -38,7 +38,7 @@ The **GaussianSplats** node belongs to the [X_ITE](/x_ite/components/overview/#x
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [colorSpace](#fields-colorSpace) | "SRGB_REC709_DISPLAY" |
 | MFVec3f | [in, out] | [positions](#fields-positions) | [ ] |
-| MFVec4f | [in, out] | [orientations](#fields-orientations) | [ ] |
+| MFQuaternion | [in, out] | [orientations](#fields-orientations) | [ ] |
 | MFVec3f | [in, out] | [scales](#fields-scales) | [ ] |
 | MFFloat | [in, out] | [opacities](#fields-opacities) | [ ] |
 | MFVec3f | [in, out] | [sphericalHarmonicsDegree0Coef0](#fields-sphericalHarmonicsDegree0Coef0) | [ ] |
@@ -89,7 +89,7 @@ The color space of the reconstructed color values, either SRGB_REC709_DISPLAY or
 
 The mean vector for the Gaussian splat is provided by the *positions* of the mesh primitive. This defines the center of the Gaussian splat ellipsoid in local space. The effective global mean vector for the Gaussian splat is derived from the *positions* field value and the global transformation matrix of the X3D node that instantiates the mesh containing the splat primitive as defined in the glTF specification.
 
-### MFVec4f [in, out] **orientations** [ ] <small>[-1,1]</small>
+### MFQuaternion [in, out] **orientations** [ ] <small>[-1,1]</small>
 {: #fields-orientations }
 
 The *orientations* field values correspond to the orientation of those axes in local space. Orientation values are stored as unit quaternions in the usual glTF order (x,y,z,w).
