@@ -31,18 +31,13 @@ Object .assign (Object .setPrototypeOf (SFQuaternion .prototype, X3DField .proto
    {
       this .getValue () .assign (value);
    },
-   getMatrix ()
-   {
-      return SFMatrix3f .fromValue (this .getValue () .getMatrix ());
-   },
-   setMatrix (matrix)
-   {
-      this .getValue () .setMatrix (matrix .getValue ());
-      this .addEvent ();
-   },
    dot (quaternion)
    {
       return this .getValue () .dot (quaternion);
+   },
+   getMatrix ()
+   {
+      return SFMatrix3f .fromValue (this .getValue () .getMatrix ());
    },
    inverse ()
    {
@@ -63,6 +58,11 @@ Object .assign (Object .setPrototypeOf (SFQuaternion .prototype, X3DField .proto
    normalize ()
    {
       return SFQuaternion .fromValue (this .getValue () .copy () .normalize ());
+   },
+   setMatrix (matrix)
+   {
+      this .getValue () .setMatrix (matrix .getValue ());
+      this .addEvent ();
    },
    slerp (quaternion, t)
    {
