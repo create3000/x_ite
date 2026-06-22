@@ -886,11 +886,15 @@ The SFQuaternion object corresponds to an X3D SFQuaternion field.
 
 ### Static Properties
 
+#### **ZERO**: SFQuaternion
+
+Returns a quaternion with all elements set to 0. This property is read-only.
+
 #### **IDENTITY**: SFQuaternion
 
 Returns the identity quaternion. This property is read-only.
 
-<!-- ### Static Methods
+### Static Methods
 
 #### **fromMatrix** (*matrix: SFMatrix3d/f*): SFQuaternion
 
@@ -906,13 +910,13 @@ print (quaternion .length ());
 // Expected output: 0.5 0.5 0.5 0.5
 // Expected output: 1
 </pre>
-</x3d-script-area> -->
+</x3d-script-area>
 
 ### Instance Creation Method(s)
 
 #### *sfQuaternionObjectName* = new **SFQuaternion** ()
 
-A new rotation initialized with the identity rotation is created and returned.
+A new quaternion initialized with zero values is created and returned.
 
 #### *sfQuaternionObjectName* = new **SFQuaternion** (*x: number, y: number, z: number, w: number*)
 
@@ -953,9 +957,9 @@ A number corresponding to the real part of the quaternion.
 
 ### Methods
 
-<!-- #### **getMatrix** (): SFMatrix3f
+#### **getMatrix** (): SFMatrix3f
 
-Returns the rotation matrix as an SFMatrix3f object. -->
+Returns the rotation matrix as an SFMatrix3f object.
 
 #### **dot** (*other: SFQuaternion*): number
 
@@ -973,13 +977,13 @@ Returns the geometric length of this quaternion.
 
 Returns an SFQuaternion whose value is the object multiplied by the passed SFQuaternion.
 
-<!-- #### **multVec** (*vec: SFVec3d/f*): SFVec3d/f
+#### **multVec** (*vec: SFVec3d/f*): SFVec3d/f
 
-Returns a SFVec3f whose value is the SFVec3f *vec* multiplied by the matrix corresponding to this object's rotation. -->
-<!--
+Returns a SFVec3f whose value is the SFVec3f *vec* multiplied by the matrix corresponding to this object's rotation.
+
 #### **setMatrix** (*matrix: SFMatrix3d/f*): void
 
-Set the value of this rotation to the rotation matrix passed in *matrix*. -->
+Set the value of this rotation to the rotation matrix passed in *matrix*.
 
 #### **normalize** (): SFQuaternion
 

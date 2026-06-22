@@ -4,7 +4,7 @@ import Quaternion from "../../standard/Math/Numbers/Quaternion.js";
 
 const { SFMatrix3f } = SFMatrix3;
 
-function SFQuaternion (x = 0, y = 0, z = 0, w = 1)
+function SFQuaternion (x = 0, y = 0, z = 0, w = 0)
 {
    X3DField .call (this, new Quaternion (+x, +y, +z, +w));
 }
@@ -25,21 +25,21 @@ Object .assign (Object .setPrototypeOf (SFQuaternion .prototype, X3DField .proto
    },
    isDefaultValue ()
    {
-      return this .getValue () .equals (Quaternion .IDENTITY);
+      return this .getValue () .equals (Quaternion .ZERO);
    },
    set (value)
    {
       this .getValue () .assign (value);
    },
-   // getMatrix ()
-   // {
-   //    return SFMatrix3f .fromValue (this .getValue () .getMatrix ());
-   // },
-   // setMatrix (matrix)
-   // {
-   //    this .getValue () .setMatrix (matrix .getValue ());
-   //    this .addEvent ();
-   // },
+   getMatrix ()
+   {
+      return SFMatrix3f .fromValue (this .getValue () .getMatrix ());
+   },
+   setMatrix (matrix)
+   {
+      this .getValue () .setMatrix (matrix .getValue ());
+      this .addEvent ();
+   },
    dot (quaternion)
    {
       return this .getValue () .dot (quaternion);
@@ -56,10 +56,10 @@ Object .assign (Object .setPrototypeOf (SFQuaternion .prototype, X3DField .proto
    {
       return SFQuaternion .fromValue (this .getValue () .copy () .multRight (quaternion .getValue ()));
    },
-   // multVec (vector)
-   // {
-   //    return vector .constructor .fromValue (this .getValue () .multVecQuat (vector .getValue () .copy ()));
-   // },
+   multVec (vector)
+   {
+      return vector .constructor .fromValue (this .getValue () .multVecQuat (vector .getValue () .copy ()));
+   },
    normalize ()
    {
       return SFQuaternion .fromValue (this .getValue () .copy () .normalize ());
@@ -182,22 +182,27 @@ X3DField .addStaticProperties (SFQuaternion, "SFQuaternion");
 
 Object .defineProperties (SFQuaternion,
 {
+   ZERO:
+   {
+      value: SFQuaternion .fromValue (Quaternion .ZERO),
+      enumerable: true,
+   },
    IDENTITY:
    {
       value: SFQuaternion .fromValue (Quaternion .IDENTITY),
       enumerable: true,
    },
-   // fromMatrix:
-   // {
-   //    value (matrix)
-   //    {
-   //       const quaternion = new this ();
+   fromMatrix:
+   {
+      value (matrix)
+      {
+         const quaternion = new this ();
 
-   //       quaternion .setMatrix (matrix);
+         quaternion .setMatrix (matrix);
 
-   //       return quaternion;
-   //    },
-   // },
+         return quaternion;
+      },
+   },
 });
 
 export default SFQuaternion;
