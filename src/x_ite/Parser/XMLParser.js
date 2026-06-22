@@ -1146,7 +1146,8 @@ Object .assign (XMLParser .prototype,
       field .setValue (null);
       return true;
    },
-   [X3DConstants .SFRotation]:  VRMLParser .prototype .sfrotationValue,
+   [X3DConstants .SFQuaternion]: VRMLParser .prototype .sfquaternionValue,
+   [X3DConstants .SFRotation]:   VRMLParser .prototype .sfrotationValue,
    [X3DConstants .SFString] (field)
    {
       field .setValue (Fields .SFString .unescape (this .input));
@@ -1178,7 +1179,8 @@ Object .assign (XMLParser .prototype,
       field .length = 0;
       return true;
    },
-   [X3DConstants .MFRotation]:  VRMLParser .prototype .sfrotationValues,
+   [X3DConstants .MFQuaternion]: VRMLParser .prototype .sfquaternionValues,
+   [X3DConstants .MFRotation]:   VRMLParser .prototype .sfrotationValues,
    [X3DConstants .MFString] (field)
    {
       if (VRMLParser .prototype .sfstringValues .call (this, field))
