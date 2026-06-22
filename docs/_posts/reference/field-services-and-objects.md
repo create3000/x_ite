@@ -973,7 +973,7 @@ Returns a SFQuaternion object whose value is the inverse of this object's quater
 
 Returns the geometric length of this quaternion.
 
-#### **multiply** *(rotation: SFQuaternion*): SFQuaternion
+#### **multiply** *(quaternion: SFQuaternion*): SFQuaternion
 
 Returns an SFQuaternion whose value is the object multiplied by the passed SFQuaternion.
 
@@ -983,7 +983,7 @@ Returns a SFVec3f whose value is the SFVec3f *vec* multiplied by the matrix corr
 
 #### **setMatrix** (*matrix: SFMatrix3d/f*): void
 
-Set the value of this rotation to the rotation matrix passed in *matrix*.
+Set the value of this quaternion to the rotation matrix passed in *matrix*.
 
 #### **normalize** (): SFQuaternion
 
