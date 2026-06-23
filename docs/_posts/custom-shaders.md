@@ -235,6 +235,7 @@ A [ComposedShader](/x_ite/components/shaders/composedshader/) node provides the 
 | SFMatrix4d     | mat4                  |                                         |
 | SFMatrix4f     | mat4                  |                                         |
 | SFNode         | [see node fields table](#node-fields) |                         |
+| SFQuaternion   | mat3                  | 3×3 matrix representation               |
 | SFRotation     | mat3                  | 3×3 matrix representation               |
 | SFString       | not supported         |                                         |
 | SFTime         | float                 |                                         |
@@ -257,6 +258,7 @@ A [ComposedShader](/x_ite/components/shaders/composedshader/) node provides the 
 | MFMatrix4d     | mat4 [ ]              |                                         |
 | MFMatrix4f     | mat4 [ ]              |                                         |
 | MFNode         | [see node fields table](#node-fields) |                         |
+| MFQuaternion   | mat3 [ ]              | 3×3 matrix representation               |
 | MFRotation     | mat3 [ ]              | 3×3 matrix representation               |
 | MFString       | not supported         |                                         |
 | MFTime         | float [ ]             |                                         |
