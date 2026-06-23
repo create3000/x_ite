@@ -989,7 +989,7 @@ Set the value of this quaternion to the rotation matrix passed in *matrix*.
 
 Returns an SFQuaternion object converted to unit length.
 
-<x3d-script-area name="X3D ECMAScript Example: SFQuaternion fromMatrix">
+<x3d-script-area name="X3D ECMAScript Example: SFQuaternion normalize">
 <pre>
 const
   quaternion = new SFQuaternion (2, 2, 2, 2),
