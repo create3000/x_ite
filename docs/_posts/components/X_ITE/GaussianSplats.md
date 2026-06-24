@@ -330,6 +330,10 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
 {: .browser-compatibility }
 
+## X_ITE
+
+- For very large Gaussian Splatting datasets, consider using [splat-transform](https://www.npmjs.com/package/@playcanvas/splat-transform?activeTab=readme) to reduce file size and optimize assets for faster loading and rendering.
+
 ## See Also
 
 - [Khronos glTF Specification of the KHR_gaussian_splatting Extension](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_gaussian_splatting/README.md)
