@@ -587,9 +587,9 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       this .sortPending = true;
    },
-   sortIndices (viewMatrix)
+   sortIndices (modelViewMatrix)
    {
-      this .currentModelViewMatrix .set (viewMatrix);
+      this .currentModelViewMatrix .set (modelViewMatrix);
 
       if (this .sortPending)
          return;
@@ -597,7 +597,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       if (Matrix4 .prototype .equals .call (this .currentModelViewMatrix, this .sortModelViewMatrix))
          return;
 
-      this .sortModelViewMatrix .set (viewMatrix);
+      this .sortModelViewMatrix .set (modelViewMatrix);
 
       this .sortWorker ?.postMessage ({
          type: "sort",
