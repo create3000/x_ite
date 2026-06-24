@@ -313,6 +313,10 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 - X3D Architecture version 4.1 draft is experimental and not fully implemented.
 - X3D Architecture version 4.1 draft is experimental and not fully implemented.
 
+## X_ITE
+
+- For very large Gaussian Splatting datasets, consider using [splat-transform](https://www.npmjs.com/package/@playcanvas/splat-transform?activeTab=readme) to reduce file size and optimize assets for faster loading and rendering.
+
 ## Example
 
 <x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/X_ITE/GaussianSplats/GaussianSplats.x3d" contentScale="auto" update="auto">
@@ -329,10 +333,6 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 |--------------------|---------|-------------------|----------|-------|
 | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-check green" title="Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> | <i class="fa-solid fa-circle-xmark red" title="Not Supported"></i> |
 {: .browser-compatibility }
-
-## X_ITE
-
-- For very large Gaussian Splatting datasets, consider using [splat-transform](https://www.npmjs.com/package/@playcanvas/splat-transform?activeTab=readme) to reduce file size and optimize assets for faster loading and rendering.
 
 ## See Also
 
