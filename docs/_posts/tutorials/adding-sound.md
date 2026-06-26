@@ -13,7 +13,7 @@ tags: [Sound, AudioClip]
   - Wind, crowd noises, elevator music
 - Sounds emit from a location, in a direction, within an area
 
-## Creating sounds
+## Creating Sounds
 
 Sounds have two components:
 
@@ -92,7 +92,7 @@ Sound {
 }
 ```
 
-## Selecting sound source types
+## Selecting Sound Source Types
 
 Supported by the [AudioClip](/x_ite/components/sound/audioclip/) node:
 
@@ -164,7 +164,7 @@ A [Sound](/x_ite/components/sound/sound/) node describes a sound emitter:
 - *minFront, minBack* - inner ellipsoid
 - *maxFront, maxBack* - outer ellipsoid
 
-## Setting the sound range
+## Setting the Sound Range
 
 - The sound range fields specify two ellipsoids
   - *minFront* and *minBack* control an inner ellipsoid
@@ -172,7 +172,7 @@ A [Sound](/x_ite/components/sound/sound/) node describes a sound emitter:
 - Sound has a constant volume inside the inner ellipsoid
 - Sound drops to zero volume from the inner to the outer ellipsoid
 
-## Creating triggered sounds
+## Creating Triggered Sounds
 
 [AudioClip](/x_ite/components/sound/audioclip/) node:
 
@@ -185,7 +185,7 @@ A [Sound](/x_ite/components/sound/sound/) node describes a sound emitter:
 - *minFront* etc. with small values
 - *priority* 1
 
-## A sample using triggered sound
+## A Sample Using Triggered Sound
 
 ### XML Encoding
 
@@ -249,7 +249,7 @@ ROUTE C4.touchTime TO PitchC4.set_startTime
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/sound/sound.x3dv)
 {: .example-links }
 
-## Creating continuous localized sounds
+## Creating Continuous Localized Sounds
 
 [AudioClip](/x_ite/components/sound/audioclip/) node:
 
@@ -263,7 +263,7 @@ ROUTE C4.touchTime TO PitchC4.set_startTime
 - *minFront* etc. with medium values
 - *priority* 0 (default)
 
-## A sample using continuous localized sound
+## A Sample Using Continuous Localized Sound
 
 ### XML Encoding
 
@@ -308,7 +308,7 @@ Transform {
 }
 ```
 
-## Creating continuous background sounds
+## Creating Continuous Background Sounds
 
 [AudioClip](/x_ite/components/sound/audioclip/) node:
 

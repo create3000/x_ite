@@ -15,7 +15,7 @@ Fog increases realism:
 
 The further the viewer can see, the more you have to model and draw. To reduce development time and drawing time, limit the viewer's sight by using fog.
 
-## Using fog visibility controls
+## Using Fog Visibility Controls
 
 The fog type selects linear or exponential visibility reduction with distance:
 
@@ -26,7 +26,7 @@ The visibility range selects the distance where the fog reaches maximum thicknes
 
 - Fog is »clear« at the viewer, and gradually reduces visibility
 
-## Selecting a fog color
+## Selecting a Fog Color
 
 - Fog has a fog color
   - White is typical, but black, red, etc. also possible

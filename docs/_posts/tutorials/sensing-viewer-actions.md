@@ -18,7 +18,7 @@ What can you do:
 - You can trigger animations on a viewer's touch
 - You can enable the viewer to move and rotate shapes
 
-## Using action sensors
+## Using Action Sensors
 
 There are four main action sensor types:
 
@@ -29,7 +29,7 @@ There are four main action sensor types:
 
 The [Anchor](/x_ite/components/networking/anchor/) node is a special-purpose action sensor with a built-in response.
 
-## Sensing shapes
+## Sensing Shapes
 
 - All action sensors sense all shapes in the same group
 - Sensors trigger when the viewer's cursor touches a sensed shape
@@ -64,7 +64,7 @@ Transform {
 }
 ```
 
-## A sample use of a TouchSensor node
+## A Sample Use of a TouchSensor Node
 
 ### XML Encoding
 
@@ -231,7 +231,7 @@ ROUTE Mover.translation_changed TO MoveMe.set_translation
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/mover1/mover1.x3dv)
 {: .example-links }
 
-## Using multiple sensors
+## Using Multiple Sensors
 
 Multiple sensors can sense the same shape but ...
 

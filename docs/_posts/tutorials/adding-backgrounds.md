@@ -17,7 +17,7 @@ Backgrounds describe:
 
 Backgrounds are faster to draw than if you used shapes to build them.
 
-## Using the background components
+## Using the Background Components
 
 A background creates three special shapes:
 
@@ -62,21 +62,21 @@ Background {
 }
 ```
 
-## Using sky angles and colors
+## Using Sky Angles and Colors
 
 - The first sky color is at the north pole
 - The remaining sky colors are at given sky angles
   - The maximum angle is 180 degrees = 3.1415 radians (π)
 - The last color smears on down to the south pole
 
-## Using ground angles and colors
+## Using Ground Angles and Colors
 
 - The first ground color is at the south pole
 - The remaining ground colors are at given ground angles
   - The maximum angle is 90 degrees = 1.5708 radians (π/2)
 - After the last color, the rest of the hemisphere is transparent
 
-## A sample background
+## A Sample Background
 
 ### XML Encoding
 
@@ -178,7 +178,7 @@ Background {
 }
 ```
 
-## A sample background image
+## A Sample Background Image
 
 |                                 |                                        |
 |---------------------------------|----------------------------------------|
@@ -188,7 +188,7 @@ Background {
   [1]: https://create3000.github.io/media/tutorials/images/background-cloud1-color.avif
   [2]: https://create3000.github.io/media/tutorials/images/background-cloud1-alpha.avif
 
-## A sample background
+## A Sample Background
 
 ### XML Encoding
 

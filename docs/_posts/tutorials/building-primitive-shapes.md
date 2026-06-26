@@ -40,7 +40,7 @@ Shape {
 }
 ```
 
-## Specifying appearance
+## Specifying Appearance
 
 - [Shape](/x_ite/components/shape/shape/) appearance is described by appearance nodes
 - For now, we'll use nodes to create a shaded white appearance:
@@ -67,7 +67,7 @@ Shape {
 }
 ```
 
-## Specifying geometry
+## Specifying Geometry
 
 [Shape](/x_ite/components/shape/shape/) geometry is built with geometry nodes:
 
@@ -94,7 +94,7 @@ Text { ... }
 - Geometry node fields control dimensions
   - Dimensions usually in meters, but can be anything
 
-## A sample primitive shape
+## A Sample Primitive Shape
 
 ### XML Encoding
 
@@ -140,13 +140,13 @@ Shape {
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/cylinder1/cylinder1.x3dv)
 {: .example-links }
 
-## Building multiple shapes
+## Building Multiple Shapes
 
 - Shapes are built centered in the world
 - An X3D file can contain multiple shapes
 - Shapes overlap when built at the same location
 
-## A sample file with multiple shapes
+## A Sample File with Multiple Shapes
 
 ### XML Encoding
 

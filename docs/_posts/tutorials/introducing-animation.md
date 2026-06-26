@@ -11,7 +11,7 @@ tags: [Animation]
 - You can create your own behaviors to make shapes move, rotate, scale, blink, and more
 - We need a means to trigger, time, and respond to a sequence of events in order to provide better user/world interactions
 
-## Building animation circuits
+## Building Animation Circuits
 
 Almost every node can be a component in an animation circuit
 
@@ -34,7 +34,7 @@ To blink a shape:
 
 - Connect a node that sends color events to a [Material](/x_ite/components/shape/material/) node's *diffuseColor* field
 
-## Routing events
+## Routing Events
 
 To set up an animation circuit, you need three things:
 
@@ -44,7 +44,7 @@ To set up an animation circuit, you need three things:
   - The node must be named with **DEF**
 3. A route connecting them
 
-## Using node inputs and outputs
+## Using Node Inputs and Outputs
 
 Every node has fields, inputs, and outputs:
 
@@ -54,7 +54,7 @@ Every node has fields, inputs, and outputs:
 
 An inputOutput field is a short-hand for a initializeOnly, inputOnly, and outputOnly
 
-## Sample inputs
+## Sample Inputs
 
 A [Transform](/x_ite/components/grouping/transform/) node has these input fields:
 
@@ -68,7 +68,7 @@ A [Material](/x_ite/components/shape/material/) node has these input fields:
 - *set\_emissiveColor*
 - *set\_transparency*
 
-## Sample outputs
+## Sample Outputs
 
 An [OrientationInterpolator](/x_ite/components/interpolation/orientationinterpolator/) node has this output field:
 
@@ -103,7 +103,7 @@ ROUTE MySender.rotation_changed TO MyReceiver.set_rotation
 
 **ROUTE** and **TO** must be in upper-case
 
-## Field data types
+## Field Data Types
 
 Sender and receiver field data types must match!
 
@@ -141,7 +141,7 @@ Data types have names with a standard format, such as:
 | SFVec4d, MFVec4d         | XYZW floating point value, double precision |
 | SFVec4f, MFVec4f         | XYZW floating point value                   |
 
-## Following naming conventions
+## Following Naming Conventions
 
 Most nodes have inputOutput fields.
 
@@ -157,7 +157,7 @@ The [Transform](/x_ite/components/grouping/transform/) node has:
 - *set\_rotation* input
 - *rotation\_changed* output
 
-## A sample animation
+## A Sample Animation
 
 ### XML Encoding
 
@@ -207,7 +207,7 @@ ROUTE Rot1.value_changed      TO Frame1.set_rotation
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/touch1/touch1.x3dv)
 {: .example-links }
 
-## Using multiple routes
+## Using Multiple Routes
 
 You can have **fan-out**
 

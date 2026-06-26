@@ -14,7 +14,7 @@ tags: [Lighting, DirectionalLight, SpotLight, PointLight]
 - Lights can be positioned, oriented, and colored
 - Lights do not cast shadows
 
-## Using types of lights
+## Using Types of Lights
 
 There are three types of X3D lights:
 
@@ -22,7 +22,7 @@ There are three types of X3D lights:
 - Directional lights - aim in one direction from infinitely far away
 - Spot lights - aim in one direction from a point, radiating in a cone
 
-## Using common lighting features
+## Using Common Lighting Features
 
 All lights have several common fields:
 

@@ -31,7 +31,7 @@ Color {
 
 Used as the color field value of [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), [IndexedLineSet](/x_ite/components/rendering/indexedlineset/), [PointSet](/x_ite/components/rendering/pointset/) or [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) nodes.
 
-## Binding colors
+## Binding Colors
 
 - Colors in the Color node override those in the Material node
 - You can bind colors
@@ -107,7 +107,7 @@ Shape {
 }
 ```
 
-## Controlling color binding for line sets
+## Controlling Color Binding for Line Sets
 
 The *colorPerVertex* field controls how color indices are used:
 
@@ -162,7 +162,7 @@ Shape {
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/colors1/colors1.x3dv)
 {: .example-links }
 
-## Controlling color binding for face sets
+## Controlling Color Binding for Face Sets
 
 The *colorPerVertex* field controls how color indices are used (similar to line sets):
 
@@ -205,7 +205,7 @@ Shape {
 }
 ```
 
-## Controlling color binding for elevation grids
+## Controlling Color Binding for Elevation Grids
 
 The *colorPerVertex* field controls how color indices are used (similar to line and face sets):
 

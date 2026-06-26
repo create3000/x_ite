@@ -147,7 +147,7 @@ Billboard {
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/billboard1/billboard1.x3dv)
 {: .example-links }
 
-## Billboard rotation axes
+## Billboard Rotation Axes
 
 - A rotation axis defines a pole to rotate round
 - Similar to a Transform node's rotation field, but no angle (auto computed)
@@ -161,7 +161,7 @@ Billboard {
 | Z-Axis       | 0 0 1       |
 | Any Axis     | 0 0 0       |
 
-## A sample billboard group
+## A Sample Billboard Group
 
 ### XML Encoding
 

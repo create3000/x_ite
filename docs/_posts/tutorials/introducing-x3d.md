@@ -5,7 +5,7 @@ nav: tutorials-shapes-geometry-and-appearance
 categories: [Tutorials]
 tags: [X3D, VRML]
 ---
-## What is X3D?
+## What Is X3D?
 
 X3D is:
 
@@ -20,7 +20,7 @@ X3D is:
 >**Note:** All examples are in X3D XML and X3D VRML Classic Encoded file format (.x3d and .x3dv).
 {: .prompt-info }
 
-## What do I need to use X3D?
+## What Do I Need to Use X3D?
 
 You can view X3D files using an X3D browser:
 
@@ -29,12 +29,12 @@ You can view X3D files using an X3D browser:
 
 You can view X3D files from your local hard disk, or from the Internet.
 
-## Can an X3D Browser be used as VRML Viewer?
+## Can an X3D Browser Be Used as VRML Viewer?
 
 - Yes an X3D browser can be uses as VRML viewer
 - Since X3D is the successor of VRML, an X3D browser is also a VRML viewer
 
-## How can X3D be used on a Web page?
+## How Can X3D Be Used on a Web Page?
 
 - Include the X_ITE Script: Add the `<script>` tag linking to X_ITE in your HTML `<head>` or before the `</body>`
 - Add the `<x3d-canvas>` Element: This custom element acts as the rendering surface for your 3D scene
@@ -42,7 +42,7 @@ You can view X3D files from your local hard disk, or from the Internet.
 - Style the Canvas: Use CSS or inline style attributes to set width, height, or layout of your 3D canvas
 - Test in a Browser: Open the HTML file in any modern browser; no plugin needed — X_ITE runs purely in JavaScript and WebGL
 
-## What do I need to develop in X3D?
+## What Do I Need to Develop in X3D?
 
 You can construct X3D files using:
 
@@ -51,7 +51,7 @@ You can construct X3D files using:
 - A 3D modeler and format translator
 - A shape generator (like a Python, or Perl script)
 
-## Should I use a text editor?
+## Should I Use a Text Editor?
 
 Pros:
 
@@ -64,7 +64,7 @@ Cons:
 - Hard to author complex 3D shapes
 - Requires knowledge of X3D syntax
 
-## Should I use a authoring tool?
+## Should I Use a Authoring Tool?
 
 Pros:
 
@@ -76,7 +76,7 @@ Cons:
 - May not support all X3D features
 - May not produce most efficient X3D
 
-## Should I use a 3D modeler and format translator?
+## Should I Use a 3D Modeler and Format Translator?
 
 Pros:
 
@@ -91,7 +91,7 @@ Cons:
 - Often a one-way path from 3D modeler into X3D
 - Easy to make shapes that are too complex
 
-## Should I use a shape generator?
+## Should I Use a Shape Generator?
 
 Pros:
 
