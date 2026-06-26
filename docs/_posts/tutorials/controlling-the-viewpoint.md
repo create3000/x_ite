@@ -60,9 +60,9 @@ Viewpoint {
 
 ## The jump Field
 
-Basically, if the *jump* field is `false` and the viewpoint receives a *set_bind* `true` event, the viewpoint is bound, but the position and orientation are the same as the previous bound viewpoint including user navigation offsets. This is useful if you want to program an elevator or train for instance. Imagine a user bound to viewpoint A walks into an elevator, when he enters the elevator, he is bound to a new viewpoint B inside the elevator coordinate system, you can now animate the elevator and the user moves with the elevator. When the elevator stops and the user walks out of the elevator, he is bound again to viewpoint A which is in a floor coordinate system. If both viewpoints A and B have *jump* set to `false`, you will not recognize any viewpoint change.
+Basically, if the *jump* field is set to false and the viewpoint receives a *set_bind* event with a value of `true`, the viewpoint is bound. However, the *position* and *orientation* remain the same as the previous bound viewpoint, including any user navigation offsets. This is useful if you want to programme an elevator or train, for example. Imagine a user bound to Viewpoint A enters an elevator. When they enter, they are bound to a new Viewpoint B inside the elevator coordinate system. You can now animate the elevator and the user will move with it. When the lift stops and the user exits, they are bound again to Viewpoint A, which is in the floor coordinate system. If both viewpoints A and B have *jump* set to `false`, you will not recognize any viewpoint change.
 
-If *jump* is `true` and the viewpoint receives a *set_bind* `true` event, you will be bound to the viewpoint and the new *position* and *orientation* will come into effect. If you don’t like the transition, set the [NavigationInfo](/x_ite/components/navigation/navigationinfo/) *transitionType* to `TELEPORT`. This will immediately apply the new *position* and *orientation*.
+If *jump* is set to `true` and the viewpoint receives a *set_bind* event, you will be bound to the viewpoint and the new *position* and *orientation* will take effect. If you are not happy with the transition, set the [NavigationInfo](/x_ite/components/navigation/navigationinfo/) *transitionType* to `TELEPORT`. This will immediately apply the new *position* and *orientation*.
 
 ## Summary
 
