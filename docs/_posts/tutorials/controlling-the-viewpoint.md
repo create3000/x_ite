@@ -58,6 +58,12 @@ Viewpoint {
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/viewpoint1/viewpoint1.x3dv)
 {: .example-links }
 
+## The jump Field
+
+Basically, if the *jump* field is `false` and the viewpoint receives a *set_bind* `true` event, the viewpoint is bound, but the position and orientation are the same as the previous bound viewpoint including user navigation offsets. This is useful if you want to program an elevator for instance. Imagine a user bound to viewpoint A walks into an elevator, when he enters the elevator, he is bound to a new viewpoint B inside the elevator coordinate system, you can now animate the elevator and the user moves with the elevator. When the elevator stops and the user walks out of the elevator, he is bound again to viewpoint A which is in a floor coordinate system. If both viewpoints A and B have *jump* set to `false`, you will not recognize any viewpoint change.
+
+If *jump* is `true` and the viewpoint receives a *set_bind* `true` event, you will be bound to the viewpoint and the new *position* and *orientation* will come into effect. If you don’t like the transition, set the [NavigationInfo](/x_ite/components/navigation/navigationinfo/) *transitionType* to `TELEPORT`. This will immediately apply the new *position* and *orientation*.
+
 ## Summary
 
 - Specify favorite viewpoints in [Viewpoint](/x_ite/components/navigation/viewpoint/) nodes
