@@ -2316,6 +2316,14 @@ declare namespace X3D
       [index: number]: number;
 
       /**
+       * Returns an SFQuaternion whose value is the passed SFQuaternion added, componentwise, to the object.
+       */
+      add (other: this): this;
+      /**
+       * Returns an SFQuaternion whose value is the object divided by the passed numeric value.
+       */
+      divide (denominator: number): this;
+      /**
        * Returns the rotation matrix as an SFMatrix3f object.
        */
       getMatrix (): SFMatrix3f;
@@ -2332,25 +2340,37 @@ declare namespace X3D
        */
       length (): number;
       /**
+       * Returns an SFQuaternion whose value is the object multiplied by the passed numeric value.
+       */
+      multiply (factor: number): this;
+      /**
        * Returns an SFQuaternion whose value is the object multiplied by the passed SFQuaternion.
        */
-      multiply (quaternion: SFQuaternion): SFQuaternion;
+      multQuat (quaternion: SFQuaternion): SFQuaternion;
       /**
        * Returns a SFVec3d/f whose value is the SFVec3d/f *vec* multiplied by the matrix corresponding to this object's rotation.
        */
       multVec <T extends SFVec3d | SFVec3f> (vector: T): T;
       /**
-       * Set the value of this quaternion to the rotation matrix passed in *matrix*.
+       * Returns an SFQuaternion whose value is the componentwise negation of the object.
        */
-      setMatrix (matrix: SFMatrix3d | SFMatrix3f): void;
+      negate (): this;
       /**
        * Returns an SFQuaternion object converted to unit length.
        */
       normalize (): SFQuaternion;
       /**
+       * Set the value of this quaternion to the rotation matrix passed in *matrix*.
+       */
+      setMatrix (matrix: SFMatrix3d | SFMatrix3f): void;
+      /**
        * Returns a SFQuaternion whose value is the spherical linear interpolation between this object's quaternion and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's quaternion. For *t* = 1, the value is *destination*.
        */
       slerp (destination: SFQuaternion, t: number): SFQuaternion;
+      /**
+       * Returns an SFQuaternion whose value is the passed SFQuaternion subtracted, componentwise, from the object.
+       */
+      subtract (other: this): this;
    }
 
    /**

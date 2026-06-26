@@ -31,6 +31,14 @@ Object .assign (Object .setPrototypeOf (SFQuaternion .prototype, X3DField .proto
    {
       this .getValue () .assign (value);
    },
+   add (quaternion)
+   {
+      return SFQuaternion .fromValue (this .getValue () .copy () .add (quaternion .getValue ()));
+   },
+   divide (value)
+   {
+      return SFQuaternion .fromValue (this .getValue () .copy () .divide (value));
+   },
    dot (quaternion)
    {
       return this .getValue () .dot (quaternion);
@@ -47,13 +55,21 @@ Object .assign (Object .setPrototypeOf (SFQuaternion .prototype, X3DField .proto
    {
       return this .getValue () .norm ();
    },
-   multiply (quaternion)
+   multiply (value)
+   {
+      return SFQuaternion .fromValue (this .getValue () .copy () .multiply (value));
+   },
+   multQuat (quaternion)
    {
       return SFQuaternion .fromValue (this .getValue () .copy () .multRight (quaternion .getValue ()));
    },
    multVec (vector)
    {
       return vector .constructor .fromValue (this .getValue () .multVecQuat (vector .getValue () .copy ()));
+   },
+   negate ()
+   {
+      return SFQuaternion .fromValue (this .getValue () .copy () .negate ());
    },
    normalize ()
    {
@@ -67,6 +83,10 @@ Object .assign (Object .setPrototypeOf (SFQuaternion .prototype, X3DField .proto
    slerp (quaternion, t)
    {
       return SFQuaternion .fromValue (this .getValue () .copy () .slerp (quaternion .getValue (), t));
+   },
+   subtract (quaternion)
+   {
+      return SFQuaternion .fromValue (this .getValue () .copy () .subtract (quaternion .getValue ()));
    },
    toStream (generator)
    {

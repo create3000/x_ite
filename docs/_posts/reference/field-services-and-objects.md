@@ -957,6 +957,14 @@ A number corresponding to the real part of the quaternion.
 
 ### Methods
 
+#### **add** (*other: SFQuaternion*): SFQuaternion
+
+Returns an SFQuaternion whose value is the passed SFQuaternion added, componentwise, to the object.
+
+#### **divide** (*denominator*): SFQuaternion
+
+Returns an SFQuaternion whose value is the object divided by the passed numeric value.
+
 #### **getMatrix** (): SFMatrix3f
 
 Returns the rotation matrix as an SFMatrix3f object.
@@ -973,7 +981,11 @@ Returns a SFQuaternion object whose value is the inverse of this object's quater
 
 Returns the geometric length of this quaternion.
 
-#### **multiply** *(quaternion: SFQuaternion*): SFQuaternion
+#### **multiply** (*factor: SFQuaternion*): SFQuaternion
+
+Returns an SFQuaternion whose value is the object multiplied by the passed numeric value.
+
+#### **multQuat** *(quaternion: SFQuaternion*): SFQuaternion
 
 Returns an SFQuaternion whose value is the object multiplied by the passed SFQuaternion.
 
@@ -981,9 +993,9 @@ Returns an SFQuaternion whose value is the object multiplied by the passed SFQua
 
 Returns a SFVec3f whose value is the SFVec3f *vec* multiplied by the matrix corresponding to this object's rotation.
 
-#### **setMatrix** (*matrix: SFMatrix3d/f*): void
+#### **negate** (): SFQuaternion
 
-Set the value of this quaternion to the rotation matrix passed in *matrix*.
+Returns an SFQuaternion whose value is the componentwise negation of the object.
 
 #### **normalize** (): SFQuaternion
 
@@ -1002,9 +1014,17 @@ print (normalized .length ());
 </pre>
 </x3d-script-area>
 
+#### **setMatrix** (*matrix: SFMatrix3d/f*): void
+
+Set the value of this quaternion to the rotation matrix passed in *matrix*.
+
 #### **slerp** (*destQuaternion: SFQuaternion, t: number*): SFQuaternion
 
 Returns a SFQuaternion whose value is the spherical linear interpolation between this object's quaternion and *destQuaternion* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's quaternion. For *t* = 1, the value is *destQuaternion*.
+
+#### **subtract** (*other: SFQuaternion*): SFVec2d/f
+
+Returns an SFQuaternion whose value is the passed SFQuaternion subtracted, componentwise, from the object.
 
 ## SFRotation Object
 
