@@ -14,8 +14,6 @@
       url: /components/x-ite/dispersionmaterialextension/
     - title: "EmissiveStrengthMaterialExtension"
       url: /components/x-ite/emissivestrengthmaterialextension/
-    - title: "GaussianSplats"
-      url: /components/x-ite/gaussiansplats/
     - title: "InstancedShape"
       url: /components/x-ite/instancedshape/
     - title: "IORMaterialExtension"
