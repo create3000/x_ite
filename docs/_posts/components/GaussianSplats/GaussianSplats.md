@@ -15,7 +15,7 @@ tags: [GaussianSplats, GaussianSplats]
 
 The **GaussianSplats** node adds basic support for direct real-time radiance field rendering of volume data without converting into surface or line primitives.
 
-The **GaussianSplats** node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 4.1 or higher.
+The **GaussianSplats** node belongs to the [GaussianSplats](/x_ite/components/overview/#gaussiansplats) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 4.1 or higher.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
@@ -102,7 +102,7 @@ The values in the *scales* field correspond to the spread of the Gaussian along 
 ### MFFloat [in, out] **opacities** [ ] <small>[0,1]</small>
 {: #fields-opacities }
 
-The opacity of a Gaussian splat is defined by the *opacities* field. It stores a normalized linear value between 0.0 (transparent) and 1.0 (opaque).
+The *opacities* field defines the opacity of each individual Gaussian splat. Values are normalized between 0.0 (transparent) and 1.0 (opaque)
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree0Coef0** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree0Coef0 }
