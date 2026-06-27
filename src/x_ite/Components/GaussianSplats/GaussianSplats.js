@@ -1,11 +1,10 @@
-import Fields               from "../../Fields.js";
-import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DNode              from "../Core/X3DNode.js";
-import X3DChildNode         from "../Core/X3DChildNode.js";
-import X3DBoundedObject     from "../Grouping/X3DBoundedObject.js";
-import X3DConstants         from "../../Base/X3DConstants.js";
-import GaussianSplatsShape  from "../../Browser/GaussianSplats/GaussianSplatsShape.js";
+import Fields                from "../../Fields.js";
+import X3DFieldDefinition    from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray  from "../../Base/FieldDefinitionArray.js";
+import X3DNode               from "../Core/X3DNode.js";
+import X3DGaussianSplatsNode from "./X3DGaussianSplatsNode.js";
+import X3DConstants          from "../../Base/X3DConstants.js";
+import GaussianSplatsShape   from "../../Browser/GaussianSplats/GaussianSplatsShape.js";
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
@@ -13,8 +12,7 @@ import GaussianSplatsShape  from "../../Browser/GaussianSplats/GaussianSplatsSha
 
 function GaussianSplats (executionContext)
 {
-   X3DChildNode     .call (this, executionContext);
-   X3DBoundedObject .call (this, executionContext);
+   X3DGaussianSplatsNode .call (this, executionContext);
 
    this .addType (X3DConstants .GaussianSplats);
 
@@ -27,13 +25,11 @@ function GaussianSplats (executionContext)
    this .shapeNode = new GaussianSplatsShape (executionContext, this);
 }
 
-Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DChildNode .prototype),
-   X3DBoundedObject .prototype,
+Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DGaussianSplatsNode .prototype),
 {
    initialize ()
    {
-      X3DChildNode     .prototype .initialize .call (this);
-      X3DBoundedObject .prototype .initialize .call (this);
+      X3DGaussianSplatsNode .prototype .initialize .call (this);
 
       this ._pointerEvents .addFieldInterest (this .shapeNode ._pointerEvents);
       this ._castShadow    .addFieldInterest (this .shapeNode ._castShadow);
@@ -59,11 +55,6 @@ Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DChildNode 
    getBBox (bbox, shadows)
    {
       return this .shapeNode .getBBox (bbox, shadows);
-   },
-   dispose ()
-   {
-      X3DBoundedObject .prototype .dispose .call (this);
-      X3DChildNode     .prototype .dispose .call (this);
    },
 });
 

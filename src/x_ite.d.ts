@@ -5436,7 +5436,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      appliedParameters: MFString <"BOUNCE" | "USER_FRICTION" | "FRICTION_COEFFICIENT-2" | "ERROR_REDUCTION" | "CONSTANT_FORCE" | "SPEED-1" | "SPEED-2" | "SLIP-1" | "SLIP-2">;
+      appliedParameters: MFString <"BOUNCE" | "USER_FRICTION" | "FRICTION_COEFFICIENT_2" | "ERROR_REDUCTION" | "CONSTANT_FORCE" | "SPEED_1" | "SPEED_2" | "SLIP_1" | "SLIP_2">;
       /**
        * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
        *
@@ -6096,7 +6096,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      appliedParameters: MFString <"BOUNCE" | "USER_FRICTION" | "FRICTION_COEFFICIENT-2" | "ERROR_REDUCTION" | "CONSTANT_FORCE" | "SPEED-1" | "SPEED-2" | "SLIP-1" | "SLIP-2">;
+      appliedParameters: MFString <"BOUNCE" | "USER_FRICTION" | "FRICTION_COEFFICIENT_2" | "ERROR_REDUCTION" | "CONSTANT_FORCE" | "SPEED_1" | "SPEED_2" | "SLIP_1" | "SLIP_2">;
       /**
        * The body1 and body2 fields specify two top-level nodes that should be evaluated in the physics model as a single set of interactions with respect to each other.
        *
@@ -8580,11 +8580,11 @@ declare namespace X3D
        */
       description: string;
       /**
-       * Array of quoted font family names in preference order, browsers use the first supported family.
+       * The family field provides an identifying alias for the font in the associated file, if that file only contains a single font family (possibly with multiple styles).
        *
-       * This field is of access type 'inputOutput' and type MFString.
+       * This field is of access type 'inputOutput' and type SFString.
        */
-      family: MFString <"SANS" | "SERIF" | "TYPEWRITER">;
+      family: string;
       /**
        * The load field has no effect, Anchor operation is only triggered by user selection.
        *
@@ -8846,7 +8846,7 @@ declare namespace X3D
        */
       orientations: MFQuaternion;
       /**
-       * indicates whether this instanced shape is a target for pointer events, if FALSE then it is ignored during pointer picking.
+       * indicates whether this GaussianSplats node is a target for pointer events, if FALSE then it is ignored during pointer picking.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -16585,10 +16585,6 @@ declare namespace X3D
        * This field is of access type 'initializeOnly' and type SFNode.
        */
       textureProperties: TexturePropertiesProxy | null;
-      /**
-       * This field is of access type 'inputOutput' and type SFString.
-       */
-      update: "NONE" | "NEXT_FRAME_ONLY" | "ALWAYS";
       /**
        * indicates time intervals between render captures when the update field is "ALWAYS".
        *

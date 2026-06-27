@@ -25,7 +25,8 @@ The **GaussianSplats** node belongs to the [GaussianSplats](/x_ite/components/ov
 ```
 + X3DNode
   + X3DChildNode
-    + GaussianSplats (*X3DBoundedObject)
+    + X3DGaussianSplatsNode (*X3DBoundedObject)
+      + GaussianSplats
 ```
 
 \* Derived from multiple interfaces.

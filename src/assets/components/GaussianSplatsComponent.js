@@ -1,5 +1,6 @@
-import Components     from "../../x_ite/Components.js";
-import GaussianSplats from "../../x_ite/Components/GaussianSplats/GaussianSplats.js";
+import Components            from "../../x_ite/Components.js";
+import GaussianSplats        from "../../x_ite/Components/GaussianSplats/GaussianSplats.js";
+import X3DGaussianSplatsNode from "../../x_ite/Components/GaussianSplats/X3DGaussianSplatsNode.js";
 
 Components .add ({
    name: "Layout",
@@ -8,7 +9,9 @@ Components .add ({
       GaussianSplats,
    ],
    abstractNodes:
-   [ ],
+   [
+      X3DGaussianSplatsNode,
+   ],
 });
 
 export default undefined;
