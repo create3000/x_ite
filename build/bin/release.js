@@ -195,11 +195,11 @@ function release ()
 
    const version = sh (`npm pkg get version | sed 's/"//g'`) .trim ();
 
-   systemSync (`npm run docs-table`);
-   systemSync (`npm run docs-components`);
-   systemSync (`npm run docs-nodes`);
-   systemSync (`npm run docs-reference`);
-   systemSync (`npm run glTF-samples`);
+   systemSync (`npm run docs:table`);
+   systemSync (`npm run docs:components`);
+   systemSync (`npm run docs:nodes`);
+   systemSync (`npm run docs:reference`);
+   systemSync (`npm run glTF:samples`);
 
    // docs
 
