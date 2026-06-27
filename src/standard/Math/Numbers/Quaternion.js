@@ -594,6 +594,7 @@ Object .defineProperties (Quaternion .prototype,
 
 Object .assign (Quaternion,
 {
+   ZERO: Object .freeze (new Quaternion (0, 0, 0, 0)),
    IDENTITY: Object .freeze (new Quaternion ()),
    spline: (() =>
    {

@@ -1,11 +1,10 @@
-import Fields               from "../../Fields.js";
-import X3DFieldDefinition   from "../../Base/X3DFieldDefinition.js";
-import FieldDefinitionArray from "../../Base/FieldDefinitionArray.js";
-import X3DNode              from "../Core/X3DNode.js";
-import X3DChildNode         from "../Core/X3DChildNode.js";
-import X3DBoundedObject     from "../Grouping/X3DBoundedObject.js";
-import X3DConstants         from "../../Base/X3DConstants.js";
-import GaussianSplatsShape  from "../../Browser/X_ITE/GaussianSplatsShape.js";
+import Fields                from "../../Fields.js";
+import X3DFieldDefinition    from "../../Base/X3DFieldDefinition.js";
+import FieldDefinitionArray  from "../../Base/FieldDefinitionArray.js";
+import X3DNode               from "../Core/X3DNode.js";
+import X3DGaussianSplatsNode from "./X3DGaussianSplatsNode.js";
+import X3DConstants          from "../../Base/X3DConstants.js";
+import GaussianSplatsShape   from "../../Browser/GaussianSplats/GaussianSplatsShape.js";
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
@@ -13,8 +12,7 @@ import GaussianSplatsShape  from "../../Browser/X_ITE/GaussianSplatsShape.js";
 
 function GaussianSplats (executionContext)
 {
-   X3DChildNode     .call (this, executionContext);
-   X3DBoundedObject .call (this, executionContext);
+   X3DGaussianSplatsNode .call (this, executionContext);
 
    this .addType (X3DConstants .GaussianSplats);
 
@@ -27,13 +25,11 @@ function GaussianSplats (executionContext)
    this .shapeNode = new GaussianSplatsShape (executionContext, this);
 }
 
-Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DChildNode .prototype),
-   X3DBoundedObject .prototype,
+Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DGaussianSplatsNode .prototype),
 {
    initialize ()
    {
-      X3DChildNode     .prototype .initialize .call (this);
-      X3DBoundedObject .prototype .initialize .call (this);
+      X3DGaussianSplatsNode .prototype .initialize .call (this);
 
       this ._pointerEvents .addFieldInterest (this .shapeNode ._pointerEvents);
       this ._castShadow    .addFieldInterest (this .shapeNode ._castShadow);
@@ -60,23 +56,18 @@ Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DChildNode 
    {
       return this .shapeNode .getBBox (bbox, shadows);
    },
-   dispose ()
-   {
-      X3DBoundedObject .prototype .dispose .call (this);
-      X3DChildNode     .prototype .dispose .call (this);
-   },
 });
 
 Object .defineProperties (GaussianSplats,
 {
-   ... X3DNode .getStaticProperties ("GaussianSplats", "X_ITE", 1, "children", "4.1"),
+   ... X3DNode .getStaticProperties ("GaussianSplats", "GaussianSplats", 1, "children", "4.1"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",                       new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "colorSpace",                     new Fields .SFString ("SRGB_REC709_DISPLAY")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "positions",                      new Fields .MFVec3f ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "orientations",                   new Fields .MFVec4f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "orientations",                   new Fields .MFQuaternion ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "scales",                         new Fields .MFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "opacities",                      new Fields .MFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "sphericalHarmonicsDegree0Coef0", new Fields .MFVec3f ()),

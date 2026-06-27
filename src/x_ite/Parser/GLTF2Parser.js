@@ -271,14 +271,8 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
             case "KHR_materials_transmission":
             case "KHR_materials_volume_scatter":
             case "KHR_materials_volume":
-            case "KHR_gaussian_splatting":
             {
                components .push (browser .getComponent ("X_ITE", 1));
-               break;
-            }
-            case "KHR_texture_transform":
-            {
-               components .push (browser .getComponent ("Texturing3D", 2));
                break;
             }
             case "KHR_animation_pointer":
@@ -292,11 +286,21 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                this .draco ??= await this .getLibrary ("draco_decoder_gltf.js");
                break;
             }
+            case "KHR_gaussian_splatting":
+            {
+               components .push (browser .getComponent ("GaussianSplats", 1));
+               break;
+            }
             case "KHR_meshopt_compression":
             case "EXT_meshopt_compression":
             {
                this .MeshoptDecoder ??= await this .getLibrary ("meshopt_decoder.js");
                await this .MeshoptDecoder .ready;
+               break;
+            }
+            case "KHR_texture_transform":
+            {
+               components .push (browser .getComponent ("Texturing3D", 2));
                break;
             }
          }

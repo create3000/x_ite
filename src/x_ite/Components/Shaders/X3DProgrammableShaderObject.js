@@ -414,6 +414,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             }
             case X3DConstants .SFMatrix3d:
             case X3DConstants .SFMatrix3f:
+            case X3DConstants .SFQuaternion:
             case X3DConstants .SFRotation:
             {
                location .array   = new Float32Array (9);
@@ -474,6 +475,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             }
             case X3DConstants .MFMatrix3d:
             case X3DConstants .MFMatrix3f:
+            case X3DConstants .MFQuaternion:
             case X3DConstants .MFRotation:
             {
                location .array   = new Float32Array (9 * this .getLocationLength (gl, program, field));
@@ -614,6 +616,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                this ._renderedTextures = this .getBrowser () .getCurrentTime ();
                return;
             }
+            case X3DConstants .SFQuaternion:
             case X3DConstants .SFRotation:
             {
                field .getValue () .getMatrix (location .array);
@@ -722,6 +725,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                this ._renderedTextures = this .getBrowser () .getCurrentTime ();
                return;
             }
+            case X3DConstants .MFQuaternion:
             case X3DConstants .MFRotation:
             {
                const { array, uniform } = location;

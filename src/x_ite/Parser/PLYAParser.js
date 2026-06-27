@@ -271,7 +271,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       if (this .sphericalHarmonics)
       {
-         scene .addComponent (this .getBrowser () .getComponent ("X_ITE"));
+         scene .addComponent (this .getBrowser () .getComponent ("GaussianSplats"));
 
          await this .getBrowser () .loadComponents (scene);
 

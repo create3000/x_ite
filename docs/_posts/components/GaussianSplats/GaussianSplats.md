@@ -1,9 +1,9 @@
 ---
 title: GaussianSplats
 date: 2026-05-30
-nav: components-X_ITE
-categories: [components, X_ITE]
-tags: [GaussianSplats, X_ITE]
+nav: components-GaussianSplats
+categories: [components, GaussianSplats]
+tags: [GaussianSplats, GaussianSplats]
 ---
 <style>
 .post h3 {
@@ -15,7 +15,7 @@ tags: [GaussianSplats, X_ITE]
 
 The **GaussianSplats** node adds basic support for direct real-time radiance field rendering of volume data without converting into surface or line primitives.
 
-The **GaussianSplats** node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 4.1 or higher.
+The **GaussianSplats** node belongs to the [GaussianSplats](/x_ite/components/overview/#gaussiansplats) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 4.1 or higher.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
@@ -25,7 +25,8 @@ The **GaussianSplats** node belongs to the [X_ITE](/x_ite/components/overview/#x
 ```
 + X3DNode
   + X3DChildNode
-    + GaussianSplats (*X3DBoundedObject)
+    + X3DGaussianSplatsNode (*X3DBoundedObject)
+      + GaussianSplats
 ```
 
 \* Derived from multiple interfaces.
@@ -38,7 +39,7 @@ The **GaussianSplats** node belongs to the [X_ITE](/x_ite/components/overview/#x
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFString | [in, out] | [colorSpace](#fields-colorSpace) | "SRGB_REC709_DISPLAY" |
 | MFVec3f | [in, out] | [positions](#fields-positions) | [ ] |
-| MFVec4f | [in, out] | [orientations](#fields-orientations) | [ ] |
+| MFQuaternion | [in, out] | [orientations](#fields-orientations) | [ ] |
 | MFVec3f | [in, out] | [scales](#fields-scales) | [ ] |
 | MFFloat | [in, out] | [opacities](#fields-opacities) | [ ] |
 | MFVec3f | [in, out] | [sphericalHarmonicsDegree0Coef0](#fields-sphericalHarmonicsDegree0Coef0) | [ ] |
@@ -89,7 +90,7 @@ The color space of the reconstructed color values, either SRGB_REC709_DISPLAY or
 
 The mean vector for the Gaussian splat is provided by the *positions* of the mesh primitive. This defines the center of the Gaussian splat ellipsoid in local space. The effective global mean vector for the Gaussian splat is derived from the *positions* field value and the global transformation matrix of the X3D node that instantiates the mesh containing the splat primitive as defined in the glTF specification.
 
-### MFVec4f [in, out] **orientations** [ ] <small>[-1,1]</small>
+### MFQuaternion [in, out] **orientations** [ ] <small>[-1,1]</small>
 {: #fields-orientations }
 
 The *orientations* field values correspond to the orientation of those axes in local space. Orientation values are stored as unit quaternions in the usual glTF order (x,y,z,w).
@@ -102,7 +103,7 @@ The values in the *scales* field correspond to the spread of the Gaussian along 
 ### MFFloat [in, out] **opacities** [ ] <small>[0,1]</small>
 {: #fields-opacities }
 
-The opacity of a Gaussian splat is defined by the *opacities* field. It stores a normalized linear value between 0.0 (transparent) and 1.0 (opaque).
+The *opacities* field defines the opacity of each individual Gaussian splat. Values are normalized between 0.0 (transparent) and 1.0 (opaque)
 
 ### MFVec3f [in, out] **sphericalHarmonicsDegree0Coef0** [ ] <small>(-∞,∞)</small>
 {: #fields-sphericalHarmonicsDegree0Coef0 }
