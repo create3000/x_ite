@@ -320,12 +320,12 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 
 ## Example
 
-<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/X_ITE/GaussianSplats/GaussianSplats.x3d" contentScale="auto" update="auto">
-  <img src="https://create3000.github.io/media/examples/X_ITE/GaussianSplats/screenshot.avif" alt="GaussianSplats"/>
+<x3d-canvas class="buttons-br" src="https://create3000.github.io/media/examples/GaussianSplats/GaussianSplats/GaussianSplats.x3d" contentScale="auto" update="auto">
+  <img src="https://create3000.github.io/media/examples/GaussianSplats/GaussianSplats/screenshot.avif" alt="GaussianSplats"/>
 </x3d-canvas>
 
-- [Download ZIP Archive](https://create3000.github.io/media/examples/X_ITE/GaussianSplats/GaussianSplats.zip)
-- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/X_ITE/GaussianSplats/GaussianSplats.x3d)
+- [Download ZIP Archive](https://create3000.github.io/media/examples/GaussianSplats/GaussianSplats/GaussianSplats.zip)
+- [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/GaussianSplats/GaussianSplats/GaussianSplats.x3d)
 {: .example-links }
 
 ## Browser Compatibility

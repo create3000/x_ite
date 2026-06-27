@@ -9,7 +9,7 @@ X_ITE follows the [npm version syntax](https://docs.npmjs.com/about-semantic-ver
 
 ## X_ITE v15.1 Series
 
-*Leipzig, 31st May 2026:* The 15.1 release of X_ITE comes now with basic support for 3D Gaussian Splatting, bringing a modern point-based rendering technique to the X3D ecosystem. To make working with Gaussian Splats straightforward and fully integrated into X3D scenes, this release introduces the new [GaussianSplats](/x_ite/components/x-ite/gaussiansplats/) node. It enables the loading and rendering of Gaussian Splat datasets while leveraging X_ITE's existing scene graph architecture.
+*Leipzig, 31st May 2026:* The 15.1 release of X_ITE comes now with basic support for 3D Gaussian Splatting, bringing a modern point-based rendering technique to the X3D ecosystem. To make working with Gaussian Splats straightforward and fully integrated into X3D scenes, this release introduces the new [GaussianSplats](/x_ite/components/gaussiansplats/gaussiansplats/) node. It enables the loading and rendering of Gaussian Splat datasets while leveraging X_ITE's existing scene graph architecture.
 
 In addition to PLY files, [SOG](https://www.npmjs.com/package/x_ite-sog-parser) and [SPZ](https://www.npmjs.com/package/x_ite-spz-parser) files are also supported, both by using an external extension, and X_ITE now supports the build-in glTF extension [KHR_gaussian_splatting](https://github.com/KhronosGroup/glTF/blob/main/extensions/2.0/Khronos/KHR_gaussian_splatting/README.md), allowing Gaussian Splat assets stored in glTF files to be loaded and displayed directly. This provides compatibility with the emerging open standard for Gaussian Splatting content and facilitates interoperability with content creation tools and pipelines that adopt the KHR_gaussian_splatting extension.
 
@@ -19,7 +19,7 @@ Although this is an initial implementation, it already provides a solid foundati
 
 ![Amethyst 3DGS](/assets/img/whats-new/amethyst.avif){: .normal .w-25 }![Spring 3DGS](/assets/img/whats-new/spring.avif){: .normal .w-25 }![Student Room 3DGS](/assets/img/whats-new/student-room.avif){: .normal .w-25 }![Cactus 3DGS](/assets/img/whats-new/cactus.avif){: .normal .w-25 }
 
-- Show [PLY example](/x_ite/components/x-ite/gaussiansplats/#example) with X_ITE.
+- Show [PLY example](/x_ite/components/gaussiansplats/gaussiansplats/#example) with X_ITE.
 - Show [SOG example](/x_ite/playground/?url=https://create3000.github.io/media/examples/Core/SOG/SOG.x3d) with X_ITE.
 - Show [SPZ example](/x_ite/playground/?url=https://create3000.github.io/media/examples/Core/SPZ/SPZ.x3d) with X_ITE.
 - Show [glTF example](/x_ite/laboratory/gltf-sample-viewer/?url=https://create3000.github.io/media/glTF/Cactus/Cactus.glb) with X_ITE.
