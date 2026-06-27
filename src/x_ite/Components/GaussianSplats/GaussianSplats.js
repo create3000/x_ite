@@ -5,7 +5,7 @@ import X3DNode              from "../Core/X3DNode.js";
 import X3DChildNode         from "../Core/X3DChildNode.js";
 import X3DBoundedObject     from "../Grouping/X3DBoundedObject.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
-import GaussianSplatsShape  from "../../Browser/X_ITE/GaussianSplatsShape.js";
+import GaussianSplatsShape  from "../../Browser/GaussianSplats/GaussianSplatsShape.js";
 
 /**
  * THIS NODE IS STILL EXPERIMENTAL.
@@ -69,7 +69,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplats .prototype, X3DChildNode 
 
 Object .defineProperties (GaussianSplats,
 {
-   ... X3DNode .getStaticProperties ("GaussianSplats", "X_ITE", 1, "children", "4.1"),
+   ... X3DNode .getStaticProperties ("GaussianSplats", "GaussianSplats", 1, "children", "4.1"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

@@ -2,8 +2,8 @@
 title: GaussianSplats
 date: 2026-05-30
 nav: components-X_ITE
-categories: [components, X_ITE]
-tags: [GaussianSplats, X_ITE]
+categories: [components, GaussianSplats]
+tags: [GaussianSplats, GaussianSplats]
 ---
 <style>
 .post h3 {

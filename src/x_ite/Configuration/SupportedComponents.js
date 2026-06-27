@@ -61,6 +61,13 @@ SupportedComponents .add ("Followers",
    level: 1,
 });
 
+SupportedComponents .add ("GaussianSplats",
+{
+   title: "Gaussian splats",
+   level: 1,
+   external: true,
+});
+
 SupportedComponents .add ("Geometry2D",
 {
    title: "Geometry2D",
