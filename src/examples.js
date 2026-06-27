@@ -19,6 +19,7 @@ const X_ITE_EXAMPLES = [
    { component: "Followers", test: "ColorDamper" },
    { component: "Followers", test: "CoordinateChaser" },
    { component: "Followers", test: "ScalarChaser", buttonsPosition: "tr" },
+   { component: "GaussianSplats", test: "GaussianSplats" },
    { component: "Geometry2D", test: "Arc2D" },
    { component: "Geometry2D", test: "ArcClose2D" },
    { component: "Geometry2D", test: "Circle2D" },
@@ -166,7 +167,6 @@ const X_ITE_EXAMPLES = [
    { component: "X3D", test: "WaterQuality", buttonsPosition: "cr" },
    { component: "X_ITE", test: "BlendMode" },
    { component: "X_ITE", test: "DepthMode" },
-   { component: "X_ITE", test: "GaussianSplats" },
    { component: "X_ITE", test: "InstancedShape" },
 ];
 X_ITE_EXAMPLES .server = "https://create3000.github.io/media/examples";
