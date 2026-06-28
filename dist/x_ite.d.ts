@@ -1156,6 +1156,7 @@ declare namespace X3D
       readonly SFMatrix4d: number;
       readonly SFMatrix4f: number;
       readonly SFNode: number;
+      readonly SFQuaternion: number;
       readonly SFRotation: number;
       readonly SFString: number;
       readonly SFTime: number;
@@ -1178,6 +1179,7 @@ declare namespace X3D
       readonly MFMatrix4d: number;
       readonly MFMatrix4f: number;
       readonly MFNode: number;
+      readonly MFQuaternion: number;
       readonly MFRotation: number;
       readonly MFString: number;
       readonly MFTime: number;
@@ -2272,6 +2274,109 @@ declare namespace X3D
    /**
     * The SFRotation object corresponds to an X3D SFRotation field.
     */
+   class SFQuaternion extends X3DField
+   {
+      static readonly type: number;
+      static readonly typeName: "SFQuaternion";
+      static readonly ZERO: SFQuaternion;
+      static readonly IDENTITY: SFQuaternion;
+
+      /**
+       * *matrix* is an SFMatrix3d/f rotation matrix object whose value is converted into an SFQuaternion object.
+       */
+      static fromMatrix (matrix: SFMatrix3d | SFMatrix3f): SFQuaternion;
+
+      /**
+       * A new rotation initialized with the identity rotation is created and returned.
+       */
+      constructor ();
+      /**
+       * *x*, *y*, and *z* are the imaginary parts of the quaternion.
+       * *w* is the real part of the quaternion.
+       */
+      constructor (x: number, y: number, z: number, w: number);
+
+      /**
+       * Returns the first value of the imaginary part of the quaternion.
+       */
+      x: number;
+      /**
+       * Returns the second value of the imaginary part of the quaternion.
+       */
+      y: number;
+      /**
+       * Returns the third value of the imaginary part of the quaternion.
+       */
+      z: number;
+      /**
+       * A number corresponding to the real part of the quaternion.
+       */
+      w: number;
+
+      [Symbol .iterator](): IterableIterator <number>;
+      [index: number]: number;
+
+      /**
+       * Returns an SFQuaternion whose value is the passed SFQuaternion added, componentwise, to the object.
+       */
+      add (other: SFQuaternion): SFQuaternion;
+      /**
+       * Returns an SFQuaternion whose value is the object divided by the passed numeric value.
+       */
+      divide (denominator: number): SFQuaternion;
+      /**
+       * Returns the rotation matrix as an SFMatrix3f object.
+       */
+      getMatrix (): SFMatrix3f;
+      /**
+       * Returns the dot product of this quaternion and SFQuaternion *other*.
+       */
+      dot (quaternion: SFQuaternion): number;
+      /**
+       * Returns the underlying quaternion as Array with the four values [x, y, z, w].
+       */
+      inverse (): SFQuaternion;
+      /**
+       * Returns the geometric length of this vector.
+       */
+      length (): number;
+      /**
+       * Returns an SFQuaternion whose value is the object multiplied by the passed numeric value.
+       */
+      multiply (factor: number): SFQuaternion;
+      /**
+       * Returns an SFQuaternion whose value is the object multiplied by the passed SFQuaternion.
+       */
+      multQuat (quaternion: SFQuaternion): SFQuaternion;
+      /**
+       * Returns a SFVec3d/f whose value is the SFVec3d/f *vec* multiplied by the matrix corresponding to this object's quaternion.
+       */
+      multVec <T extends SFVec3d | SFVec3f> (vector: T): T;
+      /**
+       * Returns an SFQuaternion whose value is the componentwise negation of the object.
+       */
+      negate (): SFQuaternion;
+      /**
+       * Returns an SFQuaternion object converted to unit length.
+       */
+      normalize (): SFQuaternion;
+      /**
+       * Set the value of this quaternion to the rotation matrix passed in *matrix*.
+       */
+      setMatrix (matrix: SFMatrix3d | SFMatrix3f): void;
+      /**
+       * Returns a SFQuaternion whose value is the spherical linear interpolation between this object's quaternion and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's quaternion. For *t* = 1, the value is *destination*.
+       */
+      slerp (destination: SFQuaternion, t: number): SFQuaternion;
+      /**
+       * Returns an SFQuaternion whose value is the passed SFQuaternion subtracted, componentwise, from the object.
+       */
+      subtract (other: SFQuaternion): SFQuaternion;
+   }
+
+   /**
+    * The SFRotation object corresponds to an X3D SFRotation field.
+    */
    class SFRotation extends X3DField
    {
       static readonly type: number;
@@ -2283,9 +2388,9 @@ declare namespace X3D
        */
       static fromMatrix (matrix: SFMatrix3d | SFMatrix3f): SFRotation;
       /**
-       * `x`, `y`, `z`, `w` is a quaternion whose value is converted into an SFRotation object.
+       * *quaternion* is an SFQuaternion object whose value is converted into an SFRotation object.
        */
-      static fromQuaternion (x: number, y: number, z: number, w: number): SFRotation;
+      static fromQuaternion (quaternion: SFQuaternion): SFRotation;
 
       /**
        * A new rotation initialized with the identity rotation is created and returned.
@@ -2335,9 +2440,9 @@ declare namespace X3D
        */
       getMatrix (): SFMatrix3f;
       /**
-       * Returns the underlying quaternion as Array with the four values [x, y, z, w].
+       * Returns the rotation as an SFQuaternion object.
        */
-      getQuaternion (): number [];
+      getQuaternion (): SFQuaternion;
       /**
        * Returns a SFRotation object whose value is the inverse of this object's rotation.
        */
@@ -2359,11 +2464,11 @@ declare namespace X3D
        */
       setMatrix (matrix: SFMatrix3d | SFMatrix3f): void;
       /**
-       * Set the value of this rotation to the quaternion passed in *x, y, z, w*.
+       * Set the value of this rotation to the quaternion passed in *quaternion*.
        */
-      setQuaternion (x: number, y: number, z: number, w: number): void;
+      setQuaternion (quaternion: SFQuaternion): void;
       /**
-       * Returns a SFRotation whose value is the spherical linear interpolation between this object's rotation and *destRotation* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's rotation. For *t* = 1, the value is *destRotation*.
+       * Returns a SFRotation whose value is the spherical linear interpolation between this object's rotation and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's rotation. For *t* = 1, the value is *destination*.
        */
       slerp (destination: SFRotation, t: number): SFRotation;
       /**
@@ -2465,7 +2570,7 @@ declare namespace X3D
        */
       length (): number;
       /**
-       * Returns a SFVec2d/f whose value is the linear interpolation between this object's vector and *destVector* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
+       * Returns a SFVec2d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
        */
       lerp (destination: this, t: number): this;
       /**
@@ -2607,7 +2712,7 @@ declare namespace X3D
        */
       length (): number;
       /**
-       * Returns a SFVec3d/f whose value is the linear interpolation between this object's vector and *destVector* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
+       * Returns a SFVec3d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
        */
       lerp (destination: this, t: number): this;
       /**
@@ -2753,7 +2858,7 @@ declare namespace X3D
        */
       length (): number;
       /**
-       * Returns a SFVec4d/f whose value is the linear interpolation between this object's vector and *destVector* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
+       * Returns a SFVec4d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
        */
       lerp (destination: this, t: number): this;
       /**
@@ -2993,6 +3098,15 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFNode";
+   }
+
+   /**
+    * The MFQuaternion object corresponds to an X3D MFQuaternion field. It is used to store a one-dimensional array of SFQuaternion objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfQuaternionObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFQuaternion (0, 0, 0, 1)`.
+    */
+   class MFQuaternion extends X3DArrayField <SFQuaternion>
+   {
+      static readonly type: number;
+      static readonly typeName: "MFQuaternion";
    }
 
    /**
@@ -5323,7 +5437,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      appliedParameters: MFString <"BOUNCE" | "USER_FRICTION" | "FRICTION_COEFFICIENT-2" | "ERROR_REDUCTION" | "CONSTANT_FORCE" | "SPEED-1" | "SPEED-2" | "SLIP-1" | "SLIP-2">;
+      appliedParameters: MFString <"BOUNCE" | "USER_FRICTION" | "FRICTION_COEFFICIENT_2" | "ERROR_REDUCTION" | "CONSTANT_FORCE" | "SPEED_1" | "SPEED_2" | "SLIP_1" | "SLIP_2">;
       /**
        * Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system.
        *
@@ -5983,7 +6097,7 @@ declare namespace X3D
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
-      appliedParameters: MFString <"BOUNCE" | "USER_FRICTION" | "FRICTION_COEFFICIENT-2" | "ERROR_REDUCTION" | "CONSTANT_FORCE" | "SPEED-1" | "SPEED-2" | "SLIP-1" | "SLIP-2">;
+      appliedParameters: MFString <"BOUNCE" | "USER_FRICTION" | "FRICTION_COEFFICIENT_2" | "ERROR_REDUCTION" | "CONSTANT_FORCE" | "SPEED_1" | "SPEED_2" | "SLIP_1" | "SLIP_2">;
       /**
        * The body1 and body2 fields specify two top-level nodes that should be evaluated in the physics model as a single set of interactions with respect to each other.
        *
@@ -8467,11 +8581,11 @@ declare namespace X3D
        */
       description: string;
       /**
-       * Array of quoted font family names in preference order, browsers use the first supported family.
+       * The family field provides an identifying alias for the font in the associated file, if that file only contains a single font family (possibly with multiple styles).
        *
-       * This field is of access type 'inputOutput' and type MFString.
+       * This field is of access type 'inputOutput' and type SFString.
        */
-      family: MFString <"SANS" | "SERIF" | "TYPEWRITER">;
+      family: string;
       /**
        * The load field has no effect, Anchor operation is only triggered by user selection.
        *
@@ -8733,7 +8847,7 @@ declare namespace X3D
        */
       orientations: MFQuaternion;
       /**
-       * indicates whether this instanced shape is a target for pointer events, if FALSE then it is ignored during pointer picking.
+       * indicates whether this GaussianSplats node is a target for pointer events, if FALSE then it is ignored during pointer picking.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -16472,10 +16586,6 @@ declare namespace X3D
        * This field is of access type 'initializeOnly' and type SFNode.
        */
       textureProperties: TexturePropertiesProxy | null;
-      /**
-       * This field is of access type 'inputOutput' and type SFString.
-       */
-      update: "NONE" | "NEXT_FRAME_ONLY" | "ALWAYS";
       /**
        * indicates time intervals between render captures when the update field is "ALWAYS".
        *

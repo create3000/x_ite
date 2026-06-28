@@ -1,4 +1,4 @@
-/* X_ITE v15.1.7 */
+/* X_ITE v15.1.8 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
@@ -20,17 +20,17 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ 	});
 /************************************************************************/
 /******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
+/******/ 	const __webpack_module_cache__ = {};
 /******/ 	
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		const cachedModule = __webpack_module_cache__[moduleId];
 /******/ 		if (cachedModule !== undefined) {
 /******/ 			return cachedModule.exports;
 /******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 		const module = __webpack_module_cache__[moduleId] = {
 /******/ 			// no module.id needed
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
@@ -48,7 +48,7 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ 	(() => {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
 /******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
+/******/ 			const getter = module && module.__esModule ?
 /******/ 				() => (module['default']) :
 /******/ 				() => (module);
 /******/ 			__webpack_require__.d(getter, { a: getter });
@@ -58,11 +58,26 @@ const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
+/******/ 		// define getter/value functions for harmony exports
 /******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 			if(Array.isArray(definition)) {
+/******/ 				var i = 0;
+/******/ 				while(i < definition.length) {
+/******/ 					var key = definition[i++];
+/******/ 					var binding = definition[i++];
+/******/ 					if(!__webpack_require__.o(exports, key)) {
+/******/ 						if(binding === 0) {
+/******/ 							Object.defineProperty(exports, key, { enumerable: true, value: definition[i++] });
+/******/ 						} else {
+/******/ 							Object.defineProperty(exports, key, { enumerable: true, get: binding });
+/******/ 						}
+/******/ 					} else if(binding === 0) { i++; }
+/******/ 				}
+/******/ 			} else {
+/******/ 				for(var key in definition) {
+/******/ 					if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 						Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 					}
 /******/ 				}
 /******/ 			}
 /******/ 		};
@@ -1321,10 +1336,10 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, (externa
          ["FRICTION_COEFFICIENT-2", RigidBodyPhysics_AppliedParametersType .FRICTION_COEFFICIENT_2],
          ["ERROR_REDUCTION",        RigidBodyPhysics_AppliedParametersType .ERROR_REDUCTION],
          ["CONSTANT_FORCE",         RigidBodyPhysics_AppliedParametersType .CONSTANT_FORCE],
-         ["SPEED-1",                RigidBodyPhysics_AppliedParametersType .SPEED_1],
-         ["SPEED-2",                RigidBodyPhysics_AppliedParametersType .SPEED_2],
-         ["SLIP-1",                 RigidBodyPhysics_AppliedParametersType .SLIP_1],
-         ["SLIP-2",                 RigidBodyPhysics_AppliedParametersType .SLIP_2],
+         ["SPEED_1",                RigidBodyPhysics_AppliedParametersType .SPEED_1],
+         ["SPEED_2",                RigidBodyPhysics_AppliedParametersType .SPEED_2],
+         ["SLIP_1",                 RigidBodyPhysics_AppliedParametersType .SLIP_1],
+         ["SLIP_2",                 RigidBodyPhysics_AppliedParametersType .SLIP_2],
       ]);
 
       return function ()
