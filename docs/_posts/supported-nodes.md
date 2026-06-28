@@ -161,7 +161,7 @@ Gaussian splats<br>
 Highest supported level: **1**
 {: .small }
 
-- [GaussianSplats](/x_ite/components/gaussiansplats/gaussiansplats/) <small class="blue">experimental</small>
+- [GaussianSplats](/x_ite/components/gaussiansplats/gaussiansplats/) [<i class="fa-regular fa-image example-icon" title="Comes with example."></i>](/x_ite/components/gaussiansplats/gaussiansplats/#example) <small class="blue">experimental</small>
 
 ### Geometry2D
 
