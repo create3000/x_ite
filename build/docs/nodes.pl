@@ -80,6 +80,8 @@ sub node {
    $file = update_field ($typeName, $_, \@node, $file, $source) foreach @fields;
    $file = reorder_sections ($file);
 
+   return if `cat '$md'` eq $file;
+
    open FILE, ">", $md;
    print FILE $file;
    close FILE;
