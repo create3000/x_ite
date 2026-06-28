@@ -2467,6 +2467,38 @@ function eventsProcessed ()
                transformNode ._name = node .name;
          }
 
+         // Set transformation matrix.
+
+         if (this .vectorValue (node .matrix, matrix))
+         {
+            matrix .getTransform (translation, rotation, scale, scaleOrientation);
+
+            transformNode ._translation      = translation;
+            transformNode ._rotation         = rotation;
+            transformNode ._scale            = scale;
+            transformNode ._scaleOrientation = scaleOrientation;
+         }
+         else
+         {
+            if (this .vectorValue (node .translation, translation))
+               transformNode ._translation = translation;
+
+            if (this .vectorValue (node .rotation, quaternion))
+               transformNode ._rotation = rotation .setQuaternion (quaternion);
+
+            if (this .vectorValue (node .scale, scale))
+               transformNode ._scale = scale;
+
+            matrix .setTransform (transformNode ._translation .getValue (),
+                                  transformNode ._rotation .getValue (),
+                                  transformNode ._scale .getValue (),
+                                  transformNode ._scaleOrientation .getValue ());
+         }
+
+         node .matrix       = matrix;
+         node .modelMatrix  = matrix .copy () .multRight (modelMatrix);
+         node .parentMatrix = modelMatrix .copy ();
+
          // Get mesh.
 
          const
@@ -2533,29 +2565,6 @@ function eventsProcessed ()
          }
          else
          {
-            // Set transformation matrix.
-
-            if (this .vectorValue (node .matrix, matrix))
-            {
-               matrix .getTransform (translation, rotation, scale, scaleOrientation);
-
-               transformNode ._translation      = translation;
-               transformNode ._rotation         = rotation;
-               transformNode ._scale            = scale;
-               transformNode ._scaleOrientation = scaleOrientation;
-            }
-            else
-            {
-               if (this .vectorValue (node .translation, translation))
-                  transformNode ._translation = translation;
-
-               if (this .vectorValue (node .rotation, quaternion))
-                  transformNode ._rotation = rotation .setQuaternion (quaternion);
-
-               if (this .vectorValue (node .scale, scale))
-                  transformNode ._scale = scale;
-            }
-
             // Add Shape nodes.
 
             if (shapeNodes)
@@ -2594,20 +2603,233 @@ function eventsProcessed ()
                   if (!lightNode)
                      break;
 
-               node .transformNode ._children .push (lightNode);
-               break;
-            }
-            case "KHR_node_visibility":
-            {
-               // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_visibility
-               extension .pointers       = [node .childNode];
-               node .childNode ._visible = extension .visible ?? true;
-               break;
+                  node .transformNode ._children .push (lightNode);
+                  break;
+               }
+               case "KHR_node_visibility":
+               {
+                  // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_visibility
+                  extension .pointers       = [node .childNode];
+                  node .childNode ._visible = extension .visible ?? true;
+                  break;
+               }
+               case "KHR_physics_rigid_bodies":
+               {
+                  let rigidBodyNode;
+
+                  if (extension .collider || extension .motion)
+                  {
+                     const name = node .childNode .getName ();
+
+                     if (physicsParent)
+                     {
+                        rigidBodyNode = physicsParent .rigidBodyNode;
+                     }
+                     else
+                     {
+                        rigidBodyNode = scene .createNode ("RigidBody", false);
+
+                        node .rigidBodyNode = rigidBodyNode;
+
+                        if (name && !rigidBodyNode .getName ())
+                           scene .addNamedNode (scene .getUniqueName (name), rigidBodyNode);
+
+                        node .modelMatrix .get (translation, rotation, scale);
+
+                        rigidBodyNode ._fixed                = true;
+                        rigidBodyNode ._position             = translation;
+                        rigidBodyNode ._orientation          = rotation;
+                        rigidBodyNode ._autoDamp             = true;
+                        rigidBodyNode ._linearDampingFactor  = 0.05;
+                        rigidBodyNode ._angularDampingFactor = 0.05;
+
+                        this .rigidBodies .push (rigidBodyNode);
+                     }
+                  }
+
+                  for (const [key, value] of Object .entries (extension))
+                  {
+                     if (!(value instanceof Object))
+                        continue;
+
+                     switch (key)
+                     {
+                        case "collider":
+                        {
+                           const collisionCollectionNode = this .physicsMaterialObject (value .physicsMaterial);
+
+                           let shapeNodes;
+
+                           if (value .geometry ?.shape !== undefined)
+                           {
+                              shapeNodes = [this .implicitShapes [value .geometry .shape]];
+                           }
+                           else if (value .geometry ?.mesh !== undefined)
+                           {
+                              const
+                                 mesh                    = this .meshes [value .geometry .mesh],
+                                 skin                    = this .skins [node .skin],
+                                 EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing;
+
+                              shapeNodes = this .meshObject (mesh, skin, EXT_mesh_gpu_instancing);
+                           }
+                           else if (value .geometry ?.node !== undefined) // Handle legacy property.
+                           {
+                              const
+                                 node                    = this .nodes [value .geometry .node],
+                                 mesh                    = this .meshes [node .mesh],
+                                 skin                    = this .skins [node .skin],
+                                 EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing;
+
+                              shapeNodes = this .meshObject (mesh, skin, EXT_mesh_gpu_instancing);
+                           }
+
+                           for (const shapeNode of shapeNodes ?? [ ])
+                           {
+                              const collidableShapeNode = scene .createNode ("CollidableShape", false);
+
+                              collidableShapeNode ._convexHull = value .geometry .convexHull;
+                              collidableShapeNode ._shape      = shapeNode;
+
+                              if (physicsParent)
+                              {
+                                 physicsParent .modelMatrix .copy ()
+                                    .inverse ()
+                                    .multLeft (node .modelMatrix)
+                                    .getTransform (translation, rotation, scale);
+
+                                 collidableShapeNode ._translation = translation;
+                                 collidableShapeNode ._rotation    = rotation;
+                                 collidableShapeNode ._scale       = scale;
+
+                                 const collidableOffsetNode = scene .createNode ("CollidableOffset", false);
+
+                                 collidableOffsetNode ._collidable = collidableShapeNode;
+
+                                 collidableOffsetNode .setup ();
+
+                                 rigidBodyNode ._geometry .push (collidableOffsetNode);
+
+                                 collisionCollectionNode ._collidables .push (collidableOffsetNode);
+
+                                 this .collidables .push (collidableOffsetNode);
+                              }
+                              else
+                              {
+                                 collidableShapeNode ._scale = scale;
+
+                                 rigidBodyNode ._geometry .push (collidableShapeNode);
+
+                                 collisionCollectionNode ._collidables .push (collidableShapeNode);
+
+                                 this .collidables .push (collidableShapeNode);
+                              }
+
+                              collidableShapeNode .setup ();
+                           }
+
+                           break;
+                        }
+                        case "motion":
+                        {
+                           const mass = this .numberValue (value .mass, 1);
+
+                           rigidBodyNode ._fixed = value .isKinematic;
+                           rigidBodyNode ._mass  = mass;
+
+                           if (this .vectorValue (value .centerOfMass, vector3))
+                              rigidBodyNode ._centerOfMass = vector3;
+
+                           if (this .vectorValue (value .inertiaDiagonal, vector3))
+                              rigidBodyNode ._inertia = new Matrix3 (vector3 [0], 0, 0, 0, vector3 [1], 0, 0, 0, vector3 [2]);
+
+                           // TODO: inertiaOrientation
+
+                           if (this .vectorValue (value .linearVelocity, vector3))
+                              rigidBodyNode ._linearVelocity = node .modelMatrix .multDirMatrix (vector3);
+
+                           if (this .vectorValue (value .angularVelocity, vector3))
+                              rigidBodyNode ._angularVelocity = node .modelMatrix .multDirMatrix (vector3);
+
+                           const gravityFactor = this .numberValue (value .gravityFactor, 1);
+
+                           if (gravityFactor !== 1)
+                           {
+                              rigidBodyNode ._useGlobalGravity = false;
+
+                              if (!value .isKinematic)
+                                 rigidBodyNode ._forces = [0, GRAVITY * gravityFactor * mass, 0];
+                           }
+
+                           // Routes
+
+                           const invParentMatrix = node .parentMatrix .copy () .inverse ();
+
+                           if (invParentMatrix .equals (Matrix4 .IDENTITY))
+                           {
+                              scene .addRoute (rigidBodyNode, "position",    node .childNode, "translation");
+                              scene .addRoute (rigidBodyNode, "orientation", node .childNode, "rotation");
+                           }
+                           else
+                           {
+                              // Script
+
+                              const scriptNode = scene .createNode ("Script", false);
+
+                              scriptNode .addUserDefinedField (X3DConstants .inputOutput, "invParentMatrix", new Fields .SFMatrix4f (... invParentMatrix));
+
+                              scriptNode .addUserDefinedField (X3DConstants .inputOutput, "position",    new Fields .SFVec3f ());
+                              scriptNode .addUserDefinedField (X3DConstants .inputOutput, "orientation", new Fields .SFRotation ());
+
+                              scriptNode .addUserDefinedField (X3DConstants .outputOnly, "translation_changed", new Fields .SFVec3f ());
+                              scriptNode .addUserDefinedField (X3DConstants .outputOnly, "rotation_changed",    new Fields .SFRotation ());
+
+                              scriptNode ._url = [/* js */ `ecmascript:
+const modelMatrix = new SFMatrix4f ();
+
+function eventsProcessed ()
+{
+   modelMatrix .setTransform (position, orientation);
+
+   modelMatrix
+      .multRight (invParentMatrix)
+      .getTransform (translation_changed, rotation_changed);
+}
+`];
+
+                              scriptNode .setup ();
+
+                              scene .addNamedNode (scene .getUniqueName ("MotionScript"), scriptNode);
+
+                              scene .addRoute (rigidBodyNode, "position",    scriptNode, "position");
+                              scene .addRoute (rigidBodyNode, "orientation", scriptNode, "orientation");
+
+                              scene .addRoute (scriptNode, "translation_changed", node .childNode, "translation");
+                              scene .addRoute (scriptNode, "rotation_changed",    node .childNode, "rotation");
+
+                              this .motionScripts .push (scriptNode);
+                           }
+
+                           break;
+                        }
+                        case "joint":
+                        {
+                           break;
+                        }
+                        case "trigger":
+                        {
+                           break;
+                        }
+                     }
+                  }
+
+                  break;
+               }
             }
          }
-      }
-   },
-   nodeChildrenArray (children)
+      };
+   })(),
+   nodeChildrenArray (children, modelMatrix, physicsParent)
    {
       if (!(children instanceof Array))
          return [ ];
