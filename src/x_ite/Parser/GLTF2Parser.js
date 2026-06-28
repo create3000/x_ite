@@ -2466,10 +2466,10 @@ function eventsProcessed ()
             if (this .vectorValue (node .scale, scale))
                transformNode ._scale = scale;
 
-            matrix .set (transformNode ._translation .getValue (),
-                         transformNode ._rotation .getValue (),
-                         transformNode ._scale .getValue (),
-                         transformNode ._scaleOrientation .getValue ());
+            matrix .setTransform (transformNode ._translation .getValue (),
+                                  transformNode ._rotation .getValue (),
+                                  transformNode ._scale .getValue (),
+                                  transformNode ._scaleOrientation .getValue ());
          }
 
          node .matrix       = matrix;
@@ -2542,29 +2542,6 @@ function eventsProcessed ()
          }
          else
          {
-            // Set transformation matrix.
-
-            if (this .vectorValue (node .matrix, matrix))
-            {
-               matrix .getTransform (translation, rotation, scale, scaleOrientation);
-
-               transformNode ._translation      = translation;
-               transformNode ._rotation         = rotation;
-               transformNode ._scale            = scale;
-               transformNode ._scaleOrientation = scaleOrientation;
-            }
-            else
-            {
-               if (this .vectorValue (node .translation, translation))
-                  transformNode ._translation = translation;
-
-               if (this .vectorValue (node .rotation, quaternion))
-                  transformNode ._rotation = rotation .setQuaternion (quaternion);
-
-               if (this .vectorValue (node .scale, scale))
-                  transformNode ._scale = scale;
-            }
-
             // Add Shape nodes.
 
             if (shapeNodes)
