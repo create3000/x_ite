@@ -21,7 +21,7 @@
     "dist/*",
     "LICENSES/*"
   ],
-  "scripts": {Updated dependencies.
+  "scripts": {
     "test": "cd ../x_ite-tests && npm test",
     "lint": "eslint src",
     "dist": "node build/bin/dist.js",
