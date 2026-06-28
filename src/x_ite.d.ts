@@ -2318,11 +2318,11 @@ declare namespace X3D
       /**
        * Returns an SFQuaternion whose value is the passed SFQuaternion added, componentwise, to the object.
        */
-      add (other: this): this;
+      add (other: SFQuaternion): SFQuaternion;
       /**
        * Returns an SFQuaternion whose value is the object divided by the passed numeric value.
        */
-      divide (denominator: number): this;
+      divide (denominator: number): SFQuaternion;
       /**
        * Returns the rotation matrix as an SFMatrix3f object.
        */
@@ -2342,7 +2342,7 @@ declare namespace X3D
       /**
        * Returns an SFQuaternion whose value is the object multiplied by the passed numeric value.
        */
-      multiply (factor: number): this;
+      multiply (factor: number): SFQuaternion;
       /**
        * Returns an SFQuaternion whose value is the object multiplied by the passed SFQuaternion.
        */
@@ -2354,7 +2354,7 @@ declare namespace X3D
       /**
        * Returns an SFQuaternion whose value is the componentwise negation of the object.
        */
-      negate (): this;
+      negate (): SFQuaternion;
       /**
        * Returns an SFQuaternion object converted to unit length.
        */
@@ -2370,7 +2370,7 @@ declare namespace X3D
       /**
        * Returns an SFQuaternion whose value is the passed SFQuaternion subtracted, componentwise, from the object.
        */
-      subtract (other: this): this;
+      subtract (other: SFQuaternion): SFQuaternion;
    }
 
    /**
