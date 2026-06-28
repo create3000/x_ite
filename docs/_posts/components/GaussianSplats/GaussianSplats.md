@@ -4,6 +4,8 @@ date: 2026-05-30
 nav: components-GaussianSplats
 categories: [components, GaussianSplats]
 tags: [GaussianSplats, GaussianSplats]
+redirect_from:
+  - /components/x-ite/gaussiansplats/
 ---
 <style>
 .post h3 {
