@@ -13,9 +13,9 @@ tags: [Layer, Layering]
 
 ## Overview
 
-Layer contains a list of children nodes that define the contents of the layer.
+**Layer** contains a list of children nodes that define the contents of the layer.
 
-The Layer node belongs to the [Layering](/x_ite/components/overview/#layering) component and requires at least support level **1,** its default container field is *layers.* It is available from X3D version 3.2 or higher.
+The **Layer** node belongs to the [Layering](/x_ite/components/overview/#layering) component and requires at least support level **1,** its default container field is *layers.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -111,7 +111,7 @@ Nodes making up this layer.
 ### Hints
 
 - No transformations are possible above each [LayerSet](/x_ite/components/layering/layerset/)/Layer combination in the scene graph hierarchy.
-- Each Layer node contains its own binding stacks and thus has its own viewpoints and navigation.
+- Each **Layer** node contains its own binding stacks and thus has its own viewpoints and navigation.
 
 ## Browser Compatibility
 

@@ -9,8 +9,9 @@ const
    _loadingDisplay = Symbol (),
    _loadingTotal   = Symbol (),
    _loadingObjects = Symbol (),
-   _loading        = Symbol (),
+   _browserLoading = Symbol (),
    _set_loadCount  = Symbol (),
+   _loadFractions  = Symbol (),
    _defaultScene   = Symbol ();
 
 function getBaseURI (element)
@@ -29,10 +30,11 @@ function X3DNetworkingContext ()
    this .addChildObjects (X3DConstants .outputOnly, "loadCount", new Fields .SFInt32 ());
 
    this [_baseURL]        = getBaseURI (this .getElement ());
+   this [_browserLoading] = false;
    this [_loadingDisplay] = 0;
    this [_loadingTotal]   = 0;
    this [_loadingObjects] = new Set ();
-   this [_loading]        = false;
+   this [_loadFractions]  = new Map ();
 }
 
 Object .assign (X3DNetworkingContext .prototype,
@@ -63,11 +65,11 @@ Object .assign (X3DNetworkingContext .prototype,
    },
    getBrowserLoading ()
    {
-      return this [_loading];
+      return this [_browserLoading];
    },
    setBrowserLoading (value)
    {
-      this [_loading] = value;
+      this [_browserLoading] = value;
 
       if (value)
       {
@@ -85,6 +87,8 @@ Object .assign (X3DNetworkingContext .prototype,
       }
       else
       {
+         this .resetLoadCount ();
+
          if (this .getBrowserOption ("SplashScreen"))
          {
             this .getCanvas () .show ();
@@ -92,7 +96,7 @@ Object .assign (X3DNetworkingContext .prototype,
             // Defer until promises are resolved.
             setTimeout (() =>
             {
-               if (!this [_loading])
+               if (!this [_browserLoading])
                   this .getSplashScreen () .addClass ("x_ite-private-fade-out-splash-screen");
             });
          }
@@ -119,7 +123,7 @@ Object .assign (X3DNetworkingContext .prototype,
    },
    getDisplayLoadCount ()
    {
-      return Array .from (this [_loadingObjects]) .reduce ((v, o) => v + !(o .isPrivate ?.() ?? true), 0);
+      return Array .from (this [_loadingObjects]) .reduce ((v, o) => v + !o .isPrivate ?.(), 0);
    },
    resetLoadCount ()
    {
@@ -128,9 +132,19 @@ Object .assign (X3DNetworkingContext .prototype,
       this [_loadingTotal]   = 0;
 
       this [_loadingObjects] .clear ();
+      this [_loadFractions]  .clear ();
 
       for (const object of this .getPrivateScene () .getLoadingObjects ())
          this .addLoadingObject (object);
+   },
+   setLoadingFractions (object, fractions)
+   {
+      if (!this [_browserLoading])
+         return;
+
+      // Let fractions go from 1 to 0.
+      this [_loadFractions] .set (object, 1 - fractions);
+      this [_set_loadCount] ();
    },
    [_set_loadCount] ()
    {
@@ -138,7 +152,7 @@ Object .assign (X3DNetworkingContext .prototype,
 
       let string;
 
-      if (this ._loadCount .getValue () || this [_loading])
+      if (this ._loadCount .getValue () || this [_browserLoading])
       {
          string = ((loadingDisplay || 1) === 1
             ? _ ("Loading %1 file")
@@ -151,11 +165,17 @@ Object .assign (X3DNetworkingContext .prototype,
 
       this .updateCursor ();
 
-      if (this [_loading])
+      if (this [_browserLoading])
       {
+         const loadFractions = Math .sumPrecise (this [_loadFractions] .values ());
+
+         // Let the loading fractions 1/2 of the count.
+         const fractions = 1 - (this ._loadCount .getValue () + loadFractions)
+            / (this [_loadingTotal] + this [_loadFractions] .size);
+
          this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (string);
          this .getSplashScreen () .find (".x_ite-private-progressbar div")
-            .css ("width", (100 - 100 * this ._loadCount .getValue () / this [_loadingTotal]) + "%");
+            .css ("width", `${100 * fractions}%`);
       }
       else
       {

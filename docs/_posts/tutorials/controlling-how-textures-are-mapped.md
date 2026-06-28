@@ -1,5 +1,5 @@
 ---
-title: Controlling How Textures are Mapped
+title: Controlling How Textures Are Mapped
 date: 2022-11-28
 nav: tutorials-textures-lights-and-environment
 categories: [Tutorials]
@@ -12,7 +12,7 @@ tags: [TextureCoordinate, TextureTransform]
   - Extract only pieces of interest
   - Create repeating patterns
 
-## Working through the texturing process
+## Working Through the Texturing Process
 
 - Imagine the texture image is a big piece of rubbery cookie dough
 - Select a texture image piece
@@ -21,7 +21,7 @@ tags: [TextureCoordinate, TextureTransform]
   - Stamp out a piece of texture dough
 - Stretch the rubbery texture cookie to fit a face
 
-## Using texture coordinate system
+## Using Texture Coordinate System
 
 Texture images (the dough) are in a texture coordinate system:
 
@@ -30,7 +30,7 @@ Texture images (the dough) are in a texture coordinate system:
 - (0,0) at lower-left
 - (1,1) at upper-right
 
-## Specifying texture coordinates
+## Specifying Texture Coordinates
 
 Texture coordinates and texture coordinate indices specify a texture piece shape (the cookie cutter):
 
@@ -40,7 +40,7 @@ Texture coordinates and texture coordinate indices specify a texture piece shape
 
   [Texture Mapping 1]: https://create3000.github.io/media/tutorials/images/texture-mapping-1.avif
 
-## Applying texture transforms
+## Applying Texture Transforms
 
 Texture transforms translate, rotate, and scale the texture coordinates (placing the cookie cutter):
 
@@ -51,7 +51,7 @@ Texture transforms translate, rotate, and scale the texture coordinates (placing
   [Texture Mapping 2]: https://create3000.github.io/media/tutorials/images/texture-mapping-2.avif
   [Texture Mapping 3]: https://create3000.github.io/media/tutorials/images/texture-mapping-3.avif
 
-## Texturing a face
+## Texturing a Face
 
 Bind the texture to a face (stretch the cookie and stick it):
 
@@ -62,7 +62,7 @@ Bind the texture to a face (stretch the cookie and stick it):
   [Cookie 1]: https://create3000.github.io/media/tutorials/images/cookie-1.avif
   [Cookie 2]: https://create3000.github.io/media/tutorials/images/cookie-2.avif
 
-## Working through the texturing process
+## Working Through the Texturing Process
 
 - Select piece with texture coordinates and indices
   - Create a cookie cutter
@@ -231,7 +231,7 @@ Shape {
 }
 ```
 
-## Scaling, rotating, and translating
+## Scaling, Rotating, and Translating
 
 Scale, Rotate, and Translate a texture cookie cutter one after the other:
 

@@ -208,32 +208,34 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
    },
    set_bbox__ ()
    {
+      const bbox = this .bbox;
+
       if (this .isDefaultBBoxSize ())
       {
          if (this .boundedPhysicsModelNodes .length)
          {
-            this .bbox .set ();
+            bbox .set ();
 
             for (const boundedPhysicsModelNode of this .boundedPhysicsModelNodes)
             {
-               const bbox = boundedPhysicsModelNode .getBBox ();
+               const subBBox = boundedPhysicsModelNode .getBBox ();
 
-               if (bbox)
-                  this .bbox .add (bbox);
+               if (subBBox)
+                  bbox .add (subBBox);
             }
          }
          else
          {
-            this .emitterNode ?.getBBox (this .bbox, this);
+            this .emitterNode ?.getBBox (bbox, this);
          }
       }
       else
       {
-         this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+         bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
       }
 
-      this .bboxSize   .assign (this .bbox .size);
-      this .bboxCenter .assign (this .bbox .center);
+      this .getBBoxSize ()   .assign (bbox .size);
+      this .getBBoxCenter () .assign (bbox .center);
    },
    set_transparent__ ()
    {
@@ -908,7 +910,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          case GeometryType .SPRITE:
          {
             this .updateSprite (gl, this .getScreenAlignedRotation (renderContext .modelViewMatrix));
-            // Proceed with next case:
+            // falls through
          }
          default:
          {
@@ -947,7 +949,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
          case GeometryType .SPRITE:
          {
             this .updateSprite (gl, this .getScreenAlignedRotation (renderContext .modelViewMatrix));
-            // Proceed with next case:
+            // falls through
          }
          case GeometryType .QUAD:
          case GeometryType .TRIANGLE:
@@ -957,7 +959,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
             gl .frontFace (positiveScale ? gl .CCW : gl .CW);
             gl .enable (gl .CULL_FACE);
 
-            // Proceed with next case:
+            // falls through
          }
          default:
          {
@@ -981,6 +983,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, X3DShapeNode 
             // Set viewport.
 
             gl .viewport (... viewport);
+            gl .scissor (... viewport);
 
             // Enable render mode nodes.
 

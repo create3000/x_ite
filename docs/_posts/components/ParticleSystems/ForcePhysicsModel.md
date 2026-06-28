@@ -13,9 +13,9 @@ tags: [ForcePhysicsModel, ParticleSystems]
 
 ## Overview
 
-ForcePhysicsModel applies a constant force value to the particles.
+**ForcePhysicsModel** applies a constant force value to the particles.
 
-The ForcePhysicsModel node belongs to the [ParticleSystems](/x_ite/components/overview/#particlesystems) component and requires at least support level **1,** its default container field is *physics.* It is available from X3D version 3.2 or higher.
+The **ForcePhysicsModel** node belongs to the [ParticleSystems](/x_ite/components/overview/#particlesystems) component and requires at least support level **1,** its default container field is *physics.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -55,7 +55,7 @@ Enables/disables node operation.
 
 #### Hints
 
-- If particles have zero mass, ForcePhysicsModel node has no effect.
+- If particles have zero mass, **ForcePhysicsModel** node has no effect.
 - *force* is specified in *force* base units (usually newtons, acceleration of one kilogram at rate of one meter per second squared).
 - [Https://en.wikipedia.org/wiki/Newton_(unit) and Kilogram](https://en.wikipedia.org/wiki/Kilogram)
 - [X3D Architecture 4.3.6 Standard units and coordinate system](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/concepts.html#Standardunitscoordinates)

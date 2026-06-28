@@ -17,7 +17,7 @@ ExtensionKeys .add ("IRIDESCENCE_MATERIAL_EXTENSION");
 import ShaderRegistry from "../../Browser/Shaders/ShaderRegistry.js";
 import Iridescence2   from "../../../assets/shaders/webgl2/pbr/Iridescence2.glsl.js";
 
-ShaderRegistry .addInclude ("Iridescence", Iridescence2);
+ShaderRegistry .addIncludeFile ("Iridescence", Iridescence2);
 
 // Register textures.
 

@@ -13,9 +13,12 @@ tags: [ShaderProgram, Shaders]
 
 ## Overview
 
-ShaderProgram is contained by ProgramShader and provides the source and interface to a self-contained program that occupies one part of the rendering process: either a vertex or fragment shader.
+**ShaderProgram** is contained by [ProgramShader](/x_ite/components/shaders/programshader/) and provides the source and interface to a self-contained program that occupies one part of the rendering process: either a vertex or fragment shader.
 
-The ShaderProgram node belongs to the [Shaders](/x_ite/components/overview/#shaders) component and requires at least support level **1,** its default container field is *programs.* It is available from X3D version 3.0 or higher.
+The **ShaderProgram** node belongs to the [Shaders](/x_ite/components/overview/#shaders) component and requires at least support level **1,** its default container field is *programs.* It is available from X3D version 3.0 or higher.
+
+>**Not Supported:** This node is **not supported** by X_ITE.
+{: .prompt-danger }
 
 ## Hierarchy
 
@@ -61,7 +64,7 @@ Author-provided prose that describes intended purpose of the url asset.
 ### SFString [ ] **type** "VERTEX" <small>["VERTEX"|"FRAGMENT"]</small>
 {: #fields-type }
 
-*type* indicates whether this ShaderProgram is a vertex or fragment (pixel) shader.
+*type* indicates whether this **ShaderProgram** is a vertex or fragment (pixel) shader.
 
 #### Warning
 
@@ -125,7 +128,7 @@ Location and filename of shader. Multiple locations are more reliable, and inclu
 
 ### Hints
 
-- ShaderProgram contains field declarations and then corresponding IS/connect statements (if any).
+- **ShaderProgram** contains field declarations and then corresponding IS/connect statements (if any).
 - Insert an XML Character Data (CDATA) block within the [Script](/x_ite/components/scripting/script/) node to contain source code embedded within an X3D scene, avoiding the need for escape characters.
 - A contained XML Character Data (CDATA) block for source code protects whitespace, line breaks, and literal characters (such as &amp; for ampersand character, \< for less-than-sign character, and \> for greater-than-sign character) from unintended escape-character modifications by XML parsers.
 - [When parent node is LoadSensor, apply `containerField='children'` (X3Dv4) or `containerField='watchList'` (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)

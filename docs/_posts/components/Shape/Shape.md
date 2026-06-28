@@ -13,9 +13,9 @@ tags: [Shape, Shape, VRML]
 
 ## Overview
 
-Shape can appear under any grouping node. Shape can contain an Appearance node and a geometry node (for example one of the primitives Box Cone Cylinder Sphere Text, one of ElevationGrid Extrusion IndexedFaceSet IndexedLineSet LineSet PointSet, or one of the other geometry nodes).
+**Shape** can appear under any grouping node. **Shape** can contain an [Appearance](/x_ite/components/shape/appearance/) node and a geometry node (for example one of the primitives [Box](/x_ite/components/geometry3d/box/) [Cone](/x_ite/components/geometry3d/cone/) [Cylinder](/x_ite/components/geometry3d/cylinder/) [Sphere](/x_ite/components/geometry3d/sphere/) [Text](/x_ite/components/text/text/), one of [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) [Extrusion](/x_ite/components/geometry3d/extrusion/) [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) [IndexedLineSet](/x_ite/components/rendering/indexedlineset/) [LineSet](/x_ite/components/rendering/lineset/) [PointSet](/x_ite/components/rendering/pointset/), or one of the other geometry nodes).
 
-The Shape node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **Shape** node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -61,12 +61,12 @@ The *pointerEvents* field defines whether this Shape becomes target for pointer 
 ### SFBool [in, out] **castShadow** TRUE
 {: #fields-castShadow }
 
-*castShadow* defines whether this Shape casts shadows as produced by lighting nodes.
+*castShadow* defines whether this **Shape** casts shadows as produced by lighting nodes.
 
 #### Hints
 
-- If the visible field is FALSE, then the Shape does not cast any shadows.
-- If prior X3D3 content is loaded into an X3D4 model, then legacy Shape nodes have shadows set to true.
+- If the visible field is FALSE, then the **Shape** does not cast any shadows.
+- If prior X3D3 content is loaded into an X3D4 model, then legacy **Shape** nodes have shadows set to true.
 
 ### SFBool [in, out] **visible** TRUE
 {: #fields-visible }
@@ -124,10 +124,10 @@ Optional single contained *geometry* node that is rendered according to correspo
 
 ### Hints
 
-- [Shape](https://en.wikipedia.org/wiki/Shape)
-- The Shape design pattern to collect appearance and geometry together is fundamentally the same for many types of 3D graphics software and hardware.
+- [**Shape**](https://en.wikipedia.org/wiki/Shape)
+- The **Shape** design pattern to collect appearance and geometry together is fundamentally the same for many types of 3D graphics software and hardware.
 - For advanced extensibility, authors can substitute a type-matched ProtoInstance node (with correct containerField value) for contained node content.
-- [X3D Architecture 12.2.1 Shape nodes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/shape.html#Shapenodes)
+- [X3D Architecture 12.2.1 **Shape** nodes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/shape.html#Shapenodes)
 - [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/lighting.html#Lightingmodel)
 - Apply `containerField='shape'` if parent node is [CADFace](/x_ite/components/cadgeometry/cadface/).
 

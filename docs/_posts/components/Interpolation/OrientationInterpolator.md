@@ -13,9 +13,9 @@ tags: [OrientationInterpolator, Interpolation, VRML]
 
 ## Overview
 
-OrientationInterpolator generates a series of 4-tuple axis-angle SFRotation values. Authors can ROUTE value_changed output events to a Transform node's rotation field or to another 4-tuple SFRotation field.
+**OrientationInterpolator** generates a series of 4-tuple axis-angle SFRotation values. Authors can ROUTE value_changed output events to a [Transform](/x_ite/components/grouping/transform/) node's rotation field or to another 4-tuple SFRotation field.
 
-The OrientationInterpolator node belongs to the [Interpolation](/x_ite/components/overview/#interpolation) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **OrientationInterpolator** node belongs to the [Interpolation](/x_ite/components/overview/#interpolation) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

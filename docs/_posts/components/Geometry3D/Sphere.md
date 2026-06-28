@@ -13,9 +13,9 @@ tags: [Sphere, Geometry3D, VRML]
 
 ## Overview
 
-Sphere is a geometry node, representing a perfectly round geometrical object that is the surface of a completely round ball.
+**Sphere** is a geometry node, representing a perfectly round geometrical object that is the surface of a completely round ball.
 
-The Sphere node belongs to the [Geometry3D](/x_ite/components/overview/#geometry3d) component and requires at least support level **1,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **Sphere** node belongs to the [Geometry3D](/x_ite/components/overview/#geometry3d) component and requires at least support level **1,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -76,7 +76,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 
 ### Hints
 
-- [Sphere](https://en.wikipedia.org/wiki/Sphere)
+- [**Sphere**](https://en.wikipedia.org/wiki/Sphere)
 - Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 
 ## Example

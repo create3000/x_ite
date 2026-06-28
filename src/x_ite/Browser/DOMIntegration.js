@@ -45,6 +45,12 @@ class DOMIntegration
       this .processCanvasMutation (browser)
    }
 
+   isPrivate ()
+   {
+      // Don't count as loading object.
+      return true;
+   }
+
    processCanvasMutation (browser)
    {
       this .processRootElement (browser, browser .getElement () .children ("X3D") .get (-1));

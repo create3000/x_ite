@@ -412,7 +412,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          geometryContext = shapeNode .getGeometryContext (),
          options         = [ ];
 
-      options .push ("X3D_DEPTH_SHADER");
+      options .push ("X3D_POINTING_PASS");
 
       if (geometryContext .hasNormals)
          options .push ("X3D_NORMALS");
@@ -447,7 +447,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       hAnimNode ?.getShaderOptions (options);
 
-      const shaderNode = this .createShader ({
+      const shaderNode = shapeNode .createPointingShader ?.(options) ?? this .createShader ({
          name: "Pointing",
          vertexShader: "Pointing",
          fragmentShader: "Pointing",

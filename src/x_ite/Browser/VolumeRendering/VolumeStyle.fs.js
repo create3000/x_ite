@@ -22,6 +22,7 @@ const float M_PI      = 3.141592653589793;
 const float M_SQRT2   = 1.4142135623730951;
 const float M_SQRT1_2 = 0.7071067811865476;
 
+#include <ToneMapping>
 #include <ClipPlanes>
 #include <Fog>
 #include <OIT>
@@ -210,9 +211,14 @@ main ()
 
    vec4 finalColor = getTextureColor (texCoord .stp / texCoord .q);
 
+   if (finalColor .a < 1.0 / 255.0)
+      discard;
+
    #if defined (X3D_FOG)
       finalColor .rgb = getFogColor (finalColor .rgb);
    #endif
+
+   finalColor .rgb = toneMap (finalColor .rgb);
 
    #if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
       oit (finalColor);

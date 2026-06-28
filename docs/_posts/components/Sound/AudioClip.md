@@ -13,9 +13,9 @@ tags: [AudioClip, Sound, VRML]
 
 ## Overview
 
-AudioClip provides audio data used by parent Sound nodes.
+**AudioClip** provides audio data used by parent [Sound](/x_ite/components/sound/sound/) nodes.
 
-The AudioClip node belongs to the [Sound](/x_ite/components/overview/#sound) component and requires at least support level **1,** its default container field is *source.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **AudioClip** node belongs to the [Sound](/x_ite/components/overview/#sound) component and requires at least support level **1,** its default container field is *source.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -169,7 +169,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 ### SFTime [in, out] **resumeTime** 0 <small>(-∞,∞)</small>
 {: #fields-resumeTime }
 
-When *resumeTime* becomes \<= time now, isPaused becomes false and AudioClip becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When *resumeTime* becomes \<= time now, isPaused becomes false and **AudioClip** becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
@@ -178,7 +178,7 @@ When *resumeTime* becomes \<= time now, isPaused becomes false and AudioClip bec
 ### SFTime [in, out] **pauseTime** 0 <small>(-∞,∞)</small>
 {: #fields-pauseTime }
 
-When time now \>= *pauseTime*, isPaused becomes true and AudioClip becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When time now \>= *pauseTime*, isPaused becomes true and **AudioClip** becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
@@ -201,7 +201,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 ### SFBool [out] **isPaused**
 {: #fields-isPaused }
 
-*isPaused* true/false events are sent when AudioClip is paused/resumed.
+*isPaused* true/false events are sent when **AudioClip** is paused/resumed.
 
 #### Warning
 
@@ -219,7 +219,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 ### SFTime [out] **elapsedTime**
 {: #fields-elapsedTime }
 
-Current elapsed time since AudioClip activated/running, cumulative in seconds, and not counting any paused time.
+Current elapsed time since **AudioClip** activated/running, cumulative in seconds, and not counting any paused time.
 
 #### Hint
 
@@ -259,7 +259,7 @@ Any audio file format supported by the web browser, but at least:
 ### Hints
 
 - Add a parent [Sound](/x_ite/components/sound/sound/) node first.
-- Utilize DEF/USE references for multiple copies of a single AudioClip sound file in order to avoid multiple-download delays, reduce memory requirements, and maintain synchronization.
+- Utilize DEF/USE references for multiple copies of a single **AudioClip** sound file in order to avoid multiple-download delays, reduce memory requirements, and maintain synchronization.
 - Authors can provide multiple audio formats for the same audio track, with each source address listed separately in the url field.
 - Player support for .wav format is required, .midi format is recommended, other formats are optional.
 - [X3D Scene Authoring Hints:Audio](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Audio)

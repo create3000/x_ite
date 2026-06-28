@@ -184,7 +184,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, X3DGeometryNode .p
 
          // The entire spine is collinear:
          if (SCPzAxis .equals (Vector3 .ZERO))
-            rotation .setFromToVec (Vector3 .Y_AXIS, SCPyAxis) .multVecRot (SCPzAxis .assign (Vector3 .Z_AXIS));
+            rotation .setVectors (Vector3 .Y_AXIS, SCPyAxis) .multVecRot (SCPzAxis .assign (Vector3 .Z_AXIS));
 
          // We do not have to normalize SCPxAxis, as SCPyAxis and SCPzAxis are orthogonal.
          SCPxAxis .assign (SCPyAxis) .cross (SCPzAxis);

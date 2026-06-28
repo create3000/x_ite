@@ -78,7 +78,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, X3
 
       this [_fileLoader] ?.abort ();
 
-      this [_fileLoader] = new FileLoader (this, cache)
+      this [_fileLoader] = new FileLoader (this, { cacheScene: cache })
          .createX3DFromURL (this ._url, null, this .setInternalScene .bind (this));
    },
    getInternalScene ()

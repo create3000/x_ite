@@ -2,6 +2,7 @@ import X3DParser    from "./X3DParser.js";
 import X3DOptimizer from "./X3DOptimizer.js";
 import Fields       from "../Fields.js";
 import X3DConstants from "../Base/X3DConstants.js";
+import FileLoader   from "../InputOutput/FileLoader.js";
 import URLs         from "../Browser/Networking/URLs.js";
 import Layer        from "../Components/Layering/Layer.js";
 import TraverseType from "../Rendering/TraverseType.js";
@@ -116,7 +117,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          if (!Object .keys (this .input) .every (key => keys .has (key)))
             return false;
 
-         if (this .input .asset ?.version !== "2.0")
+         if (!(this .input .asset ?.version >= 2.0))
             return false;
 
          return true;
@@ -283,11 +284,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                components .push (browser .getComponent ("X_ITE", 1));
                break;
             }
-            case "KHR_texture_transform":
-            {
-               components .push (browser .getComponent ("Texturing3D", 2));
-               break;
-            }
             case "KHR_animation_pointer":
             {
                components .push (browser .getComponent ("EventUtilities", 1));
@@ -305,11 +301,21 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                this .draco ??= await this .getLibrary ("draco_decoder_gltf.js");
                break;
             }
+            case "KHR_gaussian_splatting":
+            {
+               components .push (browser .getComponent ("GaussianSplats", 1));
+               break;
+            }
             case "KHR_meshopt_compression":
             case "EXT_meshopt_compression":
             {
                this .MeshoptDecoder ??= await this .getLibrary ("meshopt_decoder.js");
                await this .MeshoptDecoder .ready;
+               break;
+            }
+            case "KHR_texture_transform":
+            {
+               components .push (browser .getComponent ("Texturing3D", 2));
                break;
             }
          }
@@ -393,7 +399,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       lightNode ._intensity = this .numberValue (light .intensity, 1);
 
       if (this .vectorValue (lightNode .rotation, quaternion))
-         lightNode ._rotation = new Rotation4 (0, 0, 1, Math .PI) .multRight (new Rotation4 (quaternion));
+         lightNode ._rotation = new Rotation4 (0, 0, 1, Math .PI) .multRight (Rotation4 .fromQuaternion (quaternion));
       else
          lightNode ._rotation = new Rotation4 (0, 0, 1, Math .PI);
 
@@ -718,13 +724,15 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!buffer .uri)
          return this .buffers [i];
 
-      const
-         url         = new URL (buffer .uri, this .getScene () .getBaseURL ()),
-         response    = await fetch (url),
-         blob        = await response .blob (),
-         arrayBuffer = await blob .arrayBuffer ();
+      this .getScene () .addLoadingObject (buffer);
 
-      return $.ungzip (arrayBuffer);
+      const
+         url         = new Fields .MFString (new URL (buffer .uri, this .getScene () .getBaseURL ())),
+         arrayBuffer = await FileLoader .loadDocument (this .getBrowser () .getWorld (), url, { dataAsString: false });
+
+      this .getScene () .removeLoadingObject (buffer);
+
+      return arrayBuffer;
    },
    bufferViewsArray (bufferViews)
    {
@@ -1181,17 +1189,17 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       for (const [key, extension] of Object .entries (extensions))
       {
+         if (!this .extensions .has (key))
+            continue;
+
          switch (key)
          {
             case "KHR_texture_basisu":
+            // case "EXT_texture_astc":
             case "EXT_texture_avif":
             case "EXT_texture_webp":
-            {
-               if (this .extensions .has (key))
-                  images .push (this .images [extension ?.source]);
-
+               images .push (this .images [extension ?.source]);
                break;
-            }
          }
       }
    },
@@ -1693,6 +1701,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const extension = this .getScene () .createNode ("VolumeScatterMaterialExtension", false);
 
+      extension ._scatterStrength        = this .numberValue (KHR_materials_volume_scatter .scatterStrengthFactor, 0);
+      extension ._scatterStrengthTexture = this .textureInfo (KHR_materials_volume_scatter .scatterStrengthTexture);
+      extension ._scatterTextureMapping  = this .textureMapping (KHR_materials_volume_scatter .scatterTexture);
+
       const multiscatterColor = new Color3 ();
 
       if (this .vectorValue (KHR_materials_volume_scatter .multiscatterColorFactor, multiscatterColor))
@@ -1912,6 +1924,9 @@ function eventsProcessed ()
       this .attributesObject (primitive .attributes);
       this .targetsArray     (primitive .targets);
 
+      if (primitive .extensions ?.KHR_gaussian_splatting)
+         return this .khrGaussianSplatting (primitive, shapeNodes);
+
       primitive .indices  = this .accessors [primitive .indices];
       primitive .material = this .materials [primitive .material];
 
@@ -1922,6 +1937,53 @@ function eventsProcessed ()
          variantsNode = this .khrMaterialsVariantsExtension (primitive .extensions ?.KHR_materials_variants, shapeNode);
 
       shapeNodes .push (primitive .shapeNode = variantsNode ?? shapeNode);
+   },
+   khrGaussianSplatting (primitive, shapeNodes)
+   {
+      const
+         scene                  = this .getScene (),
+         gaussianSplats         = scene .createNode ("GaussianSplats", false),
+         KHR_gaussian_splatting = primitive .extensions ?.KHR_gaussian_splatting,
+         attributes             = primitive .attributes;
+
+      gaussianSplats ._colorSpace = String (KHR_gaussian_splatting ?.colorSpace ?? "SRGB_REC709_DISPLAY") .toUpperCase ();
+
+      gaussianSplats ._positions    = attributes ?.POSITION ?.array ?? [ ];
+      gaussianSplats ._orientations = attributes ?.["KHR_gaussian_splatting:ROTATION"] ?.array ?? [ ];
+      gaussianSplats ._scales       = attributes ?.["KHR_gaussian_splatting:SCALE"]    ?.array ?? [ ];
+      gaussianSplats ._opacities    = attributes ?.["KHR_gaussian_splatting:OPACITY"]  ?.array ?? [ ];
+
+      // Degrees 0,1,2,3
+
+      for (const [degree, coefs] of [1, 3, 5, 7] .entries ())
+      {
+         for (let coef = 0; coef < coefs; ++ coef)
+         {
+            const
+               field = gaussianSplats .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`),
+               value = attributes ?.[`KHR_gaussian_splatting:SH_DEGREE_${degree}_COEF_${coef}`] ?.array ?? [ ];
+
+            field .setValue (value);
+         }
+      }
+
+      // Bounding Box
+
+      const
+         min    = new Vector3 (),
+         max    = new Vector3 (),
+         hasMin = this .vectorValue (attributes ?.POSITION ?.min, min),
+         hasMax = this .vectorValue (attributes ?.POSITION ?.max, max);
+
+      if (hasMin && hasMax)
+      {
+         gaussianSplats ._bboxSize   = max .copy () .subtract (min),
+         gaussianSplats ._bboxCenter = min .copy () .add (max) .divide (2);
+      }
+
+      gaussianSplats .setup ();
+
+      shapeNodes .push (primitive .shapeNode = gaussianSplats);
    },
    attributesObject (attributes)
    {
@@ -2480,6 +2542,29 @@ function eventsProcessed ()
          }
          else
          {
+            // Set transformation matrix.
+
+            if (this .vectorValue (node .matrix, matrix))
+            {
+               matrix .getTransform (translation, rotation, scale, scaleOrientation);
+
+               transformNode ._translation      = translation;
+               transformNode ._rotation         = rotation;
+               transformNode ._scale            = scale;
+               transformNode ._scaleOrientation = scaleOrientation;
+            }
+            else
+            {
+               if (this .vectorValue (node .translation, translation))
+                  transformNode ._translation = translation;
+
+               if (this .vectorValue (node .rotation, quaternion))
+                  transformNode ._rotation = rotation .setQuaternion (quaternion);
+
+               if (this .vectorValue (node .scale, scale))
+                  transformNode ._scale = scale;
+            }
+
             // Add Shape nodes.
 
             if (shapeNodes)
@@ -2885,7 +2970,7 @@ function eventsProcessed ()
             if (!jointNode)
                continue;
 
-            inverseBindMatrix .get (translation, rotation, scale);
+            inverseBindMatrix .getTransform (translation, rotation, scale);
 
             humanoidNode ._joints                .push (jointNode);
             humanoidNode ._jointBindingPositions .push (translation);
@@ -2930,9 +3015,9 @@ function eventsProcessed ()
       {
          const skinCoordWeight = jointNode .skinCoordWeight;
 
-         jointMatrix .set (jointBindingPositions [j] ?.getValue (),
-                           jointBindingRotations [j] ?.getValue (),
-                           jointBindingScales [j] ?.getValue ())
+         jointMatrix .setTransform (jointBindingPositions [j] ?.getValue (),
+                                    jointBindingRotations [j] ?.getValue (),
+                                    jointBindingScales [j] ?.getValue ())
          .multRight (jointNode .getValue () .getModelViewMatrix ());
 
          for (const [c, index] of jointNode .skinCoordIndex .entries ())
@@ -2981,7 +3066,7 @@ function eventsProcessed ()
                return;
             }
 
-            // Proceed with next case:
+            // falls through
          }
          default:
          {
@@ -3300,10 +3385,10 @@ function eventsProcessed ()
 
          for (let i = 0; i < length; i += 4)
          {
-            instancedShapeNode ._rotations .push (new Rotation4 (new Quaternion (rotationArray [i + 0],
-                                                                                 rotationArray [i + 1],
-                                                                                 rotationArray [i + 2],
-                                                                                 rotationArray [i + 3])));
+            instancedShapeNode ._rotations .push (Rotation4 .fromQuaternion (new Quaternion (rotationArray [i + 0],
+                                                                                             rotationArray [i + 1],
+                                                                                             rotationArray [i + 2],
+                                                                                             rotationArray [i + 3])));
          }
       }
 
@@ -4430,21 +4515,21 @@ function eventsProcessed ()
 
             // KeyValue
 
-            interpolatorNode ._keyValue .push (new Rotation4 (new Quaternion (keyValues [0],
-                                                                              keyValues [1],
-                                                                              keyValues [2],
-                                                                              keyValues [3])));
+            interpolatorNode ._keyValue .push (Rotation4 .fromQuaternion (new Quaternion (keyValues [0],
+                                                                                          keyValues [1],
+                                                                                          keyValues [2],
+                                                                                          keyValues [3])));
 
             for (let i = 0, length = keyValues .length - 4; i < length; i += 4)
             {
-               interpolatorNode ._keyValue .push (new Rotation4 (new Quaternion (keyValues [i + 0],
-                                                                                 keyValues [i + 1],
-                                                                                 keyValues [i + 2],
-                                                                                 keyValues [i + 3])),
-                                                  new Rotation4 (new Quaternion (keyValues [i + 4],
-                                                                                 keyValues [i + 5],
-                                                                                 keyValues [i + 6],
-                                                                                 keyValues [i + 7])));
+               interpolatorNode ._keyValue .push (Rotation4 .fromQuaternion (new Quaternion (keyValues [i + 0],
+                                                                                             keyValues [i + 1],
+                                                                                             keyValues [i + 2],
+                                                                                             keyValues [i + 3])),
+                                                  Rotation4 .fromQuaternion (new Quaternion (keyValues [i + 4],
+                                                                                             keyValues [i + 5],
+                                                                                             keyValues [i + 6],
+                                                                                             keyValues [i + 7])));
             }
 
             // Finish
@@ -4460,10 +4545,10 @@ function eventsProcessed ()
 
             for (let i = 0, length = keyValues .length; i < length; i += 4)
             {
-               interpolatorNode ._keyValue .push (new Rotation4 (new Quaternion (keyValues [i + 0],
-                                                                                 keyValues [i + 1],
-                                                                                 keyValues [i + 2],
-                                                                                 keyValues [i + 3])));
+               interpolatorNode ._keyValue .push (Rotation4 .fromQuaternion (new Quaternion (keyValues [i + 0],
+                                                                                             keyValues [i + 1],
+                                                                                             keyValues [i + 2],
+                                                                                             keyValues [i + 3])));
             }
 
             interpolatorNode .setup ();
@@ -4491,7 +4576,7 @@ function eventsProcessed ()
                const q = this .cubicSplineVector (t, times, quaternions) .normalize ();
 
                interpolatorNode ._key      .push (t / cycleInterval);
-               interpolatorNode ._keyValue .push (new Rotation4 (q));
+               interpolatorNode ._keyValue .push (Rotation4 .fromQuaternion (q));
             }
 
             interpolatorNode .setup ();

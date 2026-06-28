@@ -119,7 +119,7 @@ Object .assign (Object .setPrototypeOf (TransformSensor .prototype, X3DEnvironme
 
          if (matrix)
          {
-            matrix .get (position, orientation);
+            matrix .getTransform (position, orientation);
 
             if (this ._isActive .getValue ())
             {

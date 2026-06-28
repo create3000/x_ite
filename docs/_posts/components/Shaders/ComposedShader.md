@@ -13,9 +13,9 @@ tags: [ComposedShader, Shaders]
 
 ## Overview
 
-ComposedShader defines a shader where the individual source files are assembled from contained ShaderPart program sections. All access to shading capabilities is defined through a single interface that applies to all parts.
+**ComposedShader** defines a shader where the individual source files are assembled from contained [ShaderPart](/x_ite/components/shaders/shaderpart/) program sections. All access to shading capabilities is defined through a single interface that applies to all parts.
 
-The ComposedShader node belongs to the [Shaders](/x_ite/components/overview/#shaders) component and requires at least support level **1,** its default container field is *shaders.* It is available from X3D version 3.0 or higher.
+The **ComposedShader** node belongs to the [Shaders](/x_ite/components/overview/#shaders) component and requires at least support level **1,** its default container field is *shaders.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -89,18 +89,18 @@ The *language* field indicates to the X3D player which shading *language* is use
 ### MFNode [in, out] **parts** [ ] <small>[ShaderPart]</small>
 {: #fields-parts }
 
-ComposedShader can contain multiple [ShaderPart](/x_ite/components/shaders/shaderpart/) nodes in the *parts* field.
+**ComposedShader** can contain multiple [ShaderPart](/x_ite/components/shaders/shaderpart/) nodes in the *parts* field.
 
 ## Advice
 
 ### Hints
 
-- ComposedShader contains field declarations and then corresponding IS/connect statements (if any), followed by Metadata* nodes (if any), then \<[ShaderPart](/x_ite/components/shaders/shaderpart/) `containerField='parts'/>` nodes.
+- **ComposedShader** contains field declarations and then corresponding IS/connect statements (if any), followed by Metadata* nodes (if any), then \<[ShaderPart](/x_ite/components/shaders/shaderpart/) `containerField='parts'/>` nodes.
 - Apply default `containerField='shaders'` when parent node is [Appearance](/x_ite/components/shape/appearance/).
 
 ### Warning
 
-- ComposedShader does not contain CDATA section of plain-text source code. All source programs are contained in child [ShaderPart](/x_ite/components/shaders/shaderpart/) nodes.
+- **ComposedShader** does not contain CDATA section of plain-text source code. All source programs are contained in child [ShaderPart](/x_ite/components/shaders/shaderpart/) nodes.
 
 ## Example
 

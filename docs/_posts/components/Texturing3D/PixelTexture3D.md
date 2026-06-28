@@ -13,9 +13,9 @@ tags: [PixelTexture3D, Texturing3D]
 
 ## Overview
 
-PixelTexture3D defines a 3D image-based texture map as an explicit array of pixel values (image field).
+**PixelTexture3D** defines a 3D image-based texture map as an explicit array of pixel values (image field).
 
-The PixelTexture3D node belongs to the [Texturing3D](/x_ite/components/overview/#texturing3d) component and requires at least support level **1,** its default container field is *texture.* It is available from X3D version 3.1 or higher.
+The **PixelTexture3D** node belongs to the [Texturing3D](/x_ite/components/overview/#texturing3d) component and requires at least support level **1,** its default container field is *texture.* It is available from X3D version 3.1 or higher.
 
 ## Hierarchy
 
@@ -66,7 +66,7 @@ Author-provided prose that describes intended purpose of the url asset.
 
 #### Warning
 
-- The order of initial values in [PixelTexture](/x_ite/components/texturing/pixeltexture/) and PixelTexture3D *image* arrays are different.
+- The order of initial values in [PixelTexture](/x_ite/components/texturing/pixeltexture/) and **PixelTexture3D** *image* arrays are different.
 
 ### SFBool [ ] **repeatS** FALSE
 {: #fields-repeatS }

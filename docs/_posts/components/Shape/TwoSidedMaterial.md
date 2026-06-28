@@ -13,12 +13,12 @@ tags: [TwoSidedMaterial, Shape]
 
 ## Overview
 
-TwoSidedMaterial specifies surface rendering properties for associated geometry, for outer (front) and inner (back) sides of polygons. Material attributes are used by the X3D lighting equations during rendering.
+**TwoSidedMaterial** specifies surface rendering properties for associated geometry, for outer (front) and inner (back) sides of polygons. [Material](/x_ite/components/shape/material/) attributes are used by the X3D lighting equations during rendering.
 
-The TwoSidedMaterial node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **4,** its default container field is *material.* It is available from X3D version 3.2 or higher.
+The **TwoSidedMaterial** node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **4,** its default container field is *material.* It is available from X3D version 3.2 or higher.
 
 >**Deprecated:** This node is **deprecated** as of X3D version 4.0. Future versions of the standard may remove this node.
-{: .prompt-danger }
+{: .prompt-warning }
 
 ## Hierarchy
 
@@ -201,7 +201,7 @@ How "clear" an object is: 1.0 is completely transparent, 0.0 is completely opaqu
 
 - Requires X3D `profile='Full'` or else include `<component name='Shape' level='4'/>`
 - Corresponding geometry within the parent [Shape](/x_ite/components/shape/shape/) must have solid='false' for two-sided rendering, otherwise no reverse-side back geometry is displayed.
-- X3D4 Architecture has deprecated TwoSidedMaterial, preferring use of child backMaterial node in parent [Appearance](/x_ite/components/shape/appearance/).
+- X3D4 Architecture has deprecated **TwoSidedMaterial**, preferring use of child backMaterial node in parent [Appearance](/x_ite/components/shape/appearance/).
 
 ## Example
 

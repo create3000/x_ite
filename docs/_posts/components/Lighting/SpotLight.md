@@ -13,9 +13,9 @@ tags: [SpotLight, Lighting, VRML]
 
 ## Overview
 
-SpotLight is a light source that illuminates geometry within a conical beam. X3D lights illuminate all geometry except lines and points. By default, light scope only illuminates peer geometry and children nodes within the scene graph hierarchy.
+**SpotLight** is a light source that illuminates geometry within a conical beam. X3D lights illuminate all geometry except lines and points. By default, light scope only illuminates peer geometry and children nodes within the scene graph hierarchy.
 
-The SpotLight node belongs to the [Lighting](/x_ite/components/overview/#lighting) component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **SpotLight** node belongs to the [Lighting](/x_ite/components/overview/#lighting) component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -65,7 +65,7 @@ Global lights illuminate all objects within their volume of lighting influence. 
 
 #### Warning
 
-- [DirectionalLight](/x_ite/components/lighting/directionallight/) default *global*=false to limit scope and avoid inadvertently illuminating every object in a large scene. [PointLight](/x_ite/components/lighting/pointlight/) and SpotLight default *global*=true since their effects are each limited by maximum radius value.
+- [DirectionalLight](/x_ite/components/lighting/directionallight/) default *global*=false to limit scope and avoid inadvertently illuminating every object in a large scene. [PointLight](/x_ite/components/lighting/pointlight/) and **SpotLight** default *global*=true since their effects are each limited by maximum radius value.
 
 ### SFBool [in, out] **on** TRUE
 {: #fields-on }

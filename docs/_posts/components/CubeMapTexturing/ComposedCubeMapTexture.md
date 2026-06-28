@@ -13,9 +13,9 @@ tags: [ComposedCubeMapTexture, CubeMapTexturing]
 
 ## Overview
 
-ComposedCubeMapTexture is a texture node that defines a cubic environment map source as an explicit set of images drawn from individual 2D texture nodes.
+**ComposedCubeMapTexture** is a texture node that defines a cubic environment map source as an explicit set of images drawn from individual 2D texture nodes.
 
-The ComposedCubeMapTexture node belongs to the [CubeMapTexturing](/x_ite/components/overview/#cubemaptexturing) component and requires at least support level **1,** its default container field is *texture.* It is available from X3D version 3.1 or higher.
+The **ComposedCubeMapTexture** node belongs to the [CubeMapTexturing](/x_ite/components/overview/#cubemaptexturing) component and requires at least support level **1,** its default container field is *texture.* It is available from X3D version 3.1 or higher.
 
 ## Hierarchy
 
@@ -63,7 +63,7 @@ Author-provided prose that describes intended purpose of the url asset.
 ### SFNode [in, out] **frontTexture** NULL <small>[X3DTexture2DNode]</small>
 {: #fields-frontTexture }
 
-Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/), other texture nodes).
+Parent **ComposedCubeMapTexture** element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/), other texture nodes).
 
 #### Warnings
 
@@ -73,7 +73,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageT
 ### SFNode [in, out] **backTexture** NULL <small>[X3DTexture2DNode]</small>
 {: #fields-backTexture }
 
-Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/), other texture nodes).
+Parent **ComposedCubeMapTexture** element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/), other texture nodes).
 
 #### Warnings
 
@@ -83,7 +83,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageT
 ### SFNode [in, out] **leftTexture** NULL <small>[X3DTexture2DNode]</small>
 {: #fields-leftTexture }
 
-Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/), other texture nodese).
+Parent **ComposedCubeMapTexture** element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/), other texture nodese).
 
 #### Warnings
 
@@ -93,7 +93,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageT
 ### SFNode [in, out] **rightTexture** NULL <small>[X3DTexture2DNode]</small>
 {: #fields-rightTexture }
 
-Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/), other texture nodes).
+Parent **ComposedCubeMapTexture** element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/), other texture nodes).
 
 #### Warnings
 
@@ -103,7 +103,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageT
 ### SFNode [in, out] **topTexture** NULL <small>[X3DTexture2DNode]</small>
 {: #fields-topTexture }
 
-Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/), other texture nodes).
+Parent **ComposedCubeMapTexture** element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/) [MovieTexture](/x_ite/components/texturing/movietexture/), other texture nodes).
 
 #### Warnings
 
@@ -113,7 +113,7 @@ Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageT
 ### SFNode [in, out] **bottomTexture** NULL <small>[X3DTexture2DNode]</small>
 {: #fields-bottomTexture }
 
-Parent ComposedCubeMapTexture element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/), other texture nodes).
+Parent **ComposedCubeMapTexture** element can contain up to six image nodes ([ImageTexture](/x_ite/components/texturing/imagetexture/) [PixelTexture](/x_ite/components/texturing/pixeltexture/), other texture nodes).
 
 #### Warnings
 

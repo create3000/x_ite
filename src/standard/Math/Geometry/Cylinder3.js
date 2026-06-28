@@ -54,7 +54,7 @@ Object .assign (Cylinder3 .prototype,
 
       // rotation to y axis
       const
-         rotToYAxis = new Rotation4 (this .axis .direction, new Vector3 (0, 1, 0)),
+         rotToYAxis = Rotation4 .fromVectors (this .axis .direction, new Vector3 (0, 1, 0)),
          mtxToYAxis = Matrix4 .fromRotation (rotToYAxis);
 
       // scale to unit space

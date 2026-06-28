@@ -8,7 +8,9 @@ clip ()
 {
    for (int i = 0; i < X3D_NUM_CLIP_PLANES; ++ i)
    {
-      if (dot (vertex, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)
+      vec4 clipPlane = x3d_ClipPlane [i];
+
+      if (dot (vertex, clipPlane .xyz) < clipPlane .w)
          discard;
    }
 }

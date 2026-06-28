@@ -13,9 +13,9 @@ tags: [CollisionSpace, RigidBodyPhysics]
 
 ## Overview
 
-CollisionSpace holds collection of objects considered together for resolution of inter-object collisions. Contains multiple CollidableShape, CollidableOffset, or CollisionSpace nodes (`containerField='collidables').`
+**CollisionSpace** holds collection of objects considered together for resolution of inter-object collisions. Contains multiple [CollidableShape](/x_ite/components/rigidbodyphysics/collidableshape/), [CollidableOffset](/x_ite/components/rigidbodyphysics/collidableoffset/), or **CollisionSpace** nodes (`containerField='collidables').`
 
-The CollisionSpace node belongs to the [RigidBodyPhysics](/x_ite/components/overview/#rigidbodyphysics) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The **CollisionSpace** node belongs to the [RigidBodyPhysics](/x_ite/components/overview/#rigidbodyphysics) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -114,7 +114,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 ### MFNode [in, out] **collidables** [ ] <small>[X3DNBodyCollisionSpaceNode,X3DNBodyCollidableNode]</small>
 {: #fields-collidables }
 
-Collection of collidable objects as well as nested CollisionSpace collections
+Collection of collidable objects as well as nested **CollisionSpace** collections
 
 ## Advice
 

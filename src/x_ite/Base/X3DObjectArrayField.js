@@ -15,7 +15,7 @@ const handler =
       {
          const index = +key;
 
-         if (Number .isInteger (index))
+         if (Number .isInteger (index) && index >= 0)
          {
             const array = target .getValue ();
 
@@ -34,7 +34,7 @@ const handler =
       {
          const index = +key;
 
-         if (Number .isInteger (index))
+         if (Number .isInteger (index) && index >= 0)
          {
             const array = target .getValue ();
 
@@ -55,7 +55,7 @@ const handler =
       {
          const index = +key;
 
-         if (Number .isInteger (index))
+         if (Number .isInteger (index) && index >= 0)
             return index < target .getValue () .length;
       }
 
@@ -71,7 +71,7 @@ const handler =
       {
          const index = +key;
 
-         if (Number .isInteger (index))
+         if (Number .isInteger (index) && index >= 0)
          {
             if (index < target .getValue () .length)
                return Object .getOwnPropertyDescriptor (target .getValue (), key);

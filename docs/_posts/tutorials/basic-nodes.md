@@ -9,7 +9,7 @@ tags: [Basic, Getting Started]
 
 X3D is capable of representing static and animated objects and it can have hyperlinks to other media such as sound, movies, and image. X\_ITE is a browsers for X3D and available for many different platforms as well as [Sunrize](/sunrize/) is an authoring tools for the creation X3D files. For programmers there is a JavaScript API interface to access X3D nodes and commonly used 3D application programmer interface features.
 
-## Let The Games Begin…
+## Let the Games Begin…
 
 An X3D file has four basic elements:
 

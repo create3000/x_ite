@@ -56,7 +56,7 @@ Object .assign (Object .setPrototypeOf (LayoutGroup .prototype, X3DGroupingNode 
       if (this .layoutNode)
          return this .matrix .assign (this .modelViewMatrix) .inverse () .multLeft (this .screenMatrix);
 
-      return this .matrix .identity ();
+      return this .matrix .set ();
    },
    traverse (type, renderObject)
    {

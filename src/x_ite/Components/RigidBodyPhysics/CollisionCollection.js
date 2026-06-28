@@ -65,10 +65,10 @@ Object .assign (Object .setPrototypeOf (CollisionCollection .prototype, X3DChild
          ["FRICTION_COEFFICIENT-2", AppliedParametersType .FRICTION_COEFFICIENT_2],
          ["ERROR_REDUCTION",        AppliedParametersType .ERROR_REDUCTION],
          ["CONSTANT_FORCE",         AppliedParametersType .CONSTANT_FORCE],
-         ["SPEED-1",                AppliedParametersType .SPEED_1],
-         ["SPEED-2",                AppliedParametersType .SPEED_2],
-         ["SLIP-1",                 AppliedParametersType .SLIP_1],
-         ["SLIP-2",                 AppliedParametersType .SLIP_2],
+         ["SPEED_1",                AppliedParametersType .SPEED_1],
+         ["SPEED_2",                AppliedParametersType .SPEED_2],
+         ["SLIP_1",                 AppliedParametersType .SLIP_1],
+         ["SLIP_2",                 AppliedParametersType .SLIP_2],
       ]);
 
       return function ()

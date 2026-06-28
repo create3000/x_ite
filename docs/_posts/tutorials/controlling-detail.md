@@ -17,7 +17,7 @@ If a shape is distant:
 
 Varying detail with distance reduces upfront download time, and increases drawing speed.
 
-## Creating multiple shape versions
+## Creating Multiple Shape Versions
 
 To control detail, model the same shape several times:
 
@@ -27,7 +27,7 @@ To control detail, model the same shape several times:
 
 Usually, two or three different versions is enough, but you can have as many as you want.
 
-## Controlling level of detail
+## Controlling Level of Detail
 
 Group the shape versions as levels in an [LOD](/x_ite/components/navigation/lod/) grouping node:
 
@@ -62,7 +62,7 @@ LOD {
 }
 ```
 
-## Choosing detail ranges
+## Choosing Detail Ranges
 
 Use a list of ranges for level switch points:
 
@@ -73,7 +73,7 @@ Use a list of ranges for level switch points:
 
 ![lod-level](https://create3000.github.io/media/tutorials/images/lod-level.avif)
 
-## Optimizing a shape
+## Optimizing a Shape
 
 Suggested procedure to make different levels (versions):
 
@@ -85,7 +85,7 @@ Suggested procedure to make different levels (versions):
 
 Lower detail levels should use simpler geometry, fewer textures, and no text.
 
-## A sample LOD
+## A Sample LOD
 
 ### XML Encoding
 

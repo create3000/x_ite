@@ -13,9 +13,9 @@ tags: [PickableGroup, Picking]
 
 ## Overview
 
-PickableGroup is a Grouping node that can contain most nodes. PickableGroup contains children that are marked as having a given classification of picking types, and can also enable or disable picking of the children.
+**PickableGroup** is a Grouping node that can contain most nodes. **PickableGroup** contains children that are marked as having a given classification of picking types, and can also enable or disable picking of the children.
 
-The PickableGroup node belongs to the [Picking](/x_ite/components/overview/#picking) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The **PickableGroup** node belongs to the [Picking](/x_ite/components/overview/#picking) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -80,7 +80,7 @@ The *pickable* field determines whether pick traversal is performed on this node
 ### MFString [in, out] **objectType** "ALL" <small>["ALL", "NONE", "TERRAIN", ...]</small>
 {: #fields-objectType }
 
-The *objectType* field specifies a set of labels used in the picking process. Each string specified is treated as an independent label that needs to be matched against the same type in one of the pick sensor instances. Example: labeling a PickableGroup with the *objectType* value "WATER" and then attempting to intersect a pick sensor with *objectType* value "GROUND" fails since the *objectType* values do not match. Example: the special value "ALL" means that each node is available for picking regardless of the type specified by the pick sensor. Example: the special value "NONE" effectively disables all picking for this node and is the equivalent of setting the pickable field to false.
+The *objectType* field specifies a set of labels used in the picking process. Each string specified is treated as an independent label that needs to be matched against the same type in one of the pick sensor instances. Example: labeling a **PickableGroup** with the *objectType* value "WATER" and then attempting to intersect a pick sensor with *objectType* value "GROUND" fails since the *objectType* values do not match. Example: the special value "ALL" means that each node is available for picking regardless of the type specified by the pick sensor. Example: the special value "NONE" effectively disables all picking for this node and is the equivalent of setting the pickable field to false.
 
 #### Hints
 

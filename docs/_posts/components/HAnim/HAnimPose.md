@@ -13,9 +13,9 @@ tags: [HAnimPose, HAnim]
 
 ## Overview
 
-HAnimPose nodes support setting HAnimJoint values in a corresponding HAnimHumanoid skeleton.
+**HAnimPose** nodes support setting [HAnimJoint](/x_ite/components/hanim/hanimjoint/) values in a corresponding [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skeleton.
 
-The HAnimPose node belongs to the [HAnim](/x_ite/components/overview/#hanim) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 4.1 or higher.
+The **HAnimPose** node belongs to the [HAnim](/x_ite/components/overview/#hanim) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 4.1 or higher.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
@@ -37,7 +37,7 @@ The HAnimPose node belongs to the [HAnim](/x_ite/components/overview/#hanim) com
 | SFString | [in, out] | [name](#fields-name) | "" |
 | SFInt32 | [in, out] | [loa](#fields-loa) | -1 |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
-| SFFloat | [in, out] | [transitionDuration](#fields-transitionDuration) | 0 |
+| SFTime | [in, out] | [transitionDuration](#fields-transitionDuration) | 0 |
 | SFBool | [in] | [resetAllJoints](#fields-resetAllJoints) |  |
 | SFBool | [in] | [commencePose](#fields-commencePose) |  |
 | SFTime | [in] | [set_startTime](#fields-set_startTime) |  |
@@ -67,9 +67,9 @@ Author-provided prose that describes intended purpose of this node.
 ### SFString [in, out] **name** ""
 {: #fields-name }
 
-Unique *name* attribute must be defined so that HAnimPose node can be identified at run time for animation purposes.
+Unique *name* attribute must be defined so that **HAnimPose** node can be identified at run time for animation purposes.
 
-### SFInt32 [in, out] **loa** -1 <small>[-1,4]</small>
+### SFInt32 [in, out] **loa** -1 <small>[-1,5]</small>
 {: #fields-loa }
 
 Level Of Articulation 0..4 indicates complexity and detail of joints for given humanoid skeletal hierarchy.
@@ -84,7 +84,7 @@ Level Of Articulation 0..4 indicates complexity and detail of joints for given h
 
 Enables/disables node operation.
 
-### SFFloat [in, out] **transitionDuration** 0 <small>(0,∞)</small>
+### SFTime [in, out] **transitionDuration** 0 <small>(0,∞)</small>
 {: #fields-transitionDuration }
 
 Duration in seconds for animating a pose transition.
@@ -142,7 +142,7 @@ The *children* field lists all [HAnimJoint](/x_ite/components/hanim/hanimjoint/)
 #### Warnings
 
 - These nodes must be independent of [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skeleton joints, do not re-USE any skeleton [HAnimJoint](/x_ite/components/hanim/hanimjoint/) nodes.
-- No other node types are allowed in the HAnimPose *children* field.
+- No other node types are allowed in the **HAnimPose** *children* field.
 
 ## Advice
 
@@ -150,6 +150,10 @@ The *children* field lists all [HAnimJoint](/x_ite/components/hanim/hanimjoint/)
 
 - [HAnim Architecture draft version 2.1, clause 4.10.3 Poses](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-1/ISO-IEC19774-1v2.1/ISO-IEC19774-1v2.1-WD/Architecture/concepts.html#Poses)
 - [HAnim Architecture draft version 2.1, 6.5 Pose](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-1/ISO-IEC19774-1v2.1/ISO-IEC19774-1v2.1-WD/Architecture/ObjectInterfaces.html#Pose)
+
+### Warning
+
+- X3D Architecture version 4.1 draft is experimental and not fully implemented.
 
 ## Browser Compatibility
 

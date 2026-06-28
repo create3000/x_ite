@@ -2,11 +2,11 @@ import Matrix4 from "../Numbers/Matrix4.js";
 import Vector3 from "../Numbers/Vector3.js";
 import SAT     from "../Algorithms/SAT.js";
 
-function Box3 (... args) /* size, center */
+function Box3 (size, center)
 {
    this .matrix = new Matrix4 ();
 
-   this .set (... arguments);
+   this .set (size, center);
 }
 
 Object .assign (Box3 .prototype,
@@ -35,29 +35,19 @@ Object .assign (Box3 .prototype,
    },
    set (size, center)
    {
-      switch (arguments .length)
+      if (size && center)
       {
-         case 0:
-         {
-            this .matrix .assign (Matrix4 .ZERO);
-
-            return this;
-         }
-         case 2:
-         {
-            this .matrix .set (size .x / 2, 0, 0, 0,
-                               0, size .y / 2, 0, 0,
-                               0, 0, size .z / 2, 0,
-                               center .x, center .y, center .z, 1);
-
-            return this;
-         }
-         // case 3:
-         // {
-         //    console .trace ()
-         //    return this .setExtents (arguments [0], arguments [1]);
-         // }
+         this .matrix .set (size .x / 2, 0, 0, 0,
+                            0, size .y / 2, 0, 0,
+                            0, 0, size .z / 2, 0,
+                            center .x, center .y, center .z, 1);
       }
+      else
+      {
+         this .matrix .assign (Matrix4 .ZERO);
+      }
+
+      return this;
    },
    setExtents (min, max)
    {
@@ -119,6 +109,66 @@ Object .assign (Box3 .prototype,
 
          min .min (p1, p2, p3, p4);
          max .max (p1, p2, p3, p4);
+      };
+   })(),
+   setPoints: (() =>
+   {
+      const
+         min = new Vector3 (),
+         max = new Vector3 ();
+
+      return function  (points)
+      {
+            min .set (Number .POSITIVE_INFINITY),
+            max .set (Number .NEGATIVE_INFINITY);
+
+         for (const point of points)
+         {
+            min .min (point);
+            max .max (point);
+         }
+
+         return this .setExtents (min, max);
+      };
+   })(),
+   setArray: (() =>
+   {
+      const
+         min = new Vector3 (),
+         max = new Vector3 ();
+
+      return function (array, stride = 3)
+      {
+         const length = array .length;
+
+         if (!length)
+            return this .set ();
+
+         let minX = Number .POSITIVE_INFINITY;
+         let minY = Number .POSITIVE_INFINITY;
+         let minZ = Number .POSITIVE_INFINITY;
+
+         let maxX = Number .NEGATIVE_INFINITY;
+         let maxY = Number .NEGATIVE_INFINITY;
+         let maxZ = Number .NEGATIVE_INFINITY;
+
+         for (let i = 0; i < length; i += stride)
+         {
+            const
+               x = array [i],
+               y = array [i + 1],
+               z = array [i + 2];
+
+            if (x < minX) minX = x;
+            if (y < minY) minY = y;
+            if (z < minZ) minZ = z;
+
+            if (x > maxX) maxX = x;
+            if (y > maxY) maxY = y;
+            if (z > maxZ) maxZ = z;
+         }
+
+         return this .setExtents (min .set (minX, minY, minZ), max .set (maxX, maxY, maxZ));
       };
    })(),
    getPoints: (() =>
@@ -485,17 +535,11 @@ Object .assign (Box3,
    },
    fromPoints (points)
    {
-      const
-         min = new Vector3 (Number .POSITIVE_INFINITY),
-         max = new Vector3 (Number .NEGATIVE_INFINITY);
-
-      for (const point of points)
-      {
-         min .min (point);
-         max .max (point);
-      }
-
-      return new Box3 () .setExtents (min, max);
+      return new Box3 () .setPoints (points);
+   },
+   fromArray (array, stride = 3)
+   {
+      return new Box3 () .setArray (array, stride);
    },
 });
 

@@ -16,7 +16,7 @@ A program script can be written in JavaScript, ECMAScript, and other languages
 - JavaScript is easier to program
 - ECMAScript is essentially JavaScript
 
-## Declaring a program script interface
+## Declaring a Program Script Interface
 
 For a JavaScript program script, typically give the script in the Script node's url field:
 
@@ -46,7 +46,7 @@ DEF Bouncer Script {
 }
 ```
 
-## Initializing a program script
+## Initializing a Program Script
 
 The optional **initialize** function is called when the script is loaded:
 
@@ -61,7 +61,7 @@ Initialization occurs when:
 
 - the [Script](/x_ite/components/scripting/script/) node is created (typically when the browser loads the world)
 
-## Shutting down a program script
+## Shutting Down a Program Script
 
 The optional **shutdown** function is called when the script is unloaded:
 
@@ -77,7 +77,7 @@ Shutdown occurs when:
 - the [Script](/x_ite/components/scripting/script/) node is deleted
 - the browser loads a new world
 
-## Responding to events
+## Responding to Events
 
 An input function can be declared for each input.
 
@@ -93,7 +93,7 @@ function set_fraction (value, time)
 }
 ```
 
-## Processing events in JavaScript
+## Processing Events in JavaScript
 
 If multiple events arrive at once, then multiple input functions are called.
 
@@ -106,7 +106,7 @@ function eventsProcessed ()
 }
 ```
 
-## Accessing fields from JavaScript
+## Accessing Fields from JavaScript
 
 Each interface field is a ECMAScript variable:
 
@@ -118,7 +118,7 @@ lastval      = bounceHeight; // get field
 bounceHeight = newval;       // set field
 ```
 
-## Accessing outputs from ECMAScript
+## Accessing Outputs from ECMAScript
 
 Each interface output field is a ECMAScript variable
 
@@ -133,7 +133,7 @@ lastval           = value_changed [0];  // get last event
 value_changed [0] = newval;             // send new event
 ```
 
-## A sample JavaScript script
+## A Sample JavaScript Script
 
 Create a Bouncing ball interpolator that computes a gravity-like vertical bouncing motion from a fractional time input.
 
@@ -457,7 +457,7 @@ ROUTE Bouncer.value_changed  TO Ball.set_translation
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/bouncer/bouncer.x3dv)
 {: .example-links }
 
-## Building user interfaces
+## Building User Interfaces
 
 Program scripts can be used to help create 3D user interface widgets:
 
@@ -468,7 +468,7 @@ Program scripts can be used to help create 3D user interface widgets:
 - Text prompts
 - Debug message text
 
-## Building a toggle switch
+## Building a Toggle Switch
 
 A toggle script turns on at 1st touch, off at 2nd:
 
@@ -523,7 +523,7 @@ function set_active (value, time)
 }
 ```
 
-### Using a toggle switch
+### Using a Toggle Switch
 
 Use the toggle switch to make a lamp turn on and off
 
@@ -551,7 +551,7 @@ ROUTE LightSwitch.isActive TO Toggle.set_active
 ROUTE Toggle.on_changed    TO LampLight.set_on
 ```
 
-## Building a color selector
+## Building a Color Selector
 
 The lamp on and off, but the light bulb doesn't change color!
 
@@ -594,7 +594,7 @@ function set_selection (value, time)
 }
 ```
 
-### Using a color selector
+### Using a Color Selector
 
 ### XML Encoding
 

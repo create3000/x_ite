@@ -13,9 +13,9 @@ tags: [GeoTransform, Geospatial]
 
 ## Overview
 
-GeoTransform is a Grouping node that can contain most nodes. GeoTransform translates, orients and scales GeoCoordinate geometry within the local world coordinate system. GeoTransform coordinate system X-Z plane is tangent to ellipsoid of local spatial reference frame.
+**GeoTransform** is a Grouping node that can contain most nodes. **GeoTransform** translates, orients and scales [GeoCoordinate](/x_ite/components/geospatial/geocoordinate/) geometry within the local world coordinate system. **GeoTransform** coordinate system X-Z plane is tangent to ellipsoid of local spatial reference frame.
 
-The GeoTransform node belongs to the [Geospatial](/x_ite/components/overview/#geospatial) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The **GeoTransform** node belongs to the [Geospatial](/x_ite/components/overview/#geospatial) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -212,7 +212,7 @@ Grouping nodes contain an ordered list of *children* nodes.
 ### Warnings
 
 - Requires X3D `profile='Full'` or else include `<component name='Geospatial' level='2'/>`
-- Avoid having [GeoLocation](/x_ite/components/geospatial/geolocation/) or GeoTransform as a parent or ancestor node of each other, since multiple geospatial transformations then occur with unpredictable results.
+- Avoid having [GeoLocation](/x_ite/components/geospatial/geolocation/) or **GeoTransform** as a parent or ancestor node of each other, since multiple geospatial transformations then occur with unpredictable results.
 
 ## Browser Compatibility
 

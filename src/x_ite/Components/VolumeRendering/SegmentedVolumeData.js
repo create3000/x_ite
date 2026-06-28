@@ -74,10 +74,7 @@ Object .assign (Object .setPrototypeOf (SegmentedVolumeData .prototype, X3DVolum
    {
       this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._voxels);
 
-      if (this .voxelsNode)
-         this .getAppearance () ._texture = this ._voxels;
-      else
-         this .getAppearance () ._texture = this .getBrowser () .getDefaultVoxels ();
+      this .getAppearance () ._texture = this .voxelsNode ?? this .getBrowser () .getDefaultVoxels ();
    },
    createShader (options, vs, fs)
    {

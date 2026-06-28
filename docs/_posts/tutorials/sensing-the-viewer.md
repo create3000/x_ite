@@ -15,7 +15,7 @@ Sensing the viewer enables you to trigger animations:
 
 The [LOD](/x_ite/components/navigation/lod/) and [Billboard](/x_ite/components/navigation/billboard/) nodes are special-purpose viewer sensors with built-in responses.
 
-## Sensing the viewer
+## Sensing the Viewer
 
 There are three types of viewer sensors:
 
@@ -23,7 +23,7 @@ There are three types of viewer sensors:
 - A [ProximitySensor](/x_ite/components/environmentalsensor/proximitysensor/) node senses if the viewer is within a region
 - A [Collision](/x_ite/components/navigation/collision/) node senses if the viewer has collided with shapes
 
-## Using visibility and proximity sensors
+## Using Visibility and Proximity Sensors
 
 [VisibilitySensor](/x_ite/components/environmentalsensor/visibilitysensor/) and [ProximitySensor](/x_ite/components/environmentalsensor/proximitysensor/) nodes sense a box-shaped region:
 
@@ -134,7 +134,7 @@ DEF Sensor ProximitySensor { ... }
 ROUTE Sensor.position_changed TO PetRobotFollower.set_translation
 ```
 
-## Detecting viewer-shape collision
+## Detecting Viewer-Shape Collision
 
 A [Collision](/x_ite/components/navigation/collision/) grouping node senses shapes within the group:
 
@@ -145,7 +145,7 @@ Collision occurs when the viewer's avatar gets close to a shape:
 
 - Collision distance is controlled by the avatar size in the [NavigationInfo](/x_ite/components/navigation/navigationinfo/) node
 
-## Creating collision groups
+## Creating Collision Groups
 
 Collision checking is expensive so, check for collision with a proxy shape instead:
 
@@ -204,14 +204,14 @@ ROUTE Collide.collideTime TO OuchSound.set_startTime
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/examples/Navigation/Collision/Collision.x3dv)
 {: .example-links }
 
-## Optimizing collision detection
+## Optimizing Collision Detection
 
 - Collision is on by default
   - Turn it off whenever possible!
 - However, once a parent turns off collision, a child can't turn it back on!
 - Collision results from viewer colliding with a shape, but not from a shape colliding with a viewer
 
-## Using multiple sensors
+## Using Multiple Sensors
 
 Any number of sensors can sense at the same time:
 

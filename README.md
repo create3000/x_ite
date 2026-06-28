@@ -24,6 +24,7 @@ X_ITE needs your support. If you become a [Patreon](https://patreon.com/X_ITE), 
 * [DOM Integration](https://create3000.github.io/x_ite/dom-integration)
 * [Custom Shaders](https://create3000.github.io/x_ite/custom-shaders)
 * [glTF Sample Viewer](https://create3000.github.io/x_ite/laboratory/gltf-sample-viewer/)
+* [X_ITE VRML Viewer](https://create3000.github.io/x_ite/features/#vrml-viewer)
 
 ## Using X_ITE with a CDN
 
@@ -36,10 +37,10 @@ If you are going to use X_ITE in a production environment, you should use a fixe
 jsDelivr is an open-source content delivery network (CDN) renowned for its no-cost access, swift performance, and reliable service.
 
 ```html
-<script defer src="https://cdn.jsdelivr.net/npm/x_ite@15.0.2/dist/x_ite.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@15.1.7/dist/x_ite.min.js"></script>
 <!-- or as ES module for use in scripts -->
 <script type="module">
-import X3D from "https://cdn.jsdelivr.net/npm/x_ite@15.0.2/dist/x_ite.min.mjs";
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite@15.1.7/dist/x_ite.min.mjs";
 </script>
 ```
 
@@ -70,7 +71,7 @@ This script initializes an X3D canvas within an HTML page, configuring it to con
 You can include an external file:
 
 ```html
-<script defer src="https://cdn.jsdelivr.net/npm/x_ite@15.0.2/dist/x_ite.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@15.1.7/dist/x_ite.min.js"></script>
 <x3d-canvas
     src="box.x3d"
     contentScale="auto"
@@ -82,7 +83,7 @@ You can include an external file:
 However, you can also include and manipulate the XML directly:
 
 ```html
-<script defer src="https://cdn.jsdelivr.net/npm/x_ite@15.0.2/dist/x_ite.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite@15.1.7/dist/x_ite.min.js"></script>
 <x3d-canvas contentScale="auto" update="auto">
   <X3D profile='Interchange' version='4.1'>
     <head>
@@ -121,7 +122,7 @@ The same scene can also be created using pure JavaScript:
 
 ```html
 <script type="module">
-import X3D from "https://cdn.jsdelivr.net/npm/x_ite@15.0.2/dist/x_ite.min.mjs";
+import X3D from "https://cdn.jsdelivr.net/npm/x_ite@15.1.7/dist/x_ite.min.mjs";
 
 const
   canvas  = document .createElement ("x3d-canvas"), // Or get an already inserted <x3d-canvas> element.

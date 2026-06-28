@@ -17,7 +17,7 @@ import Algorithm            from "../../../standard/Math/Algorithm.js";
 import ShaderRegistry from "../../Browser/Shaders/ShaderRegistry.js";
 import Skin2          from "../../../assets/shaders/webgl2/common/Skin2.glsl.js";
 
-ShaderRegistry .addInclude ("Skin", Skin2);
+ShaderRegistry .addIncludeFile ("Skin", Skin2);
 
 /**
  * HAnimHumanoid
@@ -346,7 +346,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, X3DChildNode .
             s = jointBindingScales    [i] ?.getValue ();
 
          jointNodes           .push (jointNode);
-         jointBindingMatrices .push (new Matrix4 () .set (t, r, s));
+         jointBindingMatrices .push (Matrix4 .fromTransform (t, r, s));
       }
 
       for (const jointNode of jointNodes)

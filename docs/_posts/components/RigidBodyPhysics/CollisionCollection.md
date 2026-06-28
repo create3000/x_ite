@@ -13,9 +13,9 @@ tags: [CollisionCollection, RigidBodyPhysics]
 
 ## Overview
 
-CollisionCollection holds a collection of objects that can be managed as a single entity for resolution of inter-object collisions.
+**CollisionCollection** holds a collection of objects that can be managed as a single entity for resolution of inter-object collisions.
 
-The CollisionCollection node belongs to the [RigidBodyPhysics](/x_ite/components/overview/#rigidbodyphysics) component and requires at least support level **1,** its default container field is *collider.* It is available from X3D version 3.2 or higher.
+The **CollisionCollection** node belongs to the [RigidBodyPhysics](/x_ite/components/overview/#rigidbodyphysics) component and requires at least support level **1,** its default container field is *collider.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -76,7 +76,7 @@ Enables/disables node operation.
 ### MFString [in, out] **appliedParameters** "BOUNCE"
 {: #fields-appliedParameters }
 
-Default global parameters for collision outputs of rigid body physics system. [Contact](/x_ite/components/rigidbodyphysics/contact/) node can override parent CollisionCollection node. Selectable values for array: "BOUNCE" "USER_FRICTION" "FRICTION_COEFFICIENT_2" "ERROR_REDUCTION" "CONSTANT_FORCE" "SPEED_1" "SPEED_2" "SLIP_1" "SLIP_2".
+Default global parameters for collision outputs of rigid body physics system. [Contact](/x_ite/components/rigidbodyphysics/contact/) node can override parent **CollisionCollection** node. Selectable values for array: "BOUNCE" "USER_FRICTION" "FRICTION_COEFFICIENT_2" "ERROR_REDUCTION" "CONSTANT_FORCE" "SPEED_1" "SPEED_2" "SLIP_1" "SLIP_2".
 
 #### Hint
 
@@ -162,7 +162,7 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 ### MFNode [in, out] **collidables** [ ] <small>[X3DNBodyCollisionSpaceNode,X3DNBodyCollidableNode]</small>
 {: #fields-collidables }
 
-CollisionCollection node holds a collection of objects in the *collidables* field that can be managed as a single entity for resolution of inter-object collisions with other groups of collidable objects. A group consists of both collidable objects as well as spaces that may be collided against each other.
+**CollisionCollection** node holds a collection of objects in the *collidables* field that can be managed as a single entity for resolution of inter-object collisions with other groups of collidable objects. A group consists of both collidable objects as well as spaces that may be collided against each other.
 
 ## Advice
 

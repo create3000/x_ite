@@ -25,14 +25,14 @@ function NRRDParser ()
 
 Object .assign (NRRDParser .prototype,
 {
-   parse (input)
+   async parse (input)
    {
       this .setInput (input);
 
       if (this .getNRRD ())
       {
          this .getFields ();
-         this .getData ();
+         await this .getData ();
       }
 
       return this .nrrd;
@@ -230,7 +230,7 @@ Object .assign (NRRDParser .prototype,
 
       throw new Error ("Unsupported NRRD endian, must be either 'little' or 'big'.");
    },
-   getData ()
+   async getData ()
    {
       switch (this .encoding)
       {
@@ -251,7 +251,7 @@ Object .assign (NRRDParser .prototype,
          }
          case "gzip":
          {
-            this .gzip ();
+            await this .gzip ();
             break;
          }
       }
@@ -389,7 +389,7 @@ Object .assign (NRRDParser .prototype,
 
       throw new Error ("Invalid NRRD data.");
    },
-   gzip ()
+   async gzip ()
    {
       try
       {
@@ -398,7 +398,7 @@ Object .assign (NRRDParser .prototype,
 
          const
             input       = this .dataView .buffer .slice (this .lastIndex),
-            arrayBuffer = $.ungzip (input);
+            arrayBuffer = await $.gunzip (input);
 
          this .dataView = new DataView (arrayBuffer);
 

@@ -13,9 +13,12 @@ tags: [ProgramShader, Shaders]
 
 ## Overview
 
-ProgramShader defines a shader that consists of one or more individually programmable, self-contained pieces. ProgramShader contains IS/connect and programs [ShaderProgram] nodes.
+**ProgramShader** defines a shader that consists of one or more individually programmable, self-contained pieces. **ProgramShader** contains IS/connect and programs [[ShaderProgram](/x_ite/components/shaders/shaderprogram/)] nodes.
 
-The ProgramShader node belongs to the [Shaders](/x_ite/components/overview/#shaders) component and requires at least support level **1,** its default container field is *shaders.* It is available from X3D version 3.0 or higher.
+The **ProgramShader** node belongs to the [Shaders](/x_ite/components/overview/#shaders) component and requires at least support level **1,** its default container field is *shaders.* It is available from X3D version 3.0 or higher.
+
+>**Not Supported:** This node is **not supported** by X_ITE.
+{: .prompt-danger }
 
 ## Hierarchy
 
@@ -86,7 +89,7 @@ The *language* field indicates to the X3D player which shading *language* is use
 ### MFNode [in, out] **programs** [ ] <small>[ShaderProgram]</small>
 {: #fields-programs }
 
-ProgramShader contains zero or more [ShaderProgram](/x_ite/components/shaders/shaderprogram/) node instances. In general, only two [ShaderProgram](/x_ite/components/shaders/shaderprogram/) instances are needed: one each for vertex and fragment processing.
+**ProgramShader** contains zero or more [ShaderProgram](/x_ite/components/shaders/shaderprogram/) node instances. In general, only two [ShaderProgram](/x_ite/components/shaders/shaderprogram/) instances are needed: one each for vertex and fragment processing.
 
 #### Hint
 
@@ -100,7 +103,7 @@ ProgramShader contains zero or more [ShaderProgram](/x_ite/components/shaders/sh
 
 ### Warning
 
-- ProgramShader contains no field declarations and no plain-text CDATA block source code.
+- **ProgramShader** contains no field declarations and no plain-text CDATA block source code.
 
 ## Browser Compatibility
 

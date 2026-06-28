@@ -13,9 +13,9 @@ tags: [BlendedVolumeStyle, VolumeRendering]
 
 ## Overview
 
-BlendedVolumeStyle combines rendering of two voxel data sets into one by blending voxel values.
+**BlendedVolumeStyle** combines rendering of two voxel data sets into one by blending voxel values.
 
-The BlendedVolumeStyle node belongs to the [VolumeRendering](/x_ite/components/overview/#volumerendering) component and requires at least support level **3,** its default container field is *renderStyle.* It is available from X3D version 3.3 or higher.
+The **BlendedVolumeStyle** node belongs to the [VolumeRendering](/x_ite/components/overview/#volumerendering) component and requires at least support level **3,** its default container field is *renderStyle.* It is available from X3D version 3.3 or higher.
 
 ## Hierarchy
 
@@ -126,7 +126,7 @@ Optional single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/component
 
 ### Hint
 
-- BlendedVolumeStyle can contain just one each of following: VolumeStyle node with `containerField='renderStyle',` Texture3D node with `containerField='voxels',` Texture2D node with `containerField='weightTransferFunction1'` and Texture2D node with `containerField='weightTransferFunction2'.`
+- **BlendedVolumeStyle** can contain just one each of following: VolumeStyle node with `containerField='renderStyle',` Texture3D node with `containerField='voxels',` Texture2D node with `containerField='weightTransferFunction1'` and Texture2D node with `containerField='weightTransferFunction2'.`
 
 ### Warning
 

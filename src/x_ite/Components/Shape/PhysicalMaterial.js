@@ -170,15 +170,14 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, X3DOneSided
    },
    set_renderedTextures__ ()
    {
-      this .getRenderedTextures () .length = this .getTextureIndices () .LENGTH;
+      this ._renderedTextures = this .getBrowser () .getCurrentTime ();
+   },
+   getRenderedTextures (renderedTextures)
+   {
+      X3DOneSidedMaterialNode .prototype .getRenderedTextures .call (this, renderedTextures);
 
       for (const extensionNode of this .extensionNodes)
-      {
-         for (const renderedTexture of extensionNode .getRenderedTextures ())
-            this .getRenderedTextures () .push (renderedTexture);
-      }
-
-      this ._renderedTextures = this .getBrowser () .getCurrentTime ();
+         extensionNode .getRenderedTextures (renderedTextures);
    },
    createShader (key, geometryContext, renderContext)
    {

@@ -7,6 +7,9 @@ tags: [Getting Started, X3D, VRML, glTF, Viewer]
 permalink: /
 ---
 
+>**Latest News:** Now comes with [3D Gaussian Splatting](/x_ite/what-s-new/#x_ite-v151-series) support.
+{: .prompt-tip }
+
 [![npm Version](https://img.shields.io/npm/v/x_ite)](https://www.npmjs.com/package/x_ite){: .badge-link }
 [![Build Size](https://img.shields.io/bundlephobia/minzip/x_ite)](https://bundlephobia.com/package/x_ite){: .badge-link }
 [![jsDelivr Hits](https://data.jsdelivr.com/v1/package/npm/x_ite/badge?style=rounded)](https://create3000.github.io/jsdelivr-download-stats/?username=create3000&repository=x_ite){: .badge-link }
@@ -20,6 +23,9 @@ permalink: /
 [![npm Downloads](https://badgen.net/npm/dm/x_ite)](https://npmtrends.com/x_ite){: .badge-link }
 [![DeepScan Grade](https://deepscan.io/api/teams/23540/projects/26814/branches/855447/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=23540&pid=26814&bid=855447){: .badge-link }
 -->
+
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite-sog-parser@latest/dist/x_ite-sog-parser-2.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/x_ite-spz-parser@latest/dist/x_ite-spz-parser-4.min.js"></script>
 
 <x3d-canvas
     class="teaser shadow"
@@ -112,6 +118,8 @@ That's wonderful! Your support is important to keep X_ITE maintained, independen
 [![WaterQuality](https://create3000.github.io/media/examples/X3D/WaterQuality/screenshot-small.avif){: width="110" height="62" }](https://create3000.github.io/media/examples/X3D/WaterQuality/WaterQuality.x3d){: title="X3D » WaterQuality" componentName="X3D" typeName="WaterQuality" doc="false" buttonsPosition="cr" }
 [![QuadSet](https://create3000.github.io/media/examples/CADGeometry/QuadSet/screenshot-small.avif){: width="110" height="62" }](https://create3000.github.io/media/examples/CADGeometry/QuadSet/QuadSet.x3d){: title="CADGeometry » QuadSet" componentName="CADGeometry" typeName="QuadSet" doc="true" buttonsPosition="br" }
 [![OBJ](https://create3000.github.io/media/examples/Core/OBJ/screenshot-small.avif){: width="110" height="62" }](https://create3000.github.io/media/examples/Core/OBJ/OBJ.x3d){: title="Core » OBJ" componentName="Core" typeName="OBJ" doc="false" buttonsPosition="tr" }
+[![SOG](https://create3000.github.io/media/examples/Core/SOG/screenshot-small.avif){: width="110" height="62" }](https://create3000.github.io/media/examples/Core/SOG/SOG.x3d){: title="Core » SOG" componentName="Core" typeName="SOG" doc="false" buttonsPosition="br" }
+[![SPZ](https://create3000.github.io/media/examples/Core/SPZ/screenshot-small.avif){: width="110" height="62" }](https://create3000.github.io/media/examples/Core/SPZ/SPZ.x3d){: title="Core » SPZ" componentName="Core" typeName="SPZ" doc="false" buttonsPosition="br" }
 [![STL](https://create3000.github.io/media/examples/Core/STL/screenshot-small.avif){: width="110" height="62" }](https://create3000.github.io/media/examples/Core/STL/STL.x3d){: title="Core » STL" componentName="Core" typeName="STL" doc="false" buttonsPosition="tr" }
 [![glTF](https://create3000.github.io/media/examples/Core/glTF/screenshot-small.avif){: width="110" height="62" }](https://create3000.github.io/media/examples/Core/glTF/glTF.x3d){: title="Core » glTF" componentName="Core" typeName="glTF" doc="false" buttonsPosition="br" }
 [![ComposedCubeMapTexture](https://create3000.github.io/media/examples/CubeMapTexturing/ComposedCubeMapTexture/screenshot-small.avif){: width="110" height="62" }](https://create3000.github.io/media/examples/CubeMapTexturing/ComposedCubeMapTexture/ComposedCubeMapTexture.x3d){: title="CubeMapTexturing » ComposedCubeMapTexture" componentName="CubeMapTexturing" typeName="ComposedCubeMapTexture" doc="true" buttonsPosition="br" }
@@ -128,6 +136,7 @@ That's wonderful! Your support is important to keep X_ITE maintained, independen
 [![ColorDamper](https://create3000.github.io/media/examples/Followers/ColorDamper/screenshot-small.avif){: width="110" height="62" }](https://create3000.github.io/media/examples/Followers/ColorDamper/ColorDamper.x3d){: title="Followers » ColorDamper" componentName="Followers" typeName="ColorDamper" doc="true" buttonsPosition="br" }
 [![CoordinateChaser](https://create3000.github.io/media/examples/Followers/CoordinateChaser/screenshot-small.avif){: width="110" height="62" }](https://create3000.github.io/media/examples/Followers/CoordinateChaser/CoordinateChaser.x3d){: title="Followers » CoordinateChaser" componentName="Followers" typeName="CoordinateChaser" doc="true" buttonsPosition="br" }
 [![ScalarChaser](https://create3000.github.io/media/examples/Followers/ScalarChaser/screenshot-small.avif){: width="110" height="62" }](https://create3000.github.io/media/examples/Followers/ScalarChaser/ScalarChaser.x3d){: title="Followers » ScalarChaser" componentName="Followers" typeName="ScalarChaser" doc="true" buttonsPosition="tr" }
+[![GaussianSplats](https://create3000.github.io/media/examples/GaussianSplats/GaussianSplats/screenshot-small.avif){: width="110" height="62" }](https://create3000.github.io/media/examples/GaussianSplats/GaussianSplats/GaussianSplats.x3d){: title="GaussianSplats » GaussianSplats" componentName="GaussianSplats" typeName="GaussianSplats" doc="true" buttonsPosition="br" }
 [![Arc2D](https://create3000.github.io/media/examples/Geometry2D/Arc2D/screenshot-small.avif){: width="110" height="62" }](https://create3000.github.io/media/examples/Geometry2D/Arc2D/Arc2D.x3d){: title="Geometry2D » Arc2D" componentName="Geometry2D" typeName="Arc2D" doc="true" buttonsPosition="br" }
 [![ArcClose2D](https://create3000.github.io/media/examples/Geometry2D/ArcClose2D/screenshot-small.avif){: width="110" height="62" }](https://create3000.github.io/media/examples/Geometry2D/ArcClose2D/ArcClose2D.x3d){: title="Geometry2D » ArcClose2D" componentName="Geometry2D" typeName="ArcClose2D" doc="true" buttonsPosition="br" }
 [![Circle2D](https://create3000.github.io/media/examples/Geometry2D/Circle2D/screenshot-small.avif){: width="110" height="62" }](https://create3000.github.io/media/examples/Geometry2D/Circle2D/Circle2D.x3d){: title="Geometry2D » Circle2D" componentName="Geometry2D" typeName="Circle2D" doc="true" buttonsPosition="br" }
@@ -363,7 +372,10 @@ X_ITE can load several file formats, either directly as the source of the \<x3d-
 | VRM              | .vrm           | model/vrm         | [About VRM][6]                  |
 | Wavefront OBJ    | .obj           | model/obj         |                                 |
 | STL              | .stl           | model/stl         | ASCII & Binary                  |
-| PLY              | .ply           | model/ply         | ASCII & Binary                  |
+| PLY              | .ply           | model/ply         | ASCII & Binary, [3DGS][7]       |
+| SOG              | .sog           | model/sog         | [By Using an Extension][8]      |
+| SPZ              | .spz           | model/spz         | [By Using an Extension][9]      |
+| OFF              | .off           | model/off         | [By Using an Extension][10]     |
 | SVG Document     | .svg, .svgz    | image/svg+xml     |                                 |
 
   [1]: https://www.web3d.org/documents/specifications/19776-1/V3.3/index.html
@@ -372,8 +384,12 @@ X_ITE can load several file formats, either directly as the source of the \<x3d-
   [4]: /x_ite/features/#vrml-viewer
   [5]: /x_ite/features/#gltf-support
   [6]: https://vrm.dev/en/vrm/vrm_about/
+  [7]: https://en.wikipedia.org/wiki/Gaussian_splatting
+  [8]: https://www.npmjs.com/package/x_ite-sog-parser
+  [9]: https://www.npmjs.com/package/x_ite-spz-parser
+  [10]: https://www.npmjs.com/package/x_ite-off-parser
 
-All files can be compressed using GZip compression (usually denoted by a 'z' at the end of the filename suffix). This saves bandwidth and speeds up download time.
+All files, including media files, can be compressed using GZip compression (usually denoted by a `z` at the end of the filename suffix or by appending `.gz`). This saves bandwidth and speeds up download times.
 
 If you have an own web-server see: [how to configure your web-server.](/x_ite/how-to-configure-your-web-server/) If you are looking for an online X3D file format converter [see here](/x_ite/laboratory/x3d-file-converter/).
 
@@ -414,7 +430,7 @@ baseURL
 : A String value containing the URL against which relative URLs are resolved. By default, this is the address of the web page itself. Although this feature is rarely needed, it can be useful when loading a `data:` or `blob:` URL with the *src* attribute, or with `Browser.loadURL`, or when using `Browser.createX3DFromString`. The value of *baseURL* will only be used with the external browser.
 
 cache
-: A Boolean value (`true` or `false`) to indicate whether files transferred over the internet should be cached on the local computer. The default value for the *cache* attribute is `true`. It works by appending "_={timestamp}" to the GET parameters of every request.
+: A Boolean value (`true` or `false`) to indicate whether files transferred over the internet should be cached on the local computer. The default value for the *cache* attribute is `true`.
 
 colorSpace
 : A String value that specifies the color space in which colors are defined and color calculations take place. The default value for the *colorSpace* attribute is `LINEAR_WHEN_PHYSICAL_MATERIAL`. For a list of possible values see [browser options](/x_ite/reference/browser-services/#browser-options).

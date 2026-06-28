@@ -13,9 +13,9 @@ tags: [PolylineEmitter, ParticleSystems]
 
 ## Overview
 
-PolylineEmitter emits particles along a single polyline. The coordinates for the line along which particles should be randomly generated are taken from a combination of the coord and coordIndex fields. The starting point for generating particles is randomly distributed along this line and given the initial speed and direction.
+**PolylineEmitter** emits particles along a single polyline. The coordinates for the line along which particles should be randomly generated are taken from a combination of the coord and coordIndex fields. The starting point for generating particles is randomly distributed along this line and given the initial speed and direction.
 
-The PolylineEmitter node belongs to the [ParticleSystems](/x_ite/components/overview/#particlesystems) component and requires at least support level **1,** its default container field is *emitter.* It is available from X3D version 3.2 or higher.
+The **PolylineEmitter** node belongs to the [ParticleSystems](/x_ite/components/overview/#particlesystems) component and requires at least support level **1,** its default container field is *emitter.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -107,7 +107,7 @@ Particle surface area in area base units (default is meters squared). Surface ar
 
 #### Warnings
 
-- If no coordinates are available, PolylineEmitter acts like a point source located at local origin.
+- If no coordinates are available, **PolylineEmitter** acts like a point source located at local origin.
 - *coordIndex* is required in order to connect contained coordinate point values.
 
 ### SFNode [in, out] **coord** NULL <small>[X3DCoordinateNode]</small>
@@ -117,13 +117,13 @@ Coordinates for the line along which particles are randomly generated.
 
 #### Warning
 
-- If no coordinates are available, PolylineEmitter acts like a point source located at local origin.
+- If no coordinates are available, **PolylineEmitter** acts like a point source located at local origin.
 
 ## Advice
 
 ### Hint
 
-- If no coordinates are available, PolylineEmitter acts like a point source located at local origin.
+- If no coordinates are available, **PolylineEmitter** acts like a point source located at local origin.
 
 ## Example
 

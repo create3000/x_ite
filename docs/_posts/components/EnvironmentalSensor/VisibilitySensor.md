@@ -13,9 +13,9 @@ tags: [VisibilitySensor, EnvironmentalSensor, VRML]
 
 ## Overview
 
-VisibilitySensor detects when user can see a specific object or region as they navigate the world. The region sensed for visibility to the user is bounded by a rectangular box.
+**VisibilitySensor** detects when user can see a specific object or region as they navigate the world. The region sensed for visibility to the user is bounded by a rectangular box.
 
-The VisibilitySensor node belongs to the [EnvironmentalSensor](/x_ite/components/overview/#environmentalsensor) component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **VisibilitySensor** node belongs to the [EnvironmentalSensor](/x_ite/components/overview/#environmentalsensor) component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

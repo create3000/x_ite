@@ -533,6 +533,12 @@
       "x3dom": false,
       "freewrl": true
    },
+   "GaussianSplats": {
+      "x3d-edit": false,
+      "castle": false,
+      "x3dom": false,
+      "freewrl": false
+   },
    "GeneratedCubeMapTexture": {
       "x3d-edit": false,
       "castle": true,

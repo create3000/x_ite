@@ -13,9 +13,9 @@ tags: [WorldInfo, Core, VRML]
 
 ## Overview
 
-WorldInfo includes a browser-displayable title and persistent string information about an X3D scene. For X3D4 models, WorldInfo can also contain a single MetadataSet node with further metadata information about the scene.
+**WorldInfo** includes a browser-displayable title and persistent string information about an X3D scene. For X3D4 models, **WorldInfo** can also contain a single [MetadataSet](/x_ite/components/core/metadataset/) node with further metadata information about the scene.
 
-The WorldInfo node belongs to the [Core](/x_ite/components/overview/#core) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **WorldInfo** node belongs to the [Core](/x_ite/components/overview/#core) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -67,8 +67,8 @@ Additional information about this model.
 
 ### Hints
 
-- Comments are not readable when a model file is loaded for viewing, but WorldInfo and Metadata* nodes are persistent and inspectable at run time.
-- [WorldInfo is part of Core component and Core profile.](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#t-CoresupportLevels)
+- Comments are not readable when a model file is loaded for viewing, but **WorldInfo** and Metadata* nodes are persistent and inspectable at run time.
+- [**WorldInfo** is part of Core component and Core profile.](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/core.html#t-CoresupportLevels)
 - [X3D for Web Authors, Chapter 15, Metadata Information](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter15-Metadata/Chapter15-MetadataInformation.html)
 
 ## Browser Compatibility

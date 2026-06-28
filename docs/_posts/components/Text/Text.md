@@ -13,9 +13,9 @@ tags: [Text, Text, VRML]
 
 ## Overview
 
-Text is a 2D (flat) geometry node that can contain multiple lines of string values. Layout and styling is controlled by a contained FontStyle node.
+**Text** is a 2D (flat) geometry node that can contain multiple lines of string values. [Layout](/x_ite/components/layout/layout/) and styling is controlled by a contained [FontStyle](/x_ite/components/text/fontstyle/) node.
 
-The Text node belongs to the [Text](/x_ite/components/overview/#text) component and requires at least support level **1,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **Text** node belongs to the [Text](/x_ite/components/overview/#text) component and requires at least support level **1,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -52,14 +52,14 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### MFString [in, out] **string** [ ]
 {: #fields-string }
 
-Single or multiple *string* values to present as Text. Each value in the *string* array (including empty strings) gets displayed on a separate line.
+Single or multiple *string* values to present as **Text**. Each value in the *string* array (including empty strings) gets displayed on a separate line.
 
 #### Hints
 
 - MFString arrays can have multiple values, so separate each individual *string* by quote marks.
 - Strings can contain quote marks by first escaping them with a backslash example: "say \"hello\" please"
 - Many XML tools substitute XML character references for special characters automatically if needed within an attribute value (such as &amp;#38; for &amp; ampersand character, or &amp;#34; for " quotation-mark character).
-- [Supports supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n) [Example](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter02-GeometryPrimitives/TextIndex.html) [Example](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter02-GeometryPrimitives/TextSpecialCharactersIndex.html)
+- [Supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n) [Example](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter02-GeometryPrimitives/TextIndex.html) [Example](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter02-GeometryPrimitives/TextSpecialCharactersIndex.html)
 
 ### MFFloat [in, out] **length** [ ] <small>[0,∞)</small>
 {: #fields-length }
@@ -90,7 +90,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 ### SFVec3f [out] **origin**
 {: #fields-origin }
 
-*origin* of the text local coordinate system, in units of the coordinate system in which the Text node is embedded. The value of the *origin* field represents the upper left corner of the textBounds.
+*origin* of the text local coordinate system, in units of the coordinate system in which the **Text** node is embedded. The value of the *origin* field represents the upper left corner of the textBounds.
 
 #### Warning
 
@@ -129,13 +129,13 @@ The *fontStyle* field can contain a [FontStyle](/x_ite/components/text/fontstyle
 
 - [String (computer science)](https://en.wikipedia.org/wiki/String_(computer_science))
 - Full Internationalization (i18n) and Localization (l10n) features are available for any written language.
-- [Supports supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
+- [Supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
 - Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 - For advanced extensibility, authors can substitute a type-matched ProtoInstance node (with correct containerField value) for contained node content.
 
 ### Warning
 
-- Text node requires X3D `profile='Immersive'` or `<component name='Text' level='1'/>`
+- **Text** node requires X3D `profile='Immersive'` or `<component name='**Text**' level='1'/>`
 
 ## Example
 

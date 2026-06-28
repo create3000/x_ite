@@ -13,9 +13,9 @@ tags: [Anchor, Networking, VRML]
 
 ## Overview
 
-Anchor is a Grouping node that can contain most nodes. When the user selects any of the geometry contained by the Anchor node, the browser either jumps to another viewpoint (similar to HTML bookmark) or else loads content (such as X3D, an image or HTML) specified by the url field. Newly loaded content completely replaces current content, if the value of parameter field indicates using the same window.
+**Anchor** is a Grouping node that can contain most nodes. When the user selects any of the geometry contained by the **Anchor** node, the browser either jumps to another viewpoint (similar to HTML bookmark) or else loads content (such as X3D, an image or HTML) specified by the url field. Newly loaded content completely replaces current content, if the value of parameter field indicates using the same window.
 
-The Anchor node belongs to the [Networking](/x_ite/components/overview/#networking) component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **Anchor** node belongs to the [Networking](/x_ite/components/overview/#networking) component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -70,12 +70,12 @@ Author-provided prose that describes intended purpose of the url asset.
 ### SFBool [in, out] **load** TRUE
 {: #fields-load }
 
-The *load* field has no effect, Anchor operation is only triggered by user selection.
+The *load* field has no effect, **Anchor** operation is only triggered by user selection.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 {: #fields-url }
 
-Address of replacement world, or #ViewpointDEFName within the current scene, or alternate Web resource, activated by the user selecting [Shape](/x_ite/components/shape/shape/) geometry within the Anchor children nodes.
+Address of replacement world, or #ViewpointDEFName within the current scene, or alternate Web resource, activated by the user selecting [Shape](/x_ite/components/shape/shape/) geometry within the **Anchor** children nodes.
 
 #### Hints
 
@@ -107,12 +107,12 @@ If provided, *parameter* tells the X3D player where to to redirect the loaded ur
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
 {: #fields-autoRefresh }
 
-The *autoRefresh* field has no effect, Anchor operation is only triggered by user selection.
+The *autoRefresh* field has no effect, **Anchor** operation is only triggered by user selection.
 
 ### SFTime [in, out] **autoRefreshTimeLimit** 3600 <small>[0,∞)</small>
 {: #fields-autoRefreshTimeLimit }
 
-The *autoRefreshTimeLimit* field has no effect, Anchor operation is only triggered by user selection.
+The *autoRefreshTimeLimit* field has no effect, **Anchor** operation is only triggered by user selection.
 
 ### SFBool [in, out] **visible** TRUE
 {: #fields-visible }

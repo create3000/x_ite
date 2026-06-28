@@ -13,9 +13,9 @@ tags: [DepthMode, X_ITE]
 
 ## Overview
 
-DepthMode contains parameters that are specific for depth control, like the value used for depth buffer comparisons.
+**DepthMode** contains parameters that are specific for depth control, like the value used for depth buffer comparisons.
 
-The DepthMode node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and its default container field is *depthMode.* It is available in X_ITE.
+The **DepthMode** node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and requires at least support level **1,** its default container field is *depthMode.* It is available from X3D version 4.0 or higher.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
@@ -37,7 +37,7 @@ The DepthMode node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) com
 | SFVec2f | [in, out] | [polygonOffset](#fields-polygonOffset) | 0 0 |
 | SFVec2f | [in, out] | [depthRange](#fields-depthRange) | 0 1 |
 | SFBool | [in, out] | [depthTest](#fields-depthTest) | TRUE |
-| SFString | [in, out] | [depthFunction](#fields-depthFunction) | "LESS |
+| SFString | [in, out] | [depthFunction](#fields-depthFunction) | "LESS_EQUAL" |
 | SFBool | [in, out] | [depthMask](#fields-depthMask) | TRUE |
 {: .fields }
 

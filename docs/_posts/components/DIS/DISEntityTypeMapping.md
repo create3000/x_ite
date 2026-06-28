@@ -13,9 +13,12 @@ tags: [DISEntityTypeMapping, DIS]
 
 ## Overview
 
-DISEntityTypeMapping provides a best-match mapping from DIS ESPDU entity type information to a specific X3D model, thus providing a visual and behavioral representation that best matches the entity type. Fields are processed in order: kind, domain, country, category, subcategory, specific, extra.
+**DISEntityTypeMapping** provides a best-match mapping from DIS ESPDU entity type information to a specific X3D model, thus providing a visual and behavioral representation that best matches the entity type. Fields are processed in order: kind, domain, country, category, subcategory, specific, extra.
 
-The DISEntityTypeMapping node belongs to the [DIS](/x_ite/components/overview/#dis) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The **DISEntityTypeMapping** node belongs to the [DIS](/x_ite/components/overview/#dis) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+
+>**Not Supported:** This node is **not supported** by X_ITE.
+{: .prompt-danger }
 
 ## Hierarchy
 
@@ -160,7 +163,7 @@ Integer enumerations value for particular *subcategory* to which an entity belon
 ### Hints
 
 - Values set to zero are wildcards, matching any received value.
-- DISEntityTypeMapping is contained by a parent [DISEntityManager](/x_ite/components/dis/disentitymanager/) node.
+- **DISEntityTypeMapping** is contained by a parent [DISEntityManager](/x_ite/components/dis/disentitymanager/) node.
 - DisEntityManager ESPDU packets use the IEEE Distributed Interactive Simulation (DIS) protocol.
 - [X3D Developers Guide on DIS](https://www.web3d.org/x3d/content/examples/X3dDevelopersGuide.htmll#DIS)
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/DistributedInteractiveSimulation.pdf)

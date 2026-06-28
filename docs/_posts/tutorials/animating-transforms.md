@@ -18,21 +18,21 @@ Animation requires control over time:
 - When to start and stop
 - How fast to go
 
-## Controlling time
+## Controlling Time
 
 - A [TimeSensor](/x_ite/components/time/timesensor/) node is similar to a stop watch
   - You control the start and stop time
 - The sensor generates time events while it is running
 - To animate, route time events into other nodes
 
-## Using absolute time
+## Using Absolute Time
 
 - A [TimeSensor](/x_ite/components/time/timesensor/) node generates absolute and fractional time events
 - Absolute time events give the wall-clock time
   - Absolute time is measured in seconds since 12:00am January 1, 1970!
   - Useful for triggering events at specific dates and times
 
-## Using fractional time
+## Using Fractional Time
 
 - Fractional time events give a number from 0 to 1
   - When the sensor starts, it outputs a 0
@@ -68,7 +68,7 @@ TimeSensor {
 }
 ```
 
-## Using timers
+## Using Timers
 
 To create a continuously running timer:
 
@@ -95,7 +95,7 @@ The *set\_stopTime* input event:
 
 - Sets when the timer should stop
 
-## Using timer outputs
+## Using Timer Outputs
 
 The isActive output event:
 
@@ -111,7 +111,7 @@ The fraction\_changed output event:
 - Outputs values from 0 to 1 during a cycle
 - Resets to 0 at the start of each cycle
 
-## A sample time sensor
+## A Sample Time Sensor
 
 ### XML Encoding
 
@@ -165,7 +165,7 @@ ROUTE Monolith1Timer.fraction_changed TO Monolith1Facade.set_transparency
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/touch2/touch2.x3dv)
 {: .example-links }
 
-## Converting time to position
+## Converting Time to Position
 
 To animate the position of a shape you provide:
 
@@ -176,7 +176,7 @@ An interpolator node converts an input time to an output position
 
 - When a time is in between two key positions, the interpolator computes an intermediate position
 
-## Interpolating positions
+## Interpolating Positions
 
 Each key position along a path has:
 
@@ -220,7 +220,7 @@ PositionInterpolator {
 
 Typically route into a [Transform](/x_ite/components/grouping/transform/) node's *set\_translation* input
 
-## Using position interpolator inputs and outputs
+## Using Position Interpolator Inputs and Outputs
 
 The *set\_fraction* input:
 
@@ -230,7 +230,7 @@ The *value\_changed* output:
 
 - Outputs the position along the path each time the fraction is set
 
-## A sample using position interpolator
+## A Sample Using Position Interpolator
 
 ### XML Encoding
 
@@ -288,7 +288,7 @@ ROUTE Position1.value_changed TO Particle1.set_translation
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/interpolator1/interpolator1.x3dv)
 {: .example-links }
 
-## Using other types of interpolators
+## Using Other Types of Interpolators
 
 |                      |                             |
 |----------------------|-----------------------------|

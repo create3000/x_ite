@@ -13,9 +13,9 @@ tags: [TimeSensor, Time, VRML]
 
 ## Overview
 
-TimeSensor continuously generates events as time passes. Typical use: ROUTE thisTimeSensorDEF.fraction_changed TO someInterpolatorDEF.set_fraction.
+**TimeSensor** continuously generates events as time passes. Typical use: ROUTE thisTimeSensorDEF.fraction_changed TO someInterpolatorDEF.set_fraction.
 
-The TimeSensor node belongs to the [Time](/x_ite/components/overview/#time) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **TimeSensor** node belongs to the [Time](/x_ite/components/overview/#time) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -80,12 +80,12 @@ Enables/disables node operation.
 
 #### Hints
 
-- In Interchange profile TimeSensor may be ignored if *cycleInterval* \< 0.01 second.
+- In Interchange profile **TimeSensor** may be ignored if *cycleInterval* \< 0.01 second.
 - *cycleInterval* is a nonnegative SFTime duration interval, not an absolute clock time.
 
 #### Warning
 
-- An active TimeSensor node ignores set_cycleInterval and set_startTime events.
+- An active **TimeSensor** node ignores set_cycleInterval and set_startTime events.
 
 ### SFBool [in, out] **loop** FALSE
 {: #fields-loop }
@@ -95,7 +95,7 @@ Repeat indefinitely when *loop*=true, repeat only once when *loop*=false.
 ### SFTime [in, out] **startTime** 0 <small>(-∞,∞)</small>
 {: #fields-startTime }
 
-When time now \>= *startTime*, isActive becomes true and TimeSensor becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When time now \>= *startTime*, isActive becomes true and **TimeSensor** becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
@@ -104,7 +104,7 @@ When time now \>= *startTime*, isActive becomes true and TimeSensor becomes acti
 ### SFTime [in, out] **resumeTime** 0 <small>(-∞,∞)</small>
 {: #fields-resumeTime }
 
-When *resumeTime* becomes \<= time now, isPaused becomes false and TimeSensor becomes inactive. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When *resumeTime* becomes \<= time now, isPaused becomes false and **TimeSensor** becomes inactive. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
@@ -117,7 +117,7 @@ When *resumeTime* becomes \<= time now, isPaused becomes false and TimeSensor be
 ### SFTime [in, out] **pauseTime** 0 <small>(-∞,∞)</small>
 {: #fields-pauseTime }
 
-When time now \>= *pauseTime*, isPaused becomes true and TimeSensor becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When time now \>= *pauseTime*, isPaused becomes true and **TimeSensor** becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
@@ -130,7 +130,7 @@ When time now \>= *pauseTime*, isPaused becomes true and TimeSensor becomes paus
 ### SFTime [in, out] **stopTime** 0 <small>(-∞,∞)</small>
 {: #fields-stopTime }
 
-When *stopTime* becomes \<= time now, isActive becomes false and TimeSensor becomes inactive. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When *stopTime* becomes \<= time now, isActive becomes false and **TimeSensor** becomes inactive. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
@@ -138,13 +138,13 @@ When *stopTime* becomes \<= time now, isActive becomes false and TimeSensor beco
 
 #### Warnings
 
-- An active TimeSensor node ignores set_cycleInterval and set_startTime events.
-- An active TimeSensor node ignores set_stopTime event values less than or equal to startTime.
+- An active **TimeSensor** node ignores set_cycleInterval and set_startTime events.
+- An active **TimeSensor** node ignores set_stopTime event values less than or equal to startTime.
 
 ### SFBool [out] **isPaused**
 {: #fields-isPaused }
 
-*isPaused* true/false events are sent when TimeSensor is paused/resumed.
+*isPaused* true/false events are sent when **TimeSensor** is paused/resumed.
 
 #### Warnings
 
@@ -154,7 +154,7 @@ When *stopTime* becomes \<= time now, isActive becomes false and TimeSensor beco
 ### SFBool [out] **isActive**
 {: #fields-isActive }
 
-*isActive* true/false events are sent when TimeSensor starts/stops running.
+*isActive* true/false events are sent when **TimeSensor** starts/stops running.
 
 #### Warning
 
@@ -167,7 +167,7 @@ When *stopTime* becomes \<= time now, isActive becomes false and TimeSensor beco
 
 #### Hints
 
-- The first *cycleTime* event for a TimeSensor node can be used as an alarm (single pulse at a specified time).
+- The first *cycleTime* event for a **TimeSensor** node can be used as an alarm (single pulse at a specified time).
 - *cycleTime* is a nonnegative SFTime duration interval, not an absolute clock time.
 
 #### Warning
@@ -177,7 +177,7 @@ When *stopTime* becomes \<= time now, isActive becomes false and TimeSensor beco
 ### SFTime [out] **elapsedTime**
 {: #fields-elapsedTime }
 
-Current elapsed time since TimeSensor activated/running, cumulative in seconds, and not counting any paused time.
+Current elapsed time since **TimeSensor** activated/running, cumulative in seconds, and not counting any paused time.
 
 #### Hint
 
@@ -210,7 +210,7 @@ Time continuously sends the absolute *time* (value 0.0 matches 1 January 1970) i
 
 ### Hints
 
-- In Interchange profile TimeSensor may be ignored if cycleInterval \< 0.01 second.
+- In Interchange profile **TimeSensor** may be ignored if cycleInterval \< 0.01 second.
 - [Event timing details are explained in X3D Specification 4.4.8.3 Execution model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/concepts.html#ExecutionModel)
 - [X3D Architecture 8 Time component](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/time.html)
 - [Example scenes and authoring assets](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter07EventAnimationInterpolation)

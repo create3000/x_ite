@@ -271,7 +271,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
 
          location .set (0, 0, e);
          scale    .set (b, b, a);
-         rotation .setFromToVec (Vector3 .Z_AXIS, this ._direction .getValue ());
+         rotation .setVectors (Vector3 .Z_AXIS, this ._direction .getValue ());
 
          sphereMatrix
             .assign (modelViewMatrix)
@@ -313,7 +313,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, X3DSoundNode .prototyp
 
          location  .assign (this ._location  .getValue ());
          direction .assign (this ._direction .getValue ());
-         rotation .setFromToVec (Vector3 .Z_AXIS, direction) .straighten ();
+         rotation .setVectors (Vector3 .Z_AXIS, direction) .straighten ();
          rotation .multVecRot (xAxis .assign (Vector3 .X_AXIS));
 
          modelViewMatrix .multVecMatrix (location) .normalize ();

@@ -13,9 +13,9 @@ tags: [ShadedVolumeStyle, VolumeRendering]
 
 ## Overview
 
-ShadedVolumeStyle applies Blinn-Phong illumination model to volume rendering.
+**ShadedVolumeStyle** applies Blinn-Phong illumination model to volume rendering.
 
-The ShadedVolumeStyle node belongs to the [VolumeRendering](/x_ite/components/overview/#volumerendering) component and requires at least support level **3,** its default container field is *renderStyle.* It is available from X3D version 3.3 or higher.
+The **ShadedVolumeStyle** node belongs to the [VolumeRendering](/x_ite/components/overview/#volumerendering) component and requires at least support level **3,** its default container field is *renderStyle.* It is available from X3D version 3.3 or higher.
 
 ## Hierarchy
 
@@ -86,7 +86,7 @@ The *surfaceNormals* field contains a 3D texture with at least three component v
 
 ### Hint
 
-- ShadedVolumeStyle can contain a single Texture3D node with `containerField='surfaceNormals'` and a single [Material](/x_ite/components/shape/material/) node.
+- **ShadedVolumeStyle** can contain a single Texture3D node with `containerField='surfaceNormals'` and a single [Material](/x_ite/components/shape/material/) node.
 
 ### Warning
 

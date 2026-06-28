@@ -13,9 +13,9 @@ tags: [CollidableOffset, RigidBodyPhysics]
 
 ## Overview
 
-CollidableOffset repositions geometry relative to center of owning body. Contains a single CollidableShape or CollidableOffset node (`containerField='collidable').`
+**CollidableOffset** repositions geometry relative to center of owning body. Contains a single [CollidableShape](/x_ite/components/rigidbodyphysics/collidableshape/) or **CollidableOffset** node (`containerField='collidable').`
 
-The CollidableOffset node belongs to the [RigidBodyPhysics](/x_ite/components/overview/#rigidbodyphysics) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The **CollidableOffset** node belongs to the [RigidBodyPhysics](/x_ite/components/overview/#rigidbodyphysics) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 

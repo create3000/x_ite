@@ -299,7 +299,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
 
          for (const { modelMatrix } of group)
          {
-            modelMatrix .get (t, r, s, so);
+            modelMatrix .getTransform (t, r, s, so);
 
             instancedShape ._translations      .push (t);
             instancedShape ._rotations         .push (r);
@@ -783,7 +783,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, X3DChildNode .pr
             newTransformNode = new Transform (executionContext),
             modelMatrix      = group [0] .modelMatrix;
 
-         modelMatrix .get (t, r, s, so);
+         modelMatrix .getTransform (t, r, s, so);
 
          newTransformNode ._translation      = t;
          newTransformNode ._rotation         = r;

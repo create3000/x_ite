@@ -13,9 +13,12 @@ tags: [DISEntityManager, DIS]
 
 ## Overview
 
-DISEntityManager notifies a scene when new DIS ESPDU entities arrive or current entities leave. DISEntityManager may contain any number of DISEntityTypeMapping nodes that provide a best-match X3D model to incoming entity type values. For each new DIS entity, DISEntityManager thus produces a new EspduTransform node that contains a corresponding X3D model.
+**DISEntityManager** notifies a scene when new DIS ESPDU entities arrive or current entities leave. **DISEntityManager** may contain any number of [DISEntityTypeMapping](/x_ite/components/dis/disentitytypemapping/) nodes that provide a best-match X3D model to incoming entity type values. For each new DIS entity, **DISEntityManager** thus produces a new [EspduTransform](/x_ite/components/dis/espdutransform/) node that contains a corresponding X3D model.
 
-The DISEntityManager node belongs to the [DIS](/x_ite/components/overview/#dis) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The **DISEntityManager** node belongs to the [DIS](/x_ite/components/overview/#dis) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+
+>**Not Supported:** This node is **not supported** by X_ITE.
+{: .prompt-danger }
 
 ## Hierarchy
 
@@ -103,7 +106,7 @@ Simulation/exercise *siteID* of the participating LAN or organization.
 
 ### Hints
 
-- DISEntityManager contains [DISEntityTypeMapping](/x_ite/components/dis/disentitytypemapping/) nodes.
+- **DISEntityManager** contains [DISEntityTypeMapping](/x_ite/components/dis/disentitytypemapping/) nodes.
 - DisEntityManager ESPDU packets use the IEEE Distributed Interactive Simulation (DIS) protocol.
 - [X3D Developers Guide on DIS](https://www.web3d.org/x3d/content/examples/X3dDevelopersGuide.htmll#DIS)
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/DistributedInteractiveSimulation.pdf)

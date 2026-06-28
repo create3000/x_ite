@@ -20,7 +20,7 @@ const handler =
       {
          const index = +key;
 
-         if (Number .isInteger (index))
+         if (Number .isInteger (index) && index >= 0)
          {
             if (index >= target [_length])
                return undefined;
@@ -52,7 +52,7 @@ const handler =
       {
          let index = +key;
 
-         if (Number .isInteger (index))
+         if (Number .isInteger (index) && index >= 0)
          {
             const components = target .getComponents ();
 
@@ -89,7 +89,7 @@ const handler =
       {
          const index = +key;
 
-         if (Number .isInteger (index))
+         if (Number .isInteger (index) && index >= 0)
             return index < target [_length];
       }
 
@@ -112,7 +112,7 @@ const handler =
       {
          const index = +key;
 
-         if (Number .isInteger (index))
+         if (Number .isInteger (index) && index >= 0)
          {
             if (index < target [_length])
                return Object .getOwnPropertyDescriptor (target .getValue (), key);

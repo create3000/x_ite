@@ -410,12 +410,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       vec3
       multVecQuat (const in vec3 v, const in vec4 q)
       {
-         float a = q .w * q .w - q .x * q .x - q .y * q .y - q .z * q .z;
-         float b = 2.0 * (v .x * q .x + v .y * q .y + v .z * q .z);
-         float c = 2.0 * q .w;
-         vec3  r = a * v .xyz + b * q .xyz + c * (q .yzx * v .zxy - q .zxy * v .yzx);
-
-         return r;
+         return v + 2.0 * cross (q .xyz, cross (q .xyz, v) + q .w * v);
       }
 
       mat3

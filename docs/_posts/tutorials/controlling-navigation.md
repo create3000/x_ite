@@ -14,7 +14,7 @@ tags: [NavigationInfo]
 - You can select the navigation type
 - You can describe the size and speed of the viewer's avatar
 
-## Selecting navigation types
+## Selecting Navigation Types
 
 There are five standard navigation keywords:
 
@@ -26,11 +26,11 @@ There are five standard navigation keywords:
 
 Some browsers support additional navigation types.
 
-## Specifying avatars
+## Specifying Avatars
 
 - Avatar size (width, height, step height) and speed can be specified
 
-## Controlling the headlight
+## Controlling the Headlight
 
 - By default, a headlight is placed on the avatar's head and aimed in the head direction
 - You can turn this headlight on and off

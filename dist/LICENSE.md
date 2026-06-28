@@ -40,8 +40,6 @@ ADDITIONAL LICENSES
  * Copyright OpenJS Foundation and other contributors
  */
 
-/*! pako 2.1.0 https://github.com/nodeca/pako @license (MIT AND Zlib) */
-
 /**
  * @license
  * Copyright 2000, Silicon Graphics, Inc. All Rights Reserved.

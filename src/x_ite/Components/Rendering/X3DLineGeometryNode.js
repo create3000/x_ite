@@ -19,6 +19,8 @@ function X3DLineGeometryNode (executionContext)
    if (!this .getExecutionContext ())
       X3DGeometryNode .call (this, executionContext);
 
+   // Private properties
+
    const
       browser = this .getBrowser (),
       gl      = browser .getContext ();
@@ -283,6 +285,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
       // Set viewport.
 
       gl .viewport (... viewport);
+      gl .scissor (... viewport);
 
       // Enable render mode nodes.
 
@@ -528,6 +531,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          // Set viewport.
 
          gl .viewport (... viewport);
+         gl .scissor (... viewport);
 
          // Enable render mode nodes.
 
@@ -611,6 +615,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
       // Set viewport.
 
       gl .viewport (... viewport);
+      gl .scissor (... viewport);
 
       // Enable render mode nodes.
 
@@ -943,6 +948,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, X3DGeome
          // Set viewport.
 
          gl .viewport (... viewport);
+         gl .scissor (... viewport);
 
          // Enable render mode nodes.
 

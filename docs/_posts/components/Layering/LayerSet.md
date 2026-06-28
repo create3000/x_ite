@@ -13,9 +13,9 @@ tags: [LayerSet, Layering]
 
 ## Overview
 
-LayerSet defines a list of layers and a rendering order. The rendering order is specified by the order field.
+**LayerSet** defines a list of layers and a rendering order. The rendering order is specified by the order field.
 
-The LayerSet node belongs to the [Layering](/x_ite/components/overview/#layering) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The **LayerSet** node belongs to the [Layering](/x_ite/components/overview/#layering) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -85,7 +85,7 @@ The *layers* list defines a list of [Layer](/x_ite/components/layering/layer/) n
 
 ### Warning
 
-- Only one LayerSet node is allowed in a scene, and it shall be a root node at the top of the scene graph.
+- Only one **LayerSet** node is allowed in a scene, and it shall be a root node at the top of the scene graph.
 
 ## Example
 

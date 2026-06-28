@@ -13,9 +13,9 @@ tags: [Normal, Rendering, VRML]
 
 ## Overview
 
-Normal defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate or CoordinateDouble node, or else to a parent ElevationGrid node. Normal values are perpendicular directions that are used per-polygon or per-vertex when computing lighting and shading for advanced physically based rendering (PBR) effects.
+**Normal** defines a set of 3D surface-normal vectors that apply either to a sibling [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node, or else to a parent [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) node. **Normal** values are perpendicular directions that are used per-polygon or per-vertex when computing lighting and shading for advanced physically based rendering (PBR) effects.
 
-The Normal node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **2,** its default container field is *normal.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **Normal** node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **2,** its default container field is *normal.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -56,11 +56,11 @@ Set of unit-length normal vectors, corresponding to indexed polygons or vertices
 
 ### Hints
 
-- Normal values are typically only calculated or applied once, during initial loading of model geometry.
-- Custom Normal values can produce special effects.
-- If no child Normal node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
+- **Normal** values are typically only calculated or applied once, during initial loading of model geometry.
+- Custom **Normal** values can produce special effects.
+- If no child **Normal** node is provided, the X3D browser shall automatically generate normals, using creaseAngle to determine smoothed shading across shared vertices.
 - Computation of normal values is performed quite rapidly on modern 3D graphics hardware, often with no perceptible delay. This is why many models simply rely on automatic computation of normals.
-- [Normal vectors perpendicular to 3D surface](https://en.wikipedia.org/wiki/Normal_(geometry))
+- [**Normal** vectors perpendicular to 3D surface](https://en.wikipedia.org/wiki/Normal_(geometry))
 
 ### Warning
 

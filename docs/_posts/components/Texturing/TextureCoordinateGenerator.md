@@ -13,9 +13,9 @@ tags: [TextureCoordinateGenerator, Texturing]
 
 ## Overview
 
-TextureCoordinateGenerator computes 2D (s,t) texture-coordinate points, used by vertex-based geometry nodes (such as IndexedFaceSet or ElevationGrid) to map textures to vertices (and patches to NURBS surfaces).
+**TextureCoordinateGenerator** computes 2D (s,t) texture-coordinate points, used by vertex-based geometry nodes (such as [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) or [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/)) to map textures to vertices (and patches to NURBS surfaces).
 
-The TextureCoordinateGenerator node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **2,** its default container field is *texCoord.* It is available from X3D version 3.0 or higher.
+The **TextureCoordinateGenerator** node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **2,** its default container field is *texCoord.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -77,7 +77,7 @@ Parameter field defines the algorithm used to compute texture coordinates.
 
 ### Hints
 
-- Add [Shape](/x_ite/components/shape/shape/) and then polygonal/planar geometry before adding TextureCoordinateGenerator.
+- Add [Shape](/x_ite/components/shape/shape/) and then polygonal/planar geometry before adding **TextureCoordinateGenerator**.
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
 - [X3D Texturing component Figure 18.1, Texture map coordinate system](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texturing.html#f-TextureMapCoordSystem)
 

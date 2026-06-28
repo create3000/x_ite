@@ -161,7 +161,7 @@ function other ()
    const cwd = process .cwd ();
 
    systemSync (`npm cache clean --force`);
-   systemSync (`countdown 120s`);
+   systemSync (`countdown 60s`);
 
    process .chdir (`${cwd}/../media`);
    systemSync (`npm run release`);
@@ -169,7 +169,7 @@ function other ()
    process .chdir (`${cwd}/../x_ite-node`);
    systemSync (`npm run release`);
    systemSync (`npm cache clean --force`);
-   systemSync (`countdown 120s`);
+   systemSync (`countdown 60s`);
 
    process .chdir (`${cwd}/../x3d-tidy`);
    systemSync (`npm run release`);
@@ -195,11 +195,11 @@ function release ()
 
    const version = sh (`npm pkg get version | sed 's/"//g'`) .trim ();
 
-   systemSync (`npm run docs-table`);
-   systemSync (`npm run docs-components`);
-   systemSync (`npm run docs-nodes`);
-   systemSync (`npm run docs-reference`);
-   systemSync (`npm run glTF-samples`);
+   systemSync (`npm run docs:table`);
+   systemSync (`npm run docs:components`);
+   systemSync (`npm run docs:nodes`);
+   systemSync (`npm run docs:reference`);
+   systemSync (`npm run glTF:samples`);
 
    // docs
 
@@ -234,7 +234,9 @@ function release ()
 
    if (!version .endsWith ("a"))
    {
-      systemSync (`npm login`);
+      if (systemSync (`npm whoami > /dev/null 2>&1`))
+	   	systemSync (`npm login`);
+
       systemSync (`npm publish`);
    }
 

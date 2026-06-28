@@ -1,5 +1,5 @@
 ---
-title: Building Shapes out of Points, Lines, and Faces
+title: Building Shapes Out of Points, Lines, and Faces
 date: 2022-11-28
 nav: tutorials-animation-sensors-and-geometry
 categories: [Tutorials]
@@ -17,7 +17,7 @@ Instead, build shapes out of atomic components:
 
 - Points, lines, and faces
 
-## Building shapes using coordinates
+## Building Shapes Using Coordinates
 
 Shape building is like a 3-D connect-the-dots game:
 
@@ -51,7 +51,7 @@ Coordinate {
 }
 ```
 
-## Using geometry coordinates
+## Using Geometry Coordinates
 
 Build coordinate-based shapes using geometry nodes:
 
@@ -145,7 +145,7 @@ Shape {
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/lines1/lines1.x3dv)
 {: .example-links }
 
-## Using line set coordinate indices
+## Using Line Set Coordinate Indices
 
 Each coordinate in a [Coordinate](/x_ite/components/rendering/coordinate/) node is implicitly numbered
 
@@ -212,7 +212,7 @@ Shape {
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/faces1/faces1.x3dv)
 {: .example-links }
 
-## Using face set coordinate index lists
+## Using Face Set Coordinate Index Lists
 
 To build a face shape
 
@@ -270,7 +270,7 @@ Shape {
 }
 ```
 
-## Using shape control
+## Using Shape Control
 
 A solid shape is one where the insides are never seen:
 
@@ -311,7 +311,7 @@ CoordinateInterpolator {
 
 Typically route into a [Coordinate](/x_ite/components/rendering/coordinate/) node's set\_point input.
 
-## Interpolating coordinate lists
+## Interpolating Coordinate Lists
 
 A [CoordinateInterpolator](/x_ite/components/interpolation/coordinateinterpolator/) node interpolates lists of coordinates:
 

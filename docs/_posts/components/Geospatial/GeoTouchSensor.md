@@ -13,9 +13,9 @@ tags: [GeoTouchSensor, Geospatial]
 
 ## Overview
 
-GeoTouchSensor returns geographic coordinates for the object being selected. GeoTouchSensor can contain a GeoOrigin node.
+**GeoTouchSensor** returns geographic coordinates for the object being selected. **GeoTouchSensor** can contain a [GeoOrigin](/x_ite/components/geospatial/geoorigin/) node.
 
-The GeoTouchSensor node belongs to the [Geospatial](/x_ite/components/overview/#geospatial) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The **GeoTouchSensor** node belongs to the [Geospatial](/x_ite/components/overview/#geospatial) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -128,7 +128,7 @@ Output event containing 3D point on surface of underlying geometry, given in geo
 ### SFVec3d [out] **hitGeoCoord_changed**
 {: #fields-hitGeoCoord_changed }
 
-Output event containing 3D point on surface of underlying geometry, given in GeoTouchSensor's local coordinate system.
+Output event containing 3D point on surface of underlying geometry, given in **GeoTouchSensor**'s local coordinate system.
 
 #### Warning
 

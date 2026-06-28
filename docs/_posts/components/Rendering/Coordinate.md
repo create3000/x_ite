@@ -13,9 +13,9 @@ tags: [Coordinate, Rendering, VRML]
 
 ## Overview
 
-Coordinate builds geometry by defining a set of 3D coordinate (triplet) point values. Coordinate is used by IndexedFaceSet, IndexedLineSet, LineSet, PointSet, Triangle* and IndexedTriangle* nodes. Coordinate is also used by HAnimHumanoid, HAnimSegment, and various Nurbs nodes.
+**Coordinate** builds geometry by defining a set of 3D coordinate (triplet) point values. **Coordinate** is used by [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), [IndexedLineSet](/x_ite/components/rendering/indexedlineset/), [LineSet](/x_ite/components/rendering/lineset/), [PointSet](/x_ite/components/rendering/pointset/), Triangle* and IndexedTriangle* nodes. **Coordinate** is also used by [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/), [HAnimSegment](/x_ite/components/hanim/hanimsegment/), and various Nurbs nodes.
 
-The Coordinate node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **1,** its default container field is *coord.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **Coordinate** node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **1,** its default container field is *coord.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

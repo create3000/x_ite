@@ -11,6 +11,7 @@ import Color3                    from "../../standard/Math/Numbers/Color3.js";
 import Color4                    from "../../standard/Math/Numbers/Color4.js";
 import Matrix3                   from "../../standard/Math/Numbers/Matrix3.js";
 import Matrix4                   from "../../standard/Math/Numbers/Matrix4.js";
+import Quaternion                from "../../standard/Math/Numbers/Quaternion.js";
 import Rotation4                 from "../../standard/Math/Numbers/Rotation4.js";
 import Vector2                   from "../../standard/Math/Numbers/Vector2.js";
 import Vector3                   from "../../standard/Math/Numbers/Vector3.js";
@@ -72,7 +73,7 @@ const Grammar = Expressions ({
    eventOut:     /eventOut/y,
    exposedField: /exposedField/y,
 
-   FieldType: /[SM]F(?:Bool|Color(?:RGBA)?|Double|Float|Image|Int32|Matrix[34][df]|Node|Rotation|String|Time|Vec[234][df])/y,
+   FieldType: /[SM]F(?:Bool|Color(?:RGBA)?|Double|Float|Image|Int32|Matrix[34][df]|Node|Quaternion|Rotation|String|Time|Vec[234][df])/y,
 
    // Values
    int32: /(?:0[xX][\da-fA-F]+)|(?:[+-]?\d+)/y,
@@ -112,6 +113,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
    Color4: new Color4 (),
    Matrix3: new Matrix3 (),
    Matrix4: new Matrix4 (),
+   Quaternion: new Quaternion (),
    Rotation4: new Rotation4 (),
    Vector2: new Vector2 (),
    Vector3: new Vector3 (),
@@ -2279,6 +2281,72 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
       //    node = this .nodeStatement ();
       // }
    },
+   sfquaternionValue (field)
+   {
+      if (this .double ())
+      {
+         const x = this .value;
+
+         if (this .double ())
+         {
+            const y = this .value;
+
+            if (this .double ())
+            {
+               const z = this .value;
+
+               if (this .double ())
+               {
+                  const w = this .value;
+
+                  field .x = x;
+                  field .y = y;
+                  field .z = z;
+                  field .w = w;
+
+                  return true;
+               }
+            }
+         }
+      }
+
+      return false;
+   },
+   mfquaternionValue (field)
+   {
+      field .length = 0;
+
+      if (this .sfquaternionValue (this .Quaternion))
+      {
+         field .push (this .Quaternion);
+         return true;
+      }
+
+      if (Grammar .OpenBracket .parse (this))
+      {
+         this .sfquaternionValues (field);
+
+         if (Grammar .CloseBracket .parse (this))
+            return true;
+
+         throw new Error ("Expected ']'.");
+      }
+
+      return false;
+   },
+   sfquaternionValues (field)
+   {
+      field .length = 0;
+
+      const
+         target = field .getTarget (),
+         value  = this .Quaternion;
+
+      while (this .sfquaternionValue (value))
+         target .push (value);
+
+      return field .length !== 0;
+   },
    sfrotationValue (field)
    {
       if (this .double ())
@@ -2625,51 +2693,53 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
 
 Object .assign (VRMLParser .prototype,
 {
-   [X3DConstants .SFBool]:      VRMLParser .prototype .sfboolValue,
-   [X3DConstants .SFColor]:     VRMLParser .prototype .sfcolorValue,
-   [X3DConstants .SFColorRGBA]: VRMLParser .prototype .sfcolorrgbaValue,
-   [X3DConstants .SFDouble]:    VRMLParser .prototype .sfdoubleValue,
-   [X3DConstants .SFFloat]:     VRMLParser .prototype .sfdoubleValue,
-   [X3DConstants .SFImage]:     VRMLParser .prototype .sfimageValue,
-   [X3DConstants .SFInt32]:     VRMLParser .prototype .sfint32Value,
-   [X3DConstants .SFMatrix3f]:  VRMLParser .prototype .sfmatrix3Value,
-   [X3DConstants .SFMatrix3d]:  VRMLParser .prototype .sfmatrix3Value,
-   [X3DConstants .SFMatrix4f]:  VRMLParser .prototype .sfmatrix4Value,
-   [X3DConstants .SFMatrix4d]:  VRMLParser .prototype .sfmatrix4Value,
-   [X3DConstants .SFNode]:      VRMLParser .prototype .sfnodeValue,
-   [X3DConstants .SFRotation]:  VRMLParser .prototype .sfrotationValue,
-   [X3DConstants .SFString]:    VRMLParser .prototype .sfstringValue,
-   [X3DConstants .SFTime]:      VRMLParser .prototype .sfdoubleValue,
-   [X3DConstants .SFVec2d]:     VRMLParser .prototype .sfvec2Value,
-   [X3DConstants .SFVec2f]:     VRMLParser .prototype .sfvec2Value,
-   [X3DConstants .SFVec3d]:     VRMLParser .prototype .sfvec3Value,
-   [X3DConstants .SFVec3f]:     VRMLParser .prototype .sfvec3Value,
-   [X3DConstants .SFVec4d]:     VRMLParser .prototype .sfvec4Value,
-   [X3DConstants .SFVec4f]:     VRMLParser .prototype .sfvec4Value,
+   [X3DConstants .SFBool]:       VRMLParser .prototype .sfboolValue,
+   [X3DConstants .SFColor]:      VRMLParser .prototype .sfcolorValue,
+   [X3DConstants .SFColorRGBA]:  VRMLParser .prototype .sfcolorrgbaValue,
+   [X3DConstants .SFDouble]:     VRMLParser .prototype .sfdoubleValue,
+   [X3DConstants .SFFloat]:      VRMLParser .prototype .sfdoubleValue,
+   [X3DConstants .SFImage]:      VRMLParser .prototype .sfimageValue,
+   [X3DConstants .SFInt32]:      VRMLParser .prototype .sfint32Value,
+   [X3DConstants .SFMatrix3f]:   VRMLParser .prototype .sfmatrix3Value,
+   [X3DConstants .SFMatrix3d]:   VRMLParser .prototype .sfmatrix3Value,
+   [X3DConstants .SFMatrix4f]:   VRMLParser .prototype .sfmatrix4Value,
+   [X3DConstants .SFMatrix4d]:   VRMLParser .prototype .sfmatrix4Value,
+   [X3DConstants .SFNode]:       VRMLParser .prototype .sfnodeValue,
+   [X3DConstants .SFQuaternion]: VRMLParser .prototype .sfquaternionValue,
+   [X3DConstants .SFRotation]:   VRMLParser .prototype .sfrotationValue,
+   [X3DConstants .SFString]:     VRMLParser .prototype .sfstringValue,
+   [X3DConstants .SFTime]:       VRMLParser .prototype .sfdoubleValue,
+   [X3DConstants .SFVec2d]:      VRMLParser .prototype .sfvec2Value,
+   [X3DConstants .SFVec2f]:      VRMLParser .prototype .sfvec2Value,
+   [X3DConstants .SFVec3d]:      VRMLParser .prototype .sfvec3Value,
+   [X3DConstants .SFVec3f]:      VRMLParser .prototype .sfvec3Value,
+   [X3DConstants .SFVec4d]:      VRMLParser .prototype .sfvec4Value,
+   [X3DConstants .SFVec4f]:      VRMLParser .prototype .sfvec4Value,
 
-   [X3DConstants .VrmlMatrix]:  VRMLParser .prototype .sfmatrix4Value,
+   [X3DConstants .VrmlMatrix]:   VRMLParser .prototype .sfmatrix4Value,
 
-   [X3DConstants .MFBool]:      VRMLParser .prototype .mfboolValue,
-   [X3DConstants .MFColor]:     VRMLParser .prototype .mfcolorValue,
-   [X3DConstants .MFColorRGBA]: VRMLParser .prototype .mfcolorrgbaValue,
-   [X3DConstants .MFDouble]:    VRMLParser .prototype .mfdoubleValue,
-   [X3DConstants .MFFloat]:     VRMLParser .prototype .mfdoubleValue,
-   [X3DConstants .MFImage]:     VRMLParser .prototype .mfimageValue,
-   [X3DConstants .MFInt32]:     VRMLParser .prototype .mfint32Value,
-   [X3DConstants .MFMatrix3d]:  VRMLParser .prototype .mfmatrix3Value,
-   [X3DConstants .MFMatrix3f]:  VRMLParser .prototype .mfmatrix3Value,
-   [X3DConstants .MFMatrix4d]:  VRMLParser .prototype .mfmatrix4Value,
-   [X3DConstants .MFMatrix4f]:  VRMLParser .prototype .mfmatrix4Value,
-   [X3DConstants .MFNode]:      VRMLParser .prototype .mfnodeValue,
-   [X3DConstants .MFRotation]:  VRMLParser .prototype .mfrotationValue,
-   [X3DConstants .MFString]:    VRMLParser .prototype .mfstringValue,
-   [X3DConstants .MFTime]:      VRMLParser .prototype .mfdoubleValue,
-   [X3DConstants .MFVec2d]:     VRMLParser .prototype .mfvec2Value,
-   [X3DConstants .MFVec2f]:     VRMLParser .prototype .mfvec2Value,
-   [X3DConstants .MFVec3d]:     VRMLParser .prototype .mfvec3Value,
-   [X3DConstants .MFVec3f]:     VRMLParser .prototype .mfvec3Value,
-   [X3DConstants .MFVec4d]:     VRMLParser .prototype .mfvec4Value,
-   [X3DConstants .MFVec4f]:     VRMLParser .prototype .mfvec4Value,
+   [X3DConstants .MFBool]:       VRMLParser .prototype .mfboolValue,
+   [X3DConstants .MFColor]:      VRMLParser .prototype .mfcolorValue,
+   [X3DConstants .MFColorRGBA]:  VRMLParser .prototype .mfcolorrgbaValue,
+   [X3DConstants .MFDouble]:     VRMLParser .prototype .mfdoubleValue,
+   [X3DConstants .MFFloat]:      VRMLParser .prototype .mfdoubleValue,
+   [X3DConstants .MFImage]:      VRMLParser .prototype .mfimageValue,
+   [X3DConstants .MFInt32]:      VRMLParser .prototype .mfint32Value,
+   [X3DConstants .MFMatrix3d]:   VRMLParser .prototype .mfmatrix3Value,
+   [X3DConstants .MFMatrix3f]:   VRMLParser .prototype .mfmatrix3Value,
+   [X3DConstants .MFMatrix4d]:   VRMLParser .prototype .mfmatrix4Value,
+   [X3DConstants .MFMatrix4f]:   VRMLParser .prototype .mfmatrix4Value,
+   [X3DConstants .MFNode]:       VRMLParser .prototype .mfnodeValue,
+   [X3DConstants .MFQuaternion]: VRMLParser .prototype .mfquaternionValue,
+   [X3DConstants .MFRotation]:   VRMLParser .prototype .mfrotationValue,
+   [X3DConstants .MFString]:     VRMLParser .prototype .mfstringValue,
+   [X3DConstants .MFTime]:       VRMLParser .prototype .mfdoubleValue,
+   [X3DConstants .MFVec2d]:      VRMLParser .prototype .mfvec2Value,
+   [X3DConstants .MFVec2f]:      VRMLParser .prototype .mfvec2Value,
+   [X3DConstants .MFVec3d]:      VRMLParser .prototype .mfvec3Value,
+   [X3DConstants .MFVec3f]:      VRMLParser .prototype .mfvec3Value,
+   [X3DConstants .MFVec4d]:      VRMLParser .prototype .mfvec4Value,
+   [X3DConstants .MFVec4f]:      VRMLParser .prototype .mfvec4Value,
 });
 
 X3DField .prototype .fromVRMLString = function (value, scene)

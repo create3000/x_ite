@@ -13,9 +13,9 @@ tags: [ImageTexture, Texturing, VRML]
 
 ## Overview
 
-ImageTexture maps a 2D-image file onto a geometric shape. Texture maps have a 2D coordinate system (s, t) horizontal and vertical, with (s, t) texture-coordinate values in range [0.0, 1.0] for opposite corners of the image.
+**ImageTexture** maps a 2D-image file onto a geometric shape. Texture maps have a 2D coordinate system (s, t) horizontal and vertical, with (s, t) texture-coordinate values in range [0.0, 1.0] for opposite corners of the image.
 
-The ImageTexture node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **1,** its default container field is *texture.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **ImageTexture** node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **1,** its default container field is *texture.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -42,6 +42,9 @@ The ImageTexture node belongs to the [Texturing](/x_ite/components/overview/#tex
 | SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0 |
 | SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600 |
 | SFBool | [ ] | [colorSpaceConversion](#fields-colorSpaceConversion) | TRUE |
+| SFInt32 | [out] | [width](#fields-width) |  |
+| SFInt32 | [out] | [height](#fields-height) |  |
+| SFInt32 | [out] | [colorDepth](#fields-colorDepth) |  |
 | SFBool | [ ] | [repeatS](#fields-repeatS) | TRUE |
 | SFBool | [ ] | [repeatT](#fields-repeatT) | TRUE |
 | SFNode | [ ] | [textureProperties](#fields-textureProperties) | NULL |
@@ -122,6 +125,21 @@ Location and filename of image. Multiple locations are more reliable, and includ
 {: #fields-colorSpaceConversion }
 
 Field *colorSpaceConversion*.
+
+### SFInt32 [out] **width**
+{: #fields-width }
+
+Output field *width*.
+
+### SFInt32 [out] **height**
+{: #fields-height }
+
+Output field *height*.
+
+### SFInt32 [out] **colorDepth**
+{: #fields-colorDepth }
+
+Output field *colorDepth*.
 
 ### SFBool [ ] **repeatS** TRUE
 {: #fields-repeatS }

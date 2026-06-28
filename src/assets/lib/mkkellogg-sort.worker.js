@@ -1,0 +1,203 @@
+/**
+ * mkkellogg-sort.worker.js
+ *
+ * Web Worker that runs the mkkellogg counting-sort WASM extracted from
+ * @mkkellogg/gaussian-splats-3d.
+ *
+ * Exported function (from sorter.cpp):
+ *
+ *   sortIndexes(
+ *    indexes*,                // i32 – input/output index array
+ *    centers*,                // i32 – float positions stride-4 (x,y,z,w)
+ *    precomputed*,            // i32 – pass 0 (unused when usePrecomputedDistances=false)
+ *    mappedDistances*,        // i32 – scratch int array, size=renderCount
+ *    frequencies*,            // i32 – scratch uint array, size=distanceMapRange
+ *    modelViewProj*,          // i32 – view matrix (4×4 column-major float)
+ *    indexesOut*,             // i32 – output sorted index array
+ *    sceneIndexes*,           // i32 – pass 0 (unused when dynamicMode=false)
+ *    transforms*,             // i32 – pass 0 (unused when dynamicMode=false)
+ *    distanceMapRange,        // i32 – histogram bin count (32768)
+ *    sortCount,               // i32 – splats to sort (= splatCount)
+ *    renderCount,             // i32 – rendered splat count (= splatCount)
+ *    splatCount,              // i32 – total splat count
+ *    usePrecomputedDistances, // i32 – 0 (false)
+ *    useIntegerSort,          // i32 – 0 (false → float path)
+ *    dynamicMode              // i32 – 0 (false → single scene)
+ *   )
+ *
+ * Messages in:
+ *   { type:"init",  posOp: Float32Array, splatCount: number }
+ *   { type:"sort",  viewMatrix: Float32Array[16] }
+ *
+ * Messages out:
+ *   { type:"ready" }
+ *   { type:"sorted", indices: Uint32Array }  (buffer transferred)
+ *   { type:"error",  message: string }
+ */
+
+// Resolve the WASM URL relative to this worker file, compatible with both
+// Rollup (import.meta.url is the worker script URL at runtime) and dev servers.
+const wasmUrl = new URL ("./sorter_no_simd_non_shared.wasm", import .meta .url) .href;
+
+// ── Constants ──────────────────────────────────────────────────────────────────
+
+const DIST_MAP_RANGE = 1 << 20;  // Sort precision
+const HEADER_PAGES   = 1;        // reserve 1 WASM page (64 KiB) for internal use
+const PAGE_BYTES     = 65536;
+
+// ── Module-level state ────────────────────────────────────────────────────────
+
+let sortFn = null;   // wasm export function
+let memBuf = null;   // WebAssembly.Memory
+
+// Byte offsets (set during init)
+let pIndexes = 0, pCenters = 0, pMappedDist = 0, pFrequencies = 0, pMVP = 0, pIndexesOut = 0;
+let N = 0;
+let uv, fv;
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
+// Align a byte offset up to 16-byte boundary.
+const align16 = (b) => (b + 15) & ~15;
+
+// ── Initialization ────────────────────────────────────────────────────────────
+
+async function init ({ positions, splatCount })
+{
+   const
+      posOp      = new Float32Array (splatCount * 4),
+      numPositions = splatCount * 3;
+
+   for (let p = 0, a = 0; p < numPositions;)
+   {
+      posOp [a ++] = positions [p ++];
+      posOp [a ++] = positions [p ++];
+      posOp [a ++] = positions [p ++];
+      posOp [a ++] = 1.0;
+   }
+
+   N = splatCount;
+
+   // Layout each buffer (byte offsets in WebAssembly.Memory).
+   let offset = HEADER_PAGES * PAGE_BYTES;
+
+   pIndexes     = offset; offset = align16 (offset + N * 4);              // Uint32[N]
+   pCenters     = offset; offset = align16 (offset + N * 4 * 4);          // Float32[N*4]
+   pMappedDist  = offset; offset = align16 (offset + N * 4);              // Int32[N]
+   pFrequencies = offset; offset = align16 (offset + DIST_MAP_RANGE * 4); // Uint32[32768]
+   pMVP         = offset; offset = align16 (offset + 16 * 4);             // Float32[16]
+   pIndexesOut  = offset; offset = align16 (offset + N * 4);              // Uint32[N]
+
+   const
+      totalBytes = offset,
+      pages      = Math .ceil (totalBytes / PAGE_BYTES) + 2; // +2 for safety
+
+   memBuf = new WebAssembly .Memory ({ initial: pages, maximum: pages + 4 });
+
+   let instance;
+
+   try
+   {
+      const response = await fetch (wasmUrl);
+
+      ({ instance } = await WebAssembly .instantiateStreaming (response, { env: { memory: memBuf } }));
+   }
+   catch
+   {
+      // Fallback: fetch as ArrayBuffer (needed when streaming isn't available).
+
+      const ab = await (await fetch (wasmUrl)) .arrayBuffer ();
+
+      ({ instance } = await WebAssembly .instantiate (ab, { env: { memory: memBuf } }));
+   }
+
+   sortFn = instance. exports .sortIndexes;
+
+   if (typeof instance .exports .__wasm_call_ctors === "function")
+      instance .exports .__wasm_call_ctors ();
+
+   // Populate centres (stride-4): Float32 (x, y, z, opacity) — raw positions.
+
+   fv = new Float32Array (memBuf .buffer);
+
+   fv .set (posOp .subarray (0, N * 4), pCenters >> 2);
+
+   // Initialize indexes 0..N-1.
+
+   uv = new Uint32Array (memBuf .buffer);
+
+   uv .set (Array .from ({ length: N }, (_, i) => i), pIndexes >> 2);
+
+   // Send ready.
+
+   self .postMessage ({ type: "ready" });
+}
+
+// ── Sort ──────────────────────────────────────────────────────────────────────
+
+function sort ({ viewMatrix })
+{
+   // Reset frequencies histogram to zero
+   uv .fill (0, pFrequencies >> 2, (pFrequencies >> 2) + DIST_MAP_RANGE);
+
+   // Write view matrix into WASM memory, with the Z row negated.
+   // The standard lookAt puts -forward in row 2, so visible splats have negative
+   // distances (near ≈ −ε, far ≈ −∞).  The WASM counting sort maps low values to
+   // low bins and places them at the END of indexesOut, giving front-to-back order.
+   // By negating row 2 (columns 2, 6, 10, 14) we flip all distances to positive
+   // (near ≈ +ε, far ≈ +∞), so the sort naturally produces back-to-front order
+   // with no O(N) reversal pass needed.
+
+   const base = pMVP >> 2;
+
+   fv .set (viewMatrix, base);
+
+   fv [base +  2] = -fv [base +  2];
+   fv [base +  6] = -fv [base +  6];
+   fv [base + 10] = -fv [base + 10];
+   fv [base + 14] = -fv [base + 14];
+
+   // Call the counting sort
+   //   sortIndexes(indexes, centers, precomputed, mappedDist, frequencies,
+   //            mvp, indexesOut, sceneIdxs, transforms,
+   //            distMapRange, sortCount, renderCount, splatCount,
+   //            usePrecomputed, useIntegerSort, dynamicMode)
+
+   sortFn (
+      pIndexes, pCenters, 0,
+      pMappedDist, pFrequencies, pMVP,
+      pIndexesOut, 0, 0,
+      DIST_MAP_RANGE, N, N, N,
+      0, 0, 0,
+   );
+
+   const out = uv .subarray (pIndexesOut >> 2, (pIndexesOut >> 2) + N);
+
+   self .postMessage ({ type: "sorted", indices: out });
+}
+
+// ── Message dispatcher ────────────────────────────────────────────────────────
+
+self .onmessage = async event =>
+{
+   try
+   {
+      switch (event .data .type)
+      {
+         case "init":
+         {
+            await init (event .data);
+            break;
+         }
+         case "sort":
+         {
+            sort (event .data);
+            break;
+         }
+      }
+   }
+   catch (error)
+   {
+      self .postMessage ({ type: "error", message: String (error) });
+   }
+};

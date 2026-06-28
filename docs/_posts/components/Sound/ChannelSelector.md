@@ -13,9 +13,9 @@ tags: [ChannelSelector, Sound]
 
 ## Overview
 
-ChannelSelector selects a single channel output from all input channels.
+**ChannelSelector** selects a single channel output from all input channels.
 
-The ChannelSelector node belongs to the [Sound](/x_ite/components/overview/#sound) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
+The **ChannelSelector** node belongs to the [Sound](/x_ite/components/overview/#sound) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 
@@ -127,7 +127,7 @@ The *children* field specifies audio-graph sound sources providing input signals
 
 ### Hint
 
-- ChannelSelector is a utility node to complement [ChannelSplitter](/x_ite/components/sound/channelsplitter/).
+- **ChannelSelector** is a utility node to complement [ChannelSplitter](/x_ite/components/sound/channelsplitter/).
 
 ## Browser Compatibility
 

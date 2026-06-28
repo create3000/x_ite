@@ -11,6 +11,8 @@ function IndexedTriangleFanSet (executionContext)
 
    this .addType (X3DConstants .IndexedTriangleFanSet);
 
+   // Private properties
+
    this .triangleIndex = [ ];
 }
 
@@ -99,7 +101,7 @@ Object .defineProperties (IndexedTriangleFanSet,
          new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",        new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",        new Fields .SFNode ()),
-         new X3DFieldDefinition (X3DConstants .inputOutput,    "tangent",         new Fields .SFNode ()), // experimental
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "tangent",         new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",           new Fields .SFNode ()),
       ]),

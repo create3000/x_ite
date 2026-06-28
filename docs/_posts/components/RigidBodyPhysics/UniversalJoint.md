@@ -13,9 +13,12 @@ tags: [UniversalJoint, RigidBodyPhysics]
 
 ## Overview
 
-UniversalJoint is like a BallJoint that constrains an extra degree of rotational freedom. Contains two RigidBody nodes (containerField values body1, body2).
+**UniversalJoint** is like a [BallJoint](/x_ite/components/rigidbodyphysics/balljoint/) that constrains an extra degree of rotational freedom. Contains two [RigidBody](/x_ite/components/rigidbodyphysics/rigidbody/) nodes (containerField values body1, body2).
 
-The UniversalJoint node belongs to the [RigidBodyPhysics](/x_ite/components/overview/#rigidbodyphysics) component and requires at least support level **2,** its default container field is *joints.* It is available from X3D version 3.2 or higher.
+The **UniversalJoint** node belongs to the [RigidBodyPhysics](/x_ite/components/overview/#rigidbodyphysics) component and requires at least support level **2,** its default container field is *joints.* It is available from X3D version 3.2 or higher.
+
+>**Not Supported:** This node is **not supported** by X_ITE.
+{: .prompt-danger }
 
 ## Hierarchy
 

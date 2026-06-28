@@ -122,7 +122,7 @@ Object .assign (Object .setPrototypeOf (SphereSensor .prototype, X3DDragSensorNo
 
       const
          toVector = trackPoint .copy () .subtract (this .sphere .center),
-         rotation = new Rotation4 (this .fromVector, toVector);
+         rotation = Rotation4 .fromVectors (this .fromVector, toVector);
 
       if (this .behind)
          rotation .inverse ();

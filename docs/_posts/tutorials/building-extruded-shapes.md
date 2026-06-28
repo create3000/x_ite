@@ -17,7 +17,7 @@ How can you do it:
 - You can build extruded shapes using an [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) node.
 - You can build extruded shapes more easily and efficiently using an [Extrusion](/x_ite/components/geometry3d/extrusion/) node.
 
-## Creating extruded shapes
+## Creating Extruded Shapes
 
 Extruded shapes are described by:
 
@@ -109,7 +109,7 @@ Shape {
 }
 ```
 
-## Squishing and twisting extruded shapes
+## Squishing and Twisting Extruded Shapes
 
 You can scale the cross-section along the spine:
 

@@ -13,9 +13,9 @@ tags: [CADLayer, CADGeometry]
 
 ## Overview
 
-CADLayer nodes define a hierarchy that shows layer structure for a Computer-Aided Design (CAD) model. CADLayer is a Grouping node that can contain CADAssembly and most nodes.
+**CADLayer** nodes define a hierarchy that shows layer structure for a Computer-Aided Design (CAD) model. **CADLayer** is a Grouping node that can contain [CADAssembly](/x_ite/components/cadgeometry/cadassembly/) and most nodes.
 
-The CADLayer node belongs to the [CADGeometry](/x_ite/components/overview/#cadgeometry) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.1 or higher.
+The **CADLayer** node belongs to the [CADGeometry](/x_ite/components/overview/#cadgeometry) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.1 or higher.
 
 ## Hierarchy
 
@@ -79,7 +79,7 @@ Whether or not renderable content within this node is visually displayed.
 
 #### Warning
 
-- CADLayer *visible* field had type MFBool in X3Dv3, thus is not backwards compatible.
+- **CADLayer** *visible* field had type MFBool in X3Dv3, thus is not backwards compatible.
 
 ### SFBool [in, out] **bboxDisplay** FALSE
 {: #fields-bboxDisplay }

@@ -13,9 +13,9 @@ tags: [ScreenFontStyle, Layout]
 
 ## Overview
 
-ScreenFontStyle is an X3DFontStyleNode defines the size, family, justification, and other styles used within a screen layout. ScreenFontStyle renders text so that it appears identical to typical 2D applications by specifying pointSize in points (as in 2D document layout) rather than size in meters. Each glyph of text is rendered as a quadrilateral with a texture applied.
+**ScreenFontStyle** is an X3DFontStyleNode defines the size, family, justification, and other styles used within a screen layout. **ScreenFontStyle** renders text so that it appears identical to typical 2D applications by specifying pointSize in points (as in 2D document layout) rather than size in meters. Each glyph of text is rendered as a quadrilateral with a texture applied.
 
-The ScreenFontStyle node belongs to the [Layout](/x_ite/components/overview/#layout) component and requires at least support level **2,** its default container field is *fontStyle.* It is available from X3D version 3.2 or higher.
+The **ScreenFontStyle** node belongs to the [Layout](/x_ite/components/overview/#layout) component and requires at least support level **2,** its default container field is *fontStyle.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -60,7 +60,7 @@ Language codes consist of a primary code and a (possibly empty) series of subcod
 - [See ISO639.2 Codes for the Representation of Names of Languages](https://www.loc.gov/standards/iso639-2/php/code_list.php)
 - [See RFC3066 Tags for the Identification of Languages](https://tools.ietf.org/html/rfc3066)
 - [See ISO3166 or](https://xml.coverpages.org/languageIdentifiers.html)
-- [Supports supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
+- [Supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
 - AccessType relaxed to inputOutput in order to support animation and user accessibility.
 
 #### Warning
@@ -80,7 +80,7 @@ Array of quoted font *family* names in preference order, browsers use the first 
 - TYPEWRITER is a fixed-width font (for example, Courier).
 - MFString arrays can have multiple values, so "separate each individual string" "by using quote marks".
 - [See 15.2.2.2 Font *family* and style](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/text.html#Fontfamilyandstyle) for details.
-- [Supports supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
+- [Supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
 - AccessType relaxed to inputOutput in order to support animation and user accessibility.
 
 #### Warning
@@ -134,7 +134,7 @@ Whether text direction is *horizontal* (true) or vertical (false).
 #### Hints
 
 - [See 15.2.2.3 Direction and justification](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/text.html#Directionandjustification) for details.
-- [Supports supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
+- [Supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
 - AccessType relaxed to inputOutput in order to support animation and user accessibility.
 
 ### SFBool [in, out] **leftToRight** TRUE
@@ -145,7 +145,7 @@ Whether text direction is left-to-right (true) or right-to-left (false).
 #### Hints
 
 - [See 15.2.2.3 Direction and justification](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/text.html#Directionandjustification) for details.
-- [Supports supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
+- [Supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
 - AccessType relaxed to inputOutput in order to support animation and user accessibility.
 
 ### SFBool [in, out] **topToBottom** TRUE
@@ -156,7 +156,7 @@ Whether text direction is top-to-bottom (true) or bottom-to-top (false).
 #### Hints
 
 - [See 15.2.2.3 Direction and justification](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/text.html#Directionandjustification) for details.
-- [Supports supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
+- [Supports capabilities for Web Internationalization (i18n)](https://www.w3.org/standards/webdesign/i18n)
 - AccessType relaxed to inputOutput in order to support animation and user accessibility.
 
 ### MFString [in, out] **justify** "BEGIN" <small>["BEGIN", "END", "FIRST", "MIDDLE", ""]</small>

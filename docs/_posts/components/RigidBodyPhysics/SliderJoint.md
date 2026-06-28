@@ -13,9 +13,9 @@ tags: [SliderJoint, RigidBodyPhysics]
 
 ## Overview
 
-SliderJoint constrains all movement between body1 and body2 along a single axis. Contains two RigidBody nodes (containerField values body1, body2).
+**SliderJoint** constrains all movement between body1 and body2 along a single axis. Contains two [RigidBody](/x_ite/components/rigidbodyphysics/rigidbody/) nodes (containerField values body1, body2).
 
-The SliderJoint node belongs to the [RigidBodyPhysics](/x_ite/components/overview/#rigidbodyphysics) component and requires at least support level **2,** its default container field is *joints.* It is available from X3D version 3.2 or higher.
+The **SliderJoint** node belongs to the [RigidBodyPhysics](/x_ite/components/overview/#rigidbodyphysics) component and requires at least support level **2,** its default container field is *joints.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -83,7 +83,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### SFFloat [in, out] **sliderForce** 0 <small>[-∞,∞)</small> <small class="red">not supported</small>
 {: #fields-sliderForce }
 
-*sliderForce* value is used to apply a force (specified in force base units) along the axis of the slider in equal and opposite directions to the two bodies. A positive value applies a force such that the two bodies accelerate away from each other, while a negative value applies a force such that the two bodies accelerate toward each other.
+]
 
 ### SFFloat [in, out] **stopBounce** 0 <small>[0,1]</small> <small class="red">not supported</small>
 {: #fields-stopBounce }

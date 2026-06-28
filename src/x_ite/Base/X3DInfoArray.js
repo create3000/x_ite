@@ -13,7 +13,7 @@ const handler =
       {
          const index = +key;
 
-         if (Number .isInteger (index))
+         if (Number .isInteger (index) && index >= 0)
             return target [_array] [index];
       }
 
@@ -25,7 +25,7 @@ const handler =
       {
          const index = +key;
 
-         if (Number .isInteger (index))
+         if (Number .isInteger (index) && index >= 0)
             return false;
       }
 
@@ -37,7 +37,7 @@ const handler =
       {
          const index = +key;
 
-         if (Number .isInteger (index))
+         if (Number .isInteger (index) && index >= 0)
             return index < target [_array] .length;
       }
 
@@ -53,7 +53,7 @@ const handler =
       {
          const index = +key;
 
-         if (Number .isInteger (index))
+         if (Number .isInteger (index) && index >= 0)
          {
             if (index < target [_array] .length)
             {

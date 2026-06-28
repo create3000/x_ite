@@ -5,6 +5,7 @@ import X3DNode              from "../Core/X3DNode.js";
 import X3DBackgroundNode    from "./X3DBackgroundNode.js";
 import X3DCast              from "../../Base/X3DCast.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
+import TraverseType         from "../../Rendering/TraverseType.js";
 import Color3               from "../../../standard/Math/Numbers/Color3.js";
 
 function TextureBackground (executionContext)
@@ -37,6 +38,16 @@ Object .assign (Object .setPrototypeOf (TextureBackground .prototype, X3DBackgro
    set_texture__ (index, textureNode)
    {
       X3DBackgroundNode .prototype .set_texture__ .call (this, index, X3DCast (X3DConstants .X3DTextureNode, textureNode));
+   },
+   traverse (type, renderObject)
+   {
+      X3DBackgroundNode .prototype .traverse .call (this, type, renderObject);
+
+      if (type !== TraverseType .DISPLAY)
+         return;
+
+      for (const textureNode of this .getTextureNodes ())
+         textureNode ?.traverse (type, renderObject);
    },
 });
 

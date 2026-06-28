@@ -1,5 +1,5 @@
-/* X_ITE v15.0.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.2")];
+/* X_ITE v15.1.7 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -213,7 +213,7 @@ return skin;}
 
 
 
-external_X_ITE_X3D_ShaderRegistry_default().addInclude ("Skin", Skin2_glsl);
+external_X_ITE_X3D_ShaderRegistry_default().addIncludeFile ("Skin", Skin2_glsl);
 
 /**
  * HAnimHumanoid
@@ -542,7 +542,7 @@ Object .assign (Object .setPrototypeOf (HAnimHumanoid .prototype, (external_X_IT
             s = jointBindingScales    [i] ?.getValue ();
 
          jointNodes           .push (jointNode);
-         jointBindingMatrices .push (new (external_X_ITE_X3D_Matrix4_default()) () .set (t, r, s));
+         jointBindingMatrices .push (external_X_ITE_X3D_Matrix4_default().fromTransform (t, r, s));
       }
 
       for (const jointNode of jointNodes)

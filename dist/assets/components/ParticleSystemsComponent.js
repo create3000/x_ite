@@ -1,5 +1,5 @@
-/* X_ITE v15.0.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.2")];
+/* X_ITE v15.1.7 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -1702,32 +1702,34 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
    },
    set_bbox__ ()
    {
+      const bbox = this .bbox;
+
       if (this .isDefaultBBoxSize ())
       {
          if (this .boundedPhysicsModelNodes .length)
          {
-            this .bbox .set ();
+            bbox .set ();
 
             for (const boundedPhysicsModelNode of this .boundedPhysicsModelNodes)
             {
-               const bbox = boundedPhysicsModelNode .getBBox ();
+               const subBBox = boundedPhysicsModelNode .getBBox ();
 
-               if (bbox)
-                  this .bbox .add (bbox);
+               if (subBBox)
+                  bbox .add (subBBox);
             }
          }
          else
          {
-            this .emitterNode ?.getBBox (this .bbox, this);
+            this .emitterNode ?.getBBox (bbox, this);
          }
       }
       else
       {
-         this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+         bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
       }
 
-      this .bboxSize   .assign (this .bbox .size);
-      this .bboxCenter .assign (this .bbox .center);
+      this .getBBoxSize ()   .assign (bbox .size);
+      this .getBBoxCenter () .assign (bbox .center);
    },
    set_transparent__ ()
    {
@@ -2402,7 +2404,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
          case (external_X_ITE_X3D_GeometryType_default()).SPRITE:
          {
             this .updateSprite (gl, this .getScreenAlignedRotation (renderContext .modelViewMatrix));
-            // Proceed with next case:
+            // falls through
          }
          default:
          {
@@ -2441,7 +2443,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
          case (external_X_ITE_X3D_GeometryType_default()).SPRITE:
          {
             this .updateSprite (gl, this .getScreenAlignedRotation (renderContext .modelViewMatrix));
-            // Proceed with next case:
+            // falls through
          }
          case (external_X_ITE_X3D_GeometryType_default()).QUAD:
          case (external_X_ITE_X3D_GeometryType_default()).TRIANGLE:
@@ -2451,7 +2453,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
             gl .frontFace (positiveScale ? gl .CCW : gl .CW);
             gl .enable (gl .CULL_FACE);
 
-            // Proceed with next case:
+            // falls through
          }
          default:
          {
@@ -2475,6 +2477,7 @@ Object .assign (Object .setPrototypeOf (ParticleSystem .prototype, (external_X_I
             // Set viewport.
 
             gl .viewport (... viewport);
+            gl .scissor (... viewport);
 
             // Enable render mode nodes.
 

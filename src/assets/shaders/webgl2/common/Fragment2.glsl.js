@@ -5,10 +5,6 @@ export default () => /* glsl */ `
    uniform float x3d_AlphaCutoff;
 #endif
 
-#if defined (X3D_FOG) && defined (X3D_FOG_COORDS)
-   in float fogDepth;
-#endif
-
 #if defined (X3D_COLOR_MATERIAL)
    in vec4 color;
 #endif
@@ -127,9 +123,7 @@ main ()
       finalColor .rgb = getFogColor (finalColor .rgb);
    #endif
 
-   #if !defined (X3D_LINEAR_OUTPUT)
-      finalColor .rgb = toneMap (finalColor .rgb);
-   #endif
+   finalColor .rgb = toneMap (finalColor .rgb);
 
    #if defined (X3D_ORDER_INDEPENDENT_TRANSPARENCY)
       oit (finalColor);

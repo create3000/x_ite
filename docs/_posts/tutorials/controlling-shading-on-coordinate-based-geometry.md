@@ -12,7 +12,7 @@ tags: [Normal, NormalInterpolator]
   - Requires lots of faces, disk space, memory, and drawing time
 - Instead, use smooth shading to create the illusion of a smooth shape, but with a small number of faces
 
-## Controlling shading using the crease angle
+## Controlling Shading Using the Crease Angle
 
 By default, faces are drawn with faceted shading.
 
@@ -22,14 +22,14 @@ You can enable smooth shading using the creaseAngle field for:
 - [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/)
 - [Extrusion](/x_ite/components/geometry3d/extrusion/)
 
-## Selecting crease angles
+## Selecting Crease Angles
 
 A crease angle is a threshold angle between two faces:
 
 - If face angle \>= crease angle, use facet shading
 - If face angle \< crease angle, use smooth shading
 
-## Using normals
+## Using Normals
 
 A normal vector indicates the direction a face is facing
 
@@ -109,7 +109,7 @@ Shape {
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/faces2/faces2.x3dv)
 {: .example-links }
 
-## Controlling normal binding for face sets
+## Controlling Normal Binding for Face Sets
 
 The *normalPerVertex* field controls how normal indices are used
 
@@ -150,7 +150,7 @@ Shape {
 }
 ```
 
-## Controlling normal binding for elevation grids
+## Controlling Normal Binding for Elevation Grids
 
 The *normalPerVertex* field controls how normal indices are used (similar to face sets):
 

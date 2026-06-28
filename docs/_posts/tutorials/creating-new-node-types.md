@@ -52,7 +52,7 @@ PROTO BouncingBall [
 }
 ```
 
-## Defining prototype bodies
+## Defining Prototype Bodies
 
 **PROTO** defines:
 
@@ -147,7 +147,7 @@ May **IS** to ...
 | outputOnly     | no             | no        | yes        | yes         |
 | inputOutput    | no             | no        | no         | yes         |
 
-## Using prototyped nodes
+## Using Prototyped Nodes
 
 The new node type can be used like any other type.
 
@@ -184,7 +184,7 @@ BouncingBall {
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/proto/proto.x3dv)
 {: .example-links }
 
-## Controlling usage rules
+## Controlling Usage Rules
 
 Recall that node use must be appropriate for the context:
 
@@ -217,7 +217,7 @@ The new node type can be used wherever the first node of the prototype body can 
 </Shape>
 ```
 
-## A sample prototype use
+## A Sample Prototype Use
 
 Create a **BouncingBall** node type that:
 
@@ -306,7 +306,7 @@ PROTO BouncingBall [
 }
 ```
 
-## Changing a prototype
+## Changing a Prototype
 
 If you change a prototype, all uses of that prototype change as well
 

@@ -83,7 +83,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
 
       this .fileLoader ?.abort ();
 
-      this .fileLoader = new FileLoader (this, cache)
+      this .fileLoader = new FileLoader (this, { cacheScene: cache })
          .createX3DFromURL (this ._url, null, this .setInternalScene .bind (this));
    },
    setInternalScene (scene)

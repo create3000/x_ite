@@ -73,33 +73,35 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
    },
    set_bbox__: (() =>
    {
-      const bbox = new Box3 ();
+      const subBBox = new Box3 ();
 
       return function ()
       {
+         const bbox = this .bbox;
+
          if (this .isDefaultBBoxSize ())
          {
             if (this .getGeometry ())
             {
-               this .bbox .set ();
+               bbox .set ();
 
                const geometryBBox = this .getGeometry () .getBBox ();
 
                for (const matrix of this .matrices)
-                  this .bbox .add (bbox .assign (geometryBBox) .multRight (matrix));
+                  bbox .add (subBBox .assign (geometryBBox) .multRight (matrix));
             }
             else
             {
-               this .bbox .set ();
+               bbox .set ();
             }
          }
          else
          {
-            this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
+            bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
          }
 
-         this .getBBoxSize ()   .assign (this .bbox .size);
-         this .getBBoxCenter () .assign (this .bbox .center);
+         this .getBBoxSize ()   .assign (bbox .size);
+         this .getBBoxCenter () .assign (bbox .center);
       };
    })(),
    set_transform__ ()
@@ -132,11 +134,11 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
       {
          const matrix = this .matrices [i] ??= new Matrix4 ();
 
-         matrix .set (translations      [i] ?.getValue (),
-                      rotations         [i] ?.getValue (),
-                      scales            [i] ?.getValue (),
-                      scaleOrientations [i] ?.getValue (),
-                      centers           [i] ?.getValue ());
+         matrix .setTransform (translations      [Math .min (i, numTranslations      - 1)] ?.getValue (),
+                               rotations         [Math .min (i, numRotations         - 1)] ?.getValue (),
+                               scales            [Math .min (i, numScales            - 1)] ?.getValue (),
+                               scaleOrientations [Math .min (i, numScaleOrientations - 1)] ?.getValue (),
+                               centers           [Math .min (i, numCenters           - 1)] ?.getValue ());
 
          data .set (matrix, o);
          data .set (matrix .submatrix .transpose () .inverse (), o + 16);
@@ -162,7 +164,7 @@ Object .assign (Object .setPrototypeOf (InstancedShape .prototype, X3DShapeNode 
 
 Object .defineProperties (InstancedShape,
 {
-   ... X3DNode .getStaticProperties ("InstancedShape", "X_ITE", 1, "children", "2.0"),
+   ... X3DNode .getStaticProperties ("InstancedShape", "X_ITE", 1, "children", "4.0"),
    fieldDefinitions:
    {
       value: new FieldDefinitionArray ([

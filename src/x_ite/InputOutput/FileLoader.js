@@ -10,27 +10,43 @@ const foreignMimeType = new Set ([
    "application/xhtml+xml",
 ])
 
-function FileLoader (node, cacheScene = false)
+function FileLoader (node, { cacheScene = false, dataAsString = true } = { })
 {
    X3DObject .call (this);
 
    this .node             = node;
    this .cacheScene       = cacheScene;
+   this .dataAsString     = dataAsString;
    this .browser          = node .getBrowser ();
    this .executionContext = node .getExecutionContext ();
    this .target           = "";
    this .url              = [ ];
-   this .URL              = new URL (this .getBaseURL ());
+   this .fileURL          = new URL (this .getBaseURL ());
    this .controller       = new AbortController ();
 }
 
 Object .assign (FileLoader,
 {
    sceneCache: new Map (),
+   loadDocument (node, url, options)
+   {
+      return new Promise ((resolve, reject) => new FileLoader (node, options) .loadDocument (url, (data, fileURL) =>
+      {
+         if (data)
+            resolve (data, fileURL);
+
+         reject ();
+      }));
+   },
 });
 
 Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .prototype),
 {
+   isPrivate ()
+   {
+      // Don't count for loading objects.
+      return true;
+   },
    abort ()
    {
       this .url .length = 0;
@@ -39,7 +55,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    },
    getURL ()
    {
-      return this .URL;
+      return this .fileURL;
    },
    getBaseURL ()
    {
@@ -123,8 +139,8 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
       if (DEVELOPMENT)
       {
-         if (this .URL .protocol !== "data:")
-            console .info (`Done loading scene '${decodeURI (this .URL)}'.`);
+         if (this .fileURL .protocol !== "data:")
+            console .info (`Done loading scene '${decodeURI (this .fileURL)}'.`);
       }
    },
    createX3DFromURL (url, parameter, callback, bindViewpoint, foreign)
@@ -141,7 +157,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       if (data === null)
          callback (null);
       else
-         this .createX3DFromString (this .URL, data, callback, this .loadDocumentError .bind (this));
+         this .createX3DFromString (this .fileURL, data, callback, this .loadDocumentError .bind (this));
    },
    loadDocument (url, callback)
    {
@@ -167,15 +183,16 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
             return await this .callback (url .substring (result [0] .length));
       }
 
-      this .URL = new URL (url, this .getBaseURL ());
+      this .fileURL = new URL (url, this .getBaseURL ());
 
-      // Data URL:
+      // Handle data URLs that are not base64 decoded here:
+      if (this .dataAsString)
       {
          const result = url .match (/^\s*data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s);
 
          if (result && result [3] !== "base64")
          {
-            // const mimeType = result [1] || "text/plain"";
+            // const mimeType = result [1] || "text/plain"";
 
             let data = url .substring (result [0] .length);
 
@@ -188,17 +205,17 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
       // Bind Viewpoint URLs:
 
-      if (this .URL .protocol !== "data:" && this .bindViewpoint)
+      if (this .fileURL .protocol !== "data:" && this .bindViewpoint)
       {
          const referer = new URL (this .getBaseURL ());
 
-         if (this .URL .protocol === referer .protocol &&
-             this .URL .hostname === referer .hostname &&
-             this .URL .port     === referer .port &&
-             this .URL .pathname === referer .pathname &&
-             this .URL .hash)
+         if (this .fileURL .protocol === referer .protocol &&
+             this .fileURL .hostname === referer .hostname &&
+             this .fileURL .port     === referer .port &&
+             this .fileURL .pathname === referer .pathname &&
+             this .fileURL .hash)
          {
-            return this .bindViewpoint (decodeURIComponent (this .URL .hash .substring (1)));
+            return this .bindViewpoint (decodeURIComponent (this .fileURL .hash .substring (1)));
          }
       }
 
@@ -209,19 +226,19 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          // Handle target
 
          if (this .target .length && this .target !== "_self")
-            return this .foreign (this .URL .href, this .target);
+            return this .foreign (this .fileURL .href, this .target);
 
          // Handle well known foreign content depending on extension or if path looks like directory.
 
-         if (this .URL .protocol !== "data:" && this .URL .href .match (/\.(?:html|htm|xhtml)$/))
-            return this .foreign (this .URL .href, this .target);
+         if (this .fileURL .protocol !== "data:" && this .fileURL .href .match (/\.(?:html|htm|xhtml)$/))
+            return this .foreign (this .fileURL .href, this .target);
       }
 
       // Cached scenes:
 
-      if (this .sceneCallback && this .cacheScene && !this .URL .search .length)
+      if (this .sceneCallback && this .cacheScene && !this .fileURL .search .length)
       {
-         const cacheURL = new URL (this .URL);
+         const cacheURL = new URL (this .fileURL);
 
          cacheURL .hash = "";
 
@@ -231,7 +248,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
          {
             const scene = await promise;
 
-            scene .setWorldURL (this .URL .href);
+            scene .setWorldURL (this .fileURL .href);
 
             return this .sceneCallback (scene);
          }
@@ -249,18 +266,51 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
       const
          options  = { cache: this .node .getCache () ? "default" : "reload", signal: this .controller .signal },
-         response = this .checkResponse (await fetch (this .URL, options)),
-         mimeType = response .headers .get ("content-type") ?.replace (/;.*$/, "");
+         response = this .checkResponse (await fetch (this .fileURL, options)),
+         mimeType = response .headers .get ("Content-Type") ?.replace (/;.*$/, "");
 
       if (this .foreign)
       {
          // console .log (mimeType);
 
          if (foreignMimeType .has (mimeType))
-            return this .foreign (this .URL .href, this .target);
+            return this .foreign (this .fileURL .href, this .target);
       }
 
-      await this .callback ($.ungzip (await response .arrayBuffer ()), this .URL);
+      await this .callback (await $.gunzip (await this .getBlob (response)), this .fileURL);
+   },
+   async getBlob (response)
+   {
+      const contentLength = parseInt (response .headers .get ("x-file-size"))
+         || parseInt (response .headers .get ("content-length"));
+
+      // Check getReader because x_ite-node has no getReader.
+      if (!contentLength || !response .body .getReader)
+         return await response .blob ();
+
+      const
+         browser = this .browser,
+         reader  = response .body .getReader (),
+         values  = [ ];
+
+      let loadedBytes = 0;
+
+      for (;;)
+      {
+         const { done, value } = await reader .read ();
+
+         if (done)
+            break;
+
+         values .push (value);
+
+         // We count decompressed bytes, but loadedBytes can be number of compressed bytes.
+         loadedBytes += value .byteLength;
+
+         browser .setLoadingFractions (this .node, Math .min (loadedBytes / contentLength, 1));
+      }
+
+      return await new Blob (values);
    },
    checkResponse (response)
    {
@@ -290,12 +340,12 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    },
    printError (error)
    {
-      const typeName = this .node instanceof X3DWorld ? "" : ` of ${this .node .getTypeName ()}`;
+      const typeName = this .node instanceof X3DWorld ? "" : ` for ${this .node .getTypeName ()}`;
 
-      if (this .URL .protocol === "data:")
+      if (this .fileURL .protocol === "data:")
          console .error (`Couldn't load data URL${typeName}.`);
       else
-         console .error (`Couldn't load URL '${$.try (() => decodeURI (this .URL)) ?? this .URL}'${typeName}.`, error);
+         console .error (`Couldn't load URL '${$.try (() => decodeURI (this .fileURL)) ?? this .fileURL}'${typeName}.`, error);
 
       console .error (error);
    },

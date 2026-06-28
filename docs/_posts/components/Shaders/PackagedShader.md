@@ -13,9 +13,12 @@ tags: [PackagedShader, Shaders]
 
 ## Overview
 
-PackagedShader contains a url for a single file that may contain a number of shaders and combined effects.
+**PackagedShader** contains a url for a single file that may contain a number of shaders and combined effects.
 
-The PackagedShader node belongs to the [Shaders](/x_ite/components/overview/#shaders) component and requires at least support level **1,** its default container field is *shaders.* It is available from X3D version 3.0 or higher.
+The **PackagedShader** node belongs to the [Shaders](/x_ite/components/overview/#shaders) component and requires at least support level **1,** its default container field is *shaders.* It is available from X3D version 3.0 or higher.
+
+>**Not Supported:** This node is **not supported** by X_ITE.
+{: .prompt-danger }
 
 ## Hierarchy
 
@@ -149,13 +152,13 @@ The *language* field indicates to the X3D player which shading *language* is use
 
 ### Hints
 
-- PackagedShader contains field declarations and then corresponding IS/connect statements (if any).
+- **PackagedShader** contains field declarations and then corresponding IS/connect statements (if any).
 - Apply default `containerField='shaders'` when parent node is [Appearance](/x_ite/components/shape/appearance/).
 - [When parent node is LoadSensor, apply `containerField='children'` (X3Dv4) or `containerField='watchList'` (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 
 ### Warning
 
-- PackagedShader does not contain CDATA section of plain-text source code.
+- **PackagedShader** does not contain CDATA section of plain-text source code.
 
 ## Browser Compatibility
 

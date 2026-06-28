@@ -50,6 +50,7 @@ Full
 - [EnvironmentalSensor](/x_ite/components/overview/#environmentalsensor) : **3**
 - [EventUtilities](/x_ite/components/overview/#eventutilities) : **1**
 - [Followers](/x_ite/components/overview/#followers) : **1**
+- [GaussianSplats](/x_ite/components/overview/#gaussiansplats) : **1**
 - [Geometry2D](/x_ite/components/overview/#geometry2d) : **2**
 - [Geometry3D](/x_ite/components/overview/#geometry3d) : **4**
 - [Geospatial](/x_ite/components/overview/#geospatial) : **2**

@@ -37,13 +37,13 @@ Object .assign (Object .setPrototypeOf (PLYBParser .prototype, PLYAParser .proto
 {
    getEncoding ()
    {
-      return ["ARRAY_BUFFER", "STRING"];
+      return "ARRAY_BUFFER";
    },
-   setInput (inputs)
+   setInput (input)
    {
-      this .arrayBuffer  = inputs [0];
+      this .arrayBuffer  = input;
       this .dataView     = new DataView (this .arrayBuffer);
-      this .input        = inputs [1];
+      this .input        = $.decodeText (input .slice (0, 4096));
       this .magic        = this .input .match (/^ply\r?\nformat (binary_(?:little|big)_endian) 1.0.*?end_header\r?\n/s);
       this .byteOffset   = this .magic ?.[0] .length;
       this .littleEndian = this .magic ?.[1] === "binary_little_endian";

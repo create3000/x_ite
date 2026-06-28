@@ -13,9 +13,9 @@ tags: [SegmentedVolumeData, VolumeRendering]
 
 ## Overview
 
-SegmentedVolumeData displays a segmented voxel dataset with different RenderStyle nodes.
+**SegmentedVolumeData** displays a segmented voxel dataset with different RenderStyle nodes.
 
-The SegmentedVolumeData node belongs to the [VolumeRendering](/x_ite/components/overview/#volumerendering) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.3 or higher.
+The **SegmentedVolumeData** node belongs to the [VolumeRendering](/x_ite/components/overview/#volumerendering) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.3 or higher.
 
 ## Hierarchy
 
@@ -141,8 +141,8 @@ Optional single contained X3DTexture3DNode ([ComposedTexture3D](/x_ite/component
 
 ### Hints
 
-- SegmentedVolumeData can contain a single [ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/) or [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/) node with `containerField='segmentIdentifiers'` and another with `containerField='voxels'.`
-- SegmentedVolumeData can contain multiple RenderStyle nodes.
+- **SegmentedVolumeData** can contain a single [ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/) or [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/) node with `containerField='segmentIdentifiers'` and another with `containerField='voxels'.`
+- **SegmentedVolumeData** can contain multiple RenderStyle nodes.
 
 ### Warning
 

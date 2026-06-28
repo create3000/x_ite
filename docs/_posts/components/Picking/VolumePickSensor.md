@@ -13,9 +13,9 @@ tags: [VolumePickSensor, Picking]
 
 ## Overview
 
-VolumePickSensor tests picking intersections using the pickingGeometry against the pickTarget geometry volume.
+**VolumePickSensor** tests picking intersections using the pickingGeometry against the pickTarget geometry volume.
 
-The VolumePickSensor node belongs to the [Picking](/x_ite/components/overview/#picking) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The **VolumePickSensor** node belongs to the [Picking](/x_ite/components/overview/#picking) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -35,7 +35,7 @@ The VolumePickSensor node belongs to the [Picking](/x_ite/components/overview/#p
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | MFString | [in, out] | [objectType](#fields-objectType) | "ALL" |
-| SFString | [in, out] | [matchCriterion](#fields-matchCriterion) | "MATCH |
+| SFString | [in, out] | [matchCriterion](#fields-matchCriterion) | "MATCH_ANY" |
 | SFString | [ ] | [intersectionType](#fields-intersectionType) | "BOUNDS" |
 | SFString | [ ] | [sortOrder](#fields-sortOrder) | "CLOSEST" |
 | SFNode | [in, out] | [pickingGeometry](#fields-pickingGeometry) | NULL |
