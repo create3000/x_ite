@@ -32,17 +32,6 @@ Object .assign (Rotation4 .prototype,
       yield this [_z];
       yield this [_angle];
    },
-   update ()
-   {
-      const rotation = this .get ();
-
-      this [_x]     = rotation .x;
-      this [_y]     = rotation .y;
-      this [_z]     = rotation .z;
-      this [_angle] = rotation .w;
-
-      return this;
-   },
    copy ()
    {
       const copy = Object .create (Rotation4 .prototype);
@@ -192,7 +181,7 @@ Object .assign (Rotation4 .prototype,
                                      Math .sqrt (Math .abs (1 + cos_angle) / 2));
          }
 
-         this .update ();
+         this .normalize ();
 
          return this;
       };
@@ -205,6 +194,17 @@ Object .assign (Rotation4 .prototype,
    {
       this .set (vector .x, vector .y, vector .z, this [_angle]);
    },
+   getEuler (euler = [ ], order = "XYZ")
+   {
+      return this [_quaternion] .getEuler (euler, order);
+   },
+   setEuler (x, y, z, order = "XYZ")
+   {
+      // Quaternion is then already normalized.
+      this [_quaternion] .setEuler (x, y, z, order);
+      this .normalize ();
+      return this;
+   },
    getMatrix (matrix = new Matrix3 ())
    {
       return this [_quaternion] .getMatrix (matrix);
@@ -212,7 +212,7 @@ Object .assign (Rotation4 .prototype,
    setMatrix (matrix)
    {
       this [_quaternion] .setMatrix (matrix) .normalize ();
-      this .update ();
+      this .normalize ();
       return this;
    },
    getQuaternion (quaternion = new Quaternion ())
@@ -222,36 +222,25 @@ Object .assign (Rotation4 .prototype,
    setQuaternion (quaternion)
    {
       this [_quaternion] .assign (quaternion) .normalize ();
-      this .update ();
-      return this;
-   },
-   getEuler (euler = [ ], order = "XYZ")
-   {
-      return this [_quaternion] .getEuler (euler, order);
-   },
-   setEuler (x, y, z, order = "XYZ")
-   {
-      // Quaternion is then already normalized.
-      this [_quaternion] .setEuler (x, y, z, order);
-      this .update ();
+      this .normalize ();
       return this;
    },
    inverse ()
    {
       this [_quaternion] .inverse ();
-      this .update ();
+      this .normalize ();
       return this;
    },
    multLeft (rotation)
    {
       this [_quaternion] .multLeft (rotation [_quaternion]) .normalize ();
-      this .update ();
+      this .normalize ();
       return this;
    },
    multRight (rotation)
    {
       this [_quaternion] .multRight (rotation [_quaternion]) .normalize ();
-      this .update ();
+      this .normalize ();
       return this;
    },
    multVecRot (vector)
@@ -264,26 +253,25 @@ Object .assign (Rotation4 .prototype,
    },
    normalize ()
    {
-      this [_quaternion] .normalize ();
-      this .update ();
-      return this;
-   },
-   pow (exponent)
-   {
-      this [_quaternion] .pow (exponent);
-      this .update ();
+      const rotation = this .get ();
+
+      this [_x]     = rotation .x;
+      this [_y]     = rotation .y;
+      this [_z]     = rotation .z;
+      this [_angle] = rotation .w;
+
       return this;
    },
    slerp (dest, t)
    {
       this [_quaternion] .slerp (dest [_quaternion], t);
-      this .update ();
+      this .normalize ();
       return this;
    },
    squad (a, b, dest, t)
    {
       this [_quaternion] .squad (a [_quaternion], b [_quaternion], dest [_quaternion], t);
-      this .update ();
+      this .normalize ();
       return this;
    },
    /**
@@ -342,7 +330,6 @@ const x = {
    },
    set (x)
    {
-      this [_x] = x;
       this .set (x, this [_y], this [_z], this [_angle]);
    },
    enumerable: true,
@@ -355,7 +342,6 @@ const y = {
    },
    set (y)
    {
-      this [_y] = y;
       this .set (this [_x], y, this [_z], this [_angle]);
    },
    enumerable: true,
@@ -368,7 +354,6 @@ const z = {
    },
    set (z)
    {
-      this [_z] = z;
       this .set (this [_x], this [_y], z, this [_angle]);
    },
    enumerable: true,
@@ -381,7 +366,6 @@ const angle = {
    },
    set (angle)
    {
-      this [_angle] = angle;
       this .set (this [_x], this [_y], this [_z], angle);
    },
    enumerable: true,
@@ -432,7 +416,7 @@ Object .assign (Rotation4,
    {
       const copy = Object .create (this .prototype);
       copy [_quaternion] = Quaternion .spline (r0 [_quaternion], r1 [_quaternion], r2 [_quaternion]);
-      copy .update ();
+      copy .normalize ();
       return copy;
    },
 });
