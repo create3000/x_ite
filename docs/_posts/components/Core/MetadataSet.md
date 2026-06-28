@@ -68,7 +68,7 @@ Reference to the metadata standard or definition defining this particular metada
 ### MFNode [in, out] **value** [ ] <small>[X3DMetadataObject]</small>
 {: #fields-value }
 
-The *value* field provides a list of X3DMetadataObject nodes whose meaning is determined by the name field.
+The *value* field provides a list of X3DMetadataObject nodes whose meaning is each determined by their respective name field.
 
 ## Advice
 
