@@ -426,7 +426,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       {
          const differenceMatrix = this .modelMatrix .copy () .multRight (fromViewpointNode .getViewMatrix ()) .inverse ();
 
-         differenceMatrix .get (position, orientation, scale, scaleOrientation);
+         differenceMatrix .getTransform (position, orientation, scale, scaleOrientation);
 
          position .subtract (this .getPosition ());
          orientation .multLeft (this .getOrientation () .copy () .inverse ());
@@ -467,9 +467,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
       this .getCameraSpaceMatrix () .multVecMatrix (point);
       this .getModelMatrix () .copy () .inverse () .multVecMatrix (point);
 
-      const minDistance = this .getNearDistance (layerNode .getNavigationInfo ()) * 2;
-
-      this .lookAt (layerNode, point, minDistance, transitionTime, factor, straighten);
+      this .lookAt (layerNode, point, 0.5, transitionTime, factor, straighten);
    },
    lookAtBBox (layerNode, bbox, transitionTime = 1, factor = 1, straighten = false)
    {
@@ -501,7 +499,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
          translation = this ._positionOffset .getValue () .copy () .lerp (offset, factor),
          direction   = this .getPosition () .copy () .add (translation) .subtract (point);
 
-      let rotation = this ._orientationOffset .getValue () .copy () .multRight (new Rotation4 (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, 1)), direction));
+      let rotation = this ._orientationOffset .getValue () .copy () .multRight (Rotation4 .fromVectors (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, 1)), direction));
 
       if (straighten)
       {
@@ -615,10 +613,10 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, X3DBindable
    },
    update ()
    {
-      this .cameraSpaceMatrix .set (this .getUserPosition (),
-                                    this .getUserOrientation (),
-                                    this ._scaleOffset .getValue (),
-                                    this ._scaleOrientationOffset .getValue ());
+      this .cameraSpaceMatrix .setTransform (this .getUserPosition (),
+                                             this .getUserOrientation (),
+                                             this ._scaleOffset .getValue (),
+                                             this ._scaleOrientationOffset .getValue ());
 
       this .cameraSpaceMatrix .multRight (this .modelMatrix);
 

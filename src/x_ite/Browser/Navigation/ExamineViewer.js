@@ -230,7 +230,11 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
       this .disconnect ();
-      this .lookAtBBox (x, y, this .getStraightenHorizon ());
+
+      if (this .getBrowser () .getAltKey ())
+         this .lookAtPoint (x, y, this .getStraightenHorizon ());
+      else
+         this .lookAtBBox (x, y, this .getStraightenHorizon ());
    },
    mousemove (event)
    {
@@ -535,7 +539,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
 
             this .deltaRotation .assign (this .rotation);
             this .roll .assign (Rotation4 .IDENTITY);
-            this .rotation .setFromToVec (toVector, this .fromVector);
+            this .rotation .setVectors (toVector, this .fromVector);
             this .deltaRotation .inverse () .multRight (this .rotation);
          }
 
@@ -626,7 +630,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
             const
                userCenterOfRotation = viewpoint .getUserCenterOfRotation (),
                fraction             = this .timeSensor ._fraction_changed .getValue (),
-               rotation             = new Rotation4 (this .axis, 2 * Math .PI * fraction),
+               rotation             = new Rotation4 (... this .axis, 2 * Math .PI * fraction),
                userPosition         = rotation .multVecRot (direction .assign (this .direction)) .add (userCenterOfRotation),
                lookAtRotation       = viewpoint .getLookAtRotation (userPosition, viewpoint .getUserCenterOfRotation ());
 
@@ -816,7 +820,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, X3DViewer .pro
          rotation .multVecRot (V .assign (Vector3 .Z_AXIS));
          N .assign (Vector3 .Y_AXIS) .cross (V);
          H .assign (N) .cross (Vector3 .Y_AXIS);
-         r .setFromToVec (Vector3 .Z_AXIS, H);
+         r .setVectors (Vector3 .Z_AXIS, H);
 
          return r;
       };

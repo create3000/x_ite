@@ -13,9 +13,9 @@ tags: [IndexedLineSet, Rendering, VRML]
 
 ## Overview
 
-IndexedLineSet defines polyline segments using index lists corresponding to vertex coordinates. IndexedLineSet is a geometry node that can contain a Coordinate or CoordinateDouble node and optionally a Color or ColorRGBA node.
+**IndexedLineSet** defines polyline segments using index lists corresponding to vertex coordinates. **IndexedLineSet** is a geometry node that can contain a [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node and optionally a [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) node.
 
-The IndexedLineSet node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **1,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **IndexedLineSet** node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **1,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -174,7 +174,7 @@ Optional single contained [Coordinate](/x_ite/components/rendering/coordinate/) 
 - Step-wise variation or linear interpolation of color values can be used as a good scientific visualization technique to map arbitrary function values to a color map.
 - Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 - For advanced extensibility, authors can substitute a type-matched ProtoInstance node (with correct containerField value) for contained node content.
-- Consider including [Fog](/x_ite/components/environmentaleffects/fog/) (with [Fog](/x_ite/components/environmentaleffects/fog/) color matching [Background](/x_ite/components/environmentaleffects/background/) color) to provide further depth cueing for IndexedLineSet (ILS).
+- Consider including [Fog](/x_ite/components/environmentaleffects/fog/) (with [Fog](/x_ite/components/environmentaleffects/fog/) color matching [Background](/x_ite/components/environmentaleffects/background/) color) to provide further depth cueing for **IndexedLineSet** (ILS).
 
 ### Warnings
 

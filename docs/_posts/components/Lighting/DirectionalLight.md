@@ -13,9 +13,9 @@ tags: [DirectionalLight, Lighting, VRML]
 
 ## Overview
 
-DirectionalLight defines parallel light rays that illuminate geometric shapes. X3D lights illuminate all geometry except lines and points. By default, light scope only illuminates peer geometry and children nodes within the scene graph hierarchy. No source location is needed since rays are parallel from an infinitely distant source. DirectionalLight intensity does not attenuate with distance.
+**DirectionalLight** defines parallel light rays that illuminate geometric shapes. X3D lights illuminate all geometry except lines and points. By default, light scope only illuminates peer geometry and children nodes within the scene graph hierarchy. No source location is needed since rays are parallel from an infinitely distant source. **DirectionalLight** intensity does not attenuate with distance.
 
-The DirectionalLight node belongs to the [Lighting](/x_ite/components/overview/#lighting) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **DirectionalLight** node belongs to the [Lighting](/x_ite/components/overview/#lighting) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -60,7 +60,7 @@ Global lights illuminate all objects within their volume of lighting influence. 
 
 #### Warning
 
-- DirectionalLight default *global*=false to limit scope and avoid inadvertently illuminating every object in a large scene. [PointLight](/x_ite/components/lighting/pointlight/) and [SpotLight](/x_ite/components/lighting/spotlight/) default *global*=true since their effects are each limited by maximum radius value.
+- **DirectionalLight** default *global*=false to limit scope and avoid inadvertently illuminating every object in a large scene. [PointLight](/x_ite/components/lighting/pointlight/) and [SpotLight](/x_ite/components/lighting/spotlight/) default *global*=true since their effects are each limited by maximum radius value.
 
 ### SFBool [in, out] **on** TRUE
 {: #fields-on }

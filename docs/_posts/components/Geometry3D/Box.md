@@ -13,9 +13,9 @@ tags: [Box, Geometry3D, VRML]
 
 ## Overview
 
-Box is a geometry node specifying a rectangular cuboid.
+**Box** is a geometry node specifying a rectangular cuboid.
 
-The Box node belongs to the [Geometry3D](/x_ite/components/overview/#geometry3d) component and requires at least support level **1,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **Box** node belongs to the [Geometry3D](/x_ite/components/overview/#geometry3d) component and requires at least support level **1,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

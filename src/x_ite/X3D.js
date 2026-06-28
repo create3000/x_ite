@@ -73,38 +73,38 @@ const X3D = Object .assign (function (onfulfilled, onrejected)
 },
 Namespace, Namespace .Fields,
 {
-   X3DConstants:                X3DConstants,
-   X3DBrowser:                  X3DBrowser,
-   X3DExecutionContext:         X3DExecutionContext,
-   X3DScene:                    X3DScene,
-   ComponentInfo:               ComponentInfo,
-   ComponentInfoArray:          ComponentInfoArray,
-   ProfileInfo:                 ProfileInfo,
-   ProfileInfoArray:            ProfileInfoArray,
-   ConcreteNodesArray:          ConcreteNodesArray,          // non-standard
-   AbstractNodesArray:          AbstractNodesArray,          // non-standard
-   UnitInfo:                    UnitInfo,
-   UnitInfoArray:               UnitInfoArray,
-   NamedNodesArray:             NamedNodesArray,             // non-standard
-   ImportedNodesArray:          ImportedNodesArray,          // non-standard
-   X3DImportedNode:             X3DImportedNode,             // non-standard
-   ExportedNodesArray:          ExportedNodesArray,          // non-standard
-   X3DExportedNode:             X3DExportedNode,             // non-standard
-   ExternProtoDeclarationArray: ExternProtoDeclarationArray,
-   ProtoDeclarationArray:       ProtoDeclarationArray,
-   X3DExternProtoDeclaration:   X3DExternProtoDeclaration,
-   X3DProtoDeclaration:         X3DProtoDeclaration,
-   X3DProtoDeclarationNode:     X3DProtoDeclarationNode,     // non-standard
-   RouteArray:                  RouteArray,
-   X3DRoute:                    X3DRoute,
+   X3DConstants,
+   X3DBrowser,
+   X3DExecutionContext,
+   X3DScene,
+   ComponentInfo,
+   ComponentInfoArray,
+   ProfileInfo,
+   ProfileInfoArray,
+   ConcreteNodesArray,          // non-standard
+   AbstractNodesArray,          // non-standard
+   UnitInfo,
+   UnitInfoArray,
+   NamedNodesArray,             // non-standard
+   ImportedNodesArray,          // non-standard
+   X3DImportedNode,             // non-standard
+   ExportedNodesArray,          // non-standard
+   X3DExportedNode,             // non-standard
+   ExternProtoDeclarationArray,
+   ProtoDeclarationArray,
+   X3DExternProtoDeclaration,
+   X3DProtoDeclaration,
+   X3DProtoDeclarationNode,     // non-standard
+   RouteArray,
+   X3DRoute,
 
-   X3DBaseNode:                 X3DBaseNode,                 // non-standard
+   X3DBaseNode,                 // non-standard
 
-   X3DFieldDefinition:          X3DFieldDefinition,
-   FieldDefinitionArray:        FieldDefinitionArray,
+   X3DFieldDefinition,
+   FieldDefinitionArray,
 
-   X3DField:                    X3DField,
-   X3DArrayField:               X3DArrayField,
+   X3DField,
+   X3DArrayField,
 
    ... Fields,
 },

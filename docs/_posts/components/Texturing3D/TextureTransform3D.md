@@ -13,9 +13,9 @@ tags: [TextureTransform3D, Texturing3D]
 
 ## Overview
 
-TextureTransform3D applies a 3D transformation to texture coordinates.
+**TextureTransform3D** applies a 3D transformation to texture coordinates.
 
-The TextureTransform3D node belongs to the [Texturing3D](/x_ite/components/overview/#texturing3d) component and requires at least support level **1,** its default container field is *textureTransform.* It is available from X3D version 3.1 or higher.
+The **TextureTransform3D** node belongs to the [Texturing3D](/x_ite/components/overview/#texturing3d) component and requires at least support level **1,** its default container field is *textureTransform.* It is available from X3D version 3.1 or higher.
 
 ## Hierarchy
 
@@ -82,7 +82,7 @@ Non-uniform planar scaling of texture about center (opposite effect appears on g
 ### Hints
 
 - Order of operations is translation, rotation about center, non-uniform scale about center.
-- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding TextureTransform3D.
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding **TextureTransform3D**.
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
 
 ### Warning

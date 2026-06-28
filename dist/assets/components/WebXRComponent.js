@@ -1,5 +1,5 @@
-/* X_ITE v15.0.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.2")];
+/* X_ITE v15.1.7 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -929,7 +929,7 @@ Object .assign (X3DWebXRContext .prototype,
                   .assign (matrix)
                   .multRight (viewMatrix)
                   .translate (hit .originalPoint)
-                  .rotate (hitRotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, hit .originalNormal));
+                  .rotate (hitRotation .setVectors ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, hit .originalNormal));
 
                this [_inputPoint] .display (radius, color, 0.3, 0.8, inputRayMatrix, projectionMatrix, frameBuffer);
             }

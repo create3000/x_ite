@@ -17,6 +17,7 @@ in vec4 x3d_Vertex;
 out vec3 vertex;
 out vec4 texCoord;
 
+#include <Fog>
 #include <Logarithmic>
 
 void
@@ -35,6 +36,10 @@ main ()
 
    #if defined (X3D_LOGARITHMIC_DEPTH_BUFFER)
       logarithmic (gl_Position);
+   #endif
+
+   #if defined (X3D_FOG) && defined (X3D_FOG_COORDS)
+      fog ();
    #endif
 }
 `;

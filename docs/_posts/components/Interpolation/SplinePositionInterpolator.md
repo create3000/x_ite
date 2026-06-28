@@ -13,9 +13,9 @@ tags: [SplinePositionInterpolator, Interpolation]
 
 ## Overview
 
-SplinePositionInterpolator performs non-linear interpolation among paired lists of 3-tuple values and velocities to produce an SFVec3f value_changed output event.
+**SplinePositionInterpolator** performs non-linear interpolation among paired lists of 3-tuple values and velocities to produce an SFVec3f value_changed output event.
 
-The SplinePositionInterpolator node belongs to the [Interpolation](/x_ite/components/overview/#interpolation) component and requires at least support level **4,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The **SplinePositionInterpolator** node belongs to the [Interpolation](/x_ite/components/overview/#interpolation) component and requires at least support level **4,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 

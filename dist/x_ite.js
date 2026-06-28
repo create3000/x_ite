@@ -1,4 +1,4 @@
-/* X_ITE v15.0.2 */
+/* X_ITE v15.1.7 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -12,7 +12,7 @@
 return /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 410
+/***/ 653
 (module, exports) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*
@@ -1017,7 +1017,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 760
+/***/ 7
 (module) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -2013,7 +2013,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 
-/***/ 887
+/***/ 288
 (module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -2027,7 +2027,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
     if ( true ) {
 
         // AMD. Register as an anonymous module.
-        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(550) ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [ __webpack_require__(157) ], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 		__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 		(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
 		__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
@@ -2258,7 +2258,7 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 
 /***/ },
 
-/***/ 340
+/***/ 451
 (module) {
 
 /**
@@ -7037,3252 +7037,7 @@ if (true) {
 
 /***/ },
 
-/***/ 655
-(__unused_webpack_module, exports) {
-
-
-/*! pako 2.1.0 https://github.com/nodeca/pako @license (MIT AND Zlib) */
-(function (global, factory) {
-   true ? factory(exports) :
-  0;
-})(this, (function (exports) { 'use strict';
-
-  // Note: adler32 takes 12% for level 0 and 2% for level 6.
-  // It isn't worth it to make additional optimizations as in original.
-  // Small size is preferable.
-
-  // (C) 1995-2013 Jean-loup Gailly and Mark Adler
-  // (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
-  //
-  // This software is provided 'as-is', without any express or implied
-  // warranty. In no event will the authors be held liable for any damages
-  // arising from the use of this software.
-  //
-  // Permission is granted to anyone to use this software for any purpose,
-  // including commercial applications, and to alter it and redistribute it
-  // freely, subject to the following restrictions:
-  //
-  // 1. The origin of this software must not be misrepresented; you must not
-  //   claim that you wrote the original software. If you use this software
-  //   in a product, an acknowledgment in the product documentation would be
-  //   appreciated but is not required.
-  // 2. Altered source versions must be plainly marked as such, and must not be
-  //   misrepresented as being the original software.
-  // 3. This notice may not be removed or altered from any source distribution.
-
-  const adler32 = (adler, buf, len, pos) => {
-    let s1 = (adler & 0xffff) |0,
-        s2 = ((adler >>> 16) & 0xffff) |0,
-        n = 0;
-
-    while (len !== 0) {
-      // Set limit ~ twice less than 5552, to keep
-      // s2 in 31-bits, because we force signed ints.
-      // in other case %= will fail.
-      n = len > 2000 ? 2000 : len;
-      len -= n;
-
-      do {
-        s1 = (s1 + buf[pos++]) |0;
-        s2 = (s2 + s1) |0;
-      } while (--n);
-
-      s1 %= 65521;
-      s2 %= 65521;
-    }
-
-    return (s1 | (s2 << 16)) |0;
-  };
-
-
-  var adler32_1 = adler32;
-
-  // Note: we can't get significant speed boost here.
-  // So write code to minimize size - no pregenerated tables
-  // and array tools dependencies.
-
-  // (C) 1995-2013 Jean-loup Gailly and Mark Adler
-  // (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
-  //
-  // This software is provided 'as-is', without any express or implied
-  // warranty. In no event will the authors be held liable for any damages
-  // arising from the use of this software.
-  //
-  // Permission is granted to anyone to use this software for any purpose,
-  // including commercial applications, and to alter it and redistribute it
-  // freely, subject to the following restrictions:
-  //
-  // 1. The origin of this software must not be misrepresented; you must not
-  //   claim that you wrote the original software. If you use this software
-  //   in a product, an acknowledgment in the product documentation would be
-  //   appreciated but is not required.
-  // 2. Altered source versions must be plainly marked as such, and must not be
-  //   misrepresented as being the original software.
-  // 3. This notice may not be removed or altered from any source distribution.
-
-  // Use ordinary array, since untyped makes no boost here
-  const makeTable = () => {
-    let c, table = [];
-
-    for (var n = 0; n < 256; n++) {
-      c = n;
-      for (var k = 0; k < 8; k++) {
-        c = ((c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1));
-      }
-      table[n] = c;
-    }
-
-    return table;
-  };
-
-  // Create table on load. Just 255 signed longs. Not a problem.
-  const crcTable = new Uint32Array(makeTable());
-
-
-  const crc32 = (crc, buf, len, pos) => {
-    const t = crcTable;
-    const end = pos + len;
-
-    crc ^= -1;
-
-    for (let i = pos; i < end; i++) {
-      crc = (crc >>> 8) ^ t[(crc ^ buf[i]) & 0xFF];
-    }
-
-    return (crc ^ (-1)); // >>> 0;
-  };
-
-
-  var crc32_1 = crc32;
-
-  // (C) 1995-2013 Jean-loup Gailly and Mark Adler
-  // (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
-  //
-  // This software is provided 'as-is', without any express or implied
-  // warranty. In no event will the authors be held liable for any damages
-  // arising from the use of this software.
-  //
-  // Permission is granted to anyone to use this software for any purpose,
-  // including commercial applications, and to alter it and redistribute it
-  // freely, subject to the following restrictions:
-  //
-  // 1. The origin of this software must not be misrepresented; you must not
-  //   claim that you wrote the original software. If you use this software
-  //   in a product, an acknowledgment in the product documentation would be
-  //   appreciated but is not required.
-  // 2. Altered source versions must be plainly marked as such, and must not be
-  //   misrepresented as being the original software.
-  // 3. This notice may not be removed or altered from any source distribution.
-
-  // See state defs from inflate.js
-  const BAD$1 = 16209;       /* got a data error -- remain here until reset */
-  const TYPE$1 = 16191;      /* i: waiting for type bits, including last-flag bit */
-
-  /*
-     Decode literal, length, and distance codes and write out the resulting
-     literal and match bytes until either not enough input or output is
-     available, an end-of-block is encountered, or a data error is encountered.
-     When large enough input and output buffers are supplied to inflate(), for
-     example, a 16K input buffer and a 64K output buffer, more than 95% of the
-     inflate execution time is spent in this routine.
-
-     Entry assumptions:
-
-          state.mode === LEN
-          strm.avail_in >= 6
-          strm.avail_out >= 258
-          start >= strm.avail_out
-          state.bits < 8
-
-     On return, state.mode is one of:
-
-          LEN -- ran out of enough output space or enough available input
-          TYPE -- reached end of block code, inflate() to interpret next block
-          BAD -- error in block data
-
-     Notes:
-
-      - The maximum input bits used by a length/distance pair is 15 bits for the
-        length code, 5 bits for the length extra, 15 bits for the distance code,
-        and 13 bits for the distance extra.  This totals 48 bits, or six bytes.
-        Therefore if strm.avail_in >= 6, then there is enough input to avoid
-        checking for available input while decoding.
-
-      - The maximum bytes that a single length/distance pair can output is 258
-        bytes, which is the maximum length that can be coded.  inflate_fast()
-        requires strm.avail_out >= 258 for each loop to avoid checking for
-        output space.
-   */
-  var inffast = function inflate_fast(strm, start) {
-    let _in;                    /* local strm.input */
-    let last;                   /* have enough input while in < last */
-    let _out;                   /* local strm.output */
-    let beg;                    /* inflate()'s initial strm.output */
-    let end;                    /* while out < end, enough space available */
-  //#ifdef INFLATE_STRICT
-    let dmax;                   /* maximum distance from zlib header */
-  //#endif
-    let wsize;                  /* window size or zero if not using window */
-    let whave;                  /* valid bytes in the window */
-    let wnext;                  /* window write index */
-    // Use `s_window` instead `window`, avoid conflict with instrumentation tools
-    let s_window;               /* allocated sliding window, if wsize != 0 */
-    let hold;                   /* local strm.hold */
-    let bits;                   /* local strm.bits */
-    let lcode;                  /* local strm.lencode */
-    let dcode;                  /* local strm.distcode */
-    let lmask;                  /* mask for first level of length codes */
-    let dmask;                  /* mask for first level of distance codes */
-    let here;                   /* retrieved table entry */
-    let op;                     /* code bits, operation, extra bits, or */
-                                /*  window position, window bytes to copy */
-    let len;                    /* match length, unused bytes */
-    let dist;                   /* match distance */
-    let from;                   /* where to copy match from */
-    let from_source;
-
-
-    let input, output; // JS specific, because we have no pointers
-
-    /* copy state to local variables */
-    const state = strm.state;
-    //here = state.here;
-    _in = strm.next_in;
-    input = strm.input;
-    last = _in + (strm.avail_in - 5);
-    _out = strm.next_out;
-    output = strm.output;
-    beg = _out - (start - strm.avail_out);
-    end = _out + (strm.avail_out - 257);
-  //#ifdef INFLATE_STRICT
-    dmax = state.dmax;
-  //#endif
-    wsize = state.wsize;
-    whave = state.whave;
-    wnext = state.wnext;
-    s_window = state.window;
-    hold = state.hold;
-    bits = state.bits;
-    lcode = state.lencode;
-    dcode = state.distcode;
-    lmask = (1 << state.lenbits) - 1;
-    dmask = (1 << state.distbits) - 1;
-
-
-    /* decode literals and length/distances until end-of-block or not enough
-       input data or output space */
-
-    top:
-    do {
-      if (bits < 15) {
-        hold += input[_in++] << bits;
-        bits += 8;
-        hold += input[_in++] << bits;
-        bits += 8;
-      }
-
-      here = lcode[hold & lmask];
-
-      dolen:
-      for (;;) { // Goto emulation
-        op = here >>> 24/*here.bits*/;
-        hold >>>= op;
-        bits -= op;
-        op = (here >>> 16) & 0xff/*here.op*/;
-        if (op === 0) {                          /* literal */
-          //Tracevv((stderr, here.val >= 0x20 && here.val < 0x7f ?
-          //        "inflate:         literal '%c'\n" :
-          //        "inflate:         literal 0x%02x\n", here.val));
-          output[_out++] = here & 0xffff/*here.val*/;
-        }
-        else if (op & 16) {                     /* length base */
-          len = here & 0xffff/*here.val*/;
-          op &= 15;                           /* number of extra bits */
-          if (op) {
-            if (bits < op) {
-              hold += input[_in++] << bits;
-              bits += 8;
-            }
-            len += hold & ((1 << op) - 1);
-            hold >>>= op;
-            bits -= op;
-          }
-          //Tracevv((stderr, "inflate:         length %u\n", len));
-          if (bits < 15) {
-            hold += input[_in++] << bits;
-            bits += 8;
-            hold += input[_in++] << bits;
-            bits += 8;
-          }
-          here = dcode[hold & dmask];
-
-          dodist:
-          for (;;) { // goto emulation
-            op = here >>> 24/*here.bits*/;
-            hold >>>= op;
-            bits -= op;
-            op = (here >>> 16) & 0xff/*here.op*/;
-
-            if (op & 16) {                      /* distance base */
-              dist = here & 0xffff/*here.val*/;
-              op &= 15;                       /* number of extra bits */
-              if (bits < op) {
-                hold += input[_in++] << bits;
-                bits += 8;
-                if (bits < op) {
-                  hold += input[_in++] << bits;
-                  bits += 8;
-                }
-              }
-              dist += hold & ((1 << op) - 1);
-  //#ifdef INFLATE_STRICT
-              if (dist > dmax) {
-                strm.msg = 'invalid distance too far back';
-                state.mode = BAD$1;
-                break top;
-              }
-  //#endif
-              hold >>>= op;
-              bits -= op;
-              //Tracevv((stderr, "inflate:         distance %u\n", dist));
-              op = _out - beg;                /* max distance in output */
-              if (dist > op) {                /* see if copy from window */
-                op = dist - op;               /* distance back in window */
-                if (op > whave) {
-                  if (state.sane) {
-                    strm.msg = 'invalid distance too far back';
-                    state.mode = BAD$1;
-                    break top;
-                  }
-
-  // (!) This block is disabled in zlib defaults,
-  // don't enable it for binary compatibility
-  //#ifdef INFLATE_ALLOW_INVALID_DISTANCE_TOOFAR_ARRR
-  //                if (len <= op - whave) {
-  //                  do {
-  //                    output[_out++] = 0;
-  //                  } while (--len);
-  //                  continue top;
-  //                }
-  //                len -= op - whave;
-  //                do {
-  //                  output[_out++] = 0;
-  //                } while (--op > whave);
-  //                if (op === 0) {
-  //                  from = _out - dist;
-  //                  do {
-  //                    output[_out++] = output[from++];
-  //                  } while (--len);
-  //                  continue top;
-  //                }
-  //#endif
-                }
-                from = 0; // window index
-                from_source = s_window;
-                if (wnext === 0) {           /* very common case */
-                  from += wsize - op;
-                  if (op < len) {         /* some from window */
-                    len -= op;
-                    do {
-                      output[_out++] = s_window[from++];
-                    } while (--op);
-                    from = _out - dist;  /* rest from output */
-                    from_source = output;
-                  }
-                }
-                else if (wnext < op) {      /* wrap around window */
-                  from += wsize + wnext - op;
-                  op -= wnext;
-                  if (op < len) {         /* some from end of window */
-                    len -= op;
-                    do {
-                      output[_out++] = s_window[from++];
-                    } while (--op);
-                    from = 0;
-                    if (wnext < len) {  /* some from start of window */
-                      op = wnext;
-                      len -= op;
-                      do {
-                        output[_out++] = s_window[from++];
-                      } while (--op);
-                      from = _out - dist;      /* rest from output */
-                      from_source = output;
-                    }
-                  }
-                }
-                else {                      /* contiguous in window */
-                  from += wnext - op;
-                  if (op < len) {         /* some from window */
-                    len -= op;
-                    do {
-                      output[_out++] = s_window[from++];
-                    } while (--op);
-                    from = _out - dist;  /* rest from output */
-                    from_source = output;
-                  }
-                }
-                while (len > 2) {
-                  output[_out++] = from_source[from++];
-                  output[_out++] = from_source[from++];
-                  output[_out++] = from_source[from++];
-                  len -= 3;
-                }
-                if (len) {
-                  output[_out++] = from_source[from++];
-                  if (len > 1) {
-                    output[_out++] = from_source[from++];
-                  }
-                }
-              }
-              else {
-                from = _out - dist;          /* copy direct from output */
-                do {                        /* minimum length is three */
-                  output[_out++] = output[from++];
-                  output[_out++] = output[from++];
-                  output[_out++] = output[from++];
-                  len -= 3;
-                } while (len > 2);
-                if (len) {
-                  output[_out++] = output[from++];
-                  if (len > 1) {
-                    output[_out++] = output[from++];
-                  }
-                }
-              }
-            }
-            else if ((op & 64) === 0) {          /* 2nd level distance code */
-              here = dcode[(here & 0xffff)/*here.val*/ + (hold & ((1 << op) - 1))];
-              continue dodist;
-            }
-            else {
-              strm.msg = 'invalid distance code';
-              state.mode = BAD$1;
-              break top;
-            }
-
-            break; // need to emulate goto via "continue"
-          }
-        }
-        else if ((op & 64) === 0) {              /* 2nd level length code */
-          here = lcode[(here & 0xffff)/*here.val*/ + (hold & ((1 << op) - 1))];
-          continue dolen;
-        }
-        else if (op & 32) {                     /* end-of-block */
-          //Tracevv((stderr, "inflate:         end of block\n"));
-          state.mode = TYPE$1;
-          break top;
-        }
-        else {
-          strm.msg = 'invalid literal/length code';
-          state.mode = BAD$1;
-          break top;
-        }
-
-        break; // need to emulate goto via "continue"
-      }
-    } while (_in < last && _out < end);
-
-    /* return unused bytes (on entry, bits < 8, so in won't go too far back) */
-    len = bits >> 3;
-    _in -= len;
-    bits -= len << 3;
-    hold &= (1 << bits) - 1;
-
-    /* update state and return */
-    strm.next_in = _in;
-    strm.next_out = _out;
-    strm.avail_in = (_in < last ? 5 + (last - _in) : 5 - (_in - last));
-    strm.avail_out = (_out < end ? 257 + (end - _out) : 257 - (_out - end));
-    state.hold = hold;
-    state.bits = bits;
-    return;
-  };
-
-  // (C) 1995-2013 Jean-loup Gailly and Mark Adler
-  // (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
-  //
-  // This software is provided 'as-is', without any express or implied
-  // warranty. In no event will the authors be held liable for any damages
-  // arising from the use of this software.
-  //
-  // Permission is granted to anyone to use this software for any purpose,
-  // including commercial applications, and to alter it and redistribute it
-  // freely, subject to the following restrictions:
-  //
-  // 1. The origin of this software must not be misrepresented; you must not
-  //   claim that you wrote the original software. If you use this software
-  //   in a product, an acknowledgment in the product documentation would be
-  //   appreciated but is not required.
-  // 2. Altered source versions must be plainly marked as such, and must not be
-  //   misrepresented as being the original software.
-  // 3. This notice may not be removed or altered from any source distribution.
-
-  const MAXBITS = 15;
-  const ENOUGH_LENS$1 = 852;
-  const ENOUGH_DISTS$1 = 592;
-  //const ENOUGH = (ENOUGH_LENS+ENOUGH_DISTS);
-
-  const CODES$1 = 0;
-  const LENS$1 = 1;
-  const DISTS$1 = 2;
-
-  const lbase = new Uint16Array([ /* Length codes 257..285 base */
-    3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31,
-    35, 43, 51, 59, 67, 83, 99, 115, 131, 163, 195, 227, 258, 0, 0
-  ]);
-
-  const lext = new Uint8Array([ /* Length codes 257..285 extra */
-    16, 16, 16, 16, 16, 16, 16, 16, 17, 17, 17, 17, 18, 18, 18, 18,
-    19, 19, 19, 19, 20, 20, 20, 20, 21, 21, 21, 21, 16, 72, 78
-  ]);
-
-  const dbase = new Uint16Array([ /* Distance codes 0..29 base */
-    1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193,
-    257, 385, 513, 769, 1025, 1537, 2049, 3073, 4097, 6145,
-    8193, 12289, 16385, 24577, 0, 0
-  ]);
-
-  const dext = new Uint8Array([ /* Distance codes 0..29 extra */
-    16, 16, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 21, 21, 22, 22,
-    23, 23, 24, 24, 25, 25, 26, 26, 27, 27,
-    28, 28, 29, 29, 64, 64
-  ]);
-
-  const inflate_table = (type, lens, lens_index, codes, table, table_index, work, opts) =>
-  {
-    const bits = opts.bits;
-        //here = opts.here; /* table entry for duplication */
-
-    let len = 0;               /* a code's length in bits */
-    let sym = 0;               /* index of code symbols */
-    let min = 0, max = 0;          /* minimum and maximum code lengths */
-    let root = 0;              /* number of index bits for root table */
-    let curr = 0;              /* number of index bits for current table */
-    let drop = 0;              /* code bits to drop for sub-table */
-    let left = 0;                   /* number of prefix codes available */
-    let used = 0;              /* code entries in table used */
-    let huff = 0;              /* Huffman code */
-    let incr;              /* for incrementing code, index */
-    let fill;              /* index for replicating entries */
-    let low;               /* low bits for current root entry */
-    let mask;              /* mask for low root bits */
-    let next;             /* next available space in table */
-    let base = null;     /* base value table to use */
-  //  let shoextra;    /* extra bits table to use */
-    let match;                  /* use base and extra for symbol >= match */
-    const count = new Uint16Array(MAXBITS + 1); //[MAXBITS+1];    /* number of codes of each length */
-    const offs = new Uint16Array(MAXBITS + 1); //[MAXBITS+1];     /* offsets in table for each length */
-    let extra = null;
-
-    let here_bits, here_op, here_val;
-
-    /*
-     Process a set of code lengths to create a canonical Huffman code.  The
-     code lengths are lens[0..codes-1].  Each length corresponds to the
-     symbols 0..codes-1.  The Huffman code is generated by first sorting the
-     symbols by length from short to long, and retaining the symbol order
-     for codes with equal lengths.  Then the code starts with all zero bits
-     for the first code of the shortest length, and the codes are integer
-     increments for the same length, and zeros are appended as the length
-     increases.  For the deflate format, these bits are stored backwards
-     from their more natural integer increment ordering, and so when the
-     decoding tables are built in the large loop below, the integer codes
-     are incremented backwards.
-
-     This routine assumes, but does not check, that all of the entries in
-     lens[] are in the range 0..MAXBITS.  The caller must assure this.
-     1..MAXBITS is interpreted as that code length.  zero means that that
-     symbol does not occur in this code.
-
-     The codes are sorted by computing a count of codes for each length,
-     creating from that a table of starting indices for each length in the
-     sorted table, and then entering the symbols in order in the sorted
-     table.  The sorted table is work[], with that space being provided by
-     the caller.
-
-     The length counts are used for other purposes as well, i.e. finding
-     the minimum and maximum length codes, determining if there are any
-     codes at all, checking for a valid set of lengths, and looking ahead
-     at length counts to determine sub-table sizes when building the
-     decoding tables.
-     */
-
-    /* accumulate lengths for codes (assumes lens[] all in 0..MAXBITS) */
-    for (len = 0; len <= MAXBITS; len++) {
-      count[len] = 0;
-    }
-    for (sym = 0; sym < codes; sym++) {
-      count[lens[lens_index + sym]]++;
-    }
-
-    /* bound code lengths, force root to be within code lengths */
-    root = bits;
-    for (max = MAXBITS; max >= 1; max--) {
-      if (count[max] !== 0) { break; }
-    }
-    if (root > max) {
-      root = max;
-    }
-    if (max === 0) {                     /* no symbols to code at all */
-      //table.op[opts.table_index] = 64;  //here.op = (var char)64;    /* invalid code marker */
-      //table.bits[opts.table_index] = 1;   //here.bits = (var char)1;
-      //table.val[opts.table_index++] = 0;   //here.val = (var short)0;
-      table[table_index++] = (1 << 24) | (64 << 16) | 0;
-
-
-      //table.op[opts.table_index] = 64;
-      //table.bits[opts.table_index] = 1;
-      //table.val[opts.table_index++] = 0;
-      table[table_index++] = (1 << 24) | (64 << 16) | 0;
-
-      opts.bits = 1;
-      return 0;     /* no symbols, but wait for decoding to report error */
-    }
-    for (min = 1; min < max; min++) {
-      if (count[min] !== 0) { break; }
-    }
-    if (root < min) {
-      root = min;
-    }
-
-    /* check for an over-subscribed or incomplete set of lengths */
-    left = 1;
-    for (len = 1; len <= MAXBITS; len++) {
-      left <<= 1;
-      left -= count[len];
-      if (left < 0) {
-        return -1;
-      }        /* over-subscribed */
-    }
-    if (left > 0 && (type === CODES$1 || max !== 1)) {
-      return -1;                      /* incomplete set */
-    }
-
-    /* generate offsets into symbol table for each length for sorting */
-    offs[1] = 0;
-    for (len = 1; len < MAXBITS; len++) {
-      offs[len + 1] = offs[len] + count[len];
-    }
-
-    /* sort symbols by length, by symbol order within each length */
-    for (sym = 0; sym < codes; sym++) {
-      if (lens[lens_index + sym] !== 0) {
-        work[offs[lens[lens_index + sym]]++] = sym;
-      }
-    }
-
-    /*
-     Create and fill in decoding tables.  In this loop, the table being
-     filled is at next and has curr index bits.  The code being used is huff
-     with length len.  That code is converted to an index by dropping drop
-     bits off of the bottom.  For codes where len is less than drop + curr,
-     those top drop + curr - len bits are incremented through all values to
-     fill the table with replicated entries.
-
-     root is the number of index bits for the root table.  When len exceeds
-     root, sub-tables are created pointed to by the root entry with an index
-     of the low root bits of huff.  This is saved in low to check for when a
-     new sub-table should be started.  drop is zero when the root table is
-     being filled, and drop is root when sub-tables are being filled.
-
-     When a new sub-table is needed, it is necessary to look ahead in the
-     code lengths to determine what size sub-table is needed.  The length
-     counts are used for this, and so count[] is decremented as codes are
-     entered in the tables.
-
-     used keeps track of how many table entries have been allocated from the
-     provided *table space.  It is checked for LENS and DIST tables against
-     the constants ENOUGH_LENS and ENOUGH_DISTS to guard against changes in
-     the initial root table size constants.  See the comments in inftrees.h
-     for more information.
-
-     sym increments through all symbols, and the loop terminates when
-     all codes of length max, i.e. all codes, have been processed.  This
-     routine permits incomplete codes, so another loop after this one fills
-     in the rest of the decoding tables with invalid code markers.
-     */
-
-    /* set up for code type */
-    // poor man optimization - use if-else instead of switch,
-    // to avoid deopts in old v8
-    if (type === CODES$1) {
-      base = extra = work;    /* dummy value--not used */
-      match = 20;
-
-    } else if (type === LENS$1) {
-      base = lbase;
-      extra = lext;
-      match = 257;
-
-    } else {                    /* DISTS */
-      base = dbase;
-      extra = dext;
-      match = 0;
-    }
-
-    /* initialize opts for loop */
-    huff = 0;                   /* starting code */
-    sym = 0;                    /* starting code symbol */
-    len = min;                  /* starting code length */
-    next = table_index;              /* current table to fill in */
-    curr = root;                /* current table index bits */
-    drop = 0;                   /* current bits to drop from code for index */
-    low = -1;                   /* trigger new sub-table when len > root */
-    used = 1 << root;          /* use root table entries */
-    mask = used - 1;            /* mask for comparing low */
-
-    /* check available table space */
-    if ((type === LENS$1 && used > ENOUGH_LENS$1) ||
-      (type === DISTS$1 && used > ENOUGH_DISTS$1)) {
-      return 1;
-    }
-
-    /* process all codes and make table entries */
-    for (;;) {
-      /* create table entry */
-      here_bits = len - drop;
-      if (work[sym] + 1 < match) {
-        here_op = 0;
-        here_val = work[sym];
-      }
-      else if (work[sym] >= match) {
-        here_op = extra[work[sym] - match];
-        here_val = base[work[sym] - match];
-      }
-      else {
-        here_op = 32 + 64;         /* end of block */
-        here_val = 0;
-      }
-
-      /* replicate for those indices with low len bits equal to huff */
-      incr = 1 << (len - drop);
-      fill = 1 << curr;
-      min = fill;                 /* save offset to next table */
-      do {
-        fill -= incr;
-        table[next + (huff >> drop) + fill] = (here_bits << 24) | (here_op << 16) | here_val |0;
-      } while (fill !== 0);
-
-      /* backwards increment the len-bit code huff */
-      incr = 1 << (len - 1);
-      while (huff & incr) {
-        incr >>= 1;
-      }
-      if (incr !== 0) {
-        huff &= incr - 1;
-        huff += incr;
-      } else {
-        huff = 0;
-      }
-
-      /* go to next symbol, update count, len */
-      sym++;
-      if (--count[len] === 0) {
-        if (len === max) { break; }
-        len = lens[lens_index + work[sym]];
-      }
-
-      /* create new sub-table if needed */
-      if (len > root && (huff & mask) !== low) {
-        /* if first time, transition to sub-tables */
-        if (drop === 0) {
-          drop = root;
-        }
-
-        /* increment past last table */
-        next += min;            /* here min is 1 << curr */
-
-        /* determine length of next table */
-        curr = len - drop;
-        left = 1 << curr;
-        while (curr + drop < max) {
-          left -= count[curr + drop];
-          if (left <= 0) { break; }
-          curr++;
-          left <<= 1;
-        }
-
-        /* check for enough space */
-        used += 1 << curr;
-        if ((type === LENS$1 && used > ENOUGH_LENS$1) ||
-          (type === DISTS$1 && used > ENOUGH_DISTS$1)) {
-          return 1;
-        }
-
-        /* point entry in root table to sub-table */
-        low = huff & mask;
-        /*table.op[low] = curr;
-        table.bits[low] = root;
-        table.val[low] = next - opts.table_index;*/
-        table[low] = (root << 24) | (curr << 16) | (next - table_index) |0;
-      }
-    }
-
-    /* fill in remaining table entry if code is incomplete (guaranteed to have
-     at most one remaining entry, since if the code is incomplete, the
-     maximum code length that was allowed to get this far is one bit) */
-    if (huff !== 0) {
-      //table.op[next + huff] = 64;            /* invalid code marker */
-      //table.bits[next + huff] = len - drop;
-      //table.val[next + huff] = 0;
-      table[next + huff] = ((len - drop) << 24) | (64 << 16) |0;
-    }
-
-    /* set return parameters */
-    //opts.table_index += used;
-    opts.bits = root;
-    return 0;
-  };
-
-
-  var inftrees = inflate_table;
-
-  // (C) 1995-2013 Jean-loup Gailly and Mark Adler
-  // (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
-  //
-  // This software is provided 'as-is', without any express or implied
-  // warranty. In no event will the authors be held liable for any damages
-  // arising from the use of this software.
-  //
-  // Permission is granted to anyone to use this software for any purpose,
-  // including commercial applications, and to alter it and redistribute it
-  // freely, subject to the following restrictions:
-  //
-  // 1. The origin of this software must not be misrepresented; you must not
-  //   claim that you wrote the original software. If you use this software
-  //   in a product, an acknowledgment in the product documentation would be
-  //   appreciated but is not required.
-  // 2. Altered source versions must be plainly marked as such, and must not be
-  //   misrepresented as being the original software.
-  // 3. This notice may not be removed or altered from any source distribution.
-
-  var constants$1 = {
-
-    /* Allowed flush values; see deflate() and inflate() below for details */
-    Z_NO_FLUSH:         0,
-    Z_PARTIAL_FLUSH:    1,
-    Z_SYNC_FLUSH:       2,
-    Z_FULL_FLUSH:       3,
-    Z_FINISH:           4,
-    Z_BLOCK:            5,
-    Z_TREES:            6,
-
-    /* Return codes for the compression/decompression functions. Negative values
-    * are errors, positive values are used for special but normal events.
-    */
-    Z_OK:               0,
-    Z_STREAM_END:       1,
-    Z_NEED_DICT:        2,
-    Z_ERRNO:           -1,
-    Z_STREAM_ERROR:    -2,
-    Z_DATA_ERROR:      -3,
-    Z_MEM_ERROR:       -4,
-    Z_BUF_ERROR:       -5,
-    //Z_VERSION_ERROR: -6,
-
-    /* compression levels */
-    Z_NO_COMPRESSION:         0,
-    Z_BEST_SPEED:             1,
-    Z_BEST_COMPRESSION:       9,
-    Z_DEFAULT_COMPRESSION:   -1,
-
-
-    Z_FILTERED:               1,
-    Z_HUFFMAN_ONLY:           2,
-    Z_RLE:                    3,
-    Z_FIXED:                  4,
-    Z_DEFAULT_STRATEGY:       0,
-
-    /* Possible values of the data_type field (though see inflate()) */
-    Z_BINARY:                 0,
-    Z_TEXT:                   1,
-    //Z_ASCII:                1, // = Z_TEXT (deprecated)
-    Z_UNKNOWN:                2,
-
-    /* The deflate compression method */
-    Z_DEFLATED:               8
-    //Z_NULL:                 null // Use -1 or null inline, depending on var type
-  };
-
-  // (C) 1995-2013 Jean-loup Gailly and Mark Adler
-  // (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
-  //
-  // This software is provided 'as-is', without any express or implied
-  // warranty. In no event will the authors be held liable for any damages
-  // arising from the use of this software.
-  //
-  // Permission is granted to anyone to use this software for any purpose,
-  // including commercial applications, and to alter it and redistribute it
-  // freely, subject to the following restrictions:
-  //
-  // 1. The origin of this software must not be misrepresented; you must not
-  //   claim that you wrote the original software. If you use this software
-  //   in a product, an acknowledgment in the product documentation would be
-  //   appreciated but is not required.
-  // 2. Altered source versions must be plainly marked as such, and must not be
-  //   misrepresented as being the original software.
-  // 3. This notice may not be removed or altered from any source distribution.
-
-
-
-
-
-
-  const CODES = 0;
-  const LENS = 1;
-  const DISTS = 2;
-
-  /* Public constants ==========================================================*/
-  /* ===========================================================================*/
-
-  const {
-    Z_FINISH: Z_FINISH$1, Z_BLOCK, Z_TREES,
-    Z_OK: Z_OK$1, Z_STREAM_END: Z_STREAM_END$1, Z_NEED_DICT: Z_NEED_DICT$1, Z_STREAM_ERROR: Z_STREAM_ERROR$1, Z_DATA_ERROR: Z_DATA_ERROR$1, Z_MEM_ERROR: Z_MEM_ERROR$1, Z_BUF_ERROR,
-    Z_DEFLATED
-  } = constants$1;
-
-
-  /* STATES ====================================================================*/
-  /* ===========================================================================*/
-
-
-  const    HEAD = 16180;       /* i: waiting for magic header */
-  const    FLAGS = 16181;      /* i: waiting for method and flags (gzip) */
-  const    TIME = 16182;       /* i: waiting for modification time (gzip) */
-  const    OS = 16183;         /* i: waiting for extra flags and operating system (gzip) */
-  const    EXLEN = 16184;      /* i: waiting for extra length (gzip) */
-  const    EXTRA = 16185;      /* i: waiting for extra bytes (gzip) */
-  const    NAME = 16186;       /* i: waiting for end of file name (gzip) */
-  const    COMMENT = 16187;    /* i: waiting for end of comment (gzip) */
-  const    HCRC = 16188;       /* i: waiting for header crc (gzip) */
-  const    DICTID = 16189;    /* i: waiting for dictionary check value */
-  const    DICT = 16190;      /* waiting for inflateSetDictionary() call */
-  const        TYPE = 16191;      /* i: waiting for type bits, including last-flag bit */
-  const        TYPEDO = 16192;    /* i: same, but skip check to exit inflate on new block */
-  const        STORED = 16193;    /* i: waiting for stored size (length and complement) */
-  const        COPY_ = 16194;     /* i/o: same as COPY below, but only first time in */
-  const        COPY = 16195;      /* i/o: waiting for input or output to copy stored block */
-  const        TABLE = 16196;     /* i: waiting for dynamic block table lengths */
-  const        LENLENS = 16197;   /* i: waiting for code length code lengths */
-  const        CODELENS = 16198;  /* i: waiting for length/lit and distance code lengths */
-  const            LEN_ = 16199;      /* i: same as LEN below, but only first time in */
-  const            LEN = 16200;       /* i: waiting for length/lit/eob code */
-  const            LENEXT = 16201;    /* i: waiting for length extra bits */
-  const            DIST = 16202;      /* i: waiting for distance code */
-  const            DISTEXT = 16203;   /* i: waiting for distance extra bits */
-  const            MATCH = 16204;     /* o: waiting for output space to copy string */
-  const            LIT = 16205;       /* o: waiting for output space to write literal */
-  const    CHECK = 16206;     /* i: waiting for 32-bit check value */
-  const    LENGTH = 16207;    /* i: waiting for 32-bit length (gzip) */
-  const    DONE = 16208;      /* finished check, done -- remain here until reset */
-  const    BAD = 16209;       /* got a data error -- remain here until reset */
-  const    MEM = 16210;       /* got an inflate() memory error -- remain here until reset */
-  const    SYNC = 16211;      /* looking for synchronization bytes to restart inflate() */
-
-  /* ===========================================================================*/
-
-
-
-  const ENOUGH_LENS = 852;
-  const ENOUGH_DISTS = 592;
-  //const ENOUGH =  (ENOUGH_LENS+ENOUGH_DISTS);
-
-  const MAX_WBITS = 15;
-  /* 32K LZ77 window */
-  const DEF_WBITS = MAX_WBITS;
-
-
-  const zswap32 = (q) => {
-
-    return  (((q >>> 24) & 0xff) +
-            ((q >>> 8) & 0xff00) +
-            ((q & 0xff00) << 8) +
-            ((q & 0xff) << 24));
-  };
-
-
-  function InflateState() {
-    this.strm = null;           /* pointer back to this zlib stream */
-    this.mode = 0;              /* current inflate mode */
-    this.last = false;          /* true if processing last block */
-    this.wrap = 0;              /* bit 0 true for zlib, bit 1 true for gzip,
-                                   bit 2 true to validate check value */
-    this.havedict = false;      /* true if dictionary provided */
-    this.flags = 0;             /* gzip header method and flags (0 if zlib), or
-                                   -1 if raw or no header yet */
-    this.dmax = 0;              /* zlib header max distance (INFLATE_STRICT) */
-    this.check = 0;             /* protected copy of check value */
-    this.total = 0;             /* protected copy of output count */
-    // TODO: may be {}
-    this.head = null;           /* where to save gzip header information */
-
-    /* sliding window */
-    this.wbits = 0;             /* log base 2 of requested window size */
-    this.wsize = 0;             /* window size or zero if not using window */
-    this.whave = 0;             /* valid bytes in the window */
-    this.wnext = 0;             /* window write index */
-    this.window = null;         /* allocated sliding window, if needed */
-
-    /* bit accumulator */
-    this.hold = 0;              /* input bit accumulator */
-    this.bits = 0;              /* number of bits in "in" */
-
-    /* for string and stored block copying */
-    this.length = 0;            /* literal or length of data to copy */
-    this.offset = 0;            /* distance back to copy string from */
-
-    /* for table and code decoding */
-    this.extra = 0;             /* extra bits needed */
-
-    /* fixed and dynamic code tables */
-    this.lencode = null;          /* starting table for length/literal codes */
-    this.distcode = null;         /* starting table for distance codes */
-    this.lenbits = 0;           /* index bits for lencode */
-    this.distbits = 0;          /* index bits for distcode */
-
-    /* dynamic table building */
-    this.ncode = 0;             /* number of code length code lengths */
-    this.nlen = 0;              /* number of length code lengths */
-    this.ndist = 0;             /* number of distance code lengths */
-    this.have = 0;              /* number of code lengths in lens[] */
-    this.next = null;              /* next available space in codes[] */
-
-    this.lens = new Uint16Array(320); /* temporary storage for code lengths */
-    this.work = new Uint16Array(288); /* work area for code table building */
-
-    /*
-     because we don't have pointers in js, we use lencode and distcode directly
-     as buffers so we don't need codes
-    */
-    //this.codes = new Int32Array(ENOUGH);       /* space for code tables */
-    this.lendyn = null;              /* dynamic table for length/literal codes (JS specific) */
-    this.distdyn = null;             /* dynamic table for distance codes (JS specific) */
-    this.sane = 0;                   /* if false, allow invalid distance too far */
-    this.back = 0;                   /* bits back of last unprocessed length/lit */
-    this.was = 0;                    /* initial length of match */
-  }
-
-
-  const inflateStateCheck = (strm) => {
-
-    if (!strm) {
-      return 1;
-    }
-    const state = strm.state;
-    if (!state || state.strm !== strm ||
-      state.mode < HEAD || state.mode > SYNC) {
-      return 1;
-    }
-    return 0;
-  };
-
-
-  const inflateResetKeep = (strm) => {
-
-    if (inflateStateCheck(strm)) { return Z_STREAM_ERROR$1; }
-    const state = strm.state;
-    strm.total_in = strm.total_out = state.total = 0;
-    strm.msg = ''; /*Z_NULL*/
-    if (state.wrap) {       /* to support ill-conceived Java test suite */
-      strm.adler = state.wrap & 1;
-    }
-    state.mode = HEAD;
-    state.last = 0;
-    state.havedict = 0;
-    state.flags = -1;
-    state.dmax = 32768;
-    state.head = null/*Z_NULL*/;
-    state.hold = 0;
-    state.bits = 0;
-    //state.lencode = state.distcode = state.next = state.codes;
-    state.lencode = state.lendyn = new Int32Array(ENOUGH_LENS);
-    state.distcode = state.distdyn = new Int32Array(ENOUGH_DISTS);
-
-    state.sane = 1;
-    state.back = -1;
-    //Tracev((stderr, "inflate: reset\n"));
-    return Z_OK$1;
-  };
-
-
-  const inflateReset = (strm) => {
-
-    if (inflateStateCheck(strm)) { return Z_STREAM_ERROR$1; }
-    const state = strm.state;
-    state.wsize = 0;
-    state.whave = 0;
-    state.wnext = 0;
-    return inflateResetKeep(strm);
-
-  };
-
-
-  const inflateReset2 = (strm, windowBits) => {
-    let wrap;
-
-    /* get the state */
-    if (inflateStateCheck(strm)) { return Z_STREAM_ERROR$1; }
-    const state = strm.state;
-
-    /* extract wrap request from windowBits parameter */
-    if (windowBits < 0) {
-      wrap = 0;
-      windowBits = -windowBits;
-    }
-    else {
-      wrap = (windowBits >> 4) + 5;
-      if (windowBits < 48) {
-        windowBits &= 15;
-      }
-    }
-
-    /* set number of window bits, free window if different */
-    if (windowBits && (windowBits < 8 || windowBits > 15)) {
-      return Z_STREAM_ERROR$1;
-    }
-    if (state.window !== null && state.wbits !== windowBits) {
-      state.window = null;
-    }
-
-    /* update state and reset the rest of it */
-    state.wrap = wrap;
-    state.wbits = windowBits;
-    return inflateReset(strm);
-  };
-
-
-  const inflateInit2 = (strm, windowBits) => {
-
-    if (!strm) { return Z_STREAM_ERROR$1; }
-    //strm.msg = Z_NULL;                 /* in case we return an error */
-
-    const state = new InflateState();
-
-    //if (state === Z_NULL) return Z_MEM_ERROR;
-    //Tracev((stderr, "inflate: allocated\n"));
-    strm.state = state;
-    state.strm = strm;
-    state.window = null/*Z_NULL*/;
-    state.mode = HEAD;     /* to pass state test in inflateReset2() */
-    const ret = inflateReset2(strm, windowBits);
-    if (ret !== Z_OK$1) {
-      strm.state = null/*Z_NULL*/;
-    }
-    return ret;
-  };
-
-
-  const inflateInit = (strm) => {
-
-    return inflateInit2(strm, DEF_WBITS);
-  };
-
-
-  /*
-   Return state with length and distance decoding tables and index sizes set to
-   fixed code decoding.  Normally this returns fixed tables from inffixed.h.
-   If BUILDFIXED is defined, then instead this routine builds the tables the
-   first time it's called, and returns those tables the first time and
-   thereafter.  This reduces the size of the code by about 2K bytes, in
-   exchange for a little execution time.  However, BUILDFIXED should not be
-   used for threaded applications, since the rewriting of the tables and virgin
-   may not be thread-safe.
-   */
-  let virgin = true;
-
-  let lenfix, distfix; // We have no pointers in JS, so keep tables separate
-
-
-  const fixedtables = (state) => {
-
-    /* build fixed huffman tables if first call (may not be thread safe) */
-    if (virgin) {
-      lenfix = new Int32Array(512);
-      distfix = new Int32Array(32);
-
-      /* literal/length table */
-      let sym = 0;
-      while (sym < 144) { state.lens[sym++] = 8; }
-      while (sym < 256) { state.lens[sym++] = 9; }
-      while (sym < 280) { state.lens[sym++] = 7; }
-      while (sym < 288) { state.lens[sym++] = 8; }
-
-      inftrees(LENS,  state.lens, 0, 288, lenfix,   0, state.work, { bits: 9 });
-
-      /* distance table */
-      sym = 0;
-      while (sym < 32) { state.lens[sym++] = 5; }
-
-      inftrees(DISTS, state.lens, 0, 32,   distfix, 0, state.work, { bits: 5 });
-
-      /* do this just once */
-      virgin = false;
-    }
-
-    state.lencode = lenfix;
-    state.lenbits = 9;
-    state.distcode = distfix;
-    state.distbits = 5;
-  };
-
-
-  /*
-   Update the window with the last wsize (normally 32K) bytes written before
-   returning.  If window does not exist yet, create it.  This is only called
-   when a window is already in use, or when output has been written during this
-   inflate call, but the end of the deflate stream has not been reached yet.
-   It is also called to create a window for dictionary data when a dictionary
-   is loaded.
-
-   Providing output buffers larger than 32K to inflate() should provide a speed
-   advantage, since only the last 32K of output is copied to the sliding window
-   upon return from inflate(), and since all distances after the first 32K of
-   output will fall in the output data, making match copies simpler and faster.
-   The advantage may be dependent on the size of the processor's data caches.
-   */
-  const updatewindow = (strm, src, end, copy) => {
-
-    let dist;
-    const state = strm.state;
-
-    /* if it hasn't been done already, allocate space for the window */
-    if (state.window === null) {
-      state.wsize = 1 << state.wbits;
-      state.wnext = 0;
-      state.whave = 0;
-
-      state.window = new Uint8Array(state.wsize);
-    }
-
-    /* copy state->wsize or less output bytes into the circular window */
-    if (copy >= state.wsize) {
-      state.window.set(src.subarray(end - state.wsize, end), 0);
-      state.wnext = 0;
-      state.whave = state.wsize;
-    }
-    else {
-      dist = state.wsize - state.wnext;
-      if (dist > copy) {
-        dist = copy;
-      }
-      //zmemcpy(state->window + state->wnext, end - copy, dist);
-      state.window.set(src.subarray(end - copy, end - copy + dist), state.wnext);
-      copy -= dist;
-      if (copy) {
-        //zmemcpy(state->window, end - copy, copy);
-        state.window.set(src.subarray(end - copy, end), 0);
-        state.wnext = copy;
-        state.whave = state.wsize;
-      }
-      else {
-        state.wnext += dist;
-        if (state.wnext === state.wsize) { state.wnext = 0; }
-        if (state.whave < state.wsize) { state.whave += dist; }
-      }
-    }
-    return 0;
-  };
-
-
-  const inflate$1 = (strm, flush) => {
-
-    let state;
-    let input, output;          // input/output buffers
-    let next;                   /* next input INDEX */
-    let put;                    /* next output INDEX */
-    let have, left;             /* available input and output */
-    let hold;                   /* bit buffer */
-    let bits;                   /* bits in bit buffer */
-    let _in, _out;              /* save starting available input and output */
-    let copy;                   /* number of stored or match bytes to copy */
-    let from;                   /* where to copy match bytes from */
-    let from_source;
-    let here = 0;               /* current decoding table entry */
-    let here_bits, here_op, here_val; // paked "here" denormalized (JS specific)
-    //let last;                   /* parent table entry */
-    let last_bits, last_op, last_val; // paked "last" denormalized (JS specific)
-    let len;                    /* length to copy for repeats, bits to drop */
-    let ret;                    /* return code */
-    const hbuf = new Uint8Array(4);    /* buffer for gzip header crc calculation */
-    let opts;
-
-    let n; // temporary variable for NEED_BITS
-
-    const order = /* permutation of code lengths */
-      new Uint8Array([ 16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15 ]);
-
-
-    if (inflateStateCheck(strm) || !strm.output ||
-        (!strm.input && strm.avail_in !== 0)) {
-      return Z_STREAM_ERROR$1;
-    }
-
-    state = strm.state;
-    if (state.mode === TYPE) { state.mode = TYPEDO; }    /* skip check */
-
-
-    //--- LOAD() ---
-    put = strm.next_out;
-    output = strm.output;
-    left = strm.avail_out;
-    next = strm.next_in;
-    input = strm.input;
-    have = strm.avail_in;
-    hold = state.hold;
-    bits = state.bits;
-    //---
-
-    _in = have;
-    _out = left;
-    ret = Z_OK$1;
-
-    inf_leave: // goto emulation
-    for (;;) {
-      switch (state.mode) {
-        case HEAD:
-          if (state.wrap === 0) {
-            state.mode = TYPEDO;
-            break;
-          }
-          //=== NEEDBITS(16);
-          while (bits < 16) {
-            if (have === 0) { break inf_leave; }
-            have--;
-            hold += input[next++] << bits;
-            bits += 8;
-          }
-          //===//
-          if ((state.wrap & 2) && hold === 0x8b1f) {  /* gzip header */
-            if (state.wbits === 0) {
-              state.wbits = 15;
-            }
-            state.check = 0/*crc32(0L, Z_NULL, 0)*/;
-            //=== CRC2(state.check, hold);
-            hbuf[0] = hold & 0xff;
-            hbuf[1] = (hold >>> 8) & 0xff;
-            state.check = crc32_1(state.check, hbuf, 2, 0);
-            //===//
-
-            //=== INITBITS();
-            hold = 0;
-            bits = 0;
-            //===//
-            state.mode = FLAGS;
-            break;
-          }
-          if (state.head) {
-            state.head.done = false;
-          }
-          if (!(state.wrap & 1) ||   /* check if zlib header allowed */
-            (((hold & 0xff)/*BITS(8)*/ << 8) + (hold >> 8)) % 31) {
-            strm.msg = 'incorrect header check';
-            state.mode = BAD;
-            break;
-          }
-          if ((hold & 0x0f)/*BITS(4)*/ !== Z_DEFLATED) {
-            strm.msg = 'unknown compression method';
-            state.mode = BAD;
-            break;
-          }
-          //--- DROPBITS(4) ---//
-          hold >>>= 4;
-          bits -= 4;
-          //---//
-          len = (hold & 0x0f)/*BITS(4)*/ + 8;
-          if (state.wbits === 0) {
-            state.wbits = len;
-          }
-          if (len > 15 || len > state.wbits) {
-            strm.msg = 'invalid window size';
-            state.mode = BAD;
-            break;
-          }
-
-          // !!! pako patch. Force use `options.windowBits` if passed.
-          // Required to always use max window size by default.
-          state.dmax = 1 << state.wbits;
-          //state.dmax = 1 << len;
-
-          state.flags = 0;               /* indicate zlib header */
-          //Tracev((stderr, "inflate:   zlib header ok\n"));
-          strm.adler = state.check = 1/*adler32(0L, Z_NULL, 0)*/;
-          state.mode = hold & 0x200 ? DICTID : TYPE;
-          //=== INITBITS();
-          hold = 0;
-          bits = 0;
-          //===//
-          break;
-        case FLAGS:
-          //=== NEEDBITS(16); */
-          while (bits < 16) {
-            if (have === 0) { break inf_leave; }
-            have--;
-            hold += input[next++] << bits;
-            bits += 8;
-          }
-          //===//
-          state.flags = hold;
-          if ((state.flags & 0xff) !== Z_DEFLATED) {
-            strm.msg = 'unknown compression method';
-            state.mode = BAD;
-            break;
-          }
-          if (state.flags & 0xe000) {
-            strm.msg = 'unknown header flags set';
-            state.mode = BAD;
-            break;
-          }
-          if (state.head) {
-            state.head.text = ((hold >> 8) & 1);
-          }
-          if ((state.flags & 0x0200) && (state.wrap & 4)) {
-            //=== CRC2(state.check, hold);
-            hbuf[0] = hold & 0xff;
-            hbuf[1] = (hold >>> 8) & 0xff;
-            state.check = crc32_1(state.check, hbuf, 2, 0);
-            //===//
-          }
-          //=== INITBITS();
-          hold = 0;
-          bits = 0;
-          //===//
-          state.mode = TIME;
-          /* falls through */
-        case TIME:
-          //=== NEEDBITS(32); */
-          while (bits < 32) {
-            if (have === 0) { break inf_leave; }
-            have--;
-            hold += input[next++] << bits;
-            bits += 8;
-          }
-          //===//
-          if (state.head) {
-            state.head.time = hold;
-          }
-          if ((state.flags & 0x0200) && (state.wrap & 4)) {
-            //=== CRC4(state.check, hold)
-            hbuf[0] = hold & 0xff;
-            hbuf[1] = (hold >>> 8) & 0xff;
-            hbuf[2] = (hold >>> 16) & 0xff;
-            hbuf[3] = (hold >>> 24) & 0xff;
-            state.check = crc32_1(state.check, hbuf, 4, 0);
-            //===
-          }
-          //=== INITBITS();
-          hold = 0;
-          bits = 0;
-          //===//
-          state.mode = OS;
-          /* falls through */
-        case OS:
-          //=== NEEDBITS(16); */
-          while (bits < 16) {
-            if (have === 0) { break inf_leave; }
-            have--;
-            hold += input[next++] << bits;
-            bits += 8;
-          }
-          //===//
-          if (state.head) {
-            state.head.xflags = (hold & 0xff);
-            state.head.os = (hold >> 8);
-          }
-          if ((state.flags & 0x0200) && (state.wrap & 4)) {
-            //=== CRC2(state.check, hold);
-            hbuf[0] = hold & 0xff;
-            hbuf[1] = (hold >>> 8) & 0xff;
-            state.check = crc32_1(state.check, hbuf, 2, 0);
-            //===//
-          }
-          //=== INITBITS();
-          hold = 0;
-          bits = 0;
-          //===//
-          state.mode = EXLEN;
-          /* falls through */
-        case EXLEN:
-          if (state.flags & 0x0400) {
-            //=== NEEDBITS(16); */
-            while (bits < 16) {
-              if (have === 0) { break inf_leave; }
-              have--;
-              hold += input[next++] << bits;
-              bits += 8;
-            }
-            //===//
-            state.length = hold;
-            if (state.head) {
-              state.head.extra_len = hold;
-            }
-            if ((state.flags & 0x0200) && (state.wrap & 4)) {
-              //=== CRC2(state.check, hold);
-              hbuf[0] = hold & 0xff;
-              hbuf[1] = (hold >>> 8) & 0xff;
-              state.check = crc32_1(state.check, hbuf, 2, 0);
-              //===//
-            }
-            //=== INITBITS();
-            hold = 0;
-            bits = 0;
-            //===//
-          }
-          else if (state.head) {
-            state.head.extra = null/*Z_NULL*/;
-          }
-          state.mode = EXTRA;
-          /* falls through */
-        case EXTRA:
-          if (state.flags & 0x0400) {
-            copy = state.length;
-            if (copy > have) { copy = have; }
-            if (copy) {
-              if (state.head) {
-                len = state.head.extra_len - state.length;
-                if (!state.head.extra) {
-                  // Use untyped array for more convenient processing later
-                  state.head.extra = new Uint8Array(state.head.extra_len);
-                }
-                state.head.extra.set(
-                  input.subarray(
-                    next,
-                    // extra field is limited to 65536 bytes
-                    // - no need for additional size check
-                    next + copy
-                  ),
-                  /*len + copy > state.head.extra_max - len ? state.head.extra_max : copy,*/
-                  len
-                );
-                //zmemcpy(state.head.extra + len, next,
-                //        len + copy > state.head.extra_max ?
-                //        state.head.extra_max - len : copy);
-              }
-              if ((state.flags & 0x0200) && (state.wrap & 4)) {
-                state.check = crc32_1(state.check, input, copy, next);
-              }
-              have -= copy;
-              next += copy;
-              state.length -= copy;
-            }
-            if (state.length) { break inf_leave; }
-          }
-          state.length = 0;
-          state.mode = NAME;
-          /* falls through */
-        case NAME:
-          if (state.flags & 0x0800) {
-            if (have === 0) { break inf_leave; }
-            copy = 0;
-            do {
-              // TODO: 2 or 1 bytes?
-              len = input[next + copy++];
-              /* use constant limit because in js we should not preallocate memory */
-              if (state.head && len &&
-                  (state.length < 65536 /*state.head.name_max*/)) {
-                state.head.name += String.fromCharCode(len);
-              }
-            } while (len && copy < have);
-
-            if ((state.flags & 0x0200) && (state.wrap & 4)) {
-              state.check = crc32_1(state.check, input, copy, next);
-            }
-            have -= copy;
-            next += copy;
-            if (len) { break inf_leave; }
-          }
-          else if (state.head) {
-            state.head.name = null;
-          }
-          state.length = 0;
-          state.mode = COMMENT;
-          /* falls through */
-        case COMMENT:
-          if (state.flags & 0x1000) {
-            if (have === 0) { break inf_leave; }
-            copy = 0;
-            do {
-              len = input[next + copy++];
-              /* use constant limit because in js we should not preallocate memory */
-              if (state.head && len &&
-                  (state.length < 65536 /*state.head.comm_max*/)) {
-                state.head.comment += String.fromCharCode(len);
-              }
-            } while (len && copy < have);
-            if ((state.flags & 0x0200) && (state.wrap & 4)) {
-              state.check = crc32_1(state.check, input, copy, next);
-            }
-            have -= copy;
-            next += copy;
-            if (len) { break inf_leave; }
-          }
-          else if (state.head) {
-            state.head.comment = null;
-          }
-          state.mode = HCRC;
-          /* falls through */
-        case HCRC:
-          if (state.flags & 0x0200) {
-            //=== NEEDBITS(16); */
-            while (bits < 16) {
-              if (have === 0) { break inf_leave; }
-              have--;
-              hold += input[next++] << bits;
-              bits += 8;
-            }
-            //===//
-            if ((state.wrap & 4) && hold !== (state.check & 0xffff)) {
-              strm.msg = 'header crc mismatch';
-              state.mode = BAD;
-              break;
-            }
-            //=== INITBITS();
-            hold = 0;
-            bits = 0;
-            //===//
-          }
-          if (state.head) {
-            state.head.hcrc = ((state.flags >> 9) & 1);
-            state.head.done = true;
-          }
-          strm.adler = state.check = 0;
-          state.mode = TYPE;
-          break;
-        case DICTID:
-          //=== NEEDBITS(32); */
-          while (bits < 32) {
-            if (have === 0) { break inf_leave; }
-            have--;
-            hold += input[next++] << bits;
-            bits += 8;
-          }
-          //===//
-          strm.adler = state.check = zswap32(hold);
-          //=== INITBITS();
-          hold = 0;
-          bits = 0;
-          //===//
-          state.mode = DICT;
-          /* falls through */
-        case DICT:
-          if (state.havedict === 0) {
-            //--- RESTORE() ---
-            strm.next_out = put;
-            strm.avail_out = left;
-            strm.next_in = next;
-            strm.avail_in = have;
-            state.hold = hold;
-            state.bits = bits;
-            //---
-            return Z_NEED_DICT$1;
-          }
-          strm.adler = state.check = 1/*adler32(0L, Z_NULL, 0)*/;
-          state.mode = TYPE;
-          /* falls through */
-        case TYPE:
-          if (flush === Z_BLOCK || flush === Z_TREES) { break inf_leave; }
-          /* falls through */
-        case TYPEDO:
-          if (state.last) {
-            //--- BYTEBITS() ---//
-            hold >>>= bits & 7;
-            bits -= bits & 7;
-            //---//
-            state.mode = CHECK;
-            break;
-          }
-          //=== NEEDBITS(3); */
-          while (bits < 3) {
-            if (have === 0) { break inf_leave; }
-            have--;
-            hold += input[next++] << bits;
-            bits += 8;
-          }
-          //===//
-          state.last = (hold & 0x01)/*BITS(1)*/;
-          //--- DROPBITS(1) ---//
-          hold >>>= 1;
-          bits -= 1;
-          //---//
-
-          switch ((hold & 0x03)/*BITS(2)*/) {
-            case 0:                             /* stored block */
-              //Tracev((stderr, "inflate:     stored block%s\n",
-              //        state.last ? " (last)" : ""));
-              state.mode = STORED;
-              break;
-            case 1:                             /* fixed block */
-              fixedtables(state);
-              //Tracev((stderr, "inflate:     fixed codes block%s\n",
-              //        state.last ? " (last)" : ""));
-              state.mode = LEN_;             /* decode codes */
-              if (flush === Z_TREES) {
-                //--- DROPBITS(2) ---//
-                hold >>>= 2;
-                bits -= 2;
-                //---//
-                break inf_leave;
-              }
-              break;
-            case 2:                             /* dynamic block */
-              //Tracev((stderr, "inflate:     dynamic codes block%s\n",
-              //        state.last ? " (last)" : ""));
-              state.mode = TABLE;
-              break;
-            case 3:
-              strm.msg = 'invalid block type';
-              state.mode = BAD;
-          }
-          //--- DROPBITS(2) ---//
-          hold >>>= 2;
-          bits -= 2;
-          //---//
-          break;
-        case STORED:
-          //--- BYTEBITS() ---// /* go to byte boundary */
-          hold >>>= bits & 7;
-          bits -= bits & 7;
-          //---//
-          //=== NEEDBITS(32); */
-          while (bits < 32) {
-            if (have === 0) { break inf_leave; }
-            have--;
-            hold += input[next++] << bits;
-            bits += 8;
-          }
-          //===//
-          if ((hold & 0xffff) !== ((hold >>> 16) ^ 0xffff)) {
-            strm.msg = 'invalid stored block lengths';
-            state.mode = BAD;
-            break;
-          }
-          state.length = hold & 0xffff;
-          //Tracev((stderr, "inflate:       stored length %u\n",
-          //        state.length));
-          //=== INITBITS();
-          hold = 0;
-          bits = 0;
-          //===//
-          state.mode = COPY_;
-          if (flush === Z_TREES) { break inf_leave; }
-          /* falls through */
-        case COPY_:
-          state.mode = COPY;
-          /* falls through */
-        case COPY:
-          copy = state.length;
-          if (copy) {
-            if (copy > have) { copy = have; }
-            if (copy > left) { copy = left; }
-            if (copy === 0) { break inf_leave; }
-            //--- zmemcpy(put, next, copy); ---
-            output.set(input.subarray(next, next + copy), put);
-            //---//
-            have -= copy;
-            next += copy;
-            left -= copy;
-            put += copy;
-            state.length -= copy;
-            break;
-          }
-          //Tracev((stderr, "inflate:       stored end\n"));
-          state.mode = TYPE;
-          break;
-        case TABLE:
-          //=== NEEDBITS(14); */
-          while (bits < 14) {
-            if (have === 0) { break inf_leave; }
-            have--;
-            hold += input[next++] << bits;
-            bits += 8;
-          }
-          //===//
-          state.nlen = (hold & 0x1f)/*BITS(5)*/ + 257;
-          //--- DROPBITS(5) ---//
-          hold >>>= 5;
-          bits -= 5;
-          //---//
-          state.ndist = (hold & 0x1f)/*BITS(5)*/ + 1;
-          //--- DROPBITS(5) ---//
-          hold >>>= 5;
-          bits -= 5;
-          //---//
-          state.ncode = (hold & 0x0f)/*BITS(4)*/ + 4;
-          //--- DROPBITS(4) ---//
-          hold >>>= 4;
-          bits -= 4;
-          //---//
-  //#ifndef PKZIP_BUG_WORKAROUND
-          if (state.nlen > 286 || state.ndist > 30) {
-            strm.msg = 'too many length or distance symbols';
-            state.mode = BAD;
-            break;
-          }
-  //#endif
-          //Tracev((stderr, "inflate:       table sizes ok\n"));
-          state.have = 0;
-          state.mode = LENLENS;
-          /* falls through */
-        case LENLENS:
-          while (state.have < state.ncode) {
-            //=== NEEDBITS(3);
-            while (bits < 3) {
-              if (have === 0) { break inf_leave; }
-              have--;
-              hold += input[next++] << bits;
-              bits += 8;
-            }
-            //===//
-            state.lens[order[state.have++]] = (hold & 0x07);//BITS(3);
-            //--- DROPBITS(3) ---//
-            hold >>>= 3;
-            bits -= 3;
-            //---//
-          }
-          while (state.have < 19) {
-            state.lens[order[state.have++]] = 0;
-          }
-          // We have separate tables & no pointers. 2 commented lines below not needed.
-          //state.next = state.codes;
-          //state.lencode = state.next;
-          // Switch to use dynamic table
-          state.lencode = state.lendyn;
-          state.lenbits = 7;
-
-          opts = { bits: state.lenbits };
-          ret = inftrees(CODES, state.lens, 0, 19, state.lencode, 0, state.work, opts);
-          state.lenbits = opts.bits;
-
-          if (ret) {
-            strm.msg = 'invalid code lengths set';
-            state.mode = BAD;
-            break;
-          }
-          //Tracev((stderr, "inflate:       code lengths ok\n"));
-          state.have = 0;
-          state.mode = CODELENS;
-          /* falls through */
-        case CODELENS:
-          while (state.have < state.nlen + state.ndist) {
-            for (;;) {
-              here = state.lencode[hold & ((1 << state.lenbits) - 1)];/*BITS(state.lenbits)*/
-              here_bits = here >>> 24;
-              here_op = (here >>> 16) & 0xff;
-              here_val = here & 0xffff;
-
-              if ((here_bits) <= bits) { break; }
-              //--- PULLBYTE() ---//
-              if (have === 0) { break inf_leave; }
-              have--;
-              hold += input[next++] << bits;
-              bits += 8;
-              //---//
-            }
-            if (here_val < 16) {
-              //--- DROPBITS(here.bits) ---//
-              hold >>>= here_bits;
-              bits -= here_bits;
-              //---//
-              state.lens[state.have++] = here_val;
-            }
-            else {
-              if (here_val === 16) {
-                //=== NEEDBITS(here.bits + 2);
-                n = here_bits + 2;
-                while (bits < n) {
-                  if (have === 0) { break inf_leave; }
-                  have--;
-                  hold += input[next++] << bits;
-                  bits += 8;
-                }
-                //===//
-                //--- DROPBITS(here.bits) ---//
-                hold >>>= here_bits;
-                bits -= here_bits;
-                //---//
-                if (state.have === 0) {
-                  strm.msg = 'invalid bit length repeat';
-                  state.mode = BAD;
-                  break;
-                }
-                len = state.lens[state.have - 1];
-                copy = 3 + (hold & 0x03);//BITS(2);
-                //--- DROPBITS(2) ---//
-                hold >>>= 2;
-                bits -= 2;
-                //---//
-              }
-              else if (here_val === 17) {
-                //=== NEEDBITS(here.bits + 3);
-                n = here_bits + 3;
-                while (bits < n) {
-                  if (have === 0) { break inf_leave; }
-                  have--;
-                  hold += input[next++] << bits;
-                  bits += 8;
-                }
-                //===//
-                //--- DROPBITS(here.bits) ---//
-                hold >>>= here_bits;
-                bits -= here_bits;
-                //---//
-                len = 0;
-                copy = 3 + (hold & 0x07);//BITS(3);
-                //--- DROPBITS(3) ---//
-                hold >>>= 3;
-                bits -= 3;
-                //---//
-              }
-              else {
-                //=== NEEDBITS(here.bits + 7);
-                n = here_bits + 7;
-                while (bits < n) {
-                  if (have === 0) { break inf_leave; }
-                  have--;
-                  hold += input[next++] << bits;
-                  bits += 8;
-                }
-                //===//
-                //--- DROPBITS(here.bits) ---//
-                hold >>>= here_bits;
-                bits -= here_bits;
-                //---//
-                len = 0;
-                copy = 11 + (hold & 0x7f);//BITS(7);
-                //--- DROPBITS(7) ---//
-                hold >>>= 7;
-                bits -= 7;
-                //---//
-              }
-              if (state.have + copy > state.nlen + state.ndist) {
-                strm.msg = 'invalid bit length repeat';
-                state.mode = BAD;
-                break;
-              }
-              while (copy--) {
-                state.lens[state.have++] = len;
-              }
-            }
-          }
-
-          /* handle error breaks in while */
-          if (state.mode === BAD) { break; }
-
-          /* check for end-of-block code (better have one) */
-          if (state.lens[256] === 0) {
-            strm.msg = 'invalid code -- missing end-of-block';
-            state.mode = BAD;
-            break;
-          }
-
-          /* build code tables -- note: do not change the lenbits or distbits
-             values here (9 and 6) without reading the comments in inftrees.h
-             concerning the ENOUGH constants, which depend on those values */
-          state.lenbits = 9;
-
-          opts = { bits: state.lenbits };
-          ret = inftrees(LENS, state.lens, 0, state.nlen, state.lencode, 0, state.work, opts);
-          // We have separate tables & no pointers. 2 commented lines below not needed.
-          // state.next_index = opts.table_index;
-          state.lenbits = opts.bits;
-          // state.lencode = state.next;
-
-          if (ret) {
-            strm.msg = 'invalid literal/lengths set';
-            state.mode = BAD;
-            break;
-          }
-
-          state.distbits = 6;
-          //state.distcode.copy(state.codes);
-          // Switch to use dynamic table
-          state.distcode = state.distdyn;
-          opts = { bits: state.distbits };
-          ret = inftrees(DISTS, state.lens, state.nlen, state.ndist, state.distcode, 0, state.work, opts);
-          // We have separate tables & no pointers. 2 commented lines below not needed.
-          // state.next_index = opts.table_index;
-          state.distbits = opts.bits;
-          // state.distcode = state.next;
-
-          if (ret) {
-            strm.msg = 'invalid distances set';
-            state.mode = BAD;
-            break;
-          }
-          //Tracev((stderr, 'inflate:       codes ok\n'));
-          state.mode = LEN_;
-          if (flush === Z_TREES) { break inf_leave; }
-          /* falls through */
-        case LEN_:
-          state.mode = LEN;
-          /* falls through */
-        case LEN:
-          if (have >= 6 && left >= 258) {
-            //--- RESTORE() ---
-            strm.next_out = put;
-            strm.avail_out = left;
-            strm.next_in = next;
-            strm.avail_in = have;
-            state.hold = hold;
-            state.bits = bits;
-            //---
-            inffast(strm, _out);
-            //--- LOAD() ---
-            put = strm.next_out;
-            output = strm.output;
-            left = strm.avail_out;
-            next = strm.next_in;
-            input = strm.input;
-            have = strm.avail_in;
-            hold = state.hold;
-            bits = state.bits;
-            //---
-
-            if (state.mode === TYPE) {
-              state.back = -1;
-            }
-            break;
-          }
-          state.back = 0;
-          for (;;) {
-            here = state.lencode[hold & ((1 << state.lenbits) - 1)];  /*BITS(state.lenbits)*/
-            here_bits = here >>> 24;
-            here_op = (here >>> 16) & 0xff;
-            here_val = here & 0xffff;
-
-            if (here_bits <= bits) { break; }
-            //--- PULLBYTE() ---//
-            if (have === 0) { break inf_leave; }
-            have--;
-            hold += input[next++] << bits;
-            bits += 8;
-            //---//
-          }
-          if (here_op && (here_op & 0xf0) === 0) {
-            last_bits = here_bits;
-            last_op = here_op;
-            last_val = here_val;
-            for (;;) {
-              here = state.lencode[last_val +
-                      ((hold & ((1 << (last_bits + last_op)) - 1))/*BITS(last.bits + last.op)*/ >> last_bits)];
-              here_bits = here >>> 24;
-              here_op = (here >>> 16) & 0xff;
-              here_val = here & 0xffff;
-
-              if ((last_bits + here_bits) <= bits) { break; }
-              //--- PULLBYTE() ---//
-              if (have === 0) { break inf_leave; }
-              have--;
-              hold += input[next++] << bits;
-              bits += 8;
-              //---//
-            }
-            //--- DROPBITS(last.bits) ---//
-            hold >>>= last_bits;
-            bits -= last_bits;
-            //---//
-            state.back += last_bits;
-          }
-          //--- DROPBITS(here.bits) ---//
-          hold >>>= here_bits;
-          bits -= here_bits;
-          //---//
-          state.back += here_bits;
-          state.length = here_val;
-          if (here_op === 0) {
-            //Tracevv((stderr, here.val >= 0x20 && here.val < 0x7f ?
-            //        "inflate:         literal '%c'\n" :
-            //        "inflate:         literal 0x%02x\n", here.val));
-            state.mode = LIT;
-            break;
-          }
-          if (here_op & 32) {
-            //Tracevv((stderr, "inflate:         end of block\n"));
-            state.back = -1;
-            state.mode = TYPE;
-            break;
-          }
-          if (here_op & 64) {
-            strm.msg = 'invalid literal/length code';
-            state.mode = BAD;
-            break;
-          }
-          state.extra = here_op & 15;
-          state.mode = LENEXT;
-          /* falls through */
-        case LENEXT:
-          if (state.extra) {
-            //=== NEEDBITS(state.extra);
-            n = state.extra;
-            while (bits < n) {
-              if (have === 0) { break inf_leave; }
-              have--;
-              hold += input[next++] << bits;
-              bits += 8;
-            }
-            //===//
-            state.length += hold & ((1 << state.extra) - 1)/*BITS(state.extra)*/;
-            //--- DROPBITS(state.extra) ---//
-            hold >>>= state.extra;
-            bits -= state.extra;
-            //---//
-            state.back += state.extra;
-          }
-          //Tracevv((stderr, "inflate:         length %u\n", state.length));
-          state.was = state.length;
-          state.mode = DIST;
-          /* falls through */
-        case DIST:
-          for (;;) {
-            here = state.distcode[hold & ((1 << state.distbits) - 1)];/*BITS(state.distbits)*/
-            here_bits = here >>> 24;
-            here_op = (here >>> 16) & 0xff;
-            here_val = here & 0xffff;
-
-            if ((here_bits) <= bits) { break; }
-            //--- PULLBYTE() ---//
-            if (have === 0) { break inf_leave; }
-            have--;
-            hold += input[next++] << bits;
-            bits += 8;
-            //---//
-          }
-          if ((here_op & 0xf0) === 0) {
-            last_bits = here_bits;
-            last_op = here_op;
-            last_val = here_val;
-            for (;;) {
-              here = state.distcode[last_val +
-                      ((hold & ((1 << (last_bits + last_op)) - 1))/*BITS(last.bits + last.op)*/ >> last_bits)];
-              here_bits = here >>> 24;
-              here_op = (here >>> 16) & 0xff;
-              here_val = here & 0xffff;
-
-              if ((last_bits + here_bits) <= bits) { break; }
-              //--- PULLBYTE() ---//
-              if (have === 0) { break inf_leave; }
-              have--;
-              hold += input[next++] << bits;
-              bits += 8;
-              //---//
-            }
-            //--- DROPBITS(last.bits) ---//
-            hold >>>= last_bits;
-            bits -= last_bits;
-            //---//
-            state.back += last_bits;
-          }
-          //--- DROPBITS(here.bits) ---//
-          hold >>>= here_bits;
-          bits -= here_bits;
-          //---//
-          state.back += here_bits;
-          if (here_op & 64) {
-            strm.msg = 'invalid distance code';
-            state.mode = BAD;
-            break;
-          }
-          state.offset = here_val;
-          state.extra = (here_op) & 15;
-          state.mode = DISTEXT;
-          /* falls through */
-        case DISTEXT:
-          if (state.extra) {
-            //=== NEEDBITS(state.extra);
-            n = state.extra;
-            while (bits < n) {
-              if (have === 0) { break inf_leave; }
-              have--;
-              hold += input[next++] << bits;
-              bits += 8;
-            }
-            //===//
-            state.offset += hold & ((1 << state.extra) - 1)/*BITS(state.extra)*/;
-            //--- DROPBITS(state.extra) ---//
-            hold >>>= state.extra;
-            bits -= state.extra;
-            //---//
-            state.back += state.extra;
-          }
-  //#ifdef INFLATE_STRICT
-          if (state.offset > state.dmax) {
-            strm.msg = 'invalid distance too far back';
-            state.mode = BAD;
-            break;
-          }
-  //#endif
-          //Tracevv((stderr, "inflate:         distance %u\n", state.offset));
-          state.mode = MATCH;
-          /* falls through */
-        case MATCH:
-          if (left === 0) { break inf_leave; }
-          copy = _out - left;
-          if (state.offset > copy) {         /* copy from window */
-            copy = state.offset - copy;
-            if (copy > state.whave) {
-              if (state.sane) {
-                strm.msg = 'invalid distance too far back';
-                state.mode = BAD;
-                break;
-              }
-  // (!) This block is disabled in zlib defaults,
-  // don't enable it for binary compatibility
-  //#ifdef INFLATE_ALLOW_INVALID_DISTANCE_TOOFAR_ARRR
-  //          Trace((stderr, "inflate.c too far\n"));
-  //          copy -= state.whave;
-  //          if (copy > state.length) { copy = state.length; }
-  //          if (copy > left) { copy = left; }
-  //          left -= copy;
-  //          state.length -= copy;
-  //          do {
-  //            output[put++] = 0;
-  //          } while (--copy);
-  //          if (state.length === 0) { state.mode = LEN; }
-  //          break;
-  //#endif
-            }
-            if (copy > state.wnext) {
-              copy -= state.wnext;
-              from = state.wsize - copy;
-            }
-            else {
-              from = state.wnext - copy;
-            }
-            if (copy > state.length) { copy = state.length; }
-            from_source = state.window;
-          }
-          else {                              /* copy from output */
-            from_source = output;
-            from = put - state.offset;
-            copy = state.length;
-          }
-          if (copy > left) { copy = left; }
-          left -= copy;
-          state.length -= copy;
-          do {
-            output[put++] = from_source[from++];
-          } while (--copy);
-          if (state.length === 0) { state.mode = LEN; }
-          break;
-        case LIT:
-          if (left === 0) { break inf_leave; }
-          output[put++] = state.length;
-          left--;
-          state.mode = LEN;
-          break;
-        case CHECK:
-          if (state.wrap) {
-            //=== NEEDBITS(32);
-            while (bits < 32) {
-              if (have === 0) { break inf_leave; }
-              have--;
-              // Use '|' instead of '+' to make sure that result is signed
-              hold |= input[next++] << bits;
-              bits += 8;
-            }
-            //===//
-            _out -= left;
-            strm.total_out += _out;
-            state.total += _out;
-            if ((state.wrap & 4) && _out) {
-              strm.adler = state.check =
-                  /*UPDATE_CHECK(state.check, put - _out, _out);*/
-                  (state.flags ? crc32_1(state.check, output, _out, put - _out) : adler32_1(state.check, output, _out, put - _out));
-
-            }
-            _out = left;
-            // NB: crc32 stored as signed 32-bit int, zswap32 returns signed too
-            if ((state.wrap & 4) && (state.flags ? hold : zswap32(hold)) !== state.check) {
-              strm.msg = 'incorrect data check';
-              state.mode = BAD;
-              break;
-            }
-            //=== INITBITS();
-            hold = 0;
-            bits = 0;
-            //===//
-            //Tracev((stderr, "inflate:   check matches trailer\n"));
-          }
-          state.mode = LENGTH;
-          /* falls through */
-        case LENGTH:
-          if (state.wrap && state.flags) {
-            //=== NEEDBITS(32);
-            while (bits < 32) {
-              if (have === 0) { break inf_leave; }
-              have--;
-              hold += input[next++] << bits;
-              bits += 8;
-            }
-            //===//
-            if ((state.wrap & 4) && hold !== (state.total & 0xffffffff)) {
-              strm.msg = 'incorrect length check';
-              state.mode = BAD;
-              break;
-            }
-            //=== INITBITS();
-            hold = 0;
-            bits = 0;
-            //===//
-            //Tracev((stderr, "inflate:   length matches trailer\n"));
-          }
-          state.mode = DONE;
-          /* falls through */
-        case DONE:
-          ret = Z_STREAM_END$1;
-          break inf_leave;
-        case BAD:
-          ret = Z_DATA_ERROR$1;
-          break inf_leave;
-        case MEM:
-          return Z_MEM_ERROR$1;
-        case SYNC:
-          /* falls through */
-        default:
-          return Z_STREAM_ERROR$1;
-      }
-    }
-
-    // inf_leave <- here is real place for "goto inf_leave", emulated via "break inf_leave"
-
-    /*
-       Return from inflate(), updating the total counts and the check value.
-       If there was no progress during the inflate() call, return a buffer
-       error.  Call updatewindow() to create and/or update the window state.
-       Note: a memory error from inflate() is non-recoverable.
-     */
-
-    //--- RESTORE() ---
-    strm.next_out = put;
-    strm.avail_out = left;
-    strm.next_in = next;
-    strm.avail_in = have;
-    state.hold = hold;
-    state.bits = bits;
-    //---
-
-    if (state.wsize || (_out !== strm.avail_out && state.mode < BAD &&
-                        (state.mode < CHECK || flush !== Z_FINISH$1))) {
-      if (updatewindow(strm, strm.output, strm.next_out, _out - strm.avail_out)) ;
-    }
-    _in -= strm.avail_in;
-    _out -= strm.avail_out;
-    strm.total_in += _in;
-    strm.total_out += _out;
-    state.total += _out;
-    if ((state.wrap & 4) && _out) {
-      strm.adler = state.check = /*UPDATE_CHECK(state.check, strm.next_out - _out, _out);*/
-        (state.flags ? crc32_1(state.check, output, _out, strm.next_out - _out) : adler32_1(state.check, output, _out, strm.next_out - _out));
-    }
-    strm.data_type = state.bits + (state.last ? 64 : 0) +
-                      (state.mode === TYPE ? 128 : 0) +
-                      (state.mode === LEN_ || state.mode === COPY_ ? 256 : 0);
-    if (((_in === 0 && _out === 0) || flush === Z_FINISH$1) && ret === Z_OK$1) {
-      ret = Z_BUF_ERROR;
-    }
-    return ret;
-  };
-
-
-  const inflateEnd = (strm) => {
-
-    if (inflateStateCheck(strm)) {
-      return Z_STREAM_ERROR$1;
-    }
-
-    let state = strm.state;
-    if (state.window) {
-      state.window = null;
-    }
-    strm.state = null;
-    return Z_OK$1;
-  };
-
-
-  const inflateGetHeader = (strm, head) => {
-
-    /* check state */
-    if (inflateStateCheck(strm)) { return Z_STREAM_ERROR$1; }
-    const state = strm.state;
-    if ((state.wrap & 2) === 0) { return Z_STREAM_ERROR$1; }
-
-    /* save header structure */
-    state.head = head;
-    head.done = false;
-    return Z_OK$1;
-  };
-
-
-  const inflateSetDictionary = (strm, dictionary) => {
-    const dictLength = dictionary.length;
-
-    let state;
-    let dictid;
-    let ret;
-
-    /* check state */
-    if (inflateStateCheck(strm)) { return Z_STREAM_ERROR$1; }
-    state = strm.state;
-
-    if (state.wrap !== 0 && state.mode !== DICT) {
-      return Z_STREAM_ERROR$1;
-    }
-
-    /* check for correct dictionary identifier */
-    if (state.mode === DICT) {
-      dictid = 1; /* adler32(0, null, 0)*/
-      /* dictid = adler32(dictid, dictionary, dictLength); */
-      dictid = adler32_1(dictid, dictionary, dictLength, 0);
-      if (dictid !== state.check) {
-        return Z_DATA_ERROR$1;
-      }
-    }
-    /* copy dictionary to window using updatewindow(), which will amend the
-     existing dictionary if appropriate */
-    ret = updatewindow(strm, dictionary, dictLength, dictLength);
-    if (ret) {
-      state.mode = MEM;
-      return Z_MEM_ERROR$1;
-    }
-    state.havedict = 1;
-    // Tracev((stderr, "inflate:   dictionary set\n"));
-    return Z_OK$1;
-  };
-
-
-  var inflateReset_1 = inflateReset;
-  var inflateReset2_1 = inflateReset2;
-  var inflateResetKeep_1 = inflateResetKeep;
-  var inflateInit_1 = inflateInit;
-  var inflateInit2_1 = inflateInit2;
-  var inflate_2$1 = inflate$1;
-  var inflateEnd_1 = inflateEnd;
-  var inflateGetHeader_1 = inflateGetHeader;
-  var inflateSetDictionary_1 = inflateSetDictionary;
-  var inflateInfo = 'pako inflate (from Nodeca project)';
-
-  /* Not implemented
-  module.exports.inflateCodesUsed = inflateCodesUsed;
-  module.exports.inflateCopy = inflateCopy;
-  module.exports.inflateGetDictionary = inflateGetDictionary;
-  module.exports.inflateMark = inflateMark;
-  module.exports.inflatePrime = inflatePrime;
-  module.exports.inflateSync = inflateSync;
-  module.exports.inflateSyncPoint = inflateSyncPoint;
-  module.exports.inflateUndermine = inflateUndermine;
-  module.exports.inflateValidate = inflateValidate;
-  */
-
-  var inflate_1$1 = {
-  	inflateReset: inflateReset_1,
-  	inflateReset2: inflateReset2_1,
-  	inflateResetKeep: inflateResetKeep_1,
-  	inflateInit: inflateInit_1,
-  	inflateInit2: inflateInit2_1,
-  	inflate: inflate_2$1,
-  	inflateEnd: inflateEnd_1,
-  	inflateGetHeader: inflateGetHeader_1,
-  	inflateSetDictionary: inflateSetDictionary_1,
-  	inflateInfo: inflateInfo
-  };
-
-  const _has = (obj, key) => {
-    return Object.prototype.hasOwnProperty.call(obj, key);
-  };
-
-  var assign = function (obj /*from1, from2, from3, ...*/) {
-    const sources = Array.prototype.slice.call(arguments, 1);
-    while (sources.length) {
-      const source = sources.shift();
-      if (!source) { continue; }
-
-      if (typeof source !== 'object') {
-        throw new TypeError(source + 'must be non-object');
-      }
-
-      for (const p in source) {
-        if (_has(source, p)) {
-          obj[p] = source[p];
-        }
-      }
-    }
-
-    return obj;
-  };
-
-
-  // Join array of chunks to single array.
-  var flattenChunks = (chunks) => {
-    // calculate data length
-    let len = 0;
-
-    for (let i = 0, l = chunks.length; i < l; i++) {
-      len += chunks[i].length;
-    }
-
-    // join chunks
-    const result = new Uint8Array(len);
-
-    for (let i = 0, pos = 0, l = chunks.length; i < l; i++) {
-      let chunk = chunks[i];
-      result.set(chunk, pos);
-      pos += chunk.length;
-    }
-
-    return result;
-  };
-
-  var common = {
-  	assign: assign,
-  	flattenChunks: flattenChunks
-  };
-
-  // String encode/decode helpers
-
-
-  // Quick check if we can use fast array to bin string conversion
-  //
-  // - apply(Array) can fail on Android 2.2
-  // - apply(Uint8Array) can fail on iOS 5.1 Safari
-  //
-  let STR_APPLY_UIA_OK = true;
-
-  try { String.fromCharCode.apply(null, new Uint8Array(1)); } catch (__) { STR_APPLY_UIA_OK = false; }
-
-
-  // Table with utf8 lengths (calculated by first byte of sequence)
-  // Note, that 5 & 6-byte values and some 4-byte values can not be represented in JS,
-  // because max possible codepoint is 0x10ffff
-  const _utf8len = new Uint8Array(256);
-  for (let q = 0; q < 256; q++) {
-    _utf8len[q] = (q >= 252 ? 6 : q >= 248 ? 5 : q >= 240 ? 4 : q >= 224 ? 3 : q >= 192 ? 2 : 1);
-  }
-  _utf8len[254] = _utf8len[254] = 1; // Invalid sequence start
-
-
-  // convert string to array (typed, when possible)
-  var string2buf = (str) => {
-    if (typeof TextEncoder === 'function' && TextEncoder.prototype.encode) {
-      return new TextEncoder().encode(str);
-    }
-
-    let buf, c, c2, m_pos, i, str_len = str.length, buf_len = 0;
-
-    // count binary size
-    for (m_pos = 0; m_pos < str_len; m_pos++) {
-      c = str.charCodeAt(m_pos);
-      if ((c & 0xfc00) === 0xd800 && (m_pos + 1 < str_len)) {
-        c2 = str.charCodeAt(m_pos + 1);
-        if ((c2 & 0xfc00) === 0xdc00) {
-          c = 0x10000 + ((c - 0xd800) << 10) + (c2 - 0xdc00);
-          m_pos++;
-        }
-      }
-      buf_len += c < 0x80 ? 1 : c < 0x800 ? 2 : c < 0x10000 ? 3 : 4;
-    }
-
-    // allocate buffer
-    buf = new Uint8Array(buf_len);
-
-    // convert
-    for (i = 0, m_pos = 0; i < buf_len; m_pos++) {
-      c = str.charCodeAt(m_pos);
-      if ((c & 0xfc00) === 0xd800 && (m_pos + 1 < str_len)) {
-        c2 = str.charCodeAt(m_pos + 1);
-        if ((c2 & 0xfc00) === 0xdc00) {
-          c = 0x10000 + ((c - 0xd800) << 10) + (c2 - 0xdc00);
-          m_pos++;
-        }
-      }
-      if (c < 0x80) {
-        /* one byte */
-        buf[i++] = c;
-      } else if (c < 0x800) {
-        /* two bytes */
-        buf[i++] = 0xC0 | (c >>> 6);
-        buf[i++] = 0x80 | (c & 0x3f);
-      } else if (c < 0x10000) {
-        /* three bytes */
-        buf[i++] = 0xE0 | (c >>> 12);
-        buf[i++] = 0x80 | (c >>> 6 & 0x3f);
-        buf[i++] = 0x80 | (c & 0x3f);
-      } else {
-        /* four bytes */
-        buf[i++] = 0xf0 | (c >>> 18);
-        buf[i++] = 0x80 | (c >>> 12 & 0x3f);
-        buf[i++] = 0x80 | (c >>> 6 & 0x3f);
-        buf[i++] = 0x80 | (c & 0x3f);
-      }
-    }
-
-    return buf;
-  };
-
-  // Helper
-  const buf2binstring = (buf, len) => {
-    // On Chrome, the arguments in a function call that are allowed is `65534`.
-    // If the length of the buffer is smaller than that, we can use this optimization,
-    // otherwise we will take a slower path.
-    if (len < 65534) {
-      if (buf.subarray && STR_APPLY_UIA_OK) {
-        return String.fromCharCode.apply(null, buf.length === len ? buf : buf.subarray(0, len));
-      }
-    }
-
-    let result = '';
-    for (let i = 0; i < len; i++) {
-      result += String.fromCharCode(buf[i]);
-    }
-    return result;
-  };
-
-
-  // convert array to string
-  var buf2string = (buf, max) => {
-    const len = max || buf.length;
-
-    if (typeof TextDecoder === 'function' && TextDecoder.prototype.decode) {
-      return new TextDecoder().decode(buf.subarray(0, max));
-    }
-
-    let i, out;
-
-    // Reserve max possible length (2 words per char)
-    // NB: by unknown reasons, Array is significantly faster for
-    //     String.fromCharCode.apply than Uint16Array.
-    const utf16buf = new Array(len * 2);
-
-    for (out = 0, i = 0; i < len;) {
-      let c = buf[i++];
-      // quick process ascii
-      if (c < 0x80) { utf16buf[out++] = c; continue; }
-
-      let c_len = _utf8len[c];
-      // skip 5 & 6 byte codes
-      if (c_len > 4) { utf16buf[out++] = 0xfffd; i += c_len - 1; continue; }
-
-      // apply mask on first byte
-      c &= c_len === 2 ? 0x1f : c_len === 3 ? 0x0f : 0x07;
-      // join the rest
-      while (c_len > 1 && i < len) {
-        c = (c << 6) | (buf[i++] & 0x3f);
-        c_len--;
-      }
-
-      // terminated by end of string?
-      if (c_len > 1) { utf16buf[out++] = 0xfffd; continue; }
-
-      if (c < 0x10000) {
-        utf16buf[out++] = c;
-      } else {
-        c -= 0x10000;
-        utf16buf[out++] = 0xd800 | ((c >> 10) & 0x3ff);
-        utf16buf[out++] = 0xdc00 | (c & 0x3ff);
-      }
-    }
-
-    return buf2binstring(utf16buf, out);
-  };
-
-
-  // Calculate max possible position in utf8 buffer,
-  // that will not break sequence. If that's not possible
-  // - (very small limits) return max size as is.
-  //
-  // buf[] - utf8 bytes array
-  // max   - length limit (mandatory);
-  var utf8border = (buf, max) => {
-
-    max = max || buf.length;
-    if (max > buf.length) { max = buf.length; }
-
-    // go back from last position, until start of sequence found
-    let pos = max - 1;
-    while (pos >= 0 && (buf[pos] & 0xC0) === 0x80) { pos--; }
-
-    // Very small and broken sequence,
-    // return max, because we should return something anyway.
-    if (pos < 0) { return max; }
-
-    // If we came to start of buffer - that means buffer is too small,
-    // return max too.
-    if (pos === 0) { return max; }
-
-    return (pos + _utf8len[buf[pos]] > max) ? pos : max;
-  };
-
-  var strings = {
-  	string2buf: string2buf,
-  	buf2string: buf2string,
-  	utf8border: utf8border
-  };
-
-  // (C) 1995-2013 Jean-loup Gailly and Mark Adler
-  // (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
-  //
-  // This software is provided 'as-is', without any express or implied
-  // warranty. In no event will the authors be held liable for any damages
-  // arising from the use of this software.
-  //
-  // Permission is granted to anyone to use this software for any purpose,
-  // including commercial applications, and to alter it and redistribute it
-  // freely, subject to the following restrictions:
-  //
-  // 1. The origin of this software must not be misrepresented; you must not
-  //   claim that you wrote the original software. If you use this software
-  //   in a product, an acknowledgment in the product documentation would be
-  //   appreciated but is not required.
-  // 2. Altered source versions must be plainly marked as such, and must not be
-  //   misrepresented as being the original software.
-  // 3. This notice may not be removed or altered from any source distribution.
-
-  var messages = {
-    2:      'need dictionary',     /* Z_NEED_DICT       2  */
-    1:      'stream end',          /* Z_STREAM_END      1  */
-    0:      '',                    /* Z_OK              0  */
-    '-1':   'file error',          /* Z_ERRNO         (-1) */
-    '-2':   'stream error',        /* Z_STREAM_ERROR  (-2) */
-    '-3':   'data error',          /* Z_DATA_ERROR    (-3) */
-    '-4':   'insufficient memory', /* Z_MEM_ERROR     (-4) */
-    '-5':   'buffer error',        /* Z_BUF_ERROR     (-5) */
-    '-6':   'incompatible version' /* Z_VERSION_ERROR (-6) */
-  };
-
-  // (C) 1995-2013 Jean-loup Gailly and Mark Adler
-  // (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
-  //
-  // This software is provided 'as-is', without any express or implied
-  // warranty. In no event will the authors be held liable for any damages
-  // arising from the use of this software.
-  //
-  // Permission is granted to anyone to use this software for any purpose,
-  // including commercial applications, and to alter it and redistribute it
-  // freely, subject to the following restrictions:
-  //
-  // 1. The origin of this software must not be misrepresented; you must not
-  //   claim that you wrote the original software. If you use this software
-  //   in a product, an acknowledgment in the product documentation would be
-  //   appreciated but is not required.
-  // 2. Altered source versions must be plainly marked as such, and must not be
-  //   misrepresented as being the original software.
-  // 3. This notice may not be removed or altered from any source distribution.
-
-  function ZStream() {
-    /* next input byte */
-    this.input = null; // JS specific, because we have no pointers
-    this.next_in = 0;
-    /* number of bytes available at input */
-    this.avail_in = 0;
-    /* total number of input bytes read so far */
-    this.total_in = 0;
-    /* next output byte should be put there */
-    this.output = null; // JS specific, because we have no pointers
-    this.next_out = 0;
-    /* remaining free space at output */
-    this.avail_out = 0;
-    /* total number of bytes output so far */
-    this.total_out = 0;
-    /* last error message, NULL if no error */
-    this.msg = ''/*Z_NULL*/;
-    /* not visible by applications */
-    this.state = null;
-    /* best guess about the data type: binary or text */
-    this.data_type = 2/*Z_UNKNOWN*/;
-    /* adler32 value of the uncompressed data */
-    this.adler = 0;
-  }
-
-  var zstream = ZStream;
-
-  // (C) 1995-2013 Jean-loup Gailly and Mark Adler
-  // (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
-  //
-  // This software is provided 'as-is', without any express or implied
-  // warranty. In no event will the authors be held liable for any damages
-  // arising from the use of this software.
-  //
-  // Permission is granted to anyone to use this software for any purpose,
-  // including commercial applications, and to alter it and redistribute it
-  // freely, subject to the following restrictions:
-  //
-  // 1. The origin of this software must not be misrepresented; you must not
-  //   claim that you wrote the original software. If you use this software
-  //   in a product, an acknowledgment in the product documentation would be
-  //   appreciated but is not required.
-  // 2. Altered source versions must be plainly marked as such, and must not be
-  //   misrepresented as being the original software.
-  // 3. This notice may not be removed or altered from any source distribution.
-
-  function GZheader() {
-    /* true if compressed data believed to be text */
-    this.text       = 0;
-    /* modification time */
-    this.time       = 0;
-    /* extra flags (not used when writing a gzip file) */
-    this.xflags     = 0;
-    /* operating system */
-    this.os         = 0;
-    /* pointer to extra field or Z_NULL if none */
-    this.extra      = null;
-    /* extra field length (valid if extra != Z_NULL) */
-    this.extra_len  = 0; // Actually, we don't need it in JS,
-                         // but leave for few code modifications
-
-    //
-    // Setup limits is not necessary because in js we should not preallocate memory
-    // for inflate use constant limit in 65536 bytes
-    //
-
-    /* space at extra (only when reading header) */
-    // this.extra_max  = 0;
-    /* pointer to zero-terminated file name or Z_NULL */
-    this.name       = '';
-    /* space at name (only when reading header) */
-    // this.name_max   = 0;
-    /* pointer to zero-terminated comment or Z_NULL */
-    this.comment    = '';
-    /* space at comment (only when reading header) */
-    // this.comm_max   = 0;
-    /* true if there was or will be a header crc */
-    this.hcrc       = 0;
-    /* true when done reading gzip header (not used when writing a gzip file) */
-    this.done       = false;
-  }
-
-  var gzheader = GZheader;
-
-  const toString = Object.prototype.toString;
-
-  /* Public constants ==========================================================*/
-  /* ===========================================================================*/
-
-  const {
-    Z_NO_FLUSH, Z_FINISH,
-    Z_OK, Z_STREAM_END, Z_NEED_DICT, Z_STREAM_ERROR, Z_DATA_ERROR, Z_MEM_ERROR
-  } = constants$1;
-
-  /* ===========================================================================*/
-
-
-  /**
-   * class Inflate
-   *
-   * Generic JS-style wrapper for zlib calls. If you don't need
-   * streaming behaviour - use more simple functions: [[inflate]]
-   * and [[inflateRaw]].
-   **/
-
-  /* internal
-   * inflate.chunks -> Array
-   *
-   * Chunks of output data, if [[Inflate#onData]] not overridden.
-   **/
-
-  /**
-   * Inflate.result -> Uint8Array|String
-   *
-   * Uncompressed result, generated by default [[Inflate#onData]]
-   * and [[Inflate#onEnd]] handlers. Filled after you push last chunk
-   * (call [[Inflate#push]] with `Z_FINISH` / `true` param).
-   **/
-
-  /**
-   * Inflate.err -> Number
-   *
-   * Error code after inflate finished. 0 (Z_OK) on success.
-   * Should be checked if broken data possible.
-   **/
-
-  /**
-   * Inflate.msg -> String
-   *
-   * Error message, if [[Inflate.err]] != 0
-   **/
-
-
-  /**
-   * new Inflate(options)
-   * - options (Object): zlib inflate options.
-   *
-   * Creates new inflator instance with specified params. Throws exception
-   * on bad params. Supported options:
-   *
-   * - `windowBits`
-   * - `dictionary`
-   *
-   * [http://zlib.net/manual.html#Advanced](http://zlib.net/manual.html#Advanced)
-   * for more information on these.
-   *
-   * Additional options, for internal needs:
-   *
-   * - `chunkSize` - size of generated data chunks (16K by default)
-   * - `raw` (Boolean) - do raw inflate
-   * - `to` (String) - if equal to 'string', then result will be converted
-   *   from utf8 to utf16 (javascript) string. When string output requested,
-   *   chunk length can differ from `chunkSize`, depending on content.
-   *
-   * By default, when no options set, autodetect deflate/gzip data format via
-   * wrapper header.
-   *
-   * ##### Example:
-   *
-   * ```javascript
-   * const pako = require('pako')
-   * const chunk1 = new Uint8Array([1,2,3,4,5,6,7,8,9])
-   * const chunk2 = new Uint8Array([10,11,12,13,14,15,16,17,18,19]);
-   *
-   * const inflate = new pako.Inflate({ level: 3});
-   *
-   * inflate.push(chunk1, false);
-   * inflate.push(chunk2, true);  // true -> last chunk
-   *
-   * if (inflate.err) { throw new Error(inflate.err); }
-   *
-   * console.log(inflate.result);
-   * ```
-   **/
-  function Inflate(options) {
-    this.options = common.assign({
-      chunkSize: 1024 * 64,
-      windowBits: 15,
-      to: ''
-    }, options || {});
-
-    const opt = this.options;
-
-    // Force window size for `raw` data, if not set directly,
-    // because we have no header for autodetect.
-    if (opt.raw && (opt.windowBits >= 0) && (opt.windowBits < 16)) {
-      opt.windowBits = -opt.windowBits;
-      if (opt.windowBits === 0) { opt.windowBits = -15; }
-    }
-
-    // If `windowBits` not defined (and mode not raw) - set autodetect flag for gzip/deflate
-    if ((opt.windowBits >= 0) && (opt.windowBits < 16) &&
-        !(options && options.windowBits)) {
-      opt.windowBits += 32;
-    }
-
-    // Gzip header has no info about windows size, we can do autodetect only
-    // for deflate. So, if window size not set, force it to max when gzip possible
-    if ((opt.windowBits > 15) && (opt.windowBits < 48)) {
-      // bit 3 (16) -> gzipped data
-      // bit 4 (32) -> autodetect gzip/deflate
-      if ((opt.windowBits & 15) === 0) {
-        opt.windowBits |= 15;
-      }
-    }
-
-    this.err    = 0;      // error code, if happens (0 = Z_OK)
-    this.msg    = '';     // error message
-    this.ended  = false;  // used to avoid multiple onEnd() calls
-    this.chunks = [];     // chunks of compressed data
-
-    this.strm   = new zstream();
-    this.strm.avail_out = 0;
-
-    let status  = inflate_1$1.inflateInit2(
-      this.strm,
-      opt.windowBits
-    );
-
-    if (status !== Z_OK) {
-      throw new Error(messages[status]);
-    }
-
-    this.header = new gzheader();
-
-    inflate_1$1.inflateGetHeader(this.strm, this.header);
-
-    // Setup dictionary
-    if (opt.dictionary) {
-      // Convert data if needed
-      if (typeof opt.dictionary === 'string') {
-        opt.dictionary = strings.string2buf(opt.dictionary);
-      } else if (toString.call(opt.dictionary) === '[object ArrayBuffer]') {
-        opt.dictionary = new Uint8Array(opt.dictionary);
-      }
-      if (opt.raw) { //In raw mode we need to set the dictionary early
-        status = inflate_1$1.inflateSetDictionary(this.strm, opt.dictionary);
-        if (status !== Z_OK) {
-          throw new Error(messages[status]);
-        }
-      }
-    }
-  }
-
-  /**
-   * Inflate#push(data[, flush_mode]) -> Boolean
-   * - data (Uint8Array|ArrayBuffer): input data
-   * - flush_mode (Number|Boolean): 0..6 for corresponding Z_NO_FLUSH..Z_TREE
-   *   flush modes. See constants. Skipped or `false` means Z_NO_FLUSH,
-   *   `true` means Z_FINISH.
-   *
-   * Sends input data to inflate pipe, generating [[Inflate#onData]] calls with
-   * new output chunks. Returns `true` on success. If end of stream detected,
-   * [[Inflate#onEnd]] will be called.
-   *
-   * `flush_mode` is not needed for normal operation, because end of stream
-   * detected automatically. You may try to use it for advanced things, but
-   * this functionality was not tested.
-   *
-   * On fail call [[Inflate#onEnd]] with error code and return false.
-   *
-   * ##### Example
-   *
-   * ```javascript
-   * push(chunk, false); // push one of data chunks
-   * ...
-   * push(chunk, true);  // push last chunk
-   * ```
-   **/
-  Inflate.prototype.push = function (data, flush_mode) {
-    const strm = this.strm;
-    const chunkSize = this.options.chunkSize;
-    const dictionary = this.options.dictionary;
-    let status, _flush_mode, last_avail_out;
-
-    if (this.ended) return false;
-
-    if (flush_mode === ~~flush_mode) _flush_mode = flush_mode;
-    else _flush_mode = flush_mode === true ? Z_FINISH : Z_NO_FLUSH;
-
-    // Convert data if needed
-    if (toString.call(data) === '[object ArrayBuffer]') {
-      strm.input = new Uint8Array(data);
-    } else {
-      strm.input = data;
-    }
-
-    strm.next_in = 0;
-    strm.avail_in = strm.input.length;
-
-    for (;;) {
-      if (strm.avail_out === 0) {
-        strm.output = new Uint8Array(chunkSize);
-        strm.next_out = 0;
-        strm.avail_out = chunkSize;
-      }
-
-      status = inflate_1$1.inflate(strm, _flush_mode);
-
-      if (status === Z_NEED_DICT && dictionary) {
-        status = inflate_1$1.inflateSetDictionary(strm, dictionary);
-
-        if (status === Z_OK) {
-          status = inflate_1$1.inflate(strm, _flush_mode);
-        } else if (status === Z_DATA_ERROR) {
-          // Replace code with more verbose
-          status = Z_NEED_DICT;
-        }
-      }
-
-      // Skip snyc markers if more data follows and not raw mode
-      while (strm.avail_in > 0 &&
-             status === Z_STREAM_END &&
-             strm.state.wrap > 0 &&
-             data[strm.next_in] !== 0)
-      {
-        inflate_1$1.inflateReset(strm);
-        status = inflate_1$1.inflate(strm, _flush_mode);
-      }
-
-      switch (status) {
-        case Z_STREAM_ERROR:
-        case Z_DATA_ERROR:
-        case Z_NEED_DICT:
-        case Z_MEM_ERROR:
-          this.onEnd(status);
-          this.ended = true;
-          return false;
-      }
-
-      // Remember real `avail_out` value, because we may patch out buffer content
-      // to align utf8 strings boundaries.
-      last_avail_out = strm.avail_out;
-
-      if (strm.next_out) {
-        if (strm.avail_out === 0 || status === Z_STREAM_END) {
-
-          if (this.options.to === 'string') {
-
-            let next_out_utf8 = strings.utf8border(strm.output, strm.next_out);
-
-            let tail = strm.next_out - next_out_utf8;
-            let utf8str = strings.buf2string(strm.output, next_out_utf8);
-
-            // move tail & realign counters
-            strm.next_out = tail;
-            strm.avail_out = chunkSize - tail;
-            if (tail) strm.output.set(strm.output.subarray(next_out_utf8, next_out_utf8 + tail), 0);
-
-            this.onData(utf8str);
-
-          } else {
-            this.onData(strm.output.length === strm.next_out ? strm.output : strm.output.subarray(0, strm.next_out));
-          }
-        }
-      }
-
-      // Must repeat iteration if out buffer is full
-      if (status === Z_OK && last_avail_out === 0) continue;
-
-      // Finalize if end of stream reached.
-      if (status === Z_STREAM_END) {
-        status = inflate_1$1.inflateEnd(this.strm);
-        this.onEnd(status);
-        this.ended = true;
-        return true;
-      }
-
-      if (strm.avail_in === 0) break;
-    }
-
-    return true;
-  };
-
-
-  /**
-   * Inflate#onData(chunk) -> Void
-   * - chunk (Uint8Array|String): output data. When string output requested,
-   *   each chunk will be string.
-   *
-   * By default, stores data blocks in `chunks[]` property and glue
-   * those in `onEnd`. Override this handler, if you need another behaviour.
-   **/
-  Inflate.prototype.onData = function (chunk) {
-    this.chunks.push(chunk);
-  };
-
-
-  /**
-   * Inflate#onEnd(status) -> Void
-   * - status (Number): inflate status. 0 (Z_OK) on success,
-   *   other if not.
-   *
-   * Called either after you tell inflate that the input stream is
-   * complete (Z_FINISH). By default - join collected chunks,
-   * free memory and fill `results` / `err` properties.
-   **/
-  Inflate.prototype.onEnd = function (status) {
-    // On success - join
-    if (status === Z_OK) {
-      if (this.options.to === 'string') {
-        this.result = this.chunks.join('');
-      } else {
-        this.result = common.flattenChunks(this.chunks);
-      }
-    }
-    this.chunks = [];
-    this.err = status;
-    this.msg = this.strm.msg;
-  };
-
-
-  /**
-   * inflate(data[, options]) -> Uint8Array|String
-   * - data (Uint8Array|ArrayBuffer): input data to decompress.
-   * - options (Object): zlib inflate options.
-   *
-   * Decompress `data` with inflate/ungzip and `options`. Autodetect
-   * format via wrapper header by default. That's why we don't provide
-   * separate `ungzip` method.
-   *
-   * Supported options are:
-   *
-   * - windowBits
-   *
-   * [http://zlib.net/manual.html#Advanced](http://zlib.net/manual.html#Advanced)
-   * for more information.
-   *
-   * Sugar (options):
-   *
-   * - `raw` (Boolean) - say that we work with raw stream, if you don't wish to specify
-   *   negative windowBits implicitly.
-   * - `to` (String) - if equal to 'string', then result will be converted
-   *   from utf8 to utf16 (javascript) string. When string output requested,
-   *   chunk length can differ from `chunkSize`, depending on content.
-   *
-   *
-   * ##### Example:
-   *
-   * ```javascript
-   * const pako = require('pako');
-   * const input = pako.deflate(new Uint8Array([1,2,3,4,5,6,7,8,9]));
-   * let output;
-   *
-   * try {
-   *   output = pako.inflate(input);
-   * } catch (err) {
-   *   console.log(err);
-   * }
-   * ```
-   **/
-  function inflate(input, options) {
-    const inflator = new Inflate(options);
-
-    inflator.push(input);
-
-    // That will never happens, if you don't cheat with options :)
-    if (inflator.err) throw inflator.msg || messages[inflator.err];
-
-    return inflator.result;
-  }
-
-
-  /**
-   * inflateRaw(data[, options]) -> Uint8Array|String
-   * - data (Uint8Array|ArrayBuffer): input data to decompress.
-   * - options (Object): zlib inflate options.
-   *
-   * The same as [[inflate]], but creates raw data, without wrapper
-   * (header and adler32 crc).
-   **/
-  function inflateRaw(input, options) {
-    options = options || {};
-    options.raw = true;
-    return inflate(input, options);
-  }
-
-
-  /**
-   * ungzip(data[, options]) -> Uint8Array|String
-   * - data (Uint8Array|ArrayBuffer): input data to decompress.
-   * - options (Object): zlib inflate options.
-   *
-   * Just shortcut to [[inflate]], because it autodetects format
-   * by header.content. Done for convenience.
-   **/
-
-
-  var Inflate_1 = Inflate;
-  var inflate_2 = inflate;
-  var inflateRaw_1 = inflateRaw;
-  var ungzip = inflate;
-  var constants = constants$1;
-
-  var inflate_1 = {
-  	Inflate: Inflate_1,
-  	inflate: inflate_2,
-  	inflateRaw: inflateRaw_1,
-  	ungzip: ungzip,
-  	constants: constants
-  };
-
-  exports.Inflate = Inflate_1;
-  exports.constants = constants;
-  exports["default"] = inflate_1;
-  exports.inflate = inflate_2;
-  exports.inflateRaw = inflateRaw_1;
-  exports.ungzip = ungzip;
-
-  Object.defineProperty(exports, '__esModule', { value: true });
-
-}));
-
-
-/***/ },
-
-/***/ 533
+/***/ 317
 (__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10301,7 +7056,7 @@ Object .defineProperty (Namespace, "add",
          return module;
       }
 
-      const X3D = window [Symbol .for ("X_ITE.X3D-15.0.2")];
+      const X3D = window [Symbol .for ("X_ITE.X3D")];
 
       if (X3D)
          X3D [name] = module;
@@ -10316,20 +7071,20 @@ Object .defineProperty (Namespace, "add",
 
 /***/ },
 
-/***/ 550
+/***/ 157
 (module, __unused_webpack_exports, __webpack_require__) {
 
 "use strict";
 
 
 // Bundlers are able to synchronously require an ESM module from a CommonJS one.
-const { jQuery } = __webpack_require__( 454 );
+const { jQuery } = __webpack_require__( 163 );
 module.exports = jQuery;
 
 
 /***/ },
 
-/***/ 454
+/***/ 163
 (__unused_webpack___webpack_module__, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10338,7 +7093,7 @@ module.exports = jQuery;
 /* harmony export */   jQuery: () => (/* binding */ jQuery)
 /* harmony export */ });
 /* unused harmony export $ */
-/* harmony import */ var _src_x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(533);
+/* harmony import */ var _src_x_ite_Namespace_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(317);
 /*!
  * jQuery JavaScript Library v4.0.0+slim
  * https://jquery.com/
@@ -17261,7 +14016,7 @@ __webpack_require__.d(__webpack_exports__, {
 });
 
 // EXTERNAL MODULE: ./src/x_ite/Namespace.js
-var Namespace = __webpack_require__(533);
+var Namespace = __webpack_require__(317);
 ;// ./src/x_ite/Base/X3DConstants.js
 const X3DConstants =
 {
@@ -18419,7 +15174,7 @@ const Features =
       {
          register ()
          { }
-         
+
          unregister ()
          { }
       };
@@ -18462,12 +15217,30 @@ const Features =
    }
 })();
 
+(() =>
+{
+   // Added June 2026
+   if (Math .sumPrecise === undefined)
+   {
+      Object .defineProperty (Math, "sumPrecise",
+      {
+         value (iterable)
+         {
+            return Array .from (iterable) .reduce ((p, c) => p + c, 0);
+         },
+         writable: true,
+         enumerable: false,
+         configurable: true,
+      });
+   }
+})();
+
 const Features_default_ = Features;
 ;
 
 /* harmony default export */ const x_ite_Features = (Namespace/* default */.A .add ("Features", Features_default_));
 ;// ./src/x_ite/Base/X3DObject.js
-/* provided dependency */ var $ = __webpack_require__(454)["A"];
+/* provided dependency */ var $ = __webpack_require__(163)["A"];
 
 
 
@@ -19099,7 +15872,7 @@ const handler =
       {
          const index = +key;
 
-         if (Number .isInteger (index))
+         if (Number .isInteger (index) && index >= 0)
             return target [_array] [index];
       }
 
@@ -19111,7 +15884,7 @@ const handler =
       {
          const index = +key;
 
-         if (Number .isInteger (index))
+         if (Number .isInteger (index) && index >= 0)
             return false;
       }
 
@@ -19123,7 +15896,7 @@ const handler =
       {
          const index = +key;
 
-         if (Number .isInteger (index))
+         if (Number .isInteger (index) && index >= 0)
             return index < target [_array] .length;
       }
 
@@ -19139,7 +15912,7 @@ const handler =
       {
          const index = +key;
 
-         if (Number .isInteger (index))
+         if (Number .isInteger (index) && index >= 0)
          {
             if (index < target [_array] .length)
             {
@@ -20957,61 +17730,27 @@ function SFMatrixPrototypeTemplate (Constructor, TypeName, Matrix, double, prope
       {
          this .getValue () .assign (value);
       },
-      setTransform: (() =>
+      setTransform (translation, rotation, scale, scaleOrientation, center)
       {
-         const args = [ ];
-
-         return function (translation, rotation, scale, scaleOrientation, center)
-         {
-            args .push (translation      ?.getValue (),
-                        rotation         ?.getValue (),
-                        scale            ?.getValue (),
-                        scaleOrientation ?.getValue (),
-                        center           ?.getValue ());
-
-            for (let i = args .length - 1; i > -1; -- i)
-            {
-               if (args [i])
-                  break;
-
-               args .pop ();
-            }
-
-            this .getValue () .set (... args);
-
-            args .length = 0;
-         };
-      })(),
-      getTransform: (() =>
+         this .getValue () .setTransform (translation      ?.getValue (),
+                                          rotation         ?.getValue (),
+                                          scale            ?.getValue (),
+                                          scaleOrientation ?.getValue (),
+                                          center           ?.getValue ());
+      },
+      getTransform (translation, rotation, scale, scaleOrientation, center)
       {
-         const args = [ ];
+         this .getValue () .getTransform (translation      ?.getValue (),
+                                          rotation         ?.getValue (),
+                                          scale            ?.getValue (),
+                                          scaleOrientation ?.getValue (),
+                                          center           ?.getValue ());
 
-         return function (translation, rotation, scale, scaleOrientation, center)
-         {
-            args .push (translation      ?.getValue (),
-                        rotation         ?.getValue (),
-                        scale            ?.getValue (),
-                        scaleOrientation ?.getValue (),
-                        center           ?.getValue ());
-
-            for (let i = args .length - 1; i > -1; -- i)
-            {
-               if (args [i])
-                  break;
-
-               args .pop ();
-            }
-
-            this .getValue () .get (... args);
-
-            translation      ?.addEvent ();
-            rotation         ?.addEvent ();
-            scale            ?.addEvent ();
-            scaleOrientation ?.addEvent ();
-
-            args .length = 0;
-         };
-      })(),
+         translation      ?.addEvent ();
+         rotation         ?.addEvent ();
+         scale            ?.addEvent ();
+         scaleOrientation ?.addEvent ();
+      },
       determinant ()
       {
          return this .getValue () .determinant ();
@@ -21242,28 +17981,28 @@ Object .assign (Vector2 .prototype,
       this .y = y + t * (dY - y);
       return this;
    },
-   max (vector)
+   max (... args)
    {
       let { x, y } = this;
 
-      for (const { x: maxX, y: maxY } of arguments)
+      for (const { x: argX, y: argY } of args)
       {
-         x = Math .max (x, maxX);
-         y = Math .max (y, maxY);
+         x = Math .max (x, argX);
+         y = Math .max (y, argY);
       }
 
       this .x = x;
       this .y = y;
       return this;
    },
-   min (vector)
+   min (... args)
    {
       let { x, y } = this;
 
-      for (const { x: minX, y: minY } of arguments)
+      for (const { x: argX, y: argY } of args)
       {
-         x = Math .min (x, minX);
-         y = Math .min (y, minY);
+         x = Math .min (x, argX);
+         y = Math .min (y, argY);
       }
 
       this .x = x;
@@ -21489,15 +18228,15 @@ Object .assign (Vector3 .prototype,
       this .z = z + t * (dZ - z);
       return this;
    },
-   max (vector)
+   max (... args)
    {
       let { x, y, z } = this;
 
-      for (const { x: maxX, y: maxY, z: maxZ } of arguments)
+      for (const { x: argX, y: argY, z: argZ } of args)
       {
-         x = Math .max (x, maxX);
-         y = Math .max (y, maxY);
-         z = Math .max (z, maxZ);
+         x = Math .max (x, argX);
+         y = Math .max (y, argY);
+         z = Math .max (z, argZ);
       }
 
       this .x = x;
@@ -21505,15 +18244,15 @@ Object .assign (Vector3 .prototype,
       this .z = z;
       return this;
    },
-   min (vector)
+   min (... args)
    {
       let { x, y, z } = this;
 
-      for (const { x: minX, y: minY, z: minZ } of arguments)
+      for (const { x: argX, y: argY, z: argZ } of args)
       {
-         x = Math .min (x, minX);
-         y = Math .min (y, minY);
-         z = Math .min (z, minZ);
+         x = Math .min (x, argX);
+         y = Math .min (y, argY);
+         z = Math .min (z, argZ);
       }
 
       this .x = x;
@@ -21695,25 +18434,12 @@ Object .assign (Matrix2 .prototype,
    {
       return this [r * this .order + c];
    },
-   set ()
+   set (m00 = 1, m01 = 0, m10 = 0, m11 = m00)
    {
-      switch (arguments .length)
-      {
-         case 0:
-         {
-            this .identity ();
-            break;
-         }
-         case 4:
-         {
-            for (let i = 0; i < 4; ++ i)
-               this [i] = arguments [i];
-
-            break;
-         }
-      }
-
-      return this;
+      this [0] = m00;
+      this [1] = m01;
+      this [2] = m10;
+      this [3] = m11;
    },
    determinant1 ()
    {
@@ -21736,16 +18462,20 @@ Object .assign (Matrix2 .prototype,
    },
    inverse ()
    {
-      const
-         { 0: A, 1: B, 2: C, 3: D } = this,
-         d = A * D - B * C;
+      const { 0: A, 1: B, 2: C, 3: D } = this;
 
-      // if (d === 0) ... determinant is zero.
+      // Calculate the determinant.
+      let d = A * D - B * C;
 
-      this [0] =  D / d;
-      this [1] = -B / d;
-      this [2] = -C / d;
-      this [3] =  A / d;
+      if (!d)
+         return this .assign (Matrix2 .ZERO);
+
+      d = 1 / d;
+
+      this [0] =  D * d;
+      this [1] = -B * d;
+      this [2] = -C * d;
+      this [3] =  A * d;
 
       return this;
    },
@@ -21820,13 +18550,6 @@ Object .assign (Matrix2 .prototype,
 
          return vector;
       }
-   },
-   identity ()
-   {
-      this [0] = 1;
-      this [1] = 0;
-      this [2] = 0;
-      this [3] = 1;
    },
    toString ()
    {
@@ -22094,152 +18817,81 @@ Object .assign (Matrix3 .prototype,
    {
       return this [r * this .order + c];
    },
-   set: (() =>
+   set (m00 = 1, m01 = 0,   m02 = 0,
+        m10 = 0, m11 = m00, m12 = 0,
+        m20 = 0, m21 = 0,   m22 = m11)
    {
-      const invCenter = new Numbers_Vector2 ();
+      this [0] = m00;
+      this [1] = m01;
+      this [2] = m02;
+      this [3] = m10;
+      this [4] = m11;
+      this [5] = m12;
+      this [6] = m20;
+      this [7] = m21;
+      this [8] = m22;
 
-      return function (translation, rotation, scale, scaleOrientation, center)
-      {
-         this .identity ();
-
-         switch (arguments .length)
-         {
-            case 1:
-            {
-               if (translation && !translation .equals (Numbers_Vector2 .ZERO))
-                  this .translate (translation);
-
-               break;
-            }
-            case 2:
-            {
-               if (translation && !translation .equals (Numbers_Vector2 .ZERO))
-                  this .translate (translation);
-
-               if (rotation)
-                  this .rotate (rotation);
-
-               break;
-            }
-            case 3:
-            {
-               if (translation && !translation .equals (Numbers_Vector2 .ZERO))
-                  this .translate (translation);
-
-               if (rotation)
-                  this .rotate (rotation);
-
-               if (scale && !scale .equals (Numbers_Vector2 .ONE))
-                  this .scale  (scale);
-
-               break;
-            }
-            case 4:
-            {
-               if (translation && !translation .equals (Numbers_Vector2 .ZERO))
-                  this .translate (translation);
-
-               if (rotation)
-                  this .rotate (rotation);
-
-               if (scale && !scale .equals (Numbers_Vector2 .ONE))
-               {
-                  if (scaleOrientation)
-                  {
-                     this .rotate (scaleOrientation);
-                     this .scale (scale);
-                     this .rotate (-scaleOrientation);
-                  }
-                  else
-                  {
-                     this .scale (scale);
-                  }
-               }
-
-               break;
-            }
-            case 5:
-            {
-               // P' = T * C * R * SR * S * -SR * -C * P
-               if (translation && !translation .equals (Numbers_Vector2 .ZERO))
-                  this .translate (translation);
-
-               const hasCenter = center && !center .equals (Numbers_Vector2 .ZERO);
-
-               if (hasCenter)
-                  this .translate (center);
-
-               if (rotation)
-                  this .rotate (rotation);
-
-               if (scale && !scale .equals (Numbers_Vector2 .ONE))
-               {
-                  if (scaleOrientation)
-                  {
-                     this .rotate (scaleOrientation);
-                     this .scale (scale);
-                     this .rotate (-scaleOrientation);
-                  }
-                  else
-                  {
-                     this .scale (scale);
-                  }
-               }
-
-               if (hasCenter)
-                  this .translate (invCenter .assign (center) .negate ());
-
-               break;
-            }
-            case 9:
-            {
-               for (let i = 0; i < 9; ++ i)
-                  this [i] = arguments [i];
-
-               break;
-            }
-         }
-
-         return this;
-      };
-   })(),
-   get: (() =>
+      return this;
+   },
+   getTransform: (() =>
    {
       const c = new Numbers_Vector2 ();
 
       return function (translation, rotation, scale, scaleOrientation, center)
       {
-         switch (arguments .length)
+         if (center)
          {
-            case 1:
-            {
-               translation .set (this [6], this [7]);
-               break;
-            }
-            case 2:
-            case 3:
-            case 4:
-            {
-               this .factor (translation, rotation, scale, scaleOrientation);
-               break;
-            }
-            case 5:
-            {
-               if (center)
-               {
-                  m .set (c .assign (center) .negate ());
-                  m .multLeft (this);
-                  m .translate (center);
-                  m .get (translation, rotation, scale, scaleOrientation);
-               }
-               else
-               {
-                  this .factor (translation, rotation, scale, scaleOrientation);
-               }
+            m .setTransform (c .assign (center) .negate ());
+            m .multLeft (this);
+            m .translate (center);
+            m .getTransform (translation, rotation, scale, scaleOrientation);
+         }
+         else
+         {
+            this .factor (translation, rotation, scale, scaleOrientation);
+         }
 
-               break;
+         return this;
+      };
+   })(),
+   setTransform: (() =>
+   {
+      const invCenter = new Numbers_Vector2 ();
+
+      return function (translation, rotation, scale, scaleOrientation, center)
+      {
+         this .set ();
+
+         // P' = T * C * R * SR * S * -SR * -C * P
+         if (translation ?.equals (Numbers_Vector2 .ZERO) === false)
+            this .translate (translation);
+
+         const hasCenter = center ?.equals (Numbers_Vector2 .ZERO) === false;
+
+         if (hasCenter)
+            this .translate (center);
+
+         if (rotation)
+            this .rotate (rotation);
+
+         if (scale ?.equals (Numbers_Vector2 .ONE) === false)
+         {
+            if (scaleOrientation)
+            {
+               this .rotate (scaleOrientation);
+               this .scale (scale);
+               this .rotate (-scaleOrientation);
+            }
+            else
+            {
+               this .scale (scale);
             }
          }
+
+         if (hasCenter)
+            this .translate (invCenter .assign (center) .negate ());
+
+         return this;
       };
    })(),
    factor: (() =>
@@ -22256,6 +18908,9 @@ Object .assign (Matrix3 .prototype,
       {
          // (1) Get translation.
          translation ?.set (this [6], this [7]);
+
+         if (!(rotation || scale || scaleOrientation))
+            return;
 
          // (2) Create 3x3 matrix.
          const a = this .submatrix;
@@ -22338,9 +18993,11 @@ Object .assign (Matrix3 .prototype,
          t12 = m6 * m1,
          t14 = m6 * m4;
 
+      // Calculate the determinant.
       let d = (t4 * m8 - t6 * m5 - t8 * m8 + t10 * m2 + t12 * m5 - t14 * m2);
 
-      // if (d === 0) ... determinant is zero.
+      if (!d)
+         return this .assign (Matrix3 .ZERO);
 
       d = 1 / d;
 
@@ -22482,14 +19139,6 @@ Object .assign (Matrix3 .prototype,
 
       return vector;
    },
-   identity ()
-   {
-      this [0] = 1; this [1] = 0; this [2] = 0;
-      this [3] = 0; this [4] = 1; this [5] = 0;
-      this [6] = 0; this [7] = 0; this [8] = 1;
-
-      return this;
-   },
    translate (translation)
    {
       const { x, y } = translation;
@@ -22622,6 +19271,10 @@ Object .assign (Matrix3,
 {
    ZERO: Object .freeze (new Matrix3 (0)),
    IDENTITY: Object .freeze (new Matrix3 ()),
+   fromTransform (translation, rotation, scale, scaleOrientation, center)
+   {
+      return Object .create (this .prototype) .setTransform (translation, rotation, scale, scaleOrientation, center);
+   },
    fromRotation (rotation)
    {
       const
@@ -22665,27 +19318,14 @@ function SFMatrix3Template (TypeName, double)
 
    return Fields_SFMatrixPrototypeTemplate (SFMatrix3, TypeName, Numbers_Matrix3, double,
    {
-      setTransform: (() =>
+      setTransform (translation, rotation, scale, scaleOrientation, center)
       {
-         const args = [ ];
-
-         return function (translation, rotation, scale, scaleOrientation, center)
-         {
-            args .push (translation ?.getValue (), +rotation, scale ?.getValue (), +scaleOrientation, center ?.getValue ());
-
-            for (let i = args .length - 1; i > -1; -- i)
-            {
-               if (args [i])
-                  break;
-
-               args .pop ();
-            }
-
-            this .getValue () .set (... args);
-
-            args .length = 0;
-         };
-      })(),
+         this .getValue () .setTransform (translation ?.getValue (),
+                                          rotation,
+                                          scale ?.getValue (),
+                                          scaleOrientation,
+                                          center ?.getValue ());
+      },
       rotate (rotation)
       {
          return SFMatrix3 .fromValue (this .getValue () .copy () .rotate (+rotation));
@@ -22836,16 +19476,16 @@ Object .assign (Vector4 .prototype,
       this .w = w + t * (dW - w);
       return this;
    },
-   max (vector)
+   max (... args)
    {
       let { x, y, z, w } = this;
 
-      for (const { x: maxX, y: maxY, z: maxZ, w: maxW } of arguments)
+      for (const { x: argX, y: argY, z: argZ, w: argW } of args)
       {
-         x = Math .max (x, maxX);
-         y = Math .max (y, maxY);
-         z = Math .max (z, maxZ);
-         w = Math .max (w, maxW);
+         x = Math .max (x, argX);
+         y = Math .max (y, argY);
+         z = Math .max (z, argZ);
+         w = Math .max (w, argW);
       }
 
       this .x = x;
@@ -22854,16 +19494,16 @@ Object .assign (Vector4 .prototype,
       this .w = w;
       return this;
    },
-   min (vector)
+   min (... args)
    {
       let { x, y, z, w } = this;
 
-      for (const { x: minX, y: minY, z: minZ, w: minW } of arguments)
+      for (const { x: argX, y: argY, z: argZ, w: argW } of args)
       {
-         x = Math .min (x, minX);
-         y = Math .min (y, minY);
-         z = Math .min (z, minZ);
-         w = Math .min (w, minW);
+         x = Math .min (x, argX);
+         y = Math .min (y, argY);
+         z = Math .min (z, argZ);
+         w = Math .min (w, argW);
       }
 
       this .x = x;
@@ -23657,51 +20297,16 @@ const
    _angle      = Symbol (),
    _quaternion = Symbol ();
 
-function Rotation4 (x, y, z, angle)
+function Rotation4 (x = 0, y = 0, z = 1, angle = 0)
 {
    this [_x]     = 0;
    this [_y]     = 0;
    this [_z]     = 1;
    this [_angle] = 0;
 
-   switch (arguments .length)
-   {
-      case 0:
-      {
-         this [_quaternion] = new Numbers_Quaternion ();
-         return;
-      }
-      case 1:
-      {
-         this [_quaternion] = arguments [0];
-         this .update ();
-         return;
-      }
-      case 2:
-      {
-         const
-            arg0 = arguments [0],
-            arg1 = arguments [1];
+   this [_quaternion] = new Numbers_Quaternion ();
 
-         this [_quaternion] = new Numbers_Quaternion ();
-
-         if (arg1 instanceof Numbers_Vector3)
-            return this .setFromToVec (arg0, arg1);
-
-         this .set (arg0 .x,
-                    arg0 .y,
-                    arg0 .z,
-                    arg1);
-
-         return;
-      }
-      case 4:
-      {
-         this [_quaternion] = new Numbers_Quaternion ();
-         this .set (x, y, z, angle);
-         return;
-      }
-   }
+   this .set (x, y, z, angle);
 }
 
 Object .assign (Rotation4 .prototype,
@@ -23801,7 +20406,7 @@ Object .assign (Rotation4 .prototype,
          return this;
       }
 
-      // Calculate quaternion
+      // Determine quaternion.
 
       const
          halfTheta = Math_Algorithm .interval (angle / 2, 0, Math .PI),
@@ -23817,7 +20422,7 @@ Object .assign (Rotation4 .prototype,
    {
       return this .set (axis .x, axis .y, axis .z, angle);
    },
-   setFromToVec: (() =>
+   setVectors: (() =>
    {
       const
          from = new Numbers_Vector3 (),
@@ -23975,8 +20580,7 @@ Object .assign (Rotation4 .prototype,
       const
          localXAxis = new Numbers_Vector3 (),
          localZAxis = new Numbers_Vector3 (),
-         upNormal   = new Numbers_Vector3 (),
-         rotation   = new Rotation4 ();
+         upNormal   = new Numbers_Vector3 ();
 
       return function (upVector = Numbers_Vector3 .Y_AXIS)
       {
@@ -23999,7 +20603,7 @@ Object .assign (Rotation4 .prototype,
          }
          else
          {
-            rotation .setFromToVec (localXAxis, newXAxis);
+            rotation .setVectors (localXAxis, newXAxis);
 
             return this .multRight (rotation);
          }
@@ -24094,6 +20698,10 @@ Object .defineProperties (Rotation4 .prototype,
 Object .assign (Rotation4,
 {
    IDENTITY: Object .freeze (new Rotation4 ()),
+   fromVectors (fromVec, toVec)
+   {
+      return new Rotation4 () .setVectors (fromVec, toVec);
+   },
    fromQuaternion (quaternion)
    {
       return new Rotation4 () .setQuaternion (quaternion);
@@ -24114,6 +20722,8 @@ Object .assign (Rotation4,
       return copy;
    },
 });
+
+const rotation = new Rotation4 ();
 
 const Rotation4_default_ = Rotation4;
 ;
@@ -24193,7 +20803,52 @@ Object .assign (Matrix4_Matrix4 .prototype,
    {
       return this [r * this .order + c];
    },
-   set: (() =>
+   set (m00 = 1, m01 = 0,   m02 = 0,   m03 = 0,
+        m10 = 0, m11 = m00, m12 = 0,   m13 = 0,
+        m20 = 0, m21 = 0,   m22 = m11, m23 = 0,
+        m30 = 0, m31 = 0,   m32 = 0,   m33 = m22)
+   {
+      this [ 0] = m00;
+      this [ 1] = m01;
+      this [ 2] = m02;
+      this [ 3] = m03;
+      this [ 4] = m10;
+      this [ 5] = m11;
+      this [ 6] = m12;
+      this [ 7] = m13;
+      this [ 8] = m20;
+      this [ 9] = m21;
+      this [10] = m22;
+      this [11] = m23;
+      this [12] = m30;
+      this [13] = m31;
+      this [14] = m32;
+      this [15] = m33;
+
+      return this;
+   },
+   getTransform: (() =>
+   {
+      const c = new Numbers_Vector3 ();
+
+      return function (translation, rotation, scale, scaleOrientation, center)
+      {
+         if (center)
+         {
+            Matrix4_m .setTransform (c .assign (center) .negate ());
+            Matrix4_m .multLeft (this);
+            Matrix4_m .translate (center);
+            Matrix4_m .getTransform (translation, rotation, scale, scaleOrientation);
+         }
+         else
+         {
+            this .factor (translation, rotation, scale, scaleOrientation);
+         }
+
+         return this;
+      };
+   })(),
+   setTransform: (() =>
    {
       const
          invScaleOrientation = new Numbers_Rotation4 (),
@@ -24201,146 +20856,38 @@ Object .assign (Matrix4_Matrix4 .prototype,
 
       return function (translation, rotation, scale, scaleOrientation, center)
       {
-         this .identity ();
+         this .set ();
 
-         switch (arguments .length)
+         // P' = T * C * R * SR * S * -SR * -C * P
+         if (translation ?.equals (Numbers_Vector3 .ZERO) === false)
+            this .translate (translation);
+
+         const hasCenter = center ?.equals (Numbers_Vector3 .ZERO) === false;
+
+         if (hasCenter)
+            this .translate (center);
+
+         if (rotation ?.equals (Numbers_Rotation4 .IDENTITY) === false)
+            this .rotate (rotation);
+
+         if (scale ?.equals (Numbers_Vector3 .ONE) === false)
          {
-            case 1:
+            if (scaleOrientation ?.equals (Numbers_Rotation4 .IDENTITY) === false)
             {
-               if (translation && !translation .equals (Numbers_Vector3 .ZERO))
-                  this .translate (translation);
-
-               break;
+               this .rotate (scaleOrientation);
+               this .scale (scale);
+               this .rotate (invScaleOrientation .assign (scaleOrientation) .inverse ());
             }
-            case 2:
+            else
             {
-               if (translation && !translation .equals (Numbers_Vector3 .ZERO))
-                  this .translate (translation);
-
-               if (rotation && !rotation .equals (Numbers_Rotation4 .IDENTITY))
-                  this .rotate (rotation);
-
-               break;
-            }
-            case 3:
-            {
-               if (translation && !translation .equals (Numbers_Vector3 .ZERO))
-                  this .translate (translation);
-
-               if (rotation && !rotation .equals (Numbers_Rotation4 .IDENTITY))
-                  this .rotate (rotation);
-
-               if (scale && !scale .equals (Numbers_Vector3 .ONE))
-                  this .scale (scale);
-
-               break;
-            }
-            case 4:
-            {
-               if (translation && !translation .equals (Numbers_Vector3 .ZERO))
-                  this .translate (translation);
-
-               if (rotation && !rotation .equals (Numbers_Rotation4 .IDENTITY))
-                  this .rotate (rotation);
-
-               if (scale && !scale .equals (Numbers_Vector3 .ONE))
-               {
-                  if (scaleOrientation && !scaleOrientation .equals (Numbers_Rotation4 .IDENTITY))
-                  {
-                     this .rotate (scaleOrientation);
-                     this .scale (scale);
-                     this .rotate (invScaleOrientation .assign (scaleOrientation) .inverse ());
-                  }
-                  else
-                  {
-                     this .scale (scale);
-                  }
-               }
-
-               break;
-            }
-            case 5:
-            {
-               // P' = T * C * R * SR * S * -SR * -C * P
-               if (translation && !translation .equals (Numbers_Vector3 .ZERO))
-                  this .translate (translation);
-
-               const hasCenter = center && !center .equals (Numbers_Vector3 .ZERO);
-
-               if (hasCenter)
-                  this .translate (center);
-
-               if (rotation && !rotation .equals (Numbers_Rotation4 .IDENTITY))
-                  this .rotate (rotation);
-
-               if (scale && !scale .equals (Numbers_Vector3 .ONE))
-               {
-                  if (scaleOrientation && !scaleOrientation .equals (Numbers_Rotation4 .IDENTITY))
-                  {
-                     this .rotate (scaleOrientation);
-                     this .scale (scale);
-                     this .rotate (invScaleOrientation .assign (scaleOrientation) .inverse ());
-                  }
-                  else
-                  {
-                     this .scale (scale);
-                  }
-               }
-
-               if (hasCenter)
-                  this .translate (invCenter .assign (center) .negate ());
-
-               break;
-            }
-            case 16:
-            {
-               for (let i = 0; i < 16; ++ i)
-                  this [i] = arguments [i];
-
-               break;
+               this .scale (scale);
             }
          }
+
+         if (hasCenter)
+            this .translate (invCenter .assign (center) .negate ());
 
          return this;
-      };
-   })(),
-   get: (() =>
-   {
-      const c = new Numbers_Vector3 ();
-
-      return function (translation, rotation, scale, scaleOrientation, center)
-      {
-         switch (arguments .length)
-         {
-            case 1:
-            {
-               translation .set (this [12], this [13], this [14]);
-               break;
-            }
-            case 2:
-            case 3:
-            case 4:
-            {
-               this .factor (translation, rotation, scale, scaleOrientation);
-               break;
-            }
-            case 5:
-            {
-               if (center)
-               {
-                  Matrix4_m .set (c .assign (center) .negate ());
-                  Matrix4_m .multLeft (this);
-                  Matrix4_m .translate (center);
-                  Matrix4_m .get (translation, rotation, scale, scaleOrientation);
-               }
-               else
-               {
-                  this .factor (translation, rotation, scale, scaleOrientation);
-               }
-
-               break;
-            }
-         }
       };
    })(),
    setRotation (rotation)
@@ -24351,27 +20898,27 @@ Object .assign (Matrix4_Matrix4 .prototype,
    {
       const
          { x, y, z, w } = quaternion,
-         A = y * y,
-         B = z * z,
-         C = x * y,
-         D = z * w,
-         E = z * x,
-         F = y * w,
-         G = x * x,
-         H = y * z,
-         I = x * w;
+         yy = y * y,
+         zz = z * z,
+         xy = x * y,
+         zw = z * w,
+         xz = x * z,
+         yw = y * w,
+         xx = x * x,
+         yz = y * z,
+         xw = x * w;
 
-      this [0]  = 1 - 2 * (A + B);
-      this [1]  = 2 * (C + D);
-      this [2]  = 2 * (E - F);
+      this [0]  = 1 - 2 * (yy + zz);
+      this [1]  = 2 * (xy + zw);
+      this [2]  = 2 * (xz - yw);
       this [3]  = 0;
-      this [4]  = 2 * (C - D);
-      this [5]  = 1 - 2 * (B + G);
-      this [6]  = 2 * (H + I);
+      this [4]  = 2 * (xy - zw);
+      this [5]  = 1 - 2 * (zz + xx);
+      this [6]  = 2 * (yz + xw);
       this [7]  = 0;
-      this [8]  = 2 * (E + F);
-      this [9]  = 2 * (H - I);
-      this [10] = 1 - 2 * (A + G);
+      this [8]  = 2 * (xz + yw);
+      this [9]  = 2 * (yz - xw);
+      this [10] = 1 - 2 * (yy + xx);
       this [11] = 0;
       this [12] = 0;
       this [13] = 0;
@@ -24394,6 +20941,9 @@ Object .assign (Matrix4_Matrix4 .prototype,
       {
          // (1) Get translation.
          translation ?.set (this [12], this [13], this [14]);
+
+         if (!(rotation || scale || scaleOrientation))
+            return;
 
          // (2) Create 3x3 matrix.
          const a = this .submatrix;
@@ -24447,25 +20997,22 @@ Object .assign (Matrix4_Matrix4 .prototype,
    {
       const
          { 0: m00, 1: m01, 2: m02, 3: m03, 4: m04, 5: m05, 6: m06, 7: m07,
-           8: m08, 9: m09, 10: m10, 11: m11, 12: m12, 13: m13, 14: m14, 15: m15 } = this,
-         b = m10 * m15,
-         c = m14 * m11,
-         d = m06 * m15,
-         e = m14 * m07,
-         f = m06 * m11,
-         g = m10 * m07,
-         h = m02 * m15,
-         i = m14 * m03,
-         j = m02 * m11,
-         o = m10 * m03,
-         r = m02 * m07,
-         x = m06 * m03,
-         H = b * m05 + e * m09 + f * m13 - (c * m05) - (d * m09) - (g * m13),
-         I = c * m01 + h * m09 + o * m13 - (b * m01) - (i * m09) - (j * m13),
-         J = d * m01 + i * m05 + r * m13 - (e * m01) - (h * m05) - (x * m13),
-         K = g * m01 + j * m05 + x * m09 - (f * m01) - (o * m05) - (r * m09);
+           8: m08, 9: m09, 10: m10, 11: m11, 12: m12, 13: m13, 14: m14, 15: m15 } = this;
 
-      return m00 * H + m04 * I + m08 * J + m12 * K;
+      const
+         b0 = m00 * m05 - m01 * m04,
+         b1 = m00 * m06 - m02 * m04,
+         b2 = m01 * m06 - m02 * m05,
+         b3 = m08 * m13 - m09 * m12,
+         b4 = m08 * m14 - m10 * m12,
+         b5 = m09 * m14 - m10 * m13,
+         b6 = m00 * b5 - m01 * b4 + m02 * b3,
+         b7 = m04 * b5 - m05 * b4 + m06 * b3,
+         b8 = m08 * b2 - m09 * b1 + m10 * b0,
+         b9 = m12 * b2 - m13 * b1 + m14 * b0;
+
+      // Calculate the determinant.
+      return m07 * b6 - m03 * b7 + m15 * b8 - m11 * b9;
    },
    transpose ()
    {
@@ -24482,62 +21029,48 @@ Object .assign (Matrix4_Matrix4 .prototype,
    },
    inverse ()
    {
-      // Complexity 43 +, 40 -, 140 *. 1 /
-
       const
          { 0: m00, 1: m01, 2: m02, 3: m03, 4: m04, 5: m05, 6: m06, 7: m07,
-           8: m08, 9: m09, 10: m10, 11: m11, 12: m12, 13: m13, 14: m14, 15: m15 } = this,
-         b = m10 * m15,
-         c = m14 * m11,
-         d = m06 * m15,
-         e = m14 * m07,
-         f = m06 * m11,
-         g = m10 * m07,
-         h = m02 * m15,
-         i = m14 * m03,
-         j = m02 * m11,
-         o = m10 * m03,
-         r = m02 * m07,
-         x = m06 * m03,
-         t = m08 * m13,
-         p = m12 * m09,
-         v = m04 * m13,
-         s = m12 * m05,
-         y = m04 * m09,
-         z = m08 * m05,
-         A = m00 * m13,
-         C = m12 * m01,
-         D = m00 * m09,
-         E = m08 * m01,
-         F = m00 * m05,
-         G = m04 * m01,
-         H = b * m05 + e * m09 + f * m13 - ((c * m05) + (d * m09) + (g * m13)),
-         I = c * m01 + h * m09 + o * m13 - ((b * m01) + (i * m09) + (j * m13)),
-         J = d * m01 + i * m05 + r * m13 - ((e * m01) + (h * m05) + (x * m13)),
-         K = g * m01 + j * m05 + x * m09 - ((f * m01) + (o * m05) + (r * m09));
+           8: m08, 9: m09, 10: m10, 11: m11, 12: m12, 13: m13, 14: m14, 15: m15 } = this;
 
-      let B = m00 * H + m04 * I + m08 * J + m12 * K;
+      const
+         b00 = m00 * m05 - m01 * m04,
+         b01 = m00 * m06 - m02 * m04,
+         b02 = m00 * m07 - m03 * m04,
+         b03 = m01 * m06 - m02 * m05,
+         b04 = m01 * m07 - m03 * m05,
+         b05 = m02 * m07 - m03 * m06,
+         b06 = m08 * m13 - m09 * m12,
+         b07 = m08 * m14 - m10 * m12,
+         b08 = m08 * m15 - m11 * m12,
+         b09 = m09 * m14 - m10 * m13,
+         b10 = m09 * m15 - m11 * m13,
+         b11 = m10 * m15 - m11 * m14;
 
-      // if (B === 0) ... determinant is zero.
+      // Calculate the determinant.
+      let d = b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06;
 
-      B = 1 / B;
+      if (!d)
+         return this .assign (Matrix4_Matrix4 .ZERO);
 
-      this [ 0] = B * H;
-      this [ 1] = B * I;
-      this [ 2] = B * J;
-      this [ 3] = B * K;
-      this [ 4] = B * (c * m04 + d * m08 + g * m12 - (b * m04) - (e * m08) - (f * m12));
-      this [ 5] = B * (b * m00 + i * m08 + j * m12 - (c * m00) - (h * m08) - (o * m12));
-      this [ 6] = B * (e * m00 + h * m04 + x * m12 - (d * m00) - (i * m04) - (r * m12));
-      this [ 7] = B * (f * m00 + o * m04 + r * m08 - (g * m00) - (j * m04) - (x * m08));
-      this [ 8] = B * (t * m07 + s * m11 + y * m15 - (p * m07) - (v * m11) - (z * m15));
-      this [ 9] = B * (p * m03 + A * m11 + E * m15 - (t * m03) - (C * m11) - (D * m15));
-      this [10] = B * (v * m03 + C * m07 + F * m15 - (s * m03) - (A * m07) - (G * m15));
-      this [11] = B * (z * m03 + D * m07 + G * m11 - (y * m03) - (E * m07) - (F * m11));
-      this [12] = B * (v * m10 + z * m14 + p * m06 - (y * m14) - (t * m06) - (s * m10));
-      this [13] = B * (D * m14 + t * m02 + C * m10 - (A * m10) - (E * m14) - (p * m02));
-      this [14] = B * (A * m06 + G * m14 + s * m02 - (F * m14) - (v * m02) - (C * m06));
-      this [15] = B * (F * m10 + y * m02 + E * m06 - (D * m06) - (G * m10) - (z * m02));
+      d = 1 / d;
+
+      this [ 0] = (m05 * b11 - m06 * b10 + m07 * b09) * d;
+      this [ 1] = (m02 * b10 - m01 * b11 - m03 * b09) * d;
+      this [ 2] = (m13 * b05 - m14 * b04 + m15 * b03) * d;
+      this [ 3] = (m10 * b04 - m09 * b05 - m11 * b03) * d;
+      this [ 4] = (m06 * b08 - m04 * b11 - m07 * b07) * d;
+      this [ 5] = (m00 * b11 - m02 * b08 + m03 * b07) * d;
+      this [ 6] = (m14 * b02 - m12 * b05 - m15 * b01) * d;
+      this [ 7] = (m08 * b05 - m10 * b02 + m11 * b01) * d;
+      this [ 8] = (m04 * b10 - m05 * b08 + m07 * b06) * d;
+      this [ 9] = (m01 * b08 - m00 * b10 - m03 * b06) * d;
+      this [10] = (m12 * b04 - m13 * b02 + m15 * b00) * d;
+      this [11] = (m09 * b02 - m08 * b04 - m11 * b00) * d;
+      this [12] = (m05 * b07 - m04 * b09 - m06 * b06) * d;
+      this [13] = (m00 * b09 - m01 * b07 + m02 * b06) * d;
+      this [14] = (m13 * b01 - m12 * b03 - m14 * b00) * d;
+      this [15] = (m08 * b03 - m09 * b01 + m10 * b00) * d;
 
       return this;
    },
@@ -24695,22 +21228,13 @@ Object .assign (Matrix4_Matrix4 .prototype,
 
       return vector;
    },
-   identity ()
-   {
-      this [ 0] = 1; this [ 1] = 0; this [ 2] = 0; this [ 3] = 0;
-      this [ 4] = 0; this [ 5] = 1; this [ 6] = 0; this [ 7] = 0;
-      this [ 8] = 0; this [ 9] = 0; this [10] = 1; this [11] = 0;
-      this [12] = 0; this [13] = 0; this [14] = 0; this [15] = 1;
-
-      return this;
-   },
    translate (translation)
    {
       const { x, y, z } = translation;
 
-      this [12] += this [ 0] * x + this [ 4] * y + this [ 8] * z;
-      this [13] += this [ 1] * x + this [ 5] * y + this [ 9] * z;
-      this [14] += this [ 2] * x + this [ 6] * y + this [10] * z;
+      this [12] += this [0] * x + this [4] * y + this [ 8] * z;
+      this [13] += this [1] * x + this [5] * y + this [ 9] * z;
+      this [14] += this [2] * x + this [6] * y + this [10] * z;
 
       return this;
    },
@@ -24842,6 +21366,10 @@ Object .assign (Matrix4_Matrix4,
 {
    ZERO: Object .freeze (new Matrix4_Matrix4 (0)),
    IDENTITY: Object .freeze (new Matrix4_Matrix4 ()),
+   fromTransform (translation, rotation, scale, scaleOrientation, center)
+   {
+      return Object .create (this .prototype) .setTransform (translation, rotation, scale, scaleOrientation, center);
+   },
    fromRotation (rotation)
    {
       return Object .create (this .prototype) .setQuaternion (rotation .getQuaternion (q));
@@ -25221,17 +21749,33 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, Base_X3DField .protot
    /**
    * @deprecated Returns the corresponding X3DField object associated with *name*. Use sfnode.{fieldName} syntax.
    */
-   getField (name)
+   getField: (() =>
    {
-      const
-         target = this [_target],
-         node   = target .getValue ();
+      let warn = true;
 
-      if (node)
-         return node .getField (name);
+      return function (name)
+      {
+         if (warn)
+         {
+            warn = false;
 
-      throw new Error ("SFNode is disposed.")
-   },
+            const target = { };
+
+            Error .captureStackTrace (target, this .getField);
+
+            console .warn ("The use of sfnode.getField(name) is deprecated. Future versions of X_ITE may remove this feature. Instead, use the sfnode.{fieldName} syntax or sfnode.addFieldCallback(key, fieldName, callback).", target .stack);
+         }
+
+         const
+            target = this [_target],
+            node   = target .getValue ();
+
+         if (node)
+            return node .getField (name);
+
+         throw new Error ("SFNode is disposed.")
+      };
+   })(),
    addFieldCallback (... args)
    {
       const target = this [_target];
@@ -25265,7 +21809,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, Base_X3DField .protot
       {
          case 1:
          {
-            const key = [args];
+            const [key] = args;
 
             return Base_X3DField .prototype .removeFieldCallback .call (target, key);
          }
@@ -25692,12 +22236,12 @@ function SFRotation (x = 0, y = 0, z = 1, angle = 0)
       if ((y instanceof SFVec3f) || (y instanceof SFVec3d))
       {
          // new SFRotation (fromVector: SFVec3d | SFVec3f, toVector: SFVec3d | SFVec3f)
-         Base_X3DField .call (this, new Numbers_Rotation4 (x .getValue (), y .getValue ()));
+         Base_X3DField .call (this, Numbers_Rotation4 .fromVectors (x .getValue (), y .getValue ()));
       }
       else
       {
          // new SFRotation (axis: SFVec3d | SFVec3f, angle: number)
-         Base_X3DField .call (this, new Numbers_Rotation4 (x .getValue (), +y));
+         Base_X3DField .call (this, new Numbers_Rotation4 (... x, +y));
       }
    }
    else
@@ -26105,7 +22649,7 @@ const X3DObjectArrayField_handler =
       {
          const index = +key;
 
-         if (Number .isInteger (index))
+         if (Number .isInteger (index) && index >= 0)
          {
             const array = target .getValue ();
 
@@ -26124,7 +22668,7 @@ const X3DObjectArrayField_handler =
       {
          const index = +key;
 
-         if (Number .isInteger (index))
+         if (Number .isInteger (index) && index >= 0)
          {
             const array = target .getValue ();
 
@@ -26145,7 +22689,7 @@ const X3DObjectArrayField_handler =
       {
          const index = +key;
 
-         if (Number .isInteger (index))
+         if (Number .isInteger (index) && index >= 0)
             return index < target .getValue () .length;
       }
 
@@ -26161,7 +22705,7 @@ const X3DObjectArrayField_handler =
       {
          const index = +key;
 
-         if (Number .isInteger (index))
+         if (Number .isInteger (index) && index >= 0)
          {
             if (index < target .getValue () .length)
                return Object .getOwnPropertyDescriptor (target .getValue (), key);
@@ -26627,7 +23171,7 @@ const X3DTypedArrayField_handler =
       {
          const index = +key;
 
-         if (Number .isInteger (index))
+         if (Number .isInteger (index) && index >= 0)
          {
             if (index >= target [_length])
                return undefined;
@@ -26659,7 +23203,7 @@ const X3DTypedArrayField_handler =
       {
          let index = +key;
 
-         if (Number .isInteger (index))
+         if (Number .isInteger (index) && index >= 0)
          {
             const components = target .getComponents ();
 
@@ -26696,7 +23240,7 @@ const X3DTypedArrayField_handler =
       {
          const index = +key;
 
-         if (Number .isInteger (index))
+         if (Number .isInteger (index) && index >= 0)
             return index < target [_length];
       }
 
@@ -26719,7 +23263,7 @@ const X3DTypedArrayField_handler =
       {
          const index = +key;
 
-         if (Number .isInteger (index))
+         if (Number .isInteger (index) && index >= 0)
          {
             if (index < target [_length])
                return Object .getOwnPropertyDescriptor (target .getValue (), key);
@@ -29091,7 +25635,7 @@ const X3DBaseNode_default_ = X3DBaseNode;
 
 /* harmony default export */ const Base_X3DBaseNode = (Namespace/* default */.A .add ("X3DBaseNode", X3DBaseNode_default_));
 ;// ./src/x_ite/Browser/Legacy.js
-/* provided dependency */ var Legacy_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var Legacy_$ = __webpack_require__(163)["A"];
 const Legacy =
 {
    elements (elements, X3DBrowser)
@@ -29153,7 +25697,7 @@ const Legacy_default_ = Legacy;
 
 /* harmony default export */ const Browser_Legacy = (Namespace/* default */.A .add ("Legacy", Legacy_default_));
 ;// ./src/x_ite/BROWSER_VERSION.js
-const BROWSER_VERSION_default_ = "15.0.2";
+const BROWSER_VERSION_default_ = "15.1.7";
 ;
 
 /* harmony default export */ const BROWSER_VERSION = (Namespace/* default */.A .add ("BROWSER_VERSION", BROWSER_VERSION_default_));
@@ -29740,7 +26284,7 @@ const gettext_default_ = (string) => locale .get (string) || string;
 
 /* harmony default export */ const gettext = (Namespace/* default */.A .add ("gettext", gettext_default_));
 ;// ./src/x_ite/Browser/Core/BrowserTimings.js
-/* provided dependency */ var BrowserTimings_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var BrowserTimings_$ = __webpack_require__(163)["A"];
 
 
 
@@ -30025,6 +26569,9 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, Base_X3DBaseN
             shapeNode    = shapes [i] .shapeNode,
             numInstances = shapeNode .getNumInstances ();
 
+         if (!shapeNode .getExecutionContext () .getCountPrimitives ())
+            continue;
+
          switch (shapeNode .getGeometryType ())
          {
             case Shape_GeometryType .POINT:
@@ -30050,9 +26597,6 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, Base_X3DBaseN
 
                // ParticleSystem nodes may have no geometry.
                if (!geometryNode)
-                  continue;
-
-               if (!geometryNode .getExecutionContext () .getCountPrimitives ())
                   continue;
 
                const vertices = geometryNode .getVertices () .length / 4 * numInstances;
@@ -30188,7 +26732,7 @@ const TextCompression_default_ = TextCompression;
 
 /* harmony default export */ const Core_TextCompression = (Namespace/* default */.A .add ("TextCompression", TextCompression_default_));
 ;// ./src/x_ite/Browser/Core/BrowserOptions.js
-/* provided dependency */ var BrowserOptions_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var BrowserOptions_$ = __webpack_require__(163)["A"];
 
 
 
@@ -30670,7 +27214,7 @@ const BrowserProperties_default_ = BrowserProperties;
 
 /* harmony default export */ const Core_BrowserProperties = (Namespace/* default */.A .add ("BrowserProperties", BrowserProperties_default_));
 ;// ./src/x_ite/Browser/Core/RenderingProperties.js
-/* provided dependency */ var RenderingProperties_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var RenderingProperties_$ = __webpack_require__(163)["A"];
 
 
 
@@ -30752,7 +27296,7 @@ const RenderingProperties_default_ = RenderingProperties;
 
 /* harmony default export */ const Core_RenderingProperties = (Namespace/* default */.A .add ("RenderingProperties", RenderingProperties_default_));
 ;// ./src/x_ite/Browser/Core/Notification.js
-/* provided dependency */ var Notification_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var Notification_$ = __webpack_require__(163)["A"];
 
 
 
@@ -30838,7 +27382,7 @@ const Notification_default_ = Notification;
 
 /* harmony default export */ const Core_Notification = (Namespace/* default */.A .add ("Notification", Notification_default_));
 ;// ./src/x_ite/Browser/Core/ContextMenu.js
-/* provided dependency */ var ContextMenu_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var ContextMenu_$ = __webpack_require__(163)["A"];
 
 
 
@@ -33501,11 +30045,11 @@ const SAT_default_ = SAT;
 
 
 
-function Box3 (... args) /* size, center */
+function Box3 (size, center)
 {
    this .matrix = new Numbers_Matrix4 ();
 
-   this .set (... arguments);
+   this .set (size, center);
 }
 
 Object .assign (Box3 .prototype,
@@ -33534,29 +30078,19 @@ Object .assign (Box3 .prototype,
    },
    set (size, center)
    {
-      switch (arguments .length)
+      if (size && center)
       {
-         case 0:
-         {
-            this .matrix .assign (Numbers_Matrix4 .ZERO);
-
-            return this;
-         }
-         case 2:
-         {
-            this .matrix .set (size .x / 2, 0, 0, 0,
-                               0, size .y / 2, 0, 0,
-                               0, 0, size .z / 2, 0,
-                               center .x, center .y, center .z, 1);
-
-            return this;
-         }
-         // case 3:
-         // {
-         //    console .trace ()
-         //    return this .setExtents (arguments [0], arguments [1]);
-         // }
+         this .matrix .set (size .x / 2, 0, 0, 0,
+                            0, size .y / 2, 0, 0,
+                            0, 0, size .z / 2, 0,
+                            center .x, center .y, center .z, 1);
       }
+      else
+      {
+         this .matrix .assign (Numbers_Matrix4 .ZERO);
+      }
+
+      return this;
    },
    setExtents (min, max)
    {
@@ -33618,6 +30152,66 @@ Object .assign (Box3 .prototype,
 
          min .min (p1, p2, p3, p4);
          max .max (p1, p2, p3, p4);
+      };
+   })(),
+   setPoints: (() =>
+   {
+      const
+         min = new Numbers_Vector3 (),
+         max = new Numbers_Vector3 ();
+
+      return function  (points)
+      {
+            min .set (Number .POSITIVE_INFINITY),
+            max .set (Number .NEGATIVE_INFINITY);
+
+         for (const point of points)
+         {
+            min .min (point);
+            max .max (point);
+         }
+
+         return this .setExtents (min, max);
+      };
+   })(),
+   setArray: (() =>
+   {
+      const
+         min = new Numbers_Vector3 (),
+         max = new Numbers_Vector3 ();
+
+      return function (array, stride = 3)
+      {
+         const length = array .length;
+
+         if (!length)
+            return this .set ();
+
+         let minX = Number .POSITIVE_INFINITY;
+         let minY = Number .POSITIVE_INFINITY;
+         let minZ = Number .POSITIVE_INFINITY;
+
+         let maxX = Number .NEGATIVE_INFINITY;
+         let maxY = Number .NEGATIVE_INFINITY;
+         let maxZ = Number .NEGATIVE_INFINITY;
+
+         for (let i = 0; i < length; i += stride)
+         {
+            const
+               x = array [i],
+               y = array [i + 1],
+               z = array [i + 2];
+
+            if (x < minX) minX = x;
+            if (y < minY) minY = y;
+            if (z < minZ) minZ = z;
+
+            if (x > maxX) maxX = x;
+            if (y > maxY) maxY = y;
+            if (z > maxZ) maxZ = z;
+         }
+
+         return this .setExtents (min .set (minX, minY, minZ), max .set (maxX, maxY, maxZ));
       };
    })(),
    getPoints: (() =>
@@ -33984,17 +30578,11 @@ Object .assign (Box3,
    },
    fromPoints (points)
    {
-      const
-         min = new Numbers_Vector3 (Number .POSITIVE_INFINITY),
-         max = new Numbers_Vector3 (Number .NEGATIVE_INFINITY);
-
-      for (const point of points)
-      {
-         min .min (point);
-         max .max (point);
-      }
-
-      return new Box3 () .setExtents (min, max);
+      return new Box3 () .setPoints (points);
+   },
+   fromArray (array, stride = 3)
+   {
+      return new Box3 () .setArray (array, stride);
    },
 });
 
@@ -34072,7 +30660,7 @@ Object .assign (Object .setPrototypeOf (X3DBBoxNode .prototype, Core_X3DChildNod
             bboxSize   = bbox .size .max (max),
             bboxCenter = bbox .center;
 
-         return matrix .set (bboxCenter, null, bboxSize);
+         return matrix .setTransform (bboxCenter, null, bboxSize);
       };
    })(),
    getShapes (shapes, parentModelMatrix)
@@ -34268,7 +30856,7 @@ const NamedNodesArray_default_ = NamedNodesArray;
 
 /* harmony default export */ const Execution_NamedNodesArray = (Namespace/* default */.A .add ("NamedNodesArray", NamedNodesArray_default_));
 ;// ./src/x_ite/Components/Core/X3DImportedNodeProxy.js
-/* provided dependency */ var X3DImportedNodeProxy_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var X3DImportedNodeProxy_$ = __webpack_require__(163)["A"];
 
 
 
@@ -36217,7 +32805,7 @@ const X3DProtoDeclaration_default_ = X3DProtoDeclaration;
 
 /* harmony default export */ const Prototype_X3DProtoDeclaration = (Namespace/* default */.A .add ("X3DProtoDeclaration", X3DProtoDeclaration_default_));
 ;// ./src/x_ite/Parser/X3DParser.js
-/* provided dependency */ var X3DParser_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var X3DParser_$ = __webpack_require__(163)["A"];
 
 
 function X3DParser (scene, name = "Parser")
@@ -36415,18 +33003,6 @@ Object .assign (X3DParser .prototype,
          array [i + 2] = z;
       }
    },
-   rotateAxes180 (array)
-   {
-      // This function is for STL and PLY models.
-
-      const length = array .length;
-
-      for (let i = 0; i < length; i += 3)
-      {
-         array [i + 1] = -array [i + 1];
-         array [i + 2] = -array [i + 2];
-      }
-   },
 });
 
 const X3DParser_default_ = X3DParser;
@@ -36552,7 +33128,7 @@ const Placeholder_default_ = Placeholder;
 
 /* harmony default export */ const Parser_Placeholder = (Namespace/* default */.A .add ("Placeholder", Placeholder_default_));
 ;// ./src/x_ite/Parser/VRMLParser.js
-/* provided dependency */ var VRMLParser_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var VRMLParser_$ = __webpack_require__(163)["A"];
 
 
 
@@ -39245,7 +35821,7 @@ const VRMLParser_default_ = VRMLParser;
 
 /* harmony default export */ const Parser_VRMLParser = (Namespace/* default */.A .add ("VRMLParser", VRMLParser_default_));
 ;// ./src/x_ite/Parser/XMLParser.js
-/* provided dependency */ var XMLParser_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var XMLParser_$ = __webpack_require__(163)["A"];
 
 
 
@@ -40531,7 +37107,7 @@ const XMLParser_default_ = XMLParser;
 
 /* harmony default export */ const Parser_XMLParser = (Namespace/* default */.A .add ("XMLParser", XMLParser_default_));
 ;// ./src/x_ite/Parser/JSONParser.js
-/* provided dependency */ var JSONParser_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var JSONParser_$ = __webpack_require__(163)["A"];
 
 
 
@@ -41191,21 +37767,21 @@ Object .assign (X3DOptimizer .prototype,
          nodeMatrix       = new Numbers_Matrix4 (),
          childMatrix      = new Numbers_Matrix4 ();
 
-      nodeMatrix .set (node .translation .getValue (),
-                       node .rotation .getValue (),
-                       node .scale .getValue (),
-                       node .scaleOrientation .getValue (),
-                       node .center .getValue ());
+      nodeMatrix .setTransform (node .translation .getValue (),
+                                node .rotation .getValue (),
+                                node .scale .getValue (),
+                                node .scaleOrientation .getValue (),
+                                node .center .getValue ());
 
-      childMatrix .set (child .translation .getValue (),
-                        child .rotation .getValue (),
-                        child .scale .getValue (),
-                        child .scaleOrientation .getValue (),
-                        child .center .getValue ());
+      childMatrix .setTransform (child .translation .getValue (),
+                                 child .rotation .getValue (),
+                                 child .scale .getValue (),
+                                 child .scaleOrientation .getValue (),
+                                 child .center .getValue ());
 
       nodeMatrix .multLeft (childMatrix);
 
-      nodeMatrix .get (translation, rotation, scale, scaleOrientation, child .center .getValue ());
+      nodeMatrix .getTransform (translation, rotation, scale, scaleOrientation, child .center .getValue ());
 
       child .translation      = translation;
       child .rotation         = rotation;
@@ -41229,11 +37805,11 @@ Object .assign (X3DOptimizer .prototype,
 
       const nodeMatrix = new Numbers_Matrix4 ();
 
-      nodeMatrix .set (node .translation .getValue (),
-                       node .rotation .getValue (),
-                       node .scale .getValue (),
-                       node .scaleOrientation .getValue (),
-                       node .center .getValue ());
+      nodeMatrix .setTransform (node .translation .getValue (),
+                                node .rotation .getValue (),
+                                node .scale .getValue (),
+                                node .scaleOrientation .getValue (),
+                                node .center .getValue ());
 
       if (child .location)
          child .location = nodeMatrix .multVecMatrix (child .location .getValue ());
@@ -41255,18 +37831,18 @@ Object .assign (X3DOptimizer .prototype,
          translation     = new Numbers_Vector3 (),
          rotation        = new Numbers_Rotation4 ();
 
-      nodeMatrix .set (node .translation .getValue (),
-                       node .rotation .getValue (),
-                       node .scale .getValue (),
-                       node .scaleOrientation .getValue (),
-                       node .center .getValue ());
+      nodeMatrix .setTransform (node .translation .getValue (),
+                                node .rotation .getValue (),
+                                node .scale .getValue (),
+                                node .scaleOrientation .getValue (),
+                                node .center .getValue ());
 
-      viewpointMatrix .set (child .position .getValue (),
-                            child .orientation .getValue ());
+      viewpointMatrix .setTransform (child .position .getValue (),
+                                     child .orientation .getValue ());
 
       viewpointMatrix
          .multRight (nodeMatrix)
-         .get (translation, rotation);
+         .getTransform (translation, rotation);
 
       child .position         = translation;
       child .orientation      = rotation;
@@ -41464,7 +38040,7 @@ const Plane3_default_ = Plane3;
 
 /* harmony default export */ const Geometry_Plane3 = (Namespace/* default */.A .add ("Plane3", Plane3_default_));
 ;// ./src/standard/Math/Geometry/Triangle3.js
-/* provided dependency */ var libtess = __webpack_require__(340);
+/* provided dependency */ var libtess = __webpack_require__(451);
 
 
 const Triangle3 =
@@ -42523,7 +39099,7 @@ class MatrixStack extends Array
 
    identity ()
    {
-      this [this .#top] .identity ();
+      this [this .#top] .set ();
    }
 
    inverse ()
@@ -42593,7 +39169,6 @@ function X3DRenderObject (executionContext)
    this .modelViewMatrix          = new Utility_MatrixStack (Numbers_Matrix4);
    this .viewMatrix               = new Utility_MatrixStack (Numbers_Matrix4);
    this .cameraSpaceMatrix        = new Utility_MatrixStack (Numbers_Matrix4);
-   this .viewportArray            = new Int32Array (4);
    this .projectionMatrixArray    = new Float32Array (16);
    this .eyeMatrixArray           = new Float32Array (16);
    this .viewMatrixArray          = new Float32Array (16);
@@ -42766,10 +39341,6 @@ Object .assign (X3DRenderObject .prototype,
    getCameraSpaceMatrix ()
    {
       return this .cameraSpaceMatrix;
-   },
-   getViewportArray ()
-   {
-      return this .viewportArray;
    },
    getProjectionMatrixArray ()
    {
@@ -43031,7 +39602,7 @@ Object .assign (X3DRenderObject .prototype,
             .multRight (viewpointNode .getOrientation ());
 
          rotation
-            .setFromToVec (Numbers_Vector3 .NEGATIVE_Z_AXIS, direction)
+            .setVectors (Numbers_Vector3 .NEGATIVE_Z_AXIS, direction)
             .multRight (localOrientation);
 
          viewpointNode .straightenHorizon (rotation);
@@ -43187,8 +39758,8 @@ Object .assign (X3DRenderObject .prototype,
 
          const renderContext = this .pointingShapes [num];
 
-         renderContext .modelViewMatrix .set (modelViewMatrix);
          renderContext .viewport .assign (viewVolume .getViewport ());
+         renderContext .modelViewMatrix .set (modelViewMatrix);
          renderContext .hAnimNode = this .hAnimNode .at (-1);
          renderContext .shapeNode = shapeNode;
 
@@ -43226,9 +39797,10 @@ Object .assign (X3DRenderObject .prototype,
          {
             const renderContext = {
                renderObject: this,
-               modelViewMatrix: new Float32Array (16),
-               collisions: [ ],
+               viewport: new Numbers_Vector4 (),
                clipPlanes: [ ],
+               collisions: [ ],
+               modelViewMatrix: new Float32Array (16),
                get renderContext () { return this; },
             };
 
@@ -43237,6 +39809,7 @@ Object .assign (X3DRenderObject .prototype,
 
          const renderContext = this .collisionShapes [num];
 
+         renderContext .viewport .assign (viewVolume .getViewport ());
          renderContext .modelViewMatrix .set (modelViewMatrix);
          renderContext .hAnimNode = this .hAnimNode .at (-1);
          renderContext .shapeNode = shapeNode;
@@ -43275,9 +39848,9 @@ Object .assign (X3DRenderObject .prototype,
          {
             const renderContext = {
                renderObject: this,
-               modelViewMatrix: new Float32Array (16),
                viewport: new Numbers_Vector4 (),
                clipPlanes: [ ],
+               modelViewMatrix: new Float32Array (16),
                get renderContext () { return this; },
             };
 
@@ -43286,8 +39859,8 @@ Object .assign (X3DRenderObject .prototype,
 
          const renderContext = this .depthShapes [num];
 
-         renderContext .modelViewMatrix .set (modelViewMatrix);
          renderContext .viewport .assign (viewVolume .getViewport ());
+         renderContext .modelViewMatrix .set (modelViewMatrix);
          renderContext .hAnimNode = this .hAnimNode .at (-1);
          renderContext .shapeNode = shapeNode;
 
@@ -43343,8 +39916,8 @@ Object .assign (X3DRenderObject .prototype,
 
          this .renderPasses |= shapeNode .getRenderPasses ();
 
-         renderContext .modelViewMatrix .set (modelViewMatrix);
          renderContext .viewport .assign (viewVolume .getViewport ());
+         renderContext .modelViewMatrix .set (modelViewMatrix);
 
          renderContext .shadows        = this .localShadows .at (-1);
          renderContext .fogNode        = this .localFogs .at (-1);
@@ -43365,79 +39938,69 @@ Object .assign (X3DRenderObject .prototype,
       return {
          renderObject: this,
          transparent: transparent,
-         modelViewMatrix: new Float32Array (16),
          viewport: new Numbers_Vector4 (),
+         modelViewMatrix: new Float32Array (16),
          localObjects: [ ],
          localObjectsKeys: [ ], // [clip planes, lights]
          get renderContext () { return this; },
       };
    },
-   pointing: (() =>
+   pointing (shapes, numShapes)
    {
-      const projectionMatrixArray = new Float32Array (16);
+      const
+         browser               = this .getBrowser (),
+         gl                    = browser .getContext (),
+         projectionMatrixArray = this .projectionMatrixArray,
+         { x, y }              = browser .getPointer ();
 
-      return function (shapes, numShapes)
+      // Configure depth shaders.
+
+      projectionMatrixArray .set (this .getProjectionMatrix () .get ());
+
+      // Configure framebuffer.
+
+      gl .scissor (0, 0, 1, 1);
+      gl .clear (gl .DEPTH_BUFFER_BIT);
+
+      // Render all objects.
+
+      gl .disable (gl .CULL_FACE);
+
+      for (let s = 0; s < numShapes; ++ s)
       {
          const
-            browser  = this .getBrowser (),
-            gl       = browser .getContext (),
-            viewport = this .viewVolumes .at (-1) .getViewport (),
-            { x, y } = browser .getPointer ();
-
-         // Configure depth shaders.
-
-         projectionMatrixArray .set (this .getProjectionMatrix () .get ());
-
-         // Configure viewport and background.
+            { renderContext, viewport, modelViewMatrix, shapeNode, hAnimNode, clipPlanes } = shapes [s],
+            appearanceNode      = shapeNode .getAppearance (),
+            geometryContext     = shapeNode .getGeometryContext (),
+            depthModeNode       = appearanceNode .getDepthMode (),
+            stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
+            shaderNode          = browser .getPointingShader (clipPlanes .length, shapeNode, hAnimNode),
+            id                  = browser .addPointingShape (renderContext);
 
          gl .viewport (viewport .x - x,
                        viewport .y - y,
                        viewport .z,
                        viewport .w);
 
-         gl .scissor (0, 0, 1, 1);
-         gl .clear (gl .DEPTH_BUFFER_BIT);
+         // Draw shape.
 
-         // Render all objects.
+         shaderNode .enable (gl);
+         shaderNode .setClipPlanes (gl, clipPlanes);
 
-         gl .disable (gl .CULL_FACE);
+         gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
+         gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
+         gl .uniform1f (shaderNode .x3d_Id, id);
 
-         for (let s = 0; s < numShapes; ++ s)
-         {
-            const
-               { renderContext, modelViewMatrix, viewport, shapeNode, hAnimNode, clipPlanes } = shapes [s],
-               appearanceNode      = shapeNode .getAppearance (),
-               geometryContext     = shapeNode .getGeometryContext (),
-               depthModeNode       = appearanceNode .getDepthMode (),
-               stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
-               shaderNode          = browser .getPointingShader (clipPlanes .length, shapeNode, hAnimNode),
-               id                  = browser .addPointingShape (renderContext);
+         depthModeNode       ?.enable (gl);
+         stylePropertiesNode ?.setShaderUniforms (gl, shaderNode);
+         hAnimNode           ?.setShaderUniforms (gl, shaderNode);
 
-            gl .viewport (viewport .x - x,
-                          viewport .y - y,
-                          viewport .z,
-                          viewport .w);
+         shapeNode .displaySimple (gl, renderContext, shaderNode);
 
-            // Draw shape.
-
-            shaderNode .enable (gl);
-            shaderNode .setClipPlanes (gl, clipPlanes);
-
-            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
-            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
-            gl .uniform1f (shaderNode .x3d_Id, id);
-
-            depthModeNode       ?.enable (gl);
-            stylePropertiesNode ?.setShaderUniforms (gl, shaderNode);
-            hAnimNode           ?.setShaderUniforms (gl, shaderNode);
-
-            shapeNode .displaySimple (gl, renderContext, shaderNode);
-
-            depthModeNode ?.disable (gl);
-            browser .resetTextureUnits ();
-         }
-      };
-   })(),
+         depthModeNode ?.disable (gl);
+         browser .resetTextureUnits ();
+      }
+   },
    collide: (() =>
    {
       const axes = [
@@ -43559,7 +40122,7 @@ Object .assign (X3DRenderObject .prototype,
 
          const
             upVector = viewpointNode .getUpVector (),
-            down     = rotation .setFromToVec (Numbers_Vector3 .Z_AXIS, upVector);
+            down     = rotation .setVectors (Numbers_Vector3 .Z_AXIS, upVector);
 
          viewProjectionMatrix
             .assign (viewpointNode .getModelMatrix ())
@@ -43581,7 +40144,7 @@ Object .assign (X3DRenderObject .prototype,
 
          distance -= avatarHeight;
 
-         const up = rotation .setFromToVec (Numbers_Vector3 .Y_AXIS, upVector);
+         const up = rotation .setVectors (Numbers_Vector3 .Y_AXIS, upVector);
 
          if (distance > 0)
          {
@@ -43623,85 +40186,76 @@ Object .assign (X3DRenderObject .prototype,
          }
       };
    })(),
-   depth: (() =>
+   depth (shapes, numShapes, normal)
    {
-      const projectionMatrixArray = new Float32Array (16);
+      const
+         browser               = this .getBrowser (),
+         gl                    = browser .getContext (),
+         viewport              = this .viewVolumes .at (-1) .getViewport (),
+         projectionMatrixArray = this .projectionMatrixArray;
 
-      return function (shapes, numShapes, normal)
+      // Configure depth shaders.
+
+      projectionMatrixArray .set (this .getProjectionMatrix () .get ());
+
+      // Configure viewport and background.
+
+      gl .viewport (... viewport);
+      gl .scissor (... viewport);
+
+      gl .clearColor (... this .depthClearColor);
+      gl .clear (gl .COLOR_BUFFER_BIT | gl .DEPTH_BUFFER_BIT);
+
+      // Render all objects
+
+      gl .disable (gl .CULL_FACE);
+
+      for (let s = 0; s < numShapes; ++ s)
       {
          const
-            browser  = this .getBrowser (),
-            gl       = browser .getContext (),
-            viewport = this .viewVolumes .at (-1) .getViewport ();
+            { renderContext, clipPlanes, modelViewMatrix, shapeNode, hAnimNode } = shapes [s],
+            appearanceNode      = shapeNode .getAppearance (),
+            geometryContext     = shapeNode .getGeometryContext (),
+            stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
+            shaderNode          = browser .getDepthShader (normal, clipPlanes .length, shapeNode, hAnimNode);
 
-         // Configure depth shaders.
+         // Cannot change viewport here, because the viewport is special here.
+         // gl .viewport (... viewport);
 
-         projectionMatrixArray .set (this .getProjectionMatrix () .get ());
+         // Draw
 
-         // Configure viewport and background
+         shaderNode .enable (gl);
+         shaderNode .setClipPlanes (gl, clipPlanes);
 
-         gl .viewport (... viewport);
-         gl .scissor (... viewport);
+         gl .uniform1i (shaderNode .x3d_Id, s);
+         gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
+         gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
 
-         gl .clearColor (... this .depthClearColor);
-         gl .clear (gl .COLOR_BUFFER_BIT | gl .DEPTH_BUFFER_BIT);
+         stylePropertiesNode ?.setShaderUniforms (gl, shaderNode);
+         hAnimNode           ?.setShaderUniforms (gl, shaderNode);
 
-         // Render all objects
-
-         gl .disable (gl .CULL_FACE);
-
-         for (let s = 0; s < numShapes; ++ s)
-         {
-            const
-               { renderContext, clipPlanes, modelViewMatrix, shapeNode, hAnimNode } = shapes [s],
-               appearanceNode      = shapeNode .getAppearance (),
-               geometryContext     = shapeNode .getGeometryContext (),
-               stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
-               shaderNode          = browser .getDepthShader (normal, clipPlanes .length, shapeNode, hAnimNode);
-
-            // Cannot change viewport here, because the viewport is special here.
-
-            // Draw
-
-            shaderNode .enable (gl);
-            shaderNode .setClipPlanes (gl, clipPlanes);
-
-            gl .uniform1i (shaderNode .x3d_Id, s);
-            gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
-            gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
-
-            stylePropertiesNode ?.setShaderUniforms (gl, shaderNode);
-            hAnimNode           ?.setShaderUniforms (gl, shaderNode);
-
-            shapeNode .displaySimple (gl, renderContext, shaderNode);
-            browser .resetTextureUnits ();
-         }
-      };
-   })(),
+         shapeNode .displaySimple (gl, renderContext, shaderNode);
+         browser .resetTextureUnits ();
+      }
+   },
    draw ()
    {
       const
-         browser                  = this .getBrowser (),
-         gl                       = browser .getContext (),
-         pose                     = browser .getPose (),
-         framebuffers             = this .getFramebuffers (),
-         numFramebuffers          = framebuffers .length,
-         viewport                 = this .viewVolumes .at (-1) .getViewport (),
-         lights                   = this .lights,
-         globalLightsKeys         = this .globalLightsKeys,
-         globalLightsKey          = globalLightsKeys .join (""),
-         globalLights             = this .globalLights,
-         renderedTextures         = this .renderedTextures,
-         globalShadows            = this .globalShadows,
-         headlight                = this .getNavigationInfo () ._headlight .getValue ();
+         browser          = this .getBrowser (),
+         gl               = browser .getContext (),
+         pose             = browser .getPose (),
+         framebuffers     = this .getFramebuffers (),
+         numFramebuffers  = framebuffers .length,
+         viewport         = this .viewVolumes .at (-1) .getViewport (),
+         lights           = this .lights,
+         globalLightsKeys = this .globalLightsKeys,
+         globalLightsKey  = globalLightsKeys .join (""),
+         globalLights     = this .globalLights,
+         renderedTextures = this .renderedTextures,
+         globalShadows    = this .globalShadows,
+         headlight        = this .getNavigationInfo () ._headlight .getValue ();
 
       // PREPARATIONS
-
-      // Set matrices.
-
-      this .viewportArray          .set (viewport);
-      this .viewMatrixArray        .set (this .getViewMatrix () .get ());
-      this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
 
       // Render shadow maps and prepare texture projectors.
       // This must be done before rendered textures are updated.
@@ -43715,6 +40269,11 @@ Object .assign (X3DRenderObject .prototype,
          renderedTexture .renderTexture (this);
 
       this .globalShadow = globalShadows .at (-1);
+
+      // Set matrices after shadows or other renderings.
+
+      this .viewMatrixArray        .set (this .getViewMatrix () .get ());
+      this .cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
 
       // DRAW
 
@@ -43899,6 +40458,8 @@ function X3DRenderObject_assign (lhs, rhs)
 
    lhs .length = length;
 }
+
+X3DRenderObject .assign = X3DRenderObject_assign;
 
 const X3DRenderObject_default_ = X3DRenderObject;
 ;
@@ -44910,6 +41471,7 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, Core_X3DBinda
       Core_X3DBindableNode .prototype .initialize .call (this);
 
       this ._type               .addInterest ("set_type__",               this);
+      this ._avatarSize         .addInterest ("set_avatarSize__",         this);
       this ._headlight          .addInterest ("set_headlight__",          this);
       this ._visibilityLimit    .addInterest ("set_visibilityLimit__",    this);
       this ._transitionStart    .addInterest ("set_transitionStart__",    this);
@@ -44917,6 +41479,7 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, Core_X3DBinda
       this ._isBound            .addInterest ("set_isBound__",            this);
 
       this .set_type__ ();
+      this .set_avatarSize__ ();
       this .set_headlight__ ();
       this .set_visibilityLimit__ ();
    },
@@ -44926,21 +41489,19 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, Core_X3DBinda
    },
    getCollisionRadius ()
    {
-      return this ._avatarSize [0] ?? 0.25;
+      return this .collisionRadius;
    },
    getAvatarHeight ()
    {
-      return this ._avatarSize [1] ?? 1.6;
+      return this .avatarHeight;
    },
    getStepHeight ()
    {
-      return this ._avatarSize [2] ?? 0.75;
+      return this .stepHeight;
    },
    getNearValue ()
    {
-      const nearValue = this .getCollisionRadius ();
-
-      return nearValue === 0 ? 1e-5 : nearValue / 2;
+      return this .nearValue;
    },
    getFarValue ()
    {
@@ -45080,6 +41641,15 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, Core_X3DBinda
 
       if (noneViewer)
          this ._availableViewers .push ("NONE");
+   },
+   set_avatarSize__ ()
+   {
+      const collisionRadius = Math .max (this ._avatarSize [0] ?? 0.25, 0);
+
+      this .collisionRadius = collisionRadius;
+      this .avatarHeight    = Math .max (this ._avatarSize [1] ?? 1.6, 0);
+      this .stepHeight      = Math .max (this ._avatarSize [2] ?? 0.75, 0);
+      this .nearValue       = collisionRadius === 0 ? 0.125 : collisionRadius / 2;
    },
    set_headlight__ ()
    {
@@ -45681,7 +42251,7 @@ function X3DGeometryNode (executionContext)
                           Base_X3DConstants .outputOnly, "bbox_changed", new x_ite_Fields .SFTime (),
                           Base_X3DConstants .outputOnly, "rebuild",      new x_ite_Fields .SFTime ());
 
-   // Private members
+   // Private properties
 
    this .min                      = new Numbers_Vector3 ();
    this .max                      = new Numbers_Vector3 ();
@@ -45707,42 +42277,37 @@ function X3DGeometryNode (executionContext)
    this .planes                   = Array .from ({ length: 5 }, () => new Geometry_Plane3 ()); // For LinePickSensor
 }
 
-class GeometryArray extends Array
+class GeometryArray
 {
-   #Type;
-   #typedArray;
-
-   constructor (Type = Float32Array)
+   static create (Type = Float32Array)
    {
-      super ();
+      let typedArray = new Type ();
 
-      this .#Type       = Type;
-      this .#typedArray = new Type ();
-   }
+      return Object .assign ([ ],
+      {
+         assign (value)
+         {
+            const length = value .length;
 
-   assign (value)
-   {
-      const length = value .length;
+            this .length = length;
 
-      this .length = length;
+            for (let i = 0; i < length; ++ i)
+               this [i] = value [i];
+         },
+         getValue ()
+         {
+            return typedArray;
+         },
+         shrinkToFit ()
+         {
+            if (this .length === typedArray .length)
+               typedArray .set (this);
+            else
+               typedArray = new Type (this);
 
-      for (let i = 0; i < length; ++ i)
-         this [i] = value [i];
-   }
-
-   getValue ()
-   {
-      return this .#typedArray;
-   }
-
-   shrinkToFit ()
-   {
-      if (this .length === this .#typedArray .length)
-         this .#typedArray .set (this);
-      else
-         this .#typedArray = new (this .#Type) (this);
-
-      return this .#typedArray;
+            return typedArray;
+         },
+      });
    }
 }
 
@@ -45754,7 +42319,7 @@ Object .defineProperty (X3DGeometryNode, "createArray",
    {
       // return new Fields .MFFloat ();
 
-      return new GeometryArray (Type);
+      return GeometryArray .create (Type);
    },
 })
 
@@ -46195,50 +42760,33 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
       this .normals        .length = 0;
       this .vertices       .length = 0;
    },
-   updateBBox: (() =>
+   updateBBox ()
    {
-      const point = new Numbers_Vector3 ();
+      // Determine bbox.
 
-      return function ()
+      const
+         vertices     = this .vertices .getValue (),
+         { min, max } = this;
+
+      if (vertices .length)
       {
-         // Determine bbox.
-
-         const
-            vertices    = this .vertices .getValue (),
-            numVertices = vertices .length,
-            min         = this .min,
-            max         = this .max;
-
-         if (numVertices)
-         {
-            if (min .x === Number .POSITIVE_INFINITY)
-            {
-               for (let i = 0; i < numVertices; i += 4)
-               {
-                  const { [i]: v1, [i + 1]: v2, [i + 2]: v3 } = vertices;
-
-                  point .set (v1, v2, v3);
-
-                  min .min (point);
-                  max .max (point);
-               }
-            }
-
-            this .bbox .setExtents (min, max);
-         }
+         if (min .x === Number .POSITIVE_INFINITY)
+            this .bbox .setArray (vertices, 4) .getExtents (min, max);
          else
-         {
-            this .bbox .setExtents (min .set (0), max .set (0));
-         }
+            this .bbox .setExtents (min, max);
+      }
+      else
+      {
+         this .bbox .setExtents (min .set (0), max .set (0));
+      }
 
-         for (let i = 0; i < 5; ++ i)
-            this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
+      for (let i = 0; i < 5; ++ i)
+         this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
 
-         this ._bbox_changed .addEvent ();
+      this ._bbox_changed .addEvent ();
 
-         this .getExecutionContext () ._bbox_changed = Date .now () / 1000;
-      };
-   })(),
+      this .getExecutionContext () ._bbox_changed = Date .now () / 1000;
+   },
    transfer ()
    {
       const gl = this .getBrowser () .getContext ();
@@ -46409,7 +42957,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
    display (gl, renderContext)
    {
       const
-         { viewport, appearanceNode, modelViewMatrix } = renderContext,
+         { viewport, modelViewMatrix, appearanceNode } = renderContext,
          browser         = this .getBrowser (),
          primitiveMode   = browser .getPrimitiveMode (gl .TRIANGLES),
          renderModeNodes = appearanceNode .getRenderModes (),
@@ -46418,6 +42966,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
       // Set viewport.
 
       gl .viewport (... viewport);
+      gl .scissor (... viewport);
 
       // Enable render mode nodes.
 
@@ -46553,7 +43102,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
    displayInstanced (gl, renderContext, shapeNode)
    {
       const
-         { viewport, appearanceNode, modelViewMatrix } = renderContext,
+         { viewport, modelViewMatrix, appearanceNode } = renderContext,
          browser         = this .getBrowser (),
          primitiveMode   = browser .getPrimitiveMode (gl .TRIANGLES),
          renderModeNodes = appearanceNode .getRenderModes (),
@@ -46562,6 +43111,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, Core_X3DNode
       // Set viewport.
 
       gl .viewport (... viewport);
+      gl .scissor (... viewport);
 
       // Enable render mode nodes.
 
@@ -47160,6 +43710,7 @@ const BitSet_default_ = BitSet;
 
 
 
+
 function X3DBackgroundNode (executionContext)
 {
    Core_X3DBindableNode .call (this, executionContext);
@@ -47178,14 +43729,14 @@ function X3DBackgroundNode (executionContext)
    // Private properties
 
    this .modelMatrix      = new Numbers_Matrix4 ();
-   this .clipPlanes       = [ ];
+   this .localObjects     = [ ];
+   this .localObjectsKeys = [ ];
    this .colors           = [ ];
    this .sphere           = [ ];
    this .textureNodes     = new Array (6);
    this .textureBits      = new Utility_BitSet ();
-   this .sphereContext    = new Rendering_GeometryContext ({ colorMaterial: true });
-   this .texturesContext  = new Rendering_GeometryContext ({ localObjectsKeys: this .sphereContext .localObjectsKeys });
-   this .localObjectsKeys = this .sphereContext .localObjectsKeys;
+   this .sphereContext    = new Rendering_GeometryContext ({ colorMaterial: true, localObjectsKeys: this .localObjectsKeys });
+   this .texturesContext  = new Rendering_GeometryContext ({ localObjectsKeys: this .localObjectsKeys });
 
    this [Rendering_RenderPass .RENDER_KEY]         = this;
    this [Rendering_RenderPass .TRANSMISSION_KEY]   = this;
@@ -47251,6 +43802,10 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, Core_X3DBi
    getRenderPassNodes ()
    {
       return this .renderPassNodes;
+   },
+   getTextureNodes ()
+   {
+      return this .textureNodes;
    },
    set_texture__ (index, textureNode)
    {
@@ -47540,22 +44095,9 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, Core_X3DBi
          }
          case Rendering_TraverseType .DISPLAY:
          {
-            const
-               localObjects     = renderObject .getLocalObjects (),
-               clipPlanes       = this .clipPlanes,
-               localObjectsKeys = this .localObjectsKeys;
-
-            let c = 0;
-
-            for (const localObject of localObjects)
-            {
-               if (localObject .isClipPlane)
-                  clipPlanes [c ++] = localObject;
-            }
-
-            clipPlanes       .length = c;
-            localObjectsKeys .length = c;
-            localObjectsKeys .fill (0);
+            // Handle ClipPane nodes.
+            Rendering_X3DRenderObject .assign (this .localObjects,     renderObject .getLocalObjects ());
+            Rendering_X3DRenderObject .assign (this .localObjectsKeys, renderObject .getLocalObjectsKeys ());
             return;
          }
       }
@@ -47608,8 +44150,8 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, Core_X3DBi
 
          modelViewMatrix .assign (this .modelMatrix);
          modelViewMatrix .multRight (renderObject .getViewMatrix () .get ());
-         modelViewMatrix .get (null, rotation);
-         modelViewMatrix .identity ();
+         modelViewMatrix .getTransform (null, rotation);
+         modelViewMatrix .set ();
          modelViewMatrix .rotate (rotation);
          modelViewMatrix .scale (scale .set (far, far, far));
 
@@ -47654,7 +44196,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, Core_X3DBi
       const shaderNode = browser .getDefaultMaterial () .getShader (sphereContext);
 
       shaderNode .enable (gl);
-      shaderNode .setClipPlanes (gl, this .clipPlanes, renderObject);
+      shaderNode .setClipPlanes (gl, this .localObjects, renderObject);
 
       // Uniforms
 
@@ -47707,7 +44249,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, Core_X3DBi
             const shaderNode = browser .getDefaultMaterial () .getShader (texturesContext);
 
             shaderNode .enable (gl);
-            shaderNode .setClipPlanes (gl, this .clipPlanes, renderObject);
+            shaderNode .setClipPlanes (gl, this .localObjects, renderObject);
 
             // Set uniforms.
 
@@ -47797,15 +44339,6 @@ Object .assign (Object .setPrototypeOf (X3DTextureNode .prototype, Shape_X3DAppe
    isTransparent ()
    {
       return this ._transparent .getValue ();
-   },
-   isRenderedTexture ()
-   {
-      return false;
-   },
-   getRenderedTextures (renderedTextures)
-   {
-      if (this .isRenderedTexture ())
-         renderedTextures .add (this);
    },
 });
 
@@ -47901,6 +44434,12 @@ Object .assign (Object .setPrototypeOf (X3DSingleTextureNode .prototype, Texturi
       // Normally the identity matrix or a flipY matrix.
       return this .matrix;
    },
+   isRenderedTexture ()
+   {
+      return false;
+   },
+   getRenderedTextures (renderedTextures)
+   { },
    isImageTransparent (data)
    {
       const length = data .length;
@@ -48166,7 +44705,8 @@ const X3DTexture2DNode_default_ = X3DTexture2DNode;
 
 /* harmony default export */ const Texturing_X3DTexture2DNode = (Namespace/* default */.A .add ("X3DTexture2DNode", X3DTexture2DNode_default_));
 ;// ./src/x_ite/Components/Texturing/ImageTexture.js
-/* provided dependency */ var ImageTexture_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var ImageTexture_$ = __webpack_require__(163)["A"];
+
 
 
 
@@ -48226,42 +44766,53 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, Texturing_X3DTe
       if (this .urlStack .length === 0)
       {
          this .clearTexture ();
+         this .updateOutputs (0, 0, 0);
          this .setLoadState (Base_X3DConstants .FAILED_STATE);
          return;
       }
 
-      // Get URL.
-
-      this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
-
-      if (this .URL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .URL .href .match (/^data:image\/ktx2[;,]/))
+      new InputOutput_FileLoader (this, { dataAsString: false }) .loadDocument ([this .urlStack .shift ()], (data, fileURL) =>
       {
-         this .setLinear (true);
-         this .setMipMaps (false);
-
-         this .getBrowser () .getKTXDecoder ()
-            .then (decoder => decoder .loadKTXFromURL (this .URL, this .getCache ()))
-            .then (texture => this .setKTXTexture (texture))
-            .catch (error => this .setError ({ type: error .message }));
-      }
-      else
-      {
-         this .setLinear (false);
-         this .setMipMaps (true);
-
-         if (this .URL .protocol !== "data:")
+         if (data === null)
          {
-            if (!this .getCache ())
-               this .URL .searchParams .set ("_", Date .now ());
+            this .loadNext ();
          }
+         else if (data instanceof ArrayBuffer)
+         {
+            this .fileURL = new URL (fileURL);
 
-         this .image .attr ("src", this .URL);
-      }
+            if (this .fileURL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .fileURL .href .match (/^\s*data:image\/ktx2[;,]/s))
+            {
+               this .setLinear (true);
+               this .setMipMaps (false);
+
+               this .getBrowser () .getKTXDecoder ()
+                  .then (decoder => decoder .loadKTXFromBuffer (data))
+                  .then (texture => this .setKTXTexture (texture))
+                  .catch (error => this .setError ({ type: error .message }));
+            }
+            else
+            {
+               this .setLinear (false);
+               this .setMipMaps (true);
+
+               this .objectURL = URL .createObjectURL (new Blob ([data]));
+
+               this .image .attr ("src", this .objectURL);
+            }
+         }
+         else
+         {
+            throw new Error ("ImageTexture: no suitable file type handler found.");
+         }
+      });
    },
    setError (event)
    {
-      if (this .URL .protocol !== "data:")
-         console .warn (`Error loading image '${decodeURI (this .URL)}:'`, event .type);
+      if (this .fileURL .protocol !== "data:")
+         console .warn (`Error loading image '${decodeURI (this .fileURL)}:'`, event .type);
+
+      URL .revokeObjectURL (this .objectURL);
 
       this .loadNext ();
    },
@@ -48272,17 +44823,20 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, Texturing_X3DTe
 
       if (DEVELOPMENT)
       {
-         if (this .URL .protocol !== "data:")
-            console .info (`Done loading image texture '${decodeURI (this .URL)}'.`);
+         if (this .fileURL .protocol !== "data:")
+            console .info (`Done loading image texture '${decodeURI (this .fileURL)}'.`);
       }
 
       try
       {
+         const { baseWidth, baseHeight, numComponents } = texture;
+
          this .setTexture (texture);
          this .setTransparent (false);
-         this .setWidth (texture .baseWidth);
-         this .setHeight (texture .baseHeight);
+         this .setWidth (baseWidth);
+         this .setHeight (baseHeight);
          this .updateTextureParameters ();
+         this .updateOutputs (baseWidth, baseHeight, numComponents);
 
          this .setLoadState (Base_X3DConstants .COMPLETE_STATE);
       }
@@ -48296,8 +44850,8 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, Texturing_X3DTe
    {
       if (DEVELOPMENT)
       {
-         if (this .URL .protocol !== "data:")
-            console .info (`Done loading image texture '${decodeURI (this .URL)}'.`);
+         if (this .fileURL .protocol !== "data:")
+            console .info (`Done loading image texture '${decodeURI (this .fileURL)}'.`);
       }
 
       try
@@ -48310,6 +44864,7 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, Texturing_X3DTe
 
          this .setTextureData (width, height, this ._colorSpaceConversion .getValue (), this .isTransparent (), image);
          this .setTransparent (this .isImageTransparent (this .getTextureData (this .getTexture (), width, height)));
+         this .updateOutputs (width, height, this .isTransparent () ? 4 : 3);
          this .setLoadState (Base_X3DConstants .COMPLETE_STATE);
          this .addNodeEvent ();
       }
@@ -48318,6 +44873,16 @@ Object .assign (Object .setPrototypeOf (ImageTexture .prototype, Texturing_X3DTe
          // Catch security error from cross origin requests.
          this .setError ({ type: error .message });
       }
+      finally
+      {
+         URL .revokeObjectURL (this .objectURL);
+      }
+   },
+   updateOutputs (width, height, colorDepth)
+   {
+      this ._width      = width;
+      this ._height     = height;
+      this ._colorDepth = colorDepth;
    },
    dispose ()
    {
@@ -48339,6 +44904,9 @@ Object .defineProperties (ImageTexture,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "autoRefresh",          new x_ite_Fields .SFTime (0)),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "autoRefreshTimeLimit", new x_ite_Fields .SFTime (3600)),
          new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "colorSpaceConversion", new x_ite_Fields .SFBool (true)), // experimental
+         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,     "width",                new x_ite_Fields .SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,     "height",               new x_ite_Fields .SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,     "colorDepth",           new x_ite_Fields .SFInt32 ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "repeatS",              new x_ite_Fields .SFBool (true)),
          new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "repeatT",              new x_ite_Fields .SFBool (true)),
          new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "textureProperties",    new x_ite_Fields .SFNode ()),
@@ -50269,7 +46837,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
       {
          const differenceMatrix = this .modelMatrix .copy () .multRight (fromViewpointNode .getViewMatrix ()) .inverse ();
 
-         differenceMatrix .get (position, orientation, scale, scaleOrientation);
+         differenceMatrix .getTransform (position, orientation, scale, scaleOrientation);
 
          position .subtract (this .getPosition ());
          orientation .multLeft (this .getOrientation () .copy () .inverse ());
@@ -50310,9 +46878,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
       this .getCameraSpaceMatrix () .multVecMatrix (point);
       this .getModelMatrix () .copy () .inverse () .multVecMatrix (point);
 
-      const minDistance = this .getNearDistance (layerNode .getNavigationInfo ()) * 2;
-
-      this .lookAt (layerNode, point, minDistance, transitionTime, factor, straighten);
+      this .lookAt (layerNode, point, 0.5, transitionTime, factor, straighten);
    },
    lookAtBBox (layerNode, bbox, transitionTime = 1, factor = 1, straighten = false)
    {
@@ -50344,7 +46910,7 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
          translation = this ._positionOffset .getValue () .copy () .lerp (offset, factor),
          direction   = this .getPosition () .copy () .add (translation) .subtract (point);
 
-      let rotation = this ._orientationOffset .getValue () .copy () .multRight (new Numbers_Rotation4 (this .getUserOrientation () .multVecRot (new Numbers_Vector3 (0, 0, 1)), direction));
+      let rotation = this ._orientationOffset .getValue () .copy () .multRight (Numbers_Rotation4 .fromVectors (this .getUserOrientation () .multVecRot (new Numbers_Vector3 (0, 0, 1)), direction));
 
       if (straighten)
       {
@@ -50458,10 +47024,10 @@ Object .assign (Object .setPrototypeOf (X3DViewpointNode .prototype, Core_X3DBin
    },
    update ()
    {
-      this .cameraSpaceMatrix .set (this .getUserPosition (),
-                                    this .getUserOrientation (),
-                                    this ._scaleOffset .getValue (),
-                                    this ._scaleOrientationOffset .getValue ());
+      this .cameraSpaceMatrix .setTransform (this .getUserPosition (),
+                                             this .getUserOrientation (),
+                                             this ._scaleOffset .getValue (),
+                                             this ._scaleOrientationOffset .getValue ());
 
       this .cameraSpaceMatrix .multRight (this .modelMatrix);
 
@@ -50682,7 +47248,8 @@ const Layer_default_ = Layer;
 
 /* harmony default export */ const Layering_Layer = (Namespace/* default */.A .add ("Layer", Layer_default_));
 ;// ./src/x_ite/Parser/GLTF2Parser.js
-/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var GLTF2Parser_$ = __webpack_require__(163)["A"];
+
 
 
 
@@ -50794,7 +47361,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
          if (!Object .keys (this .input) .every (key => keys .has (key)))
             return false;
 
-         if (this .input .asset ?.version !== "2.0")
+         if (!(this .input .asset ?.version >= 2.0))
             return false;
 
          return true;
@@ -50955,6 +47522,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
             case "KHR_materials_transmission":
             case "KHR_materials_volume_scatter":
             case "KHR_materials_volume":
+            case "KHR_gaussian_splatting":
             {
                components .push (browser .getComponent ("X_ITE", 1));
                break;
@@ -51060,7 +47628,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       lightNode ._intensity = this .numberValue (light .intensity, 1);
 
       if (this .vectorValue (lightNode .rotation, quaternion))
-         lightNode ._rotation = new Numbers_Rotation4 (0, 0, 1, Math .PI) .multRight (new Numbers_Rotation4 (quaternion));
+         lightNode ._rotation = new Numbers_Rotation4 (0, 0, 1, Math .PI) .multRight (Numbers_Rotation4 .fromQuaternion (quaternion));
       else
          lightNode ._rotation = new Numbers_Rotation4 (0, 0, 1, Math .PI);
 
@@ -51283,13 +47851,15 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
       if (!buffer .uri)
          return this .buffers [i];
 
-      const
-         url         = new URL (buffer .uri, this .getScene () .getBaseURL ()),
-         response    = await fetch (url),
-         blob        = await response .blob (),
-         arrayBuffer = await blob .arrayBuffer ();
+      this .getScene () .addLoadingObject (buffer);
 
-      return GLTF2Parser_$.ungzip (arrayBuffer);
+      const
+         url         = new x_ite_Fields .MFString (new URL (buffer .uri, this .getScene () .getBaseURL ())),
+         arrayBuffer = await InputOutput_FileLoader .loadDocument (this .getBrowser () .getWorld (), url, { dataAsString: false });
+
+      this .getScene () .removeLoadingObject (buffer);
+
+      return arrayBuffer;
    },
    bufferViewsArray (bufferViews)
    {
@@ -51746,17 +48316,17 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       for (const [key, extension] of Object .entries (extensions))
       {
+         if (!this .extensions .has (key))
+            continue;
+
          switch (key)
          {
             case "KHR_texture_basisu":
+            // case "EXT_texture_astc":
             case "EXT_texture_avif":
             case "EXT_texture_webp":
-            {
-               if (this .extensions .has (key))
-                  images .push (this .images [extension ?.source]);
-
+               images .push (this .images [extension ?.source]);
                break;
-            }
          }
       }
    },
@@ -52258,6 +48828,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, Parser_X3DParser
 
       const extension = this .getScene () .createNode ("VolumeScatterMaterialExtension", false);
 
+      extension ._scatterStrength        = this .numberValue (KHR_materials_volume_scatter .scatterStrengthFactor, 0);
+      extension ._scatterStrengthTexture = this .textureInfo (KHR_materials_volume_scatter .scatterStrengthTexture);
+      extension ._scatterTextureMapping  = this .textureMapping (KHR_materials_volume_scatter .scatterTexture);
+
       const multiscatterColor = new Numbers_Color3 ();
 
       if (this .vectorValue (KHR_materials_volume_scatter .multiscatterColorFactor, multiscatterColor))
@@ -52477,6 +49051,9 @@ function eventsProcessed ()
       this .attributesObject (primitive .attributes);
       this .targetsArray     (primitive .targets);
 
+      if (primitive .extensions ?.KHR_gaussian_splatting)
+         return this .khrGaussianSplatting (primitive, shapeNodes);
+
       primitive .indices  = this .accessors [primitive .indices];
       primitive .material = this .materials [primitive .material];
 
@@ -52487,6 +49064,53 @@ function eventsProcessed ()
          variantsNode = this .khrMaterialsVariantsExtension (primitive .extensions ?.KHR_materials_variants, shapeNode);
 
       shapeNodes .push (primitive .shapeNode = variantsNode ?? shapeNode);
+   },
+   khrGaussianSplatting (primitive, shapeNodes)
+   {
+      const
+         scene                  = this .getScene (),
+         gaussianSplats         = scene .createNode ("GaussianSplats", false),
+         KHR_gaussian_splatting = primitive .extensions ?.KHR_gaussian_splatting,
+         attributes             = primitive .attributes;
+
+      gaussianSplats ._colorSpace = String (KHR_gaussian_splatting ?.colorSpace ?? "SRGB_REC709_DISPLAY") .toUpperCase ();
+
+      gaussianSplats ._positions    = attributes ?.POSITION ?.array ?? [ ];
+      gaussianSplats ._orientations = attributes ?.["KHR_gaussian_splatting:ROTATION"] ?.array ?? [ ];
+      gaussianSplats ._scales       = attributes ?.["KHR_gaussian_splatting:SCALE"]    ?.array ?? [ ];
+      gaussianSplats ._opacities    = attributes ?.["KHR_gaussian_splatting:OPACITY"]  ?.array ?? [ ];
+
+      // Degrees 0,1,2,3
+
+      for (const [degree, coefs] of [1, 3, 5, 7] .entries ())
+      {
+         for (let coef = 0; coef < coefs; ++ coef)
+         {
+            const
+               field = gaussianSplats .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`),
+               value = attributes ?.[`KHR_gaussian_splatting:SH_DEGREE_${degree}_COEF_${coef}`] ?.array ?? [ ];
+
+            field .setValue (value);
+         }
+      }
+
+      // Bounding Box
+
+      const
+         min    = new Numbers_Vector3 (),
+         max    = new Numbers_Vector3 (),
+         hasMin = this .vectorValue (attributes ?.POSITION ?.min, min),
+         hasMax = this .vectorValue (attributes ?.POSITION ?.max, max);
+
+      if (hasMin && hasMax)
+      {
+         gaussianSplats ._bboxSize   = max .copy () .subtract (min),
+         gaussianSplats ._bboxCenter = min .copy () .add (max) .divide (2);
+      }
+
+      gaussianSplats .setup ();
+
+      shapeNodes .push (primitive .shapeNode = gaussianSplats);
    },
    attributesObject (attributes)
    {
@@ -53008,7 +49632,7 @@ function eventsProcessed ()
 
             if (this .vectorValue (node .matrix, matrix))
             {
-               matrix .get (translation, rotation, scale, scaleOrientation);
+               matrix .getTransform (translation, rotation, scale, scaleOrientation);
 
                transformNode ._translation      = translation;
                transformNode ._rotation         = rotation;
@@ -53236,7 +49860,7 @@ function eventsProcessed ()
             if (!jointNode)
                continue;
 
-            inverseBindMatrix .get (translation, rotation, scale);
+            inverseBindMatrix .getTransform (translation, rotation, scale);
 
             humanoidNode ._joints                .push (jointNode);
             humanoidNode ._jointBindingPositions .push (translation);
@@ -53281,9 +49905,9 @@ function eventsProcessed ()
       {
          const skinCoordWeight = jointNode .skinCoordWeight;
 
-         jointMatrix .set (jointBindingPositions [j] ?.getValue (),
-                           jointBindingRotations [j] ?.getValue (),
-                           jointBindingScales [j] ?.getValue ())
+         jointMatrix .setTransform (jointBindingPositions [j] ?.getValue (),
+                                    jointBindingRotations [j] ?.getValue (),
+                                    jointBindingScales [j] ?.getValue ())
          .multRight (jointNode .getValue () .getModelViewMatrix ());
 
          for (const [c, index] of jointNode .skinCoordIndex .entries ())
@@ -53332,7 +49956,7 @@ function eventsProcessed ()
                return;
             }
 
-            // Proceed with next case:
+            // falls through
          }
          default:
          {
@@ -53651,10 +50275,10 @@ function eventsProcessed ()
 
          for (let i = 0; i < length; i += 4)
          {
-            instancedShapeNode ._rotations .push (new Numbers_Rotation4 (new Numbers_Quaternion (rotationArray [i + 0],
-                                                                                 rotationArray [i + 1],
-                                                                                 rotationArray [i + 2],
-                                                                                 rotationArray [i + 3])));
+            instancedShapeNode ._rotations .push (Numbers_Rotation4 .fromQuaternion (new Numbers_Quaternion (rotationArray [i + 0],
+                                                                                             rotationArray [i + 1],
+                                                                                             rotationArray [i + 2],
+                                                                                             rotationArray [i + 3])));
          }
       }
 
@@ -54781,21 +51405,21 @@ function eventsProcessed ()
 
             // KeyValue
 
-            interpolatorNode ._keyValue .push (new Numbers_Rotation4 (new Numbers_Quaternion (keyValues [0],
-                                                                              keyValues [1],
-                                                                              keyValues [2],
-                                                                              keyValues [3])));
+            interpolatorNode ._keyValue .push (Numbers_Rotation4 .fromQuaternion (new Numbers_Quaternion (keyValues [0],
+                                                                                          keyValues [1],
+                                                                                          keyValues [2],
+                                                                                          keyValues [3])));
 
             for (let i = 0, length = keyValues .length - 4; i < length; i += 4)
             {
-               interpolatorNode ._keyValue .push (new Numbers_Rotation4 (new Numbers_Quaternion (keyValues [i + 0],
-                                                                                 keyValues [i + 1],
-                                                                                 keyValues [i + 2],
-                                                                                 keyValues [i + 3])),
-                                                  new Numbers_Rotation4 (new Numbers_Quaternion (keyValues [i + 4],
-                                                                                 keyValues [i + 5],
-                                                                                 keyValues [i + 6],
-                                                                                 keyValues [i + 7])));
+               interpolatorNode ._keyValue .push (Numbers_Rotation4 .fromQuaternion (new Numbers_Quaternion (keyValues [i + 0],
+                                                                                             keyValues [i + 1],
+                                                                                             keyValues [i + 2],
+                                                                                             keyValues [i + 3])),
+                                                  Numbers_Rotation4 .fromQuaternion (new Numbers_Quaternion (keyValues [i + 4],
+                                                                                             keyValues [i + 5],
+                                                                                             keyValues [i + 6],
+                                                                                             keyValues [i + 7])));
             }
 
             // Finish
@@ -54811,10 +51435,10 @@ function eventsProcessed ()
 
             for (let i = 0, length = keyValues .length; i < length; i += 4)
             {
-               interpolatorNode ._keyValue .push (new Numbers_Rotation4 (new Numbers_Quaternion (keyValues [i + 0],
-                                                                                 keyValues [i + 1],
-                                                                                 keyValues [i + 2],
-                                                                                 keyValues [i + 3])));
+               interpolatorNode ._keyValue .push (Numbers_Rotation4 .fromQuaternion (new Numbers_Quaternion (keyValues [i + 0],
+                                                                                             keyValues [i + 1],
+                                                                                             keyValues [i + 2],
+                                                                                             keyValues [i + 3])));
             }
 
             interpolatorNode .setup ();
@@ -54842,7 +51466,7 @@ function eventsProcessed ()
                const q = this .cubicSplineVector (t, times, quaternions) .normalize ();
 
                interpolatorNode ._key      .push (t / cycleInterval);
-               interpolatorNode ._keyValue .push (new Numbers_Rotation4 (q));
+               interpolatorNode ._keyValue .push (Numbers_Rotation4 .fromQuaternion (q));
             }
 
             interpolatorNode .setup ();
@@ -55062,7 +51686,7 @@ const GLTF2Parser_default_ = GLTF2Parser;
 
 /* harmony default export */ const Parser_GLTF2Parser = (Namespace/* default */.A .add ("GLTF2Parser", GLTF2Parser_default_));
 ;// ./src/x_ite/Parser/GLB2Parser.js
-/* provided dependency */ var GLB2Parser_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var GLB2Parser_$ = __webpack_require__(163)["A"];
 
 
 
@@ -55168,7 +51792,7 @@ const GLB2Parser_default_ = GLB2Parser;
 
 /* harmony default export */ const Parser_GLB2Parser = (Namespace/* default */.A .add ("GLB2Parser", GLB2Parser_default_));
 ;// ./src/x_ite/Parser/OBJParser.js
-/* provided dependency */ var OBJParser_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var OBJParser_$ = __webpack_require__(163)["A"];
 
 
 
@@ -55427,12 +52051,12 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, Parser_X3DParser .
       try
       {
          const
-            scene       = this .getExecutionContext (),
-            url         = new URL (path, scene .getBaseURL ()),
-            response    = await fetch (url),
-            arrayBuffer = await response .arrayBuffer (),
-            input       = OBJParser_$.decodeText (OBJParser_$.ungzip (arrayBuffer)),
-            parser      = new MaterialParser (scene, input);
+            scene    = this .getExecutionContext (),
+            url      = new URL (path, scene .getBaseURL ()),
+            response = await fetch (url),
+            blob     = await response .blob (),
+            input    = OBJParser_$.decodeText (await OBJParser_$.gunzip (blob)),
+            parser   = new MaterialParser (scene, input);
 
          parser .parse ();
 
@@ -56622,7 +53246,7 @@ const STLAParser_default_ = STLAParser;
 
 /* harmony default export */ const Parser_STLAParser = (Namespace/* default */.A .add ("STLAParser", STLAParser_default_));
 ;// ./src/x_ite/Parser/STLBParser.js
-/* provided dependency */ var STLBParser_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var STLBParser_$ = __webpack_require__(163)["A"];
 
 
 
@@ -56765,6 +53389,7 @@ const STLBParser_default_ = STLBParser;
 
 
 
+
 /*
  *  Grammar
  */
@@ -56857,7 +53482,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, Parser_X3DParser 
 
       await browser .loadComponents (scene);
 
-      this .processElements (this .header ([ ]));
+      await this .processElements (this .header ([ ]));
 
       // Create nodes.
 
@@ -57022,7 +53647,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, Parser_X3DParser 
 
       return false;
    },
-   processElements (elements)
+   async processElements (elements)
    {
       for (const element of elements)
          this .processElement (element);
@@ -57032,7 +53657,45 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, Parser_X3DParser 
 
       const scene = this .getScene ();
 
-      if (this .coordIndex) // IndexedFaceSet
+      if (this .sphericalHarmonics)
+      {
+         scene .addComponent (this .getBrowser () .getComponent ("X_ITE"));
+
+         await this .getBrowser () .loadComponents (scene);
+
+         const
+            transform      = scene .createNode ("Transform"),
+            gaussianSplats = scene .createNode ("GaussianSplats"),
+            quaternions    = this .quaternions,
+            numQuaternions = quaternions .length,
+            orientations   = [ ];
+
+         // Quaternion elements must be rotated from wxyz to xyzw.
+         // https://www.kaggle.com/code/stpeteishii/creatures-ply-to-gaussian-splat
+         for (let i = 0; i < numQuaternions; i += 4)
+            orientations .push (quaternions [i + 1], quaternions [i + 2], quaternions [i + 3], quaternions [i]);
+
+         gaussianSplats .positions    = this .points;
+         gaussianSplats .orientations = orientations;
+         gaussianSplats .scales       = this .scales;
+         gaussianSplats .opacities    = this .opacities;
+
+         // Degrees 0,1,2,3
+
+         let i = 0;
+
+         for (const [degree, coefs] of [1, 3, 5, 7] .entries ())
+         {
+            for (let coef = 0; coef < coefs; ++ coef)
+               gaussianSplats [`sphericalHarmonicsDegree${degree}Coef${coef}`] = this .sphericalHarmonics [i ++];
+         }
+
+         transform .rotation = new Numbers_Rotation4 (1, 0, 0, Math .PI);
+         transform .children .push (gaussianSplats);
+
+         scene .rootNodes .push (transform);
+      }
+      else if (this .coordIndex) // IndexedFaceSet
       {
          const
             hasNormals = this .normals ?.some (v => v !== 0),
@@ -57048,15 +53711,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, Parser_X3DParser 
          else
             geometry .coordIndex = this .coordIndex;
 
-         if (this .colors ?.length)
-         {
-            const
-               alpha = this .alpha && this .colors .some ((v, i) => i % 4 === 3 && v < 1),
-               color = scene .createNode (alpha ? "ColorRGBA" : "Color");
-
-            color .color    = alpha || !this .alpha ? this .colors : this .colors .filter ((v, i) => i % 4 !== 3);
-            geometry .color = color;
-         }
+         geometry .color = this .createColor ();
 
          if (this .texCoords ?.length)
          {
@@ -57115,15 +53770,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, Parser_X3DParser 
             geometry   = scene .createNode ("PointSet"),
             coordinate = scene .createNode ("Coordinate");
 
-         if (this .colors ?.length)
-         {
-            const
-               alpha = this .alpha && this .colors .some ((v, i) => i % 4 === 3 && v < 1),
-               color = scene .createNode (alpha ? "ColorRGBA" : "Color");
-
-            color .color    = alpha || !this .alpha ? this .colors : this .colors .filter ((v, i) => i % 4 !== 3);
-            geometry .color = color;
-         }
+         geometry .color = this .createColor ();
 
          if (hasNormals)
          {
@@ -57131,8 +53778,6 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, Parser_X3DParser 
 
             if (this .mustRotateAxes)
                this .rotateAxes90 (this .normals);
-            else if (this .rotations ?.length || this .scales ?.length)
-               this .rotateAxes180 (this .normals);
 
             normal .vector   = this .normals;
             geometry .normal = normal;
@@ -57140,8 +53785,6 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, Parser_X3DParser 
 
          if (this .mustRotateAxes)
             this .rotateAxes90 (this .points);
-         else if (this .rotations ?.length || this .scales ?.length)
-            this .rotateAxes180 (this .points);
 
          coordinate .point = this .points;
          geometry .coord   = coordinate;
@@ -57152,6 +53795,19 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, Parser_X3DParser 
 
          scene .getRootNodes () .push (shape);
       }
+   },
+   createColor ()
+   {
+      if (!this .colors ?.length)
+         return null;
+
+      const
+         alpha = this .alpha && this .colors .some ((v, i) => i % 4 === 3 && v < 1),
+         color = this .getScene () .createNode (alpha ? "ColorRGBA" : "Color");
+
+      color .color = alpha || !this .alpha ? this .colors : this .colors .filter ((v, i) => i % 4 !== 3);
+
+      return color;
    },
    processElement (element)
    {
@@ -57176,15 +53832,25 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, Parser_X3DParser 
    },
    parseVertices ({ count, properties })
    {
+      // console .time ("vertices");
+
+      // Geometry
+
       const
-         scales    = [ ],
-         rotations = [ ],
          colors    = [ ],
          texCoords = [ ],
          normals   = [ ],
          points    = [ ];
 
-      // console .time ("vertices")
+      // Gaussian Splats
+
+      const
+         scales      = [ ],
+         quaternions = [ ],
+         opacities   = [ ],
+         sh0         = [ ], // Degree 0
+         rest        = Array .from ({ length: 45 }, () => [ ]), // Degree 1,2,3
+         restIndex   = new Map (Array .from ({ length: 45 }, (v, i) => [`f_rest_${i}`, i]));
 
       for (let i = 0; i < count; ++ i)
       {
@@ -57197,25 +53863,11 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, Parser_X3DParser 
 
             switch (name)
             {
-               case "scale_0": case "scale_1": case "scale_2":
-                  scales .push (this .value);
-                  break;
-               case "rot_0": case "rot_1": case "rot_2": case "rot_3":
-                  rotations .push (this .value);
-                  break;
                case "red": case "green": case "blue": case "alpha":
                case "r": case "g": case "b": case "a":
                   colors .push (this .convertColor (this .value, type));
                   break;
-               case "f_dc_0": case "f_dc_1": case "f_dc_2":
-                  colors .push (this .convertFDC (this .convertColor (this .value, type)));
-                  break;
-               case "opacity":
-                  // https://github.com/antimatter15/splat/blob/main/convert.py
-                  colors .push (1 / (1 + Math .exp (-this .value)));
-                  break;
-               case "s": case "t":
-               case "u": case "v":
+               case "s": case "t": case "u": case "v":
                   texCoords .push (this .value);
                   break;
                case "nx": case "ny": case "nz":
@@ -57224,21 +53876,104 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, Parser_X3DParser 
                case "x": case "y": case "z":
                   points .push (this .value);
                   break;
+               // Gaussian Splats
+               // https://developer.playcanvas.com/user-manual/gaussian-splatting/formats/ply/
+               // https://github.com/mkkellogg/GaussianSplats3D/
+               case "rot_0": case "rot_1": case "rot_2": case "rot_3":
+                  quaternions .push (this .value);
+                  break;
+               // https://github.com/javagl/JSplat/blob/41706e0a54372a8ae2e4b474d3a39e19337e42c2/jsplat-io-gsplat/src/main/java/de/javagl/jsplat/io/gsplat/GsplatSplatWriter.java#L106
+               case "scale_0": case "scale_1": case "scale_2":
+                  scales .push (Math .exp (this .value));
+                  break;
+               case "opacity":
+                  // https://github.com/javagl/JSplat/blob/41706e0a54372a8ae2e4b474d3a39e19337e42c2/jsplat/src/main/java/de/javagl/jsplat/Splats.java#L244
+                  opacities .push (1 / (1 + Math .exp (-this .value)));
+                  break;
+               // Degree 0
+               case "f_dc_0": case "f_dc_1": case "f_dc_2":
+                  sh0 .push (this .value);
+                  break;
+               // Degree 1,2,3
+               case "f_rest_0":  case "f_rest_1":  case "f_rest_2":
+               case "f_rest_3":  case "f_rest_4":  case "f_rest_5":
+               case "f_rest_6":  case "f_rest_7":  case "f_rest_8":
+               case "f_rest_9":  case "f_rest_10": case "f_rest_11":
+               case "f_rest_12": case "f_rest_13": case "f_rest_14":
+               case "f_rest_15": case "f_rest_16": case "f_rest_17":
+               case "f_rest_18": case "f_rest_19": case "f_rest_20":
+               case "f_rest_21": case "f_rest_22": case "f_rest_23":
+               case "f_rest_24": case "f_rest_25": case "f_rest_26":
+               case "f_rest_27": case "f_rest_28": case "f_rest_29":
+               case "f_rest_30": case "f_rest_31": case "f_rest_32":
+               case "f_rest_33": case "f_rest_34": case "f_rest_35":
+               case "f_rest_36": case "f_rest_37": case "f_rest_38":
+               case "f_rest_39": case "f_rest_40": case "f_rest_41":
+               case "f_rest_42": case "f_rest_43": case "f_rest_44":
+                  rest [restIndex .get (name)] .push (this .value);
+                  break;
             }
          }
       }
 
-      // console .timeEnd ("vertices")
+      // console .timeEnd ("vertices");
 
       // Geometric properties
 
-      this .rotations = rotations;
-      this .scales    = scales;
-      this .alpha     = properties .some (p => p .name .match (/^(?:alpha|a|opacity)$/));
+      this .alpha     = properties .some (p => p .name .match (/^(?:alpha|a)$/));
       this .colors    = colors;
       this .texCoords = texCoords;
       this .normals   = normals;
       this .points    = points;
+
+      if (sh0 .length)
+      {
+         // Gaussian Splats
+         // https://github.com/javagl/JSplat/blob/41706e0a54372a8ae2e4b474d3a39e19337e42c2/jsplat-io-ply/src/main/java/de/javagl/jsplat/io/ply/PlySplatReader.java#L121
+
+         const
+            numSplats     = points .length / 3,
+            shDegree      = this .getSphericalHarmonicsDegree (rest),
+            shDimensions1 = this .getDimensionsForDegree (shDegree) - 1,
+            shDimensions2 = shDimensions1 * 2,
+            shs           = Array .from ({ length: 15 }, () => [ ]);
+
+         for (let d = 0; d < shDimensions1; ++ d)
+         {
+            const
+               rx = rest [d],
+               ry = rest [shDimensions1 + d],
+               rz = rest [shDimensions2 + d],
+               sh = shs [d];
+
+            for (let s = 0; s < numSplats; ++ s)
+               sh .push (rx [s], ry [s], rz [s]);
+         }
+
+         shs .unshift (sh0);
+
+         this .quaternions        = quaternions;
+         this .scales             = scales;
+         this .opacities          = opacities;
+         this .sphericalHarmonics = shs;
+      }
+   },
+   getSphericalHarmonicsDegree (rest)
+   {
+      if (rest [44] .length)
+         return 3;
+
+      if (rest [23] .length)
+         return 2;
+
+      if (rest [8] .length)
+         return 1;
+
+      return 0;
+   },
+   getDimensionsForDegree (shDegree)
+   {
+      return (shDegree + 1) ** 2;
    },
    parseFaces ({ count, properties })
    {
@@ -57392,14 +54127,6 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, Parser_X3DParser 
             return value;
       }
    },
-   convertFDC (f_dc)
-   {
-      // https://github.com/graphdeco-inria/gaussian-splatting/issues/485
-
-      const C0 = 0.28209479177387814; // = 1 / (2 * Math .sqrt (Math .PI))
-
-      return 0.5 + C0 * f_dc;
-   },
 });
 
 const PLYAParser_default_ = PLYAParser;
@@ -57407,6 +54134,7 @@ const PLYAParser_default_ = PLYAParser;
 
 /* harmony default export */ const Parser_PLYAParser = (Namespace/* default */.A .add ("PLYAParser", PLYAParser_default_));
 ;// ./src/x_ite/Parser/PLYBParser.js
+/* provided dependency */ var PLYBParser_$ = __webpack_require__(163)["A"];
 
 
 function PLYBParser (scene)
@@ -57446,13 +54174,13 @@ Object .assign (Object .setPrototypeOf (PLYBParser .prototype, Parser_PLYAParser
 {
    getEncoding ()
    {
-      return ["ARRAY_BUFFER", "STRING"];
+      return "ARRAY_BUFFER";
    },
-   setInput (inputs)
+   setInput (input)
    {
-      this .arrayBuffer  = inputs [0];
+      this .arrayBuffer  = input;
       this .dataView     = new DataView (this .arrayBuffer);
-      this .input        = inputs [1];
+      this .input        = PLYBParser_$.decodeText (input .slice (0, 4096));
       this .magic        = this .input .match (/^ply\r?\nformat (binary_(?:little|big)_endian) 1.0.*?end_header\r?\n/s);
       this .byteOffset   = this .magic ?.[0] .length;
       this .littleEndian = this .magic ?.[1] === "binary_little_endian";
@@ -57589,11 +54317,11 @@ const PLYBParser_default_ = PLYBParser;
 
 
 
-function Box2 (... args) /* size, center */
+function Box2 (size, center)
 {
    this .matrix = new Numbers_Matrix3 ();
 
-   this .set (... args);
+   this .set (size, center);
 }
 
 Object .assign (Box2 .prototype,
@@ -57618,28 +54346,18 @@ Object .assign (Box2 .prototype,
    },
    set (size, center)
    {
-      switch (arguments .length)
+      if (size && center)
       {
-         case 0:
-         {
-            this .matrix .assign (Numbers_Matrix3 .ZERO);
-
-            return this;
-         }
-         case 2:
-         {
-            this .matrix .set (size .x / 2, 0, 0,
-                               0, size .y / 2, 0,
-                               center .x, center .y, 1);
-
-            return this;
-         }
-         // case 3:
-         // {
-         //    console .trace ()
-         //    return this .setExtents (arguments [0], arguments [1]);
-         // }
+         this .matrix .set (size .x / 2, 0, 0,
+                            0, size .y / 2, 0,
+                            center .x, center .y, 1);
       }
+      else
+      {
+         this .matrix .assign (Numbers_Matrix3 .ZERO);
+      }
+
+      return this;
    },
    setExtents (min, max)
    {
@@ -57992,8 +54710,8 @@ const Bezier_default_ = Bezier;
 
 /* harmony default export */ const Algorithms_Bezier = (Namespace/* default */.A .add ("Bezier", Bezier_default_));
 ;// ./src/x_ite/Parser/SVGParser.js
-/* provided dependency */ var SVGParser_$ = __webpack_require__(454)["A"];
-/* provided dependency */ var SVGParser_libtess = __webpack_require__(340);
+/* provided dependency */ var SVGParser_$ = __webpack_require__(163)["A"];
+/* provided dependency */ var SVGParser_libtess = __webpack_require__(451);
 
 
 
@@ -59087,7 +55805,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, Parser_X3DParser .
       {
          default: // pad
          {
-            g .spreadMatrix .identity ();
+            g .spreadMatrix .set ();
 
             for (const [o, c, a] of g .stops)
                gradient .addColorStop (o, this .cssColor (c, a));
@@ -60489,7 +57207,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, Parser_X3DParser .
          scale            = new Numbers_Vector3 (),
          scaleOrientation = new Numbers_Rotation4 ();
 
-      matrix .get (translation, rotation, scale, scaleOrientation);
+      matrix .getTransform (translation, rotation, scale, scaleOrientation);
 
       transformNode .translation      = translation;
       transformNode .rotation         = rotation;
@@ -60727,7 +57445,7 @@ const SVGParser_default_ = SVGParser;
 
 /* harmony default export */ const Parser_SVGParser = (Namespace/* default */.A .add ("SVGParser", SVGParser_default_));
 ;// ./src/x_ite/Parser/GoldenGate.js
-/* provided dependency */ var GoldenGate_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var GoldenGate_$ = __webpack_require__(163)["A"];
 
 
 
@@ -60844,13 +57562,33 @@ class GoldenGate extends Parser_X3DParser
          switch (encoding)
          {
             case "STRING":
-               return GoldenGate_$.decodeText (x3dSyntax);
+            {
+               const string = GoldenGate_$.decodeText (x3dSyntax);;
+
+               if (x3dSyntax instanceof ArrayBuffer)
+               {
+                  if (x3dSyntax .byteLength && !string .length)
+                     return undefined;
+               }
+
+               return string;
+            }
             case "XML":
-               return GoldenGate_$.parseXML (this .getInput ("STRING", x3dSyntax));
+            {
+               const string = this .getInput ("STRING", x3dSyntax);
+
+               return string === undefined ? undefined : GoldenGate_$.parseXML (string);
+            }
             case "JSON":
-               return JSON .parse (this .getInput ("STRING", x3dSyntax));
+            {
+               const string = this .getInput ("STRING", x3dSyntax);
+
+               return string === undefined ? undefined : JSON .parse (string);
+            }
             case "ARRAY_BUFFER":
+            {
                return x3dSyntax instanceof ArrayBuffer ? x3dSyntax : undefined;
+            }
          }
       }
       catch
@@ -61143,7 +57881,7 @@ const X3DWorld_default_ = X3DWorld;
 
 /* harmony default export */ const Execution_X3DWorld = (Namespace/* default */.A .add ("X3DWorld", X3DWorld_default_));
 ;// ./src/x_ite/InputOutput/FileLoader.js
-/* provided dependency */ var FileLoader_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var FileLoader_$ = __webpack_require__(163)["A"];
 
 
 
@@ -61156,27 +57894,43 @@ const foreignMimeType = new Set ([
    "application/xhtml+xml",
 ])
 
-function FileLoader (node, cacheScene = false)
+function FileLoader (node, { cacheScene = false, dataAsString = true } = { })
 {
    Base_X3DObject .call (this);
 
    this .node             = node;
    this .cacheScene       = cacheScene;
+   this .dataAsString     = dataAsString;
    this .browser          = node .getBrowser ();
    this .executionContext = node .getExecutionContext ();
    this .target           = "";
    this .url              = [ ];
-   this .URL              = new URL (this .getBaseURL ());
+   this .fileURL          = new URL (this .getBaseURL ());
    this .controller       = new AbortController ();
 }
 
 Object .assign (FileLoader,
 {
    sceneCache: new Map (),
+   loadDocument (node, url, options)
+   {
+      return new Promise ((resolve, reject) => new FileLoader (node, options) .loadDocument (url, (data, fileURL) =>
+      {
+         if (data)
+            resolve (data, fileURL);
+
+         reject ();
+      }));
+   },
 });
 
 Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .prototype),
 {
+   isPrivate ()
+   {
+      // Don't count for loading objects.
+      return true;
+   },
    abort ()
    {
       this .url .length = 0;
@@ -61185,7 +57939,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
    },
    getURL ()
    {
-      return this .URL;
+      return this .fileURL;
    },
    getBaseURL ()
    {
@@ -61269,8 +58023,8 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
 
       if (DEVELOPMENT)
       {
-         if (this .URL .protocol !== "data:")
-            console .info (`Done loading scene '${decodeURI (this .URL)}'.`);
+         if (this .fileURL .protocol !== "data:")
+            console .info (`Done loading scene '${decodeURI (this .fileURL)}'.`);
       }
    },
    createX3DFromURL (url, parameter, callback, bindViewpoint, foreign)
@@ -61287,7 +58041,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
       if (data === null)
          callback (null);
       else
-         this .createX3DFromString (this .URL, data, callback, this .loadDocumentError .bind (this));
+         this .createX3DFromString (this .fileURL, data, callback, this .loadDocumentError .bind (this));
    },
    loadDocument (url, callback)
    {
@@ -61313,15 +58067,16 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
             return await this .callback (url .substring (result [0] .length));
       }
 
-      this .URL = new URL (url, this .getBaseURL ());
+      this .fileURL = new URL (url, this .getBaseURL ());
 
-      // Data URL:
+      // Handle data URLs that are not base64 decoded here:
+      if (this .dataAsString)
       {
          const result = url .match (/^\s*data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,/s);
 
          if (result && result [3] !== "base64")
          {
-            // const mimeType = result [1] || "text/plain"";
+            // const mimeType = result [1] || "text/plain"";
 
             let data = url .substring (result [0] .length);
 
@@ -61334,17 +58089,17 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
 
       // Bind Viewpoint URLs:
 
-      if (this .URL .protocol !== "data:" && this .bindViewpoint)
+      if (this .fileURL .protocol !== "data:" && this .bindViewpoint)
       {
          const referer = new URL (this .getBaseURL ());
 
-         if (this .URL .protocol === referer .protocol &&
-             this .URL .hostname === referer .hostname &&
-             this .URL .port     === referer .port &&
-             this .URL .pathname === referer .pathname &&
-             this .URL .hash)
+         if (this .fileURL .protocol === referer .protocol &&
+             this .fileURL .hostname === referer .hostname &&
+             this .fileURL .port     === referer .port &&
+             this .fileURL .pathname === referer .pathname &&
+             this .fileURL .hash)
          {
-            return this .bindViewpoint (decodeURIComponent (this .URL .hash .substring (1)));
+            return this .bindViewpoint (decodeURIComponent (this .fileURL .hash .substring (1)));
          }
       }
 
@@ -61355,19 +58110,19 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
          // Handle target
 
          if (this .target .length && this .target !== "_self")
-            return this .foreign (this .URL .href, this .target);
+            return this .foreign (this .fileURL .href, this .target);
 
          // Handle well known foreign content depending on extension or if path looks like directory.
 
-         if (this .URL .protocol !== "data:" && this .URL .href .match (/\.(?:html|htm|xhtml)$/))
-            return this .foreign (this .URL .href, this .target);
+         if (this .fileURL .protocol !== "data:" && this .fileURL .href .match (/\.(?:html|htm|xhtml)$/))
+            return this .foreign (this .fileURL .href, this .target);
       }
 
       // Cached scenes:
 
-      if (this .sceneCallback && this .cacheScene && !this .URL .search .length)
+      if (this .sceneCallback && this .cacheScene && !this .fileURL .search .length)
       {
-         const cacheURL = new URL (this .URL);
+         const cacheURL = new URL (this .fileURL);
 
          cacheURL .hash = "";
 
@@ -61377,7 +58132,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
          {
             const scene = await promise;
 
-            scene .setWorldURL (this .URL .href);
+            scene .setWorldURL (this .fileURL .href);
 
             return this .sceneCallback (scene);
          }
@@ -61395,18 +58150,51 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
 
       const
          options  = { cache: this .node .getCache () ? "default" : "reload", signal: this .controller .signal },
-         response = this .checkResponse (await fetch (this .URL, options)),
-         mimeType = response .headers .get ("content-type") ?.replace (/;.*$/, "");
+         response = this .checkResponse (await fetch (this .fileURL, options)),
+         mimeType = response .headers .get ("Content-Type") ?.replace (/;.*$/, "");
 
       if (this .foreign)
       {
          // console .log (mimeType);
 
          if (foreignMimeType .has (mimeType))
-            return this .foreign (this .URL .href, this .target);
+            return this .foreign (this .fileURL .href, this .target);
       }
 
-      await this .callback (FileLoader_$.ungzip (await response .arrayBuffer ()), this .URL);
+      await this .callback (await FileLoader_$.gunzip (await this .getBlob (response)), this .fileURL);
+   },
+   async getBlob (response)
+   {
+      const contentLength = parseInt (response .headers .get ("x-file-size"))
+         || parseInt (response .headers .get ("content-length"));
+
+      // Check getReader because x_ite-node has no getReader.
+      if (!contentLength || !response .body .getReader)
+         return await response .blob ();
+
+      const
+         browser = this .browser,
+         reader  = response .body .getReader (),
+         values  = [ ];
+
+      let loadedBytes = 0;
+
+      for (;;)
+      {
+         const { done, value } = await reader .read ();
+
+         if (done)
+            break;
+
+         values .push (value);
+
+         // We count decompressed bytes, but loadedBytes can be number of compressed bytes.
+         loadedBytes += value .byteLength;
+
+         browser .setLoadingFractions (this .node, Math .min (loadedBytes / contentLength, 1));
+      }
+
+      return await new Blob (values);
    },
    checkResponse (response)
    {
@@ -61436,12 +58224,12 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, Base_X3DObject .p
    },
    printError (error)
    {
-      const typeName = this .node instanceof Execution_X3DWorld ? "" : ` of ${this .node .getTypeName ()}`;
+      const typeName = this .node instanceof Execution_X3DWorld ? "" : ` for ${this .node .getTypeName ()}`;
 
-      if (this .URL .protocol === "data:")
+      if (this .fileURL .protocol === "data:")
          console .error (`Couldn't load data URL${typeName}.`);
       else
-         console .error (`Couldn't load URL '${FileLoader_$.try (() => decodeURI (this .URL)) ?? this .URL}'${typeName}.`, error);
+         console .error (`Couldn't load URL '${FileLoader_$.try (() => decodeURI (this .fileURL)) ?? this .fileURL}'${typeName}.`, error);
 
       console .error (error);
    },
@@ -61535,7 +58323,7 @@ Object .assign (Object .setPrototypeOf (X3DExternProtoDeclaration .prototype, Pr
 
       this [_fileLoader] ?.abort ();
 
-      this [_fileLoader] = new InputOutput_FileLoader (this, cache)
+      this [_fileLoader] = new InputOutput_FileLoader (this, { cacheScene: cache })
          .createX3DFromURL (this ._url, null, this .setInternalScene .bind (this));
    },
    getInternalScene ()
@@ -61850,7 +58638,7 @@ const ProtoDeclarationArray_default_ = ProtoDeclarationArray;
 
 /* harmony default export */ const Prototype_ProtoDeclarationArray = (Namespace/* default */.A .add ("ProtoDeclarationArray", ProtoDeclarationArray_default_));
 ;// ./src/x_ite/Routing/X3DRoute.js
-/* provided dependency */ var X3DRoute_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var X3DRoute_$ = __webpack_require__(163)["A"];
 
 
 
@@ -64507,7 +61295,7 @@ add ("PT_Sans/PTSans-Italic.woff2",     false, true);
 // add ("PT_Sans/PTSans-BoldItalic.woff2", true,  true);
 
 ;// ./src/x_ite/Browser/Core/X3DCoreContext.js
-/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var X3DCoreContext_$ = __webpack_require__(163)["A"];
 
 
 
@@ -64583,7 +61371,7 @@ function X3DCoreContext (element)
          X3DCoreContext_$("<link/>",
          {
             on: { load: resolve },
-            integrity: "sha384-CV/E+CUsDIuNlEfYZHCJkUJo7fEnvvLeWvOU91XKE2efZLHKvg+qzgmkabwpaZu8",
+            integrity: "sha384-NaGrwKtHGYZfPRCreTPlefPjB/+adZzaYtP0z/TrhBgn4rBoBqclKw8ZuQHnjvFW",
             crossorigin: "anonymous",
             rel: "stylesheet",
             href: new URL ("x_ite.css", Networking_URLs .getScriptURL ()),
@@ -66195,8 +62983,6 @@ function X3DCoordinateNode (executionContext)
    Rendering_X3DGeometricPropertyNode .call (this, executionContext);
 
    this .addType (Base_X3DConstants .X3DCoordinateNode);
-
-   this .length = 0;
 }
 
 Object .assign (Object .setPrototypeOf (X3DCoordinateNode .prototype, Rendering_X3DGeometricPropertyNode .prototype),
@@ -67664,7 +64450,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, Core_X3DChildNo
    },
    isEnabled ()
    {
-      return this .getNumInstances () && (this .geometryNode || this .getGeometryType () !== Shape_GeometryType .GEOMETRY);
+      return !!(this .getNumInstances () && (this .geometryNode || this .getGeometryType () !== Shape_GeometryType .GEOMETRY));
    },
    getBBox (bbox, shadows)
    {
@@ -67790,7 +64576,7 @@ Object .assign (Object .setPrototypeOf (X3DShapeNode .prototype, Core_X3DChildNo
    },
    set_transparent__ ()
    {
-      // This function is overloaded in ParticleSystem!
+      // This function is overloaded in ParticleSystem and GaussianSplatsShape!
 
       const alphaMode = this .appearanceNode .getAlphaMode ();
 
@@ -68019,6 +64805,8 @@ function X3DLineGeometryNode (executionContext)
 {
    if (!this .getExecutionContext ())
       Rendering_X3DGeometryNode .call (this, executionContext);
+
+   // Private properties
 
    const
       browser = this .getBrowser (),
@@ -68284,6 +65072,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, Renderin
       // Set viewport.
 
       gl .viewport (... viewport);
+      gl .scissor (... viewport);
 
       // Enable render mode nodes.
 
@@ -68529,6 +65318,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, Renderin
          // Set viewport.
 
          gl .viewport (... viewport);
+         gl .scissor (... viewport);
 
          // Enable render mode nodes.
 
@@ -68612,6 +65402,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, Renderin
       // Set viewport.
 
       gl .viewport (... viewport);
+      gl .scissor (... viewport);
 
       // Enable render mode nodes.
 
@@ -68944,6 +65735,7 @@ Object .assign (Object .setPrototypeOf (X3DLineGeometryNode .prototype, Renderin
          // Set viewport.
 
          gl .viewport (... viewport);
+         gl .scissor (... viewport);
 
          // Enable render mode nodes.
 
@@ -69342,7 +66134,7 @@ Object .assign (Object .setPrototypeOf (Viewport .prototype, Layering_X3DViewpor
                      return;
                }
 
-               // Proceed with next case:
+               // falls through
             }
             default:
             {
@@ -69425,6 +66217,13 @@ const X3DLayeringContext_default_ = X3DLayeringContext;
 ;// ./src/assets/shaders/webgl2/pbr/ToneMapping2.glsl.js
 const ToneMapping2_glsl_default_ = () => /* glsl */ `
 const float GAMMA=2.2;const float INV_GAMMA=1./GAMMA;vec3 linearToSRGB(const in vec3 color){return pow(color,vec3(INV_GAMMA));}vec4 linearToSRGB(const in vec4 color){return vec4(linearToSRGB(color.rgb),color.a);}vec3 sRGBToLinear(const in vec3 color){return pow(color,vec3(GAMMA));}vec4 sRGBToLinear(const in vec4 color){return vec4(sRGBToLinear(color.rgb),color.a);}
+#if defined(X3D_LINEAR_OUTPUT)
+vec3 toneMap(in vec3 color){
+#if defined(X3D_COLORSPACE_SRGB)
+color=sRGBToLinear(color);
+#endif
+return color;}
+#else
 #if defined(X3D_TONEMAP_ACES_NARKOWICZ)
 vec3 toneMapACES_Narkowicz(const in vec3 color){const float A=2.51;const float B=.03;const float C=2.43;const float D=.59;const float E=.14;return clamp((color*(A*color+B))/(color*(C*color+D)+E),0.,1.);}
 #endif
@@ -69450,7 +66249,9 @@ color=toneMap_KhronosPbrNeutral(color);
 #if defined(X3D_COLORSPACE_LINEAR)
 color=linearToSRGB(color);
 #endif
-return color;}`
+return color;}
+#endif
+`
 ;
 
 /* harmony default export */ const ToneMapping2_glsl = (Namespace/* default */.A .add ("ToneMapping2.glsl", ToneMapping2_glsl_default_));
@@ -70560,7 +67361,7 @@ const PositionChaser_default_ = PositionChaser;
 
 const
    OrientationChaser_a        = new Numbers_Rotation4 (),
-   rotation = new Numbers_Rotation4 ();
+   OrientationChaser_rotation = new Numbers_Rotation4 ();
 
 function OrientationChaser (executionContext)
 {
@@ -70591,7 +67392,7 @@ Object .assign (Object .setPrototypeOf (OrientationChaser .prototype, Followers_
    },
    interpolate (source, destination, weight)
    {
-      return rotation .assign (source) .slerp (destination, weight);
+      return OrientationChaser_rotation .assign (source) .slerp (destination, weight);
    },
    step (value1, value2, t)
    {
@@ -70625,8 +67426,8 @@ const OrientationChaser_default_ = OrientationChaser;
 
 /* harmony default export */ const Followers_OrientationChaser = (Namespace/* default */.A .add ("OrientationChaser", OrientationChaser_default_));
 ;// ./src/x_ite/Browser/Navigation/ExamineViewer.js
-/* provided dependency */ var jquery_mousewheel = __webpack_require__(887);
-/* provided dependency */ var ExamineViewer_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var jquery_mousewheel = __webpack_require__(288);
+/* provided dependency */ var ExamineViewer_$ = __webpack_require__(163)["A"];
 
 
 
@@ -70859,7 +67660,11 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
       const { x, y } = this .getBrowser () .getPointerFromEvent (event);
 
       this .disconnect ();
-      this .lookAtBBox (x, y, this .getStraightenHorizon ());
+
+      if (this .getBrowser () .getAltKey ())
+         this .lookAtPoint (x, y, this .getStraightenHorizon ());
+      else
+         this .lookAtBBox (x, y, this .getStraightenHorizon ());
    },
    mousemove (event)
    {
@@ -71164,7 +67969,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
 
             this .deltaRotation .assign (this .rotation);
             this .roll .assign (Numbers_Rotation4 .IDENTITY);
-            this .rotation .setFromToVec (toVector, this .fromVector);
+            this .rotation .setVectors (toVector, this .fromVector);
             this .deltaRotation .inverse () .multRight (this .rotation);
          }
 
@@ -71255,7 +68060,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
             const
                userCenterOfRotation = viewpoint .getUserCenterOfRotation (),
                fraction             = this .timeSensor ._fraction_changed .getValue (),
-               rotation             = new Numbers_Rotation4 (this .axis, 2 * Math .PI * fraction),
+               rotation             = new Numbers_Rotation4 (... this .axis, 2 * Math .PI * fraction),
                userPosition         = rotation .multVecRot (direction .assign (this .direction)) .add (userCenterOfRotation),
                lookAtRotation       = viewpoint .getLookAtRotation (userPosition, viewpoint .getUserCenterOfRotation ());
 
@@ -71445,7 +68250,7 @@ Object .assign (Object .setPrototypeOf (ExamineViewer .prototype, Navigation_X3D
          rotation .multVecRot (V .assign (Numbers_Vector3 .Z_AXIS));
          N .assign (Numbers_Vector3 .Y_AXIS) .cross (V);
          H .assign (N) .cross (Numbers_Vector3 .Y_AXIS);
-         r .setFromToVec (Numbers_Vector3 .Z_AXIS, H);
+         r .setVectors (Numbers_Vector3 .Z_AXIS, H);
 
          return r;
       };
@@ -71701,8 +68506,8 @@ const ScreenLine_default_ = ScreenLine;
 
 /* harmony default export */ const Rendering_ScreenLine = (Namespace/* default */.A .add ("ScreenLine", ScreenLine_default_));
 ;// ./src/x_ite/Browser/Navigation/X3DFlyViewer.js
-/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(887);
-/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var X3DFlyViewer_jquery_mousewheel = __webpack_require__(288);
+/* provided dependency */ var X3DFlyViewer_$ = __webpack_require__(163)["A"];
 
 
 
@@ -72074,9 +68879,9 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
          // Rubberband values
 
          if (this .direction .z > 0)
-            rubberBandRotation .setFromToVec (this .direction, axis .set (0, 0, 1));
+            rubberBandRotation .setVectors (this .direction, axis .set (0, 0, 1));
          else
-            rubberBandRotation .setFromToVec (axis .set (0, 0, -1), this .direction);
+            rubberBandRotation .setVectors (axis .set (0, 0, -1), this .direction);
 
          const rubberBandLength = this .direction .norm ();
 
@@ -72150,7 +68955,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
          speedFactor *= dt;
 
          const
-            orientation = viewpoint .getUserOrientation () .multRight (new Numbers_Rotation4 (viewpoint .getUserOrientation () .multVecRot (axis .assign (Numbers_Vector3 .Y_AXIS)), upVector)),
+            orientation = viewpoint .getUserOrientation () .multRight (Numbers_Rotation4 .fromVectors (viewpoint .getUserOrientation () .multVecRot (axis .assign (Numbers_Vector3 .Y_AXIS)), upVector)),
             translation = orientation .multVecRot (direction .multiply (speedFactor)),
             constrained = this .getActiveLayer () .constrainTranslation (translation);
 
@@ -72236,7 +69041,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
          if (this .orientationChaser ._isActive .getValue () && this .orientationChaser ._value_changed .hasInterest ("set_orientationOffset__", this))
          {
             userOrientation
-               .setFromToVec (toVector, fromVector)
+               .setVectors (toVector, fromVector)
                .multRight (viewpoint .getOrientation ())
                .multRight (this .orientationChaser ._set_destination .getValue ());
 
@@ -72250,7 +69055,7 @@ Object .assign (Object .setPrototypeOf (X3DFlyViewer .prototype, Navigation_X3DV
          else
          {
             userOrientation
-               .setFromToVec (toVector, fromVector)
+               .setVectors (toVector, fromVector)
                .multRight (viewpoint .getUserOrientation ());
 
             if (this .getStraightenHorizon ())
@@ -72368,7 +69173,7 @@ Object .assign (Object .setPrototypeOf (WalkViewer .prototype, Navigation_X3DFly
 
          userOrientation .assign (viewpoint .getUserOrientation ());
          userOrientation .multVecRot (localYAxis .assign (Numbers_Vector3 .Y_AXIS));
-         rotation        .setFromToVec (localYAxis, upVector);
+         rotation        .setVectors (localYAxis, upVector);
 
          const orientation = userOrientation .multRight (rotation);
 
@@ -72439,8 +69244,8 @@ const FlyViewer_default_ = FlyViewer;
 
 /* harmony default export */ const Navigation_FlyViewer = (Namespace/* default */.A .add ("FlyViewer", FlyViewer_default_));
 ;// ./src/x_ite/Browser/Navigation/PlaneViewer.js
-/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(887);
-/* provided dependency */ var PlaneViewer_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var PlaneViewer_jquery_mousewheel = __webpack_require__(288);
+/* provided dependency */ var PlaneViewer_$ = __webpack_require__(163)["A"];
 
 
 
@@ -72653,8 +69458,8 @@ const NoneViewer_default_ = NoneViewer;
 
 /* harmony default export */ const Navigation_NoneViewer = (Namespace/* default */.A .add ("NoneViewer", NoneViewer_default_));
 ;// ./src/x_ite/Browser/Navigation/LookAtViewer.js
-/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(887);
-/* provided dependency */ var LookAtViewer_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var LookAtViewer_jquery_mousewheel = __webpack_require__(288);
+/* provided dependency */ var LookAtViewer_$ = __webpack_require__(163)["A"];
 
 
 
@@ -73065,7 +69870,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, Navigation_X3DV
          if (this .orientationChaser ._isActive .getValue () && this .orientationChaser ._value_changed .hasInterest ("set_orientationOffset__", this))
          {
             userOrientation
-               .setFromToVec (toVector, fromVector)
+               .setVectors (toVector, fromVector)
                .multRight (viewpoint .getOrientation ())
                .multRight (this .orientationChaser ._set_destination .getValue ());
 
@@ -73078,7 +69883,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, Navigation_X3DV
          else
          {
             userOrientation
-               .setFromToVec (toVector, fromVector)
+               .setVectors (toVector, fromVector)
                .multRight (viewpoint .getUserOrientation ());
 
             viewpoint .straightenHorizon (userOrientation);
@@ -73378,7 +70183,7 @@ Object .assign (DirectionalLightContainer .prototype,
          modelMatrix          = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
          invLightSpaceMatrix  = this .invLightSpaceMatrix .assign (this .global ? modelMatrix : Numbers_Matrix4 .IDENTITY);
 
-      invLightSpaceMatrix .rotate (this .rotation .setFromToVec (Numbers_Vector3 .Z_AXIS, this .direction .assign (lightNode .getDirection ()) .negate ()));
+      invLightSpaceMatrix .rotate (this .rotation .setVectors (Numbers_Vector3 .Z_AXIS, this .direction .assign (lightNode .getDirection ()) .negate ()));
       invLightSpaceMatrix .inverse ();
 
       const
@@ -73737,8 +70542,9 @@ const
    _loadingDisplay = Symbol (),
    _loadingTotal   = Symbol (),
    X3DNetworkingContext_loadingObjects = Symbol (),
-   _loading        = Symbol (),
+   _browserLoading = Symbol (),
    _set_loadCount  = Symbol (),
+   _loadFractions  = Symbol (),
    _defaultScene   = Symbol ();
 
 function getBaseURI (element)
@@ -73757,10 +70563,11 @@ function X3DNetworkingContext ()
    this .addChildObjects (Base_X3DConstants .outputOnly, "loadCount", new x_ite_Fields .SFInt32 ());
 
    this [_baseURL]        = getBaseURI (this .getElement ());
+   this [_browserLoading] = false;
    this [_loadingDisplay] = 0;
    this [_loadingTotal]   = 0;
    this [X3DNetworkingContext_loadingObjects] = new Set ();
-   this [_loading]        = false;
+   this [_loadFractions]  = new Map ();
 }
 
 Object .assign (X3DNetworkingContext .prototype,
@@ -73791,11 +70598,11 @@ Object .assign (X3DNetworkingContext .prototype,
    },
    getBrowserLoading ()
    {
-      return this [_loading];
+      return this [_browserLoading];
    },
    setBrowserLoading (value)
    {
-      this [_loading] = value;
+      this [_browserLoading] = value;
 
       if (value)
       {
@@ -73813,6 +70620,8 @@ Object .assign (X3DNetworkingContext .prototype,
       }
       else
       {
+         this .resetLoadCount ();
+
          if (this .getBrowserOption ("SplashScreen"))
          {
             this .getCanvas () .show ();
@@ -73820,7 +70629,7 @@ Object .assign (X3DNetworkingContext .prototype,
             // Defer until promises are resolved.
             setTimeout (() =>
             {
-               if (!this [_loading])
+               if (!this [_browserLoading])
                   this .getSplashScreen () .addClass ("x_ite-private-fade-out-splash-screen");
             });
          }
@@ -73847,7 +70656,7 @@ Object .assign (X3DNetworkingContext .prototype,
    },
    getDisplayLoadCount ()
    {
-      return Array .from (this [X3DNetworkingContext_loadingObjects]) .reduce ((v, o) => v + !(o .isPrivate ?.() ?? true), 0);
+      return Array .from (this [X3DNetworkingContext_loadingObjects]) .reduce ((v, o) => v + !o .isPrivate ?.(), 0);
    },
    resetLoadCount ()
    {
@@ -73856,9 +70665,19 @@ Object .assign (X3DNetworkingContext .prototype,
       this [_loadingTotal]   = 0;
 
       this [X3DNetworkingContext_loadingObjects] .clear ();
+      this [_loadFractions]  .clear ();
 
       for (const object of this .getPrivateScene () .getLoadingObjects ())
          this .addLoadingObject (object);
+   },
+   setLoadingFractions (object, fractions)
+   {
+      if (!this [_browserLoading])
+         return;
+
+      // Let fractions go from 1 to 0.
+      this [_loadFractions] .set (object, 1 - fractions);
+      this [_set_loadCount] ();
    },
    [_set_loadCount] ()
    {
@@ -73866,7 +70685,7 @@ Object .assign (X3DNetworkingContext .prototype,
 
       let string;
 
-      if (this ._loadCount .getValue () || this [_loading])
+      if (this ._loadCount .getValue () || this [_browserLoading])
       {
          string = ((loadingDisplay || 1) === 1
             ? gettext ("Loading %1 file")
@@ -73879,11 +70698,17 @@ Object .assign (X3DNetworkingContext .prototype,
 
       this .updateCursor ();
 
-      if (this [_loading])
+      if (this [_browserLoading])
       {
+         const loadFractions = Math .sumPrecise (this [_loadFractions] .values ());
+
+         // Let the loading fractions 1/2 of the count.
+         const fractions = 1 - (this ._loadCount .getValue () + loadFractions)
+            / (this [_loadingTotal] + this [_loadFractions] .size);
+
          this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (string);
          this .getSplashScreen () .find (".x_ite-private-progressbar div")
-            .css ("width", (100 - 100 * this ._loadCount .getValue () / this [_loadingTotal]) + "%");
+            .css ("width", `${100 * fractions}%`);
       }
       else
       {
@@ -74003,8 +70828,8 @@ const X3DPickingContext_default_ = X3DPickingContext;
 
 /* harmony default export */ const Picking_X3DPickingContext = (Namespace/* default */.A .add ("X3DPickingContext", X3DPickingContext_default_));
 ;// ./src/x_ite/Browser/PointingDeviceSensor/PointingDevice.js
-/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(887);
-/* provided dependency */ var PointingDevice_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var PointingDevice_jquery_mousewheel = __webpack_require__(288);
+/* provided dependency */ var PointingDevice_$ = __webpack_require__(163)["A"];
 
 
 
@@ -74789,7 +71614,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
          geometryContext = shapeNode .getGeometryContext (),
          options         = [ ];
 
-      options .push ("X3D_DEPTH_SHADER");
+      options .push ("X3D_POINTING_PASS");
 
       if (geometryContext .hasNormals)
          options .push ("X3D_NORMALS");
@@ -74824,7 +71649,7 @@ Object .assign (X3DPointingDeviceSensorContext .prototype,
 
       hAnimNode ?.getShaderOptions (options);
 
-      const shaderNode = this .createShader ({
+      const shaderNode = shapeNode .createPointingShader ?.(options) ?? this .createShader ({
          name: "Pointing",
          vertexShader: "Pointing",
          fragmentShader: "Pointing",
@@ -75269,7 +72094,7 @@ const Lock_default_ = Lock;
 
 /* harmony default export */ const Utility_Lock = (Namespace/* default */.A .add ("Lock", Lock_default_));
 ;// ./src/x_ite/Browser/Rendering/X3DRenderingContext.js
-/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var X3DRenderingContext_$ = __webpack_require__(163)["A"];
 
 
 
@@ -75516,6 +72341,8 @@ Object .assign (X3DRenderingContext .prototype,
          geometryContext = shapeNode .getGeometryContext (),
          options         = [ ];
 
+      options .push ("X3D_DEPTH_PASS");
+
       if (normal)
       {
          options .push ("X3D_NORMAL_BUFFER");
@@ -75548,7 +72375,7 @@ Object .assign (X3DRenderingContext .prototype,
 
       hAnimNode ?.getShaderOptions (options);
 
-      const shaderNode = this .createShader ({
+      const shaderNode = shapeNode .createDepthShader ?.(options) ?? this .createShader ({
          name: "Depth",
          vertexShader: "Depth",
          fragmentShader: "Depth",
@@ -75782,7 +72609,7 @@ const X3DScriptingContext_default_ = X3DScriptingContext;
 ;// ./src/assets/shaders/webgl2/common/ClipPlanes2.glsl.js
 const ClipPlanes2_glsl_default_ = () => /* glsl */ `
 #if defined(X3D_CLIP_PLANES)
-uniform vec4 x3d_ClipPlane[X3D_NUM_CLIP_PLANES];void clip(){for(int i=0;i<X3D_NUM_CLIP_PLANES;++i){if(dot(vertex,x3d_ClipPlane[i].xyz)-x3d_ClipPlane[i].w<0.)discard;}}
+uniform vec4 x3d_ClipPlane[X3D_NUM_CLIP_PLANES];void clip(){for(int i=0;i<X3D_NUM_CLIP_PLANES;++i){vec4 clipPlane=x3d_ClipPlane[i];if(dot(vertex,clipPlane.xyz)<clipPlane.w)discard;}}
 #endif
 `
 ;
@@ -75791,7 +72618,15 @@ uniform vec4 x3d_ClipPlane[X3D_NUM_CLIP_PLANES];void clip(){for(int i=0;i<X3D_NU
 ;// ./src/assets/shaders/webgl2/common/Fog2.glsl.js
 const Fog2_glsl_default_ = () => /* glsl */ `
 #if defined(X3D_FOG)
-uniform x3d_FogParameters x3d_Fog;float getFogInterpolant(){
+#if defined(X3D_VERTEX_SHADER)&&defined(X3D_FOG_COORDS)
+in float x3d_FogDepth;out float fogDepth;void fog(){fogDepth=x3d_FogDepth;}
+#endif
+#if defined(X3D_FRAGMENT_SHADER)
+uniform x3d_FogParameters x3d_Fog;
+#if defined(X3D_FOG_COORDS)
+in float fogDepth;
+#endif
+float getFogInterpolant(){
 #if defined(X3D_FOG_COORDS)
 return clamp(1.-fogDepth,0.,1.);
 #else
@@ -75803,6 +72638,7 @@ return exp(-dV/max(visibilityRange-dV,.001));
 #endif
 #endif
 }vec3 getFogColor(const in vec3 color){return mix(x3d_Fog.color,color,getFogInterpolant());}
+#endif
 #endif
 `
 ;
@@ -75822,9 +72658,6 @@ const maxTextures          = 4;
 const Fragment2_glsl_default_ = () => /* glsl */ `
 #if defined(X3D_ALPHA_MODE_MASK)
 uniform float x3d_AlphaCutoff;
-#endif
-#if defined(X3D_FOG)&&defined(X3D_FOG_COORDS)
-in float fogDepth;
 #endif
 #if defined(X3D_COLOR_MATERIAL)
 in vec4 color;
@@ -75908,9 +72741,7 @@ finalColor=getHatchColor(finalColor,gl_FragCoord);
 #if defined(X3D_FOG)
 finalColor.rgb=getFogColor(finalColor.rgb);
 #endif
-#if!defined(X3D_LINEAR_OUTPUT)
 finalColor.rgb=toneMap(finalColor.rgb);
-#endif
 #if defined(X3D_ORDER_INDEPENDENT_TRANSPARENCY)
 oit(finalColor);
 #else
@@ -76269,7 +73100,7 @@ float rand(const in vec2 co){return fract(sin(dot(co.xy,vec2(12.9898,78.233)))*4
 const Point2_glsl_default_ = () => /* glsl */ `
 #if defined(X3D_GEOMETRY_0D)&&defined(X3D_STYLE_PROPERTIES)
 #if defined(X3D_TEXTURE)||defined(X3D_MATERIAL_TEXTURES)
-#if!defined(X3D_DEPTH_SHADER)
+#if!defined(X3D_DEPTH_PASS)&&!defined(X3D_POINTING_PASS)
 void setPointTexCoords(const in vec2 pointCoord){vec4 texCoord=vec4(pointCoord.x,1.-pointCoord.y,0.,1.);
 ${Array .from ({ length: maxTexCoords }, (_, i) => /* glsl */ `
 #if X3D_NUM_TEXTURE_COORDINATES > ${i}
@@ -76536,9 +73367,6 @@ uniform mat4 x3d_EyeMatrix;
 #if defined(X3D_GEOMETRY_1D)&&defined(X3D_STYLE_PROPERTIES)
 in vec3 x3d_LineStipple;
 #endif
-#if defined(X3D_FOG)&&defined(X3D_FOG_COORDS)
-in float x3d_FogDepth;
-#endif
 #if defined(X3D_COLOR_MATERIAL)
 in vec4 x3d_Color;
 #endif
@@ -76552,9 +73380,6 @@ in vec4 x3d_TexCoord${i};
 #endif
 #endif
 in vec4 x3d_Vertex;
-#if defined(X3D_FOG)&&defined(X3D_FOG_COORDS)
-out float fogDepth;
-#endif
 #if defined(X3D_COLOR_MATERIAL)
 out vec4 color;
 #endif
@@ -76589,6 +73414,7 @@ out vec3 localVertex;
 #include<Skin>
 #include<Instancing>
 #include<PointSize>
+#include<Fog>
 #include<Logarithmic>
 void main(){vec4 tVertex=x3d_Vertex;
 #if defined(X3D_NORMALS)
@@ -76616,7 +73442,7 @@ gl_PointSize=1.;
 lengthSoFar=x3d_LineStipple.z;startPoint=x3d_LineStipple.xy;midPoint=x3d_LineStipple.xy;
 #endif
 #if defined(X3D_FOG)&&defined(X3D_FOG_COORDS)
-fogDepth=x3d_FogDepth;
+fog();
 #endif
 #if defined(X3D_COLOR_MATERIAL)
 color=x3d_Color;
@@ -76798,8 +73624,13 @@ info.diffuseTransmissionColorFactor*=getDiffuseTransmissionColorTextureEXT();
 return info;}
 #endif
 #if defined(X3D_VOLUME_SCATTER_MATERIAL_EXT)
+${MaterialTextures .texture ("x3d_ScatterStrengthTextureEXT", "a", "linear")}
 ${MaterialTextures .texture ("x3d_MultiscatterColorTextureEXT", "rgb", "linear")}
-uniform vec3 x3d_MultiscatterColorEXT;MaterialInfo getVolumeScatterInfo(in MaterialInfo info){info.multiscatterColor=x3d_MultiscatterColorEXT;
+uniform float x3d_ScatterStrengthEXT;uniform vec3 x3d_MultiscatterColorEXT;MaterialInfo getVolumeScatterInfo(in MaterialInfo info){float scatterStrength=x3d_ScatterStrengthEXT;
+#if defined(X3D_SCATTER_STRENGTH_TEXTURE_EXT)
+scatterStrength*=getScatterStrengthTextureEXT();
+#endif
+info.multiscatterColor=x3d_MultiscatterColorEXT;
 #if defined(X3D_MULTISCATTER_COLOR_TEXTURE_EXT)
 info.multiscatterColor*=getMultiscatterColorTextureEXT();
 #endif
@@ -77101,7 +73932,7 @@ vec3 getPunctualRadianceTransmission(const in vec3 normal,const in vec3 view,con
 /* harmony default export */ const Punctual2_glsl = (Namespace/* default */.A .add ("Punctual2.glsl", Punctual2_glsl_default_));
 ;// ./src/assets/shaders/webgl2/Default2.vs.js
 const Default2_vs_default_ = () => /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
+precision highp int;precision highp float;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
 #include<Vertex>
 `
 ;
@@ -77109,7 +73940,7 @@ precision highp float;precision highp int;precision highp sampler2D;precision hi
 /* harmony default export */ const Default2_vs = (Namespace/* default */.A .add ("Default2.vs", Default2_vs_default_));
 ;// ./src/assets/shaders/webgl2/Depth2.fs.js
 const Depth2_fs_default_ = () => /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler2D;uniform int x3d_Id;layout(location=0)out vec4 x3d_FragData0;
+precision highp int;precision highp float;precision highp sampler2D;uniform int x3d_Id;layout(location=0)out vec4 x3d_FragData0;
 #if defined(X3D_CLIP_PLANES)
 in vec3 vertex;
 #endif
@@ -77143,7 +73974,7 @@ x3d_FragData0=vec4(vec3(gl_FragCoord.z),1.);
 /* harmony default export */ const Depth2_fs = (Namespace/* default */.A .add ("Depth2.fs", Depth2_fs_default_));
 ;// ./src/assets/shaders/webgl2/Depth2.vs.js
 const Depth2_vs_default_ = () => /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler2D;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;in vec4 x3d_Vertex;
+precision highp int;precision highp float;precision highp sampler2D;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;in vec4 x3d_Vertex;
 #if defined(X3D_CLIP_PLANES)
 out vec3 vertex;
 #endif
@@ -77181,19 +74012,19 @@ gl_Position=x3d_ProjectionMatrix*tVertex;}`
 /* harmony default export */ const Depth2_vs = (Namespace/* default */.A .add ("Depth2.vs", Depth2_vs_default_));
 ;// ./src/assets/shaders/webgl2/FullScreen2.vs.js
 const FullScreen2_vs_default_ = () => /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler2D;in vec2 x3d_Vertex;out vec2 texCoord;void main(){texCoord=x3d_Vertex;gl_Position=vec4(x3d_Vertex,0.,1.);}`
+precision highp int;precision highp float;precision highp sampler2D;in vec2 x3d_Vertex;out vec2 texCoord;void main(){texCoord=x3d_Vertex;gl_Position=vec4(x3d_Vertex,0.,1.);}`
 ;
 
 /* harmony default export */ const FullScreen2_vs = (Namespace/* default */.A .add ("FullScreen2.vs", FullScreen2_vs_default_));
 ;// ./src/assets/shaders/webgl2/LineTransform2.fs.js
 const LineTransform2_fs_default_ = () => /* glsl */ `#version 300 es
-precision highp float;void main(){}`
+precision highp int;precision highp float;void main(){}`
 ;
 
 /* harmony default export */ const LineTransform2_fs = (Namespace/* default */.A .add ("LineTransform2.fs", LineTransform2_fs_default_));
 ;// ./src/assets/shaders/webgl2/LineTransform2.vs.js
 const LineTransform2_vs_default_ = () => /* glsl */ `#version 300 es
-precision highp float;
+precision highp int;precision highp float;
 #if defined(X3D_PASS_0)
 uniform vec4 viewport;uniform mat4 modelViewProjectionMatrix;uniform mat4 invModelViewProjectionMatrix;uniform float linewidthScaleFactor1_2;
 #if defined(X3D_INSTANCING)
@@ -77227,7 +74058,7 @@ out mat3 instanceNormalMatrix0;out vec4 tangent0;out vec3 normal0;out mat3 insta
 /* harmony default export */ const LineTransform2_vs = (Namespace/* default */.A .add ("LineTransform2.vs", LineTransform2_vs_default_));
 ;// ./src/assets/shaders/webgl2/Material2.fs.js
 const Material2_fs_default_ = () => /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
+precision highp int;precision highp float;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
 #include<Material>
 `
 ;
@@ -77235,13 +74066,13 @@ precision highp float;precision highp int;precision highp sampler2D;precision hi
 /* harmony default export */ const Material2_fs = (Namespace/* default */.A .add ("Material2.fs", Material2_fs_default_));
 ;// ./src/assets/shaders/webgl2/OITCompose2.fs.js
 const OITCompose2_fs_default_ = () => /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler2D;uniform sampler2D x3d_AccumRevealageTexture;uniform sampler2D x3d_AlphaTexture;out vec4 x3d_FragColor;void main(){ivec2 fragCoord=ivec2(gl_FragCoord.xy);vec4 accum=texelFetch(x3d_AccumRevealageTexture,fragCoord,0);if(accum.a>=1.)discard;float alpha=texelFetch(x3d_AlphaTexture,fragCoord,0).r;float revealage=1.-accum.a;x3d_FragColor=vec4(revealage*accum.rgb/clamp(alpha,.001,50000.),revealage);}`
+precision highp int;precision highp float;precision highp sampler2D;uniform sampler2D x3d_AccumRevealageTexture;uniform sampler2D x3d_AlphaTexture;out vec4 x3d_FragColor;void main(){ivec2 fragCoord=ivec2(gl_FragCoord.xy);vec4 accum=texelFetch(x3d_AccumRevealageTexture,fragCoord,0);if(accum.a>=1.)discard;float alpha=texelFetch(x3d_AlphaTexture,fragCoord,0).r;float revealage=1.-accum.a;x3d_FragColor=vec4(revealage*accum.rgb/clamp(alpha,.001,50000.),revealage);}`
 ;
 
 /* harmony default export */ const OITCompose2_fs = (Namespace/* default */.A .add ("OITCompose2.fs", OITCompose2_fs_default_));
 ;// ./src/assets/shaders/webgl2/Physical2.fs.js
 const Physical2_fs_default_ = () => /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
+precision highp int;precision highp float;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
 #include<PBR>
 `
 ;
@@ -77249,7 +74080,7 @@ precision highp float;precision highp int;precision highp sampler2D;precision hi
 /* harmony default export */ const Physical2_fs = (Namespace/* default */.A .add ("Physical2.fs", Physical2_fs_default_));
 ;// ./src/assets/shaders/webgl2/Pointing2.fs.js
 const Pointing2_fs_default_ = () => /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler2D;in vec3 vertex;in vec3 normal;in vec4 texCoord;
+precision highp int;precision highp float;precision highp sampler2D;in vec3 vertex;in vec3 normal;in vec4 texCoord;
 #if!defined(X3D_GEOMETRY_0D)&&!defined(X3D_GEOMETRY_1D)
 in vec4 texCoord0;
 #else
@@ -77275,7 +74106,7 @@ x3d_FragData0=vec4(vertex,x3d_Id);x3d_FragData1=vec4(normal,0.);x3d_FragData2=te
 /* harmony default export */ const Pointing2_fs = (Namespace/* default */.A .add ("Pointing2.fs", Pointing2_fs_default_));
 ;// ./src/assets/shaders/webgl2/Pointing2.vs.js
 const Pointing2_vs_default_ = () => /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler2D;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;in vec4 x3d_Vertex;
+precision highp int;precision highp float;precision highp sampler2D;uniform mat4 x3d_ProjectionMatrix;uniform mat4 x3d_ModelViewMatrix;in vec4 x3d_Vertex;
 #if defined(X3D_NORMALS)
 in vec3 x3d_Normal;
 #else
@@ -77317,7 +74148,7 @@ gl_Position=x3d_ProjectionMatrix*tVertex;}`
 /* harmony default export */ const Pointing2_vs = (Namespace/* default */.A .add ("Pointing2.vs", Pointing2_vs_default_));
 ;// ./src/assets/shaders/webgl2/Unlit2.fs.js
 const Unlit2_fs_default_ = () => /* glsl */ `#version 300 es
-precision highp float;precision highp int;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
+precision highp int;precision highp float;precision highp sampler2D;precision highp sampler3D;precision highp samplerCube;
 #include<Unlit>
 `
 ;
@@ -77420,15 +74251,15 @@ const ShaderRegistry = {
          Unlit: Unlit2_fs,
       },
    },
-   addVertex: function (name, shader2)
+   addVertexShader (name, shader2)
    {
       this .vertex [2] [name] = shader2;
    },
-   addFragment: function (name, shader2)
+   addFragmentShader (name, shader2)
    {
       this .fragment [2] [name] = shader2;
    },
-   addInclude: function (name, shader2)
+   addIncludeFile (name, shader2)
    {
       this .includes [2] [name] = shader2;
    },
@@ -77491,7 +74322,7 @@ const X3DShaderNode_default_ = X3DShaderNode;
 
 /* harmony default export */ const Shaders_X3DShaderNode = (Namespace/* default */.A .add ("X3DShaderNode", X3DShaderNode_default_));
 ;// ./src/x_ite/Components/Shaders/X3DProgrammableShaderObject.js
-/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var X3DProgrammableShaderObject_$ = __webpack_require__(163)["A"];
 
 
 
@@ -77938,13 +74769,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                location .uniform = gl .uniform3f;
                break;
             }
-            case Base_X3DConstants .SFColor:
-            case Base_X3DConstants .SFVec3d:
-            case Base_X3DConstants .SFVec3f:
-            {
-               location .uniform = gl .uniform3f;
-               break;
-            }
             case Base_X3DConstants .SFColorRGBA:
             case Base_X3DConstants .SFVec4d:
             case Base_X3DConstants .SFVec4f:
@@ -78299,10 +75123,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
    getRenderedTextures (renderedTextures)
    {
       for (const { textureNode } of this .textures)
-      {
-         if (textureNode .isRenderedTexture ())
-            renderedTextures .add (textureNode);
-      }
+         textureNode .getRenderedTextures (renderedTextures);
    },
    hasFog (fogNode)
    {
@@ -78345,15 +75166,20 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       this .numClipPlanes = 0;
 
       for (const clipPlane of clipPlanes)
-         clipPlane .setShaderUniforms (gl, this, renderObject);
+      {
+         if (clipPlane .isClipPlane)
+            clipPlane .setShaderUniforms (gl, this, renderObject);
+      }
    },
    setUniforms: (() =>
    {
-      const normalMatrix = new Float32Array (9);
+      const
+         normalMatrix      = new Numbers_Matrix3 (),
+         normalMatrixArray = new Float32Array (9);
 
       return function (gl, renderContext, geometryContext, front = true)
       {
-         const { renderObject, fogNode, appearanceNode, hAnimNode, modelViewMatrix, textureNode: geometryTextureNode, localObjects } = renderContext;
+         const { renderObject, viewport, modelViewMatrix, fogNode, appearanceNode, hAnimNode, textureNode: geometryTextureNode, localObjects } = renderContext;
 
          const
             stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
@@ -78366,10 +75192,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          if (this .renderCount !== renderCount)
          {
             this .renderCount = renderCount;
-
-            // Set viewport.
-
-            gl .uniform4iv (this .x3d_Viewport, renderObject .getViewportArray ());
 
             // Set projection matrix.
 
@@ -78389,7 +75211,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             this .numTextureProjectors = 0;
 
             this .environmentLightNodes .length = 0;
-            this .lightNodes .length            = 0;
+            this .lightNodes            .length = 0;
             this .textureProjectorNodes .length = 0;
 
             for (const globalLights of renderObject .getGlobalLights ())
@@ -78411,21 +75233,26 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             }
          }
 
-         // Model view matrix
+         // Set viewport.
+
+         gl .uniform4i (this .x3d_Viewport, ... viewport);
+
+         // Set model view matrix.
 
          gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
 
-         // Normal matrix
+         // Set normal matrix if needed.
 
-         if (geometryContext .hasNormals)
+         if (this .x3d_NormalMatrix)
          {
+            // Set matrix and transpose it.
             normalMatrix [0] = modelViewMatrix [0]; normalMatrix [3] = modelViewMatrix [1]; normalMatrix [6] = modelViewMatrix [ 2];
             normalMatrix [1] = modelViewMatrix [4]; normalMatrix [4] = modelViewMatrix [5]; normalMatrix [7] = modelViewMatrix [ 6];
             normalMatrix [2] = modelViewMatrix [8]; normalMatrix [5] = modelViewMatrix [9]; normalMatrix [8] = modelViewMatrix [10];
 
-            Numbers_Matrix3 .prototype .inverse .call (normalMatrix);
+            normalMatrixArray .set (normalMatrix .inverse ());
 
-            gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, normalMatrix);
+            gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, normalMatrixArray);
          }
 
          // Fog
@@ -79492,7 +76319,7 @@ const ShaderCompiler_default_ = ShaderCompiler;
 
 /* harmony default export */ const Shaders_ShaderCompiler = (Namespace/* default */.A .add ("ShaderCompiler", ShaderCompiler_default_));
 ;// ./src/x_ite/Components/Shaders/ShaderPart.js
-/* provided dependency */ var ShaderPart_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var ShaderPart_$ = __webpack_require__(163)["A"];
 
 
 
@@ -79574,7 +76401,7 @@ Object .assign (Object .setPrototypeOf (ShaderPart .prototype, Core_X3DNode .pro
 
       return function ()
       {
-         return shaderTypes .get (this ._type .getValue ()) || "VERTEX_SHADER";
+         return shaderTypes .get (this ._type .getValue ()) ?? "VERTEX_SHADER";
       };
    })(),
    unloadData ()
@@ -79583,8 +76410,7 @@ Object .assign (Object .setPrototypeOf (ShaderPart .prototype, Core_X3DNode .pro
    },
    loadData ()
    {
-      new InputOutput_FileLoader (this) .loadDocument (this ._url,
-      function (data, url)
+      new InputOutput_FileLoader (this) .loadDocument (this ._url, (data, fileURL) =>
       {
          if (data === null)
          {
@@ -79619,22 +76445,23 @@ Object .assign (Object .setPrototypeOf (ShaderPart .prototype, Core_X3DNode .pro
 
                if (match)
                {
-                  const fileName = shaderCompiler .getSourceFileName (match [1]) || url || this .getExecutionContext () .getWorldURL ();
+                  const fileName = shaderCompiler .getSourceFileName (match [1])
+                     || fileURL
+                     || this .getExecutionContext () .getWorldURL ();
 
-                  throw new Error ("Error in " + typeName + " '" + name + "' in URL '" + fileName + "', line " + match [2] + ", " + log);
+                  throw new Error (`Error in ${typeName} '${name}' in URL '${fileName}', line ${match [2]}, ${log}`);
                }
                else
                {
-                  const fileName = url || this .getExecutionContext () .getWorldURL ();
+                  const fileName = fileURL || this .getExecutionContext () .getWorldURL ();
 
-                  throw new Error ("Error in " + typeName + " '" + name + "' in URL '" + fileName + "', " + log);
+                  throw new Error (`Error in ${typeName} '${name}' in URL '${fileName}', ${log}`);
                }
             }
 
             this .setLoadState (Base_X3DConstants .COMPLETE_STATE);
          }
-      }
-      .bind (this));
+      });
    },
    dispose ()
    {
@@ -80276,16 +77103,11 @@ Object .assign (Object .setPrototypeOf (Appearance .prototype, Shape_X3DAppearan
 
       renderedTextures .clear ();
 
-      for (const renderedTexture of this .materialNode .getRenderedTextures ())
-         renderedTextures .add (renderedTexture);
-
-      for (const renderedTexture of this .backMaterialNode ?.getRenderedTextures () ?? [ ])
-         renderedTextures .add (renderedTexture);
+      this .materialNode      .getRenderedTextures (renderedTextures);
+      this .backMaterialNode ?.getRenderedTextures (renderedTextures);
 
       this .textureNode ?.getRenderedTextures (renderedTextures);
       this .shaderNode  ?.getRenderedTextures (renderedTextures);
-
-      renderedTextures .delete (undefined);
    },
    traverse (type, renderObject)
    {
@@ -80582,9 +77404,9 @@ function X3DMaterialNode (executionContext)
 
    // Private properties
 
-   this .textureBits      = new Utility_BitSet ();
-   this .renderedTextures = [ ];
-   this .shaderNodes      = this .getBrowser () .getShaders ();
+   this .textureBits  = new Utility_BitSet ();
+   this .textureNodes = [ ];
+   this .shaderNodes  = this .getBrowser () .getShaders ();
 }
 
 Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, Shape_X3DAppearanceChildNode .prototype),
@@ -80622,22 +77444,27 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, Shape_X3DApp
    },
    addTexture (index, textureNode)
    {
+      // Collect textures.
+
+      this .textureNodes [index] = textureNode;
+
+      this ._renderedTextures = this .getBrowser () .getCurrentTime ();
+
+      // Set texture bits.
+
       index *= 4;
 
       this .textureBits .remove (index, 0xf);
       this .textureBits .add (index, textureNode ?.getTextureBits () ?? 0);
-
-      this .renderedTextures [index] = textureNode ?.isRenderedTexture () ? textureNode : undefined;
-
-      this ._renderedTextures = this .getBrowser () .getCurrentTime ();
    },
    getTextureBits ()
    {
       return this .textureBits;
    },
-   getRenderedTextures ()
+   getRenderedTextures (renderedTextures)
    {
-      return this .renderedTextures;
+      for (const textureNode of this .textureNodes)
+         textureNode ?.getRenderedTextures (renderedTextures);
    },
    getShader (geometryContext, renderContext)
    {
@@ -81435,7 +78262,7 @@ const PeriodicWave_default_ = PeriodicWave;
 
 /* harmony default export */ const Sound_PeriodicWave = (Namespace/* default */.A .add ("PeriodicWave", PeriodicWave_default_));
 ;// ./src/x_ite/Browser/Sound/X3DSoundContext.js
-/* provided dependency */ var X3DSoundContext_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var X3DSoundContext_$ = __webpack_require__(163)["A"];
 
 
 
@@ -81691,7 +78518,7 @@ Object .assign (Object .setPrototypeOf (TextureTransform .prototype, Texturing_X
             center      = this ._center .getValue (),
             matrix4     = this .matrix;
 
-         matrix3 .identity ();
+         matrix3 .set ();
 
          if (!center .equals (Numbers_Vector2 .ZERO))
             matrix3 .translate (vector .assign (center) .negate ());
@@ -81742,7 +78569,7 @@ const TextureTransform_default_ = TextureTransform;
 
 /* harmony default export */ const Texturing_TextureTransform = (Namespace/* default */.A .add ("TextureTransform", TextureTransform_default_));
 ;// ./src/x_ite/Browser/Texturing/KTXDecoder.js
-/* provided dependency */ var KTXDecoder_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var KTXDecoder_$ = __webpack_require__(163)["A"];
 const KTXDecoder_default_ = class KTXDecoder
 {
    constructor (gl, externalKtxlib, scriptDir)
@@ -81761,35 +78588,65 @@ const KTXDecoder_default_ = class KTXDecoder
 
    transcode (ktxTexture)
    {
-      if (!ktxTexture .needsTranscoding)
-         return;
-
       const { gl, libktx } = this;
+      const { transcode_fmt } = libktx;
 
-      const
-         astcSupported  = !!gl .getExtension ("WEBGL_compressed_texture_astc"),
-         etcSupported   = !!gl .getExtension ("WEBGL_compressed_texture_etc1"),
-         dxtSupported   = !!gl .getExtension ("WEBGL_compressed_texture_s3tc"),
-         bptcSupported  = !!gl .getExtension ("EXT_texture_compression_bptc"),
-         pvrtcSupported = !!gl .getExtension ("WEBGL_compressed_texture_pvrtc") || !!gl .getExtension ("WEBKIT_WEBGL_compressed_texture_pvrtc");
+      let formatString;
 
-      let format;
+      if (ktxTexture .needsTranscoding)
+      {
+         const
+            astcSupported  = !!gl .getExtension ("WEBGL_compressed_texture_astc"),
+            etcSupported   = !!gl .getExtension ("WEBGL_compressed_texture_etc1"),
+            dxtSupported   = !!gl .getExtension ("WEBGL_compressed_texture_s3tc"),
+            // bptcSupported  = !!gl .getExtension ("EXT_texture_compression_bptc"),
+            pvrtcSupported = !!gl .getExtension ("WEBGL_compressed_texture_pvrtc") || !!gl .getExtension ("WEBKIT_WEBGL_compressed_texture_pvrtc");
 
-      if (astcSupported)
-         format = libktx .TranscodeTarget .ASTC_4x4_RGBA;
-      else if (bptcSupported)
-         format = libktx .TranscodeTarget .BC7_RGBA;
-      else if (dxtSupported)
-         format = libktx .TranscodeTarget .BC1_OR_3;
-      else if (pvrtcSupported)
-         format = libktx .TranscodeTarget .PVRTC1_4_RGBA;
-      else if (etcSupported)
-         format = libktx .TranscodeTarget .ETC;
-      else
-         format = libktx .TranscodeTarget .RGBA4444;
+         let format;
 
-      if (ktxTexture .transcodeBasis (format, 0) !== libktx .ErrorCode .SUCCESS)
-         console .warn ("Texture transcode failed. See console for details.");
+         if (astcSupported)
+         {
+            formatString = "ASTC";
+            format       = transcode_fmt .ASTC_4x4_RGBA;
+         }
+         else if (dxtSupported)
+         {
+            formatString = ktxTexture.numComponents == 4 ? "BC3" : "BC1";
+            format       = transcode_fmt .BC1_OR_3;
+         }
+         else if (pvrtcSupported)
+         {
+            formatString = "PVRTC1";
+            format       = transcode_fmt .PVRTC1_4_RGBA;
+         }
+         else if (etcSupported)
+         {
+            formatString = "ETC";
+            format       = transcode_fmt .ETC;
+         }
+         else
+         {
+            formatString = "RGBA4444";
+            format       = transcode_fmt .RGBA4444;
+         }
+
+         if (ktxTexture .transcodeBasis (format, 0) != libktx .error_code .SUCCESS)
+            throw new Error ("Texture transcode failed. See console for details.");
+      }
+
+      const result = ktxTexture .glUpload ();
+
+      if (result .error != gl .NO_ERROR)
+         throw new Error (`WebGL error when uploading texture, code = ${result .error .toString (16)}`);
+
+      if (result .object === undefined)
+         throw new Error ("Texture upload failed. See console for details.");
+
+      return {
+         target: result .target,
+         object: result .object,
+         format: formatString,
+      };
    }
 
    async loadKTXFromURL (url, cache = true)
@@ -81807,18 +78664,10 @@ const KTXDecoder_default_ = class KTXDecoder
       await this .initialized;
 
       const
-         data       = new Uint8Array (KTXDecoder_$.ungzip (arrayBuffer)),
-         ktxTexture = new this .libktx .ktxTexture (data);
-
-      this .transcode (ktxTexture);
-
-      const
-         gl           = this .gl,
-         uploadResult = ktxTexture .glUpload (),
+         data         = new Uint8Array (await KTXDecoder_$.gunzip (arrayBuffer)),
+         ktxTexture   = new this .libktx .ktxTexture (data),
+         uploadResult = this .transcode (ktxTexture),
          texture      = uploadResult .object;
-
-      if (uploadResult .error !== gl .NO_ERROR || !texture)
-         throw new Error ("Could not load KTX data.");
 
       texture .baseWidth     = ktxTexture .baseWidth;
       texture .baseHeight    = ktxTexture .baseHeight;
@@ -82775,7 +79624,7 @@ const X3DBrowserContext_default_ = X3DBrowserContext;
 
 /* harmony default export */ const Browser_X3DBrowserContext = (Namespace/* default */.A .add ("X3DBrowserContext", X3DBrowserContext_default_));
 ;// ./src/x_ite/Browser/DOMIntegration.js
-/* provided dependency */ var DOMIntegration_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var DOMIntegration_$ = __webpack_require__(163)["A"];
 /*******************************************************************************
  * MIT License
  *
@@ -82821,6 +79670,12 @@ class DOMIntegration
       });
 
       this .processCanvasMutation (browser)
+   }
+
+   isPrivate ()
+   {
+      // Don't count as loading object.
+      return true;
    }
 
    processCanvasMutation (browser)
@@ -84519,6 +81374,7 @@ const LocalFog_default_ = LocalFog;
 
 
 
+
 function TextureBackground (executionContext)
 {
    EnvironmentalEffects_X3DBackgroundNode .call (this, executionContext);
@@ -84549,6 +81405,16 @@ Object .assign (Object .setPrototypeOf (TextureBackground .prototype, Environmen
    set_texture__ (index, textureNode)
    {
       EnvironmentalEffects_X3DBackgroundNode .prototype .set_texture__ .call (this, index, Base_X3DCast (Base_X3DConstants .X3DTextureNode, textureNode));
+   },
+   traverse (type, renderObject)
+   {
+      EnvironmentalEffects_X3DBackgroundNode .prototype .traverse .call (this, type, renderObject);
+
+      if (type !== Rendering_TraverseType .DISPLAY)
+         return;
+
+      for (const textureNode of this .getTextureNodes ())
+         textureNode ?.traverse (type, renderObject);
    },
 });
 
@@ -84793,7 +81659,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, Environmenta
                   .assign (viewpointNode .getModelMatrix ())
                   .translate (viewpointNode .getUserCenterOfRotation ())
                   .multRight (invModelMatrix)
-                  .get (centerOfRotation);
+                  .getTransform (centerOfRotation);
 
                invModelMatrix .multLeft (viewpointNode .getCameraSpaceMatrix ());
 
@@ -84805,7 +81671,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, Environmenta
                      invModelMatrix .multLeft (pose .cameraSpaceMatrix);
                }
 
-               invModelMatrix .get (position, orientation);
+               invModelMatrix .getTransform (position, orientation);
 
                if (this ._isActive .getValue ())
                {
@@ -85043,7 +81909,7 @@ Object .assign (Object .setPrototypeOf (TransformSensor .prototype, Environmenta
 
          if (matrix)
          {
-            matrix .get (position, orientation);
+            matrix .getTransform (position, orientation);
 
             if (this ._isActive .getValue ())
             {
@@ -86498,7 +83364,7 @@ Object .assign (Object .setPrototypeOf (Cone .prototype, Rendering_X3DGeometryNo
          for (let i = 0, length = defaultNormals .length; i < length; i += 3)
          {
             v1 .set (defaultNormals [i], 0, defaultNormals [i + 2]),
-            rx .setFromToVec (Numbers_Vector3 .Z_AXIS, v1) .multLeft (rz) .multVecRot (v1 .set (0, 0, 1));
+            rx .setVectors (Numbers_Vector3 .Z_AXIS, v1) .multLeft (rz) .multVecRot (v1 .set (0, 0, 1));
 
             normalArray .push (... v1);
          }
@@ -87229,7 +84095,7 @@ Object .assign (Object .setPrototypeOf (Extrusion .prototype, Rendering_X3DGeome
 
          // The entire spine is collinear:
          if (SCPzAxis .equals (Numbers_Vector3 .ZERO))
-            rotation .setFromToVec (Numbers_Vector3 .Y_AXIS, SCPyAxis) .multVecRot (SCPzAxis .assign (Numbers_Vector3 .Z_AXIS));
+            rotation .setVectors (Numbers_Vector3 .Y_AXIS, SCPyAxis) .multVecRot (SCPzAxis .assign (Numbers_Vector3 .Z_AXIS));
 
          // We do not have to normalize SCPxAxis, as SCPyAxis and SCPzAxis are orthogonal.
          SCPxAxis .assign (SCPyAxis) .cross (SCPzAxis);
@@ -87854,7 +84720,7 @@ Object .assign (Object .setPrototypeOf (X3DTransformMatrix3DNode .prototype, Gro
    {
       if (matrix .equals (Numbers_Matrix4 .IDENTITY))
       {
-         this .matrix .identity ();
+         this .matrix .set ();
 
          if (this .isDefaultBBoxSize ())
             this .getBBox = this .getSubBBox;
@@ -87877,7 +84743,7 @@ Object .assign (Object .setPrototypeOf (X3DTransformMatrix3DNode .prototype, Gro
    {
       if (t .equals (Numbers_Vector3 .ZERO) && r .equals (Numbers_Rotation4 .IDENTITY) && s .equals (Numbers_Vector3 .ONE))
       {
-         this .matrix .identity ();
+         this .matrix .set ();
 
          if (this .isDefaultBBoxSize ())
             this .getBBox = this .getSubBBox;
@@ -87888,7 +84754,7 @@ Object .assign (Object .setPrototypeOf (X3DTransformMatrix3DNode .prototype, Gro
       }
       else
       {
-         this .matrix .set (t, r, s, so, c);
+         this .matrix .setTransform (t, r, s, so, c);
 
          delete this .getBBox;
          delete this .traverse;
@@ -88065,6 +84931,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, Renderi
       // Set viewport.
 
       gl .viewport (... viewport);
+      gl .scissor (... viewport);
 
       // Enable render mode nodes.
 
@@ -88171,6 +85038,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, Renderi
       // Set viewport.
 
       gl .viewport (... viewport);
+      gl .scissor (... viewport);
 
       // Enable render mode nodes.
 
@@ -89391,7 +86259,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, Core_X3DChildNod
 
          for (const { modelMatrix } of group)
          {
-            modelMatrix .get (t, r, s, so);
+            modelMatrix .getTransform (t, r, s, so);
 
             instancedShape ._translations      .push (t);
             instancedShape ._rotations         .push (r);
@@ -89875,7 +86743,7 @@ Object .assign (Object .setPrototypeOf (StaticGroup .prototype, Core_X3DChildNod
             newTransformNode = new Grouping_Transform (executionContext),
             modelMatrix      = group [0] .modelMatrix;
 
-         modelMatrix .get (t, r, s, so);
+         modelMatrix .getTransform (t, r, s, so);
 
          newTransformNode ._translation      = t;
          newTransformNode ._rotation         = r;
@@ -91225,7 +88093,7 @@ Object .assign (EnvironmentLightContainer .prototype,
    { },
    setGlobalVariables (renderObject)
    {
-      this .modelViewMatrix .get () .get (null, this .rotation);
+      this .modelViewMatrix .get () .getTransform (null, this .rotation);
 
       this .rotation
          .multLeft (this .lightNode ._rotation .getValue ())
@@ -91382,7 +88250,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, Lighting_X3
       this .specularTexture ?.removeInterest ("generateTextures", this);
 
       this .specularTexture  = Base_X3DCast (Base_X3DConstants .X3DEnvironmentTextureNode, this ._specularTexture);
-      this .traverseSpecular = this .specularTexture ?.getType () .includes (Base_X3DConstants .GeneratedCubeMapTexture);
+      this .traverseSpecular = this .specularTexture ?.isRenderedTexture ();
 
       if (this .traverseSpecular)
          this .specularTexture .addUpdateCallback (this, () => this .generateTextures ());
@@ -91483,6 +88351,12 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, Lighting_X3
    },
    traverse (type, renderObject)
    {
+      if (!this .traverseSpecular)
+         return;
+
+      if (this .specularTexture ._update .getValue () === "NONE")
+         return;
+
       if (!renderObject .isIndependent ())
          return;
 
@@ -91491,8 +88365,7 @@ Object .assign (Object .setPrototypeOf (EnvironmentLight .prototype, Lighting_X3
       modelViewMatrix .push ();
       modelViewMatrix .translate (this ._origin .getValue ());
 
-      if (this .traverseSpecular && this .specularTexture ._update .getValue () !== "NONE")
-         this .specularTexture .traverse (type, renderObject);
+      this .specularTexture .traverse (type, renderObject);
 
       modelViewMatrix .pop ();
    },
@@ -91557,12 +88430,12 @@ const EnvironmentLight_default_ = EnvironmentLight;
 // yyYY      Case: Sign
 
 const orientationMatrices = [
-   new Numbers_Matrix4 () .setRotation (new Numbers_Rotation4 (Numbers_Vector3 .X_AXIS,          Numbers_Vector3 .Z_AXIS)), // left
-   new Numbers_Matrix4 () .setRotation (new Numbers_Rotation4 (Numbers_Vector3 .NEGATIVE_X_AXIS, Numbers_Vector3 .Z_AXIS)), // right
-   new Numbers_Matrix4 () .setRotation (new Numbers_Rotation4 (Numbers_Vector3 .NEGATIVE_Z_AXIS, Numbers_Vector3 .Z_AXIS)), // front
-   new Numbers_Matrix4 () .setRotation (new Numbers_Rotation4 (Numbers_Vector3 .Z_AXIS,          Numbers_Vector3 .Z_AXIS)), // back
-   new Numbers_Matrix4 () .setRotation (new Numbers_Rotation4 (Numbers_Vector3 .Y_AXIS,          Numbers_Vector3 .Z_AXIS)), // bottom
-   new Numbers_Matrix4 () .setRotation (new Numbers_Rotation4 (Numbers_Vector3 .NEGATIVE_Y_AXIS, Numbers_Vector3 .Z_AXIS)), // top
+   new Numbers_Matrix4 () .setRotation (Numbers_Rotation4 .fromVectors (Numbers_Vector3 .X_AXIS,          Numbers_Vector3 .Z_AXIS)), // left
+   new Numbers_Matrix4 () .setRotation (Numbers_Rotation4 .fromVectors (Numbers_Vector3 .NEGATIVE_X_AXIS, Numbers_Vector3 .Z_AXIS)), // right
+   new Numbers_Matrix4 () .setRotation (Numbers_Rotation4 .fromVectors (Numbers_Vector3 .NEGATIVE_Z_AXIS, Numbers_Vector3 .Z_AXIS)), // front
+   new Numbers_Matrix4 () .setRotation (Numbers_Rotation4 .fromVectors (Numbers_Vector3 .Z_AXIS,          Numbers_Vector3 .Z_AXIS)), // back
+   new Numbers_Matrix4 () .setRotation (Numbers_Rotation4 .fromVectors (Numbers_Vector3 .Y_AXIS,          Numbers_Vector3 .Z_AXIS)), // bottom
+   new Numbers_Matrix4 () .setRotation (Numbers_Rotation4 .fromVectors (Numbers_Vector3 .NEGATIVE_Y_AXIS, Numbers_Vector3 .Z_AXIS)), // top
 ];
 
 const viewports = [
@@ -91642,7 +88515,7 @@ Object .assign (PointLightContainer .prototype,
          const
             v                = viewports [i],
             viewport         = this .viewport .set (v [0] * shadowMapSize, v [1] * shadowMapSize, v [2] * shadowMapSize, v [3] * shadowMapSize),
-            projectionMatrix = Geometry_Camera .perspective2 (Math_Algorithm .radians (90), 0.125, 10000, viewport [2], viewport [3], this .projectionMatrix); // Use higher far value for better precision.
+            projectionMatrix = Geometry_Camera .perspective2 (Math_Algorithm .radians (90), 0.125, 10_000, viewport [2], viewport [3], this .projectionMatrix); // Use higher far value for better precision.
 
          renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
          renderObject .getProjectionMatrix () .push (this .projectionMatrix);
@@ -91913,7 +88786,7 @@ Object .assign (SpotLightContainer .prototype,
          invLightSpaceMatrix  = this .invLightSpaceMatrix .assign (this .global ? modelMatrix : Numbers_Matrix4 .IDENTITY);
 
       invLightSpaceMatrix .translate (lightNode .getLocation ());
-      invLightSpaceMatrix .rotate (this .rotation .setFromToVec (Numbers_Vector3 .Z_AXIS, this .direction .assign (lightNode .getDirection ()) .negate ()));
+      invLightSpaceMatrix .rotate (this .rotation .setVectors (Numbers_Vector3 .Z_AXIS, this .direction .assign (lightNode .getDirection ()) .negate ()));
       invLightSpaceMatrix .inverse ();
 
       const
@@ -92261,7 +89134,7 @@ Object .assign (Object .setPrototypeOf (Billboard .prototype, Grouping_X3DGroupi
             N1 .assign (this ._axisOfRotation .getValue ()) .cross (billboardToViewer); // Normal vector of plane as in specification
             N2 .assign (this ._axisOfRotation .getValue ()) .cross (Numbers_Vector3 .Z_AXIS);    // Normal vector of plane between axisOfRotation and zAxis
 
-            this .matrix .setRotation (rotation .setFromToVec (N2, N1));                // Rotate zAxis in plane
+            this .matrix .setRotation (rotation .setVectors (N2, N1));                // Rotate zAxis in plane
          }
 
          return this .matrix;
@@ -93539,7 +90412,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, Rendering_X3D
 
       this .fileLoader ?.abort ();
 
-      this .fileLoader = new InputOutput_FileLoader (this, cache)
+      this .fileLoader = new InputOutput_FileLoader (this, { cacheScene: cache })
          .createX3DFromURL (this ._url, null, this .setInternalScene .bind (this));
    },
    setInternalScene (scene)
@@ -93806,7 +90679,7 @@ Object .assign (Cylinder3 .prototype,
 
       // rotation to y axis
       const
-         rotToYAxis = new Numbers_Rotation4 (this .axis .direction, new Numbers_Vector3 (0, 1, 0)),
+         rotToYAxis = Numbers_Rotation4 .fromVectors (this .axis .direction, new Numbers_Vector3 (0, 1, 0)),
          mtxToYAxis = Numbers_Matrix4 .fromRotation (rotToYAxis);
 
       // scale to unit space
@@ -93969,7 +90842,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, PointingDevic
          phi   = section === 0 ? Math .asin (sinp) : sinp * Math .PI / 2,
          angle = phi + section * Math .PI;
 
-      const rotation = new Numbers_Rotation4 (this .cylinder .axis .direction, angle);
+      const rotation = new Numbers_Rotation4 (... this .cylinder .axis .direction, angle);
 
       rotation .multVecRot (trackPoint .assign (this .szNormal) .multiply (this .cylinder .radius));
       trackPoint .add (axisPoint);
@@ -94045,7 +90918,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, PointingDevic
          this .getTrackPoint (hitRay, trackPoint);
 
       this .fromVector  = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Numbers_Vector3 ()) .negate ();
-      this .startOffset = new Numbers_Rotation4 (yAxis, this ._offset .getValue ());
+      this .startOffset = new Numbers_Rotation4 (... yAxis, this ._offset .getValue ());
 
       this ._trackPoint_changed = trackPoint;
       this ._rotation_changed   = this .startOffset;
@@ -94072,7 +90945,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, PointingDevic
 
       const
          toVector = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Numbers_Vector3 ()) .negate (),
-         rotation = new Numbers_Rotation4 (this .fromVector, toVector);
+         rotation = Numbers_Rotation4 .fromVectors (this .fromVector, toVector);
 
       if (this .disk)
       {
@@ -94083,7 +90956,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, PointingDevic
          const trackPoint_ = this .modelViewMatrix .multVecMatrix (trackPoint .copy ());
 
          if (trackPoint_ .z > 0)
-            rotation .multRight (new Numbers_Rotation4 (this .yPlane .normal, Math .PI));
+            rotation .multRight (new Numbers_Rotation4 (... this .yPlane .normal, Math .PI));
       }
       else
       {
@@ -94101,7 +90974,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, PointingDevic
       {
          const
             endVector     = rotation .multVecRot (this ._axisRotation .getValue () .multVecRot (new Numbers_Vector3 (0, 0, 1))),
-            deltaRotation = new Numbers_Rotation4 (this .startVector, endVector),
+            deltaRotation = Numbers_Rotation4 .fromVectors (this .startVector, endVector),
             axis          = this ._axisRotation .getValue () .multVecRot (new Numbers_Vector3 (0, 1, 0)),
             sign          = axis .dot (deltaRotation .getAxis (new Numbers_Vector3 ())) > 0 ? 1 : -1,
             min           = this ._minAngle .getValue (),
@@ -94832,7 +91705,7 @@ Object .assign (Object .setPrototypeOf (SphereSensor .prototype, PointingDeviceS
 
       const
          toVector = trackPoint .copy () .subtract (this .sphere .center),
-         rotation = new Numbers_Rotation4 (this .fromVector, toVector);
+         rotation = Numbers_Rotation4 .fromVectors (this .fromVector, toVector);
 
       if (this .behind)
          rotation .inverse ();
@@ -94948,6 +91821,8 @@ function ClipPlane (executionContext)
 
    this .addType (Base_X3DConstants .ClipPlane);
 
+   // Private properties
+
    this .enabled = false;
    this .plane   = new Numbers_Vector4 ();
 }
@@ -95060,6 +91935,8 @@ function IndexedTriangleFanSet (executionContext)
    Rendering_X3DComposedGeometryNode .call (this, executionContext);
 
    this .addType (Base_X3DConstants .IndexedTriangleFanSet);
+
+   // Private properties
 
    this .triangleIndex = [ ];
 }
@@ -95245,6 +92122,8 @@ function IndexedTriangleStripSet (executionContext)
 
    this .addType (Base_X3DConstants .IndexedTriangleStripSet);
 
+   // Private properties
+
    this .triangleIndex = [ ];
 }
 
@@ -95367,6 +92246,8 @@ function TriangleFanSet (executionContext)
 
    this .addType (Base_X3DConstants .TriangleFanSet);
 
+   // Private properties
+
    this .triangleIndex = [ ];
 }
 
@@ -95463,6 +92344,8 @@ function TriangleStripSet (executionContext)
    Rendering_X3DComposedGeometryNode .call (this, executionContext);
 
    this .addType (Base_X3DConstants .TriangleStripSet);
+
+   // Private properties
 
    this .triangleIndex = [ ];
 }
@@ -96775,15 +93658,14 @@ Object .assign (Object .setPrototypeOf (PhysicalMaterial .prototype, Shape_X3DOn
    },
    set_renderedTextures__ ()
    {
-      this .getRenderedTextures () .length = this .getTextureIndices () .LENGTH;
+      this ._renderedTextures = this .getBrowser () .getCurrentTime ();
+   },
+   getRenderedTextures (renderedTextures)
+   {
+      Shape_X3DOneSidedMaterialNode .prototype .getRenderedTextures .call (this, renderedTextures);
 
       for (const extensionNode of this .extensionNodes)
-      {
-         for (const renderedTexture of extensionNode .getRenderedTextures ())
-            this .getRenderedTextures () .push (renderedTexture);
-      }
-
-      this ._renderedTextures = this .getBrowser () .getCurrentTime ();
+         extensionNode .getRenderedTextures (renderedTextures);
    },
    createShader (key, geometryContext, renderContext)
    {
@@ -97805,7 +94687,7 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, Sound_X3DSoundSour
    {
       this .unloadData ();
 
-      new InputOutput_FileLoader (this) .loadDocument (this ._url, async (data, URL) =>
+      new InputOutput_FileLoader (this, { dataAsString: false }) .loadDocument (this ._url, async (data, fileURL) =>
       {
          if (data === null)
          {
@@ -97820,9 +94702,13 @@ Object .assign (Object .setPrototypeOf (AudioClip .prototype, Sound_X3DSoundSour
 
             if (DEVELOPMENT)
             {
-               if (URL .protocol !== "data:")
-                  console .info (`Done loading audio '${decodeURI (URL)}'.`);
+               if (fileURL .protocol !== "data:")
+                  console .info (`Done loading audio '${decodeURI (fileURL)}'.`);
             }
+         }
+         else
+         {
+            throw new Error ("AudioClip: no suitable file type handler found.");
          }
       });
    },
@@ -99364,7 +96250,7 @@ Object .assign (Object .setPrototypeOf (ListenerPointSource .prototype, Sound_X3
             .assign (renderObject .getModelViewMatrix () .get ())
             .translate (this ._position .getValue ())
             .rotate (this ._orientation .getValue ())
-            .get (position, orientation);
+            .getTransform (position, orientation);
 
          orientation .multVecRot (forwardVector .assign (Numbers_Vector3 .Z_AXIS) .negate ()) .normalize ();
          orientation .multVecRot (upVector .assign (Numbers_Vector3 .Y_AXIS)) .normalize ();
@@ -99990,7 +96876,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, Sound_X3DSoundNode .pr
 
          location .set (0, 0, e);
          scale    .set (b, b, a);
-         rotation .setFromToVec (Numbers_Vector3 .Z_AXIS, this ._direction .getValue ());
+         rotation .setVectors (Numbers_Vector3 .Z_AXIS, this ._direction .getValue ());
 
          sphereMatrix
             .assign (modelViewMatrix)
@@ -100032,7 +96918,7 @@ Object .assign (Object .setPrototypeOf (Sound .prototype, Sound_X3DSoundNode .pr
 
          location  .assign (this ._location  .getValue ());
          direction .assign (this ._direction .getValue ());
-         rotation .setFromToVec (Numbers_Vector3 .Z_AXIS, direction) .straighten ();
+         rotation .setVectors (Numbers_Vector3 .Z_AXIS, direction) .straighten ();
          rotation .multVecRot (xAxis .assign (Numbers_Vector3 .X_AXIS));
 
          modelViewMatrix .multVecMatrix (location) .normalize ();
@@ -100839,9 +97725,10 @@ const PNGMedia_default_ = PNGMedia;
 
 /* harmony default export */ const Texturing_PNGMedia = (Namespace/* default */.A .add ("PNGMedia", PNGMedia_default_));
 ;// ./src/x_ite/Components/Texturing/MovieTexture.js
-/* provided dependency */ var MovieTexture_$ = __webpack_require__(454)["A"];
-/* provided dependency */ var SuperGif = __webpack_require__(410);
-/* provided dependency */ var APNG = __webpack_require__(760);
+/* provided dependency */ var MovieTexture_$ = __webpack_require__(163)["A"];
+/* provided dependency */ var SuperGif = __webpack_require__(653);
+/* provided dependency */ var APNG = __webpack_require__(7);
+
 
 
 
@@ -100922,51 +97809,78 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
       if (this .urlStack .length === 0)
       {
          this .video .off ("abort error suspend stalled loadeddata");
-         this ._duration_changed = -1;
          this .setMediaElement (null);
          this .clearTexture ();
+         this .updateOutputs (0, 0, 0, -1);
          this .setLoadState (Base_X3DConstants .FAILED_STATE);
          return;
       }
 
       // Get URL.
 
-      this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
+      this .fileURL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
 
-      if (this .URL .protocol !== "data:")
+      if (this .fileURL .pathname .endsWith (".gif") || this .fileURL .href .match (/^\s*data:image\/gif[;,]/s))
       {
-         if (!this .getCache ())
-            this .URL .searchParams .set ("_", Date .now ());
+         new InputOutput_FileLoader (this, { dataAsString: false }) .loadDocument ([this .fileURL], async (data, fileURL) =>
+         {
+            if (data === null)
+            {
+               this .loadNext ();
+            }
+            else if (data instanceof ArrayBuffer)
+            {
+               this .fileURL = new URL (fileURL);
+
+               const
+                  img = MovieTexture_$("<img></img>") .appendTo (MovieTexture_$("<div></div>")),
+                  gif = new SuperGif ({ gif: img [0], on_error: type => this .setError ({ type }) });
+
+               gif .load_raw (new Uint8Array (data), () => this .setGif (gif));
+            }
+            else
+            {
+               throw new Error ("MovieTexture: no suitable file type handler found.");
+            }
+         });
       }
-
-      if (this .URL .pathname .endsWith (".gif"))
+      else if (this .fileURL .pathname .endsWith (".png") || this .fileURL .href .match (/^\s*data:image\/png[;,]/s))
       {
-         const
-            img = MovieTexture_$("<img></img>") .appendTo (MovieTexture_$("<div></div>")),
-            gif = new SuperGif ({ gif: img [0], on_error: type => this .setError ({ type }) });
+         new InputOutput_FileLoader (this, { dataAsString: false }) .loadDocument ([this .fileURL], async (data, fileURL) =>
+         {
+            if (data === null)
+            {
+               this .loadNext ();
+            }
+            else if (data instanceof ArrayBuffer)
+            {
+               this .fileURL = new URL (fileURL);
 
-         gif .load_url (this .URL, () => this .setGif (gif));
+               const
+                  parseAPNG = DEVELOPMENT ? window ["apng-js"] .default : APNG .default,
+                  apng      = await parseAPNG (data);
 
-         // this .setTimeout ({ type: "timeout" });
-      }
-      else if (this .URL .pathname .endsWith (".png"))
-      {
-         const parseAPNG = DEVELOPMENT ? window ["apng-js"] .default : APNG .default;
-
-         fetch (this .URL, { cache: this .getCache () ? "default" : "reload" })
-            .then (response => response .arrayBuffer ())
-            .then (arrayBuffer => parseAPNG (arrayBuffer))
-            .then (apng => this .setAPNG (apng))
-            .catch (error => this .setError ({ type: error .message}));
-
+               this .setAPNG (apng);
+            }
+            else
+            {
+               throw new Error ("MovieTexture: no suitable file type handler found.");
+            }
+         });
       }
       else
       {
+         if (this .fileURL .protocol !== "data:")
+         {
+            if (!this .getCache ())
+               this .fileURL .searchParams .set ("_", Date .now ());
+         }
+
          this .video
             .on ("abort error", this .setError .bind (this))
             .on ("suspend stalled", this .setTimeout .bind (this))
             .on ("loadeddata", this .setVideo .bind (this))
-            .attr ("src", this .URL)
+            .attr ("src", this .fileURL)
             .get (0) .load ();
       }
    },
@@ -100982,8 +97896,8 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
    },
    setError (event)
    {
-      if (this .URL .protocol !== "data:")
-         console .warn (`Error loading movie '${decodeURI (this .URL)}':`, event .type);
+      if (this .fileURL .protocol !== "data:")
+         console .warn (`Error loading movie '${decodeURI (this .fileURL)}':`, event .type);
 
       this .loadNext ();
    },
@@ -100993,8 +97907,8 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
       {
          if (DEVELOPMENT)
          {
-            if (this .URL .protocol !== "data:")
-               console .info (`Done loading movie '${decodeURI (this .URL)}'.`);
+            if (this .fileURL .protocol !== "data:")
+               console .info (`Done loading movie '${decodeURI (this .fileURL)}'.`);
          }
 
          const
@@ -101006,11 +97920,11 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
 
          this .clearTimeout ();
 
-         this ._duration_changed = video .duration;
-         video .currentFrame     = video;
+         video .currentFrame = video;
 
          this .setMediaElement (video);
          this .setTextureData (width, height, true, false, video);
+         this .updateOutputs (width, height, 3, video .duration);
          this .setLoadState (Base_X3DConstants .COMPLETE_STATE);
 
          this .set_speed__ ();
@@ -101027,10 +97941,11 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
       {
          Texturing_GifMedia (gif, this);
 
-         this ._duration_changed = gif .duration;
+         const { width, height } = gif .get_canvas ();
 
          this .setMediaElement (gif);
-         this .setTextureData (gif .get_canvas () .width, gif .get_canvas () .height, true, false, gif .get_frames () [0] .data);
+         this .setTextureData (width, height, true, false, gif .get_frames () [0] .data);
+         this .updateOutputs (width, height, 4, gif .duration);
          this .setLoadState (Base_X3DConstants .COMPLETE_STATE);
 
          this .set_speed__ ();
@@ -101047,10 +97962,11 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
       {
          await Texturing_PNGMedia (apng, this);
 
-         this ._duration_changed = apng .duration;
+         const { width, height, duration, currentFrame } = apng;
 
          this .setMediaElement (apng);
-         this .setTextureData (apng .width, apng .height, true, false, apng .currentFrame);
+         this .setTextureData (width, height, true, false, currentFrame);
+         this .updateOutputs (width, height, 4, duration);
          this .setLoadState (Base_X3DConstants .COMPLETE_STATE);
 
          this .set_speed__ ();
@@ -101060,6 +97976,13 @@ Object .assign (Object .setPrototypeOf (MovieTexture .prototype, Texturing_X3DTe
          // Catch security error from cross origin requests.
          this .setError ({ type: error .message });
       }
+   },
+   updateOutputs (width, height, colorDepth, duration)
+   {
+      this ._width            = width;
+      this ._height           = height;
+      this ._colorDepth       = colorDepth;
+      this ._duration_changed = duration;
    },
    set_gain__ ()
    {
@@ -101129,6 +98052,10 @@ Object .defineProperties (MovieTexture,
          new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,     "isPaused",             new x_ite_Fields .SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,     "isActive",             new x_ite_Fields .SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,     "elapsedTime",          new x_ite_Fields .SFTime ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,     "width",                new x_ite_Fields .SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,     "height",               new x_ite_Fields .SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,     "colorDepth",           new x_ite_Fields .SFInt32 ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,     "hasSound",             new x_ite_Fields .SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,     "duration_changed",     new x_ite_Fields .SFTime ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "repeatS",              new x_ite_Fields .SFBool (true)),
          new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "repeatT",              new x_ite_Fields .SFBool (true)),
@@ -101380,10 +98307,7 @@ Object .assign (Object .setPrototypeOf (MultiTexture .prototype, Texturing_X3DTe
    getRenderedTextures (renderedTextures)
    {
       for (const textureNode of this .textureNodes)
-      {
-         if (textureNode .isRenderedTexture ())
-            renderedTextures .add (textureNode);
-      }
+         textureNode .getRenderedTextures (renderedTextures);
    },
    getShaderOptions (options)
    {
@@ -101817,10 +98741,13 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, Texturing_X3
       Texturing_X3DTexture2DNode   .prototype .initialize .call (this);
       Networking_X3DUrlOutputObject .prototype .initialize .call (this);
 
-      this ._dimensions .addInterest ("set_dimensions__", this);
-      this ._depthMap   .addInterest ("set_depthMap__",   this);
-      this ._children   .addInterest ("set_children__",   this);
+      this ._singleFrame .addInterest ("set_singleFrame__", this);
+      this ._width       .addInterest ("set_dimensions__",  this);
+      this ._height      .addInterest ("set_dimensions__",  this);
+      this ._depthMap    .addInterest ("set_depthMap__",    this);
+      this ._children    .addInterest ("set_children__",    this);
 
+      this .set_singleFrame__ ();
       this .set_dimensions__ ();
       this .set_depthMap__ ();
       this .set_children__ ();
@@ -101835,9 +98762,17 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, Texturing_X3
    {
       return true;
    },
+   getRenderedTextures (renderedTextures)
+   {
+      renderedTextures .add (this);
+   },
    checkLoadState ()
    {
       return this ._loadState .getValue ();
+   },
+   set_singleFrame__ ()
+   {
+      this .update = true;
    },
    set_dimensions__ ()
    {
@@ -101846,10 +98781,10 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, Texturing_X3
       // Create framebuffer.
 
       const
-         width  = this ._dimensions [0] ?? 128,
-         height = this ._dimensions [1] ?? 128;
+         width  = Math .max (this ._width .getValue (), 0),
+         height = Math .max (this ._height .getValue (), 0);
 
-      // const components = this ._dimensions [2] ?? 4;
+      // const components = this ._colorDepth .getValue ();
 
       if (width > 0 && height > 0)
       {
@@ -101933,7 +98868,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, Texturing_X3
       if (!this .frameBuffer)
          return;
 
-      if (this ._update .getValue () === "NONE")
+      if (!this .update)
          return;
 
       if (Date .now () - this .lastUpdate < this ._updateInterval .getValue () * 1000)
@@ -102035,8 +98970,8 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, Texturing_X3
 
          this .updateTextureParameters ();
 
-         if (this ._update .equals ("NEXT_FRAME_ONLY"))
-            this ._update = "NONE";
+         if (this ._singleFrame .getValue ())
+            this .update = false;
       };
    })(),
    dispose ()
@@ -102058,13 +98993,15 @@ Object .defineProperties (RenderedTexture,
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "replaceImage",        new x_ite_Fields .SFBool (true)),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "maximumNumberFrames", new x_ite_Fields .SFInt32 (1000)),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "url",                 new x_ite_Fields .MFString ()),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "update",              new x_ite_Fields .SFString ("NONE")),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "singleFrame",         new x_ite_Fields .SFBool (true)),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "updateInterval",      new x_ite_Fields .SFTime (0.1)),
-         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "dimensions",          new x_ite_Fields .MFInt32 (128, 128, 4)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "width",               new x_ite_Fields .SFInt32 (128)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "height",              new x_ite_Fields .SFInt32 (128)),
+         new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "colorDepth",          new x_ite_Fields .SFInt32 (4)),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "depthMap",            new x_ite_Fields .SFBool ()),
+         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,     "isActive",            new x_ite_Fields .SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "repeatS",             new x_ite_Fields .SFBool (true)),
          new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "repeatT",             new x_ite_Fields .SFBool (true)),
-         new Base_X3DFieldDefinition (Base_X3DConstants .outputOnly,     "isActive",            new x_ite_Fields .SFBool ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .initializeOnly, "textureProperties",   new x_ite_Fields .SFNode ()),
          new Base_X3DFieldDefinition (Base_X3DConstants .inputOutput,    "children",            new x_ite_Fields .MFNode ()),
       ]),
@@ -102201,7 +99138,7 @@ const Components_default_ = Components;
 
 /* harmony default export */ const x_ite_Components = (Namespace/* default */.A .add ("Components", Components_default_));
 ;// ./src/x_ite/Browser/X3DBrowser.js
-/* provided dependency */ var X3DBrowser_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var X3DBrowser_$ = __webpack_require__(163)["A"];
 
 
 
@@ -102325,7 +99262,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, Browser_X3DBrowse
              `      Color depth: ${this .getColorDepth ()} bits\n` +
              `      Max clip planes per shape: ${this .getMaxClipPlanes ()}\n` +
              `      Max lights per shape: ${this .getMaxLights ()}\n` +
-             `      Max textures per shape: ${this .getMaxTextures ()}\n` +
+             `      Max multi textures per shape: ${this .getMaxTextures ()}\n` +
              `      Max texture size: ${this .getMaxTextureSize ()} × ${this .getMaxTextureSize ()} pixels\n` +
              `      Texture memory: ${this .getTextureMemory () || "n/a"}\n` +
              `      Texture units: ${this .getMaxCombinedTextureUnits ()}\n` +
@@ -103353,7 +100290,7 @@ const SUPPORTED_VERSIONS_default_ = [
 
 /* harmony default export */ const SUPPORTED_VERSIONS = (Namespace/* default */.A .add ("SUPPORTED_VERSIONS", SUPPORTED_VERSIONS_default_));
 ;// ./src/x_ite/X3DCanvasElement.js
-/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var X3DCanvasElement_$ = __webpack_require__(163)["A"];
 
 
 class X3DCanvasElement extends HTMLElement
@@ -103400,6 +100337,7 @@ class X3DCanvasElement extends HTMLElement
          "debug",
          "displayColorSpace",
          "exposure",
+         "extensions",
          "logarithmicDepthBuffer",
          "maximumFrameRate",
          "multisampling",
@@ -103517,8 +100455,7 @@ const QuickSort_default_ = QuickSort;
 
 /* harmony default export */ const Algorithms_QuickSort = (Namespace/* default */.A .add ("QuickSort", QuickSort_default_));
 ;// ./src/lib/jquery.js
-/* provided dependency */ var jquery_$ = __webpack_require__(454)["A"];
-/* provided dependency */ var pako = __webpack_require__(655);
+/* provided dependency */ var jquery_$ = __webpack_require__(163)["A"];
 Object .assign (jquery_$,
 {
    decodeText (input)
@@ -103552,16 +100489,42 @@ Object .assign (jquery_$,
             console .error (error);
       }
    },
-   ungzip (arrayBuffer)
+   /**
+    * Decompresses an ArrayBuffer or Blob and returns an ArrayBuffer.
+    *
+    * @param {ArrayBuffer | Blob} data
+    * @returns ArrayBuffer
+    */
+   async gunzip (data)
    {
+      const
+         blob  = data instanceof Blob ? data : new Blob ([data]),
+         magic = await blob .slice (0, 2) .arrayBuffer ();
+
+      if (!jquery_$.isGzip (magic))
+         return await blob .arrayBuffer ();
+
       try
       {
-         return pako .ungzip (arrayBuffer, { to: "raw" }) .buffer;
+         const
+            inputStream  = blob .stream (),
+            outputStream = inputStream .pipeThrough (new DecompressionStream ("gzip"));
+
+         return await new Response (outputStream) .arrayBuffer ();
       }
-      catch (exception)
+      catch
       {
-         return arrayBuffer;
+         return await blob .arrayBuffer ();
       }
+   },
+   isGzip (arrayBuffer)
+   {
+      if (arrayBuffer .byteLength < 2)
+         return false;
+
+      const bytes = new Uint8Array (arrayBuffer);
+
+      return bytes [0] === 0x1f && bytes [1] === 0x8b;
    },
 });
 
@@ -103582,13 +100545,13 @@ const jquery_default_ = jquery_$;
 
 /* harmony default export */ const jquery = (Namespace/* default */.A .add ("jquery", jquery_default_));
 ;// ./src/lib/libtess.js
-/* provided dependency */ var libtess_libtess = __webpack_require__(340);
+/* provided dependency */ var libtess_libtess = __webpack_require__(451);
 const libtess_default_ = libtess_libtess;
 ;
 
 /* harmony default export */ const lib_libtess = (Namespace/* default */.A .add ("libtess", libtess_default_));
 ;// ./src/x_ite/X3D.js
-/* provided dependency */ var X3D_$ = __webpack_require__(454)["A"];
+/* provided dependency */ var X3D_$ = __webpack_require__(163)["A"];
 
 
 
@@ -103664,38 +100627,38 @@ const X3D = Object .assign (function (onfulfilled, onrejected)
 },
 Namespace/* default */.A, Namespace/* default */.A .Fields,
 {
-   X3DConstants:                Base_X3DConstants,
-   X3DBrowser:                  Browser_X3DBrowser,
-   X3DExecutionContext:         Execution_X3DExecutionContext,
-   X3DScene:                    Execution_X3DScene,
-   ComponentInfo:               Configuration_ComponentInfo,
-   ComponentInfoArray:          Configuration_ComponentInfoArray,
-   ProfileInfo:                 Configuration_ProfileInfo,
-   ProfileInfoArray:            Configuration_ProfileInfoArray,
-   ConcreteNodesArray:          Configuration_ConcreteNodesArray,          // non-standard
-   AbstractNodesArray:          Configuration_AbstractNodesArray,          // non-standard
-   UnitInfo:                    Configuration_UnitInfo,
-   UnitInfoArray:               Configuration_UnitInfoArray,
-   NamedNodesArray:             Execution_NamedNodesArray,             // non-standard
-   ImportedNodesArray:          Execution_ImportedNodesArray,          // non-standard
-   X3DImportedNode:             Execution_X3DImportedNode,             // non-standard
-   ExportedNodesArray:          Execution_ExportedNodesArray,          // non-standard
-   X3DExportedNode:             Execution_X3DExportedNode,             // non-standard
+   X3DConstants: Base_X3DConstants,
+   X3DBrowser: Browser_X3DBrowser,
+   X3DExecutionContext: Execution_X3DExecutionContext,
+   X3DScene: Execution_X3DScene,
+   ComponentInfo: Configuration_ComponentInfo,
+   ComponentInfoArray: Configuration_ComponentInfoArray,
+   ProfileInfo: Configuration_ProfileInfo,
+   ProfileInfoArray: Configuration_ProfileInfoArray,
+   ConcreteNodesArray: Configuration_ConcreteNodesArray,          // non-standard
+   AbstractNodesArray: Configuration_AbstractNodesArray,          // non-standard
+   UnitInfo: Configuration_UnitInfo,
+   UnitInfoArray: Configuration_UnitInfoArray,
+   NamedNodesArray: Execution_NamedNodesArray,             // non-standard
+   ImportedNodesArray: Execution_ImportedNodesArray,          // non-standard
+   X3DImportedNode: Execution_X3DImportedNode,             // non-standard
+   ExportedNodesArray: Execution_ExportedNodesArray,          // non-standard
+   X3DExportedNode: Execution_X3DExportedNode,             // non-standard
    ExternProtoDeclarationArray: Prototype_ExternProtoDeclarationArray,
-   ProtoDeclarationArray:       Prototype_ProtoDeclarationArray,
-   X3DExternProtoDeclaration:   Prototype_X3DExternProtoDeclaration,
-   X3DProtoDeclaration:         Prototype_X3DProtoDeclaration,
-   X3DProtoDeclarationNode:     Prototype_X3DProtoDeclarationNode,     // non-standard
-   RouteArray:                  Routing_RouteArray,
-   X3DRoute:                    Routing_X3DRoute,
+   ProtoDeclarationArray: Prototype_ProtoDeclarationArray,
+   X3DExternProtoDeclaration: Prototype_X3DExternProtoDeclaration,
+   X3DProtoDeclaration: Prototype_X3DProtoDeclaration,
+   X3DProtoDeclarationNode: Prototype_X3DProtoDeclarationNode,     // non-standard
+   RouteArray: Routing_RouteArray,
+   X3DRoute: Routing_X3DRoute,
 
-   X3DBaseNode:                 Base_X3DBaseNode,                 // non-standard
+   X3DBaseNode: Base_X3DBaseNode,                 // non-standard
 
-   X3DFieldDefinition:          Base_X3DFieldDefinition,
-   FieldDefinitionArray:        Base_FieldDefinitionArray,
+   X3DFieldDefinition: Base_X3DFieldDefinition,
+   FieldDefinitionArray: Base_FieldDefinitionArray,
 
-   X3DField:                    Base_X3DField,
-   X3DArrayField:               Base_X3DArrayField,
+   X3DField: Base_X3DField,
+   X3DArrayField: Base_X3DArrayField,
 
    ... x_ite_Fields,
 },
@@ -103754,7 +100717,28 @@ Namespace/* default */.A, Namespace/* default */.A .Fields,
 
 // Assign X3D to global namespace.
 
-window [Symbol .for ("X_ITE.X3D-15.0.2")] = x_ite_X3D;
+window [Symbol .for ("X_ITE.X3D")] = x_ite_X3D;
+
+// Activate extensions.
+
+function activateExtensions (X3D)
+{
+   const
+      _extensions = Symbol .for ("X_ITE.extensions"),
+      extensions  = window [_extensions];
+
+   if (Array .isArray (extensions))
+   {
+      for (const extension of extensions)
+         extension (X3D);
+   }
+
+   delete window [_extensions];
+}
+
+activateExtensions (x_ite_X3D);
+
+// Define <x3d-canvas> element.
 
 customElements .define ("x3d-canvas", x_ite_X3DCanvasElement);
 

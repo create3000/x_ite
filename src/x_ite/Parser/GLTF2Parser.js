@@ -2,6 +2,7 @@ import X3DParser    from "./X3DParser.js";
 import X3DOptimizer from "./X3DOptimizer.js";
 import Fields       from "../Fields.js";
 import X3DConstants from "../Base/X3DConstants.js";
+import FileLoader   from "../InputOutput/FileLoader.js";
 import URLs         from "../Browser/Networking/URLs.js";
 import Layer        from "../Components/Layering/Layer.js";
 import TraverseType from "../Rendering/TraverseType.js";
@@ -117,7 +118,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          if (!Object .keys (this .input) .every (key => keys .has (key)))
             return false;
 
-         if (this .input .asset ?.version !== "2.0")
+         if (!(this .input .asset ?.version >= 2.0))
             return false;
 
          return true;
@@ -284,11 +285,6 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                components .push (browser .getComponent ("X_ITE", 1));
                break;
             }
-            case "KHR_texture_transform":
-            {
-               components .push (browser .getComponent ("Texturing3D", 2));
-               break;
-            }
             case "KHR_animation_pointer":
             {
                components .push (browser .getComponent ("EventUtilities", 1));
@@ -306,11 +302,21 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
                this .draco ??= await this .getLibrary ("draco_decoder_gltf.js");
                break;
             }
+            case "KHR_gaussian_splatting":
+            {
+               components .push (browser .getComponent ("GaussianSplats", 1));
+               break;
+            }
             case "KHR_meshopt_compression":
             case "EXT_meshopt_compression":
             {
                this .MeshoptDecoder ??= await this .getLibrary ("meshopt_decoder.js");
                await this .MeshoptDecoder .ready;
+               break;
+            }
+            case "KHR_texture_transform":
+            {
+               components .push (browser .getComponent ("Texturing3D", 2));
                break;
             }
          }
@@ -394,7 +400,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       lightNode ._intensity = this .numberValue (light .intensity, 1);
 
       if (this .vectorValue (lightNode .rotation, quaternion))
-         lightNode ._rotation = new Rotation4 (0, 0, 1, Math .PI) .multRight (new Rotation4 (quaternion));
+         lightNode ._rotation = new Rotation4 (0, 0, 1, Math .PI) .multRight (Rotation4 .fromQuaternion (quaternion));
       else
          lightNode ._rotation = new Rotation4 (0, 0, 1, Math .PI);
 
@@ -741,13 +747,15 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
       if (!buffer .uri)
          return this .buffers [i];
 
-      const
-         url         = new URL (buffer .uri, this .getScene () .getBaseURL ()),
-         response    = await fetch (url),
-         blob        = await response .blob (),
-         arrayBuffer = await blob .arrayBuffer ();
+      this .getScene () .addLoadingObject (buffer);
 
-      return $.ungzip (arrayBuffer);
+      const
+         url         = new Fields .MFString (new URL (buffer .uri, this .getScene () .getBaseURL ())),
+         arrayBuffer = await FileLoader .loadDocument (this .getBrowser () .getWorld (), url, { dataAsString: false });
+
+      this .getScene () .removeLoadingObject (buffer);
+
+      return arrayBuffer;
    },
    bufferViewsArray (bufferViews)
    {
@@ -1204,17 +1212,17 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       for (const [key, extension] of Object .entries (extensions))
       {
+         if (!this .extensions .has (key))
+            continue;
+
          switch (key)
          {
             case "KHR_texture_basisu":
+            // case "EXT_texture_astc":
             case "EXT_texture_avif":
             case "EXT_texture_webp":
-            {
-               if (this .extensions .has (key))
-                  images .push (this .images [extension ?.source]);
-
+               images .push (this .images [extension ?.source]);
                break;
-            }
          }
       }
    },
@@ -1716,6 +1724,10 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
 
       const extension = this .getScene () .createNode ("VolumeScatterMaterialExtension", false);
 
+      extension ._scatterStrength        = this .numberValue (KHR_materials_volume_scatter .scatterStrengthFactor, 0);
+      extension ._scatterStrengthTexture = this .textureInfo (KHR_materials_volume_scatter .scatterStrengthTexture);
+      extension ._scatterTextureMapping  = this .textureMapping (KHR_materials_volume_scatter .scatterTexture);
+
       const multiscatterColor = new Color3 ();
 
       if (this .vectorValue (KHR_materials_volume_scatter .multiscatterColorFactor, multiscatterColor))
@@ -1935,6 +1947,9 @@ function eventsProcessed ()
       this .attributesObject (primitive .attributes);
       this .targetsArray     (primitive .targets);
 
+      if (primitive .extensions ?.KHR_gaussian_splatting)
+         return this .khrGaussianSplatting (primitive, shapeNodes);
+
       primitive .indices  = this .accessors [primitive .indices];
       primitive .material = this .materials [primitive .material];
 
@@ -1945,6 +1960,53 @@ function eventsProcessed ()
          variantsNode = this .khrMaterialsVariantsExtension (primitive .extensions ?.KHR_materials_variants, shapeNode);
 
       shapeNodes .push (primitive .shapeNode = variantsNode ?? shapeNode);
+   },
+   khrGaussianSplatting (primitive, shapeNodes)
+   {
+      const
+         scene                  = this .getScene (),
+         gaussianSplats         = scene .createNode ("GaussianSplats", false),
+         KHR_gaussian_splatting = primitive .extensions ?.KHR_gaussian_splatting,
+         attributes             = primitive .attributes;
+
+      gaussianSplats ._colorSpace = String (KHR_gaussian_splatting ?.colorSpace ?? "SRGB_REC709_DISPLAY") .toUpperCase ();
+
+      gaussianSplats ._positions    = attributes ?.POSITION ?.array ?? [ ];
+      gaussianSplats ._orientations = attributes ?.["KHR_gaussian_splatting:ROTATION"] ?.array ?? [ ];
+      gaussianSplats ._scales       = attributes ?.["KHR_gaussian_splatting:SCALE"]    ?.array ?? [ ];
+      gaussianSplats ._opacities    = attributes ?.["KHR_gaussian_splatting:OPACITY"]  ?.array ?? [ ];
+
+      // Degrees 0,1,2,3
+
+      for (const [degree, coefs] of [1, 3, 5, 7] .entries ())
+      {
+         for (let coef = 0; coef < coefs; ++ coef)
+         {
+            const
+               field = gaussianSplats .getField (`sphericalHarmonicsDegree${degree}Coef${coef}`),
+               value = attributes ?.[`KHR_gaussian_splatting:SH_DEGREE_${degree}_COEF_${coef}`] ?.array ?? [ ];
+
+            field .setValue (value);
+         }
+      }
+
+      // Bounding Box
+
+      const
+         min    = new Vector3 (),
+         max    = new Vector3 (),
+         hasMin = this .vectorValue (attributes ?.POSITION ?.min, min),
+         hasMax = this .vectorValue (attributes ?.POSITION ?.max, max);
+
+      if (hasMin && hasMax)
+      {
+         gaussianSplats ._bboxSize   = max .copy () .subtract (min),
+         gaussianSplats ._bboxCenter = min .copy () .add (max) .divide (2);
+      }
+
+      gaussianSplats .setup ();
+
+      shapeNodes .push (primitive .shapeNode = gaussianSplats);
    },
    attributesObject (attributes)
    {
@@ -2405,38 +2467,6 @@ function eventsProcessed ()
                transformNode ._name = node .name;
          }
 
-         // Set transformation matrix.
-
-         if (this .vectorValue (node .matrix, matrix))
-         {
-            matrix .get (translation, rotation, scale, scaleOrientation);
-
-            transformNode ._translation      = translation;
-            transformNode ._rotation         = rotation;
-            transformNode ._scale            = scale;
-            transformNode ._scaleOrientation = scaleOrientation;
-         }
-         else
-         {
-            if (this .vectorValue (node .translation, translation))
-               transformNode ._translation = translation;
-
-            if (this .vectorValue (node .rotation, quaternion))
-               transformNode ._rotation = rotation .setQuaternion (quaternion);
-
-            if (this .vectorValue (node .scale, scale))
-               transformNode ._scale = scale;
-
-            matrix .set (transformNode ._translation .getValue (),
-                         transformNode ._rotation .getValue (),
-                         transformNode ._scale .getValue (),
-                         transformNode ._scaleOrientation .getValue ());
-         }
-
-         node .matrix       = matrix;
-         node .modelMatrix  = matrix .copy () .multRight (modelMatrix);
-         node .parentMatrix = modelMatrix .copy ();
-
          // Get mesh.
 
          const
@@ -2503,6 +2533,29 @@ function eventsProcessed ()
          }
          else
          {
+            // Set transformation matrix.
+
+            if (this .vectorValue (node .matrix, matrix))
+            {
+               matrix .getTransform (translation, rotation, scale, scaleOrientation);
+
+               transformNode ._translation      = translation;
+               transformNode ._rotation         = rotation;
+               transformNode ._scale            = scale;
+               transformNode ._scaleOrientation = scaleOrientation;
+            }
+            else
+            {
+               if (this .vectorValue (node .translation, translation))
+                  transformNode ._translation = translation;
+
+               if (this .vectorValue (node .rotation, quaternion))
+                  transformNode ._rotation = rotation .setQuaternion (quaternion);
+
+               if (this .vectorValue (node .scale, scale))
+                  transformNode ._scale = scale;
+            }
+
             // Add Shape nodes.
 
             if (shapeNodes)
@@ -2541,232 +2594,20 @@ function eventsProcessed ()
                   if (!lightNode)
                      break;
 
-                  node .transformNode ._children .push (lightNode);
-                  break;
-               }
-               case "KHR_node_visibility":
-               {
-                  // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_visibility
-                  extension .pointers       = [node .childNode];
-                  node .childNode ._visible = extension .visible ?? true;
-                  break;
-               }
-               case "KHR_physics_rigid_bodies":
-               {
-                  let rigidBodyNode;
-
-                  if (extension .collider || extension .motion)
-                  {
-                     const name = node .childNode .getName ();
-
-                     if (physicsParent)
-                     {
-                        rigidBodyNode = physicsParent .rigidBodyNode;
-                     }
-                     else
-                     {
-                        rigidBodyNode = scene .createNode ("RigidBody", false);
-
-                        node .rigidBodyNode = rigidBodyNode;
-
-                        if (name && !rigidBodyNode .getName ())
-                           scene .addNamedNode (scene .getUniqueName (name), rigidBodyNode);
-
-                        node .modelMatrix .get (translation, rotation, scale);
-
-                        rigidBodyNode ._fixed                = true;
-                        rigidBodyNode ._position             = translation;
-                        rigidBodyNode ._orientation          = rotation;
-                        rigidBodyNode ._autoDamp             = true;
-                        rigidBodyNode ._linearDampingFactor  = 0.05;
-                        rigidBodyNode ._angularDampingFactor = 0.05;
-
-                        this .rigidBodies .push (rigidBodyNode);
-                     }
-                  }
-
-                  for (const [key, value] of Object .entries (extension))
-                  {
-                     if (!(value instanceof Object))
-                        continue;
-
-                     switch (key)
-                     {
-                        case "collider":
-                        {
-                           const collisionCollectionNode = this .physicsMaterialObject (value .physicsMaterial);
-
-                           let shapeNodes;
-
-                           if (value .geometry ?.shape !== undefined)
-                           {
-                              shapeNodes = [this .implicitShapes [value .geometry .shape]];
-                           }
-                           else if (value .geometry ?.mesh !== undefined)
-                           {
-                              const
-                                 mesh                    = this .meshes [value .geometry .mesh],
-                                 skin                    = this .skins [node .skin],
-                                 EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing;
-
-                              shapeNodes = this .meshObject (mesh, skin, EXT_mesh_gpu_instancing);
-                           }
-                           else if (value .geometry ?.node !== undefined) // Handle legacy property.
-                           {
-                              const
-                                 node                    = this .nodes [value .geometry .node],
-                                 mesh                    = this .meshes [node .mesh],
-                                 skin                    = this .skins [node .skin],
-                                 EXT_mesh_gpu_instancing = node .extensions ?.EXT_mesh_gpu_instancing;
-
-                              shapeNodes = this .meshObject (mesh, skin, EXT_mesh_gpu_instancing);
-                           }
-
-                           for (const shapeNode of shapeNodes ?? [ ])
-                           {
-                              const collidableShapeNode = scene .createNode ("CollidableShape", false);
-
-                              collidableShapeNode ._convexHull = value .geometry .convexHull;
-                              collidableShapeNode ._shape      = shapeNode;
-
-                              if (physicsParent)
-                              {
-                                 physicsParent .modelMatrix .copy ()
-                                    .inverse ()
-                                    .multLeft (node .modelMatrix) .get (translation, rotation, scale);
-
-                                 collidableShapeNode ._translation = translation;
-                                 collidableShapeNode ._rotation    = rotation;
-                                 collidableShapeNode ._scale       = scale;
-
-                                 const collidableOffsetNode = scene .createNode ("CollidableOffset", false);
-
-                                 collidableOffsetNode ._collidable = collidableShapeNode;
-
-                                 collidableOffsetNode .setup ();
-
-                                 rigidBodyNode ._geometry .push (collidableOffsetNode);
-
-                                 collisionCollectionNode ._collidables .push (collidableOffsetNode);
-
-                                 this .collidables .push (collidableOffsetNode);
-                              }
-                              else
-                              {
-                                 collidableShapeNode ._scale = scale;
-
-                                 rigidBodyNode ._geometry .push (collidableShapeNode);
-
-                                 collisionCollectionNode ._collidables .push (collidableShapeNode);
-
-                                 this .collidables .push (collidableShapeNode);
-                              }
-
-                              collidableShapeNode .setup ();
-                           }
-
-                           break;
-                        }
-                        case "motion":
-                        {
-                           const mass = this .numberValue (value .mass, 1);
-
-                           rigidBodyNode ._fixed = value .isKinematic;
-                           rigidBodyNode ._mass  = mass;
-
-                           if (this .vectorValue (value .centerOfMass, vector3))
-                              rigidBodyNode ._centerOfMass = vector3;
-
-                           if (this .vectorValue (value .inertiaDiagonal, vector3))
-                              rigidBodyNode ._inertia = new Matrix3 (vector3 [0], 0, 0, 0, vector3 [1], 0, 0, 0, vector3 [2]);
-
-                           // TODO: inertiaOrientation
-
-                           if (this .vectorValue (value .linearVelocity, vector3))
-                              rigidBodyNode ._linearVelocity = node .modelMatrix .multDirMatrix (vector3);
-
-                           if (this .vectorValue (value .angularVelocity, vector3))
-                              rigidBodyNode ._angularVelocity = node .modelMatrix .multDirMatrix (vector3);
-
-                           const gravityFactor = this .numberValue (value .gravityFactor, 1);
-
-                           if (gravityFactor !== 1)
-                           {
-                              rigidBodyNode ._useGlobalGravity = false;
-
-                              if (!value .isKinematic)
-                                 rigidBodyNode ._forces = [0, GRAVITY * gravityFactor * mass, 0];
-                           }
-
-                           // Routes
-
-                           const invParentMatrix = node .parentMatrix .copy () .inverse ();
-
-                           if (invParentMatrix .equals (Matrix4 .IDENTITY))
-                           {
-                              scene .addRoute (rigidBodyNode, "position",    node .childNode, "translation");
-                              scene .addRoute (rigidBodyNode, "orientation", node .childNode, "rotation");
-                           }
-                           else
-                           {
-                              // Script
-
-                              const scriptNode = scene .createNode ("Script", false);
-
-                              scriptNode .addUserDefinedField (X3DConstants .inputOutput, "invParentMatrix", new Fields .SFMatrix4f (... invParentMatrix));
-
-                              scriptNode .addUserDefinedField (X3DConstants .inputOutput, "position",    new Fields .SFVec3f ());
-                              scriptNode .addUserDefinedField (X3DConstants .inputOutput, "orientation", new Fields .SFRotation ());
-
-                              scriptNode .addUserDefinedField (X3DConstants .outputOnly, "translation_changed", new Fields .SFVec3f ());
-                              scriptNode .addUserDefinedField (X3DConstants .outputOnly, "rotation_changed",    new Fields .SFRotation ());
-
-                              scriptNode ._url = [/* js */ `ecmascript:
-const modelMatrix = new SFMatrix4f ();
-
-function eventsProcessed ()
-{
-   modelMatrix .setTransform (position, orientation);
-
-   modelMatrix
-      .multRight (invParentMatrix)
-      .getTransform (translation_changed, rotation_changed);
-}
-`];
-
-                              scriptNode .setup ();
-
-                              scene .addNamedNode (scene .getUniqueName ("MotionScript"), scriptNode);
-
-                              scene .addRoute (rigidBodyNode, "position",    scriptNode, "position");
-                              scene .addRoute (rigidBodyNode, "orientation", scriptNode, "orientation");
-
-                              scene .addRoute (scriptNode, "translation_changed", node .childNode, "translation");
-                              scene .addRoute (scriptNode, "rotation_changed",    node .childNode, "rotation");
-
-                              this .motionScripts .push (scriptNode);
-                           }
-
-                           break;
-                        }
-                        case "joint":
-                        {
-                           break;
-                        }
-                        case "trigger":
-                        {
-                           break;
-                        }
-                     }
-                  }
-
-                  break;
-               }
+               node .transformNode ._children .push (lightNode);
+               break;
+            }
+            case "KHR_node_visibility":
+            {
+               // https://github.com/KhronosGroup/glTF/tree/main/extensions/2.0/Khronos/KHR_node_visibility
+               extension .pointers       = [node .childNode];
+               node .childNode ._visible = extension .visible ?? true;
+               break;
             }
          }
-      };
-   })(),
-   nodeChildrenArray (children, modelMatrix, physicsParent)
+      }
+   },
+   nodeChildrenArray (children)
    {
       if (!(children instanceof Array))
          return [ ];
@@ -2936,7 +2777,7 @@ function eventsProcessed ()
             if (!jointNode)
                continue;
 
-            inverseBindMatrix .get (translation, rotation, scale);
+            inverseBindMatrix .getTransform (translation, rotation, scale);
 
             humanoidNode ._joints                .push (jointNode);
             humanoidNode ._jointBindingPositions .push (translation);
@@ -2981,9 +2822,9 @@ function eventsProcessed ()
       {
          const skinCoordWeight = jointNode .skinCoordWeight;
 
-         jointMatrix .set (jointBindingPositions [j] ?.getValue (),
-                           jointBindingRotations [j] ?.getValue (),
-                           jointBindingScales [j] ?.getValue ())
+         jointMatrix .setTransform (jointBindingPositions [j] ?.getValue (),
+                                    jointBindingRotations [j] ?.getValue (),
+                                    jointBindingScales [j] ?.getValue ())
          .multRight (jointNode .getValue () .getModelViewMatrix ());
 
          for (const [c, index] of jointNode .skinCoordIndex .entries ())
@@ -3032,7 +2873,7 @@ function eventsProcessed ()
                return;
             }
 
-            // Proceed with next case:
+            // falls through
          }
          default:
          {
@@ -3351,10 +3192,10 @@ function eventsProcessed ()
 
          for (let i = 0; i < length; i += 4)
          {
-            instancedShapeNode ._rotations .push (new Rotation4 (new Quaternion (rotationArray [i + 0],
-                                                                                 rotationArray [i + 1],
-                                                                                 rotationArray [i + 2],
-                                                                                 rotationArray [i + 3])));
+            instancedShapeNode ._rotations .push (Rotation4 .fromQuaternion (new Quaternion (rotationArray [i + 0],
+                                                                                             rotationArray [i + 1],
+                                                                                             rotationArray [i + 2],
+                                                                                             rotationArray [i + 3])));
          }
       }
 
@@ -4481,21 +4322,21 @@ function eventsProcessed ()
 
             // KeyValue
 
-            interpolatorNode ._keyValue .push (new Rotation4 (new Quaternion (keyValues [0],
-                                                                              keyValues [1],
-                                                                              keyValues [2],
-                                                                              keyValues [3])));
+            interpolatorNode ._keyValue .push (Rotation4 .fromQuaternion (new Quaternion (keyValues [0],
+                                                                                          keyValues [1],
+                                                                                          keyValues [2],
+                                                                                          keyValues [3])));
 
             for (let i = 0, length = keyValues .length - 4; i < length; i += 4)
             {
-               interpolatorNode ._keyValue .push (new Rotation4 (new Quaternion (keyValues [i + 0],
-                                                                                 keyValues [i + 1],
-                                                                                 keyValues [i + 2],
-                                                                                 keyValues [i + 3])),
-                                                  new Rotation4 (new Quaternion (keyValues [i + 4],
-                                                                                 keyValues [i + 5],
-                                                                                 keyValues [i + 6],
-                                                                                 keyValues [i + 7])));
+               interpolatorNode ._keyValue .push (Rotation4 .fromQuaternion (new Quaternion (keyValues [i + 0],
+                                                                                             keyValues [i + 1],
+                                                                                             keyValues [i + 2],
+                                                                                             keyValues [i + 3])),
+                                                  Rotation4 .fromQuaternion (new Quaternion (keyValues [i + 4],
+                                                                                             keyValues [i + 5],
+                                                                                             keyValues [i + 6],
+                                                                                             keyValues [i + 7])));
             }
 
             // Finish
@@ -4511,10 +4352,10 @@ function eventsProcessed ()
 
             for (let i = 0, length = keyValues .length; i < length; i += 4)
             {
-               interpolatorNode ._keyValue .push (new Rotation4 (new Quaternion (keyValues [i + 0],
-                                                                                 keyValues [i + 1],
-                                                                                 keyValues [i + 2],
-                                                                                 keyValues [i + 3])));
+               interpolatorNode ._keyValue .push (Rotation4 .fromQuaternion (new Quaternion (keyValues [i + 0],
+                                                                                             keyValues [i + 1],
+                                                                                             keyValues [i + 2],
+                                                                                             keyValues [i + 3])));
             }
 
             interpolatorNode .setup ();
@@ -4542,7 +4383,7 @@ function eventsProcessed ()
                const q = this .cubicSplineVector (t, times, quaternions) .normalize ();
 
                interpolatorNode ._key      .push (t / cycleInterval);
-               interpolatorNode ._keyValue .push (new Rotation4 (q));
+               interpolatorNode ._keyValue .push (Rotation4 .fromQuaternion (q));
             }
 
             interpolatorNode .setup ();

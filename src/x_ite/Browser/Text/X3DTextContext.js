@@ -2,6 +2,7 @@ import FontStyle     from "../../Components/Text/FontStyle.js";
 import URLs          from "../Networking/URLs.js";
 import FontLibrary   from "../../Components/Text/FontLibrary.js";
 import * as OpenType from "../../../../node_modules/opentype.js/dist/opentype.mjs";
+import FileLoader    from "../../InputOutput/FileLoader.js";
 import DEVELOPMENT   from "../../DEVELOPMENT.js";
 
 const
@@ -35,41 +36,42 @@ Object .assign (X3DTextContext .prototype,
     * @param {boolean} cache
     * @returns Promise<OpenType.Font>
     */
-   loadFont (fileURL, cache = true)
+   loadFont (fileURL, node)
    {
-      let promise = cache ? this [_fontCache] .get (fileURL .href) : null;
+      let promise = node .getCache () ? this [_fontCache] .get (fileURL .href) : null;
 
       if (!promise)
       {
-         promise = new Promise (async (resolve, reject) =>
+         promise = new Promise ((resolve, reject) =>
          {
-            try
+            new FileLoader (node, { dataAsString: false }) .loadDocument ([fileURL], async data =>
             {
-               const response = await fetch (fileURL, { cache: cache ? "default" : "reload" });
-
-               if (!response .ok)
-                  throw new Error (response .statusText || response .status);
-
-               const
-                  arrayBuffer  = await response .arrayBuffer (),
-                  decompressed = await this .decompressFont (arrayBuffer),
-                  font         = OpenType .parse (decompressed);
-
-               if (DEVELOPMENT)
+               if (data === null)
                {
                   if (fileURL .protocol !== "data:")
-                     console .info (`Done loading font '${decodeURI (fileURL)}'.`);
+                     console .warn (`Error loading font '${decodeURI (fileURL)}':`);
+
+                  resolve (null);
                }
+               else if (data instanceof ArrayBuffer)
+               {
+                  const
+                     decompressed = await this .decompressFont (data),
+                     font         = OpenType .parse (decompressed);
 
-               resolve (font);
-            }
-            catch (error)
-            {
-               if (fileURL .protocol !== "data:")
-                  console .warn (`Error loading font '${decodeURI (fileURL)}':`, error);
+                  if (DEVELOPMENT)
+                  {
+                     if (fileURL .protocol !== "data:")
+                        console .info (`Done loading font '${decodeURI (fileURL)}'.`);
+                  }
 
-               resolve (null);
-            }
+                  resolve (font);
+               }
+               else
+               {
+                  throw new Error (`${node .getTypeName ()}: no suitable file type handler found.`);
+               }
+            });
          });
 
          if (!fileURL .search)

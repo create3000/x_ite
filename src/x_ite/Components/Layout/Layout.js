@@ -412,7 +412,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
             scaleModeY = this .getScaleModeY (parents [index]);
 
          scale .set (1);
-         modelViewMatrix .get () .get (currentTranslation, currentRotation, currentScale);
+         modelViewMatrix .get () .getTransform (currentTranslation, currentRotation, currentScale);
 
          switch (scaleModeX)
          {
@@ -479,7 +479,7 @@ Object .assign (Object .setPrototypeOf (Layout .prototype, X3DLayoutNode .protot
          rectangle .y = translation .y;
 
          matrix
-            .set (currentTranslation, currentRotation)
+            .setTransform (currentTranslation, currentRotation)
             .translate (translation)
             .scale (scale);
 

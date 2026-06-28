@@ -64,17 +64,19 @@ sub node {
    $file   = fields_list ($typeName, $componentName, $file);
    $file   = update_example ($typeName, $componentName, $file);
    @fields = map { /\*\*(.*?)\*\*/o; $_ = $1 } $file =~ /###\s*[SM]F\w+.*/go;
+   $source = `cat $cwd/src/x_ite/Components/$componentName/$typeName.js`;
 
    if (grep /^$typeName$/, @tooltips)
    {
-      $source = `cat $cwd/src/x_ite/Components/$componentName/$typeName.js`;
-
       @node = @tooltips [(first_index { /^$typeName$/ } @tooltips) .. $#tooltips];
       @node = @node [0 .. (first_index { /^$/ } @node)];
-
-      $file = update_node ($typeName, $componentName, \@node, $file, $source);
+   }
+   else
+   {
+      @node = ();
    }
 
+   $file = update_node ($typeName, $componentName, \@node, $file, $source);
    $file = update_field ($typeName, $_, \@node, $file, $source) foreach @fields;
    $file = reorder_sections ($file);
 
@@ -115,6 +117,18 @@ sub link_nodes {
    return @lines;
 }
 
+sub strong_type_name {
+   $typeName = shift;
+   @lines    = @_;
+
+   foreach $line (@lines)
+   {
+      $line =~ s/(?<![\/#_\-])\b($typeName[,.:;]?)\b/**$1**/g;
+   }
+
+   return @lines;
+}
+
 sub update_node {
    $typeName      = shift;
    $componentName = shift;
@@ -132,8 +146,9 @@ sub update_node {
    $from           = $5 unless $from;
    $to             = $6 // "Infinity";
 
-   $deprecated   = $source =~ /THIS NODE IS DEPRECIATED SINCE X3D VERSION ([\d\.]+)./ ? $1 : "";
    $experimental = $source =~ /THIS NODE IS STILL EXPERIMENTAL./;
+   $deprecated   = $source =~ /THIS NODE IS DEPRECIATED SINCE X3D VERSION ([\d\.]+)./ ? $1 : "";
+   $notSupported = $source =~ /THIS NODE IS NOT SUPPORTED./;
 
    1 while $node =~ s/^\s*(?:\[.*?\]|\(.*?\))\s*//so;
    1 while $node =~ s/^(?:\s*or)?\s*(?:[\[\()].*?[\]\)]|-1\.)\s*//so;
@@ -189,10 +204,11 @@ sub update_node {
    s/(:|\s*at)\]/]/sgo foreach @hints;
    s/(:|\s*at)\]/]/sgo foreach @warnings;
 
-   @hints    = fix_links @hints;
-   @warnings = fix_links @warnings;
-   @hints    = link_nodes $typeName, @hints;
-   @warnings = link_nodes $typeName, @warnings;
+   @hints       = fix_links @hints;
+   @warnings    = fix_links @warnings;
+   @description = strong_type_name $typeName, link_nodes $typeName, @description;
+   @hints       = strong_type_name $typeName, link_nodes $typeName, @hints;
+   @warnings    = strong_type_name $typeName, link_nodes $typeName, @warnings;
 
    # Overview
 
@@ -207,23 +223,25 @@ sub update_node {
    }
    else
    {
+      $file =~ /## Overview\s+(.*?)\n/s;
       $string .= "\n";
-      $string .= "$typeName ...";
+      $string .= "$1";
       $string .= "\n";
       $string .= "\n";
    }
 
    $componentSlug = lc $componentName;
 
-   $string .= "The $typeName node belongs to the [$componentName](/x_ite/components/overview/#$componentSlug) component and requires at least support level **$componentLevel,** its default container field is *$containerField.*";
+   $string .= "The **$typeName** node belongs to the [$componentName](/x_ite/components/overview/#$componentSlug) component and requires at least support level **$componentLevel,** its default container field is *$containerField.*";
    $string .= " ";
    $string .= "It is available from X3D version $from or higher." if $to eq "Infinity";
    $string .= "It is available from X3D version $from up to $to." if $to ne "Infinity";
    $string =~ s/It is available from X3D version 2.0/It is available since VRML 2.0 and from X3D version 3.0/sgo if $from eq "2.0";
    $string .= "\n";
    $string .= "\n";
-   $string .= ">**Deprecated:** This node is **deprecated** as of X3D version $deprecated. Future versions of the standard may remove this node.\n{: .prompt-danger }\n\n" if $deprecated;
    $string .= ">**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.\n{: .prompt-info }\n\n" if $experimental;
+   $string .= ">**Deprecated:** This node is **deprecated** as of X3D version $deprecated. Future versions of the standard may remove this node.\n{: .prompt-warning }\n\n" if $deprecated;
+   $string .= ">**Not Supported:** This node is **not supported** by X_ITE.\n{: .prompt-danger }\n\n" if $notSupported;
 
    $file =~ s/(## Overview\n).*?\n(?=##\s+)/$1$string/s;
 
@@ -357,7 +375,7 @@ sub fields_list {
    {
       $name = $field -> [1];
 
-      next unless $file =~ m/###\s*(\w+)\s+(\[.*?\])\s+\*\*$name\*\*[ ]*(\[.*?\]|[ a-zA-Z\-+\d\."\/π]*).*?\n/;
+      next unless $file =~ m/###\s*(\w+)\s+(\[.*?\])\s+\*\*$name\*\*[ ]*(\[.*?\]|[ a-zA-Z_\-+\d\."\/π]*).*?\n/;
 
       $text = "| $1 | $2 | [$name](#fields-$name) | " . trim ($3) . " |";
 
@@ -505,9 +523,9 @@ sub update_field {
 
       @hints       = fix_links @hints;
       @warnings    = fix_links @warnings;
-      @description = link_nodes $typeName, @description;
-      @hints       = link_nodes $typeName, @hints;
-      @warnings    = link_nodes $typeName, @warnings;
+      @description = strong_type_name $typeName, link_nodes $typeName, @description;
+      @hints       = strong_type_name $typeName, link_nodes $typeName, @hints;
+      @warnings    = strong_type_name $typeName, link_nodes $typeName, @warnings;
    }
    else
    {

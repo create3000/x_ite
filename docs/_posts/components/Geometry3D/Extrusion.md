@@ -13,9 +13,9 @@ tags: [Extrusion, Geometry3D, VRML]
 
 ## Overview
 
-Extrusion is a geometry node that sequentially stretches a 2D cross section along a 3D-spine path in the local coordinate system, creating an outer hull. Scaling and rotating the crossSection 2D outline at each control point can modify the outer hull of the Extrusion to produce a wide variety of interesting shapes.
+**Extrusion** is a geometry node that sequentially stretches a 2D cross section along a 3D-spine path in the local coordinate system, creating an outer hull. Scaling and rotating the crossSection 2D outline at each control point can modify the outer hull of the **Extrusion** to produce a wide variety of interesting shapes.
 
-The Extrusion node belongs to the [Geometry3D](/x_ite/components/overview/#geometry3d) component and requires at least support level **4,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **Extrusion** node belongs to the [Geometry3D](/x_ite/components/overview/#geometry3d) component and requires at least support level **4,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -58,7 +58,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### MFVec2f [in] **set_crossSection** <small>(-∞,∞)</small>
 {: #fields-set_crossSection }
 
-The *crossSection* array defines a silhouette outline of the outer Extrusion surface. *crossSection* is an ordered set of 2D points that draw a piecewise-linear curve which is extruded to form a series of connected vertices.
+The *crossSection* array defines a silhouette outline of the outer **Extrusion** surface. *crossSection* is an ordered set of 2D points that draw a piecewise-linear curve which is extruded to form a series of connected vertices.
 
 #### Hint
 
@@ -191,7 +191,7 @@ The *convex* field is a hint to renderers whether all polygons in a shape are *c
 ### MFVec2f [ ] **crossSection** [ 1 1, 1 -1, -1 -1, -1 1, 1 1 ] <small>(-∞,∞)</small>
 {: #fields-crossSection }
 
-The *crossSection* array defines a silhouette outline of the outer Extrusion surface. *crossSection* is an ordered set of 2D points that draw a piecewise-linear curve which is extruded to form a series of connected vertices.
+The *crossSection* array defines a silhouette outline of the outer **Extrusion** surface. *crossSection* is an ordered set of 2D points that draw a piecewise-linear curve which is extruded to form a series of connected vertices.
 
 #### Hints
 
@@ -247,7 +247,7 @@ The *spine* array defines a center-line sequence of 3D points that define a piec
 
 ### Hints
 
-- [Extrusion](https://en.wikipedia.org/wiki/Extrusion)
+- [**Extrusion**](https://en.wikipedia.org/wiki/Extrusion)
 - Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 
 ### Warning

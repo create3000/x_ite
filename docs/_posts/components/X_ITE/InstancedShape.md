@@ -13,9 +13,9 @@ tags: [InstancedShape, X_ITE]
 
 ## Overview
 
-InstancedShape can appear under any grouping node. InstancedShape can contain an Appearance node and a geometry node (for example one of the primitives Box Cone Cylinder Sphere Text, one of ElevationGrid Extrusion IndexedFaceSet IndexedLineSet LineSet PointSet, or one of the other geometry nodes) and this geometry node is instantiated as often as transformations are provided.
+**InstancedShape** can appear under any grouping node. **InstancedShape** can contain an [Appearance](/x_ite/components/shape/appearance/) node and a geometry node (for example one of the primitives [Box](/x_ite/components/geometry3d/box/), [Cone](/x_ite/components/geometry3d/cone/), [Cylinder](/x_ite/components/geometry3d/cylinder/), [Sphere](/x_ite/components/geometry3d/sphere/), [Text](/x_ite/components/text/text/), one of [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/), [Extrusion](/x_ite/components/geometry3d/extrusion/), [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), [IndexedLineSet](/x_ite/components/rendering/indexedlineset/), [LineSet](/x_ite/components/rendering/lineset/), [PointSet](/x_ite/components/rendering/pointset/), or one of the other geometry nodes) and this geometry node is instantiated as often as transformations are provided.
 
-The InstancedShape node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and its default container field is *children.* It is available in X_ITE.
+The **InstancedShape** node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 4.0 or higher.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
@@ -147,17 +147,6 @@ Input/Output field *appearance*.
 {: #fields-geometry }
 
 Input/Output field *geometry*.
-
-## Advice
-
-### Hints
-
-- [Shape](https://en.wikipedia.org/wiki/Shape)
-- The Shape design pattern to collect appearance and geometry together is fundamentally the same for many types of 3D graphics software and hardware.
-- For advanced extensibility, authors can substitute a type-matched ProtoInstance node (with correct containerField value) for contained node content.
-- [X3D Architecture 12.2.1 Shape nodes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/shape.html#Shapenodes)
-- [X3D Architecture 17.2.2 Lighting model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS//Part01/components/lighting.html#Lightingmodel)
-- Apply `containerField='shape'` if parent node is [CADFace](/x_ite/components/cadgeometry/cadface/).
 
 ## Example
 

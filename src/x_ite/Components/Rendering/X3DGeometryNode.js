@@ -31,7 +31,7 @@ function X3DGeometryNode (executionContext)
                           X3DConstants .outputOnly, "bbox_changed", new Fields .SFTime (),
                           X3DConstants .outputOnly, "rebuild",      new Fields .SFTime ());
 
-   // Private members
+   // Private properties
 
    this .min                      = new Vector3 ();
    this .max                      = new Vector3 ();
@@ -57,42 +57,37 @@ function X3DGeometryNode (executionContext)
    this .planes                   = Array .from ({ length: 5 }, () => new Plane3 ()); // For LinePickSensor
 }
 
-class GeometryArray extends Array
+class GeometryArray
 {
-   #Type;
-   #typedArray;
-
-   constructor (Type = Float32Array)
+   static create (Type = Float32Array)
    {
-      super ();
+      let typedArray = new Type ();
 
-      this .#Type       = Type;
-      this .#typedArray = new Type ();
-   }
+      return Object .assign ([ ],
+      {
+         assign (value)
+         {
+            const length = value .length;
 
-   assign (value)
-   {
-      const length = value .length;
+            this .length = length;
 
-      this .length = length;
+            for (let i = 0; i < length; ++ i)
+               this [i] = value [i];
+         },
+         getValue ()
+         {
+            return typedArray;
+         },
+         shrinkToFit ()
+         {
+            if (this .length === typedArray .length)
+               typedArray .set (this);
+            else
+               typedArray = new Type (this);
 
-      for (let i = 0; i < length; ++ i)
-         this [i] = value [i];
-   }
-
-   getValue ()
-   {
-      return this .#typedArray;
-   }
-
-   shrinkToFit ()
-   {
-      if (this .length === this .#typedArray .length)
-         this .#typedArray .set (this);
-      else
-         this .#typedArray = new (this .#Type) (this);
-
-      return this .#typedArray;
+            return typedArray;
+         },
+      });
    }
 }
 
@@ -104,7 +99,7 @@ Object .defineProperty (X3DGeometryNode, "createArray",
    {
       // return new Fields .MFFloat ();
 
-      return new GeometryArray (Type);
+      return GeometryArray .create (Type);
    },
 })
 
@@ -545,50 +540,33 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       this .normals        .length = 0;
       this .vertices       .length = 0;
    },
-   updateBBox: (() =>
+   updateBBox ()
    {
-      const point = new Vector3 ();
+      // Determine bbox.
 
-      return function ()
+      const
+         vertices     = this .vertices .getValue (),
+         { min, max } = this;
+
+      if (vertices .length)
       {
-         // Determine bbox.
-
-         const
-            vertices    = this .vertices .getValue (),
-            numVertices = vertices .length,
-            min         = this .min,
-            max         = this .max;
-
-         if (numVertices)
-         {
-            if (min .x === Number .POSITIVE_INFINITY)
-            {
-               for (let i = 0; i < numVertices; i += 4)
-               {
-                  const { [i]: v1, [i + 1]: v2, [i + 2]: v3 } = vertices;
-
-                  point .set (v1, v2, v3);
-
-                  min .min (point);
-                  max .max (point);
-               }
-            }
-
-            this .bbox .setExtents (min, max);
-         }
+         if (min .x === Number .POSITIVE_INFINITY)
+            this .bbox .setArray (vertices, 4) .getExtents (min, max);
          else
-         {
-            this .bbox .setExtents (min .set (0), max .set (0));
-         }
+            this .bbox .setExtents (min, max);
+      }
+      else
+      {
+         this .bbox .setExtents (min .set (0), max .set (0));
+      }
 
-         for (let i = 0; i < 5; ++ i)
-            this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
+      for (let i = 0; i < 5; ++ i)
+         this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
 
-         this ._bbox_changed .addEvent ();
+      this ._bbox_changed .addEvent ();
 
-         this .getExecutionContext () ._bbox_changed = Date .now () / 1000;
-      };
-   })(),
+      this .getExecutionContext () ._bbox_changed = Date .now () / 1000;
+   },
    transfer ()
    {
       const gl = this .getBrowser () .getContext ();
@@ -759,7 +737,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    display (gl, renderContext)
    {
       const
-         { viewport, appearanceNode, modelViewMatrix } = renderContext,
+         { viewport, modelViewMatrix, appearanceNode } = renderContext,
          browser         = this .getBrowser (),
          primitiveMode   = browser .getPrimitiveMode (gl .TRIANGLES),
          renderModeNodes = appearanceNode .getRenderModes (),
@@ -768,6 +746,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       // Set viewport.
 
       gl .viewport (... viewport);
+      gl .scissor (... viewport);
 
       // Enable render mode nodes.
 
@@ -903,7 +882,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
    displayInstanced (gl, renderContext, shapeNode)
    {
       const
-         { viewport, appearanceNode, modelViewMatrix } = renderContext,
+         { viewport, modelViewMatrix, appearanceNode } = renderContext,
          browser         = this .getBrowser (),
          primitiveMode   = browser .getPrimitiveMode (gl .TRIANGLES),
          renderModeNodes = appearanceNode .getRenderModes (),
@@ -912,6 +891,7 @@ Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .pro
       // Set viewport.
 
       gl .viewport (... viewport);
+      gl .scissor (... viewport);
 
       // Enable render mode nodes.
 

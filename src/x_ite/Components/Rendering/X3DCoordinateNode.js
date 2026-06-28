@@ -9,8 +9,6 @@ function X3DCoordinateNode (executionContext)
    X3DGeometricPropertyNode .call (this, executionContext);
 
    this .addType (X3DConstants .X3DCoordinateNode);
-
-   this .length = 0;
 }
 
 Object .assign (Object .setPrototypeOf (X3DCoordinateNode .prototype, X3DGeometricPropertyNode .prototype),

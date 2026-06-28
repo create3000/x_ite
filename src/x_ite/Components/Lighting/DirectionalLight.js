@@ -70,7 +70,7 @@ Object .assign (DirectionalLightContainer .prototype,
          modelMatrix          = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
          invLightSpaceMatrix  = this .invLightSpaceMatrix .assign (this .global ? modelMatrix : Matrix4 .IDENTITY);
 
-      invLightSpaceMatrix .rotate (this .rotation .setFromToVec (Vector3 .Z_AXIS, this .direction .assign (lightNode .getDirection ()) .negate ()));
+      invLightSpaceMatrix .rotate (this .rotation .setVectors (Vector3 .Z_AXIS, this .direction .assign (lightNode .getDirection ()) .negate ()));
       invLightSpaceMatrix .inverse ();
 
       const

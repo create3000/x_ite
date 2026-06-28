@@ -77,7 +77,7 @@ Object .assign (SpotLightContainer .prototype,
          invLightSpaceMatrix  = this .invLightSpaceMatrix .assign (this .global ? modelMatrix : Matrix4 .IDENTITY);
 
       invLightSpaceMatrix .translate (lightNode .getLocation ());
-      invLightSpaceMatrix .rotate (this .rotation .setFromToVec (Vector3 .Z_AXIS, this .direction .assign (lightNode .getDirection ()) .negate ()));
+      invLightSpaceMatrix .rotate (this .rotation .setVectors (Vector3 .Z_AXIS, this .direction .assign (lightNode .getDirection ()) .negate ()));
       invLightSpaceMatrix .inverse ();
 
       const

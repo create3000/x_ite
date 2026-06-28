@@ -3,7 +3,7 @@ import { maxTexCoords } from "../../../../x_ite/Browser/Texturing/TexturingConfi
 export default () => /* glsl */ `
 #if defined (X3D_GEOMETRY_0D) && defined (X3D_STYLE_PROPERTIES)
 #if defined (X3D_TEXTURE) || defined (X3D_MATERIAL_TEXTURES)
-#if !defined (X3D_DEPTH_SHADER)
+#if !defined (X3D_DEPTH_PASS) && !defined (X3D_POINTING_PASS)
 void
 setPointTexCoords (const in vec2 pointCoord)
 {

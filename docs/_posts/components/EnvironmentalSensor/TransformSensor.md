@@ -13,9 +13,9 @@ tags: [TransformSensor, EnvironmentalSensor]
 
 ## Overview
 
-TransformSensor generates output events when its targetObject enters, exits, and moves within a region in space (defined by a box).
+**TransformSensor** generates output events when its targetObject enters, exits, and moves within a region in space (defined by a box).
 
-The TransformSensor node belongs to the [EnvironmentalSensor](/x_ite/components/overview/#environmentalsensor) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The **TransformSensor** node belongs to the [EnvironmentalSensor](/x_ite/components/overview/#environmentalsensor) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -131,14 +131,14 @@ Sends rotation event relative to center whenever the target object is contained 
 
 ### Hints
 
-- Each TransformSensor node behaves independently of all other TransformSensor nodes, so that every enabled TransformSensor node affected by targetObject motion sends output events.
-- Multiply instanced (DEF/USE) TransformSensor nodes in different locations use the union of all boxes to check for enter and exit, detecting enter and exit for all instances of the box, and sending enter/exit events appropriately. For non-overlapping bounding boxes, position_changed and orientation_changed events are calculated relative to the coordinate system associated with the bounding box in which the proximity was detected.
+- Each **TransformSensor** node behaves independently of all other **TransformSensor** nodes, so that every enabled **TransformSensor** node affected by targetObject motion sends output events.
+- Multiply instanced (DEF/USE) **TransformSensor** nodes in different locations use the union of all boxes to check for enter and exit, detecting enter and exit for all instances of the box, and sending enter/exit events appropriately. For non-overlapping bounding boxes, position_changed and orientation_changed events are calculated relative to the coordinate system associated with the bounding box in which the proximity was detected.
 
 ### Warnings
 
-- Results are undefined if boxes overlap for multiply instanced TransformSensor nodes.
-- A TransformSensor node with a zero-volume box (i.e. any size dimension equal to 0.0) cannot generate events, equivalent to enabled=false.
-- Unlike [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) nodes, there is no notion of a TransformSensor node lower in the scene graph grabbing events.
+- Results are undefined if boxes overlap for multiply instanced **TransformSensor** nodes.
+- A **TransformSensor** node with a zero-volume box (i.e. any size dimension equal to 0.0) cannot generate events, equivalent to enabled=false.
+- Unlike [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) nodes, there is no notion of a **TransformSensor** node lower in the scene graph grabbing events.
 
 ## Example
 

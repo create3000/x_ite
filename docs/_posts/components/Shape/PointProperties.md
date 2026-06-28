@@ -13,9 +13,9 @@ tags: [PointProperties, Shape]
 
 ## Overview
 
-PointProperties allows precise fine-grained control over the rendering style of PointSet node points inside the same Shape.
+**PointProperties** allows precise fine-grained control over the rendering style of [PointSet](/x_ite/components/rendering/pointset/) node points inside the same [Shape](/x_ite/components/shape/shape/).
 
-The PointProperties node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **5,** its default container field is *pointProperties.* It is available from X3D version 4.0 or higher.
+The **PointProperties** node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **5,** its default container field is *pointProperties.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 
@@ -86,7 +86,7 @@ Are set to default values if undefined. Together these parameters define *attenu
 ### Hints
 
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
-- When an X3DTextureNode is defined in the same [Appearance](/x_ite/components/shape/appearance/) instance as PointProperties node, the points of a [PointSet](/x_ite/components/rendering/pointset/) shall be displayed as point sprites using the given texture(s).
+- When an X3DTextureNode is defined in the same [Appearance](/x_ite/components/shape/appearance/) instance as **PointProperties** node, the points of a [PointSet](/x_ite/components/rendering/pointset/) shall be displayed as point sprites using the given texture(s).
 
 ### Warning
 

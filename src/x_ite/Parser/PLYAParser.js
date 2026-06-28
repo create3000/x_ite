@@ -1,5 +1,6 @@
 import X3DParser   from "./X3DParser.js";
 import Expressions from "./Expressions.js";
+import Rotation4   from "../../standard/Math/Numbers/Rotation4.js";
 
 /*
  *  Grammar
@@ -93,7 +94,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       await browser .loadComponents (scene);
 
-      this .processElements (this .header ([ ]));
+      await this .processElements (this .header ([ ]));
 
       // Create nodes.
 
@@ -258,7 +259,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       return false;
    },
-   processElements (elements)
+   async processElements (elements)
    {
       for (const element of elements)
          this .processElement (element);
@@ -268,7 +269,45 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
       const scene = this .getScene ();
 
-      if (this .coordIndex) // IndexedFaceSet
+      if (this .sphericalHarmonics)
+      {
+         scene .addComponent (this .getBrowser () .getComponent ("GaussianSplats"));
+
+         await this .getBrowser () .loadComponents (scene);
+
+         const
+            transform      = scene .createNode ("Transform"),
+            gaussianSplats = scene .createNode ("GaussianSplats"),
+            quaternions    = this .quaternions,
+            numQuaternions = quaternions .length,
+            orientations   = [ ];
+
+         // Quaternion elements must be rotated from wxyz to xyzw.
+         // https://www.kaggle.com/code/stpeteishii/creatures-ply-to-gaussian-splat
+         for (let i = 0; i < numQuaternions; i += 4)
+            orientations .push (quaternions [i + 1], quaternions [i + 2], quaternions [i + 3], quaternions [i]);
+
+         gaussianSplats .positions    = this .points;
+         gaussianSplats .orientations = orientations;
+         gaussianSplats .scales       = this .scales;
+         gaussianSplats .opacities    = this .opacities;
+
+         // Degrees 0,1,2,3
+
+         let i = 0;
+
+         for (const [degree, coefs] of [1, 3, 5, 7] .entries ())
+         {
+            for (let coef = 0; coef < coefs; ++ coef)
+               gaussianSplats [`sphericalHarmonicsDegree${degree}Coef${coef}`] = this .sphericalHarmonics [i ++];
+         }
+
+         transform .rotation = new Rotation4 (1, 0, 0, Math .PI);
+         transform .children .push (gaussianSplats);
+
+         scene .rootNodes .push (transform);
+      }
+      else if (this .coordIndex) // IndexedFaceSet
       {
          const
             hasNormals = this .normals ?.some (v => v !== 0),
@@ -284,15 +323,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          else
             geometry .coordIndex = this .coordIndex;
 
-         if (this .colors ?.length)
-         {
-            const
-               alpha = this .alpha && this .colors .some ((v, i) => i % 4 === 3 && v < 1),
-               color = scene .createNode (alpha ? "ColorRGBA" : "Color");
-
-            color .color    = alpha || !this .alpha ? this .colors : this .colors .filter ((v, i) => i % 4 !== 3);
-            geometry .color = color;
-         }
+         geometry .color = this .createColor ();
 
          if (this .texCoords ?.length)
          {
@@ -351,15 +382,7 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
             geometry   = scene .createNode ("PointSet"),
             coordinate = scene .createNode ("Coordinate");
 
-         if (this .colors ?.length)
-         {
-            const
-               alpha = this .alpha && this .colors .some ((v, i) => i % 4 === 3 && v < 1),
-               color = scene .createNode (alpha ? "ColorRGBA" : "Color");
-
-            color .color    = alpha || !this .alpha ? this .colors : this .colors .filter ((v, i) => i % 4 !== 3);
-            geometry .color = color;
-         }
+         geometry .color = this .createColor ();
 
          if (hasNormals)
          {
@@ -367,8 +390,6 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
             if (this .mustRotateAxes)
                this .rotateAxes90 (this .normals);
-            else if (this .rotations ?.length || this .scales ?.length)
-               this .rotateAxes180 (this .normals);
 
             normal .vector   = this .normals;
             geometry .normal = normal;
@@ -376,8 +397,6 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
          if (this .mustRotateAxes)
             this .rotateAxes90 (this .points);
-         else if (this .rotations ?.length || this .scales ?.length)
-            this .rotateAxes180 (this .points);
 
          coordinate .point = this .points;
          geometry .coord   = coordinate;
@@ -388,6 +407,19 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
          scene .getRootNodes () .push (shape);
       }
+   },
+   createColor ()
+   {
+      if (!this .colors ?.length)
+         return null;
+
+      const
+         alpha = this .alpha && this .colors .some ((v, i) => i % 4 === 3 && v < 1),
+         color = this .getScene () .createNode (alpha ? "ColorRGBA" : "Color");
+
+      color .color = alpha || !this .alpha ? this .colors : this .colors .filter ((v, i) => i % 4 !== 3);
+
+      return color;
    },
    processElement (element)
    {
@@ -412,15 +444,25 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
    },
    parseVertices ({ count, properties })
    {
+      // console .time ("vertices");
+
+      // Geometry
+
       const
-         scales    = [ ],
-         rotations = [ ],
          colors    = [ ],
          texCoords = [ ],
          normals   = [ ],
          points    = [ ];
 
-      // console .time ("vertices")
+      // Gaussian Splats
+
+      const
+         scales      = [ ],
+         quaternions = [ ],
+         opacities   = [ ],
+         sh0         = [ ], // Degree 0
+         rest        = Array .from ({ length: 45 }, () => [ ]), // Degree 1,2,3
+         restIndex   = new Map (Array .from ({ length: 45 }, (v, i) => [`f_rest_${i}`, i]));
 
       for (let i = 0; i < count; ++ i)
       {
@@ -433,25 +475,11 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
 
             switch (name)
             {
-               case "scale_0": case "scale_1": case "scale_2":
-                  scales .push (this .value);
-                  break;
-               case "rot_0": case "rot_1": case "rot_2": case "rot_3":
-                  rotations .push (this .value);
-                  break;
                case "red": case "green": case "blue": case "alpha":
                case "r": case "g": case "b": case "a":
                   colors .push (this .convertColor (this .value, type));
                   break;
-               case "f_dc_0": case "f_dc_1": case "f_dc_2":
-                  colors .push (this .convertFDC (this .convertColor (this .value, type)));
-                  break;
-               case "opacity":
-                  // https://github.com/antimatter15/splat/blob/main/convert.py
-                  colors .push (1 / (1 + Math .exp (-this .value)));
-                  break;
-               case "s": case "t":
-               case "u": case "v":
+               case "s": case "t": case "u": case "v":
                   texCoords .push (this .value);
                   break;
                case "nx": case "ny": case "nz":
@@ -460,21 +488,104 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
                case "x": case "y": case "z":
                   points .push (this .value);
                   break;
+               // Gaussian Splats
+               // https://developer.playcanvas.com/user-manual/gaussian-splatting/formats/ply/
+               // https://github.com/mkkellogg/GaussianSplats3D/
+               case "rot_0": case "rot_1": case "rot_2": case "rot_3":
+                  quaternions .push (this .value);
+                  break;
+               // https://github.com/javagl/JSplat/blob/41706e0a54372a8ae2e4b474d3a39e19337e42c2/jsplat-io-gsplat/src/main/java/de/javagl/jsplat/io/gsplat/GsplatSplatWriter.java#L106
+               case "scale_0": case "scale_1": case "scale_2":
+                  scales .push (Math .exp (this .value));
+                  break;
+               case "opacity":
+                  // https://github.com/javagl/JSplat/blob/41706e0a54372a8ae2e4b474d3a39e19337e42c2/jsplat/src/main/java/de/javagl/jsplat/Splats.java#L244
+                  opacities .push (1 / (1 + Math .exp (-this .value)));
+                  break;
+               // Degree 0
+               case "f_dc_0": case "f_dc_1": case "f_dc_2":
+                  sh0 .push (this .value);
+                  break;
+               // Degree 1,2,3
+               case "f_rest_0":  case "f_rest_1":  case "f_rest_2":
+               case "f_rest_3":  case "f_rest_4":  case "f_rest_5":
+               case "f_rest_6":  case "f_rest_7":  case "f_rest_8":
+               case "f_rest_9":  case "f_rest_10": case "f_rest_11":
+               case "f_rest_12": case "f_rest_13": case "f_rest_14":
+               case "f_rest_15": case "f_rest_16": case "f_rest_17":
+               case "f_rest_18": case "f_rest_19": case "f_rest_20":
+               case "f_rest_21": case "f_rest_22": case "f_rest_23":
+               case "f_rest_24": case "f_rest_25": case "f_rest_26":
+               case "f_rest_27": case "f_rest_28": case "f_rest_29":
+               case "f_rest_30": case "f_rest_31": case "f_rest_32":
+               case "f_rest_33": case "f_rest_34": case "f_rest_35":
+               case "f_rest_36": case "f_rest_37": case "f_rest_38":
+               case "f_rest_39": case "f_rest_40": case "f_rest_41":
+               case "f_rest_42": case "f_rest_43": case "f_rest_44":
+                  rest [restIndex .get (name)] .push (this .value);
+                  break;
             }
          }
       }
 
-      // console .timeEnd ("vertices")
+      // console .timeEnd ("vertices");
 
       // Geometric properties
 
-      this .rotations = rotations;
-      this .scales    = scales;
-      this .alpha     = properties .some (p => p .name .match (/^(?:alpha|a|opacity)$/));
+      this .alpha     = properties .some (p => p .name .match (/^(?:alpha|a)$/));
       this .colors    = colors;
       this .texCoords = texCoords;
       this .normals   = normals;
       this .points    = points;
+
+      if (sh0 .length)
+      {
+         // Gaussian Splats
+         // https://github.com/javagl/JSplat/blob/41706e0a54372a8ae2e4b474d3a39e19337e42c2/jsplat-io-ply/src/main/java/de/javagl/jsplat/io/ply/PlySplatReader.java#L121
+
+         const
+            numSplats     = points .length / 3,
+            shDegree      = this .getSphericalHarmonicsDegree (rest),
+            shDimensions1 = this .getDimensionsForDegree (shDegree) - 1,
+            shDimensions2 = shDimensions1 * 2,
+            shs           = Array .from ({ length: 15 }, () => [ ]);
+
+         for (let d = 0; d < shDimensions1; ++ d)
+         {
+            const
+               rx = rest [d],
+               ry = rest [shDimensions1 + d],
+               rz = rest [shDimensions2 + d],
+               sh = shs [d];
+
+            for (let s = 0; s < numSplats; ++ s)
+               sh .push (rx [s], ry [s], rz [s]);
+         }
+
+         shs .unshift (sh0);
+
+         this .quaternions        = quaternions;
+         this .scales             = scales;
+         this .opacities          = opacities;
+         this .sphericalHarmonics = shs;
+      }
+   },
+   getSphericalHarmonicsDegree (rest)
+   {
+      if (rest [44] .length)
+         return 3;
+
+      if (rest [23] .length)
+         return 2;
+
+      if (rest [8] .length)
+         return 1;
+
+      return 0;
+   },
+   getDimensionsForDegree (shDegree)
+   {
+      return (shDegree + 1) ** 2;
    },
    parseFaces ({ count, properties })
    {
@@ -627,14 +738,6 @@ Object .assign (Object .setPrototypeOf (PLYAParser .prototype, X3DParser .protot
          case "float64":
             return value;
       }
-   },
-   convertFDC (f_dc)
-   {
-      // https://github.com/graphdeco-inria/gaussian-splatting/issues/485
-
-      const C0 = 0.28209479177387814; // = 1 / (2 * Math .sqrt (Math .PI))
-
-      return 0.5 + C0 * f_dc;
    },
 });
 

@@ -86,7 +86,7 @@ const Features =
       {
          register ()
          { }
-         
+
          unregister ()
          { }
       };
@@ -126,6 +126,24 @@ const Features =
 
          return value;
       };
+   }
+})();
+
+(() =>
+{
+   // Added June 2026
+   if (Math .sumPrecise === undefined)
+   {
+      Object .defineProperty (Math, "sumPrecise",
+      {
+         value (iterable)
+         {
+            return Array .from (iterable) .reduce ((p, c) => p + c, 0);
+         },
+         writable: true,
+         enumerable: false,
+         configurable: true,
+      });
    }
 })();
 

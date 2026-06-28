@@ -13,9 +13,9 @@ tags: [MicrophoneSource, Sound]
 
 ## Overview
 
-MicrophoneSource captures input from a physical microphone in the real world.
+**MicrophoneSource** captures input from a physical microphone in the real world.
 
-The MicrophoneSource node belongs to the [Sound](/x_ite/components/overview/#sound) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
+The **MicrophoneSource** node belongs to the [Sound](/x_ite/components/overview/#sound) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 

@@ -13,9 +13,9 @@ tags: [PixelTexture, Texturing, VRML]
 
 ## Overview
 
-PixelTexture creates a 2D-image texture map using a numeric array of pixel values. Texture maps have a 2D coordinate system (s, t) horizontal and vertical, with (s, t) texture-coordinate values in range [0.0, 1.0] for opposite corners of the image.
+**PixelTexture** creates a 2D-image texture map using a numeric array of pixel values. Texture maps have a 2D coordinate system (s, t) horizontal and vertical, with (s, t) texture-coordinate values in range [0.0, 1.0] for opposite corners of the image.
 
-The PixelTexture node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **1,** its default container field is *texture.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **PixelTexture** node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **1,** its default container field is *texture.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -71,7 +71,7 @@ Defines *image*: width, height, number_of_components per each pixel value, and l
 
 #### Warning
 
-- The order of initial values in PixelTexture and [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/) *image* arrays are different. Example: intensity [1 2 1 0xFF 0x00] Example: intensity-alpha [2 2 1 0 255 255 0] Example: red-green-blue [2 4 3 0xFF0000 0xFF00 0 0 0 0 0xFFFFFF 0xFFFF00] Example: red-green-blue-alpha [2 2 4 0xFFFFFFAA 0xFFFF00AA 0x11111111AA 0x787800AA]
+- The order of initial values in **PixelTexture** and [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/) *image* arrays are different. Example: intensity [1 2 1 0xFF 0x00] Example: intensity-alpha [2 2 1 0 255 255 0] Example: red-green-blue [2 4 3 0xFF0000 0xFF00 0 0 0 0 0xFFFFFF 0xFFFF00] Example: red-green-blue-alpha [2 2 4 0xFFFFFFAA 0xFFFF00AA 0x11111111AA 0x787800AA]
 
 ### SFBool [ ] **repeatS** TRUE
 {: #fields-repeatS }
@@ -93,7 +93,7 @@ Optional single contained [TextureProperties](/x_ite/components/texturing/textur
 ### Hints
 
 - This is a good way to bundle image(s) into a single scene file, avoiding multiple downloads.
-- [X3D-Edit includes PixelTexture image-conversion import capabilities.](https://www.web3d.org/x3d/tools/X3D-Edit/images/PixelTextureImportImage.png)
+- [X3D-Edit includes **PixelTexture** image-conversion import capabilities.](https://www.web3d.org/x3d/tools/X3D-Edit/images/PixelTextureImportImage.png)
 - Can contain a single [TextureProperties](/x_ite/components/texturing/textureproperties/) node.
 - Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
 - [X3D Scene Authoring Hints, Images and Videos](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Images)

@@ -16,35 +16,65 @@ export default class KTXDecoder
 
    transcode (ktxTexture)
    {
-      if (!ktxTexture .needsTranscoding)
-         return;
-
       const { gl, libktx } = this;
+      const { transcode_fmt } = libktx;
 
-      const
-         astcSupported  = !!gl .getExtension ("WEBGL_compressed_texture_astc"),
-         etcSupported   = !!gl .getExtension ("WEBGL_compressed_texture_etc1"),
-         dxtSupported   = !!gl .getExtension ("WEBGL_compressed_texture_s3tc"),
-         bptcSupported  = !!gl .getExtension ("EXT_texture_compression_bptc"),
-         pvrtcSupported = !!gl .getExtension ("WEBGL_compressed_texture_pvrtc") || !!gl .getExtension ("WEBKIT_WEBGL_compressed_texture_pvrtc");
+      let formatString;
 
-      let format;
+      if (ktxTexture .needsTranscoding)
+      {
+         const
+            astcSupported  = !!gl .getExtension ("WEBGL_compressed_texture_astc"),
+            etcSupported   = !!gl .getExtension ("WEBGL_compressed_texture_etc1"),
+            dxtSupported   = !!gl .getExtension ("WEBGL_compressed_texture_s3tc"),
+            // bptcSupported  = !!gl .getExtension ("EXT_texture_compression_bptc"),
+            pvrtcSupported = !!gl .getExtension ("WEBGL_compressed_texture_pvrtc") || !!gl .getExtension ("WEBKIT_WEBGL_compressed_texture_pvrtc");
 
-      if (astcSupported)
-         format = libktx .TranscodeTarget .ASTC_4x4_RGBA;
-      else if (bptcSupported)
-         format = libktx .TranscodeTarget .BC7_RGBA;
-      else if (dxtSupported)
-         format = libktx .TranscodeTarget .BC1_OR_3;
-      else if (pvrtcSupported)
-         format = libktx .TranscodeTarget .PVRTC1_4_RGBA;
-      else if (etcSupported)
-         format = libktx .TranscodeTarget .ETC;
-      else
-         format = libktx .TranscodeTarget .RGBA4444;
+         let format;
 
-      if (ktxTexture .transcodeBasis (format, 0) !== libktx .ErrorCode .SUCCESS)
-         console .warn ("Texture transcode failed. See console for details.");
+         if (astcSupported)
+         {
+            formatString = "ASTC";
+            format       = transcode_fmt .ASTC_4x4_RGBA;
+         }
+         else if (dxtSupported)
+         {
+            formatString = ktxTexture.numComponents == 4 ? "BC3" : "BC1";
+            format       = transcode_fmt .BC1_OR_3;
+         }
+         else if (pvrtcSupported)
+         {
+            formatString = "PVRTC1";
+            format       = transcode_fmt .PVRTC1_4_RGBA;
+         }
+         else if (etcSupported)
+         {
+            formatString = "ETC";
+            format       = transcode_fmt .ETC;
+         }
+         else
+         {
+            formatString = "RGBA4444";
+            format       = transcode_fmt .RGBA4444;
+         }
+
+         if (ktxTexture .transcodeBasis (format, 0) != libktx .error_code .SUCCESS)
+            throw new Error ("Texture transcode failed. See console for details.");
+      }
+
+      const result = ktxTexture .glUpload ();
+
+      if (result .error != gl .NO_ERROR)
+         throw new Error (`WebGL error when uploading texture, code = ${result .error .toString (16)}`);
+
+      if (result .object === undefined)
+         throw new Error ("Texture upload failed. See console for details.");
+
+      return {
+         target: result .target,
+         object: result .object,
+         format: formatString,
+      };
    }
 
    async loadKTXFromURL (url, cache = true)
@@ -62,18 +92,10 @@ export default class KTXDecoder
       await this .initialized;
 
       const
-         data       = new Uint8Array ($.ungzip (arrayBuffer)),
-         ktxTexture = new this .libktx .ktxTexture (data);
-
-      this .transcode (ktxTexture);
-
-      const
-         gl           = this .gl,
-         uploadResult = ktxTexture .glUpload (),
+         data         = new Uint8Array (await $.gunzip (arrayBuffer)),
+         ktxTexture   = new this .libktx .ktxTexture (data),
+         uploadResult = this .transcode (ktxTexture),
          texture      = uploadResult .object;
-
-      if (uploadResult .error !== gl .NO_ERROR || !texture)
-         throw new Error ("Could not load KTX data.");
 
       texture .baseWidth     = ktxTexture .baseWidth;
       texture .baseHeight    = ktxTexture .baseHeight;

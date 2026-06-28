@@ -123,16 +123,16 @@ Object .assign (Vector4 .prototype,
       this .w = w + t * (dW - w);
       return this;
    },
-   max (vector)
+   max (... args)
    {
       let { x, y, z, w } = this;
 
-      for (const { x: maxX, y: maxY, z: maxZ, w: maxW } of arguments)
+      for (const { x: argX, y: argY, z: argZ, w: argW } of args)
       {
-         x = Math .max (x, maxX);
-         y = Math .max (y, maxY);
-         z = Math .max (z, maxZ);
-         w = Math .max (w, maxW);
+         x = Math .max (x, argX);
+         y = Math .max (y, argY);
+         z = Math .max (z, argZ);
+         w = Math .max (w, argW);
       }
 
       this .x = x;
@@ -141,16 +141,16 @@ Object .assign (Vector4 .prototype,
       this .w = w;
       return this;
    },
-   min (vector)
+   min (... args)
    {
       let { x, y, z, w } = this;
 
-      for (const { x: minX, y: minY, z: minZ, w: minW } of arguments)
+      for (const { x: argX, y: argY, z: argZ, w: argW } of args)
       {
-         x = Math .min (x, minX);
-         y = Math .min (y, minY);
-         z = Math .min (z, minZ);
-         w = Math .min (w, minW);
+         x = Math .min (x, argX);
+         y = Math .min (y, argY);
+         z = Math .min (z, argZ);
+         w = Math .min (w, argW);
       }
 
       this .x = x;

@@ -1,3 +1,8 @@
+import "https://cdn.jsdelivr.net/npm/x_ite-sog-parser@latest/dist/x_ite-sog-parser-2.min.js";
+import "https://cdn.jsdelivr.net/npm/x_ite-spz-parser@latest/dist/x_ite-spz-parser-4.min.js";
+import "https://cdn.jsdelivr.net/npm/x_ite-spz-parser@latest/dist/x_ite-spz-parser-123.min.js";
+import "https://cdn.jsdelivr.net/npm/x_ite-off-parser@latest/dist/x_ite-off-parser.min.js";
+
 $("#drop-zone") .on ("dragover", event =>
 {
    event .stopPropagation ();
@@ -32,6 +37,9 @@ $("#open-files a") .on ("click", event =>
       ".obj",
       ".stl",
       ".ply",
+      ".sog",
+      ".spz",
+      ".off",
       ".svg",
       ".svgz",
    ];
@@ -119,6 +127,8 @@ async function convert (encoding, files)
          scene .setMetaData ("modified", new Date () .toUTCString ());
 
          link (mimeType, file .name .replace (/\.[^.]+$/, "") + extension, output (scene, encoding, file .name));
+
+         URL .revokeObjectURL (url);
       }
       catch (error)
       {

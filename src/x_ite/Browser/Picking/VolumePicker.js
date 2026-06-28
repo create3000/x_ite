@@ -58,7 +58,7 @@ Object .assign (VolumePicker .prototype,
 
          if (childShape .getNumChildShapes ())
          {
-            matrix .get (translation, rotation, scale);
+            matrix .getTransform (translation, rotation, scale);
 
             s .setValue (scale .x, scale .y, scale .z);
 
@@ -112,7 +112,7 @@ Object .assign (VolumePicker .prototype,
       {
          const t = transform || T;
 
-         m .set (translation, rotation);
+         m .setTransform (translation, rotation);
 
          o .setValue (m [12], m [13], m [14]);
 

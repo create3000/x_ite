@@ -13,9 +13,9 @@ tags: [TouchSensor, PointingDeviceSensor, VRML]
 
 ## Overview
 
-TouchSensor tracks location and state of the pointing device, detecting when a user points at or selects (activates) geometry.
+**TouchSensor** tracks location and state of the pointing device, detecting when a user points at or selects (activates) geometry.
 
-The TouchSensor node belongs to the [PointingDeviceSensor](/x_ite/components/overview/#pointingdevicesensor) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **TouchSensor** node belongs to the [PointingDeviceSensor](/x_ite/components/overview/#pointingdevicesensor) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -88,7 +88,7 @@ When pointing device selects geometry, send event containing surface normal vect
 ### SFVec3f [out] **hitPoint_changed**
 {: #fields-hitPoint_changed }
 
-When pointing device selects geometry, send event containing 3D point on surface of underlying geometry, as measured in reference frame for TouchSensor's local coordinate system.
+When pointing device selects geometry, send event containing 3D point on surface of underlying geometry, as measured in reference frame for **TouchSensor**'s local coordinate system.
 
 #### Warning
 

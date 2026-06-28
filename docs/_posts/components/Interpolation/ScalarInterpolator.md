@@ -13,9 +13,9 @@ tags: [ScalarInterpolator, Interpolation, VRML]
 
 ## Overview
 
-ScalarInterpolator generates piecewise-linear SFFloat values. Authors can ROUTE value_changed output events to other SFFloat fields.
+**ScalarInterpolator** generates piecewise-linear SFFloat values. Authors can ROUTE value_changed output events to other SFFloat fields.
 
-The ScalarInterpolator node belongs to the [Interpolation](/x_ite/components/overview/#interpolation) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **ScalarInterpolator** node belongs to the [Interpolation](/x_ite/components/overview/#interpolation) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 

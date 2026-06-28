@@ -1,3 +1,8 @@
+import "https://cdn.jsdelivr.net/npm/x_ite-sog-parser@latest/dist/x_ite-sog-parser-2.min.js";
+import "https://cdn.jsdelivr.net/npm/x_ite-spz-parser@latest/dist/x_ite-spz-parser-4.min.js";
+import "https://cdn.jsdelivr.net/npm/x_ite-spz-parser@latest/dist/x_ite-spz-parser-123.min.js";
+import "https://cdn.jsdelivr.net/npm/x_ite-off-parser@latest/dist/x_ite-off-parser.min.js";
+
 const MONACO_VERSION = $(`script[src*="monaco-editor"]`) .attr ("src") .match (/\/monaco-editor(@?.*?)\//) [1];
 
 class Playground
@@ -145,13 +150,19 @@ class Playground
 
       fileReader .addEventListener ("load", async () =>
       {
-         await this .browser .loadURL (new X3D .MFString (fileReader .result)) .catch (Function .prototype);
+         const
+            blob = new Blob ([fileReader .result], { type: "application/octet-stream" }),
+            url  = URL .createObjectURL (blob);
+
+         await this .browser .loadURL (new X3D .MFString (url)) .catch (Function .prototype);
+
+         URL .revokeObjectURL (url);
 
          this .model .setValue (this .browser .currentScene .toXMLString ());
          this .updateLanguage ("XML");
       });
 
-      fileReader .readAsDataURL (file);
+      fileReader .readAsArrayBuffer (file);
    }
 
    async applyChanges ()
@@ -228,6 +239,9 @@ class Playground
          ".obj",
          ".stl",
          ".ply",
+         ".sog",
+         ".spz",
+         ".off",
          ".svg",
          ".svgz",
       ];
@@ -243,7 +257,7 @@ class Playground
          .appendTo (toolbar);
 
       $("<button></button>")
-         .attr ("title", "Open a file (X3D, VRML, glTF (GLB), VRM, OBJ, STL, PLY, SVG).")
+         .attr ("title", "Open a file (X3D, VRML, glTF (GLB), VRM, OBJ, STL, PLY, SOG, SPZ, OFF, SVG).")
          .addClass ("material-symbols-outlined")
          .text ("file_open")
          .on ("click", () =>

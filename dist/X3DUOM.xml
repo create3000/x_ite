@@ -7,16 +7,6 @@
 
   <AbstractNodeTypes>
 
-    <AbstractNodeType name="X3DComposedGeometryNode">
-      <InterfaceDefinition>
-        <field name="tangent"
-          type="SFNode"
-          accessType="inputOutput"
-          acceptableNodeTypes="Tangent"
-          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."/>
-      </InterfaceDefinition>
-    </AbstractNodeType>
-
     <AbstractNodeType name="X3DMaterialExtensionNode">
       <InterfaceDefinition appinfo="Nodes of this type can be used for material extensions.">
         <componentInfo name="X_ITE" level="1" />
@@ -61,148 +51,8 @@
       </InterfaceDefinition>
     </AbstractNodeType>
 
-    <AbstractNodeType name="X3DUrlOutputObject">
-      <InterfaceDefinition>
-        <field name="description"
-          type="SFString"
-          accessType="inputOutput"
-          default=""
-          description="Author-provided prose that describes intended purpose of the url asset."/>
-        <field name="enabled"
-          type="SFBool"
-          accessType="inputOutput"
-          default="true"
-          description="The enabled field either enables or disables data output processing by the node."/>
-        <field name="url"
-          type="MFString"
-          accessType="inputOutput"
-          inheritedFrom="X3DUrlObject"
-          description="Values in the url field typically defines a relative address to a file name that can be used for storing one or more rendered textures."/>
-        <field name="isActive"
-          type="SFBool"
-          accessType="outputOnly"
-          inheritedFrom="X3DTimeDependentNode"
-          description="The isActive field provides a TRUE event when node data output becomes active, and a FALSE event when node data output is stopped."/>
-      </InterfaceDefinition>
-    </AbstractNodeType>
-
   </AbstractNodeTypes>
   <ConcreteNodes>
-
-    <ConcreteNode name="EnvironmentLight">
-      <InterfaceDefinition
-        specificationUrl="https://create3000.github.io/x_ite/components/lighting/environmentlight"
-        appinfo="EnvironmentLight ... This node only affects the PhysicalMaterial and SpecularGlossinessMaterial nodes.">
-        <componentInfo name="Lighting" level="3" />
-        <Inheritance baseType="X3DLightNode" />
-        <field name="metadata"
-          type="SFNode"
-          accessType="inputOutput"
-          default="NULL"
-          acceptableNodeTypes="X3DMetadataObject"
-          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."
-        ></field>
-        <field name="global"
-          type="SFBool"
-          accessType="inputOutput"
-          default="FALSE"
-          description="Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy."
-        ></field>
-        <field name="on"
-          type="SFBool"
-          accessType="inputOutput"
-          default="TRUE"
-          description="Enables/disables this light source."
-        ></field>
-        <field name="color"
-          type="SFColor"
-          accessType="inputOutput"
-          default="1 1 1"
-          minInclusive="0"
-          maxInclusive="1"
-          description="color of light, applied to colors of objects."
-        ></field>
-        <field name="intensity"
-          type="SFFloat"
-          accessType="inputOutput"
-          default="1"
-          minInclusive="0"
-          description="Brightness of direct emission from the light."
-        ></field>
-        <field name="ambientIntensity"
-          type="SFFloat"
-          accessType="inputOutput"
-          default="0"
-          minInclusive="0"
-          maxInclusive="1"
-          description="Brightness of ambient (nondirectional background) emission from the light. Interchange profile"
-        ></field>
-        <field name="rotation"
-          type="SFRotation"
-          accessType="inputOutput"
-          default="0 0 1 0"
-          minInclusive="-1"
-          description="Input/Output field rotation."
-        ></field>
-        <field name="diffuseTexture"
-          type="SFNode"
-          accessType="inputOutput"
-          default="NULL"
-          acceptableNodeTypes="X3DEnvironmentTextureNode"
-          description="Input/Output field diffuseTexture."
-        ></field>
-        <field name="diffuseCoefficients"
-          type="MFFloat"
-          accessType="inputOutput"
-          description="Input/Output field diffuseCoefficients."
-        ></field>
-        <field name="specularTexture"
-          type="SFNode"
-          accessType="inputOutput"
-          default="NULL"
-          acceptableNodeTypes="X3DEnvironmentTextureNode"
-          description="Input/Output field specularTexture."
-        ></field>
-        <field name="shadows"
-          type="SFBool"
-          accessType="inputOutput"
-          default="FALSE"
-          description="shadows field indicates whether or not this light casts a shadow behind illuminated X3DShapeNode geometry."
-        ></field>
-        <field name="shadowIntensity"
-          type="SFFloat"
-          accessType="inputOutput"
-          default="1"
-          minInclusive="0"
-          maxInclusive="1"
-          description="shadowIntensity field defines how much light is obscured by shapes that cast shadows, ranging from 0 (light not obscured, no visible shadows) to 1 (light completely obscured, full-intensity shadows)."
-        ></field>
-        <containerField default="children" type="xs:NMTOKEN" />
-      </InterfaceDefinition>
-    </ConcreteNode>
-
-    <ConcreteNode name="Tangent">
-      <InterfaceDefinition
-        specificationUrl="https://create3000.github.io/x_ite/components/rendering/tangent"
-        appinfo="Tangent.">
-        <componentInfo name="Rendering" level="4" />
-        <Inheritance baseType="X3DGeometricPropertyNode" />
-        <field name="metadata"
-          type="SFNode"
-          accessType="inputOutput"
-          default="NULL"
-          acceptableNodeTypes="X3DMetadataObject"
-          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."/>
-        <field name="vector"
-          type="MFVec4f"
-          accessType="inputOutput"
-          minInclusive="-1"
-          maxInclusive="1"
-          description="A unit XYZ vector defining a tangent direction on the surface, and a W component whose sign value (-1 or +1) indicates the handedness of the tangent base."
-        ></field>
-        <containerField default="tangent" type="xs:NMTOKEN" />
-      </InterfaceDefinition>
-    </ConcreteNode>
 
     <ConcreteNode name="ImageTextureAtlas">
       <InterfaceDefinition
@@ -445,7 +295,7 @@
           type="SFString"
           accessType="inputOutput"
           default="FUNC_ADD"
-          description="Specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be:
+          description="Specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be one of:
 - FUNC_ADD
 - FUNC_SUBTRACT
 - FUNC_REVERSE_SUBTRACT"
@@ -458,7 +308,7 @@
           type="SFString"
           accessType="inputOutput"
           default="FUNC_ADD"
-          description="Specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be:
+          description="Specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be one of:
 - FUNC_ADD
 - FUNC_SUBTRACT
 - FUNC_REVERSE_SUBTRACT"
@@ -712,40 +562,46 @@
         <field name="castShadow"
           type="SFBool"
           accessType="inputOutput"
-          default="TRUE"
-          description="Input/Output field castShadow."/>
+          default="true"
+          description="castShadow defines whether this Shape casts shadows as produced by lighting nodes."/>
         <field name="visible"
           type="SFBool"
           accessType="inputOutput"
-          default="TRUE"
+          default="true"
+          inheritedFrom="X3DShapeNode"
           description="Whether or not renderable content within this node is visually displayed."/>
         <field name="bboxDisplay"
           type="SFBool"
           accessType="inputOutput"
-          default="FALSE"
+          default="false"
+          inheritedFrom="X3DShapeNode"
           description="Whether to display bounding box for associated geometry, aligned with world coordinates."/>
         <field name="bboxSize"
           type="SFVec3f"
           accessType="initializeOnly"
           default="-1 -1 -1"
-          minInclusive="0"
-          description="Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint."/>
+          inheritedFrom="X3DShapeNode"
+          baseType="bboxSizeType"
+          description="Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost."/>
         <field name="bboxCenter"
           type="SFVec3f"
           accessType="initializeOnly"
           default="0 0 0"
+          inheritedFrom="X3DShapeNode"
           description="Bounding box center accompanies bboxSize and provides an optional hint for bounding box position offset from origin of local coordinate system."/>
         <field name="appearance"
           type="SFNode"
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DAppearanceNode"
+          inheritedFrom="X3DShapeNode"
           description="Input/Output field appearance."/>
         <field name="geometry"
           type="SFNode"
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DGeometryNode"
+          inheritedFrom="X3DShapeNode"
           description="Input/Output field geometry."/>
         <containerField default="extensions" type="xs:NMTOKEN" />
       </InterfaceDefinition>
@@ -757,7 +613,7 @@
           type="SFBool"
           accessType="inputOutput"
           default="TRUE"
-          description="The pointerEvents field defines whether this Layer becomes target for pointer events."/>
+          description="The pointerEvents field defines whether this Layer node becomes target for pointer events."/>
       </InterfaceDefinition>
     </ConcreteNode>
 
@@ -767,7 +623,7 @@
           type="SFBool"
           accessType="inputOutput"
           default="TRUE"
-          description="The pointerEvents field defines whether this LayoutLayer becomes target for pointer events."/>
+          description="The pointerEvents field defines whether this LayoutLayer node becomes target for pointer events."/>
       </InterfaceDefinition>
     </ConcreteNode>
 
@@ -1159,13 +1015,38 @@
           default="NULL"
           acceptableNodeTypes="X3DMetadataObject"
           description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."/>
+        <field name="scatterAnisotropy"
+          type="SFFloat"
+          accessType="inputOutput"
+          default="0"
+          minInclusive="-1"
+          maxInclusive="1"
+          description="The anisotropy of scatter events. Range is [-1, 1]. Positive values represent forward scattering; negative values represent backward scattering."/>
+        <field name="scatterStrength"
+          type="SFFloat"
+          accessType="inputOutput"
+          default="0"
+          minInclusive="0"
+          maxInclusive="1"
+          description="The strength of the scattering effect. Range is [0, 1]. At 0, scattering is disabled; at 1, scattering is fully applied."/>
+        <field name="scatterStrengthTextureMapping"
+          type="SFString"
+          accessType="inputOutput"
+          default=""
+          description="Input/Output field multiscatterColorTextureMapping."/>
+        <field name="scatterStrengthTexture"
+          type="SFNode"
+          accessType="inputOutput"
+          default="NULL"
+          acceptableNodeTypes="X3DSingleTextureNode"
+          description="A texture that defines the per-texel scatter strength, stored in the alpha (A) channel. Will be multiplied by scatterStrength."/>
         <field name="multiscatterColor"
           type="SFColor"
           accessType="inputOutput"
           default="0 0 0"
           minInclusive="0"
           maxInclusive="1"
-          description="The multi-scatter albedo."/>
+          description="The multi-scatter color. In volumetric mode, this is the multi-scatter albedo. In thin-walled mode, this is a surface tint applied to transmitted light.."/>
         <field name="multiscatterColorTextureMapping"
           type="SFString"
           accessType="inputOutput"
@@ -1176,14 +1057,7 @@
           accessType="inputOutput"
           default="NULL"
           acceptableNodeTypes="X3DSingleTextureNode"
-          description="A surface texture that defines the multi-scatter albedo at the volume's entry point. Stored in the RGB channels and encoded in sRGB. This will be multiplied by the multiscatterColorFactor."/>
-        <field name="scatterAnisotropy"
-          type="SFFloat"
-          accessType="inputOutput"
-          default="0"
-          minInclusive="-1"
-          maxInclusive="1"
-          description="The anisotropy of scatter events. Range is [-1, 1]."/>
+          description="A texture that defines the multi-scatter color, stored in the RGB channels and encoded in sRGB. This will be multiplied by the multiscatterColor."/>
         <containerField default="extensions" type="xs:NMTOKEN" />
       </InterfaceDefinition>
     </ConcreteNode>
@@ -1272,37 +1146,7 @@
       </InterfaceDefinition>
     </ConcreteNode>
 
-    <ConcreteNode name="IndexedQuadSet">
-      <InterfaceDefinition>
-        <field name="tangent"
-          type="SFNode"
-          accessType="inputOutput"
-          acceptableNodeTypes="Tangent"
-          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."/>
-      </InterfaceDefinition>
-    </ConcreteNode>
-
-    <ConcreteNode name="QuadSet">
-      <InterfaceDefinition>
-        <field name="tangent"
-          type="SFNode"
-          accessType="inputOutput"
-          acceptableNodeTypes="Tangent"
-          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."/>
-      </InterfaceDefinition>
-    </ConcreteNode>
-
     <ConcreteNode name="ElevationGrid">
-      <InterfaceDefinition>
-        <field name="tangent"
-          type="SFNode"
-          accessType="inputOutput"
-          acceptableNodeTypes="Tangent"
-          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."/>
-      </InterfaceDefinition>
-    </ConcreteNode>
-
-    <ConcreteNode name="IndexedFaceSet">
       <InterfaceDefinition>
         <field name="tangent"
           type="SFNode"
@@ -1332,36 +1176,6 @@
       </InterfaceDefinition>
     </ConcreteNode>
 
-    <ConcreteNode name="IndexedTriangleFanSet">
-      <InterfaceDefinition>
-        <field name="tangent"
-          type="SFNode"
-          accessType="inputOutput"
-          acceptableNodeTypes="Tangent"
-          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."/>
-      </InterfaceDefinition>
-    </ConcreteNode>
-
-    <ConcreteNode name="IndexedTriangleSet">
-      <InterfaceDefinition>
-        <field name="tangent"
-          type="SFNode"
-          accessType="inputOutput"
-          acceptableNodeTypes="Tangent"
-          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."/>
-      </InterfaceDefinition>
-    </ConcreteNode>
-
-    <ConcreteNode name="IndexedTriangleStripSet">
-      <InterfaceDefinition>
-        <field name="tangent"
-          type="SFNode"
-          accessType="inputOutput"
-          acceptableNodeTypes="Tangent"
-          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."/>
-      </InterfaceDefinition>
-    </ConcreteNode>
-
     <ConcreteNode name="LineSet">
       <InterfaceDefinition>
         <field name="tangent"
@@ -1373,36 +1187,6 @@
     </ConcreteNode>
 
     <ConcreteNode name="PointSet">
-      <InterfaceDefinition>
-        <field name="tangent"
-          type="SFNode"
-          accessType="inputOutput"
-          acceptableNodeTypes="Tangent"
-          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."/>
-      </InterfaceDefinition>
-    </ConcreteNode>
-
-    <ConcreteNode name="TriangleFanSet">
-      <InterfaceDefinition>
-        <field name="tangent"
-          type="SFNode"
-          accessType="inputOutput"
-          acceptableNodeTypes="Tangent"
-          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."/>
-      </InterfaceDefinition>
-    </ConcreteNode>
-
-    <ConcreteNode name="TriangleSet">
-      <InterfaceDefinition>
-        <field name="tangent"
-          type="SFNode"
-          accessType="inputOutput"
-          acceptableNodeTypes="Tangent"
-          description="Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors."/>
-      </InterfaceDefinition>
-    </ConcreteNode>
-
-    <ConcreteNode name="TriangleStripSet">
       <InterfaceDefinition>
         <field name="tangent"
           type="SFNode"
@@ -1442,163 +1226,6 @@
           default="1"
           minInclusive="0"
           description="Distance in meters where objects starts to be obscured by the fog, using local coordinate system."/>
-      </InterfaceDefinition>
-    </ConcreteNode>
-
-    <ConcreteNode name="RenderedTexture">
-      <InterfaceDefinition specificationUrl="https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texturing.html#RenderedTexture"
-        appinfo="A RenderedTexture is a texture node that renders a separate scene or viewpoint into an offscreen buffer, producing an image that can be applied to geometry in real time.">
-        <componentInfo name="Texturing" level="4"/>
-        <Inheritance baseType="X3DTexture2DNode"/>
-        <AdditionalInheritance baseType="X3DUrlOutputObject"/>
-        <field name="description"
-          type="SFString"
-          accessType="inputOutput"
-          inheritedFrom="X3DTextureNode"
-          description="Author-provided prose that describes intended purpose of the url asset."/>
-          <field name="enabled"
-          type="SFBool"
-          accessType="inputOutput"
-          default="true"
-          description="The enabled field either enables or disables data output processing by the node."/>
-        <field name="url"
-          type="MFString"
-          accessType="inputOutput"
-          inheritedFrom="X3DUrlObject"
-          description="Values in the url field typically defines a relative address to a file name that can be used for storing one or more rendered textures."/>
-        <field name="isActive"
-          type="SFBool"
-          accessType="outputOnly"
-          inheritedFrom="X3DTimeDependentNode"
-          description="The isActive field provides a TRUE event when node data output becomes active, and a FALSE event when node data output is stopped."/>
-        <field name="IS"
-          type="SFNode"
-          accessType="inputOutput"
-          default="NULL"
-          acceptableNodeTypes="IS"
-          inheritedFrom="X3DNode"/>
-        <field name="metadata"
-          type="SFNode"
-          accessType="inputOutput"
-          default="NULL"
-          acceptableNodeTypes="X3DMetadataObject"
-          inheritedFrom="X3DNode"
-          description="Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node."/>
-        <field name="repeatS"
-          type="SFBool"
-          accessType="initializeOnly"
-          default="true"
-          inheritedFrom="X3DTexture2DNode"
-          description="Whether to repeat texture along S axis horizontally from left to right."/>
-        <field name="repeatT"
-          type="SFBool"
-          accessType="initializeOnly"
-          default="true"
-          inheritedFrom="X3DTexture2DNode"
-          description="Whether to repeat texture along T axis vertically from top to bottom."/>
-        <field name="textureProperties"
-          type="SFNode"
-          accessType="initializeOnly"
-          default="NULL"
-          acceptableNodeTypes="TextureProperties"
-          inheritedFrom="X3DTexture2DNode"
-          description="Optional single contained TextureProperties node that can specify additional visual attributes applied to corresponding texture images."/>
-        <field name="DEF"
-          type="SFString"
-          accessType="inputOutput"
-          inheritedFrom="X3DNode"
-          baseType="xs:ID"
-          description="DEF defines a unique ID name for this node, referenceable by other nodes."/>
-        <field name="USE"
-          type="SFString"
-          accessType="inputOutput"
-          inheritedFrom="X3DNode"
-          baseType="xs:IDREF"
-          description="USE means reuse an already DEF-ed node ID, excluding all child nodes and all other attributes (except for containerField, which can have a different value)."/>
-        <field name="class"
-          type="SFString"
-          accessType="inputOutput"
-          inheritedFrom="X3DNode"
-          baseType="xs:NMTOKENS"
-          description="The class attribute on each X3D node and statement is a space-separated list of classes, reserved for use by Cascading Style Sheets (CSS) and XML stylesheets."/>
-        <field name="id"
-          type="SFString"
-          accessType="inputOutput"
-          inheritedFrom="X3DNode"
-          baseType="xs:NMTOKEN"
-          description="The id attribute on each X3D node and statement is considered a unique identifier when used as part of an encompassing HTML/DOM context."/>
-        <field name="style"
-          type="SFString"
-          accessType="inputOutput"
-          inheritedFrom="X3DNode"
-          description="The style attribute on each X3D node and statement provides an inline block of CSS source for element styling, reserved for use by Cascading Style Sheets (CSS) and XML stylesheets."/>
-        <field name="update"
-          type="SFString"
-          accessType="inputOutput"
-          default="NONE"
-          additionalEnumerationValuesAllowed="false"
-          simpleType="generatedCubeMapTextureUpdateChoices"
-          baseType="xs:NMTOKEN"
-          description="update controls regeneration of the texture.">
-            <enumeration value="NONE" appinfo="no further texture updates are rendered."/>
-            <enumeration value="NEXT_FRAME_ONLY" appinfo="render texture once at end of frame."/>
-            <enumeration value="ALWAYS" appinfo="texture to be rendered every frame."/>
-        </field>
-        <field name="updateInterval"
-          type="SFTime"
-          accessType="inputOutput"
-          default="0.1"
-          minInclusive="0"
-          description="The updateInterval field indicates time intervals between render captures when update is &quot;ALWAYS&quot;. A value of 0 indicates full frame rate."/>
-        <field name="maximumNumberFrames"
-          type="SFInt32"
-          accessType="inputOutput"
-          default="1000"
-          minInclusive="0"
-          description="The maximumNumberFrames field indicates the maximum number of frames that can be saved for a single series of image captures. A value of 0 indicates no limit."/>
-        <field name="dimensions"
-          type="MFInt32"
-          accessType="inputOutput"
-          description="Sets the width, height, color components (and number of MRTs)."/>
-        <field name="depthMap"
-          type="SFBool"
-          accessType="initializeOnly"
-          default="false"
-          description="The generated texture will contain the depth buffer of the image (instead of the color buffer as usual)."/>
-        <field name="children"
-          type="MFNode"
-          accessType="inputOutput"
-          default="NULL"
-          description="Sets a separate, potentially independent, subscene. If the value is NULL the current scene is used."
-          acceptableNodeTypes="X3DChildNode"/>
-        <field name="replaceImage"
-          type="SFBool"
-          accessType="inputOutput"
-          default="TRUE"
-          description="The replaceImage field defines whether only a single updated image file or multiple image files can be saved."/>
-        <containerField default="texture" type="containerFieldChoicesX3DTexture2DNode"/>
-        <ContentModel>
-            <GroupContentModel name="ChildContentModelCore" minOccurs="0"/>
-            <NodeContentModel name="TextureProperties"/>
-            <NodeContentModel name="ProtoInstance"/>
-        </ContentModel>
-      </InterfaceDefinition>
-    </ConcreteNode>
-
-    <ConcreteNode name="InlineGeometry">
-      <InterfaceDefinition>
-        <Inheritance baseType="X3DGeometryNode"/>
-        <AdditionalInheritance baseType="X3DUrlObject"/>
-        <field name="solid"
-          type="SFBool"
-          accessType="inputOutput"
-          default="FALSE"
-          description="For InlineGeometry, the default value of solid is FALSE since most usages of retrieved meshes need two-sided rendering. Authors have the option to change this value for single-sided rendering."/>
-        <field name="smooth"
-          type="SFBool"
-          accessType="inputOutput"
-          default="TRUE"
-          description="The smooth field provides a hint to the browser whether smooth rendering is preferred for a retrieved polygonal mesh."/>
       </InterfaceDefinition>
     </ConcreteNode>
 

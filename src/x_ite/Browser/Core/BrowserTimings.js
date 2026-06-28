@@ -282,6 +282,9 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
             shapeNode    = shapes [i] .shapeNode,
             numInstances = shapeNode .getNumInstances ();
 
+         if (!shapeNode .getExecutionContext () .getCountPrimitives ())
+            continue;
+
          switch (shapeNode .getGeometryType ())
          {
             case GeometryType .POINT:
@@ -307,9 +310,6 @@ Object .assign (Object .setPrototypeOf (BrowserTimings .prototype, X3DBaseNode .
 
                // ParticleSystem nodes may have no geometry.
                if (!geometryNode)
-                  continue;
-
-               if (!geometryNode .getExecutionContext () .getCountPrimitives ())
                   continue;
 
                const vertices = geometryNode .getVertices () .length / 4 * numInstances;

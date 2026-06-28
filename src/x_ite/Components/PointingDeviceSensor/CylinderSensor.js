@@ -75,7 +75,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
          phi   = section === 0 ? Math .asin (sinp) : sinp * Math .PI / 2,
          angle = phi + section * Math .PI;
 
-      const rotation = new Rotation4 (this .cylinder .axis .direction, angle);
+      const rotation = new Rotation4 (... this .cylinder .axis .direction, angle);
 
       rotation .multVecRot (trackPoint .assign (this .szNormal) .multiply (this .cylinder .radius));
       trackPoint .add (axisPoint);
@@ -151,7 +151,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
          this .getTrackPoint (hitRay, trackPoint);
 
       this .fromVector  = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Vector3 ()) .negate ();
-      this .startOffset = new Rotation4 (yAxis, this ._offset .getValue ());
+      this .startOffset = new Rotation4 (... yAxis, this ._offset .getValue ());
 
       this ._trackPoint_changed = trackPoint;
       this ._rotation_changed   = this .startOffset;
@@ -178,7 +178,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
 
       const
          toVector = this .cylinder .axis .getPerpendicularVectorToPoint (trackPoint, new Vector3 ()) .negate (),
-         rotation = new Rotation4 (this .fromVector, toVector);
+         rotation = Rotation4 .fromVectors (this .fromVector, toVector);
 
       if (this .disk)
       {
@@ -189,7 +189,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
          const trackPoint_ = this .modelViewMatrix .multVecMatrix (trackPoint .copy ());
 
          if (trackPoint_ .z > 0)
-            rotation .multRight (new Rotation4 (this .yPlane .normal, Math .PI));
+            rotation .multRight (new Rotation4 (... this .yPlane .normal, Math .PI));
       }
       else
       {
@@ -207,7 +207,7 @@ Object .assign (Object .setPrototypeOf (CylinderSensor .prototype, X3DDragSensor
       {
          const
             endVector     = rotation .multVecRot (this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 0, 1))),
-            deltaRotation = new Rotation4 (this .startVector, endVector),
+            deltaRotation = Rotation4 .fromVectors (this .startVector, endVector),
             axis          = this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 1, 0)),
             sign          = axis .dot (deltaRotation .getAxis (new Vector3 ())) > 0 ? 1 : -1,
             min           = this ._minAngle .getValue (),

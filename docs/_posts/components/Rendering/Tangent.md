@@ -13,9 +13,9 @@ tags: [Tangent, Rendering]
 
 ## Overview
 
-Tangent defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate or CoordinateDouble node, or else to a parent ElevationGrid node. Tangent values are perpendicular directions that are used per-polygon or per-vertex when computing lighting and shading for advanced physically based rendering (PBR) effects.
+**Tangent** defines a set of 3D surface-normal vectors that apply either to a sibling [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node, or else to a parent [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) node. **Tangent** values are perpendicular directions that are used per-polygon or per-vertex when computing lighting and shading for advanced physically based rendering (PBR) effects.
 
-The Tangent node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **5,** its default container field is *tangent.* It is available from X3D version 4.1 or higher.
+The **Tangent** node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **5,** its default container field is *tangent.* It is available from X3D version 4.1 or higher.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
@@ -64,7 +64,11 @@ Set of x-y-z-w orthogonal *vector* values for a surface, applied either per-vert
 ### Hints
 
 - [Normal vectors perpendicular to 3D surface](https://en.wikipedia.org/wiki/Normal_(geometry))
-- [Tangent plane](https://en.wikipedia.org/wiki/Tangent)
+- [**Tangent** plane](https://en.wikipedia.org/wiki/Tangent)
+
+### Warning
+
+- X3D Architecture version 4.1 draft is experimental and not fully implemented.
 
 ## Browser Compatibility
 

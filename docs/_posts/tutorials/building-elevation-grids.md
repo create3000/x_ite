@@ -110,7 +110,7 @@ Shape {
 }
 ```
 
-## A sample elevation grid
+## A Sample Elevation Grid
 
 ### XML Encoding
 

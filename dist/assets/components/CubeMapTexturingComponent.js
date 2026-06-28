@@ -1,5 +1,5 @@
-/* X_ITE v15.0.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.2")];
+/* X_ITE v15.1.7 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
@@ -409,6 +409,11 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, CubeM
          this .addNodeEvent ();
       }
    },
+   getRenderedTextures (renderedTextures)
+   {
+      for (const textureNode of this .textureNodes)
+         textureNode ?.getRenderedTextures (renderedTextures);
+   },
 });
 
 Object .defineProperties (ComposedCubeMapTexture,
@@ -517,6 +522,10 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
    {
       return true;
    },
+   getRenderedTextures (renderedTextures)
+   {
+      renderedTextures .add (this);
+   },
    addUpdateCallback (key, callback)
    {
       this .updateCallbacks .set (key, callback);
@@ -585,12 +594,12 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
       // Rotations to negated normals of the texture cube.
 
       const rotations = [
-         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).NEGATIVE_Z_AXIS), // front
-         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).Z_AXIS),          // back
-         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).X_AXIS),          // left
-         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).NEGATIVE_X_AXIS), // right
-         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).NEGATIVE_Y_AXIS), // top
-         new (external_X_ITE_X3D_Rotation4_default()) ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).Y_AXIS),          // bottom
+         external_X_ITE_X3D_Rotation4_default().fromVectors ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).NEGATIVE_Z_AXIS), // front
+         external_X_ITE_X3D_Rotation4_default().fromVectors ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).Z_AXIS),          // back
+         external_X_ITE_X3D_Rotation4_default().fromVectors ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).X_AXIS),          // left
+         external_X_ITE_X3D_Rotation4_default().fromVectors ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).NEGATIVE_X_AXIS), // right
+         external_X_ITE_X3D_Rotation4_default().fromVectors ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).NEGATIVE_Y_AXIS), // top
+         external_X_ITE_X3D_Rotation4_default().fromVectors ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, (external_X_ITE_X3D_Vector3_default()).Y_AXIS),          // bottom
       ];
 
       // Negated scales of the texture cube.
@@ -622,8 +631,9 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
          const
             dependentRenderer  = this .dependentRenderers .get (renderObject),
             browser            = this .getBrowser (),
-            layer              = renderObject .getLayer (),
             gl                 = browser .getContext (),
+            layer              = renderObject .getLayer (),
+            viewport           = this .viewport,
             background         = dependentRenderer .getBackground (),
             navigationInfoNode = dependentRenderer .getNavigationInfo (),
             viewpointNode      = dependentRenderer .getViewpoint (),
@@ -638,7 +648,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
          this .setTransparent (background .isTransparent ());
 
          dependentRenderer .setFramebuffer (this .frameBuffer);
-         dependentRenderer .getViewVolumes () .push (viewVolume .set (projectionMatrix, this .viewport, this .viewport));
+         dependentRenderer .getViewVolumes () .push (viewVolume .set (projectionMatrix, viewport, viewport));
          dependentRenderer .getProjectionMatrix () .push (projectionMatrix);
 
          gl .bindTexture (this .getTarget (), this .getTexture ());
@@ -647,8 +657,8 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
 
          for (let i = 0; i < 6; ++ i)
          {
-            gl .viewport (... this .viewport);
-            gl .scissor (... this .viewport);
+            gl .viewport (... viewport);
+            gl .scissor (... viewport);
             gl .clearColor (0, 0, 0, 0);
             gl .clear (gl .COLOR_BUFFER_BIT); // Always clear, X3DBackground could be transparent!
 
@@ -708,8 +718,11 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, Cube
    {
       CubeMapTexturing_X3DEnvironmentTextureNode .prototype .setShaderUniforms .call (this, gl, channel);
 
-      if (this .textureRenderingPass)
-         gl .viewport (0, 0, 0, 0); // Hide object by making viewport zero size.
+      if (!this .textureRenderingPass)
+         return;
+
+      // Hide object by making scissor zero size.
+      gl .scissor (0, 0, 0, 0);
    },
 });
 
@@ -736,6 +749,9 @@ const GeneratedCubeMapTexture_default_ = GeneratedCubeMapTexture;
 ;// external "__X_ITE_X3D__ .X3DUrlObject"
 const external_X_ITE_X3D_X3DUrlObject_namespaceObject = __X_ITE_X3D__ .X3DUrlObject;
 var external_X_ITE_X3D_X3DUrlObject_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_X3DUrlObject_namespaceObject);
+;// external "__X_ITE_X3D__ .FileLoader"
+const external_X_ITE_X3D_FileLoader_namespaceObject = __X_ITE_X3D__ .FileLoader;
+var external_X_ITE_X3D_FileLoader_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_FileLoader_namespaceObject);
 ;// external "__X_ITE_X3D__ .Vector2"
 const external_X_ITE_X3D_Vector2_namespaceObject = __X_ITE_X3D__ .Vector2;
 var external_X_ITE_X3D_Vector2_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_Vector2_namespaceObject);
@@ -744,6 +760,7 @@ const external_X_ITE_X3D_DEVELOPMENT_namespaceObject = __X_ITE_X3D__ .DEVELOPMEN
 var external_X_ITE_X3D_DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_DEVELOPMENT_namespaceObject);
 ;// ./src/x_ite/Components/CubeMapTexturing/ImageCubeMapTexture.js
 /* provided dependency */ var $ = __webpack_require__(254);
+
 
 
 
@@ -805,38 +822,48 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
          return;
       }
 
-      // Get URL.
-
-      this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
-
-      if (this .URL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .URL .href .match (/^data:image\/ktx2[;,]/))
+      new (external_X_ITE_X3D_FileLoader_default()) (this, { dataAsString: false }) .loadDocument ([this .urlStack .shift ()], (data, fileURL) =>
       {
-         this .setLinear (true);
-         this .setMipMaps (false);
-
-         this .getBrowser () .getKTXDecoder ()
-            .then (decoder => decoder .loadKTXFromURL (this .URL, this .getCache ()))
-            .then (texture => this .setKTXTexture (texture))
-            .catch (error => this .setError ({ type: error .message }));
-      }
-      else
-      {
-         this .setLinear (false);
-         this .setMipMaps (true);
-
-         if (this .URL .protocol !== "data:")
+         if (data === null)
          {
-            if (!this .getCache ())
-               this .URL .searchParams .set ("_", Date .now ());
+            this .loadNext ();
          }
+         else if (data instanceof ArrayBuffer)
+         {
+            this .fileURL = new URL (fileURL);
 
-         this .image .attr ("src", this .URL);
-      }
+            if (this .fileURL .pathname .match (/\.ktx2?(?:\.gz)?$/) || this .fileURL .href .match (/^\s*data:image\/ktx2[;,]/s))
+            {
+               this .setLinear (true);
+               this .setMipMaps (false);
+
+               this .getBrowser () .getKTXDecoder ()
+                  .then (decoder => decoder .loadKTXFromBuffer (data))
+                  .then (texture => this .setKTXTexture (texture))
+                  .catch (error => this .setError ({ type: error .message }));
+            }
+            else
+            {
+               this .setLinear (false);
+               this .setMipMaps (true);
+
+               this .objectURL = URL .createObjectURL (new Blob ([data]));
+
+               this .image .attr ("src", this .objectURL);
+            }
+         }
+         else
+         {
+            throw new Error ("ImageTexture: no suitable file type handler found.");
+         }
+      });
    },
    setError (event)
    {
-      if (this .URL .protocol !== "data:")
-         console .warn (`Error loading image '${decodeURI (this .URL)}':`, event .type);
+      if (this .fileURL .protocol !== "data:")
+         console .warn (`Error loading image '${decodeURI (this .fileURL)}':`, event .type);
+
+      URL .revokeObjectURL (this .objectURL);
 
       this .loadNext ();
    },
@@ -847,8 +874,8 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
 
       if ((external_X_ITE_X3D_DEVELOPMENT_default()))
       {
-         if (this .URL .protocol !== "data:")
-            console .info (`Done loading image cube map texture '${decodeURI (this .URL)}'.`);
+         if (this .fileURL .protocol !== "data:")
+            console .info (`Done loading image cube map texture '${decodeURI (this .fileURL)}'.`);
       }
 
       try
@@ -871,8 +898,8 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
    {
       if ((external_X_ITE_X3D_DEVELOPMENT_default()))
       {
-         if (this .URL .protocol !== "data:")
-            console .info (`Done loading image cube map texture '${decodeURI (this .URL)}'.`);
+         if (this .fileURL .protocol !== "data:")
+            console .info (`Done loading image cube map texture '${decodeURI (this .fileURL)}'.`);
       }
 
       try
@@ -901,6 +928,10 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, CubeMapT
       {
          // Catch security error from cross origin requests.
          this .setError ({ type: error .message });
+      }
+      finally
+      {
+         URL .revokeObjectURL (this .objectURL);
       }
    },
    imageToCubeMap (texture, width, height)

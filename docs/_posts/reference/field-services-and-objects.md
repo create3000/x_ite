@@ -88,6 +88,7 @@ Almost all read-only functions known from JavaScript [Array](https://developer.m
   + SFMatrix4d
   + SFMatrix4f
   + SFNode
+  + SFQuaternion
   + SFRotation
   + SFVec2d
   + SFVec2f
@@ -109,6 +110,7 @@ Almost all read-only functions known from JavaScript [Array](https://developer.m
     + MFMatrix4d
     + MFMatrix4f
     + MFNode
+    + MFQuaternion
     + MFRotation
     + MFString
     + MFVec2d
@@ -878,6 +880,152 @@ Returns the X3D JSON-encoded string that, if parsed as the value of a SFNode fie
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
+## SFQuaternion Object
+
+The SFQuaternion object corresponds to an X3D SFQuaternion field.
+
+### Static Properties
+
+#### **ZERO**: SFQuaternion
+
+Returns a quaternion with all elements set to 0. This property is read-only.
+
+#### **IDENTITY**: SFQuaternion
+
+Returns the identity quaternion. This property is read-only.
+
+### Static Methods
+
+#### **fromMatrix** (*matrix: SFMatrix3d/f*): SFQuaternion
+
+*matrix* is an SFMatrix3d/f rotation matrix object whose value is converted into an SFQuaternion object.
+
+<x3d-script-area name="X3D ECMAScript Example: SFQuaternion fromMatrix">
+<pre>
+const matrix     = new SFMatrix3f (0, 1, 0, 0, 0, 1, 1, 0, 0);
+const quaternion = SFQuaternion .fromMatrix (matrix);
+
+print (quaternion);
+print (quaternion .length ());
+// Expected output: 0.5 0.5 0.5 0.5
+// Expected output: 1
+</pre>
+</x3d-script-area>
+
+### Instance Creation Method(s)
+
+#### *sfQuaternionObjectName* = new **SFQuaternion** ()
+
+A new quaternion initialized with zero values is created and returned.
+
+#### *sfQuaternionObjectName* = new **SFQuaternion** (*x: number, y: number, z: number, w: number*)
+
+*x*, *y*, and *z* are the imaginary parts of the quaternion.
+*w* is the real part of the quaternion. All values are scalar.
+
+### Iterator
+
+The `[@@iterator]()` method of SFQuaternion instances implements the iterable protocol and allows SFQuaternion objects to be consumed by most syntaxes expecting iterables, such as the spread syntax and `for...of` loops. It returns an iterator object that yields the object's properties in order.
+
+```js
+const copy = new SFQuaternion (... quaternion); // Copy using spread syntax.
+```
+
+### Properties
+
+Each component of the quaternion can be accessed using the `x`, `y`, `z` and `w` properties or using the standard C-style dereferencing operator (e.g. `sfQuaternionObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<4).
+
+#### **x**: number
+{: .writable }
+
+Returns the first value of the imaginary part.
+
+#### **y**: number
+{: .writable }
+
+Returns the second value of the imaginary part.
+
+#### **z**: number
+{: .writable }
+
+Returns the third value of the imaginary part.
+
+#### **w**: number
+{: .writable }
+
+A number corresponding to the real part of the quaternion.
+
+### Methods
+
+#### **add** (*other: SFQuaternion*): SFQuaternion
+
+Returns an SFQuaternion whose value is the passed SFQuaternion added, componentwise, to the object.
+
+#### **divide** (*denominator*): SFQuaternion
+
+Returns an SFQuaternion whose value is the object divided by the passed numeric value.
+
+#### **getMatrix** (): SFMatrix3f
+
+Returns the rotation matrix as an SFMatrix3f object.
+
+#### **dot** (*other: SFQuaternion*): number
+
+Returns the dot product of this quaternion and SSFQuaternion *other*.
+
+#### **inverse** (): SFQuaternion
+
+Returns a SFQuaternion object whose value is the inverse of this object's quaternion.
+
+#### **length** (): number
+
+Returns the geometric length of this quaternion.
+
+#### **multiply** (*factor: SFQuaternion*): SFQuaternion
+
+Returns an SFQuaternion whose value is the object multiplied by the passed numeric value.
+
+#### **multQuat** *(quaternion: SFQuaternion*): SFQuaternion
+
+Returns an SFQuaternion whose value is the object multiplied by the passed SFQuaternion.
+
+#### **multVec** (*vec: SFVec3d/f*): SFVec3d/f
+
+Returns a SFVec3f whose value is the SFVec3f *vec* multiplied by the matrix corresponding to this object's rotation.
+
+#### **negate** (): SFQuaternion
+
+Returns an SFQuaternion whose value is the componentwise negation of the object.
+
+#### **normalize** (): SFQuaternion
+
+Returns an SFQuaternion object converted to unit length.
+
+<x3d-script-area name="X3D ECMAScript Example: SFQuaternion normalize">
+<pre>
+const
+  quaternion = new SFQuaternion (2, 2, 2, 2),
+  normalized = quaternion .normalize ();
+
+print (normalized);
+print (normalized .length ());
+// Expected output: 0.5 0.5 0.5 0.5
+// Expected output: 1
+</pre>
+</x3d-script-area>
+
+#### **setMatrix** (*matrix: SFMatrix3d/f*): void
+
+Set the value of this quaternion to the rotation matrix passed in *matrix*.
+
+#### **slerp** (*destQuaternion: SFQuaternion, t: number*): SFQuaternion
+
+Returns a SFQuaternion whose value is the spherical linear interpolation between this object's quaternion and *destQuaternion* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's quaternion. For *t* = 1, the value is *destQuaternion*.
+
+#### **subtract** (*other: SFQuaternion*): SFVec2d/f
+
+Returns an SFQuaternion whose value is the passed SFQuaternion subtracted, componentwise, from the object.
+
 ## SFRotation Object
 
 The SFRotation object corresponds to an X3D SFRotation field.
@@ -973,7 +1121,7 @@ A number corresponding to the angle of the rotation (in radians).
 
 ### Methods
 
-#### **getAxis** (): number
+#### **getAxis** (): SFVec3f
 
 Returns the axis of rotation as an SFVec3f object.
 
@@ -1027,7 +1175,7 @@ Set the value of this rotation to the quaternion passed in *x, y, z, w*.
 
 Returns a SFRotation whose value is the spherical linear interpolation between this object's rotation and *destRotation* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's rotation. For *t* = 1, the value is *destRotation*.
 
-#### **straighten** (*upVector: SFVec3d/f = new SFVec3f (0, 1, 0)*): SFRotation
+#### **straighten** (*upVector: SFVec3d/f = SFVec3f.Y_AXIS*): SFRotation
 
 Straightens the rotation so that the x-axis of the resulting rotation is parallel to the plane spawned by upVector. The default  value for *upVector* is the y-axis.
 
@@ -1796,13 +1944,35 @@ Returns the X3D JSON-encoded string that, if parsed as the value of an MFNode fi
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
+## MFQuaternion Object
+
+The MFQuaternion object corresponds to an X3D MFQuaternion field. It is used to store a one-dimensional array of SFQuaternion objects.
+
+### Instance Creation Method(s)
+
+#### *mfQuaternionObjectName* = new **MFQuaternion** (*... values: SFQuaternion []*)
+
+The creation method can be passed 0 or more SFQuaternion-valued expressions to initialize the elements of the array.
+
+### Properties
+
+Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. `mfQuaternionObjectName[index]`, where *index* is an integer-valued expression with 0<=*index*\<length and length is the number of elements in the array). Assigning to an element with *index* \> length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFQuaternion (0, 0, 0, 1)`.
+
+#### **length**: number
+
+An integer containing the number of elements in the array. Assigning an integer to length changes the number of elements in the array.
+
+### Methods
+
+See [X3DArrayField](/x_ite/reference/field-services-and-objects/#methods-13).
+
 ## MFRotation Object
 
 The MFRotation object corresponds to an X3D MFRotation field. It is used to store a one-dimensional array of SFRotation objects.
 
 ### Instance Creation Method(s)
 
-#### *mfRotationObjectName* = new **MFRotation**  (*... values: SFRotation []*)
+#### *mfRotationObjectName* = new **MFRotation** (*... values: SFRotation []*)
 
 The creation method can be passed 0 or more SFRotation-valued expressions to initialize the elements of the array.
 

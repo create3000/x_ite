@@ -13,9 +13,9 @@ tags: [InlineGeometry, Networking, glTF]
 
 ## Overview
 
-InlineGeometry loads geometry from an external file. The result provides a polygonal mesh, set of lines, point cloud, parametric surface, or other geometry. Supported formats are browser dependent and can include STL and PLY mesh files.
+**InlineGeometry** loads geometry from an external file. The result provides a polygonal mesh, set of lines, point cloud, parametric surface, or other geometry. Supported formats are browser dependent and can include STL and PLY mesh files.
 
-The InlineGeometry node belongs to the [Networking](/x_ite/components/overview/#networking) component and requires at least support level **4,** its default container field is *geometry.* It is available from X3D version 4.1 or higher.
+The **InlineGeometry** node belongs to the [Networking](/x_ite/components/overview/#networking) component and requires at least support level **4,** its default container field is *geometry.* It is available from X3D version 4.1 or higher.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
@@ -131,7 +131,7 @@ Setting *solid* true means draw only one side of polygons (backface culling on),
 - Mnemonic "this geometry is *solid* like a brick" (you don't render the inside of a brick).
 - If in doubt, use *solid*='false' for maximum visibility.
 - AccessType relaxed to inputOutput in order to support animation and visualization.
-- For InlineGeometry, the default value of *solid* is FALSE since most usages of retrieved meshes need two-sided rendering.
+- For **InlineGeometry**, the default value of *solid* is FALSE since most usages of retrieved meshes need two-sided rendering.
 
 #### Warnings
 
@@ -150,12 +150,15 @@ The *smooth* field provides a hint to the browser whether *smooth* rendering is 
 | X3D XML          | .x3d, .x3dz    | model/x3d+xml     | [X3D Encoding: XML][1]          |
 | X3D JSON         | .x3dj, .x3djz  | model/x3d+json    | [X3D Encoding: JSON][2]         |
 | X3D Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml    | [X3D Encoding: Classic VRML][3] |
-| VRML 2.0         | .wrl, .wrz     | model/vrml        | [X_ITE VRML Viewer][4]                |
+| VRML 2.0         | .wrl, .wrz     | model/vrml        | [VRML Viewer][4]                |
 | glTF             | .gltf, .glb    | model/gltf+json   | [glTF Support][5]               |
 | VRM              | .vrm           | model/vrm         | [About VRM][6]                  |
 | Wavefront OBJ    | .obj           | model/obj         |                                 |
 | STL              | .stl           | model/stl         | ASCII & Binary                  |
-| PLY              | .ply           | model/ply         | ASCII & Binary                  |
+| PLY              | .ply           | model/ply         | ASCII & Binary, [3DGS][7]       |
+| SOG              | .sog           | model/sog         | [By Using an Extension][8]      |
+| SPZ              | .spz           | model/spz         | [By Using an Extension][9]      |
+| OFF              | .off           | model/off         | [By Using an Extension][10]     |
 | SVG Document     | .svg, .svgz    | image/svg+xml     |                                 |
 
   [1]: https://www.web3d.org/documents/specifications/19776-1/V3.3/index.html
@@ -164,8 +167,12 @@ The *smooth* field provides a hint to the browser whether *smooth* rendering is 
   [4]: /x_ite/features/#vrml-viewer
   [5]: /x_ite/features/#gltf-support
   [6]: https://vrm.dev/en/vrm/vrm_about/
+  [7]: https://en.wikipedia.org/wiki/Gaussian_splatting
+  [8]: https://www.npmjs.com/package/x_ite-sog-parser
+  [9]: https://www.npmjs.com/package/x_ite-spz-parser
+  [10]: https://www.npmjs.com/package/x_ite-off-parser
 
->**Tip:** All files can be compressed using GZip compression (usually denoted by a 'z' at the end of the filename suffix). This saves bandwidth and speeds up download time.
+>**Tip:** All files, including media files, can be compressed using GZip compression (usually denoted by a `z` at the end of the filename suffix or by appending `.gz`). This saves bandwidth and speeds up download times.
 {: .prompt-tip }
 
 ## Advice
@@ -175,6 +182,10 @@ The *smooth* field provides a hint to the browser whether *smooth* rendering is 
 - [Wikipedia, STL (Standard Triangle Language or Standard Tessellation Language)](https://en.wikipedia.org/wiki/STL_(file_format))
 - [Wikipedia, PLY (Polygon File Format or Stanford Triangle Format)](https://en.wikipedia.org/wiki/PLY_(file_format))
 - [Example](https://create3000.github.io/x_ite/playground/?url=https://create3000.github.io/media/examples/Networking/InlineGeometry/InlineGeometry.x3d)
+
+### Warning
+
+- X3D Architecture version 4.1 draft is experimental and not fully implemented.
 
 ## Example
 

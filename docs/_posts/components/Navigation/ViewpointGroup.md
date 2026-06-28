@@ -13,9 +13,9 @@ tags: [ViewpointGroup, Navigation]
 
 ## Overview
 
-ViewpointGroup can contain Viewpoint, OrthoViewpoint, GeoViewpoint and other ViewpointGroup nodes for better user-navigation support with a shared description on the viewpoint list.
+**ViewpointGroup** can contain [Viewpoint](/x_ite/components/navigation/viewpoint/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) and other **ViewpointGroup** nodes for better user-navigation support with a shared description on the viewpoint list.
 
-The ViewpointGroup node belongs to the [Navigation](/x_ite/components/overview/#navigation) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The **ViewpointGroup** node belongs to the [Navigation](/x_ite/components/overview/#navigation) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -50,7 +50,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### SFString [in, out] **description** ""
 {: #fields-description }
 
-[Text](/x_ite/components/text/text/) *description* or navigation hint to identify this ViewpointGroup.
+[Text](/x_ite/components/text/text/) *description* or navigation hint to identify this **ViewpointGroup**.
 
 #### Hints
 
@@ -59,12 +59,12 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 
 #### Warning
 
-- Without *description*, this ViewpointGroup is unlikely to appear on browser [Viewpoint](/x_ite/components/navigation/viewpoint/) menus.
+- Without *description*, this **ViewpointGroup** is unlikely to appear on browser [Viewpoint](/x_ite/components/navigation/viewpoint/) menus.
 
 ### SFBool [in, out] **displayed** TRUE
 {: #fields-displayed }
 
-*displayed* determines whether this ViewpointGroup is *displayed* in the current viewpoint list.
+*displayed* determines whether this **ViewpointGroup** is *displayed* in the current viewpoint list.
 
 ### SFBool [in, out] **retainUserOffsets** FALSE
 {: #fields-retainUserOffsets }
@@ -74,21 +74,21 @@ Retain (true) or reset to zero (false) any prior user navigation offsets from de
 ### SFVec3f [in, out] **size** 0 0 0 <small>(-∞,∞)</small>
 {: #fields-size }
 
-*size* of Proximity box around center location, oriented within local transformation frame, within which ViewpointGroup is usable and displayed on viewpoint list.
+*size* of Proximity box around center location, oriented within local transformation frame, within which **ViewpointGroup** is usable and displayed on viewpoint list.
 
 #### Hint
 
-- *size* 0 0 0 specifies that ViewpointGroup is always usable and displayable.
+- *size* 0 0 0 specifies that **ViewpointGroup** is always usable and displayable.
 
 ### SFVec3f [in, out] **center** 0 0 0 <small>(-∞,∞)</small>
 {: #fields-center }
 
-*center* specifies *center* point of proximity box within which ViewpointGroup is usable and displayed on viewpoint list.
+*center* specifies *center* point of proximity box within which **ViewpointGroup** is usable and displayed on viewpoint list.
 
 ### MFNode [in, out] **children** [ ] <small>[X3DViewpointNode | ViewpointGroup]</small>
 {: #fields-children }
 
-ViewpointGroup contains [Viewpoint](/x_ite/components/navigation/viewpoint/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) and other ViewpointGroup nodes that each have `containerField='children'` default value.
+**ViewpointGroup** contains [Viewpoint](/x_ite/components/navigation/viewpoint/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) and other **ViewpointGroup** nodes that each have `containerField='children'` default value.
 
 #### Hints
 
@@ -100,9 +100,9 @@ ViewpointGroup contains [Viewpoint](/x_ite/components/navigation/viewpoint/), [O
 
 ### Hints
 
-- Use ViewpointGroup as parent for [Viewpoint](/x_ite/components/navigation/viewpoint/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) and other ViewpointGroup nodes to constrain location proximity where contained viewpoints are available to user.
-- ViewpointGroup and [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) require Navigation component level 3, which is higher than CADInterchange profile.
-- [Viewpoint](/x_ite/components/navigation/viewpoint/) and ViewpointGroup descriptions together build simple menu/submenu lists for simple user navigation. ViewpointGroup is not an X3DGroupingNode, and can only contain a Metadata* node, [Viewpoint](/x_ite/components/navigation/viewpoint/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) and other ViewpointGroup nodes.
+- Use **ViewpointGroup** as parent for [Viewpoint](/x_ite/components/navigation/viewpoint/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) and other **ViewpointGroup** nodes to constrain location proximity where contained viewpoints are available to user.
+- **ViewpointGroup** and [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/) require Navigation component level 3, which is higher than CADInterchange profile.
+- [Viewpoint](/x_ite/components/navigation/viewpoint/) and **ViewpointGroup** descriptions together build simple menu/submenu lists for simple user navigation. **ViewpointGroup** is not an X3DGroupingNode, and can only contain a Metadata* node, [Viewpoint](/x_ite/components/navigation/viewpoint/), [OrthoViewpoint](/x_ite/components/navigation/orthoviewpoint/), [GeoViewpoint](/x_ite/components/geospatial/geoviewpoint/) and other **ViewpointGroup** nodes.
 
 ## Browser Compatibility
 

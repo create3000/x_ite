@@ -13,9 +13,9 @@ tags: [NurbsCurve2D, NURBS]
 
 ## Overview
 
-NurbsCurve2D defines a trimming segment that is part of a trimming contour in the u-v domain of a surface. NurbsCurve2D and ContourPolyline2D nodes that together form a closed contour, defined in the u-v parametric space of a NURBS surface, may be used as children in a Contour2D node.
+**NurbsCurve2D** defines a trimming segment that is part of a trimming contour in the u-v domain of a surface. **NurbsCurve2D** and [ContourPolyline2D](/x_ite/components/nurbs/contourpolyline2d/) nodes that together form a closed contour, defined in the u-v parametric space of a NURBS surface, may be used as children in a [Contour2D](/x_ite/components/nurbs/contour2d/) node.
 
-The NurbsCurve2D node belongs to the [NURBS](/x_ite/components/overview/#nurbs) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The **NurbsCurve2D** node belongs to the [NURBS](/x_ite/components/overview/#nurbs) component and requires at least support level **3,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -81,7 +81,7 @@ Vector assigning relative *weight* value to each control point.
 
 ### Warning
 
-- NurbsCurve2D is not a renderable geometry node.
+- **NurbsCurve2D** is not a renderable geometry node.
 
 ## Browser Compatibility
 

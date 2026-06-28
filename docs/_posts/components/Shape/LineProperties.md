@@ -13,9 +13,9 @@ tags: [LineProperties, Shape]
 
 ## Overview
 
-LineProperties allows precise fine-grained control over the rendering style of lines and edges for associated geometry inside the same Shape.
+**LineProperties** allows precise fine-grained control over the rendering style of lines and edges for associated geometry inside the same [Shape](/x_ite/components/shape/shape/).
 
-The LineProperties node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **2,** its default container field is *lineProperties.* It is available from X3D version 3.0 or higher.
+The **LineProperties** node belongs to the [Shape](/x_ite/components/overview/#shape) component and requires at least support level **2,** its default container field is *lineProperties.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -47,7 +47,7 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### SFBool [in, out] **applied** TRUE
 {: #fields-applied }
 
-Whether or not LineProperties are *applied* to associated geometry.
+Whether or not **LineProperties** are *applied* to associated geometry.
 
 ### SFInt32 [in, out] **linetype** 1 <small>[1,∞)</small>
 {: #fields-linetype }
@@ -68,7 +68,7 @@ Whether or not LineProperties are *applied* to associated geometry.
 ### Hints
 
 - DEF/USE copies of a single node can provide a similar "look + feel" style for related shapes in a scene.
-- [LineProperties illustration model](https://X3dGraphics.com/examples/X3dForWebAuthors/Chapter05AppearanceMaterialTextures/LinePropertiesExampleIndex.html)
+- [**LineProperties** illustration model](https://X3dGraphics.com/examples/X3dForWebAuthors/Chapter05AppearanceMaterialTextures/LinePropertiesExampleIndex.html)
 
 ### Warning
 

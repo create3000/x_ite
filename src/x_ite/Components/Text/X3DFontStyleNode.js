@@ -85,6 +85,10 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
          ? this .getAlignment (1, minorNormal)
          : minorNormal ? TextAlignment .FIRST : TextAlignment .END;
    },
+   getCache ()
+   {
+      return true;
+   },
    getAllowEmptyUrl ()
    {
       return true;
@@ -168,7 +172,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
 
          if (defaultFont)
          {
-            font = await browser .loadFont (new URL (defaultFont), true);
+            font = await browser .loadFont (new URL (defaultFont), this);
 
             if (font)
                break;
@@ -190,7 +194,7 @@ Object .assign (Object .setPrototypeOf (X3DFontStyleNode .prototype, X3DNode .pr
             if (executionContext .getSpecificationVersion () >= 4.1)
                console .warn (`Loading a font file via family field is deprecated, please use new FontLibrary node instead.`);
 
-            font = await browser .loadFont (fileURL, this .getCache ());
+            font = await browser .loadFont (fileURL, this);
 
             if (font)
                break;

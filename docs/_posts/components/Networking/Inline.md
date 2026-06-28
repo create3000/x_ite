@@ -13,9 +13,9 @@ tags: [Inline, Networking, VRML, glTF]
 
 ## Overview
 
-Inline can load another X3D or VRML model into the current scene via url. Inline is an X3DBoundedObject node that has bounding-box dimensions.
+**Inline** can load another X3D or VRML model into the current scene via url. **Inline** is an X3DBoundedObject node that has bounding-box dimensions.
 
-The Inline node belongs to the [Networking](/x_ite/components/overview/#networking) component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **Inline** node belongs to the [Networking](/x_ite/components/overview/#networking) component and requires at least support level **2,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -66,7 +66,7 @@ Author-provided prose that describes intended purpose of the url asset.
 ### SFBool [in, out] **global** FALSE
 {: #fields-global }
 
-The *global* field controls potential external scoping effects of lights found within an Inline scene. Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
+The *global* field controls potential external scoping effects of lights found within an **Inline** scene. Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
 
 #### Hint
 
@@ -79,13 +79,13 @@ The *global* field controls potential external scoping effects of lights found w
 
 #### Hints
 
-- Allows author to design when Inline loading occurs via user interaction, event chains or scripting.
+- Allows author to design when **Inline** loading occurs via user interaction, event chains or scripting.
 - Use a separate [LoadSensor](/x_ite/components/networking/loadsensor/) node to detect when loading is complete.
 
 ### MFString [in, out] **url** [ ] <small>[URI]</small>
 {: #fields-url }
 
-Address of X3D world to load Inline with current scene, retrieved either from local system or an online address. Browser support for X3D model support can include allowed file formats for XML .x3d, ClassicVRML .x3dv, X3D Binary .x3db, X3D JSON .json, and Virtual Reality Modeling Language (VRML97) .wrl.
+Address of X3D world to load **Inline** with current scene, retrieved either from local system or an online address. Browser support for X3D model support can include allowed file formats for XML .x3d, ClassicVRML .x3dv, X3D Binary .x3db, X3D JSON .json, and Virtual Reality Modeling Language (VRML97) .wrl.
 
 #### Hints
 
@@ -101,7 +101,7 @@ Address of X3D world to load Inline with current scene, retrieved either from lo
 
 - [GlTF support requires X3D version='4.0' and `profile='Full'` or else `<component name='Networking' level='4'/>` `<component name='Shape' level='4'/>` `<component name='Lighting' level='4'/>`](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/networking.html#t-supportLevels)
 - Strictly match directory and filename capitalization for http links! This is important for portability. Some operating systems are forgiving of capitalization mismatches, but http/https *url* addresses and paths in Unix-based operating systems are all case sensitive and intolerant of uppercase/lowercase mismatches.
-- Direct or indirect recursion by Inline and/or ExternProtoDeclare *url* reloading is a security error.
+- Direct or indirect recursion by **Inline** and/or ExternProtoDeclare *url* reloading is a security error.
 
 ### SFTime [in, out] **autoRefresh** 0 <small>[0,∞)</small>
 {: #fields-autoRefresh }
@@ -179,12 +179,15 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
 | X3D XML          | .x3d, .x3dz    | model/x3d+xml     | [X3D Encoding: XML][1]          |
 | X3D JSON         | .x3dj, .x3djz  | model/x3d+json    | [X3D Encoding: JSON][2]         |
 | X3D Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml    | [X3D Encoding: Classic VRML][3] |
-| VRML 2.0         | .wrl, .wrz     | model/vrml        | [X_ITE VRML Viewer][4]                |
+| VRML 2.0         | .wrl, .wrz     | model/vrml        | [VRML Viewer][4]                |
 | glTF             | .gltf, .glb    | model/gltf+json   | [glTF Support][5]               |
 | VRM              | .vrm           | model/vrm         | [About VRM][6]                  |
 | Wavefront OBJ    | .obj           | model/obj         |                                 |
 | STL              | .stl           | model/stl         | ASCII & Binary                  |
-| PLY              | .ply           | model/ply         | ASCII & Binary                  |
+| PLY              | .ply           | model/ply         | ASCII & Binary, [3DGS][7]       |
+| SOG              | .sog           | model/sog         | [By Using an Extension][8]      |
+| SPZ              | .spz           | model/spz         | [By Using an Extension][9]      |
+| OFF              | .off           | model/off         | [By Using an Extension][10]     |
 | SVG Document     | .svg, .svgz    | image/svg+xml     |                                 |
 
   [1]: https://www.web3d.org/documents/specifications/19776-1/V3.3/index.html
@@ -193,32 +196,36 @@ Bounding box center accompanies bboxSize and provides an optional hint for bound
   [4]: /x_ite/features/#vrml-viewer
   [5]: /x_ite/features/#gltf-support
   [6]: https://vrm.dev/en/vrm/vrm_about/
+  [7]: https://en.wikipedia.org/wiki/Gaussian_splatting
+  [8]: https://www.npmjs.com/package/x_ite-sog-parser
+  [9]: https://www.npmjs.com/package/x_ite-spz-parser
+  [10]: https://www.npmjs.com/package/x_ite-off-parser
 
->**Tip:** All files can be compressed using GZip compression (usually denoted by a 'z' at the end of the filename suffix). This saves bandwidth and speeds up download time.
+>**Tip:** All files, including media files, can be compressed using GZip compression (usually denoted by a `z` at the end of the filename suffix or by appending `.gz`). This saves bandwidth and speeds up download times.
 {: .prompt-tip }
 
 ### About Special Exported Nodes
 
-When you load a glTF or other file format, it is converted to an X3D scene and some nodes are exported from this scene. These nodes can then be imported into a parent scene where the file was loaded using an Inline node.
+When a glTF or other file format is loaded, it is converted to an X3D scene and some nodes are exported from this scene. These nodes can then be imported into a parent scene where the file was loaded using an Inline node.
 
 The easiest way to see what has been exported is to use [Sunrize](/sunrize/) and inspect the scene.
 
-If you have animations, then a [TimeSensor](/x_ite/components/time/timesensor/) named *Timer1*, *Timer2*, and so on is exported for each animation. Additionally, a [Group](/x_ite/components/grouping/group/) named *Animations* is exported.
+If you have animations, then [TimeSensor](/x_ite/components/time/timesensor/) nodes named *Timer1*, *Timer2*, and so on are exported for each animation. Additionally, a [Group](/x_ite/components/grouping/group/) named *Animations* is exported.
 
-You can then import these [TimeSensor](/x_ite/components/time/timesensor/) nodes into the parent file using an [IMPORT statement](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#IMPORTStatement).
+You can then import these [TimeSensor](/x_ite/components/time/timesensor/) nodes into the parent file using [IMPORT statements](https://www.web3d.org/documents/specifications/19775-1/V4.0/Part01/components/networking.html#IMPORTStatement) and connect routes from and to the imported nodes.
 
 #### The second method involves doing it programmatically:
 
-Load the scene using `Browser.createX3DFromURL`, then access the [TimeSensor](/x_ite/components/time/timesensor/) nodes using [`scene.getExportedNode`](/x_ite/reference/scene-services/#getexportednode-exportedname-string-sfnode).
+Load the scene using [`Browser.createX3DFromURL(...)`](/x_ite/reference/browser-services/#createx3dfromurl-url-mfstring-promisex3dscene), then access the [TimeSensor](/x_ite/components/time/timesensor/) nodes using [`scene.getExportedNode(...)`](/x_ite/reference/scene-services/#getexportednode-exportedname-string-sfnode).
 
 ## Advice
 
 ### Hints
 
 - [X3D version='4.0' support includes .gltf and .glb](https://www.khronos.org/gltf) https://en.wikipedia.org/wiki/glTF
-- You cannot ROUTE values directly into an Inline node, use IMPORT/EXPORT declarations instead.
-- Inline EXPORT example:https://www.web3d.org/x3d/content/examples/Basic/X3dSpecifications/InlineExportIndex.html
-- Inline IMPORT example:https://www.web3d.org/x3d/content/examples/Basic/X3dSpecifications/InlineImportIndex.html
+- You cannot ROUTE values directly into an **Inline** node, use IMPORT/EXPORT declarations instead.
+- **Inline** EXPORT example:https://www.web3d.org/x3d/content/examples/Basic/X3dSpecifications/InlineExportIndex.html
+- **Inline** IMPORT example:https://www.web3d.org/x3d/content/examples/Basic/X3dSpecifications/InlineImportIndex.html
 - [X3D Scene Authoring Hints, Inlines and Prototypes](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#InlinesPrototypes)
 - [When parent node is LoadSensor, apply `containerField='children'` (X3Dv4) or `containerField='watchList'` (X3Dv3).](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#fieldNameChanges)
 

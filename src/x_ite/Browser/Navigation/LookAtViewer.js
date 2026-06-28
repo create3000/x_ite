@@ -408,7 +408,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
          if (this .orientationChaser ._isActive .getValue () && this .orientationChaser ._value_changed .hasInterest ("set_orientationOffset__", this))
          {
             userOrientation
-               .setFromToVec (toVector, fromVector)
+               .setVectors (toVector, fromVector)
                .multRight (viewpoint .getOrientation ())
                .multRight (this .orientationChaser ._set_destination .getValue ());
 
@@ -421,7 +421,7 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
          else
          {
             userOrientation
-               .setFromToVec (toVector, fromVector)
+               .setVectors (toVector, fromVector)
                .multRight (viewpoint .getUserOrientation ());
 
             viewpoint .straightenHorizon (userOrientation);

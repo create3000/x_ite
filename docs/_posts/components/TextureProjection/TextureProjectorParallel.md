@@ -13,9 +13,9 @@ tags: [TextureProjectorParallel, TextureProjection]
 
 ## Overview
 
-TextureProjectorParallel is similar to a light that projects a texture into the scene, illuminating geometry that intersects the parallel projection volume.
+**TextureProjectorParallel** is similar to a light that projects a texture into the scene, illuminating geometry that intersects the parallel projection volume.
 
-The TextureProjectorParallel node belongs to the [TextureProjection](/x_ite/components/overview/#textureprojection) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
+The **TextureProjectorParallel** node belongs to the [TextureProjection](/x_ite/components/overview/#textureprojection) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 
@@ -135,7 +135,7 @@ Minimum and maximum extents of projection texture in units of local coordinate s
 #### Warnings
 
 - Minimum corner values must remain less than maximum corner values.
-- This field differs for TextureProjectorParallel and [TextureProjector](/x_ite/components/textureprojection/textureprojector/).
+- This field differs for **TextureProjectorParallel** and [TextureProjector](/x_ite/components/textureprojection/textureprojector/).
 
 ### SFFloat [in, out] **nearDistance** -1 <small>-1 or (0,∞)</small>
 {: #fields-nearDistance }

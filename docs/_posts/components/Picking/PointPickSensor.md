@@ -13,9 +13,9 @@ tags: [PointPickSensor, Picking]
 
 ## Overview
 
-PointPickSensor tests one or more pickingGeometry points in space as lying inside the provided pickTarget geometry. For each pickingGeometry PointSet coordinate point that lies inside the pickTarget geometry, a pickedPoint coordinate is returned along with a corresponding pickedGeometry node inside which the point lies.
+**PointPickSensor** tests one or more pickingGeometry points in space as lying inside the provided pickTarget geometry. For each pickingGeometry [PointSet](/x_ite/components/rendering/pointset/) coordinate point that lies inside the pickTarget geometry, a pickedPoint coordinate is returned along with a corresponding pickedGeometry node inside which the point lies.
 
-The PointPickSensor node belongs to the [Picking](/x_ite/components/overview/#picking) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The **PointPickSensor** node belongs to the [Picking](/x_ite/components/overview/#picking) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -35,7 +35,7 @@ The PointPickSensor node belongs to the [Picking](/x_ite/components/overview/#pi
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | MFString | [in, out] | [objectType](#fields-objectType) | "ALL" |
-| SFString | [in, out] | [matchCriterion](#fields-matchCriterion) | "MATCH |
+| SFString | [in, out] | [matchCriterion](#fields-matchCriterion) | "MATCH_ANY" |
 | SFString | [ ] | [intersectionType](#fields-intersectionType) | "BOUNDS" |
 | SFString | [ ] | [sortOrder](#fields-sortOrder) | "CLOSEST" |
 | SFNode | [in, out] | [pickingGeometry](#fields-pickingGeometry) | NULL |

@@ -81,7 +81,7 @@ Shape {
   - Each instance shares the same node description
   - You can only instance names defined in the same file
 
-## Using named nodes
+## Using Named Nodes
 
 Naming and using nodes:
 
@@ -92,7 +92,7 @@ Naming and using nodes:
 
 Names are also necessary for animation ...
 
-## A sample use of node names
+## A Sample Use of Node Names
 
 ### XML Encoding
 

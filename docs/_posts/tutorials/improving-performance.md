@@ -212,7 +212,7 @@ ROUTE Touch.isOver TO Button.set_whichChoice
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/boolean-switch/boolean-switch.x3dv)
 {: .example-links }
 
-## Use the Text node
+## Use the Text Node
 
 Be sure to use the [Text](/x_ite/components/text/text/) node for text. Some translators convert text to polygons, resulting in very large numbers of polygons for a simple string of text. Using the Text node reduces polygon count and allows the browser to optimize for rendering performance, using cached versions of glyphs.
 

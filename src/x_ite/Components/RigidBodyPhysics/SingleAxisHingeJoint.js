@@ -153,7 +153,7 @@ Object .assign (Object .setPrototypeOf (SingleAxisHingeJoint .prototype, X3DRigi
             const lastAngle  = this ._angle .getValue ();
 
             difference .assign (this .getInitialInverseMatrix2 ()) .multRight (this .getBody2 () .getMatrix ());
-            difference .get (null, rotation);
+            difference .getTransform (null, rotation);
 
             this ._angle = rotation .angle;
 

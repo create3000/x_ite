@@ -1,7 +1,7 @@
 export default () => /* glsl */ `#version 300 es
 
-precision highp float;
 precision highp int;
+precision highp float;
 precision highp sampler2D;
 
 uniform int x3d_Id;
@@ -41,7 +41,7 @@ main ()
 
    #if defined (X3D_NORMAL_BUFFER)
       x3d_FragData0 = vec4 (gl_FragCoord .z, vec3 (x3d_Id)); // depth, id
-      x3d_FragData1 = vec4 (normal, float (gl_FrontFacing)); // local normal, front face
+      x3d_FragData1 = vec4 (normal, float (gl_FrontFacing)); // normal, front face
    #else
       x3d_FragData0 = vec4 (vec3 (gl_FragCoord .z), 1.0); // depth
    #endif

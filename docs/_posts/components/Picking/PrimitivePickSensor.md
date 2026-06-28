@@ -13,9 +13,9 @@ tags: [PrimitivePickSensor, Picking]
 
 ## Overview
 
-PrimitivePickSensor tests picking intersections using one of the basic primitive shapes specified in the pickingGeometry field [Cone or Cylinder or Sphere or Box] against the pickTarget geometry.
+**PrimitivePickSensor** tests picking intersections using one of the basic primitive shapes specified in the pickingGeometry field [[Cone](/x_ite/components/geometry3d/cone/) or [Cylinder](/x_ite/components/geometry3d/cylinder/) or [Sphere](/x_ite/components/geometry3d/sphere/) or [Box](/x_ite/components/geometry3d/box/)] against the pickTarget geometry.
 
-The PrimitivePickSensor node belongs to the [Picking](/x_ite/components/overview/#picking) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The **PrimitivePickSensor** node belongs to the [Picking](/x_ite/components/overview/#picking) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -35,7 +35,7 @@ The PrimitivePickSensor node belongs to the [Picking](/x_ite/components/overview
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | MFString | [in, out] | [objectType](#fields-objectType) | "ALL" |
-| SFString | [in, out] | [matchCriterion](#fields-matchCriterion) | "MATCH |
+| SFString | [in, out] | [matchCriterion](#fields-matchCriterion) | "MATCH_ANY" |
 | SFString | [ ] | [intersectionType](#fields-intersectionType) | "BOUNDS" |
 | SFString | [ ] | [sortOrder](#fields-sortOrder) | "CLOSEST" |
 | SFNode | [in, out] | [pickingGeometry](#fields-pickingGeometry) | NULL |

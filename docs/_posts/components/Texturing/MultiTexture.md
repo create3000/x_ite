@@ -13,9 +13,9 @@ tags: [MultiTexture, Texturing]
 
 ## Overview
 
-MultiTexture applies several individual textures to a single geometry node, enabling a variety of visual effects that include light mapping and environment mapping. MultiTexture can contain zero or more ImageTexture, MovieTexture, PixelTexture, ComposedCubeMapTexture, GeneratedCubeMapTexture, ImageCubeMapTexture, ComposedTexture3D, ImageTexture3D, and PixelTexture3D nodes. Texture maps have a 2D coordinate system (s, t) horizontal and vertical, with (s, t) texture-coordinate values in range [0.0, 1.0] for opposite corners of the image.
+**MultiTexture** applies several individual textures to a single geometry node, enabling a variety of visual effects that include light mapping and environment mapping. **MultiTexture** can contain zero or more [ImageTexture](/x_ite/components/texturing/imagetexture/), [MovieTexture](/x_ite/components/texturing/movietexture/), [PixelTexture](/x_ite/components/texturing/pixeltexture/), [ComposedCubeMapTexture](/x_ite/components/cubemaptexturing/composedcubemaptexture/), [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/), [ImageCubeMapTexture](/x_ite/components/cubemaptexturing/imagecubemaptexture/), [ComposedTexture3D](/x_ite/components/texturing3d/composedtexture3d/), [ImageTexture3D](/x_ite/components/texturing3d/imagetexture3d/), and [PixelTexture3D](/x_ite/components/texturing3d/pixeltexture3d/) nodes. Texture maps have a 2D coordinate system (s, t) horizontal and vertical, with (s, t) texture-coordinate values in range [0.0, 1.0] for opposite corners of the image.
 
-The MultiTexture node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **2,** its default container field is *texture.* It is available from X3D version 3.0 or higher.
+The **MultiTexture** node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **2,** its default container field is *texture.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -120,7 +120,7 @@ Contained *texture* nodes ([ImageTexture](/x_ite/components/texturing/imagetextu
 
 #### Warning
 
-- MultiTexture may not contain another MultiTexture node.
+- **MultiTexture** may not contain another **MultiTexture** node.
 
 ## Advice
 
@@ -128,16 +128,16 @@ Contained *texture* nodes ([ImageTexture](/x_ite/components/texturing/imagetextu
 
 - Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
-- Multitexturing is accomplished using MultiTexture, [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) and [MultiTextureTransform](/x_ite/components/texturing/multitexturetransform/) nodes.
+- Multitexturing is accomplished using **MultiTexture**, [MultiTextureCoordinate](/x_ite/components/texturing/multitexturecoordinate/) and [MultiTextureTransform](/x_ite/components/texturing/multitexturetransform/) nodes.
 - Texture coordinates are reapplied (or else recomputed if textureTransform field initially NULL) whenever the corresponding vertex-based geometry changes.
 - [X3D Texturing component Figure 18.2 Lightmap example](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texturing.html#f-Lightmapexample)
 - [X3D Texturing component Table 18.2: Comparison of single texture and multitexture attributes](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texturing.html#t-SingleAndMultitextureAttrs)
-- MultiTexture does not need to be included in [LoadSensor](/x_ite/components/networking/loadsensor/) watchList since any child [ImageTexture](/x_ite/components/texturing/imagetexture/) and [MovieTexture](/x_ite/components/texturing/movietexture/) nodes of interest can be handled separately.
+- **MultiTexture** does not need to be included in [LoadSensor](/x_ite/components/networking/loadsensor/) watchList since any child [ImageTexture](/x_ite/components/texturing/imagetexture/) and [MovieTexture](/x_ite/components/texturing/movietexture/) nodes of interest can be handled separately.
 
 ### Warnings
 
 - The number of textures to be blended may have a significant impact on performance, depending on available graphics hardware capabilities.
-- MultiTexture may not contain another MultiTexture node.
+- **MultiTexture** may not contain another **MultiTexture** node.
 
 ## Example
 

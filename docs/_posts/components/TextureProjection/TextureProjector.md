@@ -13,9 +13,9 @@ tags: [TextureProjection, TextureProjector]
 
 ## Overview
 
-TextureProjector is similar to a light that projects a texture into the scene, illuminating geometry that intersects the perspective projection volume.
+**TextureProjector** is similar to a light that projects a texture into the scene, illuminating geometry that intersects the perspective projection volume.
 
-The TextureProjector node belongs to the [TextureProjection](/x_ite/components/overview/#textureprojection) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
+The **TextureProjector** node belongs to the [TextureProjection](/x_ite/components/overview/#textureprojection) component and requires at least support level **2,** its default container field is *children.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 
@@ -130,7 +130,7 @@ Preferred minimum viewing angle for this projection in radians, providing minimu
 
 #### Warning
 
-- This field differs for [TextureProjectorParallel](/x_ite/components/textureprojection/textureprojectorparallel/) and TextureProjector.
+- This field differs for [TextureProjectorParallel](/x_ite/components/textureprojection/textureprojectorparallel/) and **TextureProjector**.
 
 ### SFFloat [in, out] **nearDistance** -1 <small>-1 or (0,∞)</small>
 {: #fields-nearDistance }

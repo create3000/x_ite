@@ -13,9 +13,9 @@ tags: [MultiTextureCoordinate, Texturing]
 
 ## Overview
 
-MultiTextureCoordinate contains multiple TextureCoordinate or TextureCoordinateGenerator nodes, for use by a parent polygonal geometry node such as IndexedFaceSet or a Triangle* node. Each of the contained texture coordinate nodes correspond to the multiple texture nodes contained in a sibling Appearance/MultiTexture node.
+**MultiTextureCoordinate** contains multiple [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/) or [TextureCoordinateGenerator](/x_ite/components/texturing/texturecoordinategenerator/) nodes, for use by a parent polygonal geometry node such as [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/) or a Triangle* node. Each of the contained texture coordinate nodes correspond to the multiple texture nodes contained in a sibling [Appearance](/x_ite/components/shape/appearance/)/[MultiTexture](/x_ite/components/texturing/multitexture/) node.
 
-The MultiTextureCoordinate node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **2,** its default container field is *texCoord.* It is available from X3D version 3.0 or higher.
+The **MultiTextureCoordinate** node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **2,** its default container field is *texCoord.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -50,22 +50,22 @@ Zero or more contained [TextureCoordinate](/x_ite/components/texturing/textureco
 
 #### Warning
 
-- MultiTextureCoordinate may not contain another MultiTextureCoordinate node.
+- **MultiTextureCoordinate** may not contain another **MultiTextureCoordinate** node.
 
 ## Advice
 
 ### Hints
 
-- Add [Shape](/x_ite/components/shape/shape/) and then polygonal/planar geometry before adding MultiTextureCoordinate.
+- Add [Shape](/x_ite/components/shape/shape/) and then polygonal/planar geometry before adding **MultiTextureCoordinate**.
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
-- Multitexturing is accomplished using [MultiTexture](/x_ite/components/texturing/multitexture/), MultiTextureCoordinate and [MultiTextureTransform](/x_ite/components/texturing/multitexturetransform/) nodes.
+- Multitexturing is accomplished using [MultiTexture](/x_ite/components/texturing/multitexture/), **MultiTextureCoordinate** and [MultiTextureTransform](/x_ite/components/texturing/multitexturetransform/) nodes.
 - [X3D Texturing component Figure 18.2 Lightmap example](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texturing.html#f-Lightmapexample)
 - [X3D Texturing component Table 18.2: Comparison of single texture and multitexture attributes](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/texturing.html#t-SingleAndMultitextureAttrs)
 
 ### Warnings
 
 - The number of textures to be blended may have a significant impact on performance, depending on available graphics hardware capabilities.
-- MultiTextureCoordinate may not contain another MultiTextureCoordinate node.
+- **MultiTextureCoordinate** may not contain another **MultiTextureCoordinate** node.
 
 ## Browser Compatibility
 

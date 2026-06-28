@@ -22,12 +22,12 @@ import ObjectCache          from "../../../standard/Utility/ObjectCache.js";
 // yyYY      Case: Sign
 
 const orientationMatrices = [
-   new Matrix4 () .setRotation (new Rotation4 (Vector3 .X_AXIS,          Vector3 .Z_AXIS)), // left
-   new Matrix4 () .setRotation (new Rotation4 (Vector3 .NEGATIVE_X_AXIS, Vector3 .Z_AXIS)), // right
-   new Matrix4 () .setRotation (new Rotation4 (Vector3 .NEGATIVE_Z_AXIS, Vector3 .Z_AXIS)), // front
-   new Matrix4 () .setRotation (new Rotation4 (Vector3 .Z_AXIS,          Vector3 .Z_AXIS)), // back
-   new Matrix4 () .setRotation (new Rotation4 (Vector3 .Y_AXIS,          Vector3 .Z_AXIS)), // bottom
-   new Matrix4 () .setRotation (new Rotation4 (Vector3 .NEGATIVE_Y_AXIS, Vector3 .Z_AXIS)), // top
+   new Matrix4 () .setRotation (Rotation4 .fromVectors (Vector3 .X_AXIS,          Vector3 .Z_AXIS)), // left
+   new Matrix4 () .setRotation (Rotation4 .fromVectors (Vector3 .NEGATIVE_X_AXIS, Vector3 .Z_AXIS)), // right
+   new Matrix4 () .setRotation (Rotation4 .fromVectors (Vector3 .NEGATIVE_Z_AXIS, Vector3 .Z_AXIS)), // front
+   new Matrix4 () .setRotation (Rotation4 .fromVectors (Vector3 .Z_AXIS,          Vector3 .Z_AXIS)), // back
+   new Matrix4 () .setRotation (Rotation4 .fromVectors (Vector3 .Y_AXIS,          Vector3 .Z_AXIS)), // bottom
+   new Matrix4 () .setRotation (Rotation4 .fromVectors (Vector3 .NEGATIVE_Y_AXIS, Vector3 .Z_AXIS)), // top
 ];
 
 const viewports = [
@@ -107,7 +107,7 @@ Object .assign (PointLightContainer .prototype,
          const
             v                = viewports [i],
             viewport         = this .viewport .set (v [0] * shadowMapSize, v [1] * shadowMapSize, v [2] * shadowMapSize, v [3] * shadowMapSize),
-            projectionMatrix = Camera .perspective2 (Algorithm .radians (90), 0.125, 10000, viewport [2], viewport [3], this .projectionMatrix); // Use higher far value for better precision.
+            projectionMatrix = Camera .perspective2 (Algorithm .radians (90), 0.125, 10_000, viewport [2], viewport [3], this .projectionMatrix); // Use higher far value for better precision.
 
          renderObject .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, viewport, viewport));
          renderObject .getProjectionMatrix () .push (this .projectionMatrix);

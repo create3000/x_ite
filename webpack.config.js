@@ -180,7 +180,6 @@ export default Namespace .add ("${base}", __default__);`;
             jQuery: ["jquery", "default"],
             jquery_mousewheel: "jquery-mousewheel/jquery.mousewheel.js",
             libtess: "libtess/libtess.cat.js",
-            pako: "pako/dist/pako_inflate.js",
             SuperGif: "@create3000/libgif/libgif.js",
             APNG: "apng-js",
          }),
@@ -198,7 +197,6 @@ export default Namespace .add ("${base}", __default__);`;
             onBuildEnd: {
                scripts: [
                   // Version
-                  `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite{,.min}.js`,
                   `perl -p0i -e 's|^(/\\*.*?\\*/)?\\s*|/* X_ITE v'$npm_package_version' */\\n|sg' dist/x_ite{,.min}.js`,
                   // Subresource Integrity Hash Values
                   ... integrities,
@@ -327,7 +325,6 @@ export default Namespace .add ("${base}", __default__);`;
             jQuery: ["jquery", "default"],
             jquery_mousewheel: "jquery-mousewheel/jquery.mousewheel.js",
             libtess: "libtess/libtess.cat.js",
-            pako: "pako/dist/pako_inflate.js",
             SuperGif: "@create3000/libgif/libgif.js",
             APNG: "apng-js",
          }),
@@ -345,7 +342,6 @@ export default Namespace .add ("${base}", __default__);`;
             onBuildEnd: {
                scripts: [
                   // Version
-                  `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/x_ite{,.min}.mjs`,
                   `perl -p0i -e 's|^(/\\*.*?\\*/)?\\s*|/* X_ITE v'$npm_package_version' */\\n|sg' dist/x_ite{,.min}.mjs`,
                   // Subresource Integrity Hash Values
                   ... integrities,
@@ -473,7 +469,6 @@ export default Namespace .add ("${base}", __default__);`;
                onBuildEnd: {
                   scripts: [
                      // Version
-                     `perl -p0i -e 's|"X_ITE.X3D"|"X_ITE.X3D-'$npm_package_version'"|sg' dist/assets/components/${name}Component{,.min}.js`,
                      `perl -p0i -e 's|^(/\\*.*?\\*/)?\\s*|/* X_ITE v'$npm_package_version' */\\n|sg' dist/assets/components/${name}Component{,.min}.js`,
                      // asm
                      `perl -p0i -e 's|"use\\s+asm"\\s*;?||sg' dist/assets/components/${name}Component{,.min}.js`,

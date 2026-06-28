@@ -13,9 +13,9 @@ tags: [BoundedPhysicsModel, ParticleSystems]
 
 ## Overview
 
-BoundedPhysicsModel provides user-defined geometrical boundaries for particle motion. A child geometry node specifies boundaries that constrain the location of the particles.
+**BoundedPhysicsModel** provides user-defined geometrical boundaries for particle motion. A child geometry node specifies boundaries that constrain the location of the particles.
 
-The BoundedPhysicsModel node belongs to the [ParticleSystems](/x_ite/components/overview/#particlesystems) component and requires at least support level **2,** its default container field is *physics.* It is available from X3D version 3.2 or higher.
+The **BoundedPhysicsModel** node belongs to the [ParticleSystems](/x_ite/components/overview/#particlesystems) component and requires at least support level **2,** its default container field is *physics.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 

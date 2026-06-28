@@ -93,28 +93,28 @@ Object .assign (Vector2 .prototype,
       this .y = y + t * (dY - y);
       return this;
    },
-   max (vector)
+   max (... args)
    {
       let { x, y } = this;
 
-      for (const { x: maxX, y: maxY } of arguments)
+      for (const { x: argX, y: argY } of args)
       {
-         x = Math .max (x, maxX);
-         y = Math .max (y, maxY);
+         x = Math .max (x, argX);
+         y = Math .max (y, argY);
       }
 
       this .x = x;
       this .y = y;
       return this;
    },
-   min (vector)
+   min (... args)
    {
       let { x, y } = this;
 
-      for (const { x: minX, y: minY } of arguments)
+      for (const { x: argX, y: argY } of args)
       {
-         x = Math .min (x, minX);
-         y = Math .min (y, minY);
+         x = Math .min (x, argX);
+         y = Math .min (y, argY);
       }
 
       this .x = x;

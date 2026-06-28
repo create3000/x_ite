@@ -5,7 +5,7 @@ nav: tutorials-shapes-geometry-and-appearance
 categories: [Tutorials]
 tags: [Basic, Getting Started]
 ---
-## X3D file structure
+## X3D File Structure
 
 X3D files contain:
 
@@ -17,7 +17,7 @@ X3D files contain:
 - Routes - connections between fields
 - more ...
 
-## A sample X3D file
+## A Sample X3D File
 
 ### XML Encoding
 
@@ -68,7 +68,7 @@ Shape {
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/cylinder1/cylinder1.x3dv)
 {: .example-links }
 
-## Understanding the header
+## Understanding the Header
 
 **\#X3D V{{ site.x3d_latest_version }} utf8**
 
@@ -84,7 +84,7 @@ Shape {
   - Can encodes up to 2,164,864 characters for many languages
   - ASCII is a subset
 
-## Understanding profiles and components
+## Understanding Profiles and Components
 
 - **PROFILE Interchange:** File uses nodes from the `Interchange` profile
 - Nodes are grouped into components
@@ -122,7 +122,7 @@ What profiles and components are there:
 - [Profiles](/x_ite/profiles/overview/)
 - [Components](/x_ite/components/overview/)
 
-## Header statements
+## Header Statements
 
 There are a few other header statements, but always add a **PROFILE** statement. If there is no profile declared, profile **Full** is assumed and all components will be loaded, but this is probably not always desired.
 
@@ -180,7 +180,7 @@ META "modified" "Thu, 08 May 2025 14:12:13 GMT"
 ...
 ```
 
-## Using comments
+## Using Comments
 
 ### XML Encoding
 
@@ -203,7 +203,7 @@ META "modified" "Thu, 08 May 2025 14:12:13 GMT"
 - Comments start with a number-sign `#` and extend to the end of the line.
 - Mult-line comments start with `#/*` and must end with `*/#`.
 
-## Using nodes
+## Using Nodes
 
 ### XML Encoding
 
@@ -224,7 +224,7 @@ Cylinder {
   - A pair of curly-braces
   - Zero or more fields inside the curly-braces
 
-## Using node type names
+## Using Node Type Names
 
 Node type names are case sensitive:
 
@@ -235,7 +235,7 @@ Some examples:
 
 [Appearance](/x_ite/components/shape/appearance/), [Cylinder](/x_ite/components/geometry3d/cylinder/), [Material](/x_ite/components/shape/material/), [Shape](/x_ite/components/shape/shape/)
 
-## Using fields and values
+## Using Fields and Values
 
 ### XML Encoding
 
@@ -267,7 +267,7 @@ Every field has:
 - Fields can be listed in any order
   - The order doesn't affect the node
 
-## Placing nodes
+## Placing Nodes
 
 Every node has a »containerField« attribute with a default value, which is different for each node type. You can change the value if needed.
 

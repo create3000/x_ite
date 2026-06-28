@@ -15,12 +15,12 @@ function SFRotation (x = 0, y = 0, z = 1, angle = 0)
       if ((y instanceof SFVec3f) || (y instanceof SFVec3d))
       {
          // new SFRotation (fromVector: SFVec3d | SFVec3f, toVector: SFVec3d | SFVec3f)
-         X3DField .call (this, new Rotation4 (x .getValue (), y .getValue ()));
+         X3DField .call (this, Rotation4 .fromVectors (x .getValue (), y .getValue ()));
       }
       else
       {
          // new SFRotation (axis: SFVec3d | SFVec3f, angle: number)
-         X3DField .call (this, new Rotation4 (x .getValue (), +y));
+         X3DField .call (this, new Rotation4 (... x, +y));
       }
    }
    else
@@ -55,19 +55,9 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
    {
       return SFVec3f .fromValue (this .getValue () .getAxis ());
    },
-   setAxis (vector)
-   {
-      this .getValue () .setAxis (vector .getValue ());
-      this .addEvent ();
-   },
    getMatrix ()
    {
       return SFMatrix3f .fromValue (this .getValue () .getMatrix ());
-   },
-   setMatrix (matrix)
-   {
-      this .getValue () .setMatrix (matrix .getValue ());
-      this .addEvent ();
    },
    getQuaternion: (() =>
    {
@@ -76,16 +66,6 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
       return function ()
       {
          return [... this .getValue () .getQuaternion (q)];
-      };
-   })(),
-   setQuaternion: (() =>
-   {
-      const q = new Quaternion ();
-
-      return function (x, y, z, w)
-      {
-         this .getValue () .setQuaternion (q .set (+x, +y, +z, +w));
-         this .addEvent ();
       };
    })(),
    inverse ()
@@ -100,6 +80,26 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
    {
       return vector .constructor .fromValue (this .getValue () .multVecRot (vector .getValue () .copy ()));
    },
+   setAxis (vector)
+   {
+      this .getValue () .setAxis (vector .getValue ());
+      this .addEvent ();
+   },
+   setMatrix (matrix)
+   {
+      this .getValue () .setMatrix (matrix .getValue ());
+      this .addEvent ();
+   },
+   setQuaternion: (() =>
+   {
+      const q = new Quaternion ();
+
+      return function (x, y, z, w)
+      {
+         this .getValue () .setQuaternion (q .set (+x, +y, +z, +w));
+         this .addEvent ();
+      };
+   })(),
    slerp (rotation, t)
    {
       return SFRotation .fromValue (this .getValue () .copy () .slerp (rotation .getValue (), t));

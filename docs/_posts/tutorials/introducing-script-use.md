@@ -49,7 +49,7 @@ DEF Bouncer Script {
 }
 ```
 
-## Defining the program script interface
+## Defining the Program Script Interface
 
 A Script node also declares the program script interface:
 
@@ -79,7 +79,7 @@ DEF Bouncer Script {
 }
 ```
 
-## A sample using a program script
+## A Sample Using a Program Script
 
 ### XML Encoding
 

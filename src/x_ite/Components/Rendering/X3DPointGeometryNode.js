@@ -54,6 +54,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
       // Set viewport.
 
       gl .viewport (... viewport);
+      gl .scissor (... viewport);
 
       // Enable render mode nodes.
 
@@ -160,6 +161,7 @@ Object .assign (Object .setPrototypeOf (X3DPointGeometryNode .prototype, X3DGeom
       // Set viewport.
 
       gl .viewport (... viewport);
+      gl .scissor (... viewport);
 
       // Enable render mode nodes.
 

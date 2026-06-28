@@ -13,9 +13,9 @@ tags: [BoundaryEnhancementVolumeStyle, VolumeRendering]
 
 ## Overview
 
-BoundaryEnhancementVolumeStyle provides boundary enhancement for the volume rendering style.
+**BoundaryEnhancementVolumeStyle** provides boundary enhancement for the volume rendering style.
 
-The BoundaryEnhancementVolumeStyle node belongs to the [VolumeRendering](/x_ite/components/overview/#volumerendering) component and requires at least support level **2,** its default container field is *renderStyle.* It is available from X3D version 3.3 or higher.
+The **BoundaryEnhancementVolumeStyle** node belongs to the [VolumeRendering](/x_ite/components/overview/#volumerendering) component and requires at least support level **2,** its default container field is *renderStyle.* It is available from X3D version 3.3 or higher.
 
 ## Hierarchy
 

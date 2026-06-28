@@ -50,7 +50,8 @@ Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, X3DTexture3DN
                height      = image [HEIGHT],
                depth       = image [DEPTH],
                transparent = !(components & 1),
-               size3D      = width * height * depth;
+               size3D      = width * height * depth,
+               length      = OFFSET + size3D;;
 
             let data, format;
 
@@ -61,7 +62,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, X3DTexture3DN
                   data   = new Uint8Array (size3D);
                   format = gl .LUMINANCE;
 
-                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                  for (let i = OFFSET, d = 0; i < length; ++ i)
                   {
                      data [d ++] = image [i];
                   }
@@ -73,7 +74,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, X3DTexture3DN
                   data   = new Uint8Array (size3D * 2);
                   format = gl .LUMINANCE_ALPHA;
 
-                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                  for (let i = OFFSET, d = 0; i < length; ++ i)
                   {
                      const p = image [i];
 
@@ -88,7 +89,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, X3DTexture3DN
                   data   = new Uint8Array (size3D * 3);
                   format = gl .RGB;
 
-                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                  for (let i = OFFSET, d = 0; i < length; ++ i)
                   {
                      const p = image [i];
 
@@ -104,7 +105,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, X3DTexture3DN
                   data   = new Uint8Array (size3D * 4);
                   format = gl .RGBA;
 
-                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                  for (let i = OFFSET, d = 0; i < length; ++ i)
                   {
                      const p = image [i];
 

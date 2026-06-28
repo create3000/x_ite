@@ -13,9 +13,9 @@ tags: [IndexedTriangleSet, Rendering]
 
 ## Overview
 
-IndexedTriangleSet is a geometry node containing a Coordinate or CoordinateDouble node, and can also contain Color or ColorRGBA, Normal and TextureCoordinate nodes.
+**IndexedTriangleSet** is a geometry node containing a [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node, and can also contain [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/), [Normal](/x_ite/components/rendering/normal/) and [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/) nodes.
 
-The IndexedTriangleSet node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **3,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
+The **IndexedTriangleSet** node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **3,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -108,7 +108,7 @@ Whether [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/compon
 
 #### Warnings
 
-- The provided value of IndexedTriangleSet *colorPerVertex* field is ignored and always treated as true.
+- The provided value of **IndexedTriangleSet** *colorPerVertex* field is ignored and always treated as true.
 - If child [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/) node is not provided, then geometry is rendered using corresponding [Appearance](/x_ite/components/shape/appearance/) and material/texture values.
 
 ### SFBool [ ] **normalPerVertex** TRUE
@@ -157,6 +157,10 @@ Optional single contained [TextureCoordinate](/x_ite/components/texturing/textur
 {: #fields-tangent }
 
 Optional single contained [Tangent](/x_ite/components/rendering/tangent/) node that defines a set of 3D surface-normal vectors that apply either to a sibling [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node. [Tangent](/x_ite/components/rendering/tangent/) values are perpendicular directions that are used per-polygon or per-vertex when computing lighting and shading for advanced physically based rendering (PBR) effects.
+
+#### Warning
+
+- X3D Architecture version 4.1 draft is experimental and not fully implemented.
 
 ### SFNode [in, out] **normal** NULL <small>[X3DNormalNode]</small>
 {: #fields-normal }

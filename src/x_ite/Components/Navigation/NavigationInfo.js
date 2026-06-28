@@ -36,6 +36,7 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
       X3DBindableNode .prototype .initialize .call (this);
 
       this ._type               .addInterest ("set_type__",               this);
+      this ._avatarSize         .addInterest ("set_avatarSize__",         this);
       this ._headlight          .addInterest ("set_headlight__",          this);
       this ._visibilityLimit    .addInterest ("set_visibilityLimit__",    this);
       this ._transitionStart    .addInterest ("set_transitionStart__",    this);
@@ -43,6 +44,7 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
       this ._isBound            .addInterest ("set_isBound__",            this);
 
       this .set_type__ ();
+      this .set_avatarSize__ ();
       this .set_headlight__ ();
       this .set_visibilityLimit__ ();
    },
@@ -52,21 +54,19 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
    },
    getCollisionRadius ()
    {
-      return this ._avatarSize [0] ?? 0.25;
+      return this .collisionRadius;
    },
    getAvatarHeight ()
    {
-      return this ._avatarSize [1] ?? 1.6;
+      return this .avatarHeight;
    },
    getStepHeight ()
    {
-      return this ._avatarSize [2] ?? 0.75;
+      return this .stepHeight;
    },
    getNearValue ()
    {
-      const nearValue = this .getCollisionRadius ();
-
-      return nearValue === 0 ? 1e-5 : nearValue / 2;
+      return this .nearValue;
    },
    getFarValue ()
    {
@@ -206,6 +206,15 @@ Object .assign (Object .setPrototypeOf (NavigationInfo .prototype, X3DBindableNo
 
       if (noneViewer)
          this ._availableViewers .push ("NONE");
+   },
+   set_avatarSize__ ()
+   {
+      const collisionRadius = Math .max (this ._avatarSize [0] ?? 0.25, 0);
+
+      this .collisionRadius = collisionRadius;
+      this .avatarHeight    = Math .max (this ._avatarSize [1] ?? 1.6, 0);
+      this .stepHeight      = Math .max (this ._avatarSize [2] ?? 0.75, 0);
+      this .nearValue       = collisionRadius === 0 ? 0.125 : collisionRadius / 2;
    },
    set_headlight__ ()
    {

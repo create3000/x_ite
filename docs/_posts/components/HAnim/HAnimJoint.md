@@ -13,9 +13,9 @@ tags: [HAnimJoint, HAnim]
 
 ## Overview
 
-HAnimJoint node can represent each joint in a body. The child HAnimSegment node provides a visual representation of the skeleton segment.
+**HAnimJoint** node can represent each joint in a body. The child [HAnimSegment](/x_ite/components/hanim/hanimsegment/) node provides a visual representation of the skeleton segment.
 
-The HAnimJoint node belongs to the [HAnim](/x_ite/components/overview/#hanim) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The **HAnimJoint** node belongs to the [HAnim](/x_ite/components/overview/#hanim) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -80,7 +80,7 @@ Author-provided prose that describes intended purpose of this node.
 ### SFString [in, out] **name** ""
 {: #fields-name }
 
-Unique *name* attribute must be defined so that HAnimJoint node can be identified at run time for animation purposes.
+Unique *name* attribute must be defined so that **HAnimJoint** node can be identified at run time for animation purposes.
 
 #### Hints
 
@@ -94,7 +94,7 @@ Unique *name* attribute must be defined so that HAnimJoint node can be identifie
 
 - *name* prefix must match ancestor [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) *name* followed by underscore character, if more than one humanoid appears within a scene file. For example, 'Nancy_' prepended before location *name*.
 - *name* field is not included if this instance is a USE node, in order to avoid potential mismatches. Examples: humanoid_root sacroiliac l_hip l_knee l_ankle etc. as listed in HAnim Specification.
-- [Note precise spelling of special HAnimJoint *name*='humanoid_root' according to](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#TheBody)
+- [Note precise spelling of special **HAnimJoint** *name*='humanoid_root' according to](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/concepts.html#TheBody)
 
 ### SFVec3f [in, out] **translation** 0 0 0 <small>(-∞,∞)</small>
 {: #fields-translation }
@@ -107,7 +107,7 @@ Position of children relative to local coordinate system.
 
 #### Warning
 
-- Usually HAnimJoint position is controlled by the center field, not the *translation* field.
+- Usually **HAnimJoint** position is controlled by the center field, not the *translation* field.
 
 ### SFRotation [in, out] **rotation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
 {: #fields-rotation }
@@ -135,12 +135,12 @@ Translation offset from origin of local coordinate system.
 
 #### Hint
 
-- Usually HAnimJoint position is controlled by the *center* field, not the translation field.
+- Usually **HAnimJoint** position is controlled by the *center* field, not the translation field.
 
 ### SFRotation [in, out] **limitOrientation** 0 0 1 0 <small>(-∞,∞) or [-1,1]</small>
 {: #fields-limitOrientation }
 
-Orientation of upper/lower rotation limits, relative to HAnimJoint center.
+Orientation of upper/lower rotation limits, relative to **HAnimJoint** center.
 
 ### MFFloat [in, out] **llimit** [ 0, 0, 0 ] <small>(-∞,∞)</small>
 {: #fields-llimit }
@@ -197,16 +197,16 @@ A scale factor of (1 - *stiffness*) is applied around the corresponding axis (X,
 ### MFInt32 [in, out] **skinCoordIndex** [ ] <small>[0,∞)</small>
 {: #fields-skinCoordIndex }
 
-[Coordinate](/x_ite/components/rendering/coordinate/) index values referencing which vertices are influenced by the HAnimJoint.
+[Coordinate](/x_ite/components/rendering/coordinate/) index values referencing which vertices are influenced by the **HAnimJoint**.
 
 #### Hint
 
-- Corresponding skinCoord [Coordinate](/x_ite/components/rendering/coordinate/) and skinNormal [Normal](/x_ite/components/rendering/normal/) nodes are directly contained within the ancestor [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) node for this HAnimJoint.
+- Corresponding skinCoord [Coordinate](/x_ite/components/rendering/coordinate/) and skinNormal [Normal](/x_ite/components/rendering/normal/) nodes are directly contained within the ancestor [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) node for this **HAnimJoint**.
 
 #### Warnings
 
 - -1 sentinel values are not allowed.
-- Index values for [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skin [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint [HAnimSegment](/x_ite/components/hanim/hanimsegment/) and [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/) nodes for proper skin animation.
+- Index values for [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skin [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), skinCoord and skinNormal nodes must all be consistently defined together with **HAnimJoint** [HAnimSegment](/x_ite/components/hanim/hanimsegment/) and [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/) nodes for proper skin animation.
 
 ### MFFloat [in, out] **skinCoordWeight** [ ]
 {: #fields-skinCoordWeight }
@@ -215,16 +215,16 @@ Weight deformation values for the corresponding values in the skinCoordIndex fie
 
 #### Warning
 
-- Index values for [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skin [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint [HAnimSegment](/x_ite/components/hanim/hanimsegment/) and [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/) nodes for proper skin animation.
+- Index values for [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skin [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), skinCoord and skinNormal nodes must all be consistently defined together with **HAnimJoint** [HAnimSegment](/x_ite/components/hanim/hanimsegment/) and [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/) nodes for proper skin animation.
 
 ### MFNode [in, out] **displacers** [ ] <small>[HAnimDisplacer]</small>
 {: #fields-displacers }
 
-The *displacers* field stores [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/) objects for a particular HAnimJoint object.
+The *displacers* field stores [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/) objects for a particular **HAnimJoint** object.
 
 #### Warning
 
-- Index values for [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skin [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), skinCoord and skinNormal nodes must all be consistently defined together with HAnimJoint [HAnimSegment](/x_ite/components/hanim/hanimsegment/) and [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/) nodes for proper skin animation.
+- Index values for [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skin [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), skinCoord and skinNormal nodes must all be consistently defined together with **HAnimJoint** [HAnimSegment](/x_ite/components/hanim/hanimsegment/) and [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/) nodes for proper skin animation.
 
 ### SFBool [in, out] **visible** TRUE
 {: #fields-visible }
@@ -286,21 +286,21 @@ Grouping nodes contain an ordered list of *children* nodes.
 #### Hints
 
 - Each grouping node defines a coordinate space for its *children*, relative to the coordinate space of its parent node. Thus transformations accumulate down the scene graph hierarchy.
-- Place any geometry for this HAnimJoint in the child [HAnimSegment](/x_ite/components/hanim/hanimsegment/), wrapped within a [Transform](/x_ite/components/grouping/transform/) having the same translation value as the current HAnimJoint center value.
+- Place any geometry for this **HAnimJoint** in the child [HAnimSegment](/x_ite/components/hanim/hanimsegment/), wrapped within a [Transform](/x_ite/components/grouping/transform/) having the same translation value as the current **HAnimJoint** center value.
 - InputOnly MFNode addChildren field can append new X3DChildNode nodes via a ROUTE connection, duplicate input nodes (i.e. matching DEF, USE values) are ignored.
 - InputOnly MFNode removeChildren field can remove nodes from the *children* list, unrecognized input nodes (i.e. nonmatching DEF, USE values) are ignored.
 - [X3D Architecture 10.2.1 Grouping and *children* node types](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/grouping.html#GroupingAndChildrenNodes)
 
 #### Warning
 
-- HAnimJoint can only contain HAnimJoint or [HAnimSegment](/x_ite/components/hanim/hanimsegment/) nodes (each having default `containerField='children').`
+- **HAnimJoint** can only contain **HAnimJoint** or [HAnimSegment](/x_ite/components/hanim/hanimsegment/) nodes (each having default `containerField='children').`
 
 ## Advice
 
 ### Hints
 
-- HAnimJoint may only get inserted as one (or more) root nodes of [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skeleton field, as a child of another HAnimJoint node, or as a USE node in the [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) joints field.
-- Visualization shapes for HAnimJoint nodes can be placed in child [HAnimSegment](/x_ite/components/hanim/hanimsegment/) or [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes.
+- **HAnimJoint** may only get inserted as one (or more) root nodes of [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) skeleton field, as a child of another **HAnimJoint** node, or as a USE node in the [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) joints field.
+- Visualization shapes for **HAnimJoint** nodes can be placed in child [HAnimSegment](/x_ite/components/hanim/hanimsegment/) or [HAnimSite](/x_ite/components/hanim/hanimsite/) nodes.
 - [HAnim Architecture draft version 2.1](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19774/ISO-IEC19774-1/ISO-IEC19774-1v2.1/ISO-IEC19774-1v2.1-WD/Architecture/ObjectInterfaces.html#Joint)
 - [HAnim Specification](https://www.web3d.org/documents/specifications/19774/V2.0)
 - [HAnim Specification part 1, Joint](https://www.web3d.org/documents/specifications/19774/V2.0/Architecture/ObjectInterfaces.html#Joint)
@@ -309,12 +309,12 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ### Warnings
 
-- HAnimJoint can only contain certain nodes: HAnimJoint and [HAnimSegment](/x_ite/components/hanim/hanimsegment/) (with `containerField='children')` and also [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/) nodes (with `containerField='displacers').`
-- An HAnimJoint may not be a child of an [HAnimSegment](/x_ite/components/hanim/hanimsegment/).
+- **HAnimJoint** can only contain certain nodes: **HAnimJoint** and [HAnimSegment](/x_ite/components/hanim/hanimsegment/) (with `containerField='children')` and also [HAnimDisplacer](/x_ite/components/hanim/hanimdisplacer/) nodes (with `containerField='displacers').`
+- An **HAnimJoint** may not be a child of an [HAnimSegment](/x_ite/components/hanim/hanimsegment/).
 - Requires X3D `profile='Full'` or else include `<component name='HAnim' level='1'/>`
 - For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen).
 - For X3D3 HAnim1, spelling of component name is 'H-Anim' (including hyphen).
-- The number of contained \<HAnimJoint USE='*' `containerField='joints'/>` nodes at top level of [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) needs to match the number of corresponding HAnimJoint node instances found within the preceding skeleton hierarchy.
+- The number of contained \<**HAnimJoint** USE='*' `containerField='joints'/>` nodes at top level of [HAnimHumanoid](/x_ite/components/hanim/hanimhumanoid/) needs to match the number of corresponding **HAnimJoint** node instances found within the preceding skeleton hierarchy.
 
 ## Browser Compatibility
 

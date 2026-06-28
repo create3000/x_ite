@@ -13,9 +13,9 @@ tags: [TextureTransform, Texturing, VRML]
 
 ## Overview
 
-TextureTransform shifts 2D texture coordinates for positioning, orienting and scaling image textures on geometry.
+**TextureTransform** shifts 2D texture coordinates for positioning, orienting and scaling image textures on geometry.
 
-The TextureTransform node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **1,** its default container field is *textureTransform.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **TextureTransform** node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **1,** its default container field is *textureTransform.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -86,9 +86,9 @@ Non-uniform planar scaling of texture about center (opposite effect appears on g
 ### Hints
 
 - Order of operations is translation, rotation about center, non-uniform scale about center.
-- Image flip horizontal \<TextureTransform DEF='FlipHorizontal' scale='-1 1' translation='-1 0'/\>
-- Image flip vertical \<TextureTransform DEF='FlipVertical' scale='1 -1' translation='0 -1'/\>
-- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding TextureTransform.
+- Image flip horizontal \<**TextureTransform** DEF='FlipHorizontal' scale='-1 1' translation='-1 0'/\>
+- Image flip vertical \<**TextureTransform** DEF='FlipVertical' scale='1 -1' translation='0 -1'/\>
+- Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding **TextureTransform**.
 - [Texture mapping](https://en.wikipedia.org/wiki/Texture_mapping)
 
 ### Warning

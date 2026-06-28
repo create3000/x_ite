@@ -126,6 +126,14 @@ Highest supported level: **1**
 - [TexCoordChaser2D](/x_ite/components/followers/texcoordchaser2d/)
 - [TexCoordDamper2D](/x_ite/components/followers/texcoorddamper2d/)
 
+### GaussianSplats
+
+Gaussian splats<br>
+Highest supported level: **1**
+{: .small }
+
+- [GaussianSplats](/x_ite/components/gaussiansplats/gaussiansplats/) <small class="blue">experimental</small>
+
 ### Geometry2D
 
 Geometry2D<br>

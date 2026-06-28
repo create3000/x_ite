@@ -414,6 +414,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             }
             case X3DConstants .SFMatrix3d:
             case X3DConstants .SFMatrix3f:
+            case X3DConstants .SFQuaternion:
             case X3DConstants .SFRotation:
             {
                location .array   = new Float32Array (9);
@@ -435,13 +436,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             case X3DConstants .SFVec2f:
             {
                location .uniform = gl .uniform2f;
-               break;
-            }
-            case X3DConstants .SFColor:
-            case X3DConstants .SFVec3d:
-            case X3DConstants .SFVec3f:
-            {
-               location .uniform = gl .uniform3f;
                break;
             }
             case X3DConstants .SFColor:
@@ -481,6 +475,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             }
             case X3DConstants .MFMatrix3d:
             case X3DConstants .MFMatrix3f:
+            case X3DConstants .MFQuaternion:
             case X3DConstants .MFRotation:
             {
                location .array   = new Float32Array (9 * this .getLocationLength (gl, program, field));
@@ -621,6 +616,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                this ._renderedTextures = this .getBrowser () .getCurrentTime ();
                return;
             }
+            case X3DConstants .SFQuaternion:
             case X3DConstants .SFRotation:
             {
                field .getValue () .getMatrix (location .array);
@@ -729,6 +725,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                this ._renderedTextures = this .getBrowser () .getCurrentTime ();
                return;
             }
+            case X3DConstants .MFQuaternion:
             case X3DConstants .MFRotation:
             {
                const { array, uniform } = location;
@@ -805,10 +802,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
    getRenderedTextures (renderedTextures)
    {
       for (const { textureNode } of this .textures)
-      {
-         if (textureNode .isRenderedTexture ())
-            renderedTextures .add (textureNode);
-      }
+         textureNode .getRenderedTextures (renderedTextures);
    },
    hasFog (fogNode)
    {
@@ -851,15 +845,20 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       this .numClipPlanes = 0;
 
       for (const clipPlane of clipPlanes)
-         clipPlane .setShaderUniforms (gl, this, renderObject);
+      {
+         if (clipPlane .isClipPlane)
+            clipPlane .setShaderUniforms (gl, this, renderObject);
+      }
    },
    setUniforms: (() =>
    {
-      const normalMatrix = new Float32Array (9);
+      const
+         normalMatrix      = new Matrix3 (),
+         normalMatrixArray = new Float32Array (9);
 
       return function (gl, renderContext, geometryContext, front = true)
       {
-         const { renderObject, fogNode, appearanceNode, hAnimNode, modelViewMatrix, textureNode: geometryTextureNode, localObjects } = renderContext;
+         const { renderObject, viewport, modelViewMatrix, fogNode, appearanceNode, hAnimNode, textureNode: geometryTextureNode, localObjects } = renderContext;
 
          const
             stylePropertiesNode = appearanceNode .getStyleProperties (geometryContext .geometryType),
@@ -872,10 +871,6 @@ Object .assign (X3DProgrammableShaderObject .prototype,
          if (this .renderCount !== renderCount)
          {
             this .renderCount = renderCount;
-
-            // Set viewport.
-
-            gl .uniform4iv (this .x3d_Viewport, renderObject .getViewportArray ());
 
             // Set projection matrix.
 
@@ -895,7 +890,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             this .numTextureProjectors = 0;
 
             this .environmentLightNodes .length = 0;
-            this .lightNodes .length            = 0;
+            this .lightNodes            .length = 0;
             this .textureProjectorNodes .length = 0;
 
             for (const globalLights of renderObject .getGlobalLights ())
@@ -917,21 +912,26 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             }
          }
 
-         // Model view matrix
+         // Set viewport.
+
+         gl .uniform4i (this .x3d_Viewport, ... viewport);
+
+         // Set model view matrix.
 
          gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
 
-         // Normal matrix
+         // Set normal matrix if needed.
 
-         if (geometryContext .hasNormals)
+         if (this .x3d_NormalMatrix)
          {
+            // Set matrix and transpose it.
             normalMatrix [0] = modelViewMatrix [0]; normalMatrix [3] = modelViewMatrix [1]; normalMatrix [6] = modelViewMatrix [ 2];
             normalMatrix [1] = modelViewMatrix [4]; normalMatrix [4] = modelViewMatrix [5]; normalMatrix [7] = modelViewMatrix [ 6];
             normalMatrix [2] = modelViewMatrix [8]; normalMatrix [5] = modelViewMatrix [9]; normalMatrix [8] = modelViewMatrix [10];
 
-            Matrix3 .prototype .inverse .call (normalMatrix);
+            normalMatrixArray .set (normalMatrix .inverse ());
 
-            gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, normalMatrix);
+            gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, normalMatrixArray);
          }
 
          // Fog

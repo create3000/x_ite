@@ -1,9 +1,9 @@
-/* X_ITE v15.0.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.2")];
+/* X_ITE v15.1.7 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 18
+/***/ 673
 (module, __unused_webpack_exports, __webpack_require__) {
 
 var __webpack_dirname__ = "/";
@@ -40,7 +40,7 @@ var Ib=[cx,_q,cr,Yr,as,fs,hs,Hu,Su,cx,cx,cx,cx,cx,cx,cx];var Jb=[dx,si,gi,Wh,Kh,
 
 /***/ },
 
-/***/ 948
+/***/ 635
 (module, __unused_webpack_exports, __webpack_require__) {
 
 var __webpack_dirname__ = "/";
@@ -77,7 +77,7 @@ var _a=[yj,od,ef,yj];var $a=[zj,Li,di,bi,Kb,Lb,Mb,Nb,Rc,Sc,Uc,jd,xd,Ye,lf,yd,zd,
 
 /***/ },
 
-/***/ 560
+/***/ 915
 (module, __unused_webpack_exports, __webpack_require__) {
 
 /*! dicom-parser - 1.8.12 - 2023-02-20 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
@@ -4035,7 +4035,7 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_zlib__;
 
 /***/ },
 
-/***/ 196
+/***/ 939
 (module) {
 
 /* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
@@ -5571,6 +5571,11 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, Texturing3
          this .updateTextureParameters ();
       }
    },
+   getRenderedTextures (renderedTextures)
+   {
+      for (const textureNode of this .textureNodes)
+         textureNode .getRenderedTextures (renderedTextures);
+   },
 });
 
 Object .defineProperties (ComposedTexture3D,
@@ -5632,14 +5637,14 @@ function NRRDParser ()
 
 Object .assign (NRRDParser .prototype,
 {
-   parse (input)
+   async parse (input)
    {
       this .setInput (input);
 
       if (this .getNRRD ())
       {
          this .getFields ();
-         this .getData ();
+         await this .getData ();
       }
 
       return this .nrrd;
@@ -5837,7 +5842,7 @@ Object .assign (NRRDParser .prototype,
 
       throw new Error ("Unsupported NRRD endian, must be either 'little' or 'big'.");
    },
-   getData ()
+   async getData ()
    {
       switch (this .encoding)
       {
@@ -5858,7 +5863,7 @@ Object .assign (NRRDParser .prototype,
          }
          case "gzip":
          {
-            this .gzip ();
+            await this .gzip ();
             break;
          }
       }
@@ -5996,7 +6001,7 @@ Object .assign (NRRDParser .prototype,
 
       throw new Error ("Invalid NRRD data.");
    },
-   gzip ()
+   async gzip ()
    {
       try
       {
@@ -6005,7 +6010,7 @@ Object .assign (NRRDParser .prototype,
 
          const
             input       = this .dataView .buffer .slice (this .lastIndex),
-            arrayBuffer = external_X_ITE_X3D_jquery_default().ungzip (input);
+            arrayBuffer = await external_X_ITE_X3D_jquery_default().gunzip (input);
 
          this .dataView = new DataView (arrayBuffer);
 
@@ -7179,10 +7184,10 @@ var Decoder = class _Decoder {
 const external_X_ITE_X3D_DEVELOPMENT_namespaceObject = __X_ITE_X3D__ .DEVELOPMENT;
 var external_X_ITE_X3D_DEVELOPMENT_default = /*#__PURE__*/__webpack_require__.n(external_X_ITE_X3D_DEVELOPMENT_namespaceObject);
 ;// ./src/x_ite/Browser/Texturing3D/DICOMParser.js
-/* provided dependency */ var dicomParser = __webpack_require__(560);
-/* provided dependency */ var jpegDecode = __webpack_require__(196);
-/* provided dependency */ var CharLS = __webpack_require__(18);
-/* provided dependency */ var OpenJPEG = __webpack_require__(948);
+/* provided dependency */ var dicomParser = __webpack_require__(915);
+/* provided dependency */ var jpegDecode = __webpack_require__(939);
+/* provided dependency */ var CharLS = __webpack_require__(673);
+/* provided dependency */ var OpenJPEG = __webpack_require__(635);
 
 
 
@@ -8309,38 +8314,42 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
    },
    loadData ()
    {
-      new (external_X_ITE_X3D_FileLoader_default()) (this) .loadDocument (this ._url, (data, URL) =>
+      new (external_X_ITE_X3D_FileLoader_default()) (this, { dataAsString: false }) .loadDocument (this ._url, async (data, fileURL) =>
       {
          if (data === null)
          {
             // No URL could be loaded.
-            this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE);
             this .clearTexture ();
+            this .updateOutputs (0, 0, 0, 0);
+            this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE);
          }
          else if (data instanceof ArrayBuffer)
          {
-            if (URL .pathname .match (/\.ktx2?(?:\.gz)?$/) || URL .href .match (/^data:image\/ktx2[;,]/))
+            if (fileURL .pathname .match (/\.ktx2?(?:\.gz)?$/) || fileURL .href .match (/^\s*data:image\/ktx2[;,]/s))
             {
                this .setLinear (true);
                this .setMipMaps (false);
 
                return this .getBrowser () .getKTXDecoder ()
                   .then (decoder => decoder .loadKTXFromBuffer (data))
-                  .then (texture => this .setKTXTexture (texture, URL));
+                  .then (texture => this .setKTXTexture (texture, fileURL));
             }
 
             this .setLinear (false);
             this .setMipMaps (true);
 
-            const nrrd = new Texturing3D_NRRDParser () .parse (data);
+            const nrrd = await new Texturing3D_NRRDParser () .parse (data);
 
             if (nrrd .nrrd)
             {
-               const
-                  internalType = this .getInternalType (nrrd .components),
-                  transparent  = !(nrrd .components & 1);
+               const { width, height, depth, components, data } = nrrd;
 
-               this .setTextureData (nrrd .width, nrrd .height, nrrd .depth, transparent, internalType, nrrd .data);
+               const
+                  internalType = this .getInternalType (components),
+                  transparent  = !(components & 1);
+
+               this .setTextureData (width, height, depth, transparent, internalType, data);
+               this .updateOutputs (width, height, depth, components);
                this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
                return;
             }
@@ -8349,11 +8358,14 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
 
             if (dicom .dicom)
             {
-               const
-                  internalType = this .getInternalType (dicom .components),
-                  transparent  = !(dicom .components & 1);
+               const { width, height, depth, components, data } = dicom;
 
-               this .setTextureData (dicom .width, dicom .height, dicom .depth, transparent, internalType, dicom .data);
+               const
+                  internalType = this .getInternalType (components),
+                  transparent  = !(components & 1);
+
+               this .setTextureData (width, height, depth, transparent, internalType, data);
+               this .updateOutputs (width, height, depth, components);
                this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
                return;
             }
@@ -8362,25 +8374,35 @@ Object .assign (Object .setPrototypeOf (ImageTexture3D .prototype, Texturing3D_X
          }
       });
    },
-   setKTXTexture (texture, URL)
+   setKTXTexture (texture, fileURL)
    {
       if (texture .target !== this .getTarget ())
          throw new Error ("Invalid KTX texture target, must be 'TEXTURE_3D'.");
 
       if ((external_X_ITE_X3D_DEVELOPMENT_default()))
       {
-         if (URL .protocol !== "data:")
-            console .info (`Done loading image texture 3D '${decodeURI (URL)}'.`);
+         if (fileURL .protocol !== "data:")
+            console .info (`Done loading image texture 3D '${decodeURI (fileURL)}'.`);
       }
+
+      const { baseWidth, baseHeight, baseDepth, numComponents } = texture;
 
       this .setTexture (texture);
       this .setTransparent (false);
-      this .setWidth (texture .baseWidth);
-      this .setHeight (texture .baseHeight);
-      this .setDepth (texture .baseDepth); // TODO: Always 1
+      this .setWidth (baseWidth);
+      this .setHeight (baseHeight);
+      this .setDepth (baseDepth); // TODO: Always 1
       this .updateTextureParameters ();
+      this .updateOutputs (baseWidth, baseHeight, baseDepth, numComponents);
 
       this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
+   },
+   updateOutputs (width, height, depth, colorDepth)
+   {
+      this ._width      = width;
+      this ._height     = height;
+      this ._depth      = depth;
+      this ._colorDepth = colorDepth;
    },
    dispose ()
    {
@@ -8401,6 +8423,10 @@ Object .defineProperties (ImageTexture3D,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "url",                  new (external_X_ITE_X3D_Fields_default()).MFString ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "autoRefresh",          new (external_X_ITE_X3D_Fields_default()).SFTime (0)),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "autoRefreshTimeLimit", new (external_X_ITE_X3D_Fields_default()).SFTime (3600)),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "width",                new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "height",               new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "depth",                new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "colorDepth",           new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "repeatS",              new (external_X_ITE_X3D_Fields_default()).SFBool ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "repeatT",              new (external_X_ITE_X3D_Fields_default()).SFBool ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "repeatR",              new (external_X_ITE_X3D_Fields_default()).SFBool ()),
@@ -8416,6 +8442,7 @@ const ImageTexture3D_default_ = ImageTexture3D;
 /* harmony default export */ const Texturing3D_ImageTexture3D = (external_X_ITE_X3D_Namespace_default().add ("ImageTexture3D", ImageTexture3D_default_));
 ;// ./src/x_ite/Components/Texturing3D/ImageTextureAtlas.js
 /* provided dependency */ var $ = __webpack_require__(254);
+
 
 
 
@@ -8469,26 +8496,40 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3
       if (this .urlStack .length === 0)
       {
          this .clearTexture ();
+         this .updateOutputs (0, 0, 0, 0);
          this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).FAILED_STATE);
          return;
       }
 
-      // Get URL.
-
-      this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getBaseURL ());
-
-      if (this .URL .protocol !== "data:")
+      new (external_X_ITE_X3D_FileLoader_default()) (this, { dataAsString: false }) .loadDocument ([this .urlStack .shift ()], (data, fileURL) =>
       {
-         if (!this .getCache ())
-            this .URL .searchParams .set ("_", Date .now ());
-      }
+         if (data === null)
+         {
+            this .loadNext ();
+         }
+         else if (data instanceof ArrayBuffer)
+         {
+            this .fileURL = new URL (fileURL);
 
-      this .image .attr ("src", this .URL);
+            this .setLinear (false);
+            this .setMipMaps (true);
+
+            this .objectURL = URL .createObjectURL (new Blob ([data]));
+
+            this .image .attr ("src", this .objectURL);
+         }
+         else
+         {
+            throw new Error ("ImageTexture: no suitable file type handler found.");
+         }
+      });
    },
    setError (event)
    {
-      if (this .URL .protocol !== "data:")
-         console .warn (`Error loading image '${decodeURI (this .URL)}':`, event .type);
+      if (this .fileURL .protocol !== "data:")
+         console .warn (`Error loading image '${decodeURI (this .fileURL)}':`, event .type);
+
+      URL .revokeObjectURL (this .objectURL);
 
       this .loadNext ();
    },
@@ -8496,8 +8537,8 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3
    {
       if ((external_X_ITE_X3D_DEVELOPMENT_default()))
       {
-         if (this .URL .protocol !== "data:")
-            console .info (`Done loading image '${decodeURI (this .URL)}'.`);
+         if (this .fileURL .protocol !== "data:")
+            console .info (`Done loading image '${decodeURI (this .fileURL)}'.`);
       }
 
       try
@@ -8559,6 +8600,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3
          this .setHeight (height);
          this .setDepth (depth);
          this .updateTextureParameters ();
+         this .updateOutputs (width, height, depth, transparent ? 4 : 3);
          this .setLoadState ((external_X_ITE_X3D_X3DConstants_default()).COMPLETE_STATE);
       }
       catch (error)
@@ -8569,6 +8611,17 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, Texturing3
          // Catch security error from cross origin requests.
          this .setError ({ type: error .message });
       }
+      finally
+      {
+         URL .revokeObjectURL (this .objectURL);
+      }
+   },
+   updateOutputs (width, height, depth, colorDepth)
+   {
+      this ._width      = width;
+      this ._height     = height;
+      this ._depth      = depth;
+      this ._colorDepth = colorDepth;
    },
    dispose ()
    {
@@ -8592,6 +8645,10 @@ Object .defineProperties (ImageTextureAtlas,
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "slicesOverX",          new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "slicesOverY",          new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).inputOutput,    "numberOfSlices",       new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "width",                new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "height",               new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "depth",                new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
+         new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).outputOnly,     "colorDepth",           new (external_X_ITE_X3D_Fields_default()).SFInt32 ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "repeatS",              new (external_X_ITE_X3D_Fields_default()).SFBool ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "repeatT",              new (external_X_ITE_X3D_Fields_default()).SFBool ()),
          new (external_X_ITE_X3D_X3DFieldDefinition_default()) ((external_X_ITE_X3D_X3DConstants_default()).initializeOnly, "repeatR",              new (external_X_ITE_X3D_Fields_default()).SFBool ()),
@@ -8658,7 +8715,8 @@ Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, Texturing3D_X
                height      = image [HEIGHT],
                depth       = image [DEPTH],
                transparent = !(components & 1),
-               size3D      = width * height * depth;
+               size3D      = width * height * depth,
+               length      = OFFSET + size3D;;
 
             let data, format;
 
@@ -8669,7 +8727,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, Texturing3D_X
                   data   = new Uint8Array (size3D);
                   format = gl .LUMINANCE;
 
-                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                  for (let i = OFFSET, d = 0; i < length; ++ i)
                   {
                      data [d ++] = image [i];
                   }
@@ -8681,7 +8739,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, Texturing3D_X
                   data   = new Uint8Array (size3D * 2);
                   format = gl .LUMINANCE_ALPHA;
 
-                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                  for (let i = OFFSET, d = 0; i < length; ++ i)
                   {
                      const p = image [i];
 
@@ -8696,7 +8754,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, Texturing3D_X
                   data   = new Uint8Array (size3D * 3);
                   format = gl .RGB;
 
-                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                  for (let i = OFFSET, d = 0; i < length; ++ i)
                   {
                      const p = image [i];
 
@@ -8712,7 +8770,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture3D .prototype, Texturing3D_X
                   data   = new Uint8Array (size3D * 4);
                   format = gl .RGBA;
 
-                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                  for (let i = OFFSET, d = 0; i < length; ++ i)
                   {
                      const p = image [i];
 
@@ -9027,7 +9085,7 @@ Object .assign (Object .setPrototypeOf (TextureTransform3D .prototype, (external
             center      = this ._center .getValue (),
             matrix4     = this .matrix;
 
-         matrix4 .identity ();
+         matrix4 .set ();
 
          if (!center .equals ((external_X_ITE_X3D_Vector3_default()).ZERO))
             matrix4 .translate (vector .assign (center) .negate ());

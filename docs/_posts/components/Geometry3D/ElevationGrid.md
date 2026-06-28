@@ -13,9 +13,9 @@ tags: [ElevationGrid, Geometry3D, VRML]
 
 ## Overview
 
-ElevationGrid is a geometry node defining a rectangular height field, with default values for a 1m by 1m square at height 0. Vertices corresponding to ElevationGrid height values define quadrilaterals, which are placed above or below a flat surface.
+**ElevationGrid** is a geometry node defining a rectangular height field, with default values for a 1m by 1m square at height 0. Vertices corresponding to **ElevationGrid** height values define quadrilaterals, which are placed above or below a flat surface.
 
-The ElevationGrid node belongs to the [Geometry3D](/x_ite/components/overview/#geometry3d) component and requires at least support level **3,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **ElevationGrid** node belongs to the [Geometry3D](/x_ite/components/overview/#geometry3d) component and requires at least support level **3,** its default container field is *geometry.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -83,7 +83,7 @@ Number of elements in the height array along X direction.
 
 #### Warning
 
-- *xDimension* \< 2 means that ElevationGrid contains no quadrilaterals.
+- *xDimension* \< 2 means that **ElevationGrid** contains no quadrilaterals.
 
 ### SFInt32 [ ] **zDimension** 0 <small>[0,∞)</small>
 {: #fields-zDimension }
@@ -96,7 +96,7 @@ Number of elements in the height array along Z direction.
 
 #### Warning
 
-- *zDimension* \< 2 means that ElevationGrid contains no quadrilaterals.
+- *zDimension* \< 2 means that **ElevationGrid** contains no quadrilaterals.
 
 ### SFFloat [ ] **xSpacing** 1 <small>(0,∞)</small>
 {: #fields-xSpacing }
@@ -235,7 +235,7 @@ Grid array of *height* vertices with upward direction along +Y axis, with xDimen
 
 - The height array defines (xDimension-1)*(zDimension-1) quadrilaterals.
 - Positive direction for normal of each triangle is on same side of the quadrilateral. Triangles are defined either counterclockwise or clockwise depending on value of ccw field.
-- ElevationGrid can contain [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/), [Normal](/x_ite/components/rendering/normal/) and [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/) nodes.
+- **ElevationGrid** can contain [Color](/x_ite/components/rendering/color/) or [ColorRGBA](/x_ite/components/rendering/colorrgba/), [Normal](/x_ite/components/rendering/normal/) and [TextureCoordinate](/x_ite/components/texturing/texturecoordinate/) nodes.
 - Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
 - For advanced extensibility, authors can substitute a type-matched ProtoInstance node (with correct containerField value) for contained node content.
 

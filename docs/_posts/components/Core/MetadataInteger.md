@@ -13,9 +13,9 @@ tags: [MetadataInteger, Core]
 
 ## Overview
 
-MetadataInteger contains a typed list of values providing metadata information about its parent node. Further information about this specific Metadata* node may be provided by a single child Metadata* node with `containerField='metadata'.`
+**MetadataInteger** contains a typed list of values providing metadata information about its parent node. Further information about this specific Metadata* node may be provided by a single child Metadata* node with `containerField='metadata'.`
 
-The MetadataInteger node belongs to the [Core](/x_ite/components/overview/#core) component and requires at least support level **1,** its default container field is *value.* It is available from X3D version 3.0 or higher.
+The **MetadataInteger** node belongs to the [Core](/x_ite/components/overview/#core) component and requires at least support level **1,** its default container field is *value.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -40,7 +40,7 @@ The MetadataInteger node belongs to the [Core](/x_ite/components/overview/#core)
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 {: #fields-metadata }
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), MetadataInteger, [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), **MetadataInteger**, [MetadataString](/x_ite/components/core/metadatastring/) or [MetadataSet](/x_ite/components/core/metadataset/) node.
 
 #### Hint
 

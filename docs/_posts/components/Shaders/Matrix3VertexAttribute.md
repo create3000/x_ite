@@ -13,9 +13,9 @@ tags: [Matrix3VertexAttribute, Shaders]
 
 ## Overview
 
-Matrix3VertexAttribute defines a set of per-vertex 3x3 matrix attributes.
+**Matrix3VertexAttribute** defines a set of per-vertex 3x3 matrix attributes.
 
-The Matrix3VertexAttribute node belongs to the [Shaders](/x_ite/components/overview/#shaders) component and requires at least support level **1,** its default container field is *attrib.* It is available from X3D version 3.0 or higher.
+The **Matrix3VertexAttribute** node belongs to the [Shaders](/x_ite/components/overview/#shaders) component and requires at least support level **1,** its default container field is *attrib.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 

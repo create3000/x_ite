@@ -13,9 +13,9 @@ tags: [ImageTexture3D, Texturing3D]
 
 ## Overview
 
-ImageTexture3D defines a 3D image-based texture map by specifying a single image file that contains complete 3D data.
+**ImageTexture3D** defines a 3D image-based texture map by specifying a single image file that contains complete 3D data.
 
-The ImageTexture3D node belongs to the [Texturing3D](/x_ite/components/overview/#texturing3d) component and requires at least support level **2,** its default container field is *texture.* It is available from X3D version 3.1 or higher.
+The **ImageTexture3D** node belongs to the [Texturing3D](/x_ite/components/overview/#texturing3d) component and requires at least support level **2,** its default container field is *texture.* It is available from X3D version 3.1 or higher.
 
 ## Hierarchy
 
@@ -41,6 +41,10 @@ The ImageTexture3D node belongs to the [Texturing3D](/x_ite/components/overview/
 | MFString | [in, out] | [url](#fields-url) | [ ] |
 | SFTime | [in, out] | [autoRefresh](#fields-autoRefresh) | 0 |
 | SFTime | [in, out] | [autoRefreshTimeLimit](#fields-autoRefreshTimeLimit) | 3600 |
+| SFInt32 | [out] | [width](#fields-width) |  |
+| SFInt32 | [out] | [height](#fields-height) |  |
+| SFInt32 | [out] | [depth](#fields-depth) |  |
+| SFInt32 | [out] | [colorDepth](#fields-colorDepth) |  |
 | SFBool | [ ] | [repeatS](#fields-repeatS) | FALSE |
 | SFBool | [ ] | [repeatT](#fields-repeatT) | FALSE |
 | SFBool | [ ] | [repeatR](#fields-repeatR) | FALSE |
@@ -118,6 +122,26 @@ Location and filename of image. Multiple locations are more reliable, and includ
 
 - Automatically reloading content has security considerations and needs to be considered carefully.
 
+### SFInt32 [out] **width**
+{: #fields-width }
+
+Output field *width*.
+
+### SFInt32 [out] **height**
+{: #fields-height }
+
+Output field *height*.
+
+### SFInt32 [out] **depth**
+{: #fields-depth }
+
+Output field *depth*.
+
+### SFInt32 [out] **colorDepth**
+{: #fields-colorDepth }
+
+Output field *colorDepth*.
+
 ### SFBool [ ] **repeatS** FALSE
 {: #fields-repeatS }
 
@@ -140,11 +164,13 @@ Optional single contained [TextureProperties](/x_ite/components/texturing/textur
 
 ## Supported File Formats
 
-| Encoding | File Extension  | MIME Type   | Comment    |
-|----------|-----------------|-------------|------------|
-| KTX2     | .ktx2, .ktx2.gz | image/ktx2  | TEXTURE_3D |
-| DICOM    | .dcm            | image/dicom |            |
-| NRRD     | .nrrd, .nrrd.gz | image/nrrd  |            |
+| Encoding | File Extension  | MIME Type   | Comment                     |
+|----------|-----------------|-------------|-----------------------------|
+| KTX2     | .ktx2, .ktx2.gz | image/ktx2  | TEXTURE_3D                  |
+| DICOM    | .dcm            | image/dicom |                             |
+| NRRD     | .nrrd, .nrrd.gz | image/nrrd  | [Nearly Raw Raster Data][1] |
+
+  [1]: https://teem.sourceforge.net/nrrd
 
 ## Advice
 

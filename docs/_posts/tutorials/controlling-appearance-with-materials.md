@@ -107,7 +107,7 @@ Shape {
 }
 ```
 
-## Specifying colors
+## Specifying Colors
 
 Colors specify:
 
@@ -136,7 +136,7 @@ A [Material](/x_ite/components/shape/material/) node also controls shape shinine
 - *shininess* - highlightsize
 - *ambientIntensity* - ambient lighting effects
 
-## A sample world using appearance
+## A Sample World Using Appearance
 
 ### XML Encoding
 

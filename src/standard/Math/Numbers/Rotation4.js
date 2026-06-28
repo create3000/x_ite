@@ -11,51 +11,16 @@ const
    _angle      = Symbol (),
    _quaternion = Symbol ();
 
-function Rotation4 (x, y, z, angle)
+function Rotation4 (x = 0, y = 0, z = 1, angle = 0)
 {
    this [_x]     = 0;
    this [_y]     = 0;
    this [_z]     = 1;
    this [_angle] = 0;
 
-   switch (arguments .length)
-   {
-      case 0:
-      {
-         this [_quaternion] = new Quaternion ();
-         return;
-      }
-      case 1:
-      {
-         this [_quaternion] = arguments [0];
-         this .update ();
-         return;
-      }
-      case 2:
-      {
-         const
-            arg0 = arguments [0],
-            arg1 = arguments [1];
+   this [_quaternion] = new Quaternion ();
 
-         this [_quaternion] = new Quaternion ();
-
-         if (arg1 instanceof Vector3)
-            return this .setFromToVec (arg0, arg1);
-
-         this .set (arg0 .x,
-                    arg0 .y,
-                    arg0 .z,
-                    arg1);
-
-         return;
-      }
-      case 4:
-      {
-         this [_quaternion] = new Quaternion ();
-         this .set (x, y, z, angle);
-         return;
-      }
-   }
+   this .set (x, y, z, angle);
 }
 
 Object .assign (Rotation4 .prototype,
@@ -155,7 +120,7 @@ Object .assign (Rotation4 .prototype,
          return this;
       }
 
-      // Calculate quaternion
+      // Determine quaternion.
 
       const
          halfTheta = Algorithm .interval (angle / 2, 0, Math .PI),
@@ -171,7 +136,7 @@ Object .assign (Rotation4 .prototype,
    {
       return this .set (axis .x, axis .y, axis .z, angle);
    },
-   setFromToVec: (() =>
+   setVectors: (() =>
    {
       const
          from = new Vector3 (),
@@ -329,8 +294,7 @@ Object .assign (Rotation4 .prototype,
       const
          localXAxis = new Vector3 (),
          localZAxis = new Vector3 (),
-         upNormal   = new Vector3 (),
-         rotation   = new Rotation4 ();
+         upNormal   = new Vector3 ();
 
       return function (upVector = Vector3 .Y_AXIS)
       {
@@ -353,7 +317,7 @@ Object .assign (Rotation4 .prototype,
          }
          else
          {
-            rotation .setFromToVec (localXAxis, newXAxis);
+            rotation .setVectors (localXAxis, newXAxis);
 
             return this .multRight (rotation);
          }
@@ -448,6 +412,10 @@ Object .defineProperties (Rotation4 .prototype,
 Object .assign (Rotation4,
 {
    IDENTITY: Object .freeze (new Rotation4 ()),
+   fromVectors (fromVec, toVec)
+   {
+      return new Rotation4 () .setVectors (fromVec, toVec);
+   },
    fromQuaternion (quaternion)
    {
       return new Rotation4 () .setQuaternion (quaternion);
@@ -468,5 +436,7 @@ Object .assign (Rotation4,
       return copy;
    },
 });
+
+const rotation = new Rotation4 ();
 
 export default Rotation4;

@@ -13,9 +13,12 @@ tags: [ReceiverPdu, DIS]
 
 ## Overview
 
-ReceiverPdu is a networked Protocol Data Unit (PDU) information node that transmits the state of radio frequency (RF) receivers modeled in a simulation.
+**ReceiverPdu** is a networked Protocol Data Unit (PDU) information node that transmits the state of radio frequency (RF) receivers modeled in a simulation.
 
-The ReceiverPdu node belongs to the [DIS](/x_ite/components/overview/#dis) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The **ReceiverPdu** node belongs to the [DIS](/x_ite/components/overview/#dis) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+
+>**Not Supported:** This node is **not supported** by X_ITE.
+{: .prompt-danger }
 
 ## Hierarchy
 
@@ -329,7 +332,7 @@ Identifies spatial reference frame: Geodetic (GD), Geocentric (GC), Universal Tr
 
 ### Hints
 
-- ReceiverPdu packets use the IEEE Distributed Interactive Simulation (DIS) protocol.
+- **ReceiverPdu** packets use the IEEE Distributed Interactive Simulation (DIS) protocol.
 - [X3D Developers Guide on DIS](https://www.web3d.org/x3d/content/examples/X3dDevelopersGuide.htmll#DIS)
 - [X3D for Advanced Modeling (X3D4AM) slideset](https://x3dgraphics.com/slidesets/X3dForAdvancedModeling/DistributedInteractiveSimulation.pdf)
 

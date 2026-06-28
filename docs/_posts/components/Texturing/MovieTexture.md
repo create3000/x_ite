@@ -13,9 +13,9 @@ tags: [MovieTexture, Texturing, VRML]
 
 ## Overview
 
-MovieTexture applies a 2D movie image to surface geometry, or provides audio for a Sound node. First define as texture, then USE as Sound source to see it/hear it/save memory. Texture maps have a 2D coordinate system (s, t) horizontal and vertical, with (s, t) texture-coordinate values in range [0.0, 1.0] for opposite corners of the image.
+**MovieTexture** applies a 2D movie image to surface geometry, or provides audio for a [Sound](/x_ite/components/sound/sound/) node. First define as texture, then USE as [Sound](/x_ite/components/sound/sound/) source to see it/hear it/save memory. Texture maps have a 2D coordinate system (s, t) horizontal and vertical, with (s, t) texture-coordinate values in range [0.0, 1.0] for opposite corners of the image.
 
-The MovieTexture node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **3,** its default container field is *texture.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **MovieTexture** node belongs to the [Texturing](/x_ite/components/overview/#texturing) component and requires at least support level **3,** its default container field is *texture.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -53,6 +53,10 @@ The MovieTexture node belongs to the [Texturing](/x_ite/components/overview/#tex
 | SFBool | [out] | [isPaused](#fields-isPaused) |  |
 | SFBool | [out] | [isActive](#fields-isActive) |  |
 | SFTime | [out] | [elapsedTime](#fields-elapsedTime) |  |
+| SFInt32 | [out] | [width](#fields-width) |  |
+| SFInt32 | [out] | [height](#fields-height) |  |
+| SFInt32 | [out] | [colorDepth](#fields-colorDepth) |  |
+| SFBool | [out] | [hasSound](#fields-hasSound) |  |
 | SFTime | [out] | [duration_changed](#fields-duration_changed) |  |
 | SFBool | [ ] | [repeatS](#fields-repeatS) | TRUE |
 | SFBool | [ ] | [repeatT](#fields-repeatT) | TRUE |
@@ -164,7 +168,7 @@ Factor for how fast the movie (or soundtrack) is played.
 
 #### Hints
 
-- A MovieTexture node shall display frame 0 if *speed* = 0.
+- A **MovieTexture** node shall display frame 0 if *speed* = 0.
 - A negative *speed* value sets the movie to play in reverse.
 
 ### SFBool [in, out] **loop** FALSE
@@ -184,7 +188,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 ### SFTime [in, out] **resumeTime** 0 <small>(-∞,∞)</small>
 {: #fields-resumeTime }
 
-When *resumeTime* becomes \<= time now, isPaused becomes false and MovieTexture becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When *resumeTime* becomes \<= time now, isPaused becomes false and **MovieTexture** becomes active. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
@@ -197,7 +201,7 @@ When *resumeTime* becomes \<= time now, isPaused becomes false and MovieTexture 
 ### SFTime [in, out] **pauseTime** 0 <small>(-∞,∞)</small>
 {: #fields-pauseTime }
 
-When time now \>= *pauseTime*, isPaused becomes true and MovieTexture becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
+When time now \>= *pauseTime*, isPaused becomes true and **MovieTexture** becomes paused. Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 
 #### Hint
 
@@ -224,7 +228,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 ### SFBool [out] **isPaused**
 {: #fields-isPaused }
 
-*isPaused* true/false events are sent when MovieTexture is paused/resumed.
+*isPaused* true/false events are sent when **MovieTexture** is paused/resumed.
 
 #### Warnings
 
@@ -243,7 +247,7 @@ Absolute time: number of seconds since January 1, 1970, 00:00:00 GMT.
 ### SFTime [out] **elapsedTime**
 {: #fields-elapsedTime }
 
-Current elapsed time since MovieTexture activated/running, cumulative in seconds, and not counting any paused time.
+Current elapsed time since **MovieTexture** activated/running, cumulative in seconds, and not counting any paused time.
 
 #### Hint
 
@@ -253,6 +257,26 @@ Current elapsed time since MovieTexture activated/running, cumulative in seconds
 
 - Not supported in VRML97.
 - It is an error to define this transient outputOnly field in an X3D file, instead only use it a source for ROUTE events.
+
+### SFInt32 [out] **width**
+{: #fields-width }
+
+Output field *width*.
+
+### SFInt32 [out] **height**
+{: #fields-height }
+
+Output field *height*.
+
+### SFInt32 [out] **colorDepth**
+{: #fields-colorDepth }
+
+Output field *colorDepth*.
+
+### SFBool [out] **hasSound**
+{: #fields-hasSound }
+
+Output field *hasSound*.
 
 ### SFTime [out] **duration_changed**
 {: #fields-duration_changed }
@@ -305,8 +329,8 @@ Any video file format supported by the web browser, but at least:
 
 - Can contain a single [TextureProperties](/x_ite/components/texturing/textureproperties/) node.
 - Insert parent [Shape](/x_ite/components/shape/shape/) and [Appearance](/x_ite/components/shape/appearance/) nodes before adding texture.
-- Provide a [Viewpoint](/x_ite/components/navigation/viewpoint/) that allows a clear view of the MovieTexture so that users can easily see all details.
-- Utilize DEF/USE references for multiple copies of a single MovieTexture video file in order to avoid multiple-download delays, reduce memory requirements, and maintain synchronization.
+- Provide a [Viewpoint](/x_ite/components/navigation/viewpoint/) that allows a clear view of the **MovieTexture** so that users can easily see all details.
+- Utilize DEF/USE references for multiple copies of a single **MovieTexture** video file in order to avoid multiple-download delays, reduce memory requirements, and maintain synchronization.
 - Authors can provide multiple video formats for the same video track, with each source address listed separately in the url field.
 - Player support for MPEG-1 video format is required, other formats are optional.
 - Texture coordinates are reapplied (or else recomputed if textureTransform field initially NULL) whenever the corresponding vertex-based geometry changes.
@@ -317,7 +341,7 @@ Any video file format supported by the web browser, but at least:
 
 ### Warning
 
-- MovieTexture has `containerField='texture'` when parent is an [Appearance](/x_ite/components/shape/appearance/) node, otherwise `containerField='source'` when parent is a [Sound](/x_ite/components/sound/sound/) node.
+- **MovieTexture** has `containerField='texture'` when parent is an [Appearance](/x_ite/components/shape/appearance/) node, otherwise `containerField='source'` when parent is a [Sound](/x_ite/components/sound/sound/) node.
 
 ## Example
 

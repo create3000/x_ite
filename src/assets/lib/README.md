@@ -1,6 +1,6 @@
 # References
 
-## glTF Sample Viewer
+## Look Up Table Images
 
 * https://github.com/KhronosGroup/glTF-Sample-Viewer
 * https://github.com/KhronosGroup/glTF-Sample-Viewer/blob/main/assets/images/lut_charlie.png
@@ -21,3 +21,7 @@
 ## meshoptimizer
 
 * https://github.com/zeux/meshoptimizer/blob/master/js/meshopt_decoder.mjs
+
+## mkkellogg-sort.worker.js
+
+* https://github.com/mkkellogg/GaussianSplats3D/tree/main/src/worker

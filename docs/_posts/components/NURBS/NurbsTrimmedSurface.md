@@ -13,9 +13,9 @@ tags: [NurbsTrimmedSurface, NURBS]
 
 ## Overview
 
-NurbsTrimmedSurface generates texture coordinates from a Non-Uniform Rational B-Spline (NURBS) surface.
+**NurbsTrimmedSurface** generates texture coordinates from a Non-Uniform Rational B-Spline (NURBS) surface.
 
-The NurbsTrimmedSurface node belongs to the [NURBS](/x_ite/components/overview/#nurbs) component and requires at least support level **4,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
+The **NurbsTrimmedSurface** node belongs to the [NURBS](/x_ite/components/overview/#nurbs) component and requires at least support level **4,** its default container field is *geometry.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -157,7 +157,7 @@ A set of [Contour2D](/x_ite/components/nurbs/contour2d/) nodes are used as trimm
 
 #### Hint
 
-- If no trimming contours are defined, NurbsTrimmedSurface has same semantics as [NurbsPatchSurface](/x_ite/components/nurbs/nurbspatchsurface/) node.
+- If no trimming contours are defined, **NurbsTrimmedSurface** has same semantics as [NurbsPatchSurface](/x_ite/components/nurbs/nurbspatchsurface/) node.
 
 ## Example
 

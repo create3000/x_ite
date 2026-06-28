@@ -13,9 +13,9 @@ tags: [LayoutGroup, Layout]
 
 ## Overview
 
-LayoutGroup is a Grouping node that can contain most nodes, whose children are related by a common layout within a parent layout. The layout field contains an X3DLayoutNode node that provides the information required to locate and size the layout region of the LayoutGroup node relative to its parent’s layout region. LayoutGroup content is clipped by the specified viewport node.
+**LayoutGroup** is a Grouping node that can contain most nodes, whose children are related by a common layout within a parent layout. The layout field contains an X3DLayoutNode node that provides the information required to locate and size the layout region of the **LayoutGroup** node relative to its parent’s layout region. **LayoutGroup** content is clipped by the specified viewport node.
 
-The LayoutGroup node belongs to the [Layout](/x_ite/components/overview/#layout) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The **LayoutGroup** node belongs to the [Layout](/x_ite/components/overview/#layout) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -57,12 +57,12 @@ Information about this node can be contained in a [MetadataBoolean](/x_ite/compo
 ### SFNode [in, out] **layout** NULL <small>[X3DLayoutNode]</small>
 {: #fields-layout }
 
-The *layout* field contains an X3DLayoutNode node that provides the information required to locate and size the *layout* region of the LayoutGroup node relative to its parent’s *layout* region, and also to scale the contents of the LayoutGroup.
+The *layout* field contains an X3DLayoutNode node that provides the information required to locate and size the *layout* region of the **LayoutGroup** node relative to its parent’s *layout* region, and also to scale the contents of the **LayoutGroup**.
 
 ### SFNode [in, out] **viewport** NULL <small>[X3DViewportNode]</small>
 {: #fields-viewport }
 
-The content of the LayoutGroup is clipped by the specified *viewport*.
+The content of the **LayoutGroup** is clipped by the specified *viewport*.
 
 ### SFBool [in, out] **visible** TRUE
 {: #fields-visible }
@@ -132,13 +132,13 @@ Grouping nodes contain an ordered list of *children* nodes.
 
 ### Hints
 
-- The origin of the node is always in the center of its layout region. Thus, children (with the exception of LayoutGroup) are specified in a coordinate system whose origin is located at the center of the rectangle and can be transformed from that location.
+- The origin of the node is always in the center of its layout region. Thus, children (with the exception of **LayoutGroup**) are specified in a coordinate system whose origin is located at the center of the rectangle and can be transformed from that location.
 - Insert a [Shape](/x_ite/components/shape/shape/) node before adding geometry or [Appearance](/x_ite/components/shape/appearance/).
-- LayoutGroup does not directly have any pixel-dependent concepts. However, it can contain a [Layout](/x_ite/components/layout/layout/) node that does have pixel-specific options.
+- **LayoutGroup** does not directly have any pixel-dependent concepts. However, it can contain a [Layout](/x_ite/components/layout/layout/) node that does have pixel-specific options.
 
 ### Warning
 
-- A LayoutGroup can only be a child of a [LayoutLayer](/x_ite/components/layout/layoutlayer/) node or another LayoutGroup node.
+- A **LayoutGroup** can only be a child of a [LayoutLayer](/x_ite/components/layout/layoutlayer/) node or another **LayoutGroup** node.
 
 ## Browser Compatibility
 

@@ -82,7 +82,7 @@ Some words about optimizing a scene
 - [How to Use X_ITE With Electron](/x_ite/how-to-use-x-ite-with-electron/)
 - [Custom Shaders](/x_ite/custom-shaders/)
 
-## There are also Books for Further Reading
+## There Are Also Books for Further Reading
 
 - [X3D: Extensible 3D Graphics for Web Authors](https://www.amazon.com/gp/product/012088500X?ie=UTF8&tag=x3dext3dgrafo-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=012088500X) by Don Brutzman and Leonard Daly
 - [Networked Graphics: Building Networked Games and Virtual Environments](https://www.networkedgraphics.org/) by Anthony Steed and Manuel Fradinho Oliveira, Elsevier

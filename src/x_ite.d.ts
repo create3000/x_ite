@@ -1156,6 +1156,7 @@ declare namespace X3D
       readonly SFMatrix4d: number;
       readonly SFMatrix4f: number;
       readonly SFNode: number;
+      readonly SFQuaternion: number;
       readonly SFRotation: number;
       readonly SFString: number;
       readonly SFTime: number;
@@ -1178,6 +1179,7 @@ declare namespace X3D
       readonly MFMatrix4d: number;
       readonly MFMatrix4f: number;
       readonly MFNode: number;
+      readonly MFQuaternion: number;
       readonly MFRotation: number;
       readonly MFString: number;
       readonly MFTime: number;
@@ -2272,6 +2274,108 @@ declare namespace X3D
    /**
     * The SFRotation object corresponds to an X3D SFRotation field.
     */
+   class SFQuaternion extends X3DField
+   {
+      static readonly type: number;
+      static readonly typeName: "SFQuaternion";
+      static readonly IDENTITY: SFQuaternion;
+
+      /**
+       * *matrix* is an SFMatrix3d/f rotation matrix object whose value is converted into an SFQuaternion object.
+       */
+      static fromMatrix (matrix: SFMatrix3d | SFMatrix3f): SFQuaternion;
+
+      /**
+       * A new rotation initialized with the identity rotation is created and returned.
+       */
+      constructor ();
+      /**
+       * *x*, *y*, and *z* are the imaginary parts of the quaternion.
+       * *w* is the real part of the quaternion.
+       */
+      constructor (x: number, y: number, z: number, w: number);
+
+      /**
+       * Returns the first value of the imaginary part of the quaternion.
+       */
+      x: number;
+      /**
+       * Returns the second value of the imaginary part of the quaternion.
+       */
+      y: number;
+      /**
+       * Returns the third value of the imaginary part of the quaternion.
+       */
+      z: number;
+      /**
+       * A number corresponding to the real part of the quaternion.
+       */
+      w: number;
+
+      [Symbol .iterator](): IterableIterator <number>;
+      [index: number]: number;
+
+      /**
+       * Returns an SFQuaternion whose value is the passed SFQuaternion added, componentwise, to the object.
+       */
+      add (other: this): this;
+      /**
+       * Returns an SFQuaternion whose value is the object divided by the passed numeric value.
+       */
+      divide (denominator: number): this;
+      /**
+       * Returns the rotation matrix as an SFMatrix3f object.
+       */
+      getMatrix (): SFMatrix3f;
+      /**
+       * Returns the dot product of this quaternion and SFQuaternion *other*.
+       */
+      dot (quaternion: SFQuaternion): number;
+      /**
+       * Returns the underlying quaternion as Array with the four values [x, y, z, w].
+       */
+      inverse (): SFQuaternion;
+      /**
+       * Returns the geometric length of this vector.
+       */
+      length (): number;
+      /**
+       * Returns an SFQuaternion whose value is the object multiplied by the passed numeric value.
+       */
+      multiply (factor: number): this;
+      /**
+       * Returns an SFQuaternion whose value is the object multiplied by the passed SFQuaternion.
+       */
+      multQuat (quaternion: SFQuaternion): SFQuaternion;
+      /**
+       * Returns a SFVec3d/f whose value is the SFVec3d/f *vec* multiplied by the matrix corresponding to this object's rotation.
+       */
+      multVec <T extends SFVec3d | SFVec3f> (vector: T): T;
+      /**
+       * Returns an SFQuaternion whose value is the componentwise negation of the object.
+       */
+      negate (): this;
+      /**
+       * Returns an SFQuaternion object converted to unit length.
+       */
+      normalize (): SFQuaternion;
+      /**
+       * Set the value of this quaternion to the rotation matrix passed in *matrix*.
+       */
+      setMatrix (matrix: SFMatrix3d | SFMatrix3f): void;
+      /**
+       * Returns a SFQuaternion whose value is the spherical linear interpolation between this object's quaternion and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's quaternion. For *t* = 1, the value is *destination*.
+       */
+      slerp (destination: SFQuaternion, t: number): SFQuaternion;
+      /**
+       * Returns an SFQuaternion whose value is the passed SFQuaternion subtracted, componentwise, from the object.
+       */
+      subtract (other: this): this;
+   }
+
+   /**
+    * The SFRotation object corresponds to an X3D SFRotation field.
+    */
    class SFRotation extends X3DField
    {
       static readonly type: number;
@@ -2363,7 +2467,7 @@ declare namespace X3D
        */
       setQuaternion (x: number, y: number, z: number, w: number): void;
       /**
-       * Returns a SFRotation whose value is the spherical linear interpolation between this object's rotation and *destRotation* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's rotation. For *t* = 1, the value is *destRotation*.
+       * Returns a SFRotation whose value is the spherical linear interpolation between this object's rotation and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's rotation. For *t* = 1, the value is *destination*.
        */
       slerp (destination: SFRotation, t: number): SFRotation;
       /**
@@ -2465,7 +2569,7 @@ declare namespace X3D
        */
       length (): number;
       /**
-       * Returns a SFVec2d/f whose value is the linear interpolation between this object's vector and *destVector* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
+       * Returns a SFVec2d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
        */
       lerp (destination: this, t: number): this;
       /**
@@ -2607,7 +2711,7 @@ declare namespace X3D
        */
       length (): number;
       /**
-       * Returns a SFVec3d/f whose value is the linear interpolation between this object's vector and *destVector* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
+       * Returns a SFVec3d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
        */
       lerp (destination: this, t: number): this;
       /**
@@ -2753,7 +2857,7 @@ declare namespace X3D
        */
       length (): number;
       /**
-       * Returns a SFVec4d/f whose value is the linear interpolation between this object's vector and *destVector* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destVector*.
+       * Returns a SFVec4d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
        */
       lerp (destination: this, t: number): this;
       /**
@@ -2993,6 +3097,15 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "MFNode";
+   }
+
+   /**
+    * The MFQuaternion object corresponds to an X3D MFQuaternion field. It is used to store a one-dimensional array of SFQuaternion objects. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *mfQuaternionObjectName*[*index*], where *index* is an integer-valued expression with 0<=*index*<length and length is the number of elements in the array). Assigning to an element with *index* > length results in the array being dynamically expanded to contain length elements. All elements not explicitly initialized are set to `SFQuaternion (0, 0, 0, 1)`.
+    */
+   class MFQuaternion extends X3DArrayField <SFQuaternion>
+   {
+      static readonly type: number;
+      static readonly typeName: "MFQuaternion";
    }
 
    /**
@@ -4126,7 +4239,7 @@ declare namespace X3D
    interface BlendModeProxy extends X3DAppearanceChildNodeProxy
    {
       /**
-       * Specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be:, FUNC_ADD, FUNC_SUBTRACT, FUNC_REVERSE_SUBTRACT
+       * Specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be one of:, FUNC_ADD, FUNC_SUBTRACT, FUNC_REVERSE_SUBTRACT
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -4138,7 +4251,7 @@ declare namespace X3D
        */
       blendColor: SFColorRGBA;
       /**
-       * Specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be:, FUNC_ADD, FUNC_SUBTRACT, FUNC_REVERSE_SUBTRACT
+       * Specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be one of:, FUNC_ADD, FUNC_SUBTRACT, FUNC_REVERSE_SUBTRACT
        *
        * This field is of access type 'inputOutput' and type SFString.
        */
@@ -7521,11 +7634,11 @@ declare namespace X3D
       metadata: X3DMetadataObjectProxy | null;
    }
 
-   /** EnvironmentLight ... This node only affects the PhysicalMaterial and SpecularGlossinessMaterial nodes. */
+   /** EnvironmentLight node uses an environment map to represent incident illumination around a point, and can be used to show reflections of distant objects. */
    interface EnvironmentLightProxy extends X3DLightNodeProxy
    {
       /**
-       * Brightness of ambient (nondirectional background) emission from the light. Interchange profile
+       * Brightness of ambient (nondirectional background) emission from the light.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
@@ -7537,19 +7650,19 @@ declare namespace X3D
        */
       color: SFColor;
       /**
-       * Input/Output field diffuseCoefficients.
+       * diffuseCoefficients field provides a 3 x 9 array of float values providing spherical harmonic coefficients for low-frequency characteristics of the environment map to produce an irradiance map corresponding to glTF irradianceCoefficients field.
        *
        * This field is of access type 'inputOutput' and type MFFloat.
        */
       diffuseCoefficients: MFFloat;
       /**
-       * Input/Output field diffuseTexture.
+       * diffuseTexture defines explicit precomputed X3DEnvironmentTextureNode (ComposedCubeMapTexture, GeneratedCubeMapTexture, ImageCubeMapTexture) nodes as the image source for the EnvironmentLight.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
       diffuseTexture: X3DEnvironmentTextureNodeProxy | null;
       /**
-       * Global lights illuminate all objects within their volume of lighting influence. Scoped lights only illuminate objects within the same transformation hierarchy.
+       * global field affects the scope of lighting effects produced by the EnvironmentLight node, and has no effect on the computation of environment textures.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -7579,7 +7692,7 @@ declare namespace X3D
        */
       origin: SFVec3f;
       /**
-       * Input/Output field rotation.
+       * rotation field represents the overall rotation of the IBL environment.
        *
        * This field is of access type 'inputOutput' and type SFRotation.
        */
@@ -7597,7 +7710,7 @@ declare namespace X3D
        */
       shadows: boolean;
       /**
-       * Input/Output field specularTexture.
+       * specularTexture defines explicit precomputed X3DEnvironmentTextureNode (ComposedCubeMapTexture, GeneratedCubeMapTexture, ImageCubeMapTexture) nodes as the image source for the EnvironmentLight.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -10932,11 +11045,11 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       * Optional single contained Tangent node that defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -11104,11 +11217,11 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       * Optional single contained Tangent node that defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -11193,11 +11306,11 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       * Optional single contained Tangent node that defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -11282,11 +11395,11 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       * Optional single contained Tangent node that defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -11371,11 +11484,11 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       * Optional single contained Tangent node that defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -11491,11 +11604,11 @@ declare namespace X3D
       /**
        * The smooth field provides a hint to the browser whether smooth rendering is preferred for a retrieved polygonal mesh.
        *
-       * This field is of access type 'inputOutput' and type SFBool.
+       * This field is of access type 'initializeOnly' and type SFBool.
        */
       smooth: boolean;
       /**
-       * For InlineGeometry, the default value of solid is FALSE since most usages of retrieved meshes need two-sided rendering. Authors have the option to change this value for single-sided rendering.
+       * Setting solid true means draw only one side of polygons (backface culling on), setting solid false means draw both sides of polygons (backface culling off).
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -11530,13 +11643,13 @@ declare namespace X3D
        */
       bboxDisplay: boolean;
       /**
-       * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost. Bounding box size can also be defined as an optional authoring hint that suggests an optimization or constraint.
+       * Bounding box size is usually omitted, and can easily be calculated automatically by an X3D player at scene-loading time with minimal computational cost.
        *
        * This field is of access type 'initializeOnly' and type SFVec3f.
        */
       bboxSize: SFVec3f;
       /**
-       * Input/Output field castShadow.
+       * castShadow defines whether this Shape casts shadows as produced by lighting nodes.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -11929,7 +12042,7 @@ declare namespace X3D
        */
       pickable: boolean;
       /**
-       * The pointerEvents field defines whether this Layer becomes target for pointer events.
+       * The pointerEvents field defines whether this Layer node becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -12127,7 +12240,7 @@ declare namespace X3D
        */
       pickable: boolean;
       /**
-       * The pointerEvents field defines whether this LayoutLayer becomes target for pointer events.
+       * The pointerEvents field defines whether this LayoutLayer node becomes target for pointer events.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -16152,11 +16265,11 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       * Optional single contained Tangent node that defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -16397,15 +16510,9 @@ declare namespace X3D
       solid: boolean;
    }
 
-   /** A RenderedTexture is a texture node that renders a separate scene or viewpoint into an offscreen buffer, producing an image that can be applied to geometry in real time. */
+   /** RenderedTexture is a texture node that renders the view from a local viewpoint or separate scene into an offscreen buffer, producing an image or depth map that can be rendered from model geometry in real time. */
    interface RenderedTextureProxy extends X3DTexture2DNodeProxy, X3DUrlOutputObjectProxy
    {
-      /**
-       * Sets a separate, potentially independent, subscene. If the value is NULL the current scene is used.
-       *
-       * This field is of access type 'inputOutput' and type MFNode.
-       */
-      children: MFNode <X3DChildNodeProxy>;
       /**
        * number of color components for the rendered texture.
        *
@@ -16413,9 +16520,9 @@ declare namespace X3D
        */
       colorDepth: number;
       /**
-       * The generated texture will contain the depth buffer of the image (instead of the color buffer as usual).
+       * indicates that a generated texture contains a depth buffer for the image, instead of a color buffer.
        *
-       * This field is of access type 'initializeOnly' and type SFBool.
+       * This field is of access type 'inputOutput' and type SFBool.
        */
       depthMap: boolean;
       /**
@@ -16425,35 +16532,17 @@ declare namespace X3D
        */
       description: string;
       /**
-       * Sets the width, height, color components (and number of MRTs).
-       *
-       * This field is of access type 'inputOutput' and type MFInt32.
-       */
-      dimensions: MFInt32;
-      /**
-       * The enabled field either enables or disables data output processing by the node.
-       *
-       * This field is of access type 'inputOutput' and type SFBool.
-       */
-      enabled: boolean;
-      /**
        * image height in pixels.
        *
        * This field is of access type 'initializeOnly' and type SFInt32.
        */
       height: number;
       /**
-       * The isActive field provides a TRUE event when node data output becomes active, and a FALSE event when node data output is stopped.
+       * provides a TRUE event when the data output process becomes active, and a FALSE event when the data output process is stopped.
        *
        * This field is of access type 'outputOnly' and type SFBool.
        */
       readonly isActive: boolean;
-      /**
-       * The maximumNumberFrames field indicates the maximum number of frames that can be saved for a single series of image captures. A value of 0 indicates no limit.
-       *
-       * This field is of access type 'inputOutput' and type SFInt32.
-       */
-      maximumNumberFrames: number;
       /**
        * indicates the maximum number of independent frame files (or movie frames) that can be saved for a single series of image captures.
        *
@@ -16479,7 +16568,7 @@ declare namespace X3D
        */
       repeatT: boolean;
       /**
-       * The replaceImage field defines whether only a single updated image file or multiple image files can be saved.
+       * Whether only a single updated image file or multiple image files can be saved.
        *
        * This field is of access type 'inputOutput' and type SFBool.
        */
@@ -16497,19 +16586,13 @@ declare namespace X3D
        */
       textureProperties: TexturePropertiesProxy | null;
       /**
-       * update controls regeneration of the texture.
-       *
-       * This field is of access type 'inputOutput' and type SFString.
-       */
-      update: "NONE" | "NEXT_FRAME_ONLY" | "ALWAYS";
-      /**
-       * The updateInterval field indicates time intervals between render captures when update is "ALWAYS". A value of 0 indicates full frame rate.
+       * indicates time intervals between render captures when the update field is "ALWAYS".
        *
        * This field is of access type 'inputOutput' and type SFTime.
        */
       updateInterval: number;
       /**
-       * Values in the url field typically defines a relative address to a file name that can be used for storing one or more rendered textures.
+       * The url field typically defines a relative address to a file name that can be used for storing one or more rendered textures, and can also provide a destination for output of successive image files as a video file or video stream.
        *
        * This field is of access type 'inputOutput' and type MFString.
        */
@@ -18995,8 +19078,8 @@ declare namespace X3D
       whichChoice: number;
    }
 
-   /** Tangent. */
-   interface TangentProxy extends X3DGeometricPropertyNodeProxy
+   /** Tangent defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node, or else to a parent ElevationGrid node. */
+   interface TangentProxy extends X3DTangentNodeProxy
    {
       /**
        * Information about this node can be contained in a MetadataBoolean, MetadataDouble, MetadataFloat, MetadataInteger, MetadataString or MetadataSet node.
@@ -19005,7 +19088,7 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * A unit XYZ vector defining a tangent direction on the surface, and a W component whose sign value (-1 or +1) indicates the handedness of the tangent base.
+       * set of x-y-z-w orthogonal vector values for a surface, applied either per-vertex or per-face to a mesh.
        *
        * This field is of access type 'inputOutput' and type MFVec4f.
        */
@@ -20544,11 +20627,11 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       * Optional single contained Tangent node that defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -20621,11 +20704,11 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       * Optional single contained Tangent node that defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -20727,11 +20810,11 @@ declare namespace X3D
        */
       stripCount: MFInt32;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
+       * Optional single contained Tangent node that defines a set of 3D surface-normal vectors that apply either to a sibling Coordinate|CoordinateDouble node.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * Optional single contained TextureCoordinate, TextureCoordinateGenerator or MultiTextureCoordinate node that can specify coordinates for texture mapping onto corresponding geometry.
        *
@@ -21471,13 +21554,13 @@ declare namespace X3D
        */
       metadata: X3DMetadataObjectProxy | null;
       /**
-       * The multi-scatter albedo.
+       * The multi-scatter color. In volumetric mode, this is the multi-scatter albedo. In thin-walled mode, this is a surface tint applied to transmitted light..
        *
        * This field is of access type 'inputOutput' and type SFColor.
        */
       multiscatterColor: SFColor;
       /**
-       * A surface texture that defines the multi-scatter albedo at the volume's entry point. Stored in the RGB channels and encoded in sRGB. This will be multiplied by the multiscatterColorFactor.
+       * A texture that defines the multi-scatter color, stored in the RGB channels and encoded in sRGB. This will be multiplied by the multiscatterColor.
        *
        * This field is of access type 'inputOutput' and type SFNode.
        */
@@ -21489,11 +21572,29 @@ declare namespace X3D
        */
       multiscatterColorTextureMapping: string;
       /**
-       * The anisotropy of scatter events. Range is [-1, 1].
+       * The anisotropy of scatter events. Range is [-1, 1]. Positive values represent forward scattering; negative values represent backward scattering.
        *
        * This field is of access type 'inputOutput' and type SFFloat.
        */
       scatterAnisotropy: number;
+      /**
+       * The strength of the scattering effect. Range is [0, 1]. At 0, scattering is disabled; at 1, scattering is fully applied.
+       *
+       * This field is of access type 'inputOutput' and type SFFloat.
+       */
+      scatterStrength: number;
+      /**
+       * A texture that defines the per-texel scatter strength, stored in the alpha (A) channel. Will be multiplied by scatterStrength.
+       *
+       * This field is of access type 'inputOutput' and type SFNode.
+       */
+      scatterStrengthTexture: X3DSingleTextureNodeProxy | null;
+      /**
+       * Input/Output field multiscatterColorTextureMapping.
+       *
+       * This field is of access type 'inputOutput' and type SFString.
+       */
+      scatterStrengthTextureMapping: string;
    }
 
    /** WaveShaper node represents a nonlinear distorter that applies a wave-shaping distortion curve to the signal. */
@@ -21866,11 +21967,9 @@ declare namespace X3D
        */
       solid: boolean;
       /**
-       * Input/Output field tangent. If there is no Tangent node, the MikkTSpace algorithm is used to generate tangent vectors.
-       *
        * This field is of access type 'inputOutput' and type SFNode.
        */
-      tangent: TangentProxy | null;
+      tangent: X3DTangentNodeProxy | null;
       /**
        * This field is of access type 'inputOutput' and type SFNode.
        */

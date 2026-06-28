@@ -224,9 +224,9 @@ Object .assign (Object .setPrototypeOf (X3DNBodyCollidableNode .prototype, X3DCh
    { },
    eventsProcessed ()
    {
-      this .matrix .set (this ._translation .getValue (),
-                         this ._rotation    .getValue (),
-                         this ._scale       .getValue ());
+      this .matrix .setTransform (this ._translation .getValue (),
+                                  this ._rotation    .getValue (),
+                                  this ._scale       .getValue ());
 
       if (this .getBody ())
          return;

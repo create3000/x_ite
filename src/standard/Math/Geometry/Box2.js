@@ -1,11 +1,11 @@
 import Matrix3 from "../Numbers/Matrix3.js";
 import Vector2 from "../Numbers/Vector2.js";
 
-function Box2 (... args) /* size, center */
+function Box2 (size, center)
 {
    this .matrix = new Matrix3 ();
 
-   this .set (... args);
+   this .set (size, center);
 }
 
 Object .assign (Box2 .prototype,
@@ -30,28 +30,18 @@ Object .assign (Box2 .prototype,
    },
    set (size, center)
    {
-      switch (arguments .length)
+      if (size && center)
       {
-         case 0:
-         {
-            this .matrix .assign (Matrix3 .ZERO);
-
-            return this;
-         }
-         case 2:
-         {
-            this .matrix .set (size .x / 2, 0, 0,
-                               0, size .y / 2, 0,
-                               center .x, center .y, 1);
-
-            return this;
-         }
-         // case 3:
-         // {
-         //    console .trace ()
-         //    return this .setExtents (arguments [0], arguments [1]);
-         // }
+         this .matrix .set (size .x / 2, 0, 0,
+                            0, size .y / 2, 0,
+                            center .x, center .y, 1);
       }
+      else
+      {
+         this .matrix .assign (Matrix3 .ZERO);
+      }
+
+      return this;
    },
    setExtents (min, max)
    {

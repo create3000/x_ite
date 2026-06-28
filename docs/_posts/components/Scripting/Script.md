@@ -13,9 +13,9 @@ tags: [Script, Scripting, VRML]
 
 ## Overview
 
-Script contains author-programmed event behaviors for a scene. Define the script input-output event interface by including \<field/\> elements. Scripting code is embedded in a child CDATA node or (deprecated) in the url field. Optionally supported programming languages are ECMAScript (JavaScript) and Java (via url to a myNode.class file).
+**Script** contains author-programmed event behaviors for a scene. Define the script input-output event interface by including \<field/\> elements. Scripting code is embedded in a child CDATA node or (deprecated) in the url field. Optionally supported programming languages are ECMAScript (JavaScript) and Java (via url to a myNode.class file).
 
-The Script node belongs to the [Scripting](/x_ite/components/overview/#scripting) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **Script** node belongs to the [Scripting](/x_ite/components/overview/#scripting) component and requires at least support level **1,** its default container field is *children.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -83,7 +83,7 @@ List of address links for runnable script files.
 - Equivalent script code written in multiple programming languages can be provided for portability, the first runnable version is chosen at run time.
 - [X3D Scene Authoring Hints, Scripts](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Scripts)
 - If both *url* field and CDATA section are provided simultaneously, the *url* field is processed first. This approach allows utilization of update modifications or live queries in external scripts, while still providing reliable script source as a fallback alternative within the model itself.
-- [X3D XML Encoding, 4.3.13 Encapsulating Script node code](https://www.web3d.org/documents/specifications/19776-1/V3.3/Part01/concepts.html#EncapsulatingScriptNodeCode)
+- [X3D XML Encoding, 4.3.13 Encapsulating **Script** node code](https://www.web3d.org/documents/specifications/19776-1/V3.3/Part01/concepts.html#EncapsulatingScriptNodeCode)
 - MFString arrays can have multiple values, so separate each individual string by quote marks "https://www.web3d.org" "https://www.web3d.org/about" "etc."
 - Alternative XML encoding for quotation mark " is &amp;quot; (which is an example of a character entity).
 - Can replace embedded blank(s) in *url* queries with %20 for each blank character.
@@ -124,18 +124,18 @@ List of address links for runnable script files.
 ### SFBool [ ] **directOutput** FALSE
 {: #fields-directOutput }
 
-Set *directOutput* true if Script has field reference(s) of type SFNode/MFNode, and also uses direct access to modify attributes of a referenced node in the Scene.
+Set *directOutput* true if **Script** has field reference(s) of type SFNode/MFNode, and also uses direct access to modify attributes of a referenced node in the Scene.
 
 #### Hints
 
-- Set *directOutput* true if Script dynamically establishes or breaks ROUTEs.
-- *directOutput* is a browser hint to avoid overoptimizing referenced nodes, since a Script might directly change attribute values in referenced SFNode/MFNode fields, without a ROUTE connecting output events.
-- *directOutput* false means Script cannot modify referenced nodes or change ROUTEs.
+- Set *directOutput* true if **Script** dynamically establishes or breaks ROUTEs.
+- *directOutput* is a browser hint to avoid overoptimizing referenced nodes, since a **Script** might directly change attribute values in referenced SFNode/MFNode fields, without a ROUTE connecting output events.
+- *directOutput* false means **Script** cannot modify referenced nodes or change ROUTEs.
 
 ### SFBool [ ] **mustEvaluate** FALSE
 {: #fields-mustEvaluate }
 
-If *mustEvaluate* false, then the X3D player may delay sending input events to Script until output events are needed. If *mustEvaluate* true, then Script must receive input events immediately without any event-aggregation delays.
+If *mustEvaluate* false, then the X3D player may delay sending input events to **Script** until output events are needed. If *mustEvaluate* true, then **Script** must receive input events immediately without any event-aggregation delays.
 
 #### Hint
 
@@ -145,7 +145,7 @@ If *mustEvaluate* false, then the X3D player may delay sending input events to S
 
 ### Hints
 
-- Insert an XML Character Data (CDATA) block within the Script node to contain source code embedded within an X3D scene, avoiding the need for escape characters.
+- Insert an XML Character Data (CDATA) block within the **Script** node to contain source code embedded within an X3D scene, avoiding the need for escape characters.
 - A contained XML Character Data (CDATA) block for source code protects whitespace, line breaks, and literal characters (such as &amp; for ampersand character, \< for less-than-sign character, and \> for greater-than-sign character) from unintended escape-character modifications by XML parsers.
 - [X3D Scene Authoring Hints, Scripts](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Scripts)
 - [Apply `containerField='watchList'` when parent node is LoadSensor.ECMAScript-262 specification](https://www.ecma-international.org/publications/standards/Ecma-262.htm)

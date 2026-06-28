@@ -19,7 +19,7 @@ Use a trick instead:
 
 This technique is called Texture Mapping
 
-## Using image textures
+## Using Image Textures
 
 Image texture:
 
@@ -31,7 +31,7 @@ Image texture:
 | JPEG | Usually a poor choice for texture mapping 8-bit thru 24-bit lossy compressed images No transparency support                  |
 | PNG  | An adequate choice for texture mapping 8-bit thru 24-bit lossless compressed images 8-bit transparency per pixel Best choice |
 
-## Using pixel textures
+## Using Pixel Textures
 
 Pixel texture:
 
@@ -43,7 +43,7 @@ Pixel texture:
   - Stripes
   - Checkerboard patterns
 
-## Using movie textures
+## Using Movie Textures
 
 Movie texture:
 
@@ -222,14 +222,14 @@ Shape {
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/image3/image3.x3dv)
 {: .example-links }
 
-## Using materials with textures
+## Using Materials with Textures
 
 - Color textures override the color in a [Material](/x_ite/components/shape/material/) node
 - Grayscale textures multiply with the Material node color
   - Good for colorizing grayscale textures
 - If there is no Material node, the texture is applied emissively
 
-## Using transparent textures
+## Using Transparent Textures
 
 Texture images can include color and transparency values for each pixel:
 

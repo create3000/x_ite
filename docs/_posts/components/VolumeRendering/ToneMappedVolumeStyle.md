@@ -13,9 +13,9 @@ tags: [ToneMappedVolumeStyle, VolumeRendering]
 
 ## Overview
 
-ToneMappedVolumeStyle specifies that volumetric data is rendered with Gooch shading model of two-toned warm/cool coloring.
+**ToneMappedVolumeStyle** specifies that volumetric data is rendered with Gooch shading model of two-toned warm/cool coloring.
 
-The ToneMappedVolumeStyle node belongs to the [VolumeRendering](/x_ite/components/overview/#volumerendering) component and requires at least support level **2,** its default container field is *renderStyle.* It is available from X3D version 3.3 or higher.
+The **ToneMappedVolumeStyle** node belongs to the [VolumeRendering](/x_ite/components/overview/#volumerendering) component and requires at least support level **2,** its default container field is *renderStyle.* It is available from X3D version 3.3 or higher.
 
 ## Hierarchy
 
@@ -78,7 +78,7 @@ The *surfaceNormals* field contains a 3D texture with at least three component v
 
 ### Hints
 
-- ToneMappedVolumeStyle can contain a single Texture3D node with `containerField='surfaceNormals'`
+- **ToneMappedVolumeStyle** can contain a single Texture3D node with `containerField='surfaceNormals'`
 - [Gooch shading](https://en.wikipedia.org/wiki/Gooch_shading)
 
 ### Warning

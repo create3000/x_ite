@@ -13,9 +13,9 @@ tags: [GeneratedCubeMapTexture, CubeMapTexturing]
 
 ## Overview
 
-GeneratedCubeMapTexture is a texture node that defines a cubic environment map that sources its data from internally generated images. The viewpoint of the generated texture is the location and orientation of the associated geometry in world space.
+**GeneratedCubeMapTexture** is a texture node that defines a cubic environment map that sources its data from internally generated images. The viewpoint of the generated texture is the location and orientation of the associated geometry in world space.
 
-The GeneratedCubeMapTexture node belongs to the [CubeMapTexturing](/x_ite/components/overview/#cubemaptexturing) component and requires at least support level **3,** its default container field is *texture.* It is available from X3D version 3.0 or higher.
+The **GeneratedCubeMapTexture** node belongs to the [CubeMapTexturing](/x_ite/components/overview/#cubemaptexturing) component and requires at least support level **3,** its default container field is *texture.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -81,7 +81,7 @@ Optional single contained [TextureProperties](/x_ite/components/texturing/textur
 ### Hints
 
 - Can contain a single [TextureProperties](/x_ite/components/texturing/textureproperties/) node.
-- Typically a [Box](/x_ite/components/geometry3d/box/) is used for applying the GeneratedCubeMapTexture.
+- Typically a [Box](/x_ite/components/geometry3d/box/) is used for applying the **GeneratedCubeMapTexture**.
 - [Wikipedia reference, Droste effect](https://en.wikipedia.org/wiki/Droste_effect)
 - Requires X3D `profile='Full'` or else include `<component name='CubeMapTexturing' level='3'/>`
 

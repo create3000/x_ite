@@ -13,9 +13,9 @@ tags: [PeriodicWave, Sound]
 
 ## Overview
 
-PeriodicWave defines a periodic waveform that can be used to shape the output of an Oscillator.
+**PeriodicWave** defines a periodic waveform that can be used to shape the output of an Oscillator.
 
-The PeriodicWave node belongs to the [Sound](/x_ite/components/overview/#sound) component and requires at least support level **2,** its default container field is *periodicWave.* It is available from X3D version 4.0 or higher.
+The **PeriodicWave** node belongs to the [Sound](/x_ite/components/overview/#sound) component and requires at least support level **2,** its default container field is *periodicWave.* It is available from X3D version 4.0 or higher.
 
 ## Hierarchy
 

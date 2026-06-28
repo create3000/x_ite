@@ -1,7 +1,23 @@
 export default () => /* glsl */ `
 #if defined (X3D_FOG)
+#if defined (X3D_VERTEX_SHADER) && defined (X3D_FOG_COORDS)
+in float x3d_FogDepth;
+
+out float fogDepth;
+
+void
+fog ()
+{
+   fogDepth = x3d_FogDepth;
+}
+#endif
+#if defined (X3D_FRAGMENT_SHADER)
 
 uniform x3d_FogParameters x3d_Fog;
+
+#if defined (X3D_FOG_COORDS)
+   in float fogDepth;
+#endif
 
 float
 getFogInterpolant ()
@@ -28,6 +44,6 @@ getFogColor (const in vec3 color)
 {
    return mix (x3d_Fog .color, color, getFogInterpolant ());
 }
-
+#endif
 #endif
 `;

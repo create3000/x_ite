@@ -13,9 +13,9 @@ tags: [MetadataSet, Core]
 
 ## Overview
 
-MetadataSet contains a list of Metadata* nodes that each have `containerField='value'` and together provide information about the parent node of the MetadataSet. Further information about this specific MetadataSet node may be provided by a single child Metadata* node with `containerField='metadata'.`
+**MetadataSet** contains a list of Metadata* nodes that each have `containerField='value'` and together provide information about the parent node of the **MetadataSet**. Further information about this specific **MetadataSet** node may be provided by a single child Metadata* node with `containerField='metadata'.`
 
-The MetadataSet node belongs to the [Core](/x_ite/components/overview/#core) component and requires at least support level **1,** its default container field is *value.* It is available from X3D version 3.0 or higher.
+The **MetadataSet** node belongs to the [Core](/x_ite/components/overview/#core) component and requires at least support level **1,** its default container field is *value.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -40,7 +40,7 @@ The MetadataSet node belongs to the [Core](/x_ite/components/overview/#core) com
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
 {: #fields-metadata }
 
-Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or MetadataSet node.
+Information about this node can be contained in a [MetadataBoolean](/x_ite/components/core/metadataboolean/), [MetadataDouble](/x_ite/components/core/metadatadouble/), [MetadataFloat](/x_ite/components/core/metadatafloat/), [MetadataInteger](/x_ite/components/core/metadatainteger/), [MetadataString](/x_ite/components/core/metadatastring/) or **MetadataSet** node.
 
 #### Hint
 
@@ -74,18 +74,18 @@ The *value* field provides a list of X3DMetadataObject nodes whose meaning is de
 
 ### Hints
 
-- Typically use `containerField='value'` if the parent node is MetadataSet.
+- Typically use `containerField='value'` if the parent node is **MetadataSet**.
 - Explicitly defining containerField for Metadata nodes is always allowed and also unambiguous across each version of X3D.
 - [Each of the Metadata nodes are allowed as top-level root nodes in a scene, if doing that be sure to explicitly define `containerField='metadata'.`](https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-DIS/Part01/concepts.html#Rootnodes)
 - If present, an IS statement is the first child within any other node.
 - An IS statement precedes any sibling Metadata* node, which in turn precedes any other sibling nodes.
-- MetadataSet can contain other MetadataSet nodes.
+- **MetadataSet** can contain other **MetadataSet** nodes.
 - Comments are not readable when a model file is loaded for viewing, but [WorldInfo](/x_ite/components/core/worldinfo/) and Metadata* nodes are persistent and inspectable at run time.
 - [X3D for Web Authors, Chapter 15, Metadata Information](https://www.web3d.org/x3d/content/examples/X3dForWebAuthors/Chapter15-Metadata/Chapter15-MetadataInformation.html)
 
 ### Warnings
 
-- Default `containerField='metadata'` in X3D 3 changed to default `containerField='value'` in X3D 4.0, allowing construction of much terser MetadataSet vocabulary structures.
+- Default `containerField='metadata'` in X3D 3 changed to default `containerField='value'` in X3D 4.0, allowing construction of much terser **MetadataSet** vocabulary structures.
 - Metadata nodes can only contain other Metadata nodes.
 
 ## Browser Compatibility

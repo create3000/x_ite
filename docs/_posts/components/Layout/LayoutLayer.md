@@ -13,9 +13,9 @@ tags: [LayoutLayer, Layout]
 
 ## Overview
 
-LayoutLayer is a Grouping node that can contain most nodes. LayoutLayer content is clipped by the specified viewport node.
+**LayoutLayer** is a Grouping node that can contain most nodes. **LayoutLayer** content is clipped by the specified viewport node.
 
-The LayoutLayer node belongs to the [Layout](/x_ite/components/overview/#layout) component and requires at least support level **1,** its default container field is *layers.* It is available from X3D version 3.2 or higher.
+The **LayoutLayer** node belongs to the [Layout](/x_ite/components/overview/#layout) component and requires at least support level **1,** its default container field is *layers.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 

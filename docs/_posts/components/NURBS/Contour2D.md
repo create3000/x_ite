@@ -13,9 +13,9 @@ tags: [Contour2D, NURBS]
 
 ## Overview
 
-Contour2D groups a set of curve segments into a composite contour. The children segments form a closed loop, with first point of first child repeated as last point of last child, and last point of each segment repeated as the first point of the next consecutive segment. The children segments are type NurbsCurve2D or ContourPolyline2D, enumerated in the consecutive order of contour topology.
+**Contour2D** groups a set of curve segments into a composite contour. The children segments form a closed loop, with first point of first child repeated as last point of last child, and last point of each segment repeated as the first point of the next consecutive segment. The children segments are type [NurbsCurve2D](/x_ite/components/nurbs/nurbscurve2d/) or [ContourPolyline2D](/x_ite/components/nurbs/contourpolyline2d/), enumerated in the consecutive order of contour topology.
 
-The Contour2D node belongs to the [NURBS](/x_ite/components/overview/#nurbs) component and requires at least support level **4,** its default container field is *trimmingContour.* It is available from X3D version 3.0 or higher.
+The **Contour2D** node belongs to the [NURBS](/x_ite/components/overview/#nurbs) component and requires at least support level **4,** its default container field is *trimmingContour.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -66,11 +66,11 @@ The *children* form a closed loop with first point of first child repeated as la
 
 ### Hint
 
-- Contour2D is used as the trimmingContour field of the [NurbsTrimmedSurface](/x_ite/components/nurbs/nurbstrimmedsurface/) node.
+- **Contour2D** is used as the trimmingContour field of the [NurbsTrimmedSurface](/x_ite/components/nurbs/nurbstrimmedsurface/) node.
 
 ### Warning
 
-- Contour2D is not a renderable geometry node.
+- **Contour2D** is not a renderable geometry node.
 
 ## Browser Compatibility
 

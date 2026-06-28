@@ -13,7 +13,7 @@ tags: [Viewpoint]
   - Select favorite views for the viewer
   - Name the views for a browser menu
 
-## Creating viewpoints
+## Creating Viewpoints
 
 - Viewpoints specify a desired location, an orientation, and a camera field of view lens angle
 - Viewpoints can be transformed using a Transform node
@@ -57,6 +57,12 @@ Viewpoint {
 - [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/viewpoint1/viewpoint1.zip)
 - [View Source in Playground](/x_ite/playground/?url=https://create3000.github.io/media/tutorials/scenes/viewpoint1/viewpoint1.x3dv)
 {: .example-links }
+
+## The Jump Field
+
+Basically, if the *jump* field is set to false and the viewpoint receives a *set_bind* event with a value of `true`, the viewpoint is bound. However, the *position* and *orientation* remain the same as the previous bound viewpoint, including any user navigation offsets. This is useful if you want to programme an elevator or train, for example. Imagine a user bound to Viewpoint A enters an elevator. When they enter, they are bound to a new Viewpoint B inside the elevator coordinate system. You can now animate the elevator and the user will move with it. When the lift stops and the user exits, they are bound again to Viewpoint A, which is in the floor coordinate system. If both viewpoints A and B have *jump* set to `false`, you will not recognize any viewpoint change.
+
+If *jump* is set to `true` and the viewpoint receives a *set_bind* event, you will be bound to the viewpoint and the new *position* and *orientation* will take effect. If you are not happy with the transition, set the [NavigationInfo](/x_ite/components/navigation/navigationinfo/) *transitionType* to `TELEPORT`. This will immediately apply the new *position* and *orientation*.
 
 ## Summary
 

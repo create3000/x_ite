@@ -13,13 +13,13 @@ tags: [Transform, Shape]
   - Rotate shapes
   - Scale shapes
 
-## Using coordinate systems
+## Using Coordinate Systems
 
 - An X3D file builds components for a world
 - A file's world components are built in the file's world coordinate system
 - By default, all shapes are built at the origin of the world coordinate system
 
-## Transforming a coordinate system
+## Transforming a Coordinate System
 
 A transform creates a coordinate system that is
 
@@ -62,7 +62,7 @@ Transform {
 }
 ```
 
-## Including children
+## Including Children
 
 The *children* field includes a list of one or more nodes
 
@@ -144,7 +144,7 @@ Transform {
 }
 ```
 
-## Specifying rotation axes
+## Specifying Rotation Axes
 
 - A rotation axis defines a pole to rotate around
 - Like the Earth's North-South pole
@@ -193,7 +193,7 @@ Transform {
 }
 ```
 
-## Scaling, rotating, and translating
+## Scaling, Rotating, and Translating
 
 Scale, Rotate, and Translate a coordinate system, one after the other.
 
@@ -224,7 +224,7 @@ Read operations bottom-up:
 - The children are scaled, rotated, then translated
 - Order is fixed, independent of field order
 
-## A sample transform group
+## A Sample Transform Group
 
 ### XML Encoding
 

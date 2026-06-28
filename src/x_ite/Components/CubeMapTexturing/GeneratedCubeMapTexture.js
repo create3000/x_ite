@@ -49,6 +49,10 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
    {
       return true;
    },
+   getRenderedTextures (renderedTextures)
+   {
+      renderedTextures .add (this);
+   },
    addUpdateCallback (key, callback)
    {
       this .updateCallbacks .set (key, callback);
@@ -117,12 +121,12 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
       // Rotations to negated normals of the texture cube.
 
       const rotations = [
-         new Rotation4 (Vector3 .Z_AXIS, Vector3 .NEGATIVE_Z_AXIS), // front
-         new Rotation4 (Vector3 .Z_AXIS, Vector3 .Z_AXIS),          // back
-         new Rotation4 (Vector3 .Z_AXIS, Vector3 .X_AXIS),          // left
-         new Rotation4 (Vector3 .Z_AXIS, Vector3 .NEGATIVE_X_AXIS), // right
-         new Rotation4 (Vector3 .Z_AXIS, Vector3 .NEGATIVE_Y_AXIS), // top
-         new Rotation4 (Vector3 .Z_AXIS, Vector3 .Y_AXIS),          // bottom
+         Rotation4 .fromVectors (Vector3 .Z_AXIS, Vector3 .NEGATIVE_Z_AXIS), // front
+         Rotation4 .fromVectors (Vector3 .Z_AXIS, Vector3 .Z_AXIS),          // back
+         Rotation4 .fromVectors (Vector3 .Z_AXIS, Vector3 .X_AXIS),          // left
+         Rotation4 .fromVectors (Vector3 .Z_AXIS, Vector3 .NEGATIVE_X_AXIS), // right
+         Rotation4 .fromVectors (Vector3 .Z_AXIS, Vector3 .NEGATIVE_Y_AXIS), // top
+         Rotation4 .fromVectors (Vector3 .Z_AXIS, Vector3 .Y_AXIS),          // bottom
       ];
 
       // Negated scales of the texture cube.
@@ -154,8 +158,9 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
          const
             dependentRenderer  = this .dependentRenderers .get (renderObject),
             browser            = this .getBrowser (),
-            layer              = renderObject .getLayer (),
             gl                 = browser .getContext (),
+            layer              = renderObject .getLayer (),
+            viewport           = this .viewport,
             background         = dependentRenderer .getBackground (),
             navigationInfoNode = dependentRenderer .getNavigationInfo (),
             viewpointNode      = dependentRenderer .getViewpoint (),
@@ -170,7 +175,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
          this .setTransparent (background .isTransparent ());
 
          dependentRenderer .setFramebuffer (this .frameBuffer);
-         dependentRenderer .getViewVolumes () .push (viewVolume .set (projectionMatrix, this .viewport, this .viewport));
+         dependentRenderer .getViewVolumes () .push (viewVolume .set (projectionMatrix, viewport, viewport));
          dependentRenderer .getProjectionMatrix () .push (projectionMatrix);
 
          gl .bindTexture (this .getTarget (), this .getTexture ());
@@ -179,8 +184,8 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
 
          for (let i = 0; i < 6; ++ i)
          {
-            gl .viewport (... this .viewport);
-            gl .scissor (... this .viewport);
+            gl .viewport (... viewport);
+            gl .scissor (... viewport);
             gl .clearColor (0, 0, 0, 0);
             gl .clear (gl .COLOR_BUFFER_BIT); // Always clear, X3DBackground could be transparent!
 
@@ -240,8 +245,11 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
    {
       X3DEnvironmentTextureNode .prototype .setShaderUniforms .call (this, gl, channel);
 
-      if (this .textureRenderingPass)
-         gl .viewport (0, 0, 0, 0); // Hide object by making viewport zero size.
+      if (!this .textureRenderingPass)
+         return;
+
+      // Hide object by making scissor zero size.
+      gl .scissor (0, 0, 0, 0);
    },
 });
 

@@ -13,9 +13,9 @@ tags: [BlendMode, X_ITE]
 
 ## Overview
 
-BlendMode controls how pixels of an objects are drawn. Pixels can be drawn using a function that blends the incoming (source) RGBA values with the RGBA values that are already in the frame buffer (the destination values). BlendMode is an X3DAppearanceChildNode node that handles blend operations.
+**BlendMode** controls how pixels of an objects are drawn. Pixels can be drawn using a function that blends the incoming (source) RGBA values with the RGBA values that are already in the frame buffer (the destination values). **BlendMode** is an X3DAppearanceChildNode node that handles blend operations.
 
-The BlendMode node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and its default container field is *blendMode.* It is available in X_ITE.
+The **BlendMode** node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) component and requires at least support level **1,** its default container field is *blendMode.* It is available from X3D version 3.3 or higher.
 
 >**Info:** Please note that this node is still **experimental**, i.e. the functionality of this node may change in future versions of X_ITE.
 {: .prompt-info }
@@ -35,12 +35,12 @@ The BlendMode node belongs to the [X_ITE](/x_ite/components/overview/#x_ite) com
 | ---- | ----------- | ---- | ------------- |
 | SFNode | [in, out] | [metadata](#fields-metadata) | NULL |
 | SFColorRGBA | [in, out] | [blendColor](#fields-blendColor) | 0 0 0 0 |
-| SFString | [in, out] | [sourceColorFactor](#fields-sourceColorFactor) | "SRC |
+| SFString | [in, out] | [sourceColorFactor](#fields-sourceColorFactor) | "SRC_ALPHA" |
 | SFString | [in, out] | [sourceAlphaFactor](#fields-sourceAlphaFactor) | "ONE" |
-| SFString | [in, out] | [destinationColorFactor](#fields-destinationColorFactor) | "ONE |
-| SFString | [in, out] | [destinationAlphaFactor](#fields-destinationAlphaFactor) | "ONE |
-| SFString | [in, out] | [colorEquation](#fields-colorEquation) | "FUNC |
-| SFString | [in, out] | [alphaEquation](#fields-alphaEquation) | "FUNC |
+| SFString | [in, out] | [destinationColorFactor](#fields-destinationColorFactor) | "ONE_MINUS_SRC_ALPHA" |
+| SFString | [in, out] | [destinationAlphaFactor](#fields-destinationAlphaFactor) | "ONE_MINUS_SRC_ALPHA" |
+| SFString | [in, out] | [colorEquation](#fields-colorEquation) | "FUNC_ADD" |
+| SFString | [in, out] | [alphaEquation](#fields-alphaEquation) | "FUNC_ADD" |
 {: .fields }
 
 ### SFNode [in, out] **metadata** NULL <small>[X3DMetadataObject]</small>
@@ -97,7 +97,7 @@ Specifies how the alpha destination blending factors are computed.
 ### SFString [in, out] **colorEquation** "FUNC_ADD"
 {: #fields-colorEquation }
 
-Specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be:
+Specifies the RGB blend equation, how the red, green, and blue components of the source and destination colors are combined. It must be one of:
 
 - FUNC_ADD
 - FUNC_SUBTRACT
@@ -106,7 +106,7 @@ Specifies the RGB blend equation, how the red, green, and blue components of the
 ### SFString [in, out] **alphaEquation** "FUNC_ADD"
 {: #fields-alphaEquation }
 
-Specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be:
+Specifies the alpha blend equation, how the alpha component of the source and destination colors are combined. It must be one of:
 
 - FUNC_ADD
 - FUNC_SUBTRACT

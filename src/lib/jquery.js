@@ -31,16 +31,42 @@ Object .assign ($,
             console .error (error);
       }
    },
-   ungzip (arrayBuffer)
+   /**
+    * Decompresses an ArrayBuffer or Blob and returns an ArrayBuffer.
+    *
+    * @param {ArrayBuffer | Blob} data
+    * @returns ArrayBuffer
+    */
+   async gunzip (data)
    {
+      const
+         blob  = data instanceof Blob ? data : new Blob ([data]),
+         magic = await blob .slice (0, 2) .arrayBuffer ();
+
+      if (!$.isGzip (magic))
+         return await blob .arrayBuffer ();
+
       try
       {
-         return pako .ungzip (arrayBuffer, { to: "raw" }) .buffer;
+         const
+            inputStream  = blob .stream (),
+            outputStream = inputStream .pipeThrough (new DecompressionStream ("gzip"));
+
+         return await new Response (outputStream) .arrayBuffer ();
       }
-      catch (exception)
+      catch
       {
-         return arrayBuffer;
+         return await blob .arrayBuffer ();
       }
+   },
+   isGzip (arrayBuffer)
+   {
+      if (arrayBuffer .byteLength < 2)
+         return false;
+
+      const bytes = new Uint8Array (arrayBuffer);
+
+      return bytes [0] === 0x1f && bytes [1] === 0x8b;
    },
 });
 

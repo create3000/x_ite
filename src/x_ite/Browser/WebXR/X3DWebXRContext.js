@@ -508,7 +508,7 @@ Object .assign (X3DWebXRContext .prototype,
                   .assign (matrix)
                   .multRight (viewMatrix)
                   .translate (hit .originalPoint)
-                  .rotate (hitRotation .setFromToVec (Vector3 .Z_AXIS, hit .originalNormal));
+                  .rotate (hitRotation .setVectors (Vector3 .Z_AXIS, hit .originalNormal));
 
                this [_inputPoint] .display (radius, color, 0.3, 0.8, inputRayMatrix, projectionMatrix, frameBuffer);
             }

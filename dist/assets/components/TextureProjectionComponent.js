@@ -1,5 +1,5 @@
-/* X_ITE v15.0.2 */
-const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D-15.0.2")];
+/* X_ITE v15.1.7 */
+const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
 /******/ 	// The require scope
@@ -283,7 +283,7 @@ Object .assign (TextureProjectorContainer .prototype,
          modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
          invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (this .global ? modelMatrix : (external_X_ITE_X3D_Matrix4_default()).IDENTITY);
 
-      this .rotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, this .direction .assign (lightNode .getDirection ()) .negate ());
+      this .rotation .setVectors ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, this .direction .assign (lightNode .getDirection ()) .negate ());
       lightNode .straightenHorizon (this .rotation);
 
       invTextureSpaceMatrix .translate (lightNode .getLocation ());
@@ -492,7 +492,7 @@ Object .assign (TextureProjectorParallelContainer .prototype,
          modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
          invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (this .global ? modelMatrix : (external_X_ITE_X3D_Matrix4_default()).IDENTITY);
 
-      this .rotation .setFromToVec ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, this .direction .assign (lightNode .getDirection ()) .negate ());
+      this .rotation .setVectors ((external_X_ITE_X3D_Vector3_default()).Z_AXIS, this .direction .assign (lightNode .getDirection ()) .negate ());
       lightNode .straightenHorizon (this .rotation);
 
       invTextureSpaceMatrix .translate (lightNode .getLocation ());

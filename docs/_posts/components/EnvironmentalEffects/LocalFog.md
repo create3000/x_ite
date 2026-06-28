@@ -13,9 +13,9 @@ tags: [LocalFog, EnvironmentalEffects]
 
 ## Overview
 
-LocalFog simulates atmospheric effects by blending distant objects with fog color. LocalFog effects occur around the local transformation center, rather than bound to the viewer. The nearest LocalFog node within range takes precedence over other LocalFog and Fog nodes.
+**LocalFog** simulates atmospheric effects by blending distant objects with fog color. **LocalFog** effects occur around the local transformation center, rather than bound to the viewer. The nearest **LocalFog** node within range takes precedence over other **LocalFog** and [Fog](/x_ite/components/environmentaleffects/fog/) nodes.
 
-The LocalFog node belongs to the [EnvironmentalEffects](/x_ite/components/overview/#environmentaleffects) component and requires at least support level **4,** its default container field is *children.* It is available from X3D version 3.0 or higher.
+The **LocalFog** node belongs to the [EnvironmentalEffects](/x_ite/components/overview/#environmentaleffects) component and requires at least support level **4,** its default container field is *children.* It is available from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -95,13 +95,13 @@ Distance in meters where objects are totally obscured by the fog, using local co
 
 ### Hints
 
-- LocalFog effects are based on its position in the world, as given by current transformation hierarchy.
-- LocalFog effects remain independent of current view location.
+- **LocalFog** effects are based on its position in the world, as given by current transformation hierarchy.
+- **LocalFog** effects remain independent of current view location.
 
 ### Warnings
 
-- LocalFog only affects geometry within the same scene subgraph.
-- LocalFog is not a bindable node.
+- **LocalFog** only affects geometry within the same scene subgraph.
+- **LocalFog** is not a bindable node.
 
 ## Example
 

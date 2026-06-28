@@ -13,9 +13,9 @@ tags: [Color, Rendering, VRML]
 
 ## Overview
 
-Color node defines a set of RGB color values that apply either to a sibling Coordinate or CoordinateDouble node, or else to a parent ElevationGrid node. Color is only used by ElevationGrid, IndexedFaceSet, IndexedLineSet, LineSet, PointSet, Triangle* and IndexedTriangle* nodes.
+**Color** node defines a set of RGB color values that apply either to a sibling [Coordinate](/x_ite/components/rendering/coordinate/) or [CoordinateDouble](/x_ite/components/rendering/coordinatedouble/) node, or else to a parent [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/) node. **Color** is only used by [ElevationGrid](/x_ite/components/geometry3d/elevationgrid/), [IndexedFaceSet](/x_ite/components/geometry3d/indexedfaceset/), [IndexedLineSet](/x_ite/components/rendering/indexedlineset/), [LineSet](/x_ite/components/rendering/lineset/), [PointSet](/x_ite/components/rendering/pointset/), Triangle* and IndexedTriangle* nodes.
 
-The Color node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **1,** its default container field is *color.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
+The **Color** node belongs to the [Rendering](/x_ite/components/overview/#rendering) component and requires at least support level **1,** its default container field is *color.* It is available since VRML 2.0 and from X3D version 3.0 or higher.
 
 ## Hierarchy
 
@@ -53,7 +53,7 @@ The *color* field defines an array of 3-tuple RGB colors.
 ### Hints
 
 - Colors are often controlled by [Material](/x_ite/components/shape/material/) instead.
-- [X3D Scene Authoring Hints, Color](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
+- [X3D Scene Authoring Hints, **Color**](https://www.web3d.org/x3d/content/examples/X3dSceneAuthoringHints.html#Color)
 
 ## Example
 

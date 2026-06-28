@@ -44,6 +44,7 @@ class X3DCanvasElement extends HTMLElement
          "debug",
          "displayColorSpace",
          "exposure",
+         "extensions",
          "logarithmicDepthBuffer",
          "maximumFrameRate",
          "multisampling",

@@ -256,12 +256,12 @@ Object .assign (Object .setPrototypeOf (OBJParser .prototype, X3DParser .prototy
       try
       {
          const
-            scene       = this .getExecutionContext (),
-            url         = new URL (path, scene .getBaseURL ()),
-            response    = await fetch (url),
-            arrayBuffer = await response .arrayBuffer (),
-            input       = $.decodeText ($.ungzip (arrayBuffer)),
-            parser      = new MaterialParser (scene, input);
+            scene    = this .getExecutionContext (),
+            url      = new URL (path, scene .getBaseURL ()),
+            response = await fetch (url),
+            blob     = await response .blob (),
+            input    = $.decodeText (await $.gunzip (blob)),
+            parser   = new MaterialParser (scene, input);
 
          parser .parse ();
 

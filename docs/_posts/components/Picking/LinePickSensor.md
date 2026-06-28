@@ -13,9 +13,9 @@ tags: [LinePickSensor, Picking]
 
 ## Overview
 
-LinePickSensor uses one or more pickingGeometry line segments to compute intersections with pickTarget shapes. As each line intersection generates a known point in space, useful event information is returned including normal, geometry and texCoord values.
+**LinePickSensor** uses one or more pickingGeometry line segments to compute intersections with pickTarget shapes. As each line intersection generates a known point in space, useful event information is returned including normal, geometry and texCoord values.
 
-The LinePickSensor node belongs to the [Picking](/x_ite/components/overview/#picking) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
+The **LinePickSensor** node belongs to the [Picking](/x_ite/components/overview/#picking) component and requires at least support level **1,** its default container field is *children.* It is available from X3D version 3.2 or higher.
 
 ## Hierarchy
 
@@ -35,7 +35,7 @@ The LinePickSensor node belongs to the [Picking](/x_ite/components/overview/#pic
 | SFString | [in, out] | [description](#fields-description) | "" |
 | SFBool | [in, out] | [enabled](#fields-enabled) | TRUE |
 | MFString | [in, out] | [objectType](#fields-objectType) | "ALL" |
-| SFString | [in, out] | [matchCriterion](#fields-matchCriterion) | "MATCH |
+| SFString | [in, out] | [matchCriterion](#fields-matchCriterion) | "MATCH_ANY" |
 | SFString | [ ] | [intersectionType](#fields-intersectionType) | "BOUNDS" |
 | SFString | [ ] | [sortOrder](#fields-sortOrder) | "CLOSEST" |
 | SFNode | [in, out] | [pickingGeometry](#fields-pickingGeometry) | NULL |
@@ -173,7 +173,7 @@ Output event containing the node or nodes that have been found to intersect with
 
 - Sort order for line picking is based on each pair of coordinates that defining a line segment, with first declared vertex of the segment defined to be the start of the line to which the intersection points are closest.
 - [When the picking line segment intersects a coplanar polygon, computed intersection point(s) are illustrated in Figure 38.1](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/components/picking.html#f-LineIntersection)
-- Picking is performed between rendered frames of the event model. An author sets up the picking request in one frame by placing a LinePickSensor in the desired location. At the start of the next frame, any picking intersections are reported by the pick sensor.
+- Picking is performed between rendered frames of the event model. An author sets up the picking request in one frame by placing a **LinePickSensor** in the desired location. At the start of the next frame, any picking intersections are reported by the pick sensor.
 - Picking notification is performed at the start of the frame for all enabled pick sensors once all other sensors are processed.
 - [Event timing details are explained in X3D Specification 4.4.8.3 Execution model](https://www.web3d.org/specifications/X3Dv4/ISO-IEC19775-1v4-IS/Part01/concepts.html#ExecutionModel)
 - [IndexedLineSet](/x_ite/components/rendering/indexedlineset/) or Lineset can be used for pickingGeometry node.
