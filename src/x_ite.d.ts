@@ -2278,6 +2278,7 @@ declare namespace X3D
    {
       static readonly type: number;
       static readonly typeName: "SFQuaternion";
+      static readonly ZERO: SFQuaternion;
       static readonly IDENTITY: SFQuaternion;
 
       /**
