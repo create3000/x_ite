@@ -470,7 +470,7 @@ Program scripts can be used to help create 3D user interface widgets:
 
 ## Building a Toggle Switch
 
-A toggle script turns on at 1st touch, off at 2nd:
+A toggle script turns on when 1st touch is done, off at 2nd:
 
 - A [TouchSensor](/x_ite/components/pointingdevicesensor/touchsensor/) node can supply touch events
 
@@ -478,19 +478,16 @@ A toggle script turns on at 1st touch, off at 2nd:
 
 ```x3d
 <Script DEF='Toggle'>
-  <field accessType='inputOutput' type='SFBool' name='on' value='true'/>
   <field accessType='inputOnly' type='SFBool' name='set_active'/>
+  <field accessType='inputOutput' type='SFBool' name='on' value='true'/>
   <field accessType='outputOnly' type='SFBool' name='on_changed'/>
 <![CDATA[ecmascript:
 function set_active (value, time)
 {
-  if (value == false)
+  if (value)
     return;
 
-  if (on == TRUE)
-    on = FALSE;
-  else
-    on = TRUE;
+  on = !on;
 
   on_changed = on;
 }
@@ -502,20 +499,17 @@ function set_active (value, time)
 
 ```vrml
 DEF Toggle Script {
-  inputOutput  SFBool on TRUE
   inputOnly    SFBool set_active
+  inputOutput  SFBool on TRUE
   outputOnly   SFBool on_changed
 
   url "ecmascript:
 function set_active (value, time)
 {
-  if (value == false)
+  if (value)
     return;
 
-  if (on == TRUE)
-    on = FALSE;
-  else
-    on = TRUE;
+  on = !on;
 
   on_changed = on;
 }
