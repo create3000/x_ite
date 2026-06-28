@@ -568,8 +568,10 @@ A color selector script sends an on color on a **TRUE** input, and an off color 
 <![CDATA[ecmascript:
 function set_selection (value, time)
 {
-  if (value == true) color_changed = onColor;
-  else               color_changed = offColor;
+  if (value)
+    color_changed = onColor;
+  else
+    color_changed = offColor;
 }
 ]]>
 </Script>
@@ -587,8 +589,10 @@ DEF ColorSelector Script {
   url "ecmascript:
 function set_selection (value, time)
 {
-  if (value == true) color_changed = onColor;
-  else               color_changed = offColor;
+  if (value)
+    color_changed = onColor;
+  else
+    color_changed = offColor;
 }
 "
 }
