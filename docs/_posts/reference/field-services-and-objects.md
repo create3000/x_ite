@@ -1052,9 +1052,9 @@ print (rotation);
 </pre>
 </x3d-script-area>
 
-#### **fromQuaternion** (*x: number, y: number, z: number, w: number*): SFRotation
+#### **fromQuaternion** (*quaternion: SFQuaternion*): SFRotation
 
-`x`, `y`, `z`, `w` is a quaternion whose value is converted into an SFRotation object.
+*quaternion* is an SFQuaternion object whose value is converted into an SFRotation object.
 
 ### Instance Creation Method(s)
 
@@ -1129,9 +1129,9 @@ Returns the axis of rotation as an SFVec3f object.
 
 Returns the rotation matrix as an SFMatrix3f object.
 
-#### **getQuaternion** (): number []
+#### **getQuaternion** (): SFQuaternion
 
-Returns the underlying quaternion as Array with the four values [x, y, z, w].
+Returns the rotation as an SFQuaternion object.
 
 #### **inverse** (): SFRotation
 
@@ -1167,9 +1167,9 @@ Set the axis of rotation to the vector passed in *vec*.
 
 Set the value of this rotation to the rotation matrix passed in *matrix*.
 
-#### **setQuaternion** (*x: number, y: number, z: number, w: number*): void
+#### **setQuaternion** (*quaternion: SFQuaternion*): void
 
-Set the value of this rotation to the quaternion passed in *x, y, z, w*.
+Set the value of this rotation to the quaternion passed in *quaternion*.
 
 #### **slerp** (*destRotation: SFRotation, t: number*): SFRotation
 

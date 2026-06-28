@@ -1,8 +1,8 @@
-import X3DField   from "../Base/X3DField.js";
-import SFVec3     from "./SFVec3.js";
-import SFMatrix3  from "./SFMatrix3.js";
-import Rotation4  from "../../standard/Math/Numbers/Rotation4.js";
-import Quaternion from "../../standard/Math/Numbers/Quaternion.js";
+import X3DField     from "../Base/X3DField.js";
+import SFMatrix3    from "./SFMatrix3.js";
+import SFQuaternion from "./SFQuaternion.js";
+import SFVec3       from "./SFVec3.js";
+import Rotation4    from "../../standard/Math/Numbers/Rotation4.js";
 
 const
    { SFVec3d, SFVec3f } = SFVec3,
@@ -59,15 +59,10 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
    {
       return SFMatrix3f .fromValue (this .getValue () .getMatrix ());
    },
-   getQuaternion: (() =>
+   getQuaternion ()
    {
-      const q = new Quaternion ();
-
-      return function ()
-      {
-         return [... this .getValue () .getQuaternion (q)];
-      };
-   })(),
+      return SFQuaternion .fromValue (this .getValue () .getQuaternion ());
+   },
    inverse ()
    {
       return SFRotation .fromValue (this .getValue () .copy () .inverse ());
@@ -90,16 +85,11 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
       this .getValue () .setMatrix (matrix .getValue ());
       this .addEvent ();
    },
-   setQuaternion: (() =>
+   setQuaternion (quaternion)
    {
-      const q = new Quaternion ();
-
-      return function (x, y, z, w)
-      {
-         this .getValue () .setQuaternion (q .set (+x, +y, +z, +w));
-         this .addEvent ();
-      };
-   })(),
+      this .getValue () .setQuaternion (quaternion);
+      this .addEvent ();
+   },
    slerp (rotation, t)
    {
       return SFRotation .fromValue (this .getValue () .copy () .slerp (rotation .getValue (), t));
@@ -240,11 +230,11 @@ Object .defineProperties (SFRotation,
    },
    fromQuaternion:
    {
-      value (x, y, z, w)
+      value (quaternion)
       {
          const rotation = new this ();
 
-         rotation .setQuaternion (+x, +y, +z, +w);
+         rotation .setQuaternion (quaternion);
 
          return rotation;
       },

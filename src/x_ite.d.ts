@@ -2387,9 +2387,9 @@ declare namespace X3D
        */
       static fromMatrix (matrix: SFMatrix3d | SFMatrix3f): SFRotation;
       /**
-       * `x`, `y`, `z`, `w` is a quaternion whose value is converted into an SFRotation object.
+       * *quaternion* is an SFQuaternion object whose value is converted into an SFRotation object.
        */
-      static fromQuaternion (x: number, y: number, z: number, w: number): SFRotation;
+      static fromQuaternion (quaternion: SFQuaternion): SFRotation;
 
       /**
        * A new rotation initialized with the identity rotation is created and returned.
@@ -2439,9 +2439,9 @@ declare namespace X3D
        */
       getMatrix (): SFMatrix3f;
       /**
-       * Returns the underlying quaternion as Array with the four values [x, y, z, w].
+       * Returns the rotation as an SFQuaternion object.
        */
-      getQuaternion (): number [];
+      getQuaternion (): SFQuaternion;
       /**
        * Returns a SFRotation object whose value is the inverse of this object's rotation.
        */
@@ -2463,9 +2463,9 @@ declare namespace X3D
        */
       setMatrix (matrix: SFMatrix3d | SFMatrix3f): void;
       /**
-       * Set the value of this rotation to the quaternion passed in *x, y, z, w*.
+       * Set the value of this rotation to the quaternion passed in *quaternion*.
        */
-      setQuaternion (x: number, y: number, z: number, w: number): void;
+      setQuaternion (quaternion: SFQuaternion): void;
       /**
        * Returns a SFRotation whose value is the spherical linear interpolation between this object's rotation and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's rotation. For *t* = 1, the value is *destination*.
        */
