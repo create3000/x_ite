@@ -727,7 +727,8 @@ class Playground
             "PROFILE", "COMPONENT", "UNIT", "META", "EXTERNPROTO", "PROTO", "IS", "DEF", "USE", "ROUTE", "TO", "IMPORT", "EXPORT", "AS", "DESCRIPTION",
          ],
          profiles: Array .from (browser .supportedProfiles, ({name}) => name),
-         components: Array .from (browser .supportedComponents, ({name}) => name) .filter (name => !name .match (/^(WebXR|X_ITE)$/)),
+         components: Array .from (browser .supportedComponents, ({name}) => name)
+            .filter (name => !name .match (/^(WebXR|X_ITE)$/)),
          nodes: Array .from (browser .concreteNodes, ({typeName}) => typeName),
          accessTypes: [
             // X3D
@@ -735,7 +736,8 @@ class Playground
             // VRML
             "field", "eventIn", "eventOut", "exposedField",
          ],
-         fieldTypes: Array .from (browser .fieldTypes, ({typeName}) => typeName),
+         fieldTypes: Array .from (browser .fieldTypes, ({typeName}) => typeName)
+            .filter (typeName => typeName .match (/^[SM]F/)), // Filter legacy VrmlMatrix type.
          id: /[^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*/,
          escapes: /\\(?:[abfnrtv\\"'`]|x[0-9A-Fa-f]{1,4}|u[0-9A-Fa-f]{4}|U[0-9A-Fa-f]{8})/,
          tokenizer: {
