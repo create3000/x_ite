@@ -2348,7 +2348,7 @@ declare namespace X3D
        */
       multQuat (quaternion: SFQuaternion): SFQuaternion;
       /**
-       * Returns a SFVec3d/f whose value is the SFVec3d/f *vec* multiplied by the matrix corresponding to this object's rotation.
+       * Returns a SFVec3d/f whose value is the SFVec3d/f *vec* multiplied by the matrix corresponding to this object's quaternion.
        */
       multVec <T extends SFVec3d | SFVec3f> (vector: T): T;
       /**

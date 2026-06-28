@@ -991,7 +991,7 @@ Returns an SFQuaternion whose value is the object multiplied by the passed SFQua
 
 #### **multVec** (*vec: SFVec3d/f*): SFVec3d/f
 
-Returns a SFVec3f whose value is the SFVec3f *vec* multiplied by the matrix corresponding to this object's rotation.
+Returns a SFVec3f whose value is the SFVec3f *vec* multiplied by the matrix corresponding to this object's quaternion.
 
 #### **negate** (): SFQuaternion
 
