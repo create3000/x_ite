@@ -10,9 +10,9 @@ use JSON::Parse qw(parse_json);
 
 $cwd = getcwd ();
 
-say "Downloading X3dTooltips.html ..." if ! -f "/tmp/tooltips.html" || -M "/tmp/tooltips.html" > 1;
-system "wget -q -O - https://www.web3d.org/x3d/content/X3dTooltips.html > /tmp/tooltips.html"
-   if ! -f "/tmp/tooltips.html" || -M "/tmp/tooltips.html" > 1;
+$downloadTooltips = (! -f "/tmp/tooltips.html" || -M "/tmp/tooltips.html" > 1) || grep /--download-tooltips/, @ARGV;
+say "Downloading X3dTooltips.html ..." if $downloadTooltips;
+system "wget -q -O - https://www.web3d.org/x3d/content/X3dTooltips.html > /tmp/tooltips.html" if $downloadTooltips;
 $tooltips = `cat /tmp/tooltips.html`;
 
 @tooltips = $tooltips =~ m|<td.*?</td.*?>|sgo;

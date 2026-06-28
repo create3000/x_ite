@@ -197,7 +197,7 @@ function release ()
 
    systemSync (`npm run docs:table`);
    systemSync (`npm run docs:components`);
-   systemSync (`npm run docs:nodes`);
+   systemSync (`npm run docs:nodes -- --download-tooltips`);
    systemSync (`npm run docs:reference`);
    systemSync (`npm run glTF:samples`);
 
