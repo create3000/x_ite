@@ -1045,6 +1045,8 @@ Set the value of this quaternion to the rotation matrix passed in *matrix*.
 
 Returns a SFQuaternion whose value is the spherical linear interpolation between this object's quaternion and *destQuaternion* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's quaternion. For *t* = 1, the value is *destQuaternion*.
 
+Both quaternions must be normalized. If either quaternion is not normalized, the result is undefined. The interpolation always follows the shortest path on the unit hypersphere. If the dot product between the two quaternions is negative, the destination quaternion is implicitly negated to ensure the shortest interpolation path.
+
 #### **subtract** (*other: SFQuaternion*): SFVec2d/f
 
 Returns an SFQuaternion whose value is the passed SFQuaternion subtracted, componentwise, from the object.
