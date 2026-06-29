@@ -464,7 +464,7 @@ Object .assign (Quaternion .prototype,
    pow (exponent)
    {
       if (exponent instanceof Quaternion)
-         return this .assign (e .assign (exponent) .multRight (this .log ()) .exp ());
+         return this .assign (t1 .assign (exponent) .multRight (this .log ()) .exp ());
 
       if (this .isReal ())
          return this .set (0, 0, 0, this .w ** exponent);
@@ -635,7 +635,6 @@ const
    t1 = new Quaternion (),
    t2 = new Quaternion (),
    t3 = new Quaternion (),
-   e  = new Quaternion (),
    m  = new Matrix3 ();
 
 export default Quaternion;
