@@ -13,7 +13,7 @@ function QuadSphereOptions (executionContext)
    X3DBaseNode .call (this, executionContext);
 
    this .addChildObjects (X3DConstants .inputOutput, "xDimension", new Fields .SFInt32 (32),
-                          X3DConstants .inputOutput, "yDimension", new Fields .SFInt32 (15))
+                          X3DConstants .inputOutput, "yDimension", new Fields .SFInt32 (15));
 }
 
 Object .assign (Object .setPrototypeOf (QuadSphereOptions .prototype, X3DBaseNode .prototype),

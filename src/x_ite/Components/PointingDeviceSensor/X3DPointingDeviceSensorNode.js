@@ -103,7 +103,7 @@ Object .assign (Object .setPrototypeOf (X3DPointingDeviceSensorNode .prototype, 
       if (active === this ._isActive .getValue ())
          return;
 
-      this ._isActive = active
+      this ._isActive = active;
    },
    set_motion__ (hit)
    { },

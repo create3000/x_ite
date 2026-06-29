@@ -451,6 +451,6 @@ Object .defineProperties (X3DField,
          });
       },
    },
-})
+});
 
 export default X3DField;

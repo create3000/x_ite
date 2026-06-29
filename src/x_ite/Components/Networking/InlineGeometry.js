@@ -145,7 +145,7 @@ Object .assign (Object .setPrototypeOf (InlineGeometry .prototype, X3DGeometryNo
    {
       for (const node of nodes)
       {
-         const geometryNode = this .getGeometryFromNode (node ?.getValue ())
+         const geometryNode = this .getGeometryFromNode (node ?.getValue ());
 
          if (geometryNode)
             return geometryNode;

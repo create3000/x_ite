@@ -60,7 +60,7 @@ Object .assign (X3DLightingContext .prototype,
 
       texture .setup ();
 
-      this [_textures] .set (name, texture)
+      this [_textures] .set (name, texture);
 
       return texture;
    },

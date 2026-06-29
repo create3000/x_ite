@@ -19,8 +19,8 @@ import X3DSoundContext                from "./Sound/X3DSoundContext.js";
 import X3DTexturingContext            from "./Texturing/X3DTexturingContext.js";
 import X3DTimeContext                 from "./Time/X3DTimeContext.js";
 import X3DRoutingContext              from "../Routing/X3DRoutingContext.js";
-import AbstractNodes                  from "../Configuration/AbstractNodes.js"
-import ConcreteNodes                  from "../Configuration/ConcreteNodes.js"
+import AbstractNodes                  from "../Configuration/AbstractNodes.js";
+import ConcreteNodes                  from "../Configuration/ConcreteNodes.js";
 import X3DWorld                       from "../Execution/X3DWorld.js";
 import TraverseType                   from "../Rendering/TraverseType.js";
 import StopWatch                      from "../../standard/Time/StopWatch.js";
@@ -245,7 +245,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowserContext .prototype, X3DBaseNod
 
       // Display
 
-      this [_displayTime] .start ()
+      this [_displayTime] .start ();
       this .addTaintedField (this ._displayEvents);
       this [_processEvents] ();
 

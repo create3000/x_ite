@@ -16,7 +16,7 @@ const HTMLSupport =
       for (const { name, accessType } of fieldDefinitions)
       {
          if (accessType & X3DConstants .initializeOnly)
-            this .addFieldName (name)
+            this .addFieldName (name);
       }
    },
    addNodeTypeName (typeName)

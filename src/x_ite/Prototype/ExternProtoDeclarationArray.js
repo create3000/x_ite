@@ -1,5 +1,5 @@
 import X3DInfoArray              from "../Base/X3DInfoArray.js";
-import X3DExternProtoDeclaration from "./X3DExternProtoDeclaration.js"
+import X3DExternProtoDeclaration from "./X3DExternProtoDeclaration.js";
 
 function ExternProtoDeclarationArray (values = [ ])
 {

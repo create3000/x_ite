@@ -33,7 +33,7 @@ function X3DNBodyCollidableNode (executionContext)
 
    // Members
 
-   this .compoundShape  = new Ammo .btCompoundShape ()
+   this .compoundShape  = new Ammo .btCompoundShape ();
    this .offset         = new Vector3 ();
    this .matrix         = new Matrix4 ();
    this .visibleObjects = [ ];

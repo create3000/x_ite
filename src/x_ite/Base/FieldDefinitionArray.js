@@ -1,5 +1,5 @@
 import X3DInfoArray       from "./X3DInfoArray.js";
-import X3DFieldDefinition from "./X3DFieldDefinition.js"
+import X3DFieldDefinition from "./X3DFieldDefinition.js";
 
 function FieldDefinitionArray (values = [ ])
 {

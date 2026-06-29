@@ -1,5 +1,5 @@
 import X3DInfoArray from "../Base/X3DInfoArray.js";
-import UnitInfo     from "./UnitInfo.js"
+import UnitInfo     from "./UnitInfo.js";
 
 function UnitInfoArray (values = [ ])
 {

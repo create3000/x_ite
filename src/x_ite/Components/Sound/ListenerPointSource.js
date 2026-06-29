@@ -28,7 +28,7 @@ Object .assign (Object .setPrototypeOf (ListenerPointSource .prototype, X3DSound
    {
       X3DSoundNode .prototype .initialize .call (this);
 
-      this ._enabled          .addInterest ("set_trackCurrentView__", this)
+      this ._enabled          .addInterest ("set_trackCurrentView__", this);
       this ._trackCurrentView .addInterest ("set_trackCurrentView__", this);
 
       this .set_trackCurrentView__ ();

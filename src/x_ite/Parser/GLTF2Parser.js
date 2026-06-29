@@ -1056,7 +1056,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
    {
       const images = [ ];
 
-      this .textureImageExtensionsObject (texture .extensions, images)
+      this .textureImageExtensionsObject (texture .extensions, images);
 
       images .push (this .images [texture .source]);
 
@@ -1653,7 +1653,7 @@ Object .assign (Object .setPrototypeOf (GLTF2Parser .prototype, X3DParser .proto
          if (this .vectorValue (KHR_texture_transform .offset, translation))
             matrix .translate (vector .set (... translation, 0));
 
-         const angle = this .numberValue (KHR_texture_transform .rotation, 0)
+         const angle = this .numberValue (KHR_texture_transform .rotation, 0);
 
          matrix .rotate (rotation .set (0, 0, -1, angle));
 
@@ -2575,7 +2575,7 @@ function eventsProcessed ()
    },
    skinsHumanoid ()
    {
-      this .skins .forEach (skin => this .skinHumanoid (skin))
+      this .skins .forEach (skin => this .skinHumanoid (skin));
    },
    skinHumanoid: (() =>
    {
@@ -2626,7 +2626,7 @@ function eventsProcessed ()
    })(),
    skinsBBox ()
    {
-      this .skins .forEach (skin => this .skinBBox (skin .humanoidNode))
+      this .skins .forEach (skin => this .skinBBox (skin .humanoidNode));
    },
    skinBBox (humanoidNode)
    {
@@ -4120,7 +4120,7 @@ function eventsProcessed ()
 
             const
                length  = Math .floor (times .at (-1) * SAMPLES_PER_SECOND),
-               samples = Array .from ({ length: length }, (_, i) => i / (length - 1) * times .at (-1))
+               samples = Array .from ({ length: length }, (_, i) => i / (length - 1) * times .at (-1));
 
             for (const t of samples)
             {
@@ -4212,7 +4212,7 @@ function eventsProcessed ()
 
             const
                length  = Math .floor (times .at (-1) * SAMPLES_PER_SECOND),
-               samples = Array .from ({ length: length }, (_, i) => i / (length - 1) * times .at (-1))
+               samples = Array .from ({ length: length }, (_, i) => i / (length - 1) * times .at (-1));
 
             for (const t of samples)
             {
@@ -4305,7 +4305,7 @@ function eventsProcessed ()
 
             const
                length  = Math .floor (times .at (-1) * SAMPLES_PER_SECOND),
-               samples = Array .from ({ length: length }, (_, i) => i / (length - 1) * times .at (-1))
+               samples = Array .from ({ length: length }, (_, i) => i / (length - 1) * times .at (-1));
 
             // KeyValue
 

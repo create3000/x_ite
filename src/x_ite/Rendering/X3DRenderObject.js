@@ -168,7 +168,7 @@ Object .assign (X3DRenderObject .prototype,
             renderCount = 0;
 
          this .renderCount = ++ renderCount;
-      }
+      };
    })(),
    getFramebuffers ()
    {

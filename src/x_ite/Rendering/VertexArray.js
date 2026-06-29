@@ -33,7 +33,7 @@ Object .assign (VertexArray .prototype,
 
          const vertexArray = gl .createVertexArray ();
 
-         vertexArrays .set (program, vertexArray)
+         vertexArrays .set (program, vertexArray);
 
          gl .bindVertexArray (vertexArray);
 

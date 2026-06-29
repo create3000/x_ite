@@ -202,7 +202,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             texture2D: gl .getUniformLocation (program, `x3d_Texture2D[${i}]`),
             texture3D: gl .getUniformLocation (program, `x3d_Texture3D[${i}]`),
             textureCube: this .getUniformLocation (gl, program, `x3d_TextureCube[${i}]`, `x3d_CubeMapTexture[${i}]`),
-         }
+         };
 
          this .x3d_MultiTexture [i] = {
             mode:      gl .getUniformLocation (program, `x3d_MultiTexture[${i}].mode`),
@@ -218,7 +218,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             params:    gl .getUniformLocation (program, `x3d_TextureProjector[${i}].params`),
             matrix:    gl .getUniformLocation (program, `x3d_TextureProjector[${i}].matrix`),
             texture:   gl .getUniformLocation (program, `x3d_TextureProjectorTexture[${i}]`),
-         }
+         };
       }
 
       for (let i = 0; i < maxTextureTransforms; ++ i)
@@ -1086,7 +1086,7 @@ Object .assign (X3DProgrammableShaderObject .prototype,
       gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
       gl .enableVertexAttribArray (location);
       gl .vertexAttribPointer (location, 4, gl .FLOAT, false, stride, offset);
-      gl .vertexAttribDivisor (location, divisor)
+      gl .vertexAttribDivisor (location, divisor);
    },
    enableTexCoordAttribute (gl, buffers, stride, offset, divisor = 0)
    {

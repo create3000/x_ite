@@ -21,7 +21,7 @@ function BrowserOptions (executionContext)
    const browser = this .getBrowser ();
 
    this .localStorage     = browser .getLocalStorage () .addNameSpace ("BrowserOptions.");
-   this .textureQuality   = TextureQuality .MEDIUM
+   this .textureQuality   = TextureQuality .MEDIUM;
    this .primitiveQuality = PrimitiveQuality .MEDIUM;
    this .shading          = Shading .GOURAUD;
 }

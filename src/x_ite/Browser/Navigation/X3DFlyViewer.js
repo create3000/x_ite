@@ -6,7 +6,7 @@ import Rotation4         from "../../../standard/Math/Numbers/Rotation4.js";
 
 void (typeof jquery_mousewheel); // import plugin
 
-const macOS = /Mac OS X/i .test (navigator .userAgent)
+const macOS = /Mac OS X/i .test (navigator .userAgent);
 
 const
    SPEED_FACTOR           = 0.007,

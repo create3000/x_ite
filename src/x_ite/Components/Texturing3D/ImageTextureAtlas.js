@@ -162,7 +162,7 @@ Object .assign (Object .setPrototypeOf (ImageTextureAtlas .prototype, X3DTexture
       catch (error)
       {
          if (DEVELOPMENT)
-            console .log (error)
+            console .log (error);
 
          // Catch security error from cross origin requests.
          this .setError ({ type: error .message });

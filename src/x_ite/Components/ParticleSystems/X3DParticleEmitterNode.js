@@ -247,7 +247,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       key += geometryType;
       key += createParticles && this .on ? 1 : 0;
       key += ".";
-      key += numColors
+      key += numColors;
       key += ".";
       key += numTexCoords;
       key += ".";
@@ -255,7 +255,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       key += ".";
       key += numScales;
       key += ".";
-      key += numForces
+      key += numForces;
       key += ".";
       key += boundedHierarchyRoot;
 
@@ -269,7 +269,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          gl      = browser .getContext (),
          defines = this .defines .slice ();
 
-      defines .push (`#define X3D_GEOMETRY_TYPE ${particleSystem .geometryType}`)
+      defines .push (`#define X3D_GEOMETRY_TYPE ${particleSystem .geometryType}`);
       defines .push (`${particleSystem .createParticles && this .on ? "#define X3D_CREATE_PARTICLES" : ""}`);
       defines .push (`#define X3D_NUM_COLORS ${particleSystem .numColors}`);
       defines .push (`#define X3D_NUM_TEX_COORDS ${particleSystem .numTexCoords}`);

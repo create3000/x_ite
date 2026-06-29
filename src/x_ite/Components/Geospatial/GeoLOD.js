@@ -149,7 +149,7 @@ Object .assign (Object .setPrototypeOf (GeoLOD .prototype, X3DChildNode .prototy
          return previous + (childInlineNode .checkLoadState () === X3DConstants .COMPLETE_STATE ||
             childInlineNode .checkLoadState () === X3DConstants .FAILED_STATE);
       },
-      0)
+      0);
 
       if (loaded !== 4)
          return;

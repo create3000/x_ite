@@ -206,7 +206,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       // Process child nodes
 
       for (const childNode of xmlElement .childNodes)
-         this .x3dElementChildHead (childNode)
+         this .x3dElementChildHead (childNode);
 
       if (!this .xml)
          this .headElement (xmlElement);
@@ -216,7 +216,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
          browser .loadComponents (scene) .then (() =>
          {
             for (const childNode of xmlElement .childNodes)
-               this .x3dElementChildScene (childNode)
+               this .x3dElementChildScene (childNode);
 
             this .setupNodes ();
             this .resolve (scene);
@@ -226,7 +226,7 @@ Object .assign (Object .setPrototypeOf (XMLParser .prototype, X3DParser .prototy
       else
       {
          for (const childNode of xmlElement .childNodes)
-            this .x3dElementChildScene (childNode)
+            this .x3dElementChildScene (childNode);
 
          this .setupNodes ();
       }

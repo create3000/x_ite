@@ -21,7 +21,7 @@ function MultiTexture (executionContext)
 
    const browser = this .getBrowser ();
 
-   this .maxTextures  = browser .getMaxTextures ()
+   this .maxTextures  = browser .getMaxTextures ();
    this .color        = new Float32Array (4);
    this .modes        = [ ];
    this .alphaModes   = [ ];

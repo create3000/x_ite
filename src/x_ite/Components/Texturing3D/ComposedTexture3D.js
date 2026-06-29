@@ -56,7 +56,7 @@ Object .assign (Object .setPrototypeOf (ComposedTexture3D .prototype, X3DTexture
    },
    update ()
    {
-      const textureNodes = this .textureNodes
+      const textureNodes = this .textureNodes;
 
       if (textureNodes .length === 0 || !this .isComplete ())
       {

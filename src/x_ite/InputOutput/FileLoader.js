@@ -8,7 +8,7 @@ import DEVELOPMENT  from "../DEVELOPMENT.js";
 const foreignMimeType = new Set ([
    "text/html",
    "application/xhtml+xml",
-])
+]);
 
 function FileLoader (node, { cacheScene = false, dataAsString = true } = { })
 {

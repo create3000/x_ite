@@ -6,7 +6,7 @@ function ArcClose2DOptions (executionContext)
 {
    X3DBaseNode .call (this, executionContext);
 
-   this .addChildObjects (X3DConstants .inputOutput, "dimension", new Fields .SFInt32 (40))
+   this .addChildObjects (X3DConstants .inputOutput, "dimension", new Fields .SFInt32 (40));
 }
 
 Object .setPrototypeOf (ArcClose2DOptions .prototype, X3DBaseNode .prototype);

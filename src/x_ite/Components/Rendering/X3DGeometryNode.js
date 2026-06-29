@@ -101,7 +101,7 @@ Object .defineProperty (X3DGeometryNode, "createArray",
 
       return GeometryArray .create (Type);
    },
-})
+});
 
 Object .assign (Object .setPrototypeOf (X3DGeometryNode .prototype, X3DNode .prototype),
 {

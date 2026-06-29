@@ -35,7 +35,7 @@ const Context =
 
       return gl;
    },
-}
+};
 
 // function check32BitTextures (gl)
 // {

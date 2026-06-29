@@ -1085,7 +1085,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
             throw new Error ("Expected a name for field.");
          }
 
-         this .Id ()
+         this .Id ();
 
          throw new Error (`Unknown event or field type: '${this .result [0]}'.`);
       }
@@ -1111,7 +1111,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
             throw new Error ("Expected a name for field.");
          }
 
-         this .Id ()
+         this .Id ();
 
          throw new Error (`Unknown event or field type: '${this .result [0]}'.`);
       }
@@ -1137,7 +1137,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
             throw new Error ("Expected a name for field.");
          }
 
-         this .Id ()
+         this .Id ();
 
          throw new Error (`Unknown event or field type: '${this .result [0]}'.`);
       }
@@ -1163,7 +1163,7 @@ Object .assign (Object .setPrototypeOf (VRMLParser .prototype, X3DParser .protot
             throw new Error ("Expected a name for field.");
          }
 
-         this .Id ()
+         this .Id ();
 
          throw new Error (`Unknown event or field type: '${this .result [0]}'.`);
       }

@@ -180,7 +180,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       if (this .hasRoutes ())
          return true;
 
-      const executionContext = this .getExecutionContext ()
+      const executionContext = this .getExecutionContext ();
 
       for (const importedNode of executionContext .getImportedNodes ())
       {
@@ -1387,7 +1387,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
       // Remove named node if any.
 
       if (this .getName ())
-         executionContext .removeNamedNode (this .getName ())
+         executionContext .removeNamedNode (this .getName ());
 
       if (executionContext .isScene)
       {
@@ -1422,7 +1422,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             if (!(secondParent instanceof Fields .MFNode))
                continue;
 
-            secondParent .setValue (Array .from (secondParent) .filter (node => node ?.getValue () !== this))
+            secondParent .setValue (Array .from (secondParent) .filter (node => node ?.getValue () !== this));
          }
       }
 
@@ -1481,7 +1481,7 @@ Object .defineProperties (X3DNode,
          };
       },
    },
-})
+});
 
 Object .defineProperties (X3DNode, X3DNode .getStaticProperties ("X3DNode", "Core", 1));
 

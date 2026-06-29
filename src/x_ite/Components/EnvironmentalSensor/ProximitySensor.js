@@ -80,7 +80,7 @@ Object .assign (Object .setPrototypeOf (ProximitySensor .prototype, X3DEnvironme
                const
                   browser        = this .getBrowser (),
                   viewpointNode  = this .layerNode .getViewpoint (),
-                  invModelMatrix = this .modelMatrix .inverse ()
+                  invModelMatrix = this .modelMatrix .inverse ();
 
                centerOfRotationMatrix
                   .assign (viewpointNode .getModelMatrix ())

@@ -75,7 +75,7 @@ Object .assign (DataStorage .prototype,
       for (const key of Object .keys (storage))
       {
          if (key .startsWith (namespace))
-            storage .removeItem (key)
+            storage .removeItem (key);
       }
    },
 });

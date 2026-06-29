@@ -11,7 +11,7 @@ import Rotation4    from "../../standard/Math/Numbers/Rotation4.js";
 import Matrix3      from "../../standard/Math/Numbers/Matrix3.js";
 import Matrix4      from "../../standard/Math/Numbers/Matrix4.js";
 import Complex      from "../../standard/Math/Numbers/Complex.js";
-import Box2         from "../../standard/Math/Geometry/Box2.js"
+import Box2         from "../../standard/Math/Geometry/Box2.js";
 import Bezier       from "../../standard/Math/Algorithms/Bezier.js";
 import MatrixStack  from "../../standard/Math/Utility/MatrixStack.js";
 
@@ -109,7 +109,7 @@ function SVGParser (scene)
 
    // Constants
 
-   const browser = scene .getBrowser ()
+   const browser = scene .getBrowser ();
 
    switch (browser .getBrowserOption ("PrimitiveQuality"))
    {
@@ -2110,7 +2110,7 @@ Object .assign (Object .setPrototypeOf (SVGParser .prototype, X3DParser .prototy
       this .styles .push (style);
 
       for (const attribute of xmlElement .attributes)
-         this .parseStyle (attribute .name, attribute .value)
+         this .parseStyle (attribute .name, attribute .value);
 
       // Style attribute has higher precedence.
 
@@ -2724,6 +2724,6 @@ Object .defineProperty (SVGParser .prototype, "style",
    {
       return this .styles .at (-1);
    },
-})
+});
 
 export default SVGParser;

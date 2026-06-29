@@ -1,5 +1,5 @@
 import X3DInfoArray        from "../Base/X3DInfoArray.js";
-import X3DProtoDeclaration from "./X3DProtoDeclaration.js"
+import X3DProtoDeclaration from "./X3DProtoDeclaration.js";
 
 function ProtoDeclarationArray (values = [ ])
 {

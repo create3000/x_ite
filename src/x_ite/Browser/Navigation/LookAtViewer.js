@@ -7,7 +7,7 @@ import Rotation4         from "../../../standard/Math/Numbers/Rotation4.js";
 
 void (typeof jquery_mousewheel); // import plugin
 
-const macOS = /Mac OS X/i .test (navigator .userAgent)
+const macOS = /Mac OS X/i .test (navigator .userAgent);
 
 const
    SCROLL_FACTOR = macOS ? 1 / 120 : 1 / 20,
@@ -439,8 +439,8 @@ Object .assign (Object .setPrototypeOf (LookAtViewer .prototype, X3DViewer .prot
    disconnect ()
    {
       this .orientationChaser      ._value_changed .removeInterest ("set_orientationOffset__", this);
-      this .positionChaser         ._value_changed .removeInterest ("set_positionOffset__",         this)
-      this .centerOfRotationChaser ._value_changed .removeInterest ("set_centerOfRotationOffset__", this)
+      this .positionChaser         ._value_changed .removeInterest ("set_positionOffset__",         this);
+      this .centerOfRotationChaser ._value_changed .removeInterest ("set_centerOfRotationOffset__", this);
    },
    dispose ()
    {

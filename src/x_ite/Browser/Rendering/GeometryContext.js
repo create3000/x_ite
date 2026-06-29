@@ -17,7 +17,7 @@ function GeometryContext (options = { })
       textureCoordinateMapping: new Map (),
       textureCoordinateNode: null,
    },
-   options)
+   options);
 
    this .updateGeometryKey ();
 }

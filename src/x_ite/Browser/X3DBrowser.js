@@ -140,7 +140,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
    },
    getDescription ()
    {
-      return this .getNotification () ._string .getValue ()
+      return this .getNotification () ._string .getValue ();
    },
    setDescription (value)
    {
@@ -279,7 +279,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
                component .push (arg);
 
             else if (typeof arg === "string")
-               component .push (this .getComponent (arg))
+               component .push (this .getComponent (arg));
          }
 
          // Load array of component names.
@@ -581,7 +581,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
             {
                reject (new Error ("Couldn't load X3D file."));
             }
-         })
+         });
       });
    },
    loadURL (url, parameter = new Fields .MFString ())
@@ -744,7 +744,7 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
 
       const parser = new XMLParser (scene);
 
-      parser .setInput (dom)
+      parser .setInput (dom);
 
       await new Promise (parser .parseIntoScene .bind (parser));
 
@@ -868,10 +868,10 @@ Object .assign (Object .setPrototypeOf (X3DBrowser .prototype, X3DBrowserContext
       viewpointNode = X3DCast (X3DConstants .X3DViewpointNode, viewpointNode);
 
       if (!layerNode)
-         throw new Error ("Browser.bindViewpoint: layerNode must be of type X3DLayerNode.")
+         throw new Error ("Browser.bindViewpoint: layerNode must be of type X3DLayerNode.");
 
       if (!viewpointNode)
-         throw new Error ("Browser.bindViewpoint: viewpointNode must be of type X3DViewpointNode.")
+         throw new Error ("Browser.bindViewpoint: viewpointNode must be of type X3DViewpointNode.");
 
       viewpointNode .setVRMLTransition (true);
 

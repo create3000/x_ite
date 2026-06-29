@@ -200,7 +200,7 @@ function uvSeam (i, dimension, points, pointIndex, seamIndex)
    }
 
    if (pointIndex .has (key))
-      seamIndex .set (i, pointIndex .get (key))
+      seamIndex .set (i, pointIndex .get (key));
    else
       pointIndex .set (key, i);
 }

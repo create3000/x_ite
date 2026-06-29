@@ -1,3 +1,3 @@
-import AbstractNodesArray from "./AbstractNodesArray.js"
+import AbstractNodesArray from "./AbstractNodesArray.js";
 
 export default new AbstractNodesArray ();

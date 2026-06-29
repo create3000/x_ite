@@ -160,7 +160,7 @@ Object .assign (X3DTexturingContext .prototype,
    {
       const gl = this .getContext ();
 
-      return gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS)
+      return gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS);
    },
    popGlobalTextureUnit ()
    {

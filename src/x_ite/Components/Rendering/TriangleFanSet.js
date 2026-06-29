@@ -40,7 +40,7 @@ Object .assign (Object .setPrototypeOf (TriangleFanSet .prototype, X3DComposedGe
 
       for (const vertexCount of fanCount)
       {
-         const count = vertexCount - 1
+         const count = vertexCount - 1;
 
          for (let i = 1; i < count; ++ i)
          {

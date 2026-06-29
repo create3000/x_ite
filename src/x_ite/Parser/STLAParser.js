@@ -188,7 +188,7 @@ Object .assign (Object .setPrototypeOf (STLAParser .prototype, X3DParser .protot
    },
    facet (normals, vertices)
    {
-      this .comments ()
+      this .comments ();
 
       if (Grammar .facet .parse (this))
       {

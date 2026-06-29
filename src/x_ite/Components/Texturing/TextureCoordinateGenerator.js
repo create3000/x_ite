@@ -56,7 +56,7 @@ Object .assign (Object .setPrototypeOf (TextureCoordinateGenerator .prototype, X
    })(),
    set_parameter__ ()
    {
-      const length = Math .min (this .parameter .length, this ._parameter .length)
+      const length = Math .min (this .parameter .length, this ._parameter .length);
 
       for (let i = 0; i < length; ++ i)
          this .parameter [i] = this ._parameter [i];

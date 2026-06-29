@@ -11,7 +11,7 @@ function IcoSphereOptions (executionContext)
    X3DBaseNode .call (this, executionContext);
 
    this .addChildObjects (X3DConstants .inputOutput, "type",  new Fields .SFString ("ICOSAHEDRON"),
-                          X3DConstants .inputOutput, "order", new Fields .SFInt32 (2))
+                          X3DConstants .inputOutput, "order", new Fields .SFInt32 (2));
 }
 
 Object .assign (Object .setPrototypeOf (IcoSphereOptions .prototype, X3DBaseNode .prototype),

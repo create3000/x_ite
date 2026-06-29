@@ -154,14 +154,14 @@ Object .assign (Object .setPrototypeOf (X3DChaserNode .prototype, X3DFollowerNod
 
             for (let i = numBuffers - 1; i >= seconds; -- i)
             {
-               this .assign (buffer, i, buffer [i - seconds])
+               this .assign (buffer, i, buffer [i - seconds]);
             }
 
             for (let i = 0; i < seconds; ++ i)
             {
                const alpha = i / seconds;
 
-               this .assign (buffer, i, this .interpolate (this .destination, buffer [seconds], alpha))
+               this .assign (buffer, i, this .interpolate (this .destination, buffer [seconds], alpha));
             }
          }
          else

@@ -9,7 +9,7 @@ function X3DWorld (executionContext)
 {
    X3DBaseNode .call (this, executionContext);
 
-   this .addType (X3DConstants .X3DWorld)
+   this .addType (X3DConstants .X3DWorld);
 
    this .addChildObjects (X3DConstants .outputOnly, "activeLayer", new SFNode (this .layer0));
 

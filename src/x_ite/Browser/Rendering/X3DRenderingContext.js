@@ -308,7 +308,7 @@ Object .assign (X3DRenderingContext .prototype,
             this ._viewport .removeFieldCallback (key);
 
             resolve ();
-         }
+         };
 
          this .getElement () .css ({ "width": `${width}px`, "height": `${height}px` });
 

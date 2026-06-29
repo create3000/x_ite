@@ -116,7 +116,7 @@ Object .assign (Object .setPrototypeOf (BindableList .prototype, X3DBaseNode .pr
 
       // Update stack.
 
-      stack .update (layerNode, removedNodes, changedNodes)
+      stack .update (layerNode, removedNodes, changedNodes);
 
       changedNodes .length = 0;
       removedNodes .length = 0;

@@ -13,7 +13,7 @@ function CylinderOptions (executionContext)
 {
    X3DBaseNode .call (this, executionContext);
 
-   this .addChildObjects (X3DConstants .inputOutput, "dimension", new Fields .SFInt32 (20))
+   this .addChildObjects (X3DConstants .inputOutput, "dimension", new Fields .SFInt32 (20));
 }
 
 Object .assign (Object .setPrototypeOf (CylinderOptions .prototype, X3DBaseNode .prototype),

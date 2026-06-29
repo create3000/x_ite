@@ -16,22 +16,22 @@ function IcoSphere (type, order, radius)
 IcoSphere .prototype .getCoordIndex = function ()
 {
    return this .coordIndex;
-}
+};
 
 IcoSphere .prototype .getPoint = function ()
 {
    return this .point;
-}
+};
 
 IcoSphere .prototype .getTexCoordIndex = function ()
 {
    return this .texCoordIndex;
-}
+};
 
 IcoSphere .prototype .getTexPoint = function ()
 {
    return this .texPoint;
-}
+};
 
 IcoSphere .prototype .coord = function ()
 {
@@ -47,7 +47,7 @@ IcoSphere .prototype .coord = function ()
       this .icosahedron ();
 
    this .refineTriangles ();
-}
+};
 
 IcoSphere .prototype .octahedron = function ()
 {
@@ -72,7 +72,7 @@ IcoSphere .prototype .octahedron = function ()
    this .addTriangle (coordIndex, 5, 3, 2);
    this .addTriangle (coordIndex, 5, 4, 3);
    this .addTriangle (coordIndex, 5, 1, 4);
-}
+};
 
 IcoSphere .prototype .icosahedron = function ()
 {
@@ -131,7 +131,7 @@ IcoSphere .prototype .icosahedron = function ()
    this .addTriangle (coordIndex,  6,  2, 10);
    this .addTriangle (coordIndex,  8,  6,  7);
    this .addTriangle (coordIndex,  9,  8,  1);
-}
+};
 
 IcoSphere .prototype .refineTriangles = function ()
 {
@@ -159,14 +159,14 @@ IcoSphere .prototype .refineTriangles = function ()
    }
 
    this .coordIndex = coordIndex;
-}
+};
 
 IcoSphere .prototype .addPoint = function (x, y, z)
 {
    const index = this .point .length;
    this .point [index] = new Fields .SFVec3f (x, y, z) .normalize ();
    return index;
-}
+};
 
 IcoSphere .prototype .addTriangle = function (coordIndex, i1, i2, i3)
 {
@@ -174,7 +174,7 @@ IcoSphere .prototype .addTriangle = function (coordIndex, i1, i2, i3)
    coordIndex [coordIndex .length] = i2;
    coordIndex [coordIndex .length] = i3;
    coordIndex [coordIndex .length] = -1;
-}
+};
 
 IcoSphere .prototype .getMiddlePoint = function (p1, p2)
 {
@@ -200,7 +200,7 @@ IcoSphere .prototype .getMiddlePoint = function (p1, p2)
    this .middlePointIndexCache [key] = index;
 
    return index;
-}
+};
 
 IcoSphere .prototype .sphericalMapping = function (coordIndex, point)
 {
@@ -318,7 +318,7 @@ IcoSphere .prototype .sphericalMapping = function (coordIndex, point)
       this. resolveOverlap (i, i + 1);
       this. resolveOverlap (i, i + 2);
    }
-}
+};
 
 
 IcoSphere .prototype .resolveOverlap = function (i0, i1)
@@ -343,7 +343,7 @@ IcoSphere .prototype .resolveOverlap = function (i0, i1)
    }
 
    return texCoordIndex [i1];
-}
+};
 
 IcoSphere .prototype .applyRadius = function ()
 {
@@ -352,6 +352,6 @@ IcoSphere .prototype .applyRadius = function ()
 
    for (let i = 0; i < this .point .length; ++ i)
       this .point [i] = this .point [i] .multiply (this .radius);
-}
+};
 
 export default IcoSphere;

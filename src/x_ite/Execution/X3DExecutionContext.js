@@ -28,13 +28,13 @@ function X3DExecutionContext (executionContext, outerNode = null, browser = exec
 {
    X3DBaseNode .call (this, executionContext, browser);
 
-   this .addType (X3DConstants .X3DExecutionContext)
+   this .addType (X3DConstants .X3DExecutionContext);
 
    this .addChildObjects (X3DConstants .initializeOnly, "rootNodes",          new Fields .MFNode (),
                           X3DConstants .inputOutput,    "countPrimitives",    new Fields .SFBool (true),
                           X3DConstants .outputOnly,     "worldInfos",         new Fields .MFNode (),
                           X3DConstants .outputOnly,     "sceneGraph_changed", new Fields .SFTime (),
-                          X3DConstants .outputOnly,     "bbox_changed",       new Fields .SFTime ())
+                          X3DConstants .outputOnly,     "bbox_changed",       new Fields .SFTime ());
 
    this ._rootNodes .setPrivate (false);
    this ._rootNodes .collectCloneCount = () => 1;
@@ -687,9 +687,9 @@ Object .assign (Object .setPrototypeOf (X3DExecutionContext .prototype, X3DBaseN
          importedDestinationNode = destinationNode instanceof X3DImportedNode ? destinationNode : null;
 
       sourceNode       = X3DCast (X3DConstants .X3DNode, sourceNode, false) ?? importedSourceNode;
-      sourceField      = String (sourceField)
+      sourceField      = String (sourceField);
       destinationNode  = X3DCast (X3DConstants .X3DNode, destinationNode, false) ?? importedDestinationNode;
-      destinationField = String (destinationField)
+      destinationField = String (destinationField);
 
       // Check nodes.
 

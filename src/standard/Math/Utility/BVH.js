@@ -28,7 +28,7 @@ function SortComparator (vertices, axis)
    {
        return Math .min (vertices [a + axis], vertices [a + 4 + axis], vertices [a + 8 + axis]) <
               Math .min (vertices [b + axis], vertices [b + 4 + axis], vertices [b + 8 + axis]);
-   }
+   };
 }
 
 function Triangle (tree, triangle)

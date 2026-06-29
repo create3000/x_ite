@@ -9,7 +9,7 @@ function SFVec2Template (TypeName, double)
       X3DField .call (this, new Vector2 (+x, +y));
    }
 
-   SFVecPrototypeTemplate (SFVec2, TypeName, Vector2, double)
+   SFVecPrototypeTemplate (SFVec2, TypeName, Vector2, double);
 
    return SFVec2;
 }

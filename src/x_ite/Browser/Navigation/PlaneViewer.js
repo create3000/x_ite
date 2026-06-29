@@ -3,7 +3,7 @@ import Vector3   from "../../../standard/Math/Numbers/Vector3.js";
 
 void (typeof jquery_mousewheel); // import plugin
 
-const macOS = /Mac OS X/i .test (navigator .userAgent)
+const macOS = /Mac OS X/i .test (navigator .userAgent);
 
 const SCROLL_FACTOR = macOS ? 1 / 160 : 1 / 20;
 

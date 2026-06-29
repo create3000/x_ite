@@ -51,7 +51,7 @@ const handler =
    {
       return Object .getOwnPropertyDescriptor (target .getSharedNode () ?? { }, key);
    },
-}
+};
 
 function X3DImportedNodeProxy (executionContext, importedName, type)
 {

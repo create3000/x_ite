@@ -203,13 +203,13 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
          if (numClipPlanes)
          {
-            options .push ("X3D_CLIP_PLANES")
+            options .push ("X3D_CLIP_PLANES");
             options .push (`X3D_NUM_CLIP_PLANES ${Math .min (numClipPlanes, browser .getMaxClipPlanes ())}`);
          }
 
          if (numLights && geometryContext .hasNormals)
          {
-            options .push ("X3D_LIGHTING")
+            options .push ("X3D_LIGHTING");
             options .push (`X3D_NUM_LIGHTS ${Math .min (numLights, browser .getMaxLights ())}`);
 
             if (renderContext .shadows || renderObject .getGlobalShadows () .at (-1))
@@ -223,7 +223,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
                lightNode = container .lightNode;
 
             // Although we count this kind of light here, only one is supported.
-            options .push ("X3D_USE_IBL")
+            options .push ("X3D_USE_IBL");
             options .push (`X3D_NUM_ENVIRONMENT_LIGHTS ${Math .min (numEnvironmentLights, browser .getMaxEnvironmentLights ())}`);
 
             if (lightNode .getDiffuseTexture () ?.isLinear ())
@@ -240,7 +240,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
          {
             const textureProjectors = lights .filter (c => c .lightNode .getLightKey () .toString () .startsWith ("[3."));
 
-            options .push ("X3D_TEXTURE_PROJECTION")
+            options .push ("X3D_TEXTURE_PROJECTION");
             options .push (`X3D_NUM_TEXTURE_PROJECTORS ${Math .min (numTextureProjectors, browser .getMaxTextures ())}`);
 
             for (const [i, textureProjector] of textureProjectors .entries ())
@@ -319,7 +319,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
 
          if (numClipPlanes)
          {
-            options .push ("X3D_CLIP_PLANES")
+            options .push ("X3D_CLIP_PLANES");
             options .push (`X3D_NUM_CLIP_PLANES ${Math .min (numClipPlanes, browser .getMaxClipPlanes ())}`);
          }
 

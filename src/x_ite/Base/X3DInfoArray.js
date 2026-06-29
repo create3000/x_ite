@@ -260,7 +260,7 @@ Object .assign (Object .setPrototypeOf (X3DInfoArray .prototype, X3DChildObject 
    {
       const array = [... this];
 
-      array .splice (start, deleteCount, ... insertValues)
+      array .splice (start, deleteCount, ... insertValues);
 
       return new (this .constructor) (array);
    },

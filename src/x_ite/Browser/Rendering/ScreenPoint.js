@@ -1,7 +1,7 @@
 import GeometryContext from "./GeometryContext.js";
 import AlphaMode       from "../Shape/AlphaMode.js";
 import VertexArray     from "../../Rendering/VertexArray.js";
-import Layer           from "../../Components/Layering/Layer.js"
+import Layer           from "../../Components/Layering/Layer.js";
 import Matrix4         from "../../../standard/Math/Numbers/Matrix4.js";
 
 function ScreenPoint (browser)

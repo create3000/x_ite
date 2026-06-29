@@ -179,7 +179,7 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
                vAngle .push (Math .PI);
 
             if (vAngle .length === 2)
-               vAngle .splice (1, 0, (vAngle [0] + vAngle [1]) / 2)
+               vAngle .splice (1, 0, (vAngle [0] + vAngle [1]) / 2);
 
             this .buildSphere (vAngle, this ._skyAngle, this ._skyColor, false);
          }
@@ -508,8 +508,8 @@ Object .assign (Object .setPrototypeOf (X3DBackgroundNode .prototype, X3DBindabl
       gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,        false, renderObject .getEyeMatrixArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
 
-      gl .uniform3f (shaderNode .x3d_EmissiveColor,                        1, 1, 1)
-      gl .uniform1f (shaderNode .x3d_Transparency,                         transparency)
+      gl .uniform3f (shaderNode .x3d_EmissiveColor,                        1, 1, 1);
+      gl .uniform1f (shaderNode .x3d_Transparency,                         transparency);
       gl .uniform1i (shaderNode .x3d_TextureCoordinateGenerator [0] .mode, 0);
 
       // Enable vertex attribute arrays.

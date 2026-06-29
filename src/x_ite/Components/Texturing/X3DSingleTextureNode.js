@@ -12,7 +12,7 @@ function X3DSingleTextureNode (executionContext)
 
    this .addType (X3DConstants .X3DSingleTextureNode);
 
-   this .addChildObjects (X3DConstants .outputOnly, "linear", new Fields .SFBool ())
+   this .addChildObjects (X3DConstants .outputOnly, "linear", new Fields .SFBool ());
 
    // Private properties
 

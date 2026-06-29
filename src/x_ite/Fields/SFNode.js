@@ -270,7 +270,7 @@ Object .assign (Object .setPrototypeOf (SFNode .prototype, X3DField .prototype),
          if (node)
             return node .getField (name);
 
-         throw new Error ("SFNode is disposed.")
+         throw new Error ("SFNode is disposed.");
       };
    })(),
    addFieldCallback (... args)

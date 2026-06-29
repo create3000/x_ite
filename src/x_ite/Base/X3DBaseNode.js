@@ -57,7 +57,7 @@ Object .assign (Object .setPrototypeOf (X3DBaseNode .prototype, X3DChildObject .
    [_fieldDefinitions]: new FieldDefinitionArray ([ ]),
    setName (value)
    {
-      X3DChildObject .prototype .setName .call (this, value)
+      X3DChildObject .prototype .setName .call (this, value);
 
       this ._name_changed = Date .now () / 1000;
    },

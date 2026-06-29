@@ -98,7 +98,7 @@ Object .assign (Object .setPrototypeOf (NurbsTrimmedSurface .prototype, X3DNurbs
             uScale = uMax - uMin,
             vScale = vMax - vMin,
             offset = new Vector3 (uMin, vMin, 0),
-            scale  = new Vector3 (uScale, vScale, 1)
+            scale  = new Vector3 (uScale, vScale, 1);
 
          // Triangulate holes on unit square.
 

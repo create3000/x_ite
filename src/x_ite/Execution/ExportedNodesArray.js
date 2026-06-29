@@ -1,5 +1,5 @@
 import X3DInfoArray    from "../Base/X3DInfoArray.js";
-import X3DExportedNode from "./X3DExportedNode.js"
+import X3DExportedNode from "./X3DExportedNode.js";
 
 function ExportedNodesArray (values = [ ])
 {
