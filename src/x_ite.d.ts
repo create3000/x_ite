@@ -2321,6 +2321,10 @@ declare namespace X3D
        */
       add (other: SFQuaternion): SFQuaternion;
       /**
+       * Returns a SFQuaternion object whose value is the conjugate of this object's quaternion.
+       */
+      conjugate (): SFQuaternion;
+      /**
        * Returns an SFQuaternion whose value is the object divided by the passed numeric value.
        */
       divide (denominator: number): SFQuaternion;
@@ -2333,7 +2337,7 @@ declare namespace X3D
        */
       dot (quaternion: SFQuaternion): number;
       /**
-       * Returns the underlying quaternion as Array with the four values [x, y, z, w].
+       *  Returns a SFQuaternion object whose value is the inverse of this object's quaternion.
        */
       inverse (): SFQuaternion;
       /**

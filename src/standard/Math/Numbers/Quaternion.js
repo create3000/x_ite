@@ -320,21 +320,6 @@ Object .assign (Quaternion .prototype,
              this .z === z &&
              this .w === w;
    },
-   negate ()
-   {
-      this .x = -this .x;
-      this .y = -this .y;
-      this .z = -this .z;
-      this .w = -this .w;
-      return this;
-   },
-   inverse ()
-   {
-      this .x = -this .x;
-      this .y = -this .y;
-      this .z = -this .z;
-      return this;
-   },
    add ({ x, y, z, w })
    {
       this .x += x;
@@ -343,46 +328,11 @@ Object .assign (Quaternion .prototype,
       this .w += w;
       return this;
    },
-   subtract ({ x, y, z, w })
+   conjugate ()
    {
-      this .x -= x;
-      this .y -= y;
-      this .z -= z;
-      this .w -= w;
-      return this;
-   },
-   multiply (value)
-   {
-      this .x *= value;
-      this .y *= value;
-      this .z *= value;
-      this .w *= value;
-      return this;
-   },
-   multLeft (quat)
-   {
-      const
-         { x: ax, y: ay, z: az, w: aw } = this,
-         { x: bx, y: by, z: bz, w: bw } = quat;
-
-      this .x = aw * bx + ax * bw + ay * bz - az * by;
-      this .y = aw * by + ay * bw + az * bx - ax * bz;
-      this .z = aw * bz + az * bw + ax * by - ay * bx;
-      this .w = aw * bw - ax * bx - ay * by - az * bz;
-
-      return this;
-   },
-   multRight (quat)
-   {
-      const
-         { x: ax, y: ay, z: az, w: aw } = this,
-         { x: bx, y: by, z: bz, w: bw } = quat;
-
-      this .x = bw * ax + bx * aw + by * az - bz * ay;
-      this .y = bw * ay + by * aw + bz * ax - bx * az;
-      this .z = bw * az + bz * aw + bx * ay - by * ax;
-      this .w = bw * aw - bx * ax - by * ay - bz * az;
-
+      this .x = -this .x;
+      this .y = -this .y;
+      this .z = -this .z;
       return this;
    },
    divide (value)
@@ -393,58 +343,6 @@ Object .assign (Quaternion .prototype,
       this .w /= value;
       return this;
    },
-   multVecQuat (vector)
-   {
-      // https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles#Vector_rotation
-
-      const
-         { x: qx, y: qy, z: qz, w: qw } = this,
-         { x: vx, y: vy, z: vz } = vector,
-         tx = 2 * (qy * vz - qz * vy),
-         ty = 2 * (qz * vx - qx * vz),
-         tz = 2 * (qx * vy - qy * vx);
-
-      vector .x += qw * tx + qy * tz - qz * ty;
-      vector .y += qw * ty + qz * tx - qx * tz;
-      vector .z += qw * tz + qx * ty - qy * tx;
-
-      return vector;
-   },
-   multQuatVec (vector)
-   {
-      // https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles#Vector_rotation
-
-      const
-         { x: qx, y: qy, z: qz, w: qw } = this,
-         { x: vx, y: vy, z: vz } = vector,
-         tx = 2 * (qz * vy - qy * vz),
-         ty = 2 * (qx * vz - qz * vx),
-         tz = 2 * (qy * vx - qx * vy);
-
-      vector .x += qw * tx - qy * tz + qz * ty;
-      vector .y += qw * ty - qz * tx + qx * tz;
-      vector .z += qw * tz - qx * ty + qy * tx;
-
-      return vector;
-   },
-   norm ()
-   {
-      return Math .hypot (this .x, this .y, this .z, this .w);
-   },
-   normalize ()
-   {
-      const length = Math .hypot (this .x, this .y, this .z, this .w);
-
-      if (length)
-      {
-         this .x /= length;
-         this .y /= length;
-         this .z /= length;
-         this .w /= length;
-      }
-
-      return this;
-   },
    dot (quat)
    {
       return this .x * quat .x +
@@ -452,35 +350,44 @@ Object .assign (Quaternion .prototype,
              this .z * quat .z +
              this .w * quat .w;
    },
-   squaredNorm ()
+   exp ()
+   {
+      if (this .isReal ())
+         return this .set (0, 0, 0, Math .exp (this .w));
+
+      const
+         i  = this .imag,
+         li = i .norm (),
+         ew = Math .exp (this .w),
+         w  = ew * Math .cos (li),
+         v  = i .multiply (ew * Math .sin (li) / li);
+
+      this .x = v .x;
+      this .y = v .y;
+      this .z = v .z;
+      this .w = w;
+      return this;
+   },
+   inverse ()
    {
       const { x, y, z, w } = this;
 
-      return x * x +
-             y * y +
-             z * z +
-             w * w;
-   },
-   pow (exponent)
-   {
-      if (exponent instanceof Quaternion)
-         return this .assign (t1 .assign (exponent) .multRight (this .log ()) .exp ());
+      this .x = -x;
+      this .y = -y;
+      this .z = -z;
 
-      if (this .isReal ())
-         return this .set (0, 0, 0, this .w ** exponent);
+      const l = Math .hypot (x, y, z, w);
 
-      const
-         l     = this .norm (),
-         theta = Math .acos (this .w / l),
-         li    = this .imag .norm (),
-         ltoe  = l ** exponent,
-         et    = exponent * theta,
-         scale = ltoe / li * Math .sin (et);
+      if (l)
+      {
+         const l2 = l * l;
 
-      this .x *= scale;
-      this .y *= scale;
-      this .z *= scale;
-      this .w  = ltoe * Math .cos (et);
+         this .x /= l2;
+         this .y /= l2;
+         this .z /= l2;
+         this .w /= l2;
+      }
+
       return this;
    },
    log ()
@@ -505,22 +412,120 @@ Object .assign (Quaternion .prototype,
       this .w = w;
       return this;
    },
-   exp ()
+   multiply (value)
    {
-      if (this .isReal ())
-         return this .set (0, 0, 0, Math .exp (this .w));
+      this .x *= value;
+      this .y *= value;
+      this .z *= value;
+      this .w *= value;
+      return this;
+   },
+   multLeft (quat)
+   {
+      const
+         { x: ax, y: ay, z: az, w: aw } = this,
+         { x: bx, y: by, z: bz, w: bw } = quat;
+
+      this .x = aw * bx + ax * bw + ay * bz - az * by;
+      this .y = aw * by + ay * bw + az * bx - ax * bz;
+      this .z = aw * bz + az * bw + ax * by - ay * bx;
+      this .w = aw * bw - ax * bx - ay * by - az * bz;
+
+      return this;
+   },
+   multQuatVec (vector)
+   {
+      // https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles#Vector_rotation
 
       const
-         i  = this .imag,
-         li = i .norm (),
-         ew = Math .exp (this .w),
-         w  = ew * Math .cos (li),
-         v  = i .multiply (ew * Math .sin (li) / li);
+         { x: qx, y: qy, z: qz, w: qw } = this,
+         { x: vx, y: vy, z: vz } = vector,
+         tx = 2 * (qz * vy - qy * vz),
+         ty = 2 * (qx * vz - qz * vx),
+         tz = 2 * (qy * vx - qx * vy);
 
-      this .x = v .x;
-      this .y = v .y;
-      this .z = v .z;
-      this .w = w;
+      vector .x += qw * tx - qy * tz + qz * ty;
+      vector .y += qw * ty - qz * tx + qx * tz;
+      vector .z += qw * tz - qx * ty + qy * tx;
+
+      return vector;
+   },
+   multRight (quat)
+   {
+      const
+         { x: ax, y: ay, z: az, w: aw } = this,
+         { x: bx, y: by, z: bz, w: bw } = quat;
+
+      this .x = bw * ax + bx * aw + by * az - bz * ay;
+      this .y = bw * ay + by * aw + bz * ax - bx * az;
+      this .z = bw * az + bz * aw + bx * ay - by * ax;
+      this .w = bw * aw - bx * ax - by * ay - bz * az;
+
+      return this;
+   },
+   multVecQuat (vector)
+   {
+      // https://en.wikipedia.org/wiki/Conversion_between_quaternions_and_Euler_angles#Vector_rotation
+
+      const
+         { x: qx, y: qy, z: qz, w: qw } = this,
+         { x: vx, y: vy, z: vz } = vector,
+         tx = 2 * (qy * vz - qz * vy),
+         ty = 2 * (qz * vx - qx * vz),
+         tz = 2 * (qx * vy - qy * vx);
+
+      vector .x += qw * tx + qy * tz - qz * ty;
+      vector .y += qw * ty + qz * tx - qx * tz;
+      vector .z += qw * tz + qx * ty - qy * tx;
+
+      return vector;
+   },
+   negate ()
+   {
+      this .x = -this .x;
+      this .y = -this .y;
+      this .z = -this .z;
+      this .w = -this .w;
+      return this;
+   },
+   norm ()
+   {
+      return Math .hypot (this .x, this .y, this .z, this .w);
+   },
+   normalize ()
+   {
+      const length = Math .hypot (this .x, this .y, this .z, this .w);
+
+      if (length)
+      {
+         this .x /= length;
+         this .y /= length;
+         this .z /= length;
+         this .w /= length;
+      }
+
+      return this;
+   },
+   pow (exponent)
+   {
+      if (exponent instanceof Quaternion)
+         return this .assign (t1 .assign (exponent) .multRight (this .log ()) .exp ());
+
+      if (this .isReal ())
+         return this .set (0, 0, 0, this .w ** exponent);
+
+      const
+         l     = this .norm (),
+         theta = Math .acos (this .w / l),
+         li    = this .imag .norm (),
+         ltoe  = l ** exponent,
+         et    = exponent * theta,
+         scale = ltoe / li * Math .sin (et);
+
+      this .x *= scale;
+      this .y *= scale;
+      this .z *= scale;
+      this .w  = ltoe * Math .cos (et);
       return this;
    },
    slerp (destination, t)
@@ -536,6 +541,23 @@ Object .assign (Quaternion .prototype,
       return Algorithm .slerp (Algorithm .slerp (this, t1 .assign (destination), t),
                                Algorithm .slerp (t2 .assign (a), t3 .assign (b), t),
                                2 * t * (1 - t));
+   },
+   squaredNorm ()
+   {
+      const { x, y, z, w } = this;
+
+      return x * x +
+             y * y +
+             z * z +
+             w * w;
+   },
+   subtract ({ x, y, z, w })
+   {
+      this .x -= x;
+      this .y -= y;
+      this .z -= z;
+      this .w -= w;
+      return this;
    },
    toString ()
    {

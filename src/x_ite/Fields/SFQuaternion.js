@@ -35,6 +35,10 @@ Object .assign (Object .setPrototypeOf (SFQuaternion .prototype, X3DField .proto
    {
       return SFQuaternion .fromValue (this .getValue () .copy () .add (quaternion .getValue ()));
    },
+   conjugate ()
+   {
+      return SFQuaternion .fromValue (this .getValue () .copy () .conjugate ());
+   },
    divide (value)
    {
       return SFQuaternion .fromValue (this .getValue () .copy () .divide (+value));

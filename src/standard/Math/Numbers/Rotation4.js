@@ -227,7 +227,7 @@ Object .assign (Rotation4 .prototype,
    },
    inverse ()
    {
-      this [_quaternion] .inverse ();
+      this [_quaternion] .conjugate ();
       this .normalize ();
       return this;
    },

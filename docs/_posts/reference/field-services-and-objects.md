@@ -961,6 +961,10 @@ A number corresponding to the real part of the quaternion.
 
 Returns an SFQuaternion whose value is the passed SFQuaternion added, componentwise, to the object.
 
+#### **conjugate** (): SFQuaternion
+
+Returns a SFQuaternion object whose value is the conjugate of this object's quaternion.
+
 #### **divide** (*denominator*): SFQuaternion
 
 Returns an SFQuaternion whose value is the object divided by the passed numeric value.
