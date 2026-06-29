@@ -427,6 +427,10 @@ Object .assign (Quaternion .prototype,
 
       return vector;
    },
+   norm ()
+   {
+      return Math .hypot (this .x, this .y, this .z, this .w);
+   },
    normalize ()
    {
       const length = Math .hypot (this .x, this .y, this .z, this .w);
@@ -456,10 +460,6 @@ Object .assign (Quaternion .prototype,
              y * y +
              z * z +
              w * w;
-   },
-   norm ()
-   {
-      return Math .hypot (this .x, this .y, this .z, this .w);
    },
    pow (exponent)
    {
