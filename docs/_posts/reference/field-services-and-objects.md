@@ -988,15 +988,15 @@ Returns the geometric length of this quaternion.
 <x3d-script-area name="X3D ECMAScript Example: SFQuaternion length">
 <pre>
 const
-  quaternion = new SFQuaternion (2, 2, 2, 2),
+  quaternion = new SFQuaternion (1, 3, 5, 1),
   normalized = quaternion .normalize ();
 
 print (quaternion .length ());
 print (normalized .length ());
 print (normalized);
-// Expected output: 4
+// Expected output: 6
 // Expected output: 1
-// Expected output: 0.5 0.5 0.5 0.5
+// Expected output: 0.166666666666667 0.5 0.833333333333333 0.166666666666667
 </pre>
 </x3d-script-area>
 
