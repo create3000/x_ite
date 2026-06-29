@@ -370,22 +370,18 @@ Object .assign (Quaternion .prototype,
    },
    inverse ()
    {
-      const { x, y, z, w } = this;
+      this .x = -this .x;
+      this .y = -this .y;
+      this .z = -this .z;
 
-      this .x = -x;
-      this .y = -y;
-      this .z = -z;
+      const squaredNorm = this .squaredNorm ();
 
-      const length = Math .hypot (x, y, z, w);
-
-      if (length)
+      if (squaredNorm)
       {
-         const length2 = length * length;
-
-         this .x /= length2;
-         this .y /= length2;
-         this .z /= length2;
-         this .w /= length2;
+         this .x /= squaredNorm;
+         this .y /= squaredNorm;
+         this .z /= squaredNorm;
+         this .w /= squaredNorm;
       }
 
       return this;
