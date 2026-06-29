@@ -2460,11 +2460,11 @@ declare namespace X3D
        */
       multiply (rotation: SFRotation): SFRotation;
       /**
-       * Returns a SFVec3d/f whose value is the SFVec3d/f *vec* multiplied by the matrix corresponding to this object's rotation.
+       * Returns a SFVec3d/f whose value is the SFVec3d/f *vector* multiplied by the matrix corresponding to this object's rotation.
        */
       multVec <T extends SFVec3d | SFVec3f> (vector: T): T;
       /**
-       * Set the axis of rotation to the vector passed in *vec*.
+       * Set the axis of rotation to the vector passed in *axis*.
        */
       setAxis (axis: SFVec3d | SFVec3f): void;
       /**

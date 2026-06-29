@@ -1003,12 +1003,12 @@ const
   a = new SFQuaternion (1, 2, 3, 4),
   b = new SFQuaternion (8, 7, 6, 5),
   c = a .multRight (b),
-  d = b .multLeft (a);
+  d = b .multRight (a);
 
 print (c);
 print (d);
 // Expected output: 46 20 48 -20
-// Expected output: 46 20 48 -20
+// Expected output: 28 56 30 -20
 </pre>
 </x3d-script-area>
 
@@ -1182,9 +1182,9 @@ print (rotation .multVec (vector));
 </pre>
 </x3d-script-area>
 
-#### **setAxis** (*vector: SFVec3d/f*): void
+#### **setAxis** (*axis: SFVec3d/f*): void
 
-Set the axis of rotation to the vector passed in *vector*.
+Set the axis of rotation to the vector passed in *axis*.
 
 #### **setMatrix** (*matrix: SFMatrix3d/f*): void
 
