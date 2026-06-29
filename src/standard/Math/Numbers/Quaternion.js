@@ -393,8 +393,7 @@ Object .assign (Quaternion .prototype,
          if (this .w > 0)
             return this .set (0, 0, 0, Math .log (this .w));
 
-         else
-            return this .set (Math .PI, 0, 0, Math .log (-this .w));
+         return this .set (Math .PI, 0, 0, Math .log (-this .w));
       }
 
       const
