@@ -92,7 +92,7 @@ Object .assign (Object .setPrototypeOf (SFRotation .prototype, X3DField .prototy
    },
    slerp (rotation, t)
    {
-      return SFRotation .fromValue (this .getValue () .copy () .slerp (rotation .getValue (), t));
+      return SFRotation .fromValue (this .getValue () .copy () .slerp (rotation .getValue (), +t));
    },
    straighten (upVector)
    {

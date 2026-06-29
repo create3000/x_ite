@@ -90,7 +90,7 @@ Object .assign (Object .setPrototypeOf (SFQuaternion .prototype, X3DField .proto
    },
    slerp (quaternion, t)
    {
-      return SFQuaternion .fromValue (this .getValue () .copy () .slerp (quaternion .getValue (), t));
+      return SFQuaternion .fromValue (this .getValue () .copy () .slerp (quaternion .getValue (), +t));
    },
    subtract (quaternion)
    {
