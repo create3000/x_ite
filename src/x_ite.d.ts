@@ -2329,7 +2329,7 @@ declare namespace X3D
        */
       divide (denominator: number): SFQuaternion;
       /**
-       * Returns the rotation matrix as an SFMatrix3f object.
+       * Returns the rotation matrix as an SFMatrix3f object. The quaternion should be normalized to get proper results.
        */
       getMatrix (): SFMatrix3f;
       /**
@@ -2353,7 +2353,7 @@ declare namespace X3D
        */
       multLeft (quaternion: SFQuaternion): SFQuaternion;
       /**
-       * Returns a SFVec3d/f whose value is the *vector* multiplied by the object to the left.
+       * Returns a SFVec3d/f whose value is the *vector* multiplied by the object to the left. The quaternion should be normalized to get proper results.
        */
       multQuatVec <T extends SFVec3d | SFVec3f> (vector: T): T;
       /**
@@ -2361,7 +2361,7 @@ declare namespace X3D
        */
       multRight (quaternion: SFQuaternion): SFQuaternion;
       /**
-       * Returns a SFVec3d/f whose value is the object multiplied by the passed quaternion to the right.
+       * Returns a SFVec3d/f whose value is the object multiplied by the passed quaternion to the right. The quaternion should be normalized to get proper results.
        */
       multVecQuat <T extends SFVec3d | SFVec3f> (vector: T): T;
       /**
