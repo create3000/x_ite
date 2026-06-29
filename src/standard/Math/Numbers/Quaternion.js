@@ -376,16 +376,16 @@ Object .assign (Quaternion .prototype,
       this .y = -y;
       this .z = -z;
 
-      const l = Math .hypot (x, y, z, w);
+      const length = Math .hypot (x, y, z, w);
 
-      if (l)
+      if (length)
       {
-         const l2 = l * l;
+         const length2 = length * length;
 
-         this .x /= l2;
-         this .y /= l2;
-         this .z /= l2;
-         this .w /= l2;
+         this .x /= length2;
+         this .y /= length2;
+         this .z /= length2;
+         this .w /= length2;
       }
 
       return this;
