@@ -627,29 +627,29 @@ Returns a SFMatrix3d/f whose value is the object multiplied by the passed *matri
 
 Returns a SFMatrix3d/f whose value is the object multiplied by the passed *matrix* on the right.
 
-#### **multVecMatrix** (*vec: SFVec2d/f*): SFVec2d/f
+#### **multVecMatrix** (*vector: SFVec2d/f*): SFVec2d/f
 
-Returns a SFVec2d/f whose value is the object multiplied by the passed row vector.
+Returns a SFVec2d/f whose value is the object multiplied by the passed row *vector*.
 
-#### **multVecMatrix** (*vec: SFVec3d/f*): SFVec3d/f
+#### **multVecMatrix** (*vector: SFVec3d/f*): SFVec3d/f
 
-Returns a SFVec3d/f whose value is the object multiplied by the passed row vector.
+Returns a SFVec3d/f whose value is the object multiplied by the passed row *vector*.
 
-#### **multMatrixVec** (*vec: SFVec2d/f*): SFVec2d/f
+#### **multMatrixVec** (*vector: SFVec2d/f*): SFVec2d/f
 
-Returns a SFVec2d/f whose value is the object multiplied by the passed column vector.
+Returns a SFVec2d/f whose value is the object multiplied by the passed column *vector*.
 
-#### **multMatrixVec** (*vec: SFVec3d/f*): SFVec3d/f
+#### **multMatrixVec** (*vector: SFVec3d/f*): SFVec3d/f
 
-Returns a SFVec3d/f whose value is the object multiplied by the passed column vector.
+Returns a SFVec3d/f whose value is the object multiplied by the passed column *vector*.
 
-#### **multDirMatrix** (*vec: SFVec2d/f*): SFVec2d/f
+#### **multDirMatrix** (*vector: SFVec2d/f*): SFVec2d/f
 
-Returns a SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed row vector.
+Returns a SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed row *vector*.
 
-#### **multMatrixDir** (*vec: SFVec2d/f*): SFVec2d/f
+#### **multMatrixDir** (*vector: SFVec2d/f*): SFVec2d/f
 
-Returns a SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed column vector.
+Returns a SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed column *vector*.
 
 #### **translate** (*translation: SFVec2d/f*): SFMatrix3d/f
 
@@ -743,9 +743,9 @@ Returns a SFMatrix4d/f whose value is the object multiplied by the passed *matri
 
 Returns a SFMatrix4d/f whose value is the object multiplied by the passed *matrix* on the right.
 
-#### **multVecMatrix** (*vec: SFVec3d/f*): SFVec3d/f
+#### **multVecMatrix** (*vector: SFVec3d/f*): SFVec3d/f
 
-Returns a SFVec3d/f whose value is the object multiplied by the passed row vector.
+Returns a SFVec3d/f whose value is the object multiplied by the passed row *vector*.
 
 <x3d-script-area name="X3D ECMAScript Example: SFMatrix4f multVecMatrix">
 <pre>
@@ -757,25 +757,25 @@ print (matrix .multVecMatrix (vector));
 </pre>
 </x3d-script-area>
 
-#### **multVecMatrix** (*SFVec4d/f vec*): SFVec4d/f
+#### **multVecMatrix** (*SFVec4d/f vector*): SFVec4d/f
 
-Returns a SFVec4d/f whose value is the object multiplied by the passed row vector.
+Returns a SFVec4d/f whose value is the object multiplied by the passed row *vector*.
 
-#### **multMatrixVec** (*vec: SFVec3d/f*): SFVec3d/f
+#### **multMatrixVec** (*vector: SFVec3d/f*): SFVec3d/f
 
-Returns a SFVec3d/f whose value is the object multiplied by the passed column vector.
+Returns a SFVec3d/f whose value is the object multiplied by the passed column *vector*.
 
-#### **multMatrixVec** (*SFVec4d/f vec*): SFVec4d/f
+#### **multMatrixVec** (*SFVec4d/f vector*): SFVec4d/f
 
-Returns a SFVec4d/f whose value is the object multiplied by the passed column vector.
+Returns a SFVec4d/f whose value is the object multiplied by the passed column *vector*.
 
-#### **multDirMatrix** (*vec: SFVec3d/f*): SFVec3d/f
+#### **multDirMatrix** (*vector: SFVec3d/f*): SFVec3d/f
 
-Returns a SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed row vector.
+Returns a SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed row *vector*.
 
-#### **multMatrixDir** (*vec: SFVec3d/f*): SFVec3d/f
+#### **multMatrixDir** (*vector: SFVec3d/f*): SFVec3d/f
 
-Returns a SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed column vector.
+Returns a SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed column *vector*.
 
 #### **translate** (*translation: SFVec3d/f*):  SFMatrix4d/f
 
@@ -985,13 +985,36 @@ Returns the geometric length of this quaternion.
 
 Returns an SFQuaternion whose value is the object multiplied by the passed numeric value.
 
-#### **multQuat** *(quaternion: SFQuaternion*): SFQuaternion
+#### **multLeft** *(quaternion: SFQuaternion*): SFQuaternion
 
-Returns an SFQuaternion whose value is the object multiplied by the passed SFQuaternion.
+Returns a SFQuaternion whose value is the object multiplied by the passed *quaternion* on the left.
 
-#### **multVec** (*vec: SFVec3d/f*): SFVec3d/f
+#### **multQuatVec** (*vector: SFVec3d/f*): SFVec3d/f
 
-Returns a SFVec3f whose value is the SFVec3f *vec* multiplied by the matrix corresponding to this object's quaternion.
+Returns a SFVec3d/f whose value is the *vector* multiplied by the object to the left.
+
+#### **multRight** *(quaternion: SFQuaternion*): SFQuaternion
+
+Returns a SFQuaternion whose value is the object multiplied by the passed *quaternion* on the right.
+
+<x3d-script-area name="X3D ECMAScript Example: SFQuaternion multRight">
+<pre>
+const
+  a = new SFQuaternion (1, 2, 3, 4),
+  b = new SFQuaternion (8, 7, 6, 5),
+  c = a .multRight (b),
+  d = b .multLeft (a);
+
+print (c);
+print (d);
+// Expected output: 46 20 48 -20
+// Expected output: 46 20 48 -20
+</pre>
+</x3d-script-area>
+
+#### **multVecQuat** (*vector: SFVec3d/f*): SFVec3d/f
+
+Returns a SFVec3d/f whose value is the object multiplied by the passed quaternion to the right.
 
 #### **negate** (): SFQuaternion
 
@@ -1141,9 +1164,9 @@ Returns a SFRotation object whose value is the inverse of this object's rotation
 
 Returns an SFRotation whose value is the object multiplied by the passed SFRotation.
 
-#### **multVec** (*vec: SFVec3d/f*): SFVec3d/f
+#### **multVec** (*vector: SFVec3d/f*): SFVec3d/f
 
-Returns a SFVec3f whose value is the SFVec3f *vec* multiplied by the matrix corresponding to this object's rotation.
+Returns a SFVec3f whose value is the SFVec3f *vector* multiplied by the matrix corresponding to this object's rotation.
 
 <x3d-script-area name="X3D ECMAScript Example: SFRotation multVec">
 <pre>
@@ -1159,9 +1182,9 @@ print (rotation .multVec (vector));
 </pre>
 </x3d-script-area>
 
-#### **setAxis** (*vec: SFVec3d/f*): void
+#### **setAxis** (*vector: SFVec3d/f*): void
 
-Set the axis of rotation to the vector passed in *vec*.
+Set the axis of rotation to the vector passed in *vector*.
 
 #### **setMatrix** (*matrix: SFMatrix3d/f*): void
 

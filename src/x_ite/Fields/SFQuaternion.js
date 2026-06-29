@@ -59,11 +59,19 @@ Object .assign (Object .setPrototypeOf (SFQuaternion .prototype, X3DField .proto
    {
       return SFQuaternion .fromValue (this .getValue () .copy () .multiply (value));
    },
-   multQuat (quaternion)
+   multLeft (quaternion)
+   {
+      return SFQuaternion .fromValue (this .getValue () .copy () .multLeft (quaternion .getValue ()));
+   },
+   multQuatVec (vector)
+   {
+      return vector .constructor .fromValue (this .getValue () .multQuatVec (vector .getValue () .copy ()));
+   },
+   multRight (quaternion)
    {
       return SFQuaternion .fromValue (this .getValue () .copy () .multRight (quaternion .getValue ()));
    },
-   multVec (vector)
+   multVecQuat (vector)
    {
       return vector .constructor .fromValue (this .getValue () .multVecQuat (vector .getValue () .copy ()));
    },

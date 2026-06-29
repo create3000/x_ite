@@ -2345,13 +2345,21 @@ declare namespace X3D
        */
       multiply (factor: number): SFQuaternion;
       /**
-       * Returns an SFQuaternion whose value is the object multiplied by the passed SFQuaternion.
+       * Returns a SFQuaternion whose value is the object multiplied by the passed *quaternion* on the left.
        */
-      multQuat (quaternion: SFQuaternion): SFQuaternion;
+      multLeft (quaternion: SFQuaternion): SFQuaternion;
       /**
-       * Returns a SFVec3d/f whose value is the SFVec3d/f *vec* multiplied by the matrix corresponding to this object's quaternion.
+       * Returns a SFVec3d/f whose value is the *vector* multiplied by the object to the left.
        */
-      multVec <T extends SFVec3d | SFVec3f> (vector: T): T;
+      multQuatVec <T extends SFVec3d | SFVec3f> (vector: T): T;
+      /**
+       * Returns a SFQuaternion whose value is the object multiplied by the passed *quaternion* on the right.
+       */
+      multRight (quaternion: SFQuaternion): SFQuaternion;
+      /**
+       * Returns a SFVec3d/f whose value is the object multiplied by the passed quaternion to the right.
+       */
+      multVecQuat <T extends SFVec3d | SFVec3f> (vector: T): T;
       /**
        * Returns an SFQuaternion whose value is the componentwise negation of the object.
        */
