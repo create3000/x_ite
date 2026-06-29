@@ -971,7 +971,7 @@ Returns an SFQuaternion whose value is the object divided by the passed numeric 
 
 #### **getMatrix** (): SFMatrix3f
 
-Returns the rotation matrix as an SFMatrix3f object. The quaternion should be normalized to get proper results.
+Returns the rotation matrix as an SFMatrix3f object.
 
 #### **dot** (*other: SFQuaternion*): number
 
@@ -995,7 +995,7 @@ Returns a SFQuaternion whose value is the object multiplied by the passed *quate
 
 #### **multQuatVec** (*vector: SFVec3d/f*): SFVec3d/f
 
-Returns a SFVec3d/f whose value is the *vector* multiplied by the object to the left. The quaternion should be normalized to get proper results.
+Returns a SFVec3d/f whose value is the *vector* multiplied by the object to the left.
 
 #### **multRight** *(quaternion: SFQuaternion*): SFQuaternion
 
@@ -1018,7 +1018,7 @@ print (d);
 
 #### **multVecQuat** (*vector: SFVec3d/f*): SFVec3d/f
 
-Returns a SFVec3d/f whose value is the *vector* multiplied by the object to the right. The quaternion should be normalized to get proper results.
+Returns a SFVec3d/f whose value is the *vector* multiplied by the object to the right.
 
 <x3d-script-area name="X3D ECMAScript Example: SFQuaternion multVecQuat">
 <pre>
