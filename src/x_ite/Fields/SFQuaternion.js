@@ -37,7 +37,7 @@ Object .assign (Object .setPrototypeOf (SFQuaternion .prototype, X3DField .proto
    },
    divide (value)
    {
-      return SFQuaternion .fromValue (this .getValue () .copy () .divide (value));
+      return SFQuaternion .fromValue (this .getValue () .copy () .divide (+value));
    },
    dot (quaternion)
    {
@@ -57,7 +57,7 @@ Object .assign (Object .setPrototypeOf (SFQuaternion .prototype, X3DField .proto
    },
    multiply (value)
    {
-      return SFQuaternion .fromValue (this .getValue () .copy () .multiply (value));
+      return SFQuaternion .fromValue (this .getValue () .copy () .multiply (+value));
    },
    multLeft (quaternion)
    {
