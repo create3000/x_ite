@@ -6,10 +6,10 @@ class X3DCanvasElement extends HTMLElement
 
    constructor ()
    {
+      super ();
+
       try
       {
-         super ();
-
          new X3DBrowser (this);
       }
       catch (error)
