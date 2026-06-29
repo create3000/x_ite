@@ -987,9 +987,8 @@ Returns the geometric length of this quaternion.
 
 <x3d-script-area name="X3D ECMAScript Example: SFQuaternion length">
 <pre>
-const
-  quaternion = new SFQuaternion (1, 3, 5, 1),
-  normalized = quaternion .normalize ();
+const quaternion = new SFQuaternion (1, 3, 5, 1);
+const normalized = quaternion .normalize ();
 
 print (quaternion .length ());
 print (normalized .length ());
@@ -1022,12 +1021,11 @@ Returns a SFVec3d/f whose value is the *vector* multiplied by the object to the 
 
 <x3d-script-area name="X3D ECMAScript Example: SFQuaternion multVecQuat">
 <pre>
-const
-  v = new SFVec3f (8, 7, 6),
-  u = new SFQuaternion (... v, 0),
-  q = new SFQuaternion (1, 2, 3, 4),
-  a = q .normalize () .multVecQuat (v),
-  b = q .multLeft (u) .multLeft (q .inverse ());
+const v = new SFVec3f (8, 7, 6);
+const u = new SFQuaternion (... v, 0);
+const q = new SFQuaternion (1, 2, 3, 4);
+const a = q .normalize () .multVecQuat (v);
+const b = q .multLeft (u) .multLeft (q .inverse ());
 
 print (a);
 print (b);
