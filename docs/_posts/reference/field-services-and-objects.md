@@ -985,6 +985,21 @@ Returns a SFQuaternion object whose value is the inverse of this object's quater
 
 Returns the geometric length of this quaternion.
 
+<x3d-script-area name="X3D ECMAScript Example: SFQuaternion length">
+<pre>
+const
+  quaternion = new SFQuaternion (2, 2, 2, 2),
+  normalized = quaternion .normalize ();
+
+print (quaternion .length ());
+print (normalized .length ());
+print (normalized);
+// Expected output: 4
+// Expected output: 1
+// Expected output: 0.5 0.5 0.5 0.5
+</pre>
+</x3d-script-area>
+
 #### **multiply** (*factor: SFQuaternion*): SFQuaternion
 
 Returns an SFQuaternion whose value is the object multiplied by the passed numeric value.
@@ -1000,21 +1015,6 @@ Returns a SFVec3d/f whose value is the *vector* multiplied by the object to the 
 #### **multRight** *(quaternion: SFQuaternion*): SFQuaternion
 
 Returns a SFQuaternion whose value is the object multiplied by the passed *quaternion* on the right.
-
-<x3d-script-area name="X3D ECMAScript Example: SFQuaternion multRight">
-<pre>
-const
-  a = new SFQuaternion (1, 2, 3, 4),
-  b = new SFQuaternion (8, 7, 6, 5),
-  c = a .multRight (b),
-  d = b .multRight (a);
-
-print (c);
-print (d);
-// Expected output: 46 20 48 -20
-// Expected output: 28 56 30 -20
-</pre>
-</x3d-script-area>
 
 #### **multVecQuat** (*vector: SFVec3d/f*): SFVec3d/f
 
@@ -1043,19 +1043,6 @@ Returns an SFQuaternion whose value is the componentwise negation of the object.
 #### **normalize** (): SFQuaternion
 
 Returns an SFQuaternion object converted to unit length.
-
-<x3d-script-area name="X3D ECMAScript Example: SFQuaternion normalize">
-<pre>
-const
-  quaternion = new SFQuaternion (2, 2, 2, 2),
-  normalized = quaternion .normalize ();
-
-print (normalized);
-print (normalized .length ());
-// Expected output: 0.5 0.5 0.5 0.5
-// Expected output: 1
-</pre>
-</x3d-script-area>
 
 #### **setMatrix** (*matrix: SFMatrix3d/f*): void
 
