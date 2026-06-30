@@ -433,7 +433,7 @@ Alpha component of the color.
 
 ### Methods
 
-#### **getHSVA** (): number [];
+#### **getHSVA** (): number []
 
 Returns an array with the components of the color's HSVA value.
 
