@@ -975,7 +975,7 @@ Returns the rotation matrix as an SFMatrix3f object.
 
 #### **dot** (*other: SFQuaternion*): number
 
-Returns the dot product of this quaternion and SSFQuaternion *other*.
+Returns the dot product of this quaternion and SFQuaternion *other*.
 
 #### **inverse** (): SFQuaternion
 
