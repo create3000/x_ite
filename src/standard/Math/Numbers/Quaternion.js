@@ -352,20 +352,18 @@ Object .assign (Quaternion .prototype,
    },
    exp ()
    {
-      if (this .isReal ())
-         return this .set (0, 0, 0, Math .exp (this .w));
+      const { x, y, z, w } = this;
 
       const
-         i  = this .imag,
-         li = i .norm (),
-         ew = Math .exp (this .w),
-         w  = ew * Math .cos (li),
-         v  = i .multiply (ew * Math .sin (li) / li);
+         r  = Math .hypot (x, y, z),
+         et = Math .exp (w),
+         s  = r > 0 ? (et * Math .sin (r)) / r : 0;
 
-      this .x = v .x;
-      this .y = v .y;
-      this .z = v .z;
-      this .w = w;
+      this .x = x * s;
+      this .y = y * s;
+      this .z = z * s;
+      this .w = et * Math .cos (r);
+
       return this;
    },
    inverse ()
@@ -388,23 +386,17 @@ Object .assign (Quaternion .prototype,
    },
    log ()
    {
-      if (this .isReal ())
-      {
-         if (this .w > 0)
-            return this .set (0, 0, 0, Math .log (this .w));
-
-         return this .set (Math .PI, 0, 0, Math .log (-this .w));
-      }
+      const { x, y, z, w } = this;
 
       const
-         l = this .norm (),
-         v = this .imag .normalize () .multiply (Math .acos (this .w / l)),
-         w = Math .log (l);
+         r = Math .hypot (x, y, z),
+         t = r > 0 ? Math .atan2 (r, w) / r : 0;
 
-      this .x = v .x;
-      this .y = v .y;
-      this .z = v .z;
-      this .w = w;
+      this .x = x * t;
+      this .y = y * t;
+      this .z = z * t;
+      this .w = 0.5 * Math .log (x * x + y * y + z * z + w * w);
+
       return this;
    },
    multiply (value)
@@ -504,24 +496,9 @@ Object .assign (Quaternion .prototype,
    pow (exponent)
    {
       if (exponent instanceof Quaternion)
-         return this .assign (t1 .assign (exponent) .multRight (this .log ()) .exp ());
+         return this .log () .multLeft (exponent) .exp ();
 
-      if (this .isReal ())
-         return this .set (0, 0, 0, this .w ** exponent);
-
-      const
-         l     = this .norm (),
-         theta = Math .acos (this .w / l),
-         li    = this .imag .norm (),
-         ltoe  = l ** exponent,
-         et    = exponent * theta,
-         scale = ltoe / li * Math .sin (et);
-
-      this .x *= scale;
-      this .y *= scale;
-      this .z *= scale;
-      this .w  = ltoe * Math .cos (et);
-      return this;
+      return this .log () .multiply (exponent) .exp ();
    },
    slerp (destination, t)
    {
