@@ -938,17 +938,17 @@ Each component of the quaternion can be accessed using the `x`, `y`, `z` and `w`
 #### **x**: number
 {: .writable }
 
-Returns the first value of the imaginary part.
+Returns the first value of the imaginary parts.
 
 #### **y**: number
 {: .writable }
 
-Returns the second value of the imaginary part.
+Returns the second value of the imaginary parts.
 
 #### **z**: number
 {: .writable }
 
-Returns the third value of the imaginary part.
+Returns the third value of the imaginary parts.
 
 #### **w**: number
 {: .writable }
