@@ -84,11 +84,11 @@ Object .assign (Rotation4 .prototype,
             }
             else
             {
-               const axis = quaternion .getImag (result);
+               quaternion .getImag (result);
 
-               return result .set (axis .x / scale,
-                                   axis .y / scale,
-                                   axis .z / scale,
+               return result .set (result .x / scale,
+                                   result .y / scale,
+                                   result .z / scale,
                                    angle);
             }
          }
