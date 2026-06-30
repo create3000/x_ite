@@ -37,12 +37,17 @@ Object .assign (Object .setPrototypeOf (TextureCoordinateGenerator .prototype, X
          ["CAMERASPACENORMAL",           ModeType .CAMERASPACENORMAL],
          ["CAMERASPACEPOSITION",         ModeType .CAMERASPACEPOSITION],
          ["CAMERASPACEREFLECTIONVECTOR", ModeType .CAMERASPACEREFLECTIONVECTOR],
+         ["SPHERE_LOCAL",                ModeType .SPHERE_LOCAL],
          ["SPHERE-LOCAL",                ModeType .SPHERE_LOCAL],
          ["COORD",                       ModeType .COORD],
+         ["COORD_EYE",                   ModeType .COORD_EYE],
          ["COORD-EYE",                   ModeType .COORD_EYE],
          ["NOISE",                       ModeType .NOISE],
+         ["NOISE_EYE",                   ModeType .NOISE_EYE],
          ["NOISE-EYE",                   ModeType .NOISE_EYE],
+         ["SPHERE_REFLECT",              ModeType .SPHERE_REFLECT],
          ["SPHERE-REFLECT",              ModeType .SPHERE_REFLECT],
+         ["SPHERE_REFLECT-LOCAL",        ModeType .SPHERE_REFLECT_LOCAL],
          ["SPHERE-REFLECT-LOCAL",        ModeType .SPHERE_REFLECT_LOCAL],
       ]);
 
