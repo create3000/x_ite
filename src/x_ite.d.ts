@@ -22721,7 +22721,7 @@ declare namespace X3D
 
    }
 
-   /** Base type for all prototype instances. Note that direct children nodes are disallowed, instead let fieldValue with type SFNode/MFNode contain them. Current practice is that, if desired, prototype authors must explicitly add the metadatan SFNode field in the ProtoInterface. */
+   /** Base type for all prototype instances. Note that direct children nodes are disallowed, instead let fieldValue with type SFNode/MFNode contain them. Current practice is that, if desired, prototype authors must explicitly add the metadata SFNode field in the ProtoInterface. */
    interface X3DPrototypeInstanceProxy extends X3DNodeProxy
    {
       /**

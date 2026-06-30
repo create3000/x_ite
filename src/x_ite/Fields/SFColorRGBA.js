@@ -2,6 +2,17 @@ import X3DField from "../Base/X3DField.js";
 import SFColor  from "./SFColor.js";
 import Color4   from "../../standard/Math/Numbers/Color4.js";
 
+const {
+   equals,
+   set,
+   toStream,
+   toVRMLStream,
+   toXMLStream,
+   toJSONStream,
+   toJSONStreamValue
+} = SFColor .prototype;
+
+
 function SFColorRGBA (r = 0, g = 0, b = 0, a = 0)
 {
    X3DField .call (this, new Color4 (+r, +g, +b, +a));
@@ -17,12 +28,12 @@ Object .assign (Object .setPrototypeOf (SFColorRGBA .prototype, X3DField .protot
    {
       return SFColorRGBA .fromValue (this .getValue () .copy ());
    },
-   equals: SFColor .prototype .equals,
+   equals,
    isDefaultValue ()
    {
       return this .getValue () .equals (Color4 .TRANSPARENT);
    },
-   set: SFColor .prototype .set,
+   set,
    getHSVA ()
    {
       return this .getValue () .getHSVA ([ ]);
@@ -61,11 +72,11 @@ Object .assign (Object .setPrototypeOf (SFColorRGBA .prototype, X3DField .protot
          return result;
       };
    })(),
-   toStream: SFColor .prototype .toStream,
-   toVRMLStream: SFColor .prototype .toVRMLStream,
-   toXMLStream: SFColor .prototype .toXMLStream,
-   toJSONStream: SFColor .prototype .toJSONStream,
-   toJSONStreamValue: SFColor .prototype .toJSONStreamValue,
+   toStream,
+   toVRMLStream,
+   toXMLStream,
+   toJSONStream,
+   toJSONStreamValue,
 });
 
 for (const key of Object .keys (SFColorRGBA .prototype))

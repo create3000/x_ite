@@ -1,6 +1,21 @@
-import Vector3   from "./Vector3.js";
+import Vector4   from "./Vector4.js";
 import Matrix3   from "./Matrix3.js";
 import Algorithm from "../Algorithm.js";
+
+const {
+   assign,
+   equals,
+   add,
+   divide,
+   dot,
+   multiply,
+   negate,
+   norm,
+   normalize,
+   squaredNorm,
+   subtract,
+   toString
+} = Vector4 .prototype;
 
 function Quaternion (x = 0, y = 0, z = 0, w = 1)
 {
@@ -12,12 +27,15 @@ function Quaternion (x = 0, y = 0, z = 0, w = 1)
 
 Object .assign (Quaternion .prototype,
 {
-   *[Symbol .iterator] ()
+   [Symbol .iterator]: Vector4 .prototype [Symbol .iterator],
+   add,
+   assign,
+   conjugate ()
    {
-      yield this .x;
-      yield this .y;
-      yield this .z;
-      yield this .w;
+      this .x = -this .x;
+      this .y = -this .y;
+      this .z = -this .z;
+      return this;
    },
    copy ()
    {
@@ -27,160 +45,22 @@ Object .assign (Quaternion .prototype,
       copy .z = this .z;
       copy .w = this .w;
       return copy;
-   },
-   assign ({ x, y, z, w })
-   {
-      this .x = x;
-      this .y = y;
-      this .z = z;
-      this .w = w;
-      return this;
-   },
-   set (x = 0, y = 0, z = 0, w = 1)
-   {
-      this .x = x;
-      this .y = y;
-      this .z = z;
-      this .w = w;
-      return this;
-   },
-   setMatrix (matrix)
-   {
-      // First, find largest diagonal in matrix:
-
-      const i = matrix [0] > matrix [4]
-         ? matrix [0] > matrix [8] ? 0 : 2
-         : matrix [4] > matrix [8] ? 1 : 2;
-
-      const scaleRow = matrix [0] + matrix [4] + matrix [8];
-
-      if (scaleRow > matrix [i * 3 + i])
-      {
-         // Compute w first:
-         this [3] = Math .sqrt (scaleRow + 1) / 2;
-
-         // And compute other values:
-         const d = 4 * this [3];
-         this [0] = (matrix [5] - matrix [7]) / d;
-         this [1] = (matrix [6] - matrix [2]) / d;
-         this [2] = (matrix [1] - matrix [3]) / d;
-      }
-      else
-      {
-         // Compute x, y, or z first:
-         const
-            j = (i + 1) % 3,
-            k = (i + 2) % 3;
-
-         // Compute first value:
-         this [i] = Math .sqrt (matrix [i * 3 + i] - matrix [j * 3 + j] - matrix [k * 3 + k] + 1) / 2;
-
-         // And the others:
-         const d = 4 * this [i];
-         this [j] = (matrix [i * 3 + j] + matrix [j * 3 + i]) / d;
-         this [k] = (matrix [i * 3 + k] + matrix [k * 3 + i]) / d;
-         this [3] = (matrix [j * 3 + k] - matrix [k * 3 + j]) / d;
-      }
-
-      return this;
-   },
-   getMatrix (matrix = new Matrix3 ())
+   },   equals,
+   divide,
+   dot,
+   exp ()
    {
       const { x, y, z, w } = this;
 
       const
-         a = x * x,
-         b = x * y,
-         c = y * y,
-         d = y * z,
-         e = z * x,
-         f = z * z,
-         g = w * x,
-         h = w * y,
-         i = w * z;
+         r  = Math .hypot (x, y, z),
+         et = Math .exp (w),
+         s  = r > 0 ? (et * Math .sin (r)) / r : 0;
 
-      matrix [0] = 1 - 2 * (c + f);
-      matrix [1] =     2 * (b + i);
-      matrix [2] =     2 * (e - h);
-
-      matrix [3] =     2 * (b - i);
-      matrix [4] = 1 - 2 * (f + a);
-      matrix [5] =     2 * (d + g);
-
-      matrix [6] =     2 * (e + h);
-      matrix [7] =     2 * (d - g);
-      matrix [8] = 1 - 2 * (c + a);
-
-      return matrix;
-   },
-   /**
-    * Sets the Euler components.
-    * @param {number} x - The angle of the x axis in radians.
-    * @param {number} y - The angle of the y axis in radians.
-    * @param {number} z - The angle of the z axis in radians.
-    * @param {string} order - A string representing the order that the rotations are applied.
-    * @returns {Quaternion} A reference to this quaternion.
-    */
-   setEuler (x, y, z, order = "XYZ")
-   {
-      // https://github.com/toji/gl-matrix/blob/accefb6ddf1897a0dc443bbc7664c90e67af6455/src/quat.js#L460
-
-      x /= 2;
-      y /= 2;
-      z /= 2;
-
-      const
-         sx = Math .sin (x),
-         sy = Math .sin (y),
-         sz = Math .sin (z),
-         cx = Math .cos (x),
-         cy = Math .cos (y),
-         cz = Math .cos (z);
-
-      switch (order)
-      {
-         case "XYZ":
-            this .x = sx * cy * cz + cx * sy * sz;
-            this .y = cx * sy * cz - sx * cy * sz;
-            this .z = cx * cy * sz + sx * sy * cz;
-            this .w = cx * cy * cz - sx * sy * sz;
-            break;
-
-         case "ZYX":
-            this .x = sx * cy * cz - cx * sy * sz;
-            this .y = cx * sy * cz + sx * cy * sz;
-            this .z = cx * cy * sz - sx * sy * cz;
-            this .w = cx * cy * cz + sx * sy * sz;
-            break;
-
-         case "YXZ":
-            this .x = sx * cy * cz + cx * sy * sz;
-            this .y = cx * sy * cz - sx * cy * sz;
-            this .z = cx * cy * sz - sx * sy * cz;
-            this .w = cx * cy * cz + sx * sy * sz;
-            break;
-
-         case "ZXY":
-            this .x = sx * cy * cz - cx * sy * sz;
-            this .y = cx * sy * cz + sx * cy * sz;
-            this .z = cx * cy * sz + sx * sy * cz;
-            this .w = cx * cy * cz - sx * sy * sz;
-            break;
-
-         case "YZX":
-            this .x = sx * cy * cz + cx * sy * sz;
-            this .y = cx * sy * cz + sx * cy * sz;
-            this .z = cx * cy * sz - sx * sy * cz;
-            this .w = cx * cy * cz - sx * sy * sz;
-            break;
-
-         case "XZY":
-            this .x = sx * cy * cz - cx * sy * sz;
-            this .y = cx * sy * cz - sx * cy * sz;
-            this .z = cx * cy * sz + sx * sy * cz;
-            this .w = cx * cy * cz + sx * sy * sz;
-            break;
-      }
+      this .x = x * s;
+      this .y = y * s;
+      this .z = z * s;
+      this .w = et * Math .cos (r);
 
       return this;
    },
@@ -306,58 +186,34 @@ Object .assign (Quaternion .prototype,
 
       return euler;
    },
-   equals ({ x, y, z, w })
-   {
-      return this .x === x &&
-             this .y === y &&
-             this .z === z &&
-             this .w === w;
-   },
-   add ({ x, y, z, w })
-   {
-      this .x += x;
-      this .y += y;
-      this .z += z;
-      this .w += w;
-      return this;
-   },
-   conjugate ()
-   {
-      this .x = -this .x;
-      this .y = -this .y;
-      this .z = -this .z;
-      return this;
-   },
-   divide (value)
-   {
-      this .x /= value;
-      this .y /= value;
-      this .z /= value;
-      this .w /= value;
-      return this;
-   },
-   dot (quat)
-   {
-      return this .x * quat .x +
-             this .y * quat .y +
-             this .z * quat .z +
-             this .w * quat .w;
-   },
-   exp ()
+   getMatrix (matrix = new Matrix3 ())
    {
       const { x, y, z, w } = this;
 
       const
-         r  = Math .hypot (x, y, z),
-         et = Math .exp (w),
-         s  = r > 0 ? (et * Math .sin (r)) / r : 0;
+         a = x * x,
+         b = x * y,
+         c = y * y,
+         d = y * z,
+         e = z * x,
+         f = z * z,
+         g = w * x,
+         h = w * y,
+         i = w * z;
 
-      this .x = x * s;
-      this .y = y * s;
-      this .z = z * s;
-      this .w = et * Math .cos (r);
+      matrix [0] = 1 - 2 * (c + f);
+      matrix [1] =     2 * (b + i);
+      matrix [2] =     2 * (e - h);
 
-      return this;
+      matrix [3] =     2 * (b - i);
+      matrix [4] = 1 - 2 * (f + a);
+      matrix [5] =     2 * (d + g);
+
+      matrix [6] =     2 * (e + h);
+      matrix [7] =     2 * (d - g);
+      matrix [8] = 1 - 2 * (c + a);
+
+      return matrix;
    },
    inverse ()
    {
@@ -392,14 +248,7 @@ Object .assign (Quaternion .prototype,
 
       return this;
    },
-   multiply (value)
-   {
-      this .x *= value;
-      this .y *= value;
-      this .z *= value;
-      this .w *= value;
-      return this;
-   },
+   multiply,
    multLeft (quat)
    {
       const
@@ -460,38 +309,134 @@ Object .assign (Quaternion .prototype,
 
       return vector;
    },
-   negate ()
-   {
-      this .x = -this .x;
-      this .y = -this .y;
-      this .z = -this .z;
-      this .w = -this .w;
-      return this;
-   },
-   norm ()
-   {
-      return Math .hypot (this .x, this .y, this .z, this .w);
-   },
-   normalize ()
-   {
-      const length = Math .hypot (this .x, this .y, this .z, this .w);
-
-      if (length)
-      {
-         this .x /= length;
-         this .y /= length;
-         this .z /= length;
-         this .w /= length;
-      }
-
-      return this;
-   },
+   negate,
+   norm,
+   normalize,
    pow (exponent)
    {
       if (exponent instanceof Quaternion)
          return this .log () .multLeft (exponent) .exp ();
 
       return this .log () .multiply (exponent) .exp ();
+   },
+   set (x = 0, y = 0, z = 0, w = 1)
+   {
+      this .x = x;
+      this .y = y;
+      this .z = z;
+      this .w = w;
+      return this;
+   },
+   /**
+    * Sets the Euler components.
+    * @param {number} x - The angle of the x axis in radians.
+    * @param {number} y - The angle of the y axis in radians.
+    * @param {number} z - The angle of the z axis in radians.
+    * @param {string} order - A string representing the order that the rotations are applied.
+    * @returns {Quaternion} A reference to this quaternion.
+    */
+   setEuler (x, y, z, order = "XYZ")
+   {
+      // https://github.com/toji/gl-matrix/blob/accefb6ddf1897a0dc443bbc7664c90e67af6455/src/quat.js#L460
+
+      x /= 2;
+      y /= 2;
+      z /= 2;
+
+      const
+         sx = Math .sin (x),
+         sy = Math .sin (y),
+         sz = Math .sin (z),
+         cx = Math .cos (x),
+         cy = Math .cos (y),
+         cz = Math .cos (z);
+
+      switch (order)
+      {
+         case "XYZ":
+            this .x = sx * cy * cz + cx * sy * sz;
+            this .y = cx * sy * cz - sx * cy * sz;
+            this .z = cx * cy * sz + sx * sy * cz;
+            this .w = cx * cy * cz - sx * sy * sz;
+            break;
+
+         case "ZYX":
+            this .x = sx * cy * cz - cx * sy * sz;
+            this .y = cx * sy * cz + sx * cy * sz;
+            this .z = cx * cy * sz - sx * sy * cz;
+            this .w = cx * cy * cz + sx * sy * sz;
+            break;
+
+         case "YXZ":
+            this .x = sx * cy * cz + cx * sy * sz;
+            this .y = cx * sy * cz - sx * cy * sz;
+            this .z = cx * cy * sz - sx * sy * cz;
+            this .w = cx * cy * cz + sx * sy * sz;
+            break;
+
+         case "ZXY":
+            this .x = sx * cy * cz - cx * sy * sz;
+            this .y = cx * sy * cz + sx * cy * sz;
+            this .z = cx * cy * sz + sx * sy * cz;
+            this .w = cx * cy * cz - sx * sy * sz;
+            break;
+
+         case "YZX":
+            this .x = sx * cy * cz + cx * sy * sz;
+            this .y = cx * sy * cz + sx * cy * sz;
+            this .z = cx * cy * sz - sx * sy * cz;
+            this .w = cx * cy * cz - sx * sy * sz;
+            break;
+
+         case "XZY":
+            this .x = sx * cy * cz - cx * sy * sz;
+            this .y = cx * sy * cz - sx * cy * sz;
+            this .z = cx * cy * sz + sx * sy * cz;
+            this .w = cx * cy * cz + sx * sy * sz;
+            break;
+      }
+
+      return this;
+   },
+   setMatrix (matrix)
+   {
+      // First, find largest diagonal in matrix:
+
+      const i = matrix [0] > matrix [4]
+         ? matrix [0] > matrix [8] ? 0 : 2
+         : matrix [4] > matrix [8] ? 1 : 2;
+
+      const scaleRow = matrix [0] + matrix [4] + matrix [8];
+
+      if (scaleRow > matrix [i * 3 + i])
+      {
+         // Compute w first:
+         this [3] = Math .sqrt (scaleRow + 1) / 2;
+
+         // And compute other values:
+         const d = 4 * this [3];
+         this [0] = (matrix [5] - matrix [7]) / d;
+         this [1] = (matrix [6] - matrix [2]) / d;
+         this [2] = (matrix [1] - matrix [3]) / d;
+      }
+      else
+      {
+         // Compute x, y, or z first:
+         const
+            j = (i + 1) % 3,
+            k = (i + 2) % 3;
+
+         // Compute first value:
+         this [i] = Math .sqrt (matrix [i * 3 + i] - matrix [j * 3 + j] - matrix [k * 3 + k] + 1) / 2;
+
+         // And the others:
+         const d = 4 * this [i];
+         this [j] = (matrix [i * 3 + j] + matrix [j * 3 + i]) / d;
+         this [k] = (matrix [i * 3 + k] + matrix [k * 3 + i]) / d;
+         this [3] = (matrix [j * 3 + k] - matrix [k * 3 + j]) / d;
+      }
+
+      return this;
    },
    slerp (destination, t)
    {
@@ -507,30 +452,9 @@ Object .assign (Quaternion .prototype,
                                Algorithm .slerp (t2 .assign (a), t3 .assign (b), t),
                                2 * t * (1 - t));
    },
-   squaredNorm ()
-   {
-      const { x, y, z, w } = this;
-
-      return x * x +
-             y * y +
-             z * z +
-             w * w;
-   },
-   subtract ({ x, y, z, w })
-   {
-      this .x -= x;
-      this .y -= y;
-      this .z -= z;
-      this .w -= w;
-      return this;
-   },
-   toString ()
-   {
-      return this .x + " " +
-             this .y + " " +
-             this .z + " " +
-             this .w;
-   },
+   squaredNorm,
+   subtract,
+   toString,
 });
 
 for (const key of Object .keys (Quaternion .prototype))
