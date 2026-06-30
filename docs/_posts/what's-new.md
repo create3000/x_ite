@@ -64,7 +64,7 @@ These changes improve performance and align the API more closely with modern Jav
 
 ## X_ITE v14.1 Series
 
-*Leipzig, 22th March 2026:* This series of X_ITE comes with the new [RenderedTexture](/x_ite/components/texturing/renderedtexture/) node and improved support for [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/). Both textures can now be used everywhere where a X3DSingleTextureNode is valid, for instance as material texture, as [Appearance](/x_ite/components/shape/appearance/) texture, in custom shaders and as a texture projector texture.
+*Leipzig, 22th March 2026:* This series of X_ITE comes with the new [RenderedTexture](/x_ite/components/texturing/renderedtexture/) node and improved support for [GeneratedCubeMapTexture](/x_ite/components/cubemaptexturing/generatedcubemaptexture/). Both textures can now be used everywhere where an X3DSingleTextureNode is valid, for instance as material texture, as [Appearance](/x_ite/components/shape/appearance/) texture, in custom shaders and as a texture projector texture.
 
 ### Notable Changes
 
