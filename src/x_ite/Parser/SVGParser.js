@@ -41,7 +41,7 @@ const Grammar = Expressions ({
    scale: /scale/y,
    skewX: /skewX/y,
    skewY: /skewY/y,
-   color: /#[\da-fA-F]+|[a-zA-Z]+\([^\)]*\)|[a-zA-Z]+/y,
+   color: /#[\da-fA-F]+|[a-zA-Z]+\([^)]*\)|[a-zA-Z]+/y,
    url: /url\("?(.*?)"?\)/y,
    path: /[mMlLhHvVqQtTcCsSaAzZ]/y,
 });

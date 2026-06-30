@@ -53,8 +53,8 @@ const ShaderSource =
          precisionInt   = matchInt   ?.[1] ?? "mediump";
 
       const types = Types ()
-         .replace (/mediump\s+(float|vec2|vec3|mat3|mat4)/g, `${precisionFloat} \$1`)
-         .replace (/mediump\s+(int)/g,                       `${precisionInt} \$1`);
+         .replace (/mediump\s+(float|vec2|vec3|mat3|mat4)/g, `${precisionFloat} $1`)
+         .replace (/mediump\s+(int)/g,                       `${precisionInt} $1`);
 
       const lines = (match [1] .match (/\n/g) ?.length ?? 0) + 1;
 

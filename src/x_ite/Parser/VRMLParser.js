@@ -58,7 +58,7 @@ const Grammar = Expressions ({
    OpenBracket:  /\[/y,
    CloseBracket: /\]/y,
    Period:       /\./y,
-   Colon:        /\:/y,
+   Colon:        /:/y,
 
    Id: /[^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f]*/y,
    ComponentNameId: /[^\x30-\x39\x00-\x20\x22\x23\x27\x2b\x2c\x2d\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]{1}[^\x00-\x20\x22\x23\x27\x2c\x2e\x5b\x5c\x5d\x7b\x7d\x7f\x3a]*/y,
@@ -82,7 +82,7 @@ const Grammar = Expressions ({
    noDoubleQuotes: /[^"]+/y,
 
    CONSTANTS: /([+-]?)\b(NAN|INFINITY|INF|PI(?:2|1_4|2_4|3_4|4_4|5_4|6_4|7_4|8_4|1_2|2_2|3_2|4_2|1_3|2_3|3_3|4_3|5_3|6_3)?|SQRT(?:1_2|2))\b/iy,
-   HTMLColor: /0[xX][\da-fA-F]+|[a-zA-Z]+\([^\)]*\)|[a-zA-Z]+/y,
+   HTMLColor: /0[xX][\da-fA-F]+|[a-zA-Z]+\([^)]*\)|[a-zA-Z]+/y,
 });
 
 /*

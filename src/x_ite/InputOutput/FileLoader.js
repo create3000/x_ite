@@ -177,7 +177,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
 
       // Script:
       {
-         const result = url .match (/^\s*(?:ecmascript|javascript|vrmlscript)\:/s);
+         const result = url .match (/^\s*(?:ecmascript|javascript|vrmlscript):/s);
 
          if (result)
             return await this .callback (url .substring (result [0] .length));

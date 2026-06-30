@@ -1,6 +1,6 @@
 import ShaderRegistry from "./ShaderRegistry.js";
 
-const include = /^\s*#include\s*<([^\/]+)>\s*$/;
+const include = /^\s*#include\s*<([^/]+)>\s*$/;
 
 function ShaderCompiler (gl)
 {

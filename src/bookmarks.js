@@ -40,7 +40,7 @@ Object .assign (Bookmarks .prototype,
                   continue;
 
                const
-                  basename = path .match (/([^\/]+)\.\w+$/),
+                  basename = path .match (/([^/]+)\.\w+$/),
                   name     = basename [1] .replace (/([A-Z]+)/g, ' $1');
 
                element = $('<span/>')
@@ -90,7 +90,7 @@ Object .assign (Bookmarks .prototype,
    {
       const
          data  = this .browser .getWorldURL () .startsWith ("data:"),
-         base  = this .browser .getWorldURL () .replace (/(?:\.O)?\.[^\.]+$/, ""),
+         base  = this .browser .getWorldURL () .replace (/(?:\.O)?\.[^.]+$/, ""),
          local = base .replace (/https:\/\/create3000.github.io\/(.*?)\//, `https://${location.hostname}/$1/docs/`);
 
       if (this .browser .currentScene .encoding === "GLTF")
