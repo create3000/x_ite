@@ -577,11 +577,6 @@ Object .defineProperties (Quaternion .prototype,
       get () { return this .w; },
       set (value) { this .w = value; },
    },
-   real:
-   {
-      get () { return this .w; },
-      set (value) { this .w = value; },
-   },
 });
 
 Object .assign (Quaternion,
