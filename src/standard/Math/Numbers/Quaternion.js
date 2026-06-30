@@ -316,14 +316,14 @@ Object .assign (Quaternion .prototype,
 
       return euler;
    },
-   isReal ()
-   {
-      return !(this .x || this .y || this .z);
-   },
-   isImag ()
-   {
-      return !this .w;
-   },
+   // isReal ()
+   // {
+   //    return !(this .x || this .y || this .z);
+   // },
+   // isImag ()
+   // {
+   //    return !this .w;
+   // },
    equals ({ x, y, z, w })
    {
       return this .x === x &&
