@@ -249,13 +249,13 @@ Returns a white color. This property is read-only.
 
 #### **fromHSV** (*h: number, s: number, v: number*): SFColor
 
-Creates a SFColor object from a HSV color value; *h* is the hue, *s* is the saturation and *v* is the value component of the HSV color.
+Creates an SFColor object from a HSV color value; *h* is the hue, *s* is the saturation and *v* is the value component of the HSV color.
 
 The saturation and value component must be in the range [0,1], and the hue component must be in the range [0,2π].
 
 #### **fromString** (*value: string*): SFColor
 
-Creates a SFColor object from string. *value* can be any valid X3D or CSS color value. Hex values must start with `0x`.
+Creates an SFColor object from string. *value* can be any valid X3D or CSS color value. Hex values must start with `0x`.
 
 <x3d-script-area name="X3D ECMAScript Example: SFColor fromString">
 <pre>
@@ -334,11 +334,11 @@ The saturation and value component must be in the range [0,1], and the hue compo
 
 #### **linearToSRGB** (): SFColor
 
-Returns a SFColor object whose value is converted to sRGB color space.
+Returns an SFColor object whose value is converted to sRGB color space.
 
 #### **sRGBToLinear** (): SFColor
 
-Returns a SFColor object whose value is converted to linear color space.
+Returns an SFColor object whose value is converted to linear color space.
 
 #### **lerp** (*destination: SFColor, t: number*): SFColor
 
@@ -366,7 +366,7 @@ Returns a white color. This property is read-only.
 
 #### **fromHSVA** (*h: number, s: number, v: number, a: number = 1*): SFColorRGBA
 
-Creates a SFColorRGBA object from a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and *a* is the alpha component of the HSVA color.
+Creates an SFColorRGBA object from a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and *a* is the alpha component of the HSVA color.
 
 The saturation, value and alpha component must be in the range [0,1], and the hue component must be in the range [0,2π].
 
@@ -387,7 +387,7 @@ print (blue);
 
 #### **fromString** (*value: string*): SFColorRGBA
 
-Creates a SFColorRGBA object from string. *value* can be any valid X3D or CSS color value. Hex values must start with `0x`.
+Creates an SFColorRGBA object from string. *value* can be any valid X3D or CSS color value. Hex values must start with `0x`.
 
 ### Instance Creation Method(s)
 
@@ -456,11 +456,11 @@ print (color);
 
 #### **linearToSRGB** (): SFColorRGBA
 
-Returns a SFColorRGBA object whose value is converted to sRGB color space.
+Returns an SFColorRGBA object whose value is converted to sRGB color space.
 
 #### **sRGBToLinear** (): SFColorRGBA
 
-Returns a SFColorRGBA object whose value is converted to linear color space.
+Returns an SFColorRGBA object whose value is converted to linear color space.
 
 #### **lerp** (*destination: SFColorRGBA, t: number*): SFColorRGBA
 
@@ -481,7 +481,7 @@ A new image initialized with zero values is created and returned.
 *width* is the width in pixels of the image.
 *height* is the height in pixels of the image.
 *components* are the number of components of the image (0-4).
-*array* is a optional MFInt32 array with pixel data.
+*array* is an optional MFInt32 array with pixel data.
 
 <x3d-script-area name="X3D ECMAScript Example: new SFImage (width, height, components, array)">
 <pre>
@@ -581,7 +581,7 @@ Individual elements of the object can be referenced using the standard C-style d
 
 #### **setTransform** (*translation*, *rotation*, *scaleFactor*, *scaleOrientation*, *center*): void
 
-Sets the SFMatrix3d/f to the passed values. *translation* is an SFVec2d/f object, *rotation* is a Number, *scaleFactor* is a SFVec2d/f object, *scaleOrientation* is a Number and *center* is a SFVec2d/f object.
+Sets the SFMatrix3d/f to the passed values. *translation* is an SFVec2d/f object, *rotation* is a Number, *scaleFactor* is an SFVec2d/f object, *scaleOrientation* is a Number and *center* is an SFVec2d/f object.
 
 Any of the rightmost parameters can be omitted, or any parameter can be `null`. In other words, the method can take from 0 to 5 parameters. For example, you can specify 0 parameters (resulting in a identity matrix), 1 parameter (a translation), 2 parameters (a translation and a rotation), 3 parameters (a translation, rotation and a scaleFactor), etc. Any unspecified parameter is set to its default as specified in the **Transform** node section of the X3D specification.
 
@@ -601,7 +601,7 @@ print (matrix);
 
 #### **getTransform** (*translation*, *rotation*, *scaleFactor*, *scaleOrientation*, *center*): void
 
-Decomposes the SFMatrix3d/f and returns the components in the passed *translation*, *rotation*, and *scaleFactor* objects*. rotation* is a SFVec3d/f, where x and y are the complex value of the rotation and z is the rotation angle in radians. The other types of the parameters are the same as in **setTransform**.
+Decomposes the SFMatrix3d/f and returns the components in the passed *translation*, *rotation*, and *scaleFactor* objects*. rotation* is an SFVec3d/f, where x and y are the complex value of the rotation and z is the rotation angle in radians. The other types of the parameters are the same as in **setTransform**.
 
 Any of the rightmost parameters can be omitted, or any parameter can be `null`. In other words, the method can take from 0 to 5 parameters. For example, you can specify 0 parameters (resulting in a identity matrix), 1 parameter (a translation), 2 parameters (a translation and a rotation), 3 parameters (a translation, rotation and a scaleFactor), etc. Any unspecified parameter is set to its default as specified in the **Transform** node section of the X3D specification.
 
@@ -613,63 +613,63 @@ Returns the determinant of this object's matrix.
 
 #### **inverse** (): SFMatrix3d/f
 
-Returns a SFMatrix whose value is the inverse of this object.
+Returns an SFMatrix whose value is the inverse of this object.
 
 #### **transpose** (): SFMatrix3d/f
 
-Returns a SFMatrix3d/f whose value is the transpose of this object.
+Returns an SFMatrix3d/f whose value is the transpose of this object.
 
 #### **multLeft** (*matrix: SFMatrix3d/f*): SFMatrix3d/f
 
-Returns a SFMatrix3d/f whose value is the object multiplied by the passed *matrix* on the left.
+Returns an SFMatrix3d/f whose value is the object multiplied by the passed *matrix* on the left.
 
 #### **multRight** (*matrix: SFMatrix3d/f*): SFMatrix3d/f
 
-Returns a SFMatrix3d/f whose value is the object multiplied by the passed *matrix* on the right.
+Returns an SFMatrix3d/f whose value is the object multiplied by the passed *matrix* on the right.
 
 #### **multVecMatrix** (*vector: SFVec2d/f*): SFVec2d/f
 
-Returns a SFVec2d/f whose value is the object multiplied by the passed row *vector*.
+Returns an SFVec2d/f whose value is the object multiplied by the passed row *vector*.
 
 #### **multVecMatrix** (*vector: SFVec3d/f*): SFVec3d/f
 
-Returns a SFVec3d/f whose value is the object multiplied by the passed row *vector*.
+Returns an SFVec3d/f whose value is the object multiplied by the passed row *vector*.
 
 #### **multMatrixVec** (*vector: SFVec2d/f*): SFVec2d/f
 
-Returns a SFVec2d/f whose value is the object multiplied by the passed column *vector*.
+Returns an SFVec2d/f whose value is the object multiplied by the passed column *vector*.
 
 #### **multMatrixVec** (*vector: SFVec3d/f*): SFVec3d/f
 
-Returns a SFVec3d/f whose value is the object multiplied by the passed column *vector*.
+Returns an SFVec3d/f whose value is the object multiplied by the passed column *vector*.
 
 #### **multDirMatrix** (*vector: SFVec2d/f*): SFVec2d/f
 
-Returns a SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed row *vector*.
+Returns an SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed row *vector*.
 
 #### **multMatrixDir** (*vector: SFVec2d/f*): SFVec2d/f
 
-Returns a SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed column *vector*.
+Returns an SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed column *vector*.
 
 #### **translate** (*translation: SFVec2d/f*): SFMatrix3d/f
 
-Returns a SFMatrix3d/f whose value is the object translated by the passed *translation* on the left.
+Returns an SFMatrix3d/f whose value is the object translated by the passed *translation* on the left.
 
 #### **rotate** (*rotation: number*): SFMatrix3d/f
 
-Returns a SFMatrix3d/f whose value is the object rotated by the passed *rotation* (in radians) on the left.
+Returns an SFMatrix3d/f whose value is the object rotated by the passed *rotation* (in radians) on the left.
 
 #### **scale** (*scale: SFVec2d/f*): SFMatrix3d/f
 
-Returns a SFMatrix3d/f whose value is the object scaled by the passed *scale* on the left.
+Returns an SFMatrix3d/f whose value is the object scaled by the passed *scale* on the left.
 
 #### **skewX** (*angle: number*): SFMatrix3d/f
 
-Returns a SFMatrix3d/f whose value is the object skewed by the passed *angle* (in radians) on the left.
+Returns an SFMatrix3d/f whose value is the object skewed by the passed *angle* (in radians) on the left.
 
 #### **skewY** (*angle: number*): SFMatrix3d/f
 
-Returns a SFMatrix3d/f whose value is the object skewed by the passed *angle* (in radians) on the left.
+Returns an SFMatrix3d/f whose value is the object skewed by the passed *angle* (in radians) on the left.
 
 ## SFMatrix4d/SFMatrix4f Object
 
@@ -711,7 +711,7 @@ Individual elements of the object can be referenced using the standard C-style d
 
 #### **setTransform** (*translation*, *rotation*, *scaleFactor*, *scaleOrientation*, *center*): void
 
-Sets the SFMatrix4d/f to the passed values. *translation* is an SFVec3d/f object, *rotation* is a SFRotation object, *scaleFactor* is a SFVec3d/f object, *scaleOrientation* is a SFRotation object and *center* is a SFVec3d/f object.
+Sets the SFMatrix4d/f to the passed values. *translation* is an SFVec3d/f object, *rotation* is an SFRotation object, *scaleFactor* is an SFVec3d/f object, *scaleOrientation* is an SFRotation object and *center* is an SFVec3d/f object.
 
 Any of the rightmost parameters can be omitted. In other words, the method can take from 0 to 5 parameters. For example, you can specify 0 parameters (resulting in a identity matrix), 1 parameter (a translation), 2 parameters (a translation and a rotation), 3 parameters (a translation, rotation and a scaleFactor), etc. Any unspecified parameter is set to its default as specified in the **Transform** node section of the X3D specification.
 
@@ -729,23 +729,23 @@ Returns the determinant of this object's matrix.
 
 #### **inverse** (): SFMatrix4d/f
 
-Returns a SFMatrix whose value is the inverse of this object.
+Returns an SFMatrix whose value is the inverse of this object.
 
 #### **transpose** (): SFMatrix4d/f
 
-Returns a SFMatrix4d/f whose value is the transpose of this object.
+Returns an SFMatrix4d/f whose value is the transpose of this object.
 
 #### **multLeft** (*matrix: SFMatrix4d/f*): SFMatrix4d/f
 
-Returns a SFMatrix4d/f whose value is the object multiplied by the passed *matrix* on the left.
+Returns an SFMatrix4d/f whose value is the object multiplied by the passed *matrix* on the left.
 
 #### **multRight** (*matrix: SFMatrix4d/f*): SFMatrix4d/f
 
-Returns a SFMatrix4d/f whose value is the object multiplied by the passed *matrix* on the right.
+Returns an SFMatrix4d/f whose value is the object multiplied by the passed *matrix* on the right.
 
 #### **multVecMatrix** (*vector: SFVec3d/f*): SFVec3d/f
 
-Returns a SFVec3d/f whose value is the object multiplied by the passed row *vector*.
+Returns an SFVec3d/f whose value is the object multiplied by the passed row *vector*.
 
 <x3d-script-area name="X3D ECMAScript Example: SFMatrix4f multVecMatrix">
 <pre>
@@ -759,35 +759,35 @@ print (matrix .multVecMatrix (vector));
 
 #### **multVecMatrix** (*SFVec4d/f vector*): SFVec4d/f
 
-Returns a SFVec4d/f whose value is the object multiplied by the passed row *vector*.
+Returns an SFVec4d/f whose value is the object multiplied by the passed row *vector*.
 
 #### **multMatrixVec** (*vector: SFVec3d/f*): SFVec3d/f
 
-Returns a SFVec3d/f whose value is the object multiplied by the passed column *vector*.
+Returns an SFVec3d/f whose value is the object multiplied by the passed column *vector*.
 
 #### **multMatrixVec** (*SFVec4d/f vector*): SFVec4d/f
 
-Returns a SFVec4d/f whose value is the object multiplied by the passed column *vector*.
+Returns an SFVec4d/f whose value is the object multiplied by the passed column *vector*.
 
 #### **multDirMatrix** (*vector: SFVec3d/f*): SFVec3d/f
 
-Returns a SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed row *vector*.
+Returns an SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed row *vector*.
 
 #### **multMatrixDir** (*vector: SFVec3d/f*): SFVec3d/f
 
-Returns a SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed column *vector*.
+Returns an SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed column *vector*.
 
 #### **translate** (*translation: SFVec3d/f*):  SFMatrix4d/f
 
-Returns a SFMatrix4d/f whose value is the object translated by the passed *translation* on the left.
+Returns an SFMatrix4d/f whose value is the object translated by the passed *translation* on the left.
 
 #### **rotate** (*rotation: SFRotation*):  SFMatrix4d/f
 
-Returns a SFMatrix4d/f whose value is the object rotated by the passed *rotation* on the left.
+Returns an SFMatrix4d/f whose value is the object rotated by the passed *rotation* on the left.
 
 #### **scale** (*scale: SFVec3d/f*):  SFMatrix4d/f
 
-Returns a SFMatrix4d/f whose value is the object scaled by the passed *scale* on the left.
+Returns an SFMatrix4d/f whose value is the object scaled by the passed *scale* on the left.
 
 ## SFNode Object
 
@@ -864,19 +864,19 @@ Removes a field callback function associated with *key* and *name* from the fiel
 
 #### **toVRMLString** (*options?: Options*): string
 
-Returns the X3D VRML-encoded string that, if parsed as the value of a SFNode field, will produce this node.
+Returns the X3D VRML-encoded string that, if parsed as the value of an SFNode field, will produce this node.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
 #### **toXMLString** (*options?: Options*): string
 
-Returns the X3D XML-encoded string that, if parsed as the value of a SFNode field, will produce this node.
+Returns the X3D XML-encoded string that, if parsed as the value of an SFNode field, will produce this node.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
 #### **toJSONString** (*options?: Options*): string
 
-Returns the X3D JSON-encoded string that, if parsed as the value of a SFNode field, will produce this node.
+Returns the X3D JSON-encoded string that, if parsed as the value of an SFNode field, will produce this node.
 
 For options see [X3DScene.toVRMLString](/x_ite/reference/scene-services/#tovrmlstring-options-options-string-non-standard).
 
@@ -979,7 +979,7 @@ Returns the dot product of this quaternion and SFQuaternion *other*.
 
 #### **inverse** (): SFQuaternion
 
-Returns a SFQuaternion object whose value is the inverse of this object's quaternion.
+Returns an SFQuaternion object whose value is the inverse of this object's quaternion.
 
 #### **length** (): number
 
@@ -1005,19 +1005,19 @@ Returns an SFQuaternion whose value is the object multiplied by the passed numer
 
 #### **multLeft** *(quaternion: SFQuaternion*): SFQuaternion
 
-Returns a SFQuaternion whose value is the object multiplied by the passed *quaternion* on the left.
+Returns an SFQuaternion whose value is the object multiplied by the passed *quaternion* on the left.
 
 #### **multQuatVec** (*vector: SFVec3d/f*): SFVec3d/f
 
-Returns a SFVec3d/f whose value is the *vector* multiplied by the object to the left.
+Returns an SFVec3d/f whose value is the *vector* multiplied by the object to the left.
 
 #### **multRight** *(quaternion: SFQuaternion*): SFQuaternion
 
-Returns a SFQuaternion whose value is the object multiplied by the passed *quaternion* on the right.
+Returns an SFQuaternion whose value is the object multiplied by the passed *quaternion* on the right.
 
 #### **multVecQuat** (*vector: SFVec3d/f*): SFVec3d/f
 
-Returns a SFVec3d/f whose value is the *vector* multiplied by the object to the right.
+Returns an SFVec3d/f whose value is the *vector* multiplied by the object to the right.
 
 <x3d-script-area name="X3D ECMAScript Example: SFQuaternion multVecQuat">
 <pre>
@@ -1048,7 +1048,7 @@ Set the value of this quaternion to the rotation matrix passed in *matrix*.
 
 #### **slerp** (*destQuaternion: SFQuaternion, t: number*): SFQuaternion
 
-Returns a SFQuaternion whose value is the spherical linear interpolation between this object's quaternion and *destQuaternion* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's quaternion. For *t* = 1, the value is *destQuaternion*.
+Returns an SFQuaternion whose value is the spherical linear interpolation between this object's quaternion and *destQuaternion* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's quaternion. For *t* = 1, the value is *destQuaternion*.
 
 Both quaternions must be normalized. If either quaternion is not normalized, the result is undefined. The interpolation always follows the shortest path on the unit hypersphere. If the dot product between the two quaternions is negative, the destination quaternion is implicitly negated to ensure the shortest interpolation path.
 
@@ -1099,7 +1099,7 @@ A new rotation initialized with the identity rotation is created and returned.
 
 #### *sfRotationObjectName* = new **SFRotation** (*axis: SFVec3d/f, angle: number*)
 
-*axis* is a SFVec3d/f object whose value is the axis of rotation.
+*axis* is an SFVec3d/f object whose value is the axis of rotation.
 *angle* is the scalar angle of the rotation (in radians).
 
 #### *sfRotationObjectName* = new **SFRotation** (*fromVector: SFVec3d/f, toVector: SFVec3d/f*)
@@ -1165,7 +1165,7 @@ Returns the rotation as an SFQuaternion object.
 
 #### **inverse** (): SFRotation
 
-Returns a SFRotation object whose value is the inverse of this object's rotation.
+Returns an SFRotation object whose value is the inverse of this object's rotation.
 
 #### **multiply** *(rotation: SFRotation*): SFRotation
 
@@ -1173,7 +1173,7 @@ Returns an SFRotation whose value is the object multiplied by the passed SFRotat
 
 #### **multVec** (*vector: SFVec3d/f*): SFVec3d/f
 
-Returns a SFVec3f whose value is the SFVec3f *vector* multiplied by the matrix corresponding to this object's rotation.
+Returns an SFVec3f whose value is the SFVec3f *vector* multiplied by the matrix corresponding to this object's rotation.
 
 <x3d-script-area name="X3D ECMAScript Example: SFRotation multVec">
 <pre>
@@ -1203,7 +1203,7 @@ Set the value of this rotation to the quaternion passed in *quaternion*.
 
 #### **slerp** (*destRotation: SFRotation, t: number*): SFRotation
 
-Returns a SFRotation whose value is the spherical linear interpolation between this object's rotation and *destRotation* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's rotation. For *t* = 1, the value is *destRotation*.
+Returns an SFRotation whose value is the spherical linear interpolation between this object's rotation and *destRotation* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's rotation. For *t* = 1, the value is *destRotation*.
 
 #### **straighten** (*upVector: SFVec3d/f = SFVec3f.Y_AXIS*): SFRotation
 
@@ -1251,7 +1251,7 @@ A new vector initialized with zero values is created and returned.
 
 #### *sfVec2d/fObjectName* = new **SFVec2d/f** (*x: number, y: number*)
 
-Constructs a SFVec2d/f from *x* and *y*, where *x* and *y* are scalar expressions.
+Constructs an SFVec2d/f from *x* and *y*, where *x* and *y* are scalar expressions.
 
 ### Iterator
 
@@ -1329,7 +1329,7 @@ Returns the geometric length of this vector.
 
 #### **lerp** (*destination:  SFVec2d/f, t: number*): SFVec2d/f
 
-Returns a SFVec2d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
+Returns an SFVec2d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
 
 #### **min** (*other: SFVec2d/f*): SFVec2d/f
 
@@ -1415,7 +1415,7 @@ A new vector initialized with zero values is created and returned.
 
 #### *sfVec3d/fObjectName* = new **SFVec3d/f** (*x: number, y: number, z: number*)
 
-Constructs a SFVec3d/f from *x*, *y* and *z*, where *x*, *y* and *z* are scalar expressions.
+Constructs an SFVec3d/f from *x*, *y* and *z*, where *x*, *y* and *z* are scalar expressions.
 
 ### Iterator
 
@@ -1488,7 +1488,7 @@ Returns the geometric length of this vector.
 
 #### **lerp** (*destination:  SFVec3d/f, t: number*): SFVec3d/f
 
-Returns a SFVec3d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
+Returns an SFVec3d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
 
 <x3d-script-area name="X3D ECMAScript Example: SFVec3f lerp">
 <pre>
@@ -1596,7 +1596,7 @@ A new vector initialized with zero values is created and returned.
 
 #### *sfVec4d/fObjectName* = new **SFVec4d/f** (*x: number, y: number, z: number, w: number*)
 
-Constructs a SFVec4d/f from *x*, *y*, *z* and *w*, where *x*, *y*, *z* and *w* are scalar expressions.
+Constructs an SFVec4d/f from *x*, *y*, *z* and *w*, where *x*, *y*, *z* and *w* are scalar expressions.
 
 ### Iterator
 
@@ -1684,7 +1684,7 @@ Returns the geometric length of this vector.
 
 #### **lerp** (*destination:  SFVec4d/f, t: number*): SFVec4d/f
 
-Returns a SFVec4d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
+Returns an SFVec4d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
 
 #### **min** (*other: SFVec4d/f*): SFVec4d/f
 

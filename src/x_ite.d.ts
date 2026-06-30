@@ -1701,7 +1701,7 @@ declare namespace X3D
    }
 
    /**
-    * The SFColor object corresponds to an X3D SFColor field. All properties are accessed using the syntax *sfColorObjectName.\<property\>*, where *sfColorObjectName* is an instance of a SFColor object. All methods are invoked using the syntax *sfColorObjectName.method (\<argument-list\>)*, where *sfColorObjectName* is an instance of a SFColor object.
+    * The SFColor object corresponds to an X3D SFColor field. All properties are accessed using the syntax *sfColorObjectName.\<property\>*, where *sfColorObjectName* is an instance of an SFColor object. All methods are invoked using the syntax *sfColorObjectName.method (\<argument-list\>)*, where *sfColorObjectName* is an instance of an SFColor object.
     */
    class SFColor extends X3DField
    {
@@ -1712,13 +1712,13 @@ declare namespace X3D
       static readonly WHITE: SFColor;
 
       /**
-       * Creates a SFColor object from a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and a is the alpha component of the HSV color.
+       * Creates an SFColor object from a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and a is the alpha component of the HSV color.
        *
        * The saturation, and value component must be in the range 0–1, and the hue component must be in the range 0–2π.
        */
       static fromHSV (h: number, s: number, v: number): SFColor;
       /**
-       * Creates a SFColor object from string. *value* can be any valid X3D or CSS color value. Hex values must start with `0x`.
+       * Creates an SFColor object from string. *value* can be any valid X3D or CSS color value. Hex values must start with `0x`.
        */
       static fromString (value: string): SFColor;
 
@@ -1758,11 +1758,11 @@ declare namespace X3D
        */
       setHSV (h: number, s: number, v: number): void;
       /**
-       * Returns a SFColor object whose value is converted to sRGB color space.
+       * Returns an SFColor object whose value is converted to sRGB color space.
        */
       linearToSRGB (): SFColor;
       /**
-       * Returns a SFColor object whose value is converted to linear color space.
+       * Returns an SFColor object whose value is converted to linear color space.
        */
       sRGBToLinear (): SFColor;
       /**
@@ -1772,7 +1772,7 @@ declare namespace X3D
    }
 
    /**
-    * The SFColorRGBA object corresponds to an X3D SFColorRGBA field. All properties are accessed using the syntax *sfColorRGBAObjectName.\<property\>*, where *sfColorRGBAObjectName* is an instance of a SFColorRGBA object. All methods are invoked using the syntax *sfColorRGBAObjectName.method (\<argument-list\>)*, where *sfColorRGBAObjectName* is an instance of a SFColorRGBA object.
+    * The SFColorRGBA object corresponds to an X3D SFColorRGBA field. All properties are accessed using the syntax *sfColorRGBAObjectName.\<property\>*, where *sfColorRGBAObjectName* is an instance of an SFColorRGBA object. All methods are invoked using the syntax *sfColorRGBAObjectName.method (\<argument-list\>)*, where *sfColorRGBAObjectName* is an instance of an SFColorRGBA object.
     */
    class SFColorRGBA extends X3DField
    {
@@ -1784,13 +1784,13 @@ declare namespace X3D
       static readonly WHITE: SFColor;
 
       /**
-       * Creates a SFColorRGBA object from a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and *a* is the alpha component of the HSVA color.
+       * Creates an SFColorRGBA object from a HSV color value; *h* is the hue, *s* is the saturation, *v* is the value and *a* is the alpha component of the HSVA color.
        *
        * The saturation, and value component must be in the range 0–1, and the hue component must be in the range 0–2π.
        */
       static fromHSVA (h: number, s: number, v: number, a: number): SFColorRGBA;
       /**
-       * Creates a SFColorRGBA object from string. *value* can be any valid X3D or CSS color value. Hex values must start with `0x`.
+       * Creates an SFColorRGBA object from string. *value* can be any valid X3D or CSS color value. Hex values must start with `0x`.
        */
       static fromString (value: string): SFColorRGBA;
 
@@ -1834,11 +1834,11 @@ declare namespace X3D
        */
       setHSVA (h: number, s: number, v: number, a: number): void;
       /**
-       * Returns a SFColorRGBA object whose value is converted to sRGB color space.
+       * Returns an SFColorRGBA object whose value is converted to sRGB color space.
        */
       linearToSRGB (): SFColorRGBA;
       /**
-       * Returns a SFColorRGBA object whose value is converted to linear color space.
+       * Returns an SFColorRGBA object whose value is converted to linear color space.
        */
       sRGBToLinear (): SFColorRGBA;
       /**
@@ -1891,7 +1891,7 @@ declare namespace X3D
        * @param width is the width in pixels of the image.
        * @param height is the height in pixels of the image.
        * @param components are the number of components of the image (0-4).
-       * @param array is a MFInt32 array with pixel data.
+       * @param array is an optional MFInt32 array with pixel data.
        */
       constructor (width: number, height: number, components: number, array?: MFInt32);
 
@@ -1957,13 +1957,13 @@ declare namespace X3D
       [index: number]: number;
 
       /**
-       * Sets the SFMatrix3d/f to the passed values. *translation* is an SFVec2d/f object, *rotation* is a Number, *scaleFactor* is a SFVec2d/f object, *scaleOrientation* is a Number and *center* is a SFVec2d/f object.
+       * Sets the SFMatrix3d/f to the passed values. *translation* is an SFVec2d/f object, *rotation* is a Number, *scaleFactor* is an SFVec2d/f object, *scaleOrientation* is a Number and *center* is an SFVec2d/f object.
        *
        * Any of the rightmost parameters can be omitted, or any parameter can be `null`. In other words, the method can take from 0 to 5 parameters. For example, you can specify 0 parameters (resulting in a identity matrix), 1 parameter (a translation), 2 parameters (a translation and a rotation), 3 parameters (a translation, rotation and a scaleFactor), etc. Any unspecified parameter is set to its default as specified in the **Transform** node section of the X3D specification.
        */
       setTransform (translation: SFVec2, rotation: number, scaleFactor: SFVec2, scaleOrientation: number, center: SFVec2): void;
       /**
-       * Decomposes the SFMatrix3d/f and returns the components in the passed *translation*, *rotation*, and *scaleFactor* objects*. rotation* is a SFVec3d/f, where x and y are the complex value of the rotation and z is the rotation angle in radians. The other types of the parameters are the same as in **setTransform**.
+       * Decomposes the SFMatrix3d/f and returns the components in the passed *translation*, *rotation*, and *scaleFactor* objects*. rotation* is an SFVec3d/f, where x and y are the complex value of the rotation and z is the rotation angle in radians. The other types of the parameters are the same as in **setTransform**.
        *
        * Any of the rightmost parameters can be omitted, or any parameter can be `null`. In other words, the method can take from 0 to 5 parameters. For example, you can specify 0 parameters (resulting in a identity matrix), 1 parameter (a translation), 2 parameters (a translation and a rotation), 3 parameters (a translation, rotation and a scaleFactor), etc. Any unspecified parameter is set to its default as specified in the **Transform** node section of the X3D specification.
        *
@@ -1975,63 +1975,63 @@ declare namespace X3D
        */
       determinant (): number;
       /**
-       * Returns a SFMatrix whose value is the inverse of this object.
+       * Returns an SFMatrix whose value is the inverse of this object.
        */
       inverse (): this;
       /**
-       * Returns a SFMatrix3d/f whose value is the transpose of this object.
+       * Returns an SFMatrix3d/f whose value is the transpose of this object.
        */
       transpose (): this;
       /**
-       * Returns a SFMatrix3d/f whose value is the object multiplied by the passed *matrix* on the left.
+       * Returns an SFMatrix3d/f whose value is the object multiplied by the passed *matrix* on the left.
        */
       multLeft (matrix: this): this;
       /**
-       * Returns a SFMatrix3d/f whose value is the object multiplied by the passed *matrix* on the right.
+       * Returns an SFMatrix3d/f whose value is the object multiplied by the passed *matrix* on the right.
        */
       multRight (matrix: this): this;
       /**
-       * Returns a SFVec2d/f whose value is the object multiplied by the passed row vector.
+       * Returns an SFVec2d/f whose value is the object multiplied by the passed row vector.
        */
       multVecMatrix <T extends SFVec2d | SFVec2f> (row: T): T;
       /**
-       * Returns a SFVec3d/f whose value is the object multiplied by the passed row vector.
+       * Returns an SFVec3d/f whose value is the object multiplied by the passed row vector.
        */
       multVecMatrix <T extends SFVec3d | SFVec3f> (row: T): T;
       /**
-       * Returns a SFVec2d/f whose value is the object multiplied by the passed column vector.
+       * Returns an SFVec2d/f whose value is the object multiplied by the passed column vector.
        */
       multMatrixVec <T extends SFVec2d | SFVec2f> (col: T): T;
       /**
-       * Returns a SFVec3d/f whose value is the object multiplied by the passed column vector.
+       * Returns an SFVec3d/f whose value is the object multiplied by the passed column vector.
        */
       multMatrixVec <T extends SFVec3d | SFVec3f> (col: T): T;
       /**
-       * Returns a SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed row vector.
+       * Returns an SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed row vector.
        */
       multDirMatrix <T extends SFVec2d | SFVec2f> (row: T): T;
       /**
-       * Returns a SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed column vector.
+       * Returns an SFVec2d/f whose value is the object's 2×2 submatrix multiplied by the passed column vector.
        */
       multMatrixDir <T extends SFVec2d | SFVec2f> (col: T): T;
       /**
-       * Returns a SFMatrix3d/f whose value is the object translated by the passed *translation* on the left.
+       * Returns an SFMatrix3d/f whose value is the object translated by the passed *translation* on the left.
        */
       translate <T extends SFVec2d | SFVec2f> (translation: T): this;
       /**
-       * Returns a SFMatrix3d/f whose value is the object rotated by the passed *rotation* (in radians) on the left.
+       * Returns an SFMatrix3d/f whose value is the object rotated by the passed *rotation* (in radians) on the left.
        */
       rotate (rotation: number): this;
       /**
-       * Returns a SFMatrix3d/f whose value is the object scaled by the passed *scale* on the left.
+       * Returns an SFMatrix3d/f whose value is the object scaled by the passed *scale* on the left.
        */
       scale <T extends SFVec2d | SFVec2f> (scale: T): this;
       /**
-       * Returns a SFMatrix3d/f whose value is the object skewed by the passed *angle* (in radians) on the left.
+       * Returns an SFMatrix3d/f whose value is the object skewed by the passed *angle* (in radians) on the left.
        */
       skewX (angle: number): this;
       /**
-       * Returns a SFMatrix3d/f whose value is the object skewed by the passed *angle* (in radians) on the left.
+       * Returns an SFMatrix3d/f whose value is the object skewed by the passed *angle* (in radians) on the left.
        */
       skewY (angle: number): this;
    }
@@ -2081,7 +2081,7 @@ declare namespace X3D
       [index: number]: number;
 
       /**
-       * Sets the SFMatrix4d/f to the passed values. *translation* is an SFVec3d/f object, *rotation* is a SFRotation object, *scaleFactor* is a SFVec3d/f object, *scaleOrientation* is a SFRotation object and *center* is a SFVec3d/f object.
+       * Sets the SFMatrix4d/f to the passed values. *translation* is an SFVec3d/f object, *rotation* is an SFRotation object, *scaleFactor* is an SFVec3d/f object, *scaleOrientation* is an SFRotation object and *center* is an SFVec3d/f object.
        *
        * Any of the rightmost parameters can be omitted. In other words, the method can take from 0 to 5 parameters. For example, you can specify 0 parameters (resulting in a identity matrix), 1 parameter (a translation), 2 parameters (a translation and a rotation), 3 parameters (a translation, rotation and a scaleFactor), etc. Any unspecified parameter is set to its default as specified in the **Transform** node section of the X3D specification.
        */
@@ -2099,55 +2099,55 @@ declare namespace X3D
        */
       determinant (): number;
       /**
-       * Returns a SFMatrix whose value is the inverse of this object.
+       * Returns an SFMatrix whose value is the inverse of this object.
        */
       inverse (): this;
       /**
-       * Returns a SFMatrix4d/f whose value is the transpose of this object.
+       * Returns an SFMatrix4d/f whose value is the transpose of this object.
        */
       transpose (): this;
       /**
-       * Returns a SFMatrix4d/f whose value is the object multiplied by the passed *matrix* on the left.
+       * Returns an SFMatrix4d/f whose value is the object multiplied by the passed *matrix* on the left.
        */
       multLeft (matrix: this): this;
       /**
-       * Returns a SFMatrix4d/f whose value is the object multiplied by the passed *matrix* on the right.
+       * Returns an SFMatrix4d/f whose value is the object multiplied by the passed *matrix* on the right.
        */
       multRight (matrix: this): this;
       /**
-       * Returns a SFVec3d/f whose value is the object multiplied by the passed row vector.
+       * Returns an SFVec3d/f whose value is the object multiplied by the passed row vector.
        */
       multVecMatrix <T extends SFVec4d | SFVec4f> (row: T): T;
       /**
-       * Returns a SFVec4d/f whose value is the object multiplied by the passed row vector.
+       * Returns an SFVec4d/f whose value is the object multiplied by the passed row vector.
        */
       multVecMatrix <T extends SFVec3d | SFVec3f> (row: T): T;
       /**
-       * Returns a SFVec3d/f whose value is the object multiplied by the passed column vector.
+       * Returns an SFVec3d/f whose value is the object multiplied by the passed column vector.
        */
       multMatrixVec <T extends SFVec4d | SFVec4f> (col: T): T;
       /**
-       * Returns a SFVec4d/f whose value is the object multiplied by the passed column vector.
+       * Returns an SFVec4d/f whose value is the object multiplied by the passed column vector.
        */
       multMatrixVec <T extends SFVec3d | SFVec3f> (col: T): T;
       /**
-       * Returns a SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed row vector.
+       * Returns an SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed row vector.
        */
       multDirMatrix <T extends SFVec3d | SFVec3f> (row: T): T;
       /**
-       * Returns a SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed column vector.
+       * Returns an SFVec3d/f whose value is the object's 3×3 submatrix multiplied by the passed column vector.
        */
       multMatrixDir <T extends SFVec3d | SFVec3f> (col: T): T;
       /**
-       * Returns a SFMatrix4d/f whose value is the object translated by the passed *translation* on the left.
+       * Returns an SFMatrix4d/f whose value is the object translated by the passed *translation* on the left.
        */
       translate <T extends SFVec3d | SFVec3f> (translation: T): this;
       /**
-       * Returns a SFMatrix4d/f whose value is the object rotated by the passed *rotation* on the left.
+       * Returns an SFMatrix4d/f whose value is the object rotated by the passed *rotation* on the left.
        */
       rotate (rotation: SFRotation): this;
       /**
-       * Returns a SFMatrix4d/f whose value is the object scaled by the passed *scale* on the left.
+       * Returns an SFMatrix4d/f whose value is the object scaled by the passed *scale* on the left.
        */
       scale <T extends SFVec3d | SFVec3f> (scale: T): this;
    }
@@ -2243,19 +2243,19 @@ declare namespace X3D
        */
       setNodeUserData (key: any, value: any): void;
       /**
-       * Returns the X3D VRML-encoded string that, if parsed as the value of a SFNode field, produce this node.
+       * Returns the X3D VRML-encoded string that, if parsed as the value of an SFNode field, produce this node.
        *
        * For options see `X3DScene.toVRMLString`.
        */
       toVRMLString (options?: ToStringOptions): string;
       /**
-       * Returns the X3D XML-encoded string that, if parsed as the value of a SFNode field, produce this node.
+       * Returns the X3D XML-encoded string that, if parsed as the value of an SFNode field, produce this node.
        *
        * For options see `X3DScene.toVRMLString`.
        */
       toXMLString (options?: ToStringOptions): string;
       /**
-       * Returns the X3D JSON-encoded string that, if parsed as the value of a SFNode field, produce this node.
+       * Returns the X3D JSON-encoded string that, if parsed as the value of an SFNode field, produce this node.
        *
        * For options see `X3DScene.toVRMLString`.
        */
@@ -2354,7 +2354,7 @@ declare namespace X3D
        */
       dot (quaternion: SFQuaternion): number;
       /**
-       *  Returns a SFQuaternion object whose value is the inverse of this object's quaternion.
+       *  Returns an SFQuaternion object whose value is the inverse of this object's quaternion.
        */
       inverse (): SFQuaternion;
       /**
@@ -2366,19 +2366,19 @@ declare namespace X3D
        */
       multiply (factor: number): SFQuaternion;
       /**
-       * Returns a SFQuaternion whose value is the object multiplied by the passed *quaternion* on the left.
+       * Returns an SFQuaternion whose value is the object multiplied by the passed *quaternion* on the left.
        */
       multLeft (quaternion: SFQuaternion): SFQuaternion;
       /**
-       * Returns a SFVec3d/f whose value is the *vector* multiplied by the object to the left.
+       * Returns an SFVec3d/f whose value is the *vector* multiplied by the object to the left.
        */
       multQuatVec <T extends SFVec3d | SFVec3f> (vector: T): T;
       /**
-       * Returns a SFQuaternion whose value is the object multiplied by the passed *quaternion* on the right.
+       * Returns an SFQuaternion whose value is the object multiplied by the passed *quaternion* on the right.
        */
       multRight (quaternion: SFQuaternion): SFQuaternion;
       /**
-       * Returns a SFVec3d/f whose value is the object multiplied by the passed quaternion to the right.
+       * Returns an SFVec3d/f whose value is the object multiplied by the passed quaternion to the right.
        */
       multVecQuat <T extends SFVec3d | SFVec3f> (vector: T): T;
       /**
@@ -2394,7 +2394,7 @@ declare namespace X3D
        */
       setMatrix (matrix: SFMatrix3d | SFMatrix3f): void;
       /**
-       * Returns a SFQuaternion whose value is the spherical linear interpolation between this object's quaternion and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's quaternion. For *t* = 1, the value is *destination*.
+       * Returns an SFQuaternion whose value is the spherical linear interpolation between this object's quaternion and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's quaternion. For *t* = 1, the value is *destination*.
        */
       slerp (destination: SFQuaternion, t: number): SFQuaternion;
       /**
@@ -2431,7 +2431,7 @@ declare namespace X3D
        */
       constructor (x: number, y: number, z: number, angle: number);
       /**
-       * *axis* is a SFVec3d/f object whose value is the axis of rotation.
+       * *axis* is an SFVec3d/f object whose value is the axis of rotation.
        * *angle* is the scalar angle of the rotation (in radians).
        */
       constructor (axis: SFVec3d | SFVec3f, angle: number);
@@ -2473,7 +2473,7 @@ declare namespace X3D
        */
       getQuaternion (): SFQuaternion;
       /**
-       * Returns a SFRotation object whose value is the inverse of this object's rotation.
+       * Returns an SFRotation object whose value is the inverse of this object's rotation.
        */
       inverse (): SFRotation;
       /**
@@ -2481,7 +2481,7 @@ declare namespace X3D
        */
       multiply (rotation: SFRotation): SFRotation;
       /**
-       * Returns a SFVec3d/f whose value is the SFVec3d/f *vector* multiplied by the matrix corresponding to this object's rotation.
+       * Returns an SFVec3d/f whose value is the SFVec3d/f *vector* multiplied by the matrix corresponding to this object's rotation.
        */
       multVec <T extends SFVec3d | SFVec3f> (vector: T): T;
       /**
@@ -2497,7 +2497,7 @@ declare namespace X3D
        */
       setQuaternion (quaternion: SFQuaternion): void;
       /**
-       * Returns a SFRotation whose value is the spherical linear interpolation between this object's rotation and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's rotation. For *t* = 1, the value is *destination*.
+       * Returns an SFRotation whose value is the spherical linear interpolation between this object's rotation and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's rotation. For *t* = 1, the value is *destination*.
        */
       slerp (destination: SFRotation, t: number): SFRotation;
       /**
@@ -2546,7 +2546,7 @@ declare namespace X3D
        */
       constructor ();
       /**
-       * Constructs a SFVec2d/f from *x* and *y*, where *x* and *y* are scalar expressions.
+       * Constructs an SFVec2d/f from *x* and *y*, where *x* and *y* are scalar expressions.
        */
       constructor (x: number, y: number);
 
@@ -2599,7 +2599,7 @@ declare namespace X3D
        */
       length (): number;
       /**
-       * Returns a SFVec2d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
+       * Returns an SFVec2d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
        */
       lerp (destination: this, t: number): this;
       /**
@@ -2680,7 +2680,7 @@ declare namespace X3D
        */
       constructor ();
       /**
-       * Constructs a SFVec3d/f from *x*, *y* and *z*, where *x*, *y* and *z* are scalar expressions.
+       * Constructs an SFVec3d/f from *x*, *y* and *z*, where *x*, *y* and *z* are scalar expressions.
        */
       constructor (x: number, y: number, z: number);
 
@@ -2741,7 +2741,7 @@ declare namespace X3D
        */
       length (): number;
       /**
-       * Returns a SFVec3d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
+       * Returns an SFVec3d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
        */
       lerp (destination: this, t: number): this;
       /**
@@ -2826,7 +2826,7 @@ declare namespace X3D
        */
       constructor ();
       /**
-       * Constructs a SFVec4d/f from *x*, *y*, *z* and *w*, where *x*, *y*, *z* and *w* are scalar expressions.
+       * Constructs an SFVec4d/f from *x*, *y*, *z* and *w*, where *x*, *y*, *z* and *w* are scalar expressions.
        */
       constructor (x: number, y: number, z: number, w: number);
 
@@ -2887,7 +2887,7 @@ declare namespace X3D
        */
       length (): number;
       /**
-       * Returns a SFVec4d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
+       * Returns an SFVec4d/f whose value is the linear interpolation between this object's vector and *destination* at value 0 <= *t* <= 1. For *t* = 0, the value is this object's vector. For *t* = 1, the value is *destination*.
        */
       lerp (destination: this, t: number): this;
       /**
@@ -22721,7 +22721,7 @@ declare namespace X3D
 
    }
 
-   /** Base type for all prototype instances. Note that direct children nodes are disallowed, instead let fieldValue with type SFNode/MFNode contain them. Current practice is that, if desired, prototype authors must explicitly add the metadata SFNode field in the ProtoInterface. */
+   /** Base type for all prototype instances. Note that direct children nodes are disallowed, instead let fieldValue with type SFNode/MFNode contain them. Current practice is that, if desired, prototype authors must explicitly add the metadatan SFNode field in the ProtoInterface. */
    interface X3DPrototypeInstanceProxy extends X3DNodeProxy
    {
       /**
