@@ -480,7 +480,7 @@ A new image initialized with zero values is created and returned.
 
 *width* is the width in pixels of the image.
 *height* is the height in pixels of the image.
-*components* are the number of components of the image (0-4).
+*components* are the number of components of the image [0-4].
 *array* is an optional MFInt32 array with pixel data.
 
 <x3d-script-area name="X3D ECMAScript Example: new SFImage (width, height, components, array)">

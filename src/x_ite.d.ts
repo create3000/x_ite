@@ -1890,7 +1890,7 @@ declare namespace X3D
       /**
        * @param width is the width in pixels of the image.
        * @param height is the height in pixels of the image.
-       * @param components are the number of components of the image (0-4).
+       * @param components are the number of components of the image [0-4].
        * @param array is an optional MFInt32 array with pixel data.
        */
       constructor (width: number, height: number, components: number, array?: MFInt32);
