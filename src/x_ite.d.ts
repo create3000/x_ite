@@ -2297,21 +2297,38 @@ declare namespace X3D
       constructor (x: number, y: number, z: number, w: number);
 
       /**
-       * Returns the first value of the imaginary part of the quaternion.
+       * Returns the first value of the imaginary parts of the quaternion.
        */
       x: number;
       /**
-       * Returns the second value of the imaginary part of the quaternion.
+       * Returns the second value of the imaginary parts of the quaternion.
        */
       y: number;
       /**
-       * Returns the third value of the imaginary part of the quaternion.
+       * Returns the third value of the imaginary parts of the quaternion.
        */
       z: number;
       /**
        * A number corresponding to the real part of the quaternion.
        */
       w: number;
+
+      /**
+       * Returns the first value of the imaginary parts of the quaternion.
+       */
+      i: number;
+      /**
+       * Returns the second value of the imaginary parts of the quaternion.
+       */
+      j: number;
+      /**
+       * Returns the third value of the imaginary parts of the quaternion.
+       */
+      k: number;
+      /**
+       * A number corresponding to the real part of the quaternion.
+       */
+      real: number;
 
       [Symbol .iterator](): IterableIterator <number>;
       [index: number]: number;
