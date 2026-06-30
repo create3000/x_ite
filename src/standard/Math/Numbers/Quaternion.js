@@ -44,6 +44,16 @@ Object .assign (Quaternion .prototype,
       this .w = w;
       return this;
    },
+   getImag (imag = new Vector3 ())
+   {
+      return imag .set (this .x, this .y, this .z);
+   },
+   setImag (imag)
+   {
+      this .x = imag .x;
+      this .y = imag .y;
+      this .z = imag .z;
+   },
    setMatrix (matrix)
    {
       // First, find largest diagonal in matrix:
@@ -68,8 +78,9 @@ Object .assign (Quaternion .prototype,
       else
       {
          // Compute x, y, or z first:
-         const j = (i + 1) % 3;
-         const k = (i + 2) % 3;
+         const
+            j = (i + 1) % 3,
+            k = (i + 2) % 3;
 
          // Compute first value:
          this [i] = Math .sqrt (matrix [i * 3 + i] - matrix [j * 3 + j] - matrix [k * 3 + k] + 1) / 2;
@@ -569,20 +580,7 @@ Object .defineProperties (Quaternion .prototype,
    real:
    {
       get () { return this .w; },
-   },
-   imag:
-   {
-      get: (() =>
-      {
-         const result = new Vector3 ();
-
-         return function ()
-         {
-            return result .set (this .x,
-                                this .y,
-                                this .z);
-         };
-      })(),
+      set (value) { this .w = value; },
    },
 });
 

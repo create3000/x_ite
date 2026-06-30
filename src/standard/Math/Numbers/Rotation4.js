@@ -68,7 +68,7 @@ Object .assign (Rotation4 .prototype,
       {
          const quaternion = this [_quaternion];
 
-         if (Math .abs (quaternion .w) > 1)
+         if (Math .abs (quaternion .w) >= 1)
          {
             return Vector4 .Z_AXIS;
          }
@@ -84,11 +84,11 @@ Object .assign (Rotation4 .prototype,
             }
             else
             {
-               const axis = quaternion .imag .divide (scale);
+               const axis = quaternion .getImag (result);
 
-               return result .set (axis .x,
-                                   axis .y,
-                                   axis .z,
+               return result .set (axis .x / scale,
+                                   axis .y / scale,
+                                   axis .z / scale,
                                    angle);
             }
          }
