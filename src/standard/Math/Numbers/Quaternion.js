@@ -44,16 +44,6 @@ Object .assign (Quaternion .prototype,
       this .w = w;
       return this;
    },
-   getImag (imag = new Vector3 ())
-   {
-      return imag .set (this .x, this .y, this .z);
-   },
-   setImag (imag)
-   {
-      this .x = imag .x;
-      this .y = imag .y;
-      this .z = imag .z;
-   },
    setMatrix (matrix)
    {
       // First, find largest diagonal in matrix:
@@ -316,14 +306,6 @@ Object .assign (Quaternion .prototype,
 
       return euler;
    },
-   // isReal ()
-   // {
-   //    return !(this .x || this .y || this .z);
-   // },
-   // isImag ()
-   // {
-   //    return !this .w;
-   // },
    equals ({ x, y, z, w })
    {
       return this .x === x &&
