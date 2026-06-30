@@ -2321,7 +2321,7 @@ declare namespace X3D
        */
       add (other: SFQuaternion): SFQuaternion;
       /**
-       * Returns a SFQuaternion object whose value is the conjugate of this object's quaternion.
+       * Returns an SFQuaternion whose value is the componentwise negation of the imaginary parts of the object.
        */
       conjugate (): SFQuaternion;
       /**

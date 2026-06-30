@@ -963,7 +963,7 @@ Returns an SFQuaternion whose value is the passed SFQuaternion added, componentw
 
 #### **conjugate** (): SFQuaternion
 
-Returns a SFQuaternion object whose value is the conjugate of this object's quaternion.
+Returns an SFQuaternion whose value is the componentwise negation of the imaginary parts of the object.
 
 #### **divide** (*denominator*): SFQuaternion
 
