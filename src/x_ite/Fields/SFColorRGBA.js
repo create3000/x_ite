@@ -12,7 +12,6 @@ const {
    toJSONStreamValue
 } = SFColor .prototype;
 
-
 function SFColorRGBA (r = 0, g = 0, b = 0, a = 0)
 {
    X3DField .call (this, new Color4 (+r, +g, +b, +a));
