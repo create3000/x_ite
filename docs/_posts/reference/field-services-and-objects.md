@@ -311,7 +311,7 @@ Blue component of the color.
 
 ### Methods
 
-#### **getHSV** (): Array
+#### **getHSV** (): number []
 
 Returns an array with the components of the color's HSV value.
 
@@ -433,7 +433,7 @@ Alpha component of the color.
 
 ### Methods
 
-#### **getHSVA** (): Array
+#### **getHSVA** (): number [];
 
 Returns an array with the components of the color's HSVA value.
 
