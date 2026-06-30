@@ -516,7 +516,7 @@ Height of the image in pixels.
 #### **comp**: number
 {: .writable }
 
-Number of components.
+Number of components in the range [0-4].
 
 #### **array**: MFInt32
 {: .writable }

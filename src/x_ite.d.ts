@@ -1912,7 +1912,7 @@ declare namespace X3D
        */
       height: number;
       /**
-       * Number of components.
+       * Number of components in the range [0-4].
        */
       comp: number;
       /**
