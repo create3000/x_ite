@@ -152,7 +152,7 @@ Object .assign (Color4,
    },
    lerp (a, b, t, r)
    {
-      // Linearely interpolate in HSVA space between source color @a a and destination color @a b by an amount of @a t.
+      // Linearly interpolate in HSVA space between source color @a a and destination color @a b by an amount of @a t.
       // Source and destination color must be in HSVA space. The resulting HSVA color is stored in @a r.
       const aa = a [3];
       Color3 .lerp (a, b, t, r);
