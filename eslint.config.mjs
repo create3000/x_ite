@@ -9,7 +9,7 @@ export default defineConfig ([
     extends: ["js/recommended"],
     languageOptions:
     {
-      globals: globals.browser,
+      globals: globals .browser,
     },
   },
   {
@@ -18,7 +18,7 @@ export default defineConfig ([
     extends: ["js/recommended"],
     languageOptions:
     {
-      globals: globals.node,
+      globals: globals .node,
     },
   },
 ]);
