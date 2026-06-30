@@ -14,7 +14,7 @@ timezone: Europe/Berlin
 # jekyll-seo-tag settings › https://github.com/jekyll/jekyll-seo-tag/blob/master/docs/usage.md
 # ↓ --------------------------
 
-title: X_ITE X3D Browser # the main title
+title: X_ITE X3D Browser and VRML Viewer # the main title
 
 tagline: Ready for X3Dv4.1 and WebXR! # it will display as the sub-title
 
