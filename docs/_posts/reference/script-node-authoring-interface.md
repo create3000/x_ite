@@ -115,8 +115,8 @@ For each object type there is a corresponding constructor. Constructors typicall
 
 <x3d-script-area name="X3D ECMAScript Example: Object Construction">
 <pre>
-const a = new SFVec3f (0, 1, 0);   // 'a' has a SFVec3f containing 0, 1, 0.
-const b = new MFFloat (1, 2, 3, 4) // 'b' has a MFFloat containing 4 floats.
+const a = new SFVec3f (0, 1, 0);   // 'a' has an SFVec3f containing 0, 1, 0.
+const b = new MFFloat (1, 2, 3, 4) // 'b' has an MFFloat containing 4 floats.
 
 print (a);
 print (b);
@@ -320,7 +320,7 @@ The `shutdown` function takes no parameters. Events generated from it are given 
 
 ## Accessing the Script Directly
 
-Sometimes it is necessary to get access to the corresponding Script node. For this case, there is a special variable `this` in each callback function that holds a SFNode reference to the Script node.
+Sometimes it is necessary to get access to the corresponding Script node. For this case, there is a special variable `this` in each callback function that holds an SFNode reference to the Script node.
 
 ```vrml
 DEF Touch TouchSensor { }
