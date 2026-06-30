@@ -314,10 +314,10 @@ Object .assign (Quaternion .prototype,
    normalize,
    pow (exponent)
    {
-      if (exponent instanceof Quaternion)
-         return this .log () .multLeft (exponent) .exp ();
+      if (typeof exponent === "number")
+         return this .log () .multiply (exponent) .exp ();
 
-      return this .log () .multiply (exponent) .exp ();
+      return this .log () .multLeft (exponent) .exp ();
    },
    set (x = 0, y = 0, z = 0, w = 1)
    {
