@@ -113,28 +113,28 @@ Object .assign (Vector4 .prototype,
       this .w = 1 / this .w;
       return this;
    },
-   lerp (vector, t)
+   lerp ({ x, y, z, w }, t)
    {
-      this .x += t * (vector .x - this .x);
-      this .y += t * (vector .y - this .y);
-      this .z += t * (vector .z - this .z);
-      this .w += t * (vector .w - this .w);
+      this .x += t * (x - this .x);
+      this .y += t * (y - this .y);
+      this .z += t * (z - this .z);
+      this .w += t * (w - this .w);
       return this;
    },
-   max (vector)
+   max ({ x, y, z, w })
    {
-      this .x = Math .max (this .x, vector .x);
-      this .y = Math .max (this .y, vector .y);
-      this .z = Math .max (this .z, vector .z);
-      this .w = Math .max (this .w, vector .w);
+      this .x = Math .max (this .x, x);
+      this .y = Math .max (this .y, y);
+      this .z = Math .max (this .z, z);
+      this .w = Math .max (this .w, w);
       return this;
    },
-   min (vector)
+   min ({ x, y, z, w })
    {
-      this .x = Math .min (this .x, vector .x);
-      this .y = Math .min (this .y, vector .y);
-      this .z = Math .min (this .z, vector .z);
-      this .w = Math .min (this .w, vector .w);
+      this .x = Math .min (this .x, x);
+      this .y = Math .min (this .y, y);
+      this .z = Math .min (this .z, z);
+      this .w = Math .min (this .w, w);
       return this;
    },
    multiply (value)

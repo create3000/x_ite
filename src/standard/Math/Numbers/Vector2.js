@@ -85,22 +85,22 @@ Object .assign (Vector2 .prototype,
       this .y = 1 / this .y;
       return this;
    },
-   lerp (vector, t)
+   lerp ({ x, y }, t)
    {
-      this .x += t * (vector .x - this .x);
-      this .y += t * (vector .y - this .y);
+      this .x += t * (x - this .x);
+      this .y += t * (y - this .y);
       return this;
    },
-   max (vector)
+   max ({ x, y })
    {
-      this .x = Math .max (this .x, vector .x);
-      this .y = Math .max (this .y, vector .y);
+      this .x = Math .max (this .x, x);
+      this .y = Math .max (this .y, y);
       return this;
    },
-   min (vector)
+   min ({ x, y })
    {
-      this .x = Math .min (this .x, vector .x);
-      this .y = Math .min (this .y, vector .y);
+      this .x = Math .min (this .x, x);
+      this .y = Math .min (this .y, y);
       return this;
    },
    multiply (value)

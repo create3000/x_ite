@@ -109,25 +109,25 @@ Object .assign (Vector3 .prototype,
       this .z = 1 / this .z;
       return this;
    },
-   lerp (vector, t)
+   lerp ({ x, y, z }, t)
    {
-      this .x += t * (vector .x - this .x);
-      this .y += t * (vector .y - this .y);
-      this .z += t * (vector .z - this .z);
+      this .x += t * (x - this .x);
+      this .y += t * (y - this .y);
+      this .z += t * (z - this .z);
       return this;
    },
-   max (vector)
+   max ({ x, y, z })
    {
-      this .x = Math .max (this .x, vector .x);
-      this .y = Math .max (this .y, vector .y);
-      this .z = Math .max (this .z, vector .z);
+      this .x = Math .max (this .x, x);
+      this .y = Math .max (this .y, y);
+      this .z = Math .max (this .z, z);
       return this;
    },
-   min (vector)
+   min ({ x, y, z })
    {
-      this .x = Math .min (this .x, vector .x);
-      this .y = Math .min (this .y, vector .y);
-      this .z = Math .min (this .z, vector .z);
+      this .x = Math .min (this .x, x);
+      this .y = Math .min (this .y, y);
+      this .z = Math .min (this .z, z);
       return this;
    },
    multiply (value)
