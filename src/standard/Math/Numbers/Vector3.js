@@ -118,36 +118,18 @@ Object .assign (Vector3 .prototype,
       this .z = z + t * (dZ - z);
       return this;
    },
-   max (... args)
+   max (vector)
    {
-      let { x, y, z } = this;
-
-      for (const { x: argX, y: argY, z: argZ } of args)
-      {
-         x = Math .max (x, argX);
-         y = Math .max (y, argY);
-         z = Math .max (z, argZ);
-      }
-
-      this .x = x;
-      this .y = y;
-      this .z = z;
+      this .x = Math .max (this .x, vector .x);
+      this .y = Math .max (this .y, vector .y);
+      this .z = Math .max (this .z, vector .z);
       return this;
    },
-   min (... args)
+   min (vector)
    {
-      let { x, y, z } = this;
-
-      for (const { x: argX, y: argY, z: argZ } of args)
-      {
-         x = Math .min (x, argX);
-         y = Math .min (y, argY);
-         z = Math .min (z, argZ);
-      }
-
-      this .x = x;
-      this .y = y;
-      this .z = z;
+      this .x = Math .min (this .x, vector .x);
+      this .y = Math .min (this .y, vector .y);
+      this .z = Math .min (this .z, vector .z);
       return this;
    },
    multiply (value)

@@ -93,32 +93,16 @@ Object .assign (Vector2 .prototype,
       this .y = y + t * (dY - y);
       return this;
    },
-   max (... args)
+   max (vector)
    {
-      let { x, y } = this;
-
-      for (const { x: argX, y: argY } of args)
-      {
-         x = Math .max (x, argX);
-         y = Math .max (y, argY);
-      }
-
-      this .x = x;
-      this .y = y;
+      this .x = Math .max (this .x, vector .x);
+      this .y = Math .max (this .y, vector .y);
       return this;
    },
-   min (... args)
+   min (vector)
    {
-      let { x, y } = this;
-
-      for (const { x: argX, y: argY } of args)
-      {
-         x = Math .min (x, argX);
-         y = Math .min (y, argY);
-      }
-
-      this .x = x;
-      this .y = y;
+      this .x = Math .min (this .x, vector .x);
+      this .y = Math .min (this .y, vector .y);
       return this;
    },
    multiply (value)

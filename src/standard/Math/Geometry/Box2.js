@@ -121,8 +121,8 @@ Object .assign (Box2 .prototype,
          p1 .negate ();
          p2 .negate ();
 
-         min .min (p1, p2);
-         max .max (p1, p2);
+         min .min (p1) .min (p2);
+         max .max (p1) .max (p2);
       };
    })(),
    containsPoint: (() =>

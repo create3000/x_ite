@@ -120,8 +120,8 @@ function Node (tree, triangles, first, size)
       v1 .set (vertices [t + 4], vertices [t + 5], vertices [t + 6]);
       v2 .set (vertices [t + 8], vertices [t + 9], vertices [t + 10]);
 
-      min .min (v0, v1, v2);
-      max .max (v0, v1, v2);
+      min .min (v0) .min (v1) .min (v2);
+      max .max (v0) .max (v1) .max (v2);
    }
 
    for (let i = 0; i < 5; ++ i)
