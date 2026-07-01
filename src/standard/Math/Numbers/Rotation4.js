@@ -108,6 +108,9 @@ Object .assign (Rotation4 .prototype,
    })(),
    getAxis (axis = new Vector3 ())
    {
+      if (this [_tainted])
+         this .normalize ();
+
       return axis .set (this [_x], this [_y], this [_z]);
    },
    getEuler (euler = [ ], order = "XYZ")
@@ -196,6 +199,9 @@ Object .assign (Rotation4 .prototype,
    },
    setAxis (vector)
    {
+      if (this [_tainted])
+         this .normalize ();
+
       this .set (vector .x, vector .y, vector .z, this [_angle]);
    },
    setAxisAngle (axis, angle)
@@ -343,6 +349,9 @@ Object .assign (Rotation4 .prototype,
    })(),
    toString ()
    {
+      if (this [_tainted])
+         this .normalize ();
+
       return this [_x] + " " +
              this [_y] + " " +
              this [_z] + " " +
@@ -363,9 +372,11 @@ const x = {
    },
    set (x)
    {
+      if (this [_tainted])
+         this .normalize ();
+
       this .set (x, this [_y], this [_z], this [_angle]);
    },
-   enumerable: true,
 };
 
 const y = {
@@ -383,7 +394,6 @@ const y = {
 
       this .set (this [_x], y, this [_z], this [_angle]);
    },
-   enumerable: true,
 };
 
 const z = {
@@ -396,9 +406,11 @@ const z = {
    },
    set (z)
    {
+      if (this [_tainted])
+         this .normalize ();
+
       this .set (this [_x], this [_y], z, this [_angle]);
    },
-   enumerable: true,
 };
 
 const angle = {
@@ -416,29 +428,19 @@ const angle = {
 
       this .set (this [_x], this [_y], this [_z], angle);
    },
-   enumerable: true,
 };
 
 Object .defineProperties (Rotation4 .prototype,
 {
    length: { value: 4 },
-   x: x,
-   y: y,
-   z: z,
-   angle: angle,
-});
-
-x     .enumerable = false;
-y     .enumerable = false;
-z     .enumerable = false;
-angle .enumerable = false;
-
-Object .defineProperties (Rotation4 .prototype,
-{
    0: x,
    1: y,
    2: z,
    3: angle,
+   x: Object .assign ({ enumerable: true }, x),
+   y: Object .assign ({ enumerable: true }, y),
+   z: Object .assign ({ enumerable: true }, z),
+   angle: Object .assign ({ enumerable: true }, angle),
 });
 
 Object .assign (Rotation4,
