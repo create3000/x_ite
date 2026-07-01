@@ -60,10 +60,11 @@ Object .assign (Rotation4 .prototype,
       }
       else
       {
-         copy [_x]     = this [_x];
-         copy [_y]     = this [_y];
-         copy [_z]     = this [_z];
-         copy [_angle] = this [_angle];
+         copy [_x]       = this [_x];
+         copy [_y]       = this [_y];
+         copy [_z]       = this [_z];
+         copy [_angle]   = this [_angle];
+         copy [_tainted] = false;
       }
 
       copy [_quaternion] = this [_quaternion] .copy ();
@@ -258,8 +259,9 @@ Object .assign (Rotation4 .prototype,
             // Parallel vectors
             // Check if they are pointing in the same direction.
             if (cos_angle > 0)
+            {
                this [_quaternion] .set (0, 0, 0, 1); // standard rotation
-
+            }
             // Ok, so they are parallel and pointing in the opposite direction
             // of each other.
             else
