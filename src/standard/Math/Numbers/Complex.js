@@ -1,125 +1,95 @@
+import Vector2 from "./Vector2.js";
+
+const {
+   assign,
+   equals,
+   add,
+   divide,
+   multiply,
+   negate,
+   set,
+   subtract,
+} = Vector2 .prototype;
+
 function Complex (real = 0, imag = 0)
 {
-   this .real = real;
-   this .imag = imag;
+   this .x = real;
+   this .y = imag;
 }
 
 Object .assign (Complex .prototype,
 {
-   *[Symbol .iterator] ()
+   [Symbol .iterator]: Vector2 .prototype [Symbol .iterator],
+   add,
+   assign,
+   conjugate ()
    {
-      yield this .real;
-      yield this .imag;
+      this .y = -this .y;
+      return this;
    },
    copy ()
    {
       const copy = Object .create (Complex .prototype);
-      copy .real = this .real;
-      copy .imag = this .imag;
+      copy .x = this .x;
+      copy .y = this .y;
       return copy;
    },
-   assign (complex)
-   {
-      this .real = complex .real;
-      this .imag = complex .imag;
-      return this;
-   },
-   equals (complex)
-   {
-      return this .real === complex .real &&
-             this .imag === complex .imag;
-   },
-   set (real = 0, imag = 0)
-   {
-      this .real = real;
-      this .imag = imag;
-      return this;
-   },
-   setPolar (magnitude, angle)
-   {
-      this .real = magnitude * Math .cos (angle);
-      this .imag = magnitude * Math .sin (angle);
-      return this;
-   },
-   conjugate ()
-   {
-      this .imag = -this .imag;
-      return this;
-   },
-   negate ()
-   {
-      this .real = -this .real;
-      this .imag = -this .imag;
-      return this;
-   },
-   inverse ()
-   {
-      const d = this .real * this .real + this .imag * this .imag;
-
-      this .real /=  d;
-      this .imag /= -d;
-      return this;
-   },
-   add (value)
-   {
-      this .real += value .real;
-      this .imag += value .imag;
-      return this;
-   },
-   subtract (value)
-   {
-      this .real -= value .real;
-      this .imag -= value .imag;
-      return this;
-   },
-   multiply (value)
-   {
-      this .real *= value;
-      this .imag *= value;
-      return this;
-   },
-   multComp (value)
-   {
-      const
-         { real: ar, imag: ai } = this,
-         { real: br, imag: bi } = value;
-
-      this .real = ar * br - ai * bi;
-      this .imag = ar * bi + ai * br;
-      return this;
-   },
-   divide (value)
-   {
-      this .real /= value;
-      this .imag /= value;
-      return this;
-   },
+   divide,
    divComp (value)
    {
       const
-         { real: ar, imag: ai } = this,
-         { real: br, imag: bi } = value,
+         { x: ar, y: ai } = this,
+         { x: br, y: bi } = value,
          d = br * br + bi * bi;
 
-      this .real = (ar * br + ai * bi) / d;
-      this .imag = (ai * br - ar * bi) / d;
+      this .x = (ar * br + ai * bi) / d;
+      this .y = (ai * br - ar * bi) / d;
       return this;
    },
+   equals,
+   inverse ()
+   {
+      const d = this .x * this .x + this .y * this .y;
+
+      this .x /=  d;
+      this .y /= -d;
+      return this;
+   },
+   set,
+   setPolar (magnitude, angle)
+   {
+      this .x = magnitude * Math .cos (angle);
+      this .y = magnitude * Math .sin (angle);
+      return this;
+   },
+   negate,
+   multiply,
+   multComp (value)
+   {
+      const
+         { x: ar, y: ai } = this,
+         { x: br, y: bi } = value;
+
+      this .x = ar * br - ai * bi;
+      this .y = ar * bi + ai * br;
+      return this;
+   },
+   subtract,
    toString ()
    {
       let string = "";
 
-      string += this .real;
+      string += this .x;
 
-      if (this .imag < 0)
+      if (this .y < 0)
       {
-         string += this .imag;
+         string += this .y;
          string += "i";
       }
-      else if (this .imag > 0)
+      else if (this .y > 0)
       {
          string += "+";
-         string += this .imag;
+         string += this .y;
          string += "i";
       }
 
@@ -130,32 +100,38 @@ Object .assign (Complex .prototype,
 for (const key of Object .keys (Complex .prototype))
    Object .defineProperty (Complex .prototype, key, { enumerable: false });
 
+const real = {
+   get () { return this .x; },
+   set (value) { this .x = value; },
+};
+
+const imag = {
+   get () { return this .y; },
+   set (value) { this .y = value; },
+};
+
 Object .defineProperties (Complex .prototype,
 {
    length: { value: 2 },
-   0:
-   {
-      get () { return this .real; },
-      set (value) { this .real = value; },
-   },
-   1:
-   {
-      get () { return this .imag; },
-      set (value) { this .imag = value; },
-   },
+   0: real,
+   1: imag,
+   real,
+   imag,
    magnitude:
    {
       get ()
       {
-         if (this .real)
-         {
-            if (this .imag)
-               return Math .hypot (this .real, this .imag);
+         const { x, y } = this;
 
-            return Math .abs (this .real);
+         if (x)
+         {
+            if (y)
+               return Math .hypot (x, y);
+
+            return Math .abs (x);
          }
 
-         return Math .abs (this .imag);
+         return Math .abs (y);
       },
       set (magnitude)
       {
@@ -164,7 +140,7 @@ Object .defineProperties (Complex .prototype,
    },
    angle:
    {
-      get () { return Math .atan2 (this .imag, this .real); },
+      get () { return Math .atan2 (this .y, this .x); },
       set (angle) { this .setPolar (this .magnitude, angle); },
    },
 });
