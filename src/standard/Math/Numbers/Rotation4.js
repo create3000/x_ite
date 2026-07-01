@@ -31,6 +31,25 @@ Object .assign (Rotation4 .prototype,
       yield this [_z];
       yield this [_angle];
    },
+   assign (rotation)
+   {
+      if (rotation [_tainted])
+      {
+         this [_tainted] = true;
+      }
+      else
+      {
+         this [_x]       = rotation [_x];
+         this [_y]       = rotation [_y];
+         this [_z]       = rotation [_z];
+         this [_angle]   = rotation [_angle];
+         this [_tainted] = false;
+      }
+
+      this [_quaternion] .assign (rotation [_quaternion]);
+
+      return this;
+   },
    copy ()
    {
       const copy = Object .create (Rotation4 .prototype);
@@ -50,25 +69,6 @@ Object .assign (Rotation4 .prototype,
       copy [_quaternion] = this [_quaternion] .copy ();
 
       return copy;
-   },
-   assign (rotation)
-   {
-      if (rotation [_tainted])
-      {
-         this [_tainted] = true;
-      }
-      else
-      {
-         this [_x]       = rotation [_x];
-         this [_y]       = rotation [_y];
-         this [_z]       = rotation [_z];
-         this [_angle]   = rotation [_angle];
-         this [_tainted] = false;
-      }
-
-      this [_quaternion] .assign (rotation [_quaternion]);
-
-      return this;
    },
    equals (rotation)
    {
@@ -106,6 +106,66 @@ Object .assign (Rotation4 .prototype,
          }
       };
    })(),
+   getAxis (axis = new Vector3 ())
+   {
+      return axis .set (this [_x], this [_y], this [_z]);
+   },
+   getEuler (euler = [ ], order = "XYZ")
+   {
+      return this [_quaternion] .getEuler (euler, order);
+   },
+   getMatrix (matrix = new Matrix3 ())
+   {
+      return this [_quaternion] .getMatrix (matrix);
+   },
+   getQuaternion (quaternion = new Quaternion ())
+   {
+      return quaternion .assign (this [_quaternion]);
+   },
+   inverse ()
+   {
+      this [_quaternion] .conjugate ();
+
+      this [_tainted] = true;
+
+      return this;
+   },
+   multLeft (rotation)
+   {
+      this [_quaternion] .multLeft (rotation [_quaternion]) .normalize ();
+
+      this [_tainted] = true;
+
+      return this;
+   },
+   multRight (rotation)
+   {
+      this [_quaternion] .multRight (rotation [_quaternion]) .normalize ();
+
+      this [_tainted] = true;
+
+      return this;
+   },
+   multRotVec (vector)
+   {
+      return this [_quaternion] .multQuatVec (vector);
+   },
+   multVecRot (vector)
+   {
+      return this [_quaternion] .multVecQuat (vector);
+   },
+   normalize ()
+   {
+      const rotation = this .get ();
+
+      this [_x]       = rotation .x;
+      this [_y]       = rotation .y;
+      this [_z]       = rotation .z;
+      this [_angle]   = rotation .w;
+      this [_tainted] = false;
+
+      return this;
+   },
    set (x = 0, y = 0, z = 1, angle = 0)
    {
       this [_x]       = x;
@@ -134,9 +194,38 @@ Object .assign (Rotation4 .prototype,
                                Math .cos (halfTheta));
       return this;
    },
+   setAxis (vector)
+   {
+      this .set (vector .x, vector .y, vector .z, this [_angle]);
+   },
    setAxisAngle (axis, angle)
    {
       return this .set (axis .x, axis .y, axis .z, angle);
+   },
+   setEuler (x, y, z, order = "XYZ")
+   {
+      // Quaternion is then already normalized.
+      this [_quaternion] .setEuler (x, y, z, order);
+
+      this [_tainted] = true;
+
+      return this;
+   },
+   setMatrix (matrix)
+   {
+      this [_quaternion] .setMatrix (matrix) .normalize ();
+
+      this [_tainted] = true;
+
+      return this;
+   },
+   setQuaternion (quaternion)
+   {
+      this [_quaternion] .assign (quaternion) .normalize ();
+
+      this [_tainted] = true;
+
+      return this;
    },
    setVectors: (() =>
    {
@@ -199,95 +288,6 @@ Object .assign (Rotation4 .prototype,
          return this;
       };
    })(),
-   getAxis (axis = new Vector3 ())
-   {
-      return axis .set (this [_x], this [_y], this [_z]);
-   },
-   setAxis (vector)
-   {
-      this .set (vector .x, vector .y, vector .z, this [_angle]);
-   },
-   getEuler (euler = [ ], order = "XYZ")
-   {
-      return this [_quaternion] .getEuler (euler, order);
-   },
-   setEuler (x, y, z, order = "XYZ")
-   {
-      // Quaternion is then already normalized.
-      this [_quaternion] .setEuler (x, y, z, order);
-
-      this [_tainted] = true;
-
-      return this;
-   },
-   getMatrix (matrix = new Matrix3 ())
-   {
-      return this [_quaternion] .getMatrix (matrix);
-   },
-   setMatrix (matrix)
-   {
-      this [_quaternion] .setMatrix (matrix) .normalize ();
-
-      this [_tainted] = true;
-
-      return this;
-   },
-   getQuaternion (quaternion = new Quaternion ())
-   {
-      return quaternion .assign (this [_quaternion]);
-   },
-   setQuaternion (quaternion)
-   {
-      this [_quaternion] .assign (quaternion) .normalize ();
-
-      this [_tainted] = true;
-
-      return this;
-   },
-   inverse ()
-   {
-      this [_quaternion] .conjugate ();
-
-      this [_tainted] = true;
-
-      return this;
-   },
-   multLeft (rotation)
-   {
-      this [_quaternion] .multLeft (rotation [_quaternion]) .normalize ();
-
-      this [_tainted] = true;
-
-      return this;
-   },
-   multRight (rotation)
-   {
-      this [_quaternion] .multRight (rotation [_quaternion]) .normalize ();
-
-      this [_tainted] = true;
-
-      return this;
-   },
-   multVecRot (vector)
-   {
-      return this [_quaternion] .multVecQuat (vector);
-   },
-   multRotVec (vector)
-   {
-      return this [_quaternion] .multQuatVec (vector);
-   },
-   normalize ()
-   {
-      const rotation = this .get ();
-
-      this [_x]       = rotation .x;
-      this [_y]       = rotation .y;
-      this [_z]       = rotation .z;
-      this [_angle]   = rotation .w;
-      this [_tainted] = false;
-
-      return this;
-   },
    slerp (dest, t)
    {
       this [_quaternion] .slerp (dest [_quaternion], t);
@@ -444,21 +444,21 @@ Object .defineProperties (Rotation4 .prototype,
 Object .assign (Rotation4,
 {
    IDENTITY: Object .freeze (new Rotation4 ()),
-   fromVectors (fromVec, toVec)
+   fromEuler (x, y, z, order = "XYZ")
    {
-      return new Rotation4 () .setVectors (fromVec, toVec);
-   },
-   fromQuaternion (quaternion)
-   {
-      return new Rotation4 () .setQuaternion (quaternion);
+      return new Rotation4 () .setEuler (x, y, z, order);
    },
    fromMatrix (matrix)
    {
       return new Rotation4 () .setMatrix (matrix);
    },
-   fromEuler (x, y, z, order = "XYZ")
+   fromQuaternion (quaternion)
    {
-      return new Rotation4 () .setEuler (x, y, z, order);
+      return new Rotation4 () .setQuaternion (quaternion);
+   },
+   fromVectors (fromVec, toVec)
+   {
+      return new Rotation4 () .setVectors (fromVec, toVec);
    },
    spline (r0, r1, r2)
    {
