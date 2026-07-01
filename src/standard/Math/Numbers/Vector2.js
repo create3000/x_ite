@@ -85,12 +85,10 @@ Object .assign (Vector2 .prototype,
       this .y = 1 / this .y;
       return this;
    },
-   lerp ({ x: dX, y: dY }, t)
+   lerp (vector, t)
    {
-      const { x, y } = this;
-
-      this .x = x + t * (dX - x);
-      this .y = y + t * (dY - y);
+      this .x += t * (vector .x - this .x);
+      this .y += t * (vector .y - this .y);
       return this;
    },
    max (vector)

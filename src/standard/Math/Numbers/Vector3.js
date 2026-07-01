@@ -109,13 +109,11 @@ Object .assign (Vector3 .prototype,
       this .z = 1 / this .z;
       return this;
    },
-   lerp ({ x: dX, y: dY, z: dZ }, t)
+   lerp (vector, t)
    {
-      const { x, y, z } = this;
-
-      this .x = x + t * (dX - x);
-      this .y = y + t * (dY - y);
-      this .z = z + t * (dZ - z);
+      this .x += t * (vector .x - this .x);
+      this .y += t * (vector .y - this .y);
+      this .z += t * (vector .z - this .z);
       return this;
    },
    max (vector)

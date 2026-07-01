@@ -113,14 +113,12 @@ Object .assign (Vector4 .prototype,
       this .w = 1 / this .w;
       return this;
    },
-   lerp ({ x: dX, y: dY, z: dZ, w: dW }, t)
+   lerp (vector, t)
    {
-      const { x, y, z, w } = this;
-
-      this .x = x + t * (dX - x);
-      this .y = y + t * (dY - y);
-      this .z = z + t * (dZ - z);
-      this .w = w + t * (dW - w);
+      this .x += t * (vector .x - this .x);
+      this .y += t * (vector .y - this .y);
+      this .z += t * (vector .z - this .z);
+      this .w += t * (vector .w - this .w);
       return this;
    },
    max (vector)
