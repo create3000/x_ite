@@ -9,8 +9,8 @@ const
    _y          = Symbol (),
    _z          = Symbol (),
    _angle      = Symbol (),
-   _quaternion = Symbol (),
-   _tainted    = Symbol ();
+   _tainted    = Symbol (),
+   _quaternion = Symbol ();
 
 function Rotation4 (x = 0, y = 0, z = 1, angle = 0)
 {
