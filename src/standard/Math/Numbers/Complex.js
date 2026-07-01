@@ -135,25 +135,13 @@ Object .defineProperties (Complex .prototype,
    length: { value: 2 },
    0:
    {
-      get ()
-      {
-         return this .real;
-      },
-      set (value)
-      {
-         this .real = value;
-      },
+      get () { return this .real; },
+      set (value) { this .real = value; },
    },
    1:
    {
-      get ()
-      {
-         return this .imag;
-      },
-      set (value)
-      {
-         this .imag = value;
-      },
+      get () { return this .imag; },
+      set (value) { this .imag = value; },
    },
    magnitude:
    {
@@ -176,14 +164,8 @@ Object .defineProperties (Complex .prototype,
    },
    angle:
    {
-      get ()
-      {
-         return Math .atan2 (this .imag, this .real);
-      },
-      set (angle)
-      {
-         this .setPolar (this .magnitude, angle);
-      },
+      get () { return Math .atan2 (this .imag, this .real); },
+      set (angle) { this .setPolar (this .magnitude, angle); },
    },
 });
 
