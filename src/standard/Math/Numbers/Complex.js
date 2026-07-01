@@ -49,7 +49,9 @@ Object .assign (Complex .prototype,
    equals,
    inverse ()
    {
-      const d = this .x * this .x + this .y * this .y;
+      const
+         { x, y } = this,
+         d = x * x + y * y;
 
       this .x /=  d;
       this .y /= -d;
