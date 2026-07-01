@@ -9,15 +9,11 @@ const
    _y          = Symbol (),
    _z          = Symbol (),
    _angle      = Symbol (),
-   _quaternion = Symbol ();
+   _quaternion = Symbol (),
+   _tainted    = Symbol ();
 
 function Rotation4 (x = 0, y = 0, z = 1, angle = 0)
 {
-   this [_x]     = 0;
-   this [_y]     = 0;
-   this [_z]     = 1;
-   this [_angle] = 0;
-
    this [_quaternion] = new Quaternion ();
 
    this .set (x, y, z, angle);
@@ -27,6 +23,9 @@ Object .assign (Rotation4 .prototype,
 {
    *[Symbol .iterator] ()
    {
+      if (this [_tainted])
+         this .normalize ();
+
       yield this [_x];
       yield this [_y];
       yield this [_z];
@@ -36,10 +35,17 @@ Object .assign (Rotation4 .prototype,
    {
       const copy = Object .create (Rotation4 .prototype);
 
-      copy [_x]     = this [_x];
-      copy [_y]     = this [_y];
-      copy [_z]     = this [_z];
-      copy [_angle] = this [_angle];
+      if (this [_tainted])
+      {
+         copy [_tainted] = true;
+      }
+      else
+      {
+         copy [_x]     = this [_x];
+         copy [_y]     = this [_y];
+         copy [_z]     = this [_z];
+         copy [_angle] = this [_angle];
+      }
 
       copy [_quaternion] = this [_quaternion] .copy ();
 
@@ -47,10 +53,18 @@ Object .assign (Rotation4 .prototype,
    },
    assign (rotation)
    {
-      this [_x]     = rotation [_x];
-      this [_y]     = rotation [_y];
-      this [_z]     = rotation [_z];
-      this [_angle] = rotation [_angle];
+      if (rotation [_tainted])
+      {
+         this [_tainted] = true;
+      }
+      else
+      {
+         this [_x]       = rotation [_x];
+         this [_y]       = rotation [_y];
+         this [_z]       = rotation [_z];
+         this [_angle]   = rotation [_angle];
+         this [_tainted] = false;
+      }
 
       this [_quaternion] .assign (rotation [_quaternion]);
 
@@ -94,10 +108,11 @@ Object .assign (Rotation4 .prototype,
    })(),
    set (x = 0, y = 0, z = 1, angle = 0)
    {
-      this [_x]     = x;
-      this [_y]     = y;
-      this [_z]     = z;
-      this [_angle] = angle;
+      this [_x]       = x;
+      this [_y]       = y;
+      this [_z]       = z;
+      this [_angle]   = angle;
+      this [_tainted] = false;
 
       const scale = Math .hypot (x, y, z);
 
@@ -179,7 +194,7 @@ Object .assign (Rotation4 .prototype,
                                      Math .sqrt (Math .abs (1 + cos_angle) / 2));
          }
 
-         this .normalize ();
+         this [_tainted] = true;
 
          return this;
       };
@@ -200,7 +215,9 @@ Object .assign (Rotation4 .prototype,
    {
       // Quaternion is then already normalized.
       this [_quaternion] .setEuler (x, y, z, order);
-      this .normalize ();
+
+      this [_tainted] = true;
+
       return this;
    },
    getMatrix (matrix = new Matrix3 ())
@@ -210,7 +227,9 @@ Object .assign (Rotation4 .prototype,
    setMatrix (matrix)
    {
       this [_quaternion] .setMatrix (matrix) .normalize ();
-      this .normalize ();
+
+      this [_tainted] = true;
+
       return this;
    },
    getQuaternion (quaternion = new Quaternion ())
@@ -220,25 +239,33 @@ Object .assign (Rotation4 .prototype,
    setQuaternion (quaternion)
    {
       this [_quaternion] .assign (quaternion) .normalize ();
-      this .normalize ();
+
+      this [_tainted] = true;
+
       return this;
    },
    inverse ()
    {
       this [_quaternion] .conjugate ();
-      this .normalize ();
+
+      this [_tainted] = true;
+
       return this;
    },
    multLeft (rotation)
    {
       this [_quaternion] .multLeft (rotation [_quaternion]) .normalize ();
-      this .normalize ();
+
+      this [_tainted] = true;
+
       return this;
    },
    multRight (rotation)
    {
       this [_quaternion] .multRight (rotation [_quaternion]) .normalize ();
-      this .normalize ();
+
+      this [_tainted] = true;
+
       return this;
    },
    multVecRot (vector)
@@ -253,23 +280,28 @@ Object .assign (Rotation4 .prototype,
    {
       const rotation = this .get ();
 
-      this [_x]     = rotation .x;
-      this [_y]     = rotation .y;
-      this [_z]     = rotation .z;
-      this [_angle] = rotation .w;
+      this [_x]       = rotation .x;
+      this [_y]       = rotation .y;
+      this [_z]       = rotation .z;
+      this [_angle]   = rotation .w;
+      this [_tainted] = false;
 
       return this;
    },
    slerp (dest, t)
    {
       this [_quaternion] .slerp (dest [_quaternion], t);
-      this .normalize ();
+
+      this [_tainted] = true;
+
       return this;
    },
    squad (a, b, dest, t)
    {
       this [_quaternion] .squad (a [_quaternion], b [_quaternion], dest [_quaternion], t);
-      this .normalize ();
+
+      this [_tainted] = true;
+
       return this;
    },
    /**
@@ -324,6 +356,9 @@ for (const key of Object .keys (Rotation4 .prototype))
 const x = {
    get ()
    {
+      if (this [_tainted])
+         this .normalize ();
+
       return this [_x];
    },
    set (x)
@@ -336,10 +371,16 @@ const x = {
 const y = {
    get ()
    {
+      if (this [_tainted])
+         this .normalize ();
+
       return this [_y];
    },
    set (y)
    {
+      if (this [_tainted])
+         this .normalize ();
+
       this .set (this [_x], y, this [_z], this [_angle]);
    },
    enumerable: true,
@@ -348,6 +389,9 @@ const y = {
 const z = {
    get ()
    {
+      if (this [_tainted])
+         this .normalize ();
+
       return this [_z];
    },
    set (z)
@@ -360,10 +404,16 @@ const z = {
 const angle = {
    get ()
    {
+      if (this [_tainted])
+         this .normalize ();
+
       return this [_angle];
    },
    set (angle)
    {
+      if (this [_tainted])
+         this .normalize ();
+
       this .set (this [_x], this [_y], this [_z], angle);
    },
    enumerable: true,
