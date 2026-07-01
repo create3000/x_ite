@@ -77,19 +77,19 @@ Object .assign (Complex .prototype,
    subtract,
    toString ()
    {
+      const { x, y } = this;
+
       let string = "";
 
-      string += this .x;
+      if (x || !y)
+         string += x;
 
-      if (this .y < 0)
-      {
-         string += this .y;
-         string += "i";
-      }
-      else if (this .y > 0)
-      {
+      if (x && y > 0)
          string += "+";
-         string += this .y;
+
+      if (y)
+      {
+         string += y;
          string += "i";
       }
 
