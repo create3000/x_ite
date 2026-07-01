@@ -165,7 +165,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
       this .callback = callback;
 
       if (url .length === 0)
-         return this .loadDocumentError (new Error ("No URL given."));
+         return this .loadDocumentError ();
 
       this .loadDocumentAsync (String (this .url .shift ()))
          .catch (this .loadDocumentError .bind (this));
@@ -173,7 +173,7 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    async loadDocumentAsync (url)
    {
       if (!url .length)
-         return this .loadDocumentError (new Error ("URL is empty."));
+         return this .loadDocumentError ();
 
       // Script:
       {
@@ -340,6 +340,9 @@ Object .assign (Object .setPrototypeOf (FileLoader .prototype, X3DObject .protot
    },
    printError (error)
    {
+      if (!error)
+         return;
+
       const typeName = this .node instanceof X3DWorld ? "" : ` for ${this .node .getTypeName ()}`;
 
       if (this .fileURL .protocol === "data:")
