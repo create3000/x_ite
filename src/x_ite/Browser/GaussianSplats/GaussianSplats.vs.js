@@ -17,6 +17,7 @@ uniform mat4  x3d_ModelViewMatrix;
    uniform mat4 x3d_EyeMatrix;
 #endif
 
+uniform int  x3d_ViewpointType;
 uniform vec2 x3d_FocalLength;
 
 uniform sampler2D x3d_PositionsTexture;
@@ -138,31 +139,41 @@ computeCov3D (const in vec4 rotation, const in vec3 scale)
 vec3
 computeCov2D (const in vec3 viewSplatCenter, const in mat3 cov3D)
 {
-   // https://github.com/sparkjsdev/spark/blob/78bc65e2cfc6216aeb82b2122426293f862d7749/src/shaders/splatVertex.glsl#L190
-   // // If a OrthoViewpoint is used, we need something like this for J:
-   // mat3 J = mat3 (x3d_FocalLength .x, 0.0, 0.0,
-   //                0.0, x3d_FocalLength .y, 0.0,
-   //                0.0, 0.0, 0.0);
+   mat3 J;
 
-   float x = viewSplatCenter .x;
-   float y = viewSplatCenter .y;
-   float z = viewSplatCenter .z;
+   if (x3d_ViewpointType == 0)
+   {
+      // Perspective camera
+      
+      float x = viewSplatCenter .x;
+      float y = viewSplatCenter .y;
+      float z = viewSplatCenter .z;
 
-   float zz = z * z;
+      float zz = z * z;
 
-   mat3 J = mat3 (
-      x3d_FocalLength .x / z,
-      0.0,
-      -(x3d_FocalLength .x * x) / zz,
+      J = mat3 (
+         x3d_FocalLength .x / z,
+         0.0,
+         -(x3d_FocalLength .x * x) / zz,
 
-      0.0,
-      x3d_FocalLength .y / z,
-      -(x3d_FocalLength .y * y) / zz,
+         0.0,
+         x3d_FocalLength .y / z,
+         -(x3d_FocalLength .y * y) / zz,
 
-      0.0,
-      0.0,
-      0.0
-   );
+         0.0,
+         0.0,
+         0.0
+      );
+   }
+   else
+   {
+      // Ortho camera
+      // https://github.com/sparkjsdev/spark/blob/78bc65e2cfc6216aeb82b2122426293f862d7749/src/shaders/splatVertex.glsl#L190
+      // // If a OrthoViewpoint is used, we need something like this for J:
+      J = mat3 (x3d_FocalLength .x, 0.0, 0.0,
+                0.0, x3d_FocalLength .y, 0.0,
+                0.0, 0.0, 0.0);
+   }
 
    mat3 W = transpose (mat3 (x3d_ModelViewMatrix));
    mat3 T = W * J;

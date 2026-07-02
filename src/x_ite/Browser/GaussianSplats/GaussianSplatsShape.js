@@ -297,6 +297,9 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
 
       gl .uniform4i (shaderNode .x3d_Viewport, ... viewport);
 
+      // Set uniform 0 for perspective and 1 for ortho viewpoint.
+      gl .uniform1i (shaderNode .x3d_ViewpointType, projectionMatrixArray [15]);
+
       // The projection matrix stores the focal length in the first and second element of the diagonal.
       // We need to convert from NDC space to screen space, which is done by multiplying with the
       // framebuffer dimensions and dividing by 2, since NDC goes from -1 to 1.
@@ -362,6 +365,9 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
       gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
       gl .uniformMatrix4fv (shaderNode .x3d_EyeMatrix,        false, renderObject .getEyeMatrixArray ());
       gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrix);
+
+      // Set uniform 0 for perspective and 1 for ortho viewpoint.
+      gl .uniform1i (shaderNode .x3d_ViewpointType, projectionMatrixArray [15]);
 
       // The projection matrix stores the focal length in the first and second element of the diagonal.
       // We need to convert from NDC space to screen space, which is done by multiplying with the
@@ -459,6 +465,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
             "x3d_ScalesTexture",
             "x3d_OpacitiesTexture",
             "x3d_SphericalHarmonicsTexture",
+            "x3d_ViewpointType",
             "x3d_FocalLength",
          ],
       });
@@ -496,6 +503,7 @@ Object .assign (Object .setPrototypeOf (GaussianSplatsShape .prototype, X3DShape
             "x3d_OrientationsTexture",
             "x3d_ScalesTexture",
             "x3d_OpacitiesTexture",
+            "x3d_ViewpointType",
             "x3d_FocalLength",
          ],
       });
