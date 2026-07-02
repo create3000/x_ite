@@ -36,13 +36,13 @@ Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, X3
    {
       return this .target;
    },
-   getTextureType ()
-   {
-      return 4;
-   },
    getTargets ()
    {
       return this .targets;
+   },
+   getTextureType ()
+   {
+      return 4;
    },
    getSize ()
    {
