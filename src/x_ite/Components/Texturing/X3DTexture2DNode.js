@@ -105,10 +105,12 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
    },
    updateTextureData (data)
    {
-      const gl = this .getBrowser () .getContext ();
+      const
+         gl   = this .getBrowser () .getContext (),
+         type = this .float ? gl .FLOAT : gl .UNSIGNED_BYTE;
 
       gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
-      gl .texSubImage2D (gl .TEXTURE_2D, 0, 0, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
+      gl .texSubImage2D (gl .TEXTURE_2D, 0, 0, 0, gl .RGBA, type, data);
 
       if (this .texturePropertiesNode ._generateMipMaps .getValue ())
          gl .generateMipmap (gl .TEXTURE_2D);
