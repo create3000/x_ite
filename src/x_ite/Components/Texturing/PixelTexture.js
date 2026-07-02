@@ -99,9 +99,9 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNod
       try
       {
          const
-            comp        = this ._image .comp,
-            array       = this ._image .array,
-            transparent = !(comp % 2);
+            comp         = this ._image .comp,
+            array        = this ._image .array,
+            transparency = !(comp % 2);
 
          const
             width  = this ._image .width,
@@ -120,7 +120,7 @@ Object .assign (Object .setPrototypeOf (PixelTexture .prototype, X3DTexture2DNod
          const data = new Uint8Array (width * height * 4);
 
          this .convert (data, comp, array .getValue (), array .length);
-         this .setTextureData (width, height, true, transparent && this .isImageTransparent (data), data);
+         this .setTextureData (width, height, true, transparency && this .isImageTransparent (data), data);
 
          this ._loadState = X3DConstants .COMPLETE_STATE;
       }
