@@ -17,6 +17,7 @@ function X3DTexture2DNode (executionContext)
    this .target = gl .TEXTURE_2D;
    this .width  = 0;
    this .height = 0;
+   this .float  = false;
 }
 
 Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTextureNode .prototype),
@@ -53,6 +54,10 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
    {
       this .height = value;
    },
+   setFloat (value)
+   {
+      this .float = value;
+   },
    clearTexture ()
    {
       this .setTextureData (1, 1, false, false, defaultData);
@@ -85,9 +90,13 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
          throw new Error (`At least one dimension (${width} × ${height}) is greater than the maximum texture size (${max} px).`);
       }
 
+      const
+         internalFormat = this .float ? gl .RGBA32F : gl .RGBA,
+         type           = this .float ? gl .FLOAT : gl .UNSIGNED_BYTE;
+
       gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
       gl .pixelStorei (gl .UNPACK_COLORSPACE_CONVERSION_WEBGL, colorSpaceConversion ? gl .BROWSER_DEFAULT_WEBGL : gl .NONE);
-      gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
+      gl .texImage2D  (gl .TEXTURE_2D, 0, internalFormat, width, height, 0, gl .RGBA, type, data);
       gl .pixelStorei (gl .UNPACK_COLORSPACE_CONVERSION_WEBGL, gl .BROWSER_DEFAULT_WEBGL);
 
       this .setTransparent (transparent);

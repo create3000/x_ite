@@ -26,6 +26,8 @@ function RenderedTexture (executionContext)
 
    this .addChildObjects (X3DConstants .outputOnly, "loadState", new Fields .SFInt32 (X3DConstants .COMPLETE_STATE));
 
+   this .setFloat (true);
+
    // Private properties
 
    this .groupNode          = new Group (executionContext);
@@ -90,7 +92,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
          // Properties
 
          this .viewport    = new Vector4 (0, 0, width, height);
-         this .frameBuffer = new TextureBuffer ({ browser, width, height });
+         this .frameBuffer = new TextureBuffer ({ browser, width, height, float: true });
 
          this .setTextureData (width, height, false, false, null);
       }
