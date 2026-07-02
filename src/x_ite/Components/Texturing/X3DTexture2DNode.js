@@ -8,15 +8,13 @@ function X3DTexture2DNode (executionContext)
 
    this .addType (X3DConstants .X3DTexture2DNode);
 
-   this .setFloat (false);
-
    // Private properties
 
    const gl = this .getBrowser () .getContext ();
 
    this .target = gl .TEXTURE_2D;
-   this .width  = 0;
-   this .height = 0;
+
+   this .setFloat (false);
 }
 
 Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTextureNode .prototype),

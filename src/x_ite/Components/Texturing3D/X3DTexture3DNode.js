@@ -8,12 +8,11 @@ function X3DTexture3DNode (executionContext)
 
    this .addType (X3DConstants .X3DTexture3DNode);
 
+   // Private properties
+   
    const gl = this .getBrowser () .getContext ();
 
    this .target = gl .TEXTURE_3D;
-   this .width  = 0;
-   this .height = 0;
-   this .depth  = 0;
 }
 
 Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, X3DSingleTextureNode .prototype),

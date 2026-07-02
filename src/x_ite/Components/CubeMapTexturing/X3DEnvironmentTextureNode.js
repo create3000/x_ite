@@ -8,6 +8,8 @@ function X3DEnvironmentTextureNode (executionContext)
 
    this .addType (X3DConstants .X3DEnvironmentTextureNode);
 
+   // Private properties
+
    const gl = this .getBrowser () .getContext ();
 
    this .target = gl .TEXTURE_CUBE_MAP;
@@ -20,9 +22,6 @@ function X3DEnvironmentTextureNode (executionContext)
       gl .TEXTURE_CUBE_MAP_POSITIVE_Y, // Top
       gl .TEXTURE_CUBE_MAP_NEGATIVE_Y, // Bottom
    ];
-
-   this .size   = 1;
-   this .levels = 0;
 }
 
 Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, X3DSingleTextureNode .prototype),
