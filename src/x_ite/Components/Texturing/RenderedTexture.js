@@ -102,6 +102,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
 
          this .setWidth (0);
          this .setHeight (0);
+         this .clearTexture ();
       }
    },
    set_depthMap__ ()
