@@ -69,7 +69,7 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
 
       // Dispose old framebuffer.
 
-      this .frameBuffer ?.disposes ();
+      this .frameBuffer ?.dispose ();
 
       // Transfer 6 textures of size x size pixels.
 
