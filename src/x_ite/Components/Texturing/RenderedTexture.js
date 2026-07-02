@@ -44,12 +44,10 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
       this ._width       .addInterest ("set_dimensions__",  this);
       this ._height      .addInterest ("set_dimensions__",  this);
       this ._depthMap    .addInterest ("set_dimensions__",  this);
-      this ._depthMap    .addInterest ("set_depthMap__",    this);
       this ._children    .addInterest ("set_children__",    this);
 
       this .set_singleFrame__ ();
       this .set_dimensions__ ();
-      this .set_depthMap__ ();
       this .set_children__ ();
 
       this .groupNode .setup ();
@@ -77,6 +75,10 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
    set_dimensions__ ()
    {
       const browser = this .getBrowser ();
+
+      // Dispose old framebuffer.
+
+      this .frameBuffer ?.dispose ();
 
       // Create framebuffer.
 
@@ -107,9 +109,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
          this .setFloat (false);
          this .clearTexture ();
       }
-   },
-   set_depthMap__ ()
-   {
+
       this .type = this ._depthMap .getValue () ? TraverseType .DEPTH : TraverseType .DISPLAY;
    },
    set_children__ ()
