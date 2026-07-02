@@ -26,8 +26,6 @@ function RenderedTexture (executionContext)
 
    this .addChildObjects (X3DConstants .outputOnly, "loadState", new Fields .SFInt32 (X3DConstants .COMPLETE_STATE));
 
-   this .setFloat (true);
-
    // Private properties
 
    this .groupNode          = new Group (executionContext);
@@ -45,6 +43,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
       this ._singleFrame .addInterest ("set_singleFrame__", this);
       this ._width       .addInterest ("set_dimensions__",  this);
       this ._height      .addInterest ("set_dimensions__",  this);
+      this ._depthMap    .addInterest ("set_dimensions__",  this);
       this ._depthMap    .addInterest ("set_depthMap__",    this);
       this ._children    .addInterest ("set_children__",    this);
 
@@ -91,9 +90,12 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
       {
          // Properties
 
-         this .viewport    = new Vector4 (0, 0, width, height);
-         this .frameBuffer = new TextureBuffer ({ browser, width, height, float: true });
+         const float = this ._depthMap .getValue ();
 
+         this .viewport    = new Vector4 (0, 0, width, height);
+         this .frameBuffer = new TextureBuffer ({ browser, width, height, float });
+
+         this .setFloat (float);
          this .setTextureData (width, height, false, false, null);
       }
       else
@@ -102,6 +104,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
 
          this .setWidth (0);
          this .setHeight (0);
+         this .setFloat (false);
          this .clearTexture ();
       }
    },
