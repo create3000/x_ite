@@ -121,7 +121,7 @@ Object .assign (X3DRenderObject .prototype,
             break;
       }
 
-      switch (browser .getBrowserOption ("ToneMapping"))
+      switch (this .isIndependent () ? browser .getBrowserOption ("ToneMapping") : 0)
       {
          default: // NONE
             renderKey += 0;
