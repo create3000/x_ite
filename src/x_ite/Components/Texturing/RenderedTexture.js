@@ -83,7 +83,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
       // Create framebuffer.
 
       const
-         width  = Math .max (this ._width .getValue (), 0),
+         width  = Math .max (this ._width  .getValue (), 0),
          height = Math .max (this ._height .getValue (), 0);
 
       // const components = this ._colorDepth .getValue ();
