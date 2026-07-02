@@ -10,6 +10,8 @@ function X3DTexture2DNode (executionContext)
 
    this .addType (X3DConstants .X3DTexture2DNode);
 
+   this .setFloat (false);
+
    // Private properties
 
    const gl = this .getBrowser () .getContext ();
@@ -17,7 +19,6 @@ function X3DTexture2DNode (executionContext)
    this .target = gl .TEXTURE_2D;
    this .width  = 0;
    this .height = 0;
-   this .float  = false;
 }
 
 Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTextureNode .prototype),
@@ -29,10 +30,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
       this ._repeatS .addInterest ("updateTextureParameters", this);
       this ._repeatT .addInterest ("updateTextureParameters", this);
 
-      const gl = this .getBrowser () .getContext ();
-
-      gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
-      gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+      this .clearTexture ();
    },
    getTarget ()
    {
@@ -42,21 +40,24 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
    {
       return this .width;
    },
-   setWidth (value)
+   setWidth (width)
    {
-      this .width = value;
+      this .width = width;
    },
    getHeight ()
    {
       return this .height;
    },
-   setHeight (value)
+   setHeight (height)
    {
-      this .height = value;
+      this .height = height;
    },
-   setFloat (value)
+   setFloat (float)
    {
-      this .float = value;
+      const gl = this .getBrowser () .getContext ();
+
+      this .internalFormat = float ? gl .RGBA32F : gl .RGBA;
+      this .type           = float ? gl .FLOAT : gl .UNSIGNED_BYTE;
    },
    clearTexture ()
    {
@@ -90,13 +91,9 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
          throw new Error (`At least one dimension (${width} × ${height}) is greater than the maximum texture size (${max} px).`);
       }
 
-      const
-         internalFormat = this .float ? gl .RGBA32F : gl .RGBA,
-         type           = this .float ? gl .FLOAT : gl .UNSIGNED_BYTE;
-
       gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
       gl .pixelStorei (gl .UNPACK_COLORSPACE_CONVERSION_WEBGL, colorSpaceConversion ? gl .BROWSER_DEFAULT_WEBGL : gl .NONE);
-      gl .texImage2D  (gl .TEXTURE_2D, 0, internalFormat, width, height, 0, gl .RGBA, type, data);
+      gl .texImage2D  (gl .TEXTURE_2D, 0, this .internalFormat, width, height, 0, gl .RGBA, this .type, data);
       gl .pixelStorei (gl .UNPACK_COLORSPACE_CONVERSION_WEBGL, gl .BROWSER_DEFAULT_WEBGL);
 
       this .setTransparent (transparent);
@@ -105,12 +102,10 @@ Object .assign (Object .setPrototypeOf (X3DTexture2DNode .prototype, X3DSingleTe
    },
    updateTextureData (data)
    {
-      const
-         gl   = this .getBrowser () .getContext (),
-         type = this .float ? gl .FLOAT : gl .UNSIGNED_BYTE;
+      const gl = this .getBrowser () .getContext ()
 
       gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
-      gl .texSubImage2D (gl .TEXTURE_2D, 0, 0, 0, gl .RGBA, type, data);
+      gl .texSubImage2D (gl .TEXTURE_2D, 0, 0, 0, gl .RGBA, this .type, data);
 
       if (this .texturePropertiesNode ._generateMipMaps .getValue ())
          gl .generateMipmap (gl .TEXTURE_2D);

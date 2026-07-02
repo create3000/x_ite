@@ -28,10 +28,7 @@ Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, X3DSingleTe
       this ._repeatT .addInterest ("updateTextureParameters", this);
       this ._repeatR .addInterest ("updateTextureParameters", this);
 
-      const gl = this .getBrowser () .getContext ();
-
-      gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
-      gl .texImage3D  (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+      this .clearTexture ();
    },
    getTarget ()
    {

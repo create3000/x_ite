@@ -28,10 +28,6 @@ Object .assign (Object .setPrototypeOf (ImageCubeMapTexture .prototype, X3DEnvir
       X3DEnvironmentTextureNode .prototype .initialize .call (this);
       X3DUrlObject              .prototype .initialize .call (this);
 
-      // Upload default data.
-
-      this .clearTexture ();
-
       // Initialize.
 
       this .image

@@ -27,6 +27,12 @@ function X3DEnvironmentTextureNode (executionContext)
 
 Object .assign (Object .setPrototypeOf (X3DEnvironmentTextureNode .prototype, X3DSingleTextureNode .prototype),
 {
+   initialize ()
+   {
+      X3DSingleTextureNode .prototype .initialize .call (this);
+
+      this .clearTexture ();
+   },
    getTarget ()
    {
       return this .target;

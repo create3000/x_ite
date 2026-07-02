@@ -110,7 +110,7 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
          this .clearTexture ();
       }
 
-      this .type = this ._depthMap .getValue () ? TraverseType .DEPTH : TraverseType .DISPLAY;
+      this .traverseType = this ._depthMap .getValue () ? TraverseType .DEPTH : TraverseType .DISPLAY;
    },
    set_children__ ()
    {
@@ -252,9 +252,9 @@ Object .assign (Object .setPrototypeOf (RenderedTexture .prototype, X3DTexture2D
          }
 
          if (this .groupNode ._children .length)
-            dependentRenderer .render (this .type, this .groupNode .traverse, this .groupNode);
+            dependentRenderer .render (this .traverseType, this .groupNode .traverse, this .groupNode);
          else
-            layer .traverse (this .type, dependentRenderer);
+            layer .traverse (this .traverseType, dependentRenderer);
 
          if (headlight)
             headlightContainer .modelViewMatrix .pop ();

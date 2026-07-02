@@ -35,10 +35,6 @@ Object .assign (Object .setPrototypeOf (GeneratedCubeMapTexture .prototype, X3DE
    {
       X3DEnvironmentTextureNode .prototype .initialize .call (this);
 
-      // Upload default data.
-
-      this .clearTexture ();
-
       // Initialize.
 
       this ._size .addInterest ("set_size__", this);

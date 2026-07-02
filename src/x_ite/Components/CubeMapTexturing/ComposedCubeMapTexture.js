@@ -43,10 +43,6 @@ Object .assign (Object .setPrototypeOf (ComposedCubeMapTexture .prototype, X3DEn
 
       this .frameBuffer = gl .createFramebuffer ();
 
-      // Upload default data.
-
-      this .clearTexture ();
-
       // Initialize.
 
       this ._frontTexture  .addInterest ("set_texture__", this, 0);
