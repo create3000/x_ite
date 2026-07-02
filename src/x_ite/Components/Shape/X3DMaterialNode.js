@@ -133,7 +133,7 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
       if (browser .getRenderingProperty ("XRSession"))
          options .push ("X3D_XR_SESSION");
 
-      switch (browser .getBrowserOption ("ColorSpace") .toUpperCase ())
+      switch (browser .getBrowserOption ("ColorSpace"))
       {
          case "SRGB":
             options .push ("X3D_COLORSPACE_SRGB");
@@ -143,18 +143,6 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
             break;
          default: // LINEAR_WHEN_PHYSICAL_MATERIAL
             options .push (this .isPhysical () ? "X3D_COLORSPACE_LINEAR" : "X3D_COLORSPACE_SRGB");
-            break;
-      }
-
-      switch (browser .getBrowserOption ("ToneMapping") .toUpperCase ())
-      {
-         default: // NONE
-            break;
-         case "ACES_NARKOWICZ":
-         case "ACES_HILL":
-         case "ACES_HILL_EXPOSURE_BOOST":
-         case "KHR_PBR_NEUTRAL":
-            options .push (`X3D_TONEMAP_${browser .getBrowserOption ("ToneMapping") .toUpperCase ()}`);
             break;
       }
 
@@ -340,6 +328,20 @@ Object .assign (Object .setPrototypeOf (X3DMaterialNode .prototype, X3DAppearanc
    },
    addRenderOptions (options, renderObject, alphaMode)
    {
+      const browser = this .getBrowser ();
+
+      switch (renderObject .isIndependent () ? browser .getBrowserOption ("ToneMapping") : "NONE")
+      {
+         default: // NONE
+            break;
+         case "ACES_NARKOWICZ":
+         case "ACES_HILL":
+         case "ACES_HILL_EXPOSURE_BOOST":
+         case "KHR_PBR_NEUTRAL":
+            options .push (`X3D_TONEMAP_${browser .getBrowserOption ("ToneMapping")}`);
+            break;
+      }
+
       switch (renderObject .getRenderPass ())
       {
          case RenderPass .VOLUME_SCATTER_KEY:

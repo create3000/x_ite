@@ -158,7 +158,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    },
    getQualityWhenMoving ()
    {
-      const qualityWhenMoving = this ._QualityWhenMoving .getValue () .toUpperCase ();
+      const qualityWhenMoving = this ._QualityWhenMoving .getValue ();
 
       return PrimitiveQuality .get (qualityWhenMoving);
    },
@@ -172,7 +172,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    },
    getTextCompression ()
    {
-      switch (this ._TextCompression .getValue () .toUpperCase ())
+      switch (this ._TextCompression .getValue ())
       {
          default: // CHAR_SPACING
             return TextCompression .CHAR_SPACING;
@@ -192,7 +192,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    {
       const
          browser          = this .getBrowser (),
-         primitiveQuality = value .getValue () .toUpperCase ();
+         primitiveQuality = value .getValue ();
 
       this .localStorage .PrimitiveQuality = primitiveQuality;
       this .primitiveQuality               = PrimitiveQuality .get (primitiveQuality) ?? PrimitiveQuality .MEDIUM;
@@ -204,7 +204,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
    {
       const
          browser        = this .getBrowser (),
-         textureQuality = value .getValue () .toUpperCase ();
+         textureQuality = value .getValue ();
 
       this .localStorage .TextureQuality = textureQuality;
       this .textureQuality               = TextureQuality .get (textureQuality) ?? TextureQuality .MEDIUM;
@@ -219,7 +219,7 @@ Object .assign (Object .setPrototypeOf (BrowserOptions .prototype, X3DBaseNode .
       {
          const
             browser = this .getBrowser (),
-            shading = value .getValue () .toUpperCase () .replace ("POINTSET", "POINT");
+            shading = value .getValue () .replace ("POINTSET", "POINT");
 
          this .shading = Shading .get (shading) ?? Shading .GOURAUD;
 
