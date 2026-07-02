@@ -2,8 +2,6 @@ import X3DNode              from "../Core/X3DNode.js";
 import X3DSingleTextureNode from "../Texturing/X3DSingleTextureNode.js";
 import X3DConstants         from "../../Base/X3DConstants.js";
 
-const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
-
 function X3DTexture3DNode (executionContext)
 {
    X3DSingleTextureNode .call (this, executionContext);
@@ -62,12 +60,17 @@ Object .assign (Object .setPrototypeOf (X3DTexture3DNode .prototype, X3DSingleTe
    {
       this .depth = value;
    },
-   clearTexture ()
+   clearTexture: (() =>
    {
-      const gl = this .getBrowser () .getContext ();
+      const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
-      this .setTextureData (1, 1, 1, false, gl .RGBA, defaultData);
-   },
+      return function ()
+      {
+         const gl = this .getBrowser () .getContext ();
+
+         this .setTextureData (1, 1, 1, false, gl .RGBA, defaultData);
+      };
+   })(),
    setTextureData (width, height, depth, transparent, format, data)
    {
       this .width  = width;
