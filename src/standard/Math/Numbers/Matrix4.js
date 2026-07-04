@@ -604,10 +604,6 @@ Object .assign (Matrix4,
                           0, 0, 1, 0,
                           matrix [6], matrix [7], 0, 1);
    },
-   fromQuaternion (quaternion)
-   {
-      return quaternion .getMatrix (Object .create (this .prototype));
-   },
    fromRotation (rotation)
    {
       return rotation .getMatrix (Object .create (this .prototype));
