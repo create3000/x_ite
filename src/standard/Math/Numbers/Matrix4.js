@@ -597,18 +597,6 @@ Object .assign (Matrix4,
 {
    ZERO: Object .freeze (new Matrix4 (0)),
    IDENTITY: Object .freeze (new Matrix4 ()),
-   fromTransform (translation, rotation, scale, scaleOrientation, center)
-   {
-      return Object .create (this .prototype) .setTransform (translation, rotation, scale, scaleOrientation, center);
-   },
-   fromRotation (rotation)
-   {
-      return rotation .getMatrix (Object .create (this .prototype));
-   },
-   fromQuaternion (quaternion)
-   {
-      return quaternion .getMatrix (Object .create (this .prototype));
-   },
    fromMatrix3 (matrix)
    {
       return new Matrix4 (matrix [0], matrix [1], 0, 0,
@@ -616,12 +604,24 @@ Object .assign (Matrix4,
                           0, 0, 1, 0,
                           matrix [6], matrix [7], 0, 1);
    },
+   fromQuaternion (quaternion)
+   {
+      return quaternion .getMatrix (Object .create (this .prototype));
+   },
+   fromRotation (rotation)
+   {
+      return rotation .getMatrix (Object .create (this .prototype));
+   },
    fromSubMatrix (matrix)
    {
       return new Matrix4 (matrix [0], matrix [1], matrix [2], 0,
                           matrix [3], matrix [4], matrix [5], 0,
                           matrix [6], matrix [7], matrix [8], 0,
                           0, 0, 0, 1);
+   },
+   fromTransform (translation, rotation, scale, scaleOrientation, center)
+   {
+      return Object .create (this .prototype) .setTransform (translation, rotation, scale, scaleOrientation, center);
    },
 });
 

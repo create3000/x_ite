@@ -72,7 +72,7 @@ Object .assign (Object .setPrototypeOf (Billboard .prototype, X3DGroupingNode .p
          else
          {
             N1 .assign (this ._axisOfRotation .getValue ()) .cross (billboardToViewer); // Normal vector of plane as in specification
-            N2 .assign (this ._axisOfRotation .getValue ()) .cross (Vector3 .Z_AXIS);    // Normal vector of plane between axisOfRotation and zAxis
+            N2 .assign (this ._axisOfRotation .getValue ()) .cross (Vector3 .Z_AXIS);   // Normal vector of plane between axisOfRotation and zAxis
 
             rotation .setVectors (N2, N1) .getMatrix (this .matrix); // Rotate zAxis in plane
          }
