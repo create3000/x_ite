@@ -98,12 +98,12 @@ Object .assign (Matrix2 .prototype,
    {
       const { 0: a0, 1: a1, 2: a2, 3: a3 } = this;
 
-      var { 0: b0, 1: b1 } = matrix;
+      let { 0: b0, 1: b1 } = matrix;
 
       this [0] = a0 * b0 + a2 * b1;
       this [1] = a1 * b0 + a3 * b1;
 
-      var { 2: b0, 3: b1 } = matrix;
+      ({ 2: b0, 3: b1 } = matrix);
 
       this [2] = a0 * b0 + a2 * b1;
       this [3] = a1 * b0 + a3 * b1;
@@ -114,12 +114,12 @@ Object .assign (Matrix2 .prototype,
    {
       const { 0: b0, 1: b1, 2: b2, 3: b3 } = matrix;
 
-      var { 0: a0, 1: a1 } = this;
+      let { 0: a0, 1: a1 } = this;
 
       this [0] = b0 * a0 + b2 * a1;
       this [1] = b1 * a0 + b3 * a1;
 
-      var { 2: a0, 3: a1 } = this;
+      ({ 2: a0, 3: a1 } = this);
 
       this [2] = b0 * a0 + b2 * a1;
       this [3] = b1 * a0 + b3 * a1;

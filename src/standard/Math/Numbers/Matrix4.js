@@ -353,28 +353,28 @@ Object .assign (Matrix4 .prototype,
          12: a12, 13: a13, 14: a14, 15: a15
       } = this;
 
-      var { 0: b0, 1: b1, 2: b2, 3: b3 } = matrix;
+      let { 0: b0, 1: b1, 2: b2, 3: b3 } = matrix;
 
       this [ 0] = a00 * b0 + a04 * b1 + a08 * b2 + a12 * b3;
       this [ 1] = a01 * b0 + a05 * b1 + a09 * b2 + a13 * b3;
       this [ 2] = a02 * b0 + a06 * b1 + a10 * b2 + a14 * b3;
       this [ 3] = a03 * b0 + a07 * b1 + a11 * b2 + a15 * b3;
 
-      var { 4: b0, 5: b1, 6: b2, 7: b3 } = matrix;
+      ({ 4: b0, 5: b1, 6: b2, 7: b3 } = matrix);
 
       this [ 4] = a00 * b0 + a04 * b1 + a08 * b2 + a12 * b3;
       this [ 5] = a01 * b0 + a05 * b1 + a09 * b2 + a13 * b3;
       this [ 6] = a02 * b0 + a06 * b1 + a10 * b2 + a14 * b3;
       this [ 7] = a03 * b0 + a07 * b1 + a11 * b2 + a15 * b3;
 
-      var { 8: b0, 9: b1, 10: b2, 11: b3 } = matrix;
+      ({ 8: b0, 9: b1, 10: b2, 11: b3 } = matrix);
 
       this [ 8] = a00 * b0 + a04 * b1 + a08 * b2 + a12 * b3;
       this [ 9] = a01 * b0 + a05 * b1 + a09 * b2 + a13 * b3;
       this [10] = a02 * b0 + a06 * b1 + a10 * b2 + a14 * b3;
       this [11] = a03 * b0 + a07 * b1 + a11 * b2 + a15 * b3;
 
-      var { 12: b0, 13: b1, 14: b2, 15: b3 } = matrix;
+      ({ 12: b0, 13: b1, 14: b2, 15: b3 } = matrix);
 
       this [12] = a00 * b0 + a04 * b1 + a08 * b2 + a12 * b3;
       this [13] = a01 * b0 + a05 * b1 + a09 * b2 + a13 * b3;
@@ -394,28 +394,28 @@ Object .assign (Matrix4 .prototype,
          12: b12, 13: b13, 14: b14, 15: b15
       } = matrix;
 
-      var { 0: a0, 1: a1, 2: a2, 3: a3 } = this;
+      let { 0: a0, 1: a1, 2: a2, 3: a3 } = this;
 
       this [ 0] = a0 * b00 + a1 * b04 + a2 * b08 + a3 * b12;
       this [ 1] = a0 * b01 + a1 * b05 + a2 * b09 + a3 * b13;
       this [ 2] = a0 * b02 + a1 * b06 + a2 * b10 + a3 * b14;
       this [ 3] = a0 * b03 + a1 * b07 + a2 * b11 + a3 * b15;
 
-      var { 4: a0, 5: a1, 6: a2, 7: a3 } = this;
+      ({ 4: a0, 5: a1, 6: a2, 7: a3 } = this);
 
       this [ 4] = a0 * b00 + a1 * b04 + a2 * b08 + a3 * b12;
       this [ 5] = a0 * b01 + a1 * b05 + a2 * b09 + a3 * b13;
       this [ 6] = a0 * b02 + a1 * b06 + a2 * b10 + a3 * b14;
       this [ 7] = a0 * b03 + a1 * b07 + a2 * b11 + a3 * b15;
 
-      var { 8: a0, 9: a1, 10: a2, 11: a3 } = this;
+      ({ 8: a0, 9: a1, 10: a2, 11: a3 } = this);
 
       this [ 8] = a0 * b00 + a1 * b04 + a2 * b08 + a3 * b12;
       this [ 9] = a0 * b01 + a1 * b05 + a2 * b09 + a3 * b13;
       this [10] = a0 * b02 + a1 * b06 + a2 * b10 + a3 * b14;
       this [11] = a0 * b03 + a1 * b07 + a2 * b11 + a3 * b15;
 
-      var { 12: a0, 13: a1, 14: a2, 15: a3 } = this;
+      ({ 12: a0, 13: a1, 14: a2, 15: a3 } = this);
 
       this [12] = a0 * b00 + a1 * b04 + a2 * b08 + a3 * b12;
       this [13] = a0 * b01 + a1 * b05 + a2 * b09 + a3 * b13;
@@ -438,7 +438,7 @@ Object .assign (Matrix4 .prototype,
 
          return vector;
       }
-      else
+      else // vector .length === 4
       {
          const { x, y, z, w } = vector;
 
@@ -464,7 +464,7 @@ Object .assign (Matrix4 .prototype,
 
          return vector;
       }
-      else
+      else // vector .length === 4
       {
          const { x, y, z, w } = vector;
 
