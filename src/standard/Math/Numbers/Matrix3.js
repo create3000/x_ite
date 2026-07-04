@@ -515,9 +515,11 @@ Object .assign (Matrix3,
 {
    ZERO: Object .freeze (new Matrix3 (0)),
    IDENTITY: Object .freeze (new Matrix3 ()),
-   fromTransform (translation, rotation, scale, scaleOrientation, center)
+   fromMatrix2 (matrix)
    {
-      return Object .create (this .prototype) .setTransform (translation, rotation, scale, scaleOrientation, center);
+      return new Matrix3 (matrix [0], matrix [1], 0,
+                          matrix [2], matrix [3], 0,
+                          0, 0, 1);
    },
    fromRotation (rotation)
    {
@@ -529,11 +531,9 @@ Object .assign (Matrix3,
                           -sinAngle, cosAngle, 0,
                            0, 0, 1);
    },
-   fromMatrix2 (matrix)
+   fromTransform (translation, rotation, scale, scaleOrientation, center)
    {
-      return new Matrix3 (matrix [0], matrix [1], 0,
-                          matrix [2], matrix [3], 0,
-                          0, 0, 1);
+      return Object .create (this .prototype) .setTransform (translation, rotation, scale, scaleOrientation, center);
    },
 });
 
