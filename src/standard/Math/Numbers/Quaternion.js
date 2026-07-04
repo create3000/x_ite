@@ -191,26 +191,26 @@ Object .assign (Quaternion .prototype,
       const { x, y, z, w } = this;
 
       const
-         yy = y * y,
-         zz = z * z,
-         xy = x * y,
-         zw = z * w,
-         xz = x * z,
-         yw = y * w,
          xx = x * x,
+         xy = x * y,
+         xw = x * w,
+         xz = x * z,
+         yy = y * y,
+         yw = y * w,
          yz = y * z,
-         xw = x * w;
+         zz = z * z,
+         zw = z * w;
 
       const
          e0 = 1 - 2 * (yy + zz),
          e1 =     2 * (xy + zw),
          e2 =     2 * (xz - yw),
          e3 =     2 * (xy - zw),
-         e4 = 1 - 2 * (zz + xx),
-         e5 =     2 * (yz + xw),
+         e4 = 1 - 2 * (xx + zz),
+         e5 =     2 * (xw + yz),
          e6 =     2 * (xz + yw),
          e7 =     2 * (yz - xw),
-         e8 = 1 - 2 * (yy + xx);
+         e8 = 1 - 2 * (xx + yy);
 
       if (matrix .order === 3)
       {
