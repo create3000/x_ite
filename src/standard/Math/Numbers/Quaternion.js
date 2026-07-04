@@ -191,27 +191,60 @@ Object .assign (Quaternion .prototype,
       const { x, y, z, w } = this;
 
       const
-         a = x * x,
-         b = x * y,
-         c = y * y,
-         d = y * z,
-         e = z * x,
-         f = z * z,
-         g = w * x,
-         h = w * y,
-         i = w * z;
+         yy = y * y,
+         zz = z * z,
+         xy = x * y,
+         zw = z * w,
+         xz = x * z,
+         yw = y * w,
+         xx = x * x,
+         yz = y * z,
+         xw = x * w;
 
-      matrix [0] = 1 - 2 * (c + f);
-      matrix [1] =     2 * (b + i);
-      matrix [2] =     2 * (e - h);
+      const
+         e0 = 1 - 2 * (yy + zz),
+         e1 =     2 * (xy + zw),
+         e2 =     2 * (xz - yw),
+         e3 =     2 * (xy - zw),
+         e4 = 1 - 2 * (zz + xx),
+         e5 =     2 * (yz + xw),
+         e6 =     2 * (xz + yw),
+         e7 =     2 * (yz - xw),
+         e8 = 1 - 2 * (yy + xx);
 
-      matrix [3] =     2 * (b - i);
-      matrix [4] = 1 - 2 * (f + a);
-      matrix [5] =     2 * (d + g);
+      if (matrix .order === 3)
+      {
+         matrix [0] = e0;
+         matrix [1] = e1;
+         matrix [2] = e2;
 
-      matrix [6] =     2 * (e + h);
-      matrix [7] =     2 * (d - g);
-      matrix [8] = 1 - 2 * (c + a);
+         matrix [3] = e3;
+         matrix [4] = e4;
+         matrix [5] = e5;
+
+         matrix [6] = e6;
+         matrix [7] = e7;
+         matrix [8] = e8;
+      }
+      else // matrix .order === 4
+      {
+         matrix [0]  = e0;
+         matrix [1]  = e1;
+         matrix [2]  = e2;
+         matrix [3]  = 0;
+         matrix [4]  = e3;
+         matrix [5]  = e4;
+         matrix [6]  = e5;
+         matrix [7]  = 0;
+         matrix [8]  = e6;
+         matrix [9]  = e7;
+         matrix [10] = e8;
+         matrix [11] = 0;
+         matrix [12] = 0;
+         matrix [13] = 0;
+         matrix [14] = 0;
+         matrix [15] = 1;
+      }
 
       return matrix;
    },

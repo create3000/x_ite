@@ -158,43 +158,6 @@ Object .assign (Matrix4 .prototype,
          return this;
       };
    })(),
-   setRotation (rotation)
-   {
-      return this .setQuaternion (rotation .getQuaternion (q));
-   },
-   setQuaternion (quaternion)
-   {
-      const
-         { x, y, z, w } = quaternion,
-         yy = y * y,
-         zz = z * z,
-         xy = x * y,
-         zw = z * w,
-         xz = x * z,
-         yw = y * w,
-         xx = x * x,
-         yz = y * z,
-         xw = x * w;
-
-      this [0]  = 1 - 2 * (yy + zz);
-      this [1]  = 2 * (xy + zw);
-      this [2]  = 2 * (xz - yw);
-      this [3]  = 0;
-      this [4]  = 2 * (xy - zw);
-      this [5]  = 1 - 2 * (zz + xx);
-      this [6]  = 2 * (yz + xw);
-      this [7]  = 0;
-      this [8]  = 2 * (xz + yw);
-      this [9]  = 2 * (yz - xw);
-      this [10] = 1 - 2 * (yy + xx);
-      this [11] = 0;
-      this [12] = 0;
-      this [13] = 0;
-      this [14] = 0;
-      this [15] = 1;
-
-      return this;
-   },
    factor: (() =>
    {
       const
@@ -508,7 +471,7 @@ Object .assign (Matrix4 .prototype,
    },
    rotate (rotation)
    {
-      return this .multLeft (m .setQuaternion (rotation .getQuaternion (q)));
+      return this .multLeft (rotation .getMatrix (m));
    },
    scale (scale)
    {
@@ -640,11 +603,11 @@ Object .assign (Matrix4,
    },
    fromRotation (rotation)
    {
-      return Object .create (this .prototype) .setQuaternion (rotation .getQuaternion (q));
+      return rotation .getMatrix (Object .create (this .prototype));
    },
    fromQuaternion (quaternion)
    {
-      return Object .create (this .prototype) .setQuaternion (quaternion);
+      return quaternion .getMatrix (Object .create (this .prototype));
    },
    fromMatrix3 (matrix)
    {
@@ -662,8 +625,6 @@ Object .assign (Matrix4,
    },
 });
 
-const
-   q = new Quaternion (),
-   m = new Matrix4 ();
+const m = new Matrix4 ();
 
 export default Matrix4;
