@@ -749,11 +749,14 @@ Returns an SFVec3d/f whose value is the object multiplied by the passed row *vec
 
 <x3d-script-area name="X3D ECMAScript Example: SFMatrix4f multVecMatrix">
 <pre>
-const matrix = new SFMatrix4f (0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1);
-const vector = new SFVec3f (0, 0, 1);
+const matrix  = new SFMatrix4f (0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1);
+const vector3 = new SFVec3f (0, 0, 1);
+const vector4 = new SFVec4f (0, 0, 1, 1);
 
-print (matrix .multVecMatrix (vector));
+print (matrix .multVecMatrix (vector3));
+print (matrix .multVecMatrix (vector4));
 // Expected output: 1 0 0
+// Expected output: 1 0 0 1
 </pre>
 </x3d-script-area>
 
