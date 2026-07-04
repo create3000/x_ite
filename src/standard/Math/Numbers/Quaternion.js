@@ -212,7 +212,7 @@ Object .assign (Quaternion .prototype,
          e7 =     2 * (yz - xw),
          e8 = 1 - 2 * (xx + yy);
 
-      if (matrix .order === 3)
+      if (matrix .length === 9)
       {
          matrix [0] = e0;
          matrix [1] = e1;
@@ -226,7 +226,7 @@ Object .assign (Quaternion .prototype,
          matrix [7] = e7;
          matrix [8] = e8;
       }
-      else // matrix .order === 4
+      else // matrix .length === 16
       {
          matrix [0]  = e0;
          matrix [1]  = e1;
