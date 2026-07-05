@@ -628,12 +628,12 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             {
                return;
             }
+            case X3DConstants .SFColor:
+            case X3DConstants .SFColorRGBA:
             case X3DConstants .SFVec2d:
             case X3DConstants .SFVec2f:
-            case X3DConstants .SFColor:
             case X3DConstants .SFVec3d:
             case X3DConstants .SFVec3f:
-            case X3DConstants .SFColorRGBA:
             case X3DConstants .SFVec4d:
             case X3DConstants .SFVec4f:
             {

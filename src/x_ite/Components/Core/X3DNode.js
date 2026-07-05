@@ -469,6 +469,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             case X3DConstants .SFDouble:
             case X3DConstants .SFMatrix3d:
             case X3DConstants .SFMatrix4d:
+            case X3DConstants .SFQuaternion:
             case X3DConstants .SFRotation:
             case X3DConstants .SFTime:
             case X3DConstants .SFVec2d:
@@ -477,6 +478,7 @@ Object .assign (Object .setPrototypeOf (X3DNode .prototype, X3DBaseNode .prototy
             case X3DConstants .MFDouble:
             case X3DConstants .MFMatrix3d:
             case X3DConstants .MFMatrix4d:
+            case X3DConstants .MFQuaternion:
             case X3DConstants .MFRotation:
             case X3DConstants .MFTime:
             case X3DConstants .MFVec2d:
