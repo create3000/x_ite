@@ -1,5 +1,6 @@
 import Vector4   from "./Vector4.js";
 import Matrix3   from "./Matrix3.js";
+import Matrix4   from "./Matrix4.js";
 import Algorithm from "../Algorithm.js";
 
 const {
@@ -188,6 +189,13 @@ Object .assign (Quaternion .prototype,
    },
    getMatrix (matrix = new Matrix3 ())
    {
+      if (matrix .length === 9)
+         return this .getMatrix3 (matrix);
+
+      return this .getMatrix4 (matrix);
+   },
+   getMatrix3 (matrix = new Matrix3 ())
+   {
       const { x, y, z, w } = this;
 
       const
@@ -201,50 +209,51 @@ Object .assign (Quaternion .prototype,
          zz = z * z,
          zw = z * w;
 
+      matrix [0] = 1 - 2 * (yy + zz),
+      matrix [1] =     2 * (xy + zw),
+      matrix [2] =     2 * (xz - yw),
+
+      matrix [3] =     2 * (xy - zw),
+      matrix [4] = 1 - 2 * (xx + zz),
+      matrix [5] =     2 * (xw + yz),
+
+      matrix [6] =     2 * (xz + yw),
+      matrix [7] =     2 * (yz - xw),
+      matrix [8] = 1 - 2 * (xx + yy);
+
+      return matrix;
+   },
+   getMatrix4 (matrix = new Matrix4 ())
+   {
+      const { x, y, z, w } = this;
+
       const
-         e0 = 1 - 2 * (yy + zz),
-         e1 =     2 * (xy + zw),
-         e2 =     2 * (xz - yw),
-         e3 =     2 * (xy - zw),
-         e4 = 1 - 2 * (xx + zz),
-         e5 =     2 * (xw + yz),
-         e6 =     2 * (xz + yw),
-         e7 =     2 * (yz - xw),
-         e8 = 1 - 2 * (xx + yy);
+         xx = x * x,
+         xy = x * y,
+         xw = x * w,
+         xz = x * z,
+         yy = y * y,
+         yw = y * w,
+         yz = y * z,
+         zz = z * z,
+         zw = z * w;
 
-      if (matrix .length === 9)
-      {
-         matrix [0] = e0;
-         matrix [1] = e1;
-         matrix [2] = e2;
-
-         matrix [3] = e3;
-         matrix [4] = e4;
-         matrix [5] = e5;
-
-         matrix [6] = e6;
-         matrix [7] = e7;
-         matrix [8] = e8;
-      }
-      else // matrix .length === 16
-      {
-         matrix [0]  = e0;
-         matrix [1]  = e1;
-         matrix [2]  = e2;
-         matrix [3]  = 0;
-         matrix [4]  = e3;
-         matrix [5]  = e4;
-         matrix [6]  = e5;
-         matrix [7]  = 0;
-         matrix [8]  = e6;
-         matrix [9]  = e7;
-         matrix [10] = e8;
-         matrix [11] = 0;
-         matrix [12] = 0;
-         matrix [13] = 0;
-         matrix [14] = 0;
-         matrix [15] = 1;
-      }
+      matrix [0]  = 1 - 2 * (yy + zz),
+      matrix [1]  =     2 * (xy + zw),
+      matrix [2]  =     2 * (xz - yw),
+      matrix [3]  = 0;
+      matrix [4]  =     2 * (xy - zw),
+      matrix [5]  = 1 - 2 * (xx + zz),
+      matrix [6]  =     2 * (xw + yz),
+      matrix [7]  = 0;
+      matrix [8]  =     2 * (xz + yw),
+      matrix [9]  =     2 * (yz - xw),
+      matrix [10] = 1 - 2 * (xx + yy);
+      matrix [11] = 0;
+      matrix [12] = 0;
+      matrix [13] = 0;
+      matrix [14] = 0;
+      matrix [15] = 1;
 
       return matrix;
    },
