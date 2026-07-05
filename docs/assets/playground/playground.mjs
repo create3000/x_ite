@@ -342,7 +342,7 @@ class Playground
       $("<span></span>") .addClass ("dot") .appendTo (toolbar);
 
       this .fullSizeButton = $("<button></button>")
-         .attr ("title", "View browser in full size.")
+         .attr ("title", "Maximize 3D surface.")
          .addClass ("material-symbols-outlined")
          .text ("fullscreen")
          .on ("click", () =>

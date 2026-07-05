@@ -354,26 +354,13 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
 
       // Math
 
-      // Save normalize, that will not divide by zero.
-      // Try Waterfall test.
-      vec3
-      save_normalize (const in vec3 vector)
-      {
-         float l = length (vector);
-
-         if (l == 0.0)
-            return vec3 (0.0);
-
-         return vector / l;
-      }
-
       // Quaternion
 
       vec4
       Quaternion (const in vec3 fromVector, const in vec3 toVector)
       {
-         vec3 from = save_normalize (fromVector);
-         vec3 to   = save_normalize (toVector);
+         vec3 from = normalize (fromVector);
+         vec3 to   = normalize (toVector);
 
          float cos_angle = dot (from, to);
          vec3  cross_vec = cross (from, to);
@@ -392,7 +379,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
                if (dot (t, t) == 0.0)
                   t = cross (from, vec3 (0.0, 1.0, 0.0));
 
-               t = save_normalize (t);
+               t = normalize (t);
 
                return vec4 (t, 0.0);
             }
@@ -401,7 +388,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          {
             float s = sqrt (abs (1.0 - cos_angle) * 0.5);
 
-            cross_vec = save_normalize (cross_vec);
+            cross_vec = normalize (cross_vec);
 
             return vec4 (cross_vec * s, sqrt (abs (1.0 + cos_angle) * 0.5));
          }
@@ -690,7 +677,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          // Calculate position and direction.
 
          position = r .z * vertex0 + r .x * vertex1 + r .y * vertex2;
-         normal   = save_normalize (r .z * normal0 + r .x * normal1 + r .y * normal2);
+         normal   = normalize (r .z * normal0 + r .x * normal1 + r .y * normal2);
       }
       #endif
 
@@ -764,7 +751,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
       void
       bounce (const in float deltaTime, const in vec4 fromPosition, inout vec4 toPosition, inout vec3 velocity)
       {
-         Line3 line = Line3 (fromPosition .xyz, save_normalize (velocity));
+         Line3 line = Line3 (fromPosition .xyz, normalize (velocity));
 
          vec4 points  [ARRAY_SIZE];
          vec3 normals [ARRAY_SIZE];
@@ -782,7 +769,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
             return;
 
          vec3 point  = points [index] .xyz;
-         vec3 normal = save_normalize (normals [index]);
+         vec3 normal = normalize (normals [index]);
 
          Plane3 plane2 = plane3 (point, normal);
 
@@ -792,7 +779,7 @@ Object .assign (Object .setPrototypeOf (X3DParticleEmitterNode .prototype, X3DNo
          float damping = length (normals [index]);
 
          velocity   = reflect (velocity, normal);
-         toPosition = vec4 (point + save_normalize (velocity) * 0.0001, 1.0);
+         toPosition = vec4 (point + normalize (velocity) * 0.0001, 1.0);
          velocity  *= damping;
       }
       #endif
