@@ -653,7 +653,8 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                for (const value of field)
                   array [a ++] = value;
 
-               array .fill (0, a);
+               if (a < array .length)
+                  array .fill (0, a);
 
                uniform .call (gl, location, array);
                return;
@@ -674,29 +675,10 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                      array [a ++] = pixel;
                }
 
-               array .fill (0, a);
+               if (a < array .length)
+                  array .fill (0, a);
 
                uniform .call (gl, location, array);
-               return;
-            }
-            case X3DConstants .MFMatrix3d:
-            case X3DConstants .MFMatrix3f:
-            case X3DConstants .MFMatrix4d:
-            case X3DConstants .MFMatrix4f:
-            {
-               const { array, uniform } = location;
-
-               let a = 0;
-
-               for (const matrix of field)
-               {
-                  for (const element of matrix)
-                     array [a ++] = element;
-               }
-
-               array .fill (0, a);
-
-               uniform .call (gl, location, false, array);
                return;
             }
             case X3DConstants .MFNode:
@@ -740,7 +722,8 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                      array [a ++] = element;
                }
 
-               array .fill (0, a);
+               if (a < array .length)
+                  array .fill (0, a);
 
                uniform .call (gl, location, false, array);
                return;
@@ -749,12 +732,16 @@ Object .assign (X3DProgrammableShaderObject .prototype,
             {
                return;
             }
+            case X3DConstants .MFColor:
+            case X3DConstants .MFColorRGBA:
+            case X3DConstants .MFMatrix3d:
+            case X3DConstants .MFMatrix3f:
+            case X3DConstants .MFMatrix4d:
+            case X3DConstants .MFMatrix4f:
             case X3DConstants .MFVec2d:
             case X3DConstants .MFVec2f:
-            case X3DConstants .MFColor:
             case X3DConstants .MFVec3d:
             case X3DConstants .MFVec3f:
-            case X3DConstants .MFColorRGBA:
             case X3DConstants .MFVec4d:
             case X3DConstants .MFVec4f:
             {
@@ -768,7 +755,8 @@ Object .assign (X3DProgrammableShaderObject .prototype,
                      array [a ++] = element;
                }
 
-               array .fill (0, a);
+               if (a < array .length)
+                  array .fill (0, a);
 
                uniform .call (gl, location, array);
                return;
