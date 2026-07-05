@@ -119,8 +119,8 @@ Object .assign (Box3 .prototype,
 
       return function  (points)
       {
-            min .set (Number .POSITIVE_INFINITY),
-            max .set (Number .NEGATIVE_INFINITY);
+         min .set (Number .POSITIVE_INFINITY),
+         max .set (Number .NEGATIVE_INFINITY);
 
          for (const point of points)
          {
