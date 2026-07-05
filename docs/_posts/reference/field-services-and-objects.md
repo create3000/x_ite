@@ -1033,7 +1033,7 @@ const b = q .multLeft (u) .multLeft (q .inverse ());
 print (a);
 print (b);
 // Expected output: 0.8 10.6 6
-// Expected output: 0.8 10.6 6
+// Expected output: 0.8 10.6 6 0
 </pre>
 </x3d-script-area>
 
