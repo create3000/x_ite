@@ -155,6 +155,9 @@ Object .assign (Box2,
    },
    fromPoints (points)
    {
+      if (!points .length)
+         return new Box2 ();
+
       const
          min = new Vector2 (Number .POSITIVE_INFINITY),
          max = new Vector2 (Number .NEGATIVE_INFINITY);
