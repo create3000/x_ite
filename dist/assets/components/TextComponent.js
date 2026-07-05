@@ -1,4 +1,4 @@
-/* X_ITE v15.1.9 */
+/* X_ITE v15.1.10 */
 const __X_ITE_X3D__ = window [Symbol .for ("X_ITE.X3D")];
 /******/ (() => { // webpackBootstrap
 /******/ 	"use strict";
@@ -1217,8 +1217,14 @@ Object .assign (Object .setPrototypeOf (PolygonText .prototype, Text_X3DTextGeom
 
          if (vertices .length)
          {
-            min .assign (vertices [0]) .min (... vertices);
-            max .assign (vertices [0]) .max (... vertices);
+            min .assign (vertices [0]);
+            max .assign (vertices [0]);
+
+            for (const vertex of vertices)
+            {
+               min .min (vertex);
+               max .max (vertex);
+            }
          }
          else
          {
