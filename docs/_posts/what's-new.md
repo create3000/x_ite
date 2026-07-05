@@ -30,6 +30,7 @@ Although this is an initial implementation, it already provides a solid foundati
 - [x] You can now hold down the <kbd>Alt-or-Option</kbd> key to move to a certain point when you double click an object while the Examine viewer is active.
 - [x] The splash screen now shows download progress of all media (3D files, images, sound and more).
 - [x] Removed pako dependency in favour of build-in DecompressionStream.
+- [x] [RenderedTexture](/x_ite/components/texturing/renderedtexture/) now supports rendering of *depthMap* as float texture.
 
 ## X_ITE v15.0 Series
 
